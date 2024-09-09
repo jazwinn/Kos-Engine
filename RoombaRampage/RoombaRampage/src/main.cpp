@@ -58,13 +58,13 @@ const std::string genericFragmentShader =
         /*--------------------------------------------------------------
             INITIALIZE OBJECTS
          --------------------------------------------------------------*/
-        GraphicsObject testRect(GraphicsObject::RECTANGLE);
-        testRect.setup_vao();
-        testRect.set_rotate(45.f);
-        testRect.set_translate(0.5f,0.75f);
-        testRect.set_scale(2.f,2.f);
-        GraphicsObject::set_draw_mode(GL_FILL);
-        testRect.setup_shader(genericVertexShader, genericFragmentShader);
+        Graphics::classGraphicsObject testRect(Graphics::classGraphicsObject::RECTANGLE);
+        testRect.funcSetupVao();
+        testRect.funcSetRotate(45.f);
+        testRect.funcSetTranslate(0.5f,0.75f);
+        testRect.funcSetScale(2.f,2.f);
+        Graphics::classGraphicsObject::funcSetDrawMode(GL_FILL);
+        testRect.funcSetupShader(genericVertexShader, genericFragmentShader);
 
         /*--------------------------------------------------------------
            INITIALIZE IMGUI
@@ -108,8 +108,8 @@ const std::string genericFragmentShader =
              UPDATE OBJECTS
              --------------------------------------------------------------*/
 
-            testRect.add_translate(-0.001f, -0.001f);
-            testRect.update();
+            testRect.funcAddTranslate(-0.001f, -0.001f);
+            testRect.funcUpdate();
 
 
             /*--------------------------------------------------------------
@@ -128,7 +128,7 @@ const std::string genericFragmentShader =
             glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
             glClear(GL_COLOR_BUFFER_BIT);
 
-            testRect.draw();
+            testRect.funcDraw();
             imgui_manager.Render();
 
             glfwSwapBuffers(window);
@@ -138,7 +138,7 @@ const std::string genericFragmentShader =
         /*-----------------------------------------------------------
         CLEANUP
         --------------------------------------------------------------*/
-        testRect.delete_shader();
+        testRect.funcDeleteShader();
         imgui_manager.Shutdown();
         glfwDestroyWindow(window);
         glfwTerminate();
