@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 // dear imgui, v1.91.1
-=======
-// dear imgui, v1.91.2 WIP
->>>>>>> main
 // (headers)
 
 // Help:
@@ -15,11 +11,7 @@
 // - FAQ ........................ https://dearimgui.com/faq (in repository as docs/FAQ.md)
 // - Homepage ................... https://github.com/ocornut/imgui
 // - Releases & changelog ....... https://github.com/ocornut/imgui/releases
-<<<<<<< HEAD
 // - Gallery .................... https://github.com/ocornut/imgui/issues/7503 (please post your screenshots/video there!)
-=======
-// - Gallery .................... https://github.com/ocornut/imgui/issues?q=label%3Agallery (please post your screenshots/video there!)
->>>>>>> main
 // - Wiki ....................... https://github.com/ocornut/imgui/wiki (lots of good stuff there)
 //   - Getting Started            https://github.com/ocornut/imgui/wiki/Getting-Started (how to integrate in an existing app by adding ~25 lines of code)
 //   - Third-party Extensions     https://github.com/ocornut/imgui/wiki/Useful-Extensions (ImPlot & many more)
@@ -36,13 +28,8 @@
 
 // Library Version
 // (Integer encoded as XYYZZ for use in #if preprocessor conditionals, e.g. '#if IMGUI_VERSION_NUM >= 12345')
-<<<<<<< HEAD
 #define IMGUI_VERSION       "1.91.1"
 #define IMGUI_VERSION_NUM   19110
-=======
-#define IMGUI_VERSION       "1.91.2 WIP"
-#define IMGUI_VERSION_NUM   19111
->>>>>>> main
 #define IMGUI_HAS_TABLE
 
 /*

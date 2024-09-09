@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 // dear imgui, v1.91.1
-=======
-// dear imgui, v1.91.2 WIP
->>>>>>> main
 // (widgets code)
 
 /*
@@ -1464,11 +1460,7 @@ void ImGui::TextLinkOpenURL(const char* label, const char* url)
     if (TextLink(label))
         if (g.PlatformIO.Platform_OpenInShellFn != NULL)
             g.PlatformIO.Platform_OpenInShellFn(&g, url);
-<<<<<<< HEAD
     SetItemTooltip("%s", url); // It is more reassuring for user to _always_ display URL when we same as label
-=======
-    SetItemTooltip(LocalizeGetMsg(ImGuiLocKey_OpenLink_s), url); // It is more reassuring for user to _always_ display URL when we same as label
->>>>>>> main
     if (BeginPopupContextItem())
     {
         if (MenuItem(LocalizeGetMsg(ImGuiLocKey_CopyLink)))
@@ -3902,24 +3894,9 @@ static void    STB_TEXTEDIT_LAYOUTROW(StbTexteditRow* r, ImGuiInputTextState* ob
     r->num_chars = (int)(text_remaining - (text + line_start_idx));
 }
 
-<<<<<<< HEAD
 static bool is_separator(unsigned int c)
 {
     return c==',' || c==';' || c=='(' || c==')' || c=='{' || c=='}' || c=='[' || c==']' || c=='|' || c=='\n' || c=='\r' || c=='.' || c=='!' || c=='\\' || c=='/';
-=======
-static bool ImCharIsSeparatorW(unsigned int c)
-{
-    static const unsigned int separator_list[] =
-    {
-        ',', 0x3001, '.', 0x3002, ';', 0xFF1B, '(', 0xFF08, ')', 0xFF09, '{', 0xFF5B, '}', 0xFF5D,
-        '[', 0x300C, ']', 0x300D, '|', 0xFF5C, '!', 0xFF01, '\\', 0xFFE5, '/', 0x30FB, 0xFF0F,
-        '\n', '\r',
-    };
-    for (unsigned int separator : separator_list)
-        if (c == separator)
-            return true;
-    return false;
->>>>>>> main
 }
 
 static int is_word_boundary_from_right(ImGuiInputTextState* obj, int idx)
@@ -3929,15 +3906,9 @@ static int is_word_boundary_from_right(ImGuiInputTextState* obj, int idx)
         return 0;
 
     bool prev_white = ImCharIsBlankW(obj->TextW[idx - 1]);
-<<<<<<< HEAD
     bool prev_separ = is_separator(obj->TextW[idx - 1]);
     bool curr_white = ImCharIsBlankW(obj->TextW[idx]);
     bool curr_separ = is_separator(obj->TextW[idx]);
-=======
-    bool prev_separ = ImCharIsSeparatorW(obj->TextW[idx - 1]);
-    bool curr_white = ImCharIsBlankW(obj->TextW[idx]);
-    bool curr_separ = ImCharIsSeparatorW(obj->TextW[idx]);
->>>>>>> main
     return ((prev_white || prev_separ) && !(curr_separ || curr_white)) || (curr_separ && !prev_separ);
 }
 static int is_word_boundary_from_left(ImGuiInputTextState* obj, int idx)
@@ -3946,15 +3917,9 @@ static int is_word_boundary_from_left(ImGuiInputTextState* obj, int idx)
         return 0;
 
     bool prev_white = ImCharIsBlankW(obj->TextW[idx]);
-<<<<<<< HEAD
     bool prev_separ = is_separator(obj->TextW[idx]);
     bool curr_white = ImCharIsBlankW(obj->TextW[idx - 1]);
     bool curr_separ = is_separator(obj->TextW[idx - 1]);
-=======
-    bool prev_separ = ImCharIsSeparatorW(obj->TextW[idx]);
-    bool curr_white = ImCharIsBlankW(obj->TextW[idx - 1]);
-    bool curr_separ = ImCharIsSeparatorW(obj->TextW[idx - 1]);
->>>>>>> main
     return ((prev_white) && !(curr_separ || curr_white)) || (curr_separ && !prev_separ);
 }
 static int  STB_TEXTEDIT_MOVEWORDLEFT_IMPL(ImGuiInputTextState* obj, int idx)   { idx--; while (idx >= 0 && !is_word_boundary_from_right(obj, idx)) idx--; return idx < 0 ? 0 : idx; }
@@ -5231,11 +5196,7 @@ bool ImGui::InputTextEx(const char* label, const char* hint, char* buf, int buf_
     {
         // For focus requests to work on our multiline we need to ensure our child ItemAdd() call specifies the ImGuiItemFlags_Inputable (see #4761, #7870)...
         Dummy(ImVec2(text_size.x, text_size.y + style.FramePadding.y));
-<<<<<<< HEAD
         g.NextItemData.ItemFlags |= ImGuiItemFlags_Inputable | ImGuiItemFlags_NoTabStop;
-=======
-        g.NextItemData.ItemFlags |= (ImGuiItemFlags)ImGuiItemFlags_Inputable | ImGuiItemFlags_NoTabStop;
->>>>>>> main
         EndChild();
         item_data_backup.StatusFlags |= (g.LastItemData.StatusFlags & ImGuiItemStatusFlags_HoveredWindow);
 

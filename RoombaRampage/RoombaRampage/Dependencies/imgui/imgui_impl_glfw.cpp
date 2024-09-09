@@ -89,32 +89,20 @@
 #endif
 
 // GLFW
-<<<<<<< HEAD
 #include <glfw3.h>
-=======
-#include <GLFW/glfw3.h>
->>>>>>> main
 
 #ifdef _WIN32
 #undef APIENTRY
 #ifndef GLFW_EXPOSE_NATIVE_WIN32
 #define GLFW_EXPOSE_NATIVE_WIN32
 #endif
-<<<<<<< HEAD
 #include <glfw3native.h>   // for glfwGetWin32Window()
-=======
-#include <GLFW/glfw3native.h>   // for glfwGetWin32Window()
->>>>>>> main
 #endif
 #ifdef __APPLE__
 #ifndef GLFW_EXPOSE_NATIVE_COCOA
 #define GLFW_EXPOSE_NATIVE_COCOA
 #endif
-<<<<<<< HEAD
 #include <glfw3native.h>   // for glfwGetCocoaWindow()
-=======
-#include <GLFW/glfw3native.h>   // for glfwGetCocoaWindow()
->>>>>>> main
 #endif
 #ifndef _WIN32
 #include <unistd.h>             // for usleep()
@@ -124,11 +112,7 @@
 #include <emscripten.h>
 #include <emscripten/html5.h>
 #ifdef EMSCRIPTEN_USE_PORT_CONTRIB_GLFW3
-<<<<<<< HEAD
 #include <emscripten_glfw3.h>
-=======
-#include <GLFW/emscripten_glfw3.h>
->>>>>>> main
 #else
 #define EMSCRIPTEN_USE_EMBEDDED_GLFW3
 #endif
