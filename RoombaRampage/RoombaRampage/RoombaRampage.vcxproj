@@ -149,6 +149,7 @@
     <ClCompile Include="Dependencies\imgui\imgui_stdlib.cpp" />
     <ClCompile Include="Dependencies\imgui\imgui_tables.cpp" />
     <ClCompile Include="Dependencies\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="src\imgui_handler.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Graphics.cpp" />
   </ItemGroup>
@@ -164,6 +165,7 @@
     <ClInclude Include="Dependencies\imgui\imstb_textedit.h" />
     <ClInclude Include="Dependencies\imgui\imstb_truetype.h" />
     <ClInclude Include="include\Graphics.h" />
+    <ClInclude Include="include\imgui_handler.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="include\genericFragmentShader.frag" />
