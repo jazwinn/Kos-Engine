@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 // dear imgui, v1.91.1
+=======
+// dear imgui, v1.91.2 WIP
+>>>>>>> main
 // (internal structures/api)
 
 // You may use this file to debug, understand or extend Dear ImGui features but we don't provide any guarantee of forward compatibility.
@@ -1882,6 +1886,10 @@ enum ImGuiLocKey : int
     ImGuiLocKey_WindowingMainMenuBar,
     ImGuiLocKey_WindowingPopup,
     ImGuiLocKey_WindowingUntitled,
+<<<<<<< HEAD
+=======
+    ImGuiLocKey_OpenLink_s,
+>>>>>>> main
     ImGuiLocKey_CopyLink,
     ImGuiLocKey_COUNT
 };

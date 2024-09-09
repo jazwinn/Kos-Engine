@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 // dear imgui, v1.91.1
+=======
+// dear imgui, v1.91.2 WIP
+>>>>>>> main
 // (demo code)
 
 // Help:
