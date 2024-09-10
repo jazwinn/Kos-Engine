@@ -152,6 +152,8 @@
     <ClCompile Include="src\imgui_handler.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Graphics.cpp" />
+    <ClCompile Include="src\Mat2x2.cpp" />
+    <ClCompile Include="src\Mat3x3.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dependencies\imgui\imconfig.h" />
@@ -166,6 +168,8 @@
     <ClInclude Include="Dependencies\imgui\imstb_truetype.h" />
     <ClInclude Include="include\Graphics.h" />
     <ClInclude Include="include\imgui_handler.h" />
+    <ClInclude Include="include\Mat2x2.h" />
+    <ClInclude Include="include\Mat3x3.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="include\genericFragmentShader.frag" />
