@@ -23,7 +23,6 @@ namespace Graphics
 		funcSetupVao();
 		funcSetDrawMode(GL_FILL);
 		funcSetupShader(genericVertexShader, genericFragmentShader);
-
 	
 	}
 

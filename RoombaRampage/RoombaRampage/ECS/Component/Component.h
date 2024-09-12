@@ -4,6 +4,7 @@
 enum ComponentType {
 	TypeTransformComponent,
 	TypeMovemmentComponent,
+	TypeSpriteComponent,
 
 
 	TotalTypeComponent

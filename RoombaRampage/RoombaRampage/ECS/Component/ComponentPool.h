@@ -8,6 +8,7 @@
 #include "Component.h"
 #include "TransformComponent.h"
 #include "MovementComponent.h"
+#include "SpriteComponent.h"
 
 class IComponentPool {
 

@@ -18,7 +18,7 @@ void ECS::Load() {
 	//Allocate memory to each component pool
 	ecs->ECS_CombinedComponentPool[TypeTransformComponent] = new ComponentPool<TransformComponent>{};
 	ecs->ECS_CombinedComponentPool[TypeMovemmentComponent] = new ComponentPool<MovementComponent>{};
-
+	ecs->ECS_CombinedComponentPool[TypeSpriteComponent] = new ComponentPool<SpriteComponent>{};
 
 	//Allocate memory to each system
 	ecs->ECS_SystemMap[TypeMovementSystem] = new MovementSystem;
@@ -43,8 +43,10 @@ EntityID ECS::CreateEntity() {
 
 	ECS* ecs = ECS::GetInstance();
 
+	// create for all components
 	TransformComponent* TransComponent = static_cast<TransformComponent*>(ecs->ECS_CombinedComponentPool[TypeTransformComponent]->CreateComponent());
 	MovementComponent* MoveComponent = static_cast<MovementComponent*>(ecs->ECS_CombinedComponentPool[TypeMovemmentComponent]->CreateComponent());
+	SpriteComponent* SpComponent = static_cast<SpriteComponent*>(ecs->ECS_CombinedComponentPool[TypeSpriteComponent]->CreateComponent());
 
 	ecs->EntityCount++;
 

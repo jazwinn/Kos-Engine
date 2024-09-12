@@ -71,7 +71,7 @@ void ImGuiHandler::DrawHierachyWindow(bool& show_demo_window, bool& show_another
     ImGui::Text("Roomba Rampage");
 
     if (ImGui::Button("+ Add GameObject")) {
-        ecs->CreateEntity();
+        
         stringBox ? stringBox = false : stringBox = true;
     }
 		
@@ -80,6 +80,7 @@ void ImGuiHandler::DrawHierachyWindow(bool& show_demo_window, bool& show_another
     {
         if (ImGui::InputText("##", charBuffer, IM_ARRAYSIZE(charBuffer), ImGuiInputTextFlags_EnterReturnsTrue))
         {
+
             //Add the string into the vector
             obj_text_entries.push_back(std::string(charBuffer));
 
@@ -119,6 +120,11 @@ void ImGuiHandler::DrawHierachyWindow(bool& show_demo_window, bool& show_another
             std::string deleteButtonLabel = "Delete ##" + std::to_string(i);
             if (ImGui::Button(deleteButtonLabel.c_str()))
             {
+
+                //Delete entity from ecs
+                //ecs->DeleteEntity();
+
+
                 obj_component_window[i] = false;
 
                 //remove the entries 
