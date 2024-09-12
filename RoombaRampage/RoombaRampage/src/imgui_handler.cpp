@@ -59,28 +59,90 @@ void ImGuiHandler::DrawAnotherWindow(bool& show_another_window)
     }
 }
 
-void ImGuiHandler::DrawCustomWindow(bool& show_demo_window, bool& show_another_window, ImVec4& clear_color)
+void ImGuiHandler::DrawHierachyWindow(bool& show_demo_window, bool& show_another_window, ImVec4& clear_color)
 {
     // Custom window with example widgets
-    ImGui::Begin("Hello, world!");
+    ImGui::Begin("Hierachy Window");
 
-    ImGui::Text("This is some useful text.");
-    ImGui::Checkbox("Another Window", &show_another_window);
-    ImGui::ColorEdit3("clear color", (float*)&clear_color);
+    ImGui::Text("Roomba Rampage");
 
-    static float f = 0.0f;
-    static int counter = 0;
-    ImGui::SliderFloat("float", &f, 0.0f, 1.0f);
+    if (ImGui::Button("+ Add GameObject"))
+		stringBox ? stringBox = false : stringBox = true;
 
-    if (ImGui::Button("Button"))
-        counter++;
-    ImGui::SameLine();
-    ImGui::Text("counter = %d", counter);
+    if (stringBox)
+    {
+        if (ImGui::InputText("##", charBuffer, IM_ARRAYSIZE(charBuffer), ImGuiInputTextFlags_EnterReturnsTrue))
+        {
+            //Add the string into the vector
+            obj_text_entries.push_back(std::string(charBuffer));
 
-    ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+            //Set to false as no button showing first
+            //Used to track and maintain sync between objtextentries and deletebutton vector
+            deleteButton.push_back(false);
+            obj_component_window.push_back(false);
+
+            charBuffer[0] = '\0';
+            stringBox = false;
+        }
+    }
+
+    //For loop to display all the gameobj text as button 
+    for (size_t i = 0; i < obj_text_entries.size(); i++)
+    {
+        // '##' let IMGui set an internal unique ID to widget without visible label!
+        std::string buttonName = obj_text_entries[i] +"##"+ std::to_string(i);
+        if (ImGui::Button(buttonName.c_str()))
+        {
+            deleteButton[i] = true;
+            obj_component_window[i] = true;
+        }
+
+        //Render delete button
+        if (deleteButton[i])
+        {
+            //Use _button,_buttonhover_buttonactive
+            //To change the button color
+            //Dont forget to pop
+            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.9f, 0.2f, 0.2f, 1.0f));  // Red 
+            ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(1.0f, 0.4f, 0.4f, 1.0f));  // Lighter red
+            ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.7f, 0.1f, 0.1f, 1.0f));  // Darker red
+
+            //Use this to make the button side by side on the same line
+            ImGui::SameLine();
+            std::string deleteButtonLabel = "Delete ##" + std::to_string(i);
+            if (ImGui::Button(deleteButtonLabel.c_str()))
+            {
+                obj_component_window[i] = false;
+
+                //remove the entries 
+                obj_text_entries.erase(obj_text_entries.begin() + i);
+                deleteButton.erase(deleteButton.begin() + i);
+                obj_component_window.erase(obj_component_window.begin() + i);
+
+                i--;
+
+                ImGui::PopStyleColor(3);  // Pop the 3 style colors (button, hovered, and active)
+                continue;
+            }
+
+            ImGui::PopStyleColor(3);  // Pop the 3 style colors (button, hovered, and active)
+        }
+
+        //Render the game object component window
+        if (obj_component_window[i])
+        {
+            bool windowOpen = obj_component_window[i];  // Store the value in a temporary bool
+            std::string windowTitle = obj_text_entries[i] + "'s Component Window ";
+
+            ImGui::Begin(windowTitle.c_str(), &windowOpen);  // Window title based on index
+            ImGui::Text("This is the separate window for %s", obj_text_entries[i].c_str());
+            ImGui::End();
+
+            obj_component_window[i] = windowOpen;
+        }
+    }
+
     ImGui::End();
-
-    DrawAnotherWindow(show_another_window);  // Call the function to show the "Another Window"
 }
 
 void ImGuiHandler::Shutdown()

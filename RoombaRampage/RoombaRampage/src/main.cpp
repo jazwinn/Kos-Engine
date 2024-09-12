@@ -31,15 +31,25 @@ const std::string genericFragmentShader =
 
         /*--------------------------------------------------------------
            INITIALIZE OPENGL WINDOW
-        --------------------------------------------------------------*/
-        GLFWwindow* window;
-        
+        --------------------------------------------------------------*/       
         /* Initialize the library */
         if (!glfwInit())
             return -1;
 
+        GLFWwindow* window;
+
+        // Get the primary monitor
+        GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+        const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+
+        // Create a window based on the current screen size
+        int windowWidth = mode->width;
+        int windowHeight = mode->height;
+
         /* Create a windowed mode window and its OpenGL context */
-        window = glfwCreateWindow(1000, 1000, "Hello World", NULL, NULL);
+        //Set third param to glfwGetPrimaryMonitor if you want fullscreen borderless
+
+        window = glfwCreateWindow(windowWidth, windowHeight, "Hello World", NULL, NULL);
         if (!window)
         {
             glfwTerminate();
@@ -116,7 +126,7 @@ const std::string genericFragmentShader =
              IMGUI FRAME SETUP
              --------------------------------------------------------------*/
             imgui_manager.NewFrame();
-            imgui_manager.DrawCustomWindow(show_demo_window, show_another_window, clear_color);
+            imgui_manager.DrawHierachyWindow(show_demo_window, show_another_window, clear_color);
 
             /*--------------------------------------------------------------
              DRAWING/RENDERING
