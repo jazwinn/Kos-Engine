@@ -141,6 +141,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Application\imgui_handler.cpp" />
+    <ClCompile Include="Application\main.cpp" />
     <ClCompile Include="Dependencies\imgui\imgui.cpp" />
     <ClCompile Include="Dependencies\imgui\imgui_demo.cpp" />
     <ClCompile Include="Dependencies\imgui\imgui_draw.cpp" />
@@ -149,13 +151,16 @@
     <ClCompile Include="Dependencies\imgui\imgui_stdlib.cpp" />
     <ClCompile Include="Dependencies\imgui\imgui_tables.cpp" />
     <ClCompile Include="Dependencies\imgui\imgui_widgets.cpp" />
-    <ClCompile Include="src\imgui_handler.cpp" />
-    <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\Graphics.cpp" />
-    <ClCompile Include="src\Mat2x2.cpp" />
-    <ClCompile Include="src\Mat3x3.cpp" />
+    <ClCompile Include="ECS\ECS.cpp" />
+    <ClCompile Include="ECS\System\CollisionSystem.cpp" />
+    <ClCompile Include="ECS\System\MovementSystem.cpp" />
+    <ClCompile Include="Graphics\Graphics.cpp" />
+    <ClCompile Include="Math\Mat2x2.cpp" />
+    <ClCompile Include="Math\Mat3x3.cpp" />
+    <ClCompile Include="Math\vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Application\imgui_handler.h" />
     <ClInclude Include="Dependencies\imgui\imconfig.h" />
     <ClInclude Include="Dependencies\imgui\imgui.h" />
     <ClInclude Include="Dependencies\imgui\imgui_impl_glfw.h" />
@@ -166,16 +171,26 @@
     <ClInclude Include="Dependencies\imgui\imstb_rectpack.h" />
     <ClInclude Include="Dependencies\imgui\imstb_textedit.h" />
     <ClInclude Include="Dependencies\imgui\imstb_truetype.h" />
-    <ClInclude Include="include\Graphics.h" />
-    <ClInclude Include="include\imgui_handler.h" />
-    <ClInclude Include="include\Mat2x2.h" />
-    <ClInclude Include="include\Mat3x3.h" />
+    <ClInclude Include="ECS\Component\CollisionComponent.h" />
+    <ClInclude Include="ECS\Component\Component.h" />
+    <ClInclude Include="ECS\Component\ComponentPool.h" />
+    <ClInclude Include="ECS\Component\MovementComponent.h" />
+    <ClInclude Include="ECS\Component\SpriteComponent.h" />
+    <ClInclude Include="ECS\Component\TransformComponent.h" />
+    <ClInclude Include="ECS\ECS.h" />
+    <ClInclude Include="ECS\ECSList.h" />
+    <ClInclude Include="ECS\System\CollisionSystem.h" />
+    <ClInclude Include="ECS\System\MovementSystem.h" />
+    <ClInclude Include="ECS\System\System.h" />
+    <ClInclude Include="ECS\System\SystemList.h" />
+    <ClInclude Include="Graphics\Graphics.h" />
+    <ClInclude Include="Math\Mat2x2.h" />
+    <ClInclude Include="Math\Mat3x3.h" />
+    <ClInclude Include="Math\vector2.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="include\genericFragmentShader.frag" />
-    <None Include="include\genericVertexShader.vert" />
-    <None Include="include\testFragmentShader.frag" />
-    <None Include="include\testVertexShader.vert" />
+    <None Include="Graphics\genericFragmentShader.frag" />
+    <None Include="Graphics\genericVertexShader.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -12,8 +12,8 @@ class Vec2{
     Vec2(float _x, float _y);
 
     //copy constructor
-    Vec2& operator=(const Vec2& rhs);
-    Vec2(const Vec2 & rhs);
+    //Vec2& operator=(const Vec2& rhs);
+    //Vec2(const Vec2 & rhs);
 
     Vec2& operator += (const Vec2 &rhs);
     Vec2& operator -= (const Vec2 &rhs);

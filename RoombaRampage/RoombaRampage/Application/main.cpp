@@ -1,30 +1,15 @@
-#include "Graphics.h"
+#include <iostream>
+
+#include "../Graphics/Graphics.h"
+#include "../ECS/ECS.h"
+
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_handler.h"
-#include <iostream>
 
 //Initialize shader strings here for now
-const std::string testVertexShader =
-{
- #include "testVertexShader.vert"
-};
 
-const std::string testFragmentShader =
-{
-  #include "testFragmentShader.frag"
-};
-
-const std::string genericVertexShader =
-{
- #include "genericVertexShader.vert"
-};
-
-const std::string genericFragmentShader =
-{
-  #include "genericFragmentShader.frag"
-};
 
     int main(void)
     {
@@ -69,12 +54,12 @@ const std::string genericFragmentShader =
             INITIALIZE OBJECTS
          --------------------------------------------------------------*/
         Graphics::classGraphicsObject testRect(Graphics::classGraphicsObject::RECTANGLE);
-        testRect.funcSetupVao();
+        //testRect.funcSetupVao();
         testRect.funcSetRotate(45.f);
         testRect.funcSetTranslate(0.5f,0.75f);
         testRect.funcSetScale(2.f,2.f);
-        Graphics::classGraphicsObject::funcSetDrawMode(GL_FILL);
-        testRect.funcSetupShader(genericVertexShader, genericFragmentShader);
+        //Graphics::classGraphicsObject::funcSetDrawMode(GL_FILL);
+        //testRect.funcSetupShader(genericVertexShader, genericFragmentShader);
 
         /*--------------------------------------------------------------
            INITIALIZE IMGUI
@@ -83,6 +68,18 @@ const std::string genericFragmentShader =
         ImGuiHandler imgui_manager;
         const char* glsl_version = "#version 130";
         imgui_manager.Initialize(window, glsl_version);
+
+        /*--------------------------------------------------------------
+           INITIALIZE ECS
+        --------------------------------------------------------------*/
+        //fetch ecs
+        ECS* ecs = ECS::GetInstance();
+        ecs->Init();
+        ecs->Load();
+
+
+
+
 
         // Load Fonts
         // - If no fonts are loaded, dear imgui will use the default font. You can also load multiple fonts and use ImGui::PushFont()/PopFont() to select them.
@@ -148,7 +145,7 @@ const std::string genericFragmentShader =
         /*-----------------------------------------------------------
         CLEANUP
         --------------------------------------------------------------*/
-        testRect.funcDeleteShader();
+        ecs->Unload();
         imgui_manager.Shutdown();
         glfwDestroyWindow(window);
         glfwTerminate();

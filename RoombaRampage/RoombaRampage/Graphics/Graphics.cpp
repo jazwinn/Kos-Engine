@@ -1,4 +1,4 @@
-#include "Graphics.h"
+#include "../Graphics/Graphics.h"
 #include <iostream>
 #include <vector>
 #include <array>
@@ -6,9 +6,29 @@
 
 namespace Graphics
 {
+
+	const std::string genericVertexShader =
+	{
+	 #include "genericVertexShader.vert"
+	};
+
+	const std::string genericFragmentShader =
+	{
+	  #include "genericFragmentShader.frag"
+	};
+
 	//Class Constructor with Parameter
-	classGraphicsObject::classGraphicsObject(GLuint shape) : lvShapeType(shape), lvPrimitiveType(0), lvVaoId(0), lvVboId(0), lvIndexElementCount(0), lvShaderProgram(0),
-		lvModelParams() {}
+	classGraphicsObject::classGraphicsObject(GLuint shape) : lvShapeType(shape), lvPrimitiveType(0), lvVaoId(0), lvVboId(0), lvIndexElementCount(0), lvShaderProgram(0){
+
+		funcSetupVao();
+		funcSetDrawMode(GL_FILL);
+		funcSetupShader(genericVertexShader, genericFragmentShader);
+	
+	}
+
+	classGraphicsObject::~classGraphicsObject() {
+		funcDeleteShader();
+	}
 
 	void classGraphicsObject::funcSetupVao()
 	{
@@ -84,7 +104,7 @@ namespace Graphics
 
 	void classGraphicsObject::funcInit(GLfloat xPos, GLfloat yPos, GLfloat xScale, GLfloat yScale, GLfloat angle)
 	{
-		lvModelParams.lvTranslate = { xPos , yPos };
+		/*lvModelParams.lvTranslate = {xPos , yPos};
 		lvModelParams.lvScale = { xScale, yScale };
 		lvModelParams.lvRotate = angle;
 
@@ -94,18 +114,18 @@ namespace Graphics
 						0.f , 0.f ,1.f };
 		glm::mat3 lvTranslate{ 1, 0, 0, 0, 1, 0, lvModelParams.lvTranslate[0] , lvModelParams.lvTranslate[1] ,1 };
 		glm::mat3 lvNDCScale{ 1.f, 0, 0, 0, 1.f, 0, 0 , 0 ,1 };
-		lvModelParams.lvModelToNDCMatrix = lvNDCScale * lvTranslate * lvRotate * lvScale;
+		lvModelParams.lvModelToNDCMatrix = lvNDCScale * lvTranslate * lvRotate * lvScale;*/
 	}
 
 	void classGraphicsObject::funcUpdate()
 	{
-		glm::mat3 lvScale{ lvModelParams.lvScale[0], 0, 0, 0, lvModelParams.lvScale[1], 0, 0 , 0 ,1 };
+		/*glm::mat3 lvScale{ lvModelParams.lvScale[0], 0, 0, 0, lvModelParams.lvScale[1], 0, 0 , 0 ,1 };
 		glm::mat3 lvRotate{ cos(lvModelParams.lvRotate * 3.1415f / 180.f), sin(lvModelParams.lvRotate * 3.1415f / 180.f), 0.f,
 						-sin(lvModelParams.lvRotate * 3.1415f / 180.f), cos(lvModelParams.lvRotate * 3.1415f / 180.f), 0.f,
 						0.f , 0.f ,1.f };
 		glm::mat3 lvTranslate{ 1, 0, 0, 0, 1, 0, lvModelParams.lvTranslate[0] , lvModelParams.lvTranslate[1] ,1 };
 		glm::mat3 lvNDCScale{ 1.f, 0, 0, 0, 1.f, 0, 0 , 0 ,1 };
-		lvModelParams.lvModelToNDCMatrix = lvNDCScale * lvTranslate * lvRotate * lvScale;
+		lvModelParams.lvModelToNDCMatrix = lvNDCScale * lvTranslate * lvRotate * lvScale; */
 	}
 
 	void classGraphicsObject::funcDraw()

@@ -1,7 +1,7 @@
-#include "imgui_handler.h"
+#include "../Application/imgui_handler.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
-#include "imgui_handler.h"
+#include "../ECS/ECS.h"
 
 ImGuiHandler::ImGuiHandler(){} //CTOR
 
@@ -61,13 +61,20 @@ void ImGuiHandler::DrawAnotherWindow(bool& show_another_window)
 
 void ImGuiHandler::DrawHierachyWindow(bool& show_demo_window, bool& show_another_window, ImVec4& clear_color)
 {
+    //fetch ecs
+    ECS* ecs = ECS::GetInstance();
+
+
     // Custom window with example widgets
     ImGui::Begin("Hierachy Window");
 
     ImGui::Text("Roomba Rampage");
 
-    if (ImGui::Button("+ Add GameObject"))
-		stringBox ? stringBox = false : stringBox = true;
+    if (ImGui::Button("+ Add GameObject")) {
+        ecs->CreateEntity();
+        stringBox ? stringBox = false : stringBox = true;
+    }
+		
 
     if (stringBox)
     {
@@ -112,6 +119,11 @@ void ImGuiHandler::DrawHierachyWindow(bool& show_demo_window, bool& show_another
             std::string deleteButtonLabel = "Delete ##" + std::to_string(i);
             if (ImGui::Button(deleteButtonLabel.c_str()))
             {
+
+                //Delete entity from ecs
+                //ecs->DeleteEntity();
+
+
                 obj_component_window[i] = false;
 
                 //remove the entries 
