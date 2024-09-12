@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include "ECS.h"
-#include "SystemList.h"
+#include "../ECS/System/SystemList.h"
 
 //ECS Varaible
 ECS* ECS::InstancePtr = new ECS{};
@@ -34,10 +34,6 @@ void ECS::Update() {
 		System.second->Update();
 		
 	}
-
-
-	
-
 
 }
 

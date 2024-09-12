@@ -4,10 +4,10 @@
 #include <unordered_map>
 #include <memory>
 
-#include "ComponentPool.h"
-#include "Component.h"
+#include "../ECS/Component/ComponentPool.h"
+#include "../ECS/Component/Component.h"
 
-#include "System.h"
+#include "../ECS/System/System.h"
 
 #include "ECSList.h"
 
@@ -21,7 +21,7 @@ private:
 	
 
 	//using EntityMap;
-	using CombinedComponentPool = std::unordered_map<EntityID, IComponentPool*>;
+	using CombinedComponentPool = std::unordered_map<ComponentType, IComponentPool*>;
 	using SystemMap = std::unordered_map<TypeSystem, ISystem*>;
 	//using ComponentPoolMap = std::unordered_map<ComponentType, std::unique_ptr<ComponentPool>>;
 
