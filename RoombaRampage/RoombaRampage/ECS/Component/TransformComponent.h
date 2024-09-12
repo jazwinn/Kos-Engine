@@ -2,11 +2,12 @@
 #define TRANSCOM_H
 
 #include "Component.h"
+#include "../Math/vector2.h"
 
 class TransformComponent : public Component {
 
 public:
-	float position{};
+	Vec2 position{};
 	float roation{};
 	float scale{};
 };

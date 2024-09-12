@@ -1,10 +1,12 @@
+#include <iostream>
+
 #include "../Graphics/Graphics.h"
+#include "../ECS/ECS.h"
 
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_handler.h"
-#include <iostream>
 
 //Initialize shader strings here for now
 
@@ -66,6 +68,18 @@
         ImGuiHandler imgui_manager;
         const char* glsl_version = "#version 130";
         imgui_manager.Initialize(window, glsl_version);
+
+        /*--------------------------------------------------------------
+           INITIALIZE ECS
+        --------------------------------------------------------------*/
+        //fetch ecs
+        ECS* ecs = ECS::GetInstance();
+        ecs->Init();
+        ecs->Load();
+
+
+
+
 
         // Load Fonts
         // - If no fonts are loaded, dear imgui will use the default font. You can also load multiple fonts and use ImGui::PushFont()/PopFont() to select them.
@@ -131,7 +145,7 @@
         /*-----------------------------------------------------------
         CLEANUP
         --------------------------------------------------------------*/
-        testRect.funcDeleteShader();
+        ecs->Unload();
         imgui_manager.Shutdown();
         glfwDestroyWindow(window);
         glfwTerminate();

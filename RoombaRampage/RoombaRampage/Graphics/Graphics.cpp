@@ -18,14 +18,17 @@ namespace Graphics
 	};
 
 	//Class Constructor with Parameter
-	classGraphicsObject::classGraphicsObject(GLuint shape) : lvShapeType(shape), lvPrimitiveType(0), lvVaoId(0), lvVboId(0), lvIndexElementCount(0), lvShaderProgram(0),
-		lvModelParams() {
+	classGraphicsObject::classGraphicsObject(GLuint shape) : lvShapeType(shape), lvPrimitiveType(0), lvVaoId(0), lvVboId(0), lvIndexElementCount(0), lvShaderProgram(0){
 
 		funcSetupVao();
 		funcSetDrawMode(GL_FILL);
 		funcSetupShader(genericVertexShader, genericFragmentShader);
 
 	
+	}
+
+	classGraphicsObject::~classGraphicsObject() {
+		funcDeleteShader();
 	}
 
 	void classGraphicsObject::funcSetupVao()

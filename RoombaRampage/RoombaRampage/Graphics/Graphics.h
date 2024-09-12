@@ -45,6 +45,8 @@ namespace Graphics
 
 		//Constructor
 		classGraphicsObject(GLuint shape);
+		//destructor
+		~classGraphicsObject();
 
 		void funcSetupVao();
 		void funcSetupShader(const std::string& vertexShader, const std::string& fragmentShader);
