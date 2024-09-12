@@ -13,104 +13,128 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Imgui">
+      <UniqueIdentifier>{31091e89-c467-44c3-b572-360d5db0a97a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Math">
+      <UniqueIdentifier>{308de028-bba7-4b4c-a5ba-0f5c5af46af0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Application">
+      <UniqueIdentifier>{3617858b-21ab-43ce-a78f-f96d8a6a9154}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Graphics">
+      <UniqueIdentifier>{474c427d-167a-4ad3-8089-58eccad83470}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Imgui">
+      <UniqueIdentifier>{524d650b-f574-48af-859e-3335a7c0e7a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Graphics">
+      <UniqueIdentifier>{e893c5db-49dd-4d60-94b2-89072733144c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Math">
+      <UniqueIdentifier>{8e401163-cacc-4808-a6c2-6822dc26d063}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Application">
+      <UniqueIdentifier>{e279d1f0-4f0a-42cb-92d3-227284f734a0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Dependencies\imgui\imgui_widgets.cpp">
+      <Filter>Source Files\Imgui</Filter>
     </ClCompile>
     <ClCompile Include="Dependencies\imgui\imgui.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Imgui</Filter>
     </ClCompile>
     <ClCompile Include="Dependencies\imgui\imgui_demo.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Imgui</Filter>
     </ClCompile>
     <ClCompile Include="Dependencies\imgui\imgui_draw.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Imgui</Filter>
     </ClCompile>
     <ClCompile Include="Dependencies\imgui\imgui_impl_glfw.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Imgui</Filter>
     </ClCompile>
     <ClCompile Include="Dependencies\imgui\imgui_impl_opengl3.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Imgui</Filter>
     </ClCompile>
     <ClCompile Include="Dependencies\imgui\imgui_stdlib.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Imgui</Filter>
     </ClCompile>
     <ClCompile Include="Dependencies\imgui\imgui_tables.cpp">
+      <Filter>Source Files\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\Mat2x2.cpp">
+      <Filter>Source Files\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\Mat3x3.cpp">
+      <Filter>Source Files\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\vector2.cpp">
+      <Filter>Source Files\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Graphics.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\imgui\imgui_widgets.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\imgui_handler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Mat2x2.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Mat3x3.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Application\imgui_handler.cpp">
+      <Filter>Source Files\Application</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\Graphics.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Dependencies\imgui\imconfig.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Imgui</Filter>
     </ClInclude>
     <ClInclude Include="Dependencies\imgui\imgui.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Imgui</Filter>
     </ClInclude>
     <ClInclude Include="Dependencies\imgui\imgui_impl_glfw.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Imgui</Filter>
     </ClInclude>
     <ClInclude Include="Dependencies\imgui\imgui_impl_opengl3.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Imgui</Filter>
     </ClInclude>
     <ClInclude Include="Dependencies\imgui\imgui_impl_opengl3_loader.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Imgui</Filter>
     </ClInclude>
     <ClInclude Include="Dependencies\imgui\imgui_internal.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Imgui</Filter>
     </ClInclude>
     <ClInclude Include="Dependencies\imgui\imgui_stdlib.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Imgui</Filter>
     </ClInclude>
     <ClInclude Include="Dependencies\imgui\imstb_rectpack.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Imgui</Filter>
     </ClInclude>
     <ClInclude Include="Dependencies\imgui\imstb_textedit.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Imgui</Filter>
     </ClInclude>
     <ClInclude Include="Dependencies\imgui\imstb_truetype.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Imgui</Filter>
     </ClInclude>
-    <ClInclude Include="include\imgui_handler.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Graphics\Graphics.h">
+      <Filter>Header Files\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mat2x2.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Math\Mat2x2.h">
+      <Filter>Header Files\Math</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mat3x3.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Math\Mat3x3.h">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\vector2.h">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\imgui_handler.h">
+      <Filter>Header Files\Application</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="include\testFragmentShader.frag">
-      <Filter>Header Files</Filter>
+    <None Include="Graphics\genericFragmentShader.frag">
+      <Filter>Header Files\Graphics</Filter>
     </None>
-    <None Include="include\testVertexShader.vert">
-      <Filter>Header Files</Filter>
-    </None>
-    <None Include="include\genericVertexShader.vert">
-      <Filter>Header Files</Filter>
-    </None>
-    <None Include="include\genericFragmentShader.frag">
-      <Filter>Header Files</Filter>
+    <None Include="Graphics\genericVertexShader.vert">
+      <Filter>Header Files\Graphics</Filter>
     </None>
   </ItemGroup>
 </Project>

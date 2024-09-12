@@ -1,4 +1,4 @@
-#include "Mat3x3.h"
+#include "../Math/Mat3x3.h"
 
 namespace Mat3x3{
 	void classMat3x3::mat3Swap(classMat3x3 & lhs, classMat3x3 & rhs) {

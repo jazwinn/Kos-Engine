@@ -1,4 +1,5 @@
-#include "Graphics.h"
+#include "../Graphics/Graphics.h"
+
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
@@ -6,25 +7,7 @@
 #include <iostream>
 
 //Initialize shader strings here for now
-const std::string testVertexShader =
-{
- #include "testVertexShader.vert"
-};
 
-const std::string testFragmentShader =
-{
-  #include "testFragmentShader.frag"
-};
-
-const std::string genericVertexShader =
-{
- #include "genericVertexShader.vert"
-};
-
-const std::string genericFragmentShader =
-{
-  #include "genericFragmentShader.frag"
-};
 
     int main(void)
     {
@@ -69,12 +52,12 @@ const std::string genericFragmentShader =
             INITIALIZE OBJECTS
          --------------------------------------------------------------*/
         Graphics::classGraphicsObject testRect(Graphics::classGraphicsObject::RECTANGLE);
-        testRect.funcSetupVao();
+        //testRect.funcSetupVao();
         testRect.funcSetRotate(45.f);
         testRect.funcSetTranslate(0.5f,0.75f);
         testRect.funcSetScale(2.f,2.f);
-        Graphics::classGraphicsObject::funcSetDrawMode(GL_FILL);
-        testRect.funcSetupShader(genericVertexShader, genericFragmentShader);
+        //Graphics::classGraphicsObject::funcSetDrawMode(GL_FILL);
+        //testRect.funcSetupShader(genericVertexShader, genericFragmentShader);
 
         /*--------------------------------------------------------------
            INITIALIZE IMGUI

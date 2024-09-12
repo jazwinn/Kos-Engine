@@ -1,4 +1,4 @@
-#include "Graphics.h"
+#include "../Graphics/Graphics.h"
 #include <iostream>
 #include <vector>
 #include <array>
@@ -6,9 +6,36 @@
 
 namespace Graphics
 {
+	const std::string testVertexShader =
+	{
+	 #include "testVertexShader.vert"
+	};
+
+	const std::string testFragmentShader =
+	{
+	  #include "testFragmentShader.frag"
+	};
+
+	const std::string genericVertexShader =
+	{
+	 #include "genericVertexShader.vert"
+	};
+
+	const std::string genericFragmentShader =
+	{
+	  #include "genericFragmentShader.frag"
+	};
+
 	//Class Constructor with Parameter
 	classGraphicsObject::classGraphicsObject(GLuint shape) : lvShapeType(shape), lvPrimitiveType(0), lvVaoId(0), lvVboId(0), lvIndexElementCount(0), lvShaderProgram(0),
-		lvModelParams() {}
+		lvModelParams() {
+
+		funcSetupVao();
+		funcSetDrawMode(GL_FILL);
+		funcSetupShader(genericVertexShader, genericFragmentShader);
+
+	
+	}
 
 	void classGraphicsObject::funcSetupVao()
 	{

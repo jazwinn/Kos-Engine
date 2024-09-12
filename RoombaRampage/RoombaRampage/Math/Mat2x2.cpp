@@ -1,4 +1,4 @@
-#include "Mat2x2.h"
+#include "../Math/Mat2x2.h"
 
 namespace Mat2x2 {
 	void classMat2x2::mat2Swap(classMat2x2& lhs, classMat2x2& rhs) {
