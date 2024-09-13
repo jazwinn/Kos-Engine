@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "../Graphics/Graphics.h"
+#include "../Graphics/GraphicsPipe.h"
 #include "../ECS/ECS.h"
 
 #include "imgui.h"
@@ -53,13 +53,20 @@
         /*--------------------------------------------------------------
             INITIALIZE OBJECTS
          --------------------------------------------------------------*/
-        Graphics::classGraphicsObject testRect(Graphics::classGraphicsObject::RECTANGLE);
+        //Graphics::classGraphicsObject testRect(Graphics::classGraphicsObject::RECTANGLE);
         //testRect.funcSetupVao();
-        testRect.funcSetRotate(45.f);
-        testRect.funcSetTranslate(0.5f,0.75f);
-        testRect.funcSetScale(2.f,2.f);
+        //testRect.funcSetRotate(45.f);
+        //testRect.funcSetTranslate(0.5f,0.75f);
+        //testRect.funcSetScale(2.f,2.f);
         //Graphics::classGraphicsObject::funcSetDrawMode(GL_FILL);
         //testRect.funcSetupShader(genericVertexShader, genericFragmentShader);
+
+
+         /*--------------------------------------------------------------
+            INITIALIZE GRAPHICS PIPE
+         --------------------------------------------------------------*/
+        GraphicsPipe* pipe = GraphicsPipe::funcGetInstance();
+        pipe->funcInit();
 
         /*--------------------------------------------------------------
            INITIALIZE IMGUI
@@ -76,10 +83,6 @@
         ECS* ecs = ECS::GetInstance();
         ecs->Init();
         ecs->Load();
-
-
-
-
 
         // Load Fonts
         // - If no fonts are loaded, dear imgui will use the default font. You can also load multiple fonts and use ImGui::PushFont()/PopFont() to select them.
@@ -115,10 +118,6 @@
              UPDATE OBJECTS
              --------------------------------------------------------------*/
 
-            testRect.funcAddTranslate(-0.001f, -0.001f);
-            testRect.funcUpdate();
-
-
             /*--------------------------------------------------------------
              IMGUI FRAME SETUP
              --------------------------------------------------------------*/
@@ -135,7 +134,7 @@
             glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
             glClear(GL_COLOR_BUFFER_BIT);
 
-            testRect.funcDraw();
+            //testRect.funcDraw();
             imgui_manager.Render();
 
             glfwSwapBuffers(window);
