@@ -1,6 +1,8 @@
 #ifndef SYSTEM_H
 #define SYSTEM_H
 
+#include <vector>
+
 enum TypeSystem {
 	TypeMovementSystem,
 
@@ -11,6 +13,8 @@ enum TypeSystem {
 class ISystem {
 
 public:
+
+	//virtual void RegisterSystem;
 
 	virtual void Init() = 0;
 

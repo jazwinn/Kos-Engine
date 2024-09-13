@@ -2,6 +2,8 @@
 #define MOVESYS_H
 
 #include "System.h"
+#include "../ECS/Component/TransformComponent.h"
+#include "../ECS/Component/MovementComponent.h"
 
 class MovementSystem : public ISystem {
 
@@ -10,6 +12,10 @@ public:
 	void Init() override;
 
 	void Update() override;
+
+	//Storage to point to components
+	std::vector<TransformComponent*> vecTransformComponentPtr;
+	std::vector<MovementComponent*> vecMovementComponentPtr;
 
 };
 
