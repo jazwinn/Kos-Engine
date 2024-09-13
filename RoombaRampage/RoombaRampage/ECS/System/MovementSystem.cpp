@@ -16,7 +16,22 @@ void MovementSystem::RegisterSystem() {
 
 			//TODO check if component is already inside the vector
 
-			vecTransformComponentPtr.push_back((TransformComponent*)ecs->ECS_CombinedComponentPool[TypeTransformComponent]->GetEntityComponent(StoringID));
+			//Step 1 : check
+			bool store = true;
+			for (auto& TransformComponentPtr : vecTransformComponentPtr) {
+				if (TransformComponentPtr->Entity == StoringID) {
+					store = false;
+					break;
+				}
+				else {
+					store = true;
+				}
+			}
+			//Step 2 : Store address into vector
+			if (store == true) {
+				vecTransformComponentPtr.push_back((TransformComponent*)ecs->ECS_CombinedComponentPool[TypeTransformComponent]->GetEntityComponent(StoringID));
+			}
+			
 			vecMovementComponentPtr.push_back((MovementComponent*)ecs->ECS_CombinedComponentPool[TypeMovemmentComponent]->GetEntityComponent(StoringID));
 
 		}
