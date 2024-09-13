@@ -105,6 +105,12 @@
     <ClCompile Include="ECS\System\MovementSystem.cpp">
       <Filter>Source Files\ECS\System</Filter>
     </ClCompile>
+    <ClCompile Include="ECS\System\RenderSystem.cpp">
+      <Filter>Source Files\ECS\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\GraphicsPipe.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dependencies\imgui\imconfig.h">
@@ -187,6 +193,12 @@
     </ClInclude>
     <ClInclude Include="ECS\Component\SpriteComponent.h">
       <Filter>Header Files\ECS\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="ECS\System\RenderSystem.h">
+      <Filter>Header Files\ECS\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\GraphicsPipe.h">
+      <Filter>Header Files\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -154,7 +154,9 @@
     <ClCompile Include="ECS\ECS.cpp" />
     <ClCompile Include="ECS\System\CollisionSystem.cpp" />
     <ClCompile Include="ECS\System\MovementSystem.cpp" />
+    <ClCompile Include="ECS\System\RenderSystem.cpp" />
     <ClCompile Include="Graphics\Graphics.cpp" />
+    <ClCompile Include="Graphics\GraphicsPipe.cpp" />
     <ClCompile Include="Math\Mat2x2.cpp" />
     <ClCompile Include="Math\Mat3x3.cpp" />
     <ClCompile Include="Math\vector2.cpp" />
@@ -181,9 +183,11 @@
     <ClInclude Include="ECS\ECSList.h" />
     <ClInclude Include="ECS\System\CollisionSystem.h" />
     <ClInclude Include="ECS\System\MovementSystem.h" />
+    <ClInclude Include="ECS\System\RenderSystem.h" />
     <ClInclude Include="ECS\System\System.h" />
     <ClInclude Include="ECS\System\SystemList.h" />
     <ClInclude Include="Graphics\Graphics.h" />
+    <ClInclude Include="Graphics\GraphicsPipe.h" />
     <ClInclude Include="Math\Mat2x2.h" />
     <ClInclude Include="Math\Mat3x3.h" />
     <ClInclude Include="Math\vector2.h" />
