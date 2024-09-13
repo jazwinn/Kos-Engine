@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "../ECS/ECSList.h"
+#include "../ECS/ECS.h"
 #include "Component.h"
 #include "TransformComponent.h"
 #include "MovementComponent.h"
@@ -65,7 +66,6 @@ void* ComponentPool<T>::AssignComponent(EntityID ID) {
 	}
 
 	//UPDATE entity id bitflag
-
 
 	// return NULL if all component is stored
 	// SAY COMPONENT POOL IS FULL

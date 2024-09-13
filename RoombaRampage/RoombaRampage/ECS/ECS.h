@@ -52,6 +52,8 @@ public:
 
 	static bool DeleteEntity(EntityID);
 
+	static void AddComponent(ComponentType ,EntityID );
+
 
 	CombinedComponentPool ECS_CombinedComponentPool{};
 

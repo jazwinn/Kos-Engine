@@ -37,7 +37,17 @@ void ECS::Update() {
 
 }
 
+void ECS::AddComponent(ComponentType Type, EntityID ID) {
+	
+	ECS* ecs = ECS::GetInstance();
 
+	ecs->ECS_CombinedComponentPool[Type]->AssignComponent(ID);
+
+	ecs->ECS_EntityMap.find(ID)->second.set(Type);
+
+	//create function register system!!
+
+}
 
 EntityID ECS::CreateEntity() {
 
@@ -47,8 +57,7 @@ EntityID ECS::CreateEntity() {
 
 	ecs->ECS_EntityMap[ID] = 0;
 
-	TransformComponent* TransComponent = static_cast<TransformComponent*>(ecs->ECS_CombinedComponentPool[TypeTransformComponent]->AssignComponent(ID));
-
+	AddComponent(TypeTransformComponent, ID);
 
 	ecs->EntityCount++;
 
@@ -57,6 +66,8 @@ EntityID ECS::CreateEntity() {
 
 bool ECS::DeleteEntity(EntityID ID) {
 	ECS* ecs = ECS::GetInstance();
+
+	// refector
 
 	ecs->ECS_CombinedComponentPool[TypeTransformComponent]->DeleteEntityComponent(ID);
 	ecs->ECS_CombinedComponentPool[TypeMovemmentComponent]->DeleteEntityComponent(ID);
