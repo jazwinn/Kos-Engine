@@ -2,45 +2,37 @@
 
 #include "MovementSystem.h"
 
-void MovementSystem::RegisterSystem() {
+void MovementSystem::RegisterSystem(EntityID ID) {
 	ECS* ecs = ECS::GetInstance();
 
-	// requires both movement component and transform component
-	std::bitset<TotalTypeComponent> BitCompare;
-	BitCompare.set(TypeMovemmentComponent);
-	BitCompare.set(TypeTransformComponent);
+	//TODO check if component is already inside the vector
 
-	for (auto& EntityBit : ecs->ECS_EntityMap) {
-		if (EntityBit.second.test(TypeMovemmentComponent) && EntityBit.second.test(TypeTransformComponent)) {
-			EntityID StoringID = EntityBit.first;
-
-			//TODO check if component is already inside the vector
-
-			//Step 1 : check
-			bool store = true;
-			for (auto& TransformComponentPtr : vecTransformComponentPtr) {
-				if (TransformComponentPtr->Entity == StoringID) {
-					store = false;
-					break;
-				}
-				else {
-					store = true;
-				}
-			}
-			//Step 2 : Store address into vector
-			if (store == true) {
-				vecTransformComponentPtr.push_back((TransformComponent*)ecs->ECS_CombinedComponentPool[TypeTransformComponent]->GetEntityComponent(StoringID));
-			}
-			
-			vecMovementComponentPtr.push_back((MovementComponent*)ecs->ECS_CombinedComponentPool[TypeMovemmentComponent]->GetEntityComponent(StoringID));
-
+	//Step 1 : check
+	bool store = true;
+	for (auto& TransformComponentPtr : vecTransformComponentPtr) {
+		if (TransformComponentPtr->Entity == ID) {
+			store = false;
+			break;
 		}
-
+		else {
+			store = true;
+		}
 	}
+	//Step 2 : Store address into vector
+	if (store == true) {
+		vecTransformComponentPtr.push_back((TransformComponent*)ecs->ECS_CombinedComponentPool[TypeTransformComponent]->GetEntityComponent(ID));
+	}
+
+	vecMovementComponentPtr.push_back((MovementComponent*)ecs->ECS_CombinedComponentPool[TypeMovemmentComponent]->GetEntityComponent(ID));
 
 }
 
 void MovementSystem::Init() {
+
+	// requires both movement component and transform component
+	std::bitset<TotalTypeComponent> BitCompare;
+	SystemSignature.set(TypeMovemmentComponent);
+	SystemSignature.set(TypeTransformComponent);
 
 }
 
