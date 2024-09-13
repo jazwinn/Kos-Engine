@@ -2,6 +2,29 @@
 
 #include "MovementSystem.h"
 
+void MovementSystem::RegisterSystem() {
+	ECS* ecs = ECS::GetInstance();
+
+	// requires both movement component and transform component
+	std::bitset<TotalTypeComponent> BitCompare;
+	BitCompare.set(TypeMovemmentComponent);
+	BitCompare.set(TypeTransformComponent);
+
+	for (auto& EntityBit : ecs->ECS_EntityMap) {
+		if (EntityBit.second.test(TypeMovemmentComponent) && EntityBit.second.test(TypeTransformComponent)) {
+			EntityID StoringID = EntityBit.first;
+
+			//TODO check if component is already inside the vector
+
+			vecTransformComponentPtr.push_back((TransformComponent*)ecs->ECS_CombinedComponentPool[TypeTransformComponent]->GetEntityComponent(StoringID));
+			vecMovementComponentPtr.push_back((MovementComponent*)ecs->ECS_CombinedComponentPool[TypeMovemmentComponent]->GetEntityComponent(StoringID));
+
+		}
+
+	}
+
+}
+
 void MovementSystem::Init() {
 
 }

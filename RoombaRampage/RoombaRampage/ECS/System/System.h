@@ -14,7 +14,7 @@ class ISystem {
 
 public:
 
-	//virtual void RegisterSystem;
+	virtual void RegisterSystem() = 0;
 
 	virtual void Init() = 0;
 

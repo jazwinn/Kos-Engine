@@ -9,6 +9,8 @@ class MovementSystem : public ISystem {
 
 public:
 
+	void RegisterSystem() override;
+
 	void Init() override;
 
 	void Update() override;
