@@ -20,18 +20,24 @@ public:
     void Shutdown();
 
     void DrawDemoWindow(bool& show_demo_window);
-    void DrawHierachyWindow(bool& show_demo_window, bool& show_another_window, ImVec4& clear_color);
     void DrawAnotherWindow(bool& show_another_window);
+
+    unsigned int DrawHierachyWindow(bool& show_demo_window, bool& show_another_window, ImVec4& clear_color);
+
+    unsigned int clicked_entity_id;
+
+    //TransformComponent* tc = static_cast <TransformComponent*> (ecs->ECS_CombinedComponentPool[TypeMovemmentComponent]->GetEntityComponent(ID));
+
 
 private:
     bool show_demo_window = true;
     bool show_another_window = false;
 
-    bool stringBox = false;
+    bool objectNameBox = false;
     char charBuffer[50] = "";  // Char Buffer
     std::vector<std::string> obj_text_entries;
     std::vector<bool> deleteButton;
     std::vector<bool> obj_component_window;
-
+    std::vector<unsigned int> obj_entity_id;
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 };

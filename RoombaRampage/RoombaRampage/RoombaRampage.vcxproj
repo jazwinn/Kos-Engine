@@ -155,6 +155,7 @@
     <ClCompile Include="ECS\System\CollisionSystem.cpp" />
     <ClCompile Include="ECS\System\MovementSystem.cpp" />
     <ClCompile Include="Graphics\Graphics.cpp" />
+    <ClCompile Include="Application\imgui_hierarchy_window.cpp" />
     <ClCompile Include="Math\Mat2x2.cpp" />
     <ClCompile Include="Math\Mat3x3.cpp" />
     <ClCompile Include="Math\vector2.cpp" />
