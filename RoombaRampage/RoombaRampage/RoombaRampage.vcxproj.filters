@@ -105,6 +105,9 @@
     <ClCompile Include="ECS\System\MovementSystem.cpp">
       <Filter>Source Files\ECS\System</Filter>
     </ClCompile>
+    <ClCompile Include="Application\imgui_hierarchy_window.cpp">
+      <Filter>Source Files\Application</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dependencies\imgui\imconfig.h">
