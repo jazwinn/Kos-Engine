@@ -14,8 +14,6 @@ enum ComponentType {
 class Component {
 
 public:
-	// component is storing data
-	bool IsStored{};
 
 	//Entity is assigned to component
 	bool IsLive{};

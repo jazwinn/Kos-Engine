@@ -9,7 +9,6 @@ void MovementSystem::Init() {
 void MovementSystem::Update(){
 
 	ECS* ecs = ECS::GetInstance();
-
 	//Loops Through all the entity
 
 	for (EntityID ID{}; ID < ecs->EntityCount; ID++) {

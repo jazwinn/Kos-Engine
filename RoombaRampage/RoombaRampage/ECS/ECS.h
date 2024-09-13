@@ -12,6 +12,7 @@
 #include "ECSList.h"
 
 #include <iostream>
+#include <bitset>
 
 
 
@@ -23,6 +24,7 @@ private:
 	//using EntityMap;
 	using CombinedComponentPool = std::unordered_map<ComponentType, IComponentPool*>;
 	using SystemMap = std::unordered_map<TypeSystem, ISystem*>;
+	using EntityMap = std::unordered_map<EntityID, std::bitset<TotalTypeComponent>>;
 	//using ComponentPoolMap = std::unordered_map<ComponentType, std::unique_ptr<ComponentPool>>;
 
 	ECS() = default;
@@ -55,8 +57,11 @@ public:
 
 	SystemMap ECS_SystemMap{};
 
+	EntityMap ECS_EntityMap{};
 
 	EntityID EntityCount{};
+
+
 
 private:
 	static ECS* InstancePtr;

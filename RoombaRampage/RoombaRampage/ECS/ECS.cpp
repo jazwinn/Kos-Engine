@@ -43,14 +43,16 @@ EntityID ECS::CreateEntity() {
 
 	ECS* ecs = ECS::GetInstance();
 
-	// create for all components
-	TransformComponent* TransComponent = static_cast<TransformComponent*>(ecs->ECS_CombinedComponentPool[TypeTransformComponent]->CreateComponent());
-	MovementComponent* MoveComponent = static_cast<MovementComponent*>(ecs->ECS_CombinedComponentPool[TypeMovemmentComponent]->CreateComponent());
-	SpriteComponent* SpComponent = static_cast<SpriteComponent*>(ecs->ECS_CombinedComponentPool[TypeSpriteComponent]->CreateComponent());
+	EntityID ID = ecs->EntityCount;
+
+	ecs->ECS_EntityMap[ID] = 0;
+
+	TransformComponent* TransComponent = static_cast<TransformComponent*>(ecs->ECS_CombinedComponentPool[TypeTransformComponent]->AssignComponent(ID));
+
 
 	ecs->EntityCount++;
 
-	return TransComponent->Entity;
+	return ID;
 }
 
 bool ECS::DeleteEntity(EntityID ID) {
