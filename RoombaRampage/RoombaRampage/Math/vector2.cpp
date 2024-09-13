@@ -1,4 +1,4 @@
-#include "vector2.hpp"
+#include "../Math/vector2.h"
 #include "math.h"
 
 Vec2::Vec2(float _x, float _y){
@@ -92,7 +92,7 @@ float Vec2::funcVec2DSquareLength(const Vec2 &pVec0){
     float tempX = pVec0.x;
     float tempY = pVec0.y;
     float lengthSquare = tempX * tempX + tempY * tempY;
-
+    return lengthSquare;
 }
 
 float Vec2::funcVec2DDistance(const Vec2 &pVec0, const Vec2 &pVec1){
