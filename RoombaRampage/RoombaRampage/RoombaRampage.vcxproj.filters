@@ -52,9 +52,6 @@
     <Filter Include="Source Files\ECS\System">
       <UniqueIdentifier>{7d862d57-494a-488c-acf8-0ab86a262b9d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Input">
-      <UniqueIdentifier>{05a00f09-1905-49c1-9e5c-a11b37af4da9}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Dependencies\imgui\imgui_widgets.cpp">
@@ -108,7 +105,6 @@
     <ClCompile Include="ECS\System\MovementSystem.cpp">
       <Filter>Source Files\ECS\System</Filter>
     </ClCompile>
-<<<<<<< HEAD
     <ClCompile Include="Application\imgui_hierarchy_window.cpp">
       <Filter>Source Files\Application</Filter>
     </ClCompile>
@@ -117,10 +113,6 @@
     </ClCompile>
     <ClCompile Include="Graphics\GraphicsPipe.cpp">
       <Filter>Source Files\Graphics</Filter>
-=======
-    <ClCompile Include="Input.cpp">
-      <Filter>Source Files</Filter>
->>>>>>> 0ce3bd604db3677e8de66d549992747e5955f42e
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -205,7 +197,6 @@
     <ClInclude Include="ECS\Component\SpriteComponent.h">
       <Filter>Header Files\ECS\Component</Filter>
     </ClInclude>
-<<<<<<< HEAD
     <ClInclude Include="ECS\Component\ComponentList.h">
       <Filter>Header Files\ECS\Component</Filter>
     </ClInclude>
@@ -214,10 +205,6 @@
     </ClInclude>
     <ClInclude Include="Graphics\GraphicsPipe.h">
       <Filter>Header Files\Graphics</Filter>
-=======
-    <ClInclude Include="Input.h">
-      <Filter>Header Files\Input</Filter>
->>>>>>> 0ce3bd604db3677e8de66d549992747e5955f42e
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
