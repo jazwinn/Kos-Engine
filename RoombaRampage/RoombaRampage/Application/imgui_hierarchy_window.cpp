@@ -75,13 +75,13 @@ unsigned int ImGuiHandler::DrawHierachyWindow(bool& show_demo_window, bool& show
             {
 
                 //Delete entity from ecs
-                //ecs->DeleteEntity();
                 ECS::GetInstance()->DeleteEntity(obj_entity_id[i]);
 
                 obj_component_window[i] = false;
 
                 //remove the entries 
                 obj_text_entries.erase(obj_text_entries.begin() + i);
+                obj_entity_id.erase(obj_entity_id.begin() + i);
                 deleteButton.erase(deleteButton.begin() + i);
                 obj_component_window.erase(obj_component_window.begin() + i);
 

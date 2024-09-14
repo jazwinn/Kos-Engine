@@ -17,6 +17,8 @@ public:
 
 	void RegisterSystem(EntityID) override;
 
+	void DeregisterSystem(EntityID) override;
+
 	void Init() override;
 
 	void Update() override;

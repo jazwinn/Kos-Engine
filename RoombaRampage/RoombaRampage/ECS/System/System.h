@@ -3,6 +3,7 @@
 
 #include <bitset>
 #include <vector>
+#include <algorithm>
 #include "../ECS/Component/Component.h"
 
 
@@ -25,6 +26,8 @@ public:
 	compSignature SystemSignature;
 
 	virtual void RegisterSystem(EntityID) = 0;
+
+	virtual void DeregisterSystem(EntityID) = 0;
 
 	virtual void Init() = 0;
 

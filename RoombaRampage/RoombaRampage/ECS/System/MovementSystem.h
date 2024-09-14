@@ -8,9 +8,9 @@
 class MovementSystem : public ISystem {
 
 public:
-
-
 	void RegisterSystem(EntityID) override;
+
+	void DeregisterSystem(EntityID) override;
 
 	void Init() override;
 

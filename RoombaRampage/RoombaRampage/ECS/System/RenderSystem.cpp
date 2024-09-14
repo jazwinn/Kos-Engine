@@ -42,6 +42,38 @@ void RenderSystem::RegisterSystem(EntityID ID) {
 
 }
 
+void RenderSystem::DeregisterSystem(EntityID ID) {
+
+	//search element location for the entity
+	size_t IndexID{};
+	for (auto& SpriteComponentPtr : vecSpriteComponentPtr) {
+		if (SpriteComponentPtr->Entity == ID) {
+			break;
+		}
+		IndexID++;
+	}
+
+
+	//auto& it = std::find(vecspritecomponentptr.begin(), vecspritecomponentptr.end(),
+	//	[id](const spritecomponent& comp) {
+	//		return comp.entity == id;
+	//	});
+
+	//if (it == vecspritecomponentptr.end()){
+	//	std::cout << "deregister:: component not inside system";
+	//	return;
+	//}
+
+	//index to the last element
+	size_t IndexLast = vecSpriteComponentPtr.size() - 1;
+	std::swap(vecSpriteComponentPtr[IndexID], vecSpriteComponentPtr[IndexLast]);
+	std::swap(vecTransformComponentPtr[IndexID], vecTransformComponentPtr[IndexLast]);
+
+	//popback the vector;
+	vecSpriteComponentPtr.pop_back();
+	vecTransformComponentPtr.pop_back();
+}
+
 void RenderSystem::Init()
 {
 	SystemSignature.set(TypeTransformComponent);

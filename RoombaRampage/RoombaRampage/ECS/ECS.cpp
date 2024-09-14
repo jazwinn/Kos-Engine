@@ -71,17 +71,29 @@ void ECS::AddComponent(ComponentType Type, EntityID ID) {
 	ecs->ECS_EntityMap.find(ID)->second.set(Type);
 
 	//checks if new component fufils any of the system requirements
-	RegisterSystem(ID);
+	RegisterSystems(ID);
 
 }
 
-void ECS::RegisterSystem(EntityID ID) {
+void ECS::RegisterSystems(EntityID ID) {
 
 	ECS* ecs = ECS::GetInstance();
 	for (auto& system : ecs->ECS_SystemMap) {
 		if ((ecs->ECS_EntityMap.find(ID)->second & system.second->SystemSignature) == system.second->SystemSignature) {
 
 			system.second->RegisterSystem(ID);
+
+		}
+	}
+}
+
+void ECS::DeregisterSystem(EntityID ID) {
+
+	ECS* ecs = ECS::GetInstance();
+	for (auto& system : ecs->ECS_SystemMap) {
+		if ((ecs->ECS_EntityMap.find(ID)->second & system.second->SystemSignature) == system.second->SystemSignature) {
+
+			system.second->DeregisterSystem(ID);
 
 		}
 	}
@@ -103,8 +115,7 @@ EntityID ECS::CreateEntity() {
 	 --------------------------------------------------------------*/
 	TransformComponent* Trans = (TransformComponent*)ecs->ECS_CombinedComponentPool[TypeTransformComponent]->GetEntityComponent(ID);
 
-	Trans->scale = { 1.f };
-
+	Trans->scale = { 0.5f };
 
 	AddComponent(TypeSpriteComponent, ID);
 
@@ -116,10 +127,9 @@ EntityID ECS::CreateEntity() {
 }
 
 bool ECS::DeleteEntity(EntityID ID) {
-	ECS* ecs = ECS::GetInstance();
 
 	// refector
-
+	DeregisterSystem(ID);
 
 	return true;
 }

@@ -56,7 +56,9 @@ public:
 
 	static void AddComponent(ComponentType ,EntityID );
 
-	static void RegisterSystem(EntityID);
+	static void RegisterSystems(EntityID);
+
+	static void DeregisterSystem(EntityID);
 
 
 	CombinedComponentPool ECS_CombinedComponentPool{};
