@@ -3,7 +3,7 @@
 
 enum TypeSystem {
 	TypeMovementSystem,
-
+	TypeRenderSystem,
 
 	TotalTypeSystem
 };

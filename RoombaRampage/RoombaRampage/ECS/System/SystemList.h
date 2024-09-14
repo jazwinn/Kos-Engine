@@ -2,6 +2,7 @@
 #define SYSLIST_H
 
 #include "../ECS/System/MovementSystem.h"
+#include "../ECS/System/RenderSystem.h"
 
 
 
