@@ -5,8 +5,6 @@
 void MovementSystem::RegisterSystem(EntityID ID) {
 	ECS* ecs = ECS::GetInstance();
 
-	//TODO check if component is already inside the vector
-
 	//Step 1 : check
 	bool store = true;
 	for (auto& TransformComponentPtr : vecTransformComponentPtr) {

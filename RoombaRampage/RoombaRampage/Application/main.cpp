@@ -82,8 +82,9 @@
         --------------------------------------------------------------*/
         //fetch ecs
         ECS* ecs = ECS::GetInstance();
-        ecs->Init();
+        
         ecs->Load();
+        ecs->Init();
 
         // Load Fonts
         // - If no fonts are loaded, dear imgui will use the default font. You can also load multiple fonts and use ImGui::PushFont()/PopFont() to select them.
@@ -116,17 +117,24 @@
             glfwPollEvents();
 
             /*--------------------------------------------------------------
-             UPDATE OBJECTS
-             --------------------------------------------------------------*/
-
-            /*--------------------------------------------------------------
              IMGUI FRAME SETUP
              --------------------------------------------------------------*/
             imgui_manager.NewFrame();
             imgui_manager.DrawHierachyWindow(show_demo_window, show_another_window, clear_color);
 
+
             /*--------------------------------------------------------------
-             DRAWING/RENDERING
+             UPDATE ECS
+             --------------------------------------------------------------*/
+            ecs->Update();
+
+            /*--------------------------------------------------------------
+             UPDATE Render Pipeline
+             --------------------------------------------------------------*/
+            pipe->funcUpdate();
+
+            /*--------------------------------------------------------------
+             DRAWING/RENDERING Window
              --------------------------------------------------------------*/
             glClear(GL_COLOR_BUFFER_BIT);
             int display_w, display_h;
@@ -135,7 +143,16 @@
             glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
             glClear(GL_COLOR_BUFFER_BIT);
 
-            //testRect.funcDraw();
+            /*--------------------------------------------------------------
+             DRAWING/RENDERING Objects
+             --------------------------------------------------------------*/
+            //TODO remove paremeter, less hard code
+            pipe->funcDraw(pipe->squareMesh);
+
+
+            /*--------------------------------------------------------------
+             Draw IMGUI FRAME
+             --------------------------------------------------------------*/
             imgui_manager.Render();
 
             glfwSwapBuffers(window);

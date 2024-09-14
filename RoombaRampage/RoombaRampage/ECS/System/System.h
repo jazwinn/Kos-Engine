@@ -8,6 +8,11 @@
 
 enum TypeSystem {
 	TypeMovementSystem,
+
+
+
+
+	//render system called the last
 	TypeRenderSystem,
 
 	TotalTypeSystem

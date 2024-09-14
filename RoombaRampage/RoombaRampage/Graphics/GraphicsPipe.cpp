@@ -142,13 +142,19 @@ void GraphicsPipe::funcInit()
 
 void GraphicsPipe::funcUpdate()
 {
-	glm::mat3 lvScale{ modelData[0].scale.x, 0, 0, 0, modelData[0].scale.y, 0, 0 , 0 ,1};
-	glm::mat3 lvRotate{ cos(modelData[0].rotate * 3.1415f / 180.f), sin(modelData[0].rotate * 3.1415f / 180.f), 0.f,
-					-sin(modelData[0].rotate * 3.1415f / 180.f), cos(modelData[0].rotate * 3.1415f / 180.f), 0.f,
-					0.f , 0.f ,1.f };
-	glm::mat3 lvTranslate{ 1, 0, 0, 0, 1, 0, modelData[0].worldCoordinates.x , modelData[0].worldCoordinates.y ,1 };
-	glm::mat3 lvNDCScale{ 1.f, 0, 0, 0, 1.f, 0, 0 , 0 ,1 };
-	modelToNDCMatrix.push_back(lvNDCScale * lvTranslate * lvRotate * lvScale);
+	if (modelData.size() > 0) {
+		for (int n{}; n < modelData.size(); n++) {
+
+			glm::mat3 lvScale{ modelData[n].scale.x, 0, 0, 0, modelData[n].scale.y, 0, 0 , 0 ,1 };
+			glm::mat3 lvRotate{ cos(modelData[n].rotate * 3.1415f / 180.f), sin(modelData[n].rotate * 3.1415f / 180.f), 0.f,
+							-sin(modelData[n].rotate * 3.1415f / 180.f), cos(modelData[n].rotate * 3.1415f / 180.f), 0.f,
+							0.f , 0.f ,1.f };
+			glm::mat3 lvTranslate{ 1, 0, 0, 0, 1, 0, modelData[n].worldCoordinates.x , modelData[n].worldCoordinates.y ,1 };
+			glm::mat3 lvNDCScale{ 1.f, 0, 0, 0, 1.f, 0, 0 , 0 ,1 };
+			modelToNDCMatrix.push_back(lvNDCScale * lvTranslate * lvRotate * lvScale);
+		}
+	}
+
 }
 
 

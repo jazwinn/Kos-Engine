@@ -7,7 +7,13 @@
 ECS* ECS::InstancePtr = new ECS{};
 
 void ECS::Init() {
+	ECS* ecs = ECS::GetInstance();
 
+	//loops through all the system
+	for (auto& System : ecs->ECS_SystemMap) {
+		System.second->Init();
+
+	}
 		
 }
 
@@ -22,6 +28,7 @@ void ECS::Load() {
 
 	//Allocate memory to each system
 	ecs->ECS_SystemMap[TypeMovementSystem] = new MovementSystem;
+	ecs->ECS_SystemMap[TypeRenderSystem] = new RenderSystem;
 }
 
 
@@ -41,8 +48,16 @@ void ECS::Unload() {
 
 	ECS* ecs = ECS::GetInstance();
 
-	delete ecs->ECS_CombinedComponentPool[TypeTransformComponent];
-	delete ecs->ECS_CombinedComponentPool[TypeMovemmentComponent];
+	//delete componentpool
+	for (size_t n{}; n < TotalTypeComponent; n++) {
+		delete ecs->ECS_CombinedComponentPool[(ComponentType)n];
+	}
+
+	//delete systems
+	for (auto& System : ecs->ECS_SystemMap) {
+		delete System.second;
+
+	}
 
 	delete ecs;
 }
@@ -82,6 +97,19 @@ EntityID ECS::CreateEntity() {
 
 	AddComponent(TypeTransformComponent, ID);
 
+
+	/*--------------------------------------------------------------
+	 for testing
+	 --------------------------------------------------------------*/
+	TransformComponent* Trans = (TransformComponent*)ecs->ECS_CombinedComponentPool[TypeTransformComponent]->GetEntityComponent(ID);
+
+	Trans->scale = { 1.f };
+
+
+	AddComponent(TypeSpriteComponent, ID);
+
+	/*--------------------------------------------------------------*/
+
 	ecs->EntityCount++;
 
 	return ID;
@@ -92,10 +120,6 @@ bool ECS::DeleteEntity(EntityID ID) {
 
 	// refector
 
-	ecs->ECS_CombinedComponentPool[TypeTransformComponent]->DeleteEntityComponent(ID);
-	ecs->ECS_CombinedComponentPool[TypeMovemmentComponent]->DeleteEntityComponent(ID);
-
-	ecs->EntityCount--;
 
 	return true;
 }
