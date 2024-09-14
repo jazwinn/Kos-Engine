@@ -93,6 +93,7 @@ void RenderSystem::Update()
 	//loops through all vecoters pointing to component
 	for (int n{}; n < vecSpriteComponentPtr.size(); n++) {
 
+		//std::cout << "Update Entity: " << n << std::endl;
 		//sprite not need currently
 		//SpriteComponent* MovComp = vecSpriteComponentPtr[n];
 		TransformComponent* transform = vecTransformComponentPtr[n];
@@ -100,25 +101,4 @@ void RenderSystem::Update()
 	}
 
 
-
-}
-
-void RenderSystem::funcTransferData()
-{
-	ECS* ecs = ECS::GetInstance();
-	GraphicsPipe* graphicsPipe = GraphicsPipe::funcGetInstance();
-
-	//Loops Through all the entity
-	for (EntityID ID{}; ID < ecs->EntityCount; ID++) {
-
-		//IS THERE A MORE EFFICIENT WAY?? ASK KITSON
-
-		if (ecs->ECS_CombinedComponentPool[TypeTransformComponent]->HasComponent(ID) && ecs->ECS_CombinedComponentPool[TypeSpriteComponent]->HasComponent(ID))
-		{
-			TransformComponent *transform = static_cast<TransformComponent*>(ecs->ECS_CombinedComponentPool[TypeTransformComponent]->GetEntityComponent(ID));
-			graphicsPipe->modelData.push_back({ transform->roation, {transform->scale, transform->scale}, {transform->position.x,transform->position.y,0} });
-		}
-
-
-	}
 }
