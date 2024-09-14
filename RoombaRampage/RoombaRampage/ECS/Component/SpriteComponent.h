@@ -3,12 +3,14 @@
 #include <string>
 
 #include "Component.h"
+#include "glew.h"
+#include "glfw3.h"
+#include "glm.hpp"
+//#include "../ECS/System/RenderSystem.h"
 
 enum SpriteShape {
-	TRIANGLE,
 	RECTANGLE,
 	CIRCLE,
-	TRIANGLE_LINES,
 	RECTANGLE_LINES,
 	CIRCLE_LINES
 };
@@ -16,9 +18,18 @@ enum SpriteShape {
 class SpriteComponent : public Component {
 
 public:
-	SpriteShape Shape{};
-	std::string texture{};
-	//colour?
+
+	GLenum primitiveType;
+	GLenum drawMode;
+	unsigned int vaoId;
+	unsigned short indexElementCount;
+	unsigned int shaderProgram;
+
+	SpriteShape shape{};
+	std::string image{};
+	glm::mat3 modelToNDCMatrix{ 1,0,0,0,1,0,0,0,1 };
+	float color[4]{};
+
 };
 
 

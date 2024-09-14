@@ -1,9 +1,9 @@
 #include <iostream>
 
 #include "ECS.h"
-#include "../ECS/System/SystemList.h"
 
 //ECS Varaible
+
 ECS* ECS::InstancePtr = new ECS{};
 
 void ECS::Init() {
