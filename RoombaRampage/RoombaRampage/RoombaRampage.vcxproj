@@ -157,6 +157,7 @@
     <ClCompile Include="ECS\System\RenderSystem.cpp" />
     <ClCompile Include="Graphics\Graphics.cpp" />
     <ClCompile Include="Graphics\GraphicsPipe.cpp" />
+    <ClCompile Include="Application\imgui_hierarchy_window.cpp" />
     <ClCompile Include="Math\Mat2x2.cpp" />
     <ClCompile Include="Math\Mat3x3.cpp" />
     <ClCompile Include="Math\vector2.cpp" />
