@@ -52,6 +52,15 @@
     <Filter Include="Source Files\ECS\System">
       <UniqueIdentifier>{7d862d57-494a-488c-acf8-0ab86a262b9d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\WinApp">
+      <UniqueIdentifier>{487a1667-730a-4cd3-93c4-924ceb0e6e9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Events">
+      <UniqueIdentifier>{df8aa6d1-f2b9-45c8-9588-5dd5cbb61082}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\WinApp">
+      <UniqueIdentifier>{d0b078d7-ebd4-44cd-82be-be83431cc60c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Dependencies\imgui\imgui_widgets.cpp">
@@ -113,6 +122,9 @@
     </ClCompile>
     <ClCompile Include="Graphics\GraphicsPipe.cpp">
       <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="WinApp\windowswindow.cpp">
+      <Filter>Source Files\WinApp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -205,6 +217,24 @@
     </ClInclude>
     <ClInclude Include="Graphics\GraphicsPipe.h">
       <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\mouseEvents.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\windowEvents.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\keyEvents.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\baseEvent.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="WinApp\window.h">
+      <Filter>Header Files\WinApp</Filter>
+    </ClInclude>
+    <ClInclude Include="WinApp\windowswindow.h">
+      <Filter>Header Files\WinApp</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
