@@ -114,6 +114,12 @@
     <ClCompile Include="Graphics\GraphicsPipe.cpp">
       <Filter>Source Files\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="Application\Application.cpp">
+      <Filter>Source Files\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Window.cpp">
+      <Filter>Source Files\Application</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dependencies\imgui\imconfig.h">
@@ -205,6 +211,12 @@
     </ClInclude>
     <ClInclude Include="Graphics\GraphicsPipe.h">
       <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Application.h">
+      <Filter>Header Files\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Window.h">
+      <Filter>Header Files\Application</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
