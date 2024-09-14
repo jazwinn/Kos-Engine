@@ -4,7 +4,7 @@
 
 #include <vector>
 
-#include "ECSList.h"
+#include "../ECS/ECSList.h"
 #include "Component.h"
 #include "TransformComponent.h"
 #include "MovementComponent.h"
@@ -13,7 +13,7 @@
 class IComponentPool {
 
 public:
-	virtual void* CreateComponent() = 0;
+	virtual void* AssignComponent(EntityID) = 0;
 
 	virtual void* GetEntityComponent(EntityID) = 0;
 
@@ -30,7 +30,7 @@ class ComponentPool : public IComponentPool {
 public:
 	ComponentPool();
 	 
-	void* CreateComponent() override;
+	void* AssignComponent(EntityID) override;
 
 	void* GetEntityComponent(EntityID) override;
 
@@ -53,17 +53,15 @@ ComponentPool<T>::ComponentPool() {
 }
 
 template <typename T>
-void* ComponentPool<T>::CreateComponent() {
+void* ComponentPool<T>::AssignComponent(EntityID ID) {
 
-	int count{};
+
 	for (auto& Component : Pool) {
 		if (Component.IsLive == false) {
 			Component.IsLive = true;
-			Component.Entity = count;
+			Component.Entity = ID;
 			return &Component;
 		}
-
-		count++;
 	}
 
 	// return NULL if all component is stored
@@ -79,7 +77,6 @@ void* ComponentPool<T>::GetEntityComponent(EntityID ID){
 
 	for (auto& Component : Pool) {
 		if (Component.Entity == ID) {
-			Component.IsStored = true;
 			return &Component;
 		}
 	}
@@ -92,15 +89,9 @@ void* ComponentPool<T>::GetEntityComponent(EntityID ID){
 
 template <typename T>
 bool ComponentPool<T>::DeleteEntityComponent(EntityID ID){
-	for (auto& Component : Pool) {
-		if (Component.Entity == ID) {
-			Component.IsLive = false;
-			Component.IsStored = false;
 
-			//Task successful
-			return true;
-		}
-	}
+	//TODO delete component from system vector
+
 
 	//task failed
 	return false;
@@ -111,7 +102,7 @@ bool ComponentPool<T>::HasComponent(EntityID ID) { //contained any stored data
 
 	for (auto& Component : Pool) {
 		if (Component.Entity == ID) {
-			return Component.IsStored;
+			return Component.IsLive;
 		}
 	}
 

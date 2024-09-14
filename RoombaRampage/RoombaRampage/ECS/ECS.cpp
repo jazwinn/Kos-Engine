@@ -7,7 +7,13 @@
 ECS* ECS::InstancePtr = new ECS{};
 
 void ECS::Init() {
+	ECS* ecs = ECS::GetInstance();
 
+	//loops through all the system
+	for (auto& System : ecs->ECS_SystemMap) {
+		System.second->Init();
+
+	}
 		
 }
 
@@ -22,6 +28,7 @@ void ECS::Load() {
 
 	//Allocate memory to each system
 	ecs->ECS_SystemMap[TypeMovementSystem] = new MovementSystem;
+	ecs->ECS_SystemMap[TypeRenderSystem] = new RenderSystem;
 }
 
 
@@ -37,39 +44,93 @@ void ECS::Update() {
 
 }
 
+void ECS::Unload() {
 
+	ECS* ecs = ECS::GetInstance();
+
+	//delete componentpool
+	for (size_t n{}; n < TotalTypeComponent; n++) {
+		delete ecs->ECS_CombinedComponentPool[(ComponentType)n];
+	}
+
+	//delete systems
+	for (auto& System : ecs->ECS_SystemMap) {
+		delete System.second;
+
+	}
+
+	delete ecs;
+}
+
+void ECS::AddComponent(ComponentType Type, EntityID ID) {
+	
+	ECS* ecs = ECS::GetInstance();
+
+	ecs->ECS_CombinedComponentPool[Type]->AssignComponent(ID);
+
+	ecs->ECS_EntityMap.find(ID)->second.set(Type);
+
+	//checks if new component fufils any of the system requirements
+	RegisterSystems(ID);
+
+}
+
+void ECS::RegisterSystems(EntityID ID) {
+
+	ECS* ecs = ECS::GetInstance();
+	for (auto& system : ecs->ECS_SystemMap) {
+		if ((ecs->ECS_EntityMap.find(ID)->second & system.second->SystemSignature) == system.second->SystemSignature) {
+
+			system.second->RegisterSystem(ID);
+
+		}
+	}
+}
+
+void ECS::DeregisterSystem(EntityID ID) {
+
+	ECS* ecs = ECS::GetInstance();
+	for (auto& system : ecs->ECS_SystemMap) {
+		if ((ecs->ECS_EntityMap.find(ID)->second & system.second->SystemSignature) == system.second->SystemSignature) {
+
+			system.second->DeregisterSystem(ID);
+
+		}
+	}
+}
 
 EntityID ECS::CreateEntity() {
 
 	ECS* ecs = ECS::GetInstance();
 
-	// create for all components
-	TransformComponent* TransComponent = static_cast<TransformComponent*>(ecs->ECS_CombinedComponentPool[TypeTransformComponent]->CreateComponent());
-	MovementComponent* MoveComponent = static_cast<MovementComponent*>(ecs->ECS_CombinedComponentPool[TypeMovemmentComponent]->CreateComponent());
-	SpriteComponent* SpComponent = static_cast<SpriteComponent*>(ecs->ECS_CombinedComponentPool[TypeSpriteComponent]->CreateComponent());
+	EntityID ID = ecs->EntityCount;
+
+	ecs->ECS_EntityMap[ID] = 0;
+
+	AddComponent(TypeTransformComponent, ID);
+
+
+	/*--------------------------------------------------------------
+	 for testing
+	 --------------------------------------------------------------*/
+	TransformComponent* Trans = (TransformComponent*)ecs->ECS_CombinedComponentPool[TypeTransformComponent]->GetEntityComponent(ID);
+
+	Trans->scale = { 0.5f };
+
+	AddComponent(TypeSpriteComponent, ID);
+
+	/*--------------------------------------------------------------*/
 
 	ecs->EntityCount++;
 
-	return TransComponent->Entity;
+	return ID;
 }
 
 bool ECS::DeleteEntity(EntityID ID) {
-	ECS* ecs = ECS::GetInstance();
 
-	ecs->ECS_CombinedComponentPool[TypeTransformComponent]->DeleteEntityComponent(ID);
-	ecs->ECS_CombinedComponentPool[TypeMovemmentComponent]->DeleteEntityComponent(ID);
-
-	ecs->EntityCount--;
+	// refector
+	DeregisterSystem(ID);
 
 	return true;
 }
 
-void ECS::Unload() {
-
-	ECS* ecs = ECS::GetInstance();
-
-	delete ecs->ECS_CombinedComponentPool[TypeTransformComponent];
-	delete ecs->ECS_CombinedComponentPool[TypeMovemmentComponent];
-
-	delete ecs;
-}

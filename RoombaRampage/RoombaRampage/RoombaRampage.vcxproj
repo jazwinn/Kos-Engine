@@ -176,6 +176,7 @@
     <ClInclude Include="Dependencies\imgui\imstb_truetype.h" />
     <ClInclude Include="ECS\Component\CollisionComponent.h" />
     <ClInclude Include="ECS\Component\Component.h" />
+    <ClInclude Include="ECS\Component\ComponentList.h" />
     <ClInclude Include="ECS\Component\ComponentPool.h" />
     <ClInclude Include="ECS\Component\MovementComponent.h" />
     <ClInclude Include="ECS\Component\SpriteComponent.h" />

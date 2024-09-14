@@ -13,6 +13,7 @@
 #include "../ECS/System/SystemList.h"
 
 #include <iostream>
+#include <bitset>
 
 
 
@@ -22,8 +23,10 @@ private:
 	
 
 	//using EntityMap;
+
 	using CombinedComponentPool = std::unordered_map<ComponentType, IComponentPool*>;
 	using SystemMap = std::unordered_map<TypeSystem, ISystem*>;
+	using EntityMap = std::unordered_map<EntityID, std::bitset<TotalTypeComponent>>;
 	//using ComponentPoolMap = std::unordered_map<ComponentType, std::unique_ptr<ComponentPool>>;
 
 	ECS() = default;
@@ -51,13 +54,22 @@ public:
 
 	static bool DeleteEntity(EntityID);
 
+	static void AddComponent(ComponentType ,EntityID );
+
+	static void RegisterSystems(EntityID);
+
+	static void DeregisterSystem(EntityID);
+
 
 	CombinedComponentPool ECS_CombinedComponentPool{};
 
 	SystemMap ECS_SystemMap{};
 
+	EntityMap ECS_EntityMap{};
 
 	EntityID EntityCount{};
+
+
 
 private:
 	static ECS* InstancePtr;

@@ -1,8 +1,19 @@
 #ifndef SYSTEM_H
 #define SYSTEM_H
 
+#include <bitset>
+#include <vector>
+#include <algorithm>
+#include "../ECS/Component/Component.h"
+
+
 enum TypeSystem {
 	TypeMovementSystem,
+
+
+
+
+	//render system called the last
 	TypeRenderSystem,
 
 	TotalTypeSystem
@@ -11,6 +22,12 @@ enum TypeSystem {
 class ISystem {
 
 public:
+
+	compSignature SystemSignature;
+
+	virtual void RegisterSystem(EntityID) = 0;
+
+	virtual void DeregisterSystem(EntityID) = 0;
 
 	virtual void Init() = 0;
 

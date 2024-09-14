@@ -1,27 +1,18 @@
 #ifndef COM_H
 #define COM_H
 
-enum ComponentType {
-	TypeTransformComponent,
-	TypeMovemmentComponent,
-	TypeSpriteComponent,
-
-
-	TotalTypeComponent
-};
+#include "../ECS/Component/ComponentList.h"
 
 //parent class
 class Component {
 
 public:
-	// component is storing data
-	bool IsStored{};
 
 	//Entity is assigned to component
 	bool IsLive{};
 
 	//Store Entity ID
-	EntityID Entity;
+	EntityID Entity{};
 
 };
 
