@@ -37,6 +37,16 @@ void ECS::Update() {
 
 }
 
+void ECS::Unload() {
+
+	ECS* ecs = ECS::GetInstance();
+
+	delete ecs->ECS_CombinedComponentPool[TypeTransformComponent];
+	delete ecs->ECS_CombinedComponentPool[TypeMovemmentComponent];
+
+	delete ecs;
+}
+
 void ECS::AddComponent(ComponentType Type, EntityID ID) {
 	
 	ECS* ecs = ECS::GetInstance();
@@ -45,8 +55,21 @@ void ECS::AddComponent(ComponentType Type, EntityID ID) {
 
 	ecs->ECS_EntityMap.find(ID)->second.set(Type);
 
-	//create function register system!!
+	//checks if new component fufils any of the system requirements
+	RegisterSystem(ID);
 
+}
+
+void ECS::RegisterSystem(EntityID ID) {
+
+	ECS* ecs = ECS::GetInstance();
+	for (auto& system : ecs->ECS_SystemMap) {
+		if ((ecs->ECS_EntityMap.find(ID)->second & system.second->SystemSignature) == system.second->SystemSignature) {
+
+			system.second->RegisterSystem(ID);
+
+		}
+	}
 }
 
 EntityID ECS::CreateEntity() {
@@ -77,12 +100,3 @@ bool ECS::DeleteEntity(EntityID ID) {
 	return true;
 }
 
-void ECS::Unload() {
-
-	ECS* ecs = ECS::GetInstance();
-
-	delete ecs->ECS_CombinedComponentPool[TypeTransformComponent];
-	delete ecs->ECS_CombinedComponentPool[TypeMovemmentComponent];
-
-	delete ecs;
-}

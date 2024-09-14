@@ -22,4 +22,4 @@ public:
 };
 
 
-#endif
+#endif SPRITE_H

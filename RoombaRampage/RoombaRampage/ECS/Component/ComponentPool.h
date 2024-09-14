@@ -89,14 +89,9 @@ void* ComponentPool<T>::GetEntityComponent(EntityID ID){
 
 template <typename T>
 bool ComponentPool<T>::DeleteEntityComponent(EntityID ID){
-	for (auto& Component : Pool) {
-		if (Component.Entity == ID) {
-			Component.IsLive = false;
 
-			//Task successful
-			return true;
-		}
-	}
+	//TODO delete component from system vector
+
 
 	//task failed
 	return false;

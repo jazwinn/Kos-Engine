@@ -17,7 +17,7 @@ class ISystem {
 
 public:
 
-	std::bitset<TotalTypeComponent> SystemSignature;
+	compSignature SystemSignature;
 
 	virtual void RegisterSystem(EntityID) = 0;
 

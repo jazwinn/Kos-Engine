@@ -191,6 +191,9 @@
     <ClInclude Include="ECS\Component\SpriteComponent.h">
       <Filter>Header Files\ECS\Component</Filter>
     </ClInclude>
+    <ClInclude Include="ECS\Component\ComponentList.h">
+      <Filter>Header Files\ECS\Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Graphics\genericFragmentShader.frag">

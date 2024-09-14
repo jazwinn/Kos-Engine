@@ -16,6 +16,7 @@ public:
 
 	void Update() override;
 
+private:
 	//Storage to point to components
 	std::vector<TransformComponent*> vecTransformComponentPtr;
 	std::vector<MovementComponent*> vecMovementComponentPtr;

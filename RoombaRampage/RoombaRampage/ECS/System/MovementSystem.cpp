@@ -23,14 +23,26 @@ void MovementSystem::RegisterSystem(EntityID ID) {
 		vecTransformComponentPtr.push_back((TransformComponent*)ecs->ECS_CombinedComponentPool[TypeTransformComponent]->GetEntityComponent(ID));
 	}
 
-	vecMovementComponentPtr.push_back((MovementComponent*)ecs->ECS_CombinedComponentPool[TypeMovemmentComponent]->GetEntityComponent(ID));
+	//check again
+	for (auto& MovementComponentPtr : vecMovementComponentPtr) {
+		if (MovementComponentPtr->Entity == ID) {
+			store = false;
+			break;
+		}
+		else {
+			store = true;
+		}
+	}
+	if (store) {
+		vecMovementComponentPtr.push_back((MovementComponent*)ecs->ECS_CombinedComponentPool[TypeMovemmentComponent]->GetEntityComponent(ID));
+	}
+	
 
 }
 
 void MovementSystem::Init() {
 
 	// requires both movement component and transform component
-	std::bitset<TotalTypeComponent> BitCompare;
 	SystemSignature.set(TypeMovemmentComponent);
 	SystemSignature.set(TypeTransformComponent);
 
@@ -39,17 +51,18 @@ void MovementSystem::Init() {
 void MovementSystem::Update(){
 
 	ECS* ecs = ECS::GetInstance();
-	//Loops Through all the entity
 
-	for (EntityID ID{}; ID < ecs->EntityCount; ID++) {
+	if (vecMovementComponentPtr.size() != vecTransformComponentPtr.size()) {
+		std::cout << "Error: Vecotrs container size does not Match" << std::endl;
+		return;
+	}
 
-		//IS THERE A MORE EFFICIENT WAY?? ASK KITSON
-		if (ecs->ECS_CombinedComponentPool[TypeMovemmentComponent]->HasComponent(ID) && ecs->ECS_CombinedComponentPool[TypeTransformComponent]->HasComponent(ID)) {
+	//loops through all vecoters pointing to component
+	for (int n{}; n < vecMovementComponentPtr.size(); n++) {
+		std::cout << "Entity: " << n << "Movement System is getting Updated";
 
-			std::cout << "Entity: " << ID << "Movement System is getting Updated";
-
-		}
-
+		MovementComponent* MovComp = vecMovementComponentPtr[n];
+		TransformComponent* TransComp = vecTransformComponentPtr[n];
 
 	}
 

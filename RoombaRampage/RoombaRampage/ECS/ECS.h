@@ -22,6 +22,7 @@ private:
 	
 
 	//using EntityMap;
+
 	using CombinedComponentPool = std::unordered_map<ComponentType, IComponentPool*>;
 	using SystemMap = std::unordered_map<TypeSystem, ISystem*>;
 	using EntityMap = std::unordered_map<EntityID, std::bitset<TotalTypeComponent>>;
