@@ -6,6 +6,7 @@
 #include<vector>
 #include<string>
 #include <iostream>
+#include "../ECS/ECS.h"
 
 class ImGuiHandler
 {
@@ -22,12 +23,9 @@ public:
     void DrawDemoWindow(bool& show_demo_window);
     void DrawAnotherWindow(bool& show_another_window);
 
+    void DrawComponentWindow(ECS* ecs, EntityID entityID, bool& windowOpen, const std::string& windowTitle);
     unsigned int DrawHierachyWindow(bool& show_demo_window, bool& show_another_window, ImVec4& clear_color);
-
     unsigned int clicked_entity_id;
-
-    //TransformComponent* tc = static_cast <TransformComponent*> (ecs->ECS_CombinedComponentPool[TypeMovemmentComponent]->GetEntityComponent(ID));
-
 
 private:
     bool show_demo_window = true;
@@ -39,5 +37,6 @@ private:
     std::vector<bool> deleteButton;
     std::vector<bool> obj_component_window;
     std::vector<unsigned int> obj_entity_id;
+
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 };
