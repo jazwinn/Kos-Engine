@@ -23,6 +23,7 @@ classWindowsWin::~classWindowsWin() {
 	classWindowsWin::funcWinShutdown();
 }
 
+
 void classWindowsWin::funcWinInit(const classWinProperties& givenProperties) {
 	lvWinData.lvTitle = givenProperties.lvWinTitle;
 	lvWinData.lvWidth = givenProperties.lvWinWidth;
@@ -48,5 +49,43 @@ void classWindowsWin::funcWinInit(const classWinProperties& givenProperties) {
 		std::cerr << "GLEW unable to initalize due to " << glewGetErrorString(lvError) << std::endl;
 		return;
 	}
+	glfwSetWindowUserPointer(lvWin, &lvWinData);
+	funcSetVSync(false);
 
+	glfwSetWindowSizeCallback(lvWin, [](GLFWwindow* givenWin, int givenW, int givenH) {
+		classWinData& lvData = *static_cast<classWinData*>(glfwGetWindowUserPointer(givenWin));
+		lvData.lvWidth = givenW;
+		lvData.lvHeight = givenH;
+		classWindowResizeEvent lvEvent(givenW, givenH);
+		lvData.lvEventCallback(lvEvent);
+	});
+
+
+	
+
+}
+
+void classWindowsWin::funcWinShutdown() {
+	glfwDestroyWindow(lvWin);
+	gvGLFWInit = false;
+	glfwTerminate();
+}
+
+void classWindowsWin::funcUpdate() {
+	glfwPollEvents();
+
+}
+
+void classWindowsWin::funcSetVSync(bool enable) {
+	if (enable) {
+		glfwSwapInterval(1);
+	}
+	else {
+		glfwSwapInterval(0);
+	}
+	lvWinData.lvVsyncEnabled = enable;
+}
+
+bool classWindowsWin::funcGetVsync() const {
+	return lvWinData.lvVsyncEnabled;
 }
