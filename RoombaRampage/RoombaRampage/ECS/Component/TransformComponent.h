@@ -8,7 +8,7 @@ class TransformComponent : public Component {
 
 public:
 	Vec2 position{};
-	float roation{};
+	float rotation{};
 	float scale{};
 };
 

@@ -3,7 +3,7 @@
 #include "imgui_impl_opengl3.h"
 #include "../ECS/ECS.h"
 
-ImGuiHandler::ImGuiHandler(){} //CTOR
+ImGuiHandler::ImGuiHandler(){} //CTORdoing 
 
 ImGuiHandler::~ImGuiHandler(){} //Destructor
 
