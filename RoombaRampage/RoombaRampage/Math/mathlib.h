@@ -1,4 +1,5 @@
-#pragma once
+#ifndef MATHLIB_H
+#define MATHLIB_H
 #include <math.h>
 #include <cmath>
 
@@ -92,3 +93,4 @@ class mathlib {
 	bool funcIsLessEqual(long double x, long double y);
 
 };
+#endif MATHLIB_H
