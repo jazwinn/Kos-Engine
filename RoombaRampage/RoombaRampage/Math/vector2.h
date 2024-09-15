@@ -5,7 +5,7 @@ class Vec2{
     struct{
         float x , y;
     };
-    float m[2];
+    float m[2]{};
 
     //constructor
     Vec2() : x(0.0f) , y(0.0f) {};
