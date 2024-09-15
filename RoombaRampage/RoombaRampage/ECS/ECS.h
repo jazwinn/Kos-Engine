@@ -52,9 +52,11 @@ public:
 
 	static EntityID CreateEntity();
 
+	static EntityID DuplicateEntity(EntityID);
+
 	static bool DeleteEntity(EntityID);
 
-	static void AddComponent(ComponentType ,EntityID );
+	static void* AddComponent(ComponentType ,EntityID );
 
 	static void RegisterSystems(EntityID);
 
