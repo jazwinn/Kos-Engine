@@ -123,16 +123,14 @@
     <ClCompile Include="Graphics\GraphicsPipe.cpp">
       <Filter>Source Files\Graphics</Filter>
     </ClCompile>
-<<<<<<< HEAD
     <ClCompile Include="WinApp\windowswindow.cpp">
       <Filter>Source Files\WinApp</Filter>
-=======
+    </ClCompile>
     <ClCompile Include="Application\Application.cpp">
       <Filter>Source Files\Application</Filter>
     </ClCompile>
     <ClCompile Include="Application\Window.cpp">
       <Filter>Source Files\Application</Filter>
->>>>>>> currentUpstream
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -226,7 +224,6 @@
     <ClInclude Include="Graphics\GraphicsPipe.h">
       <Filter>Header Files\Graphics</Filter>
     </ClInclude>
-<<<<<<< HEAD
     <ClInclude Include="Events\mouseEvents.h">
       <Filter>Header Files\Events</Filter>
     </ClInclude>
@@ -244,13 +241,12 @@
     </ClInclude>
     <ClInclude Include="WinApp\windowswindow.h">
       <Filter>Header Files\WinApp</Filter>
-=======
+    </ClInclude>
     <ClInclude Include="Application\Application.h">
       <Filter>Header Files\Application</Filter>
     </ClInclude>
     <ClInclude Include="Application\Window.h">
       <Filter>Header Files\Application</Filter>
->>>>>>> currentUpstream
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

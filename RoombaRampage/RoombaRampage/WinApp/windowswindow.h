@@ -12,7 +12,7 @@ public:
 	void funcSetEventCallback(const eventCallbackFunc& givenCallback) override {lvWinData.lvEventCallback = givenCallback; }
 	void funcSetVSync(bool enable) override;
 	bool funcGetVsync() const override;
-	virtual void* funcGetNatWin() const { return lvWin; }
+	virtual void* funcGetNatWin() const override{ return lvWin; }
 private:
 	virtual void funcWinInit(const classWinProperties& givenProps);
 	virtual void funcWinShutdown();

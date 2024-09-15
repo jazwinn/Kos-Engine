@@ -145,6 +145,7 @@
     <ClCompile Include="Application\imgui_handler.cpp" />
     <ClCompile Include="Application\main.cpp" />
     <ClCompile Include="Application\Window.cpp" />
+    <ClCompile Include="baseInput.cpp" />
     <ClCompile Include="Dependencies\imgui\imgui.cpp" />
     <ClCompile Include="Dependencies\imgui\imgui_demo.cpp" />
     <ClCompile Include="Dependencies\imgui\imgui_draw.cpp" />
@@ -163,10 +164,12 @@
     <ClCompile Include="Math\Mat2x2.cpp" />
     <ClCompile Include="Math\Mat3x3.cpp" />
     <ClCompile Include="Math\vector2.cpp" />
+    <ClCompile Include="WinApp\windowsApp.cpp" />
     <ClCompile Include="WinApp\windowswindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Application.h" />
+    <ClInclude Include="Application\baseInput.h" />
     <ClInclude Include="Application\imgui_handler.h" />
     <ClInclude Include="Application\Window.h" />
     <ClInclude Include="Dependencies\imgui\imconfig.h" />
@@ -203,6 +206,7 @@
     <ClInclude Include="Math\Mat3x3.h" />
     <ClInclude Include="Math\vector2.h" />
     <ClInclude Include="WinApp\window.h" />
+    <ClInclude Include="WinApp\windowsApp.h" />
     <ClInclude Include="WinApp\windowswindow.h" />
   </ItemGroup>
   <ItemGroup>

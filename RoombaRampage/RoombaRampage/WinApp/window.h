@@ -23,6 +23,7 @@ public:
 	virtual void funcSetEventCallback(const eventCallbackFunc& givenCallback) = 0;
 	virtual void funcSetVSync(bool enable) = 0;
 	virtual bool funcGetVsync() const = 0;
+	virtual void* funcGetNatWin() const = 0;
 
 	static classWindow* funcCreateWindow(const classWinProperties& givenProperties = classWinProperties());
 };
