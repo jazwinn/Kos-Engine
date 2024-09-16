@@ -123,6 +123,7 @@
     <ClCompile Include="Application\Window.cpp">
       <Filter>Source Files\Application</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="Phyiscs.cpp">
       <Filter>Source Files\Phyisc</Filter>
     </ClCompile>
@@ -131,9 +132,10 @@
     </ClCompile>
     <ClCompile Include="Math\vector2.cpp">
       <Filter>Source Files\Math</Filter>
-    </ClCompile>
+=======
     <ClCompile Include="Application\imgui_component_window.cpp">
       <Filter>Source Files</Filter>
+>>>>>>> main
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

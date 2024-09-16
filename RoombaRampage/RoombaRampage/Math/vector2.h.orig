@@ -39,7 +39,10 @@ namespace Vector2 {
         static float funcVec2CrossProduct(const Vec2& pVec0, const Vec2& pVec1);
 
     };
+<<<<<<< HEAD
+=======
     float m[2]{};
+>>>>>>> main
 
     Vec2 operator + (const Vec2& lhs, const Vec2& rhs);
     Vec2 operator - (const Vec2& lhs, const Vec2& rhs);
