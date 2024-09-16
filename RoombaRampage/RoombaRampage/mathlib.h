@@ -93,4 +93,5 @@ class mathlib {
 	bool funcIsLessEqual(long double x, long double y);
 
 };
+
 #endif MATHLIB_H

@@ -163,7 +163,9 @@
     <ClCompile Include="Application\imgui_hierarchy_window.cpp" />
     <ClCompile Include="Math\Mat2x2.cpp" />
     <ClCompile Include="Math\Mat3x3.cpp" />
+    <ClCompile Include="Math\mathlib.cpp" />
     <ClCompile Include="Math\vector2.cpp" />
+    <ClCompile Include="Phyiscs.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Application.h" />
@@ -197,7 +199,9 @@
     <ClInclude Include="Graphics\GraphicsPipe.h" />
     <ClInclude Include="Math\Mat2x2.h" />
     <ClInclude Include="Math\Mat3x3.h" />
+    <ClInclude Include="Math\mathlib.h" />
     <ClInclude Include="Math\vector2.h" />
+    <ClInclude Include="Physics.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Graphics\genericFragmentShader.frag" />
