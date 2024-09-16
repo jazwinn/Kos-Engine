@@ -1,6 +1,6 @@
 // #include "../Math/vector2.h"
 
-#include "vector2.h"
+#include "../Math/vector2.h"
 
 
 Vector2::Vec2::Vec2(float _x, float _y) {
@@ -37,37 +37,37 @@ Vector2::Vec2 Vector2::Vec2::operator - () const {
     return Vec2(-x, -y);
 }
 
-Vector2::Vec2 operator + (const Vector2::Vec2& lhs, const Vector2::Vec2& rhs) {
+Vector2::Vec2 Vector2::operator + (const Vector2::Vec2& lhs, const Vector2::Vec2& rhs) {
     float tempX = lhs.x + rhs.x;
     float tempY = lhs.y + rhs.y;
     return Vector2::Vec2(tempX, tempY);
 }
 
-Vector2::Vec2 operator - (const Vector2::Vec2& lhs, const Vector2::Vec2& rhs) {
+Vector2::Vec2 Vector2::operator - (const Vector2::Vec2& lhs, const Vector2::Vec2& rhs) {
     float tempX = lhs.x - rhs.x;
     float tempY = lhs.y - rhs.y;
     return Vector2::Vec2(tempX, tempY);
 }
 
-Vector2::Vec2 operator * (const Vector2::Vec2& lhs, float rhs) {
+Vector2::Vec2 Vector2::operator * (const Vector2::Vec2& lhs, float rhs) {
     float tempX = lhs.x * rhs;
     float tempY = lhs.y * rhs;
     return Vector2::Vec2(tempX, tempY);
 }
 
-Vector2::Vec2 operator * (float lhs, const Vector2::Vec2& rhs) {
+Vector2::Vec2 Vector2::operator * (float lhs, const Vector2::Vec2& rhs) {
     float tempX = rhs.x * lhs;
     float tempY = rhs.y * lhs;
     return Vector2::Vec2(tempX, tempY);
 }
 
-Vector2::Vec2 operator * (Vector2::Vec2& lhs, Vector2::Vec2& rhs) {
+Vector2::Vec2 Vector2::operator * (const Vec2& lhs, const Vec2& rhs) {
     float tempX = lhs.x * rhs.x;
     float tempY = lhs.y * rhs.y;
     return Vector2::Vec2(tempX, tempY);
 }
 
-Vector2::Vec2 operator / (const Vector2::Vec2& lhs, float rhs) {
+Vector2::Vec2 Vector2::operator / (const Vector2::Vec2& lhs, float rhs) {
     float tempX = lhs.x / rhs;
     float tempY = lhs.y / rhs;
     return Vector2::Vec2(tempX, tempY);
@@ -124,3 +124,4 @@ float Vector2::Vec2::funcVec2CrossProduct(const Vec2& pVec0, const Vec2& pVec1) 
     float result = temp1 - temp2;
     return result;
 }
+

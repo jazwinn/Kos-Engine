@@ -8,7 +8,7 @@ namespace Vector2 {
         struct {
             float x, y;
         };
-        float m[2];
+        float m[2]{};
 
         //constructor
         Vec2() : x(0.0f), y(0.0f) {};
@@ -39,7 +39,6 @@ namespace Vector2 {
         static float funcVec2CrossProduct(const Vec2& pVec0, const Vec2& pVec1);
 
     };
-    float m[2]{};
 
     Vec2 operator + (const Vec2& lhs, const Vec2& rhs);
     Vec2 operator - (const Vec2& lhs, const Vec2& rhs);

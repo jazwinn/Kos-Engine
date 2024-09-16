@@ -9,7 +9,7 @@ class TransformComponent : public Component {
 public:
 
 	Vector2::Vec2 position{};
-	float roation{};
+	float rotation{};
 	float scale{};
 };
 
