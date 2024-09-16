@@ -121,7 +121,7 @@
       <Filter>Source Files\Application</Filter>
     </ClCompile>
     <ClCompile Include="Application\imgui_component_window.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Application</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
