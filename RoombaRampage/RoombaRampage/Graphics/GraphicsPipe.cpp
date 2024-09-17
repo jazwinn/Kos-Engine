@@ -15,22 +15,41 @@ const std::string genericFragmentShader =
   #include "../Graphics/genericFragmentShader.frag"
 };
 
+
 GraphicsPipe* GraphicsPipe::instancePtr = new GraphicsPipe{};
 
-//Class Constructor with Parameter
-//GraphicsPipe::GraphicsPipe()
-//{
-//	/*squareMesh.shapeType = SQUARE;
-//	squareLinesMesh.shapeType = SQUARE_LINES;
-//
-//	funcSetupVao(squareMesh);
-//	funcSetupVao(squareLinesMesh);
-//	funcSetDrawMode(GL_FILL);
-//	funcSetupShader(genericVertexShader, genericFragmentShader);*/
-//
-//	//modelToNDCMatrix.push_back({ 1,0,0,0,1,0,0,0,1 });
-//
-//}
+
+void GLAPIENTRY DebugCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam)
+{
+	std::cerr << "OpenGL Debug Message: " << message << std::endl;
+}
+
+void GraphicsPipe::funcInit()
+{
+	squareMesh.shapeType = SQUARE;
+	squareLinesMesh.shapeType = SQUARE_LINES;
+	testMatrix = { 1,0,0,0,1,0,0,0,1 };
+	modelData.reserve(2500);
+	modelToNDCMatrix.reserve(2500);
+
+	funcSetupVao(squareMesh);
+	funcSetupVao(squareLinesMesh);
+	funcSetDrawMode(GL_FILL);
+	funcSetupShader(genericVertexShader, genericFragmentShader);
+
+	modelToNDCMatrix.push_back(testMatrix);
+	funcSetupArrayBuffer();
+
+	GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+	const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+	int windowWidth = mode->width;
+	int windowHeight = mode->height;
+	aspectRatio = static_cast<float>(static_cast<float>(windowHeight) / static_cast<float>(windowWidth));
+
+	//glEnable(GL_DEBUG_OUTPUT);
+	//glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+	//glDebugMessageCallback(DebugCallback, nullptr);
+}
 
 GraphicsPipe::~GraphicsPipe() {
 	delete instancePtr;
@@ -115,6 +134,31 @@ void GraphicsPipe::funcSetupVao(Mesh &shape)
 	glBindVertexArray(0);
 }
 
+void GraphicsPipe::funcSetupArrayBuffer()
+{
+	glGenBuffers(1, &modelMatrixArrayBuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, modelMatrixArrayBuffer);
+	glBufferData(GL_ARRAY_BUFFER, modelToNDCMatrix.size() * sizeof(glm::mat3), &modelToNDCMatrix[0], GL_DYNAMIC_DRAW);
+	glBindVertexArray(squareMesh.vaoId);
+	unsigned int location = 3;
+	for (int i = 0; i < 3; ++i)
+	{
+		glEnableVertexAttribArray(location + i);
+		glVertexAttribPointer(location + i, 3, GL_FLOAT, GL_FALSE, sizeof(glm::mat3), (void*)(sizeof(glm::vec3) * i));
+		glVertexAttribDivisor(location + i, 1);
+	}
+
+	glBindVertexArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);	
+}
+
+void GraphicsPipe::funcSetupTextureArray()
+{
+	//glGenTextures(1, &textureArrayBuffer);
+	//glBindTexture(GL_TEXTURE_2D_ARRAY, textureArrayBuffer);
+	//glTexImage3D(GL_TEXTURE_2D_ARRAY,0,GL_RGBA8, )
+}
+
 void GraphicsPipe::funcSortDrawOrder()
 {
 	if (!modelData.empty())
@@ -127,30 +171,19 @@ void GraphicsPipe::funcSortDrawOrder()
 	
 }
 
-void GraphicsPipe::funcInit()
-{
-	squareMesh.shapeType = SQUARE;
-	squareLinesMesh.shapeType = SQUARE_LINES;
-
-	funcSetupVao(squareMesh);
-	funcSetupVao(squareLinesMesh);
-	funcSetDrawMode(GL_FILL);
-	funcSetupShader(genericVertexShader, genericFragmentShader);
-
-	testMatrix = { 1,0,0,0,1,0,0,0,1 };
-}
 
 void GraphicsPipe::funcUpdate()
 {
-	if (modelData.size() > 0) {
-		for (int n{}; n < modelData.size(); n++) {
-
+	if (modelData.size() > 0) 
+	{
+		for (int n{}; n < modelData.size(); n++) 
+		{
 			glm::mat3 lvScale{ modelData[n].scale.x, 0, 0, 0, modelData[n].scale.y, 0, 0 , 0 ,1 };
 			glm::mat3 lvRotate{ cos(modelData[n].rotate * 3.1415f / 180.f), sin(modelData[n].rotate * 3.1415f / 180.f), 0.f,
-							-sin(modelData[n].rotate * 3.1415f / 180.f), cos(modelData[n].rotate * 3.1415f / 180.f), 0.f,
-							0.f , 0.f ,1.f };
+							   -sin(modelData[n].rotate * 3.1415f / 180.f), cos(modelData[n].rotate * 3.1415f / 180.f), 0.f,
+							    0.f , 0.f ,1.f };
 			glm::mat3 lvTranslate{ 1, 0, 0, 0, 1, 0, modelData[n].worldCoordinates.x , modelData[n].worldCoordinates.y ,1 };
-			glm::mat3 lvNDCScale{ 1.f, 0, 0, 0, 1.f, 0, 0 , 0 ,1 };
+			glm::mat3 lvNDCScale{ aspectRatio, 0, 0, 0, 1.f, 0, 0 , 0 ,1.f };
 			modelToNDCMatrix.push_back(lvNDCScale * lvTranslate * lvRotate * lvScale);
 		}
 	}
@@ -164,9 +197,11 @@ void GraphicsPipe::funcDraw(Mesh shape)
 
 	if (!modelToNDCMatrix.empty())
 	{
+		glBindBuffer(GL_ARRAY_BUFFER, modelMatrixArrayBuffer);
+		glNamedBufferData(modelMatrixArrayBuffer, modelToNDCMatrix.size() * sizeof(glm::mat3), &modelToNDCMatrix[0], GL_DYNAMIC_DRAW);
 		glUseProgram(genericShaderProgram);
-
-		GLint lvUniformVarLoc1 =
+		//Leave this here for future uniform variables
+		/*GLint lvUniformVarLoc1 =
 			glGetUniformLocation(genericShaderProgram,
 				"modelToNDCMatrix");
 		if (lvUniformVarLoc1 >= 0)
@@ -178,11 +213,11 @@ void GraphicsPipe::funcDraw(Mesh shape)
 		{
 			std::cout << "Uniform variable doesn't exist!!!\n";
 			std::exit(EXIT_FAILURE);
-		}
-
+		}*/
 		glBindVertexArray(shape.vaoId);
-		glDrawElements(shape.primitiveType, shape.indexElementCount, GL_UNSIGNED_SHORT, NULL);
+		glDrawElementsInstanced(shape.primitiveType, shape.indexElementCount, GL_UNSIGNED_SHORT, NULL, modelToNDCMatrix.size());
 		glBindVertexArray(0);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		modelToNDCMatrix.clear();
 	}
 	if (!modelData.empty())
