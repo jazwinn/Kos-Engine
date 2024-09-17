@@ -116,7 +116,7 @@ EntityID ECS::CreateEntity() {
 	 --------------------------------------------------------------*/
 	TransformComponent* Trans = (TransformComponent*)ecs->ECS_CombinedComponentPool[TypeTransformComponent]->GetEntityComponent(ID);
 
-	Trans->scale = { 0.5f };
+	Trans->scale = { 0.5f, 0.5f };
 
 	AddComponent(TypeSpriteComponent, ID);
 
