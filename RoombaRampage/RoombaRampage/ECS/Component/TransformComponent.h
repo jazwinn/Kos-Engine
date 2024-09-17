@@ -10,7 +10,7 @@ public:
 
 	Vector2::Vec2 position{};
 	float rotation{};
-	float scale{};
+	Vector2::Vec2 scale{};
 };
 
 #endif TRANSCOM_H

@@ -97,7 +97,7 @@ void RenderSystem::Update()
 		//sprite not need currently
 		//SpriteComponent* MovComp = vecSpriteComponentPtr[n];
 		TransformComponent* transform = vecTransformComponentPtr[n];
-		graphicsPipe->modelData.push_back({ transform->rotation, {transform->scale, transform->scale}, {transform->position.x,transform->position.y,0} });
+		graphicsPipe->modelData.push_back({ transform->rotation, {transform->scale.x, transform->scale.y}, {transform->position.x,transform->position.y,0} });
 	}
 
 
