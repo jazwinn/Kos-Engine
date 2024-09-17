@@ -55,8 +55,6 @@ void ImGuiHandler::DrawComponentWindow(ECS* ecs, EntityID entityID, bool& window
         ImGui::SameLine();
         ImGui::SetNextItemWidth(100.0f);
         ImGui::DragFloat("Y", &tc->scale.y, 0.02f, -1.0f, 1.0f, "%.2f");;
-
-        ImGui::End();
     }
     if (mc != nullptr)
     {
@@ -94,4 +92,5 @@ void ImGuiHandler::DrawComponentWindow(ECS* ecs, EntityID entityID, bool& window
         ImGui::Text("Add a component?");
         ImGui::End();
     }
+    ImGui::End();
 }
