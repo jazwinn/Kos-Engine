@@ -120,6 +120,8 @@ EntityID ECS::CreateEntity() {
 
 	AddComponent(TypeSpriteComponent, ID);
 
+	AddComponent(TypeMovemmentComponent, ID);
+
 	/*--------------------------------------------------------------*/
 
 	ecs->EntityCount++;

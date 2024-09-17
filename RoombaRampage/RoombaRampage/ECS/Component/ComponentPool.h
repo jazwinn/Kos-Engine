@@ -94,7 +94,7 @@ template <typename T>
 void* ComponentPool<T>::GetEntityComponent(EntityID ID){
 
 	for (auto& Component : Pool) {
-		if (Component.Entity == ID) {
+		if (Component.Entity == ID && Component.IsLive) {
 			return &Component;
 		}
 	}
