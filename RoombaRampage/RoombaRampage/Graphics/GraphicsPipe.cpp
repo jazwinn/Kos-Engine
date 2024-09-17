@@ -215,7 +215,7 @@ void GraphicsPipe::funcDraw(Mesh shape)
 			std::exit(EXIT_FAILURE);
 		}*/
 		glBindVertexArray(shape.vaoId);
-		glDrawElementsInstanced(shape.primitiveType, shape.indexElementCount, GL_UNSIGNED_SHORT, NULL, modelToNDCMatrix.size());
+		glDrawElementsInstanced(shape.primitiveType, shape.indexElementCount, GL_UNSIGNED_SHORT, NULL, static_cast<GLsizei>(modelToNDCMatrix.size()));
 		glBindVertexArray(0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		modelToNDCMatrix.clear();
