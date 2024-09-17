@@ -2,6 +2,9 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "../ECS/ECS.h"
+#include "../Dependencies/rapidjson/document.h"
+#include "../Dependencies/rapidjson/writer.h"
+#include "../Dependencies/rapidjson/stringbuffer.h"
 
 ImGuiHandler::ImGuiHandler(){} //CTORdoing 
 
