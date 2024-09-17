@@ -7,7 +7,7 @@ class MovementComponent : public Component {
 
 public:
 	float Speed{};
-	float velocity{};
+	Vector2::Vec2 velocity{};
 	float resistance;
 };
 
