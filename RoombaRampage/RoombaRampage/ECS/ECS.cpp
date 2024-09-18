@@ -51,8 +51,8 @@ void ECS::Unload() {
 	ECS* ecs = ECS::GetInstance();
 
 	//delete componentpool
-	for (size_t n{}; n < TotalTypeComponent; n++) {
-		delete ecs->ECS_CombinedComponentPool[(ComponentType)n];
+	for (auto& Component : ecs->ECS_CombinedComponentPool) {
+		delete Component.second;
 	}
 
 	//delete systems
