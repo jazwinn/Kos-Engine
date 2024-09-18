@@ -32,9 +32,11 @@ void ECS::Load() {
 }
 
 
-void ECS::Update() {
-
+void ECS::Update(float DT) {
+	
 	ECS* ecs = ECS::GetInstance();
+	//update deltatime
+	ecs->DeltaTime = DT;
 
 	//loops through all the system
 	for (auto& System : ecs->ECS_SystemMap) {

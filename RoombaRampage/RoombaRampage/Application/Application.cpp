@@ -21,6 +21,8 @@ namespace Application {
     ImGuiHandler imgui_manager;
     GraphicsPipe* pipe;
 
+    float LastTime = glfwGetTime();;
+
 
     int Application::Init() {
         /*--------------------------------------------------------------
@@ -59,7 +61,6 @@ namespace Application {
     int Application::Run() {
 
         ECS* ecs = ECS::GetInstance();
-
         /*--------------------------------------------------------------
          GAME LOOP
         --------------------------------------------------------------*/
@@ -68,6 +69,10 @@ namespace Application {
             /* Poll for and process events */
             glfwPollEvents();
 
+            //calculate DeltaTime
+            float CurrentTime = glfwGetTime();
+            float DeltaTime =  CurrentTime - LastTime;
+            LastTime = CurrentTime;
             /*--------------------------------------------------------------
              IMGUI FRAME SETUP
              --------------------------------------------------------------*/
@@ -84,7 +89,7 @@ namespace Application {
             /*--------------------------------------------------------------
              UPDATE ECS
              --------------------------------------------------------------*/
-            ecs->Update();
+            ecs->Update(DeltaTime);
 
             /*--------------------------------------------------------------
              UPDATE Render Pipeline
@@ -107,6 +112,7 @@ namespace Application {
              Draw IMGUI FRAME
              --------------------------------------------------------------*/
             imgui_manager.Render();
+
 
             glfwSwapBuffers(lvWindow.Window);
         }

@@ -12,9 +12,8 @@ namespace Application{
 
 		static int Cleanup();
 
-	private:
-
-
+		
+		
 	};
 
 
