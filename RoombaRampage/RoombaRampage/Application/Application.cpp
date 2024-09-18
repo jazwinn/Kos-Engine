@@ -10,8 +10,6 @@
 #include "imgui_impl_opengl3.h"
 #include "imgui_handler.h"
 
-
-
 namespace Application {
 
     /*--------------------------------------------------------------
@@ -78,12 +76,8 @@ namespace Application {
              --------------------------------------------------------------*/
             imgui_manager.NewFrame();
 
-            bool show_demo_window = true;
-            bool show_another_window = false;
             ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f); // <----- Is this needed?
-
-
-            imgui_manager.DrawHierachyWindow(show_demo_window, show_another_window, clear_color);
+            imgui_manager.DrawHierachyWindow(clear_color);
 
 
             /*--------------------------------------------------------------

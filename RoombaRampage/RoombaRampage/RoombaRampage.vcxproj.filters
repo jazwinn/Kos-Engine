@@ -93,9 +93,6 @@
     <ClCompile Include="Graphics\Graphics.cpp">
       <Filter>Source Files\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Application\main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Application\imgui_handler.cpp">
       <Filter>Source Files\Application</Filter>
     </ClCompile>
@@ -133,6 +130,12 @@
       <Filter>Source Files\Math</Filter>
     </ClCompile>
     <ClCompile Include="Application\imgui_component_window.cpp">
+      <Filter>Source Files\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\main.cpp">
+      <Filter>Source Files\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\json_handler.cpp">
       <Filter>Source Files\Application</Filter>
     </ClCompile>
   </ItemGroup>
@@ -239,6 +242,9 @@
     <ClInclude Include="Math\vector2.h">
       <Filter>Header Files\Math</Filter>
     </ClInclude>
+    <ClInclude Include="Application\json_handler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Graphics\genericFragmentShader.frag">
@@ -247,5 +253,6 @@
     <None Include="Graphics\genericVertexShader.vert">
       <Filter>Header Files\Graphics</Filter>
     </None>
+    <None Include="Json Texts\components.json" />
   </ItemGroup>
 </Project>
