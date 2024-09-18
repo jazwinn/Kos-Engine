@@ -69,21 +69,21 @@ void ImGuiHandler::DrawComponentWindow(ECS* ecs, EntityID entityID, bool& window
 
         // Display Velocity
         ImGui::AlignTextToFramePadding();
-        ImGui::Text("Velocity");
+        ImGui::Text("Direction");
         ImGui::SameLine(slider_start_pos_x);
         ImGui::SetNextItemWidth(100.0f);
-        ImGui::DragFloat("X##VelX", &mc->velocity.x, 0.02f, -10.0f, 10.0f, "%.2f");
+        ImGui::DragFloat("X##VelX", &mc->Direction.x, 0.02f, -1.0f, 1.0f, "%.2f");
 
         ImGui::SameLine();
         ImGui::SetNextItemWidth(100.0f);
-        ImGui::DragFloat("Y##VelY", &mc->velocity.y, 0.02f, -10.0f, 10.0f, "%.2f");
+        ImGui::DragFloat("Y##VelY", &mc->Direction.y, 0.02f, -1.0f, 1.0f, "%.2f");
 
-        // Display Resistance
-        ImGui::AlignTextToFramePadding();
-        ImGui::Text("Resistance");
-        ImGui::SameLine(slider_start_pos_x);
-        ImGui::SetNextItemWidth(100.0f);
-        ImGui::DragFloat("##Res", &mc->resistance, 0.01f, 0.0f, 5.0f, "%.2f");
+        //// Display Resistance
+        //ImGui::AlignTextToFramePadding();
+        //ImGui::Text("Resistance");
+        //ImGui::SameLine(slider_start_pos_x);
+        //ImGui::SetNextItemWidth(100.0f);
+        //ImGui::DragFloat("##Res", &mc->resistance, 0.01f, 0.0f, 5.0f, "%.2f");
 
     }
     else

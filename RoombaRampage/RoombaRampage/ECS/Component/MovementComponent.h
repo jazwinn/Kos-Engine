@@ -7,8 +7,8 @@ class MovementComponent : public Component {
 
 public:
 	float Speed{};
-	Vector2::Vec2 velocity{};
-	float resistance;
+	Vector2::Vec2 Direction{};
+
 };
 
 #endif MOVECOM_H

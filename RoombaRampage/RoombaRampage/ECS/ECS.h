@@ -44,7 +44,7 @@ public:
 	static void Init();
 
 	//Update loops that updates the ECS
-	static void Update();
+	static void Update(float DeltaTime);
 
 	//Unloads and free all memory
 	static void Unload();
@@ -71,7 +71,7 @@ public:
 
 	EntityID EntityCount{};
 
-
+	float DeltaTime{};
 
 private:
 	static ECS* InstancePtr;
