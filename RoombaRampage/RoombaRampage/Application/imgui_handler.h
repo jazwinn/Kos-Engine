@@ -20,11 +20,8 @@ public:
     void Render();
     void Shutdown();
 
-    void DrawDemoWindow(bool& show_demo_window);
-    void DrawAnotherWindow(bool& show_another_window);
-
     void DrawComponentWindow(ECS* ecs, EntityID entityID, bool& windowOpen, const std::string& windowTitle);
-    unsigned int DrawHierachyWindow(bool& show_demo_window, bool& show_another_window, ImVec4& clear_color);
+    unsigned int DrawHierachyWindow(ImVec4& clear_color);
     unsigned int clicked_entity_id;
 
 private:

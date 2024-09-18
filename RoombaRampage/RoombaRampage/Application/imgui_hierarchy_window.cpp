@@ -7,7 +7,7 @@
 #include<string>
 #include <iostream>
 
-unsigned int ImGuiHandler::DrawHierachyWindow(bool& show_demo_window, bool& show_another_window, ImVec4& clear_color)
+unsigned int ImGuiHandler::DrawHierachyWindow(ImVec4& clear_color)
 {
     //fetch ecs
     ECS* ecs = ECS::GetInstance();
