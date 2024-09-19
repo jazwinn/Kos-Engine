@@ -52,6 +52,15 @@
     <Filter Include="Source Files\ECS\System">
       <UniqueIdentifier>{7d862d57-494a-488c-acf8-0ab86a262b9d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\WinApp">
+      <UniqueIdentifier>{487a1667-730a-4cd3-93c4-924ceb0e6e9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Events">
+      <UniqueIdentifier>{df8aa6d1-f2b9-45c8-9588-5dd5cbb61082}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\WinApp">
+      <UniqueIdentifier>{d0b078d7-ebd4-44cd-82be-be83431cc60c}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Header Files\Phyisc">
       <UniqueIdentifier>{08680b2c-947a-44d9-94dc-251ba73e9ec7}</UniqueIdentifier>
     </Filter>
@@ -63,6 +72,12 @@
     </Filter>
     <Filter Include="Header Files\Assets">
       <UniqueIdentifier>{b0f4c1b4-75f4-42c0-b690-9859577ed47a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Input">
+      <UniqueIdentifier>{42814e3e-029b-4116-b058-3da1664ff3f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Input">
+      <UniqueIdentifier>{c5f70c75-0f04-46d1-8910-8394246d512c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -120,6 +135,9 @@
     <ClCompile Include="Graphics\GraphicsPipe.cpp">
       <Filter>Source Files\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="WinApp\windowswindow.cpp">
+      <Filter>Source Files\WinApp</Filter>
+    </ClCompile>
     <ClCompile Include="Application\Application.cpp">
       <Filter>Source Files\Application</Filter>
     </ClCompile>
@@ -146,6 +164,12 @@
     </ClCompile>
     <ClCompile Include="Assets\AssetManager.cpp">
       <Filter>Source Files\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="WinApp\windowsApp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="baseInput.cpp">
+      <Filter>Source Files\Input</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -236,6 +260,24 @@
     <ClInclude Include="Graphics\GraphicsPipe.h">
       <Filter>Header Files\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="Events\mouseEvents.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\windowEvents.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\keyEvents.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\baseEvent.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="WinApp\window.h">
+      <Filter>Header Files\WinApp</Filter>
+    </ClInclude>
+    <ClInclude Include="WinApp\windowswindow.h">
+      <Filter>Header Files\WinApp</Filter>
+    </ClInclude>
     <ClInclude Include="Application\Application.h">
       <Filter>Header Files\Application</Filter>
     </ClInclude>
@@ -259,6 +301,12 @@
     </ClInclude>
     <ClInclude Include="Assets\AssetManager.h">
       <Filter>Header Files\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="WinApp\windowsApp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\baseInput.h">
+      <Filter>Header Files\Input</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
