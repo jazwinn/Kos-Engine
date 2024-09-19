@@ -3,9 +3,7 @@
 #include <string>
 
 #include "Component.h"
-#include "glew.h"
-#include "glfw3.h"
-#include "glm.hpp"
+
 //#include "../ECS/System/RenderSystem.h"
 
 namespace Ecs {

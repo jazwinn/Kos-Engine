@@ -1,26 +1,20 @@
-#include "../Physics.h"
+#include "Physics.h"
 
-namespace PHYSICS {
-	void classPhysics::funcRetrievePhysicsData() {
+namespace Physics {
+	void classPhysics::funcRetrievePhysicsData(Vector2::Vec2 position, Vector2::Vec2 velocity, int ID) {
 		//get the data store
 		PhysicsData obj;
-		obj.m_radius = 5.0f;
+		obj.ID = ID;
+		obj.position = position;
+		obj.velocity = velocity;
 		physicsEntities.push_back(obj);
-		//calculate the boundingbox
 	}
 	void classPhysics::funcCollisionCheck() {
-		/*
-			loop thru everything
-			if player
-			following GIT Asteroids
-		*/
-
 		//calculate boarding box
 		funcCalculateBoundingBox();
 
 		for (size_t i = 0; i < physicsEntities.size(); ++i) {
 			for (size_t j = 0; j < physicsEntities.size(); ++j) {
-				//checking of which type
 				if (physicsEntities[i].ID != physicsEntities[j].ID) {
 					if (funcCollisionIntersection_RectRect(physicsEntities[i], physicsEntities[j])) {
 						//checking whether if entity is alr added inside
@@ -33,16 +27,23 @@ namespace PHYSICS {
 		}
 	}
 
-	std::vector<PhysicsData> classPhysics::funcPassPhysicsData() const{
-		return collidedEntities;
+	std::vector<PhysicsData> classPhysics::funcPassPhysicsData() {
+		std::vector<PhysicsData> temp = collidedEntities;
+		funcClearEntites();
+		return temp;
+	}
+
+	void classPhysics::funcClearEntites(){
+		physicsEntities.clear();
+		collidedEntities.clear();
 	}
 
 	//calculate boundingbox
 	void classPhysics::funcCalculateBoundingBox() {
 		for (size_t i = 0; i < physicsEntities.size(); ++i) {
 			AABB boundingBox; 
-			boundingBox.min = { physicsEntities[i].center.x - (bounding_rect_size * 0.5f), physicsEntities[i].center.y - (bounding_rect_size * 0.5f)};
-			boundingBox.max = { physicsEntities[i].center.x + (bounding_rect_size * 0.5f), physicsEntities[i].center.y + (bounding_rect_size * 0.5f) };
+			boundingBox.min = { physicsEntities[i].position.x - (bounding_rect_size * 0.5f), physicsEntities[i].position.y - (bounding_rect_size * 0.5f)};
+			boundingBox.max = { physicsEntities[i].position.x + (bounding_rect_size * 0.5f), physicsEntities[i].position.y + (bounding_rect_size * 0.5f) };
 			physicsEntities[i].boundingBox = boundingBox;
 		}
 	}
@@ -139,17 +140,17 @@ namespace PHYSICS {
 		Vector2::Vec2 shortestDistance{};
 
 
-		if (circle.center.x < rect.boundingBox.min.x) shortestDistance.x = rect.boundingBox.min.x;
-		else if (circle.center.x > rect.boundingBox.max.x) shortestDistance.x = rect.boundingBox.max.x;
-		else shortestDistance.x = circle.center.x;
+		if (circle.position.x < rect.boundingBox.min.x) shortestDistance.x = rect.boundingBox.min.x;
+		else if (circle.position.x > rect.boundingBox.max.x) shortestDistance.x = rect.boundingBox.max.x;
+		else shortestDistance.x = circle.position.x;
 
-		if (circle.center.y < rect.boundingBox.min.y) shortestDistance.y = rect.boundingBox.min.y;
-		else if (circle.center.y > rect.boundingBox.max.y) shortestDistance.y = rect.boundingBox.max.y;
-		else shortestDistance.y = circle.center.y;
+		if (circle.position.y < rect.boundingBox.min.y) shortestDistance.y = rect.boundingBox.min.y;
+		else if (circle.position.y > rect.boundingBox.max.y) shortestDistance.y = rect.boundingBox.max.y;
+		else shortestDistance.y = circle.position.y;
 
 
-		float Y_Square = static_cast<float>(pow((circle.center.x - shortestDistance.x), 2));
-		float X_Square = static_cast<float>(pow((circle.center.y - shortestDistance.y), 2));
+		float Y_Square = static_cast<float>(pow((circle.position.x - shortestDistance.x), 2));
+		float X_Square = static_cast<float>(pow((circle.position.y - shortestDistance.y), 2));
 		float distance_Square = Y_Square + X_Square;
 
 		return distance_Square <= (circle.m_radius * circle.m_radius);
