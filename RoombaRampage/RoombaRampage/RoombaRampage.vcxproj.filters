@@ -52,7 +52,6 @@
     <Filter Include="Source Files\ECS\System">
       <UniqueIdentifier>{7d862d57-494a-488c-acf8-0ab86a262b9d}</UniqueIdentifier>
     </Filter>
-<<<<<<< HEAD
     <Filter Include="Header Files\WinApp">
       <UniqueIdentifier>{487a1667-730a-4cd3-93c4-924ceb0e6e9d}</UniqueIdentifier>
     </Filter>
@@ -61,7 +60,7 @@
     </Filter>
     <Filter Include="Source Files\WinApp">
       <UniqueIdentifier>{d0b078d7-ebd4-44cd-82be-be83431cc60c}</UniqueIdentifier>
-=======
+    </Filter>
     <Filter Include="Header Files\Phyisc">
       <UniqueIdentifier>{08680b2c-947a-44d9-94dc-251ba73e9ec7}</UniqueIdentifier>
     </Filter>
@@ -73,7 +72,6 @@
     </Filter>
     <Filter Include="Header Files\Assets">
       <UniqueIdentifier>{b0f4c1b4-75f4-42c0-b690-9859577ed47a}</UniqueIdentifier>
->>>>>>> CurrentUpstream
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -43,6 +43,8 @@ namespace Application {
 		void funcWinInit(const winProperties& givenProps);
 		//AppWindow* funcGetRawWin() { return new AppWindow; };
 		void* funcGetNatWin() const { return lvGLFWWin; }
+		void* funcGetMonitor() const { return lvMon; }
+		void* funcGetVidMode() const { return lvMode; }
 
 		static AppWindow* funcCreateWindow(const winProperties& givenProperties = winProperties());
 
@@ -51,10 +53,11 @@ namespace Application {
 		int Draw(ImVec4 ClearColor);
 
 		//int CleanUp();
+		void funcWinShutdown();
 
 	private:
 		
-		void funcWinShutdown();
+		
 		GLFWwindow* lvGLFWWin;
 		GLFWmonitor* lvMon;
 		GLFWvidmode* lvMode;

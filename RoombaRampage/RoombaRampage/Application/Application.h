@@ -23,12 +23,11 @@ namespace Application{
 	class Application {
 
 	public:
-
+		~Application() = default;
 
 		void funcEvent(classEvent& givenEvent);
 		inline AppWindow& funcGetWin() { return *lvWin; }
 		static Application& funcGetApp();
-		//void funcStopApp() { lvIsRunning = false; }
 
 		float gvDt{};
 		const float gvFixedDt = 1.f / 60.f;
@@ -39,24 +38,18 @@ namespace Application{
 
 		static int Cleanup();
 
-<<<<<<< HEAD
-		Vec2 lvMousePos{};
 
-		static std::unique_ptr<AppWindow> lvWin;
+		Vector2::Vec2 lvMousePos{};
+
+		
 
 	private:
-		//bool funcOnWinClose(classWindowClosedEvent& givenEvent);
-		//bool funcOnWinResize(classWindowResizeEvent& givenEvent);
 		bool funcOnMouseMove(classMouseMoveEvent& givenEvent);
-		
-		//bool lvIsRunning;
+		static std::unique_ptr<AppWindow> lvWin;
 		static Application* lvInstance;
+		bool isRunning = true;
 
 
-=======
-		
-		
->>>>>>> CurrentUpstream
 	};
 
 

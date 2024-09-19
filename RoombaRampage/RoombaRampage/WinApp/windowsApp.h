@@ -38,7 +38,7 @@ private:
 	std::unique_ptr<classWindow> lvWin{};
 	bool lvIsRunning;
 	static classWindowsApp* lvInstance;
-	Vec2 lvWinSize{};
+	Vector2::Vec2 lvWinSize{};
 	int lvWinWidth{}, lvWinHeight{};
 	int lvWinPosX{}, lvWinPosY{};
 	bool lvIsFullscrean = true;

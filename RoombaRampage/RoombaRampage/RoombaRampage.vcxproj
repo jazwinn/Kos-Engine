@@ -148,11 +148,8 @@
     <ClCompile Include="Application\json_handler.cpp" />
     <ClCompile Include="Application\main.cpp" />
     <ClCompile Include="Application\Window.cpp" />
-<<<<<<< HEAD
     <ClCompile Include="baseInput.cpp" />
-=======
     <ClCompile Include="Assets\AssetManager.cpp" />
->>>>>>> CurrentUpstream
     <ClCompile Include="Dependencies\imgui\imgui.cpp" />
     <ClCompile Include="Dependencies\imgui\imgui_demo.cpp" />
     <ClCompile Include="Dependencies\imgui\imgui_draw.cpp" />
@@ -172,12 +169,9 @@
     <ClCompile Include="Math\Mat3x3.cpp" />
     <ClCompile Include="Math\mathlib.cpp" />
     <ClCompile Include="Math\vector2.cpp" />
-<<<<<<< HEAD
     <ClCompile Include="WinApp\windowsApp.cpp" />
     <ClCompile Include="WinApp\windowswindow.cpp" />
-=======
     <ClCompile Include="Phyiscs.cpp" />
->>>>>>> CurrentUpstream
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Application.h" />
@@ -221,13 +215,10 @@
     <ClInclude Include="Math\Mat3x3.h" />
     <ClInclude Include="Math\mathlib.h" />
     <ClInclude Include="Math\vector2.h" />
-<<<<<<< HEAD
     <ClInclude Include="WinApp\window.h" />
     <ClInclude Include="WinApp\windowsApp.h" />
     <ClInclude Include="WinApp\windowswindow.h" />
-=======
     <ClInclude Include="Physics.h" />
->>>>>>> CurrentUpstream
   </ItemGroup>
   <ItemGroup>
     <None Include="Graphics\genericFragmentShader.frag" />

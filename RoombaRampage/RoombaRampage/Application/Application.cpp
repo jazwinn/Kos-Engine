@@ -1,7 +1,6 @@
 #include "Application.h"
 
-<<<<<<< HEAD
-=======
+
 #include "../Graphics/GraphicsPipe.h"
 #include "../ECS/ECS.h"
 #include "Window.h"
@@ -10,7 +9,7 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_handler.h"
->>>>>>> CurrentUpstream
+
 
 namespace Application {
 
@@ -51,7 +50,6 @@ namespace Application {
     int Application::Init() {
        
 
-        //AppWindow lvTempWin
         std::string lvTitle{ "Roomba Rampage" };
         int lvWidth = 1280, lvHeight = 720;
         winProperties lvProps{};
@@ -148,21 +146,24 @@ namespace Application {
              --------------------------------------------------------------*/
             imgui_manager.Render();
 
-<<<<<<< HEAD
+
             funcGetApp().funcGetWin().funcUpdate();
 
             glfwSwapBuffers(static_cast<GLFWwindow*>(funcGetApp().funcGetWin().funcGetNatWin()));
 
             if (Input::classInput::funcIsKeyPress(GLFW_KEY_Q)) {
                 std::cout << "CHECKING!" << std::endl;
-                Cleanup();
+                funcGetApp().isRunning = false;
+                //Cleanup();
             }
-=======
 
-            glfwSwapBuffers(lvWindow.Window);
->>>>>>> CurrentUpstream
+
+            glfwSwapBuffers(static_cast<GLFWwindow*>(funcGetApp().funcGetWin().funcGetNatWin()));
+            if (funcGetApp().isRunning == false) {
+                Application::Cleanup();
+            }
         }
-
+        
         return 0;
 	}
 
@@ -171,8 +172,10 @@ namespace Application {
 
         ECS::GetInstance()->Unload();
         imgui_manager.Shutdown();
+        //funcGetApp().funcGetWin().funcGetNatWin();
+        funcGetApp().funcGetWin().funcWinShutdown();
         //funcGetApp().funcGetWin().CleanUp();
-        glfwTerminate();
+        //glfwTerminate();
 
         return 0;
 	}

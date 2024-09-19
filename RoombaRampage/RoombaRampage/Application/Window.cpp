@@ -1,46 +1,7 @@
 #include "Window.h"
 
-<<<<<<< HEAD
-
-
-=======
->>>>>>> CurrentUpstream
 namespace Application {
-    //temp commented
-	//int AppWindow::init(){
- //       /* Initialize the library */
- //       if (!glfwInit())
- //           return -1;
 
- //       // Get the primary monitor
- //       GLFWmonitor* monitor = glfwGetPrimaryMonitor();
- //       const GLFWvidmode* mode = glfwGetVideoMode(monitor);
-
- //       // Create a window based on the current screen size
- //       int windowWidth = mode->width;
- //       int windowHeight = mode->height;
-
- //       /* Create a windowed mode window and its OpenGL context */
- //       //Set third param to glfwGetPrimaryMonitor if you want fullscreen borderless
-
- //       Window = glfwCreateWindow(windowWidth, windowHeight, "Hello World", NULL, NULL);
- //       if (!Window)
- //       {
- //           glfwTerminate();
- //           return -1;
- //       }
- //       /* Make the window's context current */
- //       glfwMakeContextCurrent(Window);
-
- //       /* Only initialize GLEW after defining OpenGL context*/
- //       if (glewInit() != GLEW_OK)
- //       {
- //           std::cout << "Failed to initialize GLEW" << std::endl;
- //           return -1;
- //       }
-
- //       return 0;
-	//}
 
     static bool gvGLFWInit = false;
 
@@ -185,11 +146,6 @@ namespace Application {
         return 0;
 	}
 
-	//int AppWindow::CleanUp() {
-
- //       glfwDestroyWindow(lvWin);
- //       return 0;
-	//}
 
 
 }
