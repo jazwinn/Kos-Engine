@@ -3,12 +3,13 @@
 #include <vector>
 #include <map>
 #include <string>
+#include <memory>
 
 class AssetManager
 {
 private:
 	//Access Point
-	static AssetManager* instancePtr;
+	static std::unique_ptr<AssetManager> instancePtr;
 
 
 	//Image dimensions required for our engine

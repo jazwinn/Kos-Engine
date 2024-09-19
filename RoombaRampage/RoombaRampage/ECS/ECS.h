@@ -24,8 +24,8 @@ private:
 
 	//using EntityMap;
 
-	using CombinedComponentPool = std::unordered_map<ComponentType, IComponentPool*>;
-	using SystemMap = std::unordered_map<TypeSystem, ISystem*>;
+	using CombinedComponentPool = std::unordered_map<ComponentType, std::shared_ptr<IComponentPool>>;
+	using SystemMap = std::unordered_map<TypeSystem, std::shared_ptr<ISystem>>;
 	using EntityMap = std::unordered_map<EntityID, std::bitset<TotalTypeComponent>>;
 	//using ComponentPoolMap = std::unordered_map<ComponentType, std::unique_ptr<ComponentPool>>;
 
@@ -35,7 +35,12 @@ private:
 
 public:
 	//singleton
-	static ECS* GetInstance() { return InstancePtr; }
+	static ECS* GetInstance() {
+		if (!InstancePtr) {
+			InstancePtr.reset(new ECS{});
+		}
+		return InstancePtr.get();
+	}
 
 	//load the programme
 	static void Load();
@@ -74,7 +79,7 @@ public:
 	float DeltaTime{};
 
 private:
-	static ECS* InstancePtr;
+	static std::unique_ptr<ECS> InstancePtr;
 
 };
 

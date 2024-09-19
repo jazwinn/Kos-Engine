@@ -7,6 +7,7 @@
 #include <gtc/type_ptr.hpp>
 #include <string>
 #include <vector>
+#include <memory>
 
 struct GraphicsData
 {
@@ -36,7 +37,7 @@ private:
 	void funcSetupShader(const std::string& vertexShader, const std::string& fragmentShader);
 	void funcDeleteShader();
 
-	static GraphicsPipe* instancePtr;
+	static std::unique_ptr<GraphicsPipe> instancePtr;
 
 	unsigned int genericShaderProgram;
 

@@ -5,11 +5,15 @@
 #include <regex>
 #include <iostream>
 
-AssetManager* AssetManager::instancePtr = new AssetManager;
+std::unique_ptr<AssetManager> AssetManager::instancePtr = nullptr;
 
 AssetManager* AssetManager::funcGetInstance()
 {
-    return instancePtr;
+    if (!instancePtr) 
+    {
+        instancePtr.reset(new AssetManager{});
+    }
+    return instancePtr.get();
 }
 
 AssetManager::~AssetManager()
@@ -28,7 +32,7 @@ AssetManager::~AssetManager()
             }
         }
     }
-    delete instancePtr;
+   // delete instancePtr;
 }
 
 void AssetManager::funcLoadImage(const char* file)
