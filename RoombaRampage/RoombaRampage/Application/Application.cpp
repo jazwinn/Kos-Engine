@@ -10,29 +10,67 @@
 #include "imgui_impl_opengl3.h"
 #include "imgui_handler.h"
 
+
 namespace Application {
 
     /*--------------------------------------------------------------
       GLOBAL VARAIBLE
     --------------------------------------------------------------*/
-    AppWindow lvWindow;
+    Application* Application::lvInstance = nullptr;
+    //AppWindow lvWindow;
     ImGuiHandler imgui_manager;
     GraphicsPipe* pipe;
+    auto app = new Application();
+
+    std::unique_ptr<AppWindow> Application::lvWin;
+ 
+
+
+   
+    void Application::funcEvent(classEvent& givenEvent) {
+        classEventDispatch lvDispatcher(givenEvent);
+        lvDispatcher.funcDispatch<classMouseMoveEvent>(BIND_EVENT_FN(funcOnMouseMove));
+    }
+
+    Application& Application::funcGetApp() {
+        return *lvInstance;
+    }
+
+
+    bool Application::funcOnMouseMove(classMouseMoveEvent& givenEvent) {
+        lvMousePos.x = givenEvent.funcGetX();
+        lvMousePos.y = givenEvent.funcGetY();
+        return true;
+    }
+
 
     float LastTime = glfwGetTime();;
 
 
     int Application::Init() {
-        /*--------------------------------------------------------------
-          INITIALIZE OPENGL WINDOW
-       --------------------------------------------------------------*/
-        lvWindow.init();
+       
 
+        std::string lvTitle{ "Roomba Rampage" };
+        int lvWidth = 1280, lvHeight = 720;
+        winProperties lvProps{};
+
+        lvProps.lvWinTitle = lvTitle;
+        lvProps.lvWinWidth = lvWidth;
+        lvProps.lvWinHeight = lvHeight;
+        lvInstance = new Application;
+        lvWin = std::unique_ptr<AppWindow>(AppWindow::funcCreateWindow(lvProps));
+        
+
+        lvWin->funcSetEventCallback(std::bind(&Application::funcEvent, app, std::placeholders::_1));
+
+        GLFWmonitor* lvMon = glfwGetPrimaryMonitor();
+        const GLFWvidmode* lvMode = glfwGetVideoMode(lvMon);
+        
 
         /*--------------------------------------------------------------
            INITIALIZE GRAPHICS PIPE
         --------------------------------------------------------------*/
-        
+
         pipe = GraphicsPipe::funcGetInstance();
         pipe->funcInit();
 
