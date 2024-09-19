@@ -266,7 +266,6 @@ void GraphicsPipe::funcDraw(Mesh shape)
 		if (lvUniformVarLoc1 >= 0)
 		{
 			glUniform1i(lvUniformVarLoc1, 0);
-			std::cout << textureIDs[0];
 		}
 		else
 		{
