@@ -169,8 +169,6 @@
     <ClCompile Include="Math\Mat3x3.cpp" />
     <ClCompile Include="Math\mathlib.cpp" />
     <ClCompile Include="Math\vector2.cpp" />
-    <ClCompile Include="WinApp\windowsApp.cpp" />
-    <ClCompile Include="WinApp\windowswindow.cpp" />
     <ClCompile Include="Phyiscs.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -215,9 +213,6 @@
     <ClInclude Include="Math\Mat3x3.h" />
     <ClInclude Include="Math\mathlib.h" />
     <ClInclude Include="Math\vector2.h" />
-    <ClInclude Include="WinApp\window.h" />
-    <ClInclude Include="WinApp\windowsApp.h" />
-    <ClInclude Include="WinApp\windowswindow.h" />
     <ClInclude Include="Physics.h" />
   </ItemGroup>
   <ItemGroup>
