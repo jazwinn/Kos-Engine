@@ -13,7 +13,17 @@ namespace Application{
 		static int Cleanup();
 
 		
+<<<<<<< HEAD
 		
+=======
+
+	private:
+		bool funcOnMouseMove(classMouseMoveEvent& givenEvent);
+		static std::unique_ptr<AppWindow> lvWin;
+		static Application* lvInstance;
+
+
+>>>>>>> previous
 	};
 
 

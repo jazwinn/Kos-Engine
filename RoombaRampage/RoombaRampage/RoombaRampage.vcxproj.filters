@@ -52,6 +52,12 @@
     <Filter Include="Source Files\ECS\System">
       <UniqueIdentifier>{7d862d57-494a-488c-acf8-0ab86a262b9d}</UniqueIdentifier>
     </Filter>
+<<<<<<< HEAD
+=======
+    <Filter Include="Header Files\Events">
+      <UniqueIdentifier>{df8aa6d1-f2b9-45c8-9588-5dd5cbb61082}</UniqueIdentifier>
+    </Filter>
+>>>>>>> previous
     <Filter Include="Header Files\Phyisc">
       <UniqueIdentifier>{08680b2c-947a-44d9-94dc-251ba73e9ec7}</UniqueIdentifier>
     </Filter>
@@ -147,6 +153,12 @@
     <ClCompile Include="Assets\AssetManager.cpp">
       <Filter>Source Files\Assets</Filter>
     </ClCompile>
+<<<<<<< HEAD
+=======
+    <ClCompile Include="baseInput.cpp">
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
+>>>>>>> previous
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dependencies\imgui\imconfig.h">
@@ -236,6 +248,21 @@
     <ClInclude Include="Graphics\GraphicsPipe.h">
       <Filter>Header Files\Graphics</Filter>
     </ClInclude>
+<<<<<<< HEAD
+=======
+    <ClInclude Include="Events\mouseEvents.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\windowEvents.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\keyEvents.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\baseEvent.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+>>>>>>> previous
     <ClInclude Include="Application\Application.h">
       <Filter>Header Files\Application</Filter>
     </ClInclude>
@@ -260,6 +287,12 @@
     <ClInclude Include="Assets\AssetManager.h">
       <Filter>Header Files\Assets</Filter>
     </ClInclude>
+<<<<<<< HEAD
+=======
+    <ClInclude Include="Application\baseInput.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+>>>>>>> previous
   </ItemGroup>
   <ItemGroup>
     <None Include="Graphics\genericFragmentShader.frag">
