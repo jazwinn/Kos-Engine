@@ -3,7 +3,7 @@
 #include "../Math/vector2.h"
 
 
-namespace Application {
+namespace Input {
 	class classInput {
 	public:
 		static bool funcIsKeyPress(int givenKeyCode);
@@ -14,7 +14,6 @@ namespace Application {
 		static float funcGetMouseX();
 		static float funcGetMouseY();
 		void funcInputUpdate();
-		static void funcInputFree();
 		~classInput() = default;
 
 	private:

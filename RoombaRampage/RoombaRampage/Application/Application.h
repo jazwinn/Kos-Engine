@@ -24,15 +24,11 @@ namespace Application{
 
 	public:
 
-		Application();
-
-		virtual ~Application();
-
 
 		void funcEvent(classEvent& givenEvent);
 		inline AppWindow& funcGetWin() { return *lvWin; }
 		static Application& funcGetApp();
-		void funcStopApp() { lvIsRunning = false; }
+		//void funcStopApp() { lvIsRunning = false; }
 
 		float gvDt{};
 		const float gvFixedDt = 1.f / 60.f;
@@ -43,21 +39,18 @@ namespace Application{
 
 		static int Cleanup();
 
+		Vec2 lvMousePos{};
+
+		static std::unique_ptr<AppWindow> lvWin;
+
 	private:
-		bool funcOnWinClose(classWindowClosedEvent& givenEvent);
+		//bool funcOnWinClose(classWindowClosedEvent& givenEvent);
 		//bool funcOnWinResize(classWindowResizeEvent& givenEvent);
 		bool funcOnMouseMove(classMouseMoveEvent& givenEvent);
-		std::unique_ptr<AppWindow> lvWin{};
-		bool lvIsRunning;
+		
+		//bool lvIsRunning;
 		static Application* lvInstance;
-		Vec2 lvWinSize{}, lvMousePos{};
-		int lvWinWidth{}, lvWinHeight{};
-		int lvWinPosX{}, lvWinPosY{};
-		bool lvIsFullscrean = true;
 
-		//GLFWwindow* Window;//experi
-		GLFWmonitor* monitor;
-		const GLFWvidmode* mode;
 
 	};
 

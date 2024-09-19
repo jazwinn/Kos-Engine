@@ -70,22 +70,21 @@ namespace Application {
 				return;
 			}
 		}
-		lvWin = glfwCreateWindow(givenProperties.lvWinWidth, givenProperties.lvWinHeight, givenProperties.lvWinTitle.c_str(), nullptr, nullptr);
-		if (!lvWin) {
+		lvGLFWWin = glfwCreateWindow(givenProperties.lvWinWidth, givenProperties.lvWinHeight, givenProperties.lvWinTitle.c_str(), nullptr, nullptr);
+		if (!lvGLFWWin) {
 			std::cerr << "GLFW unable to create openGL context\n";
 			glfwTerminate();
 			return;
 		}
-		glfwMakeContextCurrent(lvWin);
+		glfwMakeContextCurrent(lvGLFWWin);
 		GLenum lvError = glewInit();
 		if (lvError != GLEW_OK) {
 			std::cerr << "GLEW unable to initalize due to " << glewGetErrorString(lvError) << std::endl;
 			return;
 		}
-		glfwSetWindowUserPointer(lvWin, &lvWinData);
-		funcSetVSync(false);
+		glfwSetWindowUserPointer(lvGLFWWin, &lvWinData);
 
-		glfwSetWindowSizeCallback(lvWin, [](GLFWwindow* givenWin, int givenW, int givenH) {
+		glfwSetWindowSizeCallback(lvGLFWWin, [](GLFWwindow* givenWin, int givenW, int givenH) {
 			classWinData& lvData = *static_cast<classWinData*>(glfwGetWindowUserPointer(givenWin));
 			lvData.lvWidth = givenW;
 			lvData.lvHeight = givenH;
@@ -93,13 +92,13 @@ namespace Application {
 			lvData.lvEventCallback(lvEvent);
 		});
 
-		glfwSetWindowCloseCallback(lvWin, [](GLFWwindow* givenWin) {
+		glfwSetWindowCloseCallback(lvGLFWWin, [](GLFWwindow* givenWin) {
 			classWinData& lvData = *static_cast<classWinData*>(glfwGetWindowUserPointer(givenWin));
 			classWindowClosedEvent lvEvent;
 			lvData.lvEventCallback(lvEvent);
 		});
 
-		glfwSetKeyCallback(lvWin, [](GLFWwindow* givenWin, int givenKey, [[maybe_unused]] int scanCode, int givenAction, [[maybe_unused]] int mods) {
+		glfwSetKeyCallback(lvGLFWWin, [](GLFWwindow* givenWin, int givenKey, [[maybe_unused]] int scanCode, int givenAction, [[maybe_unused]] int mods) {
 			classWinData& lvData = *static_cast<classWinData*>(glfwGetWindowUserPointer(givenWin));
 
 			switch (givenAction) {
@@ -124,7 +123,7 @@ namespace Application {
 			}
 		});
 
-		glfwSetMouseButtonCallback(lvWin, [](GLFWwindow* givenWin, int givenKey,  int givenAction, [[maybe_unused]] int mods) {
+		glfwSetMouseButtonCallback(lvGLFWWin, [](GLFWwindow* givenWin, int givenKey,  int givenAction, [[maybe_unused]] int mods) {
 			classWinData& lvData = *static_cast<classWinData*>(glfwGetWindowUserPointer(givenWin));
 
 			switch (givenAction) {
@@ -143,13 +142,13 @@ namespace Application {
 			}
 		});
 
-		glfwSetScrollCallback(lvWin, [](GLFWwindow* givenWin, double givenX, double givenY) {
+		glfwSetScrollCallback(lvGLFWWin, [](GLFWwindow* givenWin, double givenX, double givenY) {
 			classWinData& lvData = *static_cast<classWinData*>(glfwGetWindowUserPointer(givenWin));
 			classMouseScrollEvent lvEvent(static_cast<float>(givenX), static_cast<float>(givenY));
 			lvData.lvEventCallback(lvEvent);
 		});
 
-		glfwSetCursorPosCallback(lvWin, [](GLFWwindow* givenWin, double givenX, double givenY) {
+		glfwSetCursorPosCallback(lvGLFWWin, [](GLFWwindow* givenWin, double givenX, double givenY) {
 			classWinData& lvData = *static_cast<classWinData*>(glfwGetWindowUserPointer(givenWin));
 			classMouseMoveEvent lvEvent(static_cast<float>(givenX), static_cast<float>(givenY));
 			lvData.lvEventCallback(lvEvent);
@@ -161,7 +160,7 @@ namespace Application {
 	}
 
 	void AppWindow::funcWinShutdown() {
-		glfwDestroyWindow(lvWin);
+		glfwDestroyWindow(lvGLFWWin);
 		gvGLFWInit = false;
 		glfwTerminate();
 	}
@@ -171,26 +170,11 @@ namespace Application {
 
 	}
 
-	void AppWindow::funcSetVSync(bool enable) {
-		if (enable) {
-			glfwSwapInterval(1);
-		}
-		else {
-			glfwSwapInterval(0);
-		}
-		lvWinData.lvVsyncEnabled = enable;
-	}
-
-	bool AppWindow::funcGetVsync() const {
-		return lvWinData.lvVsyncEnabled;
-	}
-
-
 	int AppWindow::Draw(ImVec4 ClearColor) {
 
         glClear(GL_COLOR_BUFFER_BIT);
         int display_w, display_h;
-        glfwGetFramebufferSize(lvWin, &display_w, &display_h);
+        glfwGetFramebufferSize(lvGLFWWin, &display_w, &display_h);
         glViewport(0, 0, display_w, display_h);
         glClearColor(ClearColor.x * ClearColor.w, ClearColor.y * ClearColor.w, ClearColor.z * ClearColor.w, ClearColor.w);
         glClear(GL_COLOR_BUFFER_BIT);

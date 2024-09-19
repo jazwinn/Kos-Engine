@@ -1,11 +1,11 @@
 #include "Application/Application.h"
 #include "Application/baseInput.h"
 
-namespace Application {
-	classInput* gvInstanceInput = new classInput();
+namespace Input {
+	classInput* classInput::gvInputInstance = new classInput();
 	Vec2 classInput::funcGetMousePos() {
 		double lvX{}, lvY{};
-		auto tempWin = static_cast<GLFWwindow*>(Application::funcGetApp().funcGetWin().funcGetNatWin());
+		auto tempWin = static_cast<GLFWwindow*>(Application::Application::funcGetApp().funcGetWin().funcGetNatWin());
 		glfwGetCursorPos(tempWin, &lvX, &lvY);
 		return Vec2{ static_cast<float>(lvX), static_cast<float>(lvY) };
 	}
@@ -18,8 +18,9 @@ namespace Application {
 	}
 
 	bool classInput::funcIsKeyPress(int givenKeyCode) {
-		auto tempWin = static_cast<GLFWwindow*>(Application::funcGetApp().funcGetWin().funcGetNatWin());
+		auto tempWin = static_cast<GLFWwindow*>(Application::Application::funcGetApp().funcGetWin().funcGetNatWin());
 		auto lvPress = glfwGetKey(tempWin, givenKeyCode);
+		
 		return lvPress == GLFW_PRESS || lvPress == GLFW_REPEAT;
 	}
 
@@ -29,7 +30,7 @@ namespace Application {
 	}
 
 	bool classInput::funcIsMouseButtonPress(int givenButton) {
-		auto tempWin = static_cast<GLFWwindow*>(Application::funcGetApp().funcGetWin().funcGetNatWin());
+		auto tempWin = static_cast<GLFWwindow*>(Application::Application::funcGetApp().funcGetWin().funcGetNatWin());
 		auto lvMousePress = glfwGetKey(tempWin, givenButton);
 		return lvMousePress == GLFW_PRESS || lvMousePress == GLFW_REPEAT;
 	}

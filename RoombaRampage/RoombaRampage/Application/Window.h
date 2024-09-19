@@ -35,17 +35,14 @@ namespace Application {
 
 
 		AppWindow(const winProperties& givenProps);
-		virtual ~AppWindow();
+		~AppWindow();
 		void funcUpdate();
 		unsigned int funcGetWinWidth() const{ return lvWinData.lvWidth; }
 		unsigned int funcGetWinHeight() const { return lvWinData.lvHeight; }
 		void funcSetEventCallback(const eventCallbackFunc& givenCallback) { lvWinData.lvEventCallback = givenCallback; }
-		void funcSetVSync(bool enable) ;
-		bool funcGetVsync() const;
-
-		virtual void* funcGetNatWin() const { return lvWin; }
-
-
+		void funcWinInit(const winProperties& givenProps);
+		//AppWindow* funcGetRawWin() { return new AppWindow; };
+		void* funcGetNatWin() const { return lvGLFWWin; }
 
 		static AppWindow* funcCreateWindow(const winProperties& givenProperties = winProperties());
 
@@ -55,18 +52,17 @@ namespace Application {
 
 		//int CleanUp();
 
-		//GLFWwindow* Window;
-		//GLFWmonitor* monitor;
-		//const GLFWvidmode* mode;
 	private:
-		void funcWinInit(const winProperties& givenProps);
+		
 		void funcWinShutdown();
-		GLFWwindow* lvWin;
+		GLFWwindow* lvGLFWWin;
+		GLFWmonitor* lvMon;
+		GLFWvidmode* lvMode;
+
 		class classWinData {
 		public:
 			std::string lvTitle;
 			unsigned int lvWidth = 0, lvHeight = 0;
-			bool lvVsyncEnabled = false;
 			eventCallbackFunc lvEventCallback;
 		};
 
