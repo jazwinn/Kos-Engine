@@ -15,73 +15,77 @@
 #include <iostream>
 #include <bitset>
 
+namespace Ecs {
+
+	class ECS {
+
+	private:
 
 
-class ECS {
-	
-private:
-	
+		//using EntityMap;
 
-	//using EntityMap;
+		using CombinedComponentPool = std::unordered_map<ComponentType, std::shared_ptr<IComponentPool>>;
+		using SystemMap = std::unordered_map<TypeSystem, std::shared_ptr<ISystem>>;
+		using EntityMap = std::unordered_map<EntityID, std::bitset<TotalTypeComponent>>;
+		//using ComponentPoolMap = std::unordered_map<ComponentType, std::unique_ptr<ComponentPool>>;
 
-	using CombinedComponentPool = std::unordered_map<ComponentType, std::shared_ptr<IComponentPool>>;
-	using SystemMap = std::unordered_map<TypeSystem, std::shared_ptr<ISystem>>;
-	using EntityMap = std::unordered_map<EntityID, std::bitset<TotalTypeComponent>>;
-	//using ComponentPoolMap = std::unordered_map<ComponentType, std::unique_ptr<ComponentPool>>;
+		ECS() = default;
 
-	ECS() = default;
 
-	
 
-public:
-	//singleton
-	static ECS* GetInstance() {
-		if (!InstancePtr) {
-			InstancePtr.reset(new ECS{});
+	public:
+		//singleton
+		static ECS* GetInstance() {
+			if (!InstancePtr) {
+				InstancePtr.reset(new ECS{});
+			}
+			return InstancePtr.get();
 		}
-		return InstancePtr.get();
-	}
 
-	//load the programme
-	static void Load();
+		//load the programme
+		static void Load();
 
-	//Initializes the programme
-	static void Init();
+		//Initializes the programme
+		static void Init();
 
-	//Update loops that updates the ECS
-	static void Update(float DeltaTime);
+		//Update loops that updates the ECS
+		static void Update(float DeltaTime);
 
-	//Unloads and free all memory
-	static void Unload();
+		//Unloads and free all memory
+		static void Unload();
 
 
-	static EntityID CreateEntity();
+		static EntityID CreateEntity();
 
-	static EntityID DuplicateEntity(EntityID);
+		static EntityID DuplicateEntity(EntityID);
 
-	static bool DeleteEntity(EntityID);
+		static bool DeleteEntity(EntityID);
 
-	static void* AddComponent(ComponentType ,EntityID );
+		static void* AddComponent(ComponentType, EntityID);
 
-	static void RegisterSystems(EntityID);
+		static void RegisterSystems(EntityID);
 
-	static void DeregisterSystem(EntityID);
+		static void DeregisterSystem(EntityID);
 
 
-	CombinedComponentPool ECS_CombinedComponentPool{};
+		CombinedComponentPool ECS_CombinedComponentPool{};
 
-	SystemMap ECS_SystemMap{};
+		SystemMap ECS_SystemMap{};
 
-	EntityMap ECS_EntityMap{};
+		EntityMap ECS_EntityMap{};
 
-	EntityID EntityCount{};
+		EntityID EntityCount{};
 
-	float DeltaTime{};
+		float DeltaTime{};
 
-private:
-	static std::unique_ptr<ECS> InstancePtr;
+	private:
+		static std::unique_ptr<ECS> InstancePtr;
 
-};
+	};
+
+}
+
+
 
 
 #endif  ECS_H

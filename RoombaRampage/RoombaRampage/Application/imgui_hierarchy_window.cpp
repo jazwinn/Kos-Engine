@@ -10,7 +10,7 @@
 unsigned int ImGuiHandler::DrawHierachyWindow(ImVec4& clear_color)
 {
     //fetch ecs
-    ECS* ecs = ECS::GetInstance();
+    Ecs::ECS* ecs = Ecs::ECS::GetInstance();
 
     // Custom window with example widgets
     ImGui::Begin("Hierachy Window");
@@ -25,7 +25,7 @@ unsigned int ImGuiHandler::DrawHierachyWindow(ImVec4& clear_color)
         if (ImGui::InputText("##", charBuffer, IM_ARRAYSIZE(charBuffer), ImGuiInputTextFlags_EnterReturnsTrue))
         {
             //create ID then push into vector
-            EntityID newEntityID = ecs-> CreateEntity();
+            Ecs::EntityID newEntityID = ecs-> CreateEntity();
             obj_entity_id.push_back(newEntityID);
 
             //Add the string into the vector
@@ -75,7 +75,7 @@ unsigned int ImGuiHandler::DrawHierachyWindow(ImVec4& clear_color)
             {
 
                 //Delete entity from ecs
-                ECS::GetInstance()->DeleteEntity(obj_entity_id[i]);
+                Ecs::ECS::GetInstance()->DeleteEntity(obj_entity_id[i]);
 
                 obj_component_window[i] = false;
 
