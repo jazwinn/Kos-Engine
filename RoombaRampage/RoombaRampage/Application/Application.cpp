@@ -1,5 +1,5 @@
-#include "Application.h"
 
+#include "Application.h"
 
 #include "../Graphics/GraphicsPipe.h"
 #include "../ECS/ECS.h"
@@ -10,67 +10,29 @@
 #include "imgui_impl_opengl3.h"
 #include "imgui_handler.h"
 
-
 namespace Application {
 
     /*--------------------------------------------------------------
       GLOBAL VARAIBLE
     --------------------------------------------------------------*/
-    Application* Application::lvInstance = nullptr;
-    //AppWindow lvWindow;
+    AppWindow lvWindow;
     ImGuiHandler imgui_manager;
     GraphicsPipe* pipe;
-    auto app = new Application();
-
-    std::unique_ptr<AppWindow> Application::lvWin;
- 
-
-
-   
-    void Application::funcEvent(classEvent& givenEvent) {
-        classEventDispatch lvDispatcher(givenEvent);
-        lvDispatcher.funcDispatch<classMouseMoveEvent>(BIND_EVENT_FN(funcOnMouseMove));
-    }
-
-    Application& Application::funcGetApp() {
-        return *lvInstance;
-    }
-
-
-    bool Application::funcOnMouseMove(classMouseMoveEvent& givenEvent) {
-        lvMousePos.x = givenEvent.funcGetX();
-        lvMousePos.y = givenEvent.funcGetY();
-        return true;
-    }
-
 
     float LastTime = glfwGetTime();;
 
 
     int Application::Init() {
-       
+        /*--------------------------------------------------------------
+          INITIALIZE OPENGL WINDOW
+       --------------------------------------------------------------*/
+        lvWindow.init();
 
-        std::string lvTitle{ "Roomba Rampage" };
-        int lvWidth = 1280, lvHeight = 720;
-        winProperties lvProps{};
-
-        lvProps.lvWinTitle = lvTitle;
-        lvProps.lvWinWidth = lvWidth;
-        lvProps.lvWinHeight = lvHeight;
-        lvInstance = new Application;
-        lvWin = std::unique_ptr<AppWindow>(AppWindow::funcCreateWindow(lvProps));
-        
-
-        lvWin->funcSetEventCallback(std::bind(&Application::funcEvent, app, std::placeholders::_1));
-
-        GLFWmonitor* lvMon = glfwGetPrimaryMonitor();
-        const GLFWvidmode* lvMode = glfwGetVideoMode(lvMon);
-        
 
         /*--------------------------------------------------------------
            INITIALIZE GRAPHICS PIPE
         --------------------------------------------------------------*/
-
+        
         pipe = GraphicsPipe::funcGetInstance();
         pipe->funcInit();
 
@@ -78,8 +40,7 @@ namespace Application {
            INITIALIZE IMGUI
         --------------------------------------------------------------*/
         const char* glsl_version = "#version 130";
-        imgui_manager.Initialize(static_cast<GLFWwindow*>(Application::funcGetApp().funcGetWin().funcGetNatWin()), glsl_version);
-
+        imgui_manager.Initialize(lvWindow.Window, glsl_version);
 
         /*--------------------------------------------------------------
            INITIALIZE ECS
@@ -91,7 +52,7 @@ namespace Application {
         ecs->Init();
 
         return 0;
-    }
+	}
 
 
 
@@ -101,10 +62,10 @@ namespace Application {
         /*--------------------------------------------------------------
          GAME LOOP
         --------------------------------------------------------------*/
-        while (!glfwWindowShouldClose(static_cast<GLFWwindow*>(Application::funcGetApp().funcGetWin().funcGetNatWin())))
+        while (!glfwWindowShouldClose(lvWindow.Window))
         {
             /* Poll for and process events */
-            //glfwPollEvents();
+            glfwPollEvents();
 
             //calculate DeltaTime
             float CurrentTime = glfwGetTime();
@@ -132,7 +93,7 @@ namespace Application {
             /*--------------------------------------------------------------
              DRAWING/RENDERING Window
              --------------------------------------------------------------*/
-            funcGetApp().funcGetWin().Draw(clear_color);
+            lvWindow.Draw(clear_color);
 
             /*--------------------------------------------------------------
              DRAWING/RENDERING Objects
@@ -147,16 +108,9 @@ namespace Application {
             imgui_manager.Render();
 
 
-            funcGetApp().funcGetWin().funcUpdate();
-
-            glfwSwapBuffers(static_cast<GLFWwindow*>(funcGetApp().funcGetWin().funcGetNatWin()));
-
-
-
-            glfwSwapBuffers(static_cast<GLFWwindow*>(funcGetApp().funcGetWin().funcGetNatWin()));
-
+            glfwSwapBuffers(lvWindow.Window);
         }
-        
+
         return 0;
 	}
 
@@ -165,10 +119,8 @@ namespace Application {
 
         ECS::GetInstance()->Unload();
         imgui_manager.Shutdown();
-        //funcGetApp().funcGetWin().funcGetNatWin();
-        funcGetApp().funcGetWin().funcWinShutdown();
-        //funcGetApp().funcGetWin().CleanUp();
-        //glfwTerminate();
+        lvWindow.CleanUp();
+        glfwTerminate();
 
         return 0;
 	}

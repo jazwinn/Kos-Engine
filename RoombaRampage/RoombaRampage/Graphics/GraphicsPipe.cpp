@@ -19,7 +19,7 @@ const std::string genericFragmentShader =
 };
 
 
-GraphicsPipe* GraphicsPipe::instancePtr = new GraphicsPipe{};
+std::unique_ptr<GraphicsPipe> GraphicsPipe::instancePtr = nullptr;
 
 
 void GLAPIENTRY DebugCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam)
@@ -67,13 +67,17 @@ void GraphicsPipe::funcInit()
 
 GraphicsPipe::~GraphicsPipe() 
 {
-	delete instancePtr;
+	//delete instancePtr;
 	funcDeleteShader();
 }
 
 GraphicsPipe* GraphicsPipe::funcGetInstance()
 {
-	return instancePtr;
+	if (!instancePtr) 
+	{
+		instancePtr.reset(new GraphicsPipe{});
+	}
+	return instancePtr.get();
 }
 
 void GraphicsPipe::funcSetupVao(Mesh &shape)

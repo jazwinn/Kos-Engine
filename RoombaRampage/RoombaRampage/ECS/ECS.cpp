@@ -4,7 +4,7 @@
 
 //ECS Varaible
 
-ECS* ECS::InstancePtr = new ECS{};
+std::unique_ptr<ECS> ECS::InstancePtr = nullptr;
 
 void ECS::Init() {
 	ECS* ecs = ECS::GetInstance();
@@ -22,13 +22,13 @@ void ECS::Load() {
 	ECS* ecs = ECS::GetInstance();
 
 	//Allocate memory to each component pool
-	ecs->ECS_CombinedComponentPool[TypeTransformComponent] = new ComponentPool<TransformComponent>{};
-	ecs->ECS_CombinedComponentPool[TypeMovemmentComponent] = new ComponentPool<MovementComponent>{};
-	ecs->ECS_CombinedComponentPool[TypeSpriteComponent] = new ComponentPool<SpriteComponent>{};
+	ecs->ECS_CombinedComponentPool[TypeTransformComponent] = std::make_shared<ComponentPool<TransformComponent>>();
+	ecs->ECS_CombinedComponentPool[TypeMovemmentComponent] = std::make_shared < ComponentPool<MovementComponent>>();
+	ecs->ECS_CombinedComponentPool[TypeSpriteComponent] = std::make_shared < ComponentPool<SpriteComponent>>();
 
 	//Allocate memory to each system
-	ecs->ECS_SystemMap[TypeMovementSystem] = new MovementSystem;
-	ecs->ECS_SystemMap[TypeRenderSystem] = new RenderSystem;
+	ecs->ECS_SystemMap[TypeMovementSystem] = std::make_shared < MovementSystem>();
+	ecs->ECS_SystemMap[TypeRenderSystem] = std::make_shared < RenderSystem>();
 }
 
 
@@ -48,20 +48,9 @@ void ECS::Update(float DT) {
 
 void ECS::Unload() {
 
-	ECS* ecs = ECS::GetInstance();
 
-	//delete componentpool
-	for (auto& Component : ecs->ECS_CombinedComponentPool) {
-		delete Component.second;
-	}
 
-	//delete systems
-	for (auto& System : ecs->ECS_SystemMap) {
-		delete System.second;
-
-	}
-
-	delete ecs;
+	//delete ecs;
 }
 
 void* ECS::AddComponent(ComponentType Type, EntityID ID) {
