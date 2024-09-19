@@ -148,7 +148,6 @@
     <ClCompile Include="Application\json_handler.cpp" />
     <ClCompile Include="Application\main.cpp" />
     <ClCompile Include="Application\Window.cpp" />
-    <ClCompile Include="baseInput.cpp" />
     <ClCompile Include="Assets\AssetManager.cpp" />
     <ClCompile Include="Dependencies\imgui\imgui.cpp" />
     <ClCompile Include="Dependencies\imgui\imgui_demo.cpp" />
@@ -169,13 +168,10 @@
     <ClCompile Include="Math\Mat3x3.cpp" />
     <ClCompile Include="Math\mathlib.cpp" />
     <ClCompile Include="Math\vector2.cpp" />
-    <ClCompile Include="WinApp\windowsApp.cpp" />
-    <ClCompile Include="WinApp\windowswindow.cpp" />
     <ClCompile Include="Phyiscs.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Application.h" />
-    <ClInclude Include="Application\baseInput.h" />
     <ClInclude Include="Application\imgui_handler.h" />
     <ClInclude Include="Application\json_handler.h" />
     <ClInclude Include="Application\Window.h" />
@@ -205,19 +201,12 @@
     <ClInclude Include="ECS\System\RenderSystem.h" />
     <ClInclude Include="ECS\System\System.h" />
     <ClInclude Include="ECS\System\SystemList.h" />
-    <ClInclude Include="Events\baseEvent.h" />
-    <ClInclude Include="Events\keyEvents.h" />
-    <ClInclude Include="Events\mouseEvents.h" />
-    <ClInclude Include="Events\windowEvents.h" />
     <ClInclude Include="Graphics\Graphics.h" />
     <ClInclude Include="Graphics\GraphicsPipe.h" />
     <ClInclude Include="Math\Mat2x2.h" />
     <ClInclude Include="Math\Mat3x3.h" />
     <ClInclude Include="Math\mathlib.h" />
     <ClInclude Include="Math\vector2.h" />
-    <ClInclude Include="WinApp\window.h" />
-    <ClInclude Include="WinApp\windowsApp.h" />
-    <ClInclude Include="WinApp\windowswindow.h" />
     <ClInclude Include="Physics.h" />
   </ItemGroup>
   <ItemGroup>
