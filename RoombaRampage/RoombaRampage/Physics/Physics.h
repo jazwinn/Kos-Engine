@@ -6,7 +6,7 @@
 #include <algorithm>
 
 
-namespace PHYSICS {
+namespace Physics {
 	
 	enum class EntityType {
 		Circle,
@@ -21,11 +21,11 @@ namespace PHYSICS {
 	struct PhysicsData {
 		float m_radius = 0.0f;					 // For circular entities
 		AABB boundingBox{};						 // Axis-Aligned Bounding Box
-		Vector2::Vec2 center{};					 // Position of the entity's center
+		Vector2::Vec2 position{};					 // Position of the entity's center
 		Vector2::Vec2 velocity{};				 // Current velocity of the entity
 		float height = 0.0f;					 // For rectangular entities
 		float width = 0.0f;						 // For rectangular entities
-		int ID = -1.0f;					     // Unique identifier
+		int ID = -1.0f;							 // Unique identifier
 		EntityType type = EntityType::Rectangle; // Circle or Rectangle
 		//for checking 
 		bool operator==(const PhysicsData& other) const {
@@ -53,9 +53,10 @@ namespace PHYSICS {
 		void funcCalculateBoundingBox();
 
 	public:
-		void funcRetrievePhysicsData();
+		void funcRetrievePhysicsData(Vector2::Vec2 position, Vector2::Vec2 velocity, int ID);
 		void funcCollisionCheck();
-		std::vector<PhysicsData> funcPassPhysicsData() const;
+		std::vector<PhysicsData> funcPassPhysicsData() ; 
+		void funcClearEntites();
 
 		//static dynamic collision
 		bool funcCollisionIntersection_RectRect(const PhysicsData&, const PhysicsData&);

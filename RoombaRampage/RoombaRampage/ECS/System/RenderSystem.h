@@ -25,7 +25,6 @@ namespace Ecs{
 
 		void Update() override;
 
-		static void funcTransferData();
 
 	private:
 		//Storage to point to components

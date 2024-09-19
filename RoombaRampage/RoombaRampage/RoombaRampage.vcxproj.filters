@@ -52,17 +52,17 @@
     <Filter Include="Source Files\ECS\System">
       <UniqueIdentifier>{7d862d57-494a-488c-acf8-0ab86a262b9d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Phyisc">
-      <UniqueIdentifier>{08680b2c-947a-44d9-94dc-251ba73e9ec7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Phyisc">
-      <UniqueIdentifier>{83adc175-400f-4197-80e7-552ce7be419c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Assets">
       <UniqueIdentifier>{fe211503-145b-4469-8243-6d33edf0bb65}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Assets">
       <UniqueIdentifier>{b0f4c1b4-75f4-42c0-b690-9859577ed47a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Physics">
+      <UniqueIdentifier>{83adc175-400f-4197-80e7-552ce7be419c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Physics">
+      <UniqueIdentifier>{08680b2c-947a-44d9-94dc-251ba73e9ec7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -126,9 +126,6 @@
     <ClCompile Include="Application\Window.cpp">
       <Filter>Source Files\Application</Filter>
     </ClCompile>
-    <ClCompile Include="Phyiscs.cpp">
-      <Filter>Source Files\Phyisc</Filter>
-    </ClCompile>
     <ClCompile Include="Math\mathlib.cpp">
       <Filter>Source Files\Math</Filter>
     </ClCompile>
@@ -146,6 +143,9 @@
     </ClCompile>
     <ClCompile Include="Assets\AssetManager.cpp">
       <Filter>Source Files\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\Phyiscs.cpp">
+      <Filter>Source Files\Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -191,7 +191,7 @@
     <ClInclude Include="Application\imgui_handler.h">
       <Filter>Header Files\Application</Filter>
     </ClInclude>
-    <ClInclude Include="ECS\Component\CollisionComponent.h">
+    <ClInclude Include="ECS\Component\BoxColliderComponent.h">
       <Filter>Header Files\ECS\Component</Filter>
     </ClInclude>
     <ClInclude Include="ECS\Component\Component.h">
@@ -242,9 +242,6 @@
     <ClInclude Include="Application\Window.h">
       <Filter>Header Files\Application</Filter>
     </ClInclude>
-    <ClInclude Include="Physics.h">
-      <Filter>Header Files\Phyisc</Filter>
-    </ClInclude>
     <ClInclude Include="Math\mathlib.h">
       <Filter>Header Files\Math</Filter>
     </ClInclude>
@@ -259,6 +256,15 @@
     </ClInclude>
     <ClInclude Include="Assets\AssetManager.h">
       <Filter>Header Files\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="ECS\Component\PlayerComponent.h">
+      <Filter>Header Files\ECS\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\Physics.h">
+      <Filter>Header Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="ECS\Component\RigidBody.h">
+      <Filter>Header Files\ECS\Component</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
