@@ -46,8 +46,7 @@ namespace Application{
 	private:
 		bool funcOnMouseMove(classMouseMoveEvent& givenEvent);
 		static std::unique_ptr<AppWindow> lvWin;
-		static Application* lvInstance;
-		bool isRunning = true;
+		static Application* lvInstance;s
 
 
 	};

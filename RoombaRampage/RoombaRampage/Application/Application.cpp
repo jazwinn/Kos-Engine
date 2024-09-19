@@ -151,17 +151,10 @@ namespace Application {
 
             glfwSwapBuffers(static_cast<GLFWwindow*>(funcGetApp().funcGetWin().funcGetNatWin()));
 
-            if (Input::classInput::funcIsKeyPress(GLFW_KEY_Q)) {
-                std::cout << "CHECKING!" << std::endl;
-                funcGetApp().isRunning = false;
-                //Cleanup();
-            }
 
 
             glfwSwapBuffers(static_cast<GLFWwindow*>(funcGetApp().funcGetWin().funcGetNatWin()));
-            if (funcGetApp().isRunning == false) {
-                Application::Cleanup();
-            }
+
         }
         
         return 0;
