@@ -20,7 +20,7 @@ public:
     void Render();
     void Shutdown();
 
-    void DrawComponentWindow(ECS* ecs, EntityID entityID, bool& windowOpen, const std::string& windowTitle);
+    void DrawComponentWindow(Ecs::ECS* ecs, Ecs::EntityID entityID, bool& windowOpen, const std::string& windowTitle);
     unsigned int DrawHierachyWindow(ImVec4& clear_color);
     unsigned int clicked_entity_id;
 

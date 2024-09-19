@@ -3,18 +3,23 @@
 
 #include "../ECS/Component/ComponentList.h"
 
+
+namespace Ecs {
+	class Component {
+
+	public:
+
+		//Entity is assigned to component
+		bool IsLive{};
+
+		//Store Entity ID
+		EntityID Entity{};
+
+	};
+
+}
 //parent class
-class Component {
 
-public:
-
-	//Entity is assigned to component
-	bool IsLive{};
-
-	//Store Entity ID
-	EntityID Entity{};
-
-};
 
 
 

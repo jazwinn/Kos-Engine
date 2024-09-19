@@ -16,14 +16,14 @@
 #include <iostream>
 #include "json_handler.h"
 
-void ImGuiHandler::DrawComponentWindow(ECS* ecs, EntityID entityID, bool& windowOpen, const std::string& windowTitle)
+void ImGuiHandler::DrawComponentWindow(Ecs::ECS* ecs, Ecs::EntityID entityID, bool& windowOpen, const std::string& windowTitle)
 {
     // Retrieve the TransformComponent
-    TransformComponent* tc = static_cast<TransformComponent*>(ecs->ECS_CombinedComponentPool[TypeTransformComponent]
+    Ecs::TransformComponent* tc = static_cast<Ecs::TransformComponent*>(ecs->ECS_CombinedComponentPool[Ecs::TypeTransformComponent]
                             ->GetEntityComponent(entityID));
 
     // Retrieve the TransformComponent
-    MovementComponent* mc = static_cast<MovementComponent*>(ecs->ECS_CombinedComponentPool[TypeMovemmentComponent]
+    Ecs::MovementComponent* mc = static_cast<Ecs::MovementComponent*>(ecs->ECS_CombinedComponentPool[Ecs::TypeMovemmentComponent]
                             ->GetEntityComponent(entityID));
 
     ImGui::Begin(windowTitle.c_str(), &windowOpen);

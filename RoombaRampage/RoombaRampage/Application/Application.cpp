@@ -46,7 +46,7 @@ namespace Application {
            INITIALIZE ECS
         --------------------------------------------------------------*/
         //fetch ecs
-        ECS* ecs = ECS::GetInstance();
+        Ecs::ECS* ecs = Ecs::ECS::GetInstance();
 
         ecs->Load();
         ecs->Init();
@@ -58,7 +58,7 @@ namespace Application {
 
     int Application::Run() {
 
-        ECS* ecs = ECS::GetInstance();
+        Ecs::ECS* ecs = Ecs::ECS::GetInstance();
         /*--------------------------------------------------------------
          GAME LOOP
         --------------------------------------------------------------*/
@@ -117,7 +117,7 @@ namespace Application {
 
 	int Application::Cleanup() {
 
-        ECS::GetInstance()->Unload();
+        Ecs::ECS::GetInstance()->Unload();
         imgui_manager.Shutdown();
         lvWindow.CleanUp();
         glfwTerminate();

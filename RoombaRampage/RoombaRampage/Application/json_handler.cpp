@@ -11,7 +11,7 @@
 #include <cstdio>
 #include <memory>
 
-void LoadComponentsJson(const std::string& jsonFilePath, TransformComponent* tc, MovementComponent* mc)
+void LoadComponentsJson(const std::string& jsonFilePath, Ecs::TransformComponent* tc, Ecs::MovementComponent* mc)
 {
 	FILE* jsonFile = fopen(jsonFilePath.c_str(), "wb"); //Open json file
 
@@ -57,7 +57,7 @@ void LoadComponentsJson(const std::string& jsonFilePath, TransformComponent* tc,
 	fclose(jsonFile);
 }
 
-void SaveComponentsJson(const std::string& jsonFilePath, TransformComponent* tc, MovementComponent* mc)
+void SaveComponentsJson(const std::string& jsonFilePath, Ecs::TransformComponent* tc, Ecs::MovementComponent* mc)
 {
 
 	FILE* jsonFile = fopen(jsonFilePath.c_str(), "wb");  // Open JSON file for writing
