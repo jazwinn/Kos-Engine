@@ -19,16 +19,8 @@ class SpriteComponent : public Component {
 
 public:
 
-	GLenum primitiveType;
-	GLenum drawMode;
-	unsigned int vaoId;
-	unsigned short indexElementCount;
-	unsigned int shaderProgram;
-
-	SpriteShape shape{};
-	std::string image{};
-	glm::mat3 modelToNDCMatrix{ 1,0,0,0,1,0,0,0,1 };
-	float color[4]{};
+	unsigned int imageID;
+	unsigned int frameNumber;
 
 };
 

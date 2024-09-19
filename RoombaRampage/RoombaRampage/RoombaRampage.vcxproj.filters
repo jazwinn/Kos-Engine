@@ -52,6 +52,7 @@
     <Filter Include="Source Files\ECS\System">
       <UniqueIdentifier>{7d862d57-494a-488c-acf8-0ab86a262b9d}</UniqueIdentifier>
     </Filter>
+<<<<<<< HEAD
     <Filter Include="Header Files\WinApp">
       <UniqueIdentifier>{487a1667-730a-4cd3-93c4-924ceb0e6e9d}</UniqueIdentifier>
     </Filter>
@@ -60,6 +61,19 @@
     </Filter>
     <Filter Include="Source Files\WinApp">
       <UniqueIdentifier>{d0b078d7-ebd4-44cd-82be-be83431cc60c}</UniqueIdentifier>
+=======
+    <Filter Include="Header Files\Phyisc">
+      <UniqueIdentifier>{08680b2c-947a-44d9-94dc-251ba73e9ec7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Phyisc">
+      <UniqueIdentifier>{83adc175-400f-4197-80e7-552ce7be419c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Assets">
+      <UniqueIdentifier>{fe211503-145b-4469-8243-6d33edf0bb65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Assets">
+      <UniqueIdentifier>{b0f4c1b4-75f4-42c0-b690-9859577ed47a}</UniqueIdentifier>
+>>>>>>> CurrentUpstream
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -93,14 +107,8 @@
     <ClCompile Include="Math\Mat3x3.cpp">
       <Filter>Source Files\Math</Filter>
     </ClCompile>
-    <ClCompile Include="Math\vector2.cpp">
-      <Filter>Source Files\Math</Filter>
-    </ClCompile>
     <ClCompile Include="Graphics\Graphics.cpp">
       <Filter>Source Files\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\main.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Application\imgui_handler.cpp">
       <Filter>Source Files\Application</Filter>
@@ -131,6 +139,27 @@
     </ClCompile>
     <ClCompile Include="Application\Window.cpp">
       <Filter>Source Files\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Phyiscs.cpp">
+      <Filter>Source Files\Phyisc</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\mathlib.cpp">
+      <Filter>Source Files\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\vector2.cpp">
+      <Filter>Source Files\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\imgui_component_window.cpp">
+      <Filter>Source Files\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\main.cpp">
+      <Filter>Source Files\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\json_handler.cpp">
+      <Filter>Source Files\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Assets\AssetManager.cpp">
+      <Filter>Source Files\Assets</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -171,9 +200,6 @@
       <Filter>Header Files\Math</Filter>
     </ClInclude>
     <ClInclude Include="Math\Mat3x3.h">
-      <Filter>Header Files\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Math\vector2.h">
       <Filter>Header Files\Math</Filter>
     </ClInclude>
     <ClInclude Include="Application\imgui_handler.h">
@@ -248,6 +274,24 @@
     <ClInclude Include="Application\Window.h">
       <Filter>Header Files\Application</Filter>
     </ClInclude>
+    <ClInclude Include="Physics.h">
+      <Filter>Header Files\Phyisc</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\mathlib.h">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\vector2.h">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\json_handler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependencies\stb_image\include\stb_image.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Assets\AssetManager.h">
+      <Filter>Header Files\Assets</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Graphics\genericFragmentShader.frag">
@@ -256,5 +300,6 @@
     <None Include="Graphics\genericVertexShader.vert">
       <Filter>Header Files\Graphics</Filter>
     </None>
+    <None Include="Json Texts\components.json" />
   </ItemGroup>
 </Project>

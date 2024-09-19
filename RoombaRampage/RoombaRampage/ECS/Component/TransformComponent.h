@@ -7,9 +7,10 @@
 class TransformComponent : public Component {
 
 public:
-	Vec2 position{};
-	float roation{};
-	float scale{};
+
+	Vector2::Vec2 position{};
+	float rotation{};
+	Vector2::Vec2 scale{};
 };
 
 #endif TRANSCOM_H

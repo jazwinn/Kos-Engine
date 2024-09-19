@@ -104,7 +104,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);GLEW_STATIC</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\imgui;$(SolutionDir)include;$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\glm\include;$(SolutionDir)Dependencies\GLEW\include\GL</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\imgui;$(SolutionDir)include;$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\glm\include;$(SolutionDir)Dependencies\stb_image\include;$(SolutionDir)Dependencies\GLEW\include\GL;$(SolutionDir)Json Texts</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>26945</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -125,7 +126,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);GLEW_STATIC</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\imgui;$(SolutionDir)include;$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\glm\include;$(SolutionDir)Dependencies\GLEW\include\GL</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\imgui;$(SolutionDir)include;$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\glm\include;$(SolutionDir)Dependencies\stb_image\include;$(SolutionDir)Dependencies\GLEW\include\GL</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -142,10 +143,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application\Application.cpp" />
+    <ClCompile Include="Application\imgui_component_window.cpp" />
     <ClCompile Include="Application\imgui_handler.cpp" />
+    <ClCompile Include="Application\json_handler.cpp" />
     <ClCompile Include="Application\main.cpp" />
     <ClCompile Include="Application\Window.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="baseInput.cpp" />
+=======
+    <ClCompile Include="Assets\AssetManager.cpp" />
+>>>>>>> CurrentUpstream
     <ClCompile Include="Dependencies\imgui\imgui.cpp" />
     <ClCompile Include="Dependencies\imgui\imgui_demo.cpp" />
     <ClCompile Include="Dependencies\imgui\imgui_draw.cpp" />
@@ -163,15 +170,22 @@
     <ClCompile Include="Application\imgui_hierarchy_window.cpp" />
     <ClCompile Include="Math\Mat2x2.cpp" />
     <ClCompile Include="Math\Mat3x3.cpp" />
+    <ClCompile Include="Math\mathlib.cpp" />
     <ClCompile Include="Math\vector2.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="WinApp\windowsApp.cpp" />
     <ClCompile Include="WinApp\windowswindow.cpp" />
+=======
+    <ClCompile Include="Phyiscs.cpp" />
+>>>>>>> CurrentUpstream
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Application.h" />
     <ClInclude Include="Application\baseInput.h" />
     <ClInclude Include="Application\imgui_handler.h" />
+    <ClInclude Include="Application\json_handler.h" />
     <ClInclude Include="Application\Window.h" />
+    <ClInclude Include="Assets\AssetManager.h" />
     <ClInclude Include="Dependencies\imgui\imconfig.h" />
     <ClInclude Include="Dependencies\imgui\imgui.h" />
     <ClInclude Include="Dependencies\imgui\imgui_impl_glfw.h" />
@@ -182,6 +196,7 @@
     <ClInclude Include="Dependencies\imgui\imstb_rectpack.h" />
     <ClInclude Include="Dependencies\imgui\imstb_textedit.h" />
     <ClInclude Include="Dependencies\imgui\imstb_truetype.h" />
+    <ClInclude Include="Dependencies\stb_image\include\stb_image.h" />
     <ClInclude Include="ECS\Component\CollisionComponent.h" />
     <ClInclude Include="ECS\Component\Component.h" />
     <ClInclude Include="ECS\Component\ComponentList.h" />
@@ -204,14 +219,20 @@
     <ClInclude Include="Graphics\GraphicsPipe.h" />
     <ClInclude Include="Math\Mat2x2.h" />
     <ClInclude Include="Math\Mat3x3.h" />
+    <ClInclude Include="Math\mathlib.h" />
     <ClInclude Include="Math\vector2.h" />
+<<<<<<< HEAD
     <ClInclude Include="WinApp\window.h" />
     <ClInclude Include="WinApp\windowsApp.h" />
     <ClInclude Include="WinApp\windowswindow.h" />
+=======
+    <ClInclude Include="Physics.h" />
+>>>>>>> CurrentUpstream
   </ItemGroup>
   <ItemGroup>
     <None Include="Graphics\genericFragmentShader.frag" />
     <None Include="Graphics\genericVertexShader.vert" />
+    <None Include="Json Texts\components.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -13,19 +13,38 @@ struct GraphicsData
 	float rotate;
 	glm::vec2 scale;
 	glm::vec3 worldCoordinates;
+	unsigned int textureID;
 	//glm::vec4 color;
-	//std::string textureFile;
 };
 
 class GraphicsPipe
 {
 private:
 
+	struct Mesh
+	{
+		int shapeType;
+		unsigned int vaoId;
+		unsigned int primitiveType;
+		unsigned short indexElementCount;
+
+	};
+
+	void funcSetupVao(Mesh& shape);
+	void funcSetupArrayBuffer();
+	void funcBindImageDatafromAssetManager();
+	void funcSetupShader(const std::string& vertexShader, const std::string& fragmentShader);
+	void funcDeleteShader();
+
 	static GraphicsPipe* instancePtr;
 
 	unsigned int genericShaderProgram;
 
-	
+	//Buffers
+	unsigned int modelMatrixArrayBuffer;
+	unsigned int textureOrderBuffer;
+
+	float aspectRatio;
 
 	struct Camera
 	{
@@ -33,10 +52,8 @@ private:
 		float angle;
 	};
 
-
 	std::vector<glm::mat3> modelToNDCMatrix;
 	glm::mat3 testMatrix;
-	
 
 
 	static GLuint funcCompileShader(GLuint type, const std::string& shader);
@@ -51,37 +68,30 @@ public:
 		CIRCLE_LINES
 	};
 
-	struct Mesh
-	{
-		int shapeType;
-		unsigned int vaoId;
-		unsigned int primitiveType;
-		unsigned short indexElementCount;
+	
 
-	};
-
-	Mesh squareMesh;
-	Mesh squareLinesMesh;
-
-	//GraphicsPipe();
 
 	~GraphicsPipe();
 
 	static GraphicsPipe* funcGetInstance();
 
-	void funcSetupVao(Mesh &shape);
-	void funcSetupShader(const std::string& vertexShader, const std::string& fragmentShader);
-	void funcDeleteShader();
-
-	void funcSortDrawOrder();
+	
 
 	void funcInit();
 	void funcUpdate();
 	void funcDraw(Mesh shape);
 
+	void funcSortDrawOrder();
 	static void funcSetDrawMode(GLenum mode);
 
+	Mesh squareMesh;
+	Mesh squareLinesMesh;
 	std::vector<GraphicsData> modelData;
+	std::vector<int> textureOrder;
+
+	//Array of the texture IDs
+	std::vector<unsigned int> textureIDs;
+	
 
 };
 

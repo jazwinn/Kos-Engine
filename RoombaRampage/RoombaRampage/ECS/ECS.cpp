@@ -32,9 +32,11 @@ void ECS::Load() {
 }
 
 
-void ECS::Update() {
-
+void ECS::Update(float DT) {
+	
 	ECS* ecs = ECS::GetInstance();
+	//update deltatime
+	ecs->DeltaTime = DT;
 
 	//loops through all the system
 	for (auto& System : ecs->ECS_SystemMap) {
@@ -49,8 +51,8 @@ void ECS::Unload() {
 	ECS* ecs = ECS::GetInstance();
 
 	//delete componentpool
-	for (size_t n{}; n < TotalTypeComponent; n++) {
-		delete ecs->ECS_CombinedComponentPool[(ComponentType)n];
+	for (auto& Component : ecs->ECS_CombinedComponentPool) {
+		delete Component.second;
 	}
 
 	//delete systems
@@ -62,17 +64,18 @@ void ECS::Unload() {
 	delete ecs;
 }
 
-void ECS::AddComponent(ComponentType Type, EntityID ID) {
+void* ECS::AddComponent(ComponentType Type, EntityID ID) {
 	
 	ECS* ecs = ECS::GetInstance();
 
-	ecs->ECS_CombinedComponentPool[Type]->AssignComponent(ID);
+	void* ComponentPtr = ecs->ECS_CombinedComponentPool[Type]->AssignComponent(ID);
 
 	ecs->ECS_EntityMap.find(ID)->second.set(Type);
 
 	//checks if new component fufils any of the system requirements
 	RegisterSystems(ID);
 
+	return ComponentPtr;
 }
 
 void ECS::RegisterSystems(EntityID ID) {
@@ -115,15 +118,41 @@ EntityID ECS::CreateEntity() {
 	 --------------------------------------------------------------*/
 	TransformComponent* Trans = (TransformComponent*)ecs->ECS_CombinedComponentPool[TypeTransformComponent]->GetEntityComponent(ID);
 
-	Trans->scale = { 0.5f };
+	Trans->scale = { 0.5f, 0.5f };
 
 	AddComponent(TypeSpriteComponent, ID);
+
+	AddComponent(TypeMovemmentComponent, ID);
 
 	/*--------------------------------------------------------------*/
 
 	ecs->EntityCount++;
 
 	return ID;
+}
+
+EntityID ECS::DuplicateEntity(EntityID DuplicatesID) {
+
+	ECS* ecs = ECS::GetInstance();
+	EntityID NewEntity = ecs->CreateEntity();
+
+	compSignature DuplicateSignature = ecs->ECS_EntityMap.find(DuplicatesID)->second;
+
+	for (size_t n{}; n < TotalTypeComponent; n++) {
+
+		if (DuplicateSignature.test((ComponentType)n)){
+
+			ecs->ECS_CombinedComponentPool[(ComponentType)n]->DuplicateComponent(DuplicatesID, NewEntity);
+
+		}
+
+	}
+	
+	ecs->ECS_EntityMap.find(NewEntity)->second = DuplicateSignature;
+
+
+	return NewEntity;
+
 }
 
 bool ECS::DeleteEntity(EntityID ID) {

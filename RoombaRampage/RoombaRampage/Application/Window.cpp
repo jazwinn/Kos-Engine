@@ -1,7 +1,10 @@
 #include "Window.h"
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> CurrentUpstream
 namespace Application {
     //temp commented
 	//int AppWindow::init(){
@@ -178,7 +181,6 @@ namespace Application {
         glViewport(0, 0, display_w, display_h);
         glClearColor(ClearColor.x * ClearColor.w, ClearColor.y * ClearColor.w, ClearColor.z * ClearColor.w, ClearColor.w);
         glClear(GL_COLOR_BUFFER_BIT);
-
 
         return 0;
 	}

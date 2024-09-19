@@ -7,7 +7,7 @@
 #include<string>
 #include <iostream>
 
-unsigned int ImGuiHandler::DrawHierachyWindow(bool& show_demo_window, bool& show_another_window, ImVec4& clear_color)
+unsigned int ImGuiHandler::DrawHierachyWindow(ImVec4& clear_color)
 {
     //fetch ecs
     ECS* ecs = ECS::GetInstance();
@@ -17,10 +17,8 @@ unsigned int ImGuiHandler::DrawHierachyWindow(bool& show_demo_window, bool& show
 
     ImGui::Text("Roomba Rampage");
 
-    if (ImGui::Button("+ Add GameObject")) {
-       // ecs->CreateEntity();
+    if (ImGui::Button("+ Add GameObject"))
         ImGuiHandler::objectNameBox ? ImGuiHandler::objectNameBox = false : objectNameBox = true;
-    }
 		
     if (objectNameBox)
     {
@@ -40,6 +38,7 @@ unsigned int ImGuiHandler::DrawHierachyWindow(bool& show_demo_window, bool& show
 
             charBuffer[0] = '\0';
             objectNameBox = false;
+
         }
     }
 
@@ -64,13 +63,14 @@ unsigned int ImGuiHandler::DrawHierachyWindow(bool& show_demo_window, bool& show
             //Use _button,_buttonhover_buttonactive
             //To change the button color
             //Dont forget to pop
-            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(51.0f, 255.0f, 56.0f, 1.0f));  // Red 
+            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.8f, 0.02f, 0.2f, 1.0f));  // Red 
             ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(1.0f, 0.4f, 0.4f, 1.0f));  // Lighter red
             ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.7f, 0.1f, 0.1f, 1.0f));  // Darker red
 
             //Use this to make the button side by side on the same line
             ImGui::SameLine();
             std::string deleteButtonLabel = "Delete ##" + std::to_string(i);
+
             if (ImGui::Button(deleteButtonLabel.c_str()))
             {
 
@@ -95,14 +95,12 @@ unsigned int ImGuiHandler::DrawHierachyWindow(bool& show_demo_window, bool& show
         }
 
         //Render the game object component window
-        if (obj_component_window[i])
+        if (obj_component_window[i] && obj_entity_id[i] == clicked_entity_id)
         {
             bool windowOpen = obj_component_window[i];  // Store the value in a temporary bool
             std::string windowTitle = obj_text_entries[i] + "'s Component Window ";
 
-            ImGui::Begin(windowTitle.c_str(), &windowOpen);  // Window title based on index
-            ImGui::Text("This is the separate window for %s", obj_text_entries[i].c_str());
-            ImGui::End();
+            DrawComponentWindow(ecs, obj_entity_id[i], windowOpen, windowTitle);
 
             obj_component_window[i] = windowOpen;
         }

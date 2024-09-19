@@ -21,6 +21,8 @@ public:
 
 	virtual bool DeleteEntityComponent(EntityID) = 0;
 
+	virtual void* DuplicateComponent(EntityID , EntityID ) = 0;
+
 };
 
 
@@ -38,7 +40,7 @@ public:
 	
 	bool DeleteEntityComponent(EntityID) override;
 
-
+	void* DuplicateComponent(EntityID DuplicatesID, EntityID NewID) override;
 
 	std::vector<T> Pool;
 };
@@ -71,12 +73,28 @@ void* ComponentPool<T>::AssignComponent(EntityID ID) {
 }
 
 
+template <typename T>
+void* ComponentPool<T>::DuplicateComponent(EntityID DuplicateID, EntityID NewID) {
+
+	//UNTESED MIGHT FAIL
+
+
+	auto* DuplicateComponent = (T*)GetEntityComponent(DuplicateID);
+
+	auto* NewComponent = (T*)AssignComponent(NewID);
+	
+	*NewComponent = *DuplicateComponent;
+
+	return NewComponent;
+}
+
+
 
 template <typename T>
 void* ComponentPool<T>::GetEntityComponent(EntityID ID){
 
 	for (auto& Component : Pool) {
-		if (Component.Entity == ID) {
+		if (Component.Entity == ID && Component.IsLive) {
 			return &Component;
 		}
 	}

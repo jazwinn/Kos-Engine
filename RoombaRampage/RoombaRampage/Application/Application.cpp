@@ -1,5 +1,16 @@
 #include "Application.h"
 
+<<<<<<< HEAD
+=======
+#include "../Graphics/GraphicsPipe.h"
+#include "../ECS/ECS.h"
+#include "Window.h"
+
+#include "imgui.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
+#include "imgui_handler.h"
+>>>>>>> CurrentUpstream
 
 namespace Application {
 
@@ -33,6 +44,8 @@ namespace Application {
         return true;
     }
 
+
+    float LastTime = glfwGetTime();;
 
 
     int Application::Init() {
@@ -87,7 +100,6 @@ namespace Application {
     int Application::Run() {
 
         ECS* ecs = ECS::GetInstance();
-
         /*--------------------------------------------------------------
          GAME LOOP
         --------------------------------------------------------------*/
@@ -96,23 +108,23 @@ namespace Application {
             /* Poll for and process events */
             //glfwPollEvents();
 
+            //calculate DeltaTime
+            float CurrentTime = glfwGetTime();
+            float DeltaTime =  CurrentTime - LastTime;
+            LastTime = CurrentTime;
             /*--------------------------------------------------------------
              IMGUI FRAME SETUP
              --------------------------------------------------------------*/
             imgui_manager.NewFrame();
 
-            bool show_demo_window = true;
-            bool show_another_window = false;
             ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f); // <----- Is this needed?
-
-
-            imgui_manager.DrawHierachyWindow(show_demo_window, show_another_window, clear_color);
+            imgui_manager.DrawHierachyWindow(clear_color);
 
 
             /*--------------------------------------------------------------
              UPDATE ECS
              --------------------------------------------------------------*/
-            ecs->Update();
+            ecs->Update(DeltaTime);
 
             /*--------------------------------------------------------------
              UPDATE Render Pipeline
@@ -136,6 +148,7 @@ namespace Application {
              --------------------------------------------------------------*/
             imgui_manager.Render();
 
+<<<<<<< HEAD
             funcGetApp().funcGetWin().funcUpdate();
 
             glfwSwapBuffers(static_cast<GLFWwindow*>(funcGetApp().funcGetWin().funcGetNatWin()));
@@ -144,6 +157,10 @@ namespace Application {
                 std::cout << "CHECKING!" << std::endl;
                 Cleanup();
             }
+=======
+
+            glfwSwapBuffers(lvWindow.Window);
+>>>>>>> CurrentUpstream
         }
 
         return 0;

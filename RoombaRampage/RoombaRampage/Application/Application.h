@@ -39,6 +39,7 @@ namespace Application{
 
 		static int Cleanup();
 
+<<<<<<< HEAD
 		Vec2 lvMousePos{};
 
 		static std::unique_ptr<AppWindow> lvWin;
@@ -52,6 +53,10 @@ namespace Application{
 		static Application* lvInstance;
 
 
+=======
+		
+		
+>>>>>>> CurrentUpstream
 	};
 
 
