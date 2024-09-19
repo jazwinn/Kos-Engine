@@ -70,6 +70,12 @@
     <Filter Include="Header Files\Assets">
       <UniqueIdentifier>{b0f4c1b4-75f4-42c0-b690-9859577ed47a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Input">
+      <UniqueIdentifier>{42814e3e-029b-4116-b058-3da1664ff3f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Input">
+      <UniqueIdentifier>{c5f70c75-0f04-46d1-8910-8394246d512c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Dependencies\imgui\imgui_widgets.cpp">
