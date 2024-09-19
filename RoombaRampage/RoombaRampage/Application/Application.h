@@ -10,7 +10,7 @@
 #include "../Events/keyEvents.h"
 #include "../Events/mouseEvents.h"
 #include "../Math/vector2.h"
-#include "../Application/baseInput.h"
+#include "../Input/baseInput.h"
 #include "../Graphics/GraphicsPipe.h"
 #include "../ECS/ECS.h"
 
@@ -49,7 +49,6 @@ namespace Application{
 		static Application* lvInstance;
 
 
->>>>>>> previous
 	};
 
 
