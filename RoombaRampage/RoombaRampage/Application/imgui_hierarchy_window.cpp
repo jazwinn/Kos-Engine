@@ -102,9 +102,9 @@ unsigned int ImGuiHandler::DrawHierachyWindow(ImVec4& clear_color)
             //Use _button,_buttonhover_buttonactive
             //To change the button color
             //Dont forget to pop
-            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.1f, 0.8f, 0.1f, 1.0f));  // green
-            ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(1.0f, 0.4f, 0.4f, 1.0f));  // Lighter red
-            ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.7f, 0.1f, 0.1f, 1.0f));  // Darker red
+            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.1f, 0.5f, 0.1f, 1.0f));  // green
+            ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.1f, 0.8f, 0.1f, 1.0f));  // Lighter red
+            ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.1f, 1.f, 0.1f, 1.0f));  // Darker red
 
             //Use this to make the button side by side on the same line
             ImGui::SameLine();
