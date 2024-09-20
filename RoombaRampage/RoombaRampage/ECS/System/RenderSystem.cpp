@@ -55,7 +55,7 @@ namespace Ecs {
 		}
 
 
-		//auto& it = std::find(vecspritecomponentptr.begin(), vecspritecomponentptr.end(),
+		//auto& it = std::find(vecspritecomponentptr.beginl(), vecspritecomponentptr.end(),
 		//	[id](const spritecomponent& comp) {
 		//		return comp.entity == id;
 		//	});

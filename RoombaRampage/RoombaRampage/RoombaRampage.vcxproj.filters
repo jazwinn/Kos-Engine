@@ -299,6 +299,12 @@
     <ClInclude Include="ECS\Component\RigidBody.h">
       <Filter>Header Files\ECS\Component</Filter>
     </ClInclude>
+    <ClInclude Include="Input\keycodes.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\mousecodes.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Graphics\genericFragmentShader.frag">
