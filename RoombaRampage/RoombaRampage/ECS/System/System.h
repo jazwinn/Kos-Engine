@@ -10,6 +10,8 @@ namespace Ecs {
 
 	enum TypeSystem {
 		TypeMovementSystem,
+		TypeControlSystem,
+
 		
 
 

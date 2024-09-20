@@ -8,26 +8,15 @@ namespace Ecs {
 	void CollisionSystem::RegisterSystem(EntityID ID) {
 		ECS* ecs = ECS::GetInstance();
 
-		//Step 1 : check
-		bool store = true;
-		for (auto& TransformComponentPtr : vecTransformComponentPtr) {
-			if (TransformComponentPtr->Entity == ID) {
-				store = false;
-				break;
-			}
-			else {
-				store = true;
-			}
-		}
+		//Checks if system already has stored the entity
 
-		if (store) {
-			//ADD ASSERT TO TEST FOR NULL
+		if (std::find_if(vecTransformComponentPtr.begin(), vecTransformComponentPtr.end(), [ID](const auto& obj) { return obj->Entity == ID; })
+			== vecTransformComponentPtr.end()) {
 			vecTransformComponentPtr.push_back((TransformComponent*)ecs->ECS_CombinedComponentPool[TypeTransformComponent]->GetEntityComponent(ID));
 			vecBoxColliderComponentPtr.push_back((BoxColliderComponent*)ecs->ECS_CombinedComponentPool[TypeBoxColliderComponent]->GetEntityComponent(ID));
 			vecRigidBodyComponentPtr.push_back((RigidBodyComponent*)ecs->ECS_CombinedComponentPool[TypeRigidBodyComponent]->GetEntityComponent(ID));
 			vecMovementComponentPtr.push_back((MovementComponent*)ecs->ECS_CombinedComponentPool[TypeMovemmentComponent]->GetEntityComponent(ID));
 		}
-
 
 
 	}
@@ -98,12 +87,12 @@ namespace Ecs {
 		
 
 		std::vector<Physics::PhysicsData> vecCollisionEntity = PysicsPipeline.PassPhysicsData();
-		if (vecCollisionEntity.empty()) std::cout << "No collision from Collision System CPP" << std::endl;
-		else {
-			for (auto& CollidedEntity : vecCollisionEntity) {
-				std::cout << "Entity " << CollidedEntity.ID << " is Collided" << std::endl;
-			}
-		}
+		//if (vecCollisionEntity.empty()) std::cout << "No collision from Collision System CPP" << std::endl;
+		//else {
+		//	for (auto& CollidedEntity : vecCollisionEntity) {
+		//		std::cout << "Entity " << CollidedEntity.ID << " is Collided" << std::endl;
+		//	}
+		//}
 		//clear the entity
 		PysicsPipeline.ClearEntites();
 	}

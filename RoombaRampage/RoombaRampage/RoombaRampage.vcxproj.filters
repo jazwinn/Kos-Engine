@@ -58,9 +58,6 @@
     <Filter Include="Header Files\Phyisc">
       <UniqueIdentifier>{08680b2c-947a-44d9-94dc-251ba73e9ec7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Phyisc">
-      <UniqueIdentifier>{83adc175-400f-4197-80e7-552ce7be419c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Assets">
       <UniqueIdentifier>{fe211503-145b-4469-8243-6d33edf0bb65}</UniqueIdentifier>
     </Filter>
@@ -164,6 +161,9 @@
     </ClCompile>
     <ClCompile Include="Physics\Phyiscs.cpp">
       <Filter>Source Files\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="ECS\System\ControlSystem.cpp">
+      <Filter>Source Files\ECS\System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -304,6 +304,9 @@
     </ClInclude>
     <ClInclude Include="Input\mousecodes.h">
       <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="ECS\System\ControlSystem.h">
+      <Filter>Header Files\ECS\System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

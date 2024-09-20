@@ -114,7 +114,7 @@ namespace Application {
             float CurrentTime = glfwGetTime();
             float DeltaTime =  CurrentTime - LastTime;
 
-            //std::cout << "FPS:" << 1/DeltaTime << std::endl;
+            std::cout << "FPS:" << 1/DeltaTime << std::endl;
             /*--------------------------------------------------------------
              IMGUI FRAME SETUP
              --------------------------------------------------------------*/

@@ -9,7 +9,7 @@ namespace Ecs {
 	using compSignature = std::bitset<TotalTypeComponent>;
 
 	// Max number of entities allowed to be created
-	static EntityID MaxEntity = 1000;
+	static EntityID MaxEntity = 3000;
 
 }
 

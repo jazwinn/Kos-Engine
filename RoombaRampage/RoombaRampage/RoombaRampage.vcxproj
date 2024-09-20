@@ -159,6 +159,7 @@
     <ClCompile Include="Dependencies\imgui\imgui_widgets.cpp" />
     <ClCompile Include="ECS\ECS.cpp" />
     <ClCompile Include="ECS\System\CollisionSystem.cpp" />
+    <ClCompile Include="ECS\System\ControlSystem.cpp" />
     <ClCompile Include="ECS\System\MovementSystem.cpp" />
     <ClCompile Include="ECS\System\RenderSystem.cpp" />
     <ClCompile Include="Graphics\Graphics.cpp" />
@@ -200,6 +201,7 @@
     <ClInclude Include="ECS\ECS.h" />
     <ClInclude Include="ECS\ECSList.h" />
     <ClInclude Include="ECS\System\CollisionSystem.h" />
+    <ClInclude Include="ECS\System\ControlSystem.h" />
     <ClInclude Include="ECS\System\MovementSystem.h" />
     <ClInclude Include="ECS\System\RenderSystem.h" />
     <ClInclude Include="ECS\System\System.h" />

@@ -24,6 +24,7 @@ unsigned int ImGuiHandler::DrawHierachyWindow(ImVec4& clear_color)
     {
         if (ImGui::InputText("##", charBuffer, IM_ARRAYSIZE(charBuffer), ImGuiInputTextFlags_EnterReturnsTrue))
         {
+
             //create ID then push into vector
             Ecs::EntityID newEntityID = ecs-> CreateEntity();
             obj_entity_id.push_back(newEntityID);
@@ -85,6 +86,7 @@ unsigned int ImGuiHandler::DrawHierachyWindow(ImVec4& clear_color)
                 obj_text_entries.erase(obj_text_entries.begin() + i);
                 obj_entity_id.erase(obj_entity_id.begin() + i);
                 deleteButton.erase(deleteButton.begin() + i);
+                DuplicateButton.erase(DuplicateButton.begin() + i);
                 obj_component_window.erase(obj_component_window.begin() + i);
 
                 i--;
