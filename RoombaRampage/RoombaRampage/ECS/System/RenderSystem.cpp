@@ -10,7 +10,6 @@ namespace Ecs {
 		ECS* ecs = ECS::GetInstance();
 
 
-
 		//Step 1 : check
 		bool store = true;
 		for (auto& TransformComponentPtr : vecTransformComponentPtr) {

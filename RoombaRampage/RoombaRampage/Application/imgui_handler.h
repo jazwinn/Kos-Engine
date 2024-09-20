@@ -32,6 +32,7 @@ private:
     char charBuffer[50] = "";  // Char Buffer
     std::vector<std::string> obj_text_entries;
     std::vector<bool> deleteButton;
+    std::vector<bool> DuplicateButton;
     std::vector<bool> obj_component_window;
     std::vector<unsigned int> obj_entity_id;
 
