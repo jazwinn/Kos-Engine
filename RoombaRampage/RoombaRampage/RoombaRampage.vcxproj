@@ -169,7 +169,7 @@
     <ClCompile Include="Math\Mat3x3.cpp" />
     <ClCompile Include="Math\mathlib.cpp" />
     <ClCompile Include="Math\vector2.cpp" />
-    <ClCompile Include="Phyiscs.cpp" />
+    <ClCompile Include="Physics\Phyiscs.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Application.h" />
@@ -188,11 +188,13 @@
     <ClInclude Include="Dependencies\imgui\imstb_textedit.h" />
     <ClInclude Include="Dependencies\imgui\imstb_truetype.h" />
     <ClInclude Include="Dependencies\stb_image\include\stb_image.h" />
-    <ClInclude Include="ECS\Component\CollisionComponent.h" />
+    <ClInclude Include="ECS\Component\BoxColliderComponent.h" />
     <ClInclude Include="ECS\Component\Component.h" />
     <ClInclude Include="ECS\Component\ComponentList.h" />
     <ClInclude Include="ECS\Component\ComponentPool.h" />
+    <ClInclude Include="ECS\Component\PlayerComponent.h" />
     <ClInclude Include="ECS\Component\MovementComponent.h" />
+    <ClInclude Include="ECS\Component\RigidBody.h" />
     <ClInclude Include="ECS\Component\SpriteComponent.h" />
     <ClInclude Include="ECS\Component\TransformComponent.h" />
     <ClInclude Include="ECS\ECS.h" />
@@ -213,7 +215,7 @@
     <ClInclude Include="Math\Mat3x3.h" />
     <ClInclude Include="Math\mathlib.h" />
     <ClInclude Include="Math\vector2.h" />
-    <ClInclude Include="Physics.h" />
+    <ClInclude Include="Physics\Physics.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Graphics\genericFragmentShader.frag" />

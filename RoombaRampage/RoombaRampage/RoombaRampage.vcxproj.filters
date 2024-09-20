@@ -73,6 +73,12 @@
     <Filter Include="Header Files\Input">
       <UniqueIdentifier>{c5f70c75-0f04-46d1-8910-8394246d512c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Physics">
+      <UniqueIdentifier>{83adc175-400f-4197-80e7-552ce7be419c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Physics">
+      <UniqueIdentifier>{08680b2c-947a-44d9-94dc-251ba73e9ec7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Dependencies\imgui\imgui_widgets.cpp">
@@ -135,9 +141,6 @@
     <ClCompile Include="Application\Window.cpp">
       <Filter>Source Files\Application</Filter>
     </ClCompile>
-    <ClCompile Include="Phyiscs.cpp">
-      <Filter>Source Files\Phyisc</Filter>
-    </ClCompile>
     <ClCompile Include="Math\mathlib.cpp">
       <Filter>Source Files\Math</Filter>
     </ClCompile>
@@ -158,6 +161,9 @@
     </ClCompile>
     <ClCompile Include="Input\baseInput.cpp">
       <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\Phyiscs.cpp">
+      <Filter>Source Files\Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -203,7 +209,7 @@
     <ClInclude Include="Application\imgui_handler.h">
       <Filter>Header Files\Application</Filter>
     </ClInclude>
-    <ClInclude Include="ECS\Component\CollisionComponent.h">
+    <ClInclude Include="ECS\Component\BoxColliderComponent.h">
       <Filter>Header Files\ECS\Component</Filter>
     </ClInclude>
     <ClInclude Include="ECS\Component\Component.h">
@@ -254,9 +260,6 @@
     <ClInclude Include="Application\Window.h">
       <Filter>Header Files\Application</Filter>
     </ClInclude>
-    <ClInclude Include="Physics.h">
-      <Filter>Header Files\Phyisc</Filter>
-    </ClInclude>
     <ClInclude Include="Math\mathlib.h">
       <Filter>Header Files\Math</Filter>
     </ClInclude>
@@ -286,6 +289,15 @@
     </ClInclude>
     <ClInclude Include="Input\baseInput.h">
       <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="ECS\Component\PlayerComponent.h">
+      <Filter>Header Files\ECS\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\Physics.h">
+      <Filter>Header Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="ECS\Component\RigidBody.h">
+      <Filter>Header Files\ECS\Component</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

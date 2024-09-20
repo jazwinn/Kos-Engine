@@ -10,10 +10,10 @@ namespace Ecs {
 
 	enum TypeSystem {
 		TypeMovementSystem,
+		
 
 
-
-
+		TypeCollisionSystem,
 		//render system called the last
 		TypeRenderSystem,
 

@@ -91,6 +91,7 @@ namespace Application {
     int Application::Run() {
 
         Ecs::ECS* ecs = Ecs::ECS::GetInstance();
+        float FPSCap = 1 / 60;
         /*--------------------------------------------------------------
          GAME LOOP
         --------------------------------------------------------------*/
@@ -102,7 +103,8 @@ namespace Application {
             //calculate DeltaTime
             float CurrentTime = glfwGetTime();
             float DeltaTime =  CurrentTime - LastTime;
-            LastTime = CurrentTime;
+
+            std::cout << "FPS:" << 1/DeltaTime << std::endl;
             /*--------------------------------------------------------------
              IMGUI FRAME SETUP
              --------------------------------------------------------------*/
@@ -140,6 +142,13 @@ namespace Application {
 
 
             glfwSwapBuffers(static_cast<GLFWwindow*>(funcGetApp().funcGetWin().funcGetNatWin()));
+
+            while (DeltaTime < FPSCap) {
+                CurrentTime = glfwGetTime();  // Continuously update current time
+                DeltaTime = CurrentTime - LastTime;  // Calculate new DeltaTime
+            }
+
+            LastTime = CurrentTime;
         }
 
         return 0;

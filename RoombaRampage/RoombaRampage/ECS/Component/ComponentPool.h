@@ -9,6 +9,8 @@
 #include "TransformComponent.h"
 #include "MovementComponent.h"
 #include "SpriteComponent.h"
+#include "BoxColliderComponent.h"
+#include "RigidBody.h"
 
 namespace Ecs {
 	class IComponentPool {
