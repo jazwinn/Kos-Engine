@@ -58,9 +58,6 @@
     <Filter Include="Header Files\Phyisc">
       <UniqueIdentifier>{08680b2c-947a-44d9-94dc-251ba73e9ec7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Phyisc">
-      <UniqueIdentifier>{83adc175-400f-4197-80e7-552ce7be419c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Assets">
       <UniqueIdentifier>{fe211503-145b-4469-8243-6d33edf0bb65}</UniqueIdentifier>
     </Filter>

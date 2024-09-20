@@ -13,7 +13,7 @@ namespace Physics {
 		if (aabb2.min.x > aabb1.max.x) return 0;
 		if (aabb2.max.y < aabb1.min.y) return 0;
 		if (aabb2.min.y > aabb1.max.y) return 0;
-		std::cout << "Static Collision fail " << std::endl;
+		//std::cout << "Static Collision fail " << std::endl;
 		return 1;
 	}
 
