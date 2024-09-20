@@ -3,15 +3,15 @@ R"( #version 460 core
 	layout (location=0) in vec3 color;
 	layout (location=1) in vec2 texCoords;
 
-	//layout (location=2) in int textureID;
+	layout (location=2) flat in int textureID;
 
 	layout (location=0) out vec4 fragColor;
 
-	uniform sampler2D textures;
+	uniform sampler2D textures[16];
 
 
 	void main()
 	{
-		 fragColor = texture(textures, texCoords) * vec4(color, 1.0);
+		 fragColor = texture(textures[textureID], texCoords) * vec4(color, 1.0);
 	}
 )"

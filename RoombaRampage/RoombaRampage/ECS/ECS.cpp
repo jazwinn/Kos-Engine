@@ -116,6 +116,9 @@ namespace Ecs{
 
 		AddComponent(TypeSpriteComponent, ID);
 
+		SpriteComponent* sprite = (SpriteComponent*)ecs->ECS_CombinedComponentPool[TypeSpriteComponent]->GetEntityComponent(ID);
+		sprite->imageID = 0;
+
 		AddComponent(TypeMovemmentComponent, ID);
 
 		AddComponent(TypeRigidBodyComponent, ID);
