@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "ECS.h"
+#include <algorithm>
 
 //ECS Varaible
 
@@ -158,8 +159,11 @@ namespace Ecs{
 
 	bool ECS::DeleteEntity(EntityID ID) {
 
+		ECS* ecs = ECS::GetInstance();
 		// refector
 		DeregisterSystem(ID);
+
+		ecs->ECS_EntityMap.erase(ID);
 
 		return true;
 	}
