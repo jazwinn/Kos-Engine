@@ -197,8 +197,8 @@ void GraphicsPipe::funcSetupArrayBuffer()
 
 void GraphicsPipe::funcBindImageDatafromAssetManager()
 {
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	//glEnable(GL_BLEND);
+	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	AssetManager* assets = AssetManager::funcGetInstance();
 	for (int i = 0; i < assets->imageContainer.size(); ++i)
 	{
