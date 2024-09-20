@@ -5,22 +5,28 @@
 #include "../ECS/Component/TransformComponent.h"
 #include "../ECS/Component/MovementComponent.h"
 
-class MovementSystem : public ISystem {
+namespace Ecs {
 
-public:
-	void RegisterSystem(EntityID) override;
+	class MovementSystem : public ISystem {
 
-	void DeregisterSystem(EntityID) override;
+	public:
+		void RegisterSystem(EntityID) override;
 
-	void Init() override;
+		void DeregisterSystem(EntityID) override;
 
-	void Update() override;
+		void Init() override;
 
-private:
-	//Storage to point to components
-	std::vector<TransformComponent*> vecTransformComponentPtr;
-	std::vector<MovementComponent*> vecMovementComponentPtr;
+		void Update() override;
 
-};
+	private:
+		//Storage to point to components
+		std::vector<TransformComponent*> vecTransformComponentPtr;
+		std::vector<MovementComponent*> vecMovementComponentPtr;
+
+	};
+
+}
+
+
 
 #endif MOVESYS_H

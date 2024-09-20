@@ -9,123 +9,131 @@
 #include "TransformComponent.h"
 #include "MovementComponent.h"
 #include "SpriteComponent.h"
+#include "BoxColliderComponent.h"
+#include "RigidBody.h"
 
-class IComponentPool {
+namespace Ecs {
+	class IComponentPool {
 
-public:
-	virtual void* AssignComponent(EntityID) = 0;
+	public:
+		virtual void* AssignComponent(EntityID) = 0;
 
-	virtual void* GetEntityComponent(EntityID) = 0;
+		virtual void* GetEntityComponent(EntityID) = 0;
 
-	virtual bool HasComponent(EntityID) = 0;
+		virtual bool HasComponent(EntityID) = 0;
 
-	virtual bool DeleteEntityComponent(EntityID) = 0;
+		virtual bool DeleteEntityComponent(EntityID) = 0;
 
-	virtual void* DuplicateComponent(EntityID , EntityID ) = 0;
+		virtual void* DuplicateComponent(EntityID, EntityID) = 0;
 
-};
-
-
-template <typename T>
-class ComponentPool : public IComponentPool {
-
-public:
-	ComponentPool();
-	 
-	void* AssignComponent(EntityID) override;
-
-	void* GetEntityComponent(EntityID) override;
-
-	bool HasComponent(EntityID) override;
-	
-	bool DeleteEntityComponent(EntityID) override;
-
-	void* DuplicateComponent(EntityID DuplicatesID, EntityID NewID) override;
-
-	std::vector<T> Pool;
-};
+	};
 
 
-template<typename T>
-ComponentPool<T>::ComponentPool() {
+	template <typename T>
+	class ComponentPool : public IComponentPool {
 
-	Pool.resize(MaxEntity);
+	public:
+		ComponentPool();
+
+		void* AssignComponent(EntityID) override;
+
+		void* GetEntityComponent(EntityID) override;
+
+		bool HasComponent(EntityID) override;
+
+		bool DeleteEntityComponent(EntityID) override;
+
+		void* DuplicateComponent(EntityID DuplicatesID, EntityID NewID) override;
+
+		std::vector<T> Pool;
+	};
 
 
-}
+	template<typename T>
+	ComponentPool<T>::ComponentPool() {
 
-template <typename T>
-void* ComponentPool<T>::AssignComponent(EntityID ID) {
+		Pool.resize(MaxEntity);
 
 
-	for (auto& Component : Pool) {
-		if (Component.IsLive == false) {
-			Component.IsLive = true;
-			Component.Entity = ID;
-			return &Component;
-		}
 	}
 
-	// return NULL if all component is stored
-	// SAY COMPONENT POOL IS FULL
-	return NULL;
-
-}
+	template <typename T>
+	void* ComponentPool<T>::AssignComponent(EntityID ID) {
 
 
-template <typename T>
-void* ComponentPool<T>::DuplicateComponent(EntityID DuplicateID, EntityID NewID) {
-
-	//UNTESED MIGHT FAIL
-
-
-	auto* DuplicateComponent = (T*)GetEntityComponent(DuplicateID);
-
-	auto* NewComponent = (T*)AssignComponent(NewID);
-	
-	*NewComponent = *DuplicateComponent;
-
-	return NewComponent;
-}
-
-
-
-template <typename T>
-void* ComponentPool<T>::GetEntityComponent(EntityID ID){
-
-	for (auto& Component : Pool) {
-		if (Component.Entity == ID && Component.IsLive) {
-			return &Component;
+		for (auto& Component : Pool) {
+			if (Component.IsLive == false) {
+				Component.IsLive = true;
+				Component.Entity = ID;
+				return &Component;
+			}
 		}
+
+		// return NULL if all component is stored
+		// SAY COMPONENT POOL IS FULL
+		return NULL;
+
 	}
 
-	//No Component Allocated to Entity
-	//SAY ENTITY NOT CREATED
-	return NULL;
-}
+
+	template <typename T>
+	void* ComponentPool<T>::DuplicateComponent(EntityID DuplicateID, EntityID NewID) {
+
+		//UNTESED MIGHT FAIL
 
 
-template <typename T>
-bool ComponentPool<T>::DeleteEntityComponent(EntityID ID){
+		auto* DuplicateComponent = (T*)GetEntityComponent(DuplicateID);
 
-	//TODO delete component from system vector
+		auto* NewComponent = (T*)AssignComponent(NewID);
 
+		*NewComponent = *DuplicateComponent;
 
-	//task failed
-	return false;
-}
-
-template <typename T>
-bool ComponentPool<T>::HasComponent(EntityID ID) { //contained any stored data
-
-	for (auto& Component : Pool) {
-		if (Component.Entity == ID) {
-			return Component.IsLive;
-		}
+		return NewComponent;
 	}
 
-	return false;
+
+
+	template <typename T>
+	void* ComponentPool<T>::GetEntityComponent(EntityID ID) {
+
+		for (auto& Component : Pool) {
+			if (Component.Entity == ID && Component.IsLive) {
+				return &Component;
+			}
+		}
+
+		//No Component Allocated to Entity
+		//SAY ENTITY NOT CREATED
+		return NULL;
+	}
+
+
+	template <typename T>
+	bool ComponentPool<T>::DeleteEntityComponent(EntityID ID) {
+
+		//TODO delete component from system vector
+
+
+		//task failed
+		return false;
+	}
+
+	template <typename T>
+	bool ComponentPool<T>::HasComponent(EntityID ID) { //contained any stored data
+
+		for (auto& Component : Pool) {
+			if (Component.Entity == ID) {
+				return Component.IsLive;
+			}
+		}
+
+		return false;
+	}
+
+
 }
+
+
 
 
 #endif COMPOOL_H

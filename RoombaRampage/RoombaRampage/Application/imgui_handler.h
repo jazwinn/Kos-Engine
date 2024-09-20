@@ -20,7 +20,7 @@ public:
     void Render();
     void Shutdown();
 
-    void DrawComponentWindow(ECS* ecs, EntityID entityID, bool& windowOpen, const std::string& windowTitle);
+    void DrawComponentWindow(Ecs::ECS* ecs, Ecs::EntityID entityID, bool& windowOpen, const std::string& windowTitle);
     unsigned int DrawHierachyWindow(ImVec4& clear_color);
     unsigned int clicked_entity_id;
 
@@ -32,6 +32,7 @@ private:
     char charBuffer[50] = "";  // Char Buffer
     std::vector<std::string> obj_text_entries;
     std::vector<bool> deleteButton;
+    std::vector<bool> DuplicateButton;
     std::vector<bool> obj_component_window;
     std::vector<unsigned int> obj_entity_id;
 

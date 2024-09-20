@@ -8,28 +8,33 @@
 #include "glfw3.h"
 #include <gtc/type_ptr.hpp>
 
-class RenderSystem : public ISystem {
+namespace Ecs{
 
-private:
-	
+	class RenderSystem : public ISystem {
 
-public:
+	private:
 
-	void RegisterSystem(EntityID) override;
 
-	void DeregisterSystem(EntityID) override;
+	public:
 
-	void Init() override;
+		void RegisterSystem(EntityID) override;
 
-	void Update() override;
+		void DeregisterSystem(EntityID) override;
 
-	static void funcTransferData();
+		void Init() override;
 
-private:
-	//Storage to point to components
-	std::vector<TransformComponent*> vecTransformComponentPtr;
-	std::vector<SpriteComponent*> vecSpriteComponentPtr;
+		void Update() override;
 
-};
+
+	private:
+		//Storage to point to components
+		std::vector<TransformComponent*> vecTransformComponentPtr;
+		std::vector<SpriteComponent*> vecSpriteComponentPtr;
+
+	};
+
+}
+
+
 
 #endif

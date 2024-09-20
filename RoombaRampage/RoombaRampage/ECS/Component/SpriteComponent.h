@@ -3,26 +3,30 @@
 #include <string>
 
 #include "Component.h"
-#include "glew.h"
-#include "glfw3.h"
-#include "glm.hpp"
+
 //#include "../ECS/System/RenderSystem.h"
 
-enum SpriteShape {
-	RECTANGLE,
-	CIRCLE,
-	RECTANGLE_LINES,
-	CIRCLE_LINES
-};
+namespace Ecs {
 
-class SpriteComponent : public Component {
+	enum SpriteShape {
+		RECTANGLE,
+		CIRCLE,
+		RECTANGLE_LINES,
+		CIRCLE_LINES
+	};
 
-public:
+	class SpriteComponent : public Component {
 
-	unsigned int imageID;
-	unsigned int frameNumber;
+	public:
 
-};
+		unsigned int imageID;
+		unsigned int frameNumber;
+
+	};
+
+}
+
+
 
 
 #endif SPRITE_H

@@ -3,11 +3,18 @@
 
 #include "Component.h"
 
-class MovementComponent : public Component {
+namespace Ecs {
 
-public:
-	float Speed{};
-	Vector2::Vec2 Direction{};
-};
+	class MovementComponent : public Component {
+
+	public:
+		float Speed{};
+		Vector2::Vec2 Direction{};
+	};
+
+
+}
+
+
 
 #endif MOVECOM_H
