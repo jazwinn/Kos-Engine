@@ -52,9 +52,7 @@ namespace Application {
 
         /*--------------------------------------------------------------
           INITIALIZE OPENGL WINDOW
-       --------------------------------------------------------------*/
-        lvWindow.init();
-       
+       --------------------------------------------------------------*/     
         
         std::string lvTitle{ "Roomba Rampage" };
         int lvWidth = 1280, lvHeight = 720;
