@@ -7,6 +7,12 @@
 
 std::unique_ptr<AssetManager> AssetManager::instancePtr = nullptr;
 
+void AssetManager::funcLoadAssets()
+{
+    funcLoadImage("Assets/roombaTest.png");
+    funcLoadImage("Assets/roombaTest2.png");
+}
+
 AssetManager* AssetManager::funcGetInstance()
 {
     if (!instancePtr) 
@@ -52,25 +58,39 @@ void AssetManager::funcLoadImage(const char* file)
         std::cout << "Warning: Color channels for " << file << " are not following RGBA specifications" << std::endl;
     }
 
-    if (image.stripCount > 1)
+    if (image.stripCount == 1)
     {
         if (image.width < targetWidth || image.height < targetHeight)
         {
-            data = funcPadTexture(data, image.width, image.height, image.channels);
+            unsigned char* newData = funcPadTexture(data, image.width, image.height, image.channels);
+            stbi_image_free(data);
             image.isPadded = true;
             image.width = targetWidth;
             image.height = targetHeight;
+            
+            image.imageID = imageCount;
+            imageCount++;
+            imageContainer.push_back(image);
+            imagedataArray.push_back(newData);
+            std::cout << "Texture Padded" << std::endl;
+        }
+        else
+        {
+            image.imageID = imageCount;
+            imageCount++;
+            imageContainer.push_back(image);
+            imagedataArray.push_back(data);
         }
     }
-    image.imageID = imageCount;
-    imageCount++;
-	imageContainer.push_back(image);
-    imagedataArray.push_back(data);
+    else
+    {
+        image.imageID = imageCount;
+        imageCount++;
+        imageContainer.push_back(image);
+        imagedataArray.push_back(data);
+    }
+   
 }
-
-
-
-
 
 unsigned char* AssetManager::funcPadTexture(const unsigned char* originalPixels, int originalWidth, int originalHeight, int originalChannels)
 {

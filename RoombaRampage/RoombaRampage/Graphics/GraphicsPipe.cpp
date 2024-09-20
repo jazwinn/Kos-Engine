@@ -29,10 +29,7 @@ void GLAPIENTRY DebugCallback(GLenum source, GLenum type, GLuint id, GLenum seve
 
 void GraphicsPipe::funcInit()
 {
-	AssetManager* assets = AssetManager::funcGetInstance();
-
-	assets->funcLoadImage("Assets/roombaTest.png");
-
+	
 	squareMesh.shapeType = SQUARE;
 	squareLinesMesh.shapeType = SQUARE_LINES;
 	testMatrix = { 1,0,0,0,1,0,0,0,1 };
@@ -185,13 +182,14 @@ void GraphicsPipe::funcSetupArrayBuffer()
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);	
 
-	/*glGenBuffers(1, &textureOrderBuffer);
+	glGenBuffers(1, &textureOrderBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, textureOrderBuffer);
-	glBufferData(GL_ARRAY_BUFFER, textureOrder.size() * sizeof(unsigned int), &textureOrder[0], GL_DYNAMIC_DRAW);
-	glEnableVertexAttribArray(10);
-	glVertexAttribIPointer(10, 1, GL_UNSIGNED_INT, sizeof(unsigned int), (void*)0);
-	glVertexAttribDivisor(10, 1);*/
-
+	glBufferData(GL_ARRAY_BUFFER, textureOrder.size() * sizeof(int), &textureOrder[0], GL_DYNAMIC_DRAW);
+	glBindVertexArray(squareMesh.vaoId);
+	glEnableVertexAttribArray(5);
+	glVertexAttribIPointer(5, 1, GL_INT, sizeof(int), (void*)0);
+	glVertexAttribDivisor(5, 1);
+	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
@@ -243,8 +241,8 @@ void GraphicsPipe::funcUpdate()
 			glm::mat3 lvTranslate{ 1, 0, 0, 0, 1, 0, modelData[n].worldCoordinates.x , modelData[n].worldCoordinates.y ,1 };
 			glm::mat3 lvNDCScale{ aspectRatio, 0, 0, 0, 1.f, 0, 0 , 0 ,1.f };
 			modelToNDCMatrix.push_back(lvNDCScale * lvTranslate * lvRotate * lvScale);
-			//textureOrder.push_back(modelData[n].textureID);
-			textureOrder.push_back(0);
+			textureOrder.push_back(modelData[n].textureID);
+			//textureOrder.push_back(1);
 		}
 	}
 
@@ -259,17 +257,21 @@ void GraphicsPipe::funcDraw(Mesh shape)
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, modelMatrixArrayBuffer);
 		glNamedBufferData(modelMatrixArrayBuffer, modelToNDCMatrix.size() * sizeof(glm::mat3), &modelToNDCMatrix[0], GL_DYNAMIC_DRAW);
-		//glBindBuffer(GL_ARRAY_BUFFER, textureOrderBuffer);
-		//glNamedBufferData(textureOrderBuffer, textureOrder.size() * sizeof(unsigned int), &textureOrder[0], GL_DYNAMIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, textureOrderBuffer);
+		glNamedBufferData(textureOrderBuffer, textureOrder.size() * sizeof(int), &textureOrder[0], GL_DYNAMIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glUseProgram(genericShaderProgram);
 
-		glActiveTexture(GL_TEXTURE0);
+		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, textureIDs[0]);
+		glActiveTexture(GL_TEXTURE2);
+		glBindTexture(GL_TEXTURE_2D, textureIDs[1]);
 
 		GLint lvUniformVarLoc1 = glGetUniformLocation(genericShaderProgram, "textures");
+	
 		if (lvUniformVarLoc1 >= 0)
 		{
-			glUniform1i(lvUniformVarLoc1, 0);
+			glUniform1iv(lvUniformVarLoc1, static_cast<GLsizei>(textureIDs.size()), (GLint*)&textureIDs[0]);
 		}
 		else
 		{

@@ -2,6 +2,7 @@
 #include "Application.h"
 
 #include "../Graphics/GraphicsPipe.h"
+#include "../Assets/AssetManager.h"
 #include "../ECS/ECS.h"
 #include "Window.h"
 
@@ -18,11 +19,18 @@ namespace Application {
     AppWindow lvWindow;
     ImGuiHandler imgui_manager;
     GraphicsPipe* pipe;
+    AssetManager* assets;
 
     float LastTime = glfwGetTime();;
 
 
     int Application::Init() {
+        /*--------------------------------------------------------------
+          LOAD ASSETS
+       --------------------------------------------------------------*/
+        assets = AssetManager::funcGetInstance();
+        assets->funcLoadAssets();
+
         /*--------------------------------------------------------------
           INITIALIZE OPENGL WINDOW
        --------------------------------------------------------------*/

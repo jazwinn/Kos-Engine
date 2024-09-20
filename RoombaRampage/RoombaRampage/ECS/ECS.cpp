@@ -12,7 +12,7 @@ void ECS::Init() {
 	//loops through all the system
 	for (auto& System : ecs->ECS_SystemMap) {
 		System.second->Init();
-
+	
 	}
 		
 }
@@ -110,6 +110,9 @@ EntityID ECS::CreateEntity() {
 	Trans->scale = { 0.5f, 0.5f };
 
 	AddComponent(TypeSpriteComponent, ID);
+
+	SpriteComponent* sprite = (SpriteComponent*)ecs->ECS_CombinedComponentPool[TypeSpriteComponent]->GetEntityComponent(ID);
+	sprite->imageID = 0;
 
 	AddComponent(TypeMovemmentComponent, ID);
 
