@@ -1,6 +1,8 @@
 #pragma once
 #include <glfw3.h>
 #include "../Math/vector2.h"
+#include "../Input/keycodes.h"
+#include "../Input/mousecodes.h"
 
 
 namespace Input {

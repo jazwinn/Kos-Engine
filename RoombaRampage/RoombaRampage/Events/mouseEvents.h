@@ -1,6 +1,6 @@
 #pragma once
 #include "baseEvent.h"
-#include "../mousecodes.h"
+#include "../Input/mousecodes.h"
 #include <sstream>
 
 class classMouseMoveEvent : public classEvent {

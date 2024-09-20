@@ -27,7 +27,7 @@ namespace Input {
 
 	bool classInput::funcIsMouseButtonPress(int givenButton) {
 		auto tempWin = static_cast<GLFWwindow*>(Application::Application::funcGetApp().funcGetWin().funcGetNatWin());
-		auto lvMousePress = glfwGetKey(tempWin, givenButton);
+		auto lvMousePress = glfwGetMouseButton(tempWin, givenButton);
 		return lvMousePress == GLFW_PRESS || lvMousePress == GLFW_REPEAT;
 	}
 

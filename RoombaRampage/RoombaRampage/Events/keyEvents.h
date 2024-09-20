@@ -1,7 +1,7 @@
 #pragma once
 #include <sstream>
 #include "baseEvent.h"
-#include "../keycodes.h"
+#include "../Input/keycodes.h"
 
 class classKeyEvent : public classEvent {
 public:

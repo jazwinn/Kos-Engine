@@ -102,9 +102,9 @@ unsigned int ImGuiHandler::DrawHierachyWindow(ImVec4& clear_color)
             //Use _button,_buttonhover_buttonactive
             //To change the button color
             //Dont forget to pop
-            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.8f, 0.02f, 0.2f, 1.0f));  // Red 
-            ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(1.0f, 0.4f, 0.4f, 1.0f));  // Lighter red
-            ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.7f, 0.1f, 0.1f, 1.0f));  // Darker red
+            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.1f, 0.5f, 0.1f, 1.0f));  // green
+            ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.1f, 0.8f, 0.1f, 1.0f));  // Lighter red
+            ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.1f, 1.f, 0.1f, 1.0f));  // Darker red
 
             //Use this to make the button side by side on the same line
             ImGui::SameLine();
@@ -113,7 +113,21 @@ unsigned int ImGuiHandler::DrawHierachyWindow(ImVec4& clear_color)
             if (ImGui::Button(DuplicateButtonLabel.c_str()))
             {
 
+                //create ID then push into vector
+                Ecs::EntityID newEntityID = ecs->DuplicateEntity(obj_entity_id[i]);
+                obj_entity_id.push_back(newEntityID);
 
+                //Add the string into the vector
+                obj_text_entries.push_back(std::string(charBuffer));
+
+                //Set to false as no button showing first
+                //Used to track and maintain sync between objtextentries and deletebutton vector
+                deleteButton.push_back(false);
+                DuplicateButton.push_back(false);
+                obj_component_window.push_back(false);
+
+                charBuffer[0] = '\0';
+                objectNameBox = false;
 
                 ImGui::PopStyleColor(3);  // Pop the 3 style colors (button, hovered, and active)
                 continue;

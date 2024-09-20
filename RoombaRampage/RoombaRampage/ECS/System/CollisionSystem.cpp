@@ -100,7 +100,7 @@ namespace Ecs {
 		std::vector<Physics::PhysicsData> vecCollisionEntity = PysicsPipeline.funcPassPhysicsData();
 		for (auto& CollidedEntity : vecCollisionEntity) {
 
-			std::cout << "Entity " << CollidedEntity.ID << " is Collided" << std::endl;
+			//std::cout << "Entity " << CollidedEntity.ID << " is Collided" << std::endl;
 		}
 
 
