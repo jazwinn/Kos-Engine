@@ -9,6 +9,7 @@ namespace Ecs {
 		TypeSpriteComponent,
 		TypeBoxColliderComponent,
 		TypeRigidBodyComponent,
+		TypePlayerComponent,
 
 		TotalTypeComponent
 	};

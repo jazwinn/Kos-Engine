@@ -29,11 +29,13 @@ namespace Ecs{
 		ecs->ECS_CombinedComponentPool[TypeSpriteComponent] = std::make_shared < ComponentPool<SpriteComponent>>();
 		ecs->ECS_CombinedComponentPool[TypeBoxColliderComponent] = std::make_shared < ComponentPool<BoxColliderComponent>>();
 		ecs->ECS_CombinedComponentPool[TypeRigidBodyComponent] = std::make_shared < ComponentPool<RigidBodyComponent>>();
+		ecs->ECS_CombinedComponentPool[TypePlayerComponent] = std::make_shared<ComponentPool<PlayerComponent>>();
 
 		//Allocate memory to each system
-		ecs->ECS_SystemMap[TypeMovementSystem] = std::make_shared < MovementSystem>();
-		ecs->ECS_SystemMap[TypeRenderSystem] = std::make_shared < RenderSystem>();
-		ecs->ECS_SystemMap[TypeCollisionSystem] = std::make_shared <CollisionSystem>();
+		ecs->ECS_SystemMap[TypeControlSystem] = std::make_shared<ControlSystem>();
+		ecs->ECS_SystemMap[TypeMovementSystem] = std::make_shared<MovementSystem>();
+		ecs->ECS_SystemMap[TypeCollisionSystem] = std::make_shared<CollisionSystem>();
+		ecs->ECS_SystemMap[TypeRenderSystem] = std::make_shared<RenderSystem>();
 	}
 
 
@@ -116,10 +118,12 @@ namespace Ecs{
 
 		AddComponent(TypeSpriteComponent, ID);
 
-		AddComponent(TypeMovemmentComponent, ID);
+		MovementComponent* MovCom = (MovementComponent*)AddComponent(TypeMovemmentComponent, ID);
+		MovCom->Speed = 1;
 
-		AddComponent(TypeRigidBodyComponent, ID);
-		AddComponent(TypeBoxColliderComponent, ID);
+		AddComponent(TypePlayerComponent, ID);
+		//AddComponent(TypeRigidBodyComponent, ID);
+		//AddComponent(TypeBoxColliderComponent, ID);
 
 		/*--------------------------------------------------------------*/
 

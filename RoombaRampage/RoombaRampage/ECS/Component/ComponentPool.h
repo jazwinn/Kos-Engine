@@ -11,6 +11,7 @@
 #include "SpriteComponent.h"
 #include "BoxColliderComponent.h"
 #include "RigidBody.h"
+#include "PlayerComponent.h"
 
 namespace Ecs {
 	class IComponentPool {
