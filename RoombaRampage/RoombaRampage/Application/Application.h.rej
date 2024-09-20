@@ -1,0 +1,15 @@
+diff a/RoombaRampage/RoombaRampage/Application/Application.h b/RoombaRampage/RoombaRampage/Application/Application.h	(rejected hunks)
+@@ -38,10 +38,10 @@
+ 
+ 		static int Cleanup();
+ 
+-
+-		Vector2::Vec2 lvMousePos{};
+-
+ 		
++<<<<<<< HEAD
++		
++=======
+ 
+ 	private:
+ 		bool funcOnMouseMove(classMouseMoveEvent& givenEvent);
