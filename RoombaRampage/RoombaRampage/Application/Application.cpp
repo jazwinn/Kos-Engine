@@ -2,6 +2,7 @@
 #include "Application.h"
 
 #include "../Graphics/GraphicsPipe.h"
+#include "../Assets/AssetManager.h"
 #include "../ECS/ECS.h"
 #include "Window.h"
 
@@ -19,6 +20,7 @@ namespace Application {
     std::shared_ptr<Application> Application::lvInstance;
     ImGuiHandler imgui_manager;
     GraphicsPipe* pipe;
+    AssetManager* assets;
     std::shared_ptr<AppWindow> Application::lvWin;
     Input::classInput gvInput;
  
@@ -42,7 +44,15 @@ namespace Application {
 
 
     int Application::Init() {
-       
+        /*--------------------------------------------------------------
+          LOAD ASSETS
+       --------------------------------------------------------------*/
+        assets = AssetManager::funcGetInstance();
+        assets->funcLoadAssets();
+
+        /*--------------------------------------------------------------
+          INITIALIZE OPENGL WINDOW
+       --------------------------------------------------------------*/     
         
         std::string lvTitle{ "Roomba Rampage" };
         int lvWidth = 1280, lvHeight = 720;

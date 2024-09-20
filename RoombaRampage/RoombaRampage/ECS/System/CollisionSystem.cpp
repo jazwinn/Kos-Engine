@@ -76,24 +76,26 @@ namespace Ecs {
 			MovementComponent* MovComp = vecMovementComponentPtr[n];
 
 			
-			PysicsPipeline.funcRetrievePhysicsData(TransComp->position, MovComp->Speed * MovComp->Direction, BoxComp->Entity);
+			PysicsPipeline.RetrievePhysicsData(TransComp->scale,TransComp->position, MovComp->Speed * MovComp->Direction, BoxComp->Entity);
 
 			
 		}
 
 		//check for collision
-		PysicsPipeline.funcCollisionCheck();
+		PysicsPipeline.CollisionCheck(ecs->DeltaTime);
 
 		
 
-		std::vector<Physics::PhysicsData> vecCollisionEntity = PysicsPipeline.funcPassPhysicsData();
-		for (auto& CollidedEntity : vecCollisionEntity) {
-
-			//std::cout << "Entity " << CollidedEntity.ID << " is Collided" << std::endl;
+		std::vector<Physics::PhysicsData> vecCollisionEntity = PysicsPipeline.PassPhysicsData();
+		if (vecCollisionEntity.empty()) std::cout << "No collision from Collision System CPP" << std::endl;
+		else {
+			for (auto& CollidedEntity : vecCollisionEntity) {
+				std::cout << "Entity " << CollidedEntity.ID << " is Collided" << std::endl;
+			}
 		}
-
-
+		//clear the entity
+		PysicsPipeline.ClearEntites();
 	}
-
+		
 
 }
