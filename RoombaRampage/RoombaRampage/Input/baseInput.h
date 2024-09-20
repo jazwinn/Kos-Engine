@@ -11,10 +11,7 @@ namespace Input {
 		static Vector2::Vec2 funcGetMousePos();
 		static float funcGetMouseX();
 		static float funcGetMouseY();
-		~classInput() = default;
-
-	private:
-		static classInput* gvInputInstance;
+		~classInput() = default; 
 
 	};
 }

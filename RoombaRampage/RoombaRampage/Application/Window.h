@@ -48,12 +48,9 @@ namespace Application {
 
 		static AppWindow* funcCreateWindow(const winProperties& givenProperties = winProperties());
 
-		//int init();
-
 		int Draw(ImVec4 ClearColor);
 
-		//int CleanUp();
-		void funcWinShutdown();
+		void funcWinShutdown(); //basically cleanup
 
 	private:
 		

@@ -124,12 +124,14 @@ namespace Application {
 	}
 
 	void AppWindow::funcWinShutdown() {
+
 		glfwDestroyWindow(lvGLFWWin);
 		gvGLFWInit = false;
 		glfwTerminate();
 	}
 
 	void AppWindow::funcUpdate() {
+		
 		glfwPollEvents();
 
 	}
@@ -146,11 +148,6 @@ namespace Application {
         return 0;
 	}
 
-	int AppWindow::CleanUp() {
-
-        glfwDestroyWindow(Window);
-        return 0;
-	}
 
 
 }

@@ -23,20 +23,18 @@ namespace Application{
 	class Application {
 
 	public:
-		~Application() = default;
-
 		void funcEvent(classEvent& givenEvent);
 		inline AppWindow& funcGetWin() { return *lvWin; }
-		static Application& funcGetApp();
+		static Application& funcGetApp() { return *lvInstance; }
 
 		float gvDt{};
 		const float gvFixedDt = 1.f / 60.f;
 
-		static int Init();
+		int Init();
 
-		static int Run();
+		int Run();
 
-		static int Cleanup();
+		int Cleanup();
 
 
 		Vector2::Vec2 lvMousePos{};
@@ -45,8 +43,8 @@ namespace Application{
 
 	private:
 		bool funcOnMouseMove(classMouseMoveEvent& givenEvent);
-		static std::unique_ptr<AppWindow> lvWin;
-		static Application* lvInstance;
+		static std::shared_ptr<AppWindow> lvWin;
+		static std::shared_ptr<Application> lvInstance;
 
 
 	};

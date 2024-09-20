@@ -1,8 +1,9 @@
-#include "Application/Application.h"
-#include "Application/baseInput.h"
+#include "../Application/Application.h"
+#include "baseInput.h"
 
 namespace Input {
-	classInput* classInput::gvInputInstance = new classInput();
+
+
 	Vector2::Vec2 classInput::funcGetMousePos() {
 		double lvX{}, lvY{};
 		auto tempWin = static_cast<GLFWwindow*>(Application::Application::funcGetApp().funcGetWin().funcGetNatWin());

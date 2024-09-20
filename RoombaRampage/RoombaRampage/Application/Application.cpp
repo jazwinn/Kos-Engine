@@ -16,13 +16,11 @@ namespace Application {
     /*--------------------------------------------------------------
       GLOBAL VARAIBLE
     --------------------------------------------------------------*/
-    Application* Application::lvInstance = nullptr;
-    //AppWindow lvWindow;
+    std::shared_ptr<Application> Application::lvInstance;
     ImGuiHandler imgui_manager;
     GraphicsPipe* pipe;
-    auto app = new Application();
-
-    std::unique_ptr<AppWindow> Application::lvWin;
+    std::shared_ptr<AppWindow> Application::lvWin;
+    Input::classInput gvInput;
  
 
 
@@ -30,10 +28,6 @@ namespace Application {
     void Application::funcEvent(classEvent& givenEvent) {
         classEventDispatch lvDispatcher(givenEvent);
         lvDispatcher.funcDispatch<classMouseMoveEvent>(BIND_EVENT_FN(funcOnMouseMove));
-    }
-
-    Application& Application::funcGetApp() {
-        return *lvInstance;
     }
 
 
@@ -49,7 +43,7 @@ namespace Application {
 
     int Application::Init() {
        
-
+        
         std::string lvTitle{ "Roomba Rampage" };
         int lvWidth = 1280, lvHeight = 720;
         winProperties lvProps{};
@@ -57,11 +51,11 @@ namespace Application {
         lvProps.lvWinTitle = lvTitle;
         lvProps.lvWinWidth = lvWidth;
         lvProps.lvWinHeight = lvHeight;
-        lvInstance = new Application;
-        lvWin = std::unique_ptr<AppWindow>(AppWindow::funcCreateWindow(lvProps));
+        lvInstance = std::make_shared<Application>(); 
+        lvWin = std::make_shared<AppWindow>(lvProps);
         
 
-        lvWin->funcSetEventCallback(std::bind(&Application::funcEvent, app, std::placeholders::_1));
+        lvWin->funcSetEventCallback(std::bind(&Application::funcEvent, lvInstance, std::placeholders::_1));
 
         GLFWmonitor* lvMon = glfwGetPrimaryMonitor();
         const GLFWvidmode* lvMode = glfwGetVideoMode(lvMon);
@@ -78,7 +72,7 @@ namespace Application {
            INITIALIZE IMGUI
         --------------------------------------------------------------*/
         const char* glsl_version = "#version 130";
-        imgui_manager.Initialize(lvWindow.Window, glsl_version);
+        imgui_manager.Initialize(static_cast<GLFWwindow*>(funcGetApp().funcGetWin().funcGetNatWin()), glsl_version);
 
         /*--------------------------------------------------------------
            INITIALIZE ECS
@@ -100,7 +94,7 @@ namespace Application {
         /*--------------------------------------------------------------
          GAME LOOP
         --------------------------------------------------------------*/
-        while (!glfwWindowShouldClose(lvWindow.Window))
+        while (!glfwWindowShouldClose(static_cast<GLFWwindow*>(funcGetApp().funcGetWin().funcGetNatWin())))
         {
             /* Poll for and process events */
             glfwPollEvents();
@@ -117,7 +111,6 @@ namespace Application {
             ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f); // <----- Is this needed?
             imgui_manager.DrawHierachyWindow(clear_color);
 
-
             /*--------------------------------------------------------------
              UPDATE ECS
              --------------------------------------------------------------*/
@@ -131,7 +124,7 @@ namespace Application {
             /*--------------------------------------------------------------
              DRAWING/RENDERING Window
              --------------------------------------------------------------*/
-            lvWindow.Draw(clear_color);
+            funcGetApp().funcGetWin().Draw(clear_color);
 
             /*--------------------------------------------------------------
              DRAWING/RENDERING Objects
@@ -146,7 +139,7 @@ namespace Application {
             imgui_manager.Render();
 
 
-            glfwSwapBuffers(lvWindow.Window);
+            glfwSwapBuffers(static_cast<GLFWwindow*>(funcGetApp().funcGetWin().funcGetNatWin()));
         }
 
         return 0;
@@ -154,10 +147,9 @@ namespace Application {
 
 
 	int Application::Cleanup() {
-
         Ecs::ECS::GetInstance()->Unload();
         imgui_manager.Shutdown();
-        lvWindow.CleanUp();
+        funcGetApp().funcGetWin().funcWinShutdown();
         glfwTerminate();
 
         return 0;
