@@ -82,6 +82,9 @@
     <Filter Include="Source Files\Debugging">
       <UniqueIdentifier>{2cac46b2-d507-4d43-a310-60e33b313731}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Json">
+      <UniqueIdentifier>{3afd1690-d320-4f03-8fec-37f6069fb03a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Dependencies\imgui\imgui_widgets.cpp">
@@ -113,9 +116,6 @@
     </ClCompile>
     <ClCompile Include="Math\Mat3x3.cpp">
       <Filter>Source Files\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics\Graphics.cpp">
-      <Filter>Source Files\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="Application\imgui_handler.cpp">
       <Filter>Source Files\Application</Filter>
@@ -162,23 +162,26 @@
     <ClCompile Include="Assets\AssetManager.cpp">
       <Filter>Source Files\Assets</Filter>
     </ClCompile>
-    <ClCompile Include="Input\baseInput.cpp">
-      <Filter>Source Files\Input</Filter>
-    </ClCompile>
     <ClCompile Include="Physics\Phyiscs.cpp">
       <Filter>Source Files\Physics</Filter>
     </ClCompile>
     <ClCompile Include="ECS\System\ControlSystem.cpp">
       <Filter>Source Files\ECS\System</Filter>
-      </ClCompile>
-    <ClCompile Include="Application\imgui_render_window.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Logging.cpp">
       <Filter>Source Files\Debugging</Filter>
     </ClCompile>
     <ClCompile Include="Performance.cpp">
       <Filter>Source Files\Debugging</Filter>
+    </ClCompile>
+    <ClCompile Include="Inputs\Input.cpp">
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\imgui_render_window.cpp">
+      <Filter>Source Files\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Helper.cpp">
+      <Filter>Source Files\Application</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -281,12 +284,6 @@
     <ClInclude Include="Math\vector2.h">
       <Filter>Header Files\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Application\json_handler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Dependencies\stb_image\include\stb_image.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Assets\AssetManager.h">
       <Filter>Header Files\Assets</Filter>
     </ClInclude>
@@ -302,9 +299,6 @@
     <ClInclude Include="Events\windowEvents.h">
       <Filter>Header Files\Events</Filter>
     </ClInclude>
-    <ClInclude Include="Input\baseInput.h">
-      <Filter>Header Files\Input</Filter>
-    </ClInclude>
     <ClInclude Include="ECS\Component\PlayerComponent.h">
       <Filter>Header Files\ECS\Component</Filter>
     </ClInclude>
@@ -313,12 +307,6 @@
     </ClInclude>
     <ClInclude Include="ECS\Component\RigidBody.h">
       <Filter>Header Files\ECS\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Input\keycodes.h">
-      <Filter>Header Files\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="Input\mousecodes.h">
-      <Filter>Header Files\Input</Filter>
     </ClInclude>
     <ClInclude Include="ECS\System\ControlSystem.h">
       <Filter>Header Files\ECS\System</Filter>
@@ -329,6 +317,18 @@
     <ClInclude Include="Logging.h">
       <Filter>Header Files\Debugging</Filter>
     </ClInclude>
+    <ClInclude Include="Inputs\Input.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\json_handler.h">
+      <Filter>Header Files\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependencies\stb_image\include\stb_image.h">
+      <Filter>Header Files\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Helper.h">
+      <Filter>Header Files\Application</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Graphics\genericFragmentShader.frag">
@@ -338,9 +338,17 @@
       <Filter>Header Files\Graphics</Filter>
     </None>
     <None Include="Json Texts\components.json" />
-    <None Include="Graphics\frameBufferFragmentShader.frag" />
-    <None Include="Graphics\frameBufferVertexShader.vert" />
-    <None Include="Graphics\frameAccumulationFragmentShader.frag" />
-    <None Include="Graphics\frameCompositionFragmentShader.frag" />
+    <None Include="Graphics\frameAccumulationFragmentShader.frag">
+      <Filter>Header Files\Graphics</Filter>
+    </None>
+    <None Include="Graphics\frameBufferFragmentShader.frag">
+      <Filter>Header Files\Graphics</Filter>
+    </None>
+    <None Include="Graphics\frameBufferVertexShader.vert">
+      <Filter>Header Files\Graphics</Filter>
+    </None>
+    <None Include="Graphics\frameCompositionFragmentShader.frag">
+      <Filter>Header Files\Graphics</Filter>
+    </None>
   </ItemGroup>
 </Project>

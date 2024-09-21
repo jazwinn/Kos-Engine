@@ -64,12 +64,12 @@ void ImGuiHandler::DrawComponentWindow(Ecs::ECS* ecs, Ecs::EntityID entityID, bo
         ImGui::Text("Scale");
         ImGui::SameLine(slider_start_pos_x);
         ImGui::SetNextItemWidth(100.0f);
-        if(ImGui::DragFloat("X", &tc->scale.x, 0.02f, 0.0f, 2.0f, "%.2f"))
+        if(ImGui::DragFloat("X", &tc->scale.x, 0.02f, 0.1f, 2.0f, "%.2f"))
             isModified = true;
 
         ImGui::SameLine();
         ImGui::SetNextItemWidth(100.0f);
-        if (ImGui::DragFloat("Y", &tc->scale.y, 0.02f, -1.0f, 1.0f, "%.2f"))
+        if (ImGui::DragFloat("Y", &tc->scale.y, 0.02f, 0.1f, 2.0f, "%.2f"))
             isModified = true;
 
     }

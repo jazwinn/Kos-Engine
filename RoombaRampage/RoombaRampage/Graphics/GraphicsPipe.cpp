@@ -1,6 +1,7 @@
 #include "../Graphics/GraphicsPipe.h"
 #include "../Assets/AssetManager.h"
 #include "../Application/Application.h"
+#include "../Application/Helper.h"
 #include <iostream>
 #include <vector>
 #include <array>
@@ -60,8 +61,8 @@ void GraphicsPipe::funcInit()
 	GLFWmonitor* monitor = glfwGetPrimaryMonitor();
 	const GLFWvidmode* mode = glfwGetVideoMode(monitor);
 
-	windowWidth = Application::Application::funcGetApp().funcGetWin().funcGetWinWidth();
-	windowHeight = Application::Application::funcGetApp().funcGetWin().funcGetWinHeight();
+	windowWidth = Helper::Helpers::GetInstance()->WindowWidth;
+	windowHeight = Helper::Helpers::GetInstance()->WindowHeight;
 	aspectRatio = static_cast<float>(static_cast<float>(windowHeight) / static_cast<float>(windowWidth));
 
 	funcSetupArrayBuffer();

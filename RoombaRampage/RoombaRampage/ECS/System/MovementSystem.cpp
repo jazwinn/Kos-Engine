@@ -1,7 +1,7 @@
 #include "../ECS.h"
 
 #include "MovementSystem.h"
-#include"../Input/baseInput.h"
+
 
 namespace Ecs {
 
@@ -60,13 +60,11 @@ namespace Ecs {
 			MovementComponent* MovComp = vecMovementComponentPtr[n];
 			TransformComponent* TransComp = vecTransformComponentPtr[n];
 
-			if (MovComp->Move) {
-				Vector2::Vec2 Velocity = MovComp->Direction * MovComp->Speed;
+			Vector2::Vec2 Velocity = MovComp->Direction * MovComp->Speed;
 
-				Vector2::Vec2 Displacement = Velocity * ecs->DeltaTime;
+			Vector2::Vec2 Displacement = Velocity * ecs->DeltaTime;
 
-				TransComp->position += Displacement;
-			}
+			TransComp->position += Displacement;
 
 
 		}
