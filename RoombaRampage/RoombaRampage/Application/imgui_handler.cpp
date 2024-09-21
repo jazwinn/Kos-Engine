@@ -1,4 +1,5 @@
 #include "../Application/imgui_handler.h"
+#include "../Application/Helper.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "../ECS/ECS.h"
@@ -38,6 +39,10 @@ void ImGuiHandler::NewFrame()
 void ImGuiHandler::Render()
 {
     // Render ImGui
+    NewFrame();
+    DrawHierachyWindow();
+    //Size of the render window is based on the parameters of this function
+    DrawRenderScreenWindow(Helper::Helpers::GetInstance()->WindowWidth / 2, Helper::Helpers::GetInstance()->WindowHeight / 2);
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }

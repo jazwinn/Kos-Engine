@@ -5,28 +5,36 @@
 #include "../Assets/AssetManager.h"
 #include "../Inputs/Input.h"
 #include "../ECS/ECS.h"
+#include "Helper.h"
 #include "Window.h"
 
 
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
-#include "imgui_handler.h"
+
 
 namespace Application {
 
     /*--------------------------------------------------------------
       GLOBAL VARAIBLE
     --------------------------------------------------------------*/
-    AppWindow lvWindow;
-    ImGuiHandler imgui_manager;
+    AppWindow Application::lvWindow;
+    ImGuiHandler Application::imgui_manager;
     GraphicsPipe* pipe;
     AssetManager* AstManager;
     Input::InputSystem Input;
+   
 
     float LastTime = static_cast<float>(glfwGetTime());
 
     int Application::Init() {
+        /*--------------------------------------------------------------
+          INITIALIZE WINDOW WIDTH & HEIGHT
+       --------------------------------------------------------------*/
+        Helper::Helpers::GetInstance()->WindowWidth = 1280;
+        Helper::Helpers::GetInstance()->WindowHeight = 720;
+
         /*--------------------------------------------------------------
           INITIALIZE OPENGL WINDOW
        --------------------------------------------------------------*/
@@ -92,14 +100,6 @@ namespace Application {
             float DeltaTime =  CurrentTime - LastTime;
 
             //std::cout << "FPS:" << 1/DeltaTime << std::endl;
-            /*--------------------------------------------------------------
-             IMGUI FRAME SETUP
-             --------------------------------------------------------------*/
-            imgui_manager.NewFrame();
-
-            ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f); // <----- Is this needed?
-            imgui_manager.DrawHierachyWindow(clear_color);
-
 
             /*--------------------------------------------------------------
              UPDATE ECS
@@ -114,21 +114,17 @@ namespace Application {
             /*--------------------------------------------------------------
              DRAWING/RENDERING Window
              --------------------------------------------------------------*/
-            lvWindow.Draw(clear_color);
+            lvWindow.Draw();
 
             /*--------------------------------------------------------------
              DRAWING/RENDERING Objects
              --------------------------------------------------------------*/
-             //TODO remove paremeter, less hard code
             pipe->funcDrawWindow();
 
             /*--------------------------------------------------------------
              Draw IMGUI FRAME
-             --------------------------------------------------------------*/
-            //Size of the render window is based on the parameters of this function
-            imgui_manager.DrawRenderScreenWindow(lvWin->funcGetWinWidth()/2, lvWin->funcGetWinHeight()/2);
+             --------------------------------------------------------------*/          
             imgui_manager.Render();
-
 
             glfwSwapBuffers(lvWindow.Window);
 
