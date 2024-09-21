@@ -162,9 +162,11 @@
     <ClCompile Include="ECS\System\ControlSystem.cpp" />
     <ClCompile Include="ECS\System\MovementSystem.cpp" />
     <ClCompile Include="ECS\System\RenderSystem.cpp" />
+    <ClCompile Include="Events\Event.cpp" />
     <ClCompile Include="Graphics\Graphics.cpp" />
     <ClCompile Include="Graphics\GraphicsPipe.cpp" />
     <ClCompile Include="Application\imgui_hierarchy_window.cpp" />
+    <ClCompile Include="Inputs\Input.cpp" />
     <ClCompile Include="Math\Mat2x2.cpp" />
     <ClCompile Include="Math\Mat3x3.cpp" />
     <ClCompile Include="Math\mathlib.cpp" />
@@ -205,8 +207,10 @@
     <ClInclude Include="ECS\System\RenderSystem.h" />
     <ClInclude Include="ECS\System\System.h" />
     <ClInclude Include="ECS\System\SystemList.h" />
+    <ClInclude Include="Events\Event.h" />
     <ClInclude Include="Graphics\Graphics.h" />
     <ClInclude Include="Graphics\GraphicsPipe.h" />
+    <ClInclude Include="Inputs\Input.h" />
     <ClInclude Include="Math\Mat2x2.h" />
     <ClInclude Include="Math\Mat3x3.h" />
     <ClInclude Include="Math\mathlib.h" />

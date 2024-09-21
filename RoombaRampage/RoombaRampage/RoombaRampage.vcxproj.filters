@@ -73,6 +73,12 @@
     <Filter Include="Header Files\Physics">
       <UniqueIdentifier>{08680b2c-947a-44d9-94dc-251ba73e9ec7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Events">
+      <UniqueIdentifier>{25aaaeb6-b433-432a-bac5-086e8e8009aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\NewFilter1">
+      <UniqueIdentifier>{6d68adf9-0adf-4c17-8913-31125f2fa51a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Dependencies\imgui\imgui_widgets.cpp">
@@ -158,6 +164,12 @@
     </ClCompile>
     <ClCompile Include="ECS\ECS.cpp">
       <Filter>Source Files\ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="Events\Event.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Inputs\Input.cpp">
+      <Filter>Source Files\Input</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -280,6 +292,12 @@
     </ClInclude>
     <ClInclude Include="ECS\System\ControlSystem.h">
       <Filter>Header Files\ECS\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\Event.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Inputs\Input.h">
+      <Filter>Header Files\Input</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

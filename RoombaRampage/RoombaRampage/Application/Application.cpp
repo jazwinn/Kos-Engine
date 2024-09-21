@@ -2,9 +2,11 @@
 #include "Application.h"
 
 #include "../Graphics/GraphicsPipe.h"
+#include "../Assets/AssetManager.h"
+#include "../Inputs/Input.h"
 #include "../ECS/ECS.h"
 #include "Window.h"
-#include "../Assets/AssetManager.h"
+
 
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
@@ -20,6 +22,7 @@ namespace Application {
     ImGuiHandler imgui_manager;
     GraphicsPipe* pipe;
     AssetManager* AstManager;
+    Input::InputSystem Input;
 
     float LastTime = glfwGetTime();;
 
@@ -40,6 +43,12 @@ namespace Application {
         --------------------------------------------------------------*/
         pipe = GraphicsPipe::funcGetInstance();
         pipe->funcInit();
+
+        /*--------------------------------------------------------------
+           INITIALIZE Input
+        --------------------------------------------------------------*/
+        //call back must happen before imgui
+        Input.SetCallBack(lvWindow.Window);
 
         /*--------------------------------------------------------------
            INITIALIZE IMGUI
@@ -65,6 +74,11 @@ namespace Application {
 
         Ecs::ECS* ecs = Ecs::ECS::GetInstance();
         float FPSCap = 1 / 60;
+
+
+
+  
+
         /*--------------------------------------------------------------
          GAME LOOP
         --------------------------------------------------------------*/
@@ -77,7 +91,7 @@ namespace Application {
             float CurrentTime = glfwGetTime();
             float DeltaTime =  CurrentTime - LastTime;
 
-            std::cout << "FPS:" << 1/DeltaTime << std::endl;
+            //std::cout << "FPS:" << 1/DeltaTime << std::endl;
             /*--------------------------------------------------------------
              IMGUI FRAME SETUP
              --------------------------------------------------------------*/
