@@ -39,6 +39,7 @@ void GLAPIENTRY DebugCallback(GLenum source, GLenum type, GLuint id, GLenum seve
 void GraphicsPipe::funcInit()
 {
 	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	squareMesh.shapeType = SQUARE;
 	squareLinesMesh.shapeType = SQUARE_LINES;
@@ -281,6 +282,7 @@ void GraphicsPipe::funcSetupFrameBuffer()
 	}
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
 }
 
 void GraphicsPipe::funcBindImageDatafromAssetManager()
@@ -457,13 +459,13 @@ void GraphicsPipe::funcDrawWindow()
 	
 	glBindFramebuffer(GL_FRAMEBUFFER, frameBufferObject);
 	glEnable(GL_DEPTH_TEST);
-	//glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	funcDraw(squareMesh);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glDisable(GL_DEPTH_TEST); 
+	glClearColor(0.f, 0.f, 0.f, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	glUseProgram(frameBufferShaderProgram);
@@ -481,9 +483,6 @@ void GraphicsPipe::funcDrawWindow()
 	{
 		std::cout << "Uniform not found" << std::endl;
 	}
-	glBlendFunc(GL_ONE_MINUS_DST_ALPHA, GL_SRC_ALPHA);
-	glDrawArrays(GL_TRIANGLES, 0, 6);
-
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
+	
+	//glDrawArrays(GL_TRIANGLES, 0, 6);
 }

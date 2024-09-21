@@ -145,6 +145,17 @@ namespace Application {
             pipe->funcDrawWindow();
 
 
+
+            ImGui::Begin("Scene Window");
+            ImVec2 pos = ImGui::GetCursorScreenPos();
+            ImGui::GetWindowDrawList()->AddImage((void*)pipe->screenTexture, pos,
+                ImVec2(ImGui::GetCursorScreenPos().x + lvWin->funcGetWinWidth() / 2,
+                    ImGui::GetCursorScreenPos().y + lvWin->funcGetWinHeight() / 2),
+                    ImVec2(0, 1), ImVec2(1, 0));
+
+            ImGui::End();
+
+
             /*--------------------------------------------------------------
              Draw IMGUI FRAME
              --------------------------------------------------------------*/

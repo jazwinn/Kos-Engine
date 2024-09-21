@@ -319,5 +319,7 @@
     <None Include="Json Texts\components.json" />
     <None Include="Graphics\frameBufferFragmentShader.frag" />
     <None Include="Graphics\frameBufferVertexShader.vert" />
+    <None Include="Graphics\frameAccumulationFragmentShader.frag" />
+    <None Include="Graphics\frameCompositionFragmentShader.frag" />
   </ItemGroup>
 </Project>

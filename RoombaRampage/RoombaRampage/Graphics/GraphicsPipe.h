@@ -49,7 +49,7 @@ private:
 	unsigned int modelMatrixArrayBuffer;
 	unsigned int textureOrderBuffer;
 	unsigned int frameBufferObject;
-	unsigned int screenTexture;
+	
 
 	int windowWidth;
 	int windowHeight;
@@ -104,8 +104,8 @@ public:
 
 	//Array of the texture IDs
 	std::vector<unsigned int> textureIDs;
-	
 
+	unsigned int screenTexture;
 };
 
 

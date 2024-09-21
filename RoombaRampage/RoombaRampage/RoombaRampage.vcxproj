@@ -222,7 +222,9 @@
     <ClInclude Include="Physics\Physics.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Graphics\frameAccumulationFragmentShader.frag" />
     <None Include="Graphics\frameBufferFragmentShader.frag" />
+    <None Include="Graphics\frameCompositionFragmentShader.frag" />
     <None Include="Graphics\genericFragmentShader.frag" />
     <None Include="Graphics\genericVertexShader.vert" />
     <None Include="Graphics\frameBufferVertexShader.vert" />

@@ -22,6 +22,7 @@ public:
 
     void DrawComponentWindow(Ecs::ECS* ecs, Ecs::EntityID entityID, bool& windowOpen, const std::string& windowTitle);
     unsigned int DrawHierachyWindow(ImVec4& clear_color);
+    void DrawRenderScreenWindow();
     unsigned int clicked_entity_id;
 
 private:
