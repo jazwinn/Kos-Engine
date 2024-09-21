@@ -145,6 +145,7 @@
     <ClCompile Include="Application\Application.cpp" />
     <ClCompile Include="Application\imgui_component_window.cpp" />
     <ClCompile Include="Application\imgui_handler.cpp" />
+    <ClCompile Include="Application\imgui_render_window.cpp" />
     <ClCompile Include="Application\json_handler.cpp" />
     <ClCompile Include="Application\main.cpp" />
     <ClCompile Include="Application\Window.cpp" />
@@ -222,8 +223,12 @@
     <ClInclude Include="Physics\Physics.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Graphics\frameAccumulationFragmentShader.frag" />
+    <None Include="Graphics\frameBufferFragmentShader.frag" />
+    <None Include="Graphics\frameCompositionFragmentShader.frag" />
     <None Include="Graphics\genericFragmentShader.frag" />
     <None Include="Graphics\genericVertexShader.vert" />
+    <None Include="Graphics\frameBufferVertexShader.vert" />
     <None Include="Json Texts\components.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

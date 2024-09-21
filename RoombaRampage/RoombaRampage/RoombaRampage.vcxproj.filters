@@ -164,6 +164,9 @@
     </ClCompile>
     <ClCompile Include="ECS\System\ControlSystem.cpp">
       <Filter>Source Files\ECS\System</Filter>
+      </ClCompile>
+    <ClCompile Include="Application\imgui_render_window.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -317,5 +320,9 @@
       <Filter>Header Files\Graphics</Filter>
     </None>
     <None Include="Json Texts\components.json" />
+    <None Include="Graphics\frameBufferFragmentShader.frag" />
+    <None Include="Graphics\frameBufferVertexShader.vert" />
+    <None Include="Graphics\frameAccumulationFragmentShader.frag" />
+    <None Include="Graphics\frameCompositionFragmentShader.frag" />
   </ItemGroup>
 </Project>

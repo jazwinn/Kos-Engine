@@ -12,6 +12,11 @@ R"( #version 460 core
 
 	void main()
 	{
-		 fragColor = texture(textures[textureID], texCoords) * vec4(color, 1.0);
+		 vec4 texColor = texture(textures[textureID], texCoords) * vec4(color, 1.0);
+
+		 if(texColor.a < 0.01)
+		 discard;
+    
+		fragColor = texColor;
 	}
 )"
