@@ -164,6 +164,9 @@
     </ClCompile>
     <ClCompile Include="ECS\System\ControlSystem.cpp">
       <Filter>Source Files\ECS\System</Filter>
+      </ClCompile>
+    <ClCompile Include="Application\imgui_render_window.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

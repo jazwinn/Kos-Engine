@@ -40,7 +40,7 @@ namespace Application {
     }
 
 
-    float LastTime = glfwGetTime();;
+    float LastTime = static_cast<float>(glfwGetTime());
 
 
     int Application::Init() {
@@ -111,7 +111,7 @@ namespace Application {
             glfwPollEvents();
 
             //calculate DeltaTime
-            float CurrentTime = glfwGetTime();
+            float CurrentTime = static_cast<float>(glfwGetTime());
             float DeltaTime =  CurrentTime - LastTime;
 
             std::cout << "FPS:" << 1/DeltaTime << std::endl;
@@ -144,28 +144,18 @@ namespace Application {
              //TODO remove paremeter, less hard code
             pipe->funcDrawWindow();
 
-
-
-            ImGui::Begin("Scene Window");
-            ImVec2 pos = ImGui::GetCursorScreenPos();
-            ImGui::GetWindowDrawList()->AddImage((void*)pipe->screenTexture, pos,
-                ImVec2(ImGui::GetCursorScreenPos().x + lvWin->funcGetWinWidth() / 2,
-                    ImGui::GetCursorScreenPos().y + lvWin->funcGetWinHeight() / 2),
-                    ImVec2(0, 1), ImVec2(1, 0));
-
-            ImGui::End();
-
-
             /*--------------------------------------------------------------
              Draw IMGUI FRAME
              --------------------------------------------------------------*/
+            //Size of the render window is based on the parameters of this function
+            imgui_manager.DrawRenderScreenWindow(lvWin->funcGetWinWidth()/2, lvWin->funcGetWinHeight()/2);
             imgui_manager.Render();
 
 
             glfwSwapBuffers(static_cast<GLFWwindow*>(funcGetApp().funcGetWin().funcGetNatWin()));
 
             while (DeltaTime < FPSCap) {
-                CurrentTime = glfwGetTime();  // Continuously update current time
+                CurrentTime = static_cast<float>(glfwGetTime());  // Continuously update current time
                 DeltaTime = CurrentTime - LastTime;  // Calculate new DeltaTime
             }
 
