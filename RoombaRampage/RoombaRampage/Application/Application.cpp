@@ -24,7 +24,7 @@ namespace Application {
     AssetManager* AstManager;
     Input::InputSystem Input;
 
-    float LastTime = glfwGetTime();;
+    float LastTime = static_cast<float>(glfwGetTime());
 
     int Application::Init() {
         /*--------------------------------------------------------------
@@ -88,7 +88,7 @@ namespace Application {
             glfwPollEvents();
 
             //calculate DeltaTime
-            float CurrentTime = glfwGetTime();
+            float CurrentTime = static_cast<float>(glfwGetTime());
             float DeltaTime =  CurrentTime - LastTime;
 
             //std::cout << "FPS:" << 1/DeltaTime << std::endl;
@@ -120,19 +120,20 @@ namespace Application {
              DRAWING/RENDERING Objects
              --------------------------------------------------------------*/
              //TODO remove paremeter, less hard code
-            pipe->funcDraw(pipe->squareMesh);
-
+            pipe->funcDrawWindow();
 
             /*--------------------------------------------------------------
              Draw IMGUI FRAME
              --------------------------------------------------------------*/
+            //Size of the render window is based on the parameters of this function
+            imgui_manager.DrawRenderScreenWindow(lvWin->funcGetWinWidth()/2, lvWin->funcGetWinHeight()/2);
             imgui_manager.Render();
 
 
             glfwSwapBuffers(lvWindow.Window);
 
             while (DeltaTime < FPSCap) {
-                CurrentTime = glfwGetTime();  // Continuously update current time
+                CurrentTime = static_cast<float>(glfwGetTime());  // Continuously update current time
                 DeltaTime = CurrentTime - LastTime;  // Calculate new DeltaTime
             }
 

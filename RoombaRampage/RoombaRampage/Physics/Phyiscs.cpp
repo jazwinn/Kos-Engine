@@ -1,7 +1,9 @@
 #include "Physics.h"
 
-namespace Physics {
 
+
+
+namespace Physics {
 
 	bool classPhysics::static_CollisionCheck(const AABB aabb1, const AABB aabb2) {
 		//std::cout << "BOUNDING BOX1 MIN X " << aabb1.min.x << " Y " << aabb1.min.y << std::endl;
@@ -26,9 +28,7 @@ namespace Physics {
 		obj.scale = scale;
 		physicsEntities.push_back(obj);
 	}
-	void debug(PhysicsData& obj) {
 
-	}
 
 	void classPhysics::CollisionCheck(float dt) {
 

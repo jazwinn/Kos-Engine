@@ -55,6 +55,9 @@
     <Filter Include="Header Files\Events">
       <UniqueIdentifier>{df8aa6d1-f2b9-45c8-9588-5dd5cbb61082}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Phyisc">
+      <UniqueIdentifier>{08680b2c-947a-44d9-94dc-251ba73e9ec7}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source Files\Assets">
       <UniqueIdentifier>{fe211503-145b-4469-8243-6d33edf0bb65}</UniqueIdentifier>
     </Filter>
@@ -73,11 +76,11 @@
     <Filter Include="Header Files\Physics">
       <UniqueIdentifier>{08680b2c-947a-44d9-94dc-251ba73e9ec7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Events">
-      <UniqueIdentifier>{25aaaeb6-b433-432a-bac5-086e8e8009aa}</UniqueIdentifier>
+    <Filter Include="Header Files\Debugging">
+      <UniqueIdentifier>{6335344d-847b-4c7b-b77a-3f310024ffe6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\NewFilter1">
-      <UniqueIdentifier>{6d68adf9-0adf-4c17-8913-31125f2fa51a}</UniqueIdentifier>
+    <Filter Include="Source Files\Debugging">
+      <UniqueIdentifier>{2cac46b2-d507-4d43-a310-60e33b313731}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -116,6 +119,9 @@
     </ClCompile>
     <ClCompile Include="Application\imgui_handler.cpp">
       <Filter>Source Files\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="ECS\ECS.cpp">
+      <Filter>Source Files\ECS</Filter>
     </ClCompile>
     <ClCompile Include="ECS\System\CollisionSystem.cpp">
       <Filter>Source Files\ECS\System</Filter>
@@ -156,20 +162,23 @@
     <ClCompile Include="Assets\AssetManager.cpp">
       <Filter>Source Files\Assets</Filter>
     </ClCompile>
+    <ClCompile Include="Input\baseInput.cpp">
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
     <ClCompile Include="Physics\Phyiscs.cpp">
       <Filter>Source Files\Physics</Filter>
     </ClCompile>
     <ClCompile Include="ECS\System\ControlSystem.cpp">
       <Filter>Source Files\ECS\System</Filter>
-    </ClCompile>
-    <ClCompile Include="ECS\ECS.cpp">
-      <Filter>Source Files\ECS</Filter>
-    </ClCompile>
-    <ClCompile Include="Events\Event.cpp">
+      </ClCompile>
+    <ClCompile Include="Application\imgui_render_window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Inputs\Input.cpp">
-      <Filter>Source Files\Input</Filter>
+    <ClCompile Include="Logging.cpp">
+      <Filter>Source Files\Debugging</Filter>
+    </ClCompile>
+    <ClCompile Include="Performance.cpp">
+      <Filter>Source Files\Debugging</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -281,6 +290,21 @@
     <ClInclude Include="Assets\AssetManager.h">
       <Filter>Header Files\Assets</Filter>
     </ClInclude>
+    <ClInclude Include="Events\baseEvent.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\keyEvents.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\mouseEvents.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\windowEvents.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\baseInput.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
     <ClInclude Include="ECS\Component\PlayerComponent.h">
       <Filter>Header Files\ECS\Component</Filter>
     </ClInclude>
@@ -290,14 +314,20 @@
     <ClInclude Include="ECS\Component\RigidBody.h">
       <Filter>Header Files\ECS\Component</Filter>
     </ClInclude>
+    <ClInclude Include="Input\keycodes.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\mousecodes.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
     <ClInclude Include="ECS\System\ControlSystem.h">
       <Filter>Header Files\ECS\System</Filter>
     </ClInclude>
-    <ClInclude Include="Events\Event.h">
-      <Filter>Header Files\Events</Filter>
+    <ClInclude Include="Performance.h">
+      <Filter>Header Files\Debugging</Filter>
     </ClInclude>
-    <ClInclude Include="Inputs\Input.h">
-      <Filter>Header Files\Input</Filter>
+    <ClInclude Include="Logging.h">
+      <Filter>Header Files\Debugging</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -308,5 +338,9 @@
       <Filter>Header Files\Graphics</Filter>
     </None>
     <None Include="Json Texts\components.json" />
+    <None Include="Graphics\frameBufferFragmentShader.frag" />
+    <None Include="Graphics\frameBufferVertexShader.vert" />
+    <None Include="Graphics\frameAccumulationFragmentShader.frag" />
+    <None Include="Graphics\frameCompositionFragmentShader.frag" />
   </ItemGroup>
 </Project>
