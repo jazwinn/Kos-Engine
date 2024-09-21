@@ -14,6 +14,8 @@
 #include "imgui_impl_opengl3.h"
 
 
+#include "../AudioManager.h"
+
 namespace Application {
 
     /*--------------------------------------------------------------
@@ -26,7 +28,12 @@ namespace Application {
     Input::InputSystem Input;
    
 
-    float LastTime = static_cast<float>(glfwGetTime());
+    // Audio
+    FModAudio audio;
+    FMOD_CHANNELGROUP* channelgroup;
+
+    float LastTime = glfwGetTime();;
+
 
     int Application::Init() {
         /*--------------------------------------------------------------
@@ -72,6 +79,13 @@ namespace Application {
 
         ecs->Load();
         ecs->Init();
+
+        /*--------------------------------------------------------------
+            INITIALIZE AUDIO MANAGER
+        --------------------------------------------------------------*/
+        // Initialize the FMOD system
+        audio.init();
+        audio.createSound("vacuum.mp3");
 
         return 0;
 	}
@@ -126,6 +140,12 @@ namespace Application {
              --------------------------------------------------------------*/          
             imgui_manager.Render();
 
+
+            /*--------------------------------------------------------------
+             Play AUDIO
+             --------------------------------------------------------------*/
+            audio.playSound();
+
             glfwSwapBuffers(lvWindow.Window);
 
             while (DeltaTime < FPSCap) {
@@ -146,6 +166,7 @@ namespace Application {
         imgui_manager.Shutdown();
         lvWindow.CleanUp();
         glfwTerminate();
+        audio.shutdown();
 
         return 0;
 	}
