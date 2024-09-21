@@ -92,7 +92,7 @@ namespace Physics {
 		AABB boundingBox{};						 // Axis-Aligned Bounding Box
 		Vector2::Vec2 position{};				 // Position of the entity's center
 		Vector2::Vec2 velocity{};				 // Current velocity of the entity
-		int ID = -1.0f;							 // Unique identifier
+		int ID = -1;							 // Unique identifier
 		EntityType type = EntityType::Rectangle; // Circle or Rectangle
 		//for checking 
 		bool operator==(const PhysicsData& other) const {
@@ -134,7 +134,6 @@ namespace Physics {
 		bool CollisionIntersection_CircleRect(const PhysicsData&, const PhysicsData&);
 		bool CollisionIntersection_CircleCircle(const PhysicsData&, const PhysicsData&);
 		bool static_CollisionCheck(const AABB, const AABB);
-		void debug(PhysicsData&);
 	};
 }
 #endif

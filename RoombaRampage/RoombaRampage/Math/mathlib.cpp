@@ -1,10 +1,10 @@
 #include "mathlib.h"
 
 double funcRadianToDegree(double x) { return x * (180.0 / PI); }
-float funcRadianToDegree(float x) { return x * (180.0f / PI); }
+float funcRadianToDegree(float x) { return static_cast<float>(x * (180.0f / PI)); }
 
 double funcDegreeToRadian(double x) { return x * (PI / 180.0); }
-float funcDegreeToRadian(float x) { return x * (PI / 180.0f); }
+float funcDegreeToRadian(float x) { return static_cast<float>(x * (PI / 180.0f)); }
 
 
 double mathlib::funcCos(double x) { return cos(x); }
