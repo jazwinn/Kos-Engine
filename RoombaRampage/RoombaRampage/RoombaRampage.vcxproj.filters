@@ -55,9 +55,6 @@
     <Filter Include="Header Files\Events">
       <UniqueIdentifier>{df8aa6d1-f2b9-45c8-9588-5dd5cbb61082}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Phyisc">
-      <UniqueIdentifier>{08680b2c-947a-44d9-94dc-251ba73e9ec7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Assets">
       <UniqueIdentifier>{fe211503-145b-4469-8243-6d33edf0bb65}</UniqueIdentifier>
     </Filter>
@@ -114,9 +111,6 @@
     <ClCompile Include="Application\imgui_handler.cpp">
       <Filter>Source Files\Application</Filter>
     </ClCompile>
-    <ClCompile Include="ECS\ECS.cpp">
-      <Filter>Source Files\ECS</Filter>
-    </ClCompile>
     <ClCompile Include="ECS\System\CollisionSystem.cpp">
       <Filter>Source Files\ECS\System</Filter>
     </ClCompile>
@@ -156,14 +150,14 @@
     <ClCompile Include="Assets\AssetManager.cpp">
       <Filter>Source Files\Assets</Filter>
     </ClCompile>
-    <ClCompile Include="Input\baseInput.cpp">
-      <Filter>Source Files\Input</Filter>
-    </ClCompile>
     <ClCompile Include="Physics\Phyiscs.cpp">
       <Filter>Source Files\Physics</Filter>
     </ClCompile>
     <ClCompile Include="ECS\System\ControlSystem.cpp">
       <Filter>Source Files\ECS\System</Filter>
+    </ClCompile>
+    <ClCompile Include="ECS\ECS.cpp">
+      <Filter>Source Files\ECS</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -275,21 +269,6 @@
     <ClInclude Include="Assets\AssetManager.h">
       <Filter>Header Files\Assets</Filter>
     </ClInclude>
-    <ClInclude Include="Events\baseEvent.h">
-      <Filter>Header Files\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="Events\keyEvents.h">
-      <Filter>Header Files\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="Events\mouseEvents.h">
-      <Filter>Header Files\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="Events\windowEvents.h">
-      <Filter>Header Files\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="Input\baseInput.h">
-      <Filter>Header Files\Input</Filter>
-    </ClInclude>
     <ClInclude Include="ECS\Component\PlayerComponent.h">
       <Filter>Header Files\ECS\Component</Filter>
     </ClInclude>
@@ -298,12 +277,6 @@
     </ClInclude>
     <ClInclude Include="ECS\Component\RigidBody.h">
       <Filter>Header Files\ECS\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Input\keycodes.h">
-      <Filter>Header Files\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="Input\mousecodes.h">
-      <Filter>Header Files\Input</Filter>
     </ClInclude>
     <ClInclude Include="ECS\System\ControlSystem.h">
       <Filter>Header Files\ECS\System</Filter>

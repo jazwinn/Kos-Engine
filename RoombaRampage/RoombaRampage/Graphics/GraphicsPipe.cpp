@@ -51,8 +51,8 @@ void GraphicsPipe::funcInit()
 	GLFWmonitor* monitor = glfwGetPrimaryMonitor();
 	const GLFWvidmode* mode = glfwGetVideoMode(monitor);
 
-	int windowWidth = Application::Application::funcGetApp().funcGetWin().funcGetWinWidth();
-	int windowHeight = Application::Application::funcGetApp().funcGetWin().funcGetWinHeight();
+	int windowWidth = mode->width;
+	int windowHeight = mode->height;
 	aspectRatio = static_cast<float>(static_cast<float>(windowHeight) / static_cast<float>(windowWidth));
 
 	

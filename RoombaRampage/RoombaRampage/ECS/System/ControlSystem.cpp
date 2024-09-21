@@ -1,7 +1,6 @@
 #include "../ECS.h"
 
 #include "ControlSystem.h"
-#include "../Input/baseInput.h"
 
 namespace Ecs {
 
@@ -64,36 +63,36 @@ namespace Ecs {
 			PlayerComponent* BoxComp = vecPlayerComponentPtr[n];
 			MovementComponent* MovComp = vecMovementComponentPtr[n];
 
-			//set direction to always be 0,0
-			MovComp->Direction.x = 0;
-			MovComp->Direction.y = 0;
+		//	//set direction to always be 0,0
+		//	MovComp->Direction.x = 0;
+		//	MovComp->Direction.y = 0;
 
-			Vector2::Vec2 NewDirection{};
-			if (Input::classInput::funcIsKeyPress(keys::W)) {
-				NewDirection.y += 1;
-			}
-			
-			if (Input::classInput::funcIsKeyPress(keys::S)) {
-				NewDirection.y += -1;
-			}
+		//	Vector2::Vec2 NewDirection{};
+		//	if (Input::classInput::funcIsKeyPress(keys::W)) {
+		//		NewDirection.y += 1;
+		//	}
+		//	
+		//	if (Input::classInput::funcIsKeyPress(keys::S)) {
+		//		NewDirection.y += -1;
+		//	}
 
 
-			if (Input::classInput::funcIsKeyPress(keys::D)) {
-				NewDirection.x += 1;
-			}
+		//	if (Input::classInput::funcIsKeyPress(keys::D)) {
+		//		NewDirection.x += 1;
+		//	}
 
-			if (Input::classInput::funcIsKeyPress(keys::A)) {
-				NewDirection.x += -1;
-			}
+		//	if (Input::classInput::funcIsKeyPress(keys::A)) {
+		//		NewDirection.x += -1;
+		//	}
 
-			if ((NewDirection.x != 0) && (NewDirection.y != 0)) {
-				Vector2::Vec2::funcVec2Normalize(NewDirection, NewDirection);
-				MovComp->Move = true;
-			}
-			
+		//	if ((NewDirection.x != 0) && (NewDirection.y != 0)) {
+		//		Vector2::Vec2::funcVec2Normalize(NewDirection, NewDirection);
+		//		MovComp->Move = true;
+		//	}
+		//	
 
-			MovComp->Direction = NewDirection;
-		
+		//	MovComp->Direction = NewDirection;
+		//
 
 		}
 

@@ -2,79 +2,42 @@
 #include "Application.h"
 
 #include "../Graphics/GraphicsPipe.h"
-#include "../Assets/AssetManager.h"
 #include "../ECS/ECS.h"
 #include "Window.h"
+#include "../Assets/AssetManager.h"
 
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_handler.h"
 
-
 namespace Application {
 
     /*--------------------------------------------------------------
       GLOBAL VARAIBLE
     --------------------------------------------------------------*/
-    std::shared_ptr<Application> Application::lvInstance;
+    AppWindow lvWindow;
     ImGuiHandler imgui_manager;
     GraphicsPipe* pipe;
-    AssetManager* assets;
-    std::shared_ptr<AppWindow> Application::lvWin;
-    Input::classInput gvInput;
- 
-
-
-   
-    void Application::funcEvent(classEvent& givenEvent) {
-        classEventDispatch lvDispatcher(givenEvent);
-        lvDispatcher.funcDispatch<classMouseMoveEvent>(BIND_EVENT_FN(funcOnMouseMove));
-    }
-
-
-    bool Application::funcOnMouseMove(classMouseMoveEvent& givenEvent) {
-        lvMousePos.x = givenEvent.funcGetX();
-        lvMousePos.y = givenEvent.funcGetY();
-        return true;
-    }
-
+    AssetManager* AstManager;
 
     float LastTime = glfwGetTime();;
 
-
     int Application::Init() {
         /*--------------------------------------------------------------
-          LOAD ASSETS
+          INITIALIZE OPENGL WINDOW
        --------------------------------------------------------------*/
-        assets = AssetManager::funcGetInstance();
-        assets->funcLoadAssets();
+        lvWindow.init();
 
         /*--------------------------------------------------------------
-          INITIALIZE OPENGL WINDOW
-       --------------------------------------------------------------*/     
-        
-        std::string lvTitle{ "Roomba Rampage" };
-        int lvWidth = 1280, lvHeight = 720;
-        winProperties lvProps{};
-
-        lvProps.lvWinTitle = lvTitle;
-        lvProps.lvWinWidth = lvWidth;
-        lvProps.lvWinHeight = lvHeight;
-        lvInstance = std::make_shared<Application>(); 
-        lvWin = std::make_shared<AppWindow>(lvProps);
-        
-
-        lvWin->funcSetEventCallback(std::bind(&Application::funcEvent, lvInstance, std::placeholders::_1));
-
-        GLFWmonitor* lvMon = glfwGetPrimaryMonitor();
-        const GLFWvidmode* lvMode = glfwGetVideoMode(lvMon);
-        
+           INITIALIZE Asset Manager
+        --------------------------------------------------------------*/
+        AstManager = AssetManager::funcGetInstance();
+        AstManager->funcLoadAssets();
 
         /*--------------------------------------------------------------
            INITIALIZE GRAPHICS PIPE
         --------------------------------------------------------------*/
-
         pipe = GraphicsPipe::funcGetInstance();
         pipe->funcInit();
 
@@ -82,7 +45,7 @@ namespace Application {
            INITIALIZE IMGUI
         --------------------------------------------------------------*/
         const char* glsl_version = "#version 130";
-        imgui_manager.Initialize(static_cast<GLFWwindow*>(funcGetApp().funcGetWin().funcGetNatWin()), glsl_version);
+        imgui_manager.Initialize(lvWindow.Window, glsl_version);
 
         /*--------------------------------------------------------------
            INITIALIZE ECS
@@ -105,7 +68,7 @@ namespace Application {
         /*--------------------------------------------------------------
          GAME LOOP
         --------------------------------------------------------------*/
-        while (!glfwWindowShouldClose(static_cast<GLFWwindow*>(funcGetApp().funcGetWin().funcGetNatWin())))
+        while (!glfwWindowShouldClose(lvWindow.Window))
         {
             /* Poll for and process events */
             glfwPollEvents();
@@ -123,6 +86,7 @@ namespace Application {
             ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f); // <----- Is this needed?
             imgui_manager.DrawHierachyWindow(clear_color);
 
+
             /*--------------------------------------------------------------
              UPDATE ECS
              --------------------------------------------------------------*/
@@ -136,7 +100,7 @@ namespace Application {
             /*--------------------------------------------------------------
              DRAWING/RENDERING Window
              --------------------------------------------------------------*/
-            funcGetApp().funcGetWin().Draw(clear_color);
+            lvWindow.Draw(clear_color);
 
             /*--------------------------------------------------------------
              DRAWING/RENDERING Objects
@@ -151,7 +115,7 @@ namespace Application {
             imgui_manager.Render();
 
 
-            glfwSwapBuffers(static_cast<GLFWwindow*>(funcGetApp().funcGetWin().funcGetNatWin()));
+            glfwSwapBuffers(lvWindow.Window);
 
             while (DeltaTime < FPSCap) {
                 CurrentTime = glfwGetTime();  // Continuously update current time
@@ -166,9 +130,10 @@ namespace Application {
 
 
 	int Application::Cleanup() {
+
         Ecs::ECS::GetInstance()->Unload();
         imgui_manager.Shutdown();
-        funcGetApp().funcGetWin().funcWinShutdown();
+        lvWindow.CleanUp();
         glfwTerminate();
 
         return 0;
