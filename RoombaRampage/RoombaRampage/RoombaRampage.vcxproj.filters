@@ -317,5 +317,7 @@
       <Filter>Header Files\Graphics</Filter>
     </None>
     <None Include="Json Texts\components.json" />
+    <None Include="Graphics\frameBufferFragmentShader.frag" />
+    <None Include="Graphics\frameBufferVertexShader.vert" />
   </ItemGroup>
 </Project>

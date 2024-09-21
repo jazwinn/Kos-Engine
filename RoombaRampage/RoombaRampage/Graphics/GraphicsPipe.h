@@ -32,19 +32,27 @@ private:
 	};
 
 	void funcSetupVao(Mesh& shape);
+	void funcSetupFboVao();
 	void funcSetupArrayBuffer();
+	void funcSetupFrameBuffer();
 	void funcBindImageDatafromAssetManager();
-	void funcSetupShader(const std::string& vertexShader, const std::string& fragmentShader);
+	unsigned int funcSetupShader(const std::string& vertexShader, const std::string& fragmentShader);
 	void funcDeleteShader();
 
 	static std::unique_ptr<GraphicsPipe> instancePtr;
 
+	//Shader Programs
 	unsigned int genericShaderProgram;
+	unsigned int frameBufferShaderProgram;
 
 	//Buffers
 	unsigned int modelMatrixArrayBuffer;
 	unsigned int textureOrderBuffer;
+	unsigned int frameBufferObject;
+	unsigned int screenTexture;
 
+	int windowWidth;
+	int windowHeight;
 	float aspectRatio;
 
 	struct Camera
@@ -80,12 +88,16 @@ public:
 
 	void funcInit();
 	void funcUpdate();
+
+	void funcDrawWindow();
 	void funcDraw(Mesh shape);
+
 
 	void funcSortDrawOrder();
 	static void funcSetDrawMode(GLenum mode);
 
 	Mesh squareMesh;
+	Mesh screenMesh;
 	Mesh squareLinesMesh;
 	std::vector<GraphicsData> modelData;
 	std::vector<int> textureOrder;

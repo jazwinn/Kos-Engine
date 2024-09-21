@@ -142,7 +142,7 @@ namespace Application {
              DRAWING/RENDERING Objects
              --------------------------------------------------------------*/
              //TODO remove paremeter, less hard code
-            pipe->funcDraw(pipe->squareMesh);
+            pipe->funcDrawWindow();
 
 
             /*--------------------------------------------------------------
