@@ -2,41 +2,17 @@
 
 #include "MovementSystem.h"
 
+
 namespace Ecs {
 
 	void MovementSystem::RegisterSystem(EntityID ID) {
 		ECS* ecs = ECS::GetInstance();
 
-		//Step 1 : check
-		bool store = true;
-		for (auto& TransformComponentPtr : vecTransformComponentPtr) {
-			if (TransformComponentPtr->Entity == ID) {
-				store = false;
-				break;
-			}
-			else {
-				store = true;
-			}
-		}
-		//Step 2 : Store address into vector
-		if (store == true) {
+		if (std::find_if(vecTransformComponentPtr.begin(), vecTransformComponentPtr.end(), [ID](const auto& obj) { return obj->Entity == ID; })
+			== vecTransformComponentPtr.end()) {
 			vecTransformComponentPtr.push_back((TransformComponent*)ecs->ECS_CombinedComponentPool[TypeTransformComponent]->GetEntityComponent(ID));
-		}
-
-		//check again
-		for (auto& MovementComponentPtr : vecMovementComponentPtr) {
-			if (MovementComponentPtr->Entity == ID) {
-				store = false;
-				break;
-			}
-			else {
-				store = true;
-			}
-		}
-		if (store) {
 			vecMovementComponentPtr.push_back((MovementComponent*)ecs->ECS_CombinedComponentPool[TypeMovemmentComponent]->GetEntityComponent(ID));
 		}
-
 
 	}
 
@@ -89,9 +65,15 @@ namespace Ecs {
 			Vector2::Vec2 Displacement = Velocity * ecs->DeltaTime;
 
 			TransComp->position += Displacement;
+
+
 		}
+	
 
 	}
+
+
+
 
 
 }

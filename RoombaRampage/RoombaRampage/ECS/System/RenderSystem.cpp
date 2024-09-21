@@ -9,38 +9,11 @@ namespace Ecs {
 	void RenderSystem::RegisterSystem(EntityID ID) {
 		ECS* ecs = ECS::GetInstance();
 
-
-
-		//Step 1 : check
-		bool store = true;
-		for (auto& TransformComponentPtr : vecTransformComponentPtr) {
-			if (TransformComponentPtr->Entity == ID) {
-				store = false;
-				break;
-			}
-			else {
-				store = true;
-			}
-		}
-		//Step 2 : Store address into vector
-		if (store == true) {
+		if (std::find_if(vecTransformComponentPtr.begin(), vecTransformComponentPtr.end(), [ID](const auto& obj) { return obj->Entity == ID; })
+			== vecTransformComponentPtr.end()) {
 			vecTransformComponentPtr.push_back((TransformComponent*)ecs->ECS_CombinedComponentPool[TypeTransformComponent]->GetEntityComponent(ID));
-		}
-
-		//check again
-		for (auto& SpriteComponentPtr : vecSpriteComponentPtr) {
-			if (SpriteComponentPtr->Entity == ID) {
-				store = false;
-				break;
-			}
-			else {
-				store = true;
-			}
-		}
-		if (store) {
 			vecSpriteComponentPtr.push_back((SpriteComponent*)ecs->ECS_CombinedComponentPool[TypeSpriteComponent]->GetEntityComponent(ID));
 		}
-
 
 	}
 
@@ -54,17 +27,6 @@ namespace Ecs {
 			}
 			IndexID++;
 		}
-
-
-		//auto& it = std::find(vecspritecomponentptr.begin(), vecspritecomponentptr.end(),
-		//	[id](const spritecomponent& comp) {
-		//		return comp.entity == id;
-		//	});
-
-		//if (it == vecspritecomponentptr.end()){
-		//	std::cout << "deregister:: component not inside system";
-		//	return;
-		//}
 
 		//index to the last element
 		size_t IndexLast = vecSpriteComponentPtr.size() - 1;

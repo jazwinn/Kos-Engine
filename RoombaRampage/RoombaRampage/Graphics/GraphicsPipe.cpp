@@ -1,11 +1,23 @@
 #include "../Graphics/GraphicsPipe.h"
 #include "../Assets/AssetManager.h"
+#include "../Application/Application.h"
+#include "../Application/Helper.h"
 #include <iostream>
 #include <vector>
 #include <array>
 #include <algorithm>
 #include <gtc/type_ptr.hpp>
 
+
+const std::string frameBufferVertexShader =
+{
+ #include "../Graphics/frameBufferVertexShader.vert"
+};
+
+const std::string frameBufferFragmentShader =
+{
+  #include "../Graphics/frameBufferFragmentShader.frag"
+};
 
 
 const std::string genericVertexShader =
@@ -18,9 +30,7 @@ const std::string genericFragmentShader =
   #include "../Graphics/genericFragmentShader.frag"
 };
 
-
 std::unique_ptr<GraphicsPipe> GraphicsPipe::instancePtr = nullptr;
-
 
 void GLAPIENTRY DebugCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam)
 {
@@ -29,9 +39,8 @@ void GLAPIENTRY DebugCallback(GLenum source, GLenum type, GLuint id, GLenum seve
 
 void GraphicsPipe::funcInit()
 {
-	AssetManager* assets = AssetManager::funcGetInstance();
-
-	assets->funcLoadImage("Assets/roombaTest.png");
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	squareMesh.shapeType = SQUARE;
 	squareLinesMesh.shapeType = SQUARE_LINES;
@@ -41,21 +50,27 @@ void GraphicsPipe::funcInit()
 
 	funcSetupVao(squareMesh);
 	funcSetupVao(squareLinesMesh);
+	funcSetupFboVao();
 	funcSetDrawMode(GL_FILL);
-	funcSetupShader(genericVertexShader, genericFragmentShader);
+	genericShaderProgram = funcSetupShader(genericVertexShader, genericFragmentShader);
+	frameBufferShaderProgram = funcSetupShader(frameBufferVertexShader, frameBufferFragmentShader);
 
 	modelToNDCMatrix.push_back(testMatrix);
 	textureOrder.push_back(0);
 
+	GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+	const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+
+	windowWidth = Helper::Helpers::GetInstance()->WindowWidth;
+	windowHeight = Helper::Helpers::GetInstance()->WindowHeight;
+	aspectRatio = static_cast<float>(static_cast<float>(windowHeight) / static_cast<float>(windowWidth));
+
 	funcSetupArrayBuffer();
 	funcBindImageDatafromAssetManager();
 
-	GLFWmonitor* monitor = glfwGetPrimaryMonitor();
-	const GLFWvidmode* mode = glfwGetVideoMode(monitor);
-	int windowWidth = mode->width;
-	int windowHeight = mode->height;
-	aspectRatio = static_cast<float>(static_cast<float>(windowHeight) / static_cast<float>(windowWidth));
 
+	funcSetupFrameBuffer();
+	
 	
 	modelToNDCMatrix.clear();
 	textureOrder.clear();
@@ -68,6 +83,10 @@ void GraphicsPipe::funcInit()
 GraphicsPipe::~GraphicsPipe() 
 {
 	//delete instancePtr;
+	if (frameBufferObject)
+	{
+		glDeleteFramebuffers(1, &frameBufferObject);
+	}
 	funcDeleteShader();
 }
 
@@ -78,6 +97,41 @@ GraphicsPipe* GraphicsPipe::funcGetInstance()
 		instancePtr.reset(new GraphicsPipe{});
 	}
 	return instancePtr.get();
+}
+
+void GraphicsPipe::funcSetupFboVao()
+{
+	float quadVertices[] = 
+	{
+		// Positions        // Texture Coords
+		-1.0f,  1.0f,       0.0f, 1.0f,  // Top-left
+		-1.0f, -1.0f,       0.0f, 0.0f,  // Bottom-left
+		 1.0f, -1.0f,       1.0f, 0.0f,  // Bottom-right
+		 1.0f, -1.0f,       1.0f, 0.0f,  // Bottom-right
+		 1.0f,  1.0f,       1.0f, 1.0f,  // Top-right
+		-1.0f,  1.0f,       0.0f, 1.0f   // Top-left
+	};
+
+	unsigned int vboID;
+	glGenVertexArrays(1, &screenMesh.vaoId);
+	glGenBuffers(1, &vboID);
+
+	glBindVertexArray(screenMesh.vaoId);
+
+	glBindBuffer(GL_ARRAY_BUFFER, vboID);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), &quadVertices, GL_STATIC_DRAW);
+
+	// Position attribute
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
+	
+
+	// Texture Coord attribute
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
+	
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
 }
 
 void GraphicsPipe::funcSetupVao(Mesh &shape)
@@ -181,24 +235,61 @@ void GraphicsPipe::funcSetupArrayBuffer()
 		glVertexAttribPointer(location + i, 3, GL_FLOAT, GL_FALSE, sizeof(glm::mat3), (void*)(sizeof(glm::vec3) * i));
 		glVertexAttribDivisor(location + i, 1);
 	}
-
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);	
 
-	/*glGenBuffers(1, &textureOrderBuffer);
+	glGenBuffers(1, &textureOrderBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, textureOrderBuffer);
-	glBufferData(GL_ARRAY_BUFFER, textureOrder.size() * sizeof(unsigned int), &textureOrder[0], GL_DYNAMIC_DRAW);
-	glEnableVertexAttribArray(10);
-	glVertexAttribIPointer(10, 1, GL_UNSIGNED_INT, sizeof(unsigned int), (void*)0);
-	glVertexAttribDivisor(10, 1);*/
-
+	glBufferData(GL_ARRAY_BUFFER, textureOrder.size() * sizeof(int), &textureOrder[0], GL_DYNAMIC_DRAW);
+	glBindVertexArray(squareMesh.vaoId);
+	glEnableVertexAttribArray(5);
+	glVertexAttribIPointer(5, 1, GL_INT, sizeof(int), (void*)0);
+	glVertexAttribDivisor(5, 1);
+	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
+
+void GraphicsPipe::funcSetupFrameBuffer()
+{
+	unsigned int fbo;
+	glGenFramebuffers(1, &fbo);
+	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+
+	unsigned int texture;
+	glGenTextures(1, &texture);
+	glBindTexture(GL_TEXTURE_2D, texture);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, windowWidth, windowHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture, 0);
+
+	unsigned int rbo;
+	glGenRenderbuffers(1, &rbo);
+	glBindRenderbuffer(GL_RENDERBUFFER, rbo);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, windowWidth, windowHeight);
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
+
+
+	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE)
+	{
+		std::cout << "Framebuffer successfully created" << std::endl;
+		frameBufferObject = fbo;
+		screenTexture = texture;
+	}
+	else
+	{
+		std::cout << "Framebuffer has not been created" << std::endl;
+	}
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
 }
 
 void GraphicsPipe::funcBindImageDatafromAssetManager()
 {
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	//glEnable(GL_BLEND);
+	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	AssetManager* assets = AssetManager::funcGetInstance();
 	for (int i = 0; i < assets->imageContainer.size(); ++i)
 	{
@@ -237,14 +328,13 @@ void GraphicsPipe::funcUpdate()
 		for (int n{}; n < modelData.size(); n++) 
 		{
 			glm::mat3 lvScale{ modelData[n].scale.x, 0, 0, 0, modelData[n].scale.y, 0, 0 , 0 ,1 };
-			glm::mat3 lvRotate{ cos(modelData[n].rotate * 3.1415f / 180.f), sin(modelData[n].rotate * 3.1415f / 180.f), 0.f,
-							   -sin(modelData[n].rotate * 3.1415f / 180.f), cos(modelData[n].rotate * 3.1415f / 180.f), 0.f,
+			glm::mat3 lvRotate{ cos(modelData[n].rotate * 3.1415f / 180.f), -sin(modelData[n].rotate * 3.1415f / 180.f), 0.f,
+							   sin(modelData[n].rotate * 3.1415f / 180.f), cos(modelData[n].rotate * 3.1415f / 180.f), 0.f,
 							    0.f , 0.f ,1.f };
 			glm::mat3 lvTranslate{ 1, 0, 0, 0, 1, 0, modelData[n].worldCoordinates.x , modelData[n].worldCoordinates.y ,1 };
 			glm::mat3 lvNDCScale{ aspectRatio, 0, 0, 0, 1.f, 0, 0 , 0 ,1.f };
 			modelToNDCMatrix.push_back(lvNDCScale * lvTranslate * lvRotate * lvScale);
-			//textureOrder.push_back(modelData[n].textureID);
-			textureOrder.push_back(0);
+			textureOrder.push_back(modelData[n].textureID);
 		}
 	}
 
@@ -254,22 +344,27 @@ void GraphicsPipe::funcUpdate()
 
 void GraphicsPipe::funcDraw(Mesh shape)
 {
-
+	
+	
 	if (!modelToNDCMatrix.empty())
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, modelMatrixArrayBuffer);
 		glNamedBufferData(modelMatrixArrayBuffer, modelToNDCMatrix.size() * sizeof(glm::mat3), &modelToNDCMatrix[0], GL_DYNAMIC_DRAW);
-		//glBindBuffer(GL_ARRAY_BUFFER, textureOrderBuffer);
-		//glNamedBufferData(textureOrderBuffer, textureOrder.size() * sizeof(unsigned int), &textureOrder[0], GL_DYNAMIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, textureOrderBuffer);
+		glNamedBufferData(textureOrderBuffer, textureOrder.size() * sizeof(int), &textureOrder[0], GL_DYNAMIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glUseProgram(genericShaderProgram);
 
-		glActiveTexture(GL_TEXTURE0);
+		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, textureIDs[0]);
+		glActiveTexture(GL_TEXTURE2);
+		glBindTexture(GL_TEXTURE_2D, textureIDs[1]);
 
 		GLint lvUniformVarLoc1 = glGetUniformLocation(genericShaderProgram, "textures");
+	
 		if (lvUniformVarLoc1 >= 0)
 		{
-			glUniform1i(lvUniformVarLoc1, 0);
+			glUniform1iv(lvUniformVarLoc1, static_cast<GLsizei>(textureIDs.size()), (GLint*)&textureIDs[0]);
 		}
 		else
 		{
@@ -291,34 +386,6 @@ void GraphicsPipe::funcDraw(Mesh shape)
 	}
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -346,7 +413,7 @@ GLuint GraphicsPipe::funcCompileShader(GLuint type, const std::string& shader)
 	return lvID;
 }
 
-void GraphicsPipe::funcSetupShader(const std::string& vertexShader, const std::string& fragmentShader)
+unsigned int GraphicsPipe::funcSetupShader(const std::string& vertexShader, const std::string& fragmentShader)
 {
 	GLuint lvProgram = glCreateProgram();
 	GLuint lvVertexShaderID = funcCompileShader(GL_VERTEX_SHADER, vertexShader);
@@ -360,8 +427,6 @@ void GraphicsPipe::funcSetupShader(const std::string& vertexShader, const std::s
 	glDeleteShader(lvVertexShaderID);
 	glDeleteShader(lvFragmentShaderID);
 
-	genericShaderProgram = lvProgram;
-
 	GLint success;
 	glGetProgramiv(genericShaderProgram, GL_LINK_STATUS, &success);
 	if (!success) 
@@ -374,7 +439,10 @@ void GraphicsPipe::funcSetupShader(const std::string& vertexShader, const std::s
 	{
 		std::cout << "Shader compiled successfully" << std::endl;
 	}
+
+	return lvProgram;
 }
+
 
 void GraphicsPipe::funcDeleteShader()
 {
@@ -385,4 +453,37 @@ void GraphicsPipe::funcDeleteShader()
 void GraphicsPipe::funcSetDrawMode(GLenum mode)
 {
 	glPolygonMode(GL_FRONT_AND_BACK, mode);
+}
+
+void GraphicsPipe::funcDrawWindow()
+{
+	
+	glBindFramebuffer(GL_FRAMEBUFFER, frameBufferObject);
+	glEnable(GL_DEPTH_TEST);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	funcDraw(squareMesh);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glDisable(GL_DEPTH_TEST); 
+	glClearColor(0.f, 0.f, 0.f, 1.f);
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	glUseProgram(frameBufferShaderProgram);
+	
+	glBindVertexArray(screenMesh.vaoId);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, screenTexture);
+	int loc = glGetUniformLocation(frameBufferShaderProgram, "screenTexture");
+
+	if (loc != -1)
+	{
+		glUniform1i(loc,0);
+	}
+	else
+	{
+		std::cout << "Uniform not found" << std::endl;
+	}
+	
+	//glDrawArrays(GL_TRIANGLES, 0, 6);
 }

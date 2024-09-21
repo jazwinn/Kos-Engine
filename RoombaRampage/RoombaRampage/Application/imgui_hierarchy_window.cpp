@@ -7,7 +7,7 @@
 #include<string>
 #include <iostream>
 
-unsigned int ImGuiHandler::DrawHierachyWindow(ImVec4& clear_color)
+unsigned int ImGuiHandler::DrawHierachyWindow()
 {
     //fetch ecs
     Ecs::ECS* ecs = Ecs::ECS::GetInstance();
@@ -24,6 +24,7 @@ unsigned int ImGuiHandler::DrawHierachyWindow(ImVec4& clear_color)
     {
         if (ImGui::InputText("##", charBuffer, IM_ARRAYSIZE(charBuffer), ImGuiInputTextFlags_EnterReturnsTrue))
         {
+
             //create ID then push into vector
             Ecs::EntityID newEntityID = ecs-> CreateEntity();
             obj_entity_id.push_back(newEntityID);
@@ -34,6 +35,7 @@ unsigned int ImGuiHandler::DrawHierachyWindow(ImVec4& clear_color)
             //Set to false as no button showing first
             //Used to track and maintain sync between objtextentries and deletebutton vector
             deleteButton.push_back(false);
+            DuplicateButton.push_back(false);
             obj_component_window.push_back(false);
 
             charBuffer[0] = '\0';
@@ -50,6 +52,7 @@ unsigned int ImGuiHandler::DrawHierachyWindow(ImVec4& clear_color)
         if (ImGui::Button(buttonName.c_str()))
         {
             deleteButton[i] ? deleteButton[i] = false : deleteButton[i] = true;
+            DuplicateButton[i] ? DuplicateButton[i] = false : DuplicateButton[i] = true;
 
             obj_component_window[i] = true;
 
@@ -83,9 +86,50 @@ unsigned int ImGuiHandler::DrawHierachyWindow(ImVec4& clear_color)
                 obj_text_entries.erase(obj_text_entries.begin() + i);
                 obj_entity_id.erase(obj_entity_id.begin() + i);
                 deleteButton.erase(deleteButton.begin() + i);
+                DuplicateButton.erase(DuplicateButton.begin() + i);
                 obj_component_window.erase(obj_component_window.begin() + i);
 
                 i--;
+
+                ImGui::PopStyleColor(3);  // Pop the 3 style colors (button, hovered, and active)
+                continue;
+            }
+
+            ImGui::PopStyleColor(3);  // Pop the 3 style colors (button, hovered, and active)
+        }
+
+        //Render Duplicate button
+        if (DuplicateButton[i])
+        {
+            //Use _button,_buttonhover_buttonactive
+            //To change the button color
+            //Dont forget to pop
+            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.1f, 0.5f, 0.1f, 1.0f));  // green
+            ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.1f, 0.8f, 0.1f, 1.0f));  // Lighter red
+            ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.1f, 1.f, 0.1f, 1.0f));  // Darker red
+
+            //Use this to make the button side by side on the same line
+            ImGui::SameLine();
+            std::string DuplicateButtonLabel = "Duplicate ##" + std::to_string(i);
+
+            if (ImGui::Button(DuplicateButtonLabel.c_str()))
+            {
+
+                //create ID then push into vector
+                Ecs::EntityID newEntityID = ecs->DuplicateEntity(obj_entity_id[i]);
+                obj_entity_id.push_back(newEntityID);
+
+                //Add the string into the vector
+                obj_text_entries.push_back(std::string(charBuffer));
+
+                //Set to false as no button showing first
+                //Used to track and maintain sync between objtextentries and deletebutton vector
+                deleteButton.push_back(false);
+                DuplicateButton.push_back(false);
+                obj_component_window.push_back(false);
+
+                charBuffer[0] = '\0';
+                objectNameBox = false;
 
                 ImGui::PopStyleColor(3);  // Pop the 3 style colors (button, hovered, and active)
                 continue;

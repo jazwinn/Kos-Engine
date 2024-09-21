@@ -161,8 +161,10 @@ xcopy /y /d "$(SolutionDir)FMOD_API\studio\lib\x64\*.dll" "$(OutDir)"</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application\Application.cpp" />
+    <ClCompile Include="Application\Helper.cpp" />
     <ClCompile Include="Application\imgui_component_window.cpp" />
     <ClCompile Include="Application\imgui_handler.cpp" />
+    <ClCompile Include="Application\imgui_render_window.cpp" />
     <ClCompile Include="Application\json_handler.cpp" />
     <ClCompile Include="Application\main.cpp" />
     <ClCompile Include="Application\Window.cpp" />
@@ -178,19 +180,23 @@ xcopy /y /d "$(SolutionDir)FMOD_API\studio\lib\x64\*.dll" "$(OutDir)"</Command>
     <ClCompile Include="Dependencies\imgui\imgui_widgets.cpp" />
     <ClCompile Include="ECS\ECS.cpp" />
     <ClCompile Include="ECS\System\CollisionSystem.cpp" />
+    <ClCompile Include="ECS\System\ControlSystem.cpp" />
     <ClCompile Include="ECS\System\MovementSystem.cpp" />
     <ClCompile Include="ECS\System\RenderSystem.cpp" />
-    <ClCompile Include="Graphics\Graphics.cpp" />
     <ClCompile Include="Graphics\GraphicsPipe.cpp" />
     <ClCompile Include="Application\imgui_hierarchy_window.cpp" />
+    <ClCompile Include="Inputs\Input.cpp" />
+    <ClCompile Include="Logging.cpp" />
     <ClCompile Include="Math\Mat2x2.cpp" />
     <ClCompile Include="Math\Mat3x3.cpp" />
     <ClCompile Include="Math\mathlib.cpp" />
     <ClCompile Include="Math\vector2.cpp" />
+    <ClCompile Include="Performance.cpp" />
     <ClCompile Include="Physics\Phyiscs.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Application.h" />
+    <ClInclude Include="Application\Helper.h" />
     <ClInclude Include="Application\imgui_handler.h" />
     <ClInclude Include="Application\json_handler.h" />
     <ClInclude Include="Application\Window.h" />
@@ -219,21 +225,33 @@ xcopy /y /d "$(SolutionDir)FMOD_API\studio\lib\x64\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="ECS\ECS.h" />
     <ClInclude Include="ECS\ECSList.h" />
     <ClInclude Include="ECS\System\CollisionSystem.h" />
+    <ClInclude Include="ECS\System\ControlSystem.h" />
     <ClInclude Include="ECS\System\MovementSystem.h" />
     <ClInclude Include="ECS\System\RenderSystem.h" />
     <ClInclude Include="ECS\System\System.h" />
     <ClInclude Include="ECS\System\SystemList.h" />
+    <ClInclude Include="Events\baseEvent.h" />
+    <ClInclude Include="Events\keyEvents.h" />
+    <ClInclude Include="Events\mouseEvents.h" />
+    <ClInclude Include="Events\windowEvents.h" />
     <ClInclude Include="Graphics\Graphics.h" />
     <ClInclude Include="Graphics\GraphicsPipe.h" />
+    <ClInclude Include="Inputs\Input.h" />
+    <ClInclude Include="Logging.h" />
     <ClInclude Include="Math\Mat2x2.h" />
     <ClInclude Include="Math\Mat3x3.h" />
     <ClInclude Include="Math\mathlib.h" />
     <ClInclude Include="Math\vector2.h" />
+    <ClInclude Include="Performance.h" />
     <ClInclude Include="Physics\Physics.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Graphics\frameAccumulationFragmentShader.frag" />
+    <None Include="Graphics\frameBufferFragmentShader.frag" />
+    <None Include="Graphics\frameCompositionFragmentShader.frag" />
     <None Include="Graphics\genericFragmentShader.frag" />
     <None Include="Graphics\genericVertexShader.vert" />
+    <None Include="Graphics\frameBufferVertexShader.vert" />
     <None Include="Json Texts\components.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

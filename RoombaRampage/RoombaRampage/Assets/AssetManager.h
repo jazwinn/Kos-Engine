@@ -13,8 +13,8 @@ private:
 
 
 	//Image dimensions required for our engine
-	int targetWidth{ 128 };
-	int targetHeight{ 128 };
+	int targetWidth{ 1280 };
+	int targetHeight{ 1280 };
 	int targetChannels{ 4 };
 
 	int imageCount{ 0 };
@@ -40,12 +40,15 @@ public:
 		int imageID;
 	};
 
+	
+
 	static AssetManager* funcGetInstance();
 	~AssetManager();
-
 	std::vector<Image> imageContainer;
 	std::vector<unsigned char*> imagedataArray;
 
+
+	void funcLoadAssets();
 	void funcLoadImage(const char* file);
 
 	

@@ -17,7 +17,7 @@ namespace Application {
 
 		int init();
 
-		int Draw(ImVec4 ClearColor);
+		int Draw();
 
 		int CleanUp();
 
@@ -25,6 +25,10 @@ namespace Application {
 		GLFWmonitor* monitor;
 		const GLFWvidmode* mode;
 
+		float WindowHeight;
+		float WindowWidth;
+
+		
 	};
 
 

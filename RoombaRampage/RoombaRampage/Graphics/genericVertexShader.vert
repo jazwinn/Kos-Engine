@@ -7,12 +7,11 @@ layout (location=2) in vec2 vertexTexCoords;
 
 layout (location=6) in mat3 modelMatrix;
 
-
-//layout (location=10) in int atextureID;
+layout (location=5) in int atextureID;
 
 layout (location=0) out vec3 color; 
 layout (location=1) out vec2 texCoords;
-//layout (location=2) out int textureID;
+layout (location=2) flat out int textureID;
 
 void main()
 {
@@ -22,7 +21,7 @@ void main()
 
 	texCoords = vertexTexCoords;
 	color = vertexColor;
-	//textureID = atextureID;
+	textureID = atextureID;
 }
 
 )"
