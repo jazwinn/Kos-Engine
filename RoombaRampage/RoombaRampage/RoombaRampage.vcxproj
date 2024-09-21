@@ -167,10 +167,12 @@
     <ClCompile Include="Graphics\GraphicsPipe.cpp" />
     <ClCompile Include="Application\imgui_hierarchy_window.cpp" />
     <ClCompile Include="Input\baseInput.cpp" />
+    <ClCompile Include="Logging.cpp" />
     <ClCompile Include="Math\Mat2x2.cpp" />
     <ClCompile Include="Math\Mat3x3.cpp" />
     <ClCompile Include="Math\mathlib.cpp" />
     <ClCompile Include="Math\vector2.cpp" />
+    <ClCompile Include="Performance.cpp" />
     <ClCompile Include="Physics\Phyiscs.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -216,10 +218,12 @@
     <ClInclude Include="Input\baseInput.h" />
     <ClInclude Include="Input\keycodes.h" />
     <ClInclude Include="Input\mousecodes.h" />
+    <ClInclude Include="Logging.h" />
     <ClInclude Include="Math\Mat2x2.h" />
     <ClInclude Include="Math\Mat3x3.h" />
     <ClInclude Include="Math\mathlib.h" />
     <ClInclude Include="Math\vector2.h" />
+    <ClInclude Include="Performance.h" />
     <ClInclude Include="Physics\Physics.h" />
   </ItemGroup>
   <ItemGroup>

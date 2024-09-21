@@ -10,12 +10,10 @@
                 _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
         #endif
         Application::Application app;
-
         app.Init();
 
         app.Run();
 
         app.Cleanup();
-
         return 0;
-    }
+    } 

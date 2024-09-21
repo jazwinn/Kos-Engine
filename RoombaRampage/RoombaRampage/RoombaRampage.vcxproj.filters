@@ -76,6 +76,12 @@
     <Filter Include="Header Files\Physics">
       <UniqueIdentifier>{08680b2c-947a-44d9-94dc-251ba73e9ec7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Debugging">
+      <UniqueIdentifier>{6335344d-847b-4c7b-b77a-3f310024ffe6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Debugging">
+      <UniqueIdentifier>{2cac46b2-d507-4d43-a310-60e33b313731}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Dependencies\imgui\imgui_widgets.cpp">
@@ -167,6 +173,12 @@
       </ClCompile>
     <ClCompile Include="Application\imgui_render_window.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Logging.cpp">
+      <Filter>Source Files\Debugging</Filter>
+    </ClCompile>
+    <ClCompile Include="Performance.cpp">
+      <Filter>Source Files\Debugging</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -310,6 +322,12 @@
     </ClInclude>
     <ClInclude Include="ECS\System\ControlSystem.h">
       <Filter>Header Files\ECS\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Performance.h">
+      <Filter>Header Files\Debugging</Filter>
+    </ClInclude>
+    <ClInclude Include="Logging.h">
+      <Filter>Header Files\Debugging</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
