@@ -29,9 +29,7 @@ const std::string genericFragmentShader =
   #include "../Graphics/genericFragmentShader.frag"
 };
 
-
 std::unique_ptr<GraphicsPipe> GraphicsPipe::instancePtr = nullptr;
-
 
 void GLAPIENTRY DebugCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam)
 {
@@ -40,7 +38,8 @@ void GLAPIENTRY DebugCallback(GLenum source, GLenum type, GLuint id, GLenum seve
 
 void GraphicsPipe::funcInit()
 {
-	
+	glEnable(GL_BLEND);
+
 	squareMesh.shapeType = SQUARE;
 	squareLinesMesh.shapeType = SQUARE_LINES;
 	testMatrix = { 1,0,0,0,1,0,0,0,1 };
@@ -49,6 +48,7 @@ void GraphicsPipe::funcInit()
 
 	funcSetupVao(squareMesh);
 	funcSetupVao(squareLinesMesh);
+	funcSetupFboVao();
 	funcSetDrawMode(GL_FILL);
 	genericShaderProgram = funcSetupShader(genericVertexShader, genericFragmentShader);
 	frameBufferShaderProgram = funcSetupShader(frameBufferVertexShader, frameBufferFragmentShader);
@@ -256,7 +256,7 @@ void GraphicsPipe::funcSetupFrameBuffer()
 	unsigned int texture;
 	glGenTextures(1, &texture);
 	glBindTexture(GL_TEXTURE_2D, texture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, windowWidth, windowHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, windowWidth, windowHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glBindTexture(GL_TEXTURE_2D, 0);
@@ -341,7 +341,8 @@ void GraphicsPipe::funcUpdate()
 
 void GraphicsPipe::funcDraw(Mesh shape)
 {
-
+	
+	
 	if (!modelToNDCMatrix.empty())
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, modelMatrixArrayBuffer);
@@ -382,34 +383,6 @@ void GraphicsPipe::funcDraw(Mesh shape)
 	}
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -481,27 +454,23 @@ void GraphicsPipe::funcSetDrawMode(GLenum mode)
 
 void GraphicsPipe::funcDrawWindow()
 {
+	
 	glBindFramebuffer(GL_FRAMEBUFFER, frameBufferObject);
-	glEnable(GL_DEPTH_TEST); // enable depth testing (is disabled for rendering screen-space quad)
-
-	// make sure we clear the framebuffer's content
-	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+	glEnable(GL_DEPTH_TEST);
+	//glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	funcDraw(squareMesh);
 
-
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	glDisable(GL_DEPTH_TEST); // disable depth test so screen-space quad isn't discarded due to depth test.
-	// clear all relevant buffers
+	glDisable(GL_DEPTH_TEST); 
 	glClear(GL_COLOR_BUFFER_BIT);
 
-
 	glUseProgram(frameBufferShaderProgram);
+	
 	glBindVertexArray(screenMesh.vaoId);
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, screenTexture);	// use the color attachment texture as the texture of the quad plane
-
+	glBindTexture(GL_TEXTURE_2D, screenTexture);
 	int loc = glGetUniformLocation(frameBufferShaderProgram, "screenTexture");
 
 	if (loc != -1)
@@ -512,9 +481,9 @@ void GraphicsPipe::funcDrawWindow()
 	{
 		std::cout << "Uniform not found" << std::endl;
 	}
-
-	
-
+	glBlendFunc(GL_ONE_MINUS_DST_ALPHA, GL_SRC_ALPHA);
 	glDrawArrays(GL_TRIANGLES, 0, 6);
+
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 }
