@@ -168,6 +168,12 @@
     <ClCompile Include="ECS\System\ControlSystem.cpp">
       <Filter>Source Files\ECS\System</Filter>
     </ClCompile>
+    <ClCompile Include="Logging.cpp">
+      <Filter>Source Files\Debugging</Filter>
+    </ClCompile>
+    <ClCompile Include="Performance.cpp">
+      <Filter>Source Files\Debugging</Filter>
+    </ClCompile>
     <ClCompile Include="Inputs\Input.cpp">
       <Filter>Source Files\Input</Filter>
     </ClCompile>
@@ -176,12 +182,6 @@
     </ClCompile>
     <ClCompile Include="Application\Helper.cpp">
       <Filter>Source Files\Application</Filter>
-    </ClCompile>
-    <ClCompile Include="Debugging\Logging.cpp">
-      <Filter>Source Files\Debugging</Filter>
-    </ClCompile>
-    <ClCompile Include="Debugging\Performance.cpp">
-      <Filter>Source Files\Debugging</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -311,6 +311,12 @@
     <ClInclude Include="ECS\System\ControlSystem.h">
       <Filter>Header Files\ECS\System</Filter>
     </ClInclude>
+    <ClInclude Include="Performance.h">
+      <Filter>Header Files\Debugging</Filter>
+    </ClInclude>
+    <ClInclude Include="Logging.h">
+      <Filter>Header Files\Debugging</Filter>
+    </ClInclude>
     <ClInclude Include="Inputs\Input.h">
       <Filter>Header Files\Input</Filter>
     </ClInclude>
@@ -322,12 +328,6 @@
     </ClInclude>
     <ClInclude Include="Application\Helper.h">
       <Filter>Header Files\Application</Filter>
-    </ClInclude>
-    <ClInclude Include="Debugging\Logging.h">
-      <Filter>Header Files\Debugging</Filter>
-    </ClInclude>
-    <ClInclude Include="Debugging\Performance.h">
-      <Filter>Header Files\Debugging</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
