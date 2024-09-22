@@ -144,7 +144,7 @@ namespace Application {
             /*--------------------------------------------------------------
              Play AUDIO
              --------------------------------------------------------------*/
-            audio.playSound();
+            //audio.playSound();
 
             glfwSwapBuffers(lvWindow.Window);
 
