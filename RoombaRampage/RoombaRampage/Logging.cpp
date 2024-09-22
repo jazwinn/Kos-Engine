@@ -34,7 +34,6 @@ namespace Logging {
         m_bInitialized = true;
 
         logFile.open(filename, std::ios::out | std::ios::app);
-        std::cout << filename << std::endl;
         if (!logFile.is_open()) {
             std::cerr << "Error opening log file." << std::endl;
         }

@@ -74,6 +74,7 @@ namespace Logging {
     static const std::string WHITE = "\033[0;30m";
     static const std::string BLUE = "\033[0;36m";
     static const std::string CLOSE = "\033[0m";
+
     enum LogLevel {
         DEBUG,
         INFO,

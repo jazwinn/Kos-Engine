@@ -7,12 +7,11 @@
 #include "../ECS/ECS.h"
 #include "Helper.h"
 #include "Window.h"
-
+#include "../Logging.h"
 
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
-#include "../Logging.h"
 
 
 #include "../AudioManager.h"
@@ -88,6 +87,11 @@ namespace Application {
         audio.init();
         audio.createSound("vacuum.mp3");
 
+        /*--------------------------------------------------------------
+            INITIALIZE LOGGING SYSTEM
+        --------------------------------------------------------------*/
+        LOGGING_INIT_LOGS("LogFile.txt");
+
         return 0;
 	}
 
@@ -95,7 +99,6 @@ namespace Application {
 
     int Application::Run() {
 
-        LOGGING_DEBUG("Inside application cpp udpate");
         Ecs::ECS* ecs = Ecs::ECS::GetInstance();
         float FPSCap = 1 / 60;
 
