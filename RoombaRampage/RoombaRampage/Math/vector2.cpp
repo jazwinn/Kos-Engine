@@ -1,5 +1,3 @@
-// #include "../Math/vector2.h"
-
 #include "../Math/vector2.h"
 
 
@@ -124,4 +122,3 @@ float Vector2::Vec2::funcVec2CrossProduct(const Vec2& pVec0, const Vec2& pVec1) 
     float result = temp1 - temp2;
     return result;
 }
-

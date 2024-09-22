@@ -7,7 +7,7 @@
 #include "../ECS/ECS.h"
 #include "Helper.h"
 #include "Window.h"
-
+#include "../Logging.h"
 
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
@@ -86,6 +86,11 @@ namespace Application {
         // Initialize the FMOD system
         audio.init();
         audio.createSound("vacuum.mp3");
+
+        /*--------------------------------------------------------------
+            INITIALIZE LOGGING SYSTEM
+        --------------------------------------------------------------*/
+        LOGGING_INIT_LOGS("LogFile.txt");
 
         return 0;
 	}
