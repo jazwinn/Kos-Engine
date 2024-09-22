@@ -12,6 +12,7 @@
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
+#include "../Logging.h"
 
 
 #include "../AudioManager.h"
@@ -94,6 +95,7 @@ namespace Application {
 
     int Application::Run() {
 
+        LOGGING_DEBUG("Inside application cpp udpate");
         Ecs::ECS* ecs = Ecs::ECS::GetInstance();
         float FPSCap = 1 / 60;
 
