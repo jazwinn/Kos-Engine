@@ -151,6 +151,8 @@
     <ClCompile Include="Application\main.cpp" />
     <ClCompile Include="Application\Window.cpp" />
     <ClCompile Include="Assets\AssetManager.cpp" />
+    <ClCompile Include="Debugging\Logging.cpp" />
+    <ClCompile Include="Debugging\Performance.cpp" />
     <ClCompile Include="Dependencies\imgui\imgui.cpp" />
     <ClCompile Include="Dependencies\imgui\imgui_demo.cpp" />
     <ClCompile Include="Dependencies\imgui\imgui_draw.cpp" />
@@ -167,12 +169,10 @@
     <ClCompile Include="Graphics\GraphicsPipe.cpp" />
     <ClCompile Include="Application\imgui_hierarchy_window.cpp" />
     <ClCompile Include="Inputs\Input.cpp" />
-    <ClCompile Include="Logging.cpp" />
     <ClCompile Include="Math\Mat2x2.cpp" />
     <ClCompile Include="Math\Mat3x3.cpp" />
     <ClCompile Include="Math\mathlib.cpp" />
     <ClCompile Include="Math\vector2.cpp" />
-    <ClCompile Include="Performance.cpp" />
     <ClCompile Include="Physics\Phyiscs.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -182,6 +182,8 @@
     <ClInclude Include="Application\json_handler.h" />
     <ClInclude Include="Application\Window.h" />
     <ClInclude Include="Assets\AssetManager.h" />
+    <ClInclude Include="Debugging\Logging.h" />
+    <ClInclude Include="Debugging\Performance.h" />
     <ClInclude Include="Dependencies\imgui\imconfig.h" />
     <ClInclude Include="Dependencies\imgui\imgui.h" />
     <ClInclude Include="Dependencies\imgui\imgui_impl_glfw.h" />
@@ -217,12 +219,10 @@
     <ClInclude Include="Graphics\Graphics.h" />
     <ClInclude Include="Graphics\GraphicsPipe.h" />
     <ClInclude Include="Inputs\Input.h" />
-    <ClInclude Include="Logging.h" />
     <ClInclude Include="Math\Mat2x2.h" />
     <ClInclude Include="Math\Mat3x3.h" />
     <ClInclude Include="Math\mathlib.h" />
     <ClInclude Include="Math\vector2.h" />
-    <ClInclude Include="Performance.h" />
     <ClInclude Include="Physics\Physics.h" />
   </ItemGroup>
   <ItemGroup>
