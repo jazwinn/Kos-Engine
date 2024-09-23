@@ -1,11 +1,16 @@
 #include "Logging.h"
-D
 
 namespace Logging {
-    // Constructor: Opens the log file in append mode
+    Logger& Logger::GetInstance()
+    {
+        static Logger instance{};
+        return instance;
+    }
+    //// Constructor: Opens the log file in append mode
     Logger::Logger(const std::string& filename)
     {
-        logFile.open(filename, std::ios::app);
+        logFile.open(filename,std::ios::app);
+        std::cout << filename << std::endl;
         if (!logFile.is_open()) {
             std::cerr << "Error opening log file." << std::endl;
         }
@@ -14,21 +19,54 @@ namespace Logging {
     // Destructor: Closes the log file
     Logger::~Logger() { logFile.close(); }
 
-    // Logs a message with a given log level
-    void Logger::log(LogLevel level, const std::string& message)
-    {
-        // Get current timestamp
-        auto now = std::chrono
-        tm* timeinfo = localtime(&now);
-        char timestamp[20];
-        strftime(timestamp, sizeof(timestamp), "%Y-%m-%d %H:%M:%S", timeinfo);
 
+    void Logger::Init(const std::string& filename) {
+        assert(!m_bInitialized && "The logger must be initialized before it is used!");
+        if (m_bInitialized)
+        {
+            std::cout << "The logger must be initialized before it is used!" << std::endl;
+            return;
+        }
+        else {
+            std::cout << "Logger initialized" << std::endl;
+        }
+
+        m_bInitialized = true;
+
+        logFile.open(filename, std::ios::out | std::ios::app);
+        if (!logFile.is_open()) {
+            std::cerr << "Error opening log file." << std::endl;
+        }
+    }
+
+
+    std::string Logger::getCurrentTimestamp() {
+        // Get current timestamp
+        auto now = std::chrono::system_clock::now();
+
+        // Convert to time_t to manipulate as a calendar time
+        std::time_t now_time = std::chrono::system_clock::to_time_t(now);
+
+        // Convert to tm for local time formatting
+        std::tm local_time;
+        localtime_s(&local_time, &now_time);
+
+        char buffer[100];
+        std::strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", &local_time);
+        
+        return std::string(buffer);
+    }
+
+    // Logs a message with a given log level
+    void Logger::Log(LogLevel level, const std::string& message)
+    {
+        std::string current_Time = getCurrentTimestamp();
         // Create log entry
         std::ostringstream logEntry;
-        logEntry << "[" << timestamp << "] " << levelToString(level) << ": " << message << std::endl;
+        logEntry << "[" << current_Time << "] " << levelToString(level) << ": " << message << "\n";
 
         // Output to console
-        std::cout << logEntry.str();
+        std::cout << colorToString(level) << logEntry.str() << CLOSE << std::endl;
 
         // Output to log file
         if (logFile.is_open()) {
@@ -49,10 +87,23 @@ namespace Logging {
             return "WARNING";
         case ERROR:
             return "ERROR";
-        case CRITICAL:
-            return "CRITICAL";
         default:
             return "UNKNOWN";
         }
     }
+
+    std::string Logger::colorToString(LogLevel level) {
+        switch (level) {
+        case DEBUG: //GREEN
+            return GREEN;
+        case INFO:  //WHITE
+            return WHITE;
+        case WARNING: //YELLOW
+            return YELLOW;
+        case ERROR:   //RED
+            return RED;
+        default:
+            return CLOSE;
+        }
+    }    
 }

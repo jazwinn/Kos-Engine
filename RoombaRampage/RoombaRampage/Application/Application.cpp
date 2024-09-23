@@ -7,14 +7,14 @@
 #include "../ECS/ECS.h"
 #include "Helper.h"
 #include "Window.h"
-#include "../Logging.h"
+#include "../Debugging/Logging.h"
 
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 
 
-#include "../AudioManager.h"
+#include "../Assets/AudioManager.h"
 
 namespace Application {
 
