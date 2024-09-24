@@ -96,7 +96,9 @@ namespace Physics {
 	}
 
 	std::vector<PhysicsData> classPhysics::PassPhysicsData() {
-		return collidedEntities;
+		std::vector<PhysicsData> TempCollidedEntities =  collidedEntities;
+		this->ClearEntites();
+		return TempCollidedEntities;
 	}
 
 	void classPhysics::ClearEntites(){

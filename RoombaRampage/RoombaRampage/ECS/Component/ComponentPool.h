@@ -9,7 +9,7 @@
 #include "TransformComponent.h"
 #include "MovementComponent.h"
 #include "SpriteComponent.h"
-#include "BoxColliderComponent.h"
+#include "ColliderComponent.h"
 #include "RigidBody.h"
 #include "PlayerComponent.h"
 
@@ -83,11 +83,20 @@ namespace Ecs {
 		//UNTESED MIGHT FAIL
 
 
-		auto* DuplicateComponent = (T*)GetEntityComponent(DuplicateID);
+		T* DuplicateComponent = (T*)GetEntityComponent(DuplicateID);
 
-		auto* NewComponent = (T*)AssignComponent(NewID);
+		T* NewComponent;
+		if (HasComponent(NewID)) {
+			NewComponent = (T*)GetEntityComponent(NewID);
+		}
+		else {
+			NewComponent = (T*)AssignComponent(NewID);
+		}
 
-		*NewComponent = *DuplicateComponent;
+		
+
+		*NewComponent = *DuplicateComponent;//copies everything INCLUDING ID
+		NewComponent->Entity = NewID;//SET BACK ID
 
 		return NewComponent;
 	}

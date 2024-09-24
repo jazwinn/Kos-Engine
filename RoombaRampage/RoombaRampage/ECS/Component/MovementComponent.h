@@ -10,6 +10,7 @@ namespace Ecs {
 	public:
 		float Speed{};
 		Vector2::Vec2 Direction{0,1};//facing north
+		bool Move = false;
 	};
 
 

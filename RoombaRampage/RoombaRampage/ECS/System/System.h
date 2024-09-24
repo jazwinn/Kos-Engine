@@ -16,6 +16,7 @@ namespace Ecs {
 
 
 		TypeCollisionSystem,
+		TypeCollisionResponseSystem,// must be after collision
 		//render system called the last
 		TypeRenderSystem,
 

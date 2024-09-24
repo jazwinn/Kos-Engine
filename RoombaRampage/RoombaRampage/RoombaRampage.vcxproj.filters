@@ -230,7 +230,7 @@
     <ClInclude Include="Application\imgui_handler.h">
       <Filter>Header Files\Application</Filter>
     </ClInclude>
-    <ClInclude Include="ECS\Component\BoxColliderComponent.h">
+    <ClInclude Include="ECS\Component\ColliderComponent.h">
       <Filter>Header Files\ECS\Component</Filter>
     </ClInclude>
     <ClInclude Include="ECS\Component\Component.h">

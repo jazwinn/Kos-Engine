@@ -20,7 +20,7 @@ namespace Ecs {
 	private:
 		//Storage to point to components
 		std::vector<TransformComponent*> vecTransformComponentPtr;
-		std::vector<BoxColliderComponent*> vecBoxColliderComponentPtr;
+		std::vector<ColliderComponent*> vecColliderComponentPtr;
 		//std::vector<RigidBodyComponent*> vecRigidBodyComponentPtr;
 		std::vector<MovementComponent*> vecMovementComponentPtr;
 
