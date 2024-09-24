@@ -1,12 +1,15 @@
-#ifndef COLLSYS_H
-#define COLLSYS_H
+#ifndef COLLRESPSYS_H
+#define COLLRESPSYS_H
 
 #include "System.h"
+#include "../ECS/Component/MovementComponent.h"
+#include "../ECS/Component/RigidBody.h"
+
 #include "../ECS/ECSList.h"
 
 namespace Ecs {
 
-	class CollisionSystem : public ISystem {
+	class CollisionResponseSystem : public ISystem {
 
 	public:
 		void RegisterSystem(EntityID) override;
@@ -19,9 +22,9 @@ namespace Ecs {
 
 	private:
 		//Storage to point to components
-		std::vector<TransformComponent*> vecTransformComponentPtr;
+		//std::vector<TransformComponent*> vecTransformComponentPtr;
 		std::vector<ColliderComponent*> vecColliderComponentPtr;
-		//std::vector<RigidBodyComponent*> vecRigidBodyComponentPtr;
+		std::vector<RigidBodyComponent*> vecRigidBodyComponentPtr;
 		std::vector<MovementComponent*> vecMovementComponentPtr;
 
 	};
@@ -30,4 +33,4 @@ namespace Ecs {
 
 
 
-#endif COLLSYS_H
+#endif COLLRESPSYS_H

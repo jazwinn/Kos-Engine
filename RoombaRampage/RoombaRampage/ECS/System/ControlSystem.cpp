@@ -66,8 +66,8 @@ namespace Ecs {
 
 
 			// set direction to always be 0,0
-			MovComp->Direction.x = 0;
-			MovComp->Direction.y = 0;
+			//MovComp->Direction.x = 0;
+			//MovComp->Direction.y = 0;
 
 			Vector2::Vec2 NewDirection{};
 			if (Input::InputSystem::KeyStateW) {
@@ -88,6 +88,7 @@ namespace Ecs {
 
 			if ((NewDirection.x != 0) && (NewDirection.y != 0)) {
 				Vector2::Vec2::funcVec2Normalize(NewDirection, NewDirection);
+				
 			}
 
 			MovComp->Direction = NewDirection;

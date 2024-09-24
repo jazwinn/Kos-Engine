@@ -7,7 +7,7 @@ namespace Ecs {
 		TypeTransformComponent,
 		TypeMovemmentComponent,
 		TypeSpriteComponent,
-		TypeBoxColliderComponent,
+		TypeColliderComponent,
 		TypeRigidBodyComponent,
 		TypePlayerComponent,
 

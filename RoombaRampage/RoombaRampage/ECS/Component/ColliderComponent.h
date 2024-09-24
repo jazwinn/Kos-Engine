@@ -8,11 +8,11 @@
 namespace Ecs {
 
 
-	class BoxColliderComponent : public Component {
+	class ColliderComponent : public Component {
 
 	public:
 		
-		Vector2::Vec2 Size{};
+		Vector2::Vec2 Size = {1,1};
 
 		Vector2::Vec2 OffSet{};
 

@@ -67,6 +67,13 @@ namespace Ecs {
 			TransComp->position += Displacement;
 
 
+			if (MovComp->Move) {
+				
+			}
+
+
+
+
 		}
 	
 

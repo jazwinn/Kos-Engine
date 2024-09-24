@@ -103,10 +103,11 @@ void ImGuiHandler::DrawComponentWindow(Ecs::ECS* ecs, Ecs::EntityID entityID, bo
         if (ImGui::DragFloat("Y##VelY", &mc->Direction.y, 0.02f, -1.0f, 1.0f, "%.2f"))
             isModified = true;
 
-        //// Display Resistance
-        //ImGui::AlignTextToFramePadding();
-        //ImGui::Text("Resistance");
-        //ImGui::SameLine(slider_start_pos_x);
+        // Display Resistance
+        ImGui::AlignTextToFramePadding();
+        ImGui::Text("Auto Move");
+        ImGui::SameLine(slider_start_pos_x);
+        ImGui::Checkbox("##", &mc->Move);
         //ImGui::SetNextItemWidth(100.0f);
         //ImGui::DragFloat("##Res", &mc->resistance, 0.01f, 0.0f, 5.0f, "%.2f");
 

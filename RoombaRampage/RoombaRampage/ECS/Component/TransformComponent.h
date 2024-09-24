@@ -3,21 +3,17 @@
 
 #include "Component.h"
 #include "../Math/vector2.h"
-#include "../Dependencies/rapidjson/document.h"
 
 namespace Ecs {
 	class TransformComponent : public Component {
 
 	public:
 
-		Vector2::Vec2 position{};
+		Vector2::Vec2 position{0,0};
 		float rotation{};
-		Vector2::Vec2 scale{};
-
-
-
-
+		Vector2::Vec2 scale{1,1};
 	};
+
 }
 
 
