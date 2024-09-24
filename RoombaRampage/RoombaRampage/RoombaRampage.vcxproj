@@ -255,7 +255,6 @@ xcopy /y /d "$(SolutionDir)FMOD_API\studio\lib\x64\*.dll" "$(OutDir)"</Command>
     <None Include="Graphics\genericFragmentShader.frag" />
     <None Include="Graphics\genericVertexShader.vert" />
     <None Include="Graphics\frameBufferVertexShader.vert" />
-    <None Include="Json Texts\components.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

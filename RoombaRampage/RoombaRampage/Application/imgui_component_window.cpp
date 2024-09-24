@@ -31,10 +31,13 @@ void ImGuiHandler::DrawComponentWindow(Ecs::ECS* ecs, Ecs::EntityID entityID, bo
     const float slider_start_pos_x = 100.0f; //Padding for the slider
 
     bool isModified = false;  //Track if the user modifies the component values
+    bool isFirstSaved = true;
 
     // Check if the TransformComponent exists for the entity
     if (tc != nullptr)
     {
+         
+
         // Display and edit the Transform component
         ImGui::Text("Transform Component");
 
@@ -75,6 +78,8 @@ void ImGuiHandler::DrawComponentWindow(Ecs::ECS* ecs, Ecs::EntityID entityID, bo
     }
     if (mc != nullptr)
     {
+        //components.push_back(std::static_pointer_cast<Ecs::Component>(std::make_shared<Ecs::MovementComponent>(*mc)));
+
         ImGui::Text("Movement Component");
 
         // Display Speed
@@ -116,6 +121,12 @@ void ImGuiHandler::DrawComponentWindow(Ecs::ECS* ecs, Ecs::EntityID entityID, bo
 
 
     // If any component was modified, save the updated values to JSON
+    if (isFirstSaved)
+    {
+        SaveComponentsJson("../RoombaRampage/Json Texts", tc,mc, entityID);
+        isFirstSaved = false;
+    }
     if (isModified)
-        SaveComponentsJson("../RoombaRampage/Json Texts/components.json", tc, mc);
-}
+        SaveComponentsJson("../RoombaRampage/Json Texts", tc, mc, entityID);
+
+}   
