@@ -2,7 +2,7 @@
 
 #include "ECS.h"
 #include <algorithm>
-
+#include "../Debugging/Performance.h"
 //ECS Varaible
 
 namespace Ecs{
@@ -11,11 +11,9 @@ namespace Ecs{
 
 	void ECS::Init() {
 		ECS* ecs = ECS::GetInstance();
-
 		//loops through all the system
 		for (auto& System : ecs->ECS_SystemMap) {
 			System.second->Init();
-
 		}
 
 	}
@@ -46,13 +44,21 @@ namespace Ecs{
 		ECS* ecs = ECS::GetInstance();
 		//update deltatime
 		ecs->DeltaTime = DT;
-
+		PerformanceTracker::Performance performance{};
 		//loops through all the system
 		for (auto& System : ecs->ECS_SystemMap) {
+			auto start = std::chrono::steady_clock::now();
 			System.second->Update();
-
+			auto end = std::chrono::steady_clock::now();
+			auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+			
+			performance.addTime(5.f);
+			float timer = 5.0f;
+			std::cout << duration << std::endl;
+			performance.addPair(System.first,timer);
 		}
-
+		performance.printPerformance();
+		performance.resetPerformance();
 	}
 
 	void ECS::Unload() {
