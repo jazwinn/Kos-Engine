@@ -119,8 +119,8 @@ namespace Physics {
 	class classPhysics {
 	private:
 		
-		std::vector<PhysicsData> physicsEntities;
-		std::vector<PhysicsData> collidedEntities;
+		static std::vector<PhysicsData> physicsEntities;
+		static std::vector<PhysicsData> collidedEntities;
 		void CalculateBoundingBox();
 
 	public:

@@ -14,7 +14,7 @@ namespace Ecs {
 			== vecTransformComponentPtr.end()) {
 			vecTransformComponentPtr.push_back((TransformComponent*)ecs->ECS_CombinedComponentPool[TypeTransformComponent]->GetEntityComponent(ID));
 			vecBoxColliderComponentPtr.push_back((BoxColliderComponent*)ecs->ECS_CombinedComponentPool[TypeBoxColliderComponent]->GetEntityComponent(ID));
-			vecRigidBodyComponentPtr.push_back((RigidBodyComponent*)ecs->ECS_CombinedComponentPool[TypeRigidBodyComponent]->GetEntityComponent(ID));
+			//vecRigidBodyComponentPtr.push_back((RigidBodyComponent*)ecs->ECS_CombinedComponentPool[TypeRigidBodyComponent]->GetEntityComponent(ID));
 			vecMovementComponentPtr.push_back((MovementComponent*)ecs->ECS_CombinedComponentPool[TypeMovemmentComponent]->GetEntityComponent(ID));
 		}
 
@@ -36,13 +36,13 @@ namespace Ecs {
 
 		std::swap(vecBoxColliderComponentPtr[IndexID], vecBoxColliderComponentPtr[IndexLast]);
 		std::swap(vecTransformComponentPtr[IndexID], vecTransformComponentPtr[IndexLast]);
-		std::swap(vecRigidBodyComponentPtr[IndexID], vecRigidBodyComponentPtr[IndexLast]);
+		//std::swap(vecRigidBodyComponentPtr[IndexID], vecRigidBodyComponentPtr[IndexLast]);
 		std::swap(vecMovementComponentPtr[IndexID], vecMovementComponentPtr[IndexLast]);
 
 		//popback the vector;
 		vecBoxColliderComponentPtr.pop_back();
 		vecTransformComponentPtr.pop_back();
-		vecRigidBodyComponentPtr.pop_back();
+		//vecRigidBodyComponentPtr.pop_back();
 		vecMovementComponentPtr.pop_back();
 	}
 
@@ -50,7 +50,7 @@ namespace Ecs {
 
 		// requires both movement component and transform component
 		SystemSignature.set(TypeBoxColliderComponent);
-		SystemSignature.set(TypeRigidBodyComponent);
+		//SystemSignature.set(TypeRigidBodyComponent);
 		SystemSignature.set(TypeMovemmentComponent);
 		//SystemSignature.set();
 
@@ -85,14 +85,14 @@ namespace Ecs {
 		PysicsPipeline.CollisionCheck(ecs->DeltaTime);
 
 		
-
+		// MOVE TO COLLISION RESPONSE SYSTEM
 		std::vector<Physics::PhysicsData> vecCollisionEntity = PysicsPipeline.PassPhysicsData();
-		//if (vecCollisionEntity.empty()) std::cout << "No collision from Collision System CPP" << std::endl;
-		//else {
-		//	for (auto& CollidedEntity : vecCollisionEntity) {
-		//		std::cout << "Entity " << CollidedEntity.ID << " is Collided" << std::endl;
-		//	}
-		//}
+		if (vecCollisionEntity.empty()); //std::cout << "No collision from Collision System CPP" << std::endl;
+		else {
+			for (auto& CollidedEntity : vecCollisionEntity) {
+				std::cout << "Entity " << CollidedEntity.ID << " is Collided" << std::endl;
+			}
+		}
 		//clear the entity
 		PysicsPipeline.ClearEntites();
 	}

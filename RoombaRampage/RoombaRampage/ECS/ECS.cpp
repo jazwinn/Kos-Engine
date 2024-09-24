@@ -123,8 +123,8 @@ namespace Ecs{
 		MovCom->Speed = 1;
 
 		AddComponent(TypePlayerComponent, ID);
-		//AddComponent(TypeRigidBodyComponent, ID);
-		//AddComponent(TypeBoxColliderComponent, ID);
+		AddComponent(TypeRigidBodyComponent, ID);
+		AddComponent(TypeBoxColliderComponent, ID);
 
 		/*--------------------------------------------------------------*/
 

@@ -2,8 +2,6 @@
 #define COLLSYS_H
 
 #include "System.h"
-#include "../ECS/Component/TransformComponent.h"
-#include "../ECS/Component/BoxColliderComponent.h"
 #include "../ECS/ECSList.h"
 
 namespace Ecs {
@@ -23,7 +21,7 @@ namespace Ecs {
 		//Storage to point to components
 		std::vector<TransformComponent*> vecTransformComponentPtr;
 		std::vector<BoxColliderComponent*> vecBoxColliderComponentPtr;
-		std::vector<RigidBodyComponent*> vecRigidBodyComponentPtr;
+		//std::vector<RigidBodyComponent*> vecRigidBodyComponentPtr;
 		std::vector<MovementComponent*> vecMovementComponentPtr;
 
 	};

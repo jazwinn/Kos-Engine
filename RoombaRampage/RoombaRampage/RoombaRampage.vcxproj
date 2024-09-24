@@ -182,6 +182,7 @@ xcopy /y /d "$(SolutionDir)FMOD_API\studio\lib\x64\*.dll" "$(OutDir)"</Command>
     <ClCompile Include="Dependencies\imgui\imgui_tables.cpp" />
     <ClCompile Include="Dependencies\imgui\imgui_widgets.cpp" />
     <ClCompile Include="ECS\ECS.cpp" />
+    <ClCompile Include="ECS\System\CollisionResponseSystem.cpp" />
     <ClCompile Include="ECS\System\CollisionSystem.cpp" />
     <ClCompile Include="ECS\System\ControlSystem.cpp" />
     <ClCompile Include="ECS\System\MovementSystem.cpp" />
@@ -227,6 +228,7 @@ xcopy /y /d "$(SolutionDir)FMOD_API\studio\lib\x64\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="ECS\Component\TransformComponent.h" />
     <ClInclude Include="ECS\ECS.h" />
     <ClInclude Include="ECS\ECSList.h" />
+    <ClInclude Include="ECS\System\CollisionResponseSystem.h" />
     <ClInclude Include="ECS\System\CollisionSystem.h" />
     <ClInclude Include="ECS\System\ControlSystem.h" />
     <ClInclude Include="ECS\System\MovementSystem.h" />
