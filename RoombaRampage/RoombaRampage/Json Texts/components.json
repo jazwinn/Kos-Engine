@@ -1,1 +1,62 @@
-{"entity":{"transform":{"position":{"x":-0.15000000596046448,"y":-0.3100000023841858},"rotation":-47.0,"scale":{"x":0.5,"y":0.5}},"movement":{"speed":1.0,"direction":{"x":0.0,"y":0.0}}}}
+[
+    {
+        "transform": {
+            "position": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "scale": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        "movement": {
+            "speed": 1.0,
+            "direction": {
+                "x": 0.0,
+                "y": 0.0
+            }
+        }
+    },
+    {
+        "transform": {
+            "position": {
+                "x": 0.0,
+                "y": -0.12252235412597656
+            },
+            "rotation": 0.0,
+            "scale": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        "movement": {
+            "speed": 1.0,
+            "direction": {
+                "x": 0.0,
+                "y": 0.0
+            }
+        }
+    },
+    {
+        "transform": {
+            "position": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "scale": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        "movement": {
+            "speed": 1.0,
+            "direction": {
+                "x": 0.0,
+                "y": 0.0
+            }
+        }
+    }
+]

@@ -2,6 +2,7 @@
 #define COM_H
 
 #include "../ECS/Component/ComponentList.h"
+#include "../Dependencies/rapidjson/document.h"  // Include rapidjson for serialization
 
 
 namespace Ecs {
@@ -14,14 +15,9 @@ namespace Ecs {
 
 		//Store Entity ID
 		EntityID Entity{};
-
 	};
 
 }
 //parent class
-
-
-
-
 
 #endif COM_H

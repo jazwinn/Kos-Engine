@@ -343,7 +343,6 @@
     <None Include="Graphics\genericVertexShader.vert">
       <Filter>Header Files\Graphics</Filter>
     </None>
-    <None Include="Json Texts\components.json" />
     <None Include="Graphics\frameAccumulationFragmentShader.frag">
       <Filter>Header Files\Graphics</Filter>
     </None>
