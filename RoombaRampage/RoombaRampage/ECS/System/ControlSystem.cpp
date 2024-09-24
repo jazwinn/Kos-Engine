@@ -88,10 +88,10 @@ namespace Ecs {
 
 			if ((NewDirection.x != 0) && (NewDirection.y != 0)) {
 				Vector2::Vec2::funcVec2Normalize(NewDirection, NewDirection);
-				MovComp->Direction = NewDirection;
+				
 			}
 
-			
+			MovComp->Direction = NewDirection;
 
 		}
 
