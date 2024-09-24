@@ -5,6 +5,9 @@
 
 namespace Physics {
 
+	std::vector<PhysicsData>  classPhysics::physicsEntities;
+	std::vector<PhysicsData> classPhysics::collidedEntities;
+
 	bool classPhysics::static_CollisionCheck(const AABB aabb1, const AABB aabb2) {
 		//std::cout << "BOUNDING BOX1 MIN X " << aabb1.min.x << " Y " << aabb1.min.y << std::endl;
 		//std::cout << "BOUNDING BOX1 MAX X " << aabb1.max.x << " Y " << aabb1.max.y << std::endl;
@@ -93,7 +96,9 @@ namespace Physics {
 	}
 
 	std::vector<PhysicsData> classPhysics::PassPhysicsData() {
-		return collidedEntities;
+		std::vector<PhysicsData> TempCollidedEntities =  collidedEntities;
+		this->ClearEntites();
+		return TempCollidedEntities;
 	}
 
 	void classPhysics::ClearEntites(){

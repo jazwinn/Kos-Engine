@@ -28,7 +28,7 @@ namespace Ecs{
 		ecs->ECS_CombinedComponentPool[TypeTransformComponent] = std::make_shared<ComponentPool<TransformComponent>>();
 		ecs->ECS_CombinedComponentPool[TypeMovemmentComponent] = std::make_shared < ComponentPool<MovementComponent>>();
 		ecs->ECS_CombinedComponentPool[TypeSpriteComponent] = std::make_shared < ComponentPool<SpriteComponent>>();
-		ecs->ECS_CombinedComponentPool[TypeBoxColliderComponent] = std::make_shared < ComponentPool<BoxColliderComponent>>();
+		ecs->ECS_CombinedComponentPool[TypeColliderComponent] = std::make_shared < ComponentPool<ColliderComponent>>();
 		ecs->ECS_CombinedComponentPool[TypeRigidBodyComponent] = std::make_shared < ComponentPool<RigidBodyComponent>>();
 		ecs->ECS_CombinedComponentPool[TypePlayerComponent] = std::make_shared<ComponentPool<PlayerComponent>>();
 
@@ -37,6 +37,7 @@ namespace Ecs{
 		ecs->ECS_SystemMap[TypeMovementSystem] = std::make_shared<MovementSystem>();
 		ecs->ECS_SystemMap[TypeCollisionSystem] = std::make_shared<CollisionSystem>();
 		ecs->ECS_SystemMap[TypeRenderSystem] = std::make_shared<RenderSystem>();
+		ecs->ECS_SystemMap[TypeCollisionResponseSystem] = std::make_shared<CollisionResponseSystem>();
 	}
 
 
@@ -115,7 +116,7 @@ namespace Ecs{
 		 --------------------------------------------------------------*/
 		TransformComponent* Trans = (TransformComponent*)ecs->ECS_CombinedComponentPool[TypeTransformComponent]->GetEntityComponent(ID);
 
-		Trans->scale = { 0.5f, 0.5f };
+		Trans->scale;
 
 		AddComponent(TypeSpriteComponent, ID);
 
@@ -123,8 +124,8 @@ namespace Ecs{
 		MovCom->Speed = 1;
 
 		AddComponent(TypePlayerComponent, ID);
-		//AddComponent(TypeRigidBodyComponent, ID);
-		//AddComponent(TypeBoxColliderComponent, ID);
+		AddComponent(TypeRigidBodyComponent, ID);
+		AddComponent(TypeColliderComponent, ID);
 
 		/*--------------------------------------------------------------*/
 
@@ -151,7 +152,7 @@ namespace Ecs{
 		}
 
 		ecs->ECS_EntityMap.find(NewEntity)->second = DuplicateSignature;
-
+		RegisterSystems(NewEntity);
 
 		return NewEntity;
 

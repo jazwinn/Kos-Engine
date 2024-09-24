@@ -55,9 +55,6 @@
     <Filter Include="Header Files\Events">
       <UniqueIdentifier>{df8aa6d1-f2b9-45c8-9588-5dd5cbb61082}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Phyisc">
-      <UniqueIdentifier>{08680b2c-947a-44d9-94dc-251ba73e9ec7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Assets">
       <UniqueIdentifier>{fe211503-145b-4469-8243-6d33edf0bb65}</UniqueIdentifier>
     </Filter>
@@ -186,6 +183,9 @@
     <ClCompile Include="Debugging\Performance.cpp">
       <Filter>Source Files\Debugging</Filter>
     </ClCompile>
+    <ClCompile Include="ECS\System\CollisionResponseSystem.cpp">
+      <Filter>Source Files\ECS\System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dependencies\imgui\imconfig.h">
@@ -230,7 +230,7 @@
     <ClInclude Include="Application\imgui_handler.h">
       <Filter>Header Files\Application</Filter>
     </ClInclude>
-    <ClInclude Include="ECS\Component\BoxColliderComponent.h">
+    <ClInclude Include="ECS\Component\ColliderComponent.h">
       <Filter>Header Files\ECS\Component</Filter>
     </ClInclude>
     <ClInclude Include="ECS\Component\Component.h">
@@ -334,6 +334,9 @@
     </ClInclude>
     <ClInclude Include="Debugging\Performance.h">
       <Filter>Header Files\Debugging</Filter>
+    </ClInclude>
+    <ClInclude Include="ECS\System\CollisionResponseSystem.h">
+      <Filter>Header Files\ECS\System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -9,9 +9,9 @@ namespace Ecs {
 
 	public:
 
-		Vector2::Vec2 position{};
+		Vector2::Vec2 position{0,0};
 		float rotation{};
-		Vector2::Vec2 scale{};
+		Vector2::Vec2 scale{1,1};
 	};
 
 }
