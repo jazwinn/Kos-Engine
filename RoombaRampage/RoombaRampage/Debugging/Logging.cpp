@@ -1,12 +1,13 @@
 #include "Logging.h"
 
 namespace Logging {
+
     Logger& Logger::GetInstance()
     {
         static Logger instance{};
         return instance;
     }
-    //// Constructor: Opens the log file in append mode
+    // Constructor: Opens the log file in append mode
     Logger::Logger(const std::string& filename)
     {
         logFile.open(filename,std::ios::app);

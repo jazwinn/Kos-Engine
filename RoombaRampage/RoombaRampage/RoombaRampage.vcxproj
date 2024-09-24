@@ -236,6 +236,7 @@ xcopy /y /d "$(SolutionDir)FMOD_API\studio\lib\x64\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="ECS\System\RenderSystem.h" />
     <ClInclude Include="ECS\System\System.h" />
     <ClInclude Include="ECS\System\SystemList.h" />
+    <ClInclude Include="ECS\System\SystemType.h" />
     <ClInclude Include="Events\baseEvent.h" />
     <ClInclude Include="Events\keyEvents.h" />
     <ClInclude Include="Events\mouseEvents.h" />
