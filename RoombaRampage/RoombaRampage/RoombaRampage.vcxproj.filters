@@ -317,6 +317,9 @@
     <ClInclude Include="Assets\AudioManager.h">
       <Filter>Header Files\Assets</Filter>
     </ClInclude>
+    <ClInclude Include="ECS\System\SystemType.h">
+      <Filter>Header Files\ECS\System</Filter>
+    </ClInclude>
     <ClInclude Include="Debugging\Logging.h">
       <Filter>Header Files\Debugging</Filter>
     </ClInclude>
