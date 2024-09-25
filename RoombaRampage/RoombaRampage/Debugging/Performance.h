@@ -20,6 +20,7 @@ namespace PerformanceTracker{
 	public:
 		Performance();
 		void printPerformance();
+		void printFPS(float);
 		void resetPerformance();
 		void addTime(float);
 

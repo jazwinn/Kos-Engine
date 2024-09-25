@@ -40,6 +40,10 @@ namespace PerformanceTracker {
 		std::cout << "###########################################" << std::endl;
 	}
 
+	void Performance::printFPS(float dt) {
+		std::cout << "FPS: " << 1 / dt << std::endl;
+	}
+
 	void Performance::resetPerformance() {
 		engineTime = 0.0f;
 		systemTimeList.clear();
