@@ -8,6 +8,7 @@
 #include "Helper.h"
 #include "Window.h"
 #include "../Debugging/Logging.h"
+#include "../Debugging/Performance.h"
 
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
@@ -92,8 +93,8 @@ namespace Application {
         /*--------------------------------------------------------------
             INITIALIZE LOGGING SYSTEM
         --------------------------------------------------------------*/
-        LOGGING_INIT_LOGS("./Logs/LogFile.txt");
-
+        LOGGING_INIT_LOGS("LogFile.txt");
+        LOGGING_INFO("Application Start");
         return 0;
 	}
 
@@ -121,6 +122,8 @@ namespace Application {
             float DeltaTime =  CurrentTime - LastTime;
 
             //std::cout << "FPS:" << 1/DeltaTime << std::endl;
+            //PerformanceTracker::Performance a;
+            //a.printFPS(DeltaTime);
 
             /*--------------------------------------------------------------
              UPDATE ECS
@@ -175,7 +178,7 @@ namespace Application {
         lvWindow.CleanUp();
         glfwTerminate();
         audio.shutdown();
-
+        LOGGING_INFO("Application Closed");
         return 0;
 	}
 
