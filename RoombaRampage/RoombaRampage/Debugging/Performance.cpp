@@ -12,6 +12,8 @@ namespace PerformanceTracker {
 			return "Control System";
 		case Ecs::TypeSystem::TypeCollisionSystem:
 			return "Collision System";
+		case Ecs::TypeSystem::TypeCollisionResponseSystem:
+			return "Collision Response System";
 		case Ecs::TypeSystem::TypeRenderSystem:
 			return "Render System";
 		default:
@@ -29,8 +31,8 @@ namespace PerformanceTracker {
 		std::cout << "###########################################" << std::endl;
 		for (auto& val : systemTimeList) {
 			std::string system = typeToString(val.first);
-			float systemTime = val.second / engineTime;
-			std::cout << "Time taken for " << system << ": " << val.first << std::endl;
+			float systemTime = (val.second / engineTime) * 100;
+			std::cout << "Time taken for " << system << ": " << val.second << std::endl;
 			std::cout << "Percentage overall: " << systemTime << std::endl;
 		}
 		float avgTime = engineTime / totalSystem;
