@@ -50,12 +50,10 @@ namespace Ecs{
 			auto start = std::chrono::steady_clock::now();
 			System.second->Update();
 			auto end = std::chrono::steady_clock::now();
-			auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+			std::chrono::duration<float> duration = end - start;
 			
-			performance.addTime(5.f);
-			float timer = 5.0f;
-			std::cout << duration << std::endl;
-			performance.addPair(System.first,timer);
+			performance.addTime(duration.count());
+			performance.addPair(System.first,duration.count());
 		}
 		performance.printPerformance();
 		performance.resetPerformance();
