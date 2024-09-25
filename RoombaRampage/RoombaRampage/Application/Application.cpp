@@ -90,7 +90,7 @@ namespace Application {
         /*--------------------------------------------------------------
             INITIALIZE LOGGING SYSTEM
         --------------------------------------------------------------*/
-        LOGGING_INIT_LOGS("LogFile.txt");
+        LOGGING_INIT_LOGS("./Logs/LogFile.txt");
 
         return 0;
 	}

@@ -25,9 +25,6 @@
     <Filter Include="Source Files\Graphics">
       <UniqueIdentifier>{474c427d-167a-4ad3-8089-58eccad83470}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Imgui">
-      <UniqueIdentifier>{524d650b-f574-48af-859e-3335a7c0e7a6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Graphics">
       <UniqueIdentifier>{e893c5db-49dd-4d60-94b2-89072733144c}</UniqueIdentifier>
     </Filter>
@@ -82,40 +79,34 @@
     <Filter Include="Header Files\Json">
       <UniqueIdentifier>{3afd1690-d320-4f03-8fec-37f6069fb03a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Imgui">
+      <UniqueIdentifier>{524d650b-f574-48af-859e-3335a7c0e7a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Imgui\Dependencies">
+      <UniqueIdentifier>{3d5d9065-2fc9-493d-bb55-05860138ce8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Imgui\Panels">
+      <UniqueIdentifier>{08823575-bc89-4a61-88fd-faa4a4ca06b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Imgui\Dependencies">
+      <UniqueIdentifier>{943f4f2a-073f-4a30-a867-b62a6989c0b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Imgui\Panels">
+      <UniqueIdentifier>{2ff53ffd-749d-456d-a5d9-d2f2739e4c61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\De/Serialization">
+      <UniqueIdentifier>{7e4f8ca9-7040-45eb-8b65-f2c9269ab84a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\De/Serialization">
+      <UniqueIdentifier>{3be5386e-9a52-42cf-9665-7b1a652745c1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Dependencies\imgui\imgui_widgets.cpp">
-      <Filter>Source Files\Imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="Dependencies\imgui\imgui.cpp">
-      <Filter>Source Files\Imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="Dependencies\imgui\imgui_demo.cpp">
-      <Filter>Source Files\Imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="Dependencies\imgui\imgui_draw.cpp">
-      <Filter>Source Files\Imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="Dependencies\imgui\imgui_impl_glfw.cpp">
-      <Filter>Source Files\Imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="Dependencies\imgui\imgui_impl_opengl3.cpp">
-      <Filter>Source Files\Imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="Dependencies\imgui\imgui_stdlib.cpp">
-      <Filter>Source Files\Imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="Dependencies\imgui\imgui_tables.cpp">
-      <Filter>Source Files\Imgui</Filter>
-    </ClCompile>
     <ClCompile Include="Math\Mat2x2.cpp">
       <Filter>Source Files\Math</Filter>
     </ClCompile>
     <ClCompile Include="Math\Mat3x3.cpp">
       <Filter>Source Files\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\imgui_handler.cpp">
-      <Filter>Source Files\Application</Filter>
     </ClCompile>
     <ClCompile Include="ECS\ECS.cpp">
       <Filter>Source Files\ECS</Filter>
@@ -125,9 +116,6 @@
     </ClCompile>
     <ClCompile Include="ECS\System\MovementSystem.cpp">
       <Filter>Source Files\ECS\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\imgui_hierarchy_window.cpp">
-      <Filter>Source Files\Application</Filter>
     </ClCompile>
     <ClCompile Include="ECS\System\RenderSystem.cpp">
       <Filter>Source Files\ECS\System</Filter>
@@ -147,13 +135,7 @@
     <ClCompile Include="Math\vector2.cpp">
       <Filter>Source Files\Math</Filter>
     </ClCompile>
-    <ClCompile Include="Application\imgui_component_window.cpp">
-      <Filter>Source Files\Application</Filter>
-    </ClCompile>
     <ClCompile Include="Application\main.cpp">
-      <Filter>Source Files\Application</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\json_handler.cpp">
       <Filter>Source Files\Application</Filter>
     </ClCompile>
     <ClCompile Include="Assets\AssetManager.cpp">
@@ -167,9 +149,6 @@
     </ClCompile>
     <ClCompile Include="Inputs\Input.cpp">
       <Filter>Source Files\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\imgui_render_window.cpp">
-      <Filter>Source Files\Application</Filter>
     </ClCompile>
     <ClCompile Include="Application\Helper.cpp">
       <Filter>Source Files\Application</Filter>
@@ -186,38 +165,47 @@
     <ClCompile Include="ECS\System\CollisionResponseSystem.cpp">
       <Filter>Source Files\ECS\System</Filter>
     </ClCompile>
+    <ClCompile Include="Dependencies\imgui\imgui.cpp">
+      <Filter>Source Files\Imgui\Dependencies</Filter>
+    </ClCompile>
+    <ClCompile Include="Dependencies\imgui\imgui_demo.cpp">
+      <Filter>Source Files\Imgui\Dependencies</Filter>
+    </ClCompile>
+    <ClCompile Include="Dependencies\imgui\imgui_draw.cpp">
+      <Filter>Source Files\Imgui\Dependencies</Filter>
+    </ClCompile>
+    <ClCompile Include="Dependencies\imgui\imgui_impl_glfw.cpp">
+      <Filter>Source Files\Imgui\Dependencies</Filter>
+    </ClCompile>
+    <ClCompile Include="Dependencies\imgui\imgui_impl_opengl3.cpp">
+      <Filter>Source Files\Imgui\Dependencies</Filter>
+    </ClCompile>
+    <ClCompile Include="Dependencies\imgui\imgui_stdlib.cpp">
+      <Filter>Source Files\Imgui\Dependencies</Filter>
+    </ClCompile>
+    <ClCompile Include="Dependencies\imgui\imgui_tables.cpp">
+      <Filter>Source Files\Imgui\Dependencies</Filter>
+    </ClCompile>
+    <ClCompile Include="Dependencies\imgui\imgui_widgets.cpp">
+      <Filter>Source Files\Imgui\Dependencies</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\ImGui Panels\imgui_component_window.cpp">
+      <Filter>Source Files\Imgui\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\ImGui Panels\imgui_handler.cpp">
+      <Filter>Source Files\Imgui\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\ImGui Panels\imgui_hierarchy_window.cpp">
+      <Filter>Source Files\Imgui\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\ImGui Panels\imgui_render_window.cpp">
+      <Filter>Source Files\Imgui\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="De&amp;Serialization\json_handler.cpp">
+      <Filter>Source Files\De/Serialization</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Dependencies\imgui\imconfig.h">
-      <Filter>Header Files\Imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="Dependencies\imgui\imgui.h">
-      <Filter>Header Files\Imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="Dependencies\imgui\imgui_impl_glfw.h">
-      <Filter>Header Files\Imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="Dependencies\imgui\imgui_impl_opengl3.h">
-      <Filter>Header Files\Imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="Dependencies\imgui\imgui_impl_opengl3_loader.h">
-      <Filter>Header Files\Imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="Dependencies\imgui\imgui_internal.h">
-      <Filter>Header Files\Imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="Dependencies\imgui\imgui_stdlib.h">
-      <Filter>Header Files\Imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="Dependencies\imgui\imstb_rectpack.h">
-      <Filter>Header Files\Imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="Dependencies\imgui\imstb_textedit.h">
-      <Filter>Header Files\Imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="Dependencies\imgui\imstb_truetype.h">
-      <Filter>Header Files\Imgui</Filter>
-    </ClInclude>
     <ClInclude Include="Graphics\Graphics.h">
       <Filter>Header Files\Graphics</Filter>
     </ClInclude>
@@ -226,9 +214,6 @@
     </ClInclude>
     <ClInclude Include="Math\Mat3x3.h">
       <Filter>Header Files\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\imgui_handler.h">
-      <Filter>Header Files\Application</Filter>
     </ClInclude>
     <ClInclude Include="ECS\Component\ColliderComponent.h">
       <Filter>Header Files\ECS\Component</Filter>
@@ -337,6 +322,42 @@
     </ClInclude>
     <ClInclude Include="ECS\System\CollisionResponseSystem.h">
       <Filter>Header Files\ECS\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependencies\imgui\imconfig.h">
+      <Filter>Header Files\Imgui\Dependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependencies\imgui\imgui.h">
+      <Filter>Header Files\Imgui\Dependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependencies\imgui\imgui_impl_glfw.h">
+      <Filter>Header Files\Imgui\Dependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependencies\imgui\imgui_impl_opengl3.h">
+      <Filter>Header Files\Imgui\Dependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependencies\imgui\imgui_impl_opengl3_loader.h">
+      <Filter>Header Files\Imgui\Dependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependencies\imgui\imgui_internal.h">
+      <Filter>Header Files\Imgui\Dependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependencies\imgui\imgui_stdlib.h">
+      <Filter>Header Files\Imgui\Dependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependencies\imgui\imstb_rectpack.h">
+      <Filter>Header Files\Imgui\Dependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependencies\imgui\imstb_textedit.h">
+      <Filter>Header Files\Imgui\Dependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependencies\imgui\imstb_truetype.h">
+      <Filter>Header Files\Imgui\Dependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ImGui Panels\imgui_handler.h">
+      <Filter>Header Files\Imgui\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="De&amp;Serialization\json_handler.h">
+      <Filter>Header Files\De/Serialization</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -163,14 +163,15 @@ xcopy /y /d "$(SolutionDir)FMOD_API\studio\lib\x64\*.dll" "$(OutDir)"</Command>
   <ItemGroup>
     <ClCompile Include="Application\Application.cpp" />
     <ClCompile Include="Application\Helper.cpp" />
-    <ClCompile Include="Application\imgui_component_window.cpp" />
-    <ClCompile Include="Application\imgui_handler.cpp" />
-    <ClCompile Include="Application\imgui_render_window.cpp" />
-    <ClCompile Include="Application\json_handler.cpp" />
+    <ClCompile Include="Application\ImGui Panels\imgui_component_window.cpp" />
+    <ClCompile Include="Application\ImGui Panels\imgui_handler.cpp" />
+    <ClCompile Include="Application\ImGui Panels\imgui_hierarchy_window.cpp" />
+    <ClCompile Include="Application\ImGui Panels\imgui_render_window.cpp" />
     <ClCompile Include="Application\main.cpp" />
     <ClCompile Include="Application\Window.cpp" />
     <ClCompile Include="Assets\AssetManager.cpp" />
     <ClCompile Include="Assets\AudioManager.cpp" />
+    <ClCompile Include="De&amp;Serialization\json_handler.cpp" />
     <ClCompile Include="Debugging\Logging.cpp" />
     <ClCompile Include="Debugging\Performance.cpp" />
     <ClCompile Include="Dependencies\imgui\imgui.cpp" />
@@ -188,7 +189,6 @@ xcopy /y /d "$(SolutionDir)FMOD_API\studio\lib\x64\*.dll" "$(OutDir)"</Command>
     <ClCompile Include="ECS\System\MovementSystem.cpp" />
     <ClCompile Include="ECS\System\RenderSystem.cpp" />
     <ClCompile Include="Graphics\GraphicsPipe.cpp" />
-    <ClCompile Include="Application\imgui_hierarchy_window.cpp" />
     <ClCompile Include="Inputs\Input.cpp" />
     <ClCompile Include="Math\Mat2x2.cpp" />
     <ClCompile Include="Math\Mat3x3.cpp" />
@@ -199,11 +199,12 @@ xcopy /y /d "$(SolutionDir)FMOD_API\studio\lib\x64\*.dll" "$(OutDir)"</Command>
   <ItemGroup>
     <ClInclude Include="Application\Application.h" />
     <ClInclude Include="Application\Helper.h" />
-    <ClInclude Include="Application\imgui_handler.h" />
+    <ClInclude Include="Application\ImGui Panels\imgui_handler.h" />
     <ClInclude Include="Application\json_handler.h" />
     <ClInclude Include="Application\Window.h" />
     <ClInclude Include="Assets\AssetManager.h" />
     <ClInclude Include="Assets\AudioManager.h" />
+    <ClInclude Include="De&amp;Serialization\json_handler.h" />
     <ClInclude Include="Debugging\Logging.h" />
     <ClInclude Include="Debugging\Performance.h" />
     <ClInclude Include="Dependencies\imgui\imconfig.h" />
