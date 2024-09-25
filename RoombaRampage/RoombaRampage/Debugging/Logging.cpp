@@ -33,10 +33,14 @@ namespace Logging {
         }
 
         m_bInitialized = true;
-
-        logFile.open(filename, std::ios::out | std::ios::app);
-        if (!logFile.is_open()) {
-            std::cerr << "Error opening log file." << std::endl;
+        try {
+            logFile.open(filename, std::ios::out | std::ios::app);
+            if (!logFile.is_open()) {
+                throw std::ios_base::failure("Failed to open file: " + filename);
+            }
+        }
+        catch (const std::exception& e) {
+            LOGGING_ERROR("Error Init Logging File {}" , e.what());
         }
     }
 

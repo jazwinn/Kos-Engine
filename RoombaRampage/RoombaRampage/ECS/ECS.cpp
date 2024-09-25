@@ -55,7 +55,7 @@ namespace Ecs{
 			performance.addTime(duration.count());
 			performance.addPair(System.first,duration.count());
 		}
-		performance.printPerformance();
+		//performance.printPerformance();
 		performance.resetPerformance();
 	}
 
