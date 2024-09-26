@@ -248,6 +248,15 @@ void GraphicsPipe::funcSetupArrayBuffer()
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
+void GraphicsPipe::funcSetupProxyBackground()
+{
+	/*unsigned int texture;
+	glGenTextures(1, &texture);
+	glBindTexture(GL_TEXTURE_2D, texture);*/
+	
+
+}
+
 void GraphicsPipe::funcSetupFrameBuffer()
 {
 	unsigned int fbo;
@@ -295,8 +304,8 @@ void GraphicsPipe::funcBindImageDatafromAssetManager()
 		unsigned int textureID;
 		glGenTextures(1, &textureID);
 		glBindTexture(GL_TEXTURE_2D, textureID);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, assets->imageContainer[i].width, assets->imageContainer[i].height, 0, GL_RGBA, GL_UNSIGNED_BYTE, assets->imagedataArray[i]);
@@ -304,6 +313,8 @@ void GraphicsPipe::funcBindImageDatafromAssetManager()
 		textureIDs.push_back(textureID);
 		std::cout << "Texture Binded, Texture ID: " << textureID << std::endl;
 	}
+
+	imageData = assets->imageContainer;
 	
 }
 
@@ -326,7 +337,9 @@ void GraphicsPipe::funcUpdate()
 	{
 		for (int n{}; n < modelData.size(); n++) 
 		{
-			glm::mat3 lvScale{ modelData[n].scale.x, 0, 0, 0, modelData[n].scale.y, 0, 0 , 0 ,1 };
+			float heightRatio = static_cast<float>(imageData[modelData[n].textureID].height) / unitHeight;
+			float widthRatio = static_cast<float>(imageData[modelData[n].textureID].width) / unitWidth;
+			glm::mat3 lvScale{ modelData[n].scale.x * widthRatio , 0, 0, 0, modelData[n].scale.y * heightRatio, 0, 0 , 0 ,1};
 			glm::mat3 lvRotate{ cos(modelData[n].rotate * 3.1415f / 180.f), -sin(modelData[n].rotate * 3.1415f / 180.f), 0.f,
 							   sin(modelData[n].rotate * 3.1415f / 180.f), cos(modelData[n].rotate * 3.1415f / 180.f), 0.f,
 							    0.f , 0.f ,1.f };
@@ -343,8 +356,6 @@ void GraphicsPipe::funcUpdate()
 
 void GraphicsPipe::funcDraw(Mesh shape)
 {
-	
-	
 	if (!modelToNDCMatrix.empty())
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, modelMatrixArrayBuffer);
@@ -354,10 +365,15 @@ void GraphicsPipe::funcDraw(Mesh shape)
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glUseProgram(genericShaderProgram);
 
-		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, textureIDs[0]);
-		glActiveTexture(GL_TEXTURE2);
-		glBindTexture(GL_TEXTURE_2D, textureIDs[1]);
+		for (int i = 0; i < textureIDs.size(); ++i)
+		{
+			glActiveTexture(GL_TEXTURE1+i);
+			glBindTexture(GL_TEXTURE_2D, textureIDs[i]);
+		}
+
+		
+		/*glActiveTexture(GL_TEXTURE2);
+		glBindTexture(GL_TEXTURE_2D, textureIDs[1]);*/
 
 		GLint lvUniformVarLoc1 = glGetUniformLocation(genericShaderProgram, "textures");
 	
@@ -452,6 +468,11 @@ void GraphicsPipe::funcDeleteShader()
 void GraphicsPipe::funcSetDrawMode(GLenum mode)
 {
 	glPolygonMode(GL_FRONT_AND_BACK, mode);
+}
+
+void GraphicsPipe::funcDrawBackground()
+{
+
 }
 
 void GraphicsPipe::funcDrawWindow()

@@ -8,6 +8,7 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include "../Assets/AssetManager.h"
 
 struct GraphicsData
 {
@@ -22,6 +23,9 @@ class GraphicsPipe
 {
 private:
 
+	int unitWidth{ 512 };
+	int unitHeight{ 512 };
+
 	struct Mesh
 	{
 		int shapeType;
@@ -31,6 +35,7 @@ private:
 
 	};
 
+	void funcSetupProxyBackground();
 	void funcSetupVao(Mesh& shape);
 	void funcSetupFboVao();
 	void funcSetupArrayBuffer();
@@ -91,6 +96,7 @@ public:
 
 	void funcDrawWindow();
 	void funcDraw(Mesh shape);
+	void funcDrawBackground();
 
 
 	void funcSortDrawOrder();
@@ -104,8 +110,10 @@ public:
 
 	//Array of the texture IDs
 	std::vector<unsigned int> textureIDs;
+	std::vector<AssetManager::Image> imageData;
 
 	unsigned int screenTexture;
+	unsigned int proxyBackgroundTexture;
 };
 
 

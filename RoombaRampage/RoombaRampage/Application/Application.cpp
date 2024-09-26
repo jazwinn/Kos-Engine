@@ -148,7 +148,7 @@ namespace Application {
              Draw IMGUI FRAME
              --------------------------------------------------------------*/
             //Size of the render window is based on the parameters of this function
-            imgui_manager.DrawRenderScreenWindow(lvWin->funcGetWinWidth()/2, lvWin->funcGetWinHeight()/2);
+            imgui_manager.DrawRenderScreenWindow(lvWin->funcGetWinWidth(), lvWin->funcGetWinHeight());
             imgui_manager.Render();
 
 

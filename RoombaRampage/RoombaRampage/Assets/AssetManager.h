@@ -12,14 +12,12 @@ private:
 	static std::unique_ptr<AssetManager> instancePtr;
 
 
-	//Image dimensions required for our engine
-	int targetWidth{ 1280 };
-	int targetHeight{ 1280 };
+	//Image channels required for our engine
 	int targetChannels{ 4 };
 
 	int imageCount{ 0 };
 	
-	unsigned char* funcPadTexture(const unsigned char* originalPixels, int originalWidth, int originalHeight, int originalChannels);
+	unsigned char* funcPadTexture(const unsigned char* originalPixels, int originalWidth, int originalHeight, int originalChannels, int targetWidth, int targetHeight, int targetChannels);
 	int extractStripCountFromFilename(const std::string& filename);
 	std::string extractSpriteNameFromFilename(const std::string& filename);
 
