@@ -129,6 +129,7 @@ namespace Application {
              UPDATE Render Pipeline
              --------------------------------------------------------------*/
             pipe->funcUpdate();
+               
 
             /*--------------------------------------------------------------
              DRAWING/RENDERING Window
