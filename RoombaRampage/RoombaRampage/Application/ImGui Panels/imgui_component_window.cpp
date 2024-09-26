@@ -22,17 +22,14 @@ void ImGuiHandler::DrawComponentWindow()
     std::string Title = "Component Window ";
     Ecs::ECS* ecs = Ecs::ECS::GetInstance();
 
+    std::string windowTitle = Title;
 
-    if (obj_text_entries.size() == 0) {
-        ImGui::Begin(Title.c_str(), &windowOpen);
-
-        ImGui::End();
-    }
+    ImGui::Begin(windowTitle.c_str(), &windowOpen);
 
     for (size_t i = 0; i < obj_text_entries.size(); i++) {
         if (obj_component_window[i] && obj_entity_id[i] == clicked_entity_id)
         {
-            std::string windowTitle = obj_text_entries[i] + "'s " + Title;
+            windowTitle = obj_text_entries[i] + "'s " + Title;
             Ecs::EntityID entityID = obj_entity_id[i];
 
             // Retrieve the TransformComponent
@@ -43,7 +40,6 @@ void ImGuiHandler::DrawComponentWindow()
             Ecs::MovementComponent* mc = static_cast<Ecs::MovementComponent*>(ecs->ECS_CombinedComponentPool[Ecs::TypeMovemmentComponent]
                 ->GetEntityComponent(entityID));
 
-            ImGui::Begin(windowTitle.c_str(), &windowOpen);
 
             const float slider_start_pos_x = 100.0f; //Padding for the slider
 
@@ -133,7 +129,7 @@ void ImGuiHandler::DrawComponentWindow()
                 ImGui::Text("Add a component?");
                 ImGui::End();
             }
-            ImGui::End();
+            
 
 
             // If any component was modified, save the updated values to JSON
@@ -151,7 +147,7 @@ void ImGuiHandler::DrawComponentWindow()
 
     }
 
-
+    ImGui::End();
    
 
 }   
