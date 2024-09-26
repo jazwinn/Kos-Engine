@@ -89,12 +89,30 @@ void LoadComponentsJson(const std::string& jsonFilePath, Ecs::TransformComponent
 
 void SaveComponentsJson(const std::string& filePath, Ecs::TransformComponent* tc, Ecs::MovementComponent* mc, int entityIndex)
 {
+
+	//checks to see if entity is alive
+	Ecs::ECS *ecs = Ecs::ECS::GetInstance();
+
+	bool save = false;
+
+	for (auto& Entiy : ecs->ECS_EntityMap) {
+		if (Entiy.first == entityIndex) {
+			save = true;
+			break;
+		}
+	}
+	
+
+
+
+
 	//JSON File Validation / Creation
 	std::string jsonFilePath = filePath + "/components.json";
 	JsonFileValidation(jsonFilePath);
 
 	//Create json obj to hold the updated values
 	std::ifstream inputFile(jsonFilePath);
+	//clear json file
 	rapidjson::Document doc;
 
 	doc.SetArray();  // Set an empty array

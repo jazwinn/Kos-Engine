@@ -204,6 +204,9 @@
     <ClCompile Include="De&amp;Serialization\json_handler.cpp">
       <Filter>Source Files\De/Serialization</Filter>
     </ClCompile>
+    <ClCompile Include="Application\ImGui Panels\imgui_logs_window.cpp">
+      <Filter>Source Files\Imgui\Panels</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Graphics\Graphics.h">

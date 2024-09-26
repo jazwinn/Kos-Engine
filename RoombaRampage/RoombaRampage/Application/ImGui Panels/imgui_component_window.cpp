@@ -19,7 +19,7 @@
 void ImGuiHandler::DrawComponentWindow()
 {
     bool windowOpen = true;
-    std::string Title = "Component Window ";
+    std::string Title = "Component Window";
     Ecs::ECS* ecs = Ecs::ECS::GetInstance();
 
     std::string windowTitle = Title;
@@ -29,7 +29,6 @@ void ImGuiHandler::DrawComponentWindow()
     for (size_t i = 0; i < obj_text_entries.size(); i++) {
         if (obj_component_window[i] && obj_entity_id[i] == clicked_entity_id)
         {
-            windowTitle = obj_text_entries[i] + "'s " + Title;
             Ecs::EntityID entityID = obj_entity_id[i];
 
             // Retrieve the TransformComponent

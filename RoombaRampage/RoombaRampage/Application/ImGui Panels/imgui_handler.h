@@ -22,6 +22,7 @@ public:
 
     void DrawComponentWindow();
     unsigned int DrawHierachyWindow();
+    void DrawLogsWindow();
     void DrawRenderScreenWindow(unsigned int windowWidth, unsigned int windowHeight);
     unsigned int clicked_entity_id;
 
