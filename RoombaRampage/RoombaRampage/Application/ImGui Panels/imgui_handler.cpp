@@ -45,6 +45,7 @@ void ImGuiHandler::Render()
 
     ImGui::DockSpaceOverViewport(0, ImGui::GetMainViewport());
     DrawHierachyWindow();
+    DrawComponentWindow();
     //Size of the render window is based on the parameters of this function
     DrawRenderScreenWindow(Helper::Helpers::GetInstance()->WindowWidth / 2, Helper::Helpers::GetInstance()->WindowHeight / 2);
     ImGui::Render();

@@ -20,7 +20,7 @@ public:
     void Render();
     void Shutdown();
 
-    void DrawComponentWindow(Ecs::ECS* ecs, Ecs::EntityID entityID, bool& windowOpen, const std::string& windowTitle);
+    void DrawComponentWindow();
     unsigned int DrawHierachyWindow();
     void DrawRenderScreenWindow(unsigned int windowWidth, unsigned int windowHeight);
     unsigned int clicked_entity_id;

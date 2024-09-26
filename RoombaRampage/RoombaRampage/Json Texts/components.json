@@ -1,0 +1,142 @@
+[
+    {
+        "transform": {
+            "position": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "movement": {
+            "speed": 1.0,
+            "direction": {
+                "x": 0.0,
+                "y": 0.0
+            }
+        }
+    },
+    {
+        "transform": {
+            "position": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "movement": {
+            "speed": 1.0,
+            "direction": {
+                "x": 0.0,
+                "y": 0.0
+            }
+        }
+    },
+    {
+        "transform": {
+            "position": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "movement": {
+            "speed": 1.0,
+            "direction": {
+                "x": 0.0,
+                "y": 0.0
+            }
+        }
+    },
+    {
+        "transform": {
+            "position": {
+                "x": -1.082488775253296,
+                "y": -0.10872238874435423
+            },
+            "rotation": 0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "movement": {
+            "speed": 1.0,
+            "direction": {
+                "x": 0.0,
+                "y": 0.0
+            }
+        }
+    },
+    {
+        "transform": {
+            "position": {
+                "x": -1.082488775253296,
+                "y": -0.10872238874435423
+            },
+            "rotation": 0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "movement": {
+            "speed": 1.0,
+            "direction": {
+                "x": 0.0,
+                "y": 0.0
+            }
+        }
+    },
+    {
+        "transform": {
+            "position": {
+                "x": -1.082488775253296,
+                "y": -0.10872238874435423
+            },
+            "rotation": 0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "movement": {
+            "speed": 1.0,
+            "direction": {
+                "x": 0.0,
+                "y": 0.0
+            }
+        }
+    },
+    {
+        "transform": {
+            "position": {
+                "x": -1.082488775253296,
+                "y": -0.10872238874435423
+            },
+            "rotation": 0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "movement": {
+            "speed": 1.0,
+            "direction": {
+                "x": 0.0,
+                "y": 0.0
+            }
+        }
+    }
+]

@@ -47,6 +47,7 @@ public:
 	std::vector<Image> imageContainer;
 	std::vector<unsigned char*> imagedataArray;
 
+	void LoadConfig();
 
 	void funcLoadAssets();
 	void funcLoadImage(const char* file);
