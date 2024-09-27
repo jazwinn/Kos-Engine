@@ -21,6 +21,7 @@ public:
     void Shutdown();
 
     void DrawMainMenuBar();
+    void DrawPerformanceWindow(float fps);
     void DrawComponentWindow();
     unsigned int DrawHierachyWindow();
     void DrawLogsWindow();

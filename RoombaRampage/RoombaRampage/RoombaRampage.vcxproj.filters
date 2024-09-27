@@ -210,6 +210,18 @@
     <ClCompile Include="Application\ImGui Panels\imgui_menubar.cpp">
       <Filter>Source Files\Imgui\Panels</Filter>
     </ClCompile>
+    <ClCompile Include="Dependencies\imgui\implot.cpp">
+      <Filter>Source Files\Imgui\Dependencies</Filter>
+    </ClCompile>
+    <ClCompile Include="Dependencies\imgui\implot_items.cpp">
+      <Filter>Source Files\Imgui\Dependencies</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\ImGui Panels\imgui_performance_window.cpp">
+      <Filter>Source Files\Imgui\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="Dependencies\imgui\implot_demo.cpp">
+      <Filter>Source Files\Imgui\Panels</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Graphics\Graphics.h">
@@ -364,6 +376,12 @@
     </ClInclude>
     <ClInclude Include="De&amp;Serialization\json_handler.h">
       <Filter>Header Files\De/Serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependencies\imgui\implot_internal.h">
+      <Filter>Header Files\Imgui\Dependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependencies\imgui\implot.h">
+      <Filter>Header Files\Imgui\Dependencies</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

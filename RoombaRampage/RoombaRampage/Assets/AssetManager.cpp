@@ -10,38 +10,9 @@
 
 std::unique_ptr<AssetManager> AssetManager::instancePtr = nullptr;
 
-void AssetManager::LoadConfig() {
-    std::ifstream file;
-    file.open("./Config/Config.txt");
-
-    if (!file.is_open()) {
-        std::cerr << "Error opening config file" << std::endl;
-        return;
-    }
-    Helper::Helpers *help = Helper::Helpers::GetInstance();
-
-    std::string line;
-    std::string temp;
-    
-    //get height
-    std::getline(file, line);
-    std::stringstream str{ line };
-    str >> temp >> help->WindowHeight;
-    //get width
-    line.clear();
-    temp.clear();
-    std::getline(file, line);
-    std::stringstream str2{ line };
-    str2 >> temp >> help->WindowWidth;
-
-    if (help->WindowHeight <= 0 || help->WindowWidth <= 0) {
-        std::cout << "Error Reading Config file (Width or Height <= 0)" << std::endl;
-    }
-}
 
 void AssetManager::funcLoadAssets()
 {
-    LoadConfig();
     funcLoadImage("Assets/roombaTest.png");
     funcLoadImage("Assets/roombaTest2.png");
 }

@@ -64,7 +64,7 @@ unsigned int ImGuiHandler::DrawHierachyWindow()
             charBuffer[0] = '\0';
             objectNameBox = false;
 
-            SaveComponentsJson("../RoombaRampage/Json Texts", Ecs::ECS::GetInstance()->ECS_EntityMap);
+            Serialization::Serialize::SaveComponentsJson("../RoombaRampage/Json Texts", Ecs::ECS::GetInstance()->ECS_EntityMap);
         }
     }
 
@@ -116,7 +116,7 @@ unsigned int ImGuiHandler::DrawHierachyWindow()
                 i--;
 
                 ImGui::PopStyleColor(3);  // Pop the 3 style colors (button, hovered, and active)
-                SaveComponentsJson("../RoombaRampage/Json Texts", Ecs::ECS::GetInstance()->ECS_EntityMap);
+                Serialization::Serialize::SaveComponentsJson("../RoombaRampage/Json Texts", Ecs::ECS::GetInstance()->ECS_EntityMap);
                 continue;
             }
 
