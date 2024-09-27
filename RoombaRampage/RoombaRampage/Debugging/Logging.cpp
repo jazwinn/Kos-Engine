@@ -20,7 +20,6 @@ namespace Logging {
     // Destructor: Closes the log file
     Logger::~Logger() { logFile.close(); }
 
-
     void Logger::Init(const std::string& filename) {
         assert(!m_bInitialized && "The logger must be initialized before it is used!");
         if (m_bInitialized)
@@ -62,6 +61,10 @@ namespace Logging {
         return std::string(buffer);
     }
 
+    std::vector<std::string> Logger::getLogList() {
+        return log_list;
+    }
+
     // Logs a message with a given log level
     void Logger::Log(LogLevel level, const std::string& message)
     {
@@ -72,7 +75,7 @@ namespace Logging {
 
         // Output to console
         std::cout << colorToString(level) << logEntry.str() << CLOSE << std::endl;
-
+        log_list.push_back(logEntry.str());
         // Output to log file
         if (logFile.is_open()) {
             logFile << logEntry.str();

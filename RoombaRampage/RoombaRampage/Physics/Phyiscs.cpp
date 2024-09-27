@@ -137,6 +137,7 @@ Rectangle::Rectangle(float rect_height, float rect_width, Vector2::Vec2 shape_po
 			}
 			else if (physicsEntities[i]->GetEntity() == EntityType::Circle) {
 				//Caclulate the bounding sphere
+				//RITTER shit
 			}
 			else {
 
