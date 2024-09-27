@@ -8,6 +8,7 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include "../Assets/AssetManager.h"
 
 struct GraphicsData
 {
@@ -15,12 +16,15 @@ struct GraphicsData
 	glm::vec2 scale;
 	glm::vec3 worldCoordinates;
 	unsigned int textureID;
-	//glm::vec4 color;
+	int shapeType;
 };
 
 class GraphicsPipe
 {
 private:
+
+	int unitWidth{ 512 };
+	int unitHeight{ 512 };
 
 	struct Mesh
 	{
@@ -33,6 +37,7 @@ private:
 
 	void funcSetupVao(Mesh& shape);
 	void funcSetupFboVao();
+	void funcSetupSquareLinesVao();
 	void funcSetupArrayBuffer();
 	void funcSetupFrameBuffer();
 	void funcBindImageDatafromAssetManager();
@@ -44,10 +49,13 @@ private:
 	//Shader Programs
 	unsigned int genericShaderProgram;
 	unsigned int frameBufferShaderProgram;
+	unsigned int debugShaderProgram;
 
 	//Buffers
 	unsigned int modelMatrixArrayBuffer;
+	unsigned int debugMatrixArrayBuffer;
 	unsigned int textureOrderBuffer;
+	unsigned int debugOrderBuffer;
 	unsigned int frameBufferObject;
 	
 
@@ -62,6 +70,7 @@ private:
 	};
 
 	std::vector<glm::mat3> modelToNDCMatrix;
+	std::vector<glm::mat3> debugToNDCMatrix;
 	glm::mat3 testMatrix;
 
 
@@ -90,7 +99,8 @@ public:
 	void funcUpdate();
 
 	void funcDrawWindow();
-	void funcDraw(Mesh shape);
+	void funcDraw();
+	void funcDrawDebug();
 
 
 	void funcSortDrawOrder();
@@ -100,12 +110,16 @@ public:
 	Mesh screenMesh;
 	Mesh squareLinesMesh;
 	std::vector<GraphicsData> modelData;
+	std::vector<GraphicsData> debugBoxData;
 	std::vector<int> textureOrder;
+	std::vector<float> debugDrawOrder;
 
 	//Array of the texture IDs
 	std::vector<unsigned int> textureIDs;
+	std::vector<AssetManager::Image> imageData;
 
 	unsigned int screenTexture;
+	unsigned int proxyBackgroundTexture;
 };
 
 

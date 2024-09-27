@@ -124,6 +124,10 @@ namespace Ecs{
 
 		AddComponent(TypeSpriteComponent, ID);
 
+		SpriteComponent* sprite = (SpriteComponent*)ecs->ECS_CombinedComponentPool[TypeSpriteComponent]->GetEntityComponent(ID);
+
+		sprite->imageID = 4;
+
 		MovementComponent* MovCom = (MovementComponent*)AddComponent(TypeMovemmentComponent, ID);
 		MovCom->Speed = 1;
 

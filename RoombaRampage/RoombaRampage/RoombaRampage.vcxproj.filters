@@ -403,5 +403,7 @@
     <None Include="Graphics\frameCompositionFragmentShader.frag">
       <Filter>Header Files\Graphics</Filter>
     </None>
+    <None Include="Graphics\debugFragmentShader.frag" />
+    <None Include="Graphics\debugVertexShader.vert" />
   </ItemGroup>
 </Project>

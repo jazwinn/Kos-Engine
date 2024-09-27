@@ -9,14 +9,55 @@
 
 void ImGuiHandler::DrawRenderScreenWindow(unsigned int windowWidth, unsigned int windowHeight)
 {
-    GraphicsPipe* pipe;
+   /* GraphicsPipe* pipe;
     pipe = GraphicsPipe::funcGetInstance();
     ImGui::Begin("Scene Window");
     ImVec2 pos = ImGui::GetCursorScreenPos();
     ImGui::GetWindowDrawList()->AddImage((void*)(long long unsigned int)pipe->screenTexture, pos,
-        ImVec2(ImGui::GetCursorScreenPos().x + windowWidth,
-            ImGui::GetCursorScreenPos().y + windowHeight),
+        ImVec2(ImGui::GetCursorScreenPos().x + ImGui::GetWindowWidth(),
+            ImGui::GetCursorScreenPos().y + ImGui::GetWindowHeight()),
+        ImVec2(0, 1), ImVec2(1, 0)); 
+
+    ImGui::End();*/
+
+      GraphicsPipe* pipe;
+    pipe = GraphicsPipe::funcGetInstance();
+    ImGui::Begin("Scene Window");
+
+    ImVec2 pos = ImGui::GetCursorScreenPos();
+    ImVec2 windowSize = ImGui::GetContentRegionAvail();
+
+    float textureAspectRatio = (float)windowWidth / (float)windowHeight;
+    float windowAspectRatio = windowSize.x / windowSize.y;
+
+    ImVec2 imageSize;
+
+    if (windowAspectRatio > textureAspectRatio) 
+    {
+        imageSize.y = windowSize.y;
+        imageSize.x = imageSize.y * textureAspectRatio;
+    }
+    else 
+    {
+        imageSize.x = windowSize.x;
+        imageSize.y = imageSize.x / textureAspectRatio;
+    }
+
+    if (imageSize.x <= windowSize.x)
+    {
+        pos.x += (windowSize.x - imageSize.x) / 2;
+    }
+
+    if (imageSize.y <= windowSize.y)
+    {
+        pos.y += (windowSize.y - imageSize.y) / 2;
+    }
+
+    ImGui::GetWindowDrawList()->AddImage(
+        (void*)(long long unsigned int)pipe->screenTexture, pos,
+        ImVec2(pos.x + imageSize.x, pos.y + imageSize.y),
         ImVec2(0, 1), ImVec2(1, 0));
 
-    ImGui::End();
+        ImGui::End();
+   
 }
