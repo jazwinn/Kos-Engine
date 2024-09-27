@@ -78,7 +78,13 @@ namespace Ecs {
 			MovementComponent* MovComp = vecMovementComponentPtr[n];
 
 			
-			PysicsPipeline.RetrievePhysicsData(ColComp->Size * TransComp->scale,TransComp->position, MovComp->Speed * MovComp->Direction, ColComp->Entity);
+			//PysicsPipeline.SendPhysicsData(ColComp->Size * TransComp->scale,TransComp->position, MovComp->Speed * MovComp->Direction, ColComp->Entity);
+			/*
+			  if circle
+				PysicsPipeline.SendPhysicsData(ColComp->Size * TransComp->scale,TransComp->position, MovComp->Speed * MovComp->Direction, ColComp->Entity);
+				if rect
+				PysicsPipeline.SendPhysicsData(ColComp->Size * TransComp->scale,TransComp->position, MovComp->Speed * MovComp->Direction, ColComp->Entity);
+			*/
 
 			if (ColComp->drawDebug)
 			{

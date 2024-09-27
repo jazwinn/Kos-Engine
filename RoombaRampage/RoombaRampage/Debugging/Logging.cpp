@@ -1,12 +1,13 @@
 #include "Logging.h"
 
 namespace Logging {
+
     Logger& Logger::GetInstance()
     {
         static Logger instance{};
         return instance;
     }
-    //// Constructor: Opens the log file in append mode
+    // Constructor: Opens the log file in append mode
     Logger::Logger(const std::string& filename)
     {
         logFile.open(filename,std::ios::app);
@@ -18,7 +19,6 @@ namespace Logging {
 
     // Destructor: Closes the log file
     Logger::~Logger() { logFile.close(); }
-
 
     void Logger::Init(const std::string& filename) {
         assert(!m_bInitialized && "The logger must be initialized before it is used!");
@@ -32,10 +32,14 @@ namespace Logging {
         }
 
         m_bInitialized = true;
-
-        logFile.open(filename, std::ios::out | std::ios::app);
-        if (!logFile.is_open()) {
-            std::cerr << "Error opening log file." << std::endl;
+        try {
+            logFile.open(filename, std::ios::out | std::ios::app);
+            if (!logFile.is_open()) {
+                throw std::ios_base::failure("Failed to open file: " + filename);
+            }
+        }
+        catch (const std::exception& e) {
+            LOGGING_ERROR("Error Init Logging File {}" , e.what());
         }
     }
 
@@ -57,6 +61,10 @@ namespace Logging {
         return std::string(buffer);
     }
 
+    std::vector<std::string> Logger::getLogList() {
+        return log_list;
+    }
+
     // Logs a message with a given log level
     void Logger::Log(LogLevel level, const std::string& message)
     {
@@ -67,7 +75,7 @@ namespace Logging {
 
         // Output to console
         std::cout << colorToString(level) << logEntry.str() << CLOSE << std::endl;
-
+        log_list.push_back(logEntry.str());
         // Output to log file
         if (logFile.is_open()) {
             logFile << logEntry.str();

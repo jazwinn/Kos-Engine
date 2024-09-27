@@ -167,6 +167,8 @@ xcopy /y /d "$(SolutionDir)FMOD_API\studio\lib\x64\*.dll" "$(OutDir)"</Command>
     <ClCompile Include="Application\ImGui Panels\imgui_handler.cpp" />
     <ClCompile Include="Application\ImGui Panels\imgui_hierarchy_window.cpp" />
     <ClCompile Include="Application\ImGui Panels\imgui_logs_window.cpp" />
+    <ClCompile Include="Application\ImGui Panels\imgui_menubar.cpp" />
+    <ClCompile Include="Application\ImGui Panels\imgui_performance_window.cpp" />
     <ClCompile Include="Application\ImGui Panels\imgui_render_window.cpp" />
     <ClCompile Include="Application\main.cpp" />
     <ClCompile Include="Application\Window.cpp" />
@@ -183,6 +185,9 @@ xcopy /y /d "$(SolutionDir)FMOD_API\studio\lib\x64\*.dll" "$(OutDir)"</Command>
     <ClCompile Include="Dependencies\imgui\imgui_stdlib.cpp" />
     <ClCompile Include="Dependencies\imgui\imgui_tables.cpp" />
     <ClCompile Include="Dependencies\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="Dependencies\imgui\implot.cpp" />
+    <ClCompile Include="Dependencies\imgui\implot_demo.cpp" />
+    <ClCompile Include="Dependencies\imgui\implot_items.cpp" />
     <ClCompile Include="ECS\ECS.cpp" />
     <ClCompile Include="ECS\System\CollisionResponseSystem.cpp" />
     <ClCompile Include="ECS\System\CollisionSystem.cpp" />
@@ -215,6 +220,8 @@ xcopy /y /d "$(SolutionDir)FMOD_API\studio\lib\x64\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="Dependencies\imgui\imgui_impl_opengl3_loader.h" />
     <ClInclude Include="Dependencies\imgui\imgui_internal.h" />
     <ClInclude Include="Dependencies\imgui\imgui_stdlib.h" />
+    <ClInclude Include="Dependencies\imgui\implot.h" />
+    <ClInclude Include="Dependencies\imgui\implot_internal.h" />
     <ClInclude Include="Dependencies\imgui\imstb_rectpack.h" />
     <ClInclude Include="Dependencies\imgui\imstb_textedit.h" />
     <ClInclude Include="Dependencies\imgui\imstb_truetype.h" />
@@ -237,6 +244,7 @@ xcopy /y /d "$(SolutionDir)FMOD_API\studio\lib\x64\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="ECS\System\RenderSystem.h" />
     <ClInclude Include="ECS\System\System.h" />
     <ClInclude Include="ECS\System\SystemList.h" />
+    <ClInclude Include="ECS\System\SystemType.h" />
     <ClInclude Include="Events\baseEvent.h" />
     <ClInclude Include="Events\keyEvents.h" />
     <ClInclude Include="Events\mouseEvents.h" />

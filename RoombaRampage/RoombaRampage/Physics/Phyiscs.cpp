@@ -5,8 +5,30 @@
 
 namespace Physics {
 
-	std::vector<PhysicsData>  classPhysics::physicsEntities;
-	std::vector<PhysicsData> classPhysics::collidedEntities;
+	std::vector<std::shared_ptr<PhysicsData>> classPhysics::physicsEntities;
+	std::vector<std::shared_ptr<PhysicsData>> classPhysics::collidedEntities;
+
+// Constructor for Circle (definition)
+Circle::Circle(float radius, Vector2::Vec2 shape_position, Vector2::Vec2 shape_scale, Vector2::Vec2 shape_velocity, int entity_ID)
+    : m_radius(radius)   // Initialize radius
+{
+    position = shape_position;
+    scale = shape_scale;
+    velocity = shape_velocity;
+    ID = entity_ID;
+    type = EntityType::Circle;  // Set type to Circle
+}
+
+// Constructor for Rectangle (definition)
+Rectangle::Rectangle(float rect_height, float rect_width, Vector2::Vec2 shape_position, Vector2::Vec2 shape_scale, Vector2::Vec2 shape_velocity, int entity_ID)
+    : height(rect_height), width(rect_width)   // Initialize height and width
+{
+    position = shape_position;
+    scale = shape_scale;
+    velocity = shape_velocity;
+    ID = entity_ID;
+    type = EntityType::Rectangle;  // Set type to Rectangle
+}
 
 	bool classPhysics::static_CollisionCheck(const AABB aabb1, const AABB aabb2) {
 		//std::cout << "BOUNDING BOX1 MIN X " << aabb1.min.x << " Y " << aabb1.min.y << std::endl;
@@ -22,16 +44,14 @@ namespace Physics {
 		return 1;
 	}
 
-	void classPhysics::RetrievePhysicsData(Vector2::Vec2 scale,Vector2::Vec2 position, Vector2::Vec2 velocity, int ID) {
-		//get the data store
-		PhysicsData obj;
-		obj.ID = ID;
-		obj.position = position;
-		obj.velocity = velocity;
-		obj.scale = scale;
-		physicsEntities.push_back(obj);
+	void classPhysics::SendPhysicsData(float rect_height, float rect_width, Vector2::Vec2 position, Vector2::Vec2 scale, Vector2::Vec2 velocity, int ID) {
+		physicsEntities.push_back(std::make_shared<Rectangle>(rect_height, rect_width, position, scale, velocity, ID));
 	}
 
+	void classPhysics::SendPhysicsData(float radius, Vector2::Vec2 position, Vector2::Vec2 scale, Vector2::Vec2 velocity, int ID){
+		physicsEntities.push_back(std::make_shared<Circle>(radius, position, scale, velocity, ID));
+	}
+	
 
 	void classPhysics::CollisionCheck(float dt) {
 
@@ -40,15 +60,14 @@ namespace Physics {
 
 		for (size_t i = 0; i < physicsEntities.size(); ++i) {
 			for (size_t j = 0; j < physicsEntities.size(); ++j) {
-				if (physicsEntities[i].ID != physicsEntities[j].ID) {
+				if (physicsEntities[i]->ID != physicsEntities[j]->ID) {
 					/*************************************
 						CHECK RECT V RECT
 					*************************************/
-					if (physicsEntities[i].type == EntityType::Rectangle && physicsEntities[j].type == EntityType::Rectangle) {
-						if (CollisionIntersection_RectRect(physicsEntities[i], physicsEntities[j], dt)) {
+					if (physicsEntities[i]->GetEntity() == EntityType::Rectangle && physicsEntities[j]->GetEntity() == EntityType::Rectangle) {
+						if (CollisionIntersection_RectRect(*dynamic_cast<Rectangle*>(physicsEntities[i].get()), *dynamic_cast<Rectangle*>(physicsEntities[i].get()), dt)) {
 							//checking whether if entity is alr added inside
 							if (std::find(collidedEntities.begin(), collidedEntities.end(), physicsEntities[i]) == collidedEntities.end()) {
-								//std::cout << "adding Entity i" << physicsEntities[i].ID << std::endl;
 								collidedEntities.push_back(physicsEntities[i]);
 							}
 						}
@@ -56,10 +75,9 @@ namespace Physics {
 					/*************************************
 						CHECK CIRCLE V RECT
 					*************************************/
-					else if (physicsEntities[i].type == EntityType::Circle && physicsEntities[j].type == EntityType::Rectangle) {
-						if (CollisionIntersection_CircleRect(physicsEntities[i], physicsEntities[j])) {
+					else if (physicsEntities[i]->GetEntity() == EntityType::Circle && physicsEntities[j]->GetEntity() == EntityType::Rectangle) {
+						if (CollisionIntersection_CircleRect(*dynamic_cast<Circle*>(physicsEntities[i].get()), *dynamic_cast<Rectangle*>(physicsEntities[j].get()))) {
 							if (std::find(collidedEntities.begin(), collidedEntities.end(), physicsEntities[i]) == collidedEntities.end()) {
-								//std::cout << "adding Entity i" << physicsEntities[i].ID << std::endl;
 								collidedEntities.push_back(physicsEntities[i]);
 							}
 						}
@@ -68,18 +86,18 @@ namespace Physics {
 					/*************************************
 						CHECK RECT V CIRCLE
 					*************************************/
-					else if (physicsEntities[j].type == EntityType::Circle && physicsEntities[i].type == EntityType::Rectangle) {
-						if (CollisionIntersection_CircleRect(physicsEntities[j], physicsEntities[i])) {
+					else if (physicsEntities[j]->GetEntity() == EntityType::Circle && physicsEntities[i]->GetEntity() == EntityType::Rectangle) {
+						if (CollisionIntersection_CircleRect(*dynamic_cast<Circle*>(physicsEntities[j].get()), *dynamic_cast<Rectangle*>(physicsEntities[i].get()))) {
 							if (std::find(collidedEntities.begin(), collidedEntities.end(), physicsEntities[i]) == collidedEntities.end()) {
 								collidedEntities.push_back(physicsEntities[i]);
 							}
 						}
 					}
 					/*************************************
-						CHECK RECT V CIRCLE
+						CHECK CIRCLE V CIRCLE
 					*************************************/
-					else if(physicsEntities[i].type == EntityType::Circle && physicsEntities[j].type == EntityType::Circle) {
-						if (CollisionIntersection_CircleCircle(physicsEntities[i], physicsEntities[j])) {
+					else if(physicsEntities[i]->GetEntity() == EntityType::Circle && physicsEntities[j]->GetEntity() == EntityType::Circle) {
+						if (CollisionIntersection_CircleCircle(*dynamic_cast<Circle*>(physicsEntities[i].get()), *dynamic_cast<Circle*>(physicsEntities[j].get()))) {
 							if (std::find(collidedEntities.begin(), collidedEntities.end(), physicsEntities[i]) == collidedEntities.end()) {
 								collidedEntities.push_back(physicsEntities[i]);
 							}
@@ -95,8 +113,8 @@ namespace Physics {
 		//std::cout << "Physics Entities size " << physicsEntities.size() << " collideEntities " << collidedEntities.size() << std::endl;
 	}
 
-	std::vector<PhysicsData> classPhysics::PassPhysicsData() {
-		std::vector<PhysicsData> TempCollidedEntities =  collidedEntities;
+	std::vector<std::shared_ptr<PhysicsData>> classPhysics::RetrievePhysicsData() {
+		std::vector<std::shared_ptr	<PhysicsData>> TempCollidedEntities =  collidedEntities;
 		this->ClearEntites();
 		return TempCollidedEntities;
 	}
@@ -111,10 +129,21 @@ namespace Physics {
 		//std::cout << "********************************************************************************" << std::endl;
 		//std::cout << "UPDATING BOUNDING BOX" << std::endl;
 		for (size_t i = 0; i < physicsEntities.size(); ++i) {
-			AABB boundingBox; 
-			boundingBox.min = { physicsEntities[i].position.x - (physicsEntities[i].scale.x * 0.5f), physicsEntities[i].position.y - (physicsEntities[i].scale.y * 0.5f)};
-			boundingBox.max = { physicsEntities[i].position.x + (physicsEntities[i].scale.x * 0.5f), physicsEntities[i].position.y + (physicsEntities[i].scale.y * 0.5f) };
-			physicsEntities[i].boundingBox = boundingBox;
+			if (physicsEntities[i]->GetEntity() == EntityType::Rectangle) {
+				AABB boundingBox;
+				boundingBox.min = { physicsEntities[i]->position.x - (physicsEntities[i]->scale.x * 0.5f), physicsEntities[i]->position.y - (physicsEntities[i]->scale.y * 0.5f) };
+				boundingBox.max = { physicsEntities[i]->position.x + (physicsEntities[i]->scale.x * 0.5f), physicsEntities[i]->position.y + (physicsEntities[i]->scale.y * 0.5f) };
+				dynamic_cast<Rectangle*>(physicsEntities[i].get())->boundingBox = boundingBox;
+			}
+			else if (physicsEntities[i]->GetEntity() == EntityType::Circle) {
+				//Caclulate the bounding sphere
+				//RITTER shit
+			}
+			else {
+
+			}
+			
+			
 			//std::cout << "BOUNDING BOX MIN X " << boundingBox.min.x << " Y " << boundingBox.min.y << std::endl;
 			//std::cout << "BOUNDING BOX MAX X " << boundingBox.max.x << " Y " << boundingBox.max.y << std::endl;
 		}
@@ -123,7 +152,7 @@ namespace Physics {
 
 
 	//static dynamic collision
-	bool classPhysics::CollisionIntersection_RectRect(const PhysicsData& obj1, const PhysicsData& obj2, float dt) {
+	bool classPhysics::CollisionIntersection_RectRect(const Rectangle& obj1, const Rectangle& obj2, float dt) {
 		//static collision
 		Physics::AABB aabb1 = obj1.boundingBox;
 		Physics::AABB aabb2 = obj2.boundingBox;
@@ -204,7 +233,7 @@ namespace Physics {
 		return true;
 
 	}
-	bool classPhysics::CollisionIntersection_CircleCircle(const PhysicsData& circle1, const PhysicsData& circle2) {
+	bool classPhysics::CollisionIntersection_CircleCircle(const Circle& circle1, const Circle& circle2) {
 		float dx = circle2.position.x - circle1.position.x;
 		float dy = circle2.position.y - circle1.position.y;
 		float distance_Square = dx * dx + dy * dy;
@@ -213,7 +242,7 @@ namespace Physics {
 		return distance_Square <= (combineRadius * combineRadius);
 	}
 
-	bool classPhysics::CollisionIntersection_CircleRect(const PhysicsData& circle, const PhysicsData& rect) {
+	bool classPhysics::CollisionIntersection_CircleRect(const Circle& circle, const Rectangle& rect) {
 		Vector2::Vec2 shortestDistance{};
 
 		

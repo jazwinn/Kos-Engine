@@ -3,11 +3,14 @@
 
 #include "../Graphics/GraphicsPipe.h"
 #include "../Assets/AssetManager.h"
+#include "../De&Serialization/json_handler.h"
+#include "../Debugging/Logging.h"
 #include "../Inputs/Input.h"
 #include "../ECS/ECS.h"
 #include "Helper.h"
 #include "Window.h"
 #include "../Debugging/Logging.h"
+#include "../Debugging/Performance.h"
 
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
@@ -39,8 +42,8 @@ namespace Application {
         /*--------------------------------------------------------------
           INITIALIZE WINDOW WIDTH & HEIGHT
        --------------------------------------------------------------*/
-        //Helper::Helpers::GetInstance()->WindowWidth = 1280;
-        //Helper::Helpers::GetInstance()->WindowHeight = 720;
+        Serialization::Serialize::LoadConfig();
+        
 
 
 
@@ -92,8 +95,8 @@ namespace Application {
         /*--------------------------------------------------------------
             INITIALIZE LOGGING SYSTEM
         --------------------------------------------------------------*/
-        LOGGING_INIT_LOGS("./Logs/LogFile.txt");
-
+        LOGGING_INIT_LOGS("Debugging/LogFile.txt");
+        LOGGING_INFO("Application Start");
         return 0;
 	}
 
@@ -102,6 +105,7 @@ namespace Application {
     int Application::Run() {
 
         Ecs::ECS* ecs = Ecs::ECS::GetInstance();
+        Helper::Helpers *Help = Helper::Helpers::GetInstance();
         float FPSCap = 1 / 60;
 
 
@@ -118,14 +122,16 @@ namespace Application {
 
             //calculate DeltaTime
             float CurrentTime = static_cast<float>(glfwGetTime());
-            float DeltaTime =  CurrentTime - LastTime;
-
+            Help->DeltaTime = CurrentTime - LastTime;
+            Help->Fps = 1 / Help->DeltaTime;
             //std::cout << "FPS:" << 1/DeltaTime << std::endl;
+            //PerformanceTracker::Performance a;
+            //a.printFPS(DeltaTime);
 
             /*--------------------------------------------------------------
              UPDATE ECS
              --------------------------------------------------------------*/
-            ecs->Update(DeltaTime);
+            ecs->Update(Helper::Helpers::GetInstance()->DeltaTime);
 
             /*--------------------------------------------------------------
              UPDATE Render Pipeline
@@ -156,9 +162,9 @@ namespace Application {
 
             glfwSwapBuffers(lvWindow.Window);
 
-            while (DeltaTime < FPSCap) {
+            while (Help->DeltaTime < FPSCap) {
                 CurrentTime = static_cast<float>(glfwGetTime());  // Continuously update current time
-                DeltaTime = CurrentTime - LastTime;  // Calculate new DeltaTime
+                Help->DeltaTime = CurrentTime - LastTime;  // Calculate new DeltaTime
             }
 
             LastTime = CurrentTime;
@@ -175,7 +181,7 @@ namespace Application {
         lvWindow.CleanUp();
         glfwTerminate();
         audio.shutdown();
-
+        LOGGING_INFO("Application Closed");
         return 0;
 	}
 
