@@ -7,8 +7,5 @@
 #include "../ECS//System/CollisionResponseSystem.h"
 #include "../ECS/System/ControlSystem.h"
 
-
-
-
 #endif SYSLIST_H
 
