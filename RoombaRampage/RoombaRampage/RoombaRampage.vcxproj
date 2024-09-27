@@ -167,6 +167,7 @@ xcopy /y /d "$(SolutionDir)FMOD_API\studio\lib\x64\*.dll" "$(OutDir)"</Command>
     <ClCompile Include="Application\ImGui Panels\imgui_handler.cpp" />
     <ClCompile Include="Application\ImGui Panels\imgui_hierarchy_window.cpp" />
     <ClCompile Include="Application\ImGui Panels\imgui_logs_window.cpp" />
+    <ClCompile Include="Application\ImGui Panels\imgui_menubar.cpp" />
     <ClCompile Include="Application\ImGui Panels\imgui_render_window.cpp" />
     <ClCompile Include="Application\main.cpp" />
     <ClCompile Include="Application\Window.cpp" />

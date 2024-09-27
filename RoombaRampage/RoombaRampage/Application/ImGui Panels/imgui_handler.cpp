@@ -42,8 +42,10 @@ void ImGuiHandler::Render()
 {
     // Render ImGui
     NewFrame();
-
     ImGui::DockSpaceOverViewport(0, ImGui::GetMainViewport());
+    DrawMainMenuBar();
+
+
     DrawHierachyWindow();
     DrawComponentWindow();
     DrawLogsWindow();

@@ -20,6 +20,7 @@ public:
     void Render();
     void Shutdown();
 
+    void DrawMainMenuBar();
     void DrawComponentWindow();
     unsigned int DrawHierachyWindow();
     void DrawLogsWindow();

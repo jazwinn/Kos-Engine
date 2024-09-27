@@ -14,10 +14,29 @@ unsigned int ImGuiHandler::DrawHierachyWindow()
     //fetch ecs
     Ecs::ECS* ecs = Ecs::ECS::GetInstance();
 
-    // Custom window with example widgets
-    ImGui::Begin("Hierachy Window");
 
-    ImGui::Text("Roomba Rampage");
+    // Custom window with example widgets
+    bool open = true;
+    ImGui::Begin("Hierachy Window", &open, ImGuiWindowFlags_MenuBar);
+
+    if (ImGui::BeginMenuBar())
+    {
+        if (ImGui::BeginMenu("Rename"))
+        {
+
+            ImGui::EndMenu();
+        }
+        if (ImGui::BeginMenu("Prefabs"))
+        {
+
+            ImGui::EndMenu();
+        }
+
+        ImGui::EndMenuBar();
+    }
+
+
+    //ImGui::Text("Roomba Rampage");
 
     if (ImGui::Button("+ Add GameObject"))
         ImGuiHandler::objectNameBox ? ImGuiHandler::objectNameBox = false : objectNameBox = true;
