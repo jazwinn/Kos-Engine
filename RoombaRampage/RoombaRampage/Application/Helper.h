@@ -27,6 +27,8 @@ namespace Helper {
 
 		float DeltaTime;
 
+		float FpsCap;
+
 		float Fps;
 
 	private:

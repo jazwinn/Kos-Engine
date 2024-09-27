@@ -35,8 +35,6 @@ namespace Application {
     FModAudio audio;
     FMOD_CHANNELGROUP* channelgroup;
 
-    float LastTime = glfwGetTime();;
-
 
     int Application::Init() {
         /*--------------------------------------------------------------
@@ -103,9 +101,9 @@ namespace Application {
     int Application::Run() {
 
         Ecs::ECS* ecs = Ecs::ECS::GetInstance();
-        Helper::Helpers *Help = Helper::Helpers::GetInstance();
-        float FPSCap = 1 / 60;
-
+        Helper::Helpers *help = Helper::Helpers::GetInstance();
+        float FPSCapTime = 1.f / help->FpsCap;
+        double lastFrameTime = glfwGetTime();
 
 
   
@@ -118,13 +116,7 @@ namespace Application {
             /* Poll for and process events */
             glfwPollEvents();
 
-            //calculate DeltaTime
-            float CurrentTime = static_cast<float>(glfwGetTime());
-            Help->DeltaTime = CurrentTime - LastTime;
-            Help->Fps = 1 / Help->DeltaTime;
-            //std::cout << "FPS:" << 1/DeltaTime << std::endl;
-            //PerformanceTracker::Performance a;
-            //a.printFPS(DeltaTime);
+
 
             /*--------------------------------------------------------------
              UPDATE ECS
@@ -158,14 +150,22 @@ namespace Application {
              --------------------------------------------------------------*/
             //audio.playSound();
 
-            glfwSwapBuffers(lvWindow.Window);
+             /*--------------------------------------------------------------
+             Calculate time
+             --------------------------------------------------------------*/
+            double currentFrameTime = glfwGetTime();
+            help->DeltaTime = currentFrameTime - lastFrameTime;
 
-            while (Help->DeltaTime < FPSCap) {
-                CurrentTime = static_cast<float>(glfwGetTime());  // Continuously update current time
-                Help->DeltaTime = CurrentTime - LastTime;  // Calculate new DeltaTime
+            while (help->DeltaTime < FPSCapTime) {
+                lastFrameTime = currentFrameTime;
+                currentFrameTime = glfwGetTime();
+                help->DeltaTime += currentFrameTime - lastFrameTime;
             }
 
-            LastTime = CurrentTime;
+            lastFrameTime = glfwGetTime();
+            help->Fps = 1.f / help->DeltaTime;
+
+            glfwSwapBuffers(lvWindow.Window);
         }
 
         return 0;
