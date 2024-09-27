@@ -143,7 +143,8 @@ namespace Application {
 
             /*--------------------------------------------------------------
              Draw IMGUI FRAME
-             --------------------------------------------------------------*/          
+             --------------------------------------------------------------*/
+            //Size of the render window is based on the parameters of this function
             imgui_manager.Render();
 
 

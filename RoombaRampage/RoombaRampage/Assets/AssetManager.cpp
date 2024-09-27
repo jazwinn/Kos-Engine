@@ -9,8 +9,12 @@ std::unique_ptr<AssetManager> AssetManager::instancePtr = nullptr;
 
 void AssetManager::funcLoadAssets()
 {
+    
+    funcLoadImage("Assets/blackTile_test.png");
+    funcLoadImage("Assets/testBackground.png");
     funcLoadImage("Assets/roombaTest.png");
     funcLoadImage("Assets/roombaTest2.png");
+    funcLoadImage("Assets/roombaTest3.png");
 }
 
 AssetManager* AssetManager::funcGetInstance()
@@ -38,11 +42,11 @@ AssetManager::~AssetManager()
             }
         }
     }
-   // delete instancePtr;
 }
 
 void AssetManager::funcLoadImage(const char* file)
 {
+    stbi_set_flip_vertically_on_load(true);
 	Image image{};
     image.stripCount = extractStripCountFromFilename(file);
     image.spriteName = extractSpriteNameFromFilename(file);
@@ -60,15 +64,27 @@ void AssetManager::funcLoadImage(const char* file)
 
     if (image.stripCount == 1)
     {
-        if (image.width < targetWidth || image.height < targetHeight)
+        if (image.width != image.height)
         {
-            unsigned char* newData = funcPadTexture(data, image.width, image.height, image.channels);
+            int targetHeight{};
+            int targetWidth{};
+            if (image.width > image.height)
+            {
+                targetHeight = image.width;
+                targetWidth = image.width;
+            }
+            else
+            {
+                targetHeight = image.height;
+                targetWidth = image.height;
+            }
+            unsigned char* newData = funcPadTexture(data, image.width, image.height, image.channels, targetWidth, targetHeight, targetChannels);
             stbi_image_free(data);
-            image.isPadded = true;
+            image.isPadded = true;      
+            image.imageID = imageCount;
             image.width = targetWidth;
             image.height = targetHeight;
-            
-            image.imageID = imageCount;
+            image.channels = targetChannels;
             imageCount++;
             imageContainer.push_back(image);
             imagedataArray.push_back(newData);
@@ -92,12 +108,28 @@ void AssetManager::funcLoadImage(const char* file)
    
 }
 
-unsigned char* AssetManager::funcPadTexture(const unsigned char* originalPixels, int originalWidth, int originalHeight, int originalChannels)
+unsigned char* AssetManager::funcPadTexture(const unsigned char* originalPixels, int originalWidth, int originalHeight, int originalChannels, int targetWidth, int targetHeight, int targetChannels)
 {
     unsigned char* paddedPixels = new unsigned char[targetWidth * targetHeight * targetChannels];
 
     // Fill with padding (e.g., transparent for RGBA)
     memset(paddedPixels, 0, targetWidth * targetHeight * targetChannels);
+
+    //If the image doesn't have alpha channel
+    if (targetChannels > originalChannels)
+    {
+        for (int y = 0; y < originalHeight; ++y)
+        {
+            for (int x = 0; x < originalWidth; ++x)
+            {
+                    int c = 3;
+                    int dstIndex = ((y + (targetHeight - originalHeight) / 2) * targetWidth + (x + (targetWidth - originalWidth) / 2)) * targetChannels + c;
+
+                    // Make Opaque
+                    paddedPixels[dstIndex] = 255;
+            }
+        }
+    }
 
     // Copy the original texture into the center of the padded texture
     for (int y = 0; y < originalHeight; ++y) 
@@ -112,6 +144,7 @@ unsigned char* AssetManager::funcPadTexture(const unsigned char* originalPixels,
 
                 // Copy pixel data
                 paddedPixels[dstIndex] = originalPixels[srcIndex];
+              
             }
         }
     }
@@ -145,46 +178,3 @@ std::string AssetManager::extractSpriteNameFromFilename(const std::string& filen
     }
     return "Error_Cannot_Read_Sprite_Name";
 }
-
-
-//GLuint loadPaddedTexture(const char* imagePath, int targetWidth, int targetHeight)
-//{
-//    // Load the image using stb_image or any other image-loading library
-//    int width, height, channels;
-//    unsigned char* data = stbi_load(imagePath, &width, &height, &channels, 0);
-//    if (!data) {
-//        std::cerr << "Failed to load image: " << imagePath << std::endl;
-//        return 0;
-//    }
-//
-//    // Create padded texture if necessary
-//    unsigned char* paddedData = nullptr;
-//    if (width != targetWidth || height != targetHeight) {
-//        paddedData = padTexture(data, width, height, channels, targetWidth, targetHeight, channels);
-//    }
-//    else {
-//        paddedData = data; // No need to pad if the sizes match
-//    }
-//
-//    // Generate OpenGL texture
-//    GLuint textureID;
-//    glGenTextures(1, &textureID);
-//    glBindTexture(GL_TEXTURE_2D, textureID);
-//
-//    // Set texture parameters (wrap and filter)
-//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-//
-//    // Upload the padded texture data to the GPU
-//    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, targetWidth, targetHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, paddedData);
-//
-//    // Free original and padded data
-//    if (data != paddedData) {
-//        delete[] paddedData;
-//    }
-//    stbi_image_free(data);
-//
-//    return textureID;
-//}

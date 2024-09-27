@@ -250,6 +250,8 @@ xcopy /y /d "$(SolutionDir)FMOD_API\studio\lib\x64\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="Physics\Physics.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Graphics\debugFragmentShader.frag" />
+    <None Include="Graphics\debugVertexShader.vert" />
     <None Include="Graphics\frameAccumulationFragmentShader.frag" />
     <None Include="Graphics\frameBufferFragmentShader.frag" />
     <None Include="Graphics\frameCompositionFragmentShader.frag" />

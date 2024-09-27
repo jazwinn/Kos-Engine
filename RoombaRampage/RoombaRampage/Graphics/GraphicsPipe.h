@@ -8,6 +8,7 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include "../Assets/AssetManager.h"
 
 struct GraphicsData
 {
@@ -15,12 +16,16 @@ struct GraphicsData
 	glm::vec2 scale;
 	glm::vec3 worldCoordinates;
 	unsigned int textureID;
+	bool debug;
 	//glm::vec4 color;
 };
 
 class GraphicsPipe
 {
 private:
+
+	int unitWidth{ 512 };
+	int unitHeight{ 512 };
 
 	struct Mesh
 	{
@@ -48,6 +53,7 @@ private:
 	//Buffers
 	unsigned int modelMatrixArrayBuffer;
 	unsigned int textureOrderBuffer;
+	unsigned int debugOrderBuffer;
 	unsigned int frameBufferObject;
 	
 
@@ -90,7 +96,8 @@ public:
 	void funcUpdate();
 
 	void funcDrawWindow();
-	void funcDraw(Mesh shape);
+	void funcDraw();
+	void funcDrawDebug();
 
 
 	void funcSortDrawOrder();
@@ -101,11 +108,14 @@ public:
 	Mesh squareLinesMesh;
 	std::vector<GraphicsData> modelData;
 	std::vector<int> textureOrder;
+	std::vector<int> debugDrawOrder;
 
 	//Array of the texture IDs
 	std::vector<unsigned int> textureIDs;
+	std::vector<AssetManager::Image> imageData;
 
 	unsigned int screenTexture;
+	unsigned int proxyBackgroundTexture;
 };
 
 
