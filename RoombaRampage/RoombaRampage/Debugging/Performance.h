@@ -19,6 +19,8 @@ namespace PerformanceTracker{
 
 	public:
 		Performance();
+
+		static void ResetTotalSystemTime();
 		static void AddSystem(Ecs::TypeSystem System);
 
 		static void printPerformance();

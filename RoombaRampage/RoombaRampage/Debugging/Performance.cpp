@@ -7,7 +7,7 @@ namespace PerformanceTracker {
 	std::unordered_map<Ecs::TypeSystem, std::pair<std::string, float>> Performance::systemTimeList;
 
 	Performance::Performance() {
-		engineTime = 0.0f;
+		//engineTime = 0.0f;
 	}
 	std::string Performance::typeToString(Ecs::TypeSystem type) {
 		switch (type) {
@@ -24,6 +24,10 @@ namespace PerformanceTracker {
 		default:
 			return "Error (Add System to Performance.cpp)";
 		}
+	}
+
+	void Performance::ResetTotalSystemTime() {
+		engineTime = 0;
 	}
 	void Performance::UpdateTotalSystemTime(float time) {
 		engineTime += time;
