@@ -16,117 +16,136 @@
 #include <iostream>
 #include "../De&Serialization/json_handler.h"
 
-void ImGuiHandler::DrawComponentWindow(Ecs::ECS* ecs, Ecs::EntityID entityID, bool& windowOpen, const std::string& windowTitle)
+void ImGuiHandler::DrawComponentWindow()
 {
-    // Retrieve the TransformComponent
-    Ecs::TransformComponent* tc = static_cast<Ecs::TransformComponent*>(ecs->ECS_CombinedComponentPool[Ecs::TypeTransformComponent]
-                            ->GetEntityComponent(entityID));
+    bool windowOpen = true;
+    std::string Title = "Component Window";
+    Ecs::ECS* ecs = Ecs::ECS::GetInstance();
 
-    // Retrieve the TransformComponent
-    Ecs::MovementComponent* mc = static_cast<Ecs::MovementComponent*>(ecs->ECS_CombinedComponentPool[Ecs::TypeMovemmentComponent]
-                            ->GetEntityComponent(entityID));
+    std::string windowTitle = Title;
 
     ImGui::Begin(windowTitle.c_str(), &windowOpen);
 
-    const float slider_start_pos_x = 100.0f; //Padding for the slider
 
-    bool isModified = false;  //Track if the user modifies the component values
-    bool isFirstSaved = true;
+    for (size_t i = 0; i < obj_text_entries.size(); i++) {
+        if (obj_component_window[i] && obj_entity_id[i] == clicked_entity_id)
+        {
+            Ecs::EntityID entityID = obj_entity_id[i];
 
-    // Check if the TransformComponent exists for the entity
-    if (tc != nullptr)
-    {
-         
+            // Retrieve the TransformComponent
+            Ecs::TransformComponent* tc = static_cast<Ecs::TransformComponent*>(ecs->ECS_CombinedComponentPool[Ecs::TypeTransformComponent]
+                ->GetEntityComponent(entityID));
 
-        // Display and edit the Transform component
-        ImGui::Text("Transform Component");
+            // Retrieve the TransformComponent
+            Ecs::MovementComponent* mc = static_cast<Ecs::MovementComponent*>(ecs->ECS_CombinedComponentPool[Ecs::TypeMovemmentComponent]
+                ->GetEntityComponent(entityID));
 
-        //Display Position
-        ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
-        ImGui::Text("Position");
-        ImGui::SameLine(slider_start_pos_x);
-        ImGui::SetNextItemWidth(100.0f);
-        if (ImGui::DragFloat("X##", &tc->position.x, 0.02f, -1.0f, 1.0f, "%.2f"))
-            isModified = true;
 
-        ImGui::SameLine();
-        ImGui::SetNextItemWidth(100.0f);
-        if(ImGui::DragFloat("Y##PosY", &tc->position.y, 0.02f, -1.0f, 1.0f, "%.2f"))
-            isModified = true;
+            const float slider_start_pos_x = 100.0f; //Padding for the slider
 
-        //Display Rotation
-        ImGui::AlignTextToFramePadding();
-        ImGui::Text("Rotation");
-        ImGui::SameLine(slider_start_pos_x);
-        ImGui::SetNextItemWidth(100.0f);
-        if(ImGui::DragFloat("##Rot", &tc->rotation, 1.0f, -360.0f, 360.0f, "%.2f"))
-            isModified = true;
+            bool isModified = false;  //Track if the user modifies the component values
+            bool isFirstSaved = true;
 
-        //Display Scale
-        ImGui::AlignTextToFramePadding();
-        ImGui::Text("Scale");
-        ImGui::SameLine(slider_start_pos_x);
-        ImGui::SetNextItemWidth(100.0f);
-        if(ImGui::DragFloat("X", &tc->scale.x, 0.02f, 0.1f, 2.0f, "%.2f"))
-            isModified = true;
+            // Check if the TransformComponent exists for the entity
+            if (tc != nullptr)
+            {
 
-        ImGui::SameLine();
-        ImGui::SetNextItemWidth(100.0f);
-        if (ImGui::DragFloat("Y", &tc->scale.y, 0.02f, 0.1f, 2.0f, "%.2f"))
-            isModified = true;
+                // Display and edit the Transform component
+                ImGui::Text("Transform Component");
+
+                //Display Position
+                ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
+                ImGui::Text("Position");
+                ImGui::SameLine(slider_start_pos_x);
+                ImGui::SetNextItemWidth(100.0f);
+                if (ImGui::DragFloat("X##", &tc->position.x, 0.02f, -1.0f, 1.0f, "%.2f"))
+                    isModified = true;
+
+                ImGui::SameLine();
+                ImGui::SetNextItemWidth(100.0f);
+                if (ImGui::DragFloat("Y##PosY", &tc->position.y, 0.02f, -1.0f, 1.0f, "%.2f"))
+                    isModified = true;
+
+                //Display Rotation
+                ImGui::AlignTextToFramePadding();
+                ImGui::Text("Rotation");
+                ImGui::SameLine(slider_start_pos_x);
+                ImGui::SetNextItemWidth(100.0f);
+                if (ImGui::DragFloat("##Rot", &tc->rotation, 1.0f, -360.0f, 360.0f, "%.2f"))
+                    isModified = true;
+
+                //Display Scale
+                ImGui::AlignTextToFramePadding();
+                ImGui::Text("Scale");
+                ImGui::SameLine(slider_start_pos_x);
+                ImGui::SetNextItemWidth(100.0f);
+                if (ImGui::DragFloat("X", &tc->scale.x, 0.02f, 0.1f, 2.0f, "%.2f"))
+                    isModified = true;
+
+                ImGui::SameLine();
+                ImGui::SetNextItemWidth(100.0f);
+                if (ImGui::DragFloat("Y", &tc->scale.y, 0.02f, 0.1f, 2.0f, "%.2f"))
+                    isModified = true;
+
+            }
+            if (mc != nullptr)
+            {
+                //components.push_back(std::static_pointer_cast<Ecs::Component>(std::make_shared<Ecs::MovementComponent>(*mc)));
+
+                ImGui::Text("Movement Component");
+
+                // Display Speed
+                ImGui::AlignTextToFramePadding();
+                ImGui::Text("Speed");
+                ImGui::SameLine(slider_start_pos_x);
+                ImGui::SetNextItemWidth(100.0f);
+                if (ImGui::DragFloat("##Speed", &mc->Speed, 0.01f, -10.0f, 10.0f, "%.2f"))
+                    isModified = true;
+
+                // Display Velocity
+                ImGui::AlignTextToFramePadding();
+                ImGui::Text("Direction");
+                ImGui::SameLine(slider_start_pos_x);
+                ImGui::SetNextItemWidth(100.0f);
+                if (ImGui::DragFloat("X##VelX", &mc->Direction.x, 0.02f, -1.0f, 1.0f, "%.2f"))
+                    isModified = true;
+
+                ImGui::SameLine();
+                ImGui::SetNextItemWidth(100.0f);
+                if (ImGui::DragFloat("Y##VelY", &mc->Direction.y, 0.02f, -1.0f, 1.0f, "%.2f"))
+                    isModified = true;
+
+                // Display Resistance
+                ImGui::AlignTextToFramePadding();
+                ImGui::Text("Auto Move");
+                ImGui::SameLine(slider_start_pos_x);
+                ImGui::Checkbox("##", &mc->Move);
+                //ImGui::SetNextItemWidth(100.0f);
+                //ImGui::DragFloat("##Res", &mc->resistance, 0.01f, 0.0f, 5.0f, "%.2f");
+
+            }
+            else
+            {
+                ImGui::Text("Add a component?");
+                ImGui::End();
+            }
+            
+
+
+            // If any component was modified, save the updated values to JSON
+            if (isFirstSaved || isModified)
+            {
+                SaveComponentsJson("../RoombaRampage/Json Texts", ecs->ECS_EntityMap);
+                isFirstSaved = false; // Ensure this is only set once
+            }
+
+            obj_component_window[i] = windowOpen;
+        }
+
 
     }
-    if (mc != nullptr)
-    {
-        //components.push_back(std::static_pointer_cast<Ecs::Component>(std::make_shared<Ecs::MovementComponent>(*mc)));
 
-        ImGui::Text("Movement Component");
-
-        // Display Speed
-        ImGui::AlignTextToFramePadding();
-        ImGui::Text("Speed");
-        ImGui::SameLine(slider_start_pos_x);
-        ImGui::SetNextItemWidth(100.0f);
-        if (ImGui::DragFloat("##Speed", &mc->Speed, 0.01f, -10.0f, 10.0f, "%.2f"))
-            isModified = true;
-
-        // Display Velocity
-        ImGui::AlignTextToFramePadding();
-        ImGui::Text("Direction");
-        ImGui::SameLine(slider_start_pos_x);
-        ImGui::SetNextItemWidth(100.0f);
-        if(ImGui::DragFloat("X##VelX", &mc->Direction.x, 0.02f, -1.0f, 1.0f, "%.2f"))
-            isModified = true;
-
-        ImGui::SameLine();
-        ImGui::SetNextItemWidth(100.0f);
-        if (ImGui::DragFloat("Y##VelY", &mc->Direction.y, 0.02f, -1.0f, 1.0f, "%.2f"))
-            isModified = true;
-
-        // Display Resistance
-        ImGui::AlignTextToFramePadding();
-        ImGui::Text("Auto Move");
-        ImGui::SameLine(slider_start_pos_x);
-        ImGui::Checkbox("##", &mc->Move);
-        //ImGui::SetNextItemWidth(100.0f);
-        //ImGui::DragFloat("##Res", &mc->resistance, 0.01f, 0.0f, 5.0f, "%.2f");
-
-    }
-    else
-    {
-        ImGui::Text("Add a component?");
-        ImGui::End();
-    }
     ImGui::End();
-
-
-    // If any component was modified, save the updated values to JSON
-    if (isFirstSaved)
-    {
-        SaveComponentsJson("../RoombaRampage/Json Texts", tc,mc, entityID);
-        isFirstSaved = false;
-    }
-    if (isModified)
-        SaveComponentsJson("../RoombaRampage/Json Texts", tc, mc, entityID);
+   
 
 }   

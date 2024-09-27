@@ -3,6 +3,8 @@
 #include "imgui_impl_opengl3.h"
 #include "imgui_handler.h"
 #include "../ECS/ECS.h"
+#include "../../De&Serialization/json_handler.h"
+
 #include<vector>
 #include<string>
 #include <iostream>
@@ -29,6 +31,8 @@ unsigned int ImGuiHandler::DrawHierachyWindow()
             Ecs::EntityID newEntityID = ecs-> CreateEntity();
             obj_entity_id.push_back(newEntityID);
 
+            //set new ID to be clicked
+            clicked_entity_id = newEntityID;
             //Add the string into the vector
             obj_text_entries.push_back(std::string(charBuffer));
 
@@ -36,11 +40,12 @@ unsigned int ImGuiHandler::DrawHierachyWindow()
             //Used to track and maintain sync between objtextentries and deletebutton vector
             deleteButton.push_back(false);
             DuplicateButton.push_back(false);
-            obj_component_window.push_back(false);
+            obj_component_window.push_back(true);
 
             charBuffer[0] = '\0';
             objectNameBox = false;
 
+            SaveComponentsJson("../RoombaRampage/Json Texts", Ecs::ECS::GetInstance()->ECS_EntityMap);
         }
     }
 
@@ -92,6 +97,7 @@ unsigned int ImGuiHandler::DrawHierachyWindow()
                 i--;
 
                 ImGui::PopStyleColor(3);  // Pop the 3 style colors (button, hovered, and active)
+                SaveComponentsJson("../RoombaRampage/Json Texts", Ecs::ECS::GetInstance()->ECS_EntityMap);
                 continue;
             }
 
@@ -138,16 +144,7 @@ unsigned int ImGuiHandler::DrawHierachyWindow()
             ImGui::PopStyleColor(3);  // Pop the 3 style colors (button, hovered, and active)
         }
 
-        //Render the game object component window
-        if (obj_component_window[i] && obj_entity_id[i] == clicked_entity_id)
-        {
-            bool windowOpen = obj_component_window[i];  // Store the value in a temporary bool
-            std::string windowTitle = obj_text_entries[i] + "'s Component Window ";
 
-            DrawComponentWindow(ecs, obj_entity_id[i], windowOpen, windowTitle);
-
-            obj_component_window[i] = windowOpen;
-        }
     }
 
     ImGui::End();

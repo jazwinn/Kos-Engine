@@ -3,6 +3,11 @@
 # Learn more about .gitignore:
 #     https://www.atlassian.com/git/tutorials/saving-changes/gitignore
 
+
+#imgui panels
+!Application/
+!imgui.ini
+
 # Node artifact files
 node_modules/
 dist/
@@ -454,9 +459,9 @@ FodyWeavers.xsd
 ## OSX artifacts
 .DS_Store
 
-## Dear ImGui artifacts
-imgui.ini
-imgui*.ini
+# ## Dear ImGui artifacts
+# imgui.ini
+# imgui*.ini
 
 ## General build artifacts
 *.o

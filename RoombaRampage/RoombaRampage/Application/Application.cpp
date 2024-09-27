@@ -39,19 +39,21 @@ namespace Application {
         /*--------------------------------------------------------------
           INITIALIZE WINDOW WIDTH & HEIGHT
        --------------------------------------------------------------*/
-        Helper::Helpers::GetInstance()->WindowWidth = 1280;
-        Helper::Helpers::GetInstance()->WindowHeight = 720;
+        //Helper::Helpers::GetInstance()->WindowWidth = 1280;
+        //Helper::Helpers::GetInstance()->WindowHeight = 720;
 
-        /*--------------------------------------------------------------
-          INITIALIZE OPENGL WINDOW
-       --------------------------------------------------------------*/
-        lvWindow.init();
+
 
         /*--------------------------------------------------------------
            INITIALIZE Asset Manager
         --------------------------------------------------------------*/
         AstManager = AssetManager::funcGetInstance();
         AstManager->funcLoadAssets();
+
+       /*--------------------------------------------------------------
+          INITIALIZE OPENGL WINDOW
+       --------------------------------------------------------------*/
+        lvWindow.init();
 
         /*--------------------------------------------------------------
            INITIALIZE GRAPHICS PIPE
