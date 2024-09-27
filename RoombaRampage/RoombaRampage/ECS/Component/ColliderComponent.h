@@ -18,6 +18,8 @@ namespace Ecs {
 
 		unsigned int Layer{};
 
+		bool drawDebug{true};
+
 	};
 
 }

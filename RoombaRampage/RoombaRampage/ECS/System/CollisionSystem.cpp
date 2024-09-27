@@ -2,6 +2,7 @@
 
 #include "CollisionSystem.h"
 #include "../Physics/Physics.h"
+#include "../Graphics/GraphicsPipe.h"
 
 namespace Ecs {
 
@@ -67,6 +68,7 @@ namespace Ecs {
 
 		//create physics;
 		Physics::classPhysics PysicsPipeline;
+		GraphicsPipe* graphicsPipe = GraphicsPipe::funcGetInstance();
 
 		for (int n{}; n < vecTransformComponentPtr.size(); n++) {
 			//std::cout << "Entity: " << n << "Movement System is getting Updated";
@@ -78,7 +80,10 @@ namespace Ecs {
 			
 			PysicsPipeline.RetrievePhysicsData(ColComp->Size * TransComp->scale,TransComp->position, MovComp->Speed * MovComp->Direction, ColComp->Entity);
 
-			
+			if (ColComp->drawDebug)
+			{
+				graphicsPipe->debugBoxData.push_back({ TransComp->rotation, glm::vec2{ColComp->Size.x * TransComp->scale.x, ColComp->Size.y * TransComp->scale.y}, glm::vec3{TransComp->position.x,TransComp->position.y, 0} ,0, 0 });
+			}
 		}
 
 		//check for collision

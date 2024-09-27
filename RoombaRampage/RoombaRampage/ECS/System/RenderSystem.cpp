@@ -63,7 +63,8 @@ namespace Ecs {
 			TransformComponent* transform = vecTransformComponentPtr[n];
 			SpriteComponent* sprite = vecSpriteComponentPtr[n];
 
-			graphicsPipe->modelData.push_back({ transform->rotation, glm::vec2{transform->scale.x, transform->scale.y}, glm::vec3{transform->position.x,transform->position.y, 0} ,sprite->imageID, true });
+			graphicsPipe->modelData.push_back({ transform->rotation, glm::vec2{transform->scale.x, transform->scale.y}, glm::vec3{transform->position.x,transform->position.y, 0} ,sprite->imageID, 0 });
+			
 		}
 
 

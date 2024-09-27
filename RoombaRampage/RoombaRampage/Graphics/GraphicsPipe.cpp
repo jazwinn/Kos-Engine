@@ -51,23 +51,29 @@ void GraphicsPipe::funcInit()
 {
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glLineWidth(4.f);
 
 	squareMesh.shapeType = SQUARE;
 	squareLinesMesh.shapeType = SQUARE_LINES;
 	testMatrix = { 1,0,0,0,1,0,0,0,1 };
 	modelData.reserve(2500);
+	debugBoxData.reserve(2500);
 	modelToNDCMatrix.reserve(2500);
+	debugToNDCMatrix.reserve(2500);
 
 	funcSetupVao(squareMesh);
-	funcSetupVao(squareLinesMesh);
+	funcSetupSquareLinesVao();
 	funcSetupFboVao();
 	funcSetDrawMode(GL_FILL);
+
 	genericShaderProgram = funcSetupShader(genericVertexShader, genericFragmentShader);
 	frameBufferShaderProgram = funcSetupShader(frameBufferVertexShader, frameBufferFragmentShader);
+	debugShaderProgram = funcSetupShader(debugVertexShader, debugFragmentShader);
 
 	modelToNDCMatrix.push_back(testMatrix);
 	textureOrder.push_back(0);
-	debugDrawOrder.push_back(false);
+	debugToNDCMatrix.push_back(testMatrix);
+	debugDrawOrder.push_back(0.f);
 
 	GLFWmonitor* monitor = glfwGetPrimaryMonitor();
 	const GLFWvidmode* mode = glfwGetVideoMode(monitor);
@@ -83,6 +89,7 @@ void GraphicsPipe::funcInit()
 
 	funcSetupFrameBuffer();
 	
+	debugToNDCMatrix.clear();
 	debugDrawOrder.clear();
 	modelToNDCMatrix.clear();
 	textureOrder.clear();
@@ -109,6 +116,72 @@ GraphicsPipe* GraphicsPipe::funcGetInstance()
 		instancePtr.reset(new GraphicsPipe{});
 	}
 	return instancePtr.get();
+}
+
+void GraphicsPipe::funcSetupSquareLinesVao()
+{
+	std::vector<glm::vec2> lvPosVtx;
+	std::vector<glm::vec3> lvClrVtx;
+	std::vector<GLushort>idx_vtx;
+
+	lvPosVtx = { glm::vec2(0.5f, -0.5f),
+				glm::vec2(0.5f, 0.5f),
+				glm::vec2(-0.5f, 0.5f),
+				glm::vec2(-0.5f, -0.5f) };
+	lvClrVtx = { glm::vec3(1.f, 1.f, 1.f),
+				glm::vec3(1.f, 1.f, 1.f),
+				glm::vec3(1.f, 1.f, 1.f),
+				glm::vec3(1.f, 1.f, 1.f) };
+	
+
+
+	GLsizei position_data_offset = 0;
+	GLsizei position_attribute_size = sizeof(glm::vec2);
+	GLsizei position_data_size = position_attribute_size * static_cast<GLsizei>(lvPosVtx.size());
+	GLsizei color_data_offset = position_data_size;
+	GLsizei color_attribute_size = sizeof(glm::vec3);
+	GLsizei color_data_size = color_attribute_size * static_cast<GLsizei>(lvClrVtx.size());
+
+
+	unsigned int lvVboId{};
+
+	glCreateBuffers(1, &lvVboId);
+
+
+	glNamedBufferStorage(lvVboId,
+	position_data_size + color_data_size,
+	nullptr,
+	GL_DYNAMIC_STORAGE_BIT);
+
+	glNamedBufferSubData(lvVboId, position_data_offset, position_data_size, lvPosVtx.data());
+	glNamedBufferSubData(lvVboId, color_data_offset, color_data_size, lvClrVtx.data());
+
+	glCreateVertexArrays(1, &squareLinesMesh.vaoId);
+	glEnableVertexArrayAttrib(squareLinesMesh.vaoId, 0);
+	glVertexArrayVertexBuffer(squareLinesMesh.vaoId, 0, lvVboId,
+		position_data_offset, position_attribute_size);
+	glVertexArrayAttribFormat(squareLinesMesh.vaoId, 0, 2, GL_FLOAT, GL_FALSE, 0);
+	glVertexArrayAttribBinding(squareLinesMesh.vaoId, 0, 0);
+
+	glEnableVertexArrayAttrib(squareLinesMesh.vaoId, 1);
+	glVertexArrayVertexBuffer(squareLinesMesh.vaoId, 1, lvVboId,
+		color_data_offset, color_attribute_size);
+	glVertexArrayAttribFormat(squareLinesMesh.vaoId, 1, 3, GL_FLOAT, GL_FALSE, 0);
+	glVertexArrayAttribBinding(squareLinesMesh.vaoId, 1, 1);
+
+
+	squareLinesMesh.primitiveType = GL_LINE_LOOP;
+	idx_vtx = { 0, 1, 2, 3};
+
+
+	squareLinesMesh.indexElementCount = static_cast<unsigned int>(idx_vtx.size());
+	unsigned int ebo_hdl;
+	glCreateBuffers(1, &ebo_hdl);
+	glNamedBufferStorage(ebo_hdl, sizeof(unsigned short) * squareLinesMesh.indexElementCount,
+		reinterpret_cast<GLvoid*>(idx_vtx.data()),
+		GL_DYNAMIC_STORAGE_BIT);
+	glVertexArrayElementBuffer(squareLinesMesh.vaoId, ebo_hdl);
+	glBindVertexArray(0);
 }
 
 void GraphicsPipe::funcSetupFboVao()
@@ -239,9 +312,11 @@ void GraphicsPipe::funcSetupVao(Mesh &shape)
 		idx_vtx = { 0, 1, 2, 2, 3, 0 };
 	}
 	else if (shape.shapeType == SQUARE_LINES)
-	{
+	{/*
 		shape.primitiveType = GL_LINE_LOOP;
-		idx_vtx = { 0, 1, 2, 3 };
+		idx_vtx = { 0, 1, 2, 3 };*/
+		shape.primitiveType = GL_TRIANGLES;
+		idx_vtx = { 0, 1, 2, 2, 3, 0 };
 	}
 
 	shape.indexElementCount = static_cast<unsigned int>(idx_vtx.size());
@@ -257,6 +332,7 @@ void GraphicsPipe::funcSetupVao(Mesh &shape)
 void GraphicsPipe::funcSetupArrayBuffer()
 {
 	//Square Mesh Buffer Setup
+	glBindVertexArray(squareMesh.vaoId);
 	glGenBuffers(1, &modelMatrixArrayBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, modelMatrixArrayBuffer);
 	glBufferData(GL_ARRAY_BUFFER, modelToNDCMatrix.size() * sizeof(glm::mat3), &modelToNDCMatrix[0], GL_DYNAMIC_DRAW);
@@ -282,29 +358,30 @@ void GraphicsPipe::funcSetupArrayBuffer()
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	//Square Lines Mesh Buffer Setup
-	//glGenBuffers(1, &modelMatrixArrayBuffer);
-	//glBindBuffer(GL_ARRAY_BUFFER, modelMatrixArrayBuffer);
-	//glBufferData(GL_ARRAY_BUFFER, modelToNDCMatrix.size() * sizeof(glm::mat3), &modelToNDCMatrix[0], GL_DYNAMIC_DRAW);
-	//glBindVertexArray(squareLinesMesh.vaoId);
-	//unsigned int otherLocation = 10; // Location 10
-	//for (int i = 0; i < 3; ++i)
-	//{
-	//	glEnableVertexAttribArray(otherLocation + i);
-	//	glVertexAttribPointer(otherLocation + i, 3, GL_FLOAT, GL_FALSE, sizeof(glm::mat3), (void*)(sizeof(glm::vec3) * i));
-	//	glVertexAttribDivisor(otherLocation + i, 1);
-	//}
-	//glBindVertexArray(0);
-	//glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(squareLinesMesh.vaoId);
+	glGenBuffers(1, &debugMatrixArrayBuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, debugMatrixArrayBuffer);
+	glBufferData(GL_ARRAY_BUFFER, debugToNDCMatrix.size() * sizeof(glm::mat3), &debugToNDCMatrix[0], GL_DYNAMIC_DRAW);
+	glBindVertexArray(squareLinesMesh.vaoId);
+	unsigned int otherLocation = 7; // Location 30
+	for (int i = 0; i < 3; ++i)
+	{
+		glEnableVertexAttribArray(otherLocation + i);
+		glVertexAttribPointer(otherLocation + i, 3, GL_FLOAT, GL_FALSE, sizeof(glm::mat3), (void*)(sizeof(glm::vec3) * i));
+		glVertexAttribDivisor(otherLocation + i, 1);
+	}
+	glBindVertexArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-	//glGenBuffers(1, &debugOrderBuffer);
-	//glBindBuffer(GL_ARRAY_BUFFER, debugOrderBuffer);
-	//glBufferData(GL_ARRAY_BUFFER, debugDrawOrder.size() * sizeof(bool), &debugDrawOrder[0], GL_DYNAMIC_DRAW);
-	//glBindVertexArray(squareMesh.vaoId);
-	//glEnableVertexAttribArray(15); // Location 15
-	//glVertexAttribIPointer(15, 1, GL_BOOL, sizeof(bool), (void*)0);
-	//glVertexAttribDivisor(15, 1);
-	//glBindVertexArray(0);
-	//glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glGenBuffers(1, &debugOrderBuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, debugOrderBuffer);
+	glBufferData(GL_ARRAY_BUFFER, debugDrawOrder.size() * sizeof(float), &debugDrawOrder[0], GL_DYNAMIC_DRAW);
+	glBindVertexArray(squareLinesMesh.vaoId);
+	glEnableVertexAttribArray(3); // Location 3
+	glVertexAttribIPointer(3, 1, GL_FLOAT, sizeof(float), (void*)0);
+	glVertexAttribDivisor(3, 1);
+	glBindVertexArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
 void GraphicsPipe::funcSetupFrameBuffer()
@@ -399,7 +476,20 @@ void GraphicsPipe::funcUpdate()
 			glm::mat3 lvNDCScale{ aspectRatio, 0, 0, 0, 1.f, 0, 0 , 0 ,1.f };
 			modelToNDCMatrix.push_back(lvNDCScale * lvTranslate * lvRotate * lvScale);
 			textureOrder.push_back(modelData[n].textureID);
-			debugDrawOrder.push_back(modelData[n].debug);
+		}
+	}
+
+	if (debugBoxData.size() > 0)
+	{
+		for (int i{}; i < debugBoxData.size(); i++)
+		{
+			glm::mat3 lvScale{ debugBoxData[i].scale.x, 0, 0, 0, debugBoxData[i].scale.y, 0, 0 , 0 ,1 };
+			glm::mat3 lvRotate{ cos(debugBoxData[i].rotate * 3.1415f / 180.f), -sin(debugBoxData[i].rotate * 3.1415f / 180.f), 0.f,
+								sin(debugBoxData[i].rotate * 3.1415f / 180.f), cos(debugBoxData[i].rotate * 3.1415f / 180.f), 0.f,
+								0.f , 0.f ,1.f };
+			glm::mat3 lvTranslate{ 1, 0, 0, 0, 1, 0, debugBoxData[i].worldCoordinates.x , debugBoxData[i].worldCoordinates.y ,1 };
+			glm::mat3 lvNDCScale{ aspectRatio, 0, 0, 0, 1.f, 0, 0 , 0 ,1.f };
+			debugToNDCMatrix.push_back(lvNDCScale * lvTranslate * lvRotate * lvScale);
 		}
 	}
 
@@ -423,10 +513,6 @@ void GraphicsPipe::funcDraw()
 			glActiveTexture(GL_TEXTURE1+i);
 			glBindTexture(GL_TEXTURE_2D, textureIDs[i]);
 		}
-
-		
-		/*glActiveTexture(GL_TEXTURE2);
-		glBindTexture(GL_TEXTURE_2D, textureIDs[1]);*/
 
 		GLint lvUniformVarLoc1 = glGetUniformLocation(genericShaderProgram, "textures");
 	
@@ -457,22 +543,22 @@ void GraphicsPipe::funcDraw()
 
 void GraphicsPipe::funcDrawDebug()
 {
-	if (!modelToNDCMatrix.empty())
+	if (!debugToNDCMatrix.empty())
 	{
-		glBindBuffer(GL_ARRAY_BUFFER, modelMatrixArrayBuffer);
-		glNamedBufferData(modelMatrixArrayBuffer, modelToNDCMatrix.size() * sizeof(glm::mat3), &modelToNDCMatrix[0], GL_DYNAMIC_DRAW);
-		glBindBuffer(GL_ARRAY_BUFFER, debugOrderBuffer);
-		glNamedBufferData(textureOrderBuffer, debugDrawOrder.size() * sizeof(bool), &debugDrawOrder[0], GL_DYNAMIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, debugMatrixArrayBuffer);
+		glNamedBufferData(debugMatrixArrayBuffer, debugToNDCMatrix.size() * sizeof(glm::mat3), &debugToNDCMatrix[0], GL_DYNAMIC_DRAW);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
-		glUseProgram(genericShaderProgram);
-
+		glUseProgram(debugShaderProgram);
 
 		glBindVertexArray(squareLinesMesh.vaoId);
-		glDrawElementsInstanced(squareLinesMesh.primitiveType, squareLinesMesh.indexElementCount, GL_UNSIGNED_SHORT, NULL, static_cast<GLsizei>(modelToNDCMatrix.size()));
+		glDrawElementsInstanced(squareLinesMesh.primitiveType, squareLinesMesh.indexElementCount, GL_UNSIGNED_SHORT, NULL, static_cast<GLsizei>(debugToNDCMatrix.size()));
 		glBindVertexArray(0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
-		//modelToNDCMatrix.clear();
-		debugDrawOrder.clear();
+		debugToNDCMatrix.clear();
+	}
+	if (!debugBoxData.empty())
+	{
+		debugBoxData.clear();
 	}
 }
 
@@ -517,11 +603,11 @@ unsigned int GraphicsPipe::funcSetupShader(const std::string& vertexShader, cons
 	glDeleteShader(lvFragmentShaderID);
 
 	GLint success;
-	glGetProgramiv(genericShaderProgram, GL_LINK_STATUS, &success);
+	glGetProgramiv(debugShaderProgram, GL_LINK_STATUS, &success);
 	if (!success) 
 	{
 		GLchar infoLog[512];
-		glGetProgramInfoLog(genericShaderProgram, 512, NULL, infoLog);
+		glGetProgramInfoLog(debugShaderProgram, 512, NULL, infoLog);
 		std::cout << "Error linking shader program:\n" << infoLog << std::endl;
 	}
 	else
@@ -548,13 +634,14 @@ void GraphicsPipe::funcSetDrawMode(GLenum mode)
 
 void GraphicsPipe::funcDrawWindow()
 {
-	
 	glBindFramebuffer(GL_FRAMEBUFFER, frameBufferObject);
 	glEnable(GL_DEPTH_TEST);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	//funcDrawDebug();
+	funcDrawDebug();
 	funcDraw();
+	
+	
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glDisable(GL_DEPTH_TEST); 
