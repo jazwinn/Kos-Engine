@@ -7,8 +7,6 @@ namespace Physics {
 
 	std::vector<std::shared_ptr<PhysicsData>> classPhysics::physicsEntities;
 	std::vector<std::shared_ptr<PhysicsData>> classPhysics::collidedEntities;
-	//std::vector<std::unique_ptr<PhysicsData>> classPhysics::physicsEntities;
-	//std::vector<std::unique_ptr<PhysicsData>> classPhysics::collidedEntities;
 
 // Constructor for Circle (definition)
 Circle::Circle(float radius, Vector2::Vec2 shape_position, Vector2::Vec2 shape_scale, Vector2::Vec2 shape_velocity, int entity_ID)
@@ -47,22 +45,11 @@ Rectangle::Rectangle(float rect_height, float rect_width, Vector2::Vec2 shape_po
 	}
 
 	void classPhysics::SendPhysicsData(float rect_height, float rect_width, Vector2::Vec2 position, Vector2::Vec2 scale, Vector2::Vec2 velocity, int ID) {
-		////get the data store
-		//// Create a unique_ptr for Rectangle
-		//std::unique_ptr<PhysicsData> rectangle = std::make_unique<Rectangle>(rect_height, rect_width, position, scale, velocity, ID);
-
-		//// Use std::move to transfer ownership of the unique_ptr to the vector
-		//physicsEntities.push_back(std::move(rectangle));
-		physicsEntities.push_back(std::make_unique<Rectangle>(rect_height, rect_width, position, scale, velocity, ID));
+		physicsEntities.push_back(std::make_shared<Rectangle>(rect_height, rect_width, position, scale, velocity, ID));
 	}
 
 	void classPhysics::SendPhysicsData(float radius, Vector2::Vec2 position, Vector2::Vec2 scale, Vector2::Vec2 velocity, int ID){
-		//// Create a unique_ptr for Rectangle
-		//std::unique_ptr<PhysicsData> circle = std::make_unique<Circle>(radius, position, scale, velocity, ID);
-
-		//// Use std::move to transfer ownership of the unique_ptr to the vector
-		//physicsEntities.push_back(std::move(circle));
-		physicsEntities.push_back(std::make_unique<Circle>(radius, position, scale, velocity, ID));
+		physicsEntities.push_back(std::make_shared<Circle>(radius, position, scale, velocity, ID));
 	}
 	
 
@@ -81,10 +68,6 @@ Rectangle::Rectangle(float rect_height, float rect_width, Vector2::Vec2 shape_po
 						if (CollisionIntersection_RectRect(*dynamic_cast<Rectangle*>(physicsEntities[i].get()), *dynamic_cast<Rectangle*>(physicsEntities[i].get()), dt)) {
 							//checking whether if entity is alr added inside
 							if (std::find(collidedEntities.begin(), collidedEntities.end(), physicsEntities[i]) == collidedEntities.end()) {
-								//std::cout << "adding Entity i" << physicsEntities[i].ID << std::endl;
-								//Rectangle rect = *dynamic_cast<Rectangle*>(physicsEntities[i].get());
-								//std::unique_ptr<PhysicsData> rectangle = std::make_unique<Rectangle>(rect.height, rect.width, rect.position, rect.scale, rect.velocity, rect.ID);
-								//collidedEntities.push_back(std::move(rectangle));
 								collidedEntities.push_back(physicsEntities[i]);
 							}
 						}
@@ -95,9 +78,6 @@ Rectangle::Rectangle(float rect_height, float rect_width, Vector2::Vec2 shape_po
 					else if (physicsEntities[i]->GetEntity() == EntityType::Circle && physicsEntities[j]->GetEntity() == EntityType::Rectangle) {
 						if (CollisionIntersection_CircleRect(*dynamic_cast<Circle*>(physicsEntities[i].get()), *dynamic_cast<Rectangle*>(physicsEntities[j].get()))) {
 							if (std::find(collidedEntities.begin(), collidedEntities.end(), physicsEntities[i]) == collidedEntities.end()) {
-								//Circle circ = *dynamic_cast<Circle*>(physicsEntities[i].get());
-								//std::unique_ptr<PhysicsData> circle = std::make_unique<Circle>(circ.m_radius, circ.position, circ.scale, circ.velocity, circ.ID);
-								//collidedEntities.push_back(std::move(circle));
 								collidedEntities.push_back(physicsEntities[i]);
 							}
 						}
@@ -109,9 +89,6 @@ Rectangle::Rectangle(float rect_height, float rect_width, Vector2::Vec2 shape_po
 					else if (physicsEntities[j]->GetEntity() == EntityType::Circle && physicsEntities[i]->GetEntity() == EntityType::Rectangle) {
 						if (CollisionIntersection_CircleRect(*dynamic_cast<Circle*>(physicsEntities[j].get()), *dynamic_cast<Rectangle*>(physicsEntities[i].get()))) {
 							if (std::find(collidedEntities.begin(), collidedEntities.end(), physicsEntities[i]) == collidedEntities.end()) {
-								//Rectangle rect = *dynamic_cast<Rectangle*>(physicsEntities[i].get());
-								//std::unique_ptr<PhysicsData> rectangle = std::make_unique<Rectangle>(rect.height, rect.width, rect.position, rect.scale, rect.velocity, rect.ID);
-								//collidedEntities.push_back(std::move(rectangle));
 								collidedEntities.push_back(physicsEntities[i]);
 							}
 						}
@@ -122,9 +99,6 @@ Rectangle::Rectangle(float rect_height, float rect_width, Vector2::Vec2 shape_po
 					else if(physicsEntities[i]->GetEntity() == EntityType::Circle && physicsEntities[j]->GetEntity() == EntityType::Circle) {
 						if (CollisionIntersection_CircleCircle(*dynamic_cast<Circle*>(physicsEntities[i].get()), *dynamic_cast<Circle*>(physicsEntities[j].get()))) {
 							if (std::find(collidedEntities.begin(), collidedEntities.end(), physicsEntities[i]) == collidedEntities.end()) {
-								//Circle circ = *dynamic_cast<Circle*>(physicsEntities[i].get());
-								//std::unique_ptr<PhysicsData> circle = std::make_unique<Circle>(circ.m_radius, circ.position, circ.scale, circ.velocity, circ.ID);
-								//collidedEntities.push_back(std::move(circle));
 								collidedEntities.push_back(physicsEntities[i]);
 							}
 						}
@@ -162,7 +136,7 @@ Rectangle::Rectangle(float rect_height, float rect_width, Vector2::Vec2 shape_po
 				dynamic_cast<Rectangle*>(physicsEntities[i].get())->boundingBox = boundingBox;
 			}
 			else if (physicsEntities[i]->GetEntity() == EntityType::Circle) {
-
+				//Caclulate the bounding sphere
 			}
 			else {
 
