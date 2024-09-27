@@ -111,9 +111,6 @@
     <ClCompile Include="ECS\ECS.cpp">
       <Filter>Source Files\ECS</Filter>
     </ClCompile>
-    <ClCompile Include="ECS\System\CollisionSystem.cpp">
-      <Filter>Source Files\ECS\System</Filter>
-    </ClCompile>
     <ClCompile Include="ECS\System\MovementSystem.cpp">
       <Filter>Source Files\ECS\System</Filter>
     </ClCompile>
@@ -206,6 +203,9 @@
     </ClCompile>
     <ClCompile Include="Application\ImGui Panels\imgui_logs_window.cpp">
       <Filter>Source Files\Imgui\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="ECS\System\CollisionSystem.cpp">
+      <Filter>Source Files\ECS\System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -316,6 +316,9 @@
     </ClInclude>
     <ClInclude Include="Assets\AudioManager.h">
       <Filter>Header Files\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="ECS\System\SystemType.h">
+      <Filter>Header Files\ECS\System</Filter>
     </ClInclude>
     <ClInclude Include="Debugging\Logging.h">
       <Filter>Header Files\Debugging</Filter>
