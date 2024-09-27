@@ -15,12 +15,8 @@ void ImGuiHandler::DrawLogsWindow() {
     ImGui::Begin("Log", &open);
     std::vector<std::string> log_Entries = Logging::Logger::GetInstance().getLogList();
     for (size_t i = 0; i < log_Entries.size(); ++i) {
-
+        ImGui::Text(log_Entries[i].c_str());
     }
-
-
-
-    ImGui::Text("Testing");
     ImGui::End();
 
     // Actually call in the regular Log helper (which will Begin() into the same window as we just did)

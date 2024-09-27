@@ -23,7 +23,8 @@ namespace PerformanceTracker{
 		void printFPS(float);
 		void resetPerformance();
 		void addTime(float);
-
+		float getTime();
+		float getSystemTime(Ecs::TypeSystem);
 		void addPair(Ecs::TypeSystem, float);
 	};
 }
