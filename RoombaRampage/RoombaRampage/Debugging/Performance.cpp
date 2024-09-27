@@ -27,6 +27,17 @@ namespace PerformanceTracker {
 	void Performance::addPair(Ecs::TypeSystem system, float time) {
 		systemTimeList.push_back(std::pair(system, time));
 	}
+
+	float Performance::getTime() {
+		return engineTime;
+	}
+	float Performance::getSystemTime(Ecs::TypeSystem sys) {
+		for (const auto& system : systemTimeList) {
+			if (system.first == sys) return system.second;
+		}
+		return -1;
+	}
+
 	void Performance::printPerformance(){
 		std::cout << "###########################################" << std::endl;
 		for (auto& val : systemTimeList) {

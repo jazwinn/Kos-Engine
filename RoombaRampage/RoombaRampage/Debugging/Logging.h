@@ -190,7 +190,7 @@ namespace Logging {
 
         std::stringstream logEntry;
         logEntry << "[ERROR]: " << getCurrentTimestamp() << " - " << std::vformat(message, std::make_format_args(args...))
-            << "\nFUNC: " << location.function_name() << " LINE: " << location.line();
+            << "\nFUNC: " << location.function_name() << " LINE: " << location.line() << " FILE: " << location.file_name();
 
         std::cout << RED << logEntry.str() << CLOSE << std::endl;
         log_list.push_back(logEntry.str());
