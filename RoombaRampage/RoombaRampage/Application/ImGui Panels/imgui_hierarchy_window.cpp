@@ -35,8 +35,8 @@ unsigned int ImGuiHandler::DrawHierachyWindow()
         ImGui::EndMenuBar();
     }
 
-
-    //ImGui::Text("Roomba Rampage");
+    std::string ObjectCountStr = "Oject Count: " + std::to_string(obj_entity_id.size());
+    ImGui::Text(ObjectCountStr.c_str());
 
     if (ImGui::Button("+ Add GameObject"))
         ImGuiHandler::objectNameBox ? ImGuiHandler::objectNameBox = false : objectNameBox = true;
@@ -75,6 +75,10 @@ unsigned int ImGuiHandler::DrawHierachyWindow()
         std::string buttonName = obj_text_entries[i] +"##"+ std::to_string(i);
         if (ImGui::Button(buttonName.c_str()))
         {
+            size_t PreviousButton = clicked_entity_id;
+            deleteButton[PreviousButton] = false;
+            DuplicateButton[PreviousButton] = false;
+
             deleteButton[i] ? deleteButton[i] = false : deleteButton[i] = true;
             DuplicateButton[i] ? DuplicateButton[i] = false : DuplicateButton[i] = true;
 
@@ -145,7 +149,7 @@ unsigned int ImGuiHandler::DrawHierachyWindow()
                 obj_entity_id.push_back(newEntityID);
 
                 //Add the string into the vector
-                obj_text_entries.push_back(std::string(charBuffer));
+                obj_text_entries.push_back(std::string(obj_text_entries[i]));
 
                 //Set to false as no button showing first
                 //Used to track and maintain sync between objtextentries and deletebutton vector
