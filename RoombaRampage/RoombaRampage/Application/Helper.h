@@ -27,6 +27,8 @@ namespace Helper {
 
 		float DeltaTime;
 
+		float Fps;
+
 	private:
 		static std::unique_ptr<Helpers> InstancePtr;
 
