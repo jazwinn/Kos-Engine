@@ -40,6 +40,12 @@ void ImGuiHandler::DrawComponentWindow()
             Ecs::MovementComponent* mc = static_cast<Ecs::MovementComponent*>(ecs->ECS_CombinedComponentPool[Ecs::TypeMovemmentComponent]
                 ->GetEntityComponent(entityID));
 
+            Ecs::ColliderComponent* cc = static_cast<Ecs::ColliderComponent*>(ecs->ECS_CombinedComponentPool[Ecs::TypeColliderComponent]
+                ->GetEntityComponent(entityID));
+
+            Ecs::SpriteComponent* sc = static_cast<Ecs::SpriteComponent*>(ecs->ECS_CombinedComponentPool[Ecs::TypeSpriteComponent]
+                ->GetEntityComponent(entityID));
+
 
             const float slider_start_pos_x = 100.0f; //Padding for the slider
 
@@ -124,6 +130,60 @@ void ImGuiHandler::DrawComponentWindow()
                 //ImGui::DragFloat("##Res", &mc->resistance, 0.01f, 0.0f, 5.0f, "%.2f");
 
             }
+            if (cc != nullptr)
+            {
+                ImGui::Text("Collider Component");
+
+                //Display Position
+                ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
+                ImGui::Text("Size");
+                ImGui::SameLine(slider_start_pos_x);
+                ImGui::SetNextItemWidth(100.0f);
+                if (ImGui::DragFloat("X###", &cc->Size.x, 0.02f, 0.f, 2.0f, "%.2f"))
+                    isModified = true;
+
+                ImGui::SameLine();
+                ImGui::SetNextItemWidth(100.0f);
+                if (ImGui::DragFloat("Y###PosY", &cc->Size.y, 0.02f, 0.f, 2.0f, "%.2f"))
+                    isModified = true;
+
+                //Display Rotation
+                ImGui::AlignTextToFramePadding();
+                ImGui::Text("Display Collision");
+                ImGui::SameLine(slider_start_pos_x);
+                ImGui::Checkbox("##xx", &cc->drawDebug);
+                    isModified = true;
+
+                //Display Scale
+                ImGui::AlignTextToFramePadding();
+                ImGui::Text("Offset");
+                ImGui::SameLine(slider_start_pos_x);
+                ImGui::SetNextItemWidth(100.0f);
+                if (ImGui::DragFloat("#####X", &cc->OffSet.x, 0.02f, -1.f, 1.0f, "%.2f"))
+                    isModified = true;
+
+                ImGui::SameLine();
+                ImGui::SetNextItemWidth(100.0f);
+                if (ImGui::DragFloat("######Y", &cc->OffSet.y, 0.02f, -1.f, 1.f, "%.2f"))
+                    isModified = true;
+            }
+
+            if (sc != nullptr)
+            {
+                //components.push_back(std::static_pointer_cast<Ecs::Component>(std::make_shared<Ecs::MovementComponent>(*mc)));
+
+                ImGui::Text("Sprite Component");
+
+                // Display Speed
+                ImGui::AlignTextToFramePadding();
+                ImGui::Text("Texture");
+                ImGui::SameLine(slider_start_pos_x);
+                ImGui::SetNextItemWidth(100.0f);
+                if (ImGui::DragInt("##Texture##", (int*)& sc->imageID, 0.04f, 0, 4, "%d"))
+                    isModified = true;
+
+            }
+
             else
             {
                 ImGui::Text("Add a component?");
