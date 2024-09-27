@@ -51,10 +51,13 @@ namespace Ecs{
 		//update deltatime
 		ecs->DeltaTime = DT;
 
+		PerformanceTracker::Performance::ResetTotalSystemTime();
+		
+
 		//loops through all the system
 		for (auto& System : ecs->ECS_SystemMap) {
 			auto start = std::chrono::steady_clock::now();
-			static float interval = 0;
+			
 
 			System.second->Update();
 
@@ -62,14 +65,11 @@ namespace Ecs{
 			auto end = std::chrono::steady_clock::now();
 
 			std::chrono::duration<float> duration = end - start;
+			
 
-			interval += duration.count();
 			PerformanceTracker::Performance::UpdateTotalSystemTime(duration.count());
-			if (interval > 1) {
-				
-				PerformanceTracker::Performance::UpdateSystemTime(System.first, duration.count());
-				interval = 0;
-			}
+			PerformanceTracker::Performance::UpdateSystemTime(System.first, duration.count());
+		
 
 		}
 		

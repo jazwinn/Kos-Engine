@@ -19,6 +19,8 @@ namespace PerformanceTracker{
 
 	public:
 		Performance();
+
+		static void ResetTotalSystemTime();
 		static void AddSystem(Ecs::TypeSystem System);
 
 		static void printPerformance();
@@ -29,12 +31,13 @@ namespace PerformanceTracker{
 		static float getSystemTime(Ecs::TypeSystem);
 		static std::string getSystemString(Ecs::TypeSystem);
 		static void UpdateSystemTime(Ecs::TypeSystem, float);
-	private:
+	
 		
 		static float engineTime;
+	private:
 		static int totalSystem;
 		static std::unordered_map<Ecs::TypeSystem, std::pair<std::string,float>> systemTimeList;
-		
+
 
 	};
 }
