@@ -3,6 +3,7 @@
 #include "imgui_impl_opengl3.h"
 #include "imgui_handler.h"
 #include "../ECS/ECS.h"
+#include "../Assets/AssetManager.h"
 
 #pragma warning(push)
 #pragma warning(disable : 26495)  // Disable uninitialized variable warning
@@ -174,13 +175,49 @@ void ImGuiHandler::DrawComponentWindow()
 
                 ImGui::Text("Sprite Component");
 
+                AssetManager* images = AssetManager::funcGetInstance();
+
+                const char* items[] = { "AAAA", "BBBB", "CCCC", "DDDD", "EEEE" };
+                static int item_selected_idx = 0; // Here we store our selected data as an index.
+
+                static bool item_highlight = false;
+                int item_highlighted_idx = -1; // Here we store our highlighted data as an index.
+                ImGui::Checkbox("Highlight hovered item in second listbox", &item_highlight);
+
+                if (ImGui::BeginListBox("listbox 1"))
+                {
+                    for (unsigned int n = 0; n < images->imageContainer.size(); n++)
+                    {
+                        const bool is_selected = (item_selected_idx == n);
+                        if (ImGui::Selectable(const_cast<char*>(images->imageContainer[n].spriteName.c_str()), is_selected))
+                        {
+                            item_selected_idx = n;
+                        }
+                            
+
+                        if (item_highlight && ImGui::IsItemHovered())
+                        {
+                            item_highlighted_idx = n;
+                        }
+                            
+                        // Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
+                        if (is_selected)
+                        {
+                            ImGui::SetItemDefaultFocus();
+                            sc->imageID = n;
+                        }
+                            
+                    }
+                    ImGui::EndListBox();
+                }
+
                 // Display Speed
-                ImGui::AlignTextToFramePadding();
+               /* ImGui::AlignTextToFramePadding();
                 ImGui::Text("Texture");
                 ImGui::SameLine(slider_start_pos_x);
                 ImGui::SetNextItemWidth(100.0f);
                 if (ImGui::DragInt("##Texture##", (int*)& sc->imageID, 0.04f, 0, 4, "%d"))
-                    isModified = true;
+                    isModified = true;*/
 
             }
 
@@ -189,8 +226,9 @@ void ImGuiHandler::DrawComponentWindow()
                 ImGui::Text("Add a component?");
                 ImGui::End();
             }
-            
 
+         
+     
 
             // If any component was modified, save the updated values to JSON
             if (isFirstSaved || isModified)
