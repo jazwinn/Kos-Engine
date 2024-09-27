@@ -4,6 +4,9 @@
 #include "imgui_handler.h"
 #include "implot.h"
 #include "../Debugging/Logging.h"
+#include "../Debugging/Performance.h"
+#include <../ECS/System/SystemType.h>
+
 
 struct Buffer {
     int MaxSize;
@@ -29,6 +32,8 @@ struct Buffer {
         }
     }
 };
+
+
 
 void ImGuiHandler::DrawPerformanceWindow(float fps) {
 
@@ -57,10 +62,28 @@ void ImGuiHandler::DrawPerformanceWindow(float fps) {
         sprintf_s(overlay, "FPS %f", average);
         
         //TODO change to ImPlot
-        ImGui::PlotLines("##", FpsValues, IM_ARRAYSIZE(FpsValues), FpsValues_offset, overlay, 0.0f, 100.0f, ImVec2(260.f, 120.0f));
+        ImGui::PlotLines("##", FpsValues, IM_ARRAYSIZE(FpsValues), FpsValues_offset, overlay, 55.0f, 65.0f, ImVec2(260.f, 120.0f));
 
        // ImGui::PlotShaded();
     }
+
+
+    if (ImGui::CollapsingHeader("System Time")) {
+
+
+        for (int n{}; n < Ecs::TotalTypeSystem; n++) {
+
+            std::string SystemText = PerformanceTracker::Performance::getSystemString((Ecs::TypeSystem)n) + ": " 
+                                    + std::to_string(PerformanceTracker::Performance::getSystemTime((Ecs::TypeSystem)n));
+
+            ImGui::Text(SystemText.c_str());
+     
+
+       }
+    }
+
+
+
 
     ImGui::End();
 
