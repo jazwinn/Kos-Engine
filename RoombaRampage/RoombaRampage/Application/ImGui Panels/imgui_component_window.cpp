@@ -151,8 +151,8 @@ void ImGuiHandler::DrawComponentWindow()
                 //Display Rotation
                 ImGui::AlignTextToFramePadding();
                 ImGui::Text("Display Collision");
-                ImGui::SameLine(slider_start_pos_x);
-                ImGui::Checkbox("##xx", &cc->drawDebug);
+                ImGui::SameLine(slider_start_pos_x + 40);
+                ImGui::Checkbox("####xx", &cc->drawDebug);
                     isModified = true;
 
                 //Display Scale
@@ -160,12 +160,12 @@ void ImGuiHandler::DrawComponentWindow()
                 ImGui::Text("Offset");
                 ImGui::SameLine(slider_start_pos_x);
                 ImGui::SetNextItemWidth(100.0f);
-                if (ImGui::DragFloat("#####X", &cc->OffSet.x, 0.02f, -1.f, 1.0f, "%.2f"))
+                if (ImGui::DragFloat("X##VelX", &cc->OffSet.x, 0.02f, -1.f, 1.0f, "%.2f"))
                     isModified = true;
 
                 ImGui::SameLine();
                 ImGui::SetNextItemWidth(100.0f);
-                if (ImGui::DragFloat("######Y", &cc->OffSet.y, 0.02f, -1.f, 1.f, "%.2f"))
+                if (ImGui::DragFloat("Y##VelY", &cc->OffSet.y, 0.02f, -1.f, 1.f, "%.2f"))
                     isModified = true;
             }
 
