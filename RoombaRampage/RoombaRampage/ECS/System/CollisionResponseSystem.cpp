@@ -65,7 +65,8 @@ namespace Ecs {
 
 		if (vecCollisionEntity.empty()); //std::cout << "No collision from Collision System CPP" << std::endl;
 		else {
-			//REQUIRES OPTIMIZATION
+			//REQUIRES OPTIMIZATION 
+			//CollidedEntity is the ID
 			for (auto& CollidedEntity : vecCollisionEntity) {
 				if (ecs->ECS_CombinedComponentPool[TypeRigidBodyComponent]->HasComponent(CollidedEntity->ID)) {
 

@@ -111,9 +111,6 @@
     <ClCompile Include="ECS\ECS.cpp">
       <Filter>Source Files\ECS</Filter>
     </ClCompile>
-    <ClCompile Include="ECS\System\CollisionSystem.cpp">
-      <Filter>Source Files\ECS\System</Filter>
-    </ClCompile>
     <ClCompile Include="ECS\System\MovementSystem.cpp">
       <Filter>Source Files\ECS\System</Filter>
     </ClCompile>
@@ -206,6 +203,9 @@
     </ClCompile>
     <ClCompile Include="Application\ImGui Panels\imgui_logs_window.cpp">
       <Filter>Source Files\Imgui\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="ECS\System\CollisionSystem.cpp">
+      <Filter>Source Files\ECS\System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
