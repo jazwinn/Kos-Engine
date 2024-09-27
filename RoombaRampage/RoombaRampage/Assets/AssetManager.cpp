@@ -19,6 +19,7 @@ void AssetManager::funcLoadAssets()
     funcLoadImage("Assets/roombaTest.png");
     funcLoadImage("Assets/roombaTest2.png");
     funcLoadImage("Assets/roombaTest3.png");
+    funcLoadImage("Assets/sprAssassinBar_strip8.png");
 }
 
 AssetManager* AssetManager::funcGetInstance()
@@ -53,7 +54,11 @@ void AssetManager::funcLoadImage(const char* file)
     stbi_set_flip_vertically_on_load(true);
 	Image image{};
     image.stripCount = extractStripCountFromFilename(file);
+   
     image.spriteName = extractSpriteNameFromFilename(file);
+    
+   
+    
 	unsigned char* data = stbi_load(file, &image.width, &image.height, &image.channels, 0);
     if (!data)
     {
@@ -159,12 +164,13 @@ unsigned char* AssetManager::funcPadTexture(const unsigned char* originalPixels,
 int AssetManager::extractStripCountFromFilename(const std::string& filename) 
 {
     // Use regex to find the strip count in the format "something_strip(number).png"
-    std::regex pattern("(\\w)_strip(\\d+)\\.png");
+    std::regex pattern("([[:alnum:]])_strip([[:digit:]]+)\\.png");
     std::smatch match;
 
     if (std::regex_search(filename, match, pattern)) 
     {
-        return std::stoi(match[1].str());
+        std::cout << "Strip Success" << std::endl;
+        return std::stoi(match[2].str());
     }
 
     // Default to 1 if no number is found
@@ -173,7 +179,7 @@ int AssetManager::extractStripCountFromFilename(const std::string& filename)
 
 std::string AssetManager::extractSpriteNameFromFilename(const std::string& filename)
 {
-    std::regex pattern("(\\w+)_.*\\.png");
+    std::regex pattern("([[:alnum:]]+)([_]*)([[:alnum:]]*)\.png");
     std::smatch match;
 
     if (std::regex_search(filename, match, pattern))

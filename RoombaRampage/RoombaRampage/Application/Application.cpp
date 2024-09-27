@@ -45,8 +45,6 @@ namespace Application {
         Serialization::Serialize::LoadConfig();
         
 
-
-
         /*--------------------------------------------------------------
            INITIALIZE Asset Manager
         --------------------------------------------------------------*/
