@@ -20,181 +20,134 @@
 // Helper function to check if the json file exists and create it
 void JsonFileValidation(const std::string& filePath) {
 
-	std::ifstream checkFile(filePath);
+    std::ifstream checkFile(filePath);
 
-	if (!checkFile) {
-		std::ofstream createFile(filePath);
-		createFile << "[]";  // Initialize empty JSON array
-		createFile.close();
-	}
-	checkFile.close();
+    if (!checkFile) {
+        std::ofstream createFile(filePath);
+        createFile << "[]";  // Initialize empty JSON array
+        createFile.close();
+    }
+    checkFile.close();
 }
 
 void LoadComponentsJson(const std::string& jsonFilePath, Ecs::TransformComponent* tc, Ecs::MovementComponent* mc)
 {
-	//FILE* jsonFile = fopen(jsonFilePath.c_str(), "wb"); //Open json file
-	////Read json file into buffer
-	//std::unique_ptr<char[]> writeBuffer(new char[65536]);
+    //FILE* jsonFile = fopen(jsonFilePath.c_str(), "wb"); //Open json file
+    ////Read json file into buffer
+    //std::unique_ptr<char[]> writeBuffer(new char[65536]);
 
-	////rapidjson::StringBuffer writeBuffer;
-	////Write the JSON data to the file
-	//rapidjson::FileWriteStream os(jsonFile, writeBuffer.get(), 65536);
-	//rapidjson::Writer<rapidjson::FileWriteStream> writer(os);
+    ////rapidjson::StringBuffer writeBuffer;
+    ////Write the JSON data to the file
+    //rapidjson::FileWriteStream os(jsonFile, writeBuffer.get(), 65536);
+    //rapidjson::Writer<rapidjson::FileWriteStream> writer(os);
 
-	//Create json obj to hold the updated values
-	rapidjson::Document doc;
-	doc.SetObject();
+    //Create json obj to hold the updated values
+    rapidjson::Document doc;
+    doc.SetObject();
 
-	rapidjson::Document::AllocatorType& allocator = doc.GetAllocator(); //Alocate memory for dynamic changes to json files
+    rapidjson::Document::AllocatorType& allocator = doc.GetAllocator(); //Alocate memory for dynamic changes to json files
 
-	// Create transform component in JSON
-	rapidjson::Value entity(rapidjson::kObjectType);
-	rapidjson::Value transform(rapidjson::kObjectType);
-	transform.AddMember("position", rapidjson::Value().SetObject()
-		.AddMember("x", tc->position.x, allocator)
-		.AddMember("y", tc->position.y, allocator), allocator);
-	transform.AddMember("rotation", tc->rotation, allocator);
-	transform.AddMember("scale", rapidjson::Value().SetObject()
-		.AddMember("x", tc->scale.x, allocator)
-		.AddMember("y", tc->scale.y, allocator), allocator);
+    // Create transform component in JSON
+    rapidjson::Value entity(rapidjson::kObjectType);
+    rapidjson::Value transform(rapidjson::kObjectType);
+    transform.AddMember("position", rapidjson::Value().SetObject()
+        .AddMember("x", tc->position.x, allocator)
+        .AddMember("y", tc->position.y, allocator), allocator);
+    transform.AddMember("rotation", tc->rotation, allocator);
+    transform.AddMember("scale", rapidjson::Value().SetObject()
+        .AddMember("x", tc->scale.x, allocator)
+        .AddMember("y", tc->scale.y, allocator), allocator);
 
-	entity.AddMember("transform", transform, allocator);
+    entity.AddMember("transform", transform, allocator);
 
-	// Create movement component in JSON
-	rapidjson::Value movement(rapidjson::kObjectType);
-	movement.AddMember("speed", mc->Speed, allocator);
-	movement.AddMember("direction", rapidjson::Value().SetObject()
-		.AddMember("x", mc->Direction.x, allocator)
-		.AddMember("y", mc->Direction.y, allocator), allocator);
+    // Create movement component in JSON
+    rapidjson::Value movement(rapidjson::kObjectType);
+    movement.AddMember("speed", mc->Speed, allocator);
+    movement.AddMember("direction", rapidjson::Value().SetObject()
+        .AddMember("x", mc->Direction.x, allocator)
+        .AddMember("y", mc->Direction.y, allocator), allocator);
 
-	entity.AddMember("movement", movement, allocator);
+    entity.AddMember("movement", movement, allocator);
 
-	doc.AddMember("entity", entity, allocator);
+    doc.AddMember("entity", entity, allocator);
 
 
-	rapidjson::StringBuffer writeBuffer;
-	rapidjson::PrettyWriter <rapidjson::StringBuffer>  writer(writeBuffer);
+    rapidjson::StringBuffer writeBuffer;
+    rapidjson::PrettyWriter <rapidjson::StringBuffer>  writer(writeBuffer);
 
-	// Write the JSON
-	doc.Accept(writer);
+    // Write the JSON
+    doc.Accept(writer);
 
-	FILE* jsonFile = fopen(jsonFilePath.c_str(), "wb");  // Open JSON file for writing
+    FILE* jsonFile = fopen(jsonFilePath.c_str(), "wb");  // Open JSON file for writing
 
-	if (jsonFile)
-	{
-		fputs(writeBuffer.GetString(), jsonFile);
-		fclose(jsonFile);
-	}
+    if (jsonFile)
+    {
+        fputs(writeBuffer.GetString(), jsonFile);
+        fclose(jsonFile);
+    }
 }
 
-void SaveComponentsJson(const std::string& filePath, Ecs::TransformComponent* tc, Ecs::MovementComponent* mc, int entityIndex)
+void SaveComponentsJson(const std::string& filePath, const std::unordered_map<Ecs::EntityID, std::bitset<Ecs::ComponentType::TotalTypeComponent>>& ECS_EntityMap)
 {
+    // JSON File Validation / Creation
+    std::string jsonFilePath = filePath + "/components.json";
+    JsonFileValidation(jsonFilePath);
 
-	//checks to see if entity is alive
-	Ecs::ECS *ecs = Ecs::ECS::GetInstance();
+    // Create JSON object to hold the updated values
+    rapidjson::Document doc;
+    doc.SetArray();  // Initialize as an empty array
 
-	bool save = false;
+    rapidjson::Document::AllocatorType& allocator = doc.GetAllocator();
 
-	for (auto& Entiy : ecs->ECS_EntityMap) {
-		if (Entiy.first == entityIndex) {
-			save = true;
-			break;
-		}
-	}
-	
+    auto* ecs = Ecs::ECS::GetInstance();
 
+    // Iterate through the ECS_Entitymap to save data only for active entities
+    for (const auto& entityPair : ECS_EntityMap) {
+        Ecs::EntityID entityID = entityPair.first;
 
+        // Create a new JSON object for entitydata
+        rapidjson::Value entityData(rapidjson::kObjectType);
 
+        // Check if the entity has TransformComponent and save 
+        if (entityPair.second.test(Ecs::ComponentType::TypeTransformComponent)) {
+            Ecs::TransformComponent* tc = static_cast<Ecs::TransformComponent*>(ecs->ECS_CombinedComponentPool[Ecs::ComponentType::TypeTransformComponent]->GetEntityComponent(entityID));
+            if (tc) {
+                rapidjson::Value transform(rapidjson::kObjectType);
+                transform.AddMember("position", rapidjson::Value().SetObject()
+                    .AddMember("x", tc->position.x, allocator)
+                    .AddMember("y", tc->position.y, allocator), allocator);
+                transform.AddMember("rotation", tc->rotation, allocator);
+                transform.AddMember("scale", rapidjson::Value().SetObject()
+                    .AddMember("x", tc->scale.x, allocator)
+                    .AddMember("y", tc->scale.y, allocator), allocator);
+                entityData.AddMember("transform", transform, allocator);
+            }
+        }
 
-	//JSON File Validation / Creation
-	std::string jsonFilePath = filePath + "/components.json";
-	JsonFileValidation(jsonFilePath);
+        // Check if the entity has MovementComponent and save it
+        if (entityPair.second.test(Ecs::ComponentType::TypeMovemmentComponent)) {
+            Ecs::MovementComponent* mc = static_cast<Ecs::MovementComponent*>(ecs->ECS_CombinedComponentPool[Ecs::ComponentType::TypeMovemmentComponent]->GetEntityComponent(entityID));
+            if (mc) {
+                rapidjson::Value movement(rapidjson::kObjectType);
+                movement.AddMember("speed", mc->Speed, allocator);
+                movement.AddMember("direction", rapidjson::Value().SetObject()
+                    .AddMember("x", mc->Direction.x, allocator)
+                    .AddMember("y", mc->Direction.y, allocator), allocator);
+                entityData.AddMember("movement", movement, allocator);
+            }
+        }
 
-	//Create json obj to hold the updated values
-	std::ifstream inputFile(jsonFilePath);
-	//clear json file
-	rapidjson::Document doc;
+        doc.PushBack(entityData, allocator);
+    }
 
-	doc.SetArray();  // Set an empty array
+    // Write the JSON back to file
+    rapidjson::StringBuffer writeBuffer;
+    rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(writeBuffer);
+    doc.Accept(writer);
 
-	if (inputFile){
-		std::string fileContent((std::istreambuf_iterator<char>(inputFile)), std::istreambuf_iterator<char>());  // Read entire file into a string
-
-		// Parse the existing JSON data from the string
-		doc.Parse(fileContent.c_str());
-		inputFile.close();
-	}
-
-	rapidjson::Document::AllocatorType& allocator = doc.GetAllocator();
-	//rapidjson::Value entity(rapidjson::kObjectType);
-
-	if (entityIndex < 0 || entityIndex >= doc.Size()) {
-
-		rapidjson::Value entity(rapidjson::kObjectType);
-
-		if (tc != nullptr)
-		{
-			// Create transform component in JSON
-			rapidjson::Value transform(rapidjson::kObjectType);
-			transform.AddMember("position", rapidjson::Value().SetObject()
-				.AddMember("x", tc->position.x, allocator)
-				.AddMember("y", tc->position.y, allocator), allocator);
-			transform.AddMember("rotation", tc->rotation, allocator);
-			transform.AddMember("scale", rapidjson::Value().SetObject()
-				.AddMember("x", tc->scale.x, allocator)
-				.AddMember("y", tc->scale.y, allocator), allocator);
-
-			entity.AddMember("transform", transform, allocator);
-		}
-
-		if (mc != nullptr)
-		{
-			// Create movement component in JSON
-			rapidjson::Value movement(rapidjson::kObjectType);
-			movement.AddMember("speed", mc->Speed, allocator);
-			movement.AddMember("direction", rapidjson::Value().SetObject()
-				.AddMember("x", mc->Direction.x, allocator)
-				.AddMember("y", mc->Direction.y, allocator), allocator);
-			entity.AddMember("movement", movement, allocator);
-		}
-		doc.PushBack(entity, allocator);
-	}
-	else
-	{
-		// Modify the existing game object
-		rapidjson::Value& gameObject = doc[entityIndex];
-
-		// Modify transform component
-		if (tc != nullptr && gameObject.HasMember("transform")) {
-			rapidjson::Value& transform = gameObject["transform"];
-			transform["position"]["x"].SetFloat(tc->position.x);
-			transform["position"]["y"].SetFloat(tc->position.y);
-			transform["rotation"].SetFloat(tc->rotation);
-			transform["scale"]["x"].SetFloat(tc->scale.x);
-			transform["scale"]["y"].SetFloat(tc->scale.y);
-		}
-
-		// Modify movement component
-		if (mc != nullptr && gameObject.HasMember("movement")) {
-			rapidjson::Value& movement = gameObject["movement"];
-			movement["speed"].SetFloat(mc->Speed);
-			movement["direction"]["x"].SetFloat(mc->Direction.x);
-			movement["direction"]["y"].SetFloat(mc->Direction.y);
-		}
-	}
-
-	rapidjson::StringBuffer writeBuffer;
-	rapidjson::PrettyWriter <rapidjson::StringBuffer>  writer(writeBuffer);
-
-	// Write the JSON
-	doc.Accept(writer);
-
-	std::ofstream outputFile(jsonFilePath);
-
-	if (outputFile)
-	{
-		std::ofstream outputFile(jsonFilePath);
-		outputFile << writeBuffer.GetString();
-		outputFile.close();
-	}
+    std::ofstream outputFile(jsonFilePath);
+    if (outputFile) {
+        outputFile << writeBuffer.GetString();
+        outputFile.close();
+    }
 }

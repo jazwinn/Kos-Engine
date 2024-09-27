@@ -26,6 +26,7 @@ void ImGuiHandler::DrawComponentWindow()
 
     ImGui::Begin(windowTitle.c_str(), &windowOpen);
 
+
     for (size_t i = 0; i < obj_text_entries.size(); i++) {
         if (obj_component_window[i] && obj_entity_id[i] == clicked_entity_id)
         {
@@ -132,13 +133,11 @@ void ImGuiHandler::DrawComponentWindow()
 
 
             // If any component was modified, save the updated values to JSON
-            if (isFirstSaved)
+            if (isFirstSaved || isModified)
             {
-                SaveComponentsJson("../RoombaRampage/Json Texts", tc, mc, entityID);
-                isFirstSaved = false;
+                SaveComponentsJson("../RoombaRampage/Json Texts", ecs->ECS_EntityMap);
+                isFirstSaved = false; // Ensure this is only set once
             }
-            if (isModified)
-                SaveComponentsJson("../RoombaRampage/Json Texts", tc, mc, entityID);
 
             obj_component_window[i] = windowOpen;
         }

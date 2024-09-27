@@ -3,6 +3,8 @@
 #include "imgui_impl_opengl3.h"
 #include "imgui_handler.h"
 #include "../ECS/ECS.h"
+#include "../../De&Serialization/json_handler.h"
+
 #include<vector>
 #include<string>
 #include <iostream>
@@ -43,6 +45,7 @@ unsigned int ImGuiHandler::DrawHierachyWindow()
             charBuffer[0] = '\0';
             objectNameBox = false;
 
+            SaveComponentsJson("../RoombaRampage/Json Texts", Ecs::ECS::GetInstance()->ECS_EntityMap);
         }
     }
 
@@ -94,6 +97,7 @@ unsigned int ImGuiHandler::DrawHierachyWindow()
                 i--;
 
                 ImGui::PopStyleColor(3);  // Pop the 3 style colors (button, hovered, and active)
+                SaveComponentsJson("../RoombaRampage/Json Texts", Ecs::ECS::GetInstance()->ECS_EntityMap);
                 continue;
             }
 
