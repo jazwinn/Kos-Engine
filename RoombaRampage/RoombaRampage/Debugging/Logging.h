@@ -12,6 +12,8 @@
 #include <source_location>
 #include <format>
 
+#include "../backward/backward.hpp"
+
 /*
  * @brief Variadic Macro for logging Information. This macro takes in a string message, followed by the
  * necessary arguments.
@@ -76,11 +78,11 @@ namespace Logging {
     static const std::string CLOSE = "\033[0m";
 
     enum LogLevel {
-        DEBUG,
-        INFO,
-        WARNING,
-        ERROR,
-        LOGLEVEL_SIZE
+        LOG_DEBUG,
+        LOG_INFO,
+        LOG_WARNING,
+        LOG_ERROR,
+        LOG_LEVEL_SIZE
     };
 
     class Logger {
@@ -120,6 +122,10 @@ namespace Logging {
 
     private:
         std::ofstream logFile; // File stream for the log file
+        
+        backward::Printer printer;// For printing crashes into the logfile
+        backward::StackTrace st;
+
         bool m_bInitialized{ false };
 
         // Converts log level to a string for output

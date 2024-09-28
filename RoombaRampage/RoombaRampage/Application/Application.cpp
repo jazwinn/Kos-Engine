@@ -37,40 +37,60 @@ namespace Application {
 
 
     int Application::Init() {
+
+        /*--------------------------------------------------------------
+        INITIALIZE LOGGING SYSTEM
+        --------------------------------------------------------------*/
+        LOGGING_INIT_LOGS("Debugging/LogFile.txt");
+        LOGGING_INFO("Application Start");
+
         /*--------------------------------------------------------------
           INITIALIZE WINDOW WIDTH & HEIGHT
        --------------------------------------------------------------*/
         Serialization::Serialize::LoadConfig();
-        
+        LOGGING_INFO("Load Config Successful");
 
         /*--------------------------------------------------------------
            INITIALIZE Asset Manager
         --------------------------------------------------------------*/
         AstManager = AssetManager::funcGetInstance();
         AstManager->funcLoadAssets();
+        LOGGING_INFO("Load Asset Successful");
+
+        /*--------------------------------------------------------------
+            INITIALIZE AUDIO MANAGER
+        --------------------------------------------------------------*/
+        // Initialize the FMOD system
+        audio.init();
+        //audio.createSound("vacuum.mp3");
+        LOGGING_INFO("Load Aduio Successful");
 
        /*--------------------------------------------------------------
           INITIALIZE OPENGL WINDOW
        --------------------------------------------------------------*/
         lvWindow.init();
+        LOGGING_INFO("Load Window Successful");
 
         /*--------------------------------------------------------------
            INITIALIZE GRAPHICS PIPE
         --------------------------------------------------------------*/
         pipe = GraphicsPipe::funcGetInstance();
         pipe->funcInit();
+        LOGGING_INFO("Load Graphic Pipline Successful");
 
         /*--------------------------------------------------------------
            INITIALIZE Input
         --------------------------------------------------------------*/
         //call back must happen before imgui
         Input.SetCallBack(lvWindow.Window);
+        LOGGING_INFO("Set Input Call Back Successful");
 
         /*--------------------------------------------------------------
            INITIALIZE IMGUI
         --------------------------------------------------------------*/
         const char* glsl_version = "#version 130";
         imgui_manager.Initialize(lvWindow.Window, glsl_version);
+        LOGGING_INFO("Load ImGui Successful");
 
         /*--------------------------------------------------------------
            INITIALIZE ECS
@@ -80,19 +100,11 @@ namespace Application {
 
         ecs->Load();
         ecs->Init();
+        LOGGING_INFO("Load ECS Successful");
 
-        /*--------------------------------------------------------------
-            INITIALIZE AUDIO MANAGER
-        --------------------------------------------------------------*/
-        // Initialize the FMOD system
-        audio.init();
-        audio.createSound("vacuum.mp3");
 
-        /*--------------------------------------------------------------
-            INITIALIZE LOGGING SYSTEM
-        --------------------------------------------------------------*/
-        LOGGING_INIT_LOGS("Debugging/LogFile.txt");
-        LOGGING_INFO("Application Start");
+
+        LOGGING_INFO("Application Init Successful");
         return 0;
 	}
 
@@ -105,8 +117,6 @@ namespace Application {
         float FPSCapTime = 1.f / help->FpsCap;
         double lastFrameTime = glfwGetTime();
 
-
-  
 
         /*--------------------------------------------------------------
          GAME LOOP
