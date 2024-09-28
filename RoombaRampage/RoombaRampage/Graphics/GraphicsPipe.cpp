@@ -60,6 +60,7 @@ void GraphicsPipe::funcInit()
 	debugBoxData.reserve(2500);
 	modelToNDCMatrix.reserve(2500);
 	debugToNDCMatrix.reserve(2500);
+	debugBoxCollisionChecks.reserve(2500);
 
 	funcSetupVao(squareMesh);
 	funcSetupSquareLinesVao();
@@ -73,7 +74,7 @@ void GraphicsPipe::funcInit()
 	modelToNDCMatrix.push_back(testMatrix);
 	textureOrder.push_back(0);
 	debugToNDCMatrix.push_back(testMatrix);
-	debugDrawOrder.push_back(0.f);
+	debugBoxCollisionChecks.push_back(false);
 
 	GLFWmonitor* monitor = glfwGetPrimaryMonitor();
 	const GLFWvidmode* mode = glfwGetVideoMode(monitor);
@@ -90,7 +91,7 @@ void GraphicsPipe::funcInit()
 	funcSetupFrameBuffer();
 	
 	debugToNDCMatrix.clear();
-	debugDrawOrder.clear();
+	debugBoxCollisionChecks.clear();
 	modelToNDCMatrix.clear();
 	textureOrder.clear();
 
@@ -121,26 +122,18 @@ GraphicsPipe* GraphicsPipe::funcGetInstance()
 void GraphicsPipe::funcSetupSquareLinesVao()
 {
 	std::vector<glm::vec2> lvPosVtx;
-	std::vector<glm::vec3> lvClrVtx;
 	std::vector<GLushort>idx_vtx;
 
 	lvPosVtx = { glm::vec2(0.5f, -0.5f),
 				glm::vec2(0.5f, 0.5f),
 				glm::vec2(-0.5f, 0.5f),
 				glm::vec2(-0.5f, -0.5f) };
-	lvClrVtx = { glm::vec3(1.f, 1.f, 1.f),
-				glm::vec3(1.f, 1.f, 1.f),
-				glm::vec3(1.f, 1.f, 1.f),
-				glm::vec3(1.f, 1.f, 1.f) };
-	
+
 
 
 	GLsizei position_data_offset = 0;
 	GLsizei position_attribute_size = sizeof(glm::vec2);
 	GLsizei position_data_size = position_attribute_size * static_cast<GLsizei>(lvPosVtx.size());
-	GLsizei color_data_offset = position_data_size;
-	GLsizei color_attribute_size = sizeof(glm::vec3);
-	GLsizei color_data_size = color_attribute_size * static_cast<GLsizei>(lvClrVtx.size());
 
 
 	unsigned int lvVboId{};
@@ -149,12 +142,12 @@ void GraphicsPipe::funcSetupSquareLinesVao()
 
 
 	glNamedBufferStorage(lvVboId,
-	position_data_size + color_data_size,
+	position_data_size,
 	nullptr,
 	GL_DYNAMIC_STORAGE_BIT);
 
 	glNamedBufferSubData(lvVboId, position_data_offset, position_data_size, lvPosVtx.data());
-	glNamedBufferSubData(lvVboId, color_data_offset, color_data_size, lvClrVtx.data());
+
 
 	glCreateVertexArrays(1, &squareLinesMesh.vaoId);
 	glEnableVertexArrayAttrib(squareLinesMesh.vaoId, 0);
@@ -162,13 +155,6 @@ void GraphicsPipe::funcSetupSquareLinesVao()
 		position_data_offset, position_attribute_size);
 	glVertexArrayAttribFormat(squareLinesMesh.vaoId, 0, 2, GL_FLOAT, GL_FALSE, 0);
 	glVertexArrayAttribBinding(squareLinesMesh.vaoId, 0, 0);
-
-	glEnableVertexArrayAttrib(squareLinesMesh.vaoId, 1);
-	glVertexArrayVertexBuffer(squareLinesMesh.vaoId, 1, lvVboId,
-		color_data_offset, color_attribute_size);
-	glVertexArrayAttribFormat(squareLinesMesh.vaoId, 1, 3, GL_FLOAT, GL_FALSE, 0);
-	glVertexArrayAttribBinding(squareLinesMesh.vaoId, 1, 1);
-
 
 	squareLinesMesh.primitiveType = GL_LINE_LOOP;
 	idx_vtx = { 0, 1, 2, 3};
@@ -362,26 +348,25 @@ void GraphicsPipe::funcSetupArrayBuffer()
 	glGenBuffers(1, &debugMatrixArrayBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, debugMatrixArrayBuffer);
 	glBufferData(GL_ARRAY_BUFFER, debugToNDCMatrix.size() * sizeof(glm::mat3), &debugToNDCMatrix[0], GL_DYNAMIC_DRAW);
-	glBindVertexArray(squareLinesMesh.vaoId);
-	unsigned int otherLocation = 7; // Location 30
+	unsigned int otherLocation = 7; // Location 7
 	for (int i = 0; i < 3; ++i)
 	{
 		glEnableVertexAttribArray(otherLocation + i);
 		glVertexAttribPointer(otherLocation + i, 3, GL_FLOAT, GL_FALSE, sizeof(glm::mat3), (void*)(sizeof(glm::vec3) * i));
 		glVertexAttribDivisor(otherLocation + i, 1);
 	}
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	glGenBuffers(1, &debugCollisionCheckBuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, debugCollisionCheckBuffer);
+	glBufferData(GL_ARRAY_BUFFER, debugBoxCollisionChecks.size() * sizeof(int), &debugBoxCollisionChecks[0], GL_DYNAMIC_DRAW);
+	glEnableVertexAttribArray(4);
+	glVertexAttribPointer(4, 1, GL_FLOAT, GL_FALSE, sizeof(float), (void*)0);
+	glVertexAttribDivisor(4, 1);
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-	glGenBuffers(1, &debugOrderBuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, debugOrderBuffer);
-	glBufferData(GL_ARRAY_BUFFER, debugDrawOrder.size() * sizeof(float), &debugDrawOrder[0], GL_DYNAMIC_DRAW);
-	glBindVertexArray(squareLinesMesh.vaoId);
-	glEnableVertexAttribArray(3); // Location 3
-	glVertexAttribIPointer(3, 1, GL_FLOAT, sizeof(float), (void*)0);
-	glVertexAttribDivisor(3, 1);
-	glBindVertexArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	
 }
 
 void GraphicsPipe::funcSetupFrameBuffer()
@@ -490,6 +475,8 @@ void GraphicsPipe::funcUpdate()
 			glm::mat3 lvTranslate{ 1, 0, 0, 0, 1, 0, debugBoxData[i].worldCoordinates.x , debugBoxData[i].worldCoordinates.y ,1 };
 			glm::mat3 lvNDCScale{ aspectRatio, 0, 0, 0, 1.f, 0, 0 , 0 ,1.f };
 			debugToNDCMatrix.push_back(lvNDCScale * lvTranslate * lvRotate * lvScale);
+			debugBoxCollisionChecks.push_back(static_cast<int>(debugBoxData[i].isCollided));
+
 		}
 	}
 
@@ -545,22 +532,41 @@ void GraphicsPipe::funcDrawDebug()
 {
 	if (!debugToNDCMatrix.empty())
 	{
+		glBindBuffer(GL_ARRAY_BUFFER, debugCollisionCheckBuffer);
+		glNamedBufferData(debugCollisionCheckBuffer, debugBoxCollisionChecks.size() * sizeof(float), &debugBoxCollisionChecks[0], GL_DYNAMIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glUseProgram(debugShaderProgram);
+
 		glBindBuffer(GL_ARRAY_BUFFER, debugMatrixArrayBuffer);
 		glNamedBufferData(debugMatrixArrayBuffer, debugToNDCMatrix.size() * sizeof(glm::mat3), &debugToNDCMatrix[0], GL_DYNAMIC_DRAW);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
-		glUseProgram(debugShaderProgram);
+
+		
+
+		
 
 		glBindVertexArray(squareLinesMesh.vaoId);
 		glDrawElementsInstanced(squareLinesMesh.primitiveType, squareLinesMesh.indexElementCount, GL_UNSIGNED_SHORT, NULL, static_cast<GLsizei>(debugToNDCMatrix.size()));
 		glBindVertexArray(0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+
 		debugToNDCMatrix.clear();
+		debugBoxCollisionChecks.clear();
 	}
 	if (!debugBoxData.empty())
 	{
 		debugBoxData.clear();
 	}
 }
+
+
+
+
+
+
+
+
 
 
 
@@ -582,6 +588,7 @@ GLuint GraphicsPipe::funcCompileShader(GLuint type, const std::string& shader)
 		std::cout << "Failed to Compile Shader" << std::endl;
 		std::cout << message << std::endl;
 		glDeleteShader(lvID);
+		std::exit;
 		return 0;
 	}
 

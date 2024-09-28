@@ -20,6 +20,8 @@ namespace Ecs {
 
 		bool drawDebug{true};
 
+		bool isCollided{ false };
+
 	};
 
 }
