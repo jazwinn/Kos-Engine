@@ -32,8 +32,8 @@ namespace Application {
    
 
     // Audio
-    FModAudio audio;
-    FMOD_CHANNELGROUP* channelgroup;
+    FModAudio Application::audio;
+    FMOD_CHANNELGROUP* Application::channelgroup;
 
 
     int Application::Init() {
@@ -62,7 +62,7 @@ namespace Application {
         --------------------------------------------------------------*/
         // Initialize the FMOD system
         audio.init();
-        //audio.createSound("vacuum.mp3");
+        audio.createSound("./Assets/vacuum.mp3");
         LOGGING_INFO("Load Aduio Successful");
 
        /*--------------------------------------------------------------

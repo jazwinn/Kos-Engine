@@ -2,12 +2,16 @@
 
 #include "Window.h"
 #include "./ImGui Panels/imgui_handler.h"
+#include "../Assets/AudioManager.h"
 
 namespace Application{
+
+
 
 	class Application {
 
 	public:
+
 
 		static int Init();
 
@@ -19,6 +23,9 @@ namespace Application{
 
 		static ImGuiHandler imgui_manager;
 
+		static FModAudio audio;
+
+		static FMOD_CHANNELGROUP* channelgroup;
 
 	};
 
