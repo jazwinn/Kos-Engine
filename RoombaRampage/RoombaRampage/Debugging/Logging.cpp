@@ -1,5 +1,6 @@
 #include "Logging.h"
 
+
 namespace Logging {
 
     Logger& Logger::GetInstance()
@@ -11,10 +12,13 @@ namespace Logging {
     Logger::Logger(const std::string& filename)
     {
         logFile.open(filename,std::ios::app);
-        std::cout << filename << std::endl;
+        //std::cout << filename << std::endl;
         if (!logFile.is_open()) {
             std::cerr << "Error opening log file." << std::endl;
         }
+
+       
+
     }
 
     // Destructor: Closes the log file
@@ -41,6 +45,9 @@ namespace Logging {
         catch (const std::exception& e) {
             LOGGING_ERROR("Error Init Logging File {}" , e.what());
         }
+
+        st.load_here(32);
+        printer.print(st, logFile);
     }
 
 
@@ -87,13 +94,13 @@ namespace Logging {
     std::string Logger::levelToString(LogLevel level)
     {
         switch (level) {
-        case DEBUG:
+        case LOG_DEBUG:
             return "DEBUG";
-        case INFO:
+        case LOG_INFO:
             return "INFO";
-        case WARNING:
+        case LOG_WARNING:
             return "WARNING";
-        case ERROR:
+        case LOG_ERROR:
             return "ERROR";
         default:
             return "UNKNOWN";
@@ -102,13 +109,13 @@ namespace Logging {
 
     std::string Logger::colorToString(LogLevel level) {
         switch (level) {
-        case DEBUG: //GREEN
+        case LOG_DEBUG: //GREEN
             return GREEN;
-        case INFO:  //WHITE
+        case LOG_INFO:  //WHITE
             return WHITE;
-        case WARNING: //YELLOW
+        case LOG_WARNING: //YELLOW
             return YELLOW;
-        case ERROR:   //RED
+        case LOG_ERROR:   //RED
             return RED;
         default:
             return CLOSE;
