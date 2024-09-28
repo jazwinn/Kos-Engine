@@ -22,7 +22,7 @@ void ImGuiHandler::DrawTestWindow() {
 	bool open = true;
 	ImGui::Begin("Test Window", &open);
 	if (ImGui::Button("Vacuum")) {
-		audio.playSound();
+		Application::Application::audio.playSound();
 	}
 	ImGui::SameLine();
 	if (ImGui::Button("Sound")) {
@@ -33,7 +33,5 @@ void ImGuiHandler::DrawTestWindow() {
 		abort();
 	}
 
-	//audio.playSound();
-	//audio.shutdown();
 	ImGui::End();
 }

@@ -31,9 +31,6 @@ void ImGuiHandler::Initialize(GLFWwindow* window, const char* glsl_version)
     // Setup Platform/Renderer bindings
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init(glsl_version);
-    audio.init();
-    audio.createSound("./Assets/vacuum.mp3");
-    //to add another create sound
 }
 
 void ImGuiHandler::NewFrame()

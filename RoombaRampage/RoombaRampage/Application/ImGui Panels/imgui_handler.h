@@ -30,7 +30,7 @@ public:
     void DrawRenderScreenWindow(unsigned int windowWidth, unsigned int windowHeight);
     unsigned int clicked_entity_id;
 
-    FModAudio audio;
+    //FModAudio audio;
 private:
     bool show_demo_window = true;
     bool show_another_window = false;
