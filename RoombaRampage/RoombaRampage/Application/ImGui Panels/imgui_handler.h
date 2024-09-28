@@ -7,6 +7,7 @@
 #include<string>
 #include <iostream>
 #include "../ECS/ECS.h"
+#include "../Assets/AudioManager.h"
 
 class ImGuiHandler
 {
@@ -23,11 +24,13 @@ public:
     void DrawMainMenuBar();
     void DrawPerformanceWindow(float fps);
     void DrawComponentWindow();
+    void DrawTestWindow();
     unsigned int DrawHierachyWindow();
     void DrawLogsWindow();
     void DrawRenderScreenWindow(unsigned int windowWidth, unsigned int windowHeight);
     unsigned int clicked_entity_id;
 
+    FModAudio audio;
 private:
     bool show_demo_window = true;
     bool show_another_window = false;
