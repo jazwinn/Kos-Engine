@@ -29,11 +29,7 @@ void ImGuiHandler::DrawTestWindow() {
 	}
 	ImGui::SameLine();
 	if (ImGui::Button("Sound")) {
-		Application::Application::audio2.playSound();
-	}
-	if (ImGui::Button("Stop Sound")) {
-		Application::Application::audio.stopSound();
-		Application::Application::audio2.stopSound();
+		//to add other sound
 	}
 	ImGui::NewLine();
 	if (ImGui::Button("Crash")) {
