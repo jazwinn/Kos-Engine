@@ -116,7 +116,8 @@ void AssetManager::funcLoadImage(const char* file)
     }
    
 }
-
+//TOCHECK
+//Naming of targetchannels is the same as the member variables
 unsigned char* AssetManager::funcPadTexture(const unsigned char* originalPixels, int originalWidth, int originalHeight, int originalChannels, int targetWidth, int targetHeight, int targetChannels)
 {
     unsigned char* paddedPixels = new unsigned char[targetWidth * targetHeight * targetChannels];
@@ -150,7 +151,7 @@ unsigned char* AssetManager::funcPadTexture(const unsigned char* originalPixels,
                 // Calculate source and destination indices
                 int srcIndex = (y * originalWidth + x) * originalChannels + c;
                 int dstIndex = ((y + (targetHeight - originalHeight) / 2) * targetWidth + (x + (targetWidth - originalWidth) / 2)) * targetChannels + c;
-
+                //TOCHECK
                 // Copy pixel data
                 paddedPixels[dstIndex] = originalPixels[srcIndex];
               
@@ -179,6 +180,7 @@ int AssetManager::extractStripCountFromFilename(const std::string& filename)
 
 std::string AssetManager::extractSpriteNameFromFilename(const std::string& filename)
 {
+    //TOCHECK
     std::regex pattern("([[:alnum:]]+)([_]*)([[:alnum:]]*)\.png");
     std::smatch match;
 

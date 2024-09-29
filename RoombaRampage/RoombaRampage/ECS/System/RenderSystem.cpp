@@ -46,7 +46,7 @@ namespace Ecs {
 
 	void RenderSystem::Update()
 	{
-		ECS* ecs = ECS::GetInstance();
+		//ECS* ecs = ECS::GetInstance();
 		GraphicsPipe* graphicsPipe = GraphicsPipe::funcGetInstance();
 
 		if (vecSpriteComponentPtr.size() != vecTransformComponentPtr.size()) {

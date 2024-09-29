@@ -39,6 +39,7 @@ bool FModAudio::createSound(const char* soundFile) {
         std::cerr << FMOD_ErrorString(result) << std::endl;
         return false;
     }
+    return true;
 }
 
 bool FModAudio::playSound() {

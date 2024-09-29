@@ -78,6 +78,7 @@ Rectangle::Rectangle(float rect_height, float rect_width, vector2::Vec2 shape_po
 						if (m_CollisionIntersection_RectRect(*dynamic_cast<Rectangle*>(m_physicsEntities[i].get()), *dynamic_cast<Rectangle*>(m_physicsEntities[i].get()), dt)) {
 							//checking whether if entity is alr added inside
 							if (std::find(m_collidedEntities.begin(), m_collidedEntities.end(), m_physicsEntities[i]) == m_collidedEntities.end()) {
+								std::cout << "Collided" << std::endl;
 								m_collidedEntities.push_back(m_physicsEntities[i]);
 							}
 						}
@@ -88,6 +89,7 @@ Rectangle::Rectangle(float rect_height, float rect_width, vector2::Vec2 shape_po
 					else if ((m_physicsEntities[i]->GetEntity() == EntityType::CIRCLE) && (m_physicsEntities[j]->GetEntity() == EntityType::RECTANGLE)) {
 						if (m_CollisionIntersection_CircleRect(*dynamic_cast<Circle*>(m_physicsEntities[i].get()), *dynamic_cast<Rectangle*>(m_physicsEntities[j].get()))) {
 							if (std::find(m_collidedEntities.begin(), m_collidedEntities.end(), m_physicsEntities[i]) == m_collidedEntities.end()) {
+								std::cout << "Collided" << std::endl;
 								m_collidedEntities.push_back(m_physicsEntities[i]);
 							}
 						}
@@ -99,6 +101,7 @@ Rectangle::Rectangle(float rect_height, float rect_width, vector2::Vec2 shape_po
 					else if (m_physicsEntities[j]->GetEntity() == EntityType::CIRCLE && m_physicsEntities[i]->GetEntity() == EntityType::RECTANGLE) {
 						if (m_CollisionIntersection_CircleRect(*dynamic_cast<Circle*>(m_physicsEntities[j].get()), *dynamic_cast<Rectangle*>(m_physicsEntities[i].get()))) {
 							if (std::find(m_collidedEntities.begin(), m_collidedEntities.end(), m_physicsEntities[i]) == m_collidedEntities.end()) {
+								std::cout << "Collided" << std::endl;
 								m_collidedEntities.push_back(m_physicsEntities[i]);
 							}
 						}
@@ -109,6 +112,7 @@ Rectangle::Rectangle(float rect_height, float rect_width, vector2::Vec2 shape_po
 					else if(m_physicsEntities[i]->GetEntity() == EntityType::CIRCLE && m_physicsEntities[j]->GetEntity() == EntityType::CIRCLE) {
 						if (m_CollisionIntersection_CircleCircle(*dynamic_cast<Circle*>(m_physicsEntities[i].get()), *dynamic_cast<Circle*>(m_physicsEntities[j].get()))) {
 							if (std::find(m_collidedEntities.begin(), m_collidedEntities.end(), m_physicsEntities[i]) == m_collidedEntities.end()) {
+								std::cout << "Collided" << std::endl;
 								m_collidedEntities.push_back(m_physicsEntities[i]);
 							}
 						}

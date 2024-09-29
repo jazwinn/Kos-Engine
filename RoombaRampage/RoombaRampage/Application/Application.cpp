@@ -153,8 +153,14 @@ namespace Application {
                     Calculate time
                     --------------------------------------------------------------*/
                 double currentFrameTime = glfwGetTime();
-                help->DeltaTime = currentFrameTime - lastFrameTime;
-                lastFrameTime = currentFrameTime;
+                help->DeltaTime = static_cast<float>(currentFrameTime - lastFrameTime);
+
+                while (help->DeltaTime < FPSCapTime) {
+                    lastFrameTime = currentFrameTime;
+                    currentFrameTime = glfwGetTime();
+                    help->DeltaTime += static_cast<float>(currentFrameTime - lastFrameTime);
+                }
+                lastFrameTime = glfwGetTime();
                 help->Fps = 1.f / help->DeltaTime;
 
                 glfwSwapBuffers(lvWindow.Window);

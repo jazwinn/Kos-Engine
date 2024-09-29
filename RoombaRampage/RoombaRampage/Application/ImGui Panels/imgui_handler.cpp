@@ -58,7 +58,7 @@ void ImGuiHandler::Render()
     DrawComponentWindow();
     DrawLogsWindow();
     DrawTestWindow();
-    DrawRenderScreenWindow(Helper::Helpers::GetInstance()->WindowWidth, Helper::Helpers::GetInstance()->WindowHeight);
+    DrawRenderScreenWindow(static_cast<unsigned int>(Helper::Helpers::GetInstance()->WindowWidth), static_cast<unsigned int>(Helper::Helpers::GetInstance()->WindowHeight));
     ImGui::Render();
     ImGuiIO& io = ImGui::GetIO();
     if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)

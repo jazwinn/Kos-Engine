@@ -226,7 +226,7 @@ void ImGuiHandler::DrawComponentWindow()
                         item_selected_idx = sc->imageID;
                         for (unsigned int n = 0; n < images->imageContainer.size(); n++)
                         {
-                            bool is_selected = (item_selected_idx == n);
+                            bool is_selected = (item_selected_idx == static_cast<int>(n));
                             if (ImGui::Selectable(const_cast<char*>(images->imageContainer[n].spriteName.c_str()), is_selected))
                             {
                                 item_selected_idx = n;
@@ -265,8 +265,8 @@ void ImGuiHandler::DrawComponentWindow()
             }
 
             if (EntitySignature.test(Ecs::TypeRigidBodyComponent)) {
-                Ecs::RigidBodyComponent* rc = static_cast<Ecs::RigidBodyComponent*>(ecs->ECS_CombinedComponentPool[Ecs::TypeRigidBodyComponent]
-                    ->GetEntityComponent(entityID));
+                //Ecs::RigidBodyComponent* rc = static_cast<Ecs::RigidBodyComponent*>(ecs->ECS_CombinedComponentPool[Ecs::TypeRigidBodyComponent]
+                //    ->GetEntityComponent(entityID));
                 if (ImGui::CollapsingHeader("RigidBody Component")) {
 
                     ImGui::Text("Work In Progress");

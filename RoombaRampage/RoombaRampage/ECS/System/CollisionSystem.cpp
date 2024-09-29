@@ -88,7 +88,7 @@ namespace Ecs {
 
 			if (ColComp->drawDebug)
 			{
-				graphicsPipe->debugBoxData.push_back({ 0, glm::vec2{ColComp->Size.m_x * TransComp->scale.m_x, ColComp->Size.m_x * TransComp->scale.m_x}, glm::vec3{TransComp->position.m_x + ColComp->OffSet.m_x,TransComp->position.m_x + ColComp->OffSet.m_x, 0} ,0, 0 });
+				graphicsPipe->debugBoxData.push_back({ 0, glm::vec2{ColComp->Size.m_x * TransComp->scale.m_x, ColComp->Size.m_y * TransComp->scale.m_y}, glm::vec3{TransComp->position.m_x + ColComp->OffSet.m_x,TransComp->position.m_y + ColComp->OffSet.m_y, 0} ,0, 0 });
 			}
 		}
 

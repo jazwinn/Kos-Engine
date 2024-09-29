@@ -51,7 +51,7 @@ namespace Ecs {
 
 	void ControlSystem::Update() {
 
-		ECS* ecs = ECS::GetInstance();
+		//ECS* ecs = ECS::GetInstance();
 
 		if (vecMovementComponentPtr.size() != vecPlayerComponentPtr.size()) {
 			std::cout << "Error: Vecotrs container size does not Match" << std::endl;
@@ -61,7 +61,7 @@ namespace Ecs {
 		for (int n{}; n < vecMovementComponentPtr.size(); n++) {
 			//std::cout << "Entity: " << n << "Movement System is getting Updated";
 
-			PlayerComponent* BoxComp = vecPlayerComponentPtr[n];
+			//PlayerComponent* BoxComp = vecPlayerComponentPtr[n];
 			MovementComponent* MovComp = vecMovementComponentPtr[n];
 
 
