@@ -25,10 +25,7 @@ namespace Application{
 
 		static FModAudio audio;
 
-		static FMOD_CHANNELGROUP* channelgroup;
+		static FModAudio audio2;
 
 	};
-
-
-
 }

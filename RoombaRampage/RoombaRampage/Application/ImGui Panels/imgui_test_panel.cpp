@@ -11,6 +11,7 @@
 #include<vector>
 #include<string>
 #include <iostream>
+#include <random> 
 
 
 
@@ -19,6 +20,8 @@ void ImGuiHandler::DrawTestWindow() {
 	bool clicked = false;
 	static int maxTime = 60;
 	static int currTime = 0;
+
+	Ecs::ECS *ecs = Ecs::ECS::GetInstance();
 	
 	bool open = true;
 	ImGui::Begin("Test Window", &open);
@@ -27,13 +30,40 @@ void ImGuiHandler::DrawTestWindow() {
 	}
 	ImGui::SameLine();
 	if (ImGui::Button("Sound")) {
-		//to add other sound
+		Application::Application::audio2.playSound();
+	}
+	if (ImGui::Button("Stop Sound")) {
+		Application::Application::audio.stopSound();
+		Application::Application::audio2.stopSound();
 	}
 	ImGui::NewLine();
 	if (ImGui::Button("Crash")) {
 		LOGGING_INFO("About to trigger abort");
 		abort();
 	}
+	ImGui::NewLine();
+	if (ImGui::Button("Spawn 2500")) {
+		int lowerBoundy = -1;
+		int upperBoundy = 1;
+
+
+
+		std::random_device rd;
+		std::mt19937 gen(rd());
+
+		std::uniform_int_distribution<> height(lowerBoundy, upperBoundy);
+
+
+		for (int n{}; n < 2500; n++) {
+			 Ecs::EntityID id = ecs->CreateEntity();
+			 Ecs::TransformComponent* tc = (Ecs::TransformComponent*)ecs->ECS_CombinedComponentPool[Ecs::TypeTransformComponent]->GetEntityComponent(id);
+			 ecs->AddComponent(Ecs::TypeSpriteComponent, id);
+
+			 tc->position.m_y = height(gen);
+
+		}
+	}
+
 
 	ImGui::End();
 }

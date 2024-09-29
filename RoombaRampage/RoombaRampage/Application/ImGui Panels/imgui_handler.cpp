@@ -50,9 +50,9 @@ void ImGuiHandler::Render()
     //create main menu bar
     DrawMainMenuBar();
 
+
+
     Helper::Helpers *help = Helper::Helpers::GetInstance();
-
-
     DrawPerformanceWindow(help->Fps);
     DrawHierachyWindow();
     DrawComponentWindow();

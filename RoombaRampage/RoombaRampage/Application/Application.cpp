@@ -16,8 +16,9 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 
-
 #include "../Assets/AudioManager.h"
+
+#include <../Dependencies/Freetype_Font/include/ft2build.h>
 
 namespace Application {
 
@@ -30,13 +31,19 @@ namespace Application {
     AssetManager* AstManager;
     Input::InputSystem Input;
    
-
     // Audio
 
     FModAudio Application::audio;
-    FMOD_CHANNELGROUP* Application::channelgroup;
     
     logging::Logger p;
+    FModAudio Application::audio2;
+
+    // Audio Demo timer
+    float audioTimer = 3.0f;
+    bool audio2_bool = true;
+
+    float LastTime = glfwGetTime();;
+
 
     int Application::Init() {
         /*--------------------------------------------------------------
@@ -60,13 +67,23 @@ namespace Application {
         AstManager->funcLoadAssets();
         LOGGING_INFO("Load Asset Successful");
 
+
         /*--------------------------------------------------------------
             INITIALIZE AUDIO MANAGER
         --------------------------------------------------------------*/
         // Initialize the FMOD system
         audio.init();
-        audio.createSound("./Assets/vacuum.mp3");
-        LOGGING_INFO("Load Aduio Successful");
+        audio2.init();
+        audio.createSound("Assets/vacuum.mp3");
+        audio2.createSound("Assets/zwing.wav");
+
+
+        LOGGING_INFO("Application Init Successful");
+
+       /*--------------------------------------------------------------
+        INITIALIZE Asset Manager
+       --------------------------------------------------------------*/
+        AstManager->testJSON();
 
        /*--------------------------------------------------------------
           INITIALIZE OPENGL WINDOW
@@ -181,6 +198,7 @@ namespace Application {
         glfwTerminate();
         audio.shutdown();
         LOGGING_INFO("Application Closed");
+        audio2.shutdown();
 
         return 0;
 	}

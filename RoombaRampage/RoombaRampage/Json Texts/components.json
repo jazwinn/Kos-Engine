@@ -1,9 +1,10 @@
 [
     {
+        "name": "test",
         "transform": {
             "position": {
-                "x": -0.13856181502342224,
-                "y": -0.12063433229923248
+                "x": 1.8185055255889893,
+                "y": 0.06806710362434387
             },
             "rotation": 0.0,
             "scale": {
@@ -17,6 +18,65 @@
                 "x": 0.0,
                 "y": 0.0
             }
+        },
+        "collider": {
+            "size": {
+                "x": 1.0,
+                "y": 1.0
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "layer": 0,
+            "drawDebug": true
+        },
+        "player": {
+            "control": false
+        },
+        "sprite": {
+            "imageID": 3,
+            "frameNumber": 0
+        }
+    },
+    {
+        "name": "test2",
+        "transform": {
+            "position": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "movement": {
+            "speed": 1.0,
+            "direction": {
+                "x": 0.0,
+                "y": 0.0
+            }
+        },
+        "collider": {
+            "size": {
+                "x": 1.0,
+                "y": 1.0
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "layer": 0,
+            "drawDebug": true
+        },
+        "player": {
+            "control": false
+        },
+        "sprite": {
+            "imageID": 3,
+            "frameNumber": 0
         }
     }
 ]
