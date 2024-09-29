@@ -22,8 +22,8 @@ unsigned int ImGuiHandler::DrawHierachyWindow()
         Serialization::Serialize::LoadComponentsJson("../RoombaRampage/Json/components.json", ecs, obj_text_entries);
 
         // Iterate through all loaded entities and add them to the hierarchy
-        for (size_t i = 0; i < obj_text_entries.size(); ++i) {
-            obj_entity_id.push_back(ecs->ECS_EntityMap.begin()->first + i);
+        for (const auto& entityPair : ecs->ECS_EntityMap) {
+            obj_entity_id.push_back(entityPair.first);
             deleteButton.push_back(false);
             DuplicateButton.push_back(false);
         }
@@ -72,12 +72,11 @@ unsigned int ImGuiHandler::DrawHierachyWindow()
             //Used to track and maintain sync between objtextentries and deletebutton vector
             deleteButton.push_back(false);
             DuplicateButton.push_back(false);
-           
 
             charBuffer[0] = '\0';
             objectNameBox = false;
 
-            Serialization::Serialize::SaveComponentsJson("../RoombaRampage/Json", Ecs::ECS::GetInstance()->ECS_EntityMap, obj_text_entries);
+            Serialization::Serialize::SaveComponentsJson("../RoombaRampage/Json", Ecs::ECS::GetInstance()->ECS_EntityMap, obj_text_entries, obj_entity_id);
         }
     }
 
@@ -94,7 +93,6 @@ unsigned int ImGuiHandler::DrawHierachyWindow()
 
             deleteButton[i] ? deleteButton[i] = false : deleteButton[i] = true;
             DuplicateButton[i] ? DuplicateButton[i] = false : DuplicateButton[i] = true;
-
 
             clicked_entity_id = obj_entity_id[i];
             std::cout << "Entity ID clicked: " << clicked_entity_id << std::endl; //For debug purposes, remove later
@@ -125,10 +123,11 @@ unsigned int ImGuiHandler::DrawHierachyWindow()
                 deleteButton.erase(deleteButton.begin() + i);
                 DuplicateButton.erase(DuplicateButton.begin() + i);
                 
+                Serialization::Serialize::SaveComponentsJson("../RoombaRampage/Json", Ecs::ECS::GetInstance()->ECS_EntityMap, obj_text_entries, obj_entity_id);
+
                 i--;
 
                 ImGui::PopStyleColor(3);  // Pop the 3 style colors (button, hovered, and active)
-                Serialization::Serialize::SaveComponentsJson("../RoombaRampage/Json Texts", Ecs::ECS::GetInstance()->ECS_EntityMap, obj_text_entries);
                 continue;
             }
 

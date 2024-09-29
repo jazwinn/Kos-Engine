@@ -214,7 +214,7 @@ namespace Serialization {
         }
     }
 
-    void Serialize::SaveComponentsJson(const std::string& filePath, const std::unordered_map<Ecs::EntityID, std::bitset<Ecs::ComponentType::TotalTypeComponent>>& ECS_EntityMap, const std::vector<std::string>& obj_text_entries)
+    void Serialize::SaveComponentsJson(const std::string& filePath, const std::unordered_map<Ecs::EntityID, std::bitset<Ecs::ComponentType::TotalTypeComponent>>& ECS_EntityMap, const std::vector<std::string>& obj_text_entries, const std::vector<Ecs::EntityID>& obj_entity_id)
     {
         // JSON File Validation / Creation
         std::string jsonFilePath = filePath + "/components.json";
@@ -237,11 +237,19 @@ namespace Serialization {
             // Create a new JSON object for entitydata
             rapidjson::Value entityData(rapidjson::kObjectType);
 
-            // Add the name of the entity
-            if (entityIndex < obj_text_entries.size()) {
-                rapidjson::Value nameValue;
-                nameValue.SetString(obj_text_entries[entityIndex].c_str(), allocator);  // Set the name field
-                entityData.AddMember("name", nameValue, allocator);
+            bool hasComponents = false;
+
+
+            // Find the corresponding name for this entity using obj_entity_id
+            auto it = std::find(obj_entity_id.begin(), obj_entity_id.end(), entityID);
+            if (it != obj_entity_id.end()) {
+                size_t index = std::distance(obj_entity_id.begin(), it);
+                if (index < obj_text_entries.size()) {
+                    rapidjson::Value nameValue;
+                    nameValue.SetString(obj_text_entries[index].c_str(), allocator);
+                    entityData.AddMember("name", nameValue, allocator);
+                    hasComponents = true;
+                }
             }
 
             // Check if the entity has TransformComponent and save 
@@ -257,6 +265,7 @@ namespace Serialization {
                         .AddMember("x", tc->scale.m_x, allocator)
                         .AddMember("y", tc->scale.m_y, allocator), allocator);
                     entityData.AddMember("transform", transform, allocator);
+                    hasComponents = true;  // Mark as having a component
                 }
             }
 
@@ -270,6 +279,7 @@ namespace Serialization {
                         .AddMember("x", mc->Direction.m_x, allocator)
                         .AddMember("y", mc->Direction.m_y, allocator), allocator);
                     entityData.AddMember("movement", movement, allocator);
+                    hasComponents = true;  // Mark as having a component
                 }
             }
 
@@ -287,6 +297,7 @@ namespace Serialization {
                     collider.AddMember("layer", cc->Layer, allocator);
                     collider.AddMember("drawDebug", cc->drawDebug, allocator);
                     entityData.AddMember("collider", collider, allocator);
+                    hasComponents = true;  // Mark as having a component
                 }
             }
 
@@ -297,6 +308,7 @@ namespace Serialization {
                     rapidjson::Value player(rapidjson::kObjectType);
                     player.AddMember("control", pc->Control, allocator);
                     entityData.AddMember("player", player, allocator);
+                    hasComponents = true;  // Mark as having a component
                 }
             }
 
@@ -307,6 +319,7 @@ namespace Serialization {
                     rapidjson::Value rigidbody(rapidjson::kObjectType);
                     rigidbody.AddMember("mass", rb->Mass, allocator);
                     entityData.AddMember("rigidbody", rigidbody, allocator);
+                    hasComponents = true;  // Mark as having a component
                 }
             }
 
@@ -318,11 +331,13 @@ namespace Serialization {
                     sprite.AddMember("imageID", sc->imageID, allocator);
                     sprite.AddMember("frameNumber", sc->frameNumber, allocator);
                     entityData.AddMember("sprite", sprite, allocator);
+                    hasComponents = true;  // Mark as having a component
                 }
             }
 
-            doc.PushBack(entityData, allocator);
-            ++entityIndex;
+            if (hasComponents) {
+                doc.PushBack(entityData, allocator);
+            }
         }
 
         // Write the JSON back to file
