@@ -19,7 +19,7 @@ unsigned int ImGuiHandler::DrawHierachyWindow()
     if (!hasLoaded) {
         std::cout << "Loading";
         // Load entities from JSON (no EntityID in JSON, new entities are created)
-        Serialization::Serialize::LoadComponentsJson("../RoombaRampage/Json Texts/components.json", ecs, obj_text_entries);
+        Serialization::Serialize::LoadComponentsJson("../RoombaRampage/Json/components.json", ecs, obj_text_entries);
 
         // Iterate through all loaded entities and add them to the hierarchy
         for (size_t i = 0; i < obj_text_entries.size(); ++i) {
@@ -38,12 +38,10 @@ unsigned int ImGuiHandler::DrawHierachyWindow()
     {
         if (ImGui::BeginMenu("Rename"))
         {
-
             ImGui::EndMenu();
         }
         if (ImGui::BeginMenu("Prefabs"))
         {
-
             ImGui::EndMenu();
         }
 
@@ -79,7 +77,7 @@ unsigned int ImGuiHandler::DrawHierachyWindow()
             charBuffer[0] = '\0';
             objectNameBox = false;
 
-            Serialization::Serialize::SaveComponentsJson("../RoombaRampage/Json Texts", Ecs::ECS::GetInstance()->ECS_EntityMap, obj_text_entries);
+            Serialization::Serialize::SaveComponentsJson("../RoombaRampage/Json", Ecs::ECS::GetInstance()->ECS_EntityMap, obj_text_entries);
         }
     }
 
