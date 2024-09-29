@@ -32,12 +32,13 @@ namespace Application {
    
 
     // Audio
+
     FModAudio Application::audio;
     FMOD_CHANNELGROUP* Application::channelgroup;
 
 
     int Application::Init() {
-
+    try {
         /*--------------------------------------------------------------
         INITIALIZE LOGGING SYSTEM
         --------------------------------------------------------------*/
@@ -91,105 +92,100 @@ namespace Application {
         const char* glsl_version = "#version 130";
         imgui_manager.Initialize(lvWindow.Window, glsl_version);
         LOGGING_INFO("Load ImGui Successful");
-
+        
         /*--------------------------------------------------------------
            INITIALIZE ECS
         --------------------------------------------------------------*/
-        //fetch ecs
-        Ecs::ECS* ecs = Ecs::ECS::GetInstance();
 
         ecs->Load();
         ecs->Init();
         LOGGING_INFO("Load ECS Successful");
 
-
-
         LOGGING_INFO("Application Init Successful");
+        }
+        catch (const std::exception& e) {
+            LOGGING_ERROR("Exception during Application Init: {}", e.what());
+        }
+    
         return 0;
 	}
 
 
 
     int Application::Run() {
-
+    try{
         Ecs::ECS* ecs = Ecs::ECS::GetInstance();
         Helper::Helpers *help = Helper::Helpers::GetInstance();
         float FPSCapTime = 1.f / help->FpsCap;
         double lastFrameTime = glfwGetTime();
-
-
         /*--------------------------------------------------------------
-         GAME LOOP
+            GAME LOOP
         --------------------------------------------------------------*/
         while (!glfwWindowShouldClose(lvWindow.Window))
         {
-            /* Poll for and process events */
-            glfwPollEvents();
+            try {
+                /* Poll for and process events */
+                glfwPollEvents();
 
+                /*--------------------------------------------------------------
+                    UPDATE ECS
+                    --------------------------------------------------------------*/
+                ecs->Update(Helper::Helpers::GetInstance()->DeltaTime);
 
+                /*--------------------------------------------------------------
+                    UPDATE Render Pipeline
+                    --------------------------------------------------------------*/
+                pipe->funcUpdate();
 
-            /*--------------------------------------------------------------
-             UPDATE ECS
-             --------------------------------------------------------------*/
-            ecs->Update(Helper::Helpers::GetInstance()->DeltaTime);
+                /*--------------------------------------------------------------
+                    DRAWING/RENDERING Window
+                    --------------------------------------------------------------*/
+                lvWindow.Draw();
 
-            /*--------------------------------------------------------------
-             UPDATE Render Pipeline
-             --------------------------------------------------------------*/
-            pipe->funcUpdate();
-               
+                /*--------------------------------------------------------------
+                    DRAWING/RENDERING Objects
+                    --------------------------------------------------------------*/
+                pipe->funcDrawWindow();
 
-            /*--------------------------------------------------------------
-             DRAWING/RENDERING Window
-             --------------------------------------------------------------*/
-            lvWindow.Draw();
+                /*--------------------------------------------------------------
+                    Draw IMGUI FRAME
+                    --------------------------------------------------------------*/
+                imgui_manager.Render();
 
-            /*--------------------------------------------------------------
-             DRAWING/RENDERING Objects
-             --------------------------------------------------------------*/
-            pipe->funcDrawWindow();
-
-            /*--------------------------------------------------------------
-             Draw IMGUI FRAME
-             --------------------------------------------------------------*/
-            imgui_manager.Render();
-
-            
-            /*--------------------------------------------------------------
-             Play AUDIO
-             --------------------------------------------------------------*/
-            //audio.playSound();
-
-             /*--------------------------------------------------------------
-             Calculate time
-             --------------------------------------------------------------*/
-            double currentFrameTime = glfwGetTime();
-            help->DeltaTime = currentFrameTime - lastFrameTime;
-
-            while (help->DeltaTime < FPSCapTime) {
+                /*--------------------------------------------------------------
+                    Calculate time
+                    --------------------------------------------------------------*/
+                double currentFrameTime = glfwGetTime();
+                help->DeltaTime = currentFrameTime - lastFrameTime;
                 lastFrameTime = currentFrameTime;
-                currentFrameTime = glfwGetTime();
-                help->DeltaTime += currentFrameTime - lastFrameTime;
+                help->Fps = 1.f / help->DeltaTime;
+
+                glfwSwapBuffers(lvWindow.Window);
             }
-
-            lastFrameTime = glfwGetTime();
-            help->Fps = 1.f / help->DeltaTime;
-
-            glfwSwapBuffers(lvWindow.Window);
+            catch (const std::exception& e) {
+                LOGGING_ERROR("Exception in game loop: {}", e.what());
+            }
         }
-
+    } catch (const std::exception& e) {
+        LOGGING_ERROR("Exception during Application Run: {}", e.what());
+    }
         return 0;
-	}
+    }
+
 
 
 	int Application::Cleanup() {
-
-        Ecs::ECS::GetInstance()->Unload();
-        imgui_manager.Shutdown();
-        lvWindow.CleanUp();
-        glfwTerminate();
-        audio.shutdown();
-        LOGGING_INFO("Application Closed");
+        try {
+            Ecs::ECS::GetInstance()->Unload();
+            imgui_manager.Shutdown();
+            lvWindow.CleanUp();
+            glfwTerminate();
+            audio.shutdown();
+            LOGGING_INFO("Application Closed");
+        }
+        catch (const std::exception& e) {
+            LOGGING_ERROR("Exception during Application Cleanup: {}", e.what());
+        }
         return 0;
 	}
 

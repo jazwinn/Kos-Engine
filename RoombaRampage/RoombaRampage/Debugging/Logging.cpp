@@ -1,3 +1,16 @@
+/******************************************************************/
+/*!
+\file      Logging.cpp
+\author    Rayner Tan, raynerweichen.tan , 2301449
+\par       raynerweichen.tan@digipen.edu
+\date      Sept 28, 2024
+\brief     Logging functions
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/********************************************************************/
 #include "Logging.h"
 
 
@@ -20,7 +33,12 @@ namespace Logging {
        
 
     }
-
+    void Logger::testingLog() {
+        LOGGING_INFO("Testing of Logging Information {}" , 50);
+        LOGGING_DEBUG("Testing of Logging Debug");
+        LOGGING_ERROR("Testing of Logging Error with Source Location");
+        LOGGING_ERROR_NO_SOURCE_LOCATION("Testing of Logging without source location");        
+    }
     // Destructor: Closes the log file
     Logger::~Logger() { logFile.close(); }
 

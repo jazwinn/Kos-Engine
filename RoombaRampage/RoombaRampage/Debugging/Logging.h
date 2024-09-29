@@ -57,19 +57,6 @@
 
 namespace Logging {
 
-    //struct LogEntry {
-    //    enum LogLevel {
-    //        DEBUG,
-    //        INFO,
-    //        WARNING,
-    //        ERROR,
-    //        CRITICAL,
-    //        LOGLEVEL_SIZE
-    //    };
-    //    LogLevel type{ LogLevel::INFO };
-    //    std::string logMsg{ "" };
-    //};
-
     static const std::string GREEN = "\033[0;32m";
     static const std::string YELLOW = "\033[0;33m";
     static const std::string RED = "\033[0;31m";
@@ -119,6 +106,8 @@ namespace Logging {
 
         std::string getCurrentTimestamp();
         std::vector<std::string> getLogList();
+
+        void testingLog();
 
     private:
         std::ofstream logFile; // File stream for the log file

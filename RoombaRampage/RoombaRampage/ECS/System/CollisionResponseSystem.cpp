@@ -60,23 +60,22 @@ namespace Ecs {
 			return;
 		}
 
-		Physics::classPhysics PysicsPipeline;
-		std::vector<std::shared_ptr<Physics::PhysicsData>> vecCollisionEntity = PysicsPipeline.RetrievePhysicsData();
+		Physics::classPhysics PhysicsPipeline;
+		std::vector<std::shared_ptr<Physics::PhysicsData>> vecCollisionEntity = PhysicsPipeline.RetrievePhysicsData();
 
 		if (vecCollisionEntity.empty()); //std::cout << "No collision from Collision System CPP" << std::endl;
 		else {
 			//REQUIRES OPTIMIZATION 
 			//CollidedEntity is the ID
 			for (auto& CollidedEntity : vecCollisionEntity) {
-				if (ecs->ECS_CombinedComponentPool[TypeRigidBodyComponent]->HasComponent(CollidedEntity->ID)) {
-
-					MovementComponent* MovCom = (MovementComponent*)ecs->ECS_CombinedComponentPool[TypeMovemmentComponent]->GetEntityComponent(CollidedEntity->ID);
-
-					MovCom->Direction = { 0,0 };
-				}
-
-				
+				MovementComponent* MovCom = (MovementComponent*)ecs->ECS_CombinedComponentPool[TypeMovemmentComponent]->GetEntityComponent(CollidedEntity->ID);
+				MovCom->Direction = { 0,0 };
 			}
+
+			//if (ecs->ECS_CombinedComponentPool[TypeRigidBodyComponent]->HasComponent(CollidedEntity->ID)) {
+			//	MovementComponent* MovCom = (MovementComponent*)ecs->ECS_CombinedComponentPool[TypeMovemmentComponent]->GetEntityComponent(CollidedEntity->ID);
+			//	MovCom->Direction = { 0,0 };
+			//}
 		}
 	}
 

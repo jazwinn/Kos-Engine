@@ -3,7 +3,7 @@
 
 #include "../Math/vector2.h"
 #include "Component.h"
-
+#include "../Physics/Physics.h"
 
 namespace Ecs {
 
@@ -20,6 +20,9 @@ namespace Ecs {
 
 		bool drawDebug{true};
 
+		Physics::EntityType type = Physics::EntityType::Rectangle;
+
+		float radius{};
 	};
 
 }

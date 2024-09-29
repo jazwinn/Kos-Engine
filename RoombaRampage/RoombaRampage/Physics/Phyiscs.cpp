@@ -1,8 +1,18 @@
+/******************************************************************/
+/*!
+\file      Physics.cpp
+\author    Rayner Tan, raynerweichen.tan , 2301449
+\par       raynerweichen.tan@digipen.edu
+\date      Sept 28, 2024
+\brief     Physics pipeline functions
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/********************************************************************/
+
 #include "Physics.h"
-
-
-
-
 namespace Physics {
 
 	std::vector<std::shared_ptr<PhysicsData>> classPhysics::physicsEntities;
@@ -64,7 +74,7 @@ Rectangle::Rectangle(float rect_height, float rect_width, Vector2::Vec2 shape_po
 					/*************************************
 						CHECK RECT V RECT
 					*************************************/
-					if (physicsEntities[i]->GetEntity() == EntityType::Rectangle && physicsEntities[j]->GetEntity() == EntityType::Rectangle) {
+					if ((physicsEntities[i]->GetEntity() == EntityType::Rectangle) && (physicsEntities[j]->GetEntity() == EntityType::Rectangle)) {
 						if (CollisionIntersection_RectRect(*dynamic_cast<Rectangle*>(physicsEntities[i].get()), *dynamic_cast<Rectangle*>(physicsEntities[i].get()), dt)) {
 							//checking whether if entity is alr added inside
 							if (std::find(collidedEntities.begin(), collidedEntities.end(), physicsEntities[i]) == collidedEntities.end()) {
@@ -75,7 +85,7 @@ Rectangle::Rectangle(float rect_height, float rect_width, Vector2::Vec2 shape_po
 					/*************************************
 						CHECK CIRCLE V RECT
 					*************************************/
-					else if (physicsEntities[i]->GetEntity() == EntityType::Circle && physicsEntities[j]->GetEntity() == EntityType::Rectangle) {
+					else if ((physicsEntities[i]->GetEntity() == EntityType::Circle) && (physicsEntities[j]->GetEntity() == EntityType::Rectangle)) {
 						if (CollisionIntersection_CircleRect(*dynamic_cast<Circle*>(physicsEntities[i].get()), *dynamic_cast<Rectangle*>(physicsEntities[j].get()))) {
 							if (std::find(collidedEntities.begin(), collidedEntities.end(), physicsEntities[i]) == collidedEntities.end()) {
 								collidedEntities.push_back(physicsEntities[i]);
@@ -104,7 +114,7 @@ Rectangle::Rectangle(float rect_height, float rect_width, Vector2::Vec2 shape_po
 						}
 					}
 					else {
-
+						LOGGING_ERROR("NO CASE FOR CHECKING");
 					}
 				}
 				//std::cout << "********************************************************************************" << std::endl;
@@ -136,16 +146,11 @@ Rectangle::Rectangle(float rect_height, float rect_width, Vector2::Vec2 shape_po
 				dynamic_cast<Rectangle*>(physicsEntities[i].get())->boundingBox = boundingBox;
 			}
 			else if (physicsEntities[i]->GetEntity() == EntityType::Circle) {
-				//Caclulate the bounding sphere
-				//RITTER shit
+
 			}
 			else {
 
 			}
-			
-			
-			//std::cout << "BOUNDING BOX MIN X " << boundingBox.min.x << " Y " << boundingBox.min.y << std::endl;
-			//std::cout << "BOUNDING BOX MAX X " << boundingBox.max.x << " Y " << boundingBox.max.y << std::endl;
 		}
 		//std::cout << "********************************************************************************" << std::endl;
 	}

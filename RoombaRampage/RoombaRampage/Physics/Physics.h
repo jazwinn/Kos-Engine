@@ -7,6 +7,7 @@
 #include <iostream>
 #include <memory>
 #include <new>
+#include "../Debugging/Logging.h"
 
 
 
@@ -90,13 +91,11 @@ namespace Physics {
 		
 		static std::vector<std::shared_ptr<PhysicsData>> physicsEntities;
 		static std::vector<std::shared_ptr<PhysicsData>> collidedEntities;
-		//static std::vector<std::unique_ptr<PhysicsData>> physicsEntities;
-		//static std::vector<std::unique_ptr<PhysicsData>> collidedEntities;
 		void CalculateBoundingBox();
 
 	public:
 		void SendPhysicsData(float rect_height, float rect_width, Vector2::Vec2 position, Vector2::Vec2 scale, Vector2::Vec2 velocity, int ID);
-		void SendPhysicsData(float radius, Vector2::Vec2 scale, Vector2::Vec2 position, Vector2::Vec2 velocity, int ID);
+		void SendPhysicsData(float radius, Vector2::Vec2 position, Vector2::Vec2 scale, Vector2::Vec2 velocity, int ID);
 		void CollisionCheck(float);
 		std::vector<std::shared_ptr<PhysicsData>> RetrievePhysicsData();
 		void ClearEntites();

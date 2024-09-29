@@ -3,6 +3,7 @@
 #include "CollisionSystem.h"
 #include "../Physics/Physics.h"
 #include "../Graphics/GraphicsPipe.h"
+#include "../Debugging/Logging.h"
 
 namespace Ecs {
 
@@ -67,7 +68,7 @@ namespace Ecs {
 		}
 
 		//create physics;
-		Physics::classPhysics PysicsPipeline;
+		Physics::classPhysics PhysicsPipeline;
 		GraphicsPipe* graphicsPipe = GraphicsPipe::funcGetInstance();
 
 		for (int n{}; n < vecTransformComponentPtr.size(); n++) {
@@ -77,14 +78,16 @@ namespace Ecs {
 			TransformComponent* TransComp = vecTransformComponentPtr[n];
 			MovementComponent* MovComp = vecMovementComponentPtr[n];
 
-			
-			//PysicsPipeline.SendPhysicsData(ColComp->Size * TransComp->scale,TransComp->position, MovComp->Speed * MovComp->Direction, ColComp->Entity);
-			/*
-			  if circle
-				PysicsPipeline.SendPhysicsData(ColComp->Size * TransComp->scale,TransComp->position, MovComp->Speed * MovComp->Direction, ColComp->Entity);
-				if rect
-				PysicsPipeline.SendPhysicsData(ColComp->Size * TransComp->scale,TransComp->position, MovComp->Speed * MovComp->Direction, ColComp->Entity);
-			*/
+			if (ColComp->type == Physics::EntityType::Circle) {
+				//take note setting radius as preset 5.0f; first
+				PhysicsPipeline.SendPhysicsData(5.0f, TransComp->position,TransComp->scale, MovComp->Speed * MovComp->Direction, ColComp->Entity);
+			}
+			else if (ColComp->type == Physics::EntityType::Rectangle) {
+				PhysicsPipeline.SendPhysicsData(ColComp->Size.x, ColComp->Size.y, TransComp->position,TransComp->scale, MovComp->Speed * MovComp->Direction, ColComp->Entity);
+			}
+			else {
+				LOGGING_ERROR("NO ENTITY TYPE");
+			}
 
 			if (ColComp->drawDebug)
 			{
@@ -94,12 +97,9 @@ namespace Ecs {
 
 		//check for collision
 		if (vecColliderComponentPtr.size() > 0) {
-			PysicsPipeline.CollisionCheck(ecs->DeltaTime);
+			PhysicsPipeline.CollisionCheck(ecs->DeltaTime);
 		}
-		
-
-		
-
+	
 	}
 		
 

@@ -1,3 +1,17 @@
+/******************************************************************/
+/*!
+\file      mathlib.cpp
+\author    Rayner Tan, raynerweichen.tan , 2301449
+\par       raynerweichen.tan@digipen.edu
+\date      Sept 28, 2024
+\brief     Math Library
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/********************************************************************/
+
 #include "mathlib.h"
 
 double funcRadianToDegree(double x) { return x * (180.0 / PI); }
