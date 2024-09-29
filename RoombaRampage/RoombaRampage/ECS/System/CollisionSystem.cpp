@@ -80,7 +80,7 @@ namespace Ecs {
 
 			if (ColComp->type == Physics::EntityType::Circle) {
 				//take note setting radius as preset 5.0f; first
-				PhysicsPipeline.SendPhysicsData(5.0f, TransComp->position,TransComp->scale, MovComp->Speed * MovComp->Direction, ColComp->Entity);
+				PhysicsPipeline.SendPhysicsData(ColComp->radius, TransComp->position,TransComp->scale, MovComp->Speed * MovComp->Direction, ColComp->Entity);
 			}
 			else if (ColComp->type == Physics::EntityType::Rectangle) {
 				PhysicsPipeline.SendPhysicsData(ColComp->Size.x, ColComp->Size.y, TransComp->position,TransComp->scale, MovComp->Speed * MovComp->Direction, ColComp->Entity);
