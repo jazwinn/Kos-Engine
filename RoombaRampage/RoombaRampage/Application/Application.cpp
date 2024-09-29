@@ -3,11 +3,14 @@
 
 #include "../Graphics/GraphicsPipe.h"
 #include "../Assets/AssetManager.h"
+#include "../De&Serialization/json_handler.h"
+#include "../Debugging/Logging.h"
 #include "../Inputs/Input.h"
 #include "../ECS/ECS.h"
 #include "Helper.h"
 #include "Window.h"
 #include "../Debugging/Logging.h"
+#include "../Debugging/Performance.h"
 
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
@@ -28,12 +31,10 @@ namespace Application {
     AssetManager* AstManager;
     Input::InputSystem Input;
    
-
     // Audio
-    FModAudio audio;
-    FModAudio audio2;
-    FMOD_CHANNELGROUP* channelgroup;
-    FMOD_CHANNELGROUP* channelgroup2;
+    FModAudio Application::audio;
+    FModAudio Application::audio2;
+
     // Audio Demo timer
     float audioTimer = 3.0f;
     bool audio2_bool = true;
@@ -42,56 +43,26 @@ namespace Application {
 
 
     int Application::Init() {
+
+        /*--------------------------------------------------------------
+        INITIALIZE LOGGING SYSTEM
+        --------------------------------------------------------------*/
+        LOGGING_INIT_LOGS("Debugging/LogFile.txt");
+        LOGGING_INFO("Application Start");
+
         /*--------------------------------------------------------------
           INITIALIZE WINDOW WIDTH & HEIGHT
        --------------------------------------------------------------*/
-        //Helper::Helpers::GetInstance()->WindowWidth = 1280;
-        //Helper::Helpers::GetInstance()->WindowHeight = 720;
-
-
+        Serialization::Serialize::LoadConfig();
+        LOGGING_INFO("Load Config Successful");
 
         /*--------------------------------------------------------------
            INITIALIZE Asset Manager
         --------------------------------------------------------------*/
         AstManager = AssetManager::funcGetInstance();
         AstManager->funcLoadAssets();
+        LOGGING_INFO("Load Asset Successful");
 
-       /*--------------------------------------------------------------
-        INITIALIZE Asset Manager
-       --------------------------------------------------------------*/
-        AstManager->testJSON();
-
-       /*--------------------------------------------------------------
-          INITIALIZE OPENGL WINDOW
-       --------------------------------------------------------------*/
-        lvWindow.init();
-
-        /*--------------------------------------------------------------
-           INITIALIZE GRAPHICS PIPE
-        --------------------------------------------------------------*/
-        pipe = GraphicsPipe::funcGetInstance();
-        pipe->funcInit();
-
-        /*--------------------------------------------------------------
-           INITIALIZE Input
-        --------------------------------------------------------------*/
-        //call back must happen before imgui
-        Input.SetCallBack(lvWindow.Window);
-
-        /*--------------------------------------------------------------
-           INITIALIZE IMGUI
-        --------------------------------------------------------------*/
-        const char* glsl_version = "#version 130";
-        imgui_manager.Initialize(lvWindow.Window, glsl_version);
-
-        /*--------------------------------------------------------------
-           INITIALIZE ECS
-        --------------------------------------------------------------*/
-        //fetch ecs
-        Ecs::ECS* ecs = Ecs::ECS::GetInstance();
-
-        ecs->Load();
-        ecs->Init();
 
         /*--------------------------------------------------------------
             INITIALIZE AUDIO MANAGER
@@ -102,10 +73,50 @@ namespace Application {
         audio.createSound("Assets/vacuum.mp3");
         audio2.createSound("Assets/zwing.wav");
 
+
+        LOGGING_INFO("Application Init Successful");
+
+       /*--------------------------------------------------------------
+        INITIALIZE Asset Manager
+       --------------------------------------------------------------*/
+        AstManager->testJSON();
+
+       /*--------------------------------------------------------------
+          INITIALIZE OPENGL WINDOW
+       --------------------------------------------------------------*/
+        lvWindow.init();
+        LOGGING_INFO("Load Window Successful");
+
         /*--------------------------------------------------------------
-            INITIALIZE LOGGING SYSTEM
+           INITIALIZE GRAPHICS PIPE
         --------------------------------------------------------------*/
-        LOGGING_INIT_LOGS("./Logs/LogFile.txt");
+        pipe = GraphicsPipe::funcGetInstance();
+        pipe->funcInit();
+        LOGGING_INFO("Load Graphic Pipline Successful");
+
+        /*--------------------------------------------------------------
+           INITIALIZE Input
+        --------------------------------------------------------------*/
+        //call back must happen before imgui
+        Input.SetCallBack(lvWindow.Window);
+        LOGGING_INFO("Set Input Call Back Successful");
+
+        /*--------------------------------------------------------------
+           INITIALIZE IMGUI
+        --------------------------------------------------------------*/
+        const char* glsl_version = "#version 130";
+        imgui_manager.Initialize(lvWindow.Window, glsl_version);
+        LOGGING_INFO("Load ImGui Successful");
+
+        /*--------------------------------------------------------------
+           INITIALIZE ECS
+        --------------------------------------------------------------*/
+        //fetch ecs
+        Ecs::ECS* ecs = Ecs::ECS::GetInstance();
+
+        ecs->Load();
+        ecs->Init();
+        LOGGING_INFO("Load ECS Successful");
 
         return 0;
 	}
@@ -115,11 +126,10 @@ namespace Application {
     int Application::Run() {
 
         Ecs::ECS* ecs = Ecs::ECS::GetInstance();
-        float FPSCap = 1 / 60;
+        Helper::Helpers *help = Helper::Helpers::GetInstance();
+        float FPSCapTime = 1.f / help->FpsCap;
+        double lastFrameTime = glfwGetTime();
 
-
-
-  
 
         /*--------------------------------------------------------------
          GAME LOOP
@@ -129,16 +139,12 @@ namespace Application {
             /* Poll for and process events */
             glfwPollEvents();
 
-            //calculate DeltaTime
-            float CurrentTime = static_cast<float>(glfwGetTime());
-            float DeltaTime =  CurrentTime - LastTime;
 
-            //std::cout << "FPS:" << 1/DeltaTime << std::endl;
 
             /*--------------------------------------------------------------
              UPDATE ECS
              --------------------------------------------------------------*/
-            ecs->Update(DeltaTime);
+            ecs->Update(Helper::Helpers::GetInstance()->DeltaTime);
 
             /*--------------------------------------------------------------
              UPDATE Render Pipeline
@@ -158,36 +164,25 @@ namespace Application {
 
             /*--------------------------------------------------------------
              Draw IMGUI FRAME
-             --------------------------------------------------------------*/          
+             --------------------------------------------------------------*/
             imgui_manager.Render();
 
-
-            /*--------------------------------------------------------------
-             Play AUDIO
+             /*--------------------------------------------------------------
+             Calculate time
              --------------------------------------------------------------*/
-            if (audioTimer >= 0)
-            {
-                audioTimer -= DeltaTime;
-                audio.playSound();
+            double currentFrameTime = glfwGetTime();
+            help->DeltaTime = currentFrameTime - lastFrameTime;
+
+            while (help->DeltaTime < FPSCapTime) {
+                lastFrameTime = currentFrameTime;
+                currentFrameTime = glfwGetTime();
+                help->DeltaTime += currentFrameTime - lastFrameTime;
             }
-            else
-            {
-                audio.stopSound();
-                if (audio2_bool)
-                {
-                    audio2.playSound();
-                    audio2_bool = !audio2_bool;
-                }
-            }
+
+            lastFrameTime = glfwGetTime();
+            help->Fps = 1.f / help->DeltaTime;
 
             glfwSwapBuffers(lvWindow.Window);
-
-            while (DeltaTime < FPSCap) {
-                CurrentTime = static_cast<float>(glfwGetTime());  // Continuously update current time
-                DeltaTime = CurrentTime - LastTime;  // Calculate new DeltaTime
-            }
-
-            LastTime = CurrentTime;
         }
 
         return 0;

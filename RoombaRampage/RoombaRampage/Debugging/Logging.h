@@ -12,6 +12,8 @@
 #include <source_location>
 #include <format>
 
+#include "../backward/backward.hpp"
+
 /*
  * @brief Variadic Macro for logging Information. This macro takes in a string message, followed by the
  * necessary arguments.
@@ -76,11 +78,11 @@ namespace Logging {
     static const std::string CLOSE = "\033[0m";
 
     enum LogLevel {
-        DEBUG,
-        INFO,
-        WARNING,
-        ERROR,
-        LOGLEVEL_SIZE
+        LOG_DEBUG,
+        LOG_INFO,
+        LOG_WARNING,
+        LOG_ERROR,
+        LOG_LEVEL_SIZE
     };
 
     class Logger {
@@ -114,18 +116,23 @@ namespace Logging {
 
         template <typename... Args>
         void Debug(std::source_location location, const std::string_view message, Args&&... args);
-        
-        std::string getCurrentTimestamp();
 
+        std::string getCurrentTimestamp();
+        std::vector<std::string> getLogList();
 
     private:
         std::ofstream logFile; // File stream for the log file
+        
+        backward::Printer printer;// For printing crashes into the logfile
+        backward::StackTrace st;
+
         bool m_bInitialized{ false };
 
         // Converts log level to a string for output
         std::string levelToString(LogLevel level);
         // add color to the text
         std::string colorToString(LogLevel level);
+        std::vector<std::string> log_list;
     };
 
 
@@ -143,6 +150,7 @@ namespace Logging {
         std::stringstream logEntry;
         logEntry << "[INFO]: " << getCurrentTimestamp() << " - " << std::vformat(message, std::make_format_args(args...));
         std::cout << BLUE << logEntry.str() << CLOSE << std::endl;
+        log_list.push_back(logEntry.str());
 
         // Output to log file
         if (logFile.is_open()) {
@@ -164,6 +172,8 @@ namespace Logging {
         std::stringstream logEntry;
         logEntry << "[WARN]: " << getCurrentTimestamp() << " - " << std::vformat(message, std::make_format_args(args...));
         std::cout << YELLOW << logEntry.str() << CLOSE << std::endl;
+        log_list.push_back(logEntry.str());
+
         // Output to log file
         if (logFile.is_open()) {
             logFile << logEntry.str() << "\n";
@@ -186,9 +196,10 @@ namespace Logging {
 
         std::stringstream logEntry;
         logEntry << "[ERROR]: " << getCurrentTimestamp() << " - " << std::vformat(message, std::make_format_args(args...))
-            << "\nFUNC: " << location.function_name() << " LINE: " << location.line();
+            << "\nFUNC: " << location.function_name() << " LINE: " << location.line() << " FILE: " << location.file_name();
 
         std::cout << RED << logEntry.str() << CLOSE << std::endl;
+        log_list.push_back(logEntry.str());
 
         // Output to log file
         if (logFile.is_open()) {
@@ -216,6 +227,7 @@ namespace Logging {
         logEntry << "[ERROR]: " << getCurrentTimestamp() << " - " << std::vformat(message, std::make_format_args(args...));
 
         std::cout << RED << logEntry.str() << CLOSE << std::endl;
+        log_list.push_back(logEntry.str());
 
         // Output to log file
         if (logFile.is_open()) {
@@ -239,6 +251,7 @@ namespace Logging {
         logEntry << "[DEBUG]: " << getCurrentTimestamp() << " - " << std::vformat(message, std::make_format_args(args...));
 
         std::cout << GREEN << logEntry.str() << CLOSE << std::endl;
+        log_list.push_back(logEntry.str());
 
         // Output to log file
         if (logFile.is_open()) {
@@ -266,3 +279,4 @@ inside MESSAGE need to have {} as this is the placeholder for 50
 ************************************************/
 
 #endif
+

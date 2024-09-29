@@ -1,7 +1,5 @@
 #include <iostream>
-#include "fmod.hpp"
 #include "Application.h"
-
 
     int main(void)
     {
@@ -12,10 +10,18 @@
         #endif
         Application::Application app{};
 
+        
+        
+
         app.Init();
+       
 
         app.Run();
 
         app.Cleanup();
+
+
+
+
         return 0;
     } 

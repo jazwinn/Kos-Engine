@@ -2,6 +2,8 @@
 #include "../Application/Helper.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
+#include "implot.h"
+#include "implot_internal.h"
 #include "../ECS/ECS.h"
 #include "../Dependencies/rapidjson/document.h"
 #include "../Dependencies/rapidjson/writer.h"
@@ -16,6 +18,7 @@ void ImGuiHandler::Initialize(GLFWwindow* window, const char* glsl_version)
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
+    ImPlot::CreateContext();
     ImGuiIO& io = ImGui::GetIO(); (void)io;
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;  // Enable Gamepad Controls
@@ -42,12 +45,20 @@ void ImGuiHandler::Render()
 {
     // Render ImGui
     NewFrame();
-
+    //viewport docking
     ImGui::DockSpaceOverViewport(0, ImGui::GetMainViewport());
+    //create main menu bar
+    DrawMainMenuBar();
+
+    Helper::Helpers *help = Helper::Helpers::GetInstance();
+
+
+    DrawPerformanceWindow(help->Fps);
     DrawHierachyWindow();
     DrawComponentWindow();
     DrawLogsWindow();
-    DrawRenderScreenWindow(Helper::Helpers::GetInstance()->WindowWidth / 2, Helper::Helpers::GetInstance()->WindowHeight / 2);
+    DrawTestWindow();
+    DrawRenderScreenWindow(Helper::Helpers::GetInstance()->WindowWidth, Helper::Helpers::GetInstance()->WindowHeight);
     ImGui::Render();
     ImGuiIO& io = ImGui::GetIO();
     if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
@@ -68,5 +79,6 @@ void ImGuiHandler::Shutdown()
     // Shutdown ImGui
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
+    ImPlot::DestroyContext();
     ImGui::DestroyContext();
 }

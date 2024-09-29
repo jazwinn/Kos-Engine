@@ -14,40 +14,16 @@
 
 std::unique_ptr<AssetManager> AssetManager::instancePtr = nullptr;
 
-void AssetManager::LoadConfig() {
-    std::ifstream file;
-    file.open("./Config/Config.txt");
-
-    if (!file.is_open()) {
-        std::cerr << "Error opening config file" << std::endl;
-        return;
-    }
-    Helper::Helpers *help = Helper::Helpers::GetInstance();
-
-    std::string line;
-    std::string temp;
-    
-    //get height
-    std::getline(file, line);
-    std::stringstream str{ line };
-    str >> temp >> help->WindowHeight;
-    //get width
-    line.clear();
-    temp.clear();
-    std::getline(file, line);
-    std::stringstream str2{ line };
-    str2 >> temp >> help->WindowWidth;
-
-    if (help->WindowHeight <= 0 || help->WindowWidth <= 0) {
-        std::cout << "Error Reading Config file (Width or Height <= 0)" << std::endl;
-    }
-}
 
 void AssetManager::funcLoadAssets()
 {
-    LoadConfig();
+    
+    funcLoadImage("Assets/blackTile_test.png");
+    funcLoadImage("Assets/testBackground.png");
     funcLoadImage("Assets/roombaTest.png");
     funcLoadImage("Assets/roombaTest2.png");
+    funcLoadImage("Assets/roombaTest3.png");
+    funcLoadImage("Assets/sprAssassinBar_strip8.png");
 }
 
 AssetManager* AssetManager::funcGetInstance()
@@ -75,14 +51,18 @@ AssetManager::~AssetManager()
             }
         }
     }
-   // delete instancePtr;
 }
 
 void AssetManager::funcLoadImage(const char* file)
 {
+    stbi_set_flip_vertically_on_load(true);
 	Image image{};
     image.stripCount = extractStripCountFromFilename(file);
+   
     image.spriteName = extractSpriteNameFromFilename(file);
+    
+   
+    
 	unsigned char* data = stbi_load(file, &image.width, &image.height, &image.channels, 0);
     if (!data)
     {
@@ -97,15 +77,27 @@ void AssetManager::funcLoadImage(const char* file)
 
     if (image.stripCount == 1)
     {
-        if (image.width < targetWidth || image.height < targetHeight)
+        if (image.width != image.height)
         {
-            unsigned char* newData = funcPadTexture(data, image.width, image.height, image.channels);
+            int targetHeight{};
+            int targetWidth{};
+            if (image.width > image.height)
+            {
+                targetHeight = image.width;
+                targetWidth = image.width;
+            }
+            else
+            {
+                targetHeight = image.height;
+                targetWidth = image.height;
+            }
+            unsigned char* newData = funcPadTexture(data, image.width, image.height, image.channels, targetWidth, targetHeight, targetChannels);
             stbi_image_free(data);
-            image.isPadded = true;
+            image.isPadded = true;      
+            image.imageID = imageCount;
             image.width = targetWidth;
             image.height = targetHeight;
-            
-            image.imageID = imageCount;
+            image.channels = targetChannels;
             imageCount++;
             imageContainer.push_back(image);
             imagedataArray.push_back(newData);
@@ -129,12 +121,28 @@ void AssetManager::funcLoadImage(const char* file)
    
 }
 
-unsigned char* AssetManager::funcPadTexture(const unsigned char* originalPixels, int originalWidth, int originalHeight, int originalChannels)
+unsigned char* AssetManager::funcPadTexture(const unsigned char* originalPixels, int originalWidth, int originalHeight, int originalChannels, int targetWidth, int targetHeight, int targetChannels)
 {
     unsigned char* paddedPixels = new unsigned char[targetWidth * targetHeight * targetChannels];
 
     // Fill with padding (e.g., transparent for RGBA)
     memset(paddedPixels, 0, targetWidth * targetHeight * targetChannels);
+
+    //If the image doesn't have alpha channel
+    if (targetChannels > originalChannels)
+    {
+        for (int y = 0; y < originalHeight; ++y)
+        {
+            for (int x = 0; x < originalWidth; ++x)
+            {
+                    int c = 3;
+                    int dstIndex = ((y + (targetHeight - originalHeight) / 2) * targetWidth + (x + (targetWidth - originalWidth) / 2)) * targetChannels + c;
+
+                    // Make Opaque
+                    paddedPixels[dstIndex] = 255;
+            }
+        }
+    }
 
     // Copy the original texture into the center of the padded texture
     for (int y = 0; y < originalHeight; ++y) 
@@ -149,6 +157,7 @@ unsigned char* AssetManager::funcPadTexture(const unsigned char* originalPixels,
 
                 // Copy pixel data
                 paddedPixels[dstIndex] = originalPixels[srcIndex];
+              
             }
         }
     }
@@ -159,12 +168,13 @@ unsigned char* AssetManager::funcPadTexture(const unsigned char* originalPixels,
 int AssetManager::extractStripCountFromFilename(const std::string& filename) 
 {
     // Use regex to find the strip count in the format "something_strip(number).png"
-    std::regex pattern("(\\w)_strip(\\d+)\\.png");
+    std::regex pattern("([[:alnum:]])_strip([[:digit:]]+)\\.png");
     std::smatch match;
 
     if (std::regex_search(filename, match, pattern)) 
     {
-        return std::stoi(match[1].str());
+        std::cout << "Strip Success" << std::endl;
+        return std::stoi(match[2].str());
     }
 
     // Default to 1 if no number is found
@@ -173,7 +183,7 @@ int AssetManager::extractStripCountFromFilename(const std::string& filename)
 
 std::string AssetManager::extractSpriteNameFromFilename(const std::string& filename)
 {
-    std::regex pattern("(\\w+)_.*\\.png");
+    std::regex pattern("([[:alnum:]]+)([_]*)([[:alnum:]]*)\.png");
     std::smatch match;
 
     if (std::regex_search(filename, match, pattern))

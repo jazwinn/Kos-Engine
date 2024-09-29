@@ -2,7 +2,8 @@
 
 #include "ECS.h"
 #include <algorithm>
-
+#include "../Debugging/Performance.h"
+#include "../Debugging/Logging.h"
 //ECS Varaible
 
 namespace Ecs{
@@ -11,11 +12,9 @@ namespace Ecs{
 
 	void ECS::Init() {
 		ECS* ecs = ECS::GetInstance();
-
 		//loops through all the system
 		for (auto& System : ecs->ECS_SystemMap) {
 			System.second->Init();
-
 		}
 
 	}
@@ -38,6 +37,12 @@ namespace Ecs{
 		ecs->ECS_SystemMap[TypeCollisionSystem] = std::make_shared<CollisionSystem>();
 		ecs->ECS_SystemMap[TypeRenderSystem] = std::make_shared<RenderSystem>();
 		ecs->ECS_SystemMap[TypeCollisionResponseSystem] = std::make_shared<CollisionResponseSystem>();
+
+		//Initialize all system Peformance
+		PerformanceTracker::Performance Perform{};
+		for (int n{}; n < TotalTypeSystem; n++) {
+			Perform.AddSystem((TypeSystem)n);
+		}
 	}
 
 
@@ -47,12 +52,28 @@ namespace Ecs{
 		//update deltatime
 		ecs->DeltaTime = DT;
 
+		PerformanceTracker::Performance::ResetTotalSystemTime();
+		
+
 		//loops through all the system
 		for (auto& System : ecs->ECS_SystemMap) {
+			auto start = std::chrono::steady_clock::now();
+			
+
 			System.second->Update();
 
-		}
 
+			auto end = std::chrono::steady_clock::now();
+
+			std::chrono::duration<float> duration = end - start;
+			
+
+			PerformanceTracker::Performance::UpdateTotalSystemTime(duration.count());
+			PerformanceTracker::Performance::UpdateSystemTime(System.first, duration.count());
+		
+
+		}
+		
 	}
 
 	void ECS::Unload() {
@@ -65,6 +86,12 @@ namespace Ecs{
 	void* ECS::AddComponent(ComponentType Type, EntityID ID) {
 
 		ECS* ecs = ECS::GetInstance();
+
+		//checks if component already exist
+		if (ecs->ECS_CombinedComponentPool[Type]->HasComponent(ID)) {
+			LOGGING_WARN("Entity Already Has Component");
+			return NULL;
+		}
 
 		void* ComponentPtr = ecs->ECS_CombinedComponentPool[Type]->AssignComponent(ID);
 
@@ -106,28 +133,11 @@ namespace Ecs{
 
 		EntityID ID = ecs->EntityCount;
 
+		// set bitflag to 0
 		ecs->ECS_EntityMap[ID] = 0;
 
+		//add transform component as default
 		AddComponent(TypeTransformComponent, ID);
-
-
-		/*--------------------------------------------------------------
-		 for testing
-		 --------------------------------------------------------------*/
-		TransformComponent* Trans = (TransformComponent*)ecs->ECS_CombinedComponentPool[TypeTransformComponent]->GetEntityComponent(ID);
-
-		Trans->scale;
-
-		AddComponent(TypeSpriteComponent, ID);
-
-		MovementComponent* MovCom = (MovementComponent*)AddComponent(TypeMovemmentComponent, ID);
-		MovCom->Speed = 1;
-
-		AddComponent(TypePlayerComponent, ID);
-		AddComponent(TypeRigidBodyComponent, ID);
-		AddComponent(TypeColliderComponent, ID);
-
-		/*--------------------------------------------------------------*/
 
 		ecs->EntityCount++;
 

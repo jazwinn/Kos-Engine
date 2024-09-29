@@ -3,6 +3,8 @@
 #include "imgui_impl_opengl3.h"
 #include "imgui_handler.h"
 #include "../ECS/ECS.h"
+#include "../../De&Serialization/json_handler.h"
+
 #include<vector>
 #include<string>
 #include <iostream>
@@ -12,10 +14,44 @@ unsigned int ImGuiHandler::DrawHierachyWindow()
     //fetch ecs
     Ecs::ECS* ecs = Ecs::ECS::GetInstance();
 
-    // Custom window with example widgets
-    ImGui::Begin("Hierachy Window");
+    // Load entities only once when the window is first opened
+    static bool hasLoaded = false;
+    if (!hasLoaded) {
+        std::cout << "Loading";
+        // Load entities from JSON (no EntityID in JSON, new entities are created)
+        Serialization::Serialize::LoadComponentsJson("../RoombaRampage/Json Texts/components.json", ecs, obj_text_entries);
 
-    ImGui::Text("Roomba Rampage");
+        // Iterate through all loaded entities and add them to the hierarchy
+        for (size_t i = 0; i < obj_text_entries.size(); ++i) {
+            obj_entity_id.push_back(ecs->ECS_EntityMap.begin()->first + i);
+            deleteButton.push_back(false);
+            DuplicateButton.push_back(false);
+        }
+        hasLoaded = true;
+    }
+
+    // Custom window with example widgets
+    bool open = true;
+    ImGui::Begin("Hierachy Window", &open, ImGuiWindowFlags_MenuBar);
+
+    if (ImGui::BeginMenuBar())
+    {
+        if (ImGui::BeginMenu("Rename"))
+        {
+
+            ImGui::EndMenu();
+        }
+        if (ImGui::BeginMenu("Prefabs"))
+        {
+
+            ImGui::EndMenu();
+        }
+
+        ImGui::EndMenuBar();
+    }
+
+    std::string ObjectCountStr = "Oject Count: " + std::to_string(obj_entity_id.size());
+    ImGui::Text(ObjectCountStr.c_str());
 
     if (ImGui::Button("+ Add GameObject"))
         ImGuiHandler::objectNameBox ? ImGuiHandler::objectNameBox = false : objectNameBox = true;
@@ -38,11 +74,12 @@ unsigned int ImGuiHandler::DrawHierachyWindow()
             //Used to track and maintain sync between objtextentries and deletebutton vector
             deleteButton.push_back(false);
             DuplicateButton.push_back(false);
-            obj_component_window.push_back(true);
+           
 
             charBuffer[0] = '\0';
             objectNameBox = false;
 
+            Serialization::Serialize::SaveComponentsJson("../RoombaRampage/Json Texts", Ecs::ECS::GetInstance()->ECS_EntityMap, obj_text_entries);
         }
     }
 
@@ -51,12 +88,15 @@ unsigned int ImGuiHandler::DrawHierachyWindow()
     {
         // '##' let IMGui set an internal unique ID to widget without visible label!
         std::string buttonName = obj_text_entries[i] +"##"+ std::to_string(i);
+
         if (ImGui::Button(buttonName.c_str()))
         {
+            std::fill(deleteButton.begin(), deleteButton.end(), false);
+            std::fill(DuplicateButton.begin(), DuplicateButton.end(), false);
+
             deleteButton[i] ? deleteButton[i] = false : deleteButton[i] = true;
             DuplicateButton[i] ? DuplicateButton[i] = false : DuplicateButton[i] = true;
 
-            obj_component_window[i] = true;
 
             clicked_entity_id = obj_entity_id[i];
             std::cout << "Entity ID clicked: " << clicked_entity_id << std::endl; //For debug purposes, remove later
@@ -78,22 +118,19 @@ unsigned int ImGuiHandler::DrawHierachyWindow()
 
             if (ImGui::Button(deleteButtonLabel.c_str()))
             {
-
-                //Delete entity from ecs
+                //Delete entity from ecs               
                 Ecs::ECS::GetInstance()->DeleteEntity(obj_entity_id[i]);
-
-                obj_component_window[i] = false;
 
                 //remove the entries 
                 obj_text_entries.erase(obj_text_entries.begin() + i);
                 obj_entity_id.erase(obj_entity_id.begin() + i);
                 deleteButton.erase(deleteButton.begin() + i);
                 DuplicateButton.erase(DuplicateButton.begin() + i);
-                obj_component_window.erase(obj_component_window.begin() + i);
-
+                
                 i--;
 
                 ImGui::PopStyleColor(3);  // Pop the 3 style colors (button, hovered, and active)
+                Serialization::Serialize::SaveComponentsJson("../RoombaRampage/Json Texts", Ecs::ECS::GetInstance()->ECS_EntityMap, obj_text_entries);
                 continue;
             }
 
@@ -122,13 +159,12 @@ unsigned int ImGuiHandler::DrawHierachyWindow()
                 obj_entity_id.push_back(newEntityID);
 
                 //Add the string into the vector
-                obj_text_entries.push_back(std::string(charBuffer));
+                obj_text_entries.push_back(std::string(obj_text_entries[i]));
 
                 //Set to false as no button showing first
                 //Used to track and maintain sync between objtextentries and deletebutton vector
                 deleteButton.push_back(false);
                 DuplicateButton.push_back(false);
-                obj_component_window.push_back(false);
 
                 charBuffer[0] = '\0';
                 objectNameBox = false;
@@ -139,8 +175,6 @@ unsigned int ImGuiHandler::DrawHierachyWindow()
 
             ImGui::PopStyleColor(3);  // Pop the 3 style colors (button, hovered, and active)
         }
-
-
     }
 
     ImGui::End();

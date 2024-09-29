@@ -2,6 +2,7 @@
 
 #include "CollisionSystem.h"
 #include "../Physics/Physics.h"
+#include "../Graphics/GraphicsPipe.h"
 
 namespace Ecs {
 
@@ -15,7 +16,7 @@ namespace Ecs {
 			vecTransformComponentPtr.push_back((TransformComponent*)ecs->ECS_CombinedComponentPool[TypeTransformComponent]->GetEntityComponent(ID));
 			vecColliderComponentPtr.push_back((ColliderComponent*)ecs->ECS_CombinedComponentPool[TypeColliderComponent]->GetEntityComponent(ID));
 			//vecRigidBodyComponentPtr.push_back((RigidBodyComponent*)ecs->ECS_CombinedComponentPool[TypeRigidBodyComponent]->GetEntityComponent(ID));
-			vecMovementComponentPtr.push_back((MovementComponent*)ecs->ECS_CombinedComponentPool[TypeMovemmentComponent]->GetEntityComponent(ID));
+			//vecMovementComponentPtr.push_back((MovementComponent*)ecs->ECS_CombinedComponentPool[TypeMovemmentComponent]->GetEntityComponent(ID));
 		}
 
 
@@ -37,13 +38,13 @@ namespace Ecs {
 		std::swap(vecColliderComponentPtr[IndexID], vecColliderComponentPtr[IndexLast]);
 		std::swap(vecTransformComponentPtr[IndexID], vecTransformComponentPtr[IndexLast]);
 		//std::swap(vecRigidBodyComponentPtr[IndexID], vecRigidBodyComponentPtr[IndexLast]);
-		std::swap(vecMovementComponentPtr[IndexID], vecMovementComponentPtr[IndexLast]);
+		//std::swap(vecMovementComponentPtr[IndexID], vecMovementComponentPtr[IndexLast]);
 
 		//popback the vector;
 		vecColliderComponentPtr.pop_back();
 		vecTransformComponentPtr.pop_back();
 		//vecRigidBodyComponentPtr.pop_back();
-		vecMovementComponentPtr.pop_back();
+		//vecMovementComponentPtr.pop_back();
 	}
 
 	void CollisionSystem::Init() {
@@ -51,7 +52,7 @@ namespace Ecs {
 		// requires both movement component and transform component
 		SystemSignature.set(TypeColliderComponent);
 		//SystemSignature.set(TypeRigidBodyComponent);
-		SystemSignature.set(TypeMovemmentComponent);
+		//SystemSignature.set(TypeMovemmentComponent);
 		//SystemSignature.set();
 
 	}
@@ -67,18 +68,28 @@ namespace Ecs {
 
 		//create physics;
 		Physics::classPhysics PysicsPipeline;
+		GraphicsPipe* graphicsPipe = GraphicsPipe::funcGetInstance();
 
 		for (int n{}; n < vecTransformComponentPtr.size(); n++) {
 			//std::cout << "Entity: " << n << "Movement System is getting Updated";
 
 			ColliderComponent* ColComp = vecColliderComponentPtr[n];
 			TransformComponent* TransComp = vecTransformComponentPtr[n];
-			MovementComponent* MovComp = vecMovementComponentPtr[n];
+			//MovementComponent* MovComp = vecMovementComponentPtr[n];
 
 			
-			PysicsPipeline.RetrievePhysicsData(ColComp->Size * TransComp->scale,TransComp->position, MovComp->Speed * MovComp->Direction, ColComp->Entity);
+			//PysicsPipeline.SendPhysicsData(ColComp->Size * TransComp->scale,TransComp->position, MovComp->Speed * MovComp->Direction, ColComp->Entity);
+			/*
+			  if circle
+				PysicsPipeline.SendPhysicsData(ColComp->Size * TransComp->scale,TransComp->position, MovComp->Speed * MovComp->Direction, ColComp->Entity);
+				if rect
+				PysicsPipeline.SendPhysicsData(ColComp->Size * TransComp->scale,TransComp->position, MovComp->Speed * MovComp->Direction, ColComp->Entity);
+			*/
 
-			
+			if (ColComp->drawDebug)
+			{
+				graphicsPipe->debugBoxData.push_back({ 0, glm::vec2{ColComp->Size.x * TransComp->scale.x, ColComp->Size.y * TransComp->scale.y}, glm::vec3{TransComp->position.x + ColComp->OffSet.x,TransComp->position.y + ColComp->OffSet.y, 0} ,ColComp->isCollided, 0 });
+			}
 		}
 
 		//check for collision

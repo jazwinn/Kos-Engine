@@ -5,23 +5,9 @@
 #include <vector>
 #include <algorithm>
 #include "../ECS/Component/Component.h"
+#include "SystemType.h"
 
 namespace Ecs {
-
-	enum TypeSystem {
-		TypeMovementSystem,
-		TypeControlSystem,
-
-		
-
-
-		TypeCollisionSystem,
-		TypeCollisionResponseSystem,// must be after collision
-		//render system called the last
-		TypeRenderSystem,
-
-		TotalTypeSystem
-	};
 
 	class ISystem {
 

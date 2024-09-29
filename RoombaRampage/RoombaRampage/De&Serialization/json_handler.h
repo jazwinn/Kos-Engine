@@ -1,5 +1,12 @@
 #include "../ECS/ECS.h"
 
-void LoadComponentsJson(const std::string& jsonFilePath, Ecs::TransformComponent* tc, Ecs::MovementComponent* mc);
+namespace Serialization {
+	class Serialize {
+	public:
+		static void LoadComponentsJson(const std::string& jsonFilePath, Ecs::ECS* ecs, std::vector<std::string>& obj_text_entries);
 
-void SaveComponentsJson(const std::string& filePath, Ecs::TransformComponent* tc, Ecs::MovementComponent* mc, int entityIndex);
+		static void SaveComponentsJson(const std::string& filePath, const std::unordered_map<Ecs::EntityID, std::bitset<Ecs::ComponentType::TotalTypeComponent>>& ECS_EntityMap, const std::vector<std::string>& obj_text_entries);
+
+		static void LoadConfig();
+	};
+}
