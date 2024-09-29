@@ -49,7 +49,7 @@ namespace Application {
         /*--------------------------------------------------------------
         INITIALIZE LOGGING SYSTEM
         --------------------------------------------------------------*/
-        LOGGING_INIT_LOGS("Debugging/LogFile.txt");
+        LOGGING_INIT_LOGS("Logs/LogFile.txt");
         LOGGING_INFO("Application Start");
         p.m_Setup_Abort_Handler();
         std::signal(SIGABRT, logging::Logger::m_Abort_Handler);
