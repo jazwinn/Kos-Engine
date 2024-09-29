@@ -217,18 +217,20 @@ void ImGuiHandler::DrawComponentWindow()
                     const char* items[] = { "AAAA", "BBBB", "CCCC", "DDDD", "EEEE" };
                     static int item_selected_idx = 0; // Here we store our selected data as an index.
 
-                    static bool item_highlight = true;
+                    static bool item_highlight = false;
                     int item_highlighted_idx = -1; // Here we store our highlighted data as an index.
                     //ImGui::Checkbox("Highlight hovered item in second listbox", &item_highlight);
 
                     if (ImGui::BeginListBox("Images"))
                     {
+                        item_selected_idx = sc->imageID;
                         for (unsigned int n = 0; n < images->imageContainer.size(); n++)
                         {
-                            const bool is_selected = (item_selected_idx == n);
+                            bool is_selected = (item_selected_idx == n);
                             if (ImGui::Selectable(const_cast<char*>(images->imageContainer[n].spriteName.c_str()), is_selected))
                             {
                                 item_selected_idx = n;
+                                is_selected = true;
                             }
 
 

@@ -23,6 +23,8 @@ namespace Ecs {
 		physicspipe::EntityType type = physicspipe::EntityType::RECTANGLE;
 
 		float radius{};
+		bool isCollided{ false };
+
 	};
 
 }

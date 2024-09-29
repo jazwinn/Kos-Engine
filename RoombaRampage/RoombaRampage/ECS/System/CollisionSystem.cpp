@@ -19,8 +19,6 @@ namespace Ecs {
 			//vecRigidBodyComponentPtr.push_back((RigidBodyComponent*)ecs->ECS_CombinedComponentPool[TypeRigidBodyComponent]->GetEntityComponent(ID));
 			vecMovementComponentPtr.push_back((MovementComponent*)ecs->ECS_CombinedComponentPool[TypeMovemmentComponent]->GetEntityComponent(ID));
 		}
-
-
 	}
 
 	void CollisionSystem::DeregisterSystem(EntityID ID) {
@@ -79,7 +77,6 @@ namespace Ecs {
 			MovementComponent* MovComp = vecMovementComponentPtr[n];
 
 			if (ColComp->type == physicspipe::EntityType::CIRCLE) {
-				//take note setting radius as preset 5.0f; first
 				PhysicsPipeline.m_SendPhysicsData(ColComp->radius, TransComp->position,TransComp->scale, MovComp->Speed * MovComp->Direction, ColComp->Entity);
 			}
 			else if (ColComp->type == physicspipe::EntityType::RECTANGLE) {

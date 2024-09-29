@@ -120,7 +120,7 @@ Rectangle::Rectangle(float rect_height, float rect_width, vector2::Vec2 shape_po
 				//std::cout << "********************************************************************************" << std::endl;
 			}
 		}
-		//std::cout << "Physics Entities size " << physicsEntities.size() << " collideEntities " << collidedEntities.size() << std::endl;
+		//std::cout << "Physics Entities size " << m_physicsEntities.size() << " collideEntities " << m_collidedEntities.size() << std::endl;
 	}
 
 	std::vector<std::shared_ptr<PhysicsData>> Physics::m_RetrievePhysicsData() {
