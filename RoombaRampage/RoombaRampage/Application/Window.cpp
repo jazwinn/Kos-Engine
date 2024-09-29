@@ -19,7 +19,7 @@ namespace Application {
         /* Create a windowed mode window and its OpenGL context */
         //Set third param to glfwGetPrimaryMonitor if you want fullscreen borderless
 
-        Window = glfwCreateWindow(WindowWidth, WindowHeight, "Spirit Engine", NULL, NULL);
+        Window = glfwCreateWindow(WindowWidth, WindowHeight, "Kos", NULL, NULL);
         if (!Window)
         {
             glfwTerminate();
