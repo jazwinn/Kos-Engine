@@ -41,10 +41,10 @@ Rectangle::Rectangle(float rect_height, float rect_width, vector2::Vec2 shape_po
 }
 
 	bool Physics::m_static_CollisionCheck(const AABB aabb1, const AABB aabb2) {
-		//std::cout << "BOUNDING BOX1 MIN X " << aabb1.min.x << " Y " << aabb1.min.y << std::endl;
-		//std::cout << "BOUNDING BOX1 MAX X " << aabb1.max.x << " Y " << aabb1.max.y << std::endl;
-		//std::cout << "BOUNDING BOX2 MIN X " << aabb2.min.x << " Y " << aabb2.min.y << std::endl;
-		//std::cout << "BOUNDING BOX2 MAX X " << aabb2.max.x << " Y " << aabb2.max.y << std::endl;
+		//std::cout << "BOUNDING BOX1 MIN X " << aabb1.m_min.m_x << " Y " << aabb1.m_min.m_y << std::endl;
+		//std::cout << "BOUNDING BOX1 MAX X " << aabb1.m_max.m_x << " Y " << aabb1.m_max.m_y << std::endl;
+		//std::cout << "BOUNDING BOX2 MIN X " << aabb2.m_min.m_x << " Y " << aabb2.m_min.m_y << std::endl;
+		//std::cout << "BOUNDING BOX2 MAX X " << aabb2.m_max.m_x << " Y " << aabb2.m_max.m_y << std::endl;
 
 		if (aabb2.m_max.m_x < aabb1.m_min.m_x) return 0;
 		if (aabb2.m_min.m_x > aabb1.m_max.m_x) return 0;
@@ -75,7 +75,7 @@ Rectangle::Rectangle(float rect_height, float rect_width, vector2::Vec2 shape_po
 						CHECK RECT V RECT
 					*************************************/
 					if ((m_physicsEntities[i]->GetEntity() == EntityType::RECTANGLE) && (m_physicsEntities[j]->GetEntity() == EntityType::RECTANGLE)) {
-						if (m_CollisionIntersection_RectRect(*dynamic_cast<Rectangle*>(m_physicsEntities[i].get()), *dynamic_cast<Rectangle*>(m_physicsEntities[i].get()), dt)) {
+						if (m_CollisionIntersection_RectRect(*dynamic_cast<Rectangle*>(m_physicsEntities[i].get()), *dynamic_cast<Rectangle*>(m_physicsEntities[j].get()), dt)) {
 							//checking whether if entity is alr added inside
 							if (std::find(m_collidedEntities.begin(), m_collidedEntities.end(), m_physicsEntities[i]) == m_collidedEntities.end()) {
 								std::cout << "Collided" << std::endl;
@@ -145,9 +145,12 @@ Rectangle::Rectangle(float rect_height, float rect_width, vector2::Vec2 shape_po
 		for (size_t i = 0; i < m_physicsEntities.size(); ++i) {
 			if (m_physicsEntities[i]->GetEntity() == EntityType::RECTANGLE) {
 				AABB boundingBox;
-				boundingBox.m_min = { m_physicsEntities[i]->m_position.m_x - (m_physicsEntities[i]->m_scale.m_x * 0.5f), m_physicsEntities[i]->m_position.m_y - (m_physicsEntities[i]->m_scale.m_y * 0.5f) };
-				boundingBox.m_max = { m_physicsEntities[i]->m_position.m_x + (m_physicsEntities[i]->m_scale.m_x * 0.5f), m_physicsEntities[i]->m_position.m_y + (m_physicsEntities[i]->m_scale.m_y * 0.5f) };
+				float width = dynamic_cast<Rectangle*>(m_physicsEntities[i].get())->m_width;
+				float height = dynamic_cast<Rectangle*>(m_physicsEntities[i].get())->m_height;
+				boundingBox.m_min = { m_physicsEntities[i]->m_position.m_x - (width * 0.5f), m_physicsEntities[i]->m_position.m_y - (height * 0.5f) };
+				boundingBox.m_max = { m_physicsEntities[i]->m_position.m_x + (width * 0.5f), m_physicsEntities[i]->m_position.m_y + (height * 0.5f) };
 				dynamic_cast<Rectangle*>(m_physicsEntities[i].get())->m_boundingBox = boundingBox;
+				//std::cout << "ID " << m_physicsEntities[i].get()->m_ID << " BOUNDING BOX MIN X" << boundingBox.m_min.m_x << " MIN Y " << boundingBox.m_max.m_y << " MAX X " << boundingBox.m_max.m_x << " MAX Y" << boundingBox.m_max.m_y << std::endl;
 			}
 			else if (m_physicsEntities[i]->GetEntity() == EntityType::CIRCLE) {
 
