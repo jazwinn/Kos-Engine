@@ -4,12 +4,28 @@
 #include "imgui_handler.h"
 #include "imgui_internal.h"
 
+#include "../../De&Serialization/json_handler.h"
+
 void ImGuiHandler::DrawMainMenuBar() {
 
     if (ImGui::BeginMainMenuBar())
     {
         if (ImGui::BeginMenu("File"))
         {
+            if (ImGui::BeginMenu("Open")) {
+
+
+                if (ImGui::MenuItem("Components.json")) {
+                   // Serialization::Serialize::LoadComponentsJson("../RoombaRampage/Json/components.json", ecs, obj_text_entries);
+                }
+
+
+
+
+                ImGui::EndMenu();
+            }
+
+                
 
             ImGui::EndMenu();
         }
