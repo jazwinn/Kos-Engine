@@ -10,7 +10,7 @@ namespace Input {
 	bool InputSystem::KeyStateS = false;
 	bool InputSystem::KeyStateD = false;
 
-	Vector2::Vec2 InputSystem::MousePosition = { 0,0 };
+	vector2::Vec2 InputSystem::MousePosition = { 0,0 };
 
 	void InputSystem::KeyCallBack(GLFWwindow* window, int key, int scancode, int action, int mods) {
 		if (action == GLFW_PRESS) {
@@ -77,8 +77,8 @@ namespace Input {
 		//change origin from top left to bottom left
 		ypos = height - ypos;
 
-		MousePosition.x = xpos;
-		MousePosition.y = ypos;
+		MousePosition.m_x = xpos;
+		MousePosition.m_y = ypos;
 		std::cout << xpos << " : " << ypos << std::endl;
 
 	}

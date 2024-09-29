@@ -4,7 +4,7 @@
 \author    Rayner Tan, raynerweichen.tan , 2301449
 \par       raynerweichen.tan@digipen.edu
 \date      Sept 28, 2024
-\brief     Vector functions
+\brief     vector2 functions
 
 Copyright (C) 2024 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the
@@ -15,124 +15,124 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Math/vector2.h"
 
 
-Vector2::Vec2::Vec2(float _x, float _y) {
-    x = _x;
-    y = _y;
+vector2::Vec2::Vec2(float _x, float _y) {
+    m_x = _x;
+    m_y = _y;
 }
 
 
-Vector2::Vec2& Vector2::Vec2::operator += (const Vec2& rhs) {
-    x = x + rhs.x;
-    y = y + rhs.y;
+vector2::Vec2& vector2::Vec2::operator += (const Vec2& rhs) {
+    m_x = m_x + rhs.m_x;
+    m_y = m_y + rhs.m_y;
     return *this;
 }
 
-Vector2::Vec2& Vector2::Vec2::operator -= (const Vec2& rhs) {
-    x = x - rhs.x;
-    y = y - rhs.y;
+vector2::Vec2& vector2::Vec2::operator -= (const Vec2& rhs) {
+    m_x = m_x - rhs.m_x;
+    m_y = m_y - rhs.m_y;
     return *this;
 }
 
-Vector2::Vec2& Vector2::Vec2::operator *= (float rhs) {
-    x = x * rhs;
-    y = y * rhs;
+vector2::Vec2& vector2::Vec2::operator *= (float rhs) {
+    m_x = m_x * rhs;
+    m_y = m_y * rhs;
     return *this;
 }
 
-Vector2::Vec2& Vector2::Vec2::operator /= (float rhs) {
-    x = x / rhs;
-    y = y / rhs;
+vector2::Vec2& vector2::Vec2::operator /= (float rhs) {
+    m_x = m_x / rhs;
+    m_y = m_y / rhs;
     return *this;
 }
 
-Vector2::Vec2 Vector2::Vec2::operator - () const {
-    return Vec2(-x, -y);
+vector2::Vec2 vector2::Vec2::operator - () const {
+    return Vec2(-m_x, -m_y);
 }
 
-Vector2::Vec2 Vector2::operator + (const Vector2::Vec2& lhs, const Vector2::Vec2& rhs) {
-    float tempX = lhs.x + rhs.x;
-    float tempY = lhs.y + rhs.y;
-    return Vector2::Vec2(tempX, tempY);
+vector2::Vec2 vector2::operator + (const vector2::Vec2& lhs, const vector2::Vec2& rhs) {
+    float tempX = lhs.m_x + rhs.m_x;
+    float tempY = lhs.m_y + rhs.m_y;
+    return vector2::Vec2(tempX, tempY);
 }
 
-Vector2::Vec2 Vector2::operator - (const Vector2::Vec2& lhs, const Vector2::Vec2& rhs) {
-    float tempX = lhs.x - rhs.x;
-    float tempY = lhs.y - rhs.y;
-    return Vector2::Vec2(tempX, tempY);
+vector2::Vec2 vector2::operator - (const vector2::Vec2& lhs, const vector2::Vec2& rhs) {
+    float tempX = lhs.m_x - rhs.m_x;
+    float tempY = lhs.m_y - rhs.m_y;
+    return vector2::Vec2(tempX, tempY);
 }
 
-Vector2::Vec2 Vector2::operator * (const Vector2::Vec2& lhs, float rhs) {
-    float tempX = lhs.x * rhs;
-    float tempY = lhs.y * rhs;
-    return Vector2::Vec2(tempX, tempY);
+vector2::Vec2 vector2::operator * (const vector2::Vec2& lhs, float rhs) {
+    float tempX = lhs.m_x * rhs;
+    float tempY = lhs.m_y * rhs;
+    return vector2::Vec2(tempX, tempY);
 }
 
-Vector2::Vec2 Vector2::operator * (float lhs, const Vector2::Vec2& rhs) {
-    float tempX = rhs.x * lhs;
-    float tempY = rhs.y * lhs;
-    return Vector2::Vec2(tempX, tempY);
+vector2::Vec2 vector2::operator * (float lhs, const vector2::Vec2& rhs) {
+    float tempX = rhs.m_x * lhs;
+    float tempY = rhs.m_y * lhs;
+    return vector2::Vec2(tempX, tempY);
 }
 
-Vector2::Vec2 Vector2::operator * (const Vec2& lhs, const Vec2& rhs) {
-    float tempX = lhs.x * rhs.x;
-    float tempY = lhs.y * rhs.y;
-    return Vector2::Vec2(tempX, tempY);
+vector2::Vec2 vector2::operator * (const Vec2& lhs, const Vec2& rhs) {
+    float tempX = lhs.m_x * rhs.m_x;
+    float tempY = lhs.m_y * rhs.m_y;
+    return vector2::Vec2(tempX, tempY);
 }
 
-Vector2::Vec2 Vector2::operator / (const Vector2::Vec2& lhs, float rhs) {
-    float tempX = lhs.x / rhs;
-    float tempY = lhs.y / rhs;
-    return Vector2::Vec2(tempX, tempY);
+vector2::Vec2 vector2::operator / (const vector2::Vec2& lhs, float rhs) {
+    float tempX = lhs.m_x / rhs;
+    float tempY = lhs.m_y / rhs;
+    return vector2::Vec2(tempX, tempY);
 }
 
 
-void Vector2::Vec2::funcVec2Normalize(Vector2::Vec2& pResult, const Vector2::Vec2& pVec0) {
-    Vector2::Vec2 temp = pVec0;
-    float distance = Vector2::Vec2::funcVec2DLength(temp);
-    pResult.x = temp.x / distance;
-    pResult.y = temp.y / distance;
+void vector2::Vec2::m_funcVec2Normalize(vector2::Vec2& pResult, const vector2::Vec2& pVec0) {
+    vector2::Vec2 temp = pVec0;
+    float distance = vector2::Vec2::m_funcVec2DLength(temp);
+    pResult.m_x = temp.m_x / distance;
+    pResult.m_y = temp.m_y / distance;
 }
 
-float  Vector2::Vec2::funcVec2DLength(const Vec2& pVec0) {
-    float tempX = pVec0.x;
-    float tempY = pVec0.y;
+float  vector2::Vec2::m_funcVec2DLength(const Vec2& pVec0) {
+    float tempX = pVec0.m_x;
+    float tempY = pVec0.m_y;
 
     float lengthSquare = tempX * tempX + tempY * tempY;
     return sqrtf(lengthSquare);
 
 }
 
-float  Vector2::Vec2::funcVec2DSquareLength(const Vec2& pVec0) {
-    float tempX = pVec0.x;
-    float tempY = pVec0.y;
+float  vector2::Vec2::m_funcVec2DSquareLength(const Vec2& pVec0) {
+    float tempX = pVec0.m_x;
+    float tempY = pVec0.m_y;
     float lengthSquare = tempX * tempX + tempY * tempY;
     return lengthSquare;
 }
 
-float  Vector2::Vec2::funcVec2DDistance(const Vec2& pVec0, const Vec2& pVec1) {
-    float tempDiffX = pVec0.x - pVec1.x;
-    float tempDiffY = pVec0.x - pVec1.y;
+float  vector2::Vec2::m_funcVec2DDistance(const Vec2& pVec0, const Vec2& pVec1) {
+    float tempDiffX = pVec0.m_x - pVec1.m_x;
+    float tempDiffY = pVec0.m_x - pVec1.m_y;
     float lengthSquare = tempDiffX * tempDiffX + tempDiffY * tempDiffY;
     return sqrtf(lengthSquare);
 }
 
-float  Vector2::Vec2::funcVec2DSquareDistance(const Vec2& pVec0, const Vec2& pVec1) {
-    float tempDiffX = pVec0.x - pVec1.x;
-    float tempDiffY = pVec0.x - pVec1.y;
+float  vector2::Vec2::m_funcVec2DSquareDistance(const Vec2& pVec0, const Vec2& pVec1) {
+    float tempDiffX = pVec0.m_x - pVec1.m_x;
+    float tempDiffY = pVec0.m_x - pVec1.m_y;
     float lengthSquare = tempDiffX * tempDiffX + tempDiffY * tempDiffY;
     return lengthSquare;
 }
 
-float  Vector2::Vec2::funcVec2DDotProduct(const Vec2& pVec0, const Vec2& pVec1) {
-    float tempX = pVec0.x * pVec1.x;
-    float tempY = pVec0.y * pVec1.y;
+float  vector2::Vec2::m_funcVec2DDotProduct(const Vec2& pVec0, const Vec2& pVec1) {
+    float tempX = pVec0.m_x * pVec1.m_x;
+    float tempY = pVec0.m_y * pVec1.m_y;
     float result = tempX + tempY;
     return result;
 }
 
-float Vector2::Vec2::funcVec2CrossProduct(const Vec2& pVec0, const Vec2& pVec1) {
-    float temp1 = pVec0.x * pVec1.y;
-    float temp2 = pVec0.y * pVec1.x;
+float vector2::Vec2::m_funcVec2CrossProduct(const Vec2& pVec0, const Vec2& pVec1) {
+    float temp1 = pVec0.m_x * pVec1.m_y;
+    float temp2 = pVec0.m_y * pVec1.m_x;
     float result = temp1 - temp2;
     return result;
 }

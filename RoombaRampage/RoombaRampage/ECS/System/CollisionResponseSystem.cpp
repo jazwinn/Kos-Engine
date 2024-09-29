@@ -60,16 +60,16 @@ namespace Ecs {
 			return;
 		}
 
-		Physics::classPhysics PhysicsPipeline;
-		std::vector<std::shared_ptr<Physics::PhysicsData>> vecCollisionEntity = PhysicsPipeline.RetrievePhysicsData();
+		physicspipe::Physics PhysicsPipeline;
+		std::vector<std::shared_ptr<physicspipe::PhysicsData>> vecCollisionEntity = PhysicsPipeline.m_RetrievePhysicsData();
 
 		if (vecCollisionEntity.empty()); //std::cout << "No collision from Collision System CPP" << std::endl;
 		else {
 			//REQUIRES OPTIMIZATION 
 			//CollidedEntity is the ID
 			for (auto& CollidedEntity : vecCollisionEntity) {
-				MovementComponent* MovCom = (MovementComponent*)ecs->ECS_CombinedComponentPool[TypeMovemmentComponent]->GetEntityComponent(CollidedEntity->ID);
-				MovCom->Direction = { 0,0 };
+				MovementComponent* MovCom = (MovementComponent*)ecs->ECS_CombinedComponentPool[TypeMovemmentComponent]->GetEntityComponent(CollidedEntity->m_ID);
+				MovCom->Direction = -MovCom->Direction;
 			}
 
 			//if (ecs->ECS_CombinedComponentPool[TypeRigidBodyComponent]->HasComponent(CollidedEntity->ID)) {

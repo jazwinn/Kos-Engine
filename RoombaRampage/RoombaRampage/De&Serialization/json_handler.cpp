@@ -89,12 +89,12 @@ namespace Serialization {
         rapidjson::Value entity(rapidjson::kObjectType);
         rapidjson::Value transform(rapidjson::kObjectType);
         transform.AddMember("position", rapidjson::Value().SetObject()
-            .AddMember("x", tc->position.x, allocator)
-            .AddMember("y", tc->position.y, allocator), allocator);
+            .AddMember("x", tc->position.m_x, allocator)
+            .AddMember("y", tc->position.m_y, allocator), allocator);
         transform.AddMember("rotation", tc->rotation, allocator);
         transform.AddMember("scale", rapidjson::Value().SetObject()
-            .AddMember("x", tc->scale.x, allocator)
-            .AddMember("y", tc->scale.y, allocator), allocator);
+            .AddMember("x", tc->scale.m_x, allocator)
+            .AddMember("y", tc->scale.m_y, allocator), allocator);
 
         entity.AddMember("transform", transform, allocator);
 
@@ -102,8 +102,8 @@ namespace Serialization {
         rapidjson::Value movement(rapidjson::kObjectType);
         movement.AddMember("speed", mc->Speed, allocator);
         movement.AddMember("direction", rapidjson::Value().SetObject()
-            .AddMember("x", mc->Direction.x, allocator)
-            .AddMember("y", mc->Direction.y, allocator), allocator);
+            .AddMember("x", mc->Direction.m_x, allocator)
+            .AddMember("y", mc->Direction.m_y, allocator), allocator);
 
         entity.AddMember("movement", movement, allocator);
 
@@ -152,12 +152,12 @@ namespace Serialization {
                 if (tc) {
                     rapidjson::Value transform(rapidjson::kObjectType);
                     transform.AddMember("position", rapidjson::Value().SetObject()
-                        .AddMember("x", tc->position.x, allocator)
-                        .AddMember("y", tc->position.y, allocator), allocator);
+                        .AddMember("x", tc->position.m_x, allocator)
+                        .AddMember("y", tc->position.m_y, allocator), allocator);
                     transform.AddMember("rotation", tc->rotation, allocator);
                     transform.AddMember("scale", rapidjson::Value().SetObject()
-                        .AddMember("x", tc->scale.x, allocator)
-                        .AddMember("y", tc->scale.y, allocator), allocator);
+                        .AddMember("x", tc->scale.m_x, allocator)
+                        .AddMember("y", tc->scale.m_y, allocator), allocator);
                     entityData.AddMember("transform", transform, allocator);
                 }
             }
@@ -169,8 +169,8 @@ namespace Serialization {
                     rapidjson::Value movement(rapidjson::kObjectType);
                     movement.AddMember("speed", mc->Speed, allocator);
                     movement.AddMember("direction", rapidjson::Value().SetObject()
-                        .AddMember("x", mc->Direction.x, allocator)
-                        .AddMember("y", mc->Direction.y, allocator), allocator);
+                        .AddMember("x", mc->Direction.m_x, allocator)
+                        .AddMember("y", mc->Direction.m_y, allocator), allocator);
                     entityData.AddMember("movement", movement, allocator);
                 }
             }

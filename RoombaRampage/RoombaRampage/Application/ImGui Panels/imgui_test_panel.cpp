@@ -31,10 +31,6 @@ void ImGuiHandler::DrawTestWindow() {
 	}
 	ImGui::NewLine();
 	if (ImGui::Button("Crash")) {
-		Logging::Logger p;
-		p.setup_abort_handler();
-		std::signal(SIGABRT, Logging::Logger::abort_handler);
-
 		LOGGING_INFO("About to trigger abort");
 		abort();
 	}

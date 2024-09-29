@@ -68,7 +68,7 @@ namespace Ecs {
 		}
 
 		//create physics;
-		Physics::classPhysics PhysicsPipeline;
+		physicspipe::Physics PhysicsPipeline;
 		GraphicsPipe* graphicsPipe = GraphicsPipe::funcGetInstance();
 
 		for (int n{}; n < vecTransformComponentPtr.size(); n++) {
@@ -78,12 +78,12 @@ namespace Ecs {
 			TransformComponent* TransComp = vecTransformComponentPtr[n];
 			MovementComponent* MovComp = vecMovementComponentPtr[n];
 
-			if (ColComp->type == Physics::EntityType::Circle) {
+			if (ColComp->type == physicspipe::EntityType::CIRCLE) {
 				//take note setting radius as preset 5.0f; first
-				PhysicsPipeline.SendPhysicsData(ColComp->radius, TransComp->position,TransComp->scale, MovComp->Speed * MovComp->Direction, ColComp->Entity);
+				PhysicsPipeline.m_SendPhysicsData(ColComp->radius, TransComp->position,TransComp->scale, MovComp->Speed * MovComp->Direction, ColComp->Entity);
 			}
-			else if (ColComp->type == Physics::EntityType::Rectangle) {
-				PhysicsPipeline.SendPhysicsData(ColComp->Size.x, ColComp->Size.y, TransComp->position,TransComp->scale, MovComp->Speed * MovComp->Direction, ColComp->Entity);
+			else if (ColComp->type == physicspipe::EntityType::RECTANGLE) {
+				PhysicsPipeline.m_SendPhysicsData(ColComp->Size.m_x, ColComp->Size.m_x, TransComp->position,TransComp->scale, MovComp->Speed * MovComp->Direction, ColComp->Entity);
 			}
 			else {
 				LOGGING_ERROR("NO ENTITY TYPE");
@@ -91,13 +91,13 @@ namespace Ecs {
 
 			if (ColComp->drawDebug)
 			{
-				graphicsPipe->debugBoxData.push_back({ 0, glm::vec2{ColComp->Size.x * TransComp->scale.x, ColComp->Size.y * TransComp->scale.y}, glm::vec3{TransComp->position.x + ColComp->OffSet.x,TransComp->position.y + ColComp->OffSet.y, 0} ,0, 0 });
+				graphicsPipe->debugBoxData.push_back({ 0, glm::vec2{ColComp->Size.m_x * TransComp->scale.m_x, ColComp->Size.m_x * TransComp->scale.m_x}, glm::vec3{TransComp->position.m_x + ColComp->OffSet.m_x,TransComp->position.m_x + ColComp->OffSet.m_x, 0} ,0, 0 });
 			}
 		}
 
 		//check for collision
 		if (vecColliderComponentPtr.size() > 0) {
-			PhysicsPipeline.CollisionCheck(ecs->DeltaTime);
+			PhysicsPipeline.m_CollisionCheck(ecs->DeltaTime);
 		}
 	
 	}

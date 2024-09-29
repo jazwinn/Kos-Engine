@@ -39,9 +39,9 @@ namespace Ecs{
 		ecs->ECS_SystemMap[TypeCollisionResponseSystem] = std::make_shared<CollisionResponseSystem>();
 
 		//Initialize all system Peformance
-		PerformanceTracker::Performance Perform{};
+		performancetracker::Performance Perform{};
 		for (int n{}; n < TotalTypeSystem; n++) {
-			Perform.AddSystem((TypeSystem)n);
+			Perform.m_AddSystem((TypeSystem)n);
 		}
 	}
 
@@ -52,7 +52,7 @@ namespace Ecs{
 		//update deltatime
 		ecs->DeltaTime = DT;
 
-		PerformanceTracker::Performance::ResetTotalSystemTime();
+		performancetracker::Performance::m_ResetTotalSystemTime();
 		
 
 		//loops through all the system
@@ -68,8 +68,8 @@ namespace Ecs{
 			std::chrono::duration<float> duration = end - start;
 			
 
-			PerformanceTracker::Performance::UpdateTotalSystemTime(duration.count());
-			PerformanceTracker::Performance::UpdateSystemTime(System.first, duration.count());
+			performancetracker::Performance::m_UpdateTotalSystemTime(duration.count());
+			performancetracker::Performance::m_UpdateSystemTime(System.first, duration.count());
 		
 
 		}

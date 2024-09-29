@@ -90,12 +90,12 @@ void ImGuiHandler::DrawComponentWindow()
                     ImGui::Text("Position");
                     ImGui::SameLine(slider_start_pos_x);
                     ImGui::SetNextItemWidth(100.0f);
-                    if (ImGui::DragFloat("X##", &tc->position.x, 0.02f, -1.0f, 1.0f, "%.2f"))
+                    if (ImGui::DragFloat("X##", &tc->position.m_x, 0.02f, -1.0f, 1.0f, "%.2f"))
                         isModified = true;
 
                     ImGui::SameLine();
                     ImGui::SetNextItemWidth(100.0f);
-                    if (ImGui::DragFloat("Y##PosY", &tc->position.y, 0.02f, -1.0f, 1.0f, "%.2f"))
+                    if (ImGui::DragFloat("Y##PosY", &tc->position.m_y, 0.02f, -1.0f, 1.0f, "%.2f"))
                         isModified = true;
 
                     //Display Rotation
@@ -111,12 +111,12 @@ void ImGuiHandler::DrawComponentWindow()
                     ImGui::Text("Scale");
                     ImGui::SameLine(slider_start_pos_x);
                     ImGui::SetNextItemWidth(100.0f);
-                    if (ImGui::DragFloat("X", &tc->scale.x, 0.02f, 0.1f, 2.0f, "%.2f"))
+                    if (ImGui::DragFloat("X", &tc->scale.m_x, 0.02f, 0.1f, 2.0f, "%.2f"))
                         isModified = true;
 
                     ImGui::SameLine();
                     ImGui::SetNextItemWidth(100.0f);
-                    if (ImGui::DragFloat("Y", &tc->scale.y, 0.02f, 0.1f, 2.0f, "%.2f"))
+                    if (ImGui::DragFloat("Y", &tc->scale.m_y, 0.02f, 0.1f, 2.0f, "%.2f"))
                         isModified = true;
                 }
             }
@@ -141,12 +141,12 @@ void ImGuiHandler::DrawComponentWindow()
                     ImGui::Text("Direction");
                     ImGui::SameLine(slider_start_pos_x);
                     ImGui::SetNextItemWidth(100.0f);
-                    if (ImGui::DragFloat("X##VelX", &mc->Direction.x, 0.02f, -1.0f, 1.0f, "%.2f"))
+                    if (ImGui::DragFloat("X##VelX", &mc->Direction.m_x, 0.02f, -1.0f, 1.0f, "%.2f"))
                         isModified = true;
 
                     ImGui::SameLine();
                     ImGui::SetNextItemWidth(100.0f);
-                    if (ImGui::DragFloat("Y##VelY", &mc->Direction.y, 0.02f, -1.0f, 1.0f, "%.2f"))
+                    if (ImGui::DragFloat("Y##VelY", &mc->Direction.m_y, 0.02f, -1.0f, 1.0f, "%.2f"))
                         isModified = true;
 
                     // Display Resistance
@@ -174,12 +174,12 @@ void ImGuiHandler::DrawComponentWindow()
                     ImGui::Text("Size");
                     ImGui::SameLine(slider_start_pos_x);
                     ImGui::SetNextItemWidth(100.0f);
-                    if (ImGui::DragFloat("X###", &cc->Size.x, 0.02f, 0.f, 2.0f, "%.2f"))
+                    if (ImGui::DragFloat("X###", &cc->Size.m_x, 0.02f, 0.f, 2.0f, "%.2f"))
                         isModified = true;
 
                     ImGui::SameLine();
                     ImGui::SetNextItemWidth(100.0f);
-                    if (ImGui::DragFloat("Y###PosY", &cc->Size.y, 0.02f, 0.f, 2.0f, "%.2f"))
+                    if (ImGui::DragFloat("Y###PosY", &cc->Size.m_y, 0.02f, 0.f, 2.0f, "%.2f"))
                         isModified = true;
 
                     //Display Rotation
@@ -194,12 +194,12 @@ void ImGuiHandler::DrawComponentWindow()
                     ImGui::Text("Offset");
                     ImGui::SameLine(slider_start_pos_x);
                     ImGui::SetNextItemWidth(100.0f);
-                    if (ImGui::DragFloat("XX##VelX", &cc->OffSet.x, 0.02f, -1.f, 1.0f, "%.2f"))
+                    if (ImGui::DragFloat("XX##VelX", &cc->OffSet.m_x, 0.02f, -1.f, 1.0f, "%.2f"))
                         isModified = true;
 
                     ImGui::SameLine();
                     ImGui::SetNextItemWidth(100.0f);
-                    if (ImGui::DragFloat("YY##VelY", &cc->OffSet.y, 0.02f, -1.f, 1.f, "%.2f"))
+                    if (ImGui::DragFloat("YY##VelY", &cc->OffSet.m_y, 0.02f, -1.f, 1.f, "%.2f"))
                         isModified = true;
                 }
 

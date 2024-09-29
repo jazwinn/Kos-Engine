@@ -13,82 +13,82 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 /********************************************************************/
 
 #include "Physics.h"
-namespace Physics {
+namespace physicspipe {
 
-	std::vector<std::shared_ptr<PhysicsData>> classPhysics::physicsEntities;
-	std::vector<std::shared_ptr<PhysicsData>> classPhysics::collidedEntities;
+	std::vector<std::shared_ptr<PhysicsData>> Physics::m_physicsEntities;
+	std::vector<std::shared_ptr<PhysicsData>> Physics::m_collidedEntities;
 
 // Constructor for Circle (definition)
-Circle::Circle(float radius, Vector2::Vec2 shape_position, Vector2::Vec2 shape_scale, Vector2::Vec2 shape_velocity, int entity_ID)
+Circle::Circle(float radius, vector2::Vec2 shape_position, vector2::Vec2 shape_scale, vector2::Vec2 shape_velocity, int entity_ID)
     : m_radius(radius)   // Initialize radius
 {
-    position = shape_position;
-    scale = shape_scale;
-    velocity = shape_velocity;
-    ID = entity_ID;
-    type = EntityType::Circle;  // Set type to Circle
+	m_position = shape_position;
+	m_scale = shape_scale;
+	m_velocity = shape_velocity;
+	m_ID = entity_ID;
+    type = EntityType::CIRCLE;  // Set type to Circle
 }
 
 // Constructor for Rectangle (definition)
-Rectangle::Rectangle(float rect_height, float rect_width, Vector2::Vec2 shape_position, Vector2::Vec2 shape_scale, Vector2::Vec2 shape_velocity, int entity_ID)
-    : height(rect_height), width(rect_width)   // Initialize height and width
+Rectangle::Rectangle(float rect_height, float rect_width, vector2::Vec2 shape_position, vector2::Vec2 shape_scale, vector2::Vec2 shape_velocity, int entity_ID)
+    : m_height(rect_height), m_width(rect_width)   // Initialize height and width
 {
-    position = shape_position;
-    scale = shape_scale;
-    velocity = shape_velocity;
-    ID = entity_ID;
-    type = EntityType::Rectangle;  // Set type to Rectangle
+	m_position = shape_position;
+	m_scale = shape_scale;
+	m_velocity = shape_velocity;
+	m_ID = entity_ID;
+    type = EntityType::RECTANGLE;  // Set type to Rectangle
 }
 
-	bool classPhysics::static_CollisionCheck(const AABB aabb1, const AABB aabb2) {
+	bool Physics::m_static_CollisionCheck(const AABB aabb1, const AABB aabb2) {
 		//std::cout << "BOUNDING BOX1 MIN X " << aabb1.min.x << " Y " << aabb1.min.y << std::endl;
 		//std::cout << "BOUNDING BOX1 MAX X " << aabb1.max.x << " Y " << aabb1.max.y << std::endl;
 		//std::cout << "BOUNDING BOX2 MIN X " << aabb2.min.x << " Y " << aabb2.min.y << std::endl;
 		//std::cout << "BOUNDING BOX2 MAX X " << aabb2.max.x << " Y " << aabb2.max.y << std::endl;
 
-		if (aabb2.max.x < aabb1.min.x) return 0;
-		if (aabb2.min.x > aabb1.max.x) return 0;
-		if (aabb2.max.y < aabb1.min.y) return 0;
-		if (aabb2.min.y > aabb1.max.y) return 0;
+		if (aabb2.m_max.m_x < aabb1.m_min.m_x) return 0;
+		if (aabb2.m_min.m_x > aabb1.m_max.m_x) return 0;
+		if (aabb2.m_max.m_y < aabb1.m_min.m_y) return 0;
+		if (aabb2.m_min.m_y > aabb1.m_max.m_y) return 0;
 		//std::cout << "Static Collision fail " << std::endl;
 		return 1;
 	}
 
-	void classPhysics::SendPhysicsData(float rect_height, float rect_width, Vector2::Vec2 position, Vector2::Vec2 scale, Vector2::Vec2 velocity, int ID) {
-		physicsEntities.push_back(std::make_shared<Rectangle>(rect_height, rect_width, position, scale, velocity, ID));
+	void Physics::m_SendPhysicsData(float rect_height, float rect_width, vector2::Vec2 position, vector2::Vec2 scale, vector2::Vec2 velocity, int ID) {
+		m_physicsEntities.push_back(std::make_shared<Rectangle>(rect_height, rect_width, position, scale, velocity, ID));
 	}
 
-	void classPhysics::SendPhysicsData(float radius, Vector2::Vec2 position, Vector2::Vec2 scale, Vector2::Vec2 velocity, int ID){
-		physicsEntities.push_back(std::make_shared<Circle>(radius, position, scale, velocity, ID));
+	void Physics::m_SendPhysicsData(float radius, vector2::Vec2 position, vector2::Vec2 scale, vector2::Vec2 velocity, int ID){
+		m_physicsEntities.push_back(std::make_shared<Circle>(radius, position, scale, velocity, ID));
 	}
 	
 
-	void classPhysics::CollisionCheck(float dt) {
+	void Physics::m_CollisionCheck(float dt) {
 
 		//calculate boarding box
-		CalculateBoundingBox();
+		m_CalculateBoundingBox();
 
-		for (size_t i = 0; i < physicsEntities.size(); ++i) {
-			for (size_t j = 0; j < physicsEntities.size(); ++j) {
-				if (physicsEntities[i]->ID != physicsEntities[j]->ID) {
+		for (size_t i = 0; i < m_physicsEntities.size(); ++i) {
+			for (size_t j = 0; j < m_physicsEntities.size(); ++j) {
+				if (m_physicsEntities[i]->m_ID != m_physicsEntities[j]->m_ID) {
 					/*************************************
 						CHECK RECT V RECT
 					*************************************/
-					if ((physicsEntities[i]->GetEntity() == EntityType::Rectangle) && (physicsEntities[j]->GetEntity() == EntityType::Rectangle)) {
-						if (CollisionIntersection_RectRect(*dynamic_cast<Rectangle*>(physicsEntities[i].get()), *dynamic_cast<Rectangle*>(physicsEntities[i].get()), dt)) {
+					if ((m_physicsEntities[i]->GetEntity() == EntityType::RECTANGLE) && (m_physicsEntities[j]->GetEntity() == EntityType::RECTANGLE)) {
+						if (m_CollisionIntersection_RectRect(*dynamic_cast<Rectangle*>(m_physicsEntities[i].get()), *dynamic_cast<Rectangle*>(m_physicsEntities[i].get()), dt)) {
 							//checking whether if entity is alr added inside
-							if (std::find(collidedEntities.begin(), collidedEntities.end(), physicsEntities[i]) == collidedEntities.end()) {
-								collidedEntities.push_back(physicsEntities[i]);
+							if (std::find(m_collidedEntities.begin(), m_collidedEntities.end(), m_physicsEntities[i]) == m_collidedEntities.end()) {
+								m_collidedEntities.push_back(m_physicsEntities[i]);
 							}
 						}
 					}
 					/*************************************
 						CHECK CIRCLE V RECT
 					*************************************/
-					else if ((physicsEntities[i]->GetEntity() == EntityType::Circle) && (physicsEntities[j]->GetEntity() == EntityType::Rectangle)) {
-						if (CollisionIntersection_CircleRect(*dynamic_cast<Circle*>(physicsEntities[i].get()), *dynamic_cast<Rectangle*>(physicsEntities[j].get()))) {
-							if (std::find(collidedEntities.begin(), collidedEntities.end(), physicsEntities[i]) == collidedEntities.end()) {
-								collidedEntities.push_back(physicsEntities[i]);
+					else if ((m_physicsEntities[i]->GetEntity() == EntityType::CIRCLE) && (m_physicsEntities[j]->GetEntity() == EntityType::RECTANGLE)) {
+						if (m_CollisionIntersection_CircleRect(*dynamic_cast<Circle*>(m_physicsEntities[i].get()), *dynamic_cast<Rectangle*>(m_physicsEntities[j].get()))) {
+							if (std::find(m_collidedEntities.begin(), m_collidedEntities.end(), m_physicsEntities[i]) == m_collidedEntities.end()) {
+								m_collidedEntities.push_back(m_physicsEntities[i]);
 							}
 						}
 					}
@@ -96,20 +96,20 @@ Rectangle::Rectangle(float rect_height, float rect_width, Vector2::Vec2 shape_po
 					/*************************************
 						CHECK RECT V CIRCLE
 					*************************************/
-					else if (physicsEntities[j]->GetEntity() == EntityType::Circle && physicsEntities[i]->GetEntity() == EntityType::Rectangle) {
-						if (CollisionIntersection_CircleRect(*dynamic_cast<Circle*>(physicsEntities[j].get()), *dynamic_cast<Rectangle*>(physicsEntities[i].get()))) {
-							if (std::find(collidedEntities.begin(), collidedEntities.end(), physicsEntities[i]) == collidedEntities.end()) {
-								collidedEntities.push_back(physicsEntities[i]);
+					else if (m_physicsEntities[j]->GetEntity() == EntityType::CIRCLE && m_physicsEntities[i]->GetEntity() == EntityType::RECTANGLE) {
+						if (m_CollisionIntersection_CircleRect(*dynamic_cast<Circle*>(m_physicsEntities[j].get()), *dynamic_cast<Rectangle*>(m_physicsEntities[i].get()))) {
+							if (std::find(m_collidedEntities.begin(), m_collidedEntities.end(), m_physicsEntities[i]) == m_collidedEntities.end()) {
+								m_collidedEntities.push_back(m_physicsEntities[i]);
 							}
 						}
 					}
 					/*************************************
 						CHECK CIRCLE V CIRCLE
 					*************************************/
-					else if(physicsEntities[i]->GetEntity() == EntityType::Circle && physicsEntities[j]->GetEntity() == EntityType::Circle) {
-						if (CollisionIntersection_CircleCircle(*dynamic_cast<Circle*>(physicsEntities[i].get()), *dynamic_cast<Circle*>(physicsEntities[j].get()))) {
-							if (std::find(collidedEntities.begin(), collidedEntities.end(), physicsEntities[i]) == collidedEntities.end()) {
-								collidedEntities.push_back(physicsEntities[i]);
+					else if(m_physicsEntities[i]->GetEntity() == EntityType::CIRCLE && m_physicsEntities[j]->GetEntity() == EntityType::CIRCLE) {
+						if (m_CollisionIntersection_CircleCircle(*dynamic_cast<Circle*>(m_physicsEntities[i].get()), *dynamic_cast<Circle*>(m_physicsEntities[j].get()))) {
+							if (std::find(m_collidedEntities.begin(), m_collidedEntities.end(), m_physicsEntities[i]) == m_collidedEntities.end()) {
+								m_collidedEntities.push_back(m_physicsEntities[i]);
 							}
 						}
 					}
@@ -123,29 +123,29 @@ Rectangle::Rectangle(float rect_height, float rect_width, Vector2::Vec2 shape_po
 		//std::cout << "Physics Entities size " << physicsEntities.size() << " collideEntities " << collidedEntities.size() << std::endl;
 	}
 
-	std::vector<std::shared_ptr<PhysicsData>> classPhysics::RetrievePhysicsData() {
-		std::vector<std::shared_ptr	<PhysicsData>> TempCollidedEntities =  collidedEntities;
-		this->ClearEntites();
+	std::vector<std::shared_ptr<PhysicsData>> Physics::m_RetrievePhysicsData() {
+		std::vector<std::shared_ptr	<PhysicsData>> TempCollidedEntities = m_collidedEntities;
+		this->m_ClearEntites();
 		return TempCollidedEntities;
 	}
 
-	void classPhysics::ClearEntites(){
-		physicsEntities.clear();
-		collidedEntities.clear();
+	void Physics::m_ClearEntites(){
+		m_physicsEntities.clear();
+		m_collidedEntities.clear();
 	}
 
 	//calculate boundingbox
-	void classPhysics::CalculateBoundingBox() {
+	void Physics::m_CalculateBoundingBox() {
 		//std::cout << "********************************************************************************" << std::endl;
 		//std::cout << "UPDATING BOUNDING BOX" << std::endl;
-		for (size_t i = 0; i < physicsEntities.size(); ++i) {
-			if (physicsEntities[i]->GetEntity() == EntityType::Rectangle) {
+		for (size_t i = 0; i < m_physicsEntities.size(); ++i) {
+			if (m_physicsEntities[i]->GetEntity() == EntityType::RECTANGLE) {
 				AABB boundingBox;
-				boundingBox.min = { physicsEntities[i]->position.x - (physicsEntities[i]->scale.x * 0.5f), physicsEntities[i]->position.y - (physicsEntities[i]->scale.y * 0.5f) };
-				boundingBox.max = { physicsEntities[i]->position.x + (physicsEntities[i]->scale.x * 0.5f), physicsEntities[i]->position.y + (physicsEntities[i]->scale.y * 0.5f) };
-				dynamic_cast<Rectangle*>(physicsEntities[i].get())->boundingBox = boundingBox;
+				boundingBox.m_min = { m_physicsEntities[i]->m_position.m_x - (m_physicsEntities[i]->m_scale.m_x * 0.5f), m_physicsEntities[i]->m_position.m_y - (m_physicsEntities[i]->m_scale.m_y * 0.5f) };
+				boundingBox.m_max = { m_physicsEntities[i]->m_position.m_x + (m_physicsEntities[i]->m_scale.m_x * 0.5f), m_physicsEntities[i]->m_position.m_y + (m_physicsEntities[i]->m_scale.m_y * 0.5f) };
+				dynamic_cast<Rectangle*>(m_physicsEntities[i].get())->m_boundingBox = boundingBox;
 			}
-			else if (physicsEntities[i]->GetEntity() == EntityType::Circle) {
+			else if (m_physicsEntities[i]->GetEntity() == EntityType::CIRCLE) {
 
 			}
 			else {
@@ -157,13 +157,13 @@ Rectangle::Rectangle(float rect_height, float rect_width, Vector2::Vec2 shape_po
 
 
 	//static dynamic collision
-	bool classPhysics::CollisionIntersection_RectRect(const Rectangle& obj1, const Rectangle& obj2, float dt) {
+	bool Physics::m_CollisionIntersection_RectRect(const Rectangle& obj1, const Rectangle& obj2, float dt) {
 		//static collision
-		Physics::AABB aabb1 = obj1.boundingBox;
-		Physics::AABB aabb2 = obj2.boundingBox;
-		Vector2::Vec2 obj1_Velocity = obj1.velocity;
-		Vector2::Vec2 obj2_Velocity = obj2.velocity;
-		Vector2::Vec2 rel_Velocity{};
+		AABB aabb1 = obj1.m_boundingBox;
+		AABB aabb2 = obj2.m_boundingBox;
+		vector2::Vec2 obj1_Velocity = obj1.m_velocity;
+		vector2::Vec2 obj2_Velocity = obj2.m_velocity;
+		vector2::Vec2 rel_Velocity{};
 		float Tfirst{}, Tlast = dt;
 		rel_Velocity = obj1_Velocity - obj2_Velocity;
 
@@ -183,85 +183,85 @@ Rectangle::Rectangle(float rect_height, float rect_width, Vector2::Vec2 shape_po
 
 
 		//static collision
-		if (static_CollisionCheck(aabb1, aabb2)) return true;
+		if (m_static_CollisionCheck(aabb1, aabb2)) return true;
 		//dynamic collision
-		if (rel_Velocity.x < 0) {
-			if (aabb2.min.x > aabb1.max.x) return 0;
-			if (aabb2.max.x < aabb1.min.x) {
-				Tfirst = std::max((aabb2.max.x - aabb1.min.x) / rel_Velocity.x, Tfirst);
+		if (rel_Velocity.m_x < 0) {
+			if (aabb2.m_min.m_x > aabb1.m_max.m_x) return 0;
+			if (aabb2.m_max.m_x < aabb1.m_min.m_x) {
+				Tfirst = std::max((aabb2.m_max.m_x - aabb1.m_min.m_x) / rel_Velocity.m_x, Tfirst);
 			}
-			if (aabb2.min.x < aabb1.max.x) {// case 4
-				Tlast = std::min((aabb2.min.x - aabb1.max.x) / rel_Velocity.x, Tlast);
+			if (aabb2.m_min.m_x < aabb1.m_max.m_x) {// case 4
+				Tlast = std::min((aabb2.m_min.m_x - aabb1.m_max.m_x) / rel_Velocity.m_x, Tlast);
 			}
 		}
-		else if (rel_Velocity.x > 0) {
-			if (aabb2.min.x > aabb1.max.x) {// case 2
-				Tfirst = std::max((aabb2.min.x - aabb1.max.x) / rel_Velocity.x, Tfirst);
+		else if (rel_Velocity.m_x > 0) {
+			if (aabb2.m_min.m_x > aabb1.m_max.m_x) {// case 2
+				Tfirst = std::max((aabb2.m_min.m_x - aabb1.m_max.m_x) / rel_Velocity.m_x, Tfirst);
 			}
-			if (aabb2.max.x > aabb1.min.x) {// case 2
-				Tlast = std::min((aabb2.max.x - aabb1.min.x) / rel_Velocity.x, Tlast);
+			if (aabb2.m_max.m_x > aabb1.m_min.m_x) {// case 2
+				Tlast = std::min((aabb2.m_max.m_x - aabb1.m_min.m_x) / rel_Velocity.m_x, Tlast);
 			}
-			if (aabb2.max.x < aabb1.min.x)return 0;//case 3
+			if (aabb2.m_max.m_x < aabb1.m_min.m_x)return 0;//case 3
 		}
-		else if (rel_Velocity.x == 0) {//case 5
-			if (aabb2.max.x < aabb1.min.x) return 0;
-			else if (aabb2.min.x > aabb1.max.x) return 0;
+		else if (rel_Velocity.m_x == 0) {//case 5
+			if (aabb2.m_max.m_x < aabb1.m_min.m_x) return 0;
+			else if (aabb2.m_min.m_x > aabb1.m_max.m_x) return 0;
 		}
 
 		if (Tfirst > Tlast) return 0;
 
 
-		if (rel_Velocity.y < 0) {
-			if (aabb2.min.y > aabb1.max.y) return 0;//case 1
-			if (aabb2.max.y < aabb1.min.y) {// case 4
-				Tfirst = std::max((aabb2.max.y - aabb1.min.y) / rel_Velocity.y, Tfirst);
+		if (rel_Velocity.m_y < 0) {
+			if (aabb2.m_min.m_y > aabb1.m_max.m_y) return 0;//case 1
+			if (aabb2.m_max.m_y < aabb1.m_min.m_y) {// case 4
+				Tfirst = std::max((aabb2.m_max.m_y - aabb1.m_min.m_y) / rel_Velocity.m_y, Tfirst);
 			}
-			if (aabb2.min.y < aabb1.max.y) {// case 4
-				Tlast = std::min((aabb2.min.y - aabb1.max.y) / rel_Velocity.y, Tlast);
+			if (aabb2.m_min.m_y < aabb1.m_max.m_y) {// case 4
+				Tlast = std::min((aabb2.m_min.m_y - aabb1.m_max.m_y) / rel_Velocity.m_y, Tlast);
 			}
 		}
-		else if (rel_Velocity.y > 0) {
-			if (aabb2.min.y > aabb1.max.y) {// case 2
-				Tfirst = std::max((aabb2.min.y - aabb1.max.y) / rel_Velocity.y, Tfirst);
+		else if (rel_Velocity.m_y > 0) {
+			if (aabb2.m_min.m_y > aabb1.m_max.m_y) {// case 2
+				Tfirst = std::max((aabb2.m_min.m_y - aabb1.m_max.m_y) / rel_Velocity.m_y, Tfirst);
 			}
-			if (aabb2.max.y > aabb1.min.y) {// case 2
-				Tlast = std::min((aabb2.max.y - aabb1.min.y) / rel_Velocity.y, Tlast);
+			if (aabb2.m_max.m_y > aabb1.m_min.m_y) {// case 2
+				Tlast = std::min((aabb2.m_max.m_y - aabb1.m_min.m_y) / rel_Velocity.m_y, Tlast);
 			}
-			if (aabb2.max.y < aabb1.min.y)return 0;//case 3
+			if (aabb2.m_max.m_y < aabb1.m_min.m_y)return 0;//case 3
 		}
-		else if (rel_Velocity.y == 0) {
-			if (aabb2.max.y < aabb1.min.y) return 0;
-			else if (aabb2.min.y > aabb1.max.y) return 0;
+		else if (rel_Velocity.m_y == 0) {
+			if (aabb2.m_max.m_y < aabb1.m_min.m_y) return 0;
+			else if (aabb2.m_min.m_y > aabb1.m_max.m_y) return 0;
 		}
 		if (Tfirst > Tlast) return 0;
 
 		return true;
 
 	}
-	bool classPhysics::CollisionIntersection_CircleCircle(const Circle& circle1, const Circle& circle2) {
-		float dx = circle2.position.x - circle1.position.x;
-		float dy = circle2.position.y - circle1.position.y;
+	bool Physics::m_CollisionIntersection_CircleCircle(const Circle& circle1, const Circle& circle2) {
+		float dx = circle2.m_position.m_x - circle1.m_position.m_x;
+		float dy = circle2.m_position.m_y - circle1.m_position.m_y;
 		float distance_Square = dx * dx + dy * dy;
 
 		float combineRadius = circle1.m_radius + circle2.m_radius;
 		return distance_Square <= (combineRadius * combineRadius);
 	}
 
-	bool classPhysics::CollisionIntersection_CircleRect(const Circle& circle, const Rectangle& rect) {
-		Vector2::Vec2 shortestDistance{};
+	bool Physics::m_CollisionIntersection_CircleRect(const Circle& circle, const Rectangle& rect) {
+		vector2::Vec2 shortestDistance{};
 
 		
-		if (circle.position.x < rect.boundingBox.min.x) shortestDistance.x = rect.boundingBox.min.x;
-		else if (circle.position.x > rect.boundingBox.max.x) shortestDistance.x = rect.boundingBox.max.x;
-		else shortestDistance.x = circle.position.x;
+		if (circle.m_position.m_x < rect.m_boundingBox.m_min.m_x) shortestDistance.m_x = rect.m_boundingBox.m_min.m_x;
+		else if (circle.m_position.m_x > rect.m_boundingBox.m_max.m_x) shortestDistance.m_x = rect.m_boundingBox.m_max.m_x;
+		else shortestDistance.m_x = circle.m_position.m_x;
 
-		if (circle.position.y < rect.boundingBox.min.y) shortestDistance.y = rect.boundingBox.min.y;
-		else if (circle.position.y > rect.boundingBox.max.y) shortestDistance.y = rect.boundingBox.max.y;
-		else shortestDistance.y = circle.position.y;
+		if (circle.m_position.m_y < rect.m_boundingBox.m_min.m_y) shortestDistance.m_y = rect.m_boundingBox.m_min.m_y;
+		else if (circle.m_position.m_y > rect.m_boundingBox.m_max.m_y) shortestDistance.m_y = rect.m_boundingBox.m_max.m_y;
+		else shortestDistance.m_y = circle.m_position.m_y;
 
 
-		float Y_Square = static_cast<float>(pow((circle.position.x - shortestDistance.x), 2));
-		float X_Square = static_cast<float>(pow((circle.position.y - shortestDistance.y), 2));
+		float Y_Square = static_cast<float>(pow((circle.m_position.m_x - shortestDistance.m_x), 2));
+		float X_Square = static_cast<float>(pow((circle.m_position.m_y - shortestDistance.m_y), 2));
 		float distance_Square = Y_Square + X_Square;
 
 		return distance_Square <= (circle.m_radius * circle.m_radius);

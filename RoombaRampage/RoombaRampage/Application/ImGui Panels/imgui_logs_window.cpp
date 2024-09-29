@@ -13,7 +13,7 @@ void ImGuiHandler::DrawLogsWindow() {
     // Most of the contents of the window will be added by the log.Draw() call.
     ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
     ImGui::Begin("Log", &open);
-    std::vector<std::string> log_Entries = Logging::Logger::GetInstance().getLogList();
+    std::vector<std::string> log_Entries = logging::Logger::m_GetInstance().m_GetLogList();
     for (size_t i = 0; i < log_Entries.size(); ++i) {
         ImGui::Text(log_Entries[i].c_str());
     }

@@ -35,15 +35,17 @@ namespace Application {
 
     FModAudio Application::audio;
     FMOD_CHANNELGROUP* Application::channelgroup;
-
+    
+    logging::Logger p;
 
     int Application::Init() {
-    try {
         /*--------------------------------------------------------------
         INITIALIZE LOGGING SYSTEM
         --------------------------------------------------------------*/
         LOGGING_INIT_LOGS("Debugging/LogFile.txt");
         LOGGING_INFO("Application Start");
+        p.m_Setup_Abort_Handler();
+        std::signal(SIGABRT, logging::Logger::m_Abort_Handler);
 
         /*--------------------------------------------------------------
           INITIALIZE WINDOW WIDTH & HEIGHT
@@ -102,10 +104,6 @@ namespace Application {
         LOGGING_INFO("Load ECS Successful");
 
         LOGGING_INFO("Application Init Successful");
-        }
-        catch (const std::exception& e) {
-            LOGGING_ERROR("Exception during Application Init: {}", e.what());
-        }
     
         return 0;
 	}
@@ -113,7 +111,6 @@ namespace Application {
 
 
     int Application::Run() {
-    try{
         Ecs::ECS* ecs = Ecs::ECS::GetInstance();
         Helper::Helpers *help = Helper::Helpers::GetInstance();
         float FPSCapTime = 1.f / help->FpsCap;
@@ -166,26 +163,19 @@ namespace Application {
                 LOGGING_ERROR("Exception in game loop: {}", e.what());
             }
         }
-    } catch (const std::exception& e) {
-        LOGGING_ERROR("Exception during Application Run: {}", e.what());
-    }
         return 0;
     }
 
 
 
 	int Application::Cleanup() {
-        try {
-            Ecs::ECS::GetInstance()->Unload();
-            imgui_manager.Shutdown();
-            lvWindow.CleanUp();
-            glfwTerminate();
-            audio.shutdown();
-            LOGGING_INFO("Application Closed");
-        }
-        catch (const std::exception& e) {
-            LOGGING_ERROR("Exception during Application Cleanup: {}", e.what());
-        }
+        Ecs::ECS::GetInstance()->Unload();
+        imgui_manager.Shutdown();
+        lvWindow.CleanUp();
+        glfwTerminate();
+        audio.shutdown();
+        LOGGING_INFO("Application Closed");
+
         return 0;
 	}
 
