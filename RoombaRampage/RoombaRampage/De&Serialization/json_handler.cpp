@@ -11,6 +11,7 @@
 
 #include "../ECS/ECS.h"
 #include "../Application/Helper.h"
+#include "../Debugging/Logging.h"
 #include "json_handler.h"
 
 #include <cstdio>
@@ -212,6 +213,9 @@ namespace Serialization {
                 }
             }
         }
+
+
+        LOGGING_INFO("Load Json Successful");
     }
 
     void Serialize::SaveComponentsJson(const std::string& filePath, const std::unordered_map<Ecs::EntityID, std::bitset<Ecs::ComponentType::TotalTypeComponent>>& ECS_EntityMap, const std::vector<std::string>& obj_text_entries, const std::vector<Ecs::EntityID>& obj_entity_id)
@@ -350,5 +354,7 @@ namespace Serialization {
             outputFile << writeBuffer.GetString();
             outputFile.close();
         }
+
+        LOGGING_INFO("Save Json Successful");
     }
 }

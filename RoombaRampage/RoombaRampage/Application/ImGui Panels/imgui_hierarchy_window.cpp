@@ -76,7 +76,7 @@ unsigned int ImGuiHandler::DrawHierachyWindow()
             charBuffer[0] = '\0';
             objectNameBox = false;
 
-            Serialization::Serialize::SaveComponentsJson("../RoombaRampage/Json", Ecs::ECS::GetInstance()->ECS_EntityMap, obj_text_entries, obj_entity_id);
+            //Serialization::Serialize::SaveComponentsJson("../RoombaRampage/Json", Ecs::ECS::GetInstance()->ECS_EntityMap, obj_text_entries, obj_entity_id);
         }
     }
 
@@ -123,7 +123,7 @@ unsigned int ImGuiHandler::DrawHierachyWindow()
                 deleteButton.erase(deleteButton.begin() + i);
                 DuplicateButton.erase(DuplicateButton.begin() + i);
                 
-                Serialization::Serialize::SaveComponentsJson("../RoombaRampage/Json", Ecs::ECS::GetInstance()->ECS_EntityMap, obj_text_entries, obj_entity_id);
+                //Serialization::Serialize::SaveComponentsJson("../RoombaRampage/Json", Ecs::ECS::GetInstance()->ECS_EntityMap, obj_text_entries, obj_entity_id);
 
                 i--;
 
