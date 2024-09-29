@@ -19,6 +19,15 @@ struct GraphicsData
 	int shapeType;
 };
 
+struct DebugDrawData
+{
+	float rotate;
+	glm::vec2 scale;
+	glm::vec3 worldCoordinates;
+	bool isCollided;
+	int shapeType;
+};
+
 class GraphicsPipe
 {
 private:
@@ -55,7 +64,7 @@ private:
 	unsigned int modelMatrixArrayBuffer;
 	unsigned int debugMatrixArrayBuffer;
 	unsigned int textureOrderBuffer;
-	unsigned int debugOrderBuffer;
+	unsigned int debugCollisionCheckBuffer;
 	unsigned int frameBufferObject;
 	
 
@@ -110,9 +119,10 @@ public:
 	Mesh screenMesh;
 	Mesh squareLinesMesh;
 	std::vector<GraphicsData> modelData;
-	std::vector<GraphicsData> debugBoxData;
+	std::vector<DebugDrawData> debugBoxData;
+	std::vector<float> debugBoxCollisionChecks;
 	std::vector<int> textureOrder;
-	std::vector<float> debugDrawOrder;
+	
 
 	//Array of the texture IDs
 	std::vector<unsigned int> textureIDs;

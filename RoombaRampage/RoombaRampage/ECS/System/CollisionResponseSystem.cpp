@@ -60,6 +60,12 @@ namespace Ecs {
 			return;
 		}
 
+		for (int n{}; n < vecColliderComponentPtr.size(); n++) 
+		{
+			ColliderComponent* ColComp = vecColliderComponentPtr[n];
+			ColComp->isCollided = false;
+		}
+
 		Physics::classPhysics PysicsPipeline;
 		std::vector<std::shared_ptr<Physics::PhysicsData>> vecCollisionEntity = PysicsPipeline.RetrievePhysicsData();
 
@@ -69,9 +75,10 @@ namespace Ecs {
 			//CollidedEntity is the ID
 			for (auto& CollidedEntity : vecCollisionEntity) {
 				if (ecs->ECS_CombinedComponentPool[TypeRigidBodyComponent]->HasComponent(CollidedEntity->ID)) {
-
+					std::cout << "Collided" << std::endl;
 					MovementComponent* MovCom = (MovementComponent*)ecs->ECS_CombinedComponentPool[TypeMovemmentComponent]->GetEntityComponent(CollidedEntity->ID);
-
+					ColliderComponent* ColCom = (ColliderComponent*)ecs->ECS_CombinedComponentPool[TypeColliderComponent]->GetEntityComponent(CollidedEntity->ID);
+					ColCom->isCollided = true;
 					MovCom->Direction = { 0,0 };
 				}
 
