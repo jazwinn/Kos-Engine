@@ -13,8 +13,9 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 
-
 #include "../Assets/AudioManager.h"
+
+#include <../Dependencies/Freetype_Font/include/ft2build.h>
 
 namespace Application {
 
@@ -30,7 +31,12 @@ namespace Application {
 
     // Audio
     FModAudio audio;
+    FModAudio audio2;
     FMOD_CHANNELGROUP* channelgroup;
+    FMOD_CHANNELGROUP* channelgroup2;
+    // Audio Demo timer
+    float audioTimer = 3.0f;
+    bool audio2_bool = true;
 
     float LastTime = glfwGetTime();;
 
@@ -49,6 +55,11 @@ namespace Application {
         --------------------------------------------------------------*/
         AstManager = AssetManager::funcGetInstance();
         AstManager->funcLoadAssets();
+
+       /*--------------------------------------------------------------
+        INITIALIZE Asset Manager
+       --------------------------------------------------------------*/
+        AstManager->testJSON();
 
        /*--------------------------------------------------------------
           INITIALIZE OPENGL WINDOW
@@ -87,7 +98,9 @@ namespace Application {
         --------------------------------------------------------------*/
         // Initialize the FMOD system
         audio.init();
-        audio.createSound("vacuum.mp3");
+        audio2.init();
+        audio.createSound("Assets/vacuum.mp3");
+        audio2.createSound("Assets/zwing.wav");
 
         /*--------------------------------------------------------------
             INITIALIZE LOGGING SYSTEM
@@ -152,7 +165,20 @@ namespace Application {
             /*--------------------------------------------------------------
              Play AUDIO
              --------------------------------------------------------------*/
-            //audio.playSound();
+            if (audioTimer >= 0)
+            {
+                audioTimer -= DeltaTime;
+                audio.playSound();
+            }
+            else
+            {
+                audio.stopSound();
+                if (audio2_bool)
+                {
+                    audio2.playSound();
+                    audio2_bool = !audio2_bool;
+                }
+            }
 
             glfwSwapBuffers(lvWindow.Window);
 
@@ -175,6 +201,7 @@ namespace Application {
         lvWindow.CleanUp();
         glfwTerminate();
         audio.shutdown();
+        audio2.shutdown();
 
         return 0;
 	}
