@@ -3,6 +3,10 @@
 #include "stb_image.h"
 #include "../Graphics/GraphicsPipe.h"
 #include "../Application/Helper.h"
+#include "../Dependencies/rapidjson/document.h"
+#include "../Dependencies/rapidjson/writer.h"
+#include "../Dependencies/rapidjson/stringbuffer.h"
+#include "../Dependencies/rapidjson/fwd.h"
 #include <regex>
 #include <iostream>
 #include <fstream>
@@ -187,4 +191,150 @@ std::string AssetManager::extractSpriteNameFromFilename(const std::string& filen
         return match[1].str();
     }
     return "Error_Cannot_Read_Sprite_Name";
+}
+
+
+//GLuint loadPaddedTexture(const char* imagePath, int targetWidth, int targetHeight)
+//{
+//    // Load the image using stb_image or any other image-loading library
+//    int width, height, channels;
+//    unsigned char* data = stbi_load(imagePath, &width, &height, &channels, 0);
+//    if (!data) {
+//        std::cerr << "Failed to load image: " << imagePath << std::endl;
+//        return 0;
+//    }
+//
+//    // Create padded texture if necessary
+//    unsigned char* paddedData = nullptr;
+//    if (width != targetWidth || height != targetHeight) {
+//        paddedData = padTexture(data, width, height, channels, targetWidth, targetHeight, channels);
+//    }
+//    else {
+//        paddedData = data; // No need to pad if the sizes match
+//    }
+//
+//    // Generate OpenGL texture
+//    GLuint textureID;
+//    glGenTextures(1, &textureID);
+//    glBindTexture(GL_TEXTURE_2D, textureID);
+//
+//    // Set texture parameters (wrap and filter)
+//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+//
+//    // Upload the padded texture data to the GPU
+//    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, targetWidth, targetHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, paddedData);
+//
+//    // Free original and padded data
+//    if (data != paddedData) {
+//        delete[] paddedData;
+//    }
+//    stbi_image_free(data);
+//
+//    return textureID;
+//}
+
+void AssetManager::serializeToJson(const std::string& filename) {
+    rapidjson::Document document;
+    document.SetObject();
+
+    // Serialize imageContainer
+    rapidjson::Value images(rapidjson::kArrayType);
+    for (const auto& image : imageContainer) {
+        rapidjson::Value imageJson(rapidjson::kObjectType);
+        imageJson.AddMember("spriteName", rapidjson::Value(image.spriteName.c_str(), document.GetAllocator()), document.GetAllocator());
+        imageJson.AddMember("stripCount", image.stripCount, document.GetAllocator());
+        imageJson.AddMember("width", image.width, document.GetAllocator());
+        imageJson.AddMember("height", image.height, document.GetAllocator());
+        imageJson.AddMember("channels", image.channels, document.GetAllocator());
+        imageJson.AddMember("isPadded", image.isPadded, document.GetAllocator());
+        images.PushBack(imageJson, document.GetAllocator());
+    }
+    document.AddMember("images", images, document.GetAllocator());
+
+    // Write to file
+    rapidjson::StringBuffer buffer;
+    rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+    document.Accept(writer);
+
+    std::ofstream file(filename);
+    file << buffer.GetString();
+    file.close();
+}
+
+
+void AssetManager::deserializeFromJson(const std::string& filename) {
+    // Read from file
+    std::ifstream file(filename);
+    std::string json((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+    file.close();
+
+    // Parse the JSON string
+    rapidjson::Document document;
+    document.Parse(json.c_str());
+
+    // Check for parsing errors
+    if (document.HasParseError()) {
+        std::cerr << "Error parsing JSON: " << document.GetParseError() << std::endl;
+        return;
+    }
+
+    // Deserialize imageContainer
+    const rapidjson::Value& images = document["images"];
+    for (rapidjson::SizeType i = 0; i < images.Size(); ++i) {
+        const rapidjson::Value& imageJson = images[i];
+        Image image;
+        image.spriteName = imageJson["spriteName"].GetString();
+        image.stripCount = imageJson["stripCount"].GetInt();
+        image.width = imageJson["width"].GetInt();
+        image.height = imageJson["height"].GetInt();
+        image.channels = imageJson["channels"].GetInt();
+        image.isPadded = imageJson["isPadded"].GetBool();
+
+        // Load image data from file (Right now assuming the image files are in the same directory) - Check with Jaz Win/Sean
+        std::string imagePath = "Assets/" + image.spriteName + "_strip" + std::to_string(image.stripCount) + ".png";
+        unsigned char* data = stbi_load(imagePath.c_str(), &image.width, &image.height, &image.channels, 0);
+        if (!data) {
+            std::cout << "Error: Could not load image: " << imagePath << std::endl;
+            return;
+        }
+
+        imageContainer.push_back(image);
+        imagedataArray.push_back(data);
+    }
+}
+
+void AssetManager::testJSON() {
+
+    // Create an instance of the AssetManager -> Already created in the app cpp thoo
+    // AssetManager* assetManager = AssetManager::funcGetInstance();
+
+    // Load some images (Also  loaded in app cpp)
+    // assetManager->funcLoadImage("Assets/roombaTest.png");
+    // assetManager->funcLoadImage("Assets/roombaTest2.png");
+
+    // Serialize the image data to a JSON file
+    this->serializeToJson("assets.json");
+
+    // Clear the image container
+    //this->imageContainer.clear();
+    //this->imagedataArray.clear();
+
+    // Deserialize the image data from the JSON file
+    this->deserializeFromJson("assets.json");
+
+    // Print the deserialized image data to test if the info was passed correctly
+    for (const auto& image : this->imageContainer) {
+        std::cout << "Sprite Name: " << image.spriteName << std::endl;
+        std::cout << "Strip Count: " << image.stripCount << std::endl;
+        std::cout << "Width: " << image.width << std::endl;
+        std::cout << "Height: " << image.height << std::endl;
+        std::cout << "Channels: " << image.channels << std::endl;
+        std::cout << "Is Padded: " << image.isPadded << std::endl;
+        std::cout << std::endl;
+    }
+
+    return;
 }

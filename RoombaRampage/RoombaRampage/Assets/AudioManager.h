@@ -4,6 +4,7 @@
 #include "fmod.hpp"
 #include "fmod_errors.h"
 
+
 class FModAudio {
 public:
     FModAudio();
@@ -14,6 +15,8 @@ public:
     bool createSound(const char* soundFile);
     bool playSound();
     void stopSound();
+    bool setVolume(float volume);
+    bool setPan(float pan);
 
     FMOD::System* system_;
     FMOD::Sound* sound_;

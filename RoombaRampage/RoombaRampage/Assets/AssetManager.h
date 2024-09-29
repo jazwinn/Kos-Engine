@@ -48,8 +48,12 @@ public:
 	void funcLoadAssets();
 	void funcLoadImage(const char* file);
 
-	
-	
+	//De|Serialisation using rapid json
+	void serializeToJson(const std::string& filename); //Serialize 
+	void deserializeFromJson(const std::string& filename);
+
+	//Test Code to test in application.cpp
+	void testJSON();
 };
 
 #endif ASSETMGR_H

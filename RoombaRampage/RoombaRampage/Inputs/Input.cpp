@@ -79,7 +79,7 @@ namespace Input {
 
 		MousePosition.x = xpos;
 		MousePosition.y = ypos;
-		std::cout << xpos << " : " << ypos << std::endl;
+		//std::cout << xpos << " : " << ypos << std::endl;
 
 	}
 
