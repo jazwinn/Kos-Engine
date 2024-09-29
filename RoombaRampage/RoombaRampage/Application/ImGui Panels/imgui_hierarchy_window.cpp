@@ -14,6 +14,22 @@ unsigned int ImGuiHandler::DrawHierachyWindow()
     //fetch ecs
     Ecs::ECS* ecs = Ecs::ECS::GetInstance();
 
+    // Load entities only once when the window is first opened
+    static bool hasLoaded = false;
+    if (!hasLoaded) {
+        std::cout << "Loading";
+        // Load entities from JSON (no EntityID in JSON, new entities are created)
+        Serialization::Serialize::LoadComponentsJson("../RoombaRampage/Json Texts/components.json", ecs, obj_text_entries);
+
+        // Iterate through all loaded entities and add them to the hierarchy
+        for (size_t i = 0; i < obj_text_entries.size(); ++i) {
+            obj_entity_id.push_back(ecs->ECS_EntityMap.begin()->first + i);
+            deleteButton.push_back(false);
+            DuplicateButton.push_back(false);
+            obj_component_window.push_back(false);
+        }
+        hasLoaded = true;
+    }
 
     // Custom window with example widgets
     bool open = true;
@@ -64,7 +80,7 @@ unsigned int ImGuiHandler::DrawHierachyWindow()
             charBuffer[0] = '\0';
             objectNameBox = false;
 
-            Serialization::Serialize::SaveComponentsJson("../RoombaRampage/Json Texts", Ecs::ECS::GetInstance()->ECS_EntityMap);
+            Serialization::Serialize::SaveComponentsJson("../RoombaRampage/Json Texts", Ecs::ECS::GetInstance()->ECS_EntityMap, obj_text_entries);
         }
     }
 
@@ -73,11 +89,14 @@ unsigned int ImGuiHandler::DrawHierachyWindow()
     {
         // '##' let IMGui set an internal unique ID to widget without visible label!
         std::string buttonName = obj_text_entries[i] +"##"+ std::to_string(i);
+
         if (ImGui::Button(buttonName.c_str()))
         {
             size_t PreviousButton = clicked_entity_id;
-            deleteButton[PreviousButton] = false;
-            DuplicateButton[PreviousButton] = false;
+            for (size_t j = 0; j < deleteButton.size(); j++) {
+                deleteButton[j] = false;
+                DuplicateButton[j] = false;
+            }
 
             deleteButton[i] ? deleteButton[i] = false : deleteButton[i] = true;
             DuplicateButton[i] ? DuplicateButton[i] = false : DuplicateButton[i] = true;
@@ -104,10 +123,12 @@ unsigned int ImGuiHandler::DrawHierachyWindow()
 
             if (ImGui::Button(deleteButtonLabel.c_str()))
             {
-
-                //Delete entity from ecs
+                //Delete entity from ecs               
                 Ecs::ECS::GetInstance()->DeleteEntity(obj_entity_id[i]);
 
+                if (clicked_entity_id == obj_entity_id[i]) {
+                    clicked_entity_id = -1;  // Reset to an invalid ID
+                }
                 obj_component_window[i] = false;
 
                 //remove the entries 
@@ -120,7 +141,7 @@ unsigned int ImGuiHandler::DrawHierachyWindow()
                 i--;
 
                 ImGui::PopStyleColor(3);  // Pop the 3 style colors (button, hovered, and active)
-                Serialization::Serialize::SaveComponentsJson("../RoombaRampage/Json Texts", Ecs::ECS::GetInstance()->ECS_EntityMap);
+                Serialization::Serialize::SaveComponentsJson("../RoombaRampage/Json Texts", Ecs::ECS::GetInstance()->ECS_EntityMap, obj_text_entries);
                 continue;
             }
 
@@ -166,8 +187,6 @@ unsigned int ImGuiHandler::DrawHierachyWindow()
 
             ImGui::PopStyleColor(3);  // Pop the 3 style colors (button, hovered, and active)
         }
-
-
     }
 
     ImGui::End();

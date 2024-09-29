@@ -34,10 +34,6 @@ void ImGuiHandler::DrawComponentWindow()
     };
     static int ComponentType = 0;
 
-
-
-
-
     for (size_t i = 0; i < obj_text_entries.size(); i++) {
         if (obj_component_window[i] && obj_entity_id[i] == clicked_entity_id)
         {
@@ -64,7 +60,6 @@ void ImGuiHandler::DrawComponentWindow()
                 ecs->AddComponent(Ecs::TypeRigidBodyComponent, entityID);
                 ComponentType = 0;
             }
-
 
             const float slider_start_pos_x = 100.0f; //Padding for the slider
 
@@ -120,6 +115,7 @@ void ImGuiHandler::DrawComponentWindow()
                         isModified = true;
                 }
             }
+
             if (EntitySignature.test(Ecs::TypeMovemmentComponent))
             {
                 if (ImGui::CollapsingHeader("Movement Component"))
@@ -156,10 +152,8 @@ void ImGuiHandler::DrawComponentWindow()
                     ImGui::Checkbox("##", &mc->Move);
 
                 }
-
-               
-
             }
+
             if (EntitySignature.test(Ecs::TypeColliderComponent))
             {
 
@@ -202,9 +196,8 @@ void ImGuiHandler::DrawComponentWindow()
                     if (ImGui::DragFloat("YY##VelY", &cc->OffSet.y, 0.02f, -1.f, 1.f, "%.2f"))
                         isModified = true;
                 }
-
-                
             }
+
             if (EntitySignature.test(Ecs::TypeSpriteComponent))
             {
                 //retrieve sprite component
@@ -233,7 +226,6 @@ void ImGuiHandler::DrawComponentWindow()
                                 is_selected = true;
                             }
 
-
                             if (item_highlight && ImGui::IsItemHovered())
                             {
                                 item_highlighted_idx = n;
@@ -247,10 +239,10 @@ void ImGuiHandler::DrawComponentWindow()
                             }
 
                         }
+
                         ImGui::EndListBox();
                     }
                 }
-
 
             }
             if (EntitySignature.test(Ecs::TypePlayerComponent)) {
@@ -274,23 +266,17 @@ void ImGuiHandler::DrawComponentWindow()
 
                 }
             }
-         
-     
 
             // If any component was modified, save the updated values to JSON
             if (isFirstSaved || isModified)
             {
-                Serialization::Serialize::SaveComponentsJson("../RoombaRampage/Json Texts", ecs->ECS_EntityMap);
+                Serialization::Serialize::SaveComponentsJson("../RoombaRampage/Json Texts", Ecs::ECS::GetInstance()->ECS_EntityMap, obj_text_entries);
                 isFirstSaved = false; // Ensure this is only set once
             }
 
             obj_component_window[i] = windowOpen;
         }
-
-
     }
 
     ImGui::End();
-   
-
 }   
