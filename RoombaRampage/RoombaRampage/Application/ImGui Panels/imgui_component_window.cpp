@@ -279,13 +279,11 @@ void ImGuiHandler::DrawComponentWindow()
         // If any component was modified, save the updated values to JSON
         if (isFirstSaved || isModified)
         {
-            Serialization::Serialize::SaveComponentsJson("../RoombaRampage/Json Texts", ecs->ECS_EntityMap);
+            Serialization::Serialize::SaveComponentsJson("../RoombaRampage/Json Texts", ecs->ECS_EntityMap, obj_text_entries);
             isFirstSaved = false; // Ensure this is only set once
         }
 
      }
 
     ImGui::End();
-   
-
 }   

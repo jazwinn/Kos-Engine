@@ -95,6 +95,9 @@ void GraphicsPipe::funcInit()
 	modelToNDCMatrix.clear();
 	textureOrder.clear();
 
+	glEnable(GL_SCISSOR_TEST);
+	glScissor(0, 0, windowWidth, windowHeight);
+
 	/*glEnable(GL_DEBUG_OUTPUT);
 	glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
 	glDebugMessageCallback(DebugCallback, nullptr);*/
@@ -610,11 +613,11 @@ unsigned int GraphicsPipe::funcSetupShader(const std::string& vertexShader, cons
 	glDeleteShader(lvFragmentShaderID);
 
 	GLint success;
-	glGetProgramiv(debugShaderProgram, GL_LINK_STATUS, &success);
+	glGetProgramiv(lvProgram, GL_LINK_STATUS, &success);
 	if (!success) 
 	{
 		GLchar infoLog[512];
-		glGetProgramInfoLog(debugShaderProgram, 512, NULL, infoLog);
+		glGetProgramInfoLog(lvProgram, 512, NULL, infoLog);
 		std::cout << "Error linking shader program:\n" << infoLog << std::endl;
 	}
 	else
