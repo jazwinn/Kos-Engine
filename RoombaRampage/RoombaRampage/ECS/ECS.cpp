@@ -131,6 +131,9 @@ namespace Ecs{
 
 		ECS* ecs = ECS::GetInstance();
 
+		//TODO change to sth other than assert
+		assert(ecs->EntityCount < MaxEntity, "Max Entity Count has been reached");
+
 		EntityID ID = ecs->EntityCount;
 
 		// set bitflag to 0
