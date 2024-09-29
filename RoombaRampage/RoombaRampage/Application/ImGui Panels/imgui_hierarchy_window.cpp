@@ -26,7 +26,6 @@ unsigned int ImGuiHandler::DrawHierachyWindow()
             obj_entity_id.push_back(ecs->ECS_EntityMap.begin()->first + i);
             deleteButton.push_back(false);
             DuplicateButton.push_back(false);
-            obj_component_window.push_back(false);
         }
         hasLoaded = true;
     }
@@ -75,7 +74,7 @@ unsigned int ImGuiHandler::DrawHierachyWindow()
             //Used to track and maintain sync between objtextentries and deletebutton vector
             deleteButton.push_back(false);
             DuplicateButton.push_back(false);
-            obj_component_window.push_back(true);
+           
 
             charBuffer[0] = '\0';
             objectNameBox = false;
@@ -92,16 +91,12 @@ unsigned int ImGuiHandler::DrawHierachyWindow()
 
         if (ImGui::Button(buttonName.c_str()))
         {
-            size_t PreviousButton = clicked_entity_id;
-            for (size_t j = 0; j < deleteButton.size(); j++) {
-                deleteButton[j] = false;
-                DuplicateButton[j] = false;
-            }
+            std::fill(deleteButton.begin(), deleteButton.end(), false);
+            std::fill(DuplicateButton.begin(), DuplicateButton.end(), false);
 
             deleteButton[i] ? deleteButton[i] = false : deleteButton[i] = true;
             DuplicateButton[i] ? DuplicateButton[i] = false : DuplicateButton[i] = true;
 
-            obj_component_window[i] = true;
 
             clicked_entity_id = obj_entity_id[i];
             std::cout << "Entity ID clicked: " << clicked_entity_id << std::endl; //For debug purposes, remove later
@@ -126,18 +121,12 @@ unsigned int ImGuiHandler::DrawHierachyWindow()
                 //Delete entity from ecs               
                 Ecs::ECS::GetInstance()->DeleteEntity(obj_entity_id[i]);
 
-                if (clicked_entity_id == obj_entity_id[i]) {
-                    clicked_entity_id = -1;  // Reset to an invalid ID
-                }
-                obj_component_window[i] = false;
-
                 //remove the entries 
                 obj_text_entries.erase(obj_text_entries.begin() + i);
                 obj_entity_id.erase(obj_entity_id.begin() + i);
                 deleteButton.erase(deleteButton.begin() + i);
                 DuplicateButton.erase(DuplicateButton.begin() + i);
-                obj_component_window.erase(obj_component_window.begin() + i);
-
+                
                 i--;
 
                 ImGui::PopStyleColor(3);  // Pop the 3 style colors (button, hovered, and active)
@@ -176,7 +165,6 @@ unsigned int ImGuiHandler::DrawHierachyWindow()
                 //Used to track and maintain sync between objtextentries and deletebutton vector
                 deleteButton.push_back(false);
                 DuplicateButton.push_back(false);
-                obj_component_window.push_back(false);
 
                 charBuffer[0] = '\0';
                 objectNameBox = false;
