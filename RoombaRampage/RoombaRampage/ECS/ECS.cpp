@@ -3,6 +3,7 @@
 #include "ECS.h"
 #include <algorithm>
 #include "../Debugging/Performance.h"
+#include "../Debugging/Logging.h"
 //ECS Varaible
 
 namespace Ecs{
@@ -86,6 +87,12 @@ namespace Ecs{
 
 		ECS* ecs = ECS::GetInstance();
 
+		//checks if component already exist
+		if (ecs->ECS_CombinedComponentPool[Type]->HasComponent(ID)) {
+			LOGGING_WARN("Entity Already Has Component");
+			return NULL;
+		}
+
 		void* ComponentPtr = ecs->ECS_CombinedComponentPool[Type]->AssignComponent(ID);
 
 		ecs->ECS_EntityMap.find(ID)->second.set(Type);
@@ -126,32 +133,11 @@ namespace Ecs{
 
 		EntityID ID = ecs->EntityCount;
 
+		// set bitflag to 0
 		ecs->ECS_EntityMap[ID] = 0;
 
+		//add transform component as default
 		AddComponent(TypeTransformComponent, ID);
-
-
-		/*--------------------------------------------------------------
-		 for testing
-		 --------------------------------------------------------------*/
-		TransformComponent* Trans = (TransformComponent*)ecs->ECS_CombinedComponentPool[TypeTransformComponent]->GetEntityComponent(ID);
-
-		Trans->scale;
-
-		AddComponent(TypeSpriteComponent, ID);
-
-		SpriteComponent* sprite = (SpriteComponent*)ecs->ECS_CombinedComponentPool[TypeSpriteComponent]->GetEntityComponent(ID);
-
-		sprite->imageID = 4;
-
-		MovementComponent* MovCom = (MovementComponent*)AddComponent(TypeMovemmentComponent, ID);
-		MovCom->Speed = 1;
-
-		AddComponent(TypePlayerComponent, ID);
-		AddComponent(TypeRigidBodyComponent, ID);
-		AddComponent(TypeColliderComponent, ID);
-
-		/*--------------------------------------------------------------*/
 
 		ecs->EntityCount++;
 
