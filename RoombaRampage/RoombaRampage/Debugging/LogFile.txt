@@ -2871,3 +2871,452 @@ Stack trace (most recent call last):
 [INFO]: 2024-09-29 15:55:15 - Load ECS Successful
 [INFO]: 2024-09-29 15:55:15 - Application Init Successful
 [INFO]: 2024-09-29 15:56:52 - Application Closed
+Stack trace (most recent call last):
+#8    Object "", at 00007FFC6FDE257D, in BaseThreadInitThunk
+#7    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_main.cpp", line 17, in mainCRTStartup
+#6    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 331, in __scrt_common_main
+#5    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 288, in __scrt_common_main_seh
+#4    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 79, in invoke_main
+#3    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\RoombaRampage\Application\main.cpp", line 19, in main
+         16:         app.Init();
+         17:        
+         18: 
+      >  19:         app.Run();
+         20: 
+         21:         app.Cleanup();
+#2    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\RoombaRampage\Application\Application.cpp", line 44, in Application::Application::Init
+         41:         /*--------------------------------------------------------------
+         42:         INITIALIZE LOGGING SYSTEM
+         43:         --------------------------------------------------------------*/
+      >  44:         LOGGING_INIT_LOGS("Debugging/LogFile.txt");
+         45:         LOGGING_INFO("Application Start");
+         46: 
+         47:         /*--------------------------------------------------------------
+#1    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\RoombaRampage\Debugging\Logging.cpp", line 50, in Logging::Logger::Init
+         47:         }
+         48: 
+         49:         st.load_here(32);
+      >  50:         printer.print(st, logFile);
+         51:     }
+#0    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\RoombaRampage\Dependencies\backward\backward.hpp", line 1150, in backward::StackTraceImpl<backward::system_tag::windows_tag>::load_here
+       1147:       RtlCaptureContext(ctx_);
+       1148:     }
+       1149: 
+      >1150:     if (!thd_) {
+       1151:       thd_ = GetCurrentThread();
+       1152:     }
+[INFO]: 2024-09-29 17:01:59 - Application Start
+[INFO]: 2024-09-29 17:01:59 - Load Config Successful
+[INFO]: 2024-09-29 17:01:59 - Load Asset Successful
+[INFO]: 2024-09-29 17:01:59 - Load Aduio Successful
+[INFO]: 2024-09-29 17:01:59 - Load Window Successful
+[INFO]: 2024-09-29 17:01:59 - Load Graphic Pipline Successful
+[INFO]: 2024-09-29 17:01:59 - Set Input Call Back Successful
+[INFO]: 2024-09-29 17:01:59 - Load ImGui Successful
+[INFO]: 2024-09-29 17:01:59 - Load ECS Successful
+[INFO]: 2024-09-29 17:01:59 - Application Init Successful
+[INFO]: 2024-09-29 17:03:44 - Application Closed
+Stack trace (most recent call last):
+#8    Object "", at 00007FFC6FDE257D, in BaseThreadInitThunk
+#7    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_main.cpp", line 17, in mainCRTStartup
+#6    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 331, in __scrt_common_main
+#5    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 288, in __scrt_common_main_seh
+#4    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 79, in invoke_main
+#3    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\RoombaRampage\Application\main.cpp", line 19, in main
+         16:         app.Init();
+         17:        
+         18: 
+      >  19:         app.Run();
+         20: 
+         21:         app.Cleanup();
+#2    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\RoombaRampage\Application\Application.cpp", line 44, in Application::Application::Init
+         41:         /*--------------------------------------------------------------
+         42:         INITIALIZE LOGGING SYSTEM
+         43:         --------------------------------------------------------------*/
+      >  44:         LOGGING_INIT_LOGS("Debugging/LogFile.txt");
+         45:         LOGGING_INFO("Application Start");
+         46: 
+         47:         /*--------------------------------------------------------------
+#1    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\RoombaRampage\Debugging\Logging.cpp", line 50, in Logging::Logger::Init
+         47:         }
+         48: 
+         49:         st.load_here(32);
+      >  50:         printer.print(st, logFile);
+         51:     }
+#0    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\RoombaRampage\Dependencies\backward\backward.hpp", line 1150, in backward::StackTraceImpl<backward::system_tag::windows_tag>::load_here
+       1147:       RtlCaptureContext(ctx_);
+       1148:     }
+       1149: 
+      >1150:     if (!thd_) {
+       1151:       thd_ = GetCurrentThread();
+       1152:     }
+[INFO]: 2024-09-29 17:28:59 - Application Start
+[INFO]: 2024-09-29 17:28:59 - Load Config Successful
+[INFO]: 2024-09-29 17:28:59 - Load Asset Successful
+[INFO]: 2024-09-29 17:28:59 - Load Aduio Successful
+[INFO]: 2024-09-29 17:29:00 - Load Window Successful
+[INFO]: 2024-09-29 17:29:00 - Load Graphic Pipline Successful
+[INFO]: 2024-09-29 17:29:00 - Set Input Call Back Successful
+[INFO]: 2024-09-29 17:29:00 - Load ImGui Successful
+[INFO]: 2024-09-29 17:29:00 - Load ECS Successful
+[INFO]: 2024-09-29 17:29:00 - Application Init Successful
+[WARN]: 2024-09-29 17:29:21 - Entity Already Has Component
+[INFO]: 2024-09-29 17:29:40 - Application Closed
+Stack trace (most recent call last):
+#8    Object "", at 00007FFC6FDE257D, in BaseThreadInitThunk
+#7    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_main.cpp", line 17, in mainCRTStartup
+#6    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 331, in __scrt_common_main
+#5    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 288, in __scrt_common_main_seh
+#4    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 79, in invoke_main
+#3    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\RoombaRampage\Application\main.cpp", line 19, in main
+         16:         app.Init();
+         17:        
+         18: 
+      >  19:         app.Run();
+         20: 
+         21:         app.Cleanup();
+#2    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\RoombaRampage\Application\Application.cpp", line 44, in Application::Application::Init
+         41:         /*--------------------------------------------------------------
+         42:         INITIALIZE LOGGING SYSTEM
+         43:         --------------------------------------------------------------*/
+      >  44:         LOGGING_INIT_LOGS("Debugging/LogFile.txt");
+         45:         LOGGING_INFO("Application Start");
+         46: 
+         47:         /*--------------------------------------------------------------
+#1    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\RoombaRampage\Debugging\Logging.cpp", line 50, in Logging::Logger::Init
+         47:         }
+         48: 
+         49:         st.load_here(32);
+      >  50:         printer.print(st, logFile);
+         51:     }
+#0    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\RoombaRampage\Dependencies\backward\backward.hpp", line 1150, in backward::StackTraceImpl<backward::system_tag::windows_tag>::load_here
+       1147:       RtlCaptureContext(ctx_);
+       1148:     }
+       1149: 
+      >1150:     if (!thd_) {
+       1151:       thd_ = GetCurrentThread();
+       1152:     }
+[INFO]: 2024-09-29 17:34:29 - Application Start
+[INFO]: 2024-09-29 17:34:29 - Load Config Successful
+[INFO]: 2024-09-29 17:34:29 - Load Asset Successful
+[INFO]: 2024-09-29 17:34:30 - Load Aduio Successful
+[INFO]: 2024-09-29 17:34:30 - Load Window Successful
+[INFO]: 2024-09-29 17:34:30 - Load Graphic Pipline Successful
+[INFO]: 2024-09-29 17:34:30 - Set Input Call Back Successful
+[INFO]: 2024-09-29 17:34:30 - Load ImGui Successful
+[INFO]: 2024-09-29 17:34:30 - Load ECS Successful
+[INFO]: 2024-09-29 17:34:30 - Application Init Successful
+Stack trace (most recent call last):
+#8    Object "", at 00007FFC6FDE257D, in BaseThreadInitThunk
+#7    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_main.cpp", line 17, in mainCRTStartup
+#6    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 331, in __scrt_common_main
+#5    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 288, in __scrt_common_main_seh
+#4    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 79, in invoke_main
+#3    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\RoombaRampage\Application\main.cpp", line 19, in main
+         16:         app.Init();
+         17:        
+         18: 
+      >  19:         app.Run();
+         20: 
+         21:         app.Cleanup();
+#2    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\RoombaRampage\Application\Application.cpp", line 44, in Application::Application::Init
+         41:         /*--------------------------------------------------------------
+         42:         INITIALIZE LOGGING SYSTEM
+         43:         --------------------------------------------------------------*/
+      >  44:         LOGGING_INIT_LOGS("Debugging/LogFile.txt");
+         45:         LOGGING_INFO("Application Start");
+         46: 
+         47:         /*--------------------------------------------------------------
+#1    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\RoombaRampage\Debugging\Logging.cpp", line 50, in Logging::Logger::Init
+         47:         }
+         48: 
+         49:         st.load_here(32);
+      >  50:         printer.print(st, logFile);
+         51:     }
+#0    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\RoombaRampage\Dependencies\backward\backward.hpp", line 1150, in backward::StackTraceImpl<backward::system_tag::windows_tag>::load_here
+       1147:       RtlCaptureContext(ctx_);
+       1148:     }
+       1149: 
+      >1150:     if (!thd_) {
+       1151:       thd_ = GetCurrentThread();
+       1152:     }
+[INFO]: 2024-09-29 17:35:14 - Application Start
+[INFO]: 2024-09-29 17:35:14 - Load Config Successful
+[INFO]: 2024-09-29 17:35:14 - Load Asset Successful
+[INFO]: 2024-09-29 17:35:14 - Load Aduio Successful
+[INFO]: 2024-09-29 17:35:14 - Load Window Successful
+[INFO]: 2024-09-29 17:35:14 - Load Graphic Pipline Successful
+[INFO]: 2024-09-29 17:35:14 - Set Input Call Back Successful
+[INFO]: 2024-09-29 17:35:14 - Load ImGui Successful
+[INFO]: 2024-09-29 17:35:14 - Load ECS Successful
+[INFO]: 2024-09-29 17:35:14 - Application Init Successful
+[INFO]: 2024-09-29 17:35:19 - Application Closed
+Stack trace (most recent call last):
+#8    Object "", at 00007FFC6FDE257D, in BaseThreadInitThunk
+#7    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_main.cpp", line 17, in mainCRTStartup
+#6    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 331, in __scrt_common_main
+#5    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 288, in __scrt_common_main_seh
+#4    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 79, in invoke_main
+#3    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\RoombaRampage\Application\main.cpp", line 19, in main
+         16:         app.Init();
+         17:        
+         18: 
+      >  19:         app.Run();
+         20: 
+         21:         app.Cleanup();
+#2    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\RoombaRampage\Application\Application.cpp", line 44, in Application::Application::Init
+         41:         /*--------------------------------------------------------------
+         42:         INITIALIZE LOGGING SYSTEM
+         43:         --------------------------------------------------------------*/
+      >  44:         LOGGING_INIT_LOGS("Debugging/LogFile.txt");
+         45:         LOGGING_INFO("Application Start");
+         46: 
+         47:         /*--------------------------------------------------------------
+#1    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\RoombaRampage\Debugging\Logging.cpp", line 50, in Logging::Logger::Init
+         47:         }
+         48: 
+         49:         st.load_here(32);
+      >  50:         printer.print(st, logFile);
+         51:     }
+#0    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\RoombaRampage\Dependencies\backward\backward.hpp", line 1150, in backward::StackTraceImpl<backward::system_tag::windows_tag>::load_here
+       1147:       RtlCaptureContext(ctx_);
+       1148:     }
+       1149: 
+      >1150:     if (!thd_) {
+       1151:       thd_ = GetCurrentThread();
+       1152:     }
+[INFO]: 2024-09-29 17:49:18 - Application Start
+[INFO]: 2024-09-29 17:49:18 - Load Config Successful
+[INFO]: 2024-09-29 17:49:18 - Load Asset Successful
+[INFO]: 2024-09-29 17:49:18 - Load Aduio Successful
+[INFO]: 2024-09-29 17:49:19 - Load Window Successful
+[INFO]: 2024-09-29 17:49:19 - Load Graphic Pipline Successful
+[INFO]: 2024-09-29 17:49:19 - Set Input Call Back Successful
+[INFO]: 2024-09-29 17:49:19 - Load ImGui Successful
+[INFO]: 2024-09-29 17:49:19 - Load ECS Successful
+[INFO]: 2024-09-29 17:49:19 - Application Init Successful
+[INFO]: 2024-09-29 17:49:38 - Application Closed
+Stack trace (most recent call last):
+#8    Object "", at 00007FFC6FDE257D, in BaseThreadInitThunk
+#7    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_main.cpp", line 17, in mainCRTStartup
+#6    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 331, in __scrt_common_main
+#5    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 288, in __scrt_common_main_seh
+#4    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 79, in invoke_main
+#3    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\RoombaRampage\Application\main.cpp", line 19, in main
+         16:         app.Init();
+         17:        
+         18: 
+      >  19:         app.Run();
+         20: 
+         21:         app.Cleanup();
+#2    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\RoombaRampage\Application\Application.cpp", line 44, in Application::Application::Init
+         41:         /*--------------------------------------------------------------
+         42:         INITIALIZE LOGGING SYSTEM
+         43:         --------------------------------------------------------------*/
+      >  44:         LOGGING_INIT_LOGS("Debugging/LogFile.txt");
+         45:         LOGGING_INFO("Application Start");
+         46: 
+         47:         /*--------------------------------------------------------------
+#1    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\RoombaRampage\Debugging\Logging.cpp", line 50, in Logging::Logger::Init
+         47:         }
+         48: 
+         49:         st.load_here(32);
+      >  50:         printer.print(st, logFile);
+         51:     }
+#0    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\RoombaRampage\Dependencies\backward\backward.hpp", line 1150, in backward::StackTraceImpl<backward::system_tag::windows_tag>::load_here
+       1147:       RtlCaptureContext(ctx_);
+       1148:     }
+       1149: 
+      >1150:     if (!thd_) {
+       1151:       thd_ = GetCurrentThread();
+       1152:     }
+[INFO]: 2024-09-29 17:51:59 - Application Start
+[INFO]: 2024-09-29 17:51:59 - Load Config Successful
+[INFO]: 2024-09-29 17:51:59 - Load Asset Successful
+[INFO]: 2024-09-29 17:51:59 - Load Aduio Successful
+[INFO]: 2024-09-29 17:52:00 - Load Window Successful
+[INFO]: 2024-09-29 17:52:00 - Load Graphic Pipline Successful
+[INFO]: 2024-09-29 17:52:00 - Set Input Call Back Successful
+[INFO]: 2024-09-29 17:52:00 - Load ImGui Successful
+[INFO]: 2024-09-29 17:52:00 - Load ECS Successful
+[INFO]: 2024-09-29 17:52:00 - Application Init Successful
+[INFO]: 2024-09-29 17:52:06 - Application Closed
+Stack trace (most recent call last):
+#8    Object "", at 00007FFC6FDE257D, in BaseThreadInitThunk
+#7    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_main.cpp", line 17, in mainCRTStartup
+#6    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 331, in __scrt_common_main
+#5    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 288, in __scrt_common_main_seh
+#4    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 79, in invoke_main
+#3    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\RoombaRampage\Application\main.cpp", line 19, in main
+         16:         app.Init();
+         17:        
+         18: 
+      >  19:         app.Run();
+         20: 
+         21:         app.Cleanup();
+#2    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\RoombaRampage\Application\Application.cpp", line 44, in Application::Application::Init
+         41:         /*--------------------------------------------------------------
+         42:         INITIALIZE LOGGING SYSTEM
+         43:         --------------------------------------------------------------*/
+      >  44:         LOGGING_INIT_LOGS("Debugging/LogFile.txt");
+         45:         LOGGING_INFO("Application Start");
+         46: 
+         47:         /*--------------------------------------------------------------
+#1    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\RoombaRampage\Debugging\Logging.cpp", line 50, in Logging::Logger::Init
+         47:         }
+         48: 
+         49:         st.load_here(32);
+      >  50:         printer.print(st, logFile);
+         51:     }
+#0    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\RoombaRampage\Dependencies\backward\backward.hpp", line 1150, in backward::StackTraceImpl<backward::system_tag::windows_tag>::load_here
+       1147:       RtlCaptureContext(ctx_);
+       1148:     }
+       1149: 
+      >1150:     if (!thd_) {
+       1151:       thd_ = GetCurrentThread();
+       1152:     }
+[INFO]: 2024-09-29 17:55:09 - Application Start
+[INFO]: 2024-09-29 17:55:09 - Load Config Successful
+[INFO]: 2024-09-29 17:55:09 - Load Asset Successful
+[INFO]: 2024-09-29 17:55:09 - Load Aduio Successful
+[INFO]: 2024-09-29 17:55:10 - Load Window Successful
+[INFO]: 2024-09-29 17:55:10 - Load Graphic Pipline Successful
+[INFO]: 2024-09-29 17:55:10 - Set Input Call Back Successful
+[INFO]: 2024-09-29 17:55:10 - Load ImGui Successful
+[INFO]: 2024-09-29 17:55:10 - Load ECS Successful
+[INFO]: 2024-09-29 17:55:10 - Application Init Successful
+[INFO]: 2024-09-29 17:56:43 - Application Closed
+Stack trace (most recent call last):
+#8    Object "", at 00007FFC6FDE257D, in BaseThreadInitThunk
+#7    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_main.cpp", line 17, in mainCRTStartup
+#6    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 331, in __scrt_common_main
+#5    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 288, in __scrt_common_main_seh
+#4    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 79, in invoke_main
+#3    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\RoombaRampage\Application\main.cpp", line 19, in main
+         16:         app.Init();
+         17:        
+         18: 
+      >  19:         app.Run();
+         20: 
+         21:         app.Cleanup();
+#2    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\RoombaRampage\Application\Application.cpp", line 44, in Application::Application::Init
+         41:         /*--------------------------------------------------------------
+         42:         INITIALIZE LOGGING SYSTEM
+         43:         --------------------------------------------------------------*/
+      >  44:         LOGGING_INIT_LOGS("Debugging/LogFile.txt");
+         45:         LOGGING_INFO("Application Start");
+         46: 
+         47:         /*--------------------------------------------------------------
+#1    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\RoombaRampage\Debugging\Logging.cpp", line 50, in Logging::Logger::Init
+         47:         }
+         48: 
+         49:         st.load_here(32);
+      >  50:         printer.print(st, logFile);
+         51:     }
+#0    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\RoombaRampage\Dependencies\backward\backward.hpp", line 1150, in backward::StackTraceImpl<backward::system_tag::windows_tag>::load_here
+       1147:       RtlCaptureContext(ctx_);
+       1148:     }
+       1149: 
+      >1150:     if (!thd_) {
+       1151:       thd_ = GetCurrentThread();
+       1152:     }
+[INFO]: 2024-09-29 17:57:12 - Application Start
+[INFO]: 2024-09-29 17:57:12 - Load Config Successful
+[INFO]: 2024-09-29 17:57:12 - Load Asset Successful
+[INFO]: 2024-09-29 17:57:12 - Load Aduio Successful
+[INFO]: 2024-09-29 17:57:13 - Load Window Successful
+[INFO]: 2024-09-29 17:57:13 - Load Graphic Pipline Successful
+[INFO]: 2024-09-29 17:57:13 - Set Input Call Back Successful
+[INFO]: 2024-09-29 17:57:13 - Load ImGui Successful
+[INFO]: 2024-09-29 17:57:13 - Load ECS Successful
+[INFO]: 2024-09-29 17:57:13 - Application Init Successful
+Stack trace (most recent call last):
+#8    Object "", at 00007FFC6FDE257D, in BaseThreadInitThunk
+#7    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_main.cpp", line 17, in mainCRTStartup
+#6    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 331, in __scrt_common_main
+#5    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 288, in __scrt_common_main_seh
+#4    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 79, in invoke_main
+#3    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\RoombaRampage\Application\main.cpp", line 19, in main
+         16:         app.Init();
+         17:        
+         18: 
+      >  19:         app.Run();
+         20: 
+         21:         app.Cleanup();
+#2    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\RoombaRampage\Application\Application.cpp", line 44, in Application::Application::Init
+         41:         /*--------------------------------------------------------------
+         42:         INITIALIZE LOGGING SYSTEM
+         43:         --------------------------------------------------------------*/
+      >  44:         LOGGING_INIT_LOGS("Debugging/LogFile.txt");
+         45:         LOGGING_INFO("Application Start");
+         46: 
+         47:         /*--------------------------------------------------------------
+#1    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\RoombaRampage\Debugging\Logging.cpp", line 50, in Logging::Logger::Init
+         47:         }
+         48: 
+         49:         st.load_here(32);
+      >  50:         printer.print(st, logFile);
+         51:     }
+#0    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\RoombaRampage\Dependencies\backward\backward.hpp", line 1150, in backward::StackTraceImpl<backward::system_tag::windows_tag>::load_here
+       1147:       RtlCaptureContext(ctx_);
+       1148:     }
+       1149: 
+      >1150:     if (!thd_) {
+       1151:       thd_ = GetCurrentThread();
+       1152:     }
+[INFO]: 2024-09-29 17:58:45 - Application Start
+[INFO]: 2024-09-29 17:58:45 - Load Config Successful
+[INFO]: 2024-09-29 17:58:45 - Load Asset Successful
+[INFO]: 2024-09-29 17:58:45 - Load Aduio Successful
+[INFO]: 2024-09-29 17:58:45 - Load Window Successful
+[INFO]: 2024-09-29 17:58:45 - Load Graphic Pipline Successful
+[INFO]: 2024-09-29 17:58:45 - Set Input Call Back Successful
+[INFO]: 2024-09-29 17:58:45 - Load ImGui Successful
+[INFO]: 2024-09-29 17:58:45 - Load ECS Successful
+[INFO]: 2024-09-29 17:58:45 - Application Init Successful
+[INFO]: 2024-09-29 17:59:16 - Application Closed
+Stack trace (most recent call last):
+#8    Object "", at 00007FFC6FDE257D, in BaseThreadInitThunk
+#7    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_main.cpp", line 17, in mainCRTStartup
+#6    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 331, in __scrt_common_main
+#5    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 288, in __scrt_common_main_seh
+#4    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 79, in invoke_main
+#3    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\RoombaRampage\Application\main.cpp", line 19, in main
+         16:         app.Init();
+         17:        
+         18: 
+      >  19:         app.Run();
+         20: 
+         21:         app.Cleanup();
+#2    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\RoombaRampage\Application\Application.cpp", line 44, in Application::Application::Init
+         41:         /*--------------------------------------------------------------
+         42:         INITIALIZE LOGGING SYSTEM
+         43:         --------------------------------------------------------------*/
+      >  44:         LOGGING_INIT_LOGS("Debugging/LogFile.txt");
+         45:         LOGGING_INFO("Application Start");
+         46: 
+         47:         /*--------------------------------------------------------------
+#1    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\RoombaRampage\Debugging\Logging.cpp", line 50, in Logging::Logger::Init
+         47:         }
+         48: 
+         49:         st.load_here(32);
+      >  50:         printer.print(st, logFile);
+         51:     }
+#0    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\RoombaRampage\Dependencies\backward\backward.hpp", line 1150, in backward::StackTraceImpl<backward::system_tag::windows_tag>::load_here
+       1147:       RtlCaptureContext(ctx_);
+       1148:     }
+       1149: 
+      >1150:     if (!thd_) {
+       1151:       thd_ = GetCurrentThread();
+       1152:     }
+[INFO]: 2024-09-29 18:00:13 - Application Start
+[INFO]: 2024-09-29 18:00:13 - Load Config Successful
+[INFO]: 2024-09-29 18:00:13 - Load Asset Successful
+[INFO]: 2024-09-29 18:00:14 - Load Aduio Successful
+[INFO]: 2024-09-29 18:00:14 - Load Window Successful
+[INFO]: 2024-09-29 18:00:14 - Load Graphic Pipline Successful
+[INFO]: 2024-09-29 18:00:14 - Set Input Call Back Successful
+[INFO]: 2024-09-29 18:00:14 - Load ImGui Successful
+[INFO]: 2024-09-29 18:00:14 - Load ECS Successful
+[INFO]: 2024-09-29 18:00:14 - Application Init Successful
+[INFO]: 2024-09-29 18:00:24 - Application Closed
