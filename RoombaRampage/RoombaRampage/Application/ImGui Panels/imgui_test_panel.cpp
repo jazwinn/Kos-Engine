@@ -6,6 +6,7 @@
 #include "../Helper.h"
 #include "../../De&Serialization/json_handler.h"
 #include "../Application.h"
+#include "../Debugging/Logging.h"
 
 #include<vector>
 #include<string>
@@ -30,6 +31,11 @@ void ImGuiHandler::DrawTestWindow() {
 	}
 	ImGui::NewLine();
 	if (ImGui::Button("Crash")) {
+		Logging::Logger p;
+		p.setup_abort_handler();
+		std::signal(SIGABRT, Logging::Logger::abort_handler);
+
+		LOGGING_INFO("About to trigger abort");
 		abort();
 	}
 

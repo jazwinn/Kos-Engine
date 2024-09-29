@@ -33,6 +33,22 @@ namespace Logging {
        
 
     }
+
+    void Logger::setup_abort_handler() {
+        std::signal(SIGABRT, abort_handler);
+    }
+    void Logger::abort_handler(int signal) {
+        LOGGING_ERROR("Abort signal received: {}", signal);
+
+        // Capture the stack trace
+        backward::StackTrace st;
+        st.load_here(32);
+
+        // Initialize the logger and log stack trace
+        auto& logger = Logging::Logger::GetInstance();
+        logger.printer.print(st, logger.logFile); // Using the printer in Logger to log the stack trace
+    }
+
     void Logger::testingLog() {
         LOGGING_INFO("Testing of Logging Information {}" , 50);
         LOGGING_DEBUG("Testing of Logging Debug");
@@ -63,9 +79,6 @@ namespace Logging {
         catch (const std::exception& e) {
             LOGGING_ERROR("Error Init Logging File {}" , e.what());
         }
-
-        st.load_here(32);
-        printer.print(st, logFile);
     }
 
 

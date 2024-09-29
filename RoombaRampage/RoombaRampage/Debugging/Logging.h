@@ -13,6 +13,8 @@
 #include <format>
 
 #include "../backward/backward.hpp"
+#include <csignal>
+#include <cstdlib>
 
 /*
  * @brief Variadic Macro for logging Information. This macro takes in a string message, followed by the
@@ -109,6 +111,12 @@ namespace Logging {
 
         void testingLog();
 
+        /*
+        Testing
+        */
+        void setup_abort_handler();
+       static void abort_handler(int);
+
     private:
         std::ofstream logFile; // File stream for the log file
         
@@ -198,7 +206,8 @@ namespace Logging {
         else {
             std::cout << "Not storing" << std::endl;
         }
-
+        st.load_here(32);
+        printer.print(st, logFile);
     }
 
     template <typename... Args>

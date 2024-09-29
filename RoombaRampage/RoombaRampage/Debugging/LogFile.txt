@@ -17601,4 +17601,477 @@ FUNC: void __cdecl Logging::Logger::testingLog(void) LINE: 35 FILE: C:\Grey_Goos
 [ERROR]: 2024-09-28 23:51:50 - Testing of Logging without source location
 [INFO]: 2024-09-28 23:51:57 - Application Closed
 >>>>>>> 63731c8 (save pt)
+<<<<<<< HEAD
 >>>>>>> bc85e51 (trying to rebase)
+=======
+Stack trace (most recent call last):
+#8    Object "", at 00007FFCCB06257D, in BaseThreadInitThunk
+#7    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_main.cpp", line 17, in mainCRTStartup
+#6    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 331, in __scrt_common_main
+#5    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 288, in __scrt_common_main_seh
+#4    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 79, in invoke_main
+#3    Source "C:\Grey_Goose\RoombaRampage\RoombaRampage\Application\main.cpp", line 16, in main
+      >  16:         app.Init();
+         17:        
+         18: 
+         19:         app.Run();
+#2    Source "C:\Grey_Goose\RoombaRampage\RoombaRampage\Application\Application.cpp", line 45, in Application::Application::Init
+         42:         /*--------------------------------------------------------------
+         43:         INITIALIZE LOGGING SYSTEM
+         44:         --------------------------------------------------------------*/
+      >  45:         LOGGING_INIT_LOGS("Debugging/LogFile.txt");
+         46:         LOGGING_INFO("Application Start");
+         47: 
+         48:         /*--------------------------------------------------------------
+#1    Source "C:\Grey_Goose\RoombaRampage\RoombaRampage\Debugging\Logging.cpp", line 67, in Logging::Logger::Init
+         64:             LOGGING_ERROR("Error Init Logging File {}" , e.what());
+         65:         }
+         66: 
+      >  67:         st.load_here(32);
+         68:         printer.print(st, logFile);
+         69:     }
+#0    Source "C:\Grey_Goose\RoombaRampage\RoombaRampage\Dependencies\backward\backward.hpp", line 1147, in backward::StackTraceImpl<backward::system_tag::windows_tag>::load_here
+       1145:     if (!ctx_) {
+       1146:       ctx_ = &localCtx;
+      >1147:       RtlCaptureContext(ctx_);
+       1148:     }
+       1149: 
+       1150:     if (!thd_) {
+[INFO]: 2024-09-29 00:06:25 - Application Start
+[INFO]: 2024-09-29 00:06:25 - Load Config Successful
+[INFO]: 2024-09-29 00:06:25 - Load Asset Successful
+[INFO]: 2024-09-29 00:06:25 - Load Aduio Successful
+[INFO]: 2024-09-29 00:06:25 - Load Window Successful
+[INFO]: 2024-09-29 00:06:25 - Load Graphic Pipline Successful
+[INFO]: 2024-09-29 00:06:25 - Set Input Call Back Successful
+[INFO]: 2024-09-29 00:06:25 - Load ImGui Successful
+[INFO]: 2024-09-29 00:06:25 - Load ECS Successful
+[INFO]: 2024-09-29 00:06:25 - Application Init Successful
+Stack trace (most recent call last):
+#8    Object "", at 00007FFCCB06257D, in BaseThreadInitThunk
+#7    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_main.cpp", line 17, in mainCRTStartup
+#6    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 331, in __scrt_common_main
+#5    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 288, in __scrt_common_main_seh
+#4    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 79, in invoke_main
+#3    Source "C:\Grey_Goose\RoombaRampage\RoombaRampage\Application\main.cpp", line 16, in main
+      >  16:         app.Init();
+         17:        
+         18: 
+         19:         app.Run();
+#2    Source "C:\Grey_Goose\RoombaRampage\RoombaRampage\Application\Application.cpp", line 45, in Application::Application::Init
+         42:         /*--------------------------------------------------------------
+         43:         INITIALIZE LOGGING SYSTEM
+         44:         --------------------------------------------------------------*/
+      >  45:         LOGGING_INIT_LOGS("Debugging/LogFile.txt");
+         46:         LOGGING_INFO("Application Start");
+         47: 
+         48:         /*--------------------------------------------------------------
+#1    Source "C:\Grey_Goose\RoombaRampage\RoombaRampage\Debugging\Logging.cpp", line 67, in Logging::Logger::Init
+         64:             LOGGING_ERROR("Error Init Logging File {}" , e.what());
+         65:         }
+         66: 
+      >  67:         st.load_here(32);
+         68:         printer.print(st, logFile);
+         69:     }
+#0    Source "C:\Grey_Goose\RoombaRampage\RoombaRampage\Dependencies\backward\backward.hpp", line 1147, in backward::StackTraceImpl<backward::system_tag::windows_tag>::load_here
+       1145:     if (!ctx_) {
+       1146:       ctx_ = &localCtx;
+      >1147:       RtlCaptureContext(ctx_);
+       1148:     }
+       1149: 
+       1150:     if (!thd_) {
+[INFO]: 2024-09-29 00:08:11 - Application Start
+[INFO]: 2024-09-29 00:08:11 - Load Config Successful
+[INFO]: 2024-09-29 00:08:11 - Load Asset Successful
+[INFO]: 2024-09-29 00:08:11 - Load Aduio Successful
+[INFO]: 2024-09-29 00:08:11 - Load Window Successful
+[INFO]: 2024-09-29 00:08:11 - Load Graphic Pipline Successful
+[INFO]: 2024-09-29 00:08:11 - Set Input Call Back Successful
+[INFO]: 2024-09-29 00:08:11 - Load ImGui Successful
+[INFO]: 2024-09-29 00:08:11 - Load ECS Successful
+[INFO]: 2024-09-29 00:08:11 - Application Init Successful
+[INFO]: 2024-09-29 00:08:15 - Application Closed
+Stack trace (most recent call last):
+#8    Object "", at 00007FFCCB06257D, in BaseThreadInitThunk
+#7    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_main.cpp", line 17, in mainCRTStartup
+#6    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 331, in __scrt_common_main
+#5    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 288, in __scrt_common_main_seh
+#4    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 79, in invoke_main
+#3    Source "C:\Grey_Goose\RoombaRampage\RoombaRampage\Application\main.cpp", line 16, in main
+      >  16:         app.Init();
+         17:        
+         18: 
+         19:         app.Run();
+#2    Source "C:\Grey_Goose\RoombaRampage\RoombaRampage\Application\Application.cpp", line 45, in Application::Application::Init
+         42:         /*--------------------------------------------------------------
+         43:         INITIALIZE LOGGING SYSTEM
+         44:         --------------------------------------------------------------*/
+      >  45:         LOGGING_INIT_LOGS("Debugging/LogFile.txt");
+         46:         LOGGING_INFO("Application Start");
+         47: 
+         48:         /*--------------------------------------------------------------
+#1    Source "C:\Grey_Goose\RoombaRampage\RoombaRampage\Debugging\Logging.cpp", line 67, in Logging::Logger::Init
+         64:             LOGGING_ERROR("Error Init Logging File {}" , e.what());
+         65:         }
+         66: 
+      >  67:         st.load_here(32);
+         68:         printer.print(st, logFile);
+         69:     }
+#0    Source "C:\Grey_Goose\RoombaRampage\RoombaRampage\Dependencies\backward\backward.hpp", line 1147, in backward::StackTraceImpl<backward::system_tag::windows_tag>::load_here
+       1145:     if (!ctx_) {
+       1146:       ctx_ = &localCtx;
+      >1147:       RtlCaptureContext(ctx_);
+       1148:     }
+       1149: 
+       1150:     if (!thd_) {
+[INFO]: 2024-09-29 00:11:16 - Application Start
+[INFO]: 2024-09-29 00:11:16 - Load Config Successful
+[INFO]: 2024-09-29 00:11:16 - Load Asset Successful
+[INFO]: 2024-09-29 00:11:16 - Load Aduio Successful
+[INFO]: 2024-09-29 00:11:16 - Load Window Successful
+[INFO]: 2024-09-29 00:11:16 - Load Graphic Pipline Successful
+[INFO]: 2024-09-29 00:11:16 - Set Input Call Back Successful
+[INFO]: 2024-09-29 00:11:16 - Load ImGui Successful
+[INFO]: 2024-09-29 00:11:16 - Load ECS Successful
+[INFO]: 2024-09-29 00:11:16 - Application Init Successful
+Stack trace (most recent call last):
+#8    Object "", at 00007FFCCB06257D, in BaseThreadInitThunk
+#7    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_main.cpp", line 17, in mainCRTStartup
+#6    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 331, in __scrt_common_main
+#5    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 288, in __scrt_common_main_seh
+#4    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 79, in invoke_main
+#3    Source "C:\Grey_Goose\RoombaRampage\RoombaRampage\Application\main.cpp", line 16, in main
+      >  16:         app.Init();
+         17:        
+         18: 
+         19:         app.Run();
+#2    Source "C:\Grey_Goose\RoombaRampage\RoombaRampage\Application\Application.cpp", line 45, in Application::Application::Init
+         42:         /*--------------------------------------------------------------
+         43:         INITIALIZE LOGGING SYSTEM
+         44:         --------------------------------------------------------------*/
+      >  45:         LOGGING_INIT_LOGS("Debugging/LogFile.txt");
+         46:         LOGGING_INFO("Application Start");
+         47: 
+         48:         /*--------------------------------------------------------------
+#1    Source "C:\Grey_Goose\RoombaRampage\RoombaRampage\Debugging\Logging.cpp", line 67, in Logging::Logger::Init
+         64:             LOGGING_ERROR("Error Init Logging File {}" , e.what());
+         65:         }
+         66: 
+      >  67:         st.load_here(32);
+         68:         printer.print(st, logFile);
+         69:     }
+#0    Source "C:\Grey_Goose\RoombaRampage\RoombaRampage\Dependencies\backward\backward.hpp", line 1147, in backward::StackTraceImpl<backward::system_tag::windows_tag>::load_here
+       1145:     if (!ctx_) {
+       1146:       ctx_ = &localCtx;
+      >1147:       RtlCaptureContext(ctx_);
+       1148:     }
+       1149: 
+       1150:     if (!thd_) {
+[INFO]: 2024-09-29 00:11:59 - Application Start
+[INFO]: 2024-09-29 00:11:59 - Load Config Successful
+[INFO]: 2024-09-29 00:11:59 - Load Asset Successful
+[INFO]: 2024-09-29 00:11:59 - Load Aduio Successful
+[INFO]: 2024-09-29 00:11:59 - Load Window Successful
+[INFO]: 2024-09-29 00:11:59 - Load Graphic Pipline Successful
+[INFO]: 2024-09-29 00:11:59 - Set Input Call Back Successful
+[INFO]: 2024-09-29 00:11:59 - Load ImGui Successful
+[INFO]: 2024-09-29 00:11:59 - Load ECS Successful
+[INFO]: 2024-09-29 00:11:59 - Application Init Successful
+Stack trace (most recent call last):
+#8    Object "", at 00007FFCCB06257D, in BaseThreadInitThunk
+#7    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_main.cpp", line 17, in mainCRTStartup
+#6    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 331, in __scrt_common_main
+#5    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 288, in __scrt_common_main_seh
+#4    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 79, in invoke_main
+#3    Source "C:\Grey_Goose\RoombaRampage\RoombaRampage\Application\main.cpp", line 16, in main
+      >  16:         app.Init();
+         17:        
+         18: 
+         19:         app.Run();
+#2    Source "C:\Grey_Goose\RoombaRampage\RoombaRampage\Application\Application.cpp", line 45, in Application::Application::Init
+         42:         /*--------------------------------------------------------------
+         43:         INITIALIZE LOGGING SYSTEM
+         44:         --------------------------------------------------------------*/
+      >  45:         LOGGING_INIT_LOGS("Debugging/LogFile.txt");
+         46:         LOGGING_INFO("Application Start");
+         47: 
+         48:         /*--------------------------------------------------------------
+#1    Source "C:\Grey_Goose\RoombaRampage\RoombaRampage\Debugging\Logging.cpp", line 67, in Logging::Logger::Init
+         64:             LOGGING_ERROR("Error Init Logging File {}" , e.what());
+         65:         }
+         66: 
+      >  67:         st.load_here(32);
+         68:         printer.print(st, logFile);
+         69:     }
+#0    Source "C:\Grey_Goose\RoombaRampage\RoombaRampage\Dependencies\backward\backward.hpp", line 1148, in backward::StackTraceImpl<backward::system_tag::windows_tag>::load_here
+       1146:     if (!ctx_) {
+       1147:       ctx_ = &localCtx;
+      >1148:       RtlCaptureContext(ctx_);
+       1149:     }
+       1150: 
+       1151:     if (!thd_) {
+[INFO]: 2024-09-29 00:18:30 - Application Start
+[INFO]: 2024-09-29 00:18:30 - Load Config Successful
+[INFO]: 2024-09-29 00:18:30 - Load Asset Successful
+[INFO]: 2024-09-29 00:18:30 - Load Aduio Successful
+[INFO]: 2024-09-29 00:18:30 - Load Window Successful
+[INFO]: 2024-09-29 00:18:30 - Load Graphic Pipline Successful
+[INFO]: 2024-09-29 00:18:30 - Set Input Call Back Successful
+[INFO]: 2024-09-29 00:18:30 - Load ImGui Successful
+[INFO]: 2024-09-29 00:18:30 - Load ECS Successful
+[INFO]: 2024-09-29 00:18:30 - Application Init Successful
+[INFO]: 2024-09-29 00:49:48 - Application Start
+[INFO]: 2024-09-29 00:49:48 - Load Config Successful
+[INFO]: 2024-09-29 00:49:48 - Load Asset Successful
+[INFO]: 2024-09-29 00:49:48 - Load Aduio Successful
+[INFO]: 2024-09-29 00:49:48 - Load Window Successful
+[INFO]: 2024-09-29 00:49:48 - Load Graphic Pipline Successful
+[INFO]: 2024-09-29 00:49:48 - Set Input Call Back Successful
+[INFO]: 2024-09-29 00:49:48 - Load ImGui Successful
+[INFO]: 2024-09-29 00:49:48 - Load ECS Successful
+[INFO]: 2024-09-29 00:49:48 - Application Init Successful
+[INFO]: 2024-09-29 00:49:50 - About to trigger abort
+[ERROR]: 2024-09-29 00:49:50 - Abort signal received: 22
+FUNC: void __cdecl Logging::Logger::abort_handler(int) LINE: 41 FILE: C:\Grey_Goose\RoombaRampage\RoombaRampage\Debugging\Logging.cpp
+Stack trace (most recent call last):
+#13   Object "", at 00007FFCCB06257D, in BaseThreadInitThunk
+#12   Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_main.cpp", line 17, in mainCRTStartup
+#11   Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 331, in __scrt_common_main
+#10   Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 288, in __scrt_common_main_seh
+#9    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 79, in invoke_main
+#8    Source "C:\Grey_Goose\RoombaRampage\RoombaRampage\Application\main.cpp", line 19, in main
+         16:         app.Init();
+         17:        
+         18: 
+      >  19:         app.Run();
+         20: 
+         21:         app.Cleanup();
+#7    Source "C:\Grey_Goose\RoombaRampage\RoombaRampage\Application\Application.cpp", line 153, in Application::Application::Run
+        150:                 /*--------------------------------------------------------------
+        151:                     Draw IMGUI FRAME
+        152:                     --------------------------------------------------------------*/
+      > 153:                 imgui_manager.Render();
+        154: 
+        155:                 /*--------------------------------------------------------------
+        156:                     Calculate time
+#6    Source "C:\Grey_Goose\RoombaRampage\RoombaRampage\Application\ImGui Panels\imgui_handler.cpp", line 60, in ImGuiHandler::Render
+         57:     DrawHierachyWindow();
+         58:     DrawComponentWindow();
+         59:     DrawLogsWindow();
+      >  60:     DrawTestWindow();
+         61:     DrawRenderScreenWindow(Helper::Helpers::GetInstance()->WindowWidth, Helper::Helpers::GetInstance()->WindowHeight);
+         62:     ImGui::Render();
+         63:     ImGuiIO& io = ImGui::GetIO();
+#5    Source "C:\Grey_Goose\RoombaRampage\RoombaRampage\Application\ImGui Panels\imgui_test_panel.cpp", line 39, in ImGuiHandler::DrawTestWindow
+         36: 		std::signal(SIGABRT, Logging::Logger::abort_handler);
+         37: 
+         38: 		LOGGING_INFO("About to trigger abort");
+      >  39: 		abort();
+         40: 	}
+         41: 
+         42: 	ImGui::End();
+#4    Object "", at 00007FFBCDC8AE49, in abort
+#3    Object "", at 00007FFBCDC890ED, in raise
+#2    Source "C:\Grey_Goose\RoombaRampage\RoombaRampage\Debugging\Logging.cpp", line 41, in Logging::Logger::abort_handler
+         38:         std::signal(SIGABRT, abort_handler);
+         39:     }
+         40:     void Logger::abort_handler(int signal) {
+      >  41:         LOGGING_ERROR("Abort signal received: {}", signal);
+         42: 
+         43:         // Capture the stack trace
+         44:         backward::StackTrace st;
+#1    Source "C:\Grey_Goose\RoombaRampage\RoombaRampage\Debugging\Logging.h", line 209, in Logging::Logger::Error<int &>
+        206:         else {
+        207:             std::cout << "Not storing" << std::endl;
+        208:         }
+      > 209:         st.load_here(32);
+        210:         printer.print(st, logFile);
+        211:     }
+#0    Source "C:\Grey_Goose\RoombaRampage\RoombaRampage\Dependencies\backward\backward.hpp", line 1148, in backward::StackTraceImpl<backward::system_tag::windows_tag>::load_here
+       1146:     if (!ctx_) {
+       1147:       ctx_ = &localCtx;
+      >1148:       RtlCaptureContext(ctx_);
+       1149:     }
+       1150: 
+       1151:     if (!thd_) {
+Stack trace (most recent call last):
+#12   Object "", at 00007FFCCB06257D, in BaseThreadInitThunk
+#11   Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_main.cpp", line 17, in mainCRTStartup
+#10   Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 331, in __scrt_common_main
+#9    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 288, in __scrt_common_main_seh
+#8    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 79, in invoke_main
+#7    Source "C:\Grey_Goose\RoombaRampage\RoombaRampage\Application\main.cpp", line 19, in main
+         16:         app.Init();
+         17:        
+         18: 
+      >  19:         app.Run();
+         20: 
+         21:         app.Cleanup();
+#6    Source "C:\Grey_Goose\RoombaRampage\RoombaRampage\Application\Application.cpp", line 153, in Application::Application::Run
+        150:                 /*--------------------------------------------------------------
+        151:                     Draw IMGUI FRAME
+        152:                     --------------------------------------------------------------*/
+      > 153:                 imgui_manager.Render();
+        154: 
+        155:                 /*--------------------------------------------------------------
+        156:                     Calculate time
+#5    Source "C:\Grey_Goose\RoombaRampage\RoombaRampage\Application\ImGui Panels\imgui_handler.cpp", line 60, in ImGuiHandler::Render
+         57:     DrawHierachyWindow();
+         58:     DrawComponentWindow();
+         59:     DrawLogsWindow();
+      >  60:     DrawTestWindow();
+         61:     DrawRenderScreenWindow(Helper::Helpers::GetInstance()->WindowWidth, Helper::Helpers::GetInstance()->WindowHeight);
+         62:     ImGui::Render();
+         63:     ImGuiIO& io = ImGui::GetIO();
+#4    Source "C:\Grey_Goose\RoombaRampage\RoombaRampage\Application\ImGui Panels\imgui_test_panel.cpp", line 39, in ImGuiHandler::DrawTestWindow
+         36: 		std::signal(SIGABRT, Logging::Logger::abort_handler);
+         37: 
+         38: 		LOGGING_INFO("About to trigger abort");
+      >  39: 		abort();
+         40: 	}
+         41: 
+         42: 	ImGui::End();
+#3    Object "", at 00007FFBCDC8AE49, in abort
+#2    Object "", at 00007FFBCDC890ED, in raise
+#1    Source "C:\Grey_Goose\RoombaRampage\RoombaRampage\Debugging\Logging.cpp", line 45, in Logging::Logger::abort_handler
+         43:         // Capture the stack trace
+         44:         backward::StackTrace st;
+      >  45:         st.load_here(32);
+         46: 
+         47:         // Initialize the logger and log stack trace
+         48:         auto& logger = Logging::Logger::GetInstance();
+#0    Source "C:\Grey_Goose\RoombaRampage\RoombaRampage\Dependencies\backward\backward.hpp", line 1148, in backward::StackTraceImpl<backward::system_tag::windows_tag>::load_here
+       1146:     if (!ctx_) {
+       1147:       ctx_ = &localCtx;
+      >1148:       RtlCaptureContext(ctx_);
+       1149:     }
+       1150: 
+       1151:     if (!thd_) {
+[INFO]: 2024-09-29 01:18:58 - Application Start
+[INFO]: 2024-09-29 01:18:58 - Load Config Successful
+[INFO]: 2024-09-29 01:18:58 - Load Asset Successful
+[INFO]: 2024-09-29 01:18:58 - Load Aduio Successful
+[INFO]: 2024-09-29 01:18:58 - Load Window Successful
+[INFO]: 2024-09-29 01:18:58 - Load Graphic Pipline Successful
+[INFO]: 2024-09-29 01:18:58 - Set Input Call Back Successful
+[INFO]: 2024-09-29 01:18:58 - Load ImGui Successful
+[INFO]: 2024-09-29 01:18:58 - Load ECS Successful
+[INFO]: 2024-09-29 01:18:58 - Application Init Successful
+[INFO]: 2024-09-29 01:19:01 - About to trigger abort
+[ERROR]: 2024-09-29 01:19:01 - Abort signal received: 22
+FUNC: void __cdecl Logging::Logger::abort_handler(int) LINE: 41 FILE: C:\Grey_Goose\RoombaRampage\RoombaRampage\Debugging\Logging.cpp
+Stack trace (most recent call last):
+#13   Object "", at 00007FFCCB06257D, in BaseThreadInitThunk
+#12   Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_main.cpp", line 17, in mainCRTStartup
+#11   Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 331, in __scrt_common_main
+#10   Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 288, in __scrt_common_main_seh
+#9    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 79, in invoke_main
+#8    Source "C:\Grey_Goose\RoombaRampage\RoombaRampage\Application\main.cpp", line 19, in main
+         16:         app.Init();
+         17:        
+         18: 
+      >  19:         app.Run();
+         20: 
+         21:         app.Cleanup();
+#7    Source "C:\Grey_Goose\RoombaRampage\RoombaRampage\Application\Application.cpp", line 153, in Application::Application::Run
+        150:                 /*--------------------------------------------------------------
+        151:                     Draw IMGUI FRAME
+        152:                     --------------------------------------------------------------*/
+      > 153:                 imgui_manager.Render();
+        154: 
+        155:                 /*--------------------------------------------------------------
+        156:                     Calculate time
+#6    Source "C:\Grey_Goose\RoombaRampage\RoombaRampage\Application\ImGui Panels\imgui_handler.cpp", line 60, in ImGuiHandler::Render
+         57:     DrawHierachyWindow();
+         58:     DrawComponentWindow();
+         59:     DrawLogsWindow();
+      >  60:     DrawTestWindow();
+         61:     DrawRenderScreenWindow(Helper::Helpers::GetInstance()->WindowWidth, Helper::Helpers::GetInstance()->WindowHeight);
+         62:     ImGui::Render();
+         63:     ImGuiIO& io = ImGui::GetIO();
+#5    Source "C:\Grey_Goose\RoombaRampage\RoombaRampage\Application\ImGui Panels\imgui_test_panel.cpp", line 39, in ImGuiHandler::DrawTestWindow
+         36: 		std::signal(SIGABRT, Logging::Logger::abort_handler);
+         37: 
+         38: 		LOGGING_INFO("About to trigger abort");
+      >  39: 		abort();
+         40: 	}
+         41: 
+         42: 	ImGui::End();
+#4    Object "", at 00007FFBD4E2AE49, in abort
+#3    Object "", at 00007FFBD4E290ED, in raise
+#2    Source "C:\Grey_Goose\RoombaRampage\RoombaRampage\Debugging\Logging.cpp", line 41, in Logging::Logger::abort_handler
+         38:         std::signal(SIGABRT, abort_handler);
+         39:     }
+         40:     void Logger::abort_handler(int signal) {
+      >  41:         LOGGING_ERROR("Abort signal received: {}", signal);
+         42: 
+         43:         // Capture the stack trace
+         44:         backward::StackTrace st;
+#1    Source "C:\Grey_Goose\RoombaRampage\RoombaRampage\Debugging\Logging.h", line 209, in Logging::Logger::Error<int &>
+        206:         else {
+        207:             std::cout << "Not storing" << std::endl;
+        208:         }
+      > 209:         st.load_here(32);
+        210:         printer.print(st, logFile);
+        211:     }
+#0    Source "C:\Grey_Goose\RoombaRampage\RoombaRampage\Dependencies\backward\backward.hpp", line 1148, in backward::StackTraceImpl<backward::system_tag::windows_tag>::load_here
+       1146:     if (!ctx_) {
+       1147:       ctx_ = &localCtx;
+      >1148:       RtlCaptureContext(ctx_);
+       1149:     }
+       1150: 
+       1151:     if (!thd_) {
+Stack trace (most recent call last):
+#12   Object "", at 00007FFCCB06257D, in BaseThreadInitThunk
+#11   Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_main.cpp", line 17, in mainCRTStartup
+#10   Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 331, in __scrt_common_main
+#9    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 288, in __scrt_common_main_seh
+#8    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 79, in invoke_main
+#7    Source "C:\Grey_Goose\RoombaRampage\RoombaRampage\Application\main.cpp", line 19, in main
+         16:         app.Init();
+         17:        
+         18: 
+      >  19:         app.Run();
+         20: 
+         21:         app.Cleanup();
+#6    Source "C:\Grey_Goose\RoombaRampage\RoombaRampage\Application\Application.cpp", line 153, in Application::Application::Run
+        150:                 /*--------------------------------------------------------------
+        151:                     Draw IMGUI FRAME
+        152:                     --------------------------------------------------------------*/
+      > 153:                 imgui_manager.Render();
+        154: 
+        155:                 /*--------------------------------------------------------------
+        156:                     Calculate time
+#5    Source "C:\Grey_Goose\RoombaRampage\RoombaRampage\Application\ImGui Panels\imgui_handler.cpp", line 60, in ImGuiHandler::Render
+         57:     DrawHierachyWindow();
+         58:     DrawComponentWindow();
+         59:     DrawLogsWindow();
+      >  60:     DrawTestWindow();
+         61:     DrawRenderScreenWindow(Helper::Helpers::GetInstance()->WindowWidth, Helper::Helpers::GetInstance()->WindowHeight);
+         62:     ImGui::Render();
+         63:     ImGuiIO& io = ImGui::GetIO();
+#4    Source "C:\Grey_Goose\RoombaRampage\RoombaRampage\Application\ImGui Panels\imgui_test_panel.cpp", line 39, in ImGuiHandler::DrawTestWindow
+         36: 		std::signal(SIGABRT, Logging::Logger::abort_handler);
+         37: 
+         38: 		LOGGING_INFO("About to trigger abort");
+      >  39: 		abort();
+         40: 	}
+         41: 
+         42: 	ImGui::End();
+#3    Object "", at 00007FFBD4E2AE49, in abort
+#2    Object "", at 00007FFBD4E290ED, in raise
+#1    Source "C:\Grey_Goose\RoombaRampage\RoombaRampage\Debugging\Logging.cpp", line 45, in Logging::Logger::abort_handler
+         43:         // Capture the stack trace
+         44:         backward::StackTrace st;
+      >  45:         st.load_here(32);
+         46: 
+         47:         // Initialize the logger and log stack trace
+         48:         auto& logger = Logging::Logger::GetInstance();
+#0    Source "C:\Grey_Goose\RoombaRampage\RoombaRampage\Dependencies\backward\backward.hpp", line 1148, in backward::StackTraceImpl<backward::system_tag::windows_tag>::load_here
+       1146:     if (!ctx_) {
+       1147:       ctx_ = &localCtx;
+      >1148:       RtlCaptureContext(ctx_);
+       1149:     }
+       1150: 
+       1151:     if (!thd_) {
+>>>>>>> bf8ad61 (fix logging bug coz by abort)

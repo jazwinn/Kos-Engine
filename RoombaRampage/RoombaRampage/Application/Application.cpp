@@ -96,7 +96,7 @@ namespace Application {
         /*--------------------------------------------------------------
            INITIALIZE ECS
         --------------------------------------------------------------*/
-
+        Ecs::ECS* ecs = Ecs::ECS::GetInstance();
         ecs->Load();
         ecs->Init();
         LOGGING_INFO("Load ECS Successful");
