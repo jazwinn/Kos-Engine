@@ -8,8 +8,8 @@ namespace Ecs {
 	class MovementComponent : public Component {
 
 	public:
-		float Speed{};
-		Vector2::Vec2 Direction{0,0};//facing north
+		float Speed{1};
+		Vector2::Vec2 Direction{0,0};
 		bool Move = false;
 	};
 

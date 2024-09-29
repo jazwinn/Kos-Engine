@@ -32,47 +32,65 @@ namespace Application {
    
 
     // Audio
-    FModAudio audio;
-    FMOD_CHANNELGROUP* channelgroup;
-
-    float LastTime = glfwGetTime();;
+    FModAudio Application::audio;
+    FMOD_CHANNELGROUP* Application::channelgroup;
 
 
     int Application::Init() {
+
+        /*--------------------------------------------------------------
+        INITIALIZE LOGGING SYSTEM
+        --------------------------------------------------------------*/
+        LOGGING_INIT_LOGS("Debugging/LogFile.txt");
+        LOGGING_INFO("Application Start");
+
         /*--------------------------------------------------------------
           INITIALIZE WINDOW WIDTH & HEIGHT
        --------------------------------------------------------------*/
         Serialization::Serialize::LoadConfig();
-        
+        LOGGING_INFO("Load Config Successful");
 
         /*--------------------------------------------------------------
            INITIALIZE Asset Manager
         --------------------------------------------------------------*/
         AstManager = AssetManager::funcGetInstance();
         AstManager->funcLoadAssets();
+        LOGGING_INFO("Load Asset Successful");
+
+        /*--------------------------------------------------------------
+            INITIALIZE AUDIO MANAGER
+        --------------------------------------------------------------*/
+        // Initialize the FMOD system
+        audio.init();
+        audio.createSound("./Assets/vacuum.mp3");
+        LOGGING_INFO("Load Aduio Successful");
 
        /*--------------------------------------------------------------
           INITIALIZE OPENGL WINDOW
        --------------------------------------------------------------*/
         lvWindow.init();
+        LOGGING_INFO("Load Window Successful");
 
         /*--------------------------------------------------------------
            INITIALIZE GRAPHICS PIPE
         --------------------------------------------------------------*/
         pipe = GraphicsPipe::funcGetInstance();
         pipe->funcInit();
+        LOGGING_INFO("Load Graphic Pipline Successful");
 
         /*--------------------------------------------------------------
            INITIALIZE Input
         --------------------------------------------------------------*/
         //call back must happen before imgui
         Input.SetCallBack(lvWindow.Window);
+        LOGGING_INFO("Set Input Call Back Successful");
 
         /*--------------------------------------------------------------
            INITIALIZE IMGUI
         --------------------------------------------------------------*/
         const char* glsl_version = "#version 130";
         imgui_manager.Initialize(lvWindow.Window, glsl_version);
+        LOGGING_INFO("Load ImGui Successful");
 
         /*--------------------------------------------------------------
            INITIALIZE ECS
@@ -82,19 +100,11 @@ namespace Application {
 
         ecs->Load();
         ecs->Init();
+        LOGGING_INFO("Load ECS Successful");
 
-        /*--------------------------------------------------------------
-            INITIALIZE AUDIO MANAGER
-        --------------------------------------------------------------*/
-        // Initialize the FMOD system
-        audio.init();
-        audio.createSound("vacuum.mp3");
 
-        /*--------------------------------------------------------------
-            INITIALIZE LOGGING SYSTEM
-        --------------------------------------------------------------*/
-        LOGGING_INIT_LOGS("Debugging/LogFile.txt");
-        LOGGING_INFO("Application Start");
+
+        LOGGING_INFO("Application Init Successful");
         return 0;
 	}
 
@@ -103,12 +113,10 @@ namespace Application {
     int Application::Run() {
 
         Ecs::ECS* ecs = Ecs::ECS::GetInstance();
-        Helper::Helpers *Help = Helper::Helpers::GetInstance();
-        float FPSCap = 1 / 60;
+        Helper::Helpers *help = Helper::Helpers::GetInstance();
+        float FPSCapTime = 1.f / help->FpsCap;
+        double lastFrameTime = glfwGetTime();
 
-
-
-  
 
         /*--------------------------------------------------------------
          GAME LOOP
@@ -118,13 +126,7 @@ namespace Application {
             /* Poll for and process events */
             glfwPollEvents();
 
-            //calculate DeltaTime
-            float CurrentTime = static_cast<float>(glfwGetTime());
-            Help->DeltaTime = CurrentTime - LastTime;
-            Help->Fps = 1 / Help->DeltaTime;
-            //std::cout << "FPS:" << 1/DeltaTime << std::endl;
-            //PerformanceTracker::Performance a;
-            //a.printFPS(DeltaTime);
+
 
             /*--------------------------------------------------------------
              UPDATE ECS
@@ -158,14 +160,22 @@ namespace Application {
              --------------------------------------------------------------*/
             //audio.playSound();
 
-            glfwSwapBuffers(lvWindow.Window);
+             /*--------------------------------------------------------------
+             Calculate time
+             --------------------------------------------------------------*/
+            double currentFrameTime = glfwGetTime();
+            help->DeltaTime = currentFrameTime - lastFrameTime;
 
-            while (Help->DeltaTime < FPSCap) {
-                CurrentTime = static_cast<float>(glfwGetTime());  // Continuously update current time
-                Help->DeltaTime = CurrentTime - LastTime;  // Calculate new DeltaTime
+            while (help->DeltaTime < FPSCapTime) {
+                lastFrameTime = currentFrameTime;
+                currentFrameTime = glfwGetTime();
+                help->DeltaTime += currentFrameTime - lastFrameTime;
             }
 
-            LastTime = CurrentTime;
+            lastFrameTime = glfwGetTime();
+            help->Fps = 1.f / help->DeltaTime;
+
+            glfwSwapBuffers(lvWindow.Window);
         }
 
         return 0;

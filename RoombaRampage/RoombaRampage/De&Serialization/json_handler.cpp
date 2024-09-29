@@ -45,7 +45,13 @@ namespace Serialization {
         std::stringstream str2{ line };
         str2 >> temp >> help->WindowWidth;
 
-        if (help->WindowHeight <= 0 || help->WindowWidth <= 0) {
+        line.clear();
+        temp.clear();
+        std::getline(file,line);
+        std::stringstream str3{ line };
+        str3 >> temp >> help->FpsCap;
+
+        if (help->WindowHeight <= 0 || help->WindowWidth <= 0 || !help->FpsCap) {
             std::cout << "Error Reading Config file (Width or Height <= 0)" << std::endl;
         }
     }

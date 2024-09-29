@@ -168,9 +168,6 @@
     <ClCompile Include="Dependencies\imgui\imgui.cpp">
       <Filter>Source Files\Imgui\Dependencies</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\imgui\imgui_demo.cpp">
-      <Filter>Source Files\Imgui\Dependencies</Filter>
-    </ClCompile>
     <ClCompile Include="Dependencies\imgui\imgui_draw.cpp">
       <Filter>Source Files\Imgui\Dependencies</Filter>
     </ClCompile>
@@ -219,7 +216,10 @@
     <ClCompile Include="Application\ImGui Panels\imgui_performance_window.cpp">
       <Filter>Source Files\Imgui\Panels</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\imgui\implot_demo.cpp">
+    <ClCompile Include="Dependencies\backward\backward.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\ImGui Panels\imgui_test_panel.cpp">
       <Filter>Source Files\Imgui\Panels</Filter>
     </ClCompile>
   </ItemGroup>
@@ -383,6 +383,12 @@
     <ClInclude Include="Dependencies\imgui\implot.h">
       <Filter>Header Files\Imgui\Dependencies</Filter>
     </ClInclude>
+    <ClInclude Include="ECS\System\SystemType.h">
+      <Filter>Header Files\ECS\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependencies\backward\backward.hpp">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Graphics\genericFragmentShader.frag">
@@ -403,7 +409,11 @@
     <None Include="Graphics\frameCompositionFragmentShader.frag">
       <Filter>Header Files\Graphics</Filter>
     </None>
-    <None Include="Graphics\debugFragmentShader.frag" />
-    <None Include="Graphics\debugVertexShader.vert" />
+    <None Include="Graphics\debugFragmentShader.frag">
+      <Filter>Header Files\Graphics</Filter>
+    </None>
+    <None Include="Graphics\debugVertexShader.vert">
+      <Filter>Header Files\Graphics</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -6,26 +6,38 @@
 #include <iostream>
 #include <string>
 #include <string_view>
+#include <unordered_map>
 #include <vector>
 #include <utility>
 #include <../ECS/System/SystemType.h>
 
 namespace PerformanceTracker{
 	class Performance {
-	private:
-		float engineTime = 0.0f;
-		int totalSystem = Ecs::TotalTypeSystem;
-		std::vector<std::pair<Ecs::TypeSystem, float>> systemTimeList;
-		std::string typeToString(Ecs::TypeSystem);
+
+		
+		static std::string typeToString(Ecs::TypeSystem);
+
 	public:
 		Performance();
-		void printPerformance();
-		void printFPS(float);
-		void resetPerformance();
-		void addTime(float);
-		float getTime();
-		float getSystemTime(Ecs::TypeSystem);
-		void addPair(Ecs::TypeSystem, float);
+
+		static void ResetTotalSystemTime();
+		static void AddSystem(Ecs::TypeSystem System);
+
+		static void printPerformance();
+		static void printFPS(float);
+		static void UpdateTotalSystemTime(float);
+
+		static float GetTotalSystemTime();
+		static float getSystemTime(Ecs::TypeSystem);
+		static std::string getSystemString(Ecs::TypeSystem);
+		static void UpdateSystemTime(Ecs::TypeSystem, float);
+	private:
+		
+		static float engineTime;
+		static int totalSystem;
+		static std::unordered_map<Ecs::TypeSystem, std::pair<std::string,float>> systemTimeList;
+		
+
 	};
 }
 

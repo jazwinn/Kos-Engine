@@ -4,6 +4,12 @@
 #include "imgui_handler.h"
 #include "implot.h"
 #include "../Debugging/Logging.h"
+#include "../Debugging/Performance.h"
+#include <../ECS/System/SystemType.h>
+#include <../Application/Helper.h>
+
+static float interval = 1;
+static std::vector<std::string> VectorSystemText;
 
 struct Buffer {
     int MaxSize;
@@ -29,6 +35,8 @@ struct Buffer {
         }
     }
 };
+
+
 
 void ImGuiHandler::DrawPerformanceWindow(float fps) {
 
@@ -57,10 +65,57 @@ void ImGuiHandler::DrawPerformanceWindow(float fps) {
         sprintf_s(overlay, "FPS %f", average);
         
         //TODO change to ImPlot
-        ImGui::PlotLines("##", FpsValues, IM_ARRAYSIZE(FpsValues), FpsValues_offset, overlay, 0.0f, 100.0f, ImVec2(260.f, 120.0f));
+        ImGui::PlotLines("##", FpsValues, IM_ARRAYSIZE(FpsValues), FpsValues_offset, overlay, 55.0f, 65.0f, ImVec2(260.f, 120.0f));
 
        // ImGui::PlotShaded();
     }
+
+
+    if (ImGui::CollapsingHeader("System Time")) {
+
+       
+
+        interval += Helper::Helpers::GetInstance()->DeltaTime;
+
+        if (interval > 1) { //updates every 1 second
+            VectorSystemText.clear();
+
+            //add ECS total time
+            std::string EcsTime = "ECS Time: 100%% (" + std::to_string(PerformanceTracker::Performance::GetTotalSystemTime()) + ")";
+            VectorSystemText.push_back(EcsTime);
+
+            //add time for each sytem
+            for (int n{}; n < Ecs::TotalTypeSystem; n++) {
+
+                float Percentage = ((PerformanceTracker::Performance::getSystemTime((Ecs::TypeSystem)n)) / PerformanceTracker::Performance::GetTotalSystemTime()) * 100.f;
+
+                //remove the last 4 trailing digits
+                std::string PercentageStr = std::to_string(Percentage);
+                PercentageStr.erase(PercentageStr.length() - 4);
+
+
+                std::string SystemText = 
+               PerformanceTracker::Performance::getSystemString((Ecs::TypeSystem)n) + ": " 
+              + PercentageStr + "%% ("
+              + std::to_string(PerformanceTracker::Performance::getSystemTime((Ecs::TypeSystem)n)) + ")";
+
+                VectorSystemText.push_back(SystemText);
+
+            }
+
+            interval = 0;
+        }
+        
+
+
+        for (std::string str : VectorSystemText) {
+            ImGui::Text(str.c_str());
+        }
+        
+    }
+
+
+
 
     ImGui::End();
 
