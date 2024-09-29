@@ -108,15 +108,15 @@ namespace Serialization {
 
                 const rapidjson::Value& transform = entityData["transform"];
                 if (transform.HasMember("position") && transform["position"].IsObject()) {
-                    tc->position.x = transform["position"]["x"].GetFloat();
-                    tc->position.y = transform["position"]["y"].GetFloat();
+                    tc->position.m_x = transform["position"]["x"].GetFloat();
+                    tc->position.m_y = transform["position"]["y"].GetFloat();
                 }
                 if (transform.HasMember("rotation")) {
                     tc->rotation = transform["rotation"].GetFloat();
                 }
                 if (transform.HasMember("scale") && transform["scale"].IsObject()) {
-                    tc->scale.x = transform["scale"]["x"].GetFloat();
-                    tc->scale.y = transform["scale"]["y"].GetFloat();
+                    tc->scale.m_x = transform["scale"]["x"].GetFloat();
+                    tc->scale.m_y = transform["scale"]["y"].GetFloat();
                 }
 
                 // Mark the entity as having a TransformComponent in the ECS_EntityMap
@@ -136,8 +136,8 @@ namespace Serialization {
                     mc->Speed = movement["speed"].GetFloat();
                 }
                 if (movement.HasMember("direction") && movement["direction"].IsObject()) {
-                    mc->Direction.x = movement["direction"]["x"].GetFloat();
-                    mc->Direction.y = movement["direction"]["y"].GetFloat();
+                    mc->Direction.m_x = movement["direction"]["x"].GetFloat();
+                    mc->Direction.m_y = movement["direction"]["y"].GetFloat();
                 }
 
                 // Mark the entity as having a MovementComponent in the ECS_EntityMap
@@ -154,12 +154,12 @@ namespace Serialization {
                 if (cc) {
                     const rapidjson::Value& collider = entityData["collider"];
                     if (collider.HasMember("size") && collider["size"].IsObject()) {
-                        cc->Size.x = collider["size"]["x"].GetFloat();
-                        cc->Size.y = collider["size"]["y"].GetFloat();
+                        cc->Size.m_x = collider["size"]["x"].GetFloat();
+                        cc->Size.m_y = collider["size"]["y"].GetFloat();
                     }
                     if (collider.HasMember("offset") && collider["offset"].IsObject()) {
-                        cc->OffSet.x = collider["offset"]["x"].GetFloat();
-                        cc->OffSet.y = collider["offset"]["y"].GetFloat();
+                        cc->OffSet.m_x = collider["offset"]["x"].GetFloat();
+                        cc->OffSet.m_y = collider["offset"]["y"].GetFloat();
                     }
                     if (collider.HasMember("layer")) {
                         cc->Layer = collider["layer"].GetUint();
@@ -250,12 +250,12 @@ namespace Serialization {
                 if (tc) {
                     rapidjson::Value transform(rapidjson::kObjectType);
                     transform.AddMember("position", rapidjson::Value().SetObject()
-                        .AddMember("x", tc->position.x, allocator)
-                        .AddMember("y", tc->position.y, allocator), allocator);
+                        .AddMember("x", tc->position.m_x, allocator)
+                        .AddMember("y", tc->position.m_y, allocator), allocator);
                     transform.AddMember("rotation", tc->rotation, allocator);
                     transform.AddMember("scale", rapidjson::Value().SetObject()
-                        .AddMember("x", tc->scale.x, allocator)
-                        .AddMember("y", tc->scale.y, allocator), allocator);
+                        .AddMember("x", tc->scale.m_x, allocator)
+                        .AddMember("y", tc->scale.m_y, allocator), allocator);
                     entityData.AddMember("transform", transform, allocator);
                 }
             }
@@ -267,8 +267,8 @@ namespace Serialization {
                     rapidjson::Value movement(rapidjson::kObjectType);
                     movement.AddMember("speed", mc->Speed, allocator);
                     movement.AddMember("direction", rapidjson::Value().SetObject()
-                        .AddMember("x", mc->Direction.x, allocator)
-                        .AddMember("y", mc->Direction.y, allocator), allocator);
+                        .AddMember("x", mc->Direction.m_x, allocator)
+                        .AddMember("y", mc->Direction.m_y, allocator), allocator);
                     entityData.AddMember("movement", movement, allocator);
                 }
             }
@@ -279,11 +279,11 @@ namespace Serialization {
                 if (cc) {
                     rapidjson::Value collider(rapidjson::kObjectType);
                     collider.AddMember("size", rapidjson::Value().SetObject()
-                        .AddMember("x", cc->Size.x, allocator)
-                        .AddMember("y", cc->Size.y, allocator), allocator);
+                        .AddMember("x", cc->Size.m_x, allocator)
+                        .AddMember("y", cc->Size.m_y, allocator), allocator);
                     collider.AddMember("offset", rapidjson::Value().SetObject()
-                        .AddMember("x", cc->OffSet.x, allocator)
-                        .AddMember("y", cc->OffSet.y, allocator), allocator);
+                        .AddMember("x", cc->OffSet.m_x, allocator)
+                        .AddMember("y", cc->OffSet.m_y, allocator), allocator);
                     collider.AddMember("layer", cc->Layer, allocator);
                     collider.AddMember("drawDebug", cc->drawDebug, allocator);
                     entityData.AddMember("collider", collider, allocator);

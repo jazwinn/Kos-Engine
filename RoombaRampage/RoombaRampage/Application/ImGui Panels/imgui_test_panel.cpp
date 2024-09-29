@@ -6,6 +6,7 @@
 #include "../Helper.h"
 #include "../../De&Serialization/json_handler.h"
 #include "../Application.h"
+#include "../Debugging/Logging.h"
 
 #include<vector>
 #include<string>
@@ -37,6 +38,7 @@ void ImGuiHandler::DrawTestWindow() {
 	}
 	ImGui::NewLine();
 	if (ImGui::Button("Crash")) {
+		LOGGING_INFO("About to trigger abort");
 		abort();
 	}
 	ImGui::NewLine();
@@ -57,7 +59,7 @@ void ImGuiHandler::DrawTestWindow() {
 			 Ecs::TransformComponent* tc = (Ecs::TransformComponent*)ecs->ECS_CombinedComponentPool[Ecs::TypeTransformComponent]->GetEntityComponent(id);
 			 ecs->AddComponent(Ecs::TypeSpriteComponent, id);
 
-			 tc->position.y = height(gen);
+			 tc->position.m_y = height(gen);
 
 		}
 	}

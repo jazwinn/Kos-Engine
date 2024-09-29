@@ -51,7 +51,7 @@ namespace Ecs {
 
 	void ControlSystem::Update() {
 
-		ECS* ecs = ECS::GetInstance();
+		//ECS* ecs = ECS::GetInstance();
 
 		if (vecMovementComponentPtr.size() != vecPlayerComponentPtr.size()) {
 			std::cout << "Error: Vecotrs container size does not Match" << std::endl;
@@ -61,7 +61,7 @@ namespace Ecs {
 		for (int n{}; n < vecMovementComponentPtr.size(); n++) {
 			//std::cout << "Entity: " << n << "Movement System is getting Updated";
 
-			PlayerComponent* BoxComp = vecPlayerComponentPtr[n];
+			//PlayerComponent* BoxComp = vecPlayerComponentPtr[n];
 			MovementComponent* MovComp = vecMovementComponentPtr[n];
 
 
@@ -69,25 +69,25 @@ namespace Ecs {
 			//MovComp->Direction.x = 0;
 			//MovComp->Direction.y = 0;
 
-			Vector2::Vec2 NewDirection{};
+			vector2::Vec2 NewDirection{};
 			if (Input::InputSystem::KeyStateW) {
-				NewDirection.y += 1;
+				NewDirection.m_y += 1;
 			}
 
 			if (Input::InputSystem::KeyStateS) {
-				NewDirection.y += -1;
+				NewDirection.m_y += -1;
 			}
 
 			if (Input::InputSystem::KeyStateD) {
-				NewDirection.x += 1;
+				NewDirection.m_x += 1;
 			}
 
 			if (Input::InputSystem::KeyStateA) {
-				NewDirection.x += -1;
+				NewDirection.m_x += -1;
 			}
 
-			if ((NewDirection.x != 0) && (NewDirection.y != 0)) {
-				Vector2::Vec2::funcVec2Normalize(NewDirection, NewDirection);
+			if ((NewDirection.m_x != 0) && (NewDirection.m_y != 0)) {
+				vector2::Vec2::m_funcVec2Normalize(NewDirection, NewDirection);
 				
 			}
 

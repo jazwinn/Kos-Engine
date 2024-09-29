@@ -12,20 +12,20 @@
 
 struct GraphicsData
 {
-	float rotate;
-	glm::vec2 scale;
-	glm::vec3 worldCoordinates;
-	unsigned int textureID;
-	int shapeType;
+	float rotate{};
+	glm::vec2 scale{};
+	glm::vec3 worldCoordinates{};
+	unsigned int textureID{};
+	int shapeType{};
 };
 
 struct DebugDrawData
 {
-	float rotate;
-	glm::vec2 scale;
-	glm::vec3 worldCoordinates;
-	bool isCollided;
-	int shapeType;
+	float rotate{};
+	glm::vec2 scale{};
+	glm::vec3 worldCoordinates{};
+	bool isCollided{};
+	int shapeType{};
 };
 
 class GraphicsPipe
@@ -37,8 +37,8 @@ private:
 
 	struct Mesh
 	{
-		int shapeType;
-		unsigned int vaoId;
+		int shapeType{};
+		unsigned int vaoId{};
 		unsigned int primitiveType;
 		unsigned short indexElementCount;
 
@@ -118,18 +118,18 @@ public:
 	Mesh squareMesh;
 	Mesh screenMesh;
 	Mesh squareLinesMesh;
-	std::vector<GraphicsData> modelData;
-	std::vector<DebugDrawData> debugBoxData;
-	std::vector<float> debugBoxCollisionChecks;
-	std::vector<int> textureOrder;
+	std::vector<GraphicsData> modelData{};
+	std::vector<DebugDrawData> debugBoxData{};
+	std::vector<float> debugBoxCollisionChecks{};
+	std::vector<int> textureOrder{};
 	
 
 	//Array of the texture IDs
-	std::vector<unsigned int> textureIDs;
-	std::vector<AssetManager::Image> imageData;
+	std::vector<unsigned int> textureIDs{};
+	std::vector<AssetManager::Image> imageData{};
 
-	unsigned int screenTexture;
-	unsigned int proxyBackgroundTexture;
+	unsigned int screenTexture{};
+	unsigned int proxyBackgroundTexture{};
 };
 
 

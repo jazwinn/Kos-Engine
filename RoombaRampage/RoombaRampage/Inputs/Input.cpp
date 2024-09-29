@@ -10,9 +10,9 @@ namespace Input {
 	bool InputSystem::KeyStateS = false;
 	bool InputSystem::KeyStateD = false;
 
-	Vector2::Vec2 InputSystem::MousePosition = { 0,0 };
+	vector2::Vec2 InputSystem::MousePosition = { 0,0 };
 
-	void InputSystem::KeyCallBack(GLFWwindow* window, int key, int scancode, int action, int mods) {
+	void InputSystem::KeyCallBack([[maybe_unused]] GLFWwindow* window, int key, [[maybe_unused]] int scancode, int action, [[maybe_unused]] int mods) {
 		if (action == GLFW_PRESS) {
 			switch (key){
 			case GLFW_KEY_W:
@@ -56,7 +56,8 @@ namespace Input {
 		}
 	}
 
-	void InputSystem::MouseButtonCallBack(GLFWwindow* pwin, int button, int action, int mod) {
+	void InputSystem::MouseButtonCallBack([[maybe_unused]] GLFWwindow* pwin, [[maybe_unused]] int button, [[maybe_unused]] int action, [[maybe_unused]] int mod) {
+
 		if (action == GLFW_PRESS) {
 			// key is press
 			std::cout << "Mouse pressed!" << std::endl;
@@ -75,11 +76,11 @@ namespace Input {
 		
 		glfwGetWindowSize(pwin, &width, &height);
 		//change origin from top left to bottom left
-		ypos = height - ypos;
+		ypos = static_cast<double>(height - ypos);
 
-		MousePosition.x = xpos;
-		MousePosition.y = ypos;
-		//std::cout << xpos << " : " << ypos << std::endl;
+		MousePosition.m_x = static_cast<float>(xpos);
+		MousePosition.m_y = static_cast<float>(ypos);
+		std::cout << xpos << " : " << ypos << std::endl;
 
 	}
 

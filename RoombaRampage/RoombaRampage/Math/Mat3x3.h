@@ -45,7 +45,7 @@ namespace Mat3x3 {
 
 	};
 
-	void mat3Identity();
+	void mat3Identity(classMat3x3& given);
 
 	void mat3Inverse(const classMat3x3& givenIn, classMat3x3& givenOut);
 

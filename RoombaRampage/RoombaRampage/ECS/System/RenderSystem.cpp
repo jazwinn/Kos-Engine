@@ -46,7 +46,7 @@ namespace Ecs {
 
 	void RenderSystem::Update()
 	{
-		ECS* ecs = ECS::GetInstance();
+		//ECS* ecs = ECS::GetInstance();
 		GraphicsPipe* graphicsPipe = GraphicsPipe::funcGetInstance();
 
 		if (vecSpriteComponentPtr.size() != vecTransformComponentPtr.size()) {
@@ -63,7 +63,7 @@ namespace Ecs {
 			TransformComponent* transform = vecTransformComponentPtr[n];
 			SpriteComponent* sprite = vecSpriteComponentPtr[n];
 
-			graphicsPipe->modelData.push_back({ transform->rotation, glm::vec2{transform->scale.x, transform->scale.y}, glm::vec3{transform->position.x,transform->position.y, 0} ,sprite->imageID, 0 });
+			graphicsPipe->modelData.push_back({ transform->rotation, glm::vec2{transform->scale.m_x, transform->scale.m_y}, glm::vec3{transform->position.m_x,transform->position.m_y, 0} ,sprite->imageID, 0 });
 			
 		}
 

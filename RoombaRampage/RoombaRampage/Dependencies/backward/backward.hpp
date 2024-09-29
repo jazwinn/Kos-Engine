@@ -20,6 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+#include "../Debugging/Logging.h"
 
 #ifndef H_6B9572DA_A64B_49E6_B234_051480991C89
 #define H_6B9572DA_A64B_49E6_B234_051480991C89
@@ -4022,7 +4023,7 @@ public:
   template <typename ST> std::ostream &print(ST &st, std::ostream &os) {
     Colorize colorize(os);
     colorize.activate(color_mode);
-    print_stacktrace(st, os, colorize);
+    print_stacktrace(st, os, colorize); 
     return os;
   }
 

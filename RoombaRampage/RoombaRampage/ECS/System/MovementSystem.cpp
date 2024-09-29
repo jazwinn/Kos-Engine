@@ -64,9 +64,9 @@ namespace Ecs {
 
 
 			if (MovComp->Move) {
-				Vector2::Vec2 Velocity = MovComp->Direction * MovComp->Speed;
+				vector2::Vec2 Velocity = MovComp->Direction * MovComp->Speed;
 
-				Vector2::Vec2 Displacement = Velocity * ecs->DeltaTime;
+				vector2::Vec2 Displacement = Velocity * ecs->DeltaTime;
 
 				TransComp->position += Displacement;
 			}

@@ -24,7 +24,7 @@ namespace Input {
 		static bool KeyStateS;
 		static bool KeyStateD;
 
-		static Vector2::Vec2 MousePosition;
+		static vector2::Vec2 MousePosition;
 	};
 
 }

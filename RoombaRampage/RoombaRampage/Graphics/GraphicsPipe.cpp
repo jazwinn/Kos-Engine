@@ -44,7 +44,8 @@ std::unique_ptr<GraphicsPipe> GraphicsPipe::instancePtr = nullptr;
 
 void GLAPIENTRY DebugCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam)
 {
-	std::cerr << "OpenGL Debug Message: " << message << std::endl;
+	//TOCHECK
+	std::cerr << "OpenGL Debug Message: " << message << " Source " << source << " Type " << type << " ID " << id << "Severity " << severity << " Length " << length << " userParam " << userParam << std::endl;
 }
 
 void GraphicsPipe::funcInit()
@@ -75,12 +76,13 @@ void GraphicsPipe::funcInit()
 	textureOrder.push_back(0);
 	debugToNDCMatrix.push_back(testMatrix);
 	debugBoxCollisionChecks.push_back(false);
+	//TOCHECK
+	//COMMENT THIS OUT?
+	//GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+	//const GLFWvidmode* mode = glfwGetVideoMode(monitor);
 
-	GLFWmonitor* monitor = glfwGetPrimaryMonitor();
-	const GLFWvidmode* mode = glfwGetVideoMode(monitor);
-
-	windowWidth = Helper::Helpers::GetInstance()->WindowWidth;
-	windowHeight = Helper::Helpers::GetInstance()->WindowHeight;
+	windowWidth = static_cast<int>(Helper::Helpers::GetInstance()->WindowWidth);
+	windowHeight = static_cast<int>(Helper::Helpers::GetInstance()->WindowHeight);
 	aspectRatio = static_cast<float>(static_cast<float>(windowHeight) / static_cast<float>(windowWidth));
 
 
@@ -163,7 +165,7 @@ void GraphicsPipe::funcSetupSquareLinesVao()
 	idx_vtx = { 0, 1, 2, 3};
 
 
-	squareLinesMesh.indexElementCount = static_cast<unsigned int>(idx_vtx.size());
+	squareLinesMesh.indexElementCount = static_cast<unsigned short>(idx_vtx.size());
 	unsigned int ebo_hdl;
 	glCreateBuffers(1, &ebo_hdl);
 	glNamedBufferStorage(ebo_hdl, sizeof(unsigned short) * squareLinesMesh.indexElementCount,
@@ -308,7 +310,7 @@ void GraphicsPipe::funcSetupVao(Mesh &shape)
 		idx_vtx = { 0, 1, 2, 2, 3, 0 };
 	}
 
-	shape.indexElementCount = static_cast<unsigned int>(idx_vtx.size());
+	shape.indexElementCount = static_cast<unsigned short>(idx_vtx.size());
 	unsigned int ebo_hdl;
 	glCreateBuffers(1, &ebo_hdl);
 	glNamedBufferStorage(ebo_hdl, sizeof(unsigned short) * shape.indexElementCount,
@@ -478,7 +480,7 @@ void GraphicsPipe::funcUpdate()
 			glm::mat3 lvTranslate{ 1, 0, 0, 0, 1, 0, debugBoxData[i].worldCoordinates.x , debugBoxData[i].worldCoordinates.y ,1 };
 			glm::mat3 lvNDCScale{ aspectRatio, 0, 0, 0, 1.f, 0, 0 , 0 ,1.f };
 			debugToNDCMatrix.push_back(lvNDCScale * lvTranslate * lvRotate * lvScale);
-			debugBoxCollisionChecks.push_back(static_cast<int>(debugBoxData[i].isCollided));
+			debugBoxCollisionChecks.push_back(static_cast<float>(static_cast<int>(debugBoxData[i].isCollided)));
 
 		}
 	}
@@ -591,7 +593,8 @@ GLuint GraphicsPipe::funcCompileShader(GLuint type, const std::string& shader)
 		std::cout << "Failed to Compile Shader" << std::endl;
 		std::cout << message << std::endl;
 		glDeleteShader(lvID);
-		std::exit;
+		//TOCHECK
+		//std::exit;
 		return 0;
 	}
 

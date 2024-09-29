@@ -156,7 +156,7 @@ namespace Mat3x3{
 	}
 
 	void mat3RotDeg(classMat3x3 & given, float ang) {
-		float lvRad = (ang * (PI / 180.f));
+		//float lvRad = (ang * (PI / 180.f));
 		mat3RotRad(given, ang);
 	}
 
