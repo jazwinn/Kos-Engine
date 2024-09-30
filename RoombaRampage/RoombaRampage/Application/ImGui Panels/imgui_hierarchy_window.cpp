@@ -4,6 +4,7 @@
 #include "imgui_handler.h"
 #include "../ECS/ECS.h"
 #include "../../De&Serialization/json_handler.h"
+#include "../Assets/Prefab.h"
 
 #include<vector>
 #include<string>
@@ -42,6 +43,22 @@ unsigned int ImGuiHandler::DrawHierachyWindow()
         }
         if (ImGui::BeginMenu("Prefabs"))
         {
+
+            for (auto prefab :prefab::Prefab::m_prefabs) {
+
+                if (ImGui::MenuItem(prefab.first.c_str())) {
+
+                    int id = prefab::Prefab::m_CreateEntityFromPrefab(prefab.first);
+                    if (id == -1) continue;
+
+                    obj_entity_id.push_back(static_cast<Ecs::EntityID>(id));
+                    obj_text_entries.push_back(prefab.first);
+                    deleteButton.push_back(false);
+                    DuplicateButton.push_back(false);
+
+                }
+            }
+
             ImGui::EndMenu();
         }
 

@@ -120,16 +120,12 @@ namespace Serialization {
                     tc->scale.m_y = transform["scale"]["y"].GetFloat();
                 }
 
-                // Mark the entity as having a TransformComponent in the ECS_EntityMap
-                ecs->ECS_EntityMap[newEntityID].set(Ecs::TypeTransformComponent);
             }
 
             // Load Movement Component if it exists
             if (entityData.HasMember("movement") && entityData["movement"].IsObject()) {
 
-                ecs->AddComponent(Ecs::TypeMovemmentComponent, newEntityID);
-
-                Ecs::MovementComponent* mc = static_cast<Ecs::MovementComponent*>(ecs->ECS_CombinedComponentPool[Ecs::TypeMovemmentComponent]->GetEntityComponent(newEntityID));
+                Ecs::MovementComponent* mc = static_cast<Ecs::MovementComponent*>(ecs->AddComponent(Ecs::TypeMovemmentComponent, newEntityID));
 
                 const rapidjson::Value& movement = entityData["movement"];
 
@@ -141,16 +137,13 @@ namespace Serialization {
                     mc->Direction.m_y = movement["direction"]["y"].GetFloat();
                 }
 
-                // Mark the entity as having a MovementComponent in the ECS_EntityMap
-                ecs->ECS_EntityMap[newEntityID].set(Ecs::TypeMovemmentComponent);
             }
 
             // Load Collider Component if it exists
             if (entityData.HasMember("collider") && entityData["collider"].IsObject()) {
 
-                ecs->AddComponent(Ecs::TypeColliderComponent, newEntityID);
+                Ecs::ColliderComponent* cc = static_cast<Ecs::ColliderComponent*>(ecs->AddComponent(Ecs::TypeColliderComponent, newEntityID));
 
-                Ecs::ColliderComponent* cc = static_cast<Ecs::ColliderComponent*>(ecs->ECS_CombinedComponentPool[Ecs::TypeColliderComponent]->GetEntityComponent(newEntityID));
 
                 if (cc) {
                     const rapidjson::Value& collider = entityData["collider"];
@@ -173,8 +166,7 @@ namespace Serialization {
 
             // Load Player Component if it exists
             if (entityData.HasMember("player") && entityData["player"].IsObject()) {
-                ecs->AddComponent(Ecs::TypePlayerComponent, newEntityID);
-                Ecs::PlayerComponent* pc = static_cast<Ecs::PlayerComponent*>(ecs->ECS_CombinedComponentPool[Ecs::TypePlayerComponent]->GetEntityComponent(newEntityID));
+                Ecs::PlayerComponent* pc = static_cast<Ecs::PlayerComponent*>(ecs->AddComponent(Ecs::TypePlayerComponent, newEntityID));
 
                 if (pc) {
                     const rapidjson::Value& player = entityData["player"];
@@ -186,8 +178,7 @@ namespace Serialization {
 
             // Load RigidBody Component if it exists
             if (entityData.HasMember("rigidbody") && entityData["rigidbody"].IsObject()) {
-                ecs->AddComponent(Ecs::TypeRigidBodyComponent, newEntityID);
-                Ecs::RigidBodyComponent* rb = static_cast<Ecs::RigidBodyComponent*>(ecs->ECS_CombinedComponentPool[Ecs::TypeRigidBodyComponent]->GetEntityComponent(newEntityID));
+                Ecs::RigidBodyComponent* rb = static_cast<Ecs::RigidBodyComponent*>(ecs->AddComponent(Ecs::TypeRigidBodyComponent, newEntityID));
 
                 if (rb) {
                     const rapidjson::Value& rigidbody = entityData["rigidbody"];
@@ -199,8 +190,7 @@ namespace Serialization {
 
             // Load Sprite Component if it exists
             if (entityData.HasMember("sprite") && entityData["sprite"].IsObject()) {
-                ecs->AddComponent(Ecs::TypeSpriteComponent, newEntityID);
-                Ecs::SpriteComponent* sc = static_cast<Ecs::SpriteComponent*>(ecs->ECS_CombinedComponentPool[Ecs::TypeSpriteComponent]->GetEntityComponent(newEntityID));
+                Ecs::SpriteComponent* sc = static_cast<Ecs::SpriteComponent*>(ecs->AddComponent(Ecs::TypeSpriteComponent, newEntityID));
 
                 if (sc) {
                     const rapidjson::Value& sprite = entityData["sprite"];

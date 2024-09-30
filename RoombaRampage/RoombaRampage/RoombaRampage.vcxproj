@@ -198,7 +198,6 @@ xcopy /y /d "$(SolutionDir)Dependencies\Freetype_Font\lib\*.dll" "$(OutDir)"</Co
     <ClCompile Include="ECS\System\ControlSystem.cpp" />
     <ClCompile Include="ECS\System\MovementSystem.cpp" />
     <ClCompile Include="ECS\System\RenderSystem.cpp" />
-    <ClCompile Include="Font.cpp" />
     <ClCompile Include="Graphics\GraphicsPipe.cpp" />
     <ClCompile Include="Inputs\Input.cpp" />
     <ClCompile Include="Math\Mat2x2.cpp" />
@@ -256,7 +255,6 @@ xcopy /y /d "$(SolutionDir)Dependencies\Freetype_Font\lib\*.dll" "$(OutDir)"</Co
     <ClInclude Include="Events\keyEvents.h" />
     <ClInclude Include="Events\mouseEvents.h" />
     <ClInclude Include="Events\windowEvents.h" />
-    <ClInclude Include="Font.h" />
     <ClInclude Include="Graphics\Graphics.h" />
     <ClInclude Include="Graphics\GraphicsPipe.h" />
     <ClInclude Include="Inputs\Input.h" />

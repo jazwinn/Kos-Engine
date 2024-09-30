@@ -1,6 +1,8 @@
 #include "AssetManager.h"
 #include "../Graphics/GraphicsPipe.h"
 #include "../Application/Helper.h"
+#include "Prefab.h"
+
 #include "../Dependencies/rapidjson/document.h"
 #include "../Dependencies/rapidjson/writer.h"
 #include "../Dependencies/rapidjson/stringbuffer.h"
@@ -31,6 +33,8 @@ namespace assetmanager {
 
         m_LoadAudio("Assets/vacuum.mp3");
         m_LoadAudio("Assets/zwing.wav");
+
+        prefab::Prefab::m_DeSerializePrefab("../RoombaRampage/Json/Prefab.json");
 
         //m_LoadFont("Assets/Roboto-Black.ttf", 12);
 
