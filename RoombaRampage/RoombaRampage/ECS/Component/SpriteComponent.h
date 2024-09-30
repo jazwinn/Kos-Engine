@@ -21,6 +21,7 @@ namespace Ecs {
 
 		unsigned int imageID;
 		unsigned int frameNumber;
+		int layer
 
 	};
 

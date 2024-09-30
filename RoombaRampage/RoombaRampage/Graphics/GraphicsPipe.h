@@ -17,6 +17,7 @@ struct GraphicsData
 	glm::vec3 worldCoordinates;
 	unsigned int textureID;
 	int shapeType;
+	int layer;
 };
 
 struct DebugDrawData
