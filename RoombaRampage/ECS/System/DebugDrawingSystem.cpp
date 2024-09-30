@@ -41,10 +41,8 @@ namespace ecs {
 
 	void DebugDrawingSystem::m_Init() {
 
-		// requires both collider component and transform component
 		m_SystemSignature.set(TYPECOLLIDERCOMPONENT);
 		m_SystemSignature.set(TYPETRANSFORMCOMPONENT);
-		//SystemSignature.set();
 
 	}
 
@@ -57,7 +55,6 @@ namespace ecs {
 			return;
 		}
 	
-	
 
 		GraphicsPipe* graphicsPipe = GraphicsPipe::funcGetInstance();
 		for (int n{}; n < m_vecColliderComponentPtr.size(); n++) {
@@ -67,7 +64,7 @@ namespace ecs {
 
 			if (collider->m_drawDebug)
 			{
-				graphicsPipe->debugBoxData.push_back({ 0, glm::vec2{collider->m_Size.m_x * transform->m_scale.m_x, collider->m_Size.m_y * transform->m_scale.m_y}, glm::vec3{transform->m_position.m_x + collider->m_OffSet.m_x,transform->m_position.m_y + collider->m_OffSet.m_y, 0} ,collider->m_isCollided, 0 });
+				graphicsPipe->debugBoxData.push_back({ 0, glm::vec2{collider->m_Size.m_x, collider->m_Size.m_y }, glm::vec3{transform->m_position.m_x + collider->m_OffSet.m_x,transform->m_position.m_y + collider->m_OffSet.m_y, 0} ,collider->m_isCollided, 0 });
 			}
 
 		}

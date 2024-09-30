@@ -76,7 +76,6 @@ namespace ecs {
 		else {
 			//REQUIRES OPTIMIZATION 
 			//CollidedEntity is the ID
-			
 			for (auto& CollidedEntity : vecCollisionEntity) {
 				if (ecs->m_ECS_CombinedComponentPool[TYPERIGIDBODYCOMPONENT]->m_HasComponent(CollidedEntity->m_ID)) {
 					MovementComponent* MovCom = (MovementComponent*)ecs->m_ECS_CombinedComponentPool[TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(CollidedEntity->m_ID);
@@ -86,10 +85,7 @@ namespace ecs {
 				
 			}
 
-			//if (ecs->ECS_CombinedComponentPool[TypeRigidBodyComponent]->HasComponent(CollidedEntity->ID)) {
-			//	MovementComponent* MovCom = (MovementComponent*)ecs->ECS_CombinedComponentPool[TypeMovemmentComponent]->GetEntityComponent(CollidedEntity->ID);
-			//	MovCom->Direction = { 0,0 };
-			//}
+
 		}
 	}
 
