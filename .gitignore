@@ -1,9 +1,4 @@
-#exceptions
-!Logs/
-!Json/
-!Application/
-!Dependencies/
-!imgui.ini
+
 
 # User-specific files
 *.rsuser
@@ -398,3 +393,10 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+#exceptions
+!Logs/
+!Json/
+!Application/
+!Dependencies/
+!imgui.ini
