@@ -68,8 +68,6 @@ namespace Ecs {
 
 			if (ColComp->drawDebug)
 			{
-				std::cout << ColComp->isCollided << std::endl;
-
 				graphicsPipe->debugBoxData.push_back({ 0, glm::vec2{ColComp->Size.m_x * transform->scale.m_x, ColComp->Size.m_y * transform->scale.m_y}, glm::vec3{transform->position.m_x + ColComp->OffSet.m_x,transform->position.m_y + ColComp->OffSet.m_y, 0} ,ColComp->isCollided, 0 });
 			}
 			
