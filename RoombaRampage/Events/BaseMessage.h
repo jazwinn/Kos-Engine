@@ -3,7 +3,7 @@
 
 namespace messaging {
 	enum class MessageType {
-		NONE, ENTITYSPAWN, AUDIOPLAY
+		NONE, AUDIOPLAY
 	};
 
 	class Message {
