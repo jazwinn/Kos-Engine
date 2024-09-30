@@ -3,6 +3,7 @@
 
 #include <glfw3.h>
 #include <../Math/vector2.h>
+#include <string>
 
 namespace Input {
 
@@ -25,6 +26,9 @@ namespace Input {
 		static bool KeyStateD;
 
 		static vector2::Vec2 MousePosition;
+
+		static std::string m_mouseString;
+		static std::string m_keyString;
 	};
 
 }

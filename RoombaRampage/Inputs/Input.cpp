@@ -11,6 +11,8 @@ namespace Input {
 	bool InputSystem::KeyStateD = false;
 
 	vector2::Vec2 InputSystem::MousePosition = { 0,0 };
+	std::string InputSystem::m_mouseString;
+	std::string InputSystem::m_keyString;
 
 	void InputSystem::KeyCallBack([[maybe_unused]] GLFWwindow* window, int key, [[maybe_unused]] int scancode, int action, [[maybe_unused]] int mods) {
 		if (action == GLFW_PRESS) {
@@ -30,7 +32,7 @@ namespace Input {
 			default:
 				break;
 			}
-			std::cout << "key pressed!" << std::endl;
+			InputSystem::m_keyString = "key pressed!";
 		}
 		else if (action == GLFW_RELEASE) {
 			switch (key) {
@@ -49,10 +51,10 @@ namespace Input {
 			default:
 				break;
 			}
-			std::cout << "key release" << std::endl;
+			InputSystem::m_keyString = "-";
 		}
 		else if (action == GLFW_REPEAT) {
-			std::cout << "Key Repeated" << std::endl;
+			InputSystem::m_keyString = "Key Repeated";
 		}
 	}
 
@@ -60,13 +62,13 @@ namespace Input {
 
 		if (action == GLFW_PRESS) {
 			// key is press
-			std::cout << "Mouse pressed!" << std::endl;
+			InputSystem::m_mouseString = "Mouse pressed!";
 		}
 		else if (action == GLFW_RELEASE) {
-			std::cout << "Mouse release" << std::endl;
+			InputSystem::m_mouseString = "-";
 		}
 		else if (action == GLFW_REPEAT) {
-			std::cout << "Mouse Repeated" << std::endl;
+			InputSystem::m_mouseString = "Mouse Repeated";
 		}
 		
 	}
