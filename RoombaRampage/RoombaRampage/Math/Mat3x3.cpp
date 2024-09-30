@@ -1,93 +1,93 @@
 #include "../Math/Mat3x3.h"
 
-namespace Mat3x3{
-	void classMat3x3::mat3Swap(classMat3x3 & lhs, classMat3x3 & rhs) {
+namespace mat3x3{
+	void Mat3x3::m_Mat3Swap(Mat3x3& lhs, Mat3x3 & rhs) {
 		std::swap(lhs, rhs);
 	}
 
-	classMat3x3 classMat3x3::mat3Adjunct() const {
-		classMat3x3 lvRet;
+	Mat3x3 Mat3x3::m_Mat3Adjunct() const {
+		Mat3x3 lvRet;
 
-		lvRet.e00 = e11 * e22 - e21 * e12;
-		lvRet.e01 = e02 * e21 - e01 * e22;
-		lvRet.e02 = e01 * e12 - e02 * e11;
+		lvRet.m_e00 = m_e11 * m_e22 - m_e21 * m_e12;
+		lvRet.m_e01 = m_e02 * m_e21 - m_e01 * m_e22;
+		lvRet.m_e02 = m_e01 * m_e12 - m_e02 * m_e11;
 
-		lvRet.e10 = e12 * e20 - e10 * e22;
-		lvRet.e11 - e00 * e22 - e02 * e20;
-		lvRet.e12 = e10 * e02 - e00 * e12;
+		lvRet.m_e10 = m_e12 * m_e20 - m_e10 * m_e22;
+		lvRet.m_e11 = m_e00 * m_e22 - m_e02 * m_e20;
+		lvRet.m_e12 = m_e10 * m_e02 - m_e00 * m_e12;
 
-		lvRet.e20 = e10 * e21 - e20 * e11;
-		lvRet.e21 = e20 * e01 - e00 * e21;
-		lvRet.e22 = e00 * e11 - e10 * e01;
+		lvRet.m_e20 = m_e10 * m_e21 - m_e20 * m_e11;
+		lvRet.m_e21 = m_e20 * m_e01 - m_e00 * m_e21;
+		lvRet.m_e22 = m_e00 * m_e11 - m_e10 * m_e01;
 
 		return lvRet;
 	}
 
-	float classMat3x3::mat3Determinant() const {
+	float Mat3x3::m_Mat3Determinant() const {
 		float lvRet;
-		lvRet = (e00 * (e11 * e22 - e21 * e12)) - (e10 * (e01 * e22 - e02 * e21)) + (e20 * (e01 * e12 - e02 * e11));
+		lvRet = (m_e00 * (m_e11 * m_e22 - m_e21 * m_e12)) - (m_e10 * (m_e01 * m_e22 - m_e02 * m_e21)) + (m_e20 * (m_e01 * m_e12 - m_e02 * m_e11));
 		return lvRet;
 	}
 
-	classMat3x3 & classMat3x3::operator=(const classMat3x3 & rhs) {
-		classMat3x3 lvTemp(rhs);
-		mat3Swap(*this, lvTemp);
+	Mat3x3 & Mat3x3::operator=(const Mat3x3 & rhs) {
+		Mat3x3 lvTemp(rhs);
+		m_Mat3Swap(*this, lvTemp);
 		return *this;
 	}
 
-	classMat3x3 & classMat3x3::operator*=(const classMat3x3 & rhs) {
-		classMat3x3 lvTemp;
-		lvTemp.e00 = (e00 * rhs.e00) + (e01 * rhs.e10) + (e02 * rhs.e20);
-		lvTemp.e01 = (e10 * rhs.e00) + (e11 * rhs.e10) + (e12 * rhs.e20);
-		lvTemp.e02 = (e20 * rhs.e00) + (e21 * rhs.e10) + (e22 * rhs.e20);
+	Mat3x3 & Mat3x3::operator*=(const Mat3x3 & rhs) {
+		Mat3x3 lvTemp;
+		lvTemp.m_e00 = (m_e00 * rhs.m_e00) + (m_e01 * rhs.m_e10) + (m_e02 * rhs.m_e20);
+		lvTemp.m_e01 = (m_e10 * rhs.m_e00) + (m_e11 * rhs.m_e10) + (m_e12 * rhs.m_e20);
+		lvTemp.m_e02 = (m_e20 * rhs.m_e00) + (m_e21 * rhs.m_e10) + (m_e22 * rhs.m_e20);
 
-		lvTemp.e10 = (e00 * rhs.e01) + (e01 * rhs.e11) + (e02 * rhs.e21);
-		lvTemp.e11 = (e10 * rhs.e01) + (e11 * rhs.e11) + (e12 * rhs.e21);
-		lvTemp.e12 = (e20 * rhs.e01) + (e21 * rhs.e11) + (e22 * rhs.e21);
+		lvTemp.m_e10 = (m_e00 * rhs.m_e01) + (m_e01 * rhs.m_e11) + (m_e02 * rhs.m_e21);
+		lvTemp.m_e11 = (m_e10 * rhs.m_e01) + (m_e11 * rhs.m_e11) + (m_e12 * rhs.m_e21);
+		lvTemp.m_e12 = (m_e20 * rhs.m_e01) + (m_e21 * rhs.m_e11) + (m_e22 * rhs.m_e21);
 
-		lvTemp.e20 = (e00 * rhs.e02) + (e01 * rhs.e12) + (e02 * rhs.e22);
-		lvTemp.e21 = (e10 * rhs.e02) + (e11 * rhs.e12) + (e12 * rhs.e22);
-		lvTemp.e22 = (e20 * rhs.e02) + (e21 * rhs.e12) + (e22 * rhs.e22);
+		lvTemp.m_e20 = (m_e00 * rhs.m_e02) + (m_e01 * rhs.m_e12) + (m_e02 * rhs.m_e22);
+		lvTemp.m_e21 = (m_e10 * rhs.m_e02) + (m_e11 * rhs.m_e12) + (m_e12 * rhs.m_e22);
+		lvTemp.m_e22 = (m_e20 * rhs.m_e02) + (m_e21 * rhs.m_e12) + (m_e22 * rhs.m_e22);
 		*this = lvTemp;
 		return *this;
 	}
 
-	classMat3x3& classMat3x3::operator+=(const classMat3x3& rhs) {
-		e00 += rhs.e00;
-		e01 += rhs.e01;
-		e02 += rhs.e02;
+	Mat3x3& Mat3x3::operator+=(const Mat3x3& rhs) {
+		m_e00 += rhs.m_e00;
+		m_e01 += rhs.m_e01;
+		m_e02 += rhs.m_e02;
 
-		e10 += rhs.e10;
-		e11 += rhs.e11;
-		e12 += rhs.e12;
+		m_e10 += rhs.m_e10;
+		m_e11 += rhs.m_e11;
+		m_e12 += rhs.m_e12;
 
-		e20 += rhs.e20;
-		e21 += rhs.e21;
-		e22 += rhs.e22;
-
-		return *this;
-	}
-
-	classMat3x3& classMat3x3::operator-=(const classMat3x3& rhs) {
-		e00 -= rhs.e00;
-		e01 -= rhs.e01;
-		e02 -= rhs.e02;
-
-		e10 -= rhs.e10;
-		e11 -= rhs.e11;
-		e12 -= rhs.e12;
-
-		e20 -= rhs.e20;
-		e21 -= rhs.e21;
-		e22 -= rhs.e22;
+		m_e20 += rhs.m_e20;
+		m_e21 += rhs.m_e21;
+		m_e22 += rhs.m_e22;
 
 		return *this;
 	}
 
-	classMat3x3 classMat3x3::mat3Abs() const {
-		float lvAb1 = e00, lvAb2 = e10, lvAb3 = e20;
-		float lvAb4 = e01, lvAb5 = e11, lvAb6 = e21;
-		float lvAb7 = e02, lvAb8 = e12, lvAb9 = e22;
+	Mat3x3& Mat3x3::operator-=(const Mat3x3& rhs) {
+		m_e00 -= rhs.m_e00;
+		m_e01 -= rhs.m_e01;
+		m_e02 -= rhs.m_e02;
+
+		m_e10 -= rhs.m_e10;
+		m_e11 -= rhs.m_e11;
+		m_e12 -= rhs.m_e12;
+
+		m_e20 -= rhs.m_e20;
+		m_e21 -= rhs.m_e21;
+		m_e22 -= rhs.m_e22;
+
+		return *this;
+	}
+
+	Mat3x3 Mat3x3::m_Mat3Abs() const {
+		float lvAb1 = m_e00, lvAb2 = m_e10, lvAb3 = m_e20;
+		float lvAb4 = m_e01, lvAb5 = m_e11, lvAb6 = m_e21;
+		float lvAb7 = m_e02, lvAb8 = m_e12, lvAb9 = m_e22;
 		lvAb1 = lvAb1 < 0.f ? -lvAb1 : lvAb1;
 		lvAb2 = lvAb2 < 0.f ? -lvAb2 : lvAb2;
 		lvAb3 = lvAb3 < 0.f ? -lvAb3 : lvAb3;
@@ -97,84 +97,84 @@ namespace Mat3x3{
 		lvAb7 = lvAb7 < 0.f ? -lvAb7 : lvAb7;
 		lvAb8 = lvAb8 < 0.f ? -lvAb8 : lvAb8;
 		lvAb9 = lvAb9 < 0.f ? -lvAb9 : lvAb9;
-		return classMat3x3(lvAb1,lvAb2,lvAb3,lvAb4,lvAb5,lvAb6,lvAb7,lvAb8,lvAb9);
+		return Mat3x3(lvAb1,lvAb2,lvAb3,lvAb4,lvAb5,lvAb6,lvAb7,lvAb8,lvAb9);
 	}
 
-	void mat3Identity(classMat3x3 & given) {
-		given.e00 = 1;
-		given.e01 = 0;
-		given.e02 = 0;
+	void Mat3Identity(Mat3x3 & given) {
+		given.m_e00 = 1;
+		given.m_e01 = 0;
+		given.m_e02 = 0;
 
-		given.e10 = 0;
-		given.e11 = 1;
-		given.e12 = 0;
+		given.m_e10 = 0;
+		given.m_e11 = 1;
+		given.m_e12 = 0;
 
-		given.e20 = 0;
-		given.e21 = 0;
-		given.e22 = 1;
+		given.m_e20 = 0;
+		given.m_e21 = 0;
+		given.m_e22 = 1;
 	}
 
-	void mat3Inverse(const classMat3x3 & givenIn, classMat3x3 & givenOut) {
-		float lvDet = givenIn.mat3Determinant();
+	void mat3Inverse(const Mat3x3 & givenIn, Mat3x3 & givenOut) {
+		float lvDet = givenIn.m_Mat3Determinant();
 		if (lvDet == 0) {
 			return;
 		}
 		float lvMul = 1 / lvDet;
 
-		classMat3x3 lvAdj = givenIn.mat3Adjunct();
-		givenOut.e00 = lvAdj.e00 * lvMul;
-		givenOut.e01 = lvAdj.e01 * lvMul;
-		givenOut.e02 = lvAdj.e02 * lvMul;
+		Mat3x3 lvAdj = givenIn.m_Mat3Adjunct();
+		givenOut.m_e00 = lvAdj.m_e00 * lvMul;
+		givenOut.m_e01 = lvAdj.m_e01 * lvMul;
+		givenOut.m_e02 = lvAdj.m_e02 * lvMul;
 
-		givenOut.e10 = lvAdj.e10 * lvMul;
-		givenOut.e11 = lvAdj.e11 * lvMul;
-		givenOut.e12 = lvAdj.e12 * lvMul;
+		givenOut.m_e10 = lvAdj.m_e10 * lvMul;
+		givenOut.m_e11 = lvAdj.m_e11 * lvMul;
+		givenOut.m_e12 = lvAdj.m_e12 * lvMul;
 
-		givenOut.e20 = lvAdj.e20 * lvMul;
-		givenOut.e21 = lvAdj.e21 * lvMul;
-		givenOut.e22 = lvAdj.e22 * lvMul;
+		givenOut.m_e20 = lvAdj.m_e20 * lvMul;
+		givenOut.m_e21 = lvAdj.m_e21 * lvMul;
+		givenOut.m_e22 = lvAdj.m_e22 * lvMul;
 	}
 
-	void mat3Translate(classMat3x3 & given, float x, float y) {
-		mat3Identity(given);
-		given.e02 = x;
-		given.e12 = y;
+	void Mat3Translate(Mat3x3 & given, float x, float y) {
+		Mat3Identity(given);
+		given.m_e02 = x;
+		given.m_e12 = y;
 	}
 
-	void mat3Scale(classMat3x3 & given, float x, float y) {
-		mat3Identity(given);
-		given.e00 = x;
-		given.e11 = y;
+	void Mat3Scale(Mat3x3 & given, float x, float y) {
+		Mat3Identity(given);
+		given.m_e00 = x;
+		given.m_e11 = y;
 	}
 
-	void mat3RotRad(classMat3x3 & given, float ang) {
-		mat3Identity(given);
-		given.e00 = cosf(ang);
-		given.e01 = -sinf(ang);
-		given.e10 = sinf(ang);
-		given.e11 = cosf(ang);
+	void Mat3RotRad(Mat3x3 & given, float ang) {
+		Mat3Identity(given);
+		given.m_e00 = cosf(ang);
+		given.m_e01 = -sinf(ang);
+		given.m_e10 = sinf(ang);
+		given.m_e11 = cosf(ang);
 	}
 
-	void mat3RotDeg(classMat3x3 & given, float ang) {
+	void Mat3RotDeg(Mat3x3 & given, float ang) {
 		//float lvRad = (ang * (PI / 180.f));
-		mat3RotRad(given, ang);
+		Mat3RotRad(given, ang);
 	}
 
-	classMat3x3 operator*(const classMat3x3 & lhs, const classMat3x3 & rhs) {
-		classMat3x3 lvTemp(lhs);
+	Mat3x3 operator*(const Mat3x3 & lhs, const Mat3x3 & rhs) {
+		Mat3x3 lvTemp(lhs);
 		lvTemp *= rhs;
 		return lvTemp;
 	}
 
 
-	classMat3x3 operator+(const classMat3x3 & lhs, const classMat3x3 & rhs) {
-		classMat3x3 lvTemp(lhs);
+	Mat3x3 operator+(const Mat3x3 & lhs, const Mat3x3 & rhs) {
+		Mat3x3 lvTemp(lhs);
 		lvTemp += rhs;
 		return lvTemp;
 	}
 
-	classMat3x3 operator-(const classMat3x3 & lhs, const classMat3x3 & rhs) {
-		classMat3x3 lvTemp(lhs);
+	Mat3x3 operator-(const Mat3x3 & lhs, const Mat3x3 & rhs) {
+		Mat3x3 lvTemp(lhs);
 		lvTemp -= rhs;
 		return lvTemp;
 	}

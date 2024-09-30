@@ -2,7 +2,7 @@
 #define ASSETMGR_H
 
 #include "../Assets/Audio.h"
-#include "../Font.h"
+//#include "../Font.h"
 #include <../Math/vector2.h>
 #include <vector>
 #include <map>

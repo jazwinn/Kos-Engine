@@ -88,7 +88,7 @@ namespace ecs{
 		ECS* ecs = ECS::m_GetInstance();
 
 		//checks if component already exist
-		if (ecs->m_ECS_CombinedComponentPool[Type]->m_HasComponent(ID)) {
+		if (ecs->m_ECS_EntityMap[ID].test(Type)) {
 			LOGGING_WARN("Entity Already Has Component");
 			return NULL;
 		}

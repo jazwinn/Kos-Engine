@@ -78,10 +78,10 @@ namespace ecs {
 			MovementComponent* MovComp = m_vecMovementComponentPtr[n];
 
 			if (ColComp->m_type == physicspipe::EntityType::CIRCLE) {
-				PhysicsPipeline.m_SendPhysicsData(ColComp->m_radius, TransComp->m_position,TransComp->m_scale, MovComp->m_Speed * MovComp->m_Direction, ColComp->m_Entity);
+				PhysicsPipeline.m_SendPhysicsData(ColComp->m_radius, TransComp->m_position, ColComp->m_Size * TransComp->m_scale, MovComp->m_Speed * MovComp->m_Direction, ColComp->m_Entity);
 			}
 			else if (ColComp->m_type == physicspipe::EntityType::RECTANGLE) {
-				PhysicsPipeline.m_SendPhysicsData(ColComp->m_Size.m_x, ColComp->m_Size.m_x, TransComp->m_position,TransComp->m_scale, MovComp->m_Speed * MovComp->m_Direction, ColComp->m_Entity);
+				PhysicsPipeline.m_SendPhysicsData(ColComp->m_Size.m_x, ColComp->m_Size.m_x, TransComp->m_position, ColComp->m_Size * TransComp->m_scale, MovComp->m_Speed * MovComp->m_Direction, ColComp->m_Entity);
 			}
 			else {
 				LOGGING_ERROR("NO ENTITY TYPE");
