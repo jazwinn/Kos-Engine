@@ -112,7 +112,6 @@ public:
 	void funcDraw();
 	void funcDrawDebug();
 
-
 	void funcSortDrawOrder();
 	static void funcSetDrawMode(GLenum mode);
 

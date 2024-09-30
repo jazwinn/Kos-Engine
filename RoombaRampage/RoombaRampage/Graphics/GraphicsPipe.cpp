@@ -567,14 +567,6 @@ void GraphicsPipe::funcDrawDebug()
 
 
 
-
-
-
-
-
-
-
-
 GLuint GraphicsPipe::funcCompileShader(GLuint type, const std::string& shader)
 {
 	GLuint lvID = glCreateShader(type);
