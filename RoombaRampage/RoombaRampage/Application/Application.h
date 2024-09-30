@@ -23,9 +23,9 @@ namespace Application{
 
 		static ImGuiHandler imgui_manager;
 
-		static FModAudio audio;
+		static fmodaudio::FModAudio audio;
 
-		static FModAudio audio2;
+		static fmodaudio::FModAudio audio2;
 
 	};
 }

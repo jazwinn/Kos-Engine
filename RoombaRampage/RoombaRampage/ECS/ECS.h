@@ -15,7 +15,7 @@
 #include <iostream>
 #include <bitset>
 
-namespace Ecs {
+namespace ecs {
 
 	class ECS {
 
@@ -26,7 +26,7 @@ namespace Ecs {
 
 		using CombinedComponentPool = std::unordered_map<ComponentType, std::shared_ptr<IComponentPool>>;
 		using SystemMap = std::unordered_map<TypeSystem, std::shared_ptr<ISystem>>;
-		using EntityMap = std::unordered_map<EntityID, std::bitset<TotalTypeComponent>>;
+		using EntityMap = std::unordered_map<EntityID, std::bitset<TOTALTYPECOMPONENT>>;
 		//using ComponentPoolMap = std::unordered_map<ComponentType, std::unique_ptr<ComponentPool>>;
 
 		ECS() = default;
@@ -35,51 +35,51 @@ namespace Ecs {
 
 	public:
 		//singleton
-		static ECS* GetInstance() {
-			if (!InstancePtr) {
-				InstancePtr.reset(new ECS{});
+		static ECS* m_GetInstance() {
+			if (!m_InstancePtr) {
+				m_InstancePtr.reset(new ECS{});
 			}
-			return InstancePtr.get();
+			return m_InstancePtr.get();
 		}
 
 		//load the programme
-		static void Load();
+		static void m_Load();
 
 		//Initializes the programme
-		static void Init();
+		static void m_Init();
 
 		//Update loops that updates the ECS
-		static void Update(float DeltaTime);
+		static void m_Update(float DeltaTime);
 
 		//Unloads and free all memory
-		static void Unload();
+		static void m_Unload();
 
 
-		static EntityID CreateEntity();
+		static EntityID m_CreateEntity();
 
-		static EntityID DuplicateEntity(EntityID);
+		static EntityID m_DuplicateEntity(EntityID);
 
-		static bool DeleteEntity(EntityID);
+		static bool m_DeleteEntity(EntityID);
 
-		static void* AddComponent(ComponentType, EntityID);
+		static void* m_AddComponent(ComponentType, EntityID);
 
-		static void RegisterSystems(EntityID);
+		static void m_RegisterSystems(EntityID);
 
-		static void DeregisterSystem(EntityID);
+		static void m_DeregisterSystem(EntityID);
 
 
-		CombinedComponentPool ECS_CombinedComponentPool{};
+		CombinedComponentPool m_ECS_CombinedComponentPool{};
 
-		SystemMap ECS_SystemMap{};
+		SystemMap m_ECS_SystemMap{};
 
-		EntityMap ECS_EntityMap{};
+		EntityMap m_ECS_EntityMap{};
 
-		EntityID EntityCount{};
+		EntityID m_EntityCount{};
 
-		float DeltaTime{};
+		float m_DeltaTime{};
 
 	private:
-		static std::unique_ptr<ECS> InstancePtr;
+		static std::unique_ptr<ECS> m_InstancePtr;
 
 	};
 

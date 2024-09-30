@@ -13,19 +13,19 @@
 #include "RigidBody.h"
 #include "PlayerComponent.h"
 
-namespace Ecs {
+namespace ecs {
 	class IComponentPool {
 
 	public:
-		virtual void* AssignComponent(EntityID) = 0;
+		virtual void* m_AssignComponent(EntityID) = 0;
 
-		virtual void* GetEntityComponent(EntityID) = 0;
+		virtual void* m_GetEntityComponent(EntityID) = 0;
 
-		virtual bool HasComponent(EntityID) = 0;
+		virtual bool m_HasComponent(EntityID) = 0;
 
-		virtual bool DeleteEntityComponent(EntityID) = 0;
+		virtual bool m_DeleteEntityComponent(EntityID) = 0;
 
-		virtual void* DuplicateComponent(EntityID, EntityID) = 0;
+		virtual void* m_DuplicateComponent(EntityID, EntityID) = 0;
 
 	};
 
@@ -36,36 +36,36 @@ namespace Ecs {
 	public:
 		ComponentPool();
 
-		void* AssignComponent(EntityID) override;
+		void* m_AssignComponent(EntityID) override;
 
-		void* GetEntityComponent(EntityID) override;
+		void* m_GetEntityComponent(EntityID) override;
 
-		bool HasComponent(EntityID) override;
+		bool m_HasComponent(EntityID) override;
 
-		bool DeleteEntityComponent(EntityID) override;
+		bool m_DeleteEntityComponent(EntityID) override;
 
-		void* DuplicateComponent(EntityID DuplicatesID, EntityID NewID) override;
+		void* m_DuplicateComponent(EntityID DuplicatesID, EntityID NewID) override;
 
-		std::vector<T> Pool;
+		std::vector<T> m_Pool;
 	};
 
 
 	template<typename T>
 	ComponentPool<T>::ComponentPool() {
 
-		Pool.resize(MaxEntity);
+		m_Pool.resize(MaxEntity);
 
 
 	}
 
 	template <typename T>
-	void* ComponentPool<T>::AssignComponent(EntityID ID) {
+	void* ComponentPool<T>::m_AssignComponent(EntityID ID) {
 
 
-		for (auto& Component : Pool) {
-			if (Component.IsLive == false) {
-				Component.IsLive = true;
-				Component.Entity = ID;
+		for (auto& Component : m_Pool) {
+			if (Component.m_IsLive == false) {
+				Component.m_IsLive = true;
+				Component.m_Entity = ID;
 				return &Component;
 			}
 		}
@@ -78,25 +78,25 @@ namespace Ecs {
 
 
 	template <typename T>
-	void* ComponentPool<T>::DuplicateComponent(EntityID DuplicateID, EntityID NewID) {
+	void* ComponentPool<T>::m_DuplicateComponent(EntityID DuplicateID, EntityID NewID) {
 
 		//UNTESED MIGHT FAIL
 
 
-		T* DuplicateComponent = (T*)GetEntityComponent(DuplicateID);
+		T* DuplicateComponent = (T*)m_GetEntityComponent(DuplicateID);
 
 		T* NewComponent;
-		if (HasComponent(NewID)) {
-			NewComponent = (T*)GetEntityComponent(NewID);
+		if (m_HasComponent(NewID)) {
+			NewComponent = (T*)m_GetEntityComponent(NewID);
 		}
 		else {
-			NewComponent = (T*)AssignComponent(NewID);
+			NewComponent = (T*)m_AssignComponent(NewID);
 		}
 
 		
 
 		*NewComponent = *DuplicateComponent;//copies everything INCLUDING ID
-		NewComponent->Entity = NewID;//SET BACK ID
+		NewComponent->m_Entity = NewID;//SET BACK ID
 
 		return NewComponent;
 	}
@@ -104,10 +104,10 @@ namespace Ecs {
 
 
 	template <typename T>
-	void* ComponentPool<T>::GetEntityComponent(EntityID ID) {
+	void* ComponentPool<T>::m_GetEntityComponent(EntityID ID) {
 
-		for (auto& Component : Pool) {
-			if (Component.Entity == ID && Component.IsLive) {
+		for (auto& Component : m_Pool) {
+			if (Component.m_Entity == ID && Component.m_IsLive) {
 				return &Component;
 			}
 		}
@@ -119,7 +119,7 @@ namespace Ecs {
 
 
 	template <typename T>
-	bool ComponentPool<T>::DeleteEntityComponent(EntityID ID) {
+	bool ComponentPool<T>::m_DeleteEntityComponent(EntityID ID) {
 
 		//TODO delete component from system vector
 
@@ -129,11 +129,11 @@ namespace Ecs {
 	}
 
 	template <typename T>
-	bool ComponentPool<T>::HasComponent(EntityID ID) { //contained any stored data
+	bool ComponentPool<T>::m_HasComponent(EntityID ID) { //contained any stored data
 
-		for (auto& Component : Pool) {
-			if (Component.Entity == ID) {
-				return Component.IsLive;
+		for (auto& Component : m_Pool) {
+			if (Component.m_Entity == ID) {
+				return Component.m_IsLive;
 			}
 		}
 

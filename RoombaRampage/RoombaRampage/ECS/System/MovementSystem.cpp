@@ -3,85 +3,73 @@
 #include "MovementSystem.h"
 
 
-namespace Ecs {
+namespace ecs {
 
-	void MovementSystem::RegisterSystem(EntityID ID) {
-		ECS* ecs = ECS::GetInstance();
+	void MovementSystem::m_RegisterSystem(EntityID ID) {
+		ECS* ecs = ECS::m_GetInstance();
 
-		if (std::find_if(vecTransformComponentPtr.begin(), vecTransformComponentPtr.end(), [ID](const auto& obj) { return obj->Entity == ID; })
-			== vecTransformComponentPtr.end()) {
-			vecTransformComponentPtr.push_back((TransformComponent*)ecs->ECS_CombinedComponentPool[TypeTransformComponent]->GetEntityComponent(ID));
-			vecMovementComponentPtr.push_back((MovementComponent*)ecs->ECS_CombinedComponentPool[TypeMovemmentComponent]->GetEntityComponent(ID));
+		if (std::find_if(m_vecTransformComponentPtr.begin(), m_vecTransformComponentPtr.end(), [ID](const auto& obj) { return obj->m_Entity == ID; })
+			== m_vecTransformComponentPtr.end()) {
+			m_vecTransformComponentPtr.push_back((TransformComponent*)ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(ID));
+			m_vecMovementComponentPtr.push_back((MovementComponent*)ecs->m_ECS_CombinedComponentPool[TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(ID));
 		}
 
 	}
 
-	void MovementSystem::DeregisterSystem(EntityID ID) {
+	void MovementSystem::m_DeregisterSystem(EntityID ID) {
 		//search element location for the entity
 		size_t IndexID{};
-		for (auto& MovComponentPtr : vecMovementComponentPtr) {
-			if (MovComponentPtr->Entity == ID) {
+		for (auto& MovComponentPtr : m_vecMovementComponentPtr) {
+			if (MovComponentPtr->m_Entity == ID) {
 				return;
 			}
 			IndexID++;
 		}
 
 		//index to the last element
-		size_t IndexLast = vecMovementComponentPtr.size() - 1;
-		std::swap(vecMovementComponentPtr[IndexID], vecMovementComponentPtr[IndexLast]);
-		std::swap(vecTransformComponentPtr[IndexID], vecTransformComponentPtr[IndexLast]);
+		size_t IndexLast = m_vecMovementComponentPtr.size() - 1;
+		std::swap(m_vecMovementComponentPtr[IndexID], m_vecMovementComponentPtr[IndexLast]);
+		std::swap(m_vecTransformComponentPtr[IndexID], m_vecTransformComponentPtr[IndexLast]);
 
 		//popback the vector;
-		vecMovementComponentPtr.pop_back();
-		vecTransformComponentPtr.pop_back();
+		m_vecMovementComponentPtr.pop_back();
+		m_vecTransformComponentPtr.pop_back();
 	}
 
-	void MovementSystem::Init() {
+	void MovementSystem::m_Init() {
 
 		// requires both movement component and transform component
-		SystemSignature.set(TypeMovemmentComponent);
-		SystemSignature.set(TypeTransformComponent);
+		m_SystemSignature.set(TYPEMOVEMENTCOMPONENT);
+		m_SystemSignature.set(TYPETRANSFORMCOMPONENT);
 
 	}
 
-	void MovementSystem::Update() {
+	void MovementSystem::m_Update() {
 
-		ECS* ecs = ECS::GetInstance();
+		ECS* ecs = ECS::m_GetInstance();
 
-		if (vecMovementComponentPtr.size() != vecTransformComponentPtr.size()) {
-			std::cout << "Error: Vecotrs container size does not Match" << std::endl;
+		if (m_vecMovementComponentPtr.size() != m_vecTransformComponentPtr.size()) {
+			//std::cout << "Error: Vectors container size does not Match" << std::endl;
+			LOGGING_ERROR("Error: Vectors container size does not Match");
 			return;
 		}
 
 		//loops through all vecoters pointing to component
-		for (int n{}; n < vecMovementComponentPtr.size(); n++) {
+		for (int n{}; n < m_vecMovementComponentPtr.size(); n++) {
 			//std::cout << "Entity: " << n << "Movement System is getting Updated";
 
-			MovementComponent* MovComp = vecMovementComponentPtr[n];
-			TransformComponent* TransComp = vecTransformComponentPtr[n];
+			MovementComponent* MovComp = m_vecMovementComponentPtr[n];
+			TransformComponent* TransComp = m_vecTransformComponentPtr[n];
 
-			
+			if (MovComp->m_Move) {
+				vector2::Vec2 Velocity = MovComp->m_Direction * MovComp->m_Speed;
 
+				vector2::Vec2 Displacement = Velocity * ecs->m_DeltaTime;
 
-			if (MovComp->Move) {
-				vector2::Vec2 Velocity = MovComp->Direction * MovComp->Speed;
-
-				vector2::Vec2 Displacement = Velocity * ecs->DeltaTime;
-
-				TransComp->position += Displacement;
+				TransComp->m_position += Displacement;
 			}
-
-
-
-
 		}
-	
-
 	}
-
-
-
-
 
 }
 

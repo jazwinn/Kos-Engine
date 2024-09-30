@@ -4,66 +4,66 @@
 #include "../ECS/Component/SpriteComponent.h"
 #include "../Graphics/GraphicsPipe.h"
 
-namespace Ecs {
+namespace ecs {
 
-	void RenderSystem::RegisterSystem(EntityID ID) {
-		ECS* ecs = ECS::GetInstance();
+	void RenderSystem::m_RegisterSystem(EntityID ID) {
+		ECS* ecs = ECS::m_GetInstance();
 
-		if (std::find_if(vecTransformComponentPtr.begin(), vecTransformComponentPtr.end(), [ID](const auto& obj) { return obj->Entity == ID; })
-			== vecTransformComponentPtr.end()) {
-			vecTransformComponentPtr.push_back((TransformComponent*)ecs->ECS_CombinedComponentPool[TypeTransformComponent]->GetEntityComponent(ID));
-			vecSpriteComponentPtr.push_back((SpriteComponent*)ecs->ECS_CombinedComponentPool[TypeSpriteComponent]->GetEntityComponent(ID));
+		if (std::find_if(m_vecTransformComponentPtr.begin(), m_vecTransformComponentPtr.end(), [ID](const auto& obj) { return obj->m_Entity == ID; })
+			== m_vecTransformComponentPtr.end()) {
+			m_vecTransformComponentPtr.push_back((TransformComponent*)ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(ID));
+			m_vecSpriteComponentPtr.push_back((SpriteComponent*)ecs->m_ECS_CombinedComponentPool[TYPESPRITECOMPONENT]->m_GetEntityComponent(ID));
 		}
 
 	}
 
-	void RenderSystem::DeregisterSystem(EntityID ID) {
+	void RenderSystem::m_DeregisterSystem(EntityID ID) {
 
 		//search element location for the entity
 		size_t IndexID{};
-		for (auto& SpriteComponentPtr : vecSpriteComponentPtr) {
-			if (SpriteComponentPtr->Entity == ID) {
+		for (auto& SpriteComponentPtr : m_vecSpriteComponentPtr) {
+			if (SpriteComponentPtr->m_Entity == ID) {
 				break;
 			}
 			IndexID++;
 		}
 
 		//index to the last element
-		size_t IndexLast = vecSpriteComponentPtr.size() - 1;
-		std::swap(vecSpriteComponentPtr[IndexID], vecSpriteComponentPtr[IndexLast]);
-		std::swap(vecTransformComponentPtr[IndexID], vecTransformComponentPtr[IndexLast]);
+		size_t IndexLast = m_vecSpriteComponentPtr.size() - 1;
+		std::swap(m_vecSpriteComponentPtr[IndexID], m_vecSpriteComponentPtr[IndexLast]);
+		std::swap(m_vecTransformComponentPtr[IndexID], m_vecTransformComponentPtr[IndexLast]);
 
 		//popback the vector;
-		vecSpriteComponentPtr.pop_back();
-		vecTransformComponentPtr.pop_back();
+		m_vecSpriteComponentPtr.pop_back();
+		m_vecTransformComponentPtr.pop_back();
 	}
 
-	void RenderSystem::Init()
+	void RenderSystem::m_Init()
 	{
-		SystemSignature.set(TypeTransformComponent);
-		SystemSignature.set(TypeSpriteComponent);
+		m_SystemSignature.set(TYPETRANSFORMCOMPONENT);
+		m_SystemSignature.set(TYPESPRITECOMPONENT);
 	}
 
-	void RenderSystem::Update()
+	void RenderSystem::m_Update()
 	{
 		//ECS* ecs = ECS::GetInstance();
 		GraphicsPipe* graphicsPipe = GraphicsPipe::funcGetInstance();
 
-		if (vecSpriteComponentPtr.size() != vecTransformComponentPtr.size()) {
+		if (m_vecSpriteComponentPtr.size() != m_vecTransformComponentPtr.size()) {
 			std::cout << "Error: Vectors container size does not Match" << std::endl;
 			return;
 		}
 
 		//loops through all vecoters pointing to component
-		for (int n{}; n < vecSpriteComponentPtr.size(); n++) {
+		for (int n{}; n < m_vecSpriteComponentPtr.size(); n++) {
 
 			//std::cout << "Update Entity: " << n << std::endl;
 			//sprite not need currently
 			//SpriteComponent* MovComp = vecSpriteComponentPtr[n];
-			TransformComponent* transform = vecTransformComponentPtr[n];
-			SpriteComponent* sprite = vecSpriteComponentPtr[n];
+			TransformComponent* transform = m_vecTransformComponentPtr[n];
+			SpriteComponent* sprite = m_vecSpriteComponentPtr[n];
 
-			graphicsPipe->modelData.push_back({ transform->rotation, glm::vec2{transform->scale.m_x, transform->scale.m_y}, glm::vec3{transform->position.m_x,transform->position.m_y, 0} ,sprite->imageID, 0 });
+			graphicsPipe->modelData.push_back({ transform->m_rotation, glm::vec2{transform->m_scale.m_x, transform->m_scale.m_y}, glm::vec3{transform->m_position.m_x,transform->m_position.m_y, 0} ,sprite->m_imageID, 0 });
 			
 		}
 

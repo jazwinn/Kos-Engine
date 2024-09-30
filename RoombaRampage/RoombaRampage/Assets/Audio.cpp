@@ -2,120 +2,123 @@
 #include <iostream>
 #include <fmod_errors.h>
 
-FModAudio::FModAudio() : system_(nullptr), sound_(nullptr), channel_(nullptr) {}
+namespace fmodaudio {
+    FModAudio::FModAudio() : m_system_(nullptr), m_sound_(nullptr), m_channel_(nullptr) {}
 
-FModAudio::~FModAudio() {
-    stopSound();
-    shutdown();
-}
-
-bool FModAudio::init() {
-    FMOD_RESULT result = FMOD::System_Create(&system_);
-    if (result != FMOD_OK) {
-        std::cerr << "FMOD error: Failed to create system: " << FMOD_ErrorString(result) << std::endl;
-        return false;
+    FModAudio::~FModAudio() {
+        m_stopSound();
+        m_shutdown();
     }
 
-    result = system_->init(32, FMOD_INIT_NORMAL, nullptr);
-    if (result != FMOD_OK) {
-        std::cerr << "FMOD error: Failed to initialize system: " << FMOD_ErrorString(result) << std::endl;
-        return false;
-    }
-
-    return true;
-}
-
-void FModAudio::shutdown() {
-    if (channel_) {
-        channel_->stop();
-        channel_ = nullptr;
-    }
-    if (sound_) {
-        sound_->release();
-        sound_ = nullptr;
-    }
-    if (system_) {
-        system_->release();
-        system_ = nullptr;
-    }
-}
-
-bool FModAudio::createSound(const char* soundFile) {
-    if (!system_) {
-        std::cerr << "FMOD error: System is not initialized." << std::endl;
-        return false;
-    }
-
-    FMOD_RESULT result = system_->createSound(soundFile, FMOD_DEFAULT, nullptr, &sound_);
-    if (result != FMOD_OK) {
-        std::cerr << "FMOD error: Failed to create sound: " << FMOD_ErrorString(result) << std::endl;
-        return false;
-    }
-
-    return true;
-}
-
-bool FModAudio::playSound() {
-    if (!sound_) {
-        std::cerr << "FMOD error: Sound is not created." << std::endl;
-        return false;
-    }
-
-    if (!channel_) {
-        FMOD_RESULT result = system_->playSound(sound_, nullptr, false, &channel_);
+    bool FModAudio::m_init() {
+        FMOD_RESULT result = FMOD::System_Create(&m_system_);
         if (result != FMOD_OK) {
-            std::cerr << "FMOD error: Failed to play sound: " << FMOD_ErrorString(result) << std::endl;
+            std::cerr << "FMOD error: Failed to create system: " << FMOD_ErrorString(result) << std::endl;
             return false;
         }
-        std::cout << "Sound played\n";
+
+        result = m_system_->init(32, FMOD_INIT_NORMAL, nullptr);
+        if (result != FMOD_OK) {
+            std::cerr << "FMOD error: Failed to initialize system: " << FMOD_ErrorString(result) << std::endl;
+            return false;
+        }
+
+        return true;
     }
-    else {
-        bool isPlaying;
-        channel_->isPlaying(&isPlaying);
-        if (!isPlaying) {
-            FMOD_RESULT result = system_->playSound(sound_, nullptr, false, &channel_);
-            if (result != FMOD_OK) {
-                std::cerr << "FMOD error: Failed to replay sound: " << FMOD_ErrorString(result) << std::endl;
-                return false;
-            }
-            std::cout << "Sound replayed\n";
+
+    void FModAudio::m_shutdown() {
+        if (m_channel_) {
+            m_channel_->stop();
+            m_channel_ = nullptr;
+        }
+        if (m_sound_) {
+            m_sound_->release();
+            m_sound_ = nullptr;
+        }
+        if (m_system_) {
+            m_system_->release();
+            m_system_ = nullptr;
         }
     }
 
-    return true;
-}
+    bool FModAudio::m_createSound(const char* soundFile) {
+        if (!m_system_) {
+            std::cerr << "FMOD error: System is not initialized." << std::endl;
+            return false;
+        }
 
-void FModAudio::stopSound() {
-    if (channel_) {
-        channel_->stop();
-        channel_ = nullptr;
-    }
-}
+        FMOD_RESULT result = m_system_->createSound(soundFile, FMOD_DEFAULT, nullptr, &m_sound_);
+        if (result != FMOD_OK) {
+            std::cerr << "FMOD error: Failed to create sound: " << FMOD_ErrorString(result) << std::endl;
+            return false;
+        }
 
-// Volume control (0.0 = silent, 1.0 = full volume)
-bool FModAudio::setVolume(float volume) {
-    if (!channel_) {
-        std::cerr << "FMOD error: Channel is not initialized." << std::endl;
-        return false;
+        return true;
     }
-    FMOD_RESULT result = channel_->setVolume(volume);
-    if (result != FMOD_OK) {
-        std::cerr << "FMOD error: Failed to set volume: " << FMOD_ErrorString(result) << std::endl;
-        return false;
-    }
-    return true;
-}
 
-// Panning control (-1.0 = full left, 1.0 = full right, 0.0 = center)
-bool FModAudio::setPan(float pan) {
-    if (!channel_) {
-        std::cerr << "FMOD error: Channel is not initialized." << std::endl;
-        return false;
+    bool FModAudio::m_playSound() {
+        if (!m_sound_) {
+            std::cerr << "FMOD error: Sound is not created." << std::endl;
+            return false;
+        }
+
+        if (!m_channel_) {
+            FMOD_RESULT result = m_system_->playSound(m_sound_, nullptr, false, &m_channel_);
+            if (result != FMOD_OK) {
+                std::cerr << "FMOD error: Failed to play sound: " << FMOD_ErrorString(result) << std::endl;
+                return false;
+            }
+            std::cout << "Sound played\n";
+        }
+        else {
+            bool isPlaying;
+            m_channel_->isPlaying(&isPlaying);
+            if (!isPlaying) {
+                FMOD_RESULT result = m_system_->playSound(m_sound_, nullptr, false, &m_channel_);
+                if (result != FMOD_OK) {
+                    std::cerr << "FMOD error: Failed to replay sound: " << FMOD_ErrorString(result) << std::endl;
+                    return false;
+                }
+                std::cout << "Sound replayed\n";
+            }
+        }
+
+        return true;
     }
-    FMOD_RESULT result = channel_->setPan(pan);
-    if (result != FMOD_OK) {
-        std::cerr << "FMOD error: Failed to set panning: " << FMOD_ErrorString(result) << std::endl;
-        return false;
+
+    void FModAudio::m_stopSound() {
+        if (m_channel_) {
+            m_channel_->stop();
+            m_channel_ = nullptr;
+        }
     }
-    return true;
+
+    // Volume control (0.0 = silent, 1.0 = full volume)
+    bool FModAudio::m_setVolume(float volume) {
+        if (!m_channel_) {
+            std::cerr << "FMOD error: Channel is not initialized." << std::endl;
+            return false;
+        }
+        FMOD_RESULT result = m_channel_->setVolume(volume);
+        if (result != FMOD_OK) {
+            std::cerr << "FMOD error: Failed to set volume: " << FMOD_ErrorString(result) << std::endl;
+            return false;
+        }
+        return true;
+    }
+
+    // Panning control (-1.0 = full left, 1.0 = full right, 0.0 = center)
+    bool FModAudio::m_setPan(float pan) {
+        if (!m_channel_) {
+            std::cerr << "FMOD error: Channel is not initialized." << std::endl;
+            return false;
+        }
+        FMOD_RESULT result = m_channel_->setPan(pan);
+        if (result != FMOD_OK) {
+            std::cerr << "FMOD error: Failed to set panning: " << FMOD_ErrorString(result) << std::endl;
+            return false;
+        }
+        return true;
+    }
+
 }

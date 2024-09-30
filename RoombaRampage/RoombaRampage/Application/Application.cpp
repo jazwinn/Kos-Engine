@@ -38,7 +38,7 @@ namespace Application {
     bool audio2_bool = true;
 
     float LastTime = glfwGetTime();;
-
+    
 
     int Application::Init() {
         
@@ -94,9 +94,9 @@ namespace Application {
         /*--------------------------------------------------------------
            INITIALIZE ECS
         --------------------------------------------------------------*/
-        Ecs::ECS* ecs = Ecs::ECS::GetInstance();
-        ecs->Load();
-        ecs->Init();
+        ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+        ecs->m_Load();
+        ecs->m_Init();
         LOGGING_INFO("Load ECS Successful");
 
         LOGGING_INFO("Application Init Successful");
@@ -107,8 +107,8 @@ namespace Application {
 
 
     int Application::Run() {
-        Ecs::ECS* ecs = Ecs::ECS::GetInstance();
         Helper::Helpers *help = Helper::Helpers::GetInstance();
+        ecs::ECS* ecs = ecs::ECS::m_GetInstance();
         float FPSCapTime = 1.f / help->FpsCap;
         double lastFrameTime = glfwGetTime();
         /*--------------------------------------------------------------
@@ -123,7 +123,7 @@ namespace Application {
                 /*--------------------------------------------------------------
                     UPDATE ECS
                     --------------------------------------------------------------*/
-                ecs->Update(Helper::Helpers::GetInstance()->DeltaTime);
+                ecs->m_Update(Helper::Helpers::GetInstance()->DeltaTime);
 
                 /*--------------------------------------------------------------
                     UPDATE Render Pipeline
@@ -171,7 +171,7 @@ namespace Application {
 
 
 	int Application::Cleanup() {
-        Ecs::ECS::GetInstance()->Unload();
+        ecs::ECS::m_GetInstance()->m_Unload();
         imgui_manager.Shutdown();
         lvWindow.CleanUp();
         glfwTerminate();

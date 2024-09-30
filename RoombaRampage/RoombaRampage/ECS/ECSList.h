@@ -3,10 +3,10 @@
 #include <bitset>
 #include "../ECS/Component/ComponentList.h"
 
-namespace Ecs {
+namespace ecs {
 
 	using EntityID = unsigned int;
-	using compSignature = std::bitset<TotalTypeComponent>;
+	using compSignature = std::bitset<TOTALTYPECOMPONENT>;
 
 	// Max number of entities allowed to be created
 	static EntityID MaxEntity = 3000;

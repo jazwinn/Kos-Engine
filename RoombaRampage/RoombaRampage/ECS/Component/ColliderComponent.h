@@ -5,25 +5,25 @@
 #include "Component.h"
 #include "../Physics/Physics.h"
 
-namespace Ecs {
+namespace ecs {
 
 
 	class ColliderComponent : public Component {
 
 	public:
 		
-		vector2::Vec2 Size = {1,1};
+		vector2::Vec2 m_Size = {1,1};
 
-		vector2::Vec2 OffSet{};
+		vector2::Vec2 m_OffSet{};
 
-		unsigned int Layer{};
+		unsigned int m_Layer{};
 
-		bool drawDebug{true};
+		bool m_drawDebug{true};
 
-		physicspipe::EntityType type = physicspipe::EntityType::RECTANGLE;
+		physicspipe::EntityType m_type = physicspipe::EntityType::RECTANGLE;
 
-		float radius{};
-		bool isCollided{ false };
+		float m_radius{};
+		bool m_isCollided{ false };
 
 	};
 

@@ -51,9 +51,9 @@ prior written consent of DigiPen Institute of Technology is prohibited.
    * @param Takes an std::string_view or string in the form of "This is a log value: {0}, and {1}", followed by
    * the arguments
    */
-#define LOGGING_ERROR(x, ...) logging::Logger:: m_GetInstance(). m_Error(std::source_location::current(), x,  __VA_ARGS__)
-#define LOGGING_ERROR_NO_SOURCE_LOCATION(x, ...) logging::Logger:: m_GetInstance(). m_Error(x, __VA_ARGS__)
-#define LOGGING_CRASH(x, ...) logging::Logger:: m_GetInstance(). m_Crash(x,  __VA_ARGS__)
+#define LOGGING_ERROR(x, ...) logging::Logger::m_GetInstance().m_Error(std::source_location::current(), x,  __VA_ARGS__)
+#define LOGGING_ERROR_NO_SOURCE_LOCATION(x, ...) logging::Logger::m_GetInstance().m_Error(x, __VA_ARGS__)
+#define LOGGING_CRASH(x, ...) logging::Logger::m_GetInstance().m_Crash(x,  __VA_ARGS__)
    /*
     * @brief Variadic Macro for logging Errors. This macro takes in a string message, followed by the
     * necessary arguments.
@@ -65,9 +65,10 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 #define LOGGING_ASSERT(x) \
     if (!(x)) { \
-        LOGGING_ERROR("Assertion failed: {}", x); \
         assert(x); \
     }
+#define LOGGING_ASSERT_WITH_MSG(x,...) logging::Logger::m_GetInstance().m_Assert(std::source_location::current(),x,__VA_ARGS__);
+
 
 #define LOGGING_INIT_LOGS( filename ) logging::Logger::m_GetInstance().m_Init( filename )
 
@@ -119,6 +120,9 @@ namespace logging {
 
         template <typename... Args>
         void  m_Crash(const std::string_view message, Args&&... args);
+
+        template <typename... Args>
+        void  m_Assert(std::source_location location, const std::string_view message, Args&&... args);
 
         template <typename... Args>
         void  m_Debug(const std::string_view message, Args&&... args);
@@ -273,6 +277,33 @@ namespace logging {
             m_logFile << logEntry.str() << "\n";
             m_logFile.flush(); // Ensure immediate write to file
         }
+    }
+
+    template <typename... Args>
+    void Logger::m_Assert(std::source_location location, const std::string_view message, Args&&... args)
+    {
+        assert(m_bInitialized && "The logger must be initialized before it is used!");
+
+        if (!m_bInitialized)
+        {
+            std::cout << "The logger must be initialized before it is used!" << std::endl;
+            return;
+        }
+
+        std::stringstream logEntry;
+        logEntry << "[ASSERTION]: " << m_GetCurrentTimestamp() << " - " << std::vformat(message, std::make_format_args(args...))
+        << "\nFUNC: " << location.function_name() << " LINE: " << location.line() << " FILE: " << location.file_name();
+
+        std::cout << s_RED << logEntry.str() << s_CLOSE << std::endl;
+        m_log_list.push_back(logEntry.str());
+
+        // Output to log file
+        if (m_logFile.is_open()) {
+            m_logFile << logEntry.str() << "\n";
+            m_logFile.flush(); // Ensure immediate write to file
+        }
+
+        LOGGING_ASSERT(false);
     }
 
 

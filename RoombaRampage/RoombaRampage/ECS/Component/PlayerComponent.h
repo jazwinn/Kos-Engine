@@ -4,14 +4,14 @@
 #include "Component.h"
 
 
-namespace Ecs {
+namespace ecs {
 
 
 	class PlayerComponent : public Component {
 
 	public:
 
-		bool Control;
+		bool m_Control;
 
 	};
 

@@ -6,23 +6,23 @@
 #include "../ECS/Component/PlayerComponent.h"
 #include "../ECS/ECSList.h"
 
-namespace Ecs {
+namespace ecs {
 
 	class ControlSystem : public ISystem {
 
 	public:
-		void RegisterSystem(EntityID) override;
+		void m_RegisterSystem(EntityID) override;
 
-		void DeregisterSystem(EntityID) override;
+		void m_DeregisterSystem(EntityID) override;
 
-		void Init() override;
+		void m_Init() override;
 
-		void Update() override;
+		void m_Update() override;
 
 	private:
 		//Storage to point to components
-		std::vector<PlayerComponent*> vecPlayerComponentPtr;
-		std::vector<MovementComponent*> vecMovementComponentPtr;
+		std::vector<PlayerComponent*> m_vecPlayerComponentPtr;
+		std::vector<MovementComponent*> m_vecMovementComponentPtr;
 
 	};
 

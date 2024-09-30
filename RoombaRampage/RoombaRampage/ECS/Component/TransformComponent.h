@@ -4,14 +4,14 @@
 #include "Component.h"
 #include "../Math/vector2.h"
 
-namespace Ecs {
+namespace ecs {
 	class TransformComponent : public Component {
 
 	public:
 
-		vector2::Vec2 position{0,0};
-		float rotation{};
-		vector2::Vec2 scale{1,1};
+		vector2::Vec2 m_position{0,0};
+		float m_rotation{};
+		vector2::Vec2 m_scale{1,1};
 	};
 
 }

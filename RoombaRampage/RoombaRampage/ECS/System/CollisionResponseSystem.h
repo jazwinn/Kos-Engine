@@ -7,25 +7,25 @@
 
 #include "../ECS/ECSList.h"
 
-namespace Ecs {
+namespace ecs {
 
 	class CollisionResponseSystem : public ISystem {
 
 	public:
-		void RegisterSystem(EntityID) override;
+		void m_RegisterSystem(EntityID) override;
 
-		void DeregisterSystem(EntityID) override;
+		void m_DeregisterSystem(EntityID) override;
 
-		void Init() override;
+		void m_Init() override;
 
-		void Update() override;
+		void m_Update() override;
 
 	private:
 		//Storage to point to components
 		//std::vector<TransformComponent*> vecTransformComponentPtr;
-		std::vector<ColliderComponent*> vecColliderComponentPtr;
-		std::vector<RigidBodyComponent*> vecRigidBodyComponentPtr;
-		std::vector<MovementComponent*> vecMovementComponentPtr;
+		std::vector<ColliderComponent*> m_vecColliderComponentPtr;
+		std::vector<RigidBodyComponent*> m_vecRigidBodyComponentPtr;
+		std::vector<MovementComponent*> m_vecMovementComponentPtr;
 
 	};
 

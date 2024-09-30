@@ -49,7 +49,7 @@ namespace assetmanager {
 		~AssetManager();
 		std::vector<Image> imageContainer;
 		std::vector<unsigned char*> imagedataArray;
-		std::vector<std::unique_ptr<FModAudio>> m_audioContainer;
+		std::vector<std::unique_ptr<fmodaudio::FModAudio>> m_audioContainer;
 
 		void funcLoadAssets();
 		void funcLoadImage(const char* file);

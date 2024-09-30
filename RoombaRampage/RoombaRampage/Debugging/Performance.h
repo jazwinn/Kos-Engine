@@ -31,21 +31,21 @@ namespace performancetracker{
 		Performance();
 
 		static void m_ResetTotalSystemTime();
-		static void m_AddSystem(Ecs::TypeSystem System);
+		static void m_AddSystem(ecs::TypeSystem System);
 
 		static void m_PrintPerformance();
 		static void m_PrintFPS(float);
 		static void m_UpdateTotalSystemTime(float);
 
 		static float m_GetTotalSystemTime();
-		static float m_GetSystemTime(Ecs::TypeSystem);
-		static std::string m_GetSystemString(Ecs::TypeSystem);
-		static void m_UpdateSystemTime(Ecs::TypeSystem, float);
+		static float m_GetSystemTime(ecs::TypeSystem);
+		static std::string m_GetSystemString(ecs::TypeSystem);
+		static void m_UpdateSystemTime(ecs::TypeSystem, float);
 	private:
-		static std::string m_typeToString(Ecs::TypeSystem);
+		static std::string m_typeToString(ecs::TypeSystem);
 		static float m_engineTime;
 		static int m_totalSystem;
-		static std::unordered_map<Ecs::TypeSystem, std::pair<std::string,float>> m_systemTimeList;
+		static std::unordered_map<ecs::TypeSystem, std::pair<std::string,float>> m_systemTimeList;
 		
 
 	};

@@ -8,7 +8,7 @@
 #include "glfw3.h"
 #include <gtc/type_ptr.hpp>
 
-namespace Ecs{
+namespace ecs{
 
 	class RenderSystem : public ISystem {
 
@@ -17,19 +17,19 @@ namespace Ecs{
 
 	public:
 
-		void RegisterSystem(EntityID) override;
+		void m_RegisterSystem(EntityID) override;
 
-		void DeregisterSystem(EntityID) override;
+		void m_DeregisterSystem(EntityID) override;
 
-		void Init() override;
+		void m_Init() override;
 
-		void Update() override;
+		void m_Update() override;
 
 
 	private:
 		//Storage to point to components
-		std::vector<TransformComponent*> vecTransformComponentPtr;
-		std::vector<SpriteComponent*> vecSpriteComponentPtr;
+		std::vector<TransformComponent*> m_vecTransformComponentPtr;
+		std::vector<SpriteComponent*> m_vecSpriteComponentPtr;
 
 	};
 

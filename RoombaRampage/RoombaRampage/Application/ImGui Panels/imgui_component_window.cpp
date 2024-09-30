@@ -21,7 +21,7 @@ void ImGuiHandler::DrawComponentWindow()
 {
     bool windowOpen = true;
     std::string Title = "Component Window";
-    Ecs::ECS* ecs = Ecs::ECS::GetInstance();
+    ecs::ECS* ecs = ecs::ECS::m_GetInstance();
 
     std::string windowTitle = Title;
 
@@ -40,27 +40,27 @@ void ImGuiHandler::DrawComponentWindow()
 
     if (obj_text_entries.size() > 0) {
 
-        Ecs::EntityID entityID = clicked_entity_id;
+        ecs::EntityID entityID = clicked_entity_id;
 
         ImGui::Combo("##ADDCOMPONENT", &ComponentType, ComponentNames, IM_ARRAYSIZE(ComponentNames), IM_ARRAYSIZE(ComponentNames));
         if (ComponentType == 1) {
-            ecs->AddComponent(Ecs::TypeMovemmentComponent, entityID);
+            ecs->m_AddComponent(ecs::TYPEMOVEMENTCOMPONENT, entityID);
             ComponentType = 0;
         }
         if (ComponentType == 2) {
-            ecs->AddComponent(Ecs::TypeColliderComponent, entityID);
+            ecs->m_AddComponent(ecs::TYPECOLLIDERCOMPONENT, entityID);
             ComponentType = 0;
         }
         if (ComponentType == 3) {
-            ecs->AddComponent(Ecs::TypeSpriteComponent, entityID);
+            ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, entityID);
             ComponentType = 0;
         }
         if (ComponentType == 4) {
-            ecs->AddComponent(Ecs::TypePlayerComponent, entityID);
+            ecs->m_AddComponent(ecs::TYPEPLAYERCOMPONENT, entityID);
             ComponentType = 0;
         }
         if (ComponentType == 5) {
-            ecs->AddComponent(Ecs::TypeRigidBodyComponent, entityID);
+            ecs->m_AddComponent(ecs::TYPERIGIDBODYCOMPONENT, entityID);
             ComponentType = 0;
         }
 
@@ -72,29 +72,29 @@ void ImGuiHandler::DrawComponentWindow()
 
         // Check if the TransformComponent exists for the entity
 
-        Ecs::compSignature EntitySignature = ecs->ECS_EntityMap[entityID];
+        ecs::compSignature EntitySignature = ecs->m_ECS_EntityMap[entityID];
             
-        if (EntitySignature.test(Ecs::TypeTransformComponent))
+        if (EntitySignature.test(ecs::TYPETRANSFORMCOMPONENT))
         {
                 
                 
             if (ImGui::CollapsingHeader("Transform Component"))
             {
                 // Retrieve the TransformComponent
-                Ecs::TransformComponent* tc = static_cast<Ecs::TransformComponent*>(ecs->ECS_CombinedComponentPool[Ecs::TypeTransformComponent]
-                    ->GetEntityComponent(entityID));
+                ecs::TransformComponent* tc = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]
+                    ->m_GetEntityComponent(entityID));
 
                 //Display Position
                 ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
                 ImGui::Text("Position");
                 ImGui::SameLine(slider_start_pos_x);
                 ImGui::SetNextItemWidth(100.0f);
-                if (ImGui::DragFloat("X##", &tc->position.m_x, 0.02f, -1.0f, 1.0f, "%.2f"))
+                if (ImGui::DragFloat("X##", &tc->m_position.m_x, 0.02f, -1.0f, 1.0f, "%.2f"))
                     isModified = true;
 
                 ImGui::SameLine();
                 ImGui::SetNextItemWidth(100.0f);
-                if (ImGui::DragFloat("Y##PosY", &tc->position.m_y, 0.02f, -1.0f, 1.0f, "%.2f"))
+                if (ImGui::DragFloat("Y##PosY", &tc->m_position.m_y, 0.02f, -1.0f, 1.0f, "%.2f"))
                     isModified = true;
 
                 //Display Rotation
@@ -102,7 +102,7 @@ void ImGuiHandler::DrawComponentWindow()
                 ImGui::Text("Rotation");
                 ImGui::SameLine(slider_start_pos_x);
                 ImGui::SetNextItemWidth(100.0f);
-                if (ImGui::DragFloat("##Rot", &tc->rotation, 1.0f, -360.0f, 360.0f, "%.2f"))
+                if (ImGui::DragFloat("##Rot", &tc->m_rotation, 1.0f, -360.0f, 360.0f, "%.2f"))
                     isModified = true;
 
                 //Display Scale
@@ -110,29 +110,29 @@ void ImGuiHandler::DrawComponentWindow()
                 ImGui::Text("Scale");
                 ImGui::SameLine(slider_start_pos_x);
                 ImGui::SetNextItemWidth(100.0f);
-                if (ImGui::DragFloat("X", &tc->scale.m_x, 0.02f, 0.1f, 2.0f, "%.2f"))
+                if (ImGui::DragFloat("X", &tc->m_scale.m_x, 0.02f, 0.1f, 2.0f, "%.2f"))
                     isModified = true;
 
                 ImGui::SameLine();
                 ImGui::SetNextItemWidth(100.0f);
-                if (ImGui::DragFloat("Y", &tc->scale.m_y, 0.02f, 0.1f, 2.0f, "%.2f"))
+                if (ImGui::DragFloat("Y", &tc->m_scale.m_y, 0.02f, 0.1f, 2.0f, "%.2f"))
                     isModified = true;
             }
         }
-        if (EntitySignature.test(Ecs::TypeMovemmentComponent))
+        if (EntitySignature.test(ecs::TYPEMOVEMENTCOMPONENT))
         {
             if (ImGui::CollapsingHeader("Movement Component"))
             {
                 // retrieve movement component
-                Ecs::MovementComponent* mc = static_cast<Ecs::MovementComponent*>(ecs->ECS_CombinedComponentPool[Ecs::TypeMovemmentComponent]
-                    ->GetEntityComponent(entityID));
+                ecs::MovementComponent* mc = static_cast<ecs::MovementComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEMOVEMENTCOMPONENT]
+                    ->m_GetEntityComponent(entityID));
 
                 // Display Speed
                 ImGui::AlignTextToFramePadding();
                 ImGui::Text("Speed");
                 ImGui::SameLine(slider_start_pos_x);
                 ImGui::SetNextItemWidth(100.0f);
-                if (ImGui::DragFloat("##Speed", &mc->Speed, 0.01f, -10.0f, 10.0f, "%.2f"))
+                if (ImGui::DragFloat("##Speed", &mc->m_Speed, 0.01f, -10.0f, 10.0f, "%.2f"))
                     isModified = true;
 
                 // Display Velocity
@@ -140,52 +140,52 @@ void ImGuiHandler::DrawComponentWindow()
                 ImGui::Text("Direction");
                 ImGui::SameLine(slider_start_pos_x);
                 ImGui::SetNextItemWidth(100.0f);
-                if (ImGui::DragFloat("X##VelX", &mc->Direction.m_x, 0.02f, -1.0f, 1.0f, "%.2f"))
+                if (ImGui::DragFloat("X##VelX", &mc->m_Direction.m_x, 0.02f, -1.0f, 1.0f, "%.2f"))
                     isModified = true;
 
                 ImGui::SameLine();
                 ImGui::SetNextItemWidth(100.0f);
-                if (ImGui::DragFloat("Y##VelY", &mc->Direction.m_y, 0.02f, -1.0f, 1.0f, "%.2f"))
+                if (ImGui::DragFloat("Y##VelY", &mc->m_Direction.m_y, 0.02f, -1.0f, 1.0f, "%.2f"))
                     isModified = true;
 
                 // Display Resistance
                 ImGui::AlignTextToFramePadding();
                 ImGui::Text("Auto Move");
                 ImGui::SameLine(slider_start_pos_x);
-                ImGui::Checkbox("##", &mc->Move);
+                ImGui::Checkbox("##", &mc->m_Move);
 
             }
 
                
 
         }
-        if (EntitySignature.test(Ecs::TypeColliderComponent))
+        if (EntitySignature.test(ecs::TYPECOLLIDERCOMPONENT))
         {
 
             if (ImGui::CollapsingHeader("Collider Component")) {
 
                 //retrieve collision collider
-                Ecs::ColliderComponent* cc = static_cast<Ecs::ColliderComponent*>(ecs->ECS_CombinedComponentPool[Ecs::TypeColliderComponent]
-                    ->GetEntityComponent(entityID));
+                ecs::ColliderComponent* cc = static_cast<ecs::ColliderComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]
+                    ->m_GetEntityComponent(entityID));
 
                 //Display Position
                 ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
                 ImGui::Text("Size");
                 ImGui::SameLine(slider_start_pos_x);
                 ImGui::SetNextItemWidth(100.0f);
-                if (ImGui::DragFloat("X###", &cc->Size.m_x, 0.02f, 0.f, 2.0f, "%.2f"))
+                if (ImGui::DragFloat("X###", &cc->m_Size.m_x, 0.02f, 0.f, 2.0f, "%.2f"))
                     isModified = true;
 
                 ImGui::SameLine();
                 ImGui::SetNextItemWidth(100.0f);
-                if (ImGui::DragFloat("Y###PosY", &cc->Size.m_y, 0.02f, 0.f, 2.0f, "%.2f"))
+                if (ImGui::DragFloat("Y###PosY", &cc->m_Size.m_y, 0.02f, 0.f, 2.0f, "%.2f"))
                     isModified = true;
 
                 //Display Rotation
                 ImGui::AlignTextToFramePadding();
                 ImGui::Text("Display Collision");
                 ImGui::SameLine(slider_start_pos_x + 40);
-                ImGui::Checkbox("####xx", &cc->drawDebug);
+                ImGui::Checkbox("####xx", &cc->m_drawDebug);
                 isModified = true;
 
                 //Display Scale
@@ -193,22 +193,22 @@ void ImGuiHandler::DrawComponentWindow()
                 ImGui::Text("Offset");
                 ImGui::SameLine(slider_start_pos_x);
                 ImGui::SetNextItemWidth(100.0f);
-                if (ImGui::DragFloat("XX##VelX", &cc->OffSet.m_x, 0.02f, -1.f, 1.0f, "%.2f"))
+                if (ImGui::DragFloat("XX##VelX", &cc->m_OffSet.m_x, 0.02f, -1.f, 1.0f, "%.2f"))
                     isModified = true;
 
                 ImGui::SameLine();
                 ImGui::SetNextItemWidth(100.0f);
-                if (ImGui::DragFloat("YY##VelY", &cc->OffSet.m_y, 0.02f, -1.f, 1.f, "%.2f"))
+                if (ImGui::DragFloat("YY##VelY", &cc->m_OffSet.m_y, 0.02f, -1.f, 1.f, "%.2f"))
                     isModified = true;
             }
 
                 
         }
-        if (EntitySignature.test(Ecs::TypeSpriteComponent))
+        if (EntitySignature.test(ecs::TYPESPRITECOMPONENT))
         {
             //retrieve sprite component
-            Ecs::SpriteComponent* sc = static_cast<Ecs::SpriteComponent*>(ecs->ECS_CombinedComponentPool[Ecs::TypeSpriteComponent]
-                ->GetEntityComponent(entityID));
+            ecs::SpriteComponent* sc = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]
+                ->m_GetEntityComponent(entityID));
 
             if (ImGui::CollapsingHeader("Sprite Component")) {
                 assetmanager::AssetManager* images = assetmanager::AssetManager::funcGetInstance();
@@ -222,7 +222,7 @@ void ImGuiHandler::DrawComponentWindow()
 
                 if (ImGui::BeginListBox("Images"))
                 {
-                    item_selected_idx = sc->imageID;
+                    item_selected_idx = sc->m_imageID;
                     for (unsigned int n = 0; n < images->imageContainer.size(); n++)
                     {
                         bool is_selected = (item_selected_idx == n);
@@ -242,7 +242,7 @@ void ImGuiHandler::DrawComponentWindow()
                         if (is_selected)
                         {
                             ImGui::SetItemDefaultFocus();
-                            sc->imageID = n;
+                            sc->m_imageID = n;
                         }
 
                     }
@@ -252,20 +252,20 @@ void ImGuiHandler::DrawComponentWindow()
 
 
         }
-        if (EntitySignature.test(Ecs::TypePlayerComponent)) {
-            Ecs::PlayerComponent* pc = static_cast<Ecs::PlayerComponent*>(ecs->ECS_CombinedComponentPool[Ecs::TypePlayerComponent]
-                ->GetEntityComponent(entityID));
+        if (EntitySignature.test(ecs::TYPEPLAYERCOMPONENT)) {
+            ecs::PlayerComponent* pc = static_cast<ecs::PlayerComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEPLAYERCOMPONENT]
+                ->m_GetEntityComponent(entityID));
             if (ImGui::CollapsingHeader("Player Component")) {
                 
-                ImGui::Checkbox("Player Control", &pc->Control);
+                ImGui::Checkbox("Player Control", &pc->m_Control);
                 
                 
             }
         }
 
-        if (EntitySignature.test(Ecs::TypeRigidBodyComponent)) {
-            Ecs::RigidBodyComponent* rc = static_cast<Ecs::RigidBodyComponent*>(ecs->ECS_CombinedComponentPool[Ecs::TypeRigidBodyComponent]
-                ->GetEntityComponent(entityID));
+        if (EntitySignature.test(ecs::TYPERIGIDBODYCOMPONENT)) {
+            ecs::RigidBodyComponent* rc = static_cast<ecs::RigidBodyComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPERIGIDBODYCOMPONENT]
+                ->m_GetEntityComponent(entityID));
             if (ImGui::CollapsingHeader("RigidBody Component")) {
 
                 ImGui::Text("Work In Progress");

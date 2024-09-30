@@ -6,7 +6,7 @@
 
 //#include "../ECS/System/RenderSystem.h"
 
-namespace Ecs {
+namespace ecs {
 
 	enum SpriteShape {
 		RECTANGLE,
@@ -19,8 +19,8 @@ namespace Ecs {
 
 	public:
 
-		unsigned int imageID;
-		unsigned int frameNumber;
+		unsigned int m_imageID;
+		unsigned int m_frameNumber;
 
 	};
 

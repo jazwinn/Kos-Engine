@@ -1,20 +1,17 @@
 #ifndef SYSTYPE_H
 #define SYSTYPE_H
-namespace Ecs {
+namespace ecs {
 
 	enum TypeSystem {
-		TypeMovementSystem,
-		TypeControlSystem,
 
-
-
-
-		TypeCollisionSystem,
-		TypeCollisionResponseSystem,
+		TYPEMOVEMENTSYSTEM,
+		TYPECONTROLSYSTEM,
+		TYPECOLLISIONSYSTEM,
+		TYPECOLLISIONRESPONSESYSTEM,
+		
 		//render system called the last
-		TypeRenderSystem,
-
-		TotalTypeSystem
+		TYPERENDERSYSTEM,
+		TOTALTYPESYSTEM
 	};
 }
 

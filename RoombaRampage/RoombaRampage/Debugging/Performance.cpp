@@ -16,23 +16,23 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 namespace performancetracker {
 	//Global Varaibles
 	float Performance::m_engineTime = 0.f;
-	int Performance::m_totalSystem = Ecs::TotalTypeSystem;
-	std::unordered_map<Ecs::TypeSystem, std::pair<std::string, float>> Performance::m_systemTimeList;
+	int Performance::m_totalSystem = ecs::TOTALTYPESYSTEM;
+	std::unordered_map<ecs::TypeSystem, std::pair<std::string, float>> Performance::m_systemTimeList;
 
 	Performance::Performance() {
 		//engineTime = 0.0f;
 	}
-	std::string Performance::m_typeToString(Ecs::TypeSystem type) {
+	std::string Performance::m_typeToString(ecs::TypeSystem type) {
 		switch (type) {
-		case Ecs::TypeSystem::TypeMovementSystem:
+		case ecs::TypeSystem::TYPEMOVEMENTSYSTEM:
 			return "Movement System";
-		case Ecs::TypeSystem::TypeControlSystem:
+		case ecs::TypeSystem::TYPECONTROLSYSTEM:
 			return "Control System";
-		case Ecs::TypeSystem::TypeCollisionSystem:
+		case ecs::TypeSystem::TYPECOLLISIONSYSTEM:
 			return "Collision System";
-		case Ecs::TypeSystem::TypeCollisionResponseSystem:
+		case ecs::TypeSystem::TYPECOLLISIONRESPONSESYSTEM:
 			return "Collision Response System";
-		case Ecs::TypeSystem::TypeRenderSystem:
+		case ecs::TypeSystem::TYPERENDERSYSTEM:
 			return "Render System";
 		default:
 			return "Error (Add System to Performance.cpp)";
@@ -46,22 +46,22 @@ namespace performancetracker {
 		m_engineTime += time;
 	}
 
-	void Performance::m_AddSystem(Ecs::TypeSystem System) {
+	void Performance::m_AddSystem(ecs::TypeSystem System) {
 		m_systemTimeList[System] = { m_typeToString(System),0};
 	}
 
-	void Performance::m_UpdateSystemTime(Ecs::TypeSystem system, float time) {
+	void Performance::m_UpdateSystemTime(ecs::TypeSystem system, float time) {
 		m_systemTimeList[system].second = time;
 	}
 
 	float Performance::m_GetTotalSystemTime() {
 		return m_engineTime;
 	}
-	float Performance::m_GetSystemTime(Ecs::TypeSystem sys) {
+	float Performance::m_GetSystemTime(ecs::TypeSystem sys) {
 		return m_systemTimeList[sys].second;
 	}
 	
-	std::string Performance::m_GetSystemString(Ecs::TypeSystem Sys) {
+	std::string Performance::m_GetSystemString(ecs::TypeSystem Sys) {
 		return m_systemTimeList[Sys].first;
 	}
 
