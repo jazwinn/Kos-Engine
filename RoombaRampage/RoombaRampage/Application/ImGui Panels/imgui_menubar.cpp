@@ -5,6 +5,7 @@
 #include "imgui_internal.h"
 
 #include "../../De&Serialization/json_handler.h"
+#include "../ECS/ECS.h"
 
 void ImGuiHandler::DrawMainMenuBar() {
 
@@ -12,15 +13,20 @@ void ImGuiHandler::DrawMainMenuBar() {
     {
         if (ImGui::BeginMenu("File"))
         {
-            if (ImGui::BeginMenu("Open")) {
+            if (ImGui::MenuItem("Save")) {
+
+
+                Serialization::Serialize::SaveComponentsJson("../RoombaRampage/Json", Ecs::ECS::GetInstance()->ECS_EntityMap, obj_text_entries, obj_entity_id);
+
+                
+            }
+            
+            if (ImGui::BeginMenu("Open - Work In Progress")) {
 
 
                 if (ImGui::MenuItem("Components.json")) {
-                   // Serialization::Serialize::LoadComponentsJson("../RoombaRampage/Json/components.json", ecs, obj_text_entries);
+                    //Serialization::Serialize::LoadComponentsJson("../RoombaRampage/Json/components.json", Ecs::ECS::GetInstance(), obj_text_entries);
                 }
-
-
-
 
                 ImGui::EndMenu();
             }

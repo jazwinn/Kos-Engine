@@ -5,8 +5,8 @@
 #include "../ECS/ECS.h"
 #include "../Helper.h"
 #include "../../De&Serialization/json_handler.h"
-#include "../Application.h"
 #include "../Debugging/Logging.h"
+#include "../Assets/AssetManager.h"
 
 #include<vector>
 #include<string>
@@ -22,19 +22,22 @@ void ImGuiHandler::DrawTestWindow() {
 	static int currTime = 0;
 
 	Ecs::ECS *ecs = Ecs::ECS::GetInstance();
-	
+	assetmanager::AssetManager* assetManager = assetmanager::AssetManager::funcGetInstance();
+
+
 	bool open = true;
 	ImGui::Begin("Test Window", &open);
 	if (ImGui::Button("Vacuum")) {
-		Application::Application::audio.playSound();
+		// abit hard coded might cause crash
+		assetManager->m_audioContainer[0]->playSound();
 	}
 	ImGui::SameLine();
 	if (ImGui::Button("Sound")) {
-		Application::Application::audio2.playSound();
+		assetManager->m_audioContainer[1]->playSound();
 	}
 	if (ImGui::Button("Stop Sound")) {
-		Application::Application::audio.stopSound();
-		Application::Application::audio2.stopSound();
+		assetManager->m_audioContainer[0]->stopSound();
+		assetManager->m_audioContainer[1]->stopSound();
 	}
 	ImGui::NewLine();
 	if (ImGui::Button("Crash")) {
