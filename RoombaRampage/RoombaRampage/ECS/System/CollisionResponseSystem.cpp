@@ -73,7 +73,6 @@ namespace Ecs {
 			//CollidedEntity is the ID
 			for (auto& CollidedEntity : vecCollisionEntity) {
 				if (ecs->ECS_CombinedComponentPool[TypeRigidBodyComponent]->HasComponent(CollidedEntity->m_ID)) {
-					std::cout << "Collided" << std::endl;
 					MovementComponent* MovCom = (MovementComponent*)ecs->ECS_CombinedComponentPool[TypeMovemmentComponent]->GetEntityComponent(CollidedEntity->m_ID);
 					ColliderComponent* ColCom = (ColliderComponent*)ecs->ECS_CombinedComponentPool[TypeColliderComponent]->GetEntityComponent(CollidedEntity->m_ID);
 					ColCom->isCollided = true;

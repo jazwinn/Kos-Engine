@@ -1,10 +1,10 @@
 [
     {
-        "name": "test",
+        "name": "test2",
         "transform": {
             "position": {
-                "x": 1.8185055255889893,
-                "y": 0.06806710362434387
+                "x": -0.5129761695861816,
+                "y": 0.5536870956420898
             },
             "rotation": 0.0,
             "scale": {
@@ -34,16 +34,21 @@
         "player": {
             "control": false
         },
+        "rigidbody": {
+            "mass": 0.0
+        },
         "sprite": {
-            "imageID": 3,
+            "imageID": 0,
             "frameNumber": 0
         }
     },
     {
-        "name": "test2",
+        "name": "test1"
+    },
+    {
         "transform": {
             "position": {
-                "x": 0.0,
+                "x": 0.5933093428611755,
                 "y": 0.0
             },
             "rotation": 0.0,
@@ -71,11 +76,11 @@
             "layer": 0,
             "drawDebug": true
         },
-        "player": {
-            "control": false
+        "rigidbody": {
+            "mass": 0.0
         },
         "sprite": {
-            "imageID": 3,
+            "imageID": 0,
             "frameNumber": 0
         }
     }

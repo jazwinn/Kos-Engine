@@ -1,11 +1,11 @@
-[INFO]: 2024-09-29 23:25:14 - Application Start
-[INFO]: 2024-09-29 23:25:14 - Load Config Successful
-[INFO]: 2024-09-29 23:25:14 - Load Asset Successful
-[INFO]: 2024-09-29 23:25:14 - Application Init Successful
-[INFO]: 2024-09-29 23:25:14 - Load Window Successful
-[INFO]: 2024-09-29 23:25:14 - Load Graphic Pipline Successful
-[INFO]: 2024-09-29 23:25:14 - Set Input Call Back Successful
-[INFO]: 2024-09-29 23:25:14 - Load ImGui Successful
-[INFO]: 2024-09-29 23:25:14 - Load ECS Successful
-[INFO]: 2024-09-29 23:25:14 - Application Init Successful
-[INFO]: 2024-09-29 23:26:54 - Application Closed
+[INFO]: 2024-09-30 12:41:35 - Application Start
+[INFO]: 2024-09-30 12:41:35 - Load Config Successful
+[INFO]: 2024-09-30 12:41:35 - Load Asset Successful
+[INFO]: 2024-09-30 12:41:35 - Application Init Successful
+[INFO]: 2024-09-30 12:41:35 - Load Window Successful
+[INFO]: 2024-09-30 12:41:35 - Load Graphic Pipline Successful
+[INFO]: 2024-09-30 12:41:35 - Set Input Call Back Successful
+[INFO]: 2024-09-30 12:41:35 - Load ImGui Successful
+[INFO]: 2024-09-30 12:41:35 - Load ECS Successful
+[INFO]: 2024-09-30 12:41:35 - Application Init Successful
+[INFO]: 2024-09-30 12:41:38 - Application Closed
