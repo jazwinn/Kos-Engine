@@ -58,6 +58,7 @@ void ImGuiHandler::Render()
     DrawComponentWindow();
     DrawLogsWindow();
     DrawTestWindow();
+    DrawInputWindow();
     DrawRenderScreenWindow(static_cast<unsigned int>(Helper::Helpers::GetInstance()->WindowWidth), static_cast<unsigned int>(Helper::Helpers::GetInstance()->WindowHeight));
     ImGui::Render();
     ImGuiIO& io = ImGui::GetIO();

@@ -23,9 +23,8 @@ namespace assetmanager {
 
     void AssetManager::funcLoadAssets()
     {
-
-        funcLoadImage("Assets/blackTile_test.png");
         funcLoadImage("Assets/testBackground.png");
+        funcLoadImage("Assets/blackTile_test.png");
         funcLoadImage("Assets/roombaTest.png");
         funcLoadImage("Assets/roombaTest2.png");
         funcLoadImage("Assets/roombaTest3.png");

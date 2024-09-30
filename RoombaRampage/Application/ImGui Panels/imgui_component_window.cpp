@@ -148,11 +148,11 @@ void ImGuiHandler::DrawComponentWindow()
                 if (ImGui::DragFloat("Y##VelY", &mc->m_Direction.m_y, 0.02f, -1.0f, 1.0f, "%.2f"))
                     isModified = true;
 
-                // Display Resistance
-                ImGui::AlignTextToFramePadding();
-                ImGui::Text("Auto Move");
-                ImGui::SameLine(slider_start_pos_x);
-                ImGui::Checkbox("##", &mc->m_Move);
+                //// Display Resistance
+                //ImGui::AlignTextToFramePadding();
+                //ImGui::Text("Auto Move");
+                //ImGui::SameLine(slider_start_pos_x);
+                //ImGui::Checkbox("##", &mc->m_Move);
 
             }
 
