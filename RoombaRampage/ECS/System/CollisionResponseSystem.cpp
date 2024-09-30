@@ -82,31 +82,14 @@ namespace ecs {
 					MovementComponent* MovCom = (MovementComponent*)ecs->m_ECS_CombinedComponentPool[TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(CollidedEntity->m_ID);
 					ColliderComponent* ColCom = (ColliderComponent*)ecs->m_ECS_CombinedComponentPool[TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(CollidedEntity->m_ID);
 					ColCom->m_isCollided = true;
-					MovCom->m_Direction = { 0,0 };
 				}	
 				
 			}
 
-			
 			//if (ecs->ECS_CombinedComponentPool[TypeRigidBodyComponent]->HasComponent(CollidedEntity->ID)) {
 			//	MovementComponent* MovCom = (MovementComponent*)ecs->ECS_CombinedComponentPool[TypeMovemmentComponent]->GetEntityComponent(CollidedEntity->ID);
 			//	MovCom->Direction = { 0,0 };
 			//}
-		}
-		GraphicsPipe* graphicsPipe = GraphicsPipe::funcGetInstance();
-		for (int n{}; n < m_vecColliderComponentPtr.size(); n++) {
-
-			//std::cout << "Update Entity: " << n << std::endl;
-			//sprite not need currently
-			//SpriteComponent* MovComp = vecSpriteComponentPtr[n];
-			TransformComponent* transform = m_vecTransformComponentPtr[n];
-			ColliderComponent* collider = m_vecColliderComponentPtr[n];
-
-			if (collider->m_drawDebug)
-			{
-				graphicsPipe->debugBoxData.push_back({ 0, glm::vec2{collider->m_Size.m_x * transform->m_scale.m_x, collider->m_Size.m_y * transform->m_scale.m_y}, glm::vec3{transform->m_position.m_x + collider->m_OffSet.m_x,transform->m_position.m_y + collider->m_OffSet.m_y, 0} ,collider->m_isCollided, 0 });
-			}
-
 		}
 	}
 
