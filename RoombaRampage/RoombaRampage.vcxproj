@@ -196,6 +196,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\Freetype_Font\lib\*.dll" "$(OutDir)"</Co
     <ClCompile Include="ECS\System\CollisionResponseSystem.cpp" />
     <ClCompile Include="ECS\System\CollisionSystem.cpp" />
     <ClCompile Include="ECS\System\ControlSystem.cpp" />
+    <ClCompile Include="ECS\System\DebugDrawingSystem.cpp" />
     <ClCompile Include="ECS\System\MovementSystem.cpp" />
     <ClCompile Include="ECS\System\RenderSystem.cpp" />
     <ClCompile Include="Events\Listeners.cpp" />
@@ -248,6 +249,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\Freetype_Font\lib\*.dll" "$(OutDir)"</Co
     <ClInclude Include="ECS\System\CollisionResponseSystem.h" />
     <ClInclude Include="ECS\System\CollisionSystem.h" />
     <ClInclude Include="ECS\System\ControlSystem.h" />
+    <ClInclude Include="ECS\System\DebugDrawingSystem.h" />
     <ClInclude Include="ECS\System\MovementSystem.h" />
     <ClInclude Include="ECS\System\RenderSystem.h" />
     <ClInclude Include="ECS\System\System.h" />

@@ -6,6 +6,7 @@
 #include "../ECS/System/CollisionSystem.h"
 #include "../ECS//System/CollisionResponseSystem.h"
 #include "../ECS/System/ControlSystem.h"
+#include "../ECS/System/DebugDrawingSystem.h"
 
 #endif SYSLIST_H
 
