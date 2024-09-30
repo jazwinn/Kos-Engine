@@ -22,7 +22,7 @@ namespace ecs {
 		std::vector<TransformComponent*> m_vecTransformComponentPtr;
 		std::vector<ColliderComponent*> m_vecColliderComponentPtr;
 		//std::vector<RigidBodyComponent*> vecRigidBodyComponentPtr;
-		std::vector<MovementComponent*> m_vecMovementComponentPtr;
+		//std::vector<MovementComponent*> m_vecMovementComponentPtr;
 
 	};
 
