@@ -35,8 +35,8 @@ namespace Ecs{
 		ecs->ECS_SystemMap[TypeControlSystem] = std::make_shared<ControlSystem>();
 		ecs->ECS_SystemMap[TypeMovementSystem] = std::make_shared<MovementSystem>();
 		ecs->ECS_SystemMap[TypeCollisionSystem] = std::make_shared<CollisionSystem>();
-		ecs->ECS_SystemMap[TypeRenderSystem] = std::make_shared<RenderSystem>();
 		ecs->ECS_SystemMap[TypeCollisionResponseSystem] = std::make_shared<CollisionResponseSystem>();
+		ecs->ECS_SystemMap[TypeRenderSystem] = std::make_shared<RenderSystem>();
 
 		//Initialize all system Peformance
 		performancetracker::Performance Perform{};

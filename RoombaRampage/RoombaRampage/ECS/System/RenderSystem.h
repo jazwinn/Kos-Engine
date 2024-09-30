@@ -30,6 +30,7 @@ namespace Ecs{
 		//Storage to point to components
 		std::vector<TransformComponent*> vecTransformComponentPtr;
 		std::vector<SpriteComponent*> vecSpriteComponentPtr;
+		std::vector<ColliderComponent*> vecColliderComponentPtr;
 
 	};
 

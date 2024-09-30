@@ -13,6 +13,7 @@ namespace Ecs {
 			== vecTransformComponentPtr.end()) {
 			vecTransformComponentPtr.push_back((TransformComponent*)ecs->ECS_CombinedComponentPool[TypeTransformComponent]->GetEntityComponent(ID));
 			vecSpriteComponentPtr.push_back((SpriteComponent*)ecs->ECS_CombinedComponentPool[TypeSpriteComponent]->GetEntityComponent(ID));
+			vecColliderComponentPtr.push_back((ColliderComponent*)ecs->ECS_CombinedComponentPool[TypeColliderComponent]->GetEntityComponent(ID));
 		}
 
 	}
@@ -32,16 +33,19 @@ namespace Ecs {
 		size_t IndexLast = vecSpriteComponentPtr.size() - 1;
 		std::swap(vecSpriteComponentPtr[IndexID], vecSpriteComponentPtr[IndexLast]);
 		std::swap(vecTransformComponentPtr[IndexID], vecTransformComponentPtr[IndexLast]);
+		std::swap(vecColliderComponentPtr[IndexID], vecColliderComponentPtr[IndexLast]);
 
 		//popback the vector;
 		vecSpriteComponentPtr.pop_back();
 		vecTransformComponentPtr.pop_back();
+		vecColliderComponentPtr.pop_back();
 	}
 
 	void RenderSystem::Init()
 	{
 		SystemSignature.set(TypeTransformComponent);
 		SystemSignature.set(TypeSpriteComponent);
+		SystemSignature.set(TypeColliderComponent);
 	}
 
 	void RenderSystem::Update()
@@ -56,14 +60,18 @@ namespace Ecs {
 
 		//loops through all vecoters pointing to component
 		for (int n{}; n < vecSpriteComponentPtr.size(); n++) {
-
-			//std::cout << "Update Entity: " << n << std::endl;
-			//sprite not need currently
-			//SpriteComponent* MovComp = vecSpriteComponentPtr[n];
 			TransformComponent* transform = vecTransformComponentPtr[n];
 			SpriteComponent* sprite = vecSpriteComponentPtr[n];
+			ColliderComponent* ColComp = vecColliderComponentPtr[n];
 
 			graphicsPipe->modelData.push_back({ transform->rotation, glm::vec2{transform->scale.m_x, transform->scale.m_y}, glm::vec3{transform->position.m_x,transform->position.m_y, 0} ,sprite->imageID, 0, 0 });
+
+			if (ColComp->drawDebug)
+			{
+				std::cout << ColComp->isCollided << std::endl;
+
+				graphicsPipe->debugBoxData.push_back({ 0, glm::vec2{ColComp->Size.m_x * transform->scale.m_x, ColComp->Size.m_y * transform->scale.m_y}, glm::vec3{transform->position.m_x + ColComp->OffSet.m_x,transform->position.m_y + ColComp->OffSet.m_y, 0} ,ColComp->isCollided, 0 });
+			}
 			
 		}
 
