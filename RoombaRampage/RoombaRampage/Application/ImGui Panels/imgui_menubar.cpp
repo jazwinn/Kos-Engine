@@ -16,7 +16,7 @@ void ImGuiHandler::DrawMainMenuBar() {
             if (ImGui::MenuItem("Save")) {
 
 
-                Serialization::Serialize::SaveComponentsJson("../RoombaRampage/Json", Ecs::ECS::GetInstance()->ECS_EntityMap, obj_text_entries, obj_entity_id);
+                Serialization::Serialize::SaveComponentsJson("../RoombaRampage/Json", ecs::ECS::m_GetInstance()->m_ECS_EntityMap, obj_text_entries, obj_entity_id);
 
                 
             }

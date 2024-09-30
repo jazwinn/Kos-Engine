@@ -33,72 +33,75 @@ namespace prefab {
 
             if (prefabData.HasMember("name") && prefabData["name"].IsString()) {
                 prefabName = prefabData["name"].GetString();  // Store the name
+                if (prefabName.empty()) {
+                    prefabName = "OBJECT";
+                }
             }
             
             if (prefabData.HasMember("transform") && prefabData["transform"].IsObject()) {
                 //set bitflag
-                prefab.m_prefabSignature.set(Ecs::TypeTransformComponent);
+                prefab.m_prefabSignature.set(ecs::TYPETRANSFORMCOMPONENT);
 
                 const rapidjson::Value& transform = prefabData["transform"];
                 if (transform.HasMember("position") && transform["position"].IsObject()) {
-                    prefab.m_transformComponents.position.m_x = transform["position"]["x"].GetFloat();
-                    prefab.m_transformComponents.position.m_y = transform["position"]["y"].GetFloat();
+                    prefab.m_transformComponents.m_position.m_x = transform["position"]["x"].GetFloat();
+                    prefab.m_transformComponents.m_position.m_y = transform["position"]["y"].GetFloat();
                 }
                 if (transform.HasMember("rotation")) {
-                    prefab.m_transformComponents.rotation = transform["rotation"].GetFloat();
+                    prefab.m_transformComponents.m_rotation = transform["rotation"].GetFloat();
                 }
                 if (transform.HasMember("scale") && transform["scale"].IsObject()) {
-                    prefab.m_transformComponents.scale.m_x = transform["scale"]["x"].GetFloat();
-                    prefab.m_transformComponents.scale.m_y = transform["scale"]["y"].GetFloat();
+                    prefab.m_transformComponents.m_scale.m_x = transform["scale"]["x"].GetFloat();
+                    prefab.m_transformComponents.m_scale.m_y = transform["scale"]["y"].GetFloat();
                 }
 
             }
 
             if (prefabData.HasMember("movement") && prefabData["movement"].IsObject()) {
 
-                prefab.m_prefabSignature.set(Ecs::TypeMovemmentComponent);
+                prefab.m_prefabSignature.set(ecs::TYPEMOVEMENTCOMPONENT);
 
                 const rapidjson::Value& movement = prefabData["movement"];
 
                 if (movement.HasMember("speed")) {
-                    prefab.m_movementComponents.Speed = movement["speed"].GetFloat();
+                    prefab.m_movementComponents.m_Speed = movement["speed"].GetFloat();
                 }
                 if (movement.HasMember("direction") && movement["direction"].IsObject()) {
-                    prefab.m_movementComponents.Direction.m_x = movement["direction"]["x"].GetFloat();
-                    prefab.m_movementComponents.Direction.m_y = movement["direction"]["y"].GetFloat();
+                    prefab.m_movementComponents.m_Direction.m_x = movement["direction"]["x"].GetFloat();
+                    prefab.m_movementComponents.m_Direction.m_y = movement["direction"]["y"].GetFloat();
                 }
 
             }
 
             if (prefabData.HasMember("collider") && prefabData["collider"].IsObject()) {
 
-                prefab.m_prefabSignature.set(Ecs::TypeColliderComponent);
+                prefab.m_prefabSignature.set(ecs::TYPECOLLIDERCOMPONENT);
 
                  const rapidjson::Value& collider = prefabData["collider"];
                 if (collider.HasMember("size") && collider["size"].IsObject()) {
-                    prefab.m_colliderComponents.Size.m_x = collider["size"]["x"].GetFloat();
-                    prefab.m_colliderComponents.Size.m_y = collider["size"]["y"].GetFloat();
+                    prefab.m_colliderComponents.m_Size.m_x = collider["size"]["x"].GetFloat();
+                    prefab.m_colliderComponents.m_Size.m_y = collider["size"]["y"].GetFloat();
                 }
                 if (collider.HasMember("offset") && collider["offset"].IsObject()) {
-                    prefab.m_colliderComponents.OffSet.m_x = collider["offset"]["x"].GetFloat();
-                    prefab.m_colliderComponents.OffSet.m_y = collider["offset"]["y"].GetFloat();
+                    prefab.m_colliderComponents.m_OffSet.m_x = collider["offset"]["x"].GetFloat();
+                    prefab.m_colliderComponents.m_OffSet.m_y = collider["offset"]["y"].GetFloat();
                 }
                 if (collider.HasMember("layer")) {
-                    prefab.m_colliderComponents.Layer = collider["layer"].GetUint();
+                    prefab.m_colliderComponents.m_Layer = collider["layer"].GetUint();
                 }
                 if (collider.HasMember("drawDebug")) {
-                    prefab.m_colliderComponents.drawDebug = collider["drawDebug"].GetBool();
+                    prefab.m_colliderComponents.m_drawDebug = collider["drawDebug"].GetBool();
                 }
 
             }
 
             if (prefabData.HasMember("player") && prefabData["player"].IsObject()) {
 
-                prefab.m_prefabSignature.set(Ecs::TypePlayerComponent);
+                prefab.m_prefabSignature.set(ecs::TYPEPLAYERCOMPONENT);
 
                 const rapidjson::Value& player = prefabData["player"];
                 if (player.HasMember("control")) {
-                    prefab.m_playerComponents.Control = player["control"].GetBool();
+                    prefab.m_playerComponents.m_Control = player["control"].GetBool();
                 }
 
             }
@@ -106,11 +109,11 @@ namespace prefab {
             // Load RigidBody Component if it exists
             if (prefabData.HasMember("rigidbody") && prefabData["rigidbody"].IsObject()) {
 
-                prefab.m_prefabSignature.set(Ecs::TypeRigidBodyComponent);
+                prefab.m_prefabSignature.set(ecs::TYPERIGIDBODYCOMPONENT);
 
                 const rapidjson::Value& rigidbody = prefabData["rigidbody"];
                 if (rigidbody.HasMember("mass")) {
-                    prefab.m_rigidBodyComponents.Mass = rigidbody["mass"].GetFloat();
+                    prefab.m_rigidBodyComponents.m_Mass = rigidbody["mass"].GetFloat();
                 }
 
             }
@@ -118,14 +121,14 @@ namespace prefab {
             // Load Sprite Component if it exists
             if (prefabData.HasMember("sprite") && prefabData["sprite"].IsObject()) {
 
-                prefab.m_prefabSignature.set(Ecs::TypeSpriteComponent);
+                prefab.m_prefabSignature.set(ecs::TYPESPRITECOMPONENT);
 
                 const rapidjson::Value& sprite = prefabData["sprite"];
                 if (sprite.HasMember("imageID")) {
-                    prefab.m_spriteComponents.imageID = sprite["imageID"].GetUint();
+                    prefab.m_spriteComponents.m_imageID = sprite["imageID"].GetUint();
                 }
                 if (sprite.HasMember("frameNumber")) {
-                    prefab.m_spriteComponents.frameNumber = sprite["frameNumber"].GetUint();
+                    prefab.m_spriteComponents.m_frameNumber = sprite["frameNumber"].GetUint();
                 }
                 
             }
@@ -152,54 +155,54 @@ namespace prefab {
 
         Prefab prefab = m_prefabs[prefabString];
 
-        Ecs::ECS* ecs = Ecs::ECS::GetInstance();
+        ecs::ECS* ecs = ecs::ECS::m_GetInstance();
 
-        Ecs::EntityID newEntityID = ecs->CreateEntity();
+        ecs::EntityID newEntityID = ecs->m_CreateEntity();
 
         //allocate transform component
         //Addon everytime a transform component is added
         
-        Ecs::TransformComponent* tc = static_cast<Ecs::TransformComponent*>(ecs->ECS_CombinedComponentPool[Ecs::TypeTransformComponent]->GetEntityComponent(newEntityID));
+        ecs::TransformComponent* tc = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(newEntityID));
         *tc = prefab.m_transformComponents;
 
         //set component back to true
-        tc->IsLive = true;
-        tc->Entity = newEntityID;
+        tc->m_IsLive = true;
+        tc->m_Entity = newEntityID;
 
-        if (prefab.m_prefabSignature.test(Ecs::TypeMovemmentComponent)) {
-            Ecs::MovementComponent* mc = static_cast<Ecs::MovementComponent*>(ecs->AddComponent(Ecs::TypeMovemmentComponent, newEntityID));
+        if (prefab.m_prefabSignature.test(ecs::TYPEMOVEMENTCOMPONENT)) {
+            ecs::MovementComponent* mc = static_cast<ecs::MovementComponent*>(ecs->m_AddComponent(ecs::TYPEMOVEMENTCOMPONENT, newEntityID));
             *mc = prefab.m_movementComponents;
-            mc->IsLive = true;
-            mc->Entity = newEntityID;
+            mc->m_IsLive = true;
+            mc->m_Entity = newEntityID;
         }
 
-        if (prefab.m_prefabSignature.test(Ecs::TypeColliderComponent)) {
-            Ecs::ColliderComponent* cc = static_cast<Ecs::ColliderComponent*>(ecs->AddComponent(Ecs::TypeColliderComponent, newEntityID));
+        if (prefab.m_prefabSignature.test(ecs::TYPECOLLIDERCOMPONENT)) {
+            ecs::ColliderComponent* cc = static_cast<ecs::ColliderComponent*>(ecs->m_AddComponent(ecs::TYPECOLLIDERCOMPONENT, newEntityID));
             *cc = prefab.m_colliderComponents;
-            cc->IsLive = true;
-            cc->Entity = newEntityID;
+            cc->m_IsLive = true;
+            cc->m_Entity = newEntityID;
         }
 
 
-        if (prefab.m_prefabSignature.test(Ecs::TypePlayerComponent)) {
-            Ecs::PlayerComponent* pc = static_cast<Ecs::PlayerComponent*>(ecs->AddComponent(Ecs::TypePlayerComponent, newEntityID));
+        if (prefab.m_prefabSignature.test(ecs::TYPEPLAYERCOMPONENT)) {
+            ecs::PlayerComponent* pc = static_cast<ecs::PlayerComponent*>(ecs->m_AddComponent(ecs::TYPEPLAYERCOMPONENT, newEntityID));
             *pc = prefab.m_playerComponents;
-            pc->IsLive = true;
-            pc->Entity = newEntityID;
+            pc->m_IsLive = true;
+            pc->m_Entity = newEntityID;
         }
 
-        if (prefab.m_prefabSignature.test(Ecs::TypeRigidBodyComponent)) {
-            Ecs::RigidBodyComponent* rb = static_cast<Ecs::RigidBodyComponent*>(ecs->AddComponent(Ecs::TypeRigidBodyComponent, newEntityID));
+        if (prefab.m_prefabSignature.test(ecs::TYPERIGIDBODYCOMPONENT)) {
+            ecs::RigidBodyComponent* rb = static_cast<ecs::RigidBodyComponent*>(ecs->m_AddComponent(ecs::TYPERIGIDBODYCOMPONENT, newEntityID));
             *rb = prefab.m_rigidBodyComponents;
-            rb->IsLive = true;
-            rb->Entity = newEntityID;
+            rb->m_IsLive = true;
+            rb->m_Entity = newEntityID;
         }
 
-        if (prefab.m_prefabSignature.test(Ecs::TypeSpriteComponent)) {
-            Ecs::SpriteComponent* sc = static_cast<Ecs::SpriteComponent*>(ecs->AddComponent(Ecs::TypeSpriteComponent, newEntityID));
+        if (prefab.m_prefabSignature.test(ecs::TYPESPRITECOMPONENT)) {
+            ecs::SpriteComponent* sc = static_cast<ecs::SpriteComponent*>(ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, newEntityID));
             *sc = prefab.m_spriteComponents;
-            sc->IsLive = true;
-            sc->Entity = newEntityID;
+            sc->m_IsLive = true;
+            sc->m_Entity = newEntityID;
         }
 
         LOGGING_INFO("Prefab -> Entity Created Successfully");

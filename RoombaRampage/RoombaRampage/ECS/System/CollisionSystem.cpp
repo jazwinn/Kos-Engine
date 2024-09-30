@@ -5,63 +5,64 @@
 #include "../Graphics/GraphicsPipe.h"
 #include "../Debugging/Logging.h"
 
-namespace Ecs {
+namespace ecs {
 
-	void CollisionSystem::RegisterSystem(EntityID ID) {
-		ECS* ecs = ECS::GetInstance();
+	void CollisionSystem::m_RegisterSystem(EntityID ID) {
+		ECS* ecs = ECS::m_GetInstance();
 
 		//Checks if system already has stored the entity
 
-		if (std::find_if(vecTransformComponentPtr.begin(), vecTransformComponentPtr.end(), [ID](const auto& obj) { return obj->Entity == ID; })
-			== vecTransformComponentPtr.end()) {
-			vecTransformComponentPtr.push_back((TransformComponent*)ecs->ECS_CombinedComponentPool[TypeTransformComponent]->GetEntityComponent(ID));
-			vecColliderComponentPtr.push_back((ColliderComponent*)ecs->ECS_CombinedComponentPool[TypeColliderComponent]->GetEntityComponent(ID));
+		if (std::find_if(m_vecTransformComponentPtr.begin(), m_vecTransformComponentPtr.end(), [ID](const auto& obj) { return obj->m_Entity == ID; })
+			== m_vecTransformComponentPtr.end()) {
+			m_vecTransformComponentPtr.push_back((TransformComponent*)ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(ID));
+			m_vecColliderComponentPtr.push_back((ColliderComponent*)ecs->m_ECS_CombinedComponentPool[TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(ID));
 			//vecRigidBodyComponentPtr.push_back((RigidBodyComponent*)ecs->ECS_CombinedComponentPool[TypeRigidBodyComponent]->GetEntityComponent(ID));
-			vecMovementComponentPtr.push_back((MovementComponent*)ecs->ECS_CombinedComponentPool[TypeMovemmentComponent]->GetEntityComponent(ID));
+			m_vecMovementComponentPtr.push_back((MovementComponent*)ecs->m_ECS_CombinedComponentPool[TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(ID));
 		}
 	}
 
-	void CollisionSystem::DeregisterSystem(EntityID ID) {
+	void CollisionSystem::m_DeregisterSystem(EntityID ID) {
 		//search element location for the entity
 		size_t IndexID{};
-		for (auto& ComponentPtr : vecColliderComponentPtr) {
-			if (ComponentPtr->Entity == ID) {
+		for (auto& ComponentPtr : m_vecColliderComponentPtr) {
+			if (ComponentPtr->m_Entity == ID) {
 				break;
 			}
 			IndexID++;
 		}
 
 		//index to the last element
-		size_t IndexLast = vecColliderComponentPtr.size() - 1;
+		size_t IndexLast = m_vecColliderComponentPtr.size() - 1;
 
-		std::swap(vecColliderComponentPtr[IndexID], vecColliderComponentPtr[IndexLast]);
-		std::swap(vecTransformComponentPtr[IndexID], vecTransformComponentPtr[IndexLast]);
+		std::swap(m_vecColliderComponentPtr[IndexID], m_vecColliderComponentPtr[IndexLast]);
+		std::swap(m_vecTransformComponentPtr[IndexID], m_vecTransformComponentPtr[IndexLast]);
 		//std::swap(vecRigidBodyComponentPtr[IndexID], vecRigidBodyComponentPtr[IndexLast]);
-		std::swap(vecMovementComponentPtr[IndexID], vecMovementComponentPtr[IndexLast]);
+		std::swap(m_vecMovementComponentPtr[IndexID], m_vecMovementComponentPtr[IndexLast]);
 
 		//popback the vector;
-		vecColliderComponentPtr.pop_back();
-		vecTransformComponentPtr.pop_back();
+		m_vecColliderComponentPtr.pop_back();
+		m_vecTransformComponentPtr.pop_back();
 		//vecRigidBodyComponentPtr.pop_back();
-		vecMovementComponentPtr.pop_back();
+		m_vecMovementComponentPtr.pop_back();
 	}
 
-	void CollisionSystem::Init() {
+	void CollisionSystem::m_Init() {
 
 		// requires both movement component and transform component
-		SystemSignature.set(TypeColliderComponent);
+		m_SystemSignature.set(TYPECOLLIDERCOMPONENT);
 		//SystemSignature.set(TypeRigidBodyComponent);
-		SystemSignature.set(TypeMovemmentComponent);
+		m_SystemSignature.set(TYPEMOVEMENTCOMPONENT);
 		//SystemSignature.set();
 
 	}
 
-	void CollisionSystem::Update() {
+	void CollisionSystem::m_Update() {
 
-		ECS* ecs = ECS::GetInstance();
+		ECS* ecs = ECS::m_GetInstance();
 
-		if (vecColliderComponentPtr.size() != vecTransformComponentPtr.size()) {
-			std::cout << "Error: Vecotrs container size does not Match" << std::endl;
+		if (m_vecColliderComponentPtr.size() != m_vecTransformComponentPtr.size()) {
+			//std::cout << "Error: Vecotrs container size does not Match" << std::endl;
+			LOGGING_ERROR("Error: Vecotrs container size does not Match");
 			return;
 		}
 
@@ -69,32 +70,32 @@ namespace Ecs {
 		physicspipe::Physics PhysicsPipeline;
 		GraphicsPipe* graphicsPipe = GraphicsPipe::funcGetInstance();
 
-		for (int n{}; n < vecTransformComponentPtr.size(); n++) {
+		for (int n{}; n < m_vecTransformComponentPtr.size(); n++) {
 			//std::cout << "Entity: " << n << "Movement System is getting Updated";
 
-			ColliderComponent* ColComp = vecColliderComponentPtr[n];
-			TransformComponent* TransComp = vecTransformComponentPtr[n];
-			MovementComponent* MovComp = vecMovementComponentPtr[n];
+			ColliderComponent* ColComp = m_vecColliderComponentPtr[n];
+			TransformComponent* TransComp = m_vecTransformComponentPtr[n];
+			MovementComponent* MovComp = m_vecMovementComponentPtr[n];
 
-			if (ColComp->type == physicspipe::EntityType::CIRCLE) {
-				PhysicsPipeline.m_SendPhysicsData(ColComp->radius, TransComp->position, ColComp->Size * TransComp->scale, MovComp->Speed * MovComp->Direction, ColComp->Entity);
+			if (ColComp->m_type == physicspipe::EntityType::CIRCLE) {
+				PhysicsPipeline.m_SendPhysicsData(ColComp->m_radius, TransComp->m_position, ColComp->m_Size * TransComp->m_scale, MovComp->m_Speed * MovComp->m_Direction, ColComp->m_Entity);
 			}
-			else if (ColComp->type == physicspipe::EntityType::RECTANGLE) {
-				PhysicsPipeline.m_SendPhysicsData(ColComp->Size.m_x, ColComp->Size.m_x, TransComp->position, ColComp->Size * TransComp->scale, MovComp->Speed * MovComp->Direction, ColComp->Entity);
+			else if (ColComp->m_type == physicspipe::EntityType::RECTANGLE) {
+				PhysicsPipeline.m_SendPhysicsData(ColComp->m_Size.m_x, ColComp->m_Size.m_x, TransComp->m_position, ColComp->m_Size * TransComp->m_scale, MovComp->m_Speed * MovComp->m_Direction, ColComp->m_Entity);
 			}
 			else {
 				LOGGING_ERROR("NO ENTITY TYPE");
 			}
 
-			if (ColComp->drawDebug)
+			if (ColComp->m_drawDebug)
 			{
-				graphicsPipe->debugBoxData.push_back({ 0, glm::vec2{ColComp->Size.m_x * TransComp->scale.m_x, ColComp->Size.m_y * TransComp->scale.m_y}, glm::vec3{TransComp->position.m_x + ColComp->OffSet.m_x,TransComp->position.m_y + ColComp->OffSet.m_y, 0} ,0, 0 });
+				graphicsPipe->debugBoxData.push_back({ 0, glm::vec2{ColComp->m_Size.m_x * TransComp->m_scale.m_x, ColComp->m_Size.m_y * TransComp->m_scale.m_y}, glm::vec3{TransComp->m_position.m_x + ColComp->m_OffSet.m_x,TransComp->m_position.m_y + ColComp->m_OffSet.m_y, 0} ,0, 0 });
 			}
 		}
 
 		//check for collision
-		if (vecColliderComponentPtr.size() > 0) {
-			PhysicsPipeline.m_CollisionCheck(ecs->DeltaTime);
+		if (m_vecColliderComponentPtr.size() > 0) {
+			PhysicsPipeline.m_CollisionCheck(ecs->m_DeltaTime);
 		}
 	
 	}

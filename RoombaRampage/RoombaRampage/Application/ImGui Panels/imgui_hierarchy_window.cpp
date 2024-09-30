@@ -13,7 +13,7 @@
 unsigned int ImGuiHandler::DrawHierachyWindow()
 {
     //fetch ecs
-    Ecs::ECS* ecs = Ecs::ECS::GetInstance();
+    ecs::ECS* ecs = ecs::ECS::m_GetInstance();
 
     // Load entities only once when the window is first opened
     static bool hasLoaded = false;
@@ -23,7 +23,7 @@ unsigned int ImGuiHandler::DrawHierachyWindow()
         Serialization::Serialize::LoadComponentsJson("../RoombaRampage/Json/components.json", ecs, obj_text_entries);
 
         // Iterate through all loaded entities and add them to the hierarchy
-        for (const auto& entityPair : ecs->ECS_EntityMap) {
+        for (const auto& entityPair : ecs->m_ECS_EntityMap) {
             obj_entity_id.push_back(entityPair.first);
             deleteButton.push_back(false);
             DuplicateButton.push_back(false);
@@ -43,22 +43,23 @@ unsigned int ImGuiHandler::DrawHierachyWindow()
         }
         if (ImGui::BeginMenu("Prefabs"))
         {
+            if (prefab::Prefab::m_prefabs.size() > 0) {
+                for (auto prefab : prefab::Prefab::m_prefabs) {
 
-            for (auto prefab :prefab::Prefab::m_prefabs) {
+                    if (ImGui::MenuItem(prefab.first.c_str())) {
 
-                if (ImGui::MenuItem(prefab.first.c_str())) {
+                        int id = prefab::Prefab::m_CreateEntityFromPrefab(prefab.first);
+                        if (id == -1) continue;
 
-                    int id = prefab::Prefab::m_CreateEntityFromPrefab(prefab.first);
-                    if (id == -1) continue;
+                        obj_entity_id.push_back(static_cast<ecs::EntityID>(id));
+                        obj_text_entries.push_back(prefab.first);
+                        deleteButton.push_back(false);
+                        DuplicateButton.push_back(false);
 
-                    obj_entity_id.push_back(static_cast<Ecs::EntityID>(id));
-                    obj_text_entries.push_back(prefab.first);
-                    deleteButton.push_back(false);
-                    DuplicateButton.push_back(false);
-
+                    }
                 }
             }
-
+          
             ImGui::EndMenu();
         }
 
@@ -77,7 +78,7 @@ unsigned int ImGuiHandler::DrawHierachyWindow()
         {
 
             //create ID then push into vector
-            Ecs::EntityID newEntityID = ecs-> CreateEntity();
+            ecs::EntityID newEntityID = ecs->m_CreateEntity();
             obj_entity_id.push_back(newEntityID);
 
             //set new ID to be clicked
@@ -132,7 +133,7 @@ unsigned int ImGuiHandler::DrawHierachyWindow()
             if (ImGui::Button(deleteButtonLabel.c_str()))
             {
                 //Delete entity from ecs               
-                Ecs::ECS::GetInstance()->DeleteEntity(obj_entity_id[i]);
+                ecs::ECS::m_GetInstance()->m_DeleteEntity(obj_entity_id[i]);
 
                 //remove the entries 
                 obj_text_entries.erase(obj_text_entries.begin() + i);
@@ -169,7 +170,7 @@ unsigned int ImGuiHandler::DrawHierachyWindow()
             {
 
                 //create ID then push into vector
-                Ecs::EntityID newEntityID = ecs->DuplicateEntity(obj_entity_id[i]);
+                ecs::EntityID newEntityID = ecs->m_DuplicateEntity(obj_entity_id[i]);
                 obj_entity_id.push_back(newEntityID);
 
                 //Add the string into the vector

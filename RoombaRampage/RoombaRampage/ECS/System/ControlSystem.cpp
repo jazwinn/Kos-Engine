@@ -3,66 +3,67 @@
 #include "ControlSystem.h"
 #include "../Inputs/Input.h"
 
-namespace Ecs {
+namespace ecs {
 
-	void ControlSystem::RegisterSystem(EntityID ID) {
-		ECS* ecs = ECS::GetInstance();
+	void ControlSystem::m_RegisterSystem(EntityID ID) {
+		ECS* ecs = ECS::m_GetInstance();
 
 		//Checks if system already has stored the entity
 
-		if (std::find_if(vecMovementComponentPtr.begin(), vecMovementComponentPtr.end(), [ID](const auto& obj) { return obj->Entity == ID; })
-			== vecMovementComponentPtr.end()) {
-			vecPlayerComponentPtr.push_back((PlayerComponent*)ecs->ECS_CombinedComponentPool[TypePlayerComponent]->GetEntityComponent(ID));
-			vecMovementComponentPtr.push_back((MovementComponent*)ecs->ECS_CombinedComponentPool[TypeMovemmentComponent]->GetEntityComponent(ID));
+		if (std::find_if(m_vecMovementComponentPtr.begin(), m_vecMovementComponentPtr.end(), [ID](const auto& obj) { return obj->m_Entity == ID; })
+			== m_vecMovementComponentPtr.end()) {
+			m_vecPlayerComponentPtr.push_back((PlayerComponent*)ecs->m_ECS_CombinedComponentPool[TYPEPLAYERCOMPONENT]->m_GetEntityComponent(ID));
+			m_vecMovementComponentPtr.push_back((MovementComponent*)ecs->m_ECS_CombinedComponentPool[TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(ID));
 		}
 
 
 	}
 
-	void ControlSystem::DeregisterSystem(EntityID ID) {
+	void ControlSystem::m_DeregisterSystem(EntityID ID) {
 		//search element location for the entity
 		size_t IndexID{};
-		for (auto& ComponentPtr : vecPlayerComponentPtr) {
-			if (ComponentPtr->Entity == ID) {
+		for (auto& ComponentPtr : m_vecPlayerComponentPtr) {
+			if (ComponentPtr->m_Entity == ID) {
 				break;
 			}
 			IndexID++;
 		}
 
 		//index to the last element
-		size_t IndexLast = vecPlayerComponentPtr.size() - 1;
+		size_t IndexLast = m_vecPlayerComponentPtr.size() - 1;
 
-		std::swap(vecPlayerComponentPtr[IndexID], vecPlayerComponentPtr[IndexLast]);
-		std::swap(vecMovementComponentPtr[IndexID], vecMovementComponentPtr[IndexLast]);
+		std::swap(m_vecPlayerComponentPtr[IndexID], m_vecPlayerComponentPtr[IndexLast]);
+		std::swap(m_vecMovementComponentPtr[IndexID], m_vecMovementComponentPtr[IndexLast]);
 
 		//popback the vector;
-		vecPlayerComponentPtr.pop_back();
-		vecMovementComponentPtr.pop_back();
+		m_vecPlayerComponentPtr.pop_back();
+		m_vecMovementComponentPtr.pop_back();
 	}
 
-	void ControlSystem::Init() {
+	void ControlSystem::m_Init() {
 
 		// requires both movement component and transform component
-		SystemSignature.set(TypePlayerComponent);
-		SystemSignature.set(TypeMovemmentComponent);
+		m_SystemSignature.set(TYPEPLAYERCOMPONENT);
+		m_SystemSignature.set(TYPEMOVEMENTCOMPONENT);
 		//SystemSignature.set();
 
 	}
 
-	void ControlSystem::Update() {
+	void ControlSystem::m_Update() {
 
 		//ECS* ecs = ECS::GetInstance();
 
-		if (vecMovementComponentPtr.size() != vecPlayerComponentPtr.size()) {
-			std::cout << "Error: Vecotrs container size does not Match" << std::endl;
+		if (m_vecMovementComponentPtr.size() != m_vecPlayerComponentPtr.size()) {
+			//std::cout << "Error: Vecotrs container size does not Match" << std::endl;
+			LOGGING_ERROR("Error: Vecotrs container size does not Match");
 			return;
 		}
 
-		for (int n{}; n < vecMovementComponentPtr.size(); n++) {
+		for (int n{}; n < m_vecMovementComponentPtr.size(); n++) {
 			//std::cout << "Entity: " << n << "Movement System is getting Updated";
 
 			//PlayerComponent* BoxComp = vecPlayerComponentPtr[n];
-			MovementComponent* MovComp = vecMovementComponentPtr[n];
+			MovementComponent* MovComp = m_vecMovementComponentPtr[n];
 
 
 			// set direction to always be 0,0
@@ -91,7 +92,7 @@ namespace Ecs {
 				
 			}
 
-			MovComp->Direction = NewDirection;
+			MovComp->m_Direction = NewDirection;
 
 		}
 

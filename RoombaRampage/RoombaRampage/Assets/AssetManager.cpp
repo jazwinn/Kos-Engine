@@ -68,9 +68,9 @@ namespace assetmanager {
     }
 
    void AssetManager::m_LoadAudio(std::string file) {
-        std::unique_ptr<FModAudio> Audio = std::make_unique<FModAudio>();
-        Audio->init();
-        Audio->createSound(file.c_str());
+        std::unique_ptr<fmodaudio::FModAudio> Audio = std::make_unique<fmodaudio::FModAudio>();
+        Audio->m_init();
+        Audio->m_createSound(file.c_str());
 
         m_audioContainer.push_back(std::move(Audio));
         Audio = nullptr;

@@ -6,14 +6,14 @@
 #include "Component.h"
 
 
-namespace Ecs {
+namespace ecs {
 
 
 	class RigidBodyComponent : public Component {
 
 	public:
 
-		float Mass{};
+		float m_Mass{};
 
 	};
 

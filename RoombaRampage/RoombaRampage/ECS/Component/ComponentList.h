@@ -1,17 +1,17 @@
 #ifndef COMPLIST_H
 #define COMPLIST_H
 
-namespace Ecs {
+namespace ecs {
 
 	enum ComponentType {
-		TypeTransformComponent,
-		TypeMovemmentComponent,
-		TypeSpriteComponent,
-		TypeColliderComponent,
-		TypeRigidBodyComponent,
-		TypePlayerComponent,
+		TYPETRANSFORMCOMPONENT,
+		TYPEMOVEMENTCOMPONENT,
+		TYPESPRITECOMPONENT,
+		TYPECOLLIDERCOMPONENT,
+		TYPERIGIDBODYCOMPONENT,
+		TYPEPLAYERCOMPONENT,
 
-		TotalTypeComponent
+		TOTALTYPECOMPONENT
 	};
 
 }

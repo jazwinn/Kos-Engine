@@ -71,8 +71,9 @@ namespace fontmanager {
             // Store character in Characters map
             Character character = {
                 texture,
-                vector2::Vec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
-                vector2::Vec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
+                //TOCHECK
+                vector2::Vec2(static_cast<float>(face->glyph->bitmap.width), static_cast<float>(face->glyph->bitmap.rows)),
+                vector2::Vec2(static_cast<float>(face->glyph->bitmap_left), static_cast<float>(face->glyph->bitmap_top)),
                 static_cast<GLuint>(face->glyph->advance.x)
             };
 

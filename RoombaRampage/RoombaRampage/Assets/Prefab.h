@@ -21,16 +21,16 @@ namespace prefab {
 		static std::unordered_map<std::string, Prefab> m_prefabs;
 	private:
 
-		std::bitset<Ecs::TotalTypeComponent> m_prefabSignature;
+		std::bitset<ecs::TOTALTYPECOMPONENT> m_prefabSignature;
 
 
 		//Add vector for every new components
-		Ecs::MovementComponent m_movementComponents;
-		Ecs::PlayerComponent m_playerComponents;
-		Ecs::SpriteComponent m_spriteComponents;
-		Ecs::TransformComponent m_transformComponents;
-		Ecs::ColliderComponent m_colliderComponents;
-		Ecs::RigidBodyComponent m_rigidBodyComponents;
+		ecs::MovementComponent m_movementComponents;
+		ecs::PlayerComponent m_playerComponents;
+		ecs::SpriteComponent m_spriteComponents;
+		ecs::TransformComponent m_transformComponents;
+		ecs::ColliderComponent m_colliderComponents;
+		ecs::RigidBodyComponent m_rigidBodyComponents;
 
 		
 

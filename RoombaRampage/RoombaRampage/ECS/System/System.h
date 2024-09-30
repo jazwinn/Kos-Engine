@@ -7,21 +7,21 @@
 #include "../ECS/Component/Component.h"
 #include "SystemType.h"
 
-namespace Ecs {
+namespace ecs {
 
 	class ISystem {
 
 	public:
 
-		compSignature SystemSignature;
+		compSignature m_SystemSignature;
 
-		virtual void RegisterSystem(EntityID) = 0;
+		virtual void m_RegisterSystem(EntityID) = 0;
 
-		virtual void DeregisterSystem(EntityID) = 0;
+		virtual void m_DeregisterSystem(EntityID) = 0;
 
-		virtual void Init() = 0;
+		virtual void m_Init() = 0;
 
-		virtual void Update() = 0;
+		virtual void m_Update() = 0;
 
 
 	};

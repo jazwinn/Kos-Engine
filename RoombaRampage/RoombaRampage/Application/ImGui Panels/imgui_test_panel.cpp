@@ -17,11 +17,11 @@
 
 void ImGuiHandler::DrawTestWindow() {
 	
-	bool clicked = false;
+	//bool clicked = false;
 	static int maxTime = 60;
 	static int currTime = 0;
 
-	Ecs::ECS *ecs = Ecs::ECS::GetInstance();
+	ecs::ECS *ecs = ecs::ECS::m_GetInstance();
 	assetmanager::AssetManager* assetManager = assetmanager::AssetManager::funcGetInstance();
 
 
@@ -29,15 +29,15 @@ void ImGuiHandler::DrawTestWindow() {
 	ImGui::Begin("Test Window", &open);
 	if (ImGui::Button("Vacuum")) {
 		// abit hard coded might cause crash
-		assetManager->m_audioContainer[0]->playSound();
+		assetManager->m_audioContainer[0]->m_playSound();
 	}
 	ImGui::SameLine();
 	if (ImGui::Button("Sound")) {
-		assetManager->m_audioContainer[1]->playSound();
+		assetManager->m_audioContainer[1]->m_playSound();
 	}
 	if (ImGui::Button("Stop Sound")) {
-		assetManager->m_audioContainer[0]->stopSound();
-		assetManager->m_audioContainer[1]->stopSound();
+		assetManager->m_audioContainer[0]->m_stopSound();
+		assetManager->m_audioContainer[1]->m_stopSound();
 	}
 	ImGui::NewLine();
 	if (ImGui::Button("Crash")) {
@@ -58,11 +58,11 @@ void ImGuiHandler::DrawTestWindow() {
 
 
 		for (int n{}; n < 2500; n++) {
-			 Ecs::EntityID id = ecs->CreateEntity();
-			 Ecs::TransformComponent* tc = (Ecs::TransformComponent*)ecs->ECS_CombinedComponentPool[Ecs::TypeTransformComponent]->GetEntityComponent(id);
-			 ecs->AddComponent(Ecs::TypeSpriteComponent, id);
+			 ecs::EntityID id = ecs->m_CreateEntity();
+			 ecs::TransformComponent* tc = (ecs::TransformComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id);
+			 ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, id);
 
-			 tc->position.m_y = height(gen);
+			 tc->m_position.m_y = static_cast<float>(height(gen));
 
 		}
 	}

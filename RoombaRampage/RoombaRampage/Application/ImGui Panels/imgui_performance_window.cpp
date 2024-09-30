@@ -85,9 +85,9 @@ void ImGuiHandler::DrawPerformanceWindow(float fps) {
             VectorSystemText.push_back(EcsTime);
 
             //add time for each sytem
-            for (int n{}; n < Ecs::TotalTypeSystem; n++) {
+            for (int n{}; n < ecs::TOTALTYPESYSTEM; n++) {
 
-                float Percentage = ((performancetracker::Performance::m_GetSystemTime((Ecs::TypeSystem)n)) / performancetracker::Performance::m_GetTotalSystemTime()) * 100.f;
+                float Percentage = ((performancetracker::Performance::m_GetSystemTime((ecs::TypeSystem)n)) / performancetracker::Performance::m_GetTotalSystemTime()) * 100.f;
 
                 //remove the last 4 trailing digits
                 std::string PercentageStr = std::to_string(Percentage);
@@ -95,9 +95,9 @@ void ImGuiHandler::DrawPerformanceWindow(float fps) {
 
 
                 std::string SystemText = 
-               performancetracker::Performance::m_GetSystemString((Ecs::TypeSystem)n) + ": "
+               performancetracker::Performance::m_GetSystemString((ecs::TypeSystem)n) + ": "
               + PercentageStr + "%% ("
-              + std::to_string(performancetracker::Performance::m_GetSystemTime((Ecs::TypeSystem)n)) + ")";
+              + std::to_string(performancetracker::Performance::m_GetSystemTime((ecs::TypeSystem)n)) + ")";
 
                 VectorSystemText.push_back(SystemText);
 
