@@ -1,0 +1,12 @@
+[INFO]: 2024-09-30 23:54:44 - Application Start
+[INFO]: 2024-09-30 23:54:44 - Load Log Successful
+[INFO]: 2024-09-30 23:54:44 - Load Config Successful
+[INFO]: 2024-09-30 23:54:44 - Load Prefab Json Successful
+[INFO]: 2024-09-30 23:54:44 - Load Asset Successful
+[INFO]: 2024-09-30 23:54:44 - Load Window Successful
+[INFO]: 2024-09-30 23:54:45 - Load Graphic Pipline Successful
+[INFO]: 2024-09-30 23:54:45 - Set Input Call Back Successful
+[INFO]: 2024-09-30 23:54:45 - Load ImGui Successful
+[INFO]: 2024-09-30 23:54:45 - Load ECS Successful
+[INFO]: 2024-09-30 23:54:45 - Application Init Successful
+[INFO]: 2024-09-30 23:55:28 - Application Closed

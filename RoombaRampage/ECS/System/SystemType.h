@@ -1,0 +1,18 @@
+#ifndef SYSTYPE_H
+#define SYSTYPE_H
+namespace ecs {
+
+	enum TypeSystem {
+
+		TYPEMOVEMENTSYSTEM,
+		TYPECONTROLSYSTEM,
+		TYPECOLLISIONSYSTEM,
+		TYPECOLLISIONRESPONSESYSTEM,
+		
+		//render system called the last
+		TYPERENDERSYSTEM,
+		TOTALTYPESYSTEM
+	};
+}
+
+#endif
