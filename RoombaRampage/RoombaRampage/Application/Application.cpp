@@ -16,7 +16,7 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 
-#include "../Assets/AudioManager.h"
+#include "../Assets/Audio.h"
 
 #include <../Dependencies/Freetype_Font/include/ft2build.h>
 
@@ -28,15 +28,10 @@ namespace Application {
     AppWindow Application::lvWindow;
     ImGuiHandler Application::imgui_manager;
     GraphicsPipe* pipe;
-    AssetManager* AstManager;
     Input::InputSystem Input;
-   
-    // Audio
+    assetmanager::AssetManager* AstManager;
+    logging::Logger logs;
 
-    FModAudio Application::audio;
-    
-    logging::Logger p;
-    FModAudio Application::audio2;
 
     // Audio Demo timer
     float audioTimer = 3.0f;
@@ -51,7 +46,7 @@ namespace Application {
         --------------------------------------------------------------*/
         LOGGING_INIT_LOGS("Logs/LogFile.txt");
         LOGGING_INFO("Application Start");
-        p.m_Setup_Abort_Handler();
+        logs.m_Setup_Abort_Handler();
         std::signal(SIGABRT, logging::Logger::m_Abort_Handler);
 
         /*--------------------------------------------------------------
@@ -63,27 +58,9 @@ namespace Application {
         /*--------------------------------------------------------------
            INITIALIZE Asset Manager
         --------------------------------------------------------------*/
-        AstManager = AssetManager::funcGetInstance();
+        AstManager = assetmanager::AssetManager::funcGetInstance();
         AstManager->funcLoadAssets();
         LOGGING_INFO("Load Asset Successful");
-
-
-        /*--------------------------------------------------------------
-            INITIALIZE AUDIO MANAGER
-        --------------------------------------------------------------*/
-        // Initialize the FMOD system
-        audio.init();
-        audio2.init();
-        audio.createSound("Assets/vacuum.mp3");
-        audio2.createSound("Assets/zwing.wav");
-
-
-        LOGGING_INFO("Application Init Successful");
-
-       /*--------------------------------------------------------------
-        INITIALIZE Asset Manager
-       --------------------------------------------------------------*/
-        AstManager->testJSON();
 
        /*--------------------------------------------------------------
           INITIALIZE OPENGL WINDOW
@@ -196,9 +173,7 @@ namespace Application {
         imgui_manager.Shutdown();
         lvWindow.CleanUp();
         glfwTerminate();
-        audio.shutdown();
         LOGGING_INFO("Application Closed");
-        audio2.shutdown();
 
         return 0;
 	}

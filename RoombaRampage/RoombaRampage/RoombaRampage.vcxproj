@@ -175,7 +175,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\FMOD_API\studio\lib\x64\*.dll" "$(OutDir
     <ClCompile Include="Application\main.cpp" />
     <ClCompile Include="Application\Window.cpp" />
     <ClCompile Include="Assets\AssetManager.cpp" />
-    <ClCompile Include="Assets\AudioManager.cpp" />
+    <ClCompile Include="Assets\Audio.cpp" />
     <ClCompile Include="De&amp;Serialization\json_handler.cpp" />
     <ClCompile Include="Debugging\Logging.cpp" />
     <ClCompile Include="Debugging\Performance.cpp" />
@@ -210,7 +210,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\FMOD_API\studio\lib\x64\*.dll" "$(OutDir
     <ClInclude Include="Application\json_handler.h" />
     <ClInclude Include="Application\Window.h" />
     <ClInclude Include="Assets\AssetManager.h" />
-    <ClInclude Include="Assets\AudioManager.h" />
+    <ClInclude Include="Assets\Audio.h" />
     <ClInclude Include="De&amp;Serialization\json_handler.h" />
     <ClInclude Include="Debugging\Logging.h" />
     <ClInclude Include="Debugging\Performance.h" />

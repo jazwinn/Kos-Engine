@@ -153,7 +153,7 @@
     <ClCompile Include="Application\Helper.cpp">
       <Filter>Source Files\Application</Filter>
     </ClCompile>
-    <ClCompile Include="Assets\AudioManager.cpp">
+    <ClCompile Include="Assets\Audio.cpp">
       <Filter>Source Files\Assets</Filter>
     </ClCompile>
     <ClCompile Include="Debugging\Logging.cpp">
@@ -329,7 +329,7 @@
     <ClInclude Include="Application\Helper.h">
       <Filter>Header Files\Application</Filter>
     </ClInclude>
-    <ClInclude Include="Assets\AudioManager.h">
+    <ClInclude Include="Assets\Audio.h">
       <Filter>Header Files\Assets</Filter>
     </ClInclude>
     <ClInclude Include="Debugging\Logging.h">

@@ -126,7 +126,7 @@ public:
 
 	//Array of the texture IDs
 	std::vector<unsigned int> textureIDs{};
-	std::vector<AssetManager::Image> imageData{};
+	std::vector<assetmanager::AssetManager::Image> imageData{};
 
 	unsigned int screenTexture{};
 	unsigned int proxyBackgroundTexture{};
