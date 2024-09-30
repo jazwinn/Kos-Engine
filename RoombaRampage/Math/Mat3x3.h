@@ -1,4 +1,5 @@
 #pragma warning (disable : 4201)
+#pragma warning(disable : 26495)
 #ifndef MAT2x2_H
 #define MAT2x2_H
 #include <algorithm>
@@ -15,8 +16,8 @@ namespace mat3x3 {
 				float m_e10, m_e11, m_e12;	//e01 e11 e21
 				float m_e20, m_e21, m_e22;	//e02 e12 e22
 			};
-			float m_Mat[3][3];
-			float m_Row[9];
+			[[maybe_unused]]float m_Mat[3][3];
+			[[maybe_unused]] float m_Row[9];
 		};
 
 		Mat3x3() : m_e00(0.f), m_e01(0.f), m_e02(0.f), m_e10(0.f), m_e11(0.f), m_e12(0.f), m_e20(0.f), m_e21(0.f), m_e22(0.f) {}

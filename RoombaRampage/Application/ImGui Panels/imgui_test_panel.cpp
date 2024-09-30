@@ -7,6 +7,9 @@
 #include "../../De&Serialization/json_handler.h"
 #include "../Debugging/Logging.h"
 #include "../Assets/AssetManager.h"
+#include "../Events/BaseMessage.h"
+#include "../Events/MessageSystem.h"
+#include "../Events/Listeners.h"
 
 #include<vector>
 #include<string>
@@ -24,12 +27,15 @@ void ImGuiHandler::DrawTestWindow() {
 	ecs::ECS *ecs = ecs::ECS::m_GetInstance();
 	assetmanager::AssetManager* assetManager = assetmanager::AssetManager::funcGetInstance();
 
-
+	messaging::MessageSystem MsgSys;
+	MsgSys.m_AddListener(messaging::MessageType::AUDIOPLAY, messaging::SoundPlayed);
 	bool open = true;
 	ImGui::Begin("Test Window", &open);
 	if (ImGui::Button("Vacuum")) {
 		// abit hard coded might cause crash
-		assetManager->m_audioContainer[0]->m_playSound();
+		//assetManager->m_audioContainer[0]->m_playSound();
+		messaging::Message vacuumBtnClick(messaging::MessageType::AUDIOPLAY, "Test Panel");
+		MsgSys.m_SendMessage(vacuumBtnClick);
 	}
 	ImGui::SameLine();
 	if (ImGui::Button("Sound")) {

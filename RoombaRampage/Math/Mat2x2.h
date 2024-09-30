@@ -1,3 +1,4 @@
+#pragma warning (disable : 4201)
 #ifndef MAT2x2_H
 #define MAT2x2_H
 #include <algorithm>
@@ -10,9 +11,8 @@ namespace mat2x2 {
 				float m_e00, m_e01;
 				float m_e10, m_e11;
 			};
-
-			float m_mat[2][2];
-			float m_row[4];
+			[[maybe_unused]] float m_mat[2][2];
+			[[maybe_unused]] float m_row[4];
 		};
 
 		Mat2x2() : m_e00(0.f), m_e10(0.f), m_e01(0.f), m_e11(0.f) {}
