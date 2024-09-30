@@ -11,6 +11,7 @@ namespace ecs {
 		
 		//render system called the last
 		TYPERENDERSYSTEM,
+		TYPEDEBUGDRAWINGSYSTEM,
 		TOTALTYPESYSTEM
 	};
 }

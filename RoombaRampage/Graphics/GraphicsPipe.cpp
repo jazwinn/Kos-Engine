@@ -480,7 +480,8 @@ void GraphicsPipe::funcUpdate()
 			glm::mat3 lvTranslate{ 1, 0, 0, 0, 1, 0, debugBoxData[i].worldCoordinates.x , debugBoxData[i].worldCoordinates.y ,1 };
 			glm::mat3 lvNDCScale{ aspectRatio, 0, 0, 0, 1.f, 0, 0 , 0 ,1.f };
 			debugToNDCMatrix.push_back(lvNDCScale * lvTranslate * lvRotate * lvScale);
-			debugBoxCollisionChecks.push_back(static_cast<float>(static_cast<int>(debugBoxData[i].isCollided)));
+			debugBoxCollisionChecks.push_back(static_cast<float>(debugBoxData[i].isCollided));
+			
 
 		}
 	}

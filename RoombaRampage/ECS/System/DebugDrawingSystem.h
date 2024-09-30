@@ -1,15 +1,16 @@
-#ifndef COLLRESPSYS_H
-#define COLLRESPSYS_H
+#ifndef DEBUGDRAWSYS_H
+#define DEBUGDRAWSYS_H
 
 #include "System.h"
-#include "../ECS/Component/MovementComponent.h"
+#include "../ECS/Component/TransformComponent.h"
+#include "../ECS/Component/ColliderComponent.h"
 #include "../ECS/Component/RigidBody.h"
 
 #include "../ECS/ECSList.h"
 
 namespace ecs {
 
-	class CollisionResponseSystem : public ISystem {
+	class DebugDrawingSystem : public ISystem {
 
 	public:
 		void m_RegisterSystem(EntityID) override;
@@ -24,8 +25,6 @@ namespace ecs {
 		//Storage to point to components
 		std::vector<TransformComponent*> m_vecTransformComponentPtr;
 		std::vector<ColliderComponent*> m_vecColliderComponentPtr;
-		std::vector<RigidBodyComponent*> m_vecRigidBodyComponentPtr;
-		std::vector<MovementComponent*> m_vecMovementComponentPtr;
 
 	};
 
@@ -33,4 +32,4 @@ namespace ecs {
 
 
 
-#endif COLLRESPSYS_H
+#endif DEBUGDRAWSYS_H

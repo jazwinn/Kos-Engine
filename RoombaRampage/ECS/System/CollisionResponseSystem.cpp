@@ -2,6 +2,7 @@
 
 #include "CollisionResponseSystem.h"
 #include "../Physics/Physics.h"
+#include "../Graphics/GraphicsPipe.h"
 
 namespace ecs {
 
@@ -12,6 +13,7 @@ namespace ecs {
 
 		if (std::find_if(m_vecMovementComponentPtr.begin(), m_vecMovementComponentPtr.end(), [ID](const auto& obj) { return obj->m_Entity == ID; })
 			== m_vecMovementComponentPtr.end()) {
+			m_vecTransformComponentPtr.push_back((TransformComponent*)ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(ID));
 			m_vecColliderComponentPtr.push_back((ColliderComponent*)ecs->m_ECS_CombinedComponentPool[TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(ID));
 			m_vecRigidBodyComponentPtr.push_back((RigidBodyComponent*)ecs->m_ECS_CombinedComponentPool[TYPERIGIDBODYCOMPONENT]->m_GetEntityComponent(ID));
 			m_vecMovementComponentPtr.push_back((MovementComponent*)ecs->m_ECS_CombinedComponentPool[TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(ID));
@@ -34,11 +36,13 @@ namespace ecs {
 		std::swap(m_vecColliderComponentPtr[IndexID],  m_vecColliderComponentPtr[IndexLast]);
 		std::swap(m_vecRigidBodyComponentPtr[IndexID], m_vecRigidBodyComponentPtr[IndexLast]);
 		std::swap(m_vecMovementComponentPtr[IndexID],  m_vecMovementComponentPtr[IndexLast]);
+		std::swap(m_vecTransformComponentPtr[IndexID], m_vecTransformComponentPtr[IndexLast]);
 
 		//popback the vector;
 		m_vecColliderComponentPtr.pop_back();
 		m_vecRigidBodyComponentPtr.pop_back();
 		m_vecMovementComponentPtr.pop_back();
+		m_vecTransformComponentPtr.pop_back();
 	}
 
 	void CollisionResponseSystem::m_Init() {
@@ -47,6 +51,7 @@ namespace ecs {
 		m_SystemSignature.set(TYPECOLLIDERCOMPONENT);
 		m_SystemSignature.set(TYPERIGIDBODYCOMPONENT);
 		m_SystemSignature.set(TYPEMOVEMENTCOMPONENT);
+		m_SystemSignature.set(TYPETRANSFORMCOMPONENT);
 		//SystemSignature.set();
 
 	}
@@ -71,13 +76,14 @@ namespace ecs {
 		else {
 			//REQUIRES OPTIMIZATION 
 			//CollidedEntity is the ID
+			
 			for (auto& CollidedEntity : vecCollisionEntity) {
 				if (ecs->m_ECS_CombinedComponentPool[TYPERIGIDBODYCOMPONENT]->m_HasComponent(CollidedEntity->m_ID)) {
 					MovementComponent* MovCom = (MovementComponent*)ecs->m_ECS_CombinedComponentPool[TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(CollidedEntity->m_ID);
 					ColliderComponent* ColCom = (ColliderComponent*)ecs->m_ECS_CombinedComponentPool[TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(CollidedEntity->m_ID);
 					ColCom->m_isCollided = true;
-					MovCom->m_Direction = { 0,0 };
 				}	
+				
 			}
 
 			//if (ecs->ECS_CombinedComponentPool[TypeRigidBodyComponent]->HasComponent(CollidedEntity->ID)) {

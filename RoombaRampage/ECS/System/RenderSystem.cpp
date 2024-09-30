@@ -62,8 +62,11 @@ namespace ecs {
 			//SpriteComponent* MovComp = vecSpriteComponentPtr[n];
 			TransformComponent* transform = m_vecTransformComponentPtr[n];
 			SpriteComponent* sprite = m_vecSpriteComponentPtr[n];
+	
 
 			graphicsPipe->modelData.push_back({ transform->m_rotation, glm::vec2{transform->m_scale.m_x, transform->m_scale.m_y}, glm::vec3{transform->m_position.m_x,transform->m_position.m_y, 0} ,sprite->m_imageID, 0 });
+
+			
 			
 		}
 
