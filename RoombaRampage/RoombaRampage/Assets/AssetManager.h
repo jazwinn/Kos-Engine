@@ -2,6 +2,8 @@
 #define ASSETMGR_H
 
 #include "../Assets/Audio.h"
+#include "../Font.h"
+#include <../Math/vector2.h>
 #include <vector>
 #include <map>
 #include <string>
@@ -53,6 +55,8 @@ namespace assetmanager {
 		void funcLoadImage(const char* file);
 		void m_LoadAudio(std::string file);
 
+		//void m_LoadFont(std::string file, unsigned int fontsize);
+
 		//De|Serialisation using rapid json
 		void serializeToJson(const std::string& filename); //Serialize 
 		void deserializeFromJson(const std::string& filename);
@@ -61,7 +65,6 @@ namespace assetmanager {
 		void testJSON();
 	};
 }
-
 
 
 #endif ASSETMGR_H

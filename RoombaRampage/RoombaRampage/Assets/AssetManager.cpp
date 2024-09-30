@@ -13,8 +13,6 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
-
-
 namespace assetmanager {
 
 
@@ -33,6 +31,8 @@ namespace assetmanager {
 
         m_LoadAudio("Assets/vacuum.mp3");
         m_LoadAudio("Assets/zwing.wav");
+
+        //m_LoadFont("Assets/Roboto-Black.ttf", 12);
 
     }
 
@@ -72,6 +72,11 @@ namespace assetmanager {
         Audio = nullptr;
         
     }
+   // To implement
+   /*void m_LoadFont(std::string file, unsigned int fontsize) {
+       std::unique_ptr<fontmanager::Font> Font = std::make_unique<fontmanager::Font>();
+       Font(file, fontsize);
+   }*/
 
     void AssetManager::funcLoadImage(const char* file)
     {
@@ -361,5 +366,3 @@ namespace assetmanager {
         return;
     }
 }
-
-
