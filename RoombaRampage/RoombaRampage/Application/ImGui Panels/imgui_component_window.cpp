@@ -211,7 +211,7 @@ void ImGuiHandler::DrawComponentWindow()
                 ->GetEntityComponent(entityID));
 
             if (ImGui::CollapsingHeader("Sprite Component")) {
-                AssetManager* images = AssetManager::funcGetInstance();
+                assetmanager::AssetManager* images = assetmanager::AssetManager::funcGetInstance();
 
                 const char* items[] = { "AAAA", "BBBB", "CCCC", "DDDD", "EEEE" };
                 static int item_selected_idx = 0; // Here we store our selected data as an index.

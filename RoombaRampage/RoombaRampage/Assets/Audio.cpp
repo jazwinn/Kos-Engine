@@ -1,10 +1,11 @@
-#include "AudioManager.h"
+#include "Audio.h"
 #include <iostream>
 #include <fmod_errors.h>
 
 FModAudio::FModAudio() : system_(nullptr), sound_(nullptr), channel_(nullptr) {}
 
 FModAudio::~FModAudio() {
+    stopSound();
     shutdown();
 }
 
