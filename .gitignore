@@ -2,6 +2,7 @@
 !Logs/
 !Json/
 !Application/
+!Dependencies/
 !imgui.ini
 
 # User-specific files
