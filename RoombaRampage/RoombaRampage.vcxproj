@@ -174,6 +174,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\Freetype_Font\lib\*.dll" "$(OutDir)"</Co
     <ClCompile Include="Application\ImGui Panels\imgui_performance_window.cpp" />
     <ClCompile Include="Application\ImGui Panels\imgui_render_window.cpp" />
     <ClCompile Include="Application\ImGui Panels\imgui_test_panel.cpp" />
+    <ClCompile Include="Application\ImGui Panels\imgui__input_window.cpp" />
     <ClCompile Include="Application\main.cpp" />
     <ClCompile Include="Application\Window.cpp" />
     <ClCompile Include="Assets\AssetManager.cpp" />

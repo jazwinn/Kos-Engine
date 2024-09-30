@@ -61,13 +61,11 @@ namespace ecs {
 			MovementComponent* MovComp = m_vecMovementComponentPtr[n];
 			TransformComponent* TransComp = m_vecTransformComponentPtr[n];
 
-			if (MovComp->m_Move) {
 				vector2::Vec2 Velocity = MovComp->m_Direction * MovComp->m_Speed;
 
 				vector2::Vec2 Displacement = Velocity * ecs->m_DeltaTime;
 
 				TransComp->m_position += Displacement;
-			}
 		}
 	}
 

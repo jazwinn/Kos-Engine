@@ -86,10 +86,10 @@ namespace ecs {
 			}
 
 			if (ColComp->m_type == physicspipe::EntityType::CIRCLE) {
-				PhysicsPipeline.m_SendPhysicsData(ColComp->m_radius, TransComp->m_position, ColComp->m_Size * TransComp->m_scale, velocity, id);
+				PhysicsPipeline.m_SendPhysicsData(ColComp->m_radius, TransComp->m_position, ColComp->m_Size, velocity, id);
 			}
 			else if (ColComp->m_type == physicspipe::EntityType::RECTANGLE) {
-				PhysicsPipeline.m_SendPhysicsData(ColComp->m_Size.m_x, ColComp->m_Size.m_x, TransComp->m_position, ColComp->m_Size * TransComp->m_scale, velocity, id);
+				PhysicsPipeline.m_SendPhysicsData(ColComp->m_Size.m_x, ColComp->m_Size.m_x, TransComp->m_position, ColComp->m_Size , velocity, id);
 			}
 			else {
 				LOGGING_ERROR("NO ENTITY TYPE");
@@ -97,7 +97,7 @@ namespace ecs {
 
 			if (ColComp->m_drawDebug)
 			{
-				graphicsPipe->debugBoxData.push_back({ 0, glm::vec2{ColComp->m_Size.m_x * TransComp->m_scale.m_x, ColComp->m_Size.m_y * TransComp->m_scale.m_y}, glm::vec3{TransComp->m_position.m_x + ColComp->m_OffSet.m_x,TransComp->m_position.m_y + ColComp->m_OffSet.m_y, 0} ,0, 0 });
+				graphicsPipe->debugBoxData.push_back({ 0, glm::vec2{ColComp->m_Size.m_x, ColComp->m_Size.m_y}, glm::vec3{TransComp->m_position.m_x + ColComp->m_OffSet.m_x,TransComp->m_position.m_y + ColComp->m_OffSet.m_y, 0} ,0, 0 });
 			}
 		}
 

@@ -60,15 +60,16 @@ void ImGuiHandler::DrawTestWindow() {
 		std::random_device rd;
 		std::mt19937 gen(rd());
 
-		std::uniform_int_distribution<> height(lowerBoundy, upperBoundy);
-
+		std::uniform_real_distribution<float> height(lowerBoundy, upperBoundy);
+		std::uniform_real_distribution<float> height2(-1.5, 1.5);
 
 		for (int n{}; n < 2500; n++) {
 			 ecs::EntityID id = ecs->m_CreateEntity();
 			 ecs::TransformComponent* tc = (ecs::TransformComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id);
 			 ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, id);
-
+			 tc->m_scale = { 0.2, 0.2 };
 			 tc->m_position.m_y = static_cast<float>(height(gen));
+			 tc->m_position.m_x = static_cast<float>(height2(gen));
 
 		}
 	}

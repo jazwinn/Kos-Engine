@@ -1,0 +1,18 @@
+#include "imgui.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
+#include "imgui_handler.h"
+
+#include"../Inputs/Input.h"
+
+void ImGuiHandler::DrawInputWindow() {
+
+	bool open = true;
+	ImGui::Begin("Inputs", &open);
+
+	std::string mousePos = "Mouse Position: (" + std::to_string(static_cast<int>(Input::InputSystem::MousePosition.m_x)) + " , " + std::to_string(static_cast<int>(Input::InputSystem::MousePosition.m_y)) + ")";
+	ImGui::Text(mousePos.c_str());
+
+
+	ImGui::End();
+}

@@ -80,7 +80,7 @@ namespace Input {
 
 		MousePosition.m_x = static_cast<float>(xpos);
 		MousePosition.m_y = static_cast<float>(ypos);
-		std::cout << xpos << " : " << ypos << std::endl;
+		//std::cout << xpos << " : " << ypos << std::endl;
 
 	}
 

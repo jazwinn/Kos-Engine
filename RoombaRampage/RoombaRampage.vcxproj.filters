@@ -234,6 +234,9 @@
     <ClCompile Include="Events\MessageSystem.cpp">
       <Filter>Source Files\Messaging</Filter>
     </ClCompile>
+    <ClCompile Include="Application\ImGui Panels\imgui__input_window.cpp">
+      <Filter>Source Files\Imgui\Panels</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Graphics\Graphics.h">

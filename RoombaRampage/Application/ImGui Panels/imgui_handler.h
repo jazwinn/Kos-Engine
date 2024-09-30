@@ -25,6 +25,7 @@ public:
     void DrawPerformanceWindow(float fps);
     void DrawComponentWindow();
     void DrawTestWindow();
+    void DrawInputWindow();
     unsigned int DrawHierachyWindow();
     void DrawLogsWindow();
     void DrawRenderScreenWindow(unsigned int windowWidth, unsigned int windowHeight);
