@@ -9,7 +9,7 @@ namespace Ecs {
 
 	public:
 		float Speed{1};
-		Vector2::Vec2 Direction{0,0};
+		vector2::Vec2 Direction{0,0};
 		bool Move = false;
 	};
 

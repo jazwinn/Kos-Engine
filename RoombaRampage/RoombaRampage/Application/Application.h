@@ -2,7 +2,7 @@
 
 #include "Window.h"
 #include "./ImGui Panels/imgui_handler.h"
-#include "../Assets/AudioManager.h"
+#include "../Assets/Audio.h"
 
 namespace Application{
 
@@ -25,10 +25,7 @@ namespace Application{
 
 		static FModAudio audio;
 
-		static FMOD_CHANNELGROUP* channelgroup;
+		static FModAudio audio2;
 
 	};
-
-
-
 }

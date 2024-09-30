@@ -3,6 +3,7 @@
 #include "CollisionSystem.h"
 #include "../Physics/Physics.h"
 #include "../Graphics/GraphicsPipe.h"
+#include "../Debugging/Logging.h"
 
 namespace Ecs {
 
@@ -16,10 +17,8 @@ namespace Ecs {
 			vecTransformComponentPtr.push_back((TransformComponent*)ecs->ECS_CombinedComponentPool[TypeTransformComponent]->GetEntityComponent(ID));
 			vecColliderComponentPtr.push_back((ColliderComponent*)ecs->ECS_CombinedComponentPool[TypeColliderComponent]->GetEntityComponent(ID));
 			//vecRigidBodyComponentPtr.push_back((RigidBodyComponent*)ecs->ECS_CombinedComponentPool[TypeRigidBodyComponent]->GetEntityComponent(ID));
-			//vecMovementComponentPtr.push_back((MovementComponent*)ecs->ECS_CombinedComponentPool[TypeMovemmentComponent]->GetEntityComponent(ID));
+			vecMovementComponentPtr.push_back((MovementComponent*)ecs->ECS_CombinedComponentPool[TypeMovemmentComponent]->GetEntityComponent(ID));
 		}
-
-
 	}
 
 	void CollisionSystem::DeregisterSystem(EntityID ID) {
@@ -38,13 +37,13 @@ namespace Ecs {
 		std::swap(vecColliderComponentPtr[IndexID], vecColliderComponentPtr[IndexLast]);
 		std::swap(vecTransformComponentPtr[IndexID], vecTransformComponentPtr[IndexLast]);
 		//std::swap(vecRigidBodyComponentPtr[IndexID], vecRigidBodyComponentPtr[IndexLast]);
-		//std::swap(vecMovementComponentPtr[IndexID], vecMovementComponentPtr[IndexLast]);
+		std::swap(vecMovementComponentPtr[IndexID], vecMovementComponentPtr[IndexLast]);
 
 		//popback the vector;
 		vecColliderComponentPtr.pop_back();
 		vecTransformComponentPtr.pop_back();
 		//vecRigidBodyComponentPtr.pop_back();
-		//vecMovementComponentPtr.pop_back();
+		vecMovementComponentPtr.pop_back();
 	}
 
 	void CollisionSystem::Init() {
@@ -52,7 +51,7 @@ namespace Ecs {
 		// requires both movement component and transform component
 		SystemSignature.set(TypeColliderComponent);
 		//SystemSignature.set(TypeRigidBodyComponent);
-		//SystemSignature.set(TypeMovemmentComponent);
+		SystemSignature.set(TypeMovemmentComponent);
 		//SystemSignature.set();
 
 	}
@@ -67,7 +66,7 @@ namespace Ecs {
 		}
 
 		//create physics;
-		Physics::classPhysics PysicsPipeline;
+		physicspipe::Physics PhysicsPipeline;
 		GraphicsPipe* graphicsPipe = GraphicsPipe::funcGetInstance();
 
 		for (int n{}; n < vecTransformComponentPtr.size(); n++) {
@@ -75,31 +74,29 @@ namespace Ecs {
 
 			ColliderComponent* ColComp = vecColliderComponentPtr[n];
 			TransformComponent* TransComp = vecTransformComponentPtr[n];
-			//MovementComponent* MovComp = vecMovementComponentPtr[n];
+			MovementComponent* MovComp = vecMovementComponentPtr[n];
 
-			
-			//PysicsPipeline.SendPhysicsData(ColComp->Size * TransComp->scale,TransComp->position, MovComp->Speed * MovComp->Direction, ColComp->Entity);
-			/*
-			  if circle
-				PysicsPipeline.SendPhysicsData(ColComp->Size * TransComp->scale,TransComp->position, MovComp->Speed * MovComp->Direction, ColComp->Entity);
-				if rect
-				PysicsPipeline.SendPhysicsData(ColComp->Size * TransComp->scale,TransComp->position, MovComp->Speed * MovComp->Direction, ColComp->Entity);
-			*/
+			if (ColComp->type == physicspipe::EntityType::CIRCLE) {
+				PhysicsPipeline.m_SendPhysicsData(ColComp->radius, TransComp->position,TransComp->scale, MovComp->Speed * MovComp->Direction, ColComp->Entity);
+			}
+			else if (ColComp->type == physicspipe::EntityType::RECTANGLE) {
+				PhysicsPipeline.m_SendPhysicsData(ColComp->Size.m_x, ColComp->Size.m_x, TransComp->position,TransComp->scale, MovComp->Speed * MovComp->Direction, ColComp->Entity);
+			}
+			else {
+				LOGGING_ERROR("NO ENTITY TYPE");
+			}
 
 			if (ColComp->drawDebug)
 			{
-				graphicsPipe->debugBoxData.push_back({ 0, glm::vec2{ColComp->Size.x * TransComp->scale.x, ColComp->Size.y * TransComp->scale.y}, glm::vec3{TransComp->position.x + ColComp->OffSet.x,TransComp->position.y + ColComp->OffSet.y, 0} ,ColComp->isCollided, 0 });
+				graphicsPipe->debugBoxData.push_back({ 0, glm::vec2{ColComp->Size.m_x * TransComp->scale.m_x, ColComp->Size.m_y * TransComp->scale.m_y}, glm::vec3{TransComp->position.m_x + ColComp->OffSet.m_x,TransComp->position.m_y + ColComp->OffSet.m_y, 0} ,0, 0 });
 			}
 		}
 
 		//check for collision
 		if (vecColliderComponentPtr.size() > 0) {
-			PysicsPipeline.CollisionCheck(ecs->DeltaTime);
+			PhysicsPipeline.m_CollisionCheck(ecs->DeltaTime);
 		}
-		
-
-		
-
+	
 	}
 		
 

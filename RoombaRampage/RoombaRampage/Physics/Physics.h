@@ -1,3 +1,17 @@
+/******************************************************************/
+/*!
+\file      Physics.h
+\author    Rayner Tan, raynerweichen.tan , 2301449
+\par       raynerweichen.tan@digipen.edu
+\date      Sept 28, 2024
+\brief     Physics pipeline functions
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/********************************************************************/
+
 #ifndef PHYSICS_H
 #define PHYSICS_H
 
@@ -7,19 +21,20 @@
 #include <iostream>
 #include <memory>
 #include <new>
+#include "../Debugging/Logging.h"
 
 
 
-namespace Physics {
+namespace physicspipe {
 	
 	enum class EntityType {
-		Circle,
-		Rectangle
+		CIRCLE,
+		RECTANGLE
 	};
 
 	struct AABB {
-		Vector2::Vec2 min;
-		Vector2::Vec2 max;
+		vector2::Vec2 m_min;
+		vector2::Vec2 m_max;
 	};
 
 	/**********************************
@@ -27,11 +42,11 @@ namespace Physics {
 	**********************************/
 	class PhysicsData {
 	public:
-		Vector2::Vec2 scale{};                         // Axis-Aligned Bounding Box
-		Vector2::Vec2 position{};                   // Position of the entity's center
-		Vector2::Vec2 velocity{};                   // Current velocity of the entity
-		int ID = -1;                                // Unique identifier
-		EntityType type = EntityType::Rectangle;    // Circle or Rectangle
+		vector2::Vec2 m_scale{};                         // Axis-Aligned Bounding Box
+		vector2::Vec2 m_position{};                   // Position of the entity's center
+		vector2::Vec2 m_velocity{};                   // Current velocity of the entity
+		int m_ID = -1;                                // Unique identifier
+		EntityType type = EntityType::RECTANGLE;    // Circle or Rectangle
 
 		virtual ~PhysicsData() = default;
 
@@ -40,7 +55,7 @@ namespace Physics {
 
 		//Operator for equality check
 		bool operator==(const PhysicsData& other) const {
-			return (ID == other.ID);
+			return (m_ID == other.m_ID);
 		}
 	};
 
@@ -54,57 +69,55 @@ namespace Physics {
 		float m_radius = 0.0f;
 		Circle() = default;
 		// Constructor for Circle (declaration)
-		Circle(float radius, Vector2::Vec2 shape_position, Vector2::Vec2 shape_scale, Vector2::Vec2 shape_velocity, int entity_ID);
+		Circle(float radius, vector2::Vec2 shape_position, vector2::Vec2 shape_scale, vector2::Vec2 shape_velocity, int entity_ID);
 
 		// Overriding GetEntity for Circle
 		EntityType GetEntity() const override {
-			return EntityType::Circle;
+			return EntityType::CIRCLE;
 		}
 	};
 
 	// Rectangle class derived from PhysicsData
 	class Rectangle : public PhysicsData {
 	public:
-		float height = 0.0f;  // For rectangular entities
-		float width = 0.0f;   // For rectangular entities
-		AABB boundingBox{};
+		float m_height = 0.0f;  // For rectangular entities
+		float m_width = 0.0f;   // For rectangular entities
+		AABB m_boundingBox{};
 		Rectangle() = default;
 		// Constructor for Rectangle (declaration)
-		Rectangle(float rect_height, float rect_width, Vector2::Vec2 shape_position, Vector2::Vec2 shape_scale, Vector2::Vec2 shape_velocity, int entity_ID);
+		Rectangle(float rect_height, float rect_width, vector2::Vec2 shape_position, vector2::Vec2 shape_scale, vector2::Vec2 shape_velocity, int entity_ID);
 
 		// Overriding GetEntity for Rectangle
 		EntityType GetEntity() const override {
-			return EntityType::Rectangle;
+			return EntityType::RECTANGLE;
 		}
 	};
 
 	struct LineSegment
 	{
-		Vector2::Vec2 m_pt0;
-		Vector2::Vec2 m_pt1;
-		Vector2::Vec2 m_normal;
+		vector2::Vec2 m_pt0;
+		vector2::Vec2 m_pt1;
+		vector2::Vec2 m_normal;
 	};
 
-	class classPhysics {
+	class Physics {
 	private:
 		
-		static std::vector<std::shared_ptr<PhysicsData>> physicsEntities;
-		static std::vector<std::shared_ptr<PhysicsData>> collidedEntities;
-		//static std::vector<std::unique_ptr<PhysicsData>> physicsEntities;
-		//static std::vector<std::unique_ptr<PhysicsData>> collidedEntities;
-		void CalculateBoundingBox();
+		static std::vector<std::shared_ptr<PhysicsData>> m_physicsEntities;
+		static std::vector<std::shared_ptr<PhysicsData>> m_collidedEntities;
+		void m_CalculateBoundingBox();
 
 	public:
-		void SendPhysicsData(float rect_height, float rect_width, Vector2::Vec2 position, Vector2::Vec2 scale, Vector2::Vec2 velocity, int ID);
-		void SendPhysicsData(float radius, Vector2::Vec2 scale, Vector2::Vec2 position, Vector2::Vec2 velocity, int ID);
-		void CollisionCheck(float);
-		std::vector<std::shared_ptr<PhysicsData>> RetrievePhysicsData();
-		void ClearEntites();
+		void m_SendPhysicsData(float rect_height, float rect_width, vector2::Vec2 position, vector2::Vec2 scale, vector2::Vec2 velocity, int ID);
+		void m_SendPhysicsData(float radius, vector2::Vec2 position, vector2::Vec2 scale, vector2::Vec2 velocity, int ID);
+		void m_CollisionCheck(float);
+		std::vector<std::shared_ptr<PhysicsData>> m_RetrievePhysicsData();
+		void m_ClearEntites();
 		//static dynamic collision
-		bool CollisionIntersection_RectRect(const Rectangle&, const Rectangle&, float );
-		bool CollisionIntersection_CircleRect(const Circle&, const Rectangle&);
-		bool CollisionIntersection_CircleCircle(const Circle&, const Circle&);
-		bool static_CollisionCheck(const AABB, const AABB);
+		bool m_CollisionIntersection_RectRect(const Rectangle&, const Rectangle&, float );
+		bool m_CollisionIntersection_CircleRect(const Circle&, const Rectangle&);
+		bool m_CollisionIntersection_CircleCircle(const Circle&, const Circle&);
+		bool m_static_CollisionCheck(const AABB, const AABB);
 	};
 }
 #endif

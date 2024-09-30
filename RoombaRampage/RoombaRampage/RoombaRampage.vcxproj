@@ -142,6 +142,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\FMOD_API\studio\lib\x64\*.dll" "$(OutDir
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);GLEW_STATIC;CRT_SECURE_NO_WARNINGS;CRT_SECURE_NO_WARNINGS;CRT_SECURE_NO_WARNINGSCRT_SECURE_NO_WARNINGSCRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\FMOD_API\core\inc;$(SolutionDir)Dependencies\FMOD_API\studio\inc;$(SolutionDir)Dependencies\imgui;$(SolutionDir)include;$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\glm\include;$(SolutionDir)Dependencies\stb_image\include;$(SolutionDir)Dependencies\GLEW\include\GL;</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -174,7 +175,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\FMOD_API\studio\lib\x64\*.dll" "$(OutDir
     <ClCompile Include="Application\main.cpp" />
     <ClCompile Include="Application\Window.cpp" />
     <ClCompile Include="Assets\AssetManager.cpp" />
-    <ClCompile Include="Assets\AudioManager.cpp" />
+    <ClCompile Include="Assets\Audio.cpp" />
     <ClCompile Include="De&amp;Serialization\json_handler.cpp" />
     <ClCompile Include="Debugging\Logging.cpp" />
     <ClCompile Include="Debugging\Performance.cpp" />
@@ -209,7 +210,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\FMOD_API\studio\lib\x64\*.dll" "$(OutDir
     <ClInclude Include="Application\json_handler.h" />
     <ClInclude Include="Application\Window.h" />
     <ClInclude Include="Assets\AssetManager.h" />
-    <ClInclude Include="Assets\AudioManager.h" />
+    <ClInclude Include="Assets\Audio.h" />
     <ClInclude Include="De&amp;Serialization\json_handler.h" />
     <ClInclude Include="Debugging\Logging.h" />
     <ClInclude Include="Debugging\Performance.h" />

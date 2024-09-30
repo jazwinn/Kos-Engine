@@ -9,8 +9,10 @@ namespace Application {
             return -1;
 
         // Get the primary monitor
-        GLFWmonitor* monitor = glfwGetPrimaryMonitor();
-        const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+        //TOCHECK
+        //naming of monitor and mode is same as member function
+        //GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+        //const GLFWvidmode* mode = glfwGetVideoMode(monitor);
 
         // Create a window based on the current screen size
         WindowWidth = Helper::Helpers::GetInstance()->WindowWidth;
@@ -19,7 +21,7 @@ namespace Application {
         /* Create a windowed mode window and its OpenGL context */
         //Set third param to glfwGetPrimaryMonitor if you want fullscreen borderless
 
-        Window = glfwCreateWindow(WindowWidth, WindowHeight, "Kos", NULL, NULL);
+        Window = glfwCreateWindow(static_cast<int>(WindowWidth), static_cast<int>(WindowHeight), "Kos", NULL, NULL);
         if (!Window)
         {
             glfwTerminate();
@@ -45,7 +47,7 @@ namespace Application {
         int display_w, display_h;
         glfwGetFramebufferSize(Window, &display_w, &display_h);
         glViewport(0, 0, display_w, display_h);
-        glClearColor(0.86, 0.86, 0.86, 0.86);
+        glClearColor(static_cast<GLclampf>(0.86), static_cast<GLclampf>(0.86), static_cast<GLclampf>(0.86), static_cast<GLclampf>(0.86));
         glClear(GL_COLOR_BUFFER_BIT);
 
         return 0;

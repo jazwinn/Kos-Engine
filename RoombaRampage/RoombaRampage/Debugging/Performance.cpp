@@ -1,15 +1,28 @@
+/******************************************************************/
+/*!
+\file      Performance.cpp
+\author    Rayner Tan, raynerweichen.tan , 2301449
+\par       raynerweichen.tan@digipen.edu
+\date      Sept 28, 2024
+\brief     Performance functions
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/********************************************************************/
 #include "Performance.h"
 
-namespace PerformanceTracker {
+namespace performancetracker {
 	//Global Varaibles
-	float Performance::engineTime = 0.f;
-	int Performance::totalSystem = Ecs::TotalTypeSystem;
-	std::unordered_map<Ecs::TypeSystem, std::pair<std::string, float>> Performance::systemTimeList;
+	float Performance::m_engineTime = 0.f;
+	int Performance::m_totalSystem = Ecs::TotalTypeSystem;
+	std::unordered_map<Ecs::TypeSystem, std::pair<std::string, float>> Performance::m_systemTimeList;
 
 	Performance::Performance() {
 		//engineTime = 0.0f;
 	}
-	std::string Performance::typeToString(Ecs::TypeSystem type) {
+	std::string Performance::m_typeToString(Ecs::TypeSystem type) {
 		switch (type) {
 		case Ecs::TypeSystem::TypeMovementSystem:
 			return "Movement System";
@@ -26,33 +39,33 @@ namespace PerformanceTracker {
 		}
 	}
 
-	void Performance::ResetTotalSystemTime() {
-		engineTime = 0;
+	void Performance::m_ResetTotalSystemTime() {
+		m_engineTime = 0;
 	}
-	void Performance::UpdateTotalSystemTime(float time) {
-		engineTime += time;
-	}
-
-	void Performance::AddSystem(Ecs::TypeSystem System) {
-		systemTimeList[System] = {typeToString(System),0};
+	void Performance::m_UpdateTotalSystemTime(float time) {
+		m_engineTime += time;
 	}
 
-	void Performance::UpdateSystemTime(Ecs::TypeSystem system, float time) {
-		systemTimeList[system].second = time;
+	void Performance::m_AddSystem(Ecs::TypeSystem System) {
+		m_systemTimeList[System] = { m_typeToString(System),0};
 	}
 
-	float Performance::GetTotalSystemTime() {
-		return engineTime;
+	void Performance::m_UpdateSystemTime(Ecs::TypeSystem system, float time) {
+		m_systemTimeList[system].second = time;
 	}
-	float Performance::getSystemTime(Ecs::TypeSystem sys) {
-		return systemTimeList[sys].second;
+
+	float Performance::m_GetTotalSystemTime() {
+		return m_engineTime;
+	}
+	float Performance::m_GetSystemTime(Ecs::TypeSystem sys) {
+		return m_systemTimeList[sys].second;
 	}
 	
-	std::string Performance::getSystemString(Ecs::TypeSystem Sys) {
-		return systemTimeList[Sys].first;
+	std::string Performance::m_GetSystemString(Ecs::TypeSystem Sys) {
+		return m_systemTimeList[Sys].first;
 	}
 
-	void Performance::printPerformance(){
+	void Performance::m_PrintPerformance(){
 		//std::cout << "###########################################" << std::endl;
 		//for (auto& val : systemTimeList) {
 		//	std::string system = typeToString(val.first);
@@ -65,7 +78,7 @@ namespace PerformanceTracker {
 		//std::cout << "###########################################" << std::endl;
 	}
 
-	void Performance::printFPS(float dt) {
+	void Performance::m_PrintFPS(float dt) {
 		std::cout << "FPS: " << 1 / dt << std::endl;
 	}
 

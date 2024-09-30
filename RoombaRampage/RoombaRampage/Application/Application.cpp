@@ -16,8 +16,9 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 
+#include "../Assets/Audio.h"
 
-#include "../Assets/AudioManager.h"
+#include <../Dependencies/Freetype_Font/include/ft2build.h>
 
 namespace Application {
 
@@ -27,22 +28,26 @@ namespace Application {
     AppWindow Application::lvWindow;
     ImGuiHandler Application::imgui_manager;
     GraphicsPipe* pipe;
-    AssetManager* AstManager;
     Input::InputSystem Input;
-   
+    assetmanager::AssetManager* AstManager;
+    logging::Logger logs;
 
-    // Audio
-    FModAudio Application::audio;
-    FMOD_CHANNELGROUP* Application::channelgroup;
+
+    // Audio Demo timer
+    float audioTimer = 3.0f;
+    bool audio2_bool = true;
+
+    float LastTime = glfwGetTime();;
 
 
     int Application::Init() {
-
         /*--------------------------------------------------------------
         INITIALIZE LOGGING SYSTEM
         --------------------------------------------------------------*/
-        LOGGING_INIT_LOGS("Debugging/LogFile.txt");
+        LOGGING_INIT_LOGS("Logs/LogFile.txt");
         LOGGING_INFO("Application Start");
+        logs.m_Setup_Abort_Handler();
+        std::signal(SIGABRT, logging::Logger::m_Abort_Handler);
 
         /*--------------------------------------------------------------
           INITIALIZE WINDOW WIDTH & HEIGHT
@@ -53,17 +58,9 @@ namespace Application {
         /*--------------------------------------------------------------
            INITIALIZE Asset Manager
         --------------------------------------------------------------*/
-        AstManager = AssetManager::funcGetInstance();
+        AstManager = assetmanager::AssetManager::funcGetInstance();
         AstManager->funcLoadAssets();
         LOGGING_INFO("Load Asset Successful");
-
-        /*--------------------------------------------------------------
-            INITIALIZE AUDIO MANAGER
-        --------------------------------------------------------------*/
-        // Initialize the FMOD system
-        audio.init();
-        audio.createSound("./Assets/vacuum.mp3");
-        LOGGING_INFO("Load Aduio Successful");
 
        /*--------------------------------------------------------------
           INITIALIZE OPENGL WINDOW
@@ -91,105 +88,93 @@ namespace Application {
         const char* glsl_version = "#version 130";
         imgui_manager.Initialize(lvWindow.Window, glsl_version);
         LOGGING_INFO("Load ImGui Successful");
-
+        
         /*--------------------------------------------------------------
            INITIALIZE ECS
         --------------------------------------------------------------*/
-        //fetch ecs
         Ecs::ECS* ecs = Ecs::ECS::GetInstance();
-
         ecs->Load();
         ecs->Init();
         LOGGING_INFO("Load ECS Successful");
 
-
-
         LOGGING_INFO("Application Init Successful");
+    
         return 0;
 	}
 
 
 
     int Application::Run() {
-
         Ecs::ECS* ecs = Ecs::ECS::GetInstance();
         Helper::Helpers *help = Helper::Helpers::GetInstance();
         float FPSCapTime = 1.f / help->FpsCap;
         double lastFrameTime = glfwGetTime();
-
-
         /*--------------------------------------------------------------
-         GAME LOOP
+            GAME LOOP
         --------------------------------------------------------------*/
         while (!glfwWindowShouldClose(lvWindow.Window))
         {
-            /* Poll for and process events */
-            glfwPollEvents();
+            try {
+                /* Poll for and process events */
+                glfwPollEvents();
 
+                /*--------------------------------------------------------------
+                    UPDATE ECS
+                    --------------------------------------------------------------*/
+                ecs->Update(Helper::Helpers::GetInstance()->DeltaTime);
 
+                /*--------------------------------------------------------------
+                    UPDATE Render Pipeline
+                    --------------------------------------------------------------*/
+                pipe->funcUpdate();
 
-            /*--------------------------------------------------------------
-             UPDATE ECS
-             --------------------------------------------------------------*/
-            ecs->Update(Helper::Helpers::GetInstance()->DeltaTime);
+                /*--------------------------------------------------------------
+                    DRAWING/RENDERING Window
+                    --------------------------------------------------------------*/
+                lvWindow.Draw();
 
-            /*--------------------------------------------------------------
-             UPDATE Render Pipeline
-             --------------------------------------------------------------*/
-            pipe->funcUpdate();
-               
+                /*--------------------------------------------------------------
+                    DRAWING/RENDERING Objects
+                    --------------------------------------------------------------*/
+                pipe->funcDrawWindow();
 
-            /*--------------------------------------------------------------
-             DRAWING/RENDERING Window
-             --------------------------------------------------------------*/
-            lvWindow.Draw();
+                /*--------------------------------------------------------------
+                    Draw IMGUI FRAME
+                    --------------------------------------------------------------*/
+                imgui_manager.Render();
 
-            /*--------------------------------------------------------------
-             DRAWING/RENDERING Objects
-             --------------------------------------------------------------*/
-            pipe->funcDrawWindow();
+                /*--------------------------------------------------------------
+                    Calculate time
+                    --------------------------------------------------------------*/
+                double currentFrameTime = glfwGetTime();
+                help->DeltaTime = static_cast<float>(currentFrameTime - lastFrameTime);
 
-            /*--------------------------------------------------------------
-             Draw IMGUI FRAME
-             --------------------------------------------------------------*/
-            imgui_manager.Render();
+                while (help->DeltaTime < FPSCapTime) {
+                    lastFrameTime = currentFrameTime;
+                    currentFrameTime = glfwGetTime();
+                    help->DeltaTime += static_cast<float>(currentFrameTime - lastFrameTime);
+                }
+                lastFrameTime = glfwGetTime();
+                help->Fps = 1.f / help->DeltaTime;
 
-            
-            /*--------------------------------------------------------------
-             Play AUDIO
-             --------------------------------------------------------------*/
-            //audio.playSound();
-
-             /*--------------------------------------------------------------
-             Calculate time
-             --------------------------------------------------------------*/
-            double currentFrameTime = glfwGetTime();
-            help->DeltaTime = currentFrameTime - lastFrameTime;
-
-            while (help->DeltaTime < FPSCapTime) {
-                lastFrameTime = currentFrameTime;
-                currentFrameTime = glfwGetTime();
-                help->DeltaTime += currentFrameTime - lastFrameTime;
+                glfwSwapBuffers(lvWindow.Window);
             }
-
-            lastFrameTime = glfwGetTime();
-            help->Fps = 1.f / help->DeltaTime;
-
-            glfwSwapBuffers(lvWindow.Window);
+            catch (const std::exception& e) {
+                LOGGING_ERROR("Exception in game loop: {}", e.what());
+            }
         }
-
         return 0;
-	}
+    }
+
 
 
 	int Application::Cleanup() {
-
         Ecs::ECS::GetInstance()->Unload();
         imgui_manager.Shutdown();
         lvWindow.CleanUp();
         glfwTerminate();
-        audio.shutdown();
         LOGGING_INFO("Application Closed");
+
         return 0;
 	}
 
