@@ -17,7 +17,7 @@ void main()
 {
 
 	gl_Position = vec4(vec2(modelMatrix * vec3(vertexPosition, 1.f)),
-					   0.0, 1.0);
+					   0.1 * atextureID, 1.0);
 
 	texCoords = vertexTexCoords;
 	color = vertexColor;
