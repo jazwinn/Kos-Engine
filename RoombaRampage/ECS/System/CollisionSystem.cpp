@@ -17,7 +17,7 @@ namespace ecs {
 			m_vecTransformComponentPtr.push_back((TransformComponent*)ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(ID));
 			m_vecColliderComponentPtr.push_back((ColliderComponent*)ecs->m_ECS_CombinedComponentPool[TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(ID));
 			//vecRigidBodyComponentPtr.push_back((RigidBodyComponent*)ecs->ECS_CombinedComponentPool[TypeRigidBodyComponent]->GetEntityComponent(ID));
-			m_vecMovementComponentPtr.push_back((MovementComponent*)ecs->m_ECS_CombinedComponentPool[TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(ID));
+			//m_vecMovementComponentPtr.push_back((MovementComponent*)ecs->m_ECS_CombinedComponentPool[TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(ID));
 		}
 	}
 
@@ -37,22 +37,20 @@ namespace ecs {
 		std::swap(m_vecColliderComponentPtr[IndexID], m_vecColliderComponentPtr[IndexLast]);
 		std::swap(m_vecTransformComponentPtr[IndexID], m_vecTransformComponentPtr[IndexLast]);
 		//std::swap(vecRigidBodyComponentPtr[IndexID], vecRigidBodyComponentPtr[IndexLast]);
-		std::swap(m_vecMovementComponentPtr[IndexID], m_vecMovementComponentPtr[IndexLast]);
+		//std::swap(m_vecMovementComponentPtr[IndexID], m_vecMovementComponentPtr[IndexLast]);
 
 		//popback the vector;
 		m_vecColliderComponentPtr.pop_back();
 		m_vecTransformComponentPtr.pop_back();
 		//vecRigidBodyComponentPtr.pop_back();
-		m_vecMovementComponentPtr.pop_back();
+		//m_vecMovementComponentPtr.pop_back();
 	}
 
 	void CollisionSystem::m_Init() {
 
 		// requires both movement component and transform component
 		m_SystemSignature.set(TYPECOLLIDERCOMPONENT);
-		//SystemSignature.set(TypeRigidBodyComponent);
-		m_SystemSignature.set(TYPEMOVEMENTCOMPONENT);
-		//SystemSignature.set();
+		//m_SystemSignature.set(TYPEMOVEMENTCOMPONENT);
 
 	}
 
@@ -75,13 +73,23 @@ namespace ecs {
 
 			ColliderComponent* ColComp = m_vecColliderComponentPtr[n];
 			TransformComponent* TransComp = m_vecTransformComponentPtr[n];
-			MovementComponent* MovComp = m_vecMovementComponentPtr[n];
+
+			EntityID id = ColComp->m_Entity;
+
+			//if movement component is present, do dynamic collision
+			vector2::Vec2 velocity{};
+			if (ecs->m_ECS_EntityMap[id].test(TYPEMOVEMENTCOMPONENT)) {
+
+				MovementComponent* MovComp = static_cast<MovementComponent*>(ecs->m_ECS_CombinedComponentPool[TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(id));
+
+				 velocity = MovComp->m_Speed * MovComp->m_Direction;
+			}
 
 			if (ColComp->m_type == physicspipe::EntityType::CIRCLE) {
-				PhysicsPipeline.m_SendPhysicsData(ColComp->m_radius, TransComp->m_position, ColComp->m_Size * TransComp->m_scale, MovComp->m_Speed * MovComp->m_Direction, ColComp->m_Entity);
+				PhysicsPipeline.m_SendPhysicsData(ColComp->m_radius, TransComp->m_position, ColComp->m_Size * TransComp->m_scale, velocity, id);
 			}
 			else if (ColComp->m_type == physicspipe::EntityType::RECTANGLE) {
-				PhysicsPipeline.m_SendPhysicsData(ColComp->m_Size.m_x, ColComp->m_Size.m_x, TransComp->m_position, ColComp->m_Size * TransComp->m_scale, MovComp->m_Speed * MovComp->m_Direction, ColComp->m_Entity);
+				PhysicsPipeline.m_SendPhysicsData(ColComp->m_Size.m_x, ColComp->m_Size.m_x, TransComp->m_position, ColComp->m_Size * TransComp->m_scale, velocity, id);
 			}
 			else {
 				LOGGING_ERROR("NO ENTITY TYPE");

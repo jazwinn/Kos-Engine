@@ -10,6 +10,7 @@ namespace ecs{
 
 	std::unique_ptr<ECS> ECS::m_InstancePtr = nullptr;
 
+
 	void ECS::m_Init() {
 		ECS* ecs = ECS::m_GetInstance();
 		//loops through all the system
