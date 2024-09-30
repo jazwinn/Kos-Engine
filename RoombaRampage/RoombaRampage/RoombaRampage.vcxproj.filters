@@ -222,6 +222,9 @@
     <ClCompile Include="Application\ImGui Panels\imgui_test_panel.cpp">
       <Filter>Source Files\Imgui\Panels</Filter>
     </ClCompile>
+    <ClCompile Include="Assets\Prefab.cpp">
+      <Filter>Source Files\Assets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Graphics\Graphics.h">
@@ -388,6 +391,9 @@
     </ClInclude>
     <ClInclude Include="Dependencies\backward\backward.hpp">
       <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Assets\Prefab.h">
+      <Filter>Source Files\Assets</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

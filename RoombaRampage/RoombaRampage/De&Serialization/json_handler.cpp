@@ -57,7 +57,7 @@ namespace Serialization {
         }
     }
     // Helper function to check if the json file exists and create it
-    void JsonFileValidation(const std::string& filePath) {
+    void Serialize::JsonFileValidation(const std::string& filePath) {
 
         std::ifstream checkFile(filePath);
 
