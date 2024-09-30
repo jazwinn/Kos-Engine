@@ -100,9 +100,6 @@
     <Filter Include="Source Files\De/Serialization">
       <UniqueIdentifier>{3be5386e-9a52-42cf-9665-7b1a652745c1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Events">
-      <UniqueIdentifier>{54186e0b-947d-4dbc-b16c-a1fd863c4278}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Math\Mat2x2.cpp">
@@ -225,8 +222,8 @@
     <ClCompile Include="Application\ImGui Panels\imgui_test_panel.cpp">
       <Filter>Source Files\Imgui\Panels</Filter>
     </ClCompile>
-    <ClCompile Include="Events\Event.cpp">
-      <Filter>Source Files\Events</Filter>
+    <ClCompile Include="Assets\Prefab.cpp">
+      <Filter>Source Files\Assets</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -298,6 +295,18 @@
     </ClInclude>
     <ClInclude Include="Assets\AssetManager.h">
       <Filter>Header Files\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\baseEvent.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\keyEvents.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\mouseEvents.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\windowEvents.h">
+      <Filter>Header Files\Events</Filter>
     </ClInclude>
     <ClInclude Include="ECS\Component\PlayerComponent.h">
       <Filter>Header Files\ECS\Component</Filter>
@@ -383,8 +392,8 @@
     <ClInclude Include="Dependencies\backward\backward.hpp">
       <Filter>Resource Files</Filter>
     </ClInclude>
-    <ClInclude Include="Events\Event.h">
-      <Filter>Header Files\Events</Filter>
+    <ClInclude Include="Assets\Prefab.h">
+      <Filter>Source Files\Assets</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
