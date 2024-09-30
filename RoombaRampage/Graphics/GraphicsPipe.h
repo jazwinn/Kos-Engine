@@ -12,11 +12,12 @@
 
 struct GraphicsData
 {
-	float rotate{};
-	glm::vec2 scale{};
-	glm::vec3 worldCoordinates{};
-	unsigned int textureID{};
-	int shapeType{};
+	float rotate;
+	glm::vec2 scale;
+	glm::vec3 worldCoordinates;
+	unsigned int textureID;
+	int shapeType;
+	int layer;
 };
 
 struct DebugDrawData

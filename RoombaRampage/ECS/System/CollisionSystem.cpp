@@ -76,6 +76,13 @@ namespace ecs {
 
 			EntityID id = ColComp->m_Entity;
 
+			//Reset all collision components to not colliding
+			for (int n{}; n < m_vecColliderComponentPtr.size(); n++)
+			{
+				ColliderComponent* ColComp = m_vecColliderComponentPtr[n];
+				ColComp->m_isCollided = false;
+			}
+
 			//if movement component is present, do dynamic collision
 			vector2::Vec2 velocity{};
 			if (ecs->m_ECS_EntityMap[id].test(TYPEMOVEMENTCOMPONENT)) {
@@ -86,19 +93,15 @@ namespace ecs {
 			}
 
 			if (ColComp->m_type == physicspipe::EntityType::CIRCLE) {
-				PhysicsPipeline.m_SendPhysicsData(ColComp->m_radius, TransComp->m_position, ColComp->m_Size * TransComp->m_scale, velocity, id);
+				PhysicsPipeline.m_SendPhysicsData(ColComp->m_radius, TransComp->m_position + ColComp->m_OffSet, ColComp->m_Size * TransComp->m_scale, velocity, id);
 			}
 			else if (ColComp->m_type == physicspipe::EntityType::RECTANGLE) {
-				PhysicsPipeline.m_SendPhysicsData(ColComp->m_Size.m_x, ColComp->m_Size.m_x, TransComp->m_position, ColComp->m_Size * TransComp->m_scale, velocity, id);
+				PhysicsPipeline.m_SendPhysicsData(ColComp->m_Size.m_y * TransComp->m_scale.m_y, ColComp->m_Size.m_x * TransComp->m_scale.m_x, TransComp->m_position + ColComp->m_OffSet, ColComp->m_Size * TransComp->m_scale, velocity, id);
 			}
 			else {
 				LOGGING_ERROR("NO ENTITY TYPE");
 			}
 
-			if (ColComp->m_drawDebug)
-			{
-				graphicsPipe->debugBoxData.push_back({ 0, glm::vec2{ColComp->m_Size.m_x * TransComp->m_scale.m_x, ColComp->m_Size.m_y * TransComp->m_scale.m_y}, glm::vec3{TransComp->m_position.m_x + ColComp->m_OffSet.m_x,TransComp->m_position.m_y + ColComp->m_OffSet.m_y, 0} ,0, 0 });
-			}
 		}
 
 		//check for collision

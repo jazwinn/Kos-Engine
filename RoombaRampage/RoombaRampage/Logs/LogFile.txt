@@ -1,0 +1,9 @@
+[INFO]: 2024-09-30 22:43:42 - Application Start
+[INFO]: 2024-09-30 22:43:42 - Load Config Successful
+[INFO]: 2024-09-30 22:43:42 - Load Asset Successful
+[INFO]: 2024-09-30 22:43:42 - Load Window Successful
+[INFO]: 2024-09-30 22:43:42 - Load Graphic Pipline Successful
+[INFO]: 2024-09-30 22:43:42 - Set Input Call Back Successful
+[INFO]: 2024-09-30 22:43:42 - Load ImGui Successful
+[INFO]: 2024-09-30 22:43:42 - Load ECS Successful
+[INFO]: 2024-09-30 22:43:42 - Application Init Successful
