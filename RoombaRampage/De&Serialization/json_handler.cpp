@@ -87,8 +87,10 @@ namespace Serialization {
         checkFile.close();
     }
 
-    void Serialize::LoadComponentsJson(const std::string& jsonFilePath, ecs::ECS* ecs, std::vector<std::string>& obj_text_entries)
+    void Serialize::LoadComponentsJson(const std::string& jsonFilePath)
     {
+
+        ecs::ECS* ecs = ecs::ECS::m_GetInstance();
         // Open the JSON file for reading
         std::ifstream inputFile(jsonFilePath);
 
@@ -104,8 +106,6 @@ namespace Serialization {
         rapidjson::Document doc;
         doc.Parse(fileContent.c_str());
 
-        obj_text_entries.clear();
-
         // Iterate through each component entry in the JSON array
         for (rapidjson::SizeType i = 0; i < doc.Size(); i++) {
             const rapidjson::Value& entityData = doc[i];
@@ -115,11 +115,12 @@ namespace Serialization {
 
             // Load the name field
             if (entityData.HasMember("name") && entityData["name"].IsString()) {
-                obj_text_entries.push_back(entityData["name"].GetString());  // Store the name
+                ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(newEntityID));
+                nc->m_entityName = entityData["name"].GetString();  // Store the name
             }
-            else {
-                obj_text_entries.push_back("GameObject -"); //Incase cannot load
-            }
+            //else {
+            //    obj_text_entries.push_back("GameObject -"); //Incase cannot load
+            //}
 
             // Load Transform Component if it exists
             if (entityData.HasMember("transform") && entityData["transform"].IsObject()) {
@@ -228,6 +229,7 @@ namespace Serialization {
         LOGGING_INFO("Load Json Successful");
     }
 
+    //THIS SHOULD NVR BE CALLED OUTSIDE OF IMGUI ELSE IT MIGHT CRASH
     void Serialize::SaveComponentsJson(const std::string& filePath, const std::unordered_map<ecs::EntityID, std::bitset<ecs::ComponentType::TOTALTYPECOMPONENT>>& ECS_EntityMap, const std::vector<std::string>& obj_text_entries, const std::vector<ecs::EntityID>& obj_entity_id)
     {
         // JSON File Validation / Creation

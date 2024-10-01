@@ -26,6 +26,7 @@ namespace prefab {
 
 		//Add vector for every new components
 		ecs::MovementComponent m_movementComponents;
+		ecs::NameComponent m_nameComponents;
 		ecs::PlayerComponent m_playerComponents;
 		ecs::SpriteComponent m_spriteComponents;
 		ecs::TransformComponent m_transformComponents;

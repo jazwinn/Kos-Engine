@@ -2,6 +2,7 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_handler.h"
+#include "imgui_stdlib.h"
 #include "../ECS/ECS.h"
 #include "../Assets/AssetManager.h"
 
@@ -67,12 +68,36 @@ void ImGuiHandler::DrawComponentWindow()
 
         const float slider_start_pos_x = 100.0f; //Padding for the slider
 
-        bool isModified = false;  //Track if the user modifies the component values
-        bool isFirstSaved = true;
 
         // Check if the TransformComponent exists for the entity
 
         ecs::compSignature EntitySignature = ecs->m_ECS_EntityMap[entityID];
+
+        if (EntitySignature.test(ecs::TYPENAMECOMPONENT))
+        {
+
+
+            if (ImGui::CollapsingHeader("Name Component"))
+            {
+                // Retrieve the TransformComponent
+                ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]
+                    ->m_GetEntityComponent(entityID));
+
+                //Display Position
+                ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
+                ImGui::Text("Object Name: ");
+                ImGui::SameLine(slider_start_pos_x);
+                ImGui::SetNextItemWidth(100.0f);
+                if (ImGui::InputText("##NAMETEXT##", &nc->m_entityName)) {
+                    for (int n{}; n < obj_entity_id.size(); n++) {
+                        if (obj_entity_id[n] == entityID) {
+                            obj_text_entries[n] = nc->m_entityName;
+                        }
+                    }
+                }
+
+            }
+        }
             
         if (EntitySignature.test(ecs::TYPETRANSFORMCOMPONENT))
         {
@@ -89,34 +114,29 @@ void ImGuiHandler::DrawComponentWindow()
                 ImGui::Text("Position");
                 ImGui::SameLine(slider_start_pos_x);
                 ImGui::SetNextItemWidth(100.0f);
-                if (ImGui::DragFloat("X##", &tc->m_position.m_x, 0.02f, -1.0f, 1.0f, "%.2f"))
-                    isModified = true;
+                ImGui::DragFloat("X##", &tc->m_position.m_x, 0.02f, -1.0f, 1.0f, "%.2f");
 
                 ImGui::SameLine();
                 ImGui::SetNextItemWidth(100.0f);
-                if (ImGui::DragFloat("Y##PosY", &tc->m_position.m_y, 0.02f, -1.0f, 1.0f, "%.2f"))
-                    isModified = true;
+                ImGui::DragFloat("Y##PosY", &tc->m_position.m_y, 0.02f, -1.0f, 1.0f, "%.2f");
 
                 //Display Rotation
                 ImGui::AlignTextToFramePadding();
                 ImGui::Text("Rotation");
                 ImGui::SameLine(slider_start_pos_x);
                 ImGui::SetNextItemWidth(100.0f);
-                if (ImGui::DragFloat("##Rot", &tc->m_rotation, 1.0f, -360.0f, 360.0f, "%.2f"))
-                    isModified = true;
+                ImGui::DragFloat("##Rot", &tc->m_rotation, 1.0f, -360.0f, 360.0f, "%.2f");
 
                 //Display Scale
                 ImGui::AlignTextToFramePadding();
                 ImGui::Text("Scale");
                 ImGui::SameLine(slider_start_pos_x);
                 ImGui::SetNextItemWidth(100.0f);
-                if (ImGui::DragFloat("X", &tc->m_scale.m_x, 0.02f, 0.1f, 2.0f, "%.2f"))
-                    isModified = true;
+                ImGui::DragFloat("X", &tc->m_scale.m_x, 0.02f, 0.1f, 2.0f, "%.2f");
 
                 ImGui::SameLine();
                 ImGui::SetNextItemWidth(100.0f);
-                if (ImGui::DragFloat("Y", &tc->m_scale.m_y, 0.02f, 0.1f, 2.0f, "%.2f"))
-                    isModified = true;
+                ImGui::DragFloat("Y", &tc->m_scale.m_y, 0.02f, 0.1f, 2.0f, "%.2f");
             }
         }
         if (EntitySignature.test(ecs::TYPEMOVEMENTCOMPONENT))
@@ -132,21 +152,19 @@ void ImGuiHandler::DrawComponentWindow()
                 ImGui::Text("Speed");
                 ImGui::SameLine(slider_start_pos_x);
                 ImGui::SetNextItemWidth(100.0f);
-                if (ImGui::DragFloat("##Speed", &mc->m_Speed, 0.01f, -10.0f, 10.0f, "%.2f"))
-                    isModified = true;
+                ImGui::DragFloat("##Speed", &mc->m_Speed, 0.01f, -10.0f, 10.0f, "%.2f");
 
                 // Display Velocity
                 ImGui::AlignTextToFramePadding();
                 ImGui::Text("Direction");
                 ImGui::SameLine(slider_start_pos_x);
                 ImGui::SetNextItemWidth(100.0f);
-                if (ImGui::DragFloat("X##VelX", &mc->m_Direction.m_x, 0.02f, -1.0f, 1.0f, "%.2f"))
-                    isModified = true;
+                ImGui::DragFloat("X##VelX", &mc->m_Direction.m_x, 0.02f, -1.0f, 1.0f, "%.2f");
 
                 ImGui::SameLine();
                 ImGui::SetNextItemWidth(100.0f);
-                if (ImGui::DragFloat("Y##VelY", &mc->m_Direction.m_y, 0.02f, -1.0f, 1.0f, "%.2f"))
-                    isModified = true;
+                ImGui::DragFloat("Y##VelY", &mc->m_Direction.m_y, 0.02f, -1.0f, 1.0f, "%.2f");
+
 
                 //// Display Resistance
                 //ImGui::AlignTextToFramePadding();
@@ -173,33 +191,33 @@ void ImGuiHandler::DrawComponentWindow()
                 ImGui::Text("Size");
                 ImGui::SameLine(slider_start_pos_x);
                 ImGui::SetNextItemWidth(100.0f);
-                if (ImGui::DragFloat("X###", &cc->m_Size.m_x, 0.02f, 0.f, 2.0f, "%.2f"))
-                    isModified = true;
+                ImGui::DragFloat("X###", &cc->m_Size.m_x, 0.02f, 0.f, 2.0f, "%.2f");
+
 
                 ImGui::SameLine();
                 ImGui::SetNextItemWidth(100.0f);
-                if (ImGui::DragFloat("Y###PosY", &cc->m_Size.m_y, 0.02f, 0.f, 2.0f, "%.2f"))
-                    isModified = true;
+                ImGui::DragFloat("Y###PosY", &cc->m_Size.m_y, 0.02f, 0.f, 2.0f, "%.2f");
+   
 
                 //Display Rotation
                 ImGui::AlignTextToFramePadding();
                 ImGui::Text("Display Collision");
                 ImGui::SameLine(slider_start_pos_x + 40);
                 ImGui::Checkbox("####xx", &cc->m_drawDebug);
-                isModified = true;
+            
 
                 //Display Scale
                 ImGui::AlignTextToFramePadding();
                 ImGui::Text("Offset");
                 ImGui::SameLine(slider_start_pos_x);
                 ImGui::SetNextItemWidth(100.0f);
-                if (ImGui::DragFloat("XX##VelX", &cc->m_OffSet.m_x, 0.02f, -1.f, 1.0f, "%.2f"))
-                    isModified = true;
+                ImGui::DragFloat("XX##VelX", &cc->m_OffSet.m_x, 0.02f, -1.f, 1.0f, "%.2f");
+                  
 
                 ImGui::SameLine();
                 ImGui::SetNextItemWidth(100.0f);
-                if (ImGui::DragFloat("YY##VelY", &cc->m_OffSet.m_y, 0.02f, -1.f, 1.f, "%.2f"))
-                    isModified = true;
+                ImGui::DragFloat("YY##VelY", &cc->m_OffSet.m_y, 0.02f, -1.f, 1.f, "%.2f");
+                   
             }
 
                 
@@ -276,12 +294,6 @@ void ImGuiHandler::DrawComponentWindow()
          
      
 
-        // If any component was modified, save the updated values to JSON
-        if (isFirstSaved || isModified)
-        {
-            //Serialization::Serialize::SaveComponentsJson("../RoombaRampage/Json", ecs->ECS_EntityMap, obj_text_entries, obj_entity_id);
-            isFirstSaved = false; // Ensure this is only set once
-        }
 
      }
 

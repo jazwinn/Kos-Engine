@@ -11,7 +11,7 @@ namespace ecs {
 
 	public:
 
-		bool m_Control;
+		bool m_Control{true};
 
 	};
 

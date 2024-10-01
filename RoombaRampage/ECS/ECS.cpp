@@ -26,6 +26,7 @@ namespace ecs{
 
 		//Allocate memory to each component pool
 		ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT] = std::make_shared<ComponentPool<TransformComponent>>();
+		ecs->m_ECS_CombinedComponentPool[TYPENAMECOMPONENT] = std::make_shared<ComponentPool<NameComponent>>();
 		ecs->m_ECS_CombinedComponentPool[TYPEMOVEMENTCOMPONENT] = std::make_shared < ComponentPool<MovementComponent>>();
 		ecs->m_ECS_CombinedComponentPool[TYPESPRITECOMPONENT] = std::make_shared < ComponentPool<SpriteComponent>>();
 		ecs->m_ECS_CombinedComponentPool[TYPECOLLIDERCOMPONENT] = std::make_shared < ComponentPool<ColliderComponent>>();
@@ -144,7 +145,8 @@ namespace ecs{
 		// set bitflag to 0
 		ecs->m_ECS_EntityMap[ID] = 0;
 
-		//add transform component as default
+		//add transform component and name component as default
+		m_AddComponent(TYPENAMECOMPONENT, ID);
 		m_AddComponent(TYPETRANSFORMCOMPONENT, ID);
 
 		ecs->m_EntityCount++;

@@ -71,7 +71,7 @@ void ImGuiHandler::DrawPerformanceWindow(float fps) {
     }
 
 
-    if (ImGui::CollapsingHeader("System Time")) {
+    if (ImGui::CollapsingHeader("System Time", ImGuiTreeNodeFlags_DefaultOpen)) {
 
        
 

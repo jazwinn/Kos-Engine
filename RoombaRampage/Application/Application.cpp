@@ -16,9 +16,7 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 
-#include "../Assets/Audio.h"
 
-#include <../Dependencies/Freetype_Font/include/ft2build.h>
 
 namespace Application {
 
@@ -65,6 +63,13 @@ namespace Application {
         LOGGING_INFO("Load Window Successful");
 
         /*--------------------------------------------------------------
+           INITIALIZE ECS
+        --------------------------------------------------------------*/
+        ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+        ecs->m_Load();
+        ecs->m_Init();
+        LOGGING_INFO("Load ECS Successful");
+        /*--------------------------------------------------------------
            INITIALIZE Asset Manager
         --------------------------------------------------------------*/
         AstManager = assetmanager::AssetManager::m_funcGetInstance();
@@ -85,30 +90,19 @@ namespace Application {
         //call back must happen before imgui
         Input.SetCallBack(lvWindow.Window);
         LOGGING_INFO("Set Input Call Back Successful");
+        
 
-        /*--------------------------------------------------------------
+       /*--------------------------------------------------------------
            INITIALIZE IMGUI
         --------------------------------------------------------------*/
         const char* glsl_version = "#version 130";
         imgui_manager.Initialize(lvWindow.Window, glsl_version);
         LOGGING_INFO("Load ImGui Successful");
-        
-        /*--------------------------------------------------------------
-           INITIALIZE ECS
-        --------------------------------------------------------------*/
-        ecs::ECS* ecs = ecs::ECS::m_GetInstance();
-        ecs->m_Load();
-        ecs->m_Init();
-        LOGGING_INFO("Load ECS Successful");
 
         /*--------------------------------------------------------------
             LOAD ENTITIES INTO ECS & IMGUI
         --------------------------------------------------------------*/
-        AstManager->m_loadEntities("../RoombaRampage/Json/components.json", ecs,
-            imgui_manager.GetObjectTextEntries(),
-            imgui_manager.GetDeleteButtons(),
-            imgui_manager.GetDuplicateButtons(),
-            imgui_manager.GetObjectEntityIDs());
+        AstManager->m_loadEntities("../RoombaRampage/Json/components.json");
 
         LOGGING_INFO("Application Init Successful");
     

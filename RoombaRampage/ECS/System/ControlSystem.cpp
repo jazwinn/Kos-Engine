@@ -62,9 +62,10 @@ namespace ecs {
 		for (int n{}; n < m_vecMovementComponentPtr.size(); n++) {
 			//std::cout << "Entity: " << n << "Movement System is getting Updated";
 
-			//PlayerComponent* BoxComp = vecPlayerComponentPtr[n];
+			PlayerComponent* playerComp = m_vecPlayerComponentPtr[n];
 			MovementComponent* MovComp = m_vecMovementComponentPtr[n];
 
+			if (playerComp->m_Control == false)continue;
 
 			// set direction to always be 0,0
 			//MovComp->Direction.x = 0;

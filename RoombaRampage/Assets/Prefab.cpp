@@ -29,12 +29,11 @@ namespace prefab {
             const rapidjson::Value& prefabData = doc[i];
             
             Prefab prefab;
-            std::string prefabName;
 
             if (prefabData.HasMember("name") && prefabData["name"].IsString()) {
-                prefabName = prefabData["name"].GetString();  // Store the name
-                if (prefabName.empty()) {
-                    prefabName = "OBJECT";
+                prefab.m_nameComponents.m_entityName = prefabData["name"].GetString();  // Store the name
+                if (prefab.m_nameComponents.m_entityName.empty()) {
+                    prefab.m_nameComponents.m_entityName = "OBJECT";
                 }
             }
             
@@ -136,7 +135,7 @@ namespace prefab {
 
 
 
-            m_prefabs[prefabName] = prefab;
+            m_prefabs[prefab.m_nameComponents.m_entityName] = prefab;
         }
 
         LOGGING_INFO("Load Prefab Json Successful");
@@ -161,13 +160,21 @@ namespace prefab {
 
         //allocate transform component
         //Addon everytime a transform component is added
-        
-        ecs::TransformComponent* tc = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(newEntityID));
-        *tc = prefab.m_transformComponents;
+        {
+            ecs::TransformComponent* tc = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(newEntityID));
+            *tc = prefab.m_transformComponents;
+            //set component back to true
+            tc->m_IsLive = true;
+            tc->m_Entity = newEntityID;
+        }
+        {
+            ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(newEntityID));
+            *nc = prefab.m_nameComponents;
+            //set component back to true
+            nc->m_IsLive = true;
+            nc->m_Entity = newEntityID;
+        }
 
-        //set component back to true
-        tc->m_IsLive = true;
-        tc->m_Entity = newEntityID;
 
         if (prefab.m_prefabSignature.test(ecs::TYPEMOVEMENTCOMPONENT)) {
             ecs::MovementComponent* mc = static_cast<ecs::MovementComponent*>(ecs->m_AddComponent(ecs::TYPEMOVEMENTCOMPONENT, newEntityID));
