@@ -47,7 +47,7 @@ namespace ecs {
 	void RenderSystem::m_Update()
 	{
 		//ECS* ecs = ECS::GetInstance();
-		GraphicsPipe* graphicsPipe = GraphicsPipe::funcGetInstance();
+		graphicpipe::GraphicsPipe* graphicsPipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
 
 		if (m_vecSpriteComponentPtr.size() != m_vecTransformComponentPtr.size()) {
 			std::cout << "Error: Vectors container size does not Match" << std::endl;
@@ -64,7 +64,7 @@ namespace ecs {
 			SpriteComponent* sprite = m_vecSpriteComponentPtr[n];
 	
 
-			graphicsPipe->modelData.push_back({ transform->m_rotation, glm::vec2{transform->m_scale.m_x, transform->m_scale.m_y}, glm::vec3{transform->m_position.m_x,transform->m_position.m_y, 0} ,sprite->m_imageID, 0 });
+			graphicsPipe->m_modelData.push_back({ transform->m_rotation, glm::vec2{transform->m_scale.m_x, transform->m_scale.m_y}, glm::vec3{transform->m_position.m_x,transform->m_position.m_y, 0} ,sprite->m_imageID, 0 });
 
 			
 			

@@ -27,7 +27,7 @@ namespace Application {
     --------------------------------------------------------------*/
     AppWindow Application::lvWindow;
     ImGuiHandler Application::imgui_manager;
-    GraphicsPipe* pipe;
+    graphicpipe::GraphicsPipe* pipe;
     Input::InputSystem Input;
     assetmanager::AssetManager* AstManager;
     logging::Logger logs;
@@ -37,7 +37,7 @@ namespace Application {
     float audioTimer = 3.0f;
     bool audio2_bool = true;
 
-    float LastTime = glfwGetTime();;
+    float LastTime = static_cast<float>(glfwGetTime());
     
 
     int Application::Init() {
@@ -60,8 +60,8 @@ namespace Application {
         /*--------------------------------------------------------------
            INITIALIZE Asset Manager
         --------------------------------------------------------------*/
-        AstManager = assetmanager::AssetManager::funcGetInstance();
-        AstManager->funcLoadAssets();
+        AstManager = assetmanager::AssetManager::m_funcGetInstance();
+        AstManager->m_funcLoadAssets();
         LOGGING_INFO("Load Asset Successful");
 
        /*--------------------------------------------------------------
@@ -73,8 +73,8 @@ namespace Application {
         /*--------------------------------------------------------------
            INITIALIZE GRAPHICS PIPE
         --------------------------------------------------------------*/
-        pipe = GraphicsPipe::funcGetInstance();
-        pipe->funcInit();
+        pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
+        pipe->m_funcInit();
         LOGGING_INFO("Load Graphic Pipline Successful");
 
         /*--------------------------------------------------------------
@@ -128,7 +128,7 @@ namespace Application {
                 /*--------------------------------------------------------------
                     UPDATE Render Pipeline
                     --------------------------------------------------------------*/
-                pipe->funcUpdate();
+                pipe->m_funcUpdate();
 
                 /*--------------------------------------------------------------
                     DRAWING/RENDERING Window
@@ -138,7 +138,7 @@ namespace Application {
                 /*--------------------------------------------------------------
                     DRAWING/RENDERING Objects
                     --------------------------------------------------------------*/
-                pipe->funcDrawWindow();
+                pipe->m_funcDrawWindow();
 
                 /*--------------------------------------------------------------
                     Draw IMGUI FRAME

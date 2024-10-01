@@ -1,0 +1,63 @@
+[
+    {
+        "name": "Player Object",
+        "transform": {
+            "position": {
+                "x": -0.5765599608421326,
+                "y": 0.32071298360824585
+            },
+            "rotation": 0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "movement": {
+            "speed": 1.0,
+            "direction": {
+                "x": 0.0,
+                "y": 0.0
+            }
+        },
+        "collider": {
+            "size": {
+                "x": 1.0,
+                "y": 1.0
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "layer": 0,
+            "drawDebug": true
+        },
+        "player": {
+            "control": false
+        },
+        "rigidbody": {
+            "mass": 0.0
+        },
+        "sprite": {
+            "imageID": 4,
+            "frameNumber": 0
+        }
+    },
+    {
+        "name": "Background",
+        "transform": {
+            "position": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "scale": {
+                "x": 2.0,
+                "y": 2.0
+            }
+        },
+        "sprite": {
+            "imageID": 1,
+            "frameNumber": 0
+        }
+    }
+]

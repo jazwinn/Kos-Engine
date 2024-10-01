@@ -48,7 +48,7 @@ namespace ecs {
 
 	void DebugDrawingSystem::m_Update() {
 
-		ECS* ecs = ECS::m_GetInstance();
+		//ECS* ecs = ECS::m_GetInstance();
 
 		if (m_vecTransformComponentPtr.size() != m_vecColliderComponentPtr.size()) {
 			LOGGING_ERROR("Error: Vecotrs container size does not Match");
@@ -56,7 +56,7 @@ namespace ecs {
 		}
 	
 
-		GraphicsPipe* graphicsPipe = GraphicsPipe::funcGetInstance();
+		graphicpipe::GraphicsPipe * graphicsPipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
 		for (int n{}; n < m_vecColliderComponentPtr.size(); n++) {
 
 			TransformComponent* transform = m_vecTransformComponentPtr[n];
@@ -64,7 +64,7 @@ namespace ecs {
 
 			if (collider->m_drawDebug)
 			{
-				graphicsPipe->debugBoxData.push_back({ 0, glm::vec2{collider->m_Size.m_x, collider->m_Size.m_y }, glm::vec3{transform->m_position.m_x + collider->m_OffSet.m_x,transform->m_position.m_y + collider->m_OffSet.m_y, 0} ,collider->m_isCollided, 0 });
+				graphicsPipe->m_debugBoxData.push_back({ 0, glm::vec2{collider->m_Size.m_x, collider->m_Size.m_y }, glm::vec3{transform->m_position.m_x + collider->m_OffSet.m_x,transform->m_position.m_y + collider->m_OffSet.m_y, 0} ,collider->m_isCollided, 0 });
 			}
 
 		}

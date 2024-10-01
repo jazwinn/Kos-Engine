@@ -10,127 +10,129 @@
 #include <memory>
 #include "../Assets/AssetManager.h"
 
-struct GraphicsData
-{
-	float rotate;
-	glm::vec2 scale;
-	glm::vec3 worldCoordinates;
-	unsigned int textureID;
-	int shapeType;
-	int layer;
-};
-
-struct DebugDrawData
-{
-	float rotate{};
-	glm::vec2 scale{};
-	glm::vec3 worldCoordinates{};
-	bool isCollided{};
-	int shapeType{};
-};
-
-class GraphicsPipe
-{
-private:
-
-	int unitWidth{ 512 };
-	int unitHeight{ 512 };
-
-	struct Mesh
+namespace graphicpipe {
+	struct GraphicsData
 	{
-		int shapeType{};
-		unsigned int vaoId{};
-		unsigned int primitiveType;
-		unsigned short indexElementCount;
-
+		float m_rotate;
+		glm::vec2 m_scale;
+		glm::vec3 m_worldCoordinates;
+		unsigned int m_textureID;
+		int m_shapeType;
+		int m_layer;
 	};
 
-	void funcSetupVao(Mesh& shape);
-	void funcSetupFboVao();
-	void funcSetupSquareLinesVao();
-	void funcSetupArrayBuffer();
-	void funcSetupFrameBuffer();
-	void funcBindImageDatafromAssetManager();
-	unsigned int funcSetupShader(const std::string& vertexShader, const std::string& fragmentShader);
-	void funcDeleteShader();
-
-	static std::unique_ptr<GraphicsPipe> instancePtr;
-
-	//Shader Programs
-	unsigned int genericShaderProgram;
-	unsigned int frameBufferShaderProgram;
-	unsigned int debugShaderProgram;
-
-	//Buffers
-	unsigned int modelMatrixArrayBuffer;
-	unsigned int debugMatrixArrayBuffer;
-	unsigned int textureOrderBuffer;
-	unsigned int debugCollisionCheckBuffer;
-	unsigned int frameBufferObject;
-	
-
-	int windowWidth;
-	int windowHeight;
-	float aspectRatio;
-
-	struct Camera
+	struct DebugDrawData
 	{
-		glm::vec2 coordinates;
-		float angle;
+		float m_rotate{};
+		glm::vec2 m_scale{};
+		glm::vec3 m_worldCoordinates{};
+		bool m_isCollided{};
+		int m_shapeType{};
 	};
 
-	std::vector<glm::mat3> modelToNDCMatrix;
-	std::vector<glm::mat3> debugToNDCMatrix;
-	glm::mat3 testMatrix;
-
-
-	static GLuint funcCompileShader(GLuint type, const std::string& shader);
-
-public:
-
-	enum
+	class GraphicsPipe
 	{
-		SQUARE,
-		CIRCLE,
-		SQUARE_LINES,
-		CIRCLE_LINES
+	private:
+
+		int m_unitWidth{ 512 };
+		int m_unitHeight{ 512 };
+
+		struct Mesh
+		{
+			int m_shapeType{};
+			unsigned int m_vaoId{};
+			unsigned int m_primitiveType;
+			unsigned short m_indexElementCount;
+
+		};
+
+		void m_funcSetupVao(Mesh& shape);
+		void m_funcSetupFboVao();
+		void m_funcSetupSquareLinesVao();
+		void m_funcSetupArrayBuffer();
+		void m_funcSetupFrameBuffer();
+		void m_funcBindImageDatafromAssetManager();
+		unsigned int m_funcSetupShader(const std::string& vertexShader, const std::string& fragmentShader);
+		void m_funcDeleteShader();
+
+		static std::unique_ptr<GraphicsPipe> m_instancePtr;
+
+		//Shader Programs
+		unsigned int m_genericShaderProgram;
+		unsigned int m_frameBufferShaderProgram;
+		unsigned int m_debugShaderProgram;
+
+		//Buffers
+		unsigned int m_modelMatrixArrayBuffer;
+		unsigned int m_debugMatrixArrayBuffer;
+		unsigned int m_textureOrderBuffer;
+		unsigned int m_debugCollisionCheckBuffer;
+		unsigned int m_frameBufferObject;
+
+
+		int m_windowWidth{};
+		int m_windowHeight{};
+		float m_aspectRatio{};
+
+		struct Camera
+		{
+			glm::vec2 m_coordinates;
+			float m_angle;
+		};
+
+		std::vector<glm::mat3> m_modelToNDCMatrix;
+		std::vector<glm::mat3> m_debugToNDCMatrix;
+		glm::mat3 m_testMatrix;
+
+
+		static GLuint m_funcCompileShader(GLuint type, const std::string& shader);
+
+	public:
+
+		enum
+		{
+			SQUARE,
+			CIRCLE,
+			SQUARE_LINES,
+			CIRCLE_LINES
+		};
+
+
+
+
+		~GraphicsPipe();
+
+		static GraphicsPipe* m_funcGetInstance();
+
+
+
+		void m_funcInit();
+		void m_funcUpdate();
+
+		void m_funcDrawWindow();
+		void m_funcDraw();
+		void m_funcDrawDebug();
+
+		void m_funcSortDrawOrder();
+		static void m_funcSetDrawMode(GLenum mode);
+
+		Mesh m_squareMesh;
+		Mesh m_screenMesh;
+		Mesh m_squareLinesMesh;
+		std::vector<GraphicsData> m_modelData{};
+		std::vector<DebugDrawData> m_debugBoxData{};
+		std::vector<float> m_debugBoxCollisionChecks{};
+		std::vector<int> m_textureOrder{};
+
+
+		//Array of the texture IDs
+		std::vector<unsigned int> m_textureIDs{};
+		std::vector<assetmanager::AssetManager::Image> m_imageData{};
+
+		unsigned int m_screenTexture{};
+		unsigned int m_proxyBackgroundTexture{};
 	};
-
-	
-
-
-	~GraphicsPipe();
-
-	static GraphicsPipe* funcGetInstance();
-
-	
-
-	void funcInit();
-	void funcUpdate();
-
-	void funcDrawWindow();
-	void funcDraw();
-	void funcDrawDebug();
-
-	void funcSortDrawOrder();
-	static void funcSetDrawMode(GLenum mode);
-
-	Mesh squareMesh;
-	Mesh screenMesh;
-	Mesh squareLinesMesh;
-	std::vector<GraphicsData> modelData{};
-	std::vector<DebugDrawData> debugBoxData{};
-	std::vector<float> debugBoxCollisionChecks{};
-	std::vector<int> textureOrder{};
-	
-
-	//Array of the texture IDs
-	std::vector<unsigned int> textureIDs{};
-	std::vector<assetmanager::AssetManager::Image> imageData{};
-
-	unsigned int screenTexture{};
-	unsigned int proxyBackgroundTexture{};
-};
+}
 
 
 #endif GRAPHPIPE_H

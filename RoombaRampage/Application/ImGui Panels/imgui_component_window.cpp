@@ -211,7 +211,7 @@ void ImGuiHandler::DrawComponentWindow()
                 ->m_GetEntityComponent(entityID));
 
             if (ImGui::CollapsingHeader("Sprite Component")) {
-                assetmanager::AssetManager* images = assetmanager::AssetManager::funcGetInstance();
+                assetmanager::AssetManager* images = assetmanager::AssetManager::m_funcGetInstance();
 
                 const char* items[] = { "AAAA", "BBBB", "CCCC", "DDDD", "EEEE" };
                 static int item_selected_idx = 0; // Here we store our selected data as an index.
@@ -223,10 +223,10 @@ void ImGuiHandler::DrawComponentWindow()
                 if (ImGui::BeginListBox("Images"))
                 {
                     item_selected_idx = sc->m_imageID;
-                    for (unsigned int n = 0; n < images->imageContainer.size(); n++)
+                    for (unsigned int n = 0; n < images->m_imageContainer.size(); n++)
                     {
                         bool is_selected = (item_selected_idx == n);
-                        if (ImGui::Selectable(const_cast<char*>(images->imageContainer[n].spriteName.c_str()), is_selected))
+                        if (ImGui::Selectable(const_cast<char*>(images->m_imageContainer[n].m_spriteName.c_str()), is_selected))
                         {
                             item_selected_idx = n;
                             is_selected = true;
@@ -264,8 +264,8 @@ void ImGuiHandler::DrawComponentWindow()
         }
 
         if (EntitySignature.test(ecs::TYPERIGIDBODYCOMPONENT)) {
-            ecs::RigidBodyComponent* rc = static_cast<ecs::RigidBodyComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPERIGIDBODYCOMPONENT]
-                ->m_GetEntityComponent(entityID));
+            //ecs::RigidBodyComponent* rc = static_cast<ecs::RigidBodyComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPERIGIDBODYCOMPONENT]
+            //    ->m_GetEntityComponent(entityID));
             if (ImGui::CollapsingHeader("RigidBody Component")) {
 
                 ImGui::Text("Work In Progress");

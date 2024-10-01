@@ -81,6 +81,7 @@ namespace ecs {
 					MovementComponent* MovCom = (MovementComponent*)ecs->m_ECS_CombinedComponentPool[TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(CollidedEntity->m_ID);
 					ColliderComponent* ColCom = (ColliderComponent*)ecs->m_ECS_CombinedComponentPool[TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(CollidedEntity->m_ID);
 					ColCom->m_isCollided = true;
+					MovCom->m_Direction = { 0,0 };
 				}	
 				
 			}

@@ -68,7 +68,7 @@ namespace ecs {
 
 		//create physics;
 		physicspipe::Physics PhysicsPipeline;
-		GraphicsPipe* graphicsPipe = GraphicsPipe::funcGetInstance();
+		//graphicpipe::GraphicsPipe* graphicsPipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
 
 		for (int n{}; n < m_vecTransformComponentPtr.size(); n++) {
 			//std::cout << "Entity: " << n << "Movement System is getting Updated";

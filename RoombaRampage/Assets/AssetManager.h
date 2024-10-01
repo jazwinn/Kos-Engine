@@ -9,22 +9,23 @@
 #include <string>
 #include <memory>
 
+
 namespace assetmanager {
 	class AssetManager
 	{
 	private:
 		//Access Point
-		static std::unique_ptr<AssetManager> instancePtr;
+		static std::unique_ptr<AssetManager> m_instancePtr;
 
 
 		//Image channels required for our engine
-		int targetChannels{ 4 };
+		int m_targetChannels{ 4 };
 
-		int imageCount{ 0 };
+		int m_imageCount{ 0 };
 
-		unsigned char* funcPadTexture(const unsigned char* originalPixels, int originalWidth, int originalHeight, int originalChannels, int targetWidth, int targetHeight, int targetChannels);
-		int extractStripCountFromFilename(const std::string& filename);
-		std::string extractSpriteNameFromFilename(const std::string& filename);
+		unsigned char* m_funcPadTexture(const unsigned char* originalPixels, int originalWidth, int originalHeight, int originalChannels, int targetWidth, int targetHeight, int targetChannels);
+		int m_extractStripCountFromFilename(const std::string& filename);
+		std::string m_extractSpriteNameFromFilename(const std::string& filename);
 
 
 	public:
@@ -34,35 +35,35 @@ namespace assetmanager {
 		};
 		struct Image
 		{
-			std::string spriteName;
-			int width;
-			int height;
-			int channels;
-			int stripCount;
-			bool isPadded = false;
-			int imageID;
+			std::string m_spriteName{};
+			int m_width{};
+			int m_height{};
+			int m_channels{};
+			int m_stripCount{};
+			bool m_isPadded = false;
+			int m_imageID{};
 		};
 
 
 
-		static AssetManager* funcGetInstance();
+		static AssetManager* m_funcGetInstance();
 		~AssetManager();
-		std::vector<Image> imageContainer;
-		std::vector<unsigned char*> imagedataArray;
+		std::vector<Image> m_imageContainer;
+		std::vector<unsigned char*> m_imagedataArray;
 		std::vector<std::unique_ptr<fmodaudio::FModAudio>> m_audioContainer;
 
-		void funcLoadAssets();
-		void funcLoadImage(const char* file);
+		void m_funcLoadAssets();
+		void m_funcLoadImage(const char* file);
 		void m_LoadAudio(std::string file);
 
 		//void m_LoadFont(std::string file, unsigned int fontsize);
 
 		//De|Serialisation using rapid json
-		void serializeToJson(const std::string& filename); //Serialize 
-		void deserializeFromJson(const std::string& filename);
+		void m_serializeToJson(const std::string& filename); //Serialize 
+		void m_deserializeFromJson(const std::string& filename);
 
 		//Test Code to test in application.cpp
-		void testJSON();
+		void m_testJSON();
 	};
 }
 

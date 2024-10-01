@@ -18,17 +18,17 @@
 namespace assetmanager {
 
 
-    std::unique_ptr<AssetManager> AssetManager::instancePtr = nullptr;
+    std::unique_ptr<AssetManager> AssetManager::m_instancePtr = nullptr;
 
 
-    void AssetManager::funcLoadAssets()
+    void AssetManager::m_funcLoadAssets()
     {
-        funcLoadImage("Assets/testBackground.png");
-        funcLoadImage("Assets/blackTile_test.png");
-        funcLoadImage("Assets/roombaTest.png");
-        funcLoadImage("Assets/roombaTest2.png");
-        funcLoadImage("Assets/roombaTest3.png");
-        funcLoadImage("Assets/sprAssassinBar_strip8.png");
+        m_funcLoadImage("Assets/testBackground.png");
+        m_funcLoadImage("Assets/blackTile_test.png");
+        m_funcLoadImage("Assets/roombaTest.png");
+        m_funcLoadImage("Assets/roombaTest2.png");
+        m_funcLoadImage("Assets/roombaTest3.png");
+        m_funcLoadImage("Assets/sprAssassinBar_strip8.png");
 
         m_LoadAudio("Assets/vacuum.mp3");
         m_LoadAudio("Assets/zwing.wav");
@@ -39,28 +39,28 @@ namespace assetmanager {
 
     }
 
-    AssetManager* AssetManager::funcGetInstance()
+    AssetManager* AssetManager::m_funcGetInstance()
     {
-        if (!instancePtr)
+        if (!m_instancePtr)
         {
-            instancePtr.reset(new AssetManager{});
+            m_instancePtr.reset(new AssetManager{});
         }
-        return instancePtr.get();
+        return m_instancePtr.get();
     }
 
     AssetManager::~AssetManager()
     {
-        for (int i = 0; i < imageContainer.size(); ++i)
+        for (int i = 0; i < m_imageContainer.size(); ++i)
         {
-            if (imagedataArray[i])
+            if (m_imagedataArray[i])
             {
-                if (imageContainer[i].isPadded)
+                if (m_imageContainer[i].m_isPadded)
                 {
-                    delete imagedataArray[i];
+                    delete m_imagedataArray[i];
                 }
                 else
                 {
-                    stbi_image_free(imagedataArray[i]);
+                    stbi_image_free(m_imagedataArray[i]);
                 }
             }
         }
@@ -81,76 +81,76 @@ namespace assetmanager {
        Font(file, fontsize);
    }*/
 
-    void AssetManager::funcLoadImage(const char* file)
+    void AssetManager::m_funcLoadImage(const char* file)
     {
         stbi_set_flip_vertically_on_load(true);
         Image image{};
-        image.stripCount = extractStripCountFromFilename(file);
+        image.m_stripCount = m_extractStripCountFromFilename(file);
 
-        image.spriteName = extractSpriteNameFromFilename(file);
+        image.m_spriteName = m_extractSpriteNameFromFilename(file);
 
 
 
-        unsigned char* data = stbi_load(file, &image.width, &image.height, &image.channels, 0);
+        unsigned char* data = stbi_load(file, &image.m_width, &image.m_height, &image.m_channels, 0);
         if (!data)
         {
             std::cout << "Error: Could not load image: " << file << std::endl;
             return;
         }
 
-        if (image.channels != targetChannels)
+        if (image.m_channels != m_targetChannels)
         {
             std::cout << "Warning: Color channels for " << file << " are not following RGBA specifications" << std::endl;
         }
 
-        if (image.stripCount == 1)
+        if (image.m_stripCount == 1)
         {
-            if (image.width != image.height)
+            if (image.m_width != image.m_height)
             {
                 int targetHeight{};
                 int targetWidth{};
-                if (image.width > image.height)
+                if (image.m_width > image.m_height)
                 {
-                    targetHeight = image.width;
-                    targetWidth = image.width;
+                    targetHeight = image.m_width;
+                    targetWidth = image.m_width;
                 }
                 else
                 {
-                    targetHeight = image.height;
-                    targetWidth = image.height;
+                    targetHeight = image.m_height;
+                    targetWidth = image.m_height;
                 }
-                unsigned char* newData = funcPadTexture(data, image.width, image.height, image.channels, targetWidth, targetHeight, targetChannels);
+                unsigned char* newData = m_funcPadTexture(data, image.m_width, image.m_height, image.m_channels, targetWidth, targetHeight, m_targetChannels);
                 stbi_image_free(data);
-                image.isPadded = true;
-                image.imageID = imageCount;
-                image.width = targetWidth;
-                image.height = targetHeight;
-                image.channels = targetChannels;
-                imageCount++;
-                imageContainer.push_back(image);
-                imagedataArray.push_back(newData);
+                image.m_isPadded = true;
+                image.m_imageID = m_imageCount;
+                image.m_width = targetWidth;
+                image.m_height = targetHeight;
+                image.m_channels = m_targetChannels;
+                m_imageCount++;
+                m_imageContainer.push_back(image);
+                m_imagedataArray.push_back(newData);
                 std::cout << "Texture Padded" << std::endl;
             }
             else
             {
-                image.imageID = imageCount;
-                imageCount++;
-                imageContainer.push_back(image);
-                imagedataArray.push_back(data);
+                image.m_imageID = m_imageCount;
+                m_imageCount++;
+                m_imageContainer.push_back(image);
+                m_imagedataArray.push_back(data);
             }
         }
         else
         {
-            image.imageID = imageCount;
-            imageCount++;
-            imageContainer.push_back(image);
-            imagedataArray.push_back(data);
+            image.m_imageID = m_imageCount;
+            m_imageCount++;
+            m_imageContainer.push_back(image);
+            m_imagedataArray.push_back(data);
         }
 
     }
     //TOCHECK
     //Naming of targetchannels is the same as the member variables
-    unsigned char* AssetManager::funcPadTexture(const unsigned char* originalPixels, int originalWidth, int originalHeight, int originalChannels, int targetWidth, int targetHeight, int targetChannels)
+    unsigned char* AssetManager::m_funcPadTexture(const unsigned char* originalPixels, int originalWidth, int originalHeight, int originalChannels, int targetWidth, int targetHeight, int targetChannels)
     {
         unsigned char* paddedPixels = new unsigned char[targetWidth * targetHeight * targetChannels];
 
@@ -173,6 +173,10 @@ namespace assetmanager {
             }
         }
 
+        // Calculate the maximum valid indices for source and destination arrays
+        int maxSrcIndex = originalHeight * originalWidth * originalChannels;
+        int maxDstIndex = targetHeight * targetWidth * targetChannels;
+
         // Copy the original texture into the center of the padded texture
         for (int y = 0; y < originalHeight; ++y)
         {
@@ -185,7 +189,19 @@ namespace assetmanager {
                     int dstIndex = ((y + (targetHeight - originalHeight) / 2) * targetWidth + (x + (targetWidth - originalWidth) / 2)) * targetChannels + c;
                     //TOCHECK
                     // Copy pixel data
-                    paddedPixels[dstIndex] = originalPixels[srcIndex];
+                    //paddedPixels[dstIndex] = originalPixels[srcIndex];
+                                // Ensure indices are within bounds
+                    if (srcIndex < maxSrcIndex && dstIndex < maxDstIndex)
+                    {
+                        // Copy pixel data
+                        paddedPixels[dstIndex] = originalPixels[srcIndex];
+                    }
+                    else
+                    {
+                        // Handle out-of-bounds cases (e.g., log an error or continue)
+                        // TOCHECK: You can add logging or handling logic here
+                        LOGGING_ERROR("Buffer Overflow as SrcIndx > MaxSrcIndex || dstIndex > maxDstIndex");
+                    }
 
                 }
             }
@@ -194,7 +210,7 @@ namespace assetmanager {
         return paddedPixels;
     }
 
-    int AssetManager::extractStripCountFromFilename(const std::string& filename)
+    int AssetManager::m_extractStripCountFromFilename(const std::string& filename)
     {
         // Use regex to find the strip count in the format "something_strip(number).png"
         std::regex pattern("([[:alnum:]])_strip([[:digit:]]+)\\.png");
@@ -210,10 +226,10 @@ namespace assetmanager {
         return 1;
     }
 
-    std::string AssetManager::extractSpriteNameFromFilename(const std::string& filename)
+    std::string AssetManager::m_extractSpriteNameFromFilename(const std::string& filename)
     {
         //TOCHECK
-        std::regex pattern("([[:alnum:]]+)([_]*)([[:alnum:]]*)\.png");
+        std::regex pattern("([[:alnum:]]+)([_]*)([[:alnum:]]*)\\.png");
         std::smatch match;
 
         if (std::regex_search(filename, match, pattern))
@@ -266,20 +282,20 @@ namespace assetmanager {
     //    return textureID;
     //}
 
-    void AssetManager::serializeToJson(const std::string& filename) {
+    void AssetManager::m_serializeToJson(const std::string& filename) {
         rapidjson::Document document;
         document.SetObject();
 
         // Serialize imageContainer
         rapidjson::Value images(rapidjson::kArrayType);
-        for (const auto& image : imageContainer) {
+        for (const auto& image : m_imageContainer) {
             rapidjson::Value imageJson(rapidjson::kObjectType);
-            imageJson.AddMember("spriteName", rapidjson::Value(image.spriteName.c_str(), document.GetAllocator()), document.GetAllocator());
-            imageJson.AddMember("stripCount", image.stripCount, document.GetAllocator());
-            imageJson.AddMember("width", image.width, document.GetAllocator());
-            imageJson.AddMember("height", image.height, document.GetAllocator());
-            imageJson.AddMember("channels", image.channels, document.GetAllocator());
-            imageJson.AddMember("isPadded", image.isPadded, document.GetAllocator());
+            imageJson.AddMember("spriteName", rapidjson::Value(image.m_spriteName.c_str(), document.GetAllocator()), document.GetAllocator());
+            imageJson.AddMember("stripCount", image.m_stripCount, document.GetAllocator());
+            imageJson.AddMember("width", image.m_width, document.GetAllocator());
+            imageJson.AddMember("height", image.m_height, document.GetAllocator());
+            imageJson.AddMember("channels", image.m_channels, document.GetAllocator());
+            imageJson.AddMember("isPadded", image.m_isPadded, document.GetAllocator());
             images.PushBack(imageJson, document.GetAllocator());
         }
         document.AddMember("images", images, document.GetAllocator());
@@ -295,7 +311,7 @@ namespace assetmanager {
     }
 
 
-    void AssetManager::deserializeFromJson(const std::string& filename) {
+    void AssetManager::m_deserializeFromJson(const std::string& filename) {
         // Read from file
         std::ifstream file(filename);
         std::string json((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
@@ -316,27 +332,27 @@ namespace assetmanager {
         for (rapidjson::SizeType i = 0; i < images.Size(); ++i) {
             const rapidjson::Value& imageJson = images[i];
             Image image;
-            image.spriteName = imageJson["spriteName"].GetString();
-            image.stripCount = imageJson["stripCount"].GetInt();
-            image.width = imageJson["width"].GetInt();
-            image.height = imageJson["height"].GetInt();
-            image.channels = imageJson["channels"].GetInt();
-            image.isPadded = imageJson["isPadded"].GetBool();
+            image.m_spriteName = imageJson["spriteName"].GetString();
+            image.m_stripCount = imageJson["stripCount"].GetInt();
+            image.m_width = imageJson["width"].GetInt();
+            image.m_height = imageJson["height"].GetInt();
+            image.m_channels = imageJson["channels"].GetInt();
+            image.m_isPadded = imageJson["isPadded"].GetBool();
 
             // Load image data from file (Right now assuming the image files are in the same directory) - Check with Jaz Win/Sean
-            std::string imagePath = "Assets/" + image.spriteName + "_strip" + std::to_string(image.stripCount) + ".png";
-            unsigned char* data = stbi_load(imagePath.c_str(), &image.width, &image.height, &image.channels, 0);
+            std::string imagePath = "Assets/" + image.m_spriteName + "_strip" + std::to_string(image.m_stripCount) + ".png";
+            unsigned char* data = stbi_load(imagePath.c_str(), &image.m_width, &image.m_height, &image.m_channels, 0);
             if (!data) {
                 std::cout << "Error: Could not load image: " << imagePath << std::endl;
                 return;
             }
 
-            imageContainer.push_back(image);
-            imagedataArray.push_back(data);
+            m_imageContainer.push_back(image);
+            m_imagedataArray.push_back(data);
         }
     }
 
-    void AssetManager::testJSON() {
+    void AssetManager::m_testJSON() {
 
         // Create an instance of the AssetManager -> Already created in the app cpp thoo
         // AssetManager* assetManager = AssetManager::funcGetInstance();
@@ -346,23 +362,23 @@ namespace assetmanager {
         // assetManager->funcLoadImage("Assets/roombaTest2.png");
 
         // Serialize the image data to a JSON file
-        this->serializeToJson("assets.json");
+        this->m_serializeToJson("assets.json");
 
         // Clear the image container
         //this->imageContainer.clear();
         //this->imagedataArray.clear();
 
         // Deserialize the image data from the JSON file
-        this->deserializeFromJson("assets.json");
+        this->m_deserializeFromJson("assets.json");
 
         // Print the deserialized image data to test if the info was passed correctly
-        for (const auto& image : this->imageContainer) {
-            std::cout << "Sprite Name: " << image.spriteName << std::endl;
-            std::cout << "Strip Count: " << image.stripCount << std::endl;
-            std::cout << "Width: " << image.width << std::endl;
-            std::cout << "Height: " << image.height << std::endl;
-            std::cout << "Channels: " << image.channels << std::endl;
-            std::cout << "Is Padded: " << image.isPadded << std::endl;
+        for (const auto& image : this->m_imageContainer) {
+            std::cout << "Sprite Name: " << image.m_spriteName << std::endl;
+            std::cout << "Strip Count: " << image.m_stripCount << std::endl;
+            std::cout << "Width: " << image.m_width << std::endl;
+            std::cout << "Height: " << image.m_height << std::endl;
+            std::cout << "Channels: " << image.m_channels << std::endl;
+            std::cout << "Is Padded: " << image.m_isPadded << std::endl;
             std::cout << std::endl;
         }
 
