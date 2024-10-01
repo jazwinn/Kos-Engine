@@ -38,6 +38,7 @@ namespace ecs{
 		ecs->m_ECS_SystemMap[TYPECOLLISIONSYSTEM] = std::make_shared<CollisionSystem>();
 		ecs->m_ECS_SystemMap[TYPECOLLISIONRESPONSESYSTEM] = std::make_shared<CollisionResponseSystem>();
 		ecs->m_ECS_SystemMap[TYPERENDERSYSTEM] = std::make_shared<RenderSystem>();
+		ecs->m_ECS_SystemMap[TYPEDEBUGDRAWINGSYSTEM] = std::make_shared<DebugDrawingSystem>();
 
 		//Initialize all system Peformance
 		performancetracker::Performance Perform{};

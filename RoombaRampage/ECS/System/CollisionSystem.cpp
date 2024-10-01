@@ -4,6 +4,7 @@
 #include "../Physics/Physics.h"
 #include "../Graphics/GraphicsPipe.h"
 #include "../Debugging/Logging.h"
+#include <algorithm>
 
 namespace ecs {
 
@@ -16,8 +17,7 @@ namespace ecs {
 			== m_vecTransformComponentPtr.end()) {
 			m_vecTransformComponentPtr.push_back((TransformComponent*)ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(ID));
 			m_vecColliderComponentPtr.push_back((ColliderComponent*)ecs->m_ECS_CombinedComponentPool[TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(ID));
-			//vecRigidBodyComponentPtr.push_back((RigidBodyComponent*)ecs->ECS_CombinedComponentPool[TypeRigidBodyComponent]->GetEntityComponent(ID));
-			//m_vecMovementComponentPtr.push_back((MovementComponent*)ecs->m_ECS_CombinedComponentPool[TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(ID));
+
 		}
 	}
 
@@ -36,21 +36,16 @@ namespace ecs {
 
 		std::swap(m_vecColliderComponentPtr[IndexID], m_vecColliderComponentPtr[IndexLast]);
 		std::swap(m_vecTransformComponentPtr[IndexID], m_vecTransformComponentPtr[IndexLast]);
-		//std::swap(vecRigidBodyComponentPtr[IndexID], vecRigidBodyComponentPtr[IndexLast]);
-		//std::swap(m_vecMovementComponentPtr[IndexID], m_vecMovementComponentPtr[IndexLast]);
 
 		//popback the vector;
 		m_vecColliderComponentPtr.pop_back();
 		m_vecTransformComponentPtr.pop_back();
-		//vecRigidBodyComponentPtr.pop_back();
-		//m_vecMovementComponentPtr.pop_back();
+
 	}
 
 	void CollisionSystem::m_Init() {
 
-		// requires both movement component and transform component
 		m_SystemSignature.set(TYPECOLLIDERCOMPONENT);
-		//m_SystemSignature.set(TYPEMOVEMENTCOMPONENT);
 
 	}
 
@@ -63,6 +58,13 @@ namespace ecs {
 			LOGGING_ERROR("Error: Vecotrs container size does not Match");
 			return;
 		}
+		
+		//TODO find better way to fill up data
+		for (int n{}; n < m_vecColliderComponentPtr.size(); n++)
+		{
+			ColliderComponent* ColComp = m_vecColliderComponentPtr[n];
+			ColComp->m_isCollided = false;
+		}
 
 		//create physics;
 		physicspipe::Physics PhysicsPipeline;
@@ -70,18 +72,12 @@ namespace ecs {
 
 		for (int n{}; n < m_vecTransformComponentPtr.size(); n++) {
 			//std::cout << "Entity: " << n << "Movement System is getting Updated";
-
+			
 			ColliderComponent* ColComp = m_vecColliderComponentPtr[n];
 			TransformComponent* TransComp = m_vecTransformComponentPtr[n];
 
 			EntityID id = ColComp->m_Entity;
-
-			//Reset all collision components to not colliding
-			for (int n{}; n < m_vecColliderComponentPtr.size(); n++)
-			{
-				ColliderComponent* ColComp = m_vecColliderComponentPtr[n];
-				ColComp->m_isCollided = false;
-			}
+			
 
 			//if movement component is present, do dynamic collision
 			vector2::Vec2 velocity{};
@@ -93,10 +89,10 @@ namespace ecs {
 			}
 
 			if (ColComp->m_type == physicspipe::EntityType::CIRCLE) {
-				PhysicsPipeline.m_SendPhysicsData(ColComp->m_radius, TransComp->m_position + ColComp->m_OffSet, ColComp->m_Size * TransComp->m_scale, velocity, id);
+				PhysicsPipeline.m_SendPhysicsData(ColComp->m_radius, TransComp->m_position + ColComp->m_OffSet, ColComp->m_Size, velocity, id);
 			}
 			else if (ColComp->m_type == physicspipe::EntityType::RECTANGLE) {
-				PhysicsPipeline.m_SendPhysicsData(ColComp->m_Size.m_y * TransComp->m_scale.m_y, ColComp->m_Size.m_x * TransComp->m_scale.m_x, TransComp->m_position + ColComp->m_OffSet, ColComp->m_Size * TransComp->m_scale, velocity, id);
+				PhysicsPipeline.m_SendPhysicsData(ColComp->m_Size.m_y , ColComp->m_Size.m_x, TransComp->m_position + ColComp->m_OffSet, ColComp->m_Size, velocity, id);
 			}
 			else {
 				LOGGING_ERROR("NO ENTITY TYPE");

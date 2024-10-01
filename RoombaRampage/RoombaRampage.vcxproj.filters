@@ -234,6 +234,12 @@
     <ClCompile Include="Events\MessageSystem.cpp">
       <Filter>Source Files\Messaging</Filter>
     </ClCompile>
+    <ClCompile Include="Application\ImGui Panels\imgui__input_window.cpp">
+      <Filter>Source Files\Imgui\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="ECS\System\DebugDrawingSystem.cpp">
+      <Filter>Source Files\ECS\System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Graphics\Graphics.h">
@@ -400,6 +406,9 @@
     </ClInclude>
     <ClInclude Include="Events\MessageSystem.h">
       <Filter>Header Files\Messaging</Filter>
+    </ClInclude>
+    <ClInclude Include="ECS\System\DebugDrawingSystem.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
