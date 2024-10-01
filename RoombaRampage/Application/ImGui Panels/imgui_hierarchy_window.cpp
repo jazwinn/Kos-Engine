@@ -37,6 +37,7 @@ unsigned int ImGuiHandler::DrawHierachyWindow()
         // Iterate through all loaded entities and add them to the hierarchy
         for (const auto& entityPair : ecs->m_ECS_EntityMap) {
             obj_entity_id.push_back(entityPair.first);
+            obj_text_entries.push_back(static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(entityPair.first))->m_entityName);
             deleteButton.push_back(false);
             DuplicateButton.push_back(false);
         }
@@ -49,10 +50,7 @@ unsigned int ImGuiHandler::DrawHierachyWindow()
 
     if (ImGui::BeginMenuBar())
     {
-        if (ImGui::BeginMenu("Rename"))
-        {
-            ImGui::EndMenu();
-        }
+
         if (ImGui::BeginMenu("Prefabs"))
         {
             if (prefab::Prefab::m_prefabs.size() > 0) {
@@ -153,7 +151,8 @@ unsigned int ImGuiHandler::DrawHierachyWindow()
                 deleteButton.erase(deleteButton.begin() + i);
                 DuplicateButton.erase(DuplicateButton.begin() + i);
                 
-                //Serialization::Serialize::SaveComponentsJson("../RoombaRampage/Json", Ecs::ECS::GetInstance()->ECS_EntityMap, obj_text_entries, obj_entity_id);
+                clicked_entity_id = obj_entity_id[0];//set to 
+
 
                 i--;
 

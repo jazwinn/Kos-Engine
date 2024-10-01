@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Window.h"
-#include "./ImGui Panels/imgui_handler.h"
 #include "../Assets/Audio.h"
 
 namespace Application{
@@ -21,11 +20,9 @@ namespace Application{
 	
 		static AppWindow lvWindow;
 
-		static ImGuiHandler imgui_manager;
+	private:
+		static ImGuiHandler imgui_manager; //should only remain in Application
 
-		static fmodaudio::FModAudio audio;
-
-		static fmodaudio::FModAudio audio2;
 
 	};
 }

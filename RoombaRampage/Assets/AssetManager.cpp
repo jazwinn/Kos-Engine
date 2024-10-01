@@ -441,7 +441,7 @@ namespace assetmanager {
         return;
     }
 
-    void AssetManager::m_loadEntities(const std::string& jsonFilePath, ecs::ECS* ecs, std::vector<std::string>& obj_text_entries, std::vector<bool>& deleteButton, std::vector<bool>& DuplicateButton, std::vector<unsigned int>& obj_entity_id)
+    void AssetManager::m_loadEntities(const std::string& jsonFilePath)
     {
         // Ensure the JSON file exists
         std::ifstream checkFile(jsonFilePath);
@@ -452,7 +452,7 @@ namespace assetmanager {
 
         // Load entities from the JSON file
         std::cout << "Loading entities from: " << jsonFilePath << std::endl;
-        Serialization::Serialize::LoadComponentsJson(jsonFilePath, ecs, obj_text_entries);  // Load into ECS
+        Serialization::Serialize::LoadComponentsJson(jsonFilePath);  // Load into ECS
 
         std::cout << "Entities successfully loaded!" << std::endl;
     }

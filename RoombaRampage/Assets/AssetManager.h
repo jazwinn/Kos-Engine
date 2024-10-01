@@ -64,11 +64,7 @@ namespace assetmanager {
 		void m_deserializeFromJson(const std::string& filename);
 
 		//Load entity data
-		void m_loadEntities(const std::string& jsonFilePath, ecs::ECS* ecs,
-			std::vector<std::string>& obj_text_entries,
-			std::vector<bool>& deleteButton,
-			std::vector<bool>& DuplicateButton,
-			std::vector<unsigned int>& obj_entity_id);
+		void m_loadEntities(const std::string& jsonFilePath);
 
 		//Test Code to test in application.cpp
 		void m_testJSON();

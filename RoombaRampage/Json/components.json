@@ -3,8 +3,8 @@
         "name": "Player Object",
         "transform": {
             "position": {
-                "x": -0.5765599608421326,
-                "y": 0.32071298360824585
+                "x": 0.6714264750480652,
+                "y": -0.7131779789924622
             },
             "rotation": 0.0,
             "scale": {
@@ -16,7 +16,7 @@
             "speed": 1.0,
             "direction": {
                 "x": 0.0,
-                "y": 0.0
+                "y": -1.0
             }
         },
         "collider": {
@@ -32,7 +32,7 @@
             "drawDebug": true
         },
         "player": {
-            "control": false
+            "control": true
         },
         "rigidbody": {
             "mass": 0.0
@@ -56,7 +56,7 @@
             }
         },
         "sprite": {
-            "imageID": 1,
+            "imageID": 0,
             "frameNumber": 0
         }
     }

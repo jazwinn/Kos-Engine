@@ -7,11 +7,13 @@
 #include "../ECS/ECSList.h"
 #include "Component.h"
 #include "TransformComponent.h"
+#include "NameComponent.h"
 #include "MovementComponent.h"
 #include "SpriteComponent.h"
 #include "ColliderComponent.h"
 #include "RigidBody.h"
 #include "PlayerComponent.h"
+
 
 namespace ecs {
 	class IComponentPool {
