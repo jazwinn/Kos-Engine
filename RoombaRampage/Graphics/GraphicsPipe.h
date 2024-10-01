@@ -11,6 +11,15 @@
 #include "../Assets/AssetManager.h"
 
 namespace graphicpipe {
+
+	struct CharacterData 
+	{
+		GLuint m_textureID;       // ID handle of the glyph texture
+		glm::ivec2 size;     // Size of the glyph
+		glm::ivec2 bearing;  // Offset from baseline to left/top of glyph
+		GLuint advance;         // Offset to advance to the next glyph
+	};
+
 	struct GraphicsData
 	{
 		float m_rotate;
@@ -46,12 +55,12 @@ namespace graphicpipe {
 
 		};
 
+		void m_funcSetupTextVao();
 		void m_funcSetupVao(Mesh& shape);
 		void m_funcSetupFboVao();
 		void m_funcSetupSquareLinesVao();
 		void m_funcSetupArrayBuffer();
 		void m_funcSetupFrameBuffer();
-		void m_funcBindImageDatafromAssetManager();
 		unsigned int m_funcSetupShader(const std::string& vertexShader, const std::string& fragmentShader);
 		void m_funcDeleteShader();
 
@@ -61,6 +70,7 @@ namespace graphicpipe {
 		unsigned int m_genericShaderProgram;
 		unsigned int m_frameBufferShaderProgram;
 		unsigned int m_debugShaderProgram;
+		unsigned int m_textShaderProgram;
 
 		//Buffers
 		unsigned int m_modelMatrixArrayBuffer;
@@ -68,6 +78,7 @@ namespace graphicpipe {
 		unsigned int m_textureOrderBuffer;
 		unsigned int m_debugCollisionCheckBuffer;
 		unsigned int m_frameBufferObject;
+		unsigned int m_textBuffer;
 
 
 		int m_windowWidth{};
@@ -115,14 +126,17 @@ namespace graphicpipe {
 
 		void m_funcSortDrawOrder();
 		static void m_funcSetDrawMode(GLenum mode);
+		void m_funcDrawText(std::string text, float x, float y, float scale, glm::vec3 color);
 
 		Mesh m_squareMesh;
 		Mesh m_screenMesh;
 		Mesh m_squareLinesMesh;
+		Mesh m_textMesh;
 		std::vector<GraphicsData> m_modelData{};
 		std::vector<DebugDrawData> m_debugBoxData{};
 		std::vector<float> m_debugBoxCollisionChecks{};
 		std::vector<int> m_textureOrder{};
+		std::map<char, CharacterData> m_characters{};
 
 
 		//Array of the texture IDs

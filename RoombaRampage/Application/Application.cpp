@@ -42,6 +42,7 @@ namespace Application {
 
     int Application::Init() {
         
+
         /*--------------------------------------------------------------
         INITIALIZE LOGGING SYSTEM
         --------------------------------------------------------------*/
@@ -57,6 +58,12 @@ namespace Application {
         Serialization::Serialize::LoadConfig();
         LOGGING_INFO("Load Config Successful");
 
+       /*--------------------------------------------------------------
+          INITIALIZE OPENGL WINDOW
+       --------------------------------------------------------------*/
+        lvWindow.init();
+        LOGGING_INFO("Load Window Successful");
+
         /*--------------------------------------------------------------
            INITIALIZE Asset Manager
         --------------------------------------------------------------*/
@@ -64,11 +71,6 @@ namespace Application {
         AstManager->m_funcLoadAssets();
         LOGGING_INFO("Load Asset Successful");
 
-       /*--------------------------------------------------------------
-          INITIALIZE OPENGL WINDOW
-       --------------------------------------------------------------*/
-        lvWindow.init();
-        LOGGING_INFO("Load Window Successful");
 
         /*--------------------------------------------------------------
            INITIALIZE GRAPHICS PIPE
@@ -140,11 +142,13 @@ namespace Application {
                     --------------------------------------------------------------*/
                 pipe->m_funcDrawWindow();
 
+
                 /*--------------------------------------------------------------
                     Draw IMGUI FRAME
                     --------------------------------------------------------------*/
                 imgui_manager.Render();
 
+          
                 /*--------------------------------------------------------------
                     Calculate time
                     --------------------------------------------------------------*/

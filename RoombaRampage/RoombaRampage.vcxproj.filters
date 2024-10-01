@@ -436,5 +436,7 @@
     <None Include="Graphics\debugVertexShader.vert">
       <Filter>Header Files\Graphics</Filter>
     </None>
+    <None Include="Graphics\textFragmentShader.frag" />
+    <None Include="Graphics\textVertexShader.vert" />
   </ItemGroup>
 </Project>

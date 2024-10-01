@@ -7,6 +7,7 @@
 #include <array>
 #include <algorithm>
 #include <gtc/type_ptr.hpp>
+#include <gtc/matrix_transform.hpp>
 
 namespace graphicpipe {
 
@@ -43,6 +44,16 @@ namespace graphicpipe {
 	  #include "../Graphics/genericFragmentShader.frag"
 	};
 
+	const std::string textVertexShader =
+	{
+	 #include "../Graphics/textVertexShader.vert"
+	};
+
+	const std::string textFragmentShader =
+	{
+	  #include "../Graphics/textFragmentShader.frag"
+	};
+
 	std::unique_ptr<GraphicsPipe> GraphicsPipe::m_instancePtr = nullptr;
 
 	void GLAPIENTRY DebugCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam)
@@ -69,11 +80,13 @@ namespace graphicpipe {
 		m_funcSetupVao(m_squareMesh);
 		m_funcSetupSquareLinesVao();
 		m_funcSetupFboVao();
+		m_funcSetupTextVao();
 		m_funcSetDrawMode(GL_FILL);
 
 		m_genericShaderProgram = m_funcSetupShader(genericVertexShader, genericFragmentShader);
 		m_frameBufferShaderProgram = m_funcSetupShader(frameBufferVertexShader, frameBufferFragmentShader);
 		m_debugShaderProgram = m_funcSetupShader(debugVertexShader, debugFragmentShader);
+		m_textShaderProgram = m_funcSetupShader(textVertexShader, textFragmentShader);
 
 		m_modelToNDCMatrix.push_back(m_testMatrix);
 		m_textureOrder.push_back(0);
@@ -90,7 +103,7 @@ namespace graphicpipe {
 
 
 		m_funcSetupArrayBuffer();
-		m_funcBindImageDatafromAssetManager();
+		//m_funcBindImageDatafromAssetManager();
 
 
 		m_funcSetupFrameBuffer();
@@ -149,13 +162,8 @@ namespace graphicpipe {
 		glCreateBuffers(1, &lvVboId);
 
 
-		glNamedBufferStorage(lvVboId,
-			position_data_size,
-			nullptr,
-			GL_DYNAMIC_STORAGE_BIT);
-
+		glNamedBufferStorage(lvVboId, position_data_size, nullptr, GL_DYNAMIC_STORAGE_BIT);
 		glNamedBufferSubData(lvVboId, position_data_offset, position_data_size, lvPosVtx.data());
-
 
 		glCreateVertexArrays(1, &m_squareLinesMesh.m_vaoId);
 		glEnableVertexArrayAttrib(m_squareLinesMesh.m_vaoId, 0);
@@ -200,17 +208,31 @@ namespace graphicpipe {
 		glBindBuffer(GL_ARRAY_BUFFER, vboID);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), &quadVertices, GL_STATIC_DRAW);
 
-		// Position attribute
 		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
-
-
-		// Texture Coord attribute
-		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
+		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindVertexArray(0);
+
+	}
+
+	void GraphicsPipe::m_funcSetupTextVao()
+	{
+		
+		glGenVertexArrays(1, &m_textMesh.m_vaoId);
+		glGenBuffers(1, &m_textBuffer);
+
+		glBindVertexArray(m_textMesh.m_vaoId);
+
+		glBindBuffer(GL_ARRAY_BUFFER, m_textBuffer);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6 * 4, NULL, GL_DYNAMIC_DRAW);
+
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
+
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindVertexArray(0);
+
 	}
 
 	void GraphicsPipe::m_funcSetupVao(Mesh& shape)
@@ -220,21 +242,20 @@ namespace graphicpipe {
 		std::vector<glm::vec2> lvTexCoords;
 		std::vector<GLushort>idx_vtx;
 
-		if (shape.m_shapeType == SQUARE || shape.m_shapeType == SQUARE_LINES)
-		{
-			lvPosVtx = { glm::vec2(0.5f, -0.5f),
+		
+		lvPosVtx	= { glm::vec2(0.5f, -0.5f),
 						glm::vec2(0.5f, 0.5f),
 						glm::vec2(-0.5f, 0.5f),
 						glm::vec2(-0.5f, -0.5f) };
-			lvClrVtx = { glm::vec3(1.f, 1.f, 1.f),
+		lvClrVtx	= { glm::vec3(1.f, 1.f, 1.f),
 						glm::vec3(1.f, 1.f, 1.f),
 						glm::vec3(1.f, 1.f, 1.f),
 						glm::vec3(1.f, 1.f, 1.f) };
-			lvTexCoords = { glm::vec2(1.f, 0.f),
-						   glm::vec2(1.f, 1.f),
-						   glm::vec2(0.f, 1.f),
-						   glm::vec2(0.f, 0.f) };
-		}
+		lvTexCoords	= { glm::vec2(1.f, 0.f),
+						glm::vec2(1.f, 1.f),
+						glm::vec2(0.f, 1.f),
+						glm::vec2(0.f, 0.f) };
+
 
 
 		GLsizei position_data_offset = 0;
@@ -252,30 +273,12 @@ namespace graphicpipe {
 
 		glCreateBuffers(1, &lvVboId);
 
-		if (shape.m_shapeType == SQUARE)
-		{
-			glNamedBufferStorage(lvVboId,
-				position_data_size + color_data_size + texcoord_data_size,
-				nullptr,
-				GL_DYNAMIC_STORAGE_BIT);
-		}
-		else if (shape.m_shapeType == SQUARE_LINES)
-		{
-
-			glNamedBufferStorage(lvVboId,
-				position_data_size + color_data_size,
-				nullptr,
-				GL_DYNAMIC_STORAGE_BIT);
-		}
-
-
+		glNamedBufferStorage(lvVboId, position_data_size + color_data_size + texcoord_data_size, nullptr, GL_DYNAMIC_STORAGE_BIT);
 
 		glNamedBufferSubData(lvVboId, position_data_offset, position_data_size, lvPosVtx.data());
 		glNamedBufferSubData(lvVboId, color_data_offset, color_data_size, lvClrVtx.data());
-		if (shape.m_shapeType == SQUARE)
-		{
-			glNamedBufferSubData(lvVboId, texcoord_data_offset, texcoord_data_size, lvTexCoords.data());
-		}
+		glNamedBufferSubData(lvVboId, texcoord_data_offset, texcoord_data_size, lvTexCoords.data());
+	
 		glCreateVertexArrays(1, &shape.m_vaoId);
 		glEnableVertexArrayAttrib(shape.m_vaoId, 0);
 		glVertexArrayVertexBuffer(shape.m_vaoId, 0, lvVboId,
@@ -290,28 +293,17 @@ namespace graphicpipe {
 		glVertexArrayAttribBinding(shape.m_vaoId, 1, 1);
 
 
-		if (shape.m_shapeType == SQUARE)
-		{
-			glEnableVertexArrayAttrib(shape.m_vaoId, 2);
-			glVertexArrayVertexBuffer(shape.m_vaoId, 2, lvVboId, texcoord_data_offset,
-				texcoord_attribute_size);
-			glVertexArrayAttribFormat(shape.m_vaoId, 2, 2, GL_FLOAT, GL_FALSE, 0);
-			glVertexArrayAttribBinding(shape.m_vaoId, 2, 2);
-		}
+		glEnableVertexArrayAttrib(shape.m_vaoId, 2);
+		glVertexArrayVertexBuffer(shape.m_vaoId, 2, lvVboId, texcoord_data_offset,
+			texcoord_attribute_size);
+		glVertexArrayAttribFormat(shape.m_vaoId, 2, 2, GL_FLOAT, GL_FALSE, 0);
+		glVertexArrayAttribBinding(shape.m_vaoId, 2, 2);
+	
 
 
-		if (shape.m_shapeType == SQUARE)
-		{
-			shape.m_primitiveType = GL_TRIANGLES;
-			idx_vtx = { 0, 1, 2, 2, 3, 0 };
-		}
-		else if (shape.m_shapeType == SQUARE_LINES)
-		{/*
-			shape.primitiveType = GL_LINE_LOOP;
-			idx_vtx = { 0, 1, 2, 3 };*/
-			shape.m_primitiveType = GL_TRIANGLES;
-			idx_vtx = { 0, 1, 2, 2, 3, 0 };
-		}
+		shape.m_primitiveType = GL_TRIANGLES;
+		idx_vtx = { 0, 1, 2, 2, 3, 0 };
+		
 
 		shape.m_indexElementCount = static_cast<unsigned short>(idx_vtx.size());
 		unsigned int ebo_hdl;
@@ -374,6 +366,8 @@ namespace graphicpipe {
 		glBindVertexArray(0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
+		
+
 
 	}
 
@@ -414,29 +408,7 @@ namespace graphicpipe {
 
 	}
 
-	void GraphicsPipe::m_funcBindImageDatafromAssetManager()
-	{
-		//glEnable(GL_BLEND);
-		//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		assetmanager::AssetManager* assets = assetmanager::AssetManager::m_funcGetInstance();
-		for (int i = 0; i < assets->m_imageContainer.size(); ++i)
-		{
-			unsigned int textureID;
-			glGenTextures(1, &textureID);
-			glBindTexture(GL_TEXTURE_2D, textureID);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, assets->m_imageContainer[i].m_width, assets->m_imageContainer[i].m_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, assets->m_imagedataArray[i]);
-			glGenerateMipmap(GL_TEXTURE_2D);
-			m_textureIDs.push_back(textureID);
-			std::cout << "Texture Binded, Texture ID: " << textureID << std::endl;
-		}
 
-		m_imageData = assets->m_imageContainer;
-
-	}
 
 	void GraphicsPipe::m_funcSortDrawOrder()
 	{
@@ -550,10 +522,6 @@ namespace graphicpipe {
 			glNamedBufferData(m_debugMatrixArrayBuffer, m_debugToNDCMatrix.size() * sizeof(glm::mat3), &m_debugToNDCMatrix[0], GL_DYNAMIC_DRAW);
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-
-
-
-
 			glBindVertexArray(m_squareLinesMesh.m_vaoId);
 			glDrawElementsInstanced(m_squareLinesMesh.m_primitiveType, m_squareLinesMesh.m_indexElementCount, GL_UNSIGNED_SHORT, NULL, static_cast<GLsizei>(m_debugToNDCMatrix.size()));
 			glBindVertexArray(0);
@@ -584,11 +552,12 @@ namespace graphicpipe {
 		{
 			int length;
 			glGetShaderiv(lvID, GL_INFO_LOG_LENGTH, &length);
-			char* message = (char*)alloca(length * sizeof(char));
+			char* message = (char*)malloc(length * sizeof(char));
 			glGetShaderInfoLog(lvID, length, &length, message);
 			std::cout << "Failed to Compile Shader" << std::endl;
 			std::cout << message << std::endl;
 			glDeleteShader(lvID);
+			free(message);
 			//TOCHECK
 			//std::exit;
 			return 0;
@@ -649,8 +618,8 @@ namespace graphicpipe {
 
 		m_funcDrawDebug();
 		m_funcDraw();
-
-
+		m_funcDrawText("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", 0, 360, 1.f, glm::vec3(1.f, 0.0f, 0.f));
+		m_funcDrawText("(C) LearnOpenGL.com", 540.0f, 570.0f, 0.5f, glm::vec3(0.3, 0.7f, 0.9f));
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		glDisable(GL_DEPTH_TEST);
@@ -674,6 +643,59 @@ namespace graphicpipe {
 		}
 
 		//glDrawArrays(GL_TRIANGLES, 0, 6);
+	}
+
+	void GraphicsPipe::m_funcDrawText(std::string text, float x, float y, float scale, glm::vec3 color)
+	{
+		
+		// activate corresponding render state	
+		glUseProgram(m_textShaderProgram);
+		glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(m_windowWidth), 0.0f, static_cast<float>(m_windowHeight));
+		glUniformMatrix4fv(glGetUniformLocation(m_textShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+
+		int loc = glGetUniformLocation(m_textShaderProgram, "projection");
+
+		glUniform3f(glGetUniformLocation(m_textShaderProgram, "textColor"), color.x, color.y, color.z);
+		glActiveTexture(GL_TEXTURE0);
+		glBindVertexArray(m_textMesh.m_vaoId);
+
+		// iterate through all characters
+		std::string::const_iterator c;
+		for (c = text.begin(); c != text.end(); c++)
+		{
+			CharacterData ch = m_characters[*c];
+
+			float xpos = x + ch.bearing.x * scale;
+			float ypos = y - (ch.size.y - ch.bearing.y) * scale;
+
+			float w = ch.size.x * scale;
+			float h = ch.size.y * scale;
+			// update VBO for each character
+			float vertices[6][4] = {
+				{ xpos,     ypos + h,   0.0f, 0.0f },
+				{ xpos,     ypos,       0.0f, 1.0f },
+				{ xpos + w, ypos,       1.0f, 1.0f },
+
+				{ xpos,     ypos + h,   0.0f, 0.0f },
+				{ xpos + w, ypos,       1.0f, 1.0f },
+				{ xpos + w, ypos + h,   1.0f, 0.0f }
+			};
+			// render glyph texture over quad
+			glBindTexture(GL_TEXTURE_2D, ch.m_textureID);
+
+			// update content of VBO memory
+			glBindBuffer(GL_ARRAY_BUFFER, m_textBuffer);
+			glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+			// render quad
+			glDrawArrays(GL_TRIANGLES, 0, 6);
+
+			
+			// now advance cursors for next glyph (note that advance is number of 1/64 pixels)
+			x += (ch.advance >> 6) * scale; // bitshift by 6 to get value in pixels (2^6 = 64)
+		}
+		glBindVertexArray(0);
+		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 }
 

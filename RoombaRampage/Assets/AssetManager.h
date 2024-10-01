@@ -1,6 +1,9 @@
 #ifndef ASSETMGR_H
 #define ASSETMGR_H
 
+#include <../Freetype_Font/include/ft2build.h>
+#include <../Freetype_Font/include/freetype/freetype.h>
+#include <../GLEW/include/GL/glew.h>
 #include "../Assets/Audio.h"
 //#include "../Font.h"
 #include <../Math/vector2.h>
@@ -44,19 +47,15 @@ namespace assetmanager {
 			int m_imageID{};
 		};
 
-
-
 		static AssetManager* m_funcGetInstance();
 		~AssetManager();
 		std::vector<Image> m_imageContainer;
 		std::vector<unsigned char*> m_imagedataArray;
 		std::vector<std::unique_ptr<fmodaudio::FModAudio>> m_audioContainer;
-
 		void m_funcLoadAssets();
 		void m_funcLoadImage(const char* file);
 		void m_LoadAudio(std::string file);
-
-		//void m_LoadFont(std::string file, unsigned int fontsize);
+		void m_LoadFont(std::string file, unsigned int fontsize);
 
 		//De|Serialisation using rapid json
 		void m_serializeToJson(const std::string& filename); //Serialize 
