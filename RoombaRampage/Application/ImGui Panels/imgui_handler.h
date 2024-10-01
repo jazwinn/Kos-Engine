@@ -31,6 +31,12 @@ public:
     void DrawRenderScreenWindow(unsigned int windowWidth, unsigned int windowHeight);
     int clicked_entity_id;
 
+    //Getter to acess the four imgui variables
+    std::vector<std::string>& GetObjectTextEntries() { return obj_text_entries; }
+    std::vector<bool>& GetDeleteButtons() { return deleteButton; }
+    std::vector<bool>& GetDuplicateButtons() { return DuplicateButton; }
+    std::vector<unsigned int>& GetObjectEntityIDs() { return obj_entity_id; }
+
 private:
 
     bool objectNameBox = false;

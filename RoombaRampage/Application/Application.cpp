@@ -101,6 +101,15 @@ namespace Application {
         ecs->m_Init();
         LOGGING_INFO("Load ECS Successful");
 
+        /*--------------------------------------------------------------
+            LOAD ENTITIES INTO ECS & IMGUI
+        --------------------------------------------------------------*/
+        AstManager->m_loadEntities("../RoombaRampage/Json/components.json", ecs,
+            imgui_manager.GetObjectTextEntries(),
+            imgui_manager.GetDeleteButtons(),
+            imgui_manager.GetDuplicateButtons(),
+            imgui_manager.GetObjectEntityIDs());
+
         LOGGING_INFO("Application Init Successful");
     
         return 0;
