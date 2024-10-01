@@ -20,8 +20,8 @@ void ImGuiHandler::DrawRenderScreenWindow(unsigned int windowWidth, unsigned int
 
     ImGui::End();*/
 
-      GraphicsPipe* pipe;
-    pipe = GraphicsPipe::funcGetInstance();
+    graphicpipe::GraphicsPipe* pipe;
+    pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
     ImGui::Begin("Scene Window");
 
     ImVec2 pos = ImGui::GetCursorScreenPos();
@@ -54,7 +54,7 @@ void ImGuiHandler::DrawRenderScreenWindow(unsigned int windowWidth, unsigned int
     }
 
     ImGui::GetWindowDrawList()->AddImage(
-        (void*)(long long unsigned int)pipe->screenTexture, pos,
+        (void*)(long long unsigned int)pipe->m_screenTexture, pos,
         ImVec2(pos.x + imageSize.x, pos.y + imageSize.y),
         ImVec2(0, 1), ImVec2(1, 0));
 

@@ -25,7 +25,7 @@ void ImGuiHandler::DrawTestWindow() {
 	static int currTime = 0;
 
 	ecs::ECS *ecs = ecs::ECS::m_GetInstance();
-	assetmanager::AssetManager* assetManager = assetmanager::AssetManager::funcGetInstance();
+	assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
 
 	messaging::MessageSystem MsgSys;
 	MsgSys.m_AddListener(messaging::MessageType::AUDIOPLAY, messaging::SoundPlayed);
@@ -60,14 +60,14 @@ void ImGuiHandler::DrawTestWindow() {
 		std::random_device rd;
 		std::mt19937 gen(rd());
 
-		std::uniform_real_distribution<float> height(lowerBoundy, upperBoundy);
+		std::uniform_real_distribution<float> height(static_cast<float>(lowerBoundy), static_cast<float>(upperBoundy));
 		std::uniform_real_distribution<float> height2(-1.5, 1.5);
 
 		for (int n{}; n < 2500; n++) {
 			 ecs::EntityID id = ecs->m_CreateEntity();
 			 ecs::TransformComponent* tc = (ecs::TransformComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id);
 			 ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, id);
-			 tc->m_scale = { 0.2, 0.2 };
+			 tc->m_scale = { 0.2f, 0.2f };
 			 tc->m_position.m_y = static_cast<float>(height(gen));
 			 tc->m_position.m_x = static_cast<float>(height2(gen));
 

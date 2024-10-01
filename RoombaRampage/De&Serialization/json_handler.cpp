@@ -224,7 +224,7 @@ namespace Serialization {
 
         auto* ecs = ecs::ECS::m_GetInstance();
 
-        size_t entityIndex = 0;
+        //size_t entityIndex = 0;
 
         // Iterate through the ECS_Entitymap to save data only for active entities
         for (const auto& entityPair : ECS_EntityMap) {
