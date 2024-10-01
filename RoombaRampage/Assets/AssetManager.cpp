@@ -2,6 +2,7 @@
 #include "../Graphics/GraphicsPipe.h"
 #include "../Application/Helper.h"
 #include "Prefab.h"
+#include "../De&Serialization/json_handler.h"
 
 #include "../Dependencies/rapidjson/document.h"
 #include "../Dependencies/rapidjson/writer.h"
@@ -438,5 +439,21 @@ namespace assetmanager {
         }
 
         return;
+    }
+
+    void AssetManager::m_loadEntities(const std::string& jsonFilePath, ecs::ECS* ecs, std::vector<std::string>& obj_text_entries, std::vector<bool>& deleteButton, std::vector<bool>& DuplicateButton, std::vector<unsigned int>& obj_entity_id)
+    {
+        // Ensure the JSON file exists
+        std::ifstream checkFile(jsonFilePath);
+        if (!checkFile) {
+            std::cerr << "Error: JSON file not found: " << jsonFilePath << std::endl;
+            return;
+        }
+
+        // Load entities from the JSON file
+        std::cout << "Loading entities from: " << jsonFilePath << std::endl;
+        Serialization::Serialize::LoadComponentsJson(jsonFilePath, ecs, obj_text_entries);  // Load into ECS
+
+        std::cout << "Entities successfully loaded!" << std::endl;
     }
 }

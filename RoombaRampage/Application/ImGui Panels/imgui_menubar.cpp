@@ -9,6 +9,13 @@
 
 void ImGuiHandler::DrawMainMenuBar() {
 
+    ImGuiIO& io = ImGui::GetIO();  // Get input/output data
+    //If CTRL + S press, save
+    if (io.KeyCtrl && ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_S))) {
+        Serialization::Serialize::SaveComponentsJson("../RoombaRampage/Json", ecs::ECS::m_GetInstance()->m_ECS_EntityMap, obj_text_entries, obj_entity_id);
+        std::cout << "Saving data..." << std::endl;
+    }
+
     if (ImGui::BeginMainMenuBar())
     {
         if (ImGui::BeginMenu("File"))

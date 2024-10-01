@@ -1,3 +1,20 @@
+/********************************************************************/
+/*!
+\file      imgui_hierarchy_window.cpp
+\author    Chiu Jun Jie, junjie.c , 2301524
+\par       junjie.c@digipen.edu
+\date      Oct 02, 2024
+\brief     This file contains the implementation of the ImGui Hierarchy Window for rendering and managing game objects.
+           - Displays and updates a list of game objects (entities) in the ECS framework.
+           - Provides functionality for adding, deleting, and duplicating game objects.
+           - Uses ImGui to create a hierarchy view, with interaction buttons for each game object.
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/********************************************************************/
+
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
@@ -15,13 +32,8 @@ unsigned int ImGuiHandler::DrawHierachyWindow()
     //fetch ecs
     ecs::ECS* ecs = ecs::ECS::m_GetInstance();
 
-    // Load entities only once when the window is first opened
     static bool hasLoaded = false;
     if (!hasLoaded) {
-        std::cout << "Loading";
-        // Load entities from JSON (no EntityID in JSON, new entities are created)
-        Serialization::Serialize::LoadComponentsJson("../RoombaRampage/Json/components.json", ecs, obj_text_entries);
-
         // Iterate through all loaded entities and add them to the hierarchy
         for (const auto& entityPair : ecs->m_ECS_EntityMap) {
             obj_entity_id.push_back(entityPair.first);

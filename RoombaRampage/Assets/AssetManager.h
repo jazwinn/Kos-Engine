@@ -5,6 +5,8 @@
 #include <../Freetype_Font/include/freetype/freetype.h>
 #include <../GLEW/include/GL/glew.h>
 #include "../Assets/Audio.h"
+#include "../ECS/ECS.h"
+
 //#include "../Font.h"
 #include <../Math/vector2.h>
 #include <vector>
@@ -60,6 +62,13 @@ namespace assetmanager {
 		//De|Serialisation using rapid json
 		void m_serializeToJson(const std::string& filename); //Serialize 
 		void m_deserializeFromJson(const std::string& filename);
+
+		//Load entity data
+		void m_loadEntities(const std::string& jsonFilePath, ecs::ECS* ecs,
+			std::vector<std::string>& obj_text_entries,
+			std::vector<bool>& deleteButton,
+			std::vector<bool>& DuplicateButton,
+			std::vector<unsigned int>& obj_entity_id);
 
 		//Test Code to test in application.cpp
 		void m_testJSON();
