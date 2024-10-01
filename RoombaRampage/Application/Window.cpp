@@ -17,7 +17,13 @@ namespace Application {
         // Create a window based on the current screen size
         WindowWidth = Helper::Helpers::GetInstance()->WindowWidth;
         WindowHeight = Helper::Helpers::GetInstance()->WindowHeight;
+        
+        //Set Context Version
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
 
+
+       
         /* Create a windowed mode window and its OpenGL context */
         //Set third param to glfwGetPrimaryMonitor if you want fullscreen borderless
 
@@ -37,6 +43,7 @@ namespace Application {
             return -1;
         }
 
+        
         return 0;
 	}
 

@@ -11,6 +11,8 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <string>
+
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
@@ -35,7 +37,8 @@ namespace assetmanager {
 
         prefab::Prefab::m_DeSerializePrefab("../RoombaRampage/Json/Prefab.json");
 
-        //m_LoadFont("Assets/Roboto-Black.ttf", 12);
+        //m_LoadFont("Assets/Roboto-Black.ttf", 48);
+        m_LoadFont("Assets/AfacadFlux-Thin.ttf", 48);
 
     }
 
@@ -75,14 +78,95 @@ namespace assetmanager {
         Audio = nullptr;
         
     }
-   // To implement
-   /*void m_LoadFont(std::string file, unsigned int fontsize) {
-       std::unique_ptr<fontmanager::Font> Font = std::make_unique<fontmanager::Font>();
-       Font(file, fontsize);
-   }*/
+   void AssetManager::m_LoadFont(std::string file, unsigned int fontsize)
+   {
+       graphicpipe::GraphicsPipe* graphics = graphicpipe::GraphicsPipe::m_funcGetInstance();
+
+      
+       FT_Library ft;
+       // All functions return a value different than 0 whenever an error occurred
+       if (FT_Init_FreeType(&ft))
+       {
+           std::cout << "ERROR::FREETYPE: Could not init FreeType Library" << std::endl;
+           return;
+       }
+
+       // find path to font
+  
+       if (file.empty())
+       {
+           std::cout << "ERROR::FREETYPE: Failed to load font_name" << std::endl;
+           return;
+       }
+
+       // load font as face
+       FT_Face face;
+       if (FT_New_Face(ft, file.c_str(), 0, &face)) {
+           std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;
+           return;
+       }
+       else {
+           // set size to load glyphs as
+           FT_Set_Pixel_Sizes(face, 0, 48);
+
+           
+           // disable byte-alignment restriction
+           glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+           
+
+           // load first 128 characters of ASCII set
+           for (unsigned char c = 0; c < 128; c++)
+           {
+               // Load character glyph 
+               if (FT_Load_Char(face, c, FT_LOAD_RENDER))
+               {
+                   std::cout << "ERROR::FREETYTPE: Failed to load Glyph" << std::endl;
+                   continue;
+               }
+               // generate texture
+               unsigned int texture;
+               glGenTextures(1, &texture);
+               glBindTexture(GL_TEXTURE_2D, texture);
+
+               glTexImage2D(
+                   GL_TEXTURE_2D,
+                   0,
+                   GL_RED,
+                   face->glyph->bitmap.width,
+                   face->glyph->bitmap.rows,
+                   0,
+                   GL_RED,
+                   GL_UNSIGNED_BYTE,
+                   face->glyph->bitmap.buffer
+               );
+               // set texture options
+               glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+               glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+               glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+               glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+               // now store character for later use
+               graphicpipe::CharacterData character = {
+                   texture,
+                   glm::ivec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
+                   glm::ivec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
+                   static_cast<unsigned int>(face->glyph->advance.x)
+               };
+               graphics->m_characters.insert(std::pair<char, graphicpipe::CharacterData>(c, character));
+           }
+           glBindTexture(GL_TEXTURE_2D, 0);
+       }
+       // destroy FreeType once we're finished
+       FT_Done_Face(face);
+       FT_Done_FreeType(ft);
+   }
+ 
 
     void AssetManager::m_funcLoadImage(const char* file)
     {
+        graphicpipe::GraphicsPipe* graphics = graphicpipe::GraphicsPipe::m_funcGetInstance();
+
+
         stbi_set_flip_vertically_on_load(true);
         Image image{};
         image.m_stripCount = m_extractStripCountFromFilename(file);
@@ -146,6 +230,20 @@ namespace assetmanager {
             m_imageContainer.push_back(image);
             m_imagedataArray.push_back(data);
         }
+
+        unsigned int textureID;
+        glGenTextures(1, &textureID);
+        glBindTexture(GL_TEXTURE_2D, textureID);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_imageContainer.back().m_width, m_imageContainer.back().m_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, m_imagedataArray.back());
+        glGenerateMipmap(GL_TEXTURE_2D);
+        graphics->m_textureIDs.push_back(textureID);
+        std::cout << "Texture Binded, Texture ID: " << textureID << std::endl;
+
+        graphics->m_imageData.push_back(m_imageContainer.back());
 
     }
     //TOCHECK
@@ -238,49 +336,6 @@ namespace assetmanager {
         }
         return "Error_Cannot_Read_Sprite_Name";
     }
-
-
-    //GLuint loadPaddedTexture(const char* imagePath, int targetWidth, int targetHeight)
-    //{
-    //    // Load the image using stb_image or any other image-loading library
-    //    int width, height, channels;
-    //    unsigned char* data = stbi_load(imagePath, &width, &height, &channels, 0);
-    //    if (!data) {
-    //        std::cerr << "Failed to load image: " << imagePath << std::endl;
-    //        return 0;
-    //    }
-    //
-    //    // Create padded texture if necessary
-    //    unsigned char* paddedData = nullptr;
-    //    if (width != targetWidth || height != targetHeight) {
-    //        paddedData = padTexture(data, width, height, channels, targetWidth, targetHeight, channels);
-    //    }
-    //    else {
-    //        paddedData = data; // No need to pad if the sizes match
-    //    }
-    //
-    //    // Generate OpenGL texture
-    //    GLuint textureID;
-    //    glGenTextures(1, &textureID);
-    //    glBindTexture(GL_TEXTURE_2D, textureID);
-    //
-    //    // Set texture parameters (wrap and filter)
-    //    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    //    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    //    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    //    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    //
-    //    // Upload the padded texture data to the GPU
-    //    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, targetWidth, targetHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, paddedData);
-    //
-    //    // Free original and padded data
-    //    if (data != paddedData) {
-    //        delete[] paddedData;
-    //    }
-    //    stbi_image_free(data);
-    //
-    //    return textureID;
-    //}
 
     void AssetManager::m_serializeToJson(const std::string& filename) {
         rapidjson::Document document;
