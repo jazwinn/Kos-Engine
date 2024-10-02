@@ -53,8 +53,8 @@ namespace graphicpipe {
 		{
 			int m_shapeType{};
 			unsigned int m_vaoId{};
-			unsigned int m_primitiveType;
-			unsigned short m_indexElementCount;
+			unsigned int m_primitiveType{};
+			unsigned short m_indexElementCount{};
 
 		};
 

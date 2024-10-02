@@ -705,7 +705,7 @@ namespace graphicpipe {
 				glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(m_windowWidth), 0.0f, static_cast<float>(m_windowHeight));
 				glUniformMatrix4fv(glGetUniformLocation(m_textShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 
-				int loc = glGetUniformLocation(m_textShaderProgram, "projection");
+				//int loc = glGetUniformLocation(m_textShaderProgram, "projection");
 
 				glUniform3f(glGetUniformLocation(m_textShaderProgram, "textColor"), textData.m_color.x, textData.m_color.y, textData.m_color.z);
 				glActiveTexture(GL_TEXTURE0);

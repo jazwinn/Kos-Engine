@@ -1,3 +1,20 @@
+/******************************************************************/
+/*!
+\file      imgui_component_window.cpp
+\author    Chiu Jun Jie, junjie.c , 2301524
+\par       junjie.c@digipen.edu
+\date      Oct 02, 2024
+\brief     This file implements the ImGui component window for handling
+           user interactions with ECS components in the application. It
+           enables the addition, display, and modification of various
+           entity components within the ECS framework.
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/********************************************************************/
+
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
@@ -19,7 +36,7 @@
 #include <iostream>
 #include "../De&Serialization/json_handler.h"
 
-void ImGuiHandler::DrawComponentWindow()
+void gui::ImGuiHandler::DrawComponentWindow()
 {
     bool windowOpen = true;
     std::string Title = "Component Window";
@@ -35,10 +52,6 @@ void ImGuiHandler::DrawComponentWindow()
         "Add Components","Movement Component", "Collider Component", "Sprite Component", "Player Component", "Rigid Body Component", "Text Component", "Animation Component"
     };
     static int ComponentType = 0;
-
-
-
-
 
     if (obj_text_entries.size() > 0) {
 
@@ -86,9 +99,6 @@ void ImGuiHandler::DrawComponentWindow()
 
         if (EntitySignature.test(ecs::TYPENAMECOMPONENT))
         {
-
-
-
             // Retrieve the TransformComponent
             ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]
                 ->m_GetEntityComponent(entityID));
@@ -105,14 +115,10 @@ void ImGuiHandler::DrawComponentWindow()
                     }
                 }
             }
-
-            
         }
             
         if (EntitySignature.test(ecs::TYPETRANSFORMCOMPONENT))
-        {
-                
-                
+        {    
             if (ImGui::CollapsingHeader("Transform Component"))
             {
                 // Retrieve the TransformComponent
@@ -182,10 +188,7 @@ void ImGuiHandler::DrawComponentWindow()
                 //ImGui::SameLine(slider_start_pos_x);
                 //ImGui::Checkbox("##", &mc->m_Move);
 
-            }
-
-               
-
+            }     
         }
         if (EntitySignature.test(ecs::TYPECOLLIDERCOMPONENT))
         {
@@ -225,10 +228,8 @@ void ImGuiHandler::DrawComponentWindow()
                 ImGui::SameLine();
                 ImGui::SetNextItemWidth(100.0f);
                 ImGui::DragFloat("YY##VelY", &cc->m_OffSet.m_y, 0.02f, -1.f, 1.f, "%.2f");
-                   
+              
             }
-
-                
         }
         if (EntitySignature.test(ecs::TYPESPRITECOMPONENT))
         {
@@ -251,7 +252,7 @@ void ImGuiHandler::DrawComponentWindow()
                     item_selected_idx = sc->m_imageID;
                     for (unsigned int n = 0; n < images->m_imageContainer.size(); n++)
                     {
-                        bool is_selected = (item_selected_idx == n);
+                        bool is_selected = (item_selected_idx == static_cast<int>(n));
                         if (ImGui::Selectable(const_cast<char*>(images->m_imageContainer[n].m_spriteName.c_str()), is_selected))
                         {
                             item_selected_idx = n;
@@ -284,8 +285,6 @@ void ImGuiHandler::DrawComponentWindow()
             if (ImGui::CollapsingHeader("Player Component")) {
                 
                 ImGui::Checkbox("Player Control", &pc->m_Control);
-                
-                
             }
         }
 
@@ -295,8 +294,6 @@ void ImGuiHandler::DrawComponentWindow()
             if (ImGui::CollapsingHeader("RigidBody Component")) {
 
                 ImGui::Text("Work In Progress");
-
-
             }
         }
         
@@ -339,9 +336,6 @@ void ImGuiHandler::DrawComponentWindow()
 
             }
         }
-        
-
-
      }
 
     ImGui::End();
