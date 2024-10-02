@@ -3,6 +3,7 @@
 
 #include "fmod.hpp"
 #include "fmod_errors.h"
+#include <thread>
 
 namespace fmodaudio {
     class FModAudio {
