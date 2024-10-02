@@ -18,7 +18,7 @@ namespace prefab {
 
 		static int m_CreateEntityFromPrefab(std::string Prefab);
 
-		static std::unordered_map<std::string, Prefab> m_prefabs;
+		
 	private:
 
 		std::bitset<ecs::TOTALTYPECOMPONENT> m_prefabSignature;

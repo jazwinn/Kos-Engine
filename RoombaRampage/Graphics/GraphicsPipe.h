@@ -141,7 +141,7 @@ namespace graphicpipe {
 
 		//Array of the texture IDs
 		std::vector<unsigned int> m_textureIDs{};
-		std::vector<assetmanager::AssetManager::Image> m_imageData{};
+		std::vector<image::Image> m_imageData{};
 
 		unsigned int m_screenTexture{};
 		unsigned int m_proxyBackgroundTexture{};

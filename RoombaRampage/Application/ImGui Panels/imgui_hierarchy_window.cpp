@@ -21,7 +21,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "imgui_handler.h"
 #include "../ECS/ECS.h"
 #include "../../De&Serialization/json_handler.h"
-#include "../Assets/Prefab.h"
+#include "../Assets/AssetManager.h"
 
 #include<vector>
 #include<string>
@@ -53,8 +53,9 @@ unsigned int ImGuiHandler::DrawHierachyWindow()
 
         if (ImGui::BeginMenu("Prefabs"))
         {
-            if (prefab::Prefab::m_prefabs.size() > 0) {
-                for (auto prefab : prefab::Prefab::m_prefabs) {
+            assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+            if (assetmanager->m_prefabs.size() > 0) {
+                for (auto prefab : assetmanager->m_prefabs) {
 
                     if (ImGui::MenuItem(prefab.first.c_str())) {
 
@@ -95,6 +96,8 @@ unsigned int ImGuiHandler::DrawHierachyWindow()
             clicked_entity_id = newEntityID;
             //Add the string into the vector
             obj_text_entries.push_back(std::string(charBuffer));
+            // add string to name component
+            static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(newEntityID))->m_entityName = std::string(charBuffer);
 
             //Set to false as no button showing first
             //Used to track and maintain sync between objtextentries and deletebutton vector
@@ -151,7 +154,10 @@ unsigned int ImGuiHandler::DrawHierachyWindow()
                 deleteButton.erase(deleteButton.begin() + i);
                 DuplicateButton.erase(DuplicateButton.begin() + i);
                 
-                clicked_entity_id = obj_entity_id[0];//set to 
+                if (obj_entity_id.size() > 0) {
+                    clicked_entity_id = obj_entity_id[0];//set to 
+                }
+                
 
 
                 i--;

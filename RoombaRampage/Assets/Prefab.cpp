@@ -1,11 +1,11 @@
 #include "Prefab.h"
 #include "../De&Serialization/json_handler.h"
 #include "../Debugging/Logging.h"
+#include "AssetManager.h"
 
 
 namespace prefab {
 
-    std::unordered_map<std::string, Prefab> Prefab::m_prefabs;
 
 	void Prefab::m_DeSerializePrefab(std::string path) {
 
@@ -24,6 +24,7 @@ namespace prefab {
         // Parse the JSON content
         rapidjson::Document doc;
         doc.Parse(fileContent.c_str());
+        assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
 
         for (rapidjson::SizeType i = 0; i < doc.Size(); i++) {
             const rapidjson::Value& prefabData = doc[i];
@@ -134,8 +135,8 @@ namespace prefab {
 
 
 
-
-            m_prefabs[prefab.m_nameComponents.m_entityName] = prefab;
+            
+            assetmanager->m_prefabs[prefab.m_nameComponents.m_entityName] = prefab;
         }
 
         LOGGING_INFO("Load Prefab Json Successful");
@@ -145,14 +146,15 @@ namespace prefab {
 
     int Prefab::m_CreateEntityFromPrefab(std::string prefabString) {
 
+        assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
         //serach for prefab that matches the map
 
-        if (m_prefabs.find(prefabString) == m_prefabs.end()) {
+        if (assetmanager->m_prefabs.find(prefabString) == assetmanager->m_prefabs.end()) {
             LOGGING_ERROR("Prefab does not exist");
             return -1;
         }
 
-        Prefab prefab = m_prefabs[prefabString];
+        Prefab prefab = assetmanager->m_prefabs[prefabString];
 
         ecs::ECS* ecs = ecs::ECS::m_GetInstance();
 

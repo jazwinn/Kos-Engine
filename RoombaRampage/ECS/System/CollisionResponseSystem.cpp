@@ -76,6 +76,7 @@ namespace ecs {
 
 
 		for (auto& CollidedEntity : vecCollisionEntity) {
+			// create hash set
 			ids.insert(CollidedEntity->m_ID);
 		}
 		
