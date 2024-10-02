@@ -1,16 +1,24 @@
 /******************************************************************/
 /*!
 \file      Logging.h
-\author    Rayner Tan, raynerweichen.tan , 2301449
+\author    Rayner Tan
 \par       raynerweichen.tan@digipen.edu
 \date      Sept 28, 2024
-\brief     Logging functions
+\brief     This file contains the definition of the Logger class and
+           related macros for logging at different log levels (INFO,
+           WARN, ERROR, DEBUG, CRASH) along with signal handling
+           for program crashes.
+
+The Logger class provides formatted output of log messages to
+both the console and file, as well as macros to easily log messages
+with varying severity.
 
 Copyright (C) 2024 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the
 prior written consent of DigiPen Institute of Technology is prohibited.
 */
-/********************************************************************/
+/******************************************************************/
+
 #ifndef LOGGING_H
 #define LOGGING_H
 
@@ -30,46 +38,59 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include <cstdlib>
 
 /*
- * @brief Variadic Macro for logging Information. This macro takes in a string message, followed by the
- * necessary arguments.
- * @param Takes an std::string_view or string in the form of "This is a log value: {0}, and {1}", followed by
- * the arguments
- */
+* @brief Variadic Macro for logging Information. This macro takes in a string message, followed by the
+* necessary arguments.
+* @param Takes an std::string_view or string in the form of "This is a log value: {0}, and {1}", followed by
+* the arguments
+*/
 #define LOGGING_INFO(x, ...) logging::Logger::m_GetInstance(). m_Info( x , __VA_ARGS__ )
 
- /*
-  * @brief Variadic Macro for logging warnings. This macro takes in a string message, followed by the
-  * necessary arguments.
-  * @param Takes an std::string_view or string in the form of "This is a log value: {0}, and {1}", followed by
-  * the arguments
-  */
+/*
+* @brief Variadic Macro for logging warnings. This macro takes in a string message, followed by the
+* necessary arguments.
+* @param Takes an std::string_view or string in the form of "This is a log value: {0}, and {1}", followed by
+* the arguments
+*/
 #define LOGGING_WARN( x, ... ) logging::Logger::m_GetInstance().m_Warn( x , __VA_ARGS__ )
 
-  /*
-   * @brief Variadic Macro for logging Errors. This macro takes in a string message, followed by the
-   * necessary arguments.
-   * @param Takes an std::string_view or string in the form of "This is a log value: {0}, and {1}", followed by
-   * the arguments
-   */
+/*
+* @brief Variadic Macro for logging Errors. This macro takes in a string message, followed by the
+* necessary arguments.
+* @param Takes an std::string_view or string in the form of "This is a log value: {0}, and {1}", followed by
+* the arguments
+*/
 #define LOGGING_ERROR(x, ...) logging::Logger::m_GetInstance().m_Error(std::source_location::current(), x,  __VA_ARGS__)
 #define LOGGING_ERROR_NO_SOURCE_LOCATION(x, ...) logging::Logger::m_GetInstance().m_Error(x, __VA_ARGS__)
 #define LOGGING_CRASH(x, ...) logging::Logger::m_GetInstance().m_Crash(x,  __VA_ARGS__)
-   /*
-    * @brief Variadic Macro for logging Errors. This macro takes in a string message, followed by the
-    * necessary arguments.
-    * @param Takes an std::string_view or string in the form of "This is a log value: {0}, and {1}", followed by
-    * the arguments
-    */
+/*
+* @brief Variadic Macro for logging Debug. This macro takes in a string message, followed by the
+* necessary arguments.
+* @param Takes an std::string_view or string in the form of "This is a log value: {0}, and {1}", followed by
+* the arguments
+*/
 #define LOGGING_DEBUG(x, ...) logging::Logger:: m_GetInstance().m_Debug( x, __VA_ARGS__)
 
-
+/******************************************************************/
+/*!
+\def       LOGGING_ASSERT(x)
+\brief     Macro for making assertions. If the condition is false, an assertion
+            failure occurs.
+\param[in] x    The condition to assert.
+*/
+/******************************************************************/
 #define LOGGING_ASSERT(x) \
     if (!(x)) { \
         assert(x); \
     }
 #define LOGGING_ASSERT_WITH_MSG(x,...) logging::Logger::m_GetInstance().m_Assert(std::source_location::current(),x,__VA_ARGS__);
 
-
+/******************************************************************/
+/*!
+\def       LOGGING_INIT_LOGS(filename)
+\brief     Macro to initialize the Logger with the specified file.
+\param[in] filename The name of the file where log messages will be stored.
+*/
+/******************************************************************/
 #define LOGGING_INIT_LOGS( filename ) logging::Logger::m_GetInstance().m_Init( filename )
 
 namespace logging {
@@ -81,6 +102,13 @@ namespace logging {
     static const std::string s_BLUE = "\033[0;36m";
     static const std::string s_CLOSE = "\033[0m";
 
+    /******************************************************************/
+    /*!
+    \enum      LogLevel
+    \brief     Defines the different levels of logging available: DEBUG, INFO,
+               WARNING, ERROR.
+    */
+    /******************************************************************/
     enum class LogLevel {
         LOG_DEBUG,
         LOG_INFO,
@@ -126,17 +154,40 @@ namespace logging {
 
         template <typename... Args>
         void  m_Debug(const std::string_view message, Args&&... args);
-
+        /******************************************************************/
+        /*!
+        \fn        std::string Logger::m_GetCurrentTimestamp()
+        \brief     Gets the current timestamp in the format YYYY-MM-DD HH:MM:SS.
+        \return    A string containing the current timestamp.
+        */
+        /******************************************************************/
         std::string m_GetCurrentTimestamp();
+        /******************************************************************/
+        /*!
+        \fn        std::vector<std::string> Logger::m_GetLogList()
+        \brief     Returns the list of logs
+        */
+        /******************************************************************/
         std::vector<std::string>  m_GetLogList();
 
         void m_TestingLog();
-
-        /*
-        Testing
+        /******************************************************************/
+        /*!
+        \fn        void Logger::m_Setup_Abort_Handler()
+        \brief     Sets up signal handlers for various abort and crash signals
+                   (SIGABRT, SIGSEGV, SIGTERM, etc.).
         */
+        /******************************************************************/
         void  m_Setup_Abort_Handler();
-       static void  m_Abort_Handler(int);
+        /******************************************************************/
+        /*!
+        \fn        static void Logger::m_Abort_Handler(int signal)
+        \brief     Handles the received abort signal and logs the stack trace
+                   to the log file.
+        \param[in] signal The signal received (e.g., SIGABRT, SIGSEGV).
+        */
+        /******************************************************************/
+        static void  m_Abort_Handler(int);
 
     private:
         std::ofstream  m_logFile; // File stream for the log file
@@ -344,8 +395,6 @@ USING DEFINE
 LOGGING_INIT_LOGS(<FILE PATH>);
 LOGGING_INFO(<MESSAGE>, 50);
 inside MESSAGE need to have {} as this is the placeholder for 50
-
-
 
 ************************************************/
 

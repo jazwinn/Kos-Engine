@@ -39,7 +39,7 @@ namespace assetmanager {
         prefab::Prefab::m_DeSerializePrefab("../RoombaRampage/Json/Prefab.json");
 
         //m_LoadFont("Assets/Roboto-Black.ttf", 48);
-        m_LoadFont("Assets/AfacadFlux-Thin.ttf", 48);
+        m_LoadFont("Assets/AfacadFlux-Thin.ttf");
 
     }
 
@@ -79,7 +79,7 @@ namespace assetmanager {
         Audio = nullptr;
         
     }
-   void AssetManager::m_LoadFont(std::string file, unsigned int fontsize)
+   void AssetManager::m_LoadFont(std::string file)
    {
        graphicpipe::GraphicsPipe* graphics = graphicpipe::GraphicsPipe::m_funcGetInstance();
 
@@ -256,21 +256,23 @@ namespace assetmanager {
         // Fill with padding (e.g., transparent for RGBA)
         memset(paddedPixels, 0, targetWidth * targetHeight * targetChannels);
 
+        // Calculate the maximum valid indices for source and destination arraysW
         //If the image doesn't have alpha channel
-        if (targetChannels > originalChannels)
-        {
-            for (int y = 0; y < originalHeight; ++y)
-            {
-                for (int x = 0; x < originalWidth; ++x)
-                {
-                    int c = 3;
-                    int dstIndex = ((y + (targetHeight - originalHeight) / 2) * targetWidth + (x + (targetWidth - originalWidth) / 2)) * targetChannels + c;
+        //if (targetChannels > originalChannels)
+        //{
+        //    for (int y = 0; y < originalHeight; ++y)
+        //    {
+        //        for (int x = 0; x < originalWidth; ++x)
+        //        {
+        //            int c = 3;
+        //            int dstIndex = ((y + (targetHeight - originalHeight) / 2) * targetWidth + (x + (targetWidth - originalWidth) / 2)) * targetChannels + c;
 
-                    // Make Opaque
-                    paddedPixels[dstIndex] = 255;
-                }
-            }
-        }
+        //            // Make Opaque
+        //            paddedPixels[dstIndex] = 255;
+        //        }
+        //    }
+        //}
+        // Copy the original texture into the center of the padded texture
 
         // Calculate the maximum valid indices for source and destination arrays
         int maxSrcIndex = originalHeight * originalWidth * originalChannels;

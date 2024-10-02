@@ -1,27 +1,48 @@
 /******************************************************************/
 /*!
 \file      Logging.cpp
-\author    Rayner Tan, raynerweichen.tan , 2301449
+\author    Rayner Tan
 \par       raynerweichen.tan@digipen.edu
 \date      Sept 28, 2024
-\brief     Logging functions
+\brief     This file contains the implementation of the Logger class,
+           which provides logging functionality including error handling,
+           signal capturing, and formatted message logging to both
+           console and file.
+
+The Logger class supports different log levels, formatted log entries,
+signal handling for program crashes, and captures stack traces during
+critical events.
 
 Copyright (C) 2024 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the
 prior written consent of DigiPen Institute of Technology is prohibited.
 */
-/********************************************************************/
+/******************************************************************/
+
 #include "Logging.h"
 
 
 namespace logging {
 
+    /******************************************************************/
+    /*!
+    \fn        Logger& Logger::m_GetInstance()
+    \brief     Returns the singleton instance of the Logger class.
+    \return    Reference to the Logger instance.
+    */
+    /******************************************************************/
     Logger& Logger::m_GetInstance()
     {
         static Logger instance{};
         return instance;
     }
-    // Constructor: Opens the log file in append mode
+    /******************************************************************/
+    /*!
+    \fn        Logger::Logger(const std::string& filename)
+    \brief     Constructor that opens the log file in append mode.
+    \param[in] filename  The name of the file to log messages to.
+    */
+    /******************************************************************/
     Logger::Logger(const std::string& filename)
     {
         m_logFile.open(filename,std::ios::out | std::ios::trunc);
@@ -29,11 +50,14 @@ namespace logging {
         if (!m_logFile.is_open()) {
             std::cerr << "Error opening log file." << std::endl;
         }
-
-       
-
     }
-
+    /******************************************************************/
+    /*!
+    \fn        void Logger::m_Setup_Abort_Handler()
+    \brief     Sets up signal handlers for various abort and crash signals,
+               such as SIGABRT, SIGSEGV, and SIGTERM.
+    */
+    /******************************************************************/
     void Logger::m_Setup_Abort_Handler() {
         // Handle abort signals
         std::signal(SIGABRT, m_Abort_Handler);
@@ -50,6 +74,14 @@ namespace logging {
         // Handle termination requests (can be caught for cleanup)
         std::signal(SIGTERM, m_Abort_Handler);
     }
+    /******************************************************************/
+    /*!
+    \fn        void Logger::m_Abort_Handler(int signal)
+    \brief     Handles abort signals and logs the stack trace.
+    \param[in] signal The signal that caused the abort, such as SIGABRT,
+               SIGSEGV, or SIGTERM.
+    */
+    /******************************************************************/
     void Logger::m_Abort_Handler(int signal) {
         auto location = std::source_location::current();
         std::string signalDescription{};
@@ -102,16 +134,34 @@ namespace logging {
         auto& logger = logging::Logger::m_GetInstance();
         logger.m_printer.print(st, logger.m_logFile); // Using the printer in Logger to log the stack trace
     }
-
+    /******************************************************************/
+    /*!
+    \fn        void Logger::m_TestingLog()
+    \brief     Logs test messages at different log levels (INFO, DEBUG, ERROR)
+               for testing purposes.
+    */
+    /******************************************************************/
     void Logger::m_TestingLog() {
         LOGGING_INFO("Testing of Logging Information {}" , 50);
         LOGGING_DEBUG("Testing of Logging Debug");
         LOGGING_ERROR("Testing of Logging Error with Source Location");
         LOGGING_ERROR_NO_SOURCE_LOCATION("Testing of Logging without source location");        
     }
-    // Destructor: Closes the log file
+    /******************************************************************/
+    /*!
+    \fn        Logger::~Logger()
+    \brief     Destructor that closes the log file.
+    */
+    /******************************************************************/
     Logger::~Logger() { m_logFile.close(); }
-
+    /******************************************************************/
+    /*!
+    \fn        void Logger::m_Init(const std::string& filename)
+    \brief     Initializes the Logger by opening the specified log file.
+    \param[in] filename  The name of the file to log messages to.
+    \warning   Must be called before using the Logger to log messages.
+    */
+    /******************************************************************/
     void Logger::m_Init(const std::string& filename) {
         assert(!m_bInitialized && "The logger must be initialized before it is used!");
         if (m_bInitialized)
@@ -135,7 +185,13 @@ namespace logging {
         }
     }
 
-
+    /******************************************************************/
+    /*!
+    \fn        std::string Logger::m_GetCurrentTimestamp()
+    \brief     Gets the current timestamp in the format YYYY-MM-DD HH:MM:SS.
+    \return    A string containing the current timestamp.
+    */
+    /******************************************************************/
     std::string Logger::m_GetCurrentTimestamp() {
         // Get current timestamp
         auto now = std::chrono::system_clock::now();
@@ -152,12 +208,25 @@ namespace logging {
         
         return std::string(buffer);
     }
-
+    /******************************************************************/
+    /*!
+    \fn        std::vector<std::string> Logger::m_GetLogList()
+    \brief     Returns the list of logs
+    */
+    /******************************************************************/
     std::vector<std::string> Logger::m_GetLogList() {
         return  m_log_list;
     }
 
-    // Logs a message with a given log level
+    /******************************************************************/
+    /*!
+    \fn        void Logger::m_Log(LogLevel level, const std::string& message)
+    \brief     Logs a message with the specified log level and outputs it to both
+               the console and the log file.
+    \param[in] level   The severity level of the log (INFO, DEBUG, WARNING, ERROR).
+    \param[in] message The log message to be logged.
+    */
+    /******************************************************************/
     void Logger::m_Log(LogLevel level, const std::string& message)
     {
         std::string current_Time = m_GetCurrentTimestamp();
@@ -175,7 +244,14 @@ namespace logging {
         }
     }
 
-    // Converts log level to a string for output
+    /******************************************************************/
+    /*!
+    \fn        std::string Logger::m_LevelToString(LogLevel level)
+    \brief     Converts the log level enum to its corresponding string representation.
+    \param[in] level  The log level to be converted.
+    \return    The string representation of the log level.
+    */
+    /******************************************************************/
     std::string Logger::m_LevelToString(LogLevel level)
     {
         switch (level) {
@@ -191,7 +267,14 @@ namespace logging {
             return "UNKNOWN";
         }
     }
-
+    /******************************************************************/
+    /*!
+    \fn        std::string Logger::m_ColorToString(LogLevel level)
+    \brief     Converts the log level to a color-coded string for console output.
+    \param[in] level  The log level to be converted to a color code.
+    \return    The color-coded string representing the log level.
+    */
+    /******************************************************************/
     std::string Logger::m_ColorToString(LogLevel level) {
         switch (level) {
         case LogLevel::LOG_DEBUG: //GREEN

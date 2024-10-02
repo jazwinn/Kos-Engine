@@ -57,7 +57,7 @@ namespace assetmanager {
 		void m_funcLoadAssets();
 		void m_funcLoadImage(const char* file);
 		void m_LoadAudio(std::string file);
-		void m_LoadFont(std::string file, unsigned int fontsize);
+		void m_LoadFont(std::string file);
 
 		//De|Serialisation using rapid json
 		void m_serializeToJson(const std::string& filename); //Serialize 
