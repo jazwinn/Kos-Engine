@@ -15,12 +15,12 @@ namespace graphicpipe {
 	//SPLIT TO DIFFERENT FILES!!!!
 	struct GraphicsData
 	{
-		float m_rotate;
-		glm::vec2 m_scale;
-		glm::vec3 m_worldCoordinates;
-		unsigned int m_textureID;
-		int m_shapeType;
-		int m_layer;
+		float m_rotate{};
+		glm::vec2 m_scale{};
+		glm::vec3 m_worldCoordinates{};
+		unsigned int m_textureID{};
+		int m_shapeType{};
+		int m_layer{};
 	};
 
 	struct DebugDrawData
@@ -69,18 +69,18 @@ namespace graphicpipe {
 		static std::unique_ptr<GraphicsPipe> m_instancePtr;
 
 		//Shader Programs
-		unsigned int m_genericShaderProgram;
-		unsigned int m_frameBufferShaderProgram;
-		unsigned int m_debugShaderProgram;
-		unsigned int m_textShaderProgram;
+		unsigned int m_genericShaderProgram{};
+		unsigned int m_frameBufferShaderProgram{};
+		unsigned int m_debugShaderProgram{};
+		unsigned int m_textShaderProgram{};
 
 		//Buffers
-		unsigned int m_modelMatrixArrayBuffer;
-		unsigned int m_debugMatrixArrayBuffer;
-		unsigned int m_textureOrderBuffer;
-		unsigned int m_debugCollisionCheckBuffer;
-		unsigned int m_frameBufferObject;
-		unsigned int m_textBuffer;
+		unsigned int m_modelMatrixArrayBuffer{};
+		unsigned int m_debugMatrixArrayBuffer{};
+		unsigned int m_textureOrderBuffer{};
+		unsigned int m_debugCollisionCheckBuffer{};
+		unsigned int m_frameBufferObject{};
+		unsigned int m_textBuffer{};
 
 
 		int m_windowWidth{};
@@ -93,9 +93,9 @@ namespace graphicpipe {
 			float m_angle;
 		};
 
-		std::vector<glm::mat3> m_modelToNDCMatrix;
-		std::vector<glm::mat3> m_debugToNDCMatrix;
-		glm::mat3 m_testMatrix;
+		std::vector<glm::mat3> m_modelToNDCMatrix{};
+		std::vector<glm::mat3> m_debugToNDCMatrix{};
+		glm::mat3 m_testMatrix{};
 
 
 		static GLuint m_funcCompileShader(GLuint type, const std::string& shader);

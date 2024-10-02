@@ -38,6 +38,7 @@ void ImGuiHandler::DrawTestWindow() {
 
 	ecs::ECS *ecs = ecs::ECS::m_GetInstance();
 	assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
+	logging::Logger log;
 
 	messaging::MessageSystem MsgSys;
 	MsgSys.m_AddListener(messaging::MessageType::AUDIOPLAY, messaging::SoundPlayed);
@@ -61,6 +62,10 @@ void ImGuiHandler::DrawTestWindow() {
 	if (ImGui::Button("Crash")) {
 		LOGGING_INFO("About to trigger abort");
 		abort();
+	}
+	ImGui::NewLine();
+	if (ImGui::Button("Test Log")) {
+		log.m_GetInstance().m_TestingLog();
 	}
 	ImGui::NewLine();
 	if (ImGui::Button("Spawn 2500")) {
