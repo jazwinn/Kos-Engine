@@ -77,30 +77,31 @@ void ImGuiHandler::DrawComponentWindow()
 
         ecs::compSignature EntitySignature = ecs->m_ECS_EntityMap[entityID];
 
+        ImGui::SeparatorText("Components");
+
         if (EntitySignature.test(ecs::TYPENAMECOMPONENT))
         {
 
 
-            if (ImGui::CollapsingHeader("Name Component"))
-            {
-                // Retrieve the TransformComponent
-                ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]
-                    ->m_GetEntityComponent(entityID));
 
-                //Display Position
-                ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
-                ImGui::Text("Object Name: ");
-                ImGui::SameLine(slider_start_pos_x);
-                ImGui::SetNextItemWidth(100.0f);
-                if (ImGui::InputText("##NAMETEXT##", &nc->m_entityName)) {
-                    for (int n{}; n < obj_entity_id.size(); n++) {
-                        if (obj_entity_id[n] == entityID) {
-                            obj_text_entries[n] = nc->m_entityName;
-                        }
+            // Retrieve the TransformComponent
+            ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]
+                ->m_GetEntityComponent(entityID));
+
+            //Display Position
+            ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
+            ImGui::Text("Object Name: ");
+            ImGui::SameLine(slider_start_pos_x);
+            ImGui::SetNextItemWidth(100.0f);
+            if (ImGui::InputText("##NAMETEXT##", &nc->m_entityName)) {
+                for (int n{}; n < obj_entity_id.size(); n++) {
+                    if (obj_entity_id[n] == entityID) {
+                        obj_text_entries[n] = nc->m_entityName;
                     }
                 }
-
             }
+
+            
         }
             
         if (EntitySignature.test(ecs::TYPETRANSFORMCOMPONENT))
