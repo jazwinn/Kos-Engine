@@ -3,8 +3,8 @@
     "name": "Player Object",
     "transform": {
       "position": {
-        "x": -0.5765599608421326,
-        "y": 0.32071298360824585
+        "x": 0.0,
+        "y": 0.0
       },
       "rotation": 0.0,
       "scale": {
@@ -87,8 +87,8 @@
     "name": "Wall",
     "transform": {
       "position": {
-        "x": 0.0,
-        "y": 0.0
+        "x": -1.5,
+        "y": 0.75
       },
       "rotation": 0.0,
       "scale": {
