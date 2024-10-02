@@ -296,17 +296,44 @@ void gui::ImGuiHandler::DrawComponentWindow()
                 ImGui::Text("Work In Progress");
             }
         }
-        
         if (EntitySignature.test(ecs::TYPETEXTCOMPONENT))
         {
 
 
             if (ImGui::CollapsingHeader("Text Component"))
             {
-                
+                // Retrieve the TransformComponent
+                ecs::TextComponent* tc = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]
+                    ->m_GetEntityComponent(entityID));
+
+
+                ImVec4 color = ImVec4(tc->m_red, tc->m_green, tc->m_blue, 255.0f / 255.0f);
+                // ImGuiColorEditFlags misc_flags = (hdr ? ImGuiColorEditFlags_HDR : 0) | (drag_and_drop ? 0 : ImGuiColorEditFlags_NoDragDrop) | (alpha_half_preview ? ImGuiColorEditFlags_AlphaPreviewHalf : (alpha_preview ? ImGuiColorEditFlags_AlphaPreview : 0)) | (options_menu ? 0 : ImGuiColorEditFlags_NoOptions);
+
+                 //Display Position
+                ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
+                ImGui::Text("Text: ");
+                ImGui::SameLine(slider_start_pos_x);
+                ImGui::SetNextItemWidth(100.0f);
+                ImGui::InputText("##TEXT##", &tc->m_text);
+
+                ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
+                ImGui::Text("Size");
+                ImGui::SameLine(slider_start_pos_x);
+                ImGui::SetNextItemWidth(100.0f);
+                ImGui::DragFloat("###TEXTXXX", &tc->m_fontSize, 0.02f, 0.f, 10.0f, "%.2f");
+
+                ImGui::Text("Color");
+                ImGui::SameLine();
+                if (ImGui::ColorEdit3("##MyColor1", (float*)&color, ImGuiColorEditFlags_DisplayRGB)) {
+                    tc->m_red = color.x;
+                    tc->m_green = color.y;
+                    tc->m_blue = color.z;
+                }
 
             }
         }
+        
         if (EntitySignature.test(ecs::TYPEANIMATIONCOMPONENT))
         {
             //retrieve sprite component

@@ -73,11 +73,11 @@ namespace ecs {
 				{
 					animation->m_frameTimer = 0.f;
 				}
-				graphicsPipe->m_modelData.push_back({ transform->m_rotation, glm::vec2{transform->m_scale.m_x, transform->m_scale.m_y}, glm::vec3{transform->m_position.m_x,transform->m_position.m_y, 0} ,sprite->m_imageID, animation->m_frameTimer, 0 });
+				graphicsPipe->m_modelData.push_back({ transform->m_rotation, glm::vec2{transform->m_scale.m_x, transform->m_scale.m_y}, glm::vec2{transform->m_position.m_x,transform->m_position.m_y} ,sprite->m_imageID, animation->m_frameTimer, 0 });
 			}
 			else
 			{
-				graphicsPipe->m_modelData.push_back({ transform->m_rotation, glm::vec2{transform->m_scale.m_x, transform->m_scale.m_y}, glm::vec3{transform->m_position.m_x,transform->m_position.m_y, 0} ,sprite->m_imageID, 0, 0 });
+				graphicsPipe->m_modelData.push_back({ transform->m_rotation, glm::vec2{transform->m_scale.m_x, transform->m_scale.m_y}, glm::vec2{transform->m_position.m_x,transform->m_position.m_y} ,sprite->m_imageID, 0, 0 });
 			}
 			
 		}

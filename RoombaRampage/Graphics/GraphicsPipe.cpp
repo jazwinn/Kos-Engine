@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <gtc/type_ptr.hpp>
 #include <gtc/matrix_transform.hpp>
+#include "../ECS/ECSList.h"
 
 namespace graphicpipe {
 
@@ -72,14 +73,14 @@ namespace graphicpipe {
 		m_squareMesh.m_shapeType = SQUARE;
 		m_squareLinesMesh.m_shapeType = SQUARE_LINES;
 		m_testMatrix = { 1,0,0,0,1,0,0,0,1 };
-		m_modelData.reserve(2500);
-		m_debugBoxData.reserve(2500);
-		m_textData.reserve(2500);
-		m_modelToNDCMatrix.reserve(2500);
-		m_debugToNDCMatrix.reserve(2500);
-		m_debugBoxCollisionChecks.reserve(2500);
-		m_frameNumbers.reserve(2500);
-		m_stripCounts.reserve(2500);
+		m_modelData.reserve(ecs::MaxEntity);
+		m_debugBoxData.reserve(ecs::MaxEntity);
+		m_textData.reserve(ecs::MaxEntity);
+		m_modelToNDCMatrix.reserve(ecs::MaxEntity);
+		m_debugToNDCMatrix.reserve(ecs::MaxEntity);
+		m_debugBoxCollisionChecks.reserve(ecs::MaxEntity);
+		m_frameNumbers.reserve(ecs::MaxEntity);
+		m_stripCounts.reserve(ecs::MaxEntity);
 
 		m_funcSetupVao(m_squareMesh);
 		m_funcSetupSquareLinesVao();
@@ -438,19 +439,6 @@ namespace graphicpipe {
 
 	}
 
-
-
-	void GraphicsPipe::m_funcSortDrawOrder()
-	{
-		if (!m_modelData.empty())
-		{
-			std::sort(m_modelData.begin(), m_modelData.end(), [](GraphicsData a, GraphicsData b)
-				{
-					return a.m_worldCoordinates.z > b.m_worldCoordinates.z;
-				});
-		}
-
-	}
 
 
 	void GraphicsPipe::m_funcUpdate()

@@ -17,7 +17,7 @@ namespace graphicpipe {
 	{
 		float m_rotate{};
 		glm::vec2 m_scale{};
-		glm::vec3 m_worldCoordinates{};
+		glm::vec2 m_worldCoordinates{};
 		unsigned int m_textureID{};
 		float m_animationTimer{};
 		int m_layer{};
@@ -129,7 +129,6 @@ namespace graphicpipe {
 		void m_funcDraw();
 		void m_funcDrawDebug();
 
-		void m_funcSortDrawOrder();
 		static void m_funcSetDrawMode(GLenum mode);
 		void m_funcDrawText();
 
