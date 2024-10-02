@@ -12,8 +12,10 @@ namespace ecs {
 
 	public:
 
-		std::string m_text;
-		unsigned int m_fontSize;
+		std::string m_text{"Insert Text"};
+		float m_fontSize{ 1 };
+
+		float m_red{}, m_green{}, m_blue{};
 
 	};
 

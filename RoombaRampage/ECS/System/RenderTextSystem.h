@@ -1,0 +1,40 @@
+#ifndef RENDERTEXTSYS_H
+#define RENDERTEXTSYS_H
+
+
+#include "System.h"
+#include "../ECS/Component/TextComponent.h"
+#include <glew.h>
+#include "glfw3.h"
+#include <gtc/type_ptr.hpp>
+
+namespace ecs {
+
+	class RenderTextSystem : public ISystem {
+
+	private:
+
+
+	public:
+
+		void m_RegisterSystem(EntityID) override;
+
+		void m_DeregisterSystem(EntityID) override;
+
+		void m_Init() override;
+
+		void m_Update() override;
+
+
+	private:
+		//Storage to point to components
+		std::vector<TransformComponent*> m_vecTransformComponentPtr;
+		std::vector<TextComponent*> m_vecTextComponentPtr;
+
+	};
+
+}
+
+
+
+#endif RENDERTEXTSYS_H

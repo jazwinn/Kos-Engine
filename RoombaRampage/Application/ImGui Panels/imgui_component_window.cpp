@@ -31,7 +31,7 @@ void ImGuiHandler::DrawComponentWindow()
     //Add Component Window
     const char* ComponentNames[] =
     {
-        "Add Components","Movement Component", "Collider Component", "Sprite Component", "Player Component", "Rigid Body Component"
+        "Add Components","Movement Component", "Collider Component", "Sprite Component", "Player Component", "Rigid Body Component", "Text Component"
     };
     static int ComponentType = 0;
 
@@ -62,6 +62,10 @@ void ImGuiHandler::DrawComponentWindow()
         }
         if (ComponentType == 5) {
             ecs->m_AddComponent(ecs::TYPERIGIDBODYCOMPONENT, entityID);
+            ComponentType = 0;
+        }
+        if (ComponentType == 6) {
+            ecs->m_AddComponent(ecs::TYPETEXTCOMPONENT, entityID);
             ComponentType = 0;
         }
 
@@ -186,7 +190,7 @@ void ImGuiHandler::DrawComponentWindow()
                 ecs::ColliderComponent* cc = static_cast<ecs::ColliderComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]
                     ->m_GetEntityComponent(entityID));
 
-                //Display Position
+                //Display size
                 ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
                 ImGui::Text("Size");
                 ImGui::SameLine(slider_start_pos_x);
@@ -291,8 +295,45 @@ void ImGuiHandler::DrawComponentWindow()
 
             }
         }
-         
-     
+        
+        if (EntitySignature.test(ecs::TYPETEXTCOMPONENT))
+        {
+
+
+            if (ImGui::CollapsingHeader("Text Component"))
+            {
+                // Retrieve the TransformComponent
+                ecs::TextComponent* tc = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]
+                    ->m_GetEntityComponent(entityID));
+
+                
+                ImVec4 color = ImVec4(tc->m_red, tc->m_green, tc->m_blue, 255.0f / 255.0f);
+               // ImGuiColorEditFlags misc_flags = (hdr ? ImGuiColorEditFlags_HDR : 0) | (drag_and_drop ? 0 : ImGuiColorEditFlags_NoDragDrop) | (alpha_half_preview ? ImGuiColorEditFlags_AlphaPreviewHalf : (alpha_preview ? ImGuiColorEditFlags_AlphaPreview : 0)) | (options_menu ? 0 : ImGuiColorEditFlags_NoOptions);
+
+                //Display Position
+                ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
+                ImGui::Text("Text: ");
+                ImGui::SameLine(slider_start_pos_x);
+                ImGui::SetNextItemWidth(100.0f);
+                ImGui::InputText("##TEXT##", &tc->m_text);
+
+                ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
+                ImGui::Text("Size");
+                ImGui::SameLine(slider_start_pos_x);
+                ImGui::SetNextItemWidth(100.0f);
+                ImGui::DragFloat("###TEXTXXX", &tc->m_fontSize, 0.02f, 0.f, 10.0f, "%.2f");
+
+                ImGui::Text("Color");
+                ImGui::SameLine(); 
+                if (ImGui::ColorEdit3("##MyColor1", (float*)&color, ImGuiColorEditFlags_DisplayRGB)) {
+                    tc->m_red = color.x;
+                    tc->m_green = color.y;
+                    tc->m_blue = color.z;
+                }
+
+            }
+        }
+        
 
 
      }

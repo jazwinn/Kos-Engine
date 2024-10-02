@@ -74,6 +74,7 @@ namespace graphicpipe {
 		m_testMatrix = { 1,0,0,0,1,0,0,0,1 };
 		m_modelData.reserve(2500);
 		m_debugBoxData.reserve(2500);
+		m_textData.reserve(2500);
 		m_modelToNDCMatrix.reserve(2500);
 		m_debugToNDCMatrix.reserve(2500);
 		m_debugBoxCollisionChecks.reserve(2500);
@@ -619,8 +620,9 @@ namespace graphicpipe {
 
 		m_funcDrawDebug();
 		m_funcDraw();
-		m_funcDrawText("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", 0, 360, 1.f, glm::vec3(1.f, 0.0f, 0.f));
-		m_funcDrawText("(C) LearnOpenGL.com", 540.0f, 570.0f, 0.5f, glm::vec3(0.3, 0.7f, 0.9f));
+		
+		
+		m_funcDrawText();
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		glDisable(GL_DEPTH_TEST);
@@ -646,58 +648,75 @@ namespace graphicpipe {
 		//glDrawArrays(GL_TRIANGLES, 0, 6);
 	}
 
-	void GraphicsPipe::m_funcDrawText(std::string text, float x, float y, float scale, glm::vec3 color)
+	void GraphicsPipe::m_funcDrawText()
 	{
-		
-		// activate corresponding render state	
-		glUseProgram(m_textShaderProgram);
-		glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(m_windowWidth), 0.0f, static_cast<float>(m_windowHeight));
-		glUniformMatrix4fv(glGetUniformLocation(m_textShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 
-		int loc = glGetUniformLocation(m_textShaderProgram, "projection");
+		if (!m_textData.empty()) {
 
-		glUniform3f(glGetUniformLocation(m_textShaderProgram, "textColor"), color.x, color.y, color.z);
-		glActiveTexture(GL_TEXTURE0);
-		glBindVertexArray(m_textMesh.m_vaoId);
+			for (auto& textData : m_textData) {
+				// activate corresponding render state	
+				glUseProgram(m_textShaderProgram);
+				glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(m_windowWidth), 0.0f, static_cast<float>(m_windowHeight));
+				glUniformMatrix4fv(glGetUniformLocation(m_textShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 
-		// iterate through all characters
-		std::string::const_iterator c;
-		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
-		for (c = text.begin(); c != text.end(); c++)
-		{
-			text::CharacterData ch = assetmanager->m_characters[*c];
+				int loc = glGetUniformLocation(m_textShaderProgram, "projection");
 
-			float xpos = x + ch.m_bearing.x * scale;
-			float ypos = y - (ch.m_size.y - ch.m_bearing.y) * scale;
+				glUniform3f(glGetUniformLocation(m_textShaderProgram, "textColor"), textData.m_color.x, textData.m_color.y, textData.m_color.z);
+				glActiveTexture(GL_TEXTURE0);
+				glBindVertexArray(m_textMesh.m_vaoId);
 
-			float w = ch.m_size.x * scale;
-			float h = ch.m_size.y * scale;
-			// update VBO for each character
-			float vertices[6][4] = {
-				{ xpos,     ypos + h,   0.0f, 0.0f },
-				{ xpos,     ypos,       0.0f, 1.0f },
-				{ xpos + w, ypos,       1.0f, 1.0f },
+				// iterate through all characters
+				std::string::const_iterator c;
+				assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+				for (c = textData.m_text.begin(); c != textData.m_text.end(); c++)
+				{
+					text::CharacterData ch = assetmanager->m_characters[*c];
 
-				{ xpos,     ypos + h,   0.0f, 0.0f },
-				{ xpos + w, ypos,       1.0f, 1.0f },
-				{ xpos + w, ypos + h,   1.0f, 0.0f }
-			};
-			// render glyph texture over quad
-			glBindTexture(GL_TEXTURE_2D, ch.m_textureID);
 
-			// update content of VBO memory
-			glBindBuffer(GL_ARRAY_BUFFER, m_textBuffer);
-			glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
-			glBindBuffer(GL_ARRAY_BUFFER, 0);
-			// render quad
-			glDrawArrays(GL_TRIANGLES, 0, 6);
+					float xpos = textData.m_x + ch.m_bearing.x * textData.m_scale;
+					float ypos = textData.m_y - (ch.m_size.y - ch.m_bearing.y) * textData.m_scale;
 
+					float w = ch.m_size.x * textData.m_scale;
+					float h = ch.m_size.y * textData.m_scale;
+					// update VBO for each character
+					float vertices[6][4] = {
+						{ xpos,     ypos + h,   0.0f, 0.0f },
+						{ xpos,     ypos,       0.0f, 1.0f },
+						{ xpos + w, ypos,       1.0f, 1.0f },
+
+						{ xpos,     ypos + h,   0.0f, 0.0f },
+						{ xpos + w, ypos,       1.0f, 1.0f },
+						{ xpos + w, ypos + h,   1.0f, 0.0f }
+					};
+					// render glyph texture over quad
+					glBindTexture(GL_TEXTURE_2D, ch.m_textureID);
+
+					// update content of VBO memory
+					glBindBuffer(GL_ARRAY_BUFFER, m_textBuffer);
+					glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
+					glBindBuffer(GL_ARRAY_BUFFER, 0);
+					// render quad
+					glDrawArrays(GL_TRIANGLES, 0, 6);
+
+
+					// now advance cursors for next glyph (note that advance is number of 1/64 pixels)
+					textData.m_x += (ch.m_advance >> 6) * textData.m_scale; // bitshift by 6 to get value in pixels (2^6 = 64)
+				}
+				glBindVertexArray(0);
+				glBindTexture(GL_TEXTURE_2D, 0);
+
+
+
+			}
 			
-			// now advance cursors for next glyph (note that advance is number of 1/64 pixels)
-			x += (ch.m_advance >> 6) * scale; // bitshift by 6 to get value in pixels (2^6 = 64)
+			if (!m_textData.empty())
+			{
+				m_textData.clear();
+			}
+
+
 		}
-		glBindVertexArray(0);
-		glBindTexture(GL_TEXTURE_2D, 0);
+		
 	}
 }
 

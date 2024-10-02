@@ -1,10 +1,10 @@
 [
     {
-        "name": "Player Object",
+        "name": "text",
         "transform": {
             "position": {
-                "x": 0.6714264750480652,
-                "y": -0.7131779789924622
+                "x": -0.8600000143051147,
+                "y": 0.5199999809265137
             },
             "rotation": 0.0,
             "scale": {
@@ -12,52 +12,14 @@
                 "y": 1.0
             }
         },
-        "movement": {
-            "speed": 1.0,
-            "direction": {
-                "x": 0.0,
-                "y": -1.0
+        "text": {
+            "text": "Insert Text",
+            "fontsize": 2.0,
+            "colour": {
+                "red": 0.6685409545898438,
+                "blue": 0.406862735748291,
+                "green": 1.0
             }
-        },
-        "collider": {
-            "size": {
-                "x": 1.0,
-                "y": 1.0
-            },
-            "offset": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "layer": 0,
-            "drawDebug": true
-        },
-        "player": {
-            "control": true
-        },
-        "rigidbody": {
-            "mass": 0.0
-        },
-        "sprite": {
-            "imageID": 4,
-            "frameNumber": 0
-        }
-    },
-    {
-        "name": "Background",
-        "transform": {
-            "position": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "rotation": 0.0,
-            "scale": {
-                "x": 2.0,
-                "y": 2.0
-            }
-        },
-        "sprite": {
-            "imageID": 0,
-            "frameNumber": 0
         }
     }
 ]

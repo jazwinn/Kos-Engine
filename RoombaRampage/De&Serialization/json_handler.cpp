@@ -212,6 +212,26 @@ namespace Serialization {
                     }
                 }
             }
+
+            // Load Sprite Component if it exists
+            if (entityData.HasMember("text") && entityData["text"].IsObject()) {
+                ecs::TextComponent* tc = static_cast<ecs::TextComponent*>(ecs->m_AddComponent(ecs::TYPETEXTCOMPONENT, newEntityId));
+
+                if (tc) {
+                    const rapidjson::Value& text = entityData["text"];
+                    if (text.HasMember("text")) {
+                        tc->m_text = text["text"].GetString();
+                    }
+                    if (text.HasMember("fontsize")) {
+                        tc->m_fontSize = text["fontsize"].GetFloat();
+                    }
+                    if (text.HasMember("colour")) {
+                        tc->m_red = text["colour"]["red"].GetFloat();
+                        tc->m_green = text["colour"]["green"].GetFloat();
+                        tc->m_blue = text["colour"]["blue"].GetFloat();
+                    }
+                }
+            }
         }
 
         LOGGING_INFO("Load Json Successful");
@@ -333,16 +353,24 @@ namespace Serialization {
                 }
             }
 
-            //if (entityPair.second.test(ecs::ComponentType::TYPETEXTCOMPONENT)) {
-            //    ecs::TextComponent* tc = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPETEXTCOMPONENT]->m_GetEntityComponent(entityID));
-            //    if (tc) {
-            //        rapidjson::Value text(rapidjson::kObjectType);
-            //        text.AddMember("text", tc->m_text, allocator);
-            //        text.AddMember("fontsize", tc->m_fontSize, allocator);
-            //        entityData.AddMember("text", text, allocator);
-            //        hasComponents = true;  // Mark as having a component
-            //    }
-            //}
+            if (entityPair.second.test(ecs::ComponentType::TYPETEXTCOMPONENT)) {
+                ecs::TextComponent* tc = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPETEXTCOMPONENT]->m_GetEntityComponent(entityId));
+                if (tc) {
+                    rapidjson::Value text(rapidjson::kObjectType);
+                    rapidjson::Value textValue;
+                    textValue.SetString( tc->m_text.c_str(), allocator);
+
+                    text.AddMember("text", textValue, allocator);
+                    text.AddMember("fontsize", tc->m_fontSize, allocator);
+                    text.AddMember("colour", rapidjson::Value().SetObject()
+                    .AddMember("red", tc->m_red, allocator)
+                    .AddMember("blue", tc->m_blue, allocator)
+                    .AddMember("green", tc->m_green, allocator), allocator);
+
+                    entityData.AddMember("text", text, allocator);
+                    hasComponents = true;  // Mark as having a component
+                }
+            }
 
             if (hasComponents) {
                 doc.PushBack(entityData, allocator);

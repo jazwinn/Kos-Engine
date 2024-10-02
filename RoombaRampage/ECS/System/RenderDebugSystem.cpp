@@ -1,6 +1,6 @@
 #include "../ECS.h"
 
-#include "DebugDrawingSystem.h"
+#include "RenderDebugSystem.h"
 #include "../Physics/Physics.h"
 #include "../Graphics/GraphicsPipe.h"
 
