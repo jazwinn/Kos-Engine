@@ -82,5 +82,34 @@
         "green": 1.0
       }
     }
+  },
+  {
+    "name": "Wall",
+    "transform": {
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "rotation": 0.0,
+      "scale": {
+        "x": 2.0,
+        "y": 2.0
+      }
+    },
+    "collider": {
+      "size": {
+        "x": 0.6399999856948853,
+        "y": 0.6200000047683716
+      },
+      "offset": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "drawDebug": true
+    },
+    "sprite": {
+      "imageID": 1,
+      "frameNumber": 0
+    }
   }
 ]
