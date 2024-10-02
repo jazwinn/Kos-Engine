@@ -48,6 +48,8 @@ namespace performancetracker {
 			return "Collision Response System";
 		case ecs::TypeSystem::TYPEDEBUGDRAWINGSYSTEM:
 			return "Render Debug System";
+		case ecs::TypeSystem::TYPERENDERTEXTSYSTEM:
+			return "Render Text System";
 		case ecs::TypeSystem::TYPERENDERSYSTEM:
 			return "Render System";
 		default:

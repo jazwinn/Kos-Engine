@@ -240,7 +240,7 @@
     <ClCompile Include="Application\ImGui Panels\imgui__input_window.cpp">
       <Filter>Source Files\Imgui\Panels</Filter>
     </ClCompile>
-    <ClCompile Include="ECS\System\DebugDrawingSystem.cpp">
+    <ClCompile Include="ECS\System\RenderDebugSystem.cpp">
       <Filter>Source Files\ECS\System</Filter>
     </ClCompile>
     <ClCompile Include="Assets\Image.cpp">
@@ -248,6 +248,9 @@
     </ClCompile>
     <ClCompile Include="Assets\Text.cpp">
       <Filter>Source Files\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="ECS\System\RenderTextSystem.cpp">
+      <Filter>Source Files\ECS\System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -410,9 +413,6 @@
     <ClInclude Include="Events\MessageSystem.h">
       <Filter>Header Files\Messaging</Filter>
     </ClInclude>
-    <ClInclude Include="ECS\System\DebugDrawingSystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ECS\Component\NameComponent.h">
       <Filter>Header Files\ECS\Component</Filter>
     </ClInclude>
@@ -427,6 +427,12 @@
     </ClInclude>
     <ClInclude Include="ECS\Component\TextComponent.h">
       <Filter>Header Files\ECS\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="ECS\System\RenderTextSystem.h">
+      <Filter>Header Files\ECS\System</Filter>
+    </ClInclude>
+    <ClInclude Include="ECS\System\RenderDebugSystem.h">
+      <Filter>Header Files\ECS\System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

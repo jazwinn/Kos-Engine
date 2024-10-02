@@ -133,7 +133,25 @@ namespace prefab {
                 
             }
 
+            // Load text Component if it exists
+            if (prefabData.HasMember("text") && prefabData["text"].IsObject()) {
+                
+                prefab.m_prefabSignature.set(ecs::TYPETEXTCOMPONENT);
 
+                const rapidjson::Value& text = prefabData["text"];
+                if (text.HasMember("text")) {
+                    prefab.m_textComponent.m_text = text["text"].GetString();
+                }
+                if (text.HasMember("fontsize")) {
+                    prefab.m_textComponent.m_fontSize = text["fontsize"].GetFloat();
+                }
+                if (text.HasMember("colour")) {
+                    prefab.m_textComponent.m_red = text["colour"]["red"].GetFloat();
+                    prefab.m_textComponent.m_green = text["colour"]["green"].GetFloat();
+                    prefab.m_textComponent.m_blue = text["colour"]["blue"].GetFloat();
+                }
+                
+            }
 
             
             assetmanager->m_prefabs[prefab.m_nameComponents.m_entityName] = prefab;
@@ -212,6 +230,13 @@ namespace prefab {
             *sc = prefab.m_spriteComponents;
             sc->m_IsLive = true;
             sc->m_Entity = newEntityID;
+        }
+
+        if (prefab.m_prefabSignature.test(ecs::TYPETEXTCOMPONENT)) {
+            ecs::TextComponent* tc = static_cast<ecs::TextComponent*>(ecs->m_AddComponent(ecs::TYPETEXTCOMPONENT, newEntityID));
+            *tc = prefab.m_textComponent;
+            tc->m_IsLive = true;
+            tc->m_Entity = newEntityID;
         }
 
         LOGGING_INFO("Prefab -> Entity Created Successfully");

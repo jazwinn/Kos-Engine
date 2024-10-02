@@ -32,6 +32,15 @@ namespace graphicpipe {
 		int m_shapeType{};
 	};
 
+	struct TextData
+	{
+		std::string m_text;
+		float m_x; 
+		float m_y;
+		float m_scale;
+		glm::vec3 m_color;
+	};
+
 	class GraphicsPipe
 	{
 	private:
@@ -119,7 +128,7 @@ namespace graphicpipe {
 
 		void m_funcSortDrawOrder();
 		static void m_funcSetDrawMode(GLenum mode);
-		void m_funcDrawText(std::string text, float x, float y, float scale, glm::vec3 color);
+		void m_funcDrawText();
 
 		Mesh m_squareMesh;
 		Mesh m_screenMesh;
@@ -127,6 +136,7 @@ namespace graphicpipe {
 		Mesh m_textMesh;
 		std::vector<GraphicsData> m_modelData{};
 		std::vector<DebugDrawData> m_debugBoxData{};
+		std::vector<TextData> m_textData{};
 		std::vector<float> m_debugBoxCollisionChecks{};
 		std::vector<int> m_textureOrder{};
 
