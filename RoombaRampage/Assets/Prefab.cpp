@@ -85,9 +85,9 @@ namespace prefab {
                     prefab.m_colliderComponents.m_OffSet.m_x = collider["offset"]["x"].GetFloat();
                     prefab.m_colliderComponents.m_OffSet.m_y = collider["offset"]["y"].GetFloat();
                 }
-                if (collider.HasMember("layer")) {
-                    prefab.m_colliderComponents.m_Layer = collider["layer"].GetUint();
-                }
+                //if (collider.HasMember("layer")) {
+                //    prefab.m_colliderComponents.m_Layer = collider["layer"].GetUint();
+                //}
                 if (collider.HasMember("drawDebug")) {
                     prefab.m_colliderComponents.m_drawDebug = collider["drawDebug"].GetBool();
                 }

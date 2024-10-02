@@ -176,9 +176,9 @@ namespace Serialization {
                         cc->m_OffSet.m_x = collider["offset"]["x"].GetFloat();
                         cc->m_OffSet.m_y = collider["offset"]["y"].GetFloat();
                     }
-                    if (collider.HasMember("layer")) {
-                        cc->m_Layer = collider["layer"].GetUint();
-                    }
+                    //if (collider.HasMember("layer")) {
+                    //    cc->m_Layer = collider["layer"].GetUint();
+                    //}
                     if (collider.HasMember("drawDebug")) {
                         cc->m_drawDebug = collider["drawDebug"].GetBool();
                     }
@@ -310,7 +310,7 @@ namespace Serialization {
                     collider.AddMember("offset", rapidjson::Value().SetObject()
                         .AddMember("x", cc->m_OffSet.m_x, allocator)
                         .AddMember("y", cc->m_OffSet.m_y, allocator), allocator);
-                    collider.AddMember("layer", cc->m_Layer, allocator);
+                    /*collider.AddMember("layer", cc->m_Layer, allocator);*/
                     collider.AddMember("drawDebug", cc->m_drawDebug, allocator);
                     entityData.AddMember("collider", collider, allocator);
                     hasComponents = true;  // Mark as having a component
