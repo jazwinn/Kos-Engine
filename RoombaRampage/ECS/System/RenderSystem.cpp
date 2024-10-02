@@ -62,9 +62,20 @@ namespace ecs {
 			//SpriteComponent* MovComp = vecSpriteComponentPtr[n];
 			TransformComponent* transform = m_vecTransformComponentPtr[n];
 			SpriteComponent* sprite = m_vecSpriteComponentPtr[n];
+
+			ECS* ecs = ECS::m_GetInstance();
+
+			if (sprite->m_isAnimating)
+			{
+				sprite->m_frameTimer += ecs->m_DeltaTime;
+			}
+			else
+			{
+				sprite->m_frameTimer = 0.f;
+			}
 	
 
-			graphicsPipe->m_modelData.push_back({ transform->m_rotation, glm::vec2{transform->m_scale.m_x, transform->m_scale.m_y}, glm::vec3{transform->m_position.m_x,transform->m_position.m_y, 0} ,sprite->m_imageID, 0 });
+			graphicsPipe->m_modelData.push_back({ transform->m_rotation, glm::vec2{transform->m_scale.m_x, transform->m_scale.m_y}, glm::vec3{transform->m_position.m_x,transform->m_position.m_y, 0} ,sprite->m_imageID, sprite->m_frameTimer, 0 });
 
 			
 			

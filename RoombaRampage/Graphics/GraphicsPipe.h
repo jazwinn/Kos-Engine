@@ -19,7 +19,7 @@ namespace graphicpipe {
 		glm::vec2 m_scale{};
 		glm::vec3 m_worldCoordinates{};
 		unsigned int m_textureID{};
-		int m_shapeType{};
+		float m_animationTimer{};
 		int m_layer{};
 	};
 
@@ -47,6 +47,7 @@ namespace graphicpipe {
 
 		int m_unitWidth{ 512 };
 		int m_unitHeight{ 512 };
+		float m_frameTime{ 0.41f }; //24fps
 
 		struct Mesh
 		{
@@ -81,6 +82,8 @@ namespace graphicpipe {
 		unsigned int m_debugCollisionCheckBuffer{};
 		unsigned int m_frameBufferObject{};
 		unsigned int m_textBuffer{};
+		unsigned int m_stripCountBuffer{};
+		unsigned int m_frameNumberBuffer{};
 
 
 		int m_windowWidth{};
@@ -143,6 +146,8 @@ namespace graphicpipe {
 
 		//Array of the texture IDs
 		std::vector<unsigned int> m_textureIDs{};
+		std::vector<int>		  m_stripCounts{};
+		std::vector<int>		  m_frameNumbers{};
 		std::vector<image::Image> m_imageData{};
 
 		unsigned int m_screenTexture{};

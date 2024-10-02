@@ -4,7 +4,6 @@
 
 #include "Component.h"
 
-//#include "../ECS/System/RenderSystem.h"
 
 namespace ecs {
 
@@ -21,8 +20,9 @@ namespace ecs {
 
 		unsigned int m_imageID;
 		unsigned int m_frameNumber;
+		float m_frameTimer;
 		int layer;
-
+		bool m_isAnimating{ true };
 	};
 
 }
