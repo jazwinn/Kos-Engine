@@ -248,7 +248,7 @@ void ImGuiHandler::DrawComponentWindow()
                     item_selected_idx = sc->m_imageID;
                     for (unsigned int n = 0; n < images->m_imageContainer.size(); n++)
                     {
-                        bool is_selected = (item_selected_idx == n);
+                        bool is_selected = (item_selected_idx == static_cast<int>(n));
                         if (ImGui::Selectable(const_cast<char*>(images->m_imageContainer[n].m_spriteName.c_str()), is_selected))
                         {
                             item_selected_idx = n;

@@ -148,66 +148,64 @@ void ImGuiHandler::DrawTestWindow() {
 		}
 	}
 
-
-
 	ImGui::NewLine();
+	if (collision_Flag) {
+		if (ImGui::Button("ID_1 Right")) {
+			ecs::MovementComponent* mc = (ecs::MovementComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(id_1);
+			mc->m_Direction = { 0.1f,0.f };
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("ID_1 Left")) {
+			ecs::MovementComponent* mc = (ecs::MovementComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(id_1);
+			mc->m_Direction = { -0.1f,0.f };
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("ID_1 Up")) {
+			ecs::MovementComponent* mc = (ecs::MovementComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(id_1);
+			mc->m_Direction = { 0.f,0.1f };
+		}
+		ImGui::NewLine();
+		if (ImGui::Button("ID_1 Down")) {
+			ecs::MovementComponent* mc = (ecs::MovementComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(id_1);
+			mc->m_Direction = { 0.f,-0.1f };
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("ID_1 Reset")) {
+			ecs::MovementComponent* mc = (ecs::MovementComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(id_1);
+			ecs::TransformComponent* tc = (ecs::TransformComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id_1);
+			mc->m_Direction = { 0.f,0.f };
+			tc->m_position = { 1.f,0.f };
+		}
 
-	if (ImGui::Button("ID_1 Right")) {
-		ecs::MovementComponent* mc = (ecs::MovementComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(id_1);
-		mc->m_Direction = { 0.1f,0.f };
-	}
-	ImGui::SameLine();
-	if(ImGui::Button("ID_1 Left")) {
-		ecs::MovementComponent* mc = (ecs::MovementComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(id_1);
-		mc->m_Direction = { -0.1f,0.f };
-	}
-	ImGui::SameLine();
-	if (ImGui::Button("ID_1 Up")) {
-		ecs::MovementComponent* mc = (ecs::MovementComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(id_1);
-		mc->m_Direction = {0.f,0.1f };
-	}
-	ImGui::NewLine();
-	if (ImGui::Button("ID_1 Down")) {
-		ecs::MovementComponent* mc = (ecs::MovementComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(id_1);
-		mc->m_Direction = { 0.f,-0.1f };
-	}
-	ImGui::SameLine();
-	if (ImGui::Button("ID_1 Reset")) {
-		ecs::MovementComponent* mc = (ecs::MovementComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(id_1);
-		ecs::TransformComponent* tc = (ecs::TransformComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id_2);
-		mc->m_Direction = { 0.f,0.f };
-		tc->m_position = { 1.f,0.f };
-	}
+		ImGui::NewLine();
 
-	ImGui::NewLine();
+		if (ImGui::Button("ID_2 Right")) {
+			ecs::MovementComponent* mc = (ecs::MovementComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(id_2);
+			mc->m_Direction = { 0.1f,0.f };
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("ID_2 Left")) {
+			ecs::MovementComponent* mc = (ecs::MovementComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(id_2);
+			mc->m_Direction = { -0.1f,0.f };
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("ID_2 Up")) {
+			ecs::MovementComponent* mc = (ecs::MovementComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(id_2);
+			mc->m_Direction = { 0.f,0.1f };
+		}
+		ImGui::NewLine();
+		if (ImGui::Button("ID_2 Down")) {
+			ecs::MovementComponent* mc = (ecs::MovementComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(id_2);
+			mc->m_Direction = { 0.f,-0.1f };
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("ID_2 Reset")) {
+			ecs::MovementComponent* mc = (ecs::MovementComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(id_2);
+			ecs::TransformComponent* tc = (ecs::TransformComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id_2);
+			mc->m_Direction = { 0.f,0.f };
+			tc->m_position = { -1.f,0.f };
 
-	if (ImGui::Button("ID_2 Right")) {
-		ecs::MovementComponent* mc = (ecs::MovementComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(id_2);
-		mc->m_Direction = { 0.1f,0.f };
+		}
 	}
-	ImGui::SameLine();
-	if (ImGui::Button("ID_2 Left")) {
-		ecs::MovementComponent* mc = (ecs::MovementComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(id_2);
-		mc->m_Direction = { -0.1f,0.f };
-	}
-	ImGui::SameLine();
-	if (ImGui::Button("ID_2 Up")) {
-		ecs::MovementComponent* mc = (ecs::MovementComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(id_2);
-		mc->m_Direction = { 0.f,0.1f };
-	}
-	ImGui::NewLine();
-	if (ImGui::Button("ID_2 Down")) {
-		ecs::MovementComponent* mc = (ecs::MovementComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(id_2);
-		mc->m_Direction = { 0.f,-0.1f };
-	}
-	ImGui::SameLine();
-	if (ImGui::Button("ID_2 Reset")) {
-		ecs::MovementComponent* mc = (ecs::MovementComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(id_2);
-		ecs::TransformComponent* tc = (ecs::TransformComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id_2);
-		mc->m_Direction = { 0.f,0.f };
-		tc->m_position = { -1.f,0.f };
-
-	}
-
 	ImGui::End();
 }
