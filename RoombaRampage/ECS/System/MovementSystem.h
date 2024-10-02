@@ -1,3 +1,15 @@
+/*!
+\file      MovementSystem.h
+\author    Elijah Teo, teo.e , 2301530
+\par       teo.e@digipen.edu
+\date      Sept 28, 2024
+\brief     This file holds the declaration of the MovementSystem class
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/********************************************************************/
 #ifndef MOVESYS_H
 #define MOVESYS_H
 

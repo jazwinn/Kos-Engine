@@ -1,3 +1,17 @@
+/******************************************************************/
+/*!
+\file      BaseMessage.h
+\author    Elijah Teo, teo.e , 2301530
+\par       teo.e@digipen.edu
+\date      Sept 28, 2024
+\brief     This file holds the enum of the different types of messages we want to send 
+		   along with the Message class which will hold that type and the string that we want to attach to that type
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/********************************************************************/
 #pragma once
 #include <string>
 
