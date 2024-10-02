@@ -434,6 +434,9 @@
     <ClInclude Include="ECS\System\RenderDebugSystem.h">
       <Filter>Header Files\ECS\System</Filter>
     </ClInclude>
+    <ClInclude Include="ECS\Component\AnimationComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Graphics\debugFragmentShader.frag">

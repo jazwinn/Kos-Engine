@@ -232,6 +232,21 @@ namespace Serialization {
                     }
                 }
             }
+            if (entityData.HasMember("animation") && entityData["animation"].IsObject()) {
+                ecs::AnimationComponent* ac = static_cast<ecs::AnimationComponent*>(ecs->m_AddComponent(ecs::TYPEANIMATIONCOMPONENT, newEntityId));
+
+                if (ac) {
+                    const rapidjson::Value& animation = entityData["animation"];
+                    if (animation.HasMember("frameTimer"))
+                    {
+                        ac->m_frameTimer = animation["frameTimer"].GetFloat();
+                    }
+                    if (animation.HasMember("isAnimating"))
+                    {
+                        ac->m_isAnimating = animation["isAnimating"].GetBool();
+                    }
+                }
+            }
         }
 
         LOGGING_INFO("Load Json Successful");
@@ -368,6 +383,18 @@ namespace Serialization {
                     .AddMember("green", tc->m_green, allocator), allocator);
 
                     entityData.AddMember("text", text, allocator);
+                    hasComponents = true;  // Mark as having a component
+                }
+            }
+
+            if (entityPair.second.test(ecs::ComponentType::TYPEANIMATIONCOMPONENT)) {
+                ecs::AnimationComponent* ac = static_cast<ecs::AnimationComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPEANIMATIONCOMPONENT]->m_GetEntityComponent(entityId));
+                if (ac) {
+                    rapidjson::Value animation(rapidjson::kObjectType);
+
+                    animation.AddMember("frameTimer", ac->m_frameTimer, allocator);
+                    animation.AddMember("isAnimating", ac->m_isAnimating, allocator);
+                    entityData.AddMember("animation", animation, allocator);
                     hasComponents = true;  // Mark as having a component
                 }
             }

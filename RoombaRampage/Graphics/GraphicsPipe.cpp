@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <gtc/type_ptr.hpp>
 #include <gtc/matrix_transform.hpp>
+#include "../ECS/ECSList.h"
 
 namespace graphicpipe {
 
@@ -72,12 +73,14 @@ namespace graphicpipe {
 		m_squareMesh.m_shapeType = SQUARE;
 		m_squareLinesMesh.m_shapeType = SQUARE_LINES;
 		m_testMatrix = { 1,0,0,0,1,0,0,0,1 };
-		m_modelData.reserve(2500);
-		m_debugBoxData.reserve(2500);
-		m_textData.reserve(2500);
-		m_modelToNDCMatrix.reserve(2500);
-		m_debugToNDCMatrix.reserve(2500);
-		m_debugBoxCollisionChecks.reserve(2500);
+		m_modelData.reserve(ecs::MaxEntity);
+		m_debugBoxData.reserve(ecs::MaxEntity);
+		m_textData.reserve(ecs::MaxEntity);
+		m_modelToNDCMatrix.reserve(ecs::MaxEntity);
+		m_debugToNDCMatrix.reserve(ecs::MaxEntity);
+		m_debugBoxCollisionChecks.reserve(ecs::MaxEntity);
+		m_frameNumbers.reserve(ecs::MaxEntity);
+		m_stripCounts.reserve(ecs::MaxEntity);
 
 		m_funcSetupVao(m_squareMesh);
 		m_funcSetupSquareLinesVao();
@@ -92,6 +95,8 @@ namespace graphicpipe {
 
 		m_modelToNDCMatrix.push_back(m_testMatrix);
 		m_textureOrder.push_back(0);
+		m_frameNumbers.push_back(0);
+		m_stripCounts.push_back(0);
 		m_debugToNDCMatrix.push_back(m_testMatrix);
 		m_debugBoxCollisionChecks.push_back(false);
 		//TOCHECK
@@ -114,6 +119,8 @@ namespace graphicpipe {
 		m_debugBoxCollisionChecks.clear();
 		m_modelToNDCMatrix.clear();
 		m_textureOrder.clear();
+		m_frameNumbers.clear();
+		m_stripCounts.clear();
 
 		glEnable(GL_SCISSOR_TEST);
 		glScissor(0, 0, m_windowWidth, m_windowHeight);
@@ -335,15 +342,34 @@ namespace graphicpipe {
 		glBindVertexArray(0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
+		GLenum err = glGetError();
+		if (err != GL_NO_ERROR) {
+			std::cout << "First OpenGL Error: " << err << std::endl;
+		}
+
+		glBindVertexArray(m_squareMesh.m_vaoId);
 		glGenBuffers(1, &m_textureOrderBuffer);
 		glBindBuffer(GL_ARRAY_BUFFER, m_textureOrderBuffer);
 		glBufferData(GL_ARRAY_BUFFER, m_textureOrder.size() * sizeof(int), &m_textureOrder[0], GL_DYNAMIC_DRAW);
-		glBindVertexArray(m_squareMesh.m_vaoId);
 		glEnableVertexAttribArray(5);
 		glVertexAttribIPointer(5, 1, GL_INT, sizeof(int), (void*)0);
 		glVertexAttribDivisor(5, 1);
+		glGenBuffers(1, &m_stripCountBuffer);
+		glBindBuffer(GL_ARRAY_BUFFER, m_stripCountBuffer);
+		glBufferData(GL_ARRAY_BUFFER, m_stripCounts.size() * sizeof(int), &m_stripCounts[0], GL_DYNAMIC_DRAW);
+		glEnableVertexAttribArray(4);
+		glVertexAttribIPointer(4, 1, GL_INT, sizeof(int), (void*)0);
+		glVertexAttribDivisor(4, 1);
+		glGenBuffers(1, &m_frameNumberBuffer);
+		glBindBuffer(GL_ARRAY_BUFFER, m_frameNumberBuffer);
+		glBufferData(GL_ARRAY_BUFFER, m_frameNumbers.size() * sizeof(int), &m_frameNumbers[0], GL_DYNAMIC_DRAW);
+		glEnableVertexAttribArray(3);
+		glVertexAttribIPointer(3, 1, GL_INT, sizeof(int), (void*)0);
+		glVertexAttribDivisor(3, 1);
 		glBindVertexArray(0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+		
 
 		//Square Lines Mesh Buffer Setup
 		glBindVertexArray(m_squareLinesMesh.m_vaoId);
@@ -369,7 +395,10 @@ namespace graphicpipe {
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 		
-
+		err = glGetError();
+		if (err != GL_NO_ERROR) {
+			std::cout << "Third OpenGL Error: " << err << std::endl;
+		}
 
 	}
 
@@ -412,19 +441,6 @@ namespace graphicpipe {
 
 
 
-	void GraphicsPipe::m_funcSortDrawOrder()
-	{
-		if (!m_modelData.empty())
-		{
-			std::sort(m_modelData.begin(), m_modelData.end(), [](GraphicsData a, GraphicsData b)
-				{
-					return a.m_worldCoordinates.z > b.m_worldCoordinates.z;
-				});
-		}
-
-	}
-
-
 	void GraphicsPipe::m_funcUpdate()
 	{
 		if (m_modelData.size() > 0)
@@ -434,15 +450,23 @@ namespace graphicpipe {
 				float heightRatio = static_cast<float>(m_imageData[m_modelData[n].m_textureID].m_height) / m_unitHeight;
 				float widthRatio = static_cast<float>(m_imageData[m_modelData[n].m_textureID].m_width) / m_unitWidth;
 
+				float imageAspectRatio = static_cast<float>(m_imageData[m_modelData[n].m_textureID].m_width) / static_cast<float>(m_imageData[m_modelData[n].m_textureID].m_height);
 
-				glm::mat3 lvScale{ m_modelData[n].m_scale.x * widthRatio , 0, 0, 0, m_modelData[n].m_scale.y * heightRatio, 0, 0 , 0 ,1 };
+				glm::mat3 lvScale{ m_modelData[n].m_scale.x * widthRatio / imageAspectRatio , 0, 0, 0, m_modelData[n].m_scale.y * heightRatio , 0, 0 , 0 ,1 };
 				glm::mat3 lvRotate{ cos(m_modelData[n].m_rotate * 3.1415f / 180.f), -sin(m_modelData[n].m_rotate * 3.1415f / 180.f), 0.f,
 								   sin(m_modelData[n].m_rotate * 3.1415f / 180.f), cos(m_modelData[n].m_rotate * 3.1415f / 180.f), 0.f,
 									0.f , 0.f ,1.f };
 				glm::mat3 lvTranslate{ 1, 0, 0, 0, 1, 0, m_modelData[n].m_worldCoordinates.x , m_modelData[n].m_worldCoordinates.y ,1 };
-				glm::mat3 lvNDCScale{ m_aspectRatio, 0, 0, 0, 1.f, 0, 0 , 0 ,1.f };
+				glm::mat3 lvNDCScale{ m_aspectRatio , 0, 0, 0, 1.f, 0, 0 , 0 ,1.f };
+
+				float totalFrameTime = m_frameTime * m_imageData[m_modelData[n].m_textureID].m_stripCount;
+				float frameTime = static_cast<float>(fmod(m_modelData[n].m_animationTimer, totalFrameTime));
+				int frameNumber = static_cast<int>(frameTime / m_frameTime);
+
 				m_modelToNDCMatrix.push_back(lvNDCScale * lvTranslate * lvRotate * lvScale);
 				m_textureOrder.push_back(m_modelData[n].m_textureID);
+				m_stripCounts.push_back(m_imageData[m_modelData[n].m_textureID].m_stripCount);
+				m_frameNumbers.push_back(frameNumber);			
 			}
 		}
 
@@ -459,7 +483,6 @@ namespace graphicpipe {
 				m_debugToNDCMatrix.push_back(lvNDCScale * lvTranslate * lvRotate * lvScale);
 				m_debugBoxCollisionChecks.push_back(static_cast<float>(m_debugBoxData[i].m_isCollided));
 
-
 			}
 		}
 
@@ -475,7 +498,17 @@ namespace graphicpipe {
 			glNamedBufferData(m_modelMatrixArrayBuffer, m_modelToNDCMatrix.size() * sizeof(glm::mat3), &m_modelToNDCMatrix[0], GL_DYNAMIC_DRAW);
 			glBindBuffer(GL_ARRAY_BUFFER, m_textureOrderBuffer);
 			glNamedBufferData(m_textureOrderBuffer, m_textureOrder.size() * sizeof(int), &m_textureOrder[0], GL_DYNAMIC_DRAW);
+			
+			glBindBuffer(GL_ARRAY_BUFFER, m_stripCountBuffer);
+			glNamedBufferData(m_stripCountBuffer, m_stripCounts.size() * sizeof(int), &m_stripCounts[0], GL_DYNAMIC_DRAW);
+
+		
+			glBindBuffer(GL_ARRAY_BUFFER, m_frameNumberBuffer);
+			glNamedBufferData(m_frameNumberBuffer, m_frameNumbers.size() * sizeof(int), &m_frameNumbers[0], GL_DYNAMIC_DRAW);
+		
+		
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
+
 			glUseProgram(m_genericShaderProgram);
 
 			for (int i = 0; i < m_textureIDs.size(); ++i)
@@ -503,6 +536,8 @@ namespace graphicpipe {
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
 			m_modelToNDCMatrix.clear();
 			m_textureOrder.clear();
+			m_frameNumbers.clear();
+			m_stripCounts.clear();
 		}
 		if (!m_modelData.empty())
 		{
@@ -528,7 +563,6 @@ namespace graphicpipe {
 			glDrawElementsInstanced(m_squareLinesMesh.m_primitiveType, m_squareLinesMesh.m_indexElementCount, GL_UNSIGNED_SHORT, NULL, static_cast<GLsizei>(m_debugToNDCMatrix.size()));
 			glBindVertexArray(0);
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
-
 
 			m_debugToNDCMatrix.clear();
 			m_debugBoxCollisionChecks.clear();
@@ -704,19 +738,12 @@ namespace graphicpipe {
 				}
 				glBindVertexArray(0);
 				glBindTexture(GL_TEXTURE_2D, 0);
-
-
-
 			}
-			
 			if (!m_textData.empty())
 			{
 				m_textData.clear();
 			}
-
-
 		}
-		
 	}
 }
 

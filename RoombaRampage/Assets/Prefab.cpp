@@ -153,6 +153,22 @@ namespace prefab {
                 
             }
 
+            if (prefabData.HasMember("animation") && prefabData["animation"].IsObject()) {
+                
+                prefab.m_prefabSignature.set(ecs::TYPEANIMATIONCOMPONENT);
+             
+                const rapidjson::Value& animation = prefabData["animation"];
+                if (animation.HasMember("frameTimer"))
+                {
+                    prefab.m_animationComponent.m_frameTimer = animation["frameTimer"].GetFloat();
+                }
+                if (animation.HasMember("isAnimating"))
+                {
+                    prefab.m_animationComponent.m_isAnimating = animation["isAnimating"].GetBool();
+                }
+                
+            }
+
             
             assetmanager->m_prefabs[prefab.m_nameComponents.m_entityName] = prefab;
         }
@@ -237,6 +253,13 @@ namespace prefab {
             *tc = prefab.m_textComponent;
             tc->m_IsLive = true;
             tc->m_Entity = newEntityID;
+        }
+
+        if (prefab.m_prefabSignature.test(ecs::TYPEANIMATIONCOMPONENT)) {
+            ecs::AnimationComponent* ac = static_cast<ecs::AnimationComponent*>(ecs->m_AddComponent(ecs::TYPEANIMATIONCOMPONENT, newEntityID));
+            *ac = prefab.m_animationComponent;
+            ac->m_IsLive = true;
+            ac->m_Entity = newEntityID;
         }
 
         LOGGING_INFO("Prefab -> Entity Created Successfully");

@@ -3,7 +3,7 @@
 
 
 #include "System.h"
-#include "../ECS/Component/SpriteComponent.h"
+#include "../ECS/ECSList.h"
 #include <glew.h>
 #include "glfw3.h"
 #include <gtc/type_ptr.hpp>
