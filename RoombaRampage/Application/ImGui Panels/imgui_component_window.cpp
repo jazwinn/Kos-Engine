@@ -320,7 +320,7 @@ void ImGuiHandler::DrawComponentWindow()
             if (ImGui::CollapsingHeader("Animation Component")) {
 
 
-                // Retrieve the TransformComponent
+                // Retrieve the Animation Component
                 ecs::AnimationComponent* ac = static_cast<ecs::AnimationComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEANIMATIONCOMPONENT]
                     ->m_GetEntityComponent(entityID));
 
@@ -329,18 +329,13 @@ void ImGuiHandler::DrawComponentWindow()
                 ImGui::SameLine(slider_start_pos_x + 40);
                 ImGui::Checkbox("####xx##", &ac->m_isAnimating);
 
-                //Display Position
-               //ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
-               //ImGui::Text("F: ");
-               //ImGui::SameLine(slider_start_pos_x);
-               //ImGui::SetNextItemWidth(100.0f);
-               //ImGui::DragFloat("##FRAME TIMER##", &ac->m_frameTimer);
+            
+               ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
+               ImGui::Text("Seconds Per Frame: ");
+               ImGui::SameLine(slider_start_pos_x + 100);
+               ImGui::SetNextItemWidth(100.0f);
+               ImGui::DragFloat("##SPF##", &graphicsPipe->m_frameTime, 0.01f, 0.04f, 2.f, "%.2f");
 
-               //ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
-               //ImGui::Text("Frame Number: ");
-               //ImGui::SameLine(slider_start_pos_x);
-               //ImGui::SetNextItemWidth(100.0f);
-               //ImGui::DragFloat("###TIMERXXX", &->m_fontSize, 0.02f, 0.f, 10.0f, "%.2f");
 
             }
         }

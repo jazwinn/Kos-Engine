@@ -47,7 +47,7 @@ namespace graphicpipe {
 
 		int m_unitWidth{ 512 };
 		int m_unitHeight{ 512 };
-		float m_frameTime{ 0.41f }; //24fps
+		
 
 		struct Mesh
 		{
@@ -113,7 +113,7 @@ namespace graphicpipe {
 			CIRCLE_LINES
 		};
 
-
+		float m_frameTime{ 0.41f }; //24fps
 
 
 		~GraphicsPipe();

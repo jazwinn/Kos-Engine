@@ -464,7 +464,7 @@ namespace graphicpipe {
 
 				float imageAspectRatio = static_cast<float>(m_imageData[m_modelData[n].m_textureID].m_width) / static_cast<float>(m_imageData[m_modelData[n].m_textureID].m_height);
 
-				glm::mat3 lvScale{ m_modelData[n].m_scale.x * widthRatio / imageAspectRatio , 0, 0, 0, m_modelData[n].m_scale.y * heightRatio, 0, 0 , 0 ,1 };
+				glm::mat3 lvScale{ m_modelData[n].m_scale.x * widthRatio / imageAspectRatio , 0, 0, 0, m_modelData[n].m_scale.y * heightRatio , 0, 0 , 0 ,1 };
 				glm::mat3 lvRotate{ cos(m_modelData[n].m_rotate * 3.1415f / 180.f), -sin(m_modelData[n].m_rotate * 3.1415f / 180.f), 0.f,
 								   sin(m_modelData[n].m_rotate * 3.1415f / 180.f), cos(m_modelData[n].m_rotate * 3.1415f / 180.f), 0.f,
 									0.f , 0.f ,1.f };
