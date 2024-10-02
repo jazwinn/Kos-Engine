@@ -1,3 +1,15 @@
+/*!
+\file      Mat2x2.h
+\author    Elijah Teo, teo.e , 2301530
+\par       teo.e@digipen.edu
+\date      Sept 28, 2024
+\brief     This file holds the class for a Matrix of 2x2 size, it's member functions and non member functions along with operator overloads
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/********************************************************************/
 #pragma warning (disable : 4201)
 #ifndef MAT2x2_H
 #define MAT2x2_H
@@ -50,6 +62,12 @@ namespace mat2x2 {
 	Mat2x2 operator+(const Mat2x2& lhs, const Mat2x2& rhs);
 
 	Mat2x2 operator-(const Mat2x2& lhs, const Mat2x2& rhs);
+
+	bool operator==(const Mat2x2& lhs, const Mat2x2& rhs);
+
+	bool operator>=(const Mat2x2& lhs, const Mat2x2& rhs);
+
+	bool operator<=(const Mat2x2& lhs, const Mat2x2& rhs);
 }
 
 
