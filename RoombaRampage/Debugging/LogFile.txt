@@ -1,13 +1,13 @@
-[INFO]: 2024-10-02 11:49:51 - Application Start
-[INFO]: 2024-10-02 11:49:51 - Load Log Successful
-[INFO]: 2024-10-02 11:49:51 - Load Config Successful
-[INFO]: 2024-10-02 11:49:52 - Load Window Successful
-[INFO]: 2024-10-02 11:49:52 - Load ECS Successful
-[INFO]: 2024-10-02 11:49:52 - Load Prefab Json Successful
-[INFO]: 2024-10-02 11:49:52 - Load Asset Successful
-[INFO]: 2024-10-02 11:49:52 - Load Graphic Pipline Successful
-[INFO]: 2024-10-02 11:49:52 - Set Input Call Back Successful
-[INFO]: 2024-10-02 11:49:52 - Load ImGui Successful
-[INFO]: 2024-10-02 11:49:52 - Load Json Successful
-[INFO]: 2024-10-02 11:49:52 - Application Init Successful
-[INFO]: 2024-10-02 11:49:56 - Application Closed
+[INFO]: 2024-10-02 12:25:48 - Application Start
+[INFO]: 2024-10-02 12:25:48 - Load Log Successful
+[INFO]: 2024-10-02 12:25:48 - Load Config Successful
+[INFO]: 2024-10-02 12:25:48 - Load Window Successful
+[INFO]: 2024-10-02 12:25:48 - Load ECS Successful
+[INFO]: 2024-10-02 12:25:49 - Load Prefab Json Successful
+[INFO]: 2024-10-02 12:25:49 - Load Asset Successful
+[INFO]: 2024-10-02 12:25:49 - Load Graphic Pipline Successful
+[INFO]: 2024-10-02 12:25:49 - Set Input Call Back Successful
+[INFO]: 2024-10-02 12:25:49 - Load ImGui Successful
+[INFO]: 2024-10-02 12:25:49 - Load Json Successful
+[INFO]: 2024-10-02 12:25:49 - Application Init Successful
+[INFO]: 2024-10-02 12:25:52 - Application Closed
