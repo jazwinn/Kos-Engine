@@ -116,7 +116,7 @@ namespace assetmanager {
 
         // Load entities from the JSON file
         std::cout << "Loading entities from: " << jsonFilePath << std::endl;
-        Serialization::Serialize::LoadComponentsJson(jsonFilePath);  // Load into ECS
+        Serialization::Serialize::m_LoadComponentsJson(jsonFilePath);  // Load into ECS
 
         std::cout << "Entities successfully loaded!" << std::endl;
     }

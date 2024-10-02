@@ -87,7 +87,7 @@ namespace Serialization {
         checkFile.close();
     }
 
-    void Serialize::m_LoadComponentsJson(const std::string& jsonFilePath, ecs::ECS* ecs, std::vector<std::string>& objTextEntries)
+    void Serialize::m_LoadComponentsJson(const std::string& jsonFilePath)
     {
         // Open the JSON file for reading
         std::ifstream inputFile(jsonFilePath);
@@ -104,7 +104,7 @@ namespace Serialization {
         rapidjson::Document doc;
         doc.Parse(fileContent.c_str());
 
-        objTextEntries.clear();
+        ecs::ECS* ecs = ecs::ECS::m_GetInstance();
 
         // Iterate through each component entry in the JSON array
         for (rapidjson::SizeType i = 0; i < doc.Size(); i++) {
@@ -115,10 +115,8 @@ namespace Serialization {
 
             // Load the name field
             if (entityData.HasMember("name") && entityData["name"].IsString()) {
-                objTextEntries.push_back(entityData["name"].GetString());  // Store the name
-            }
-            else {
-                objTextEntries.push_back("GameObject -"); //Incase cannot load
+                ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(newEntityId));
+                nc->m_entityName = entityData["name"].GetString();  // Store the name
             }
 
             // Load Transform Component if it exists
@@ -169,9 +167,6 @@ namespace Serialization {
                     if (collider.HasMember("offset") && collider["offset"].IsObject()) {
                         cc->m_OffSet.m_x = collider["offset"]["x"].GetFloat();
                         cc->m_OffSet.m_y = collider["offset"]["y"].GetFloat();
-                    }
-                    if (collider.HasMember("layer")) {
-                        cc->m_Layer = collider["layer"].GetUint();
                     }
                     if (collider.HasMember("drawDebug")) {
                         cc->m_drawDebug = collider["drawDebug"].GetBool();
@@ -298,7 +293,6 @@ namespace Serialization {
                     collider.AddMember("offset", rapidjson::Value().SetObject()
                         .AddMember("x", cc->m_OffSet.m_x, allocator)
                         .AddMember("y", cc->m_OffSet.m_y, allocator), allocator);
-                    collider.AddMember("layer", cc->m_Layer, allocator);
                     collider.AddMember("drawDebug", cc->m_drawDebug, allocator);
                     entityData.AddMember("collider", collider, allocator);
                     hasComponents = true;  // Mark as having a component
