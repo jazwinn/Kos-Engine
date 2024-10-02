@@ -240,4 +240,123 @@ namespace mat3x3{
 		lvTemp -= rhs;
 		return lvTemp;
 	}
+
+	/**
+ \brief		this function is a operator overload of the == sign used to compare 2 matrixes and return true if they are equal
+ **/
+	bool operator==(const Mat3x3& lhs, const Mat3x3& rhs) {
+		bool lvMe00 = false, lvMe01 = false, lvMe02 = false;
+		bool lvMe10 = false, lvMe11 = false, lvMe12 = false;
+		bool lvMe20 = false, lvMe21 = false, lvMe22 = false;
+		if (lhs.m_e00 == rhs.m_e00) {
+			lvMe00 = true;
+		}
+		if (lhs.m_e01 == rhs.m_e01) {
+			lvMe01 = true;
+		}
+		if (lhs.m_e02 == rhs.m_e02) {
+			lvMe02 = true;
+		}
+		if (lhs.m_e10 == rhs.m_e10) {
+			lvMe10 = true;
+		}
+		if (lhs.m_e11 == rhs.m_e11) {
+			lvMe11 = true;
+		}
+		if (lhs.m_e12 == rhs.m_e12) {
+			lvMe12 = true;
+		}
+		if (lhs.m_e20 == rhs.m_e20) {
+			lvMe20 = true;
+		}
+		if (lhs.m_e21 == rhs.m_e21) {
+			lvMe21 = true;
+		}
+		if (lhs.m_e22 == rhs.m_e22) {
+			lvMe22 = true;
+		}
+
+		return lvMe00 && lvMe01 && lvMe02 && lvMe10 && lvMe11 && lvMe12 && lvMe20 && lvMe21 && lvMe22;
+
+	}
+
+	/**
+	 \brief		this function is a operator overload of the <= sign used to compare 2 matrixes and return true if 
+				any left matrix element is smaller than or equal to right matrix
+	 **/
+	bool operator<=(const Mat3x3& lhs, const Mat3x3& rhs) {
+		bool lvMe00 = false, lvMe01 = false, lvMe02 = false;
+		bool lvMe10 = false, lvMe11 = false, lvMe12 = false;
+		bool lvMe20 = false, lvMe21 = false, lvMe22 = false;
+		if (lhs.m_e00 <= rhs.m_e00) {
+			lvMe00 = true;
+		}
+		if (lhs.m_e01 <= rhs.m_e01) {
+			lvMe01 = true;
+		}
+		if (lhs.m_e02 <= rhs.m_e02) {
+			lvMe02 = true;
+		}
+		if (lhs.m_e10 <= rhs.m_e10) {
+			lvMe10 = true;
+		}
+		if (lhs.m_e11 <= rhs.m_e11) {
+			lvMe11 = true;
+		}
+		if (lhs.m_e12 <= rhs.m_e12) {
+			lvMe12 = true;
+		}
+		if (lhs.m_e20 <= rhs.m_e20) {
+			lvMe20 = true;
+		}
+		if (lhs.m_e21 <= rhs.m_e21) {
+			lvMe21 = true;
+		}
+		if (lhs.m_e22 <= rhs.m_e22) {
+			lvMe22 = true;
+		}
+
+		return lvMe00 && lvMe01 && lvMe02 && lvMe10 && lvMe11 && lvMe12 && lvMe20 && lvMe21 && lvMe22;
+
+	}
+
+	/**
+	 \brief		this function is a operator overload of the >= sign used to compare 2 matrixes and return true if 
+				any left matrix element is bigger than or equal to right matrix
+	 **/
+	bool operator>=(const Mat3x3& lhs, const Mat3x3& rhs) {
+		bool lvMe00 = false, lvMe01 = false, lvMe02 = false;
+		bool lvMe10 = false, lvMe11 = false, lvMe12 = false;
+		bool lvMe20 = false, lvMe21 = false, lvMe22 = false;
+		if (lhs.m_e00 >= rhs.m_e00) {
+			lvMe00 = true;
+		}
+		if (lhs.m_e01 >= rhs.m_e01) {
+			lvMe01 = true;
+		}
+		if (lhs.m_e02 >= rhs.m_e02) {
+			lvMe02 = true;
+		}
+		if (lhs.m_e10 >= rhs.m_e10) {
+			lvMe10 = true;
+		}
+		if (lhs.m_e11 >= rhs.m_e11) {
+			lvMe11 = true;
+		}
+		if (lhs.m_e12 >= rhs.m_e12) {
+			lvMe12 = true;
+		}
+		if (lhs.m_e20 >= rhs.m_e20) {
+			lvMe20 = true;
+		}
+		if (lhs.m_e21 >= rhs.m_e21) {
+			lvMe21 = true;
+		}
+		if (lhs.m_e22 >= rhs.m_e22) {
+			lvMe22 = true;
+		}
+
+		return lvMe00 && lvMe01 && lvMe02 && lvMe10 && lvMe11 && lvMe12 && lvMe20 && lvMe21 && lvMe22;
+
+	}
 }
