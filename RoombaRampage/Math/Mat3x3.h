@@ -76,5 +76,11 @@ namespace mat3x3 {
 	Mat3x3 operator+(const Mat3x3& lhs, const Mat3x3& rhs);
 
 	Mat3x3 operator-(const Mat3x3& lhs, const Mat3x3& rhs);
+
+	bool operator==(const Mat3x3& lhs, const Mat3x3& rhs);
+
+	bool operator<=(const Mat3x3& lhs, const Mat3x3& rhs);
+
+	bool operator>=(const Mat3x3& lhs, const Mat3x3& rhs);
 }
 #endif
