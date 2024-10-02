@@ -57,27 +57,28 @@ namespace ecs {
 		//loops through all vecoters pointing to component
 		for (int n{}; n < m_vecSpriteComponentPtr.size(); n++) {
 
-			//std::cout << "Update Entity: " << n << std::endl;
-			//sprite not need currently
-			//SpriteComponent* MovComp = vecSpriteComponentPtr[n];
 			TransformComponent* transform = m_vecTransformComponentPtr[n];
 			SpriteComponent* sprite = m_vecSpriteComponentPtr[n];
 
 			ECS* ecs = ECS::m_GetInstance();
 
-			if (sprite->m_isAnimating)
+			if (ecs->m_ECS_EntityMap[sprite->m_Entity].test(TYPEANIMATIONCOMPONENT)) 
 			{
-				sprite->m_frameTimer += ecs->m_DeltaTime;
+				AnimationComponent* animation = (AnimationComponent*)ecs->m_ECS_CombinedComponentPool[TYPEANIMATIONCOMPONENT]->m_GetEntityComponent(sprite->m_Entity);
+				if (animation->m_isAnimating)
+				{
+					animation->m_frameTimer += ecs->m_DeltaTime;
+				}
+				else
+				{
+					animation->m_frameTimer = 0.f;
+				}
+				graphicsPipe->m_modelData.push_back({ transform->m_rotation, glm::vec2{transform->m_scale.m_x, transform->m_scale.m_y}, glm::vec3{transform->m_position.m_x,transform->m_position.m_y, 0} ,sprite->m_imageID, animation->m_frameTimer, 0 });
 			}
 			else
 			{
-				sprite->m_frameTimer = 0.f;
+				graphicsPipe->m_modelData.push_back({ transform->m_rotation, glm::vec2{transform->m_scale.m_x, transform->m_scale.m_y}, glm::vec3{transform->m_position.m_x,transform->m_position.m_y, 0} ,sprite->m_imageID, 0, 0 });
 			}
-	
-
-			graphicsPipe->m_modelData.push_back({ transform->m_rotation, glm::vec2{transform->m_scale.m_x, transform->m_scale.m_y}, glm::vec3{transform->m_position.m_x,transform->m_position.m_y, 0} ,sprite->m_imageID, sprite->m_frameTimer, 0 });
-
-			
 			
 		}
 

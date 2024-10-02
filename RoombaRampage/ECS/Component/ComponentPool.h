@@ -14,6 +14,7 @@
 #include "RigidBody.h"
 #include "PlayerComponent.h"
 #include "TextComponent.h"
+#include "AnimationComponent.h"
 
 
 namespace ecs {

@@ -5,6 +5,7 @@
 #include "imgui_stdlib.h"
 #include "../ECS/ECS.h"
 #include "../Assets/AssetManager.h"
+#include "../Graphics/GraphicsPipe.h"
 
 #pragma warning(push)
 #pragma warning(disable : 26495)  // Disable uninitialized variable warning
@@ -31,7 +32,7 @@ void ImGuiHandler::DrawComponentWindow()
     //Add Component Window
     const char* ComponentNames[] =
     {
-        "Add Components","Movement Component", "Collider Component", "Sprite Component", "Player Component", "Rigid Body Component", "Text Component"
+        "Add Components","Movement Component", "Collider Component", "Sprite Component", "Player Component", "Rigid Body Component", "Text Component", "Animation Component"
     };
     static int ComponentType = 0;
 
@@ -66,6 +67,10 @@ void ImGuiHandler::DrawComponentWindow()
         }
         if (ComponentType == 6) {
             ecs->m_AddComponent(ecs::TYPETEXTCOMPONENT, entityID);
+            ComponentType = 0;
+        }
+        if (ComponentType == 7) {
+            ecs->m_AddComponent(ecs::TYPEANIMATIONCOMPONENT, entityID);
             ComponentType = 0;
         }
 
@@ -204,14 +209,12 @@ void ImGuiHandler::DrawComponentWindow()
                 ImGui::DragFloat("Y###PosY", &cc->m_Size.m_y, 0.02f, 0.f, 2.0f, "%.2f");
    
 
-                //Display Rotation
                 ImGui::AlignTextToFramePadding();
                 ImGui::Text("Display Collision");
                 ImGui::SameLine(slider_start_pos_x + 40);
                 ImGui::Checkbox("####xx", &cc->m_drawDebug);
             
 
-                //Display Scale
                 ImGui::AlignTextToFramePadding();
                 ImGui::Text("Offset");
                 ImGui::SameLine(slider_start_pos_x);
@@ -303,34 +306,41 @@ void ImGuiHandler::DrawComponentWindow()
 
             if (ImGui::CollapsingHeader("Text Component"))
             {
+                
+
+            }
+        }
+        if (EntitySignature.test(ecs::TYPEANIMATIONCOMPONENT))
+        {
+            //retrieve sprite component
+            ecs::AnimationComponent* ac = static_cast<ecs::AnimationComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEANIMATIONCOMPONENT]
+                ->m_GetEntityComponent(entityID));
+            graphicpipe::GraphicsPipe* graphicsPipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
+
+            if (ImGui::CollapsingHeader("Animation Component")) {
+
+
                 // Retrieve the TransformComponent
-                ecs::TextComponent* tc = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]
+                ecs::AnimationComponent* ac = static_cast<ecs::AnimationComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEANIMATIONCOMPONENT]
                     ->m_GetEntityComponent(entityID));
 
-                
-                ImVec4 color = ImVec4(tc->m_red, tc->m_green, tc->m_blue, 255.0f / 255.0f);
-               // ImGuiColorEditFlags misc_flags = (hdr ? ImGuiColorEditFlags_HDR : 0) | (drag_and_drop ? 0 : ImGuiColorEditFlags_NoDragDrop) | (alpha_half_preview ? ImGuiColorEditFlags_AlphaPreviewHalf : (alpha_preview ? ImGuiColorEditFlags_AlphaPreview : 0)) | (options_menu ? 0 : ImGuiColorEditFlags_NoOptions);
+                ImGui::AlignTextToFramePadding();
+                ImGui::Text("Toggle Animation");
+                ImGui::SameLine(slider_start_pos_x + 40);
+                ImGui::Checkbox("####xx##", &ac->m_isAnimating);
 
                 //Display Position
-                ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
-                ImGui::Text("Text: ");
-                ImGui::SameLine(slider_start_pos_x);
-                ImGui::SetNextItemWidth(100.0f);
-                ImGui::InputText("##TEXT##", &tc->m_text);
+               //ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
+               //ImGui::Text("F: ");
+               //ImGui::SameLine(slider_start_pos_x);
+               //ImGui::SetNextItemWidth(100.0f);
+               //ImGui::DragFloat("##FRAME TIMER##", &ac->m_frameTimer);
 
-                ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
-                ImGui::Text("Size");
-                ImGui::SameLine(slider_start_pos_x);
-                ImGui::SetNextItemWidth(100.0f);
-                ImGui::DragFloat("###TEXTXXX", &tc->m_fontSize, 0.02f, 0.f, 10.0f, "%.2f");
-
-                ImGui::Text("Color");
-                ImGui::SameLine(); 
-                if (ImGui::ColorEdit3("##MyColor1", (float*)&color, ImGuiColorEditFlags_DisplayRGB)) {
-                    tc->m_red = color.x;
-                    tc->m_green = color.y;
-                    tc->m_blue = color.z;
-                }
+               //ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
+               //ImGui::Text("Frame Number: ");
+               //ImGui::SameLine(slider_start_pos_x);
+               //ImGui::SetNextItemWidth(100.0f);
+               //ImGui::DragFloat("###TIMERXXX", &->m_fontSize, 0.02f, 0.f, 10.0f, "%.2f");
 
             }
         }

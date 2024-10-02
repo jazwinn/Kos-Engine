@@ -27,9 +27,8 @@ namespace assetmanager {
         m_funcLoadImage("Assets/roombaTest.png");
         m_funcLoadImage("Assets/roombaTest2.png");
         m_funcLoadImage("Assets/roombaTest3.png");
-        m_funcLoadImage("Assets/sprAssassinBar_strip8.png");
-        m_funcLoadImage("Assets/roombaBlink_strip4.png");
-        m_funcLoadImage("Assets/roombaBlinkSmall_strip4.png");
+        m_funcLoadImage("Assets/animatedRoombaBlink_strip4.png");
+        m_funcLoadImage("Assets/animatedSeanSprite_strip4.png");
 
         m_LoadAudio("Assets/vacuum.mp3");
         m_LoadAudio("Assets/zwing.wav");
