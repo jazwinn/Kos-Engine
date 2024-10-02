@@ -4,13 +4,18 @@
 \author    Rayner Tan, raynerweichen.tan , 2301449
 \par       raynerweichen.tan@digipen.edu
 \date      Sept 28, 2024
-\brief     vector2 functions
+\brief     This file contains the definition and implementation
+           of 2D vector (Vec2) operations such as addition,
+           subtraction, normalization, dot product, and cross product.
+
+The Vec2 class provides methods for handling basic 2D vector math
+operations, which are useful in many mathematical and graphical computations.
 
 Copyright (C) 2024 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the
 prior written consent of DigiPen Institute of Technology is prohibited.
 */
-/********************************************************************/
+/******************************************************************/
 
 #include "../Math/vector2.h"
 

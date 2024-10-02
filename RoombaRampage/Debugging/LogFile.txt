@@ -1,3 +1,18 @@
+<<<<<<< HEAD
+[INFO]: 2024-10-02 12:22:39 - Application Start
+[INFO]: 2024-10-02 12:22:39 - Load Log Successful
+[INFO]: 2024-10-02 12:22:39 - Load Config Successful
+[INFO]: 2024-10-02 12:22:40 - Load Window Successful
+[INFO]: 2024-10-02 12:22:40 - Load ECS Successful
+[INFO]: 2024-10-02 12:22:40 - Load Prefab Json Successful
+[INFO]: 2024-10-02 12:22:40 - Load Asset Successful
+[INFO]: 2024-10-02 12:22:40 - Load Graphic Pipline Successful
+[INFO]: 2024-10-02 12:22:40 - Set Input Call Back Successful
+[INFO]: 2024-10-02 12:22:40 - Load ImGui Successful
+[INFO]: 2024-10-02 12:22:40 - Load Json Successful
+[INFO]: 2024-10-02 12:22:40 - Application Init Successful
+[INFO]: 2024-10-02 12:23:14 - Application Closed
+=======
 [INFO]: 2024-10-02 13:13:33 - Application Start
 [INFO]: 2024-10-02 13:13:33 - Load Log Successful
 [INFO]: 2024-10-02 13:13:33 - Load Config Successful
@@ -11,3 +26,4 @@
 [INFO]: 2024-10-02 13:13:34 - Load Json Successful
 [INFO]: 2024-10-02 13:13:34 - Application Init Successful
 [INFO]: 2024-10-02 13:13:49 - Application Closed
+>>>>>>> upstream/main

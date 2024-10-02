@@ -32,8 +32,7 @@ namespace assetmanager {
         m_LoadAudio("Assets/vacuum.mp3");
         m_LoadAudio("Assets/zwing.wav");
         m_LoadPrefab("../RoombaRampage/Json/Prefab.json");
-        
-
+    
         m_LoadFont("Assets/AfacadFlux-Thin.ttf");
 
     }
