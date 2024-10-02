@@ -1,5 +1,5 @@
-#ifndef AUDIO_MANAGER_H
-#define AUDIO_MANAGER_H
+#ifndef AUDIO_H
+#define AUDIO_H
 
 #include "fmod.hpp"
 #include "fmod_errors.h"
@@ -25,4 +25,4 @@ namespace fmodaudio{
 }
 
 
-#endif // AUDIO_MANAGER_H
+#endif AUDIO_H

@@ -5,10 +5,10 @@
 \par       junjie.c@digipen.edu
 \date      Oct 02, 2024
 \brief     This file handles JSON-related operations for component serialization and deserialization in the ECS framework.
-            - LoadConfig: Loads configuration settings such as window dimensions and FPS cap from a config file.
-            - JsonFileValidation: Validates if the JSON file exists and creates a new one if it doesn't.
-            - LoadComponentsJson: Loads component data from a JSON file into the ECS.
-            - SaveComponentsJson: Saves component data from the ECS to a JSON file.
+            - m_LoadConfig: Loads configuration settings such as window dimensions and FPS cap from a config file.
+            - m_JsonFileValidation: Validates if the JSON file exists and creates a new one if it doesn't.
+            - m_LoadComponentsJson: Loads component data from a JSON file into the ECS.
+            - m_SaveComponentsJson: Saves component data from the ECS to a JSON file.
 
 Copyright (C) 2024 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the
@@ -40,7 +40,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 namespace Serialization {
 
-    void Serialize::LoadConfig() {
+    void Serialize::m_LoadConfig() {
         std::ifstream file;
         file.open("./Config/Config.txt");
 
@@ -66,7 +66,7 @@ namespace Serialization {
 
         line.clear();
         temp.clear();
-        std::getline(file,line);
+        std::getline(file, line);
         std::stringstream str3{ line };
         str3 >> temp >> help->FpsCap;
 
@@ -75,7 +75,7 @@ namespace Serialization {
         }
     }
     // Helper function to check if the json file exists and create it
-    void Serialize::JsonFileValidation(const std::string& filePath) {
+    void Serialize::m_JsonFileValidation(const std::string& filePath) {
 
         std::ifstream checkFile(filePath);
 
@@ -87,10 +87,8 @@ namespace Serialization {
         checkFile.close();
     }
 
-    void Serialize::LoadComponentsJson(const std::string& jsonFilePath)
+    void Serialize::m_LoadComponentsJson(const std::string& jsonFilePath)
     {
-
-        ecs::ECS* ecs = ecs::ECS::m_GetInstance();
         // Open the JSON file for reading
         std::ifstream inputFile(jsonFilePath);
 
@@ -106,25 +104,24 @@ namespace Serialization {
         rapidjson::Document doc;
         doc.Parse(fileContent.c_str());
 
+        ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+
         // Iterate through each component entry in the JSON array
         for (rapidjson::SizeType i = 0; i < doc.Size(); i++) {
             const rapidjson::Value& entityData = doc[i];
 
             // Create a new entity
-            ecs::EntityID newEntityID = ecs->m_CreateEntity();
+            ecs::EntityID newEntityId = ecs->m_CreateEntity();
 
             // Load the name field
             if (entityData.HasMember("name") && entityData["name"].IsString()) {
-                ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(newEntityID));
+                ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(newEntityId));
                 nc->m_entityName = entityData["name"].GetString();  // Store the name
             }
-            //else {
-            //    obj_text_entries.push_back("GameObject -"); //Incase cannot load
-            //}
 
             // Load Transform Component if it exists
             if (entityData.HasMember("transform") && entityData["transform"].IsObject()) {
-                ecs::TransformComponent* tc = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(newEntityID));
+                ecs::TransformComponent* tc = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(newEntityId));
 
                 const rapidjson::Value& transform = entityData["transform"];
                 if (transform.HasMember("position") && transform["position"].IsObject()) {
@@ -138,14 +135,12 @@ namespace Serialization {
                     tc->m_scale.m_x = transform["scale"]["x"].GetFloat();
                     tc->m_scale.m_y = transform["scale"]["y"].GetFloat();
                 }
-
             }
 
             // Load Movement Component if it exists
             if (entityData.HasMember("movement") && entityData["movement"].IsObject()) {
 
-                ecs::MovementComponent* mc = static_cast<ecs::MovementComponent*>(ecs->m_AddComponent(ecs::TYPEMOVEMENTCOMPONENT, newEntityID));
-
+                ecs::MovementComponent* mc = static_cast<ecs::MovementComponent*>(ecs->m_AddComponent(ecs::TYPEMOVEMENTCOMPONENT, newEntityId));
 
                 const rapidjson::Value& movement = entityData["movement"];
 
@@ -156,15 +151,12 @@ namespace Serialization {
                     mc->m_Direction.m_x = movement["direction"]["x"].GetFloat();
                     mc->m_Direction.m_y = movement["direction"]["y"].GetFloat();
                 }
-
             }
 
             // Load Collider Component if it exists
             if (entityData.HasMember("collider") && entityData["collider"].IsObject()) {
 
-
-                ecs::ColliderComponent* cc = static_cast<ecs::ColliderComponent*>(ecs->m_AddComponent(ecs::TYPECOLLIDERCOMPONENT, newEntityID));
-
+                ecs::ColliderComponent* cc = static_cast<ecs::ColliderComponent*>(ecs->m_AddComponent(ecs::TYPECOLLIDERCOMPONENT, newEntityId));
 
                 if (cc) {
                     const rapidjson::Value& collider = entityData["collider"];
@@ -176,9 +168,6 @@ namespace Serialization {
                         cc->m_OffSet.m_x = collider["offset"]["x"].GetFloat();
                         cc->m_OffSet.m_y = collider["offset"]["y"].GetFloat();
                     }
-                    if (collider.HasMember("layer")) {
-                        cc->m_Layer = collider["layer"].GetUint();
-                    }
                     if (collider.HasMember("drawDebug")) {
                         cc->m_drawDebug = collider["drawDebug"].GetBool();
                     }
@@ -187,7 +176,7 @@ namespace Serialization {
 
             // Load Player Component if it exists
             if (entityData.HasMember("player") && entityData["player"].IsObject()) {
-                ecs::PlayerComponent* pc = static_cast<ecs::PlayerComponent*>(ecs->m_AddComponent(ecs::TYPEPLAYERCOMPONENT, newEntityID));
+                ecs::PlayerComponent* pc = static_cast<ecs::PlayerComponent*>(ecs->m_AddComponent(ecs::TYPEPLAYERCOMPONENT, newEntityId));
 
                 if (pc) {
                     const rapidjson::Value& player = entityData["player"];
@@ -199,7 +188,7 @@ namespace Serialization {
 
             // Load RigidBody Component if it exists
             if (entityData.HasMember("rigidbody") && entityData["rigidbody"].IsObject()) {
-                ecs::RigidBodyComponent* rb = static_cast<ecs::RigidBodyComponent*>(ecs->m_AddComponent(ecs::TYPERIGIDBODYCOMPONENT, newEntityID));
+                ecs::RigidBodyComponent* rb = static_cast<ecs::RigidBodyComponent*>(ecs->m_AddComponent(ecs::TYPERIGIDBODYCOMPONENT, newEntityId));
 
                 if (rb) {
                     const rapidjson::Value& rigidbody = entityData["rigidbody"];
@@ -211,7 +200,7 @@ namespace Serialization {
 
             // Load Sprite Component if it exists
             if (entityData.HasMember("sprite") && entityData["sprite"].IsObject()) {
-                ecs::SpriteComponent* sc = static_cast<ecs::SpriteComponent*>(ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, newEntityID));
+                ecs::SpriteComponent* sc = static_cast<ecs::SpriteComponent*>(ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, newEntityId));
 
                 if (sc) {
                     const rapidjson::Value& sprite = entityData["sprite"];
@@ -225,16 +214,13 @@ namespace Serialization {
             }
         }
 
-
         LOGGING_INFO("Load Json Successful");
     }
 
-    //THIS SHOULD NVR BE CALLED OUTSIDE OF IMGUI ELSE IT MIGHT CRASH
-    void Serialize::SaveComponentsJson(const std::string& filePath, const std::unordered_map<ecs::EntityID, std::bitset<ecs::ComponentType::TOTALTYPECOMPONENT>>& ECS_EntityMap, const std::vector<std::string>& obj_text_entries, const std::vector<ecs::EntityID>& obj_entity_id)
+    void Serialize::m_SaveComponentsJson(const std::string& filePath, const std::unordered_map<ecs::EntityID, std::bitset<ecs::ComponentType::TOTALTYPECOMPONENT>>& ECS_EntityMap, const std::vector<std::string>& objTextEntries, const std::vector<ecs::EntityID>& objEntityId)
     {
-        // JSON File Validation / Creation
         std::string jsonFilePath = filePath + "/components.json";
-        JsonFileValidation(jsonFilePath);
+        m_JsonFileValidation(jsonFilePath);
 
         // Create JSON object to hold the updated values
         rapidjson::Document doc;
@@ -244,25 +230,22 @@ namespace Serialization {
 
         auto* ecs = ecs::ECS::m_GetInstance();
 
-        //size_t entityIndex = 0;
-
         // Iterate through the ECS_Entitymap to save data only for active entities
         for (const auto& entityPair : ECS_EntityMap) {
-            ecs::EntityID entityID = entityPair.first;
+            ecs::EntityID entityId = entityPair.first;
 
             // Create a new JSON object for entitydata
             rapidjson::Value entityData(rapidjson::kObjectType);
 
             bool hasComponents = false;
 
-
-            // Find the corresponding name for this entity using obj_entity_id
-            auto it = std::find(obj_entity_id.begin(), obj_entity_id.end(), entityID);
-            if (it != obj_entity_id.end()) {
-                size_t index = std::distance(obj_entity_id.begin(), it);
-                if (index < obj_text_entries.size()) {
+            // Find name for this entity using objEntityId
+            auto it = std::find(objEntityId.begin(), objEntityId.end(), entityId);
+            if (it != objEntityId.end()) {
+                size_t index = std::distance(objEntityId.begin(), it);
+                if (index < objTextEntries.size()) {
                     rapidjson::Value nameValue;
-                    nameValue.SetString(obj_text_entries[index].c_str(), allocator);
+                    nameValue.SetString(objTextEntries[index].c_str(), allocator);
                     entityData.AddMember("name", nameValue, allocator);
                     hasComponents = true;
                 }
@@ -270,7 +253,7 @@ namespace Serialization {
 
             // Check if the entity has TransformComponent and save 
             if (entityPair.second.test(ecs::ComponentType::TYPETRANSFORMCOMPONENT)) {
-                ecs::TransformComponent* tc = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(entityID));
+                ecs::TransformComponent* tc = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(entityId));
                 if (tc) {
                     rapidjson::Value transform(rapidjson::kObjectType);
                     transform.AddMember("position", rapidjson::Value().SetObject()
@@ -287,7 +270,7 @@ namespace Serialization {
 
             // Check if the entity has MovementComponent and save it
             if (entityPair.second.test(ecs::ComponentType::TYPEMOVEMENTCOMPONENT)) {
-                ecs::MovementComponent* mc = static_cast<ecs::MovementComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(entityID));
+                ecs::MovementComponent* mc = static_cast<ecs::MovementComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(entityId));
                 if (mc) {
                     rapidjson::Value movement(rapidjson::kObjectType);
                     movement.AddMember("speed", mc->m_Speed, allocator);
@@ -301,7 +284,7 @@ namespace Serialization {
 
             // Check if the entity has ColliderComponent and save it
             if (entityPair.second.test(ecs::ComponentType::TYPECOLLIDERCOMPONENT)) {
-                ecs::ColliderComponent* cc = static_cast<ecs::ColliderComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(entityID));
+                ecs::ColliderComponent* cc = static_cast<ecs::ColliderComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(entityId));
                 if (cc) {
                     rapidjson::Value collider(rapidjson::kObjectType);
                     collider.AddMember("size", rapidjson::Value().SetObject()
@@ -310,7 +293,6 @@ namespace Serialization {
                     collider.AddMember("offset", rapidjson::Value().SetObject()
                         .AddMember("x", cc->m_OffSet.m_x, allocator)
                         .AddMember("y", cc->m_OffSet.m_y, allocator), allocator);
-                    collider.AddMember("layer", cc->m_Layer, allocator);
                     collider.AddMember("drawDebug", cc->m_drawDebug, allocator);
                     entityData.AddMember("collider", collider, allocator);
                     hasComponents = true;  // Mark as having a component
@@ -319,7 +301,7 @@ namespace Serialization {
 
             // Check if the entity has PlayerComponent and save it
             if (entityPair.second.test(ecs::ComponentType::TYPEPLAYERCOMPONENT)) {
-                ecs::PlayerComponent* pc = static_cast<ecs::PlayerComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPEPLAYERCOMPONENT]->m_GetEntityComponent(entityID));
+                ecs::PlayerComponent* pc = static_cast<ecs::PlayerComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPEPLAYERCOMPONENT]->m_GetEntityComponent(entityId));
                 if (pc) {
                     rapidjson::Value player(rapidjson::kObjectType);
                     player.AddMember("control", pc->m_Control, allocator);
@@ -330,7 +312,7 @@ namespace Serialization {
 
             // Check if the entity has RigidBodyComponent and save it
             if (entityPair.second.test(ecs::ComponentType::TYPERIGIDBODYCOMPONENT)) {
-                ecs::RigidBodyComponent* rb = static_cast<ecs::RigidBodyComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPERIGIDBODYCOMPONENT]->m_GetEntityComponent(entityID));
+                ecs::RigidBodyComponent* rb = static_cast<ecs::RigidBodyComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPERIGIDBODYCOMPONENT]->m_GetEntityComponent(entityId));
                 if (rb) {
                     rapidjson::Value rigidbody(rapidjson::kObjectType);
                     rigidbody.AddMember("mass", rb->m_Mass, allocator);
@@ -341,7 +323,7 @@ namespace Serialization {
 
             // Check if the entity has SpriteComponent and save it
             if (entityPair.second.test(ecs::ComponentType::TYPESPRITECOMPONENT)) {
-                ecs::SpriteComponent* sc = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPESPRITECOMPONENT]->m_GetEntityComponent(entityID));
+                ecs::SpriteComponent* sc = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPESPRITECOMPONENT]->m_GetEntityComponent(entityId));
                 if (sc) {
                     rapidjson::Value sprite(rapidjson::kObjectType);
                     sprite.AddMember("imageID", sc->m_imageID, allocator);
@@ -350,6 +332,17 @@ namespace Serialization {
                     hasComponents = true;  // Mark as having a component
                 }
             }
+
+            //if (entityPair.second.test(ecs::ComponentType::TYPETEXTCOMPONENT)) {
+            //    ecs::TextComponent* tc = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPETEXTCOMPONENT]->m_GetEntityComponent(entityID));
+            //    if (tc) {
+            //        rapidjson::Value text(rapidjson::kObjectType);
+            //        text.AddMember("text", tc->m_text, allocator);
+            //        text.AddMember("fontsize", tc->m_fontSize, allocator);
+            //        entityData.AddMember("text", text, allocator);
+            //        hasComponents = true;  // Mark as having a component
+            //    }
+            //}
 
             if (hasComponents) {
                 doc.PushBack(entityData, allocator);

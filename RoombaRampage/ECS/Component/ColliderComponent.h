@@ -16,13 +16,13 @@ namespace ecs {
 
 		vector2::Vec2 m_OffSet{};
 
-		unsigned int m_Layer{};
-
 		bool m_drawDebug{true};
 
+		// Current no implementation
 		physicspipe::EntityType m_type = physicspipe::EntityType::RECTANGLE;
 
 		float m_radius{};
+
 		bool m_isCollided{ false };
 
 	};

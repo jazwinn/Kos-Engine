@@ -1,3 +1,15 @@
+/*!
+\file      Mat3x3.h
+\author    Elijah Teo, teo.e , 2301530
+\par       teo.e@digipen.edu
+\date      Sept 28, 2024
+\brief     This file holds the class for a Matrix of 3x3 size, it's member functions and non member functions along with operator overloads
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/********************************************************************/
 #pragma warning (disable : 4201)
 #pragma warning(disable : 26495)
 #ifndef MAT2x2_H

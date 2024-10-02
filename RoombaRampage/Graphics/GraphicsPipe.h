@@ -12,14 +12,7 @@
 
 namespace graphicpipe {
 
-	struct CharacterData 
-	{
-		GLuint m_textureID{};       // ID handle of the glyph texture
-		glm::ivec2 size{};     // Size of the glyph
-		glm::ivec2 bearing{};  // Offset from baseline to left/top of glyph
-		GLuint advance{};         // Offset to advance to the next glyph
-	};
-
+	//SPLIT TO DIFFERENT FILES!!!!
 	struct GraphicsData
 	{
 		float m_rotate{};
@@ -136,12 +129,11 @@ namespace graphicpipe {
 		std::vector<DebugDrawData> m_debugBoxData{};
 		std::vector<float> m_debugBoxCollisionChecks{};
 		std::vector<int> m_textureOrder{};
-		std::map<char, CharacterData> m_characters{};
 
 
 		//Array of the texture IDs
 		std::vector<unsigned int> m_textureIDs{};
-		std::vector<assetmanager::AssetManager::Image> m_imageData{};
+		std::vector<image::Image> m_imageData{};
 
 		unsigned int m_screenTexture{};
 		unsigned int m_proxyBackgroundTexture{};
