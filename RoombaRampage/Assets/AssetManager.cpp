@@ -34,7 +34,7 @@ namespace assetmanager {
         m_LoadPrefab("../RoombaRampage/Json/Prefab.json");
         
 
-        m_LoadFont("Assets/AfacadFlux-Thin.ttf", 48);
+        m_LoadFont("Assets/AfacadFlux-Thin.ttf");
 
     }
 
@@ -79,9 +79,9 @@ namespace assetmanager {
         Audio = nullptr;
         
     }
-   void AssetManager::m_LoadFont(std::string file, unsigned int fontsize)
+   void AssetManager::m_LoadFont(std::string file)
    {
-       text::Font::LoadFont(file, fontsize);
+       text::Font::LoadFont(file);
    }
  
 

@@ -37,17 +37,14 @@ namespace assetmanager {
 
 		std::vector<image::Image> m_imageContainer;
 		std::vector<unsigned char*> m_imagedataArray;
-
 		std::vector<std::unique_ptr<fmodaudio::FModAudio>> m_audioContainer;
-
 		std::unordered_map<std::string, prefab::Prefab> m_prefabs;
-
 		Font m_characters{};
 
 		void m_funcLoadAssets();
 		void m_funcLoadImage(const char* file);
 		void m_LoadAudio(std::string file);
-		void m_LoadFont(std::string file, unsigned int fontsize);
+		void m_LoadFont(std::string file);
 		void m_LoadPrefab(std::string file);
 
 		//Load entity data

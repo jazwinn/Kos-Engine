@@ -22,7 +22,7 @@ namespace text {
 
 	public:
 
-		static void LoadFont(std::string file, unsigned int fontsize);
+		static void LoadFont(std::string file);
 	};
 
 }

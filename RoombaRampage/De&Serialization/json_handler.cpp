@@ -351,6 +351,17 @@ namespace Serialization {
                 }
             }
 
+            //if (entityPair.second.test(ecs::ComponentType::TYPETEXTCOMPONENT)) {
+            //    ecs::TextComponent* tc = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPETEXTCOMPONENT]->m_GetEntityComponent(entityID));
+            //    if (tc) {
+            //        rapidjson::Value text(rapidjson::kObjectType);
+            //        text.AddMember("text", tc->m_text, allocator);
+            //        text.AddMember("fontsize", tc->m_fontSize, allocator);
+            //        entityData.AddMember("text", text, allocator);
+            //        hasComponents = true;  // Mark as having a component
+            //    }
+            //}
+
             if (hasComponents) {
                 doc.PushBack(entityData, allocator);
             }
