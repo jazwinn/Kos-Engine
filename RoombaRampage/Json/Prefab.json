@@ -1,0 +1,115 @@
+[
+  {
+    "name": "Player Object",
+    "transform": {
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "rotation": 0.0,
+      "scale": {
+        "x": 1.0,
+        "y": 1.0
+      }
+    },
+    "movement": {
+      "speed": 1.0,
+      "direction": {
+        "x": 0.0,
+        "y": 0.0
+      }
+    },
+    "collider": {
+      "size": {
+        "x": 1.0,
+        "y": 1.0
+      },
+      "offset": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "layer": 0,
+      "drawDebug": true
+    },
+    "player": {
+      "control": true
+    },
+    "rigidbody": {
+      "mass": 0.0
+    },
+    "sprite": {
+      "imageID": 4,
+      "frameNumber": 0
+    }
+  },
+  {
+    "name": "Background",
+    "transform": {
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "rotation": 0.0,
+      "scale": {
+        "x": 2.0,
+        "y": 2.0
+      }
+    },
+    "sprite": {
+      "imageID": 0,
+      "frameNumber": 0
+    }
+  },
+  {
+    "name": "text",
+    "transform": {
+      "position": {
+        "x": -0.8600000143051147,
+        "y": 0.5199999809265137
+      },
+      "rotation": 0.0,
+      "scale": {
+        "x": 1.0,
+        "y": 1.0
+      }
+    },
+    "text": {
+      "text": "Insert Text",
+      "fontsize": 2.0,
+      "colour": {
+        "red": 0.6685409545898438,
+        "blue": 0.406862735748291,
+        "green": 1.0
+      }
+    }
+  },
+  {
+    "name": "Wall",
+    "transform": {
+      "position": {
+        "x": -1.5,
+        "y": 0.75
+      },
+      "rotation": 0.0,
+      "scale": {
+        "x": 2.0,
+        "y": 2.0
+      }
+    },
+    "collider": {
+      "size": {
+        "x": 0.6399999856948853,
+        "y": 0.6200000047683716
+      },
+      "offset": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "drawDebug": true
+    },
+    "sprite": {
+      "imageID": 1,
+      "frameNumber": 0
+    }
+  }
+]
