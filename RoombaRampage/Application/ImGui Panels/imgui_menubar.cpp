@@ -7,7 +7,7 @@
 #include "../../De&Serialization/json_handler.h"
 #include "../ECS/ECS.h"
 
-void ImGuiHandler::DrawMainMenuBar() {
+void gui::ImGuiHandler::DrawMainMenuBar() {
 
     ImGuiIO& io = ImGui::GetIO();  // Get input/output data
     //If CTRL + S press, save

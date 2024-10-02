@@ -27,7 +27,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include<string>
 #include <iostream>
 
-unsigned int ImGuiHandler::DrawHierachyWindow()
+unsigned int gui::ImGuiHandler::DrawHierachyWindow()
 {
     //fetch ecs
     ecs::ECS* ecs = ecs::ECS::m_GetInstance();
@@ -36,7 +36,7 @@ unsigned int ImGuiHandler::DrawHierachyWindow()
     if (!hasLoaded) {
         // Iterate through all loaded entities and add them to the hierarchy
         for (const auto& entityPair : ecs->m_ECS_EntityMap) {
-            obj_entity_id.push_back(entityPair.first);
+            this->obj_entity_id.push_back(entityPair.first);
             obj_text_entries.push_back(static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(entityPair.first))->m_entityName);
             deleteButton.push_back(false);
             DuplicateButton.push_back(false);

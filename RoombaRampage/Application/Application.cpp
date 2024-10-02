@@ -24,7 +24,7 @@ namespace Application {
       GLOBAL VARAIBLE
     --------------------------------------------------------------*/
     AppWindow Application::lvWindow;
-    ImGuiHandler Application::imgui_manager;
+    gui::ImGuiHandler Application::imgui_manager; 
     graphicpipe::GraphicsPipe* pipe;
     Input::InputSystem Input;
     assetmanager::AssetManager* AstManager;

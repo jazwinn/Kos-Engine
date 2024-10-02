@@ -21,7 +21,7 @@ namespace Application{
 		static AppWindow lvWindow;
 
 	private:
-		static ImGuiHandler imgui_manager; //should only remain in Application
+		static gui::ImGuiHandler imgui_manager; //should only remain in Application
 
 
 	};
