@@ -53,7 +53,7 @@ namespace Application {
         /*--------------------------------------------------------------
           INITIALIZE WINDOW WIDTH & HEIGHT
        --------------------------------------------------------------*/
-        Serialization::Serialize::LoadConfig();
+        Serialization::Serialize::m_LoadConfig();
         LOGGING_INFO("Load Config Successful");
 
        /*--------------------------------------------------------------

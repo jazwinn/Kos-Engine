@@ -32,6 +32,7 @@ namespace ecs{
 		ecs->m_ECS_CombinedComponentPool[TYPECOLLIDERCOMPONENT] = std::make_shared < ComponentPool<ColliderComponent>>();
 		ecs->m_ECS_CombinedComponentPool[TYPERIGIDBODYCOMPONENT] = std::make_shared < ComponentPool<RigidBodyComponent>>();
 		ecs->m_ECS_CombinedComponentPool[TYPEPLAYERCOMPONENT] = std::make_shared<ComponentPool<PlayerComponent>>();
+		ecs->m_ECS_CombinedComponentPool[TYPETEXTCOMPONENT] = std::make_shared<ComponentPool<TextComponent>>();
 
 		//Allocate memory to each system
 		ecs->m_ECS_SystemMap[TYPECONTROLSYSTEM] = std::make_shared<ControlSystem>();

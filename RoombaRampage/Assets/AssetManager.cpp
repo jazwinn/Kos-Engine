@@ -34,7 +34,7 @@ namespace assetmanager {
         m_LoadPrefab("../RoombaRampage/Json/Prefab.json");
         
 
-        m_LoadFont("Assets/AfacadFlux-Thin.ttf", 48);
+        m_LoadFont("Assets/AfacadFlux-Thin.ttf");
 
     }
 
@@ -79,9 +79,9 @@ namespace assetmanager {
         Audio = nullptr;
         
     }
-   void AssetManager::m_LoadFont(std::string file, unsigned int fontsize)
+   void AssetManager::m_LoadFont(std::string file)
    {
-       text::Font::LoadFont(file, fontsize);
+       text::Font::LoadFont(file);
    }
  
 
@@ -116,7 +116,7 @@ namespace assetmanager {
 
         // Load entities from the JSON file
         std::cout << "Loading entities from: " << jsonFilePath << std::endl;
-        Serialization::Serialize::LoadComponentsJson(jsonFilePath);  // Load into ECS
+        Serialization::Serialize::m_LoadComponentsJson(jsonFilePath);  // Load into ECS
 
         std::cout << "Entities successfully loaded!" << std::endl;
     }

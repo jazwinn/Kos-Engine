@@ -4,7 +4,7 @@
 
 namespace text {
 
-	void Font::LoadFont(std::string file, unsigned int fontsize) {
+	void Font::LoadFont(std::string file) {
 
 
         FT_Library ft;

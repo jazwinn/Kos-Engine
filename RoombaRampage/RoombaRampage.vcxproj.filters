@@ -103,6 +103,9 @@
     <Filter Include="Source Files\Messaging">
       <UniqueIdentifier>{280167de-8d47-4042-87ab-7bf054a9603d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Graphics\Shaders">
+      <UniqueIdentifier>{b5e4c5ba-869a-4f06-a8b9-9a000360fbce}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Math\Mat2x2.cpp">
@@ -422,33 +425,40 @@
     <ClInclude Include="Assets\Text.h">
       <Filter>Header Files\Assets</Filter>
     </ClInclude>
+    <ClInclude Include="ECS\Component\TextComponent.h">
+      <Filter>Header Files\ECS\Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Graphics\genericFragmentShader.frag">
-      <Filter>Header Files\Graphics</Filter>
-    </None>
-    <None Include="Graphics\genericVertexShader.vert">
-      <Filter>Header Files\Graphics</Filter>
-    </None>
-    <None Include="Graphics\frameAccumulationFragmentShader.frag">
-      <Filter>Header Files\Graphics</Filter>
-    </None>
-    <None Include="Graphics\frameBufferFragmentShader.frag">
-      <Filter>Header Files\Graphics</Filter>
-    </None>
-    <None Include="Graphics\frameBufferVertexShader.vert">
-      <Filter>Header Files\Graphics</Filter>
-    </None>
-    <None Include="Graphics\frameCompositionFragmentShader.frag">
-      <Filter>Header Files\Graphics</Filter>
-    </None>
     <None Include="Graphics\debugFragmentShader.frag">
-      <Filter>Header Files\Graphics</Filter>
+      <Filter>Header Files\Graphics\Shaders</Filter>
     </None>
     <None Include="Graphics\debugVertexShader.vert">
-      <Filter>Header Files\Graphics</Filter>
+      <Filter>Header Files\Graphics\Shaders</Filter>
     </None>
-    <None Include="Graphics\textFragmentShader.frag" />
-    <None Include="Graphics\textVertexShader.vert" />
+    <None Include="Graphics\frameAccumulationFragmentShader.frag">
+      <Filter>Header Files\Graphics\Shaders</Filter>
+    </None>
+    <None Include="Graphics\frameBufferFragmentShader.frag">
+      <Filter>Header Files\Graphics\Shaders</Filter>
+    </None>
+    <None Include="Graphics\frameBufferVertexShader.vert">
+      <Filter>Header Files\Graphics\Shaders</Filter>
+    </None>
+    <None Include="Graphics\frameCompositionFragmentShader.frag">
+      <Filter>Header Files\Graphics\Shaders</Filter>
+    </None>
+    <None Include="Graphics\genericFragmentShader.frag">
+      <Filter>Header Files\Graphics\Shaders</Filter>
+    </None>
+    <None Include="Graphics\genericVertexShader.vert">
+      <Filter>Header Files\Graphics\Shaders</Filter>
+    </None>
+    <None Include="Graphics\textFragmentShader.frag">
+      <Filter>Header Files\Graphics\Shaders</Filter>
+    </None>
+    <None Include="Graphics\textVertexShader.vert">
+      <Filter>Header Files\Graphics\Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>
