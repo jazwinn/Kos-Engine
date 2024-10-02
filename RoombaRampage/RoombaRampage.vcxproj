@@ -181,6 +181,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\Freetype_Font\lib\*.dll" "$(OutDir)"</Co
     <ClCompile Include="Assets\Audio.cpp" />
     <ClCompile Include="Assets\Image.cpp" />
     <ClCompile Include="Assets\Prefab.cpp" />
+    <ClCompile Include="Assets\Text.cpp" />
     <ClCompile Include="De&amp;Serialization\json_handler.cpp" />
     <ClCompile Include="Debugging\Logging.cpp" />
     <ClCompile Include="Debugging\Performance.cpp" />
@@ -221,6 +222,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\Freetype_Font\lib\*.dll" "$(OutDir)"</Co
     <ClInclude Include="Assets\Audio.h" />
     <ClInclude Include="Assets\Image.h" />
     <ClInclude Include="Assets\Prefab.h" />
+    <ClInclude Include="Assets\Text.h" />
     <ClInclude Include="De&amp;Serialization\json_handler.h" />
     <ClInclude Include="Debugging\Logging.h" />
     <ClInclude Include="Debugging\Performance.h" />
@@ -262,7 +264,6 @@ xcopy /y /d "$(SolutionDir)Dependencies\Freetype_Font\lib\*.dll" "$(OutDir)"</Co
     <ClInclude Include="Events\BaseMessage.h" />
     <ClInclude Include="Events\Listeners.h" />
     <ClInclude Include="Events\MessageSystem.h" />
-    <ClInclude Include="Graphics\Graphics.h" />
     <ClInclude Include="Graphics\GraphicsPipe.h" />
     <ClInclude Include="Inputs\Input.h" />
     <ClInclude Include="Math\Mat2x2.h" />

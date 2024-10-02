@@ -2,6 +2,7 @@
 #include "../Assets/AssetManager.h"
 #include "../Application/Application.h"
 #include "../Application/Helper.h"
+#include "../Assets/Font.h"
 #include <iostream>
 #include <vector>
 #include <array>
@@ -661,15 +662,16 @@ namespace graphicpipe {
 
 		// iterate through all characters
 		std::string::const_iterator c;
+		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
 		for (c = text.begin(); c != text.end(); c++)
 		{
-			CharacterData ch = m_characters[*c];
+			text::CharacterData ch = assetmanager->m_characters[*c];
 
-			float xpos = x + ch.bearing.x * scale;
-			float ypos = y - (ch.size.y - ch.bearing.y) * scale;
+			float xpos = x + ch.m_bearing.x * scale;
+			float ypos = y - (ch.m_size.y - ch.m_bearing.y) * scale;
 
-			float w = ch.size.x * scale;
-			float h = ch.size.y * scale;
+			float w = ch.m_size.x * scale;
+			float h = ch.m_size.y * scale;
 			// update VBO for each character
 			float vertices[6][4] = {
 				{ xpos,     ypos + h,   0.0f, 0.0f },
@@ -692,7 +694,7 @@ namespace graphicpipe {
 
 			
 			// now advance cursors for next glyph (note that advance is number of 1/64 pixels)
-			x += (ch.advance >> 6) * scale; // bitshift by 6 to get value in pixels (2^6 = 64)
+			x += (ch.m_advance >> 6) * scale; // bitshift by 6 to get value in pixels (2^6 = 64)
 		}
 		glBindVertexArray(0);
 		glBindTexture(GL_TEXTURE_2D, 0);
