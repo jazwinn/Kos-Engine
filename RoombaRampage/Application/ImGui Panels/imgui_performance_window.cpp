@@ -38,7 +38,7 @@ struct Buffer {
 
 
 
-void ImGuiHandler::DrawPerformanceWindow(float fps) {
+void gui::ImGuiHandler::DrawPerformanceWindow(float fps) {
 
     ImGui::Begin("Performance");
 
