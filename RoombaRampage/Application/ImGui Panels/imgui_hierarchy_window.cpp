@@ -66,7 +66,7 @@ unsigned int ImGuiHandler::DrawHierachyWindow()
                         obj_text_entries.push_back(prefab.first);
                         deleteButton.push_back(false);
                         DuplicateButton.push_back(false);
-
+                        clicked_entity_id = id;
                     }
                 }
             }
