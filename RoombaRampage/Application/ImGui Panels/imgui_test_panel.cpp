@@ -59,14 +59,18 @@ void ImGuiHandler::DrawTestWindow() {
 		assetManager->m_audioContainer[1]->m_StopSound();
 	}
 	ImGui::NewLine();
+	ImGui::SeparatorText("##########################################");
+	ImGui::NewLine();
 	if (ImGui::Button("Crash")) {
 		LOGGING_INFO("About to trigger abort");
 		abort();
 	}
+	ImGui::SeparatorText("##########################################");
 	ImGui::NewLine();
 	if (ImGui::Button("Test Log")) {
 		log.m_GetInstance().m_TestingLog();
 	}
+	ImGui::SeparatorText("##########################################");
 	ImGui::NewLine();
 
 	static bool spawn = false;
@@ -101,7 +105,8 @@ void ImGuiHandler::DrawTestWindow() {
 			spawn = true;
 		}
 	}
-
+	ImGui::SeparatorText("##########################################");
+	ImGui::NewLine();
 	static bool collision_Flag = false;
 	static bool delete_Flag = false;
 	static ecs::EntityID id_1;
@@ -147,28 +152,10 @@ void ImGuiHandler::DrawTestWindow() {
 			delete_Flag = true;
 		}
 	}
-
+	ImGui::SeparatorText("##########################################");
 	ImGui::NewLine();
 	if (collision_Flag) {
-		if (ImGui::Button("ID_1 Right")) {
-			ecs::MovementComponent* mc = (ecs::MovementComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(id_1);
-			mc->m_Direction = { 0.1f,0.f };
-		}
-		ImGui::SameLine();
-		if (ImGui::Button("ID_1 Left")) {
-			ecs::MovementComponent* mc = (ecs::MovementComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(id_1);
-			mc->m_Direction = { -0.1f,0.f };
-		}
-		ImGui::SameLine();
-		if (ImGui::Button("ID_1 Up")) {
-			ecs::MovementComponent* mc = (ecs::MovementComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(id_1);
-			mc->m_Direction = { 0.f,0.1f };
-		}
-		ImGui::NewLine();
-		if (ImGui::Button("ID_1 Down")) {
-			ecs::MovementComponent* mc = (ecs::MovementComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(id_1);
-			mc->m_Direction = { 0.f,-0.1f };
-		}
+
 		ImGui::SameLine();
 		if (ImGui::Button("ID_1 Reset")) {
 			ecs::MovementComponent* mc = (ecs::MovementComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(id_1);
@@ -177,28 +164,30 @@ void ImGuiHandler::DrawTestWindow() {
 			tc->m_position = { 1.f,0.f };
 		}
 
-		ImGui::NewLine();
-
-		if (ImGui::Button("ID_2 Right")) {
-			ecs::MovementComponent* mc = (ecs::MovementComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(id_2);
-			mc->m_Direction = { 0.1f,0.f };
-		}
 		ImGui::SameLine();
-		if (ImGui::Button("ID_2 Left")) {
-			ecs::MovementComponent* mc = (ecs::MovementComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(id_2);
-			mc->m_Direction = { -0.1f,0.f };
-		}
-		ImGui::SameLine();
-		if (ImGui::Button("ID_2 Up")) {
-			ecs::MovementComponent* mc = (ecs::MovementComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(id_2);
+		if (ImGui::Button("ID_1 Up")) {
+			ecs::MovementComponent* mc = (ecs::MovementComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(id_1);
 			mc->m_Direction = { 0.f,0.1f };
 		}
 		ImGui::NewLine();
-		if (ImGui::Button("ID_2 Down")) {
-			ecs::MovementComponent* mc = (ecs::MovementComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(id_2);
+
+		if (ImGui::Button("ID_1 Left")) {
+			ecs::MovementComponent* mc = (ecs::MovementComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(id_1);
+			mc->m_Direction = { -0.1f,0.f };
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("ID_1 Down")) {
+			ecs::MovementComponent* mc = (ecs::MovementComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(id_1);
 			mc->m_Direction = { 0.f,-0.1f };
 		}
 		ImGui::SameLine();
+		if (ImGui::Button("ID_1 Right")) {
+			ecs::MovementComponent* mc = (ecs::MovementComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(id_1);
+			mc->m_Direction = { 0.1f,0.f };
+		}
+
+
+		ImGui::NewLine();
 		if (ImGui::Button("ID_2 Reset")) {
 			ecs::MovementComponent* mc = (ecs::MovementComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(id_2);
 			ecs::TransformComponent* tc = (ecs::TransformComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id_2);
@@ -206,6 +195,27 @@ void ImGuiHandler::DrawTestWindow() {
 			tc->m_position = { -1.f,0.f };
 
 		}
+		ImGui::SameLine();
+		if (ImGui::Button("ID_2 Up")) {
+			ecs::MovementComponent* mc = (ecs::MovementComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(id_2);
+			mc->m_Direction = { 0.f,0.1f };
+		}
+		ImGui::NewLine();
+		if (ImGui::Button("ID_2 Left")) {
+			ecs::MovementComponent* mc = (ecs::MovementComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(id_2);
+			mc->m_Direction = { -0.1f,0.f };
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("ID_2 Down")) {
+			ecs::MovementComponent* mc = (ecs::MovementComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(id_2);
+			mc->m_Direction = { 0.f,-0.1f };
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("ID_2 Right")) {
+			ecs::MovementComponent* mc = (ecs::MovementComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(id_2);
+			mc->m_Direction = { 0.1f,0.f };
+		}
+
 	}
 	ImGui::End();
 }
