@@ -68,27 +68,42 @@ void ImGuiHandler::DrawTestWindow() {
 		log.m_GetInstance().m_TestingLog();
 	}
 	ImGui::NewLine();
+
+	static bool spawn = false;
 	if (ImGui::Button("Spawn 2500")) {
-		int lowerBoundy = -1;
-		int upperBoundy = 1;
-
-
-
-		std::random_device rd;
-		std::mt19937 gen(rd());
-
-		std::uniform_real_distribution<float> height(static_cast<float>(lowerBoundy), static_cast<float>(upperBoundy));
-		std::uniform_real_distribution<float> height2(-1.5, 1.5);
-
-		for (int n{}; n < 2500; n++) {
-			 ecs::EntityID id = ecs->m_CreateEntity();
-			 ecs::TransformComponent* tc = (ecs::TransformComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id);
-			 ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, id);
-			 tc->m_scale = { 0.2f, 0.2f };
-			 tc->m_position.m_y = static_cast<float>(height(gen));
-			 tc->m_position.m_x = static_cast<float>(height2(gen));
-
+		
+		if (spawn) {
+			LOGGING_WARN("SPAWNING MORE THAN SET MAX ENTITY WILL CAUSE ASSERTION");
 		}
+		else {
+			int lowerBoundy = -1;
+			int upperBoundy = 1;
+
+
+
+			std::random_device rd;
+			std::mt19937 gen(rd());
+
+			std::uniform_real_distribution<float> height(static_cast<float>(lowerBoundy), static_cast<float>(upperBoundy));
+			std::uniform_real_distribution<float> height2(-1.5, 1.5);
+
+			for (int n{}; n < 2500; n++) {
+				ecs::EntityID id = ecs->m_CreateEntity();
+				ecs::TransformComponent* tc = (ecs::TransformComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id);
+				ecs::SpriteComponent* sc = static_cast<ecs::SpriteComponent*>(ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, id));
+				sc->m_imageID = 3;
+				
+				tc->m_scale = { 1.f,1.f };
+				tc->m_position.m_y = static_cast<float>(height(gen));
+				tc->m_position.m_x = static_cast<float>(height2(gen));
+
+			}
+
+			spawn = true;
+		}
+		
+		
+		
 	}
 
 

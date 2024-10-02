@@ -118,7 +118,7 @@ void ImGuiHandler::DrawComponentWindow()
                 ImGui::Text("Position");
                 ImGui::SameLine(slider_start_pos_x);
                 ImGui::SetNextItemWidth(100.0f);
-                ImGui::DragFloat("X##", &tc->m_position.m_x, 0.02f, -1.0f, 1.0f, "%.2f");
+                ImGui::DragFloat("X##", &tc->m_position.m_x, 0.02f, -2.f, 2.f, "%.2f");
 
                 ImGui::SameLine();
                 ImGui::SetNextItemWidth(100.0f);
