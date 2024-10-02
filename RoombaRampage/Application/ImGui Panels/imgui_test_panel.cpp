@@ -52,11 +52,11 @@ void ImGuiHandler::DrawTestWindow() {
 	}
 	ImGui::SameLine();
 	if (ImGui::Button("Sound")) {
-		assetManager->m_audioContainer[1]->m_playSound();
+		assetManager->m_audioContainer[1]->m_PlaySound();
 	}
 	if (ImGui::Button("Stop Sound")) {
-		assetManager->m_audioContainer[0]->m_stopSound();
-		assetManager->m_audioContainer[1]->m_stopSound();
+		assetManager->m_audioContainer[0]->m_StopSound();
+		assetManager->m_audioContainer[1]->m_StopSound();
 	}
 	ImGui::NewLine();
 	if (ImGui::Button("Crash")) {
