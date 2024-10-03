@@ -1,10 +1,10 @@
 /******************************************************************/
 /*!
-\file      MovementComponent.h
+\file      RigidBodyComponent.h
 \author    Ng Jaz winn, jazwinn.ng , 2301502
 \par       jazwinn.ng@digipen.edu
 \date      Oct 02, 2024
-\brief     This file contains data for the movement componetn
+\brief     This file contains data for rigid body
 
 
 Copyright (C) 2024 DigiPen Institute of Technology.
@@ -12,28 +12,32 @@ Reproduction or disclosure of this file or its contents without the
 prior written consent of DigiPen Institute of Technology is prohibited.
 */
 /********************************************************************/
-#ifndef MOVECOM_H
-#define MOVECOM_H
+#ifndef RIGIDCOM_H
+#define RIGIDCOM_H
 
+#include "../Math/Vector2.h"
 #include "Component.h"
 
+
 namespace ecs {
+
 	/******************************************************************/
 	/*!
-	\class     MovementComponent
-	\brief    Contains the speed and direction data
+	\class     RigidBodyComponent
+	\brief     Contains rigid body data
 	*/
 	/******************************************************************/
-	class MovementComponent : public Component {
+	class RigidBodyComponent : public Component {
 
 	public:
-		float m_Speed{1};
-		vector2::Vec2 m_Direction{0,0};
-	};
 
+		float m_Mass{};
+
+	};
 
 }
 
 
 
-#endif MOVECOM_H
+
+#endif RIGIDCOM_H

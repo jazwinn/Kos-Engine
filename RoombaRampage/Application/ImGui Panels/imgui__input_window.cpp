@@ -1,3 +1,19 @@
+/******************************************************************/
+/*!
+\file      Imgui_input_window.cpp
+\author    Ng Jaz winn, jazwinn.ng , 2301502
+\par       jazwinn.ng@digipen.edu
+\date      Oct 02, 2024
+\brief     This file contains the defination of the draw input window
+		   function. It draws the input window to show data.
+
+
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/********************************************************************/
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"

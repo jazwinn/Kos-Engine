@@ -57,13 +57,13 @@ namespace gui {
 
 
         Helper::Helpers* help = Helper::Helpers::GetInstance();
-        DrawPerformanceWindow(help->Fps);
+        DrawPerformanceWindow(help->m_fps);
         DrawHierachyWindow();
         DrawComponentWindow();
         DrawLogsWindow();
         DrawTestWindow();
         DrawInputWindow();
-        DrawRenderScreenWindow(static_cast<unsigned int>(Helper::Helpers::GetInstance()->WindowWidth), static_cast<unsigned int>(Helper::Helpers::GetInstance()->WindowHeight));
+        DrawRenderScreenWindow(static_cast<unsigned int>(Helper::Helpers::GetInstance()->m_windowWidth), static_cast<unsigned int>(Helper::Helpers::GetInstance()->m_windowHeight));
         ImGui::Render();
         ImGuiIO& io = ImGui::GetIO();
         if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)

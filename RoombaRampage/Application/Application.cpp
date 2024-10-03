@@ -1,4 +1,22 @@
+/******************************************************************/
+/*!
+\file      Application.cpp
+\author    Ng Jaz winn, jazwinn.ng , 2301502
+\par       jazwinn.ng@digipen.edu
+\date      Oct 02, 2024
+\brief     This file contains the main update loop of the engine.
+           It initializes the various major systems and call upon
+           them in the update loop. When the window is closed,
+           the applciations cleanup function is called to 
+           call the major systems to clean their program.
+           
 
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/********************************************************************/
 #include "Application.h"
 
 #include "../Graphics/GraphicsPipe.h"
@@ -114,7 +132,7 @@ namespace Application {
     int Application::Run() {
         Helper::Helpers *help = Helper::Helpers::GetInstance();
         ecs::ECS* ecs = ecs::ECS::m_GetInstance();
-        float FPSCapTime = 1.f / help->FpsCap;
+        float FPSCapTime = 1.f / help->m_fpsCap;
         double lastFrameTime = glfwGetTime();
         /*--------------------------------------------------------------
             GAME LOOP
@@ -128,7 +146,7 @@ namespace Application {
                 /*--------------------------------------------------------------
                     UPDATE ECS
                     --------------------------------------------------------------*/
-                ecs->m_Update(Helper::Helpers::GetInstance()->DeltaTime);
+                ecs->m_Update(Helper::Helpers::GetInstance()->m_deltaTime);
 
                 /*--------------------------------------------------------------
                     UPDATE Render Pipeline
@@ -156,15 +174,15 @@ namespace Application {
                     Calculate time
                     --------------------------------------------------------------*/
                 double currentFrameTime = glfwGetTime();
-                help->DeltaTime = static_cast<float>(currentFrameTime - lastFrameTime);
+                help->m_deltaTime = static_cast<float>(currentFrameTime - lastFrameTime);
 
-                while (help->DeltaTime < FPSCapTime) {
+                while (help->m_deltaTime < FPSCapTime) {
                     lastFrameTime = currentFrameTime;
                     currentFrameTime = glfwGetTime();
-                    help->DeltaTime += static_cast<float>(currentFrameTime - lastFrameTime);
+                    help->m_deltaTime += static_cast<float>(currentFrameTime - lastFrameTime);
                 }
                 lastFrameTime = glfwGetTime();
-                help->Fps = 1.f / help->DeltaTime;
+                help->m_fps = 1.f / help->m_deltaTime;
 
                 glfwSwapBuffers(lvWindow.Window);
             }

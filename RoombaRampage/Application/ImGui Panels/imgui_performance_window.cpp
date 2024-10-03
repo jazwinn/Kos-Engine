@@ -1,3 +1,19 @@
+/******************************************************************/
+/*!
+\file      Imgui_werformance_window.cpp
+\author    Ng Jaz winn, jazwinn.ng , 2301502
+\par       jazwinn.ng@digipen.edu
+\date      Oct 02, 2024
+\brief     This file contains the performance window that prints out
+           the time taken for all systems in each frame.
+
+
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/********************************************************************/
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
@@ -75,7 +91,7 @@ void gui::ImGuiHandler::DrawPerformanceWindow(float fps) {
 
        
 
-        interval += Helper::Helpers::GetInstance()->DeltaTime;
+        interval += Helper::Helpers::GetInstance()->m_deltaTime;
 
         if (interval > 1) { //updates every 1 second
             VectorSystemText.clear();

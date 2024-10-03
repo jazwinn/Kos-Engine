@@ -15,8 +15,8 @@ namespace Application {
         //const GLFWvidmode* mode = glfwGetVideoMode(monitor);
 
         // Create a window based on the current screen size
-        WindowWidth = Helper::Helpers::GetInstance()->WindowWidth;
-        WindowHeight = Helper::Helpers::GetInstance()->WindowHeight;
+        WindowWidth = Helper::Helpers::GetInstance()->m_windowWidth;
+        WindowHeight = Helper::Helpers::GetInstance()->m_windowHeight;
         
         //Set Context Version
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);

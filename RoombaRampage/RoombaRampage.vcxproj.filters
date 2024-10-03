@@ -320,7 +320,7 @@
     <ClInclude Include="Physics\Physics.h">
       <Filter>Header Files\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="ECS\Component\RigidBody.h">
+    <ClInclude Include="ECS\Component\RigidBodyComponent.h">
       <Filter>Header Files\ECS\Component</Filter>
     </ClInclude>
     <ClInclude Include="ECS\System\ControlSystem.h">

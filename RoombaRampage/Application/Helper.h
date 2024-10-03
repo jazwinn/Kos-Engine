@@ -1,12 +1,31 @@
-#pragma once
+/******************************************************************/
+/*!
+\file      Helper.h
+\author    Ng Jaz winn, jazwinn.ng , 2301502
+\par       jazwinn.ng@digipen.edu
+\date      Oct 02, 2024
+\brief     This file contains varaibles that is called and used anywhere
+		   in the application.
+
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/********************************************************************/
+
+#ifndef HELP_H
+#define HELP_H
 
 #include <memory>
-/*--------------------------------------------------------------
-  CURRENTLY NOT IN USE
---------------------------------------------------------------*/
 
 namespace Helper {
-
+/******************************************************************/
+/*!
+\class     Helpers
+\brief     Contains varaibles that can be called in anywhere
+*/
+/******************************************************************/
 	class Helpers {
 
 	private:
@@ -21,15 +40,15 @@ namespace Helper {
 			return InstancePtr.get();
 		}
 
-		float WindowWidth;
+		float m_windowWidth;
 
-		float WindowHeight;
+		float m_windowHeight;
 
-		float DeltaTime;
+		float m_deltaTime;
 
-		float FpsCap;
+		float m_fpsCap;
 
-		float Fps;
+		float m_fps;
 
 	private:
 		static std::unique_ptr<Helpers> InstancePtr;
@@ -37,3 +56,9 @@ namespace Helper {
 	};
 
 }
+
+
+#endif // !HELP_H
+
+
+

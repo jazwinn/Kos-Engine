@@ -1,10 +1,23 @@
+/******************************************************************/
+/*!
+\file      RenderDebugSystem.h
+\author    Ng Jaz winn, jazwinn.ng , 2301502
+\par       jazwinn.ng@digipen.edu
+\date      Oct 02, 2024
+\brief     This file contains class for the DebugDrawingSystem
+
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/********************************************************************/
 #ifndef DEBUGDRAWSYS_H
 #define DEBUGDRAWSYS_H
 
 #include "System.h"
 #include "../ECS/Component/TransformComponent.h"
 #include "../ECS/Component/ColliderComponent.h"
-#include "../ECS/Component/RigidBody.h"
 
 #include "../ECS/ECSList.h"
 
