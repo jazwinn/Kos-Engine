@@ -108,7 +108,6 @@ namespace graphicpipe {
 		m_windowHeight = static_cast<int>(Helper::Helpers::GetInstance()->WindowHeight);
 		m_aspectRatio = static_cast<float>(static_cast<float>(m_windowHeight) / static_cast<float>(m_windowWidth));
 
-
 		m_funcSetupArrayBuffer();
 		//m_funcBindImageDatafromAssetManager();
 
@@ -443,6 +442,10 @@ namespace graphicpipe {
 
 	void GraphicsPipe::m_funcUpdate()
 	{
+		//m_windowWidth = static_cast<int>(Helper::Helpers::GetInstance()->WindowWidth);
+		//m_windowHeight = static_cast<int>(Helper::Helpers::GetInstance()->WindowHeight);
+		//m_aspectRatio = static_cast<float>(static_cast<float>(m_windowHeight) / static_cast<float>(m_windowWidth));
+		std::cout << m_aspectRatio << std::endl;
 		if (m_modelData.size() > 0)
 		{
 			for (int n{}; n < m_modelData.size(); n++)
@@ -458,6 +461,7 @@ namespace graphicpipe {
 									0.f , 0.f ,1.f };
 				glm::mat3 lvTranslate{ 1, 0, 0, 0, 1, 0, m_modelData[n].m_worldCoordinates.x , m_modelData[n].m_worldCoordinates.y ,1 };
 				glm::mat3 lvNDCScale{ m_aspectRatio , 0, 0, 0, 1.f, 0, 0 , 0 ,1.f };
+
 
 				float totalFrameTime = m_frameTime * m_imageData[m_modelData[n].m_textureID].m_stripCount;
 				float frameTime = static_cast<float>(fmod(m_modelData[n].m_animationTimer, totalFrameTime));

@@ -49,11 +49,13 @@ namespace Application {
 
 
 	int AppWindow::Draw() {
-
+        Helper::Helpers *help = Helper::Helpers::GetInstance();
         glClear(GL_COLOR_BUFFER_BIT);
         int display_w, display_h;
         glfwGetFramebufferSize(Window, &display_w, &display_h);
         glViewport(0, 0, display_w, display_h);
+        help->WindowHeight = display_h;
+        help->WindowWidth = display_w;
         glClearColor(static_cast<GLclampf>(0.86), static_cast<GLclampf>(0.86), static_cast<GLclampf>(0.86), static_cast<GLclampf>(0.86));
         glClear(GL_COLOR_BUFFER_BIT);
 
