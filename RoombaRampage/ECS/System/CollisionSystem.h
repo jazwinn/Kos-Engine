@@ -1,3 +1,26 @@
+/******************************************************************/
+/*!
+\file      CollisionSystem.h
+\author    Clarence Boey
+\par       c.boey@digipen.edu
+\date      Sept 29, 2024
+\brief     This file contains the declaration of the CollisionSystem class,
+           which is part of the Entity Component System (ECS) framework.
+
+           The CollisionSystem class is responsible for managing and
+           processing collisions between entities that have both
+           Transform and Collider components. It registers and
+           deregisters entities with collision-related components and
+           updates the system to handle collisions during the game loop.
+
+           The class extends the ISystem interface, ensuring it adheres
+           to the system management structure within the ECS framework.
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/******************************************************************/
 
 #ifndef COLLSYS_H
 #define COLLSYS_H
@@ -7,28 +30,84 @@
 
 namespace ecs {
 
-	class CollisionSystem : public ISystem {
+    /******************************************************************/
+    /*!
+    \class   CollisionSystem
+    \brief   Manages the collision detection between entities in the ECS.
 
-	public:
-		void m_RegisterSystem(EntityID) override;
+             The CollisionSystem processes the collision interactions
+             between entities that have a TransformComponent and
+             ColliderComponent. It handles the registration and
+             deregistration of entities and updates the system every
+             frame to check for and respond to collisions.
+    */
+    /******************************************************************/
+    class CollisionSystem : public ISystem {
 
-		void m_DeregisterSystem(EntityID) override;
+    public:
 
-		void m_Init() override;
+        /******************************************************************/
+        /*!
+        \fn      void CollisionSystem::m_RegisterSystem(EntityID)
+        \brief   Registers an entity with the CollisionSystem.
 
-		void m_Update() override;
+                 This function adds the entity's relevant components,
+                 such as TransformComponent and ColliderComponent, to
+                 the internal storage for processing collision detection.
 
-	private:
-		//Storage to point to components
-		std::vector<TransformComponent*> m_vecTransformComponentPtr;
-		std::vector<ColliderComponent*> m_vecColliderComponentPtr;
-		//std::vector<RigidBodyComponent*> vecRigidBodyComponentPtr;
-		//std::vector<MovementComponent*> m_vecMovementComponentPtr;
+        \param   EntityID - The unique identifier of the entity to be registered.
+        */
+        /******************************************************************/
+        void m_RegisterSystem(EntityID) override;
 
-	};
+        /******************************************************************/
+        /*!
+        \fn      void CollisionSystem::m_DeregisterSystem(EntityID)
+        \brief   Deregisters an entity from the CollisionSystem.
+
+                 Removes the entity and its components from the collision
+                 processing system, stopping further collision checks
+                 for this entity.
+
+        \param   EntityID - The unique identifier of the entity to be deregistered.
+        */
+        /******************************************************************/
+        void m_DeregisterSystem(EntityID) override;
+
+        /******************************************************************/
+        /*!
+        \fn      void CollisionSystem::m_Init()
+        \brief   Initializes the CollisionSystem.
+
+                 Prepares the system for collision detection by setting up
+                 necessary structures and ensuring all registered entities
+                 are ready for collision processing.
+        */
+        /******************************************************************/
+        void m_Init() override;
+
+        /******************************************************************/
+        /*!
+        \fn      void CollisionSystem::m_Update()
+        \brief   Updates the CollisionSystem on every frame.
+
+                 This function processes collision detection for all registered
+                 entities, checking for intersections between colliders and
+                 handling the necessary collision responses.
+        */
+        /******************************************************************/
+        void m_Update() override;
+
+    private:
+        //! Vector storing pointers to the TransformComponent of registered entities
+        std::vector<TransformComponent*> m_vecTransformComponentPtr;
+        //! Vector storing pointers to the ColliderComponent of registered entities
+        std::vector<ColliderComponent*> m_vecColliderComponentPtr;
+        //std::vector<RigidBodyComponent*> vecRigidBodyComponentPtr; // Placeholder for future use
+        //std::vector<MovementComponent*> m_vecMovementComponentPtr; // Placeholder for future use
+
+    };
 
 }
 
-
-
-#endif COLLSYS_H
+#endif // COLLSYS_H

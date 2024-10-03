@@ -108,7 +108,6 @@ namespace graphicpipe {
 		m_windowHeight = static_cast<int>(Helper::Helpers::GetInstance()->m_windowHeight);
 		m_aspectRatio = static_cast<float>(static_cast<float>(m_windowHeight) / static_cast<float>(m_windowWidth));
 
-
 		m_funcSetupArrayBuffer();
 		//m_funcBindImageDatafromAssetManager();
 
@@ -443,6 +442,9 @@ namespace graphicpipe {
 
 	void GraphicsPipe::m_funcUpdate()
 	{
+		m_windowWidth = static_cast<int>(Helper::Helpers::GetInstance()->WindowWidth);
+		m_windowHeight = static_cast<int>(Helper::Helpers::GetInstance()->WindowHeight);
+		m_aspectRatio = static_cast<float>(static_cast<float>(m_windowHeight) / static_cast<float>(m_windowWidth));
 		if (m_modelData.size() > 0)
 		{
 			for (int n{}; n < m_modelData.size(); n++)
@@ -452,12 +454,29 @@ namespace graphicpipe {
 
 				float imageAspectRatio = static_cast<float>(m_imageData[m_modelData[n].m_textureID].m_width) / static_cast<float>(m_imageData[m_modelData[n].m_textureID].m_height);
 
-				glm::mat3 lvScale{ m_modelData[n].m_scale.x * widthRatio / imageAspectRatio , 0, 0, 0, m_modelData[n].m_scale.y * heightRatio , 0, 0 , 0 ,1 };
+				glm::mat3 lvScale{ m_modelData[n].m_scale.x * widthRatio / imageAspectRatio, 0, 0, 0, m_modelData[n].m_scale.y * heightRatio , 0, 0 , 0 ,1 };
 				glm::mat3 lvRotate{ cos(m_modelData[n].m_rotate * 3.1415f / 180.f), -sin(m_modelData[n].m_rotate * 3.1415f / 180.f), 0.f,
 								   sin(m_modelData[n].m_rotate * 3.1415f / 180.f), cos(m_modelData[n].m_rotate * 3.1415f / 180.f), 0.f,
 									0.f , 0.f ,1.f };
 				glm::mat3 lvTranslate{ 1, 0, 0, 0, 1, 0, m_modelData[n].m_worldCoordinates.x , m_modelData[n].m_worldCoordinates.y ,1 };
-				glm::mat3 lvNDCScale{ m_aspectRatio , 0, 0, 0, 1.f, 0, 0 , 0 ,1.f };
+
+				glm::mat3 lvNDCScale{ m_aspectRatio, 0, 0, 0, 1.f, 0, 0 , 0 ,1.f };
+				
+				//glm::mat3 ortho = glm::mat3(1.0f);
+
+				//// Scale X and Y by aspect ratio
+				//float left = -0.5f;
+				//float right = 0.5f;
+				//float bottom = -0.5f;
+				//float top = 0.5f;
+
+				//ortho[0][0] = 2.0f / (right - left);  // Scale X
+				//ortho[1][1] = 2.0f / (top - bottom);  // Scale Y
+
+				//ortho[2][0] = -(right + left) / (right - left);  // Translate X
+				//ortho[2][1] = -(top + bottom) / (top - bottom);  // Translate Y
+			
+				
 
 				float totalFrameTime = m_frameTime * m_imageData[m_modelData[n].m_textureID].m_stripCount;
 				float frameTime = static_cast<float>(fmod(m_modelData[n].m_animationTimer, totalFrameTime));

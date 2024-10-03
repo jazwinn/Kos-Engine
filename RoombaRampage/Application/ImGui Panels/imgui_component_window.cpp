@@ -36,7 +36,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include <iostream>
 #include "../De&Serialization/json_handler.h"
 
-void gui::ImGuiHandler::DrawComponentWindow()
+void gui::ImGuiHandler::m_DrawComponentWindow()
 {
     bool windowOpen = true;
     std::string Title = "Component Window";
@@ -53,9 +53,9 @@ void gui::ImGuiHandler::DrawComponentWindow()
     };
     static int ComponentType = 0;
 
-    if (obj_text_entries.size() > 0) {
+    if (m_objTextEntries.size() > 0) {
 
-        ecs::EntityID entityID = clicked_entity_id;
+        ecs::EntityID entityID = m_clickedEntityId;
 
         ImGui::Combo("##ADDCOMPONENT", &ComponentType, ComponentNames, IM_ARRAYSIZE(ComponentNames), IM_ARRAYSIZE(ComponentNames));
         if (ComponentType == 1) {
@@ -87,7 +87,6 @@ void gui::ImGuiHandler::DrawComponentWindow()
             ComponentType = 0;
         }
 
-
         const float slider_start_pos_x = 100.0f; //Padding for the slider
 
 
@@ -109,9 +108,9 @@ void gui::ImGuiHandler::DrawComponentWindow()
             ImGui::SameLine(slider_start_pos_x);
             ImGui::SetNextItemWidth(100.0f);
             if (ImGui::InputText("##NAMETEXT##", &nc->m_entityName)) {
-                for (int n{}; n < obj_entity_id.size(); n++) {
-                    if (obj_entity_id[n] == entityID) {
-                        obj_text_entries[n] = nc->m_entityName;
+                for (int n{}; n < m_objEntityId.size(); n++) {
+                    if (m_objEntityId[n] == entityID) {
+                        m_objTextEntries[n] = nc->m_entityName;
                     }
                 }
             }
@@ -192,7 +191,6 @@ void gui::ImGuiHandler::DrawComponentWindow()
         }
         if (EntitySignature.test(ecs::TYPECOLLIDERCOMPONENT))
         {
-
             if (ImGui::CollapsingHeader("Collider Component")) {
 
                 //retrieve collision collider
@@ -330,7 +328,6 @@ void gui::ImGuiHandler::DrawComponentWindow()
                     tc->m_green = color.y;
                     tc->m_blue = color.z;
                 }
-
             }
         }
         
@@ -353,11 +350,8 @@ void gui::ImGuiHandler::DrawComponentWindow()
                ImGui::SameLine(slider_start_pos_x + 100);
                ImGui::SetNextItemWidth(100.0f);
                ImGui::DragFloat("##SPF##", &graphicsPipe->m_frameTime, 0.01f, 0.04f, 2.f, "%.2f");
-
-
             }
         }
      }
-
     ImGui::End();
 }   

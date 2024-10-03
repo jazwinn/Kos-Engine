@@ -21,7 +21,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 #include"../Inputs/Input.h"
 
-void gui::ImGuiHandler::DrawInputWindow() {
+void gui::ImGuiHandler::m_DrawInputWindow() {
 
 	bool open = true;
 	ImGui::Begin("Inputs", &open);

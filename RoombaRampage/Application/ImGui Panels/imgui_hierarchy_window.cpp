@@ -27,7 +27,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include<string>
 #include <iostream>
 
-unsigned int gui::ImGuiHandler::DrawHierachyWindow()
+unsigned int gui::ImGuiHandler::m_DrawHierachyWindow()
 {
     //fetch ecs
     ecs::ECS* ecs = ecs::ECS::m_GetInstance();
@@ -36,10 +36,10 @@ unsigned int gui::ImGuiHandler::DrawHierachyWindow()
     if (!hasLoaded) {
         // Iterate through all loaded entities and add them to the hierarchy
         for (const auto& entityPair : ecs->m_ECS_EntityMap) {
-            this->obj_entity_id.push_back(entityPair.first);
-            obj_text_entries.push_back(static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(entityPair.first))->m_entityName);
-            deleteButton.push_back(false);
-            DuplicateButton.push_back(false);
+            this->m_objEntityId.push_back(entityPair.first);
+            m_objTextEntries.push_back(static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(entityPair.first))->m_entityName);
+            m_deleteButton.push_back(false);
+            m_duplicateButton.push_back(false);
         }
         hasLoaded = true;
     }
@@ -62,11 +62,11 @@ unsigned int gui::ImGuiHandler::DrawHierachyWindow()
                         int id = prefab::Prefab::m_CreateEntityFromPrefab(prefab.first);
                         if (id == -1) continue;
 
-                        obj_entity_id.push_back(static_cast<ecs::EntityID>(id));
-                        obj_text_entries.push_back(prefab.first);
-                        deleteButton.push_back(false);
-                        DuplicateButton.push_back(false);
-                        clicked_entity_id = id;
+                        m_objEntityId.push_back(static_cast<ecs::EntityID>(id));
+                        m_objTextEntries.push_back(prefab.first);
+                        m_deleteButton.push_back(false);
+                        m_duplicateButton.push_back(false);
+                        m_clickedEntityId = id;
                     }
                 }
             }
@@ -77,60 +77,60 @@ unsigned int gui::ImGuiHandler::DrawHierachyWindow()
         ImGui::EndMenuBar();
     }
 
-    std::string ObjectCountStr = "Oject Count: " + std::to_string(obj_entity_id.size());
+    std::string ObjectCountStr = "Oject Count: " + std::to_string(m_objEntityId.size());
     ImGui::Text(ObjectCountStr.c_str());
 
     if (ImGui::Button("+ Add GameObject"))
-        ImGuiHandler::objectNameBox ? ImGuiHandler::objectNameBox = false : objectNameBox = true;
+        ImGuiHandler::m_objectNameBox ? ImGuiHandler::m_objectNameBox = false : m_objectNameBox = true;
 		
-    if (objectNameBox)
+    if (m_objectNameBox)
     {
-        if (ImGui::InputText("##", charBuffer, IM_ARRAYSIZE(charBuffer), ImGuiInputTextFlags_EnterReturnsTrue))
+        if (ImGui::InputText("##", m_charBuffer, IM_ARRAYSIZE(m_charBuffer), ImGuiInputTextFlags_EnterReturnsTrue))
         {
 
             //create ID then push into vector
             ecs::EntityID newEntityID = ecs->m_CreateEntity();
-            obj_entity_id.push_back(newEntityID);
+            m_objEntityId.push_back(newEntityID);
 
             //set new ID to be clicked
-            clicked_entity_id = newEntityID;
+            m_clickedEntityId = newEntityID;
             //Add the string into the vector
-            obj_text_entries.push_back(std::string(charBuffer));
+            m_objTextEntries.push_back(std::string(m_charBuffer));
             // add string to name component
-            static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(newEntityID))->m_entityName = std::string(charBuffer);
+            static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(newEntityID))->m_entityName = std::string(m_charBuffer);
 
             //Set to false as no button showing first
             //Used to track and maintain sync between objtextentries and deletebutton vector
-            deleteButton.push_back(false);
-            DuplicateButton.push_back(false);
+            m_deleteButton.push_back(false);
+            m_duplicateButton.push_back(false);
 
-            charBuffer[0] = '\0';
-            objectNameBox = false;
+            m_charBuffer[0] = '\0';
+            m_objectNameBox = false;
 
             //Serialization::Serialize::SaveComponentsJson("../RoombaRampage/Json", Ecs::ECS::GetInstance()->ECS_EntityMap, obj_text_entries, obj_entity_id);
         }
     }
 
     //For loop to display all the gameobj text as button 
-    for (size_t i = 0; i < obj_text_entries.size(); i++)
+    for (size_t i = 0; i < m_objTextEntries.size(); i++)
     {
         // '##' let IMGui set an internal unique ID to widget without visible label!
-        std::string buttonName = obj_text_entries[i] +"##"+ std::to_string(i);
+        std::string buttonName = m_objTextEntries[i] +"##"+ std::to_string(i);
 
         if (ImGui::Button(buttonName.c_str()))
         {
-            std::fill(deleteButton.begin(), deleteButton.end(), false);
-            std::fill(DuplicateButton.begin(), DuplicateButton.end(), false);
+            std::fill(m_deleteButton.begin(), m_deleteButton.end(), false);
+            std::fill(m_duplicateButton.begin(), m_duplicateButton.end(), false);
 
-            deleteButton[i] ? deleteButton[i] = false : deleteButton[i] = true;
-            DuplicateButton[i] ? DuplicateButton[i] = false : DuplicateButton[i] = true;
+            m_deleteButton[i] ? m_deleteButton[i] = false : m_deleteButton[i] = true;
+            m_duplicateButton[i] ? m_duplicateButton[i] = false : m_duplicateButton[i] = true;
 
-            clicked_entity_id = obj_entity_id[i];
-            std::cout << "Entity ID clicked: " << clicked_entity_id << std::endl; //For debug purposes, remove later
+            m_clickedEntityId = m_objEntityId[i];
+            std::cout << "Entity ID clicked: " << m_clickedEntityId << std::endl; //For debug purposes, remove later
         }
 
         //Render delete button
-        if (deleteButton[i])
+        if (m_deleteButton[i])
         {
             //Use _button,_buttonhover_buttonactive
             //To change the button color
@@ -146,16 +146,16 @@ unsigned int gui::ImGuiHandler::DrawHierachyWindow()
             if (ImGui::Button(deleteButtonLabel.c_str()))
             {
                 //Delete entity from ecs               
-                ecs::ECS::m_GetInstance()->m_DeleteEntity(obj_entity_id[i]);
+                ecs::ECS::m_GetInstance()->m_DeleteEntity(m_objEntityId[i]);
 
                 //remove the entries 
-                obj_text_entries.erase(obj_text_entries.begin() + i);
-                obj_entity_id.erase(obj_entity_id.begin() + i);
-                deleteButton.erase(deleteButton.begin() + i);
-                DuplicateButton.erase(DuplicateButton.begin() + i);
+                m_objTextEntries.erase(m_objTextEntries.begin() + i);
+                m_objEntityId.erase(m_objEntityId.begin() + i);
+                m_deleteButton.erase(m_deleteButton.begin() + i);
+                m_duplicateButton.erase(m_duplicateButton.begin() + i);
                 
-                if (obj_entity_id.size() > 0) {
-                    clicked_entity_id = obj_entity_id[0];//set to 
+                if (m_objEntityId.size() > 0) {
+                    m_clickedEntityId = m_objEntityId[0];//set to 
                 }
                 
 
@@ -170,7 +170,7 @@ unsigned int gui::ImGuiHandler::DrawHierachyWindow()
         }
 
         //Render Duplicate button
-        if (DuplicateButton[i])
+        if (m_duplicateButton[i])
         {
             //Use _button,_buttonhover_buttonactive
             //To change the button color
@@ -187,19 +187,19 @@ unsigned int gui::ImGuiHandler::DrawHierachyWindow()
             {
 
                 //create ID then push into vector
-                ecs::EntityID newEntityID = ecs->m_DuplicateEntity(obj_entity_id[i]);
-                obj_entity_id.push_back(newEntityID);
+                ecs::EntityID newEntityID = ecs->m_DuplicateEntity(m_objEntityId[i]);
+                m_objEntityId.push_back(newEntityID);
 
                 //Add the string into the vector
-                obj_text_entries.push_back(std::string(obj_text_entries[i]));
+                m_objTextEntries.push_back(std::string(m_objTextEntries[i]));
 
                 //Set to false as no button showing first
                 //Used to track and maintain sync between objtextentries and deletebutton vector
-                deleteButton.push_back(false);
-                DuplicateButton.push_back(false);
+                m_deleteButton.push_back(false);
+                m_duplicateButton.push_back(false);
 
-                charBuffer[0] = '\0';
-                objectNameBox = false;
+                m_charBuffer[0] = '\0';
+                m_objectNameBox = false;
 
                 ImGui::PopStyleColor(3);  // Pop the 3 style colors (button, hovered, and active)
                 continue;
@@ -211,5 +211,5 @@ unsigned int gui::ImGuiHandler::DrawHierachyWindow()
 
     ImGui::End();
 
-    return clicked_entity_id;
+    return m_clickedEntityId;
 }
