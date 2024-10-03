@@ -1,3 +1,18 @@
+/******************************************************************/
+/*!
+\file      imgui_logs_window.cpp
+\author    Rayner Tan
+\par       raynerweichen.tan@digipen.edu
+\date      Sept 28, 2024
+\brief     Logging Panel for ImGUI
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/******************************************************************/
+
+
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"

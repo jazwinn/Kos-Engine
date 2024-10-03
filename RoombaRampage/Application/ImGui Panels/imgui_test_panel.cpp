@@ -111,7 +111,7 @@ void gui::ImGuiHandler::m_DrawTestWindow() {
 	ImGui::SameLine();
 	if (ImGui::Button("Delete 2500")) {
 		if (spawn) {
-			for (size_t i = 0; i < list_Of_Entities.size(); ++i) {
+			for (auto& i : list_Of_Entities) {
 				ecs::ECS::m_GetInstance()->m_DeleteEntity(i);
 			}
 		}
