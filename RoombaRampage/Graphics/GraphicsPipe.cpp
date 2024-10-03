@@ -445,7 +445,6 @@ namespace graphicpipe {
 		m_windowWidth = static_cast<int>(Helper::Helpers::GetInstance()->WindowWidth);
 		m_windowHeight = static_cast<int>(Helper::Helpers::GetInstance()->WindowHeight);
 		m_aspectRatio = static_cast<float>(static_cast<float>(m_windowHeight) / static_cast<float>(m_windowWidth));
-		std::cout << m_aspectRatio << std::endl;
 		if (m_modelData.size() > 0)
 		{
 			for (int n{}; n < m_modelData.size(); n++)
@@ -455,13 +454,13 @@ namespace graphicpipe {
 
 				float imageAspectRatio = static_cast<float>(m_imageData[m_modelData[n].m_textureID].m_width) / static_cast<float>(m_imageData[m_modelData[n].m_textureID].m_height);
 
-				glm::mat3 lvScale{ m_modelData[n].m_scale.x * widthRatio / imageAspectRatio * m_aspectRatio , 0, 0, 0, m_modelData[n].m_scale.y * heightRatio , 0, 0 , 0 ,1 };
+				glm::mat3 lvScale{ m_modelData[n].m_scale.x * widthRatio / imageAspectRatio, 0, 0, 0, m_modelData[n].m_scale.y * heightRatio , 0, 0 , 0 ,1 };
 				glm::mat3 lvRotate{ cos(m_modelData[n].m_rotate * 3.1415f / 180.f), -sin(m_modelData[n].m_rotate * 3.1415f / 180.f), 0.f,
 								   sin(m_modelData[n].m_rotate * 3.1415f / 180.f), cos(m_modelData[n].m_rotate * 3.1415f / 180.f), 0.f,
 									0.f , 0.f ,1.f };
 				glm::mat3 lvTranslate{ 1, 0, 0, 0, 1, 0, m_modelData[n].m_worldCoordinates.x , m_modelData[n].m_worldCoordinates.y ,1 };
 
-				glm::mat3 lvNDCScale{ 1.f, 0, 0, 0, 1.f, 0, 0 , 0 ,1.f };
+				glm::mat3 lvNDCScale{ m_aspectRatio, 0, 0, 0, 1.f, 0, 0 , 0 ,1.f };
 				
 				//glm::mat3 ortho = glm::mat3(1.0f);
 
@@ -494,12 +493,12 @@ namespace graphicpipe {
 		{
 			for (int i{}; i < m_debugBoxData.size(); i++)
 			{
-				glm::mat3 lvScale{ m_debugBoxData[i].m_scale.x * m_aspectRatio, 0, 0, 0, m_debugBoxData[i].m_scale.y, 0, 0 , 0 ,1 };
+				glm::mat3 lvScale{ m_debugBoxData[i].m_scale.x, 0, 0, 0, m_debugBoxData[i].m_scale.y, 0, 0 , 0 ,1 };
 				glm::mat3 lvRotate{ cos(m_debugBoxData[i].m_rotate * 3.1415f / 180.f), -sin(m_debugBoxData[i].m_rotate * 3.1415f / 180.f), 0.f,
 									sin(m_debugBoxData[i].m_rotate * 3.1415f / 180.f), cos(m_debugBoxData[i].m_rotate * 3.1415f / 180.f), 0.f,
 									0.f , 0.f ,1.f };
 				glm::mat3 lvTranslate{ 1, 0, 0, 0, 1, 0, m_debugBoxData[i].m_worldCoordinates.x , m_debugBoxData[i].m_worldCoordinates.y ,1 };
-				glm::mat3 lvNDCScale{ 1.f, 0, 0, 0, 1.f, 0, 0 , 0 ,1.f };
+				glm::mat3 lvNDCScale{ m_aspectRatio, 0, 0, 0, 1.f, 0, 0 , 0 ,1.f };
 				m_debugToNDCMatrix.push_back(lvNDCScale * lvTranslate * lvRotate * lvScale);
 				m_debugBoxCollisionChecks.push_back(static_cast<float>(m_debugBoxData[i].m_isCollided));
 
