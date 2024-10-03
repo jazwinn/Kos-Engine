@@ -205,15 +205,15 @@ namespace ecs {
 	template <typename T>
 	bool ComponentPool<T>::m_HasComponent(EntityID ID) { //contained any stored data
 
-		//for (auto& Component : m_Pool) {
-		//	if (Component.m_Entity == ID) {
-		//		return Component.m_IsLive;
-		//	}
-		//}
-
-		if (std::find_if(m_Pool.begin(), m_Pool.end(), [ID](const auto& obj) { return obj.m_Entity == ID; }) != m_Pool.end()) {
-			return true;
+		for (auto& Component : m_Pool) {
+			if (Component.m_Entity == ID) {
+				return Component.m_IsLive;
+			}
 		}
+
+		//if (std::find_if(m_Pool.begin(), m_Pool.end(), [ID](const auto& obj) { return obj.m_Entity == ID; }) != m_Pool.end()) {
+		//	return true;
+		//}
 
 		return false;
 	}

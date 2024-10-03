@@ -442,8 +442,8 @@ namespace graphicpipe {
 
 	void GraphicsPipe::m_funcUpdate()
 	{
-		m_windowWidth = static_cast<int>(Helper::Helpers::GetInstance()->WindowWidth);
-		m_windowHeight = static_cast<int>(Helper::Helpers::GetInstance()->WindowHeight);
+		m_windowWidth = static_cast<int>(Helper::Helpers::GetInstance()->m_windowWidth);
+		m_windowHeight = static_cast<int>(Helper::Helpers::GetInstance()->m_windowHeight);
 		m_aspectRatio = static_cast<float>(static_cast<float>(m_windowHeight) / static_cast<float>(m_windowWidth));
 		if (m_modelData.size() > 0)
 		{

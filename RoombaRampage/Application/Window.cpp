@@ -54,8 +54,8 @@ namespace Application {
         int display_w, display_h;
         glfwGetFramebufferSize(Window, &display_w, &display_h);
         glViewport(0, 0, display_w, display_h);
-        help->WindowHeight = static_cast<float>(display_h);
-        help->WindowWidth = static_cast<float>(display_w);
+        help->m_windowHeight = static_cast<float>(display_h);
+        help->m_windowWidth = static_cast<float>(display_w);
         glClearColor(static_cast<GLclampf>(0.86), static_cast<GLclampf>(0.86), static_cast<GLclampf>(0.86), static_cast<GLclampf>(0.86));
         glClear(GL_COLOR_BUFFER_BIT);
 
