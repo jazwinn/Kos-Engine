@@ -7,7 +7,7 @@
 
 #include "../Graphics/GraphicsPipe.h"
 
-void ImGuiHandler::DrawRenderScreenWindow(unsigned int windowWidth, unsigned int windowHeight)
+void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsigned int windowHeight)
 {
    /* GraphicsPipe* pipe;
     pipe = GraphicsPipe::funcGetInstance();

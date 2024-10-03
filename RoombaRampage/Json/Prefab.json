@@ -111,5 +111,27 @@
       "imageID": 1,
       "frameNumber": 0
     }
+  },
+  {
+    "name": "Animated Object",
+    "transform": {
+        "position": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "rotation": 0.0,
+        "scale": {
+            "x": 1.0,
+            "y": 1.0
+        }
+    },
+    "sprite": {
+        "imageID": 5,
+        "frameNumber": 0
+    },
+    "animation": {
+        "frameTimer": 37.98250961303711,
+        "isAnimating": true
+    }
   }
 ]

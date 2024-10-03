@@ -119,19 +119,23 @@ namespace image {
 
     std::string Image::m_extractSpriteNameFromFilename(const std::string& filename)
     {
-        //TOCHECK
-        std::regex pattern("([[:alnum:]]+)([_]*)([[:alnum:]]*)\\.png");
+        std::regex pattern("([_[:alnum:]]+)([_]+)([[:alnum:]]*)\\.png"); // For animation
         std::smatch match;
 
         if (std::regex_search(filename, match, pattern))
         {
             return match[1].str();
         }
+
+        pattern = ("([[:alnum:]]+)([_]*)([[:alnum:]]*)\\.png"); // For single sprites
+        if (std::regex_search(filename, match, pattern))
+        {
+            return match[1].str();
+        }
+
         return "Error_Cannot_Read_Sprite_Name";
     }
 
-    //TOCHECK
-   //Naming of targetchannels is the same as the member variables
     unsigned char* Image::m_funcPadTexture(const unsigned char* originalPixels, int originalWidth, int originalHeight, int originalChannels, int targetWidth, int targetHeight, int targetChannels)
     {
         unsigned char* paddedPixels = new unsigned char[targetWidth * targetHeight * targetChannels];

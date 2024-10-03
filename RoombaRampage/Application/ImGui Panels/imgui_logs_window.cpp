@@ -4,7 +4,7 @@
 #include "imgui_handler.h"
 #include "../Debugging/Logging.h"
 
-void ImGuiHandler::DrawLogsWindow() {
+void gui::ImGuiHandler::m_DrawLogsWindow() {
 
     //static ExampleAppLog log;
     bool open = true;

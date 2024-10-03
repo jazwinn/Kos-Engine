@@ -209,9 +209,9 @@ xcopy /y /d "$(SolutionDir)Dependencies\Freetype_Font\lib\*.dll" "$(OutDir)"</Co
     <ClCompile Include="Inputs\Input.cpp" />
     <ClCompile Include="Math\Mat2x2.cpp" />
     <ClCompile Include="Math\Mat3x3.cpp" />
-    <ClCompile Include="Math\mathlib.cpp" />
-    <ClCompile Include="Math\vector2.cpp" />
-    <ClCompile Include="Physics\Phyiscs.cpp" />
+    <ClCompile Include="Math\Mathlib.cpp" />
+    <ClCompile Include="Math\Vector2.cpp" />
+    <ClCompile Include="Physics\Physics.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Application.h" />
@@ -241,6 +241,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\Freetype_Font\lib\*.dll" "$(OutDir)"</Co
     <ClInclude Include="Dependencies\imgui\imstb_textedit.h" />
     <ClInclude Include="Dependencies\imgui\imstb_truetype.h" />
     <ClInclude Include="Dependencies\stb_image\include\stb_image.h" />
+    <ClInclude Include="ECS\Component\AnimationComponent.h" />
     <ClInclude Include="ECS\Component\ColliderComponent.h" />
     <ClInclude Include="ECS\Component\Component.h" />
     <ClInclude Include="ECS\Component\ComponentList.h" />
@@ -271,8 +272,8 @@ xcopy /y /d "$(SolutionDir)Dependencies\Freetype_Font\lib\*.dll" "$(OutDir)"</Co
     <ClInclude Include="Inputs\Input.h" />
     <ClInclude Include="Math\Mat2x2.h" />
     <ClInclude Include="Math\Mat3x3.h" />
-    <ClInclude Include="Math\mathlib.h" />
-    <ClInclude Include="Math\vector2.h" />
+    <ClInclude Include="Math\Mathlib.h" />
+    <ClInclude Include="Math\Vector2.h" />
     <ClInclude Include="Physics\Physics.h" />
   </ItemGroup>
   <ItemGroup>

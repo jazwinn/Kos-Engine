@@ -5,7 +5,7 @@
 
 #include"../Inputs/Input.h"
 
-void ImGuiHandler::DrawInputWindow() {
+void gui::ImGuiHandler::m_DrawInputWindow() {
 
 	bool open = true;
 	ImGui::Begin("Inputs", &open);

@@ -135,20 +135,11 @@
     <ClCompile Include="Application\Window.cpp">
       <Filter>Source Files\Application</Filter>
     </ClCompile>
-    <ClCompile Include="Math\mathlib.cpp">
-      <Filter>Source Files\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="Math\vector2.cpp">
-      <Filter>Source Files\Math</Filter>
-    </ClCompile>
     <ClCompile Include="Application\main.cpp">
       <Filter>Source Files\Application</Filter>
     </ClCompile>
     <ClCompile Include="Assets\AssetManager.cpp">
       <Filter>Source Files\Assets</Filter>
-    </ClCompile>
-    <ClCompile Include="Physics\Phyiscs.cpp">
-      <Filter>Source Files\Physics</Filter>
     </ClCompile>
     <ClCompile Include="ECS\System\ControlSystem.cpp">
       <Filter>Source Files\ECS\System</Filter>
@@ -252,6 +243,15 @@
     <ClCompile Include="ECS\System\RenderTextSystem.cpp">
       <Filter>Source Files\ECS\System</Filter>
     </ClCompile>
+    <ClCompile Include="Physics\Physics.cpp">
+      <Filter>Source Files\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\Mathlib.cpp">
+      <Filter>Source Files\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\Vector2.cpp">
+      <Filter>Source Files\Math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Math\Mat2x2.h">
@@ -310,12 +310,6 @@
     </ClInclude>
     <ClInclude Include="Application\Window.h">
       <Filter>Header Files\Application</Filter>
-    </ClInclude>
-    <ClInclude Include="Math\mathlib.h">
-      <Filter>Header Files\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Math\vector2.h">
-      <Filter>Header Files\Math</Filter>
     </ClInclude>
     <ClInclude Include="Assets\AssetManager.h">
       <Filter>Header Files\Assets</Filter>
@@ -433,6 +427,15 @@
     </ClInclude>
     <ClInclude Include="ECS\System\RenderDebugSystem.h">
       <Filter>Header Files\ECS\System</Filter>
+    </ClInclude>
+    <ClInclude Include="ECS\Component\AnimationComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Mathlib.h">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Vector2.h">
+      <Filter>Header Files\Math</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

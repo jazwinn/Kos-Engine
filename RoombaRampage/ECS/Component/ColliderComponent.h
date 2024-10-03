@@ -1,7 +1,7 @@
 #ifndef BOXCOM_H
 #define BOXCOM_H
 
-#include "../Math/vector2.h"
+#include "../Math/Vector2.h"
 #include "Component.h"
 #include "../Physics/Physics.h"
 

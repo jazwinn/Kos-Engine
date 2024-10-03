@@ -39,7 +39,9 @@ namespace assetmanager {
         m_funcLoadImage("Assets/roombaTest.png");
         m_funcLoadImage("Assets/roombaTest2.png");
         m_funcLoadImage("Assets/roombaTest3.png");
-        m_funcLoadImage("Assets/sprAssassinBar_strip8.png");
+        m_funcLoadImage("Assets/ani_RoombaBlink_strip4.png");
+        m_funcLoadImage("Assets/ani_RoombaBoosters_strip6.png");
+        m_funcLoadImage("Assets/ani_SeanSprite_strip4.png");
 
         m_LoadAudio("Assets/vacuum.mp3");
         m_LoadAudio("Assets/zwing.wav");
@@ -104,7 +106,7 @@ namespace assetmanager {
        
         graphics->m_textureIDs.push_back(textureID);
         std::cout << "Texture Binded, Texture ID: " << textureID << std::endl;
-
+        graphics->m_stripCounts.push_back(m_imageContainer.back().m_stripCount);
         graphics->m_imageData.push_back(m_imageContainer.back());
 
     }

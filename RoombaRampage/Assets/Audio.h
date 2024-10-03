@@ -27,6 +27,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 #include "fmod.hpp"
 #include "fmod_errors.h"
+#include <thread>
 
 namespace fmodaudio {
 

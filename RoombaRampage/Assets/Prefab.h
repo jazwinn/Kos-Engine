@@ -33,6 +33,7 @@ namespace prefab {
 		ecs::ColliderComponent m_colliderComponents;
 		ecs::RigidBodyComponent m_rigidBodyComponents;
 		ecs::TextComponent m_textComponent;
+		ecs::AnimationComponent m_animationComponent;
 		
 
 
