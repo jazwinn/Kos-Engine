@@ -1,5 +1,27 @@
-#include "../Application/ImGui Panels/imgui_handler.h"
-#include "../Application/Helper.h"
+/********************************************************************/
+/*!
+\file      imgui_handler.cpp
+\author    Chiu Jun Jie, junjie.c , 2301524
+\par       junjie.c@digipen.edu
+\date      Oct 02, 2024
+\brief     This file defines functions that handle ImGui operations
+           - Initialize: Sets up ImGui with GLFW and OpenGL.
+           - NewFrame: Prepares and starts a new ImGui frame.
+           - Render: Renders ImGui elements and windows.
+           - Shutdown: Cleans up ImGui resources.
+           - DrawMainMenuBar: Renders the main menu bar UI.
+           - DrawPerformanceWindow: Displays FPS and performance metrics.
+           - DrawComponentWindow: Manages the ECS component interface.
+           - DrawLogsWindow: Displays logs.
+           - DrawInputWindow: Handles input settings.
+           - DrawRenderScreenWindow: Sets up the window for render output.
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/********************************************************************/
+
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "implot.h"
@@ -8,8 +30,8 @@
 #include "../Dependencies/rapidjson/document.h"
 #include "../Dependencies/rapidjson/writer.h"
 #include "../Dependencies/rapidjson/stringbuffer.h"
-
-
+#include "../Application/ImGui Panels/imgui_handler.h"
+#include "../Application/Helper.h"
 
 namespace gui {
 
@@ -17,7 +39,7 @@ namespace gui {
 
     ImGuiHandler::~ImGuiHandler() {} //Destructor
 
-    void ImGuiHandler::Initialize(GLFWwindow* window, const char* glsl_version)
+    void ImGuiHandler::m_Initialize(GLFWwindow* window, const char* glsl_version)
     {
         // Setup Dear ImGui context
         IMGUI_CHECKVERSION();
@@ -37,7 +59,7 @@ namespace gui {
         ImGui_ImplOpenGL3_Init(glsl_version);
     }
 
-    void ImGuiHandler::NewFrame()
+    void ImGuiHandler::m_NewFrame()
     {
         // Start a new ImGui frame
         ImGui_ImplOpenGL3_NewFrame();
@@ -45,25 +67,23 @@ namespace gui {
         ImGui::NewFrame();
     }
 
-    void ImGuiHandler::Render()
+    void ImGuiHandler::m_Render()
     {
         // Render ImGui
-        NewFrame();
+        m_NewFrame();
         //viewport docking
         ImGui::DockSpaceOverViewport(0, ImGui::GetMainViewport());
         //create main menu bar
-        DrawMainMenuBar();
-
-
+        m_DrawMainMenuBar();
 
         Helper::Helpers* help = Helper::Helpers::GetInstance();
-        DrawPerformanceWindow(help->Fps);
-        DrawHierachyWindow();
-        DrawComponentWindow();
-        DrawLogsWindow();
-        DrawTestWindow();
-        DrawInputWindow();
-        DrawRenderScreenWindow(static_cast<unsigned int>(Helper::Helpers::GetInstance()->WindowWidth), static_cast<unsigned int>(Helper::Helpers::GetInstance()->WindowHeight));
+        m_DrawPerformanceWindow(help->Fps);
+        m_DrawHierachyWindow();
+        m_DrawComponentWindow();
+        m_DrawLogsWindow();
+        m_DrawTestWindow();
+        m_DrawInputWindow();
+        m_DrawRenderScreenWindow(static_cast<unsigned int>(Helper::Helpers::GetInstance()->WindowWidth), static_cast<unsigned int>(Helper::Helpers::GetInstance()->WindowHeight));
         ImGui::Render();
         ImGuiIO& io = ImGui::GetIO();
         if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
@@ -74,12 +94,9 @@ namespace gui {
             glfwMakeContextCurrent(backup_current_context);
         }
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
-
     }
 
-
-    void ImGuiHandler::Shutdown()
+    void ImGuiHandler::m_Shutdown()
     {
         // Shutdown ImGui
         ImGui_ImplOpenGL3_Shutdown();
@@ -87,5 +104,4 @@ namespace gui {
         ImPlot::DestroyContext();
         ImGui::DestroyContext();
     }
-
 }

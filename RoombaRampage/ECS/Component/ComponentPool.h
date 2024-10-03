@@ -16,6 +16,8 @@
 #include "TextComponent.h"
 #include "AnimationComponent.h"
 
+#include <algorithm>
+
 
 namespace ecs {
 	class IComponentPool {
@@ -57,7 +59,7 @@ namespace ecs {
 	template<typename T>
 	ComponentPool<T>::ComponentPool() {
 
-		m_Pool.resize(MaxEntity);
+		m_Pool.reserve(MaxEntity);
 
 
 	}
@@ -66,17 +68,22 @@ namespace ecs {
 	void* ComponentPool<T>::m_AssignComponent(EntityID ID) {
 
 
-		for (auto& Component : m_Pool) {
+		/*for (auto& Component : m_Pool) {
 			if (Component.m_IsLive == false) {
 				Component.m_IsLive = true;
 				Component.m_Entity = ID;
 				return &Component;
 			}
-		}
+		}*/
+		T component;
+		component.m_IsLive = true;
+		component.m_Entity = ID;
+		m_Pool.push_back(std::move(component));
+		return &m_Pool.back();
 
 		// return NULL if all component is stored
 		// SAY COMPONENT POOL IS FULL
-		return NULL;
+		//return NULL;
 
 	}
 
@@ -116,6 +123,12 @@ namespace ecs {
 			}
 		}
 
+		//auto it = std::find_if(m_Pool.begin(), m_Pool.end(), [ID](const auto& obj) { return (obj.m_Entity == ID && obj.m_IsLive); });
+		//if (it != m_Pool.end()) {
+		//	return &(*it);
+		//}
+
+
 		//No Component Allocated to Entity
 		//SAY ENTITY NOT CREATED
 		return NULL;
@@ -135,10 +148,14 @@ namespace ecs {
 	template <typename T>
 	bool ComponentPool<T>::m_HasComponent(EntityID ID) { //contained any stored data
 
-		for (auto& Component : m_Pool) {
-			if (Component.m_Entity == ID) {
-				return Component.m_IsLive;
-			}
+		//for (auto& Component : m_Pool) {
+		//	if (Component.m_Entity == ID) {
+		//		return Component.m_IsLive;
+		//	}
+		//}
+
+		if (std::find_if(m_Pool.begin(), m_Pool.end(), [ID](const auto& obj) { return obj.m_Entity == ID; }) != m_Pool.end()) {
+			return true;
 		}
 
 		return false;

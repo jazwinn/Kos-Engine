@@ -1,6 +1,6 @@
 /******************************************************************/
 /*!
-\file      vector2.h
+\file      Vector2.h
 \author    Rayner Tan, raynerweichen.tan , 2301449
 \par       raynerweichen.tan@digipen.edu
 \date      Sept 28, 2024
@@ -20,7 +20,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #ifndef VECTOR2_H
 #define VECTOR2_H
 #include <cstddef>
-#include "mathlib.h"
+#include "Mathlib.h"
 namespace vector2 {
     class Vec2 {
     public:
