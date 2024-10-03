@@ -164,11 +164,12 @@ void gui::ImGuiHandler::m_DrawTestWindow() {
 			delete_Flag = true;
 		}
 	}
-	ImGui::SeparatorText("##########################################");
+
+
 	ImGui::NewLine();
 	if (collision_Flag) {
 
-		ImGui::SameLine();
+		
 		if (ImGui::Button("ID_1 Reset")) {
 			ecs::MovementComponent* mc = (ecs::MovementComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(id_1);
 			ecs::TransformComponent* tc = (ecs::TransformComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id_1);

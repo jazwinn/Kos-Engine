@@ -113,7 +113,7 @@ namespace graphicpipe {
 			CIRCLE_LINES
 		};
 
-		float m_frameTime{ 0.41f }; //24fps
+		float m_frameTime{ 0.30f };
 
 
 		~GraphicsPipe();
