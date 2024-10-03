@@ -2,7 +2,7 @@
 #define INPUT_H
 
 #include <glfw3.h>
-#include <../Math/vector2.h>
+#include <../Math/Vector2.h>
 #include <string>
 
 namespace Input {
