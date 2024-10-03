@@ -1,3 +1,26 @@
+/******************************************************************/
+/*!
+\file      CollisionSystem.cpp
+\author    Clarence Boey
+\par       c.boey@digipen.edu
+\date      Sept 29, 2024
+\brief     This file contains the definition of the CollisionSystem class,
+		   which is part of the Entity Component System (ECS) framework.
+
+		   The CollisionSystem class is responsible for managing and
+		   processing collisions between entities that have both
+		   Transform and Collider components. It registers and
+		   deregisters entities with collision-related components and
+		   updates the system to handle collisions during the game loop.
+
+		   The class extends the ISystem interface, ensuring it adheres
+		   to the system management structure within the ECS framework.
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/******************************************************************/
 #include "../ECS.h"
 
 #include "CollisionSystem.h"
