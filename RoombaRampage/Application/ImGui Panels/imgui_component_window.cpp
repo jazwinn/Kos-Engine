@@ -328,7 +328,6 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                     tc->m_green = color.y;
                     tc->m_blue = color.z;
                 }
-
             }
         }
         

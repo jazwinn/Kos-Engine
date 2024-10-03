@@ -22,12 +22,53 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 namespace Serialization {
 	class Serialize {
 	public:
+
+		/******************************************************************/
+		/*!
+			\fn        Serialize::m_LoadComponentsJson(const std::string& jsonFilePath)
+			\brief     Loads component data from a JSON file into the ECS framework.
+			\param[in] jsonFilePath The path to the JSON file containing the component data.
+			\details   This function reads the specified JSON file and parses component data for various components such as
+					   `TransformComponent`, `MovementComponent`, `ColliderComponent`, `PlayerComponent`, and others.
+					   The data is then applied to the appropriate entities in the ECS.
+		*/
+		/******************************************************************/
 		static void m_LoadComponentsJson(const std::string& jsonFilePath);
 
+		/******************************************************************/
+		/*!
+			\fn        Serialize::m_SaveComponentsJson(const std::string& filePath, const std::unordered_map<ecs::EntityID, std::bitset<ecs::ComponentType::TOTALTYPECOMPONENT>>& ECS_EntityMap, const std::vector<std::string>& objTextEntries, const std::vector<ecs::EntityID>& objEntityId)
+			\brief     Saves component data from the ECS to a JSON file.
+			\param[in] filePath      The path to save the JSON file.
+			\param[in] ECS_EntityMap The map of entities and their associated components.
+			\param[in] objTextEntries The list of entity names to save.
+			\param[in] objEntityId   The list of entity IDs to save.
+			\details   This function iterates through the ECS entity map and saves relevant component data such as `TransformComponent`,
+					   `MovementComponent`, `ColliderComponent`, `PlayerComponent`, and more. The saved data is written to a JSON file
+					   for later retrieval and reloading.
+		*/
+		/******************************************************************/
 		static void m_SaveComponentsJson(const std::string& filePath, const std::unordered_map<ecs::EntityID, std::bitset<ecs::ComponentType::TOTALTYPECOMPONENT>>& ECS_EntityMap, const std::vector<std::string>& obj_text_entries, const std::vector<ecs::EntityID>& obj_entity_id);
 
+		/******************************************************************/
+		/*!
+			\fn        Serialize::m_LoadConfig()
+			\brief     Loads configuration settings such as window dimensions and FPS cap from a config file.
+			\details   This function reads the configuration file `Config.txt`, extracting window height, width, and FPS cap values,
+					   and assigns them to the corresponding variables in the `Helper::Helpers` class.
+		*/
+		/******************************************************************/
 		static void m_LoadConfig();
 
+		/******************************************************************/
+		/*!
+			\fn        Serialize::m_JsonFileValidation(const std::string& filePath)
+			\brief     Validates if the JSON file exists and creates a new one if it doesn't.
+			\param[in] filePath The path to the JSON file to be validated.
+			\details   This function checks if the specified JSON file exists. If it does not, it creates a new JSON file and initializes
+					   it with an empty array structure (`[]`).
+		*/
+		/******************************************************************/
 		static void m_JsonFileValidation(const std::string& filePath);
 	};
 }
