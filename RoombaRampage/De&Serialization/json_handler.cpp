@@ -1,7 +1,7 @@
 /******************************************************************/
 /*!
 \file      json_handler.cpp
-\author    Chiu Jun Jie, junjie.c , 2301524 / Jaz
+\author    Chiu Jun Jie, junjie.c , 2301524
 \par       junjie.c@digipen.edu
 \date      Oct 02, 2024
 \brief     This file handles JSON-related operations for component serialization and deserialization in the ECS framework.
