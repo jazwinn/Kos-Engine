@@ -10,7 +10,7 @@
 #include "Text.h"
 
 //#include "../Font.h"
-#include <../Math/vector2.h>
+#include <../Math/Vector2.h>
 #include <vector>
 #include <map>
 #include <string>

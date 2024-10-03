@@ -2,7 +2,7 @@
 #define TRANSCOM_H
 
 #include "Component.h"
-#include "../Math/vector2.h"
+#include "../Math/Vector2.h"
 
 namespace ecs {
 	class TransformComponent : public Component {

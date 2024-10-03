@@ -2,7 +2,7 @@
 #ifndef RIGIDCOM_H
 #define RIGIDCOM_H
 
-#include "../Math/vector2.h"
+#include "../Math/Vector2.h"
 #include "Component.h"
 
 

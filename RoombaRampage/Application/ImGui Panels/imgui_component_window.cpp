@@ -342,12 +342,6 @@ void gui::ImGuiHandler::DrawComponentWindow()
             graphicpipe::GraphicsPipe* graphicsPipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
 
             if (ImGui::CollapsingHeader("Animation Component")) {
-
-
-                // Retrieve the Animation Component
-                ecs::AnimationComponent* ac = static_cast<ecs::AnimationComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEANIMATIONCOMPONENT]
-                    ->m_GetEntityComponent(entityID));
-
                 ImGui::AlignTextToFramePadding();
                 ImGui::Text("Toggle Animation");
                 ImGui::SameLine(slider_start_pos_x + 40);
