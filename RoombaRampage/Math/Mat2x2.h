@@ -11,6 +11,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 */
 /********************************************************************/
 #pragma warning (disable : 4201)
+#pragma warning(disable : 26495)
 #ifndef MAT2x2_H
 #define MAT2x2_H
 #include <algorithm>
