@@ -16,6 +16,8 @@
 #include "TextComponent.h"
 #include "AnimationComponent.h"
 
+#include <algorithm>
+
 
 namespace ecs {
 	class IComponentPool {
@@ -116,6 +118,12 @@ namespace ecs {
 			}
 		}
 
+		//auto it = std::find_if(m_Pool.begin(), m_Pool.end(), [ID](const auto& obj) { return (obj.m_Entity == ID && obj.m_IsLive); });
+		//if (it != m_Pool.end()) {
+		//	return &(*it);
+		//}
+
+
 		//No Component Allocated to Entity
 		//SAY ENTITY NOT CREATED
 		return NULL;
@@ -135,10 +143,14 @@ namespace ecs {
 	template <typename T>
 	bool ComponentPool<T>::m_HasComponent(EntityID ID) { //contained any stored data
 
-		for (auto& Component : m_Pool) {
-			if (Component.m_Entity == ID) {
-				return Component.m_IsLive;
-			}
+		//for (auto& Component : m_Pool) {
+		//	if (Component.m_Entity == ID) {
+		//		return Component.m_IsLive;
+		//	}
+		//}
+
+		if (std::find_if(m_Pool.begin(), m_Pool.end(), [ID](const auto& obj) { return obj.m_Entity == ID; }) != m_Pool.end()) {
+			return true;
 		}
 
 		return false;

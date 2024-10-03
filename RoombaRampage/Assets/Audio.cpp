@@ -1,3 +1,27 @@
+/******************************************************************/
+/*!
+\file      Audio.cpp
+\author    Clarence Boey
+\par       c.boey@digipen.edu
+\date      Sept 30, 2024
+\brief     This file contains the implementation of the Audio class,
+           which provides audio
+
+This file implements a simple wrapper class FModAudio for handling 
+audio playback using the FMOD sound system. It provides basic 
+functionalities such as initializing the FMOD system, creating and 
+playing sounds, controlling volume and panning, pausing and stopping 
+playback, looping, and fading sound. Additionally, the file handles 
+proper resource management by cleaning up the FMOD system and releasing 
+resources when the audio operations are finished or when the object 
+is destroyed.
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/******************************************************************/
+
 #include "Audio.h"
 #include <chrono>
 #include <iostream>
@@ -95,7 +119,6 @@ namespace fmodaudio {
         }
     }
 
-    // Volume control (0.0 = silent, 1.0 = full volume)
     bool FModAudio::m_SetVolume(float volume) {
         if (!m_channel) {
             std::cerr << "FMOD error: Channel is not initialized." << std::endl;
@@ -109,7 +132,6 @@ namespace fmodaudio {
         return true;
     }
 
-    // Panning control (-1.0 = full left, 1.0 = full right, 0.0 = center)
     bool FModAudio::m_SetPan(float pan) {
         if (!m_channel) {
             std::cerr << "FMOD error: Channel is not initialized." << std::endl;
@@ -166,23 +188,18 @@ namespace fmodaudio {
         return true;
     }
 
-#include <chrono>
-
-    // Function to smoothly fade sound to a target volume over a specified duration
     bool FModAudio::m_FadeSound(float targetVolume, float fadeDuration) {
         if (!m_channel) {
             std::cerr << "FMOD error: Channel is not initialized." << std::endl;
             return false;
         }
 
-        // Enable volume ramping for smooth transition
         FMOD_RESULT result = m_channel->setVolumeRamp(true);
         if (result != FMOD_OK) {
             std::cerr << "FMOD error: Failed to enable volume ramping: " << FMOD_ErrorString(result) << std::endl;
             return false;
         }
 
-        // Get the current volume
         float currentVolume;
         result = m_channel->getVolume(&currentVolume);
         if (result != FMOD_OK) {
@@ -190,24 +207,19 @@ namespace fmodaudio {
             return false;
         }
 
-        // Calculate the time step based on fade duration
-        int steps = 100; // Number of small steps for smoother fade
+        int steps = 100;
         float volumeStep = (targetVolume - currentVolume) / steps;
         int delay = static_cast<int>(fadeDuration * 1000 / steps);  // Delay between steps (in milliseconds)
 
-        // Gradually adjust the volume in small steps
         for (int i = 0; i < steps; ++i) {
             currentVolume += volumeStep;
             m_channel->setVolume(currentVolume);
 
-            // Pause for a bit to allow smooth fading
             std::this_thread::sleep_for(std::chrono::milliseconds(delay));
         }
 
-        // Ensure the final volume is set to the exact target
         m_channel->setVolume(targetVolume);
 
         return true;
     }
-
 }

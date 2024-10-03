@@ -30,7 +30,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 
 
-void gui::ImGuiHandler::DrawTestWindow() {
+void gui::ImGuiHandler::m_DrawTestWindow() {
 	
 	//bool clicked = false;
 	static int maxTime = 60;
