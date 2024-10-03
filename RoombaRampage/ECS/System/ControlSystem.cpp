@@ -1,3 +1,27 @@
+/******************************************************************/
+/*!
+\file      ControlSystem.cpp
+\author    Clarence Boey
+\par       c.boey@digipen.edu
+\date      Sept 28, 2024
+\brief     This file contains the definition of the ControlSystem class,
+		   which is part of the Entity Component System (ECS) framework.
+
+		   The ControlSystem class manages player input and movement control
+		   for entities in the ECS framework. It processes input for
+		   entities with PlayerComponent and MovementComponent, updating
+		   their states based on player commands.
+
+		   The class extends the ISystem interface, ensuring it conforms
+		   to the ECS structure, allowing registration, deregistration,
+		   initialization, and updating of entities in the system.
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/******************************************************************/
+
 #include "../ECS.h"
 
 #include "ControlSystem.h"
