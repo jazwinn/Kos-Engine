@@ -254,7 +254,7 @@ namespace Serialization {
 
     void Serialize::m_SaveComponentsJson(const std::string& filePath, const std::unordered_map<ecs::EntityID, std::bitset<ecs::ComponentType::TOTALTYPECOMPONENT>>& ECS_EntityMap, const std::vector<std::string>& objTextEntries, const std::vector<ecs::EntityID>& objEntityId)
     {
-        std::string jsonFilePath = filePath + "/components.json";
+        std::string jsonFilePath = filePath + "/Components.json";
         m_JsonFileValidation(jsonFilePath);
 
         // Create JSON object to hold the updated values

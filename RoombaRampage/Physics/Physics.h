@@ -22,7 +22,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #ifndef PHYSICS_H
 #define PHYSICS_H
 
-#include "../Math/vector2.h"
+#include "../Math/Vector2.h"
 #include <vector>
 #include <algorithm>
 #include <iostream>

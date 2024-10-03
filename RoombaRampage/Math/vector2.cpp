@@ -17,7 +17,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 */
 /******************************************************************/
 
-#include "../Math/vector2.h"
+#include "Vector2.h"
 
 
 vector2::Vec2::Vec2(float _x, float _y) {

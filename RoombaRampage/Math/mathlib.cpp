@@ -12,7 +12,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 */
 /********************************************************************/
 
-#include "mathlib.h"
+#include "Mathlib.h"
 
 namespace mathlibrary {
 	double mathlib::funcRadianToDegree(double x) { return x * (180.0 / PI); }
