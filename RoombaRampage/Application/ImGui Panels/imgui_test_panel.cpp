@@ -74,6 +74,7 @@ void gui::ImGuiHandler::m_DrawTestWindow() {
 	ImGui::NewLine();
 
 	static bool spawn = false;
+	static std::vector <ecs::EntityID> list_Of_Entities;
 	if (ImGui::Button("Spawn 2500")) {
 		
 		if (spawn) {
@@ -92,7 +93,9 @@ void gui::ImGuiHandler::m_DrawTestWindow() {
 			std::uniform_real_distribution<float> height2(-1.5, 1.5);
 
 			for (int n{}; n < 2500; n++) {
+				
 				ecs::EntityID id = ecs->m_CreateEntity();
+				list_Of_Entities.push_back(id);
 				ecs::TransformComponent* tc = (ecs::TransformComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id);
 				ecs::SpriteComponent* sc = static_cast<ecs::SpriteComponent*>(ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, id));
 				sc->m_imageID = 3;
@@ -105,6 +108,15 @@ void gui::ImGuiHandler::m_DrawTestWindow() {
 			spawn = true;
 		}
 	}
+	ImGui::SameLine();
+	if (ImGui::Button("Delete 2500")) {
+		if (spawn) {
+			for (auto& i : list_Of_Entities) {
+				ecs::ECS::m_GetInstance()->m_DeleteEntity(i);
+			}
+		}
+	}
+	
 	ImGui::SeparatorText("##########################################");
 	ImGui::NewLine();
 	static bool collision_Flag = false;
