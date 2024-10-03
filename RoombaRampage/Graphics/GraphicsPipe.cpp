@@ -494,12 +494,12 @@ namespace graphicpipe {
 		{
 			for (int i{}; i < m_debugBoxData.size(); i++)
 			{
-				glm::mat3 lvScale{ m_debugBoxData[i].m_scale.x, 0, 0, 0, m_debugBoxData[i].m_scale.y, 0, 0 , 0 ,1 };
+				glm::mat3 lvScale{ m_debugBoxData[i].m_scale.x * m_aspectRatio, 0, 0, 0, m_debugBoxData[i].m_scale.y, 0, 0 , 0 ,1 };
 				glm::mat3 lvRotate{ cos(m_debugBoxData[i].m_rotate * 3.1415f / 180.f), -sin(m_debugBoxData[i].m_rotate * 3.1415f / 180.f), 0.f,
 									sin(m_debugBoxData[i].m_rotate * 3.1415f / 180.f), cos(m_debugBoxData[i].m_rotate * 3.1415f / 180.f), 0.f,
 									0.f , 0.f ,1.f };
 				glm::mat3 lvTranslate{ 1, 0, 0, 0, 1, 0, m_debugBoxData[i].m_worldCoordinates.x , m_debugBoxData[i].m_worldCoordinates.y ,1 };
-				glm::mat3 lvNDCScale{ m_aspectRatio, 0, 0, 0, 1.f, 0, 0 , 0 ,1.f };
+				glm::mat3 lvNDCScale{ 1.f, 0, 0, 0, 1.f, 0, 0 , 0 ,1.f };
 				m_debugToNDCMatrix.push_back(lvNDCScale * lvTranslate * lvRotate * lvScale);
 				m_debugBoxCollisionChecks.push_back(static_cast<float>(m_debugBoxData[i].m_isCollided));
 
