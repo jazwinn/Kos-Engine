@@ -249,7 +249,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\Freetype_Font\lib\*.dll" "$(OutDir)"</Co
     <ClInclude Include="ECS\Component\NameComponent.h" />
     <ClInclude Include="ECS\Component\PlayerComponent.h" />
     <ClInclude Include="ECS\Component\MovementComponent.h" />
-    <ClInclude Include="ECS\Component\RigidBody.h" />
+    <ClInclude Include="ECS\Component\RigidBodyComponent.h" />
     <ClInclude Include="ECS\Component\SpriteComponent.h" />
     <ClInclude Include="ECS\Component\TextComponent.h" />
     <ClInclude Include="ECS\Component\TransformComponent.h" />

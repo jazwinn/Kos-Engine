@@ -1,3 +1,21 @@
+/******************************************************************/
+/*!
+\file      Helper.cpp
+\author    Ng Jaz winn, jazwinn.ng , 2301502
+\par       jazwinn.ng@digipen.edu
+\date      Oct 02, 2024
+\brief     This file contains the definations for the prefab class.
+           It reads a json file and stores all its data. When the prefab
+           is called in the game. It creates an entiy and copy
+           the prefab data to the new entity
+
+
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/********************************************************************/
 #include "Prefab.h"
 #include "../De&Serialization/json_handler.h"
 #include "../Debugging/Logging.h"

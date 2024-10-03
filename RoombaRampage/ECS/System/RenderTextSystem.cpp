@@ -1,3 +1,20 @@
+/******************************************************************/
+/*!
+\file      RenderTextSystem.cpp
+\author    Ng Jaz winn, jazwinn.ng , 2301502
+\par       jazwinn.ng@digipen.edu
+\date      Oct 02, 2024
+\brief     This file contains the defination of the RenderTextSystem
+		   class. It passes the text data into the graphics
+		   pipeline for it to be rendered.
+
+
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/********************************************************************/
 #include "../ECS.h"
 
 #include "RenderTextSystem.h"
@@ -66,8 +83,8 @@ namespace ecs {
 			float green = text->m_green;
 			float blue = text->m_blue;
 
-			float windowCordianteX = (transform->m_position.m_x + 1) / 2 * help->WindowWidth;
-			float windowCordianteY = (transform->m_position.m_y + 1) / 2 * help->WindowHeight;
+			float windowCordianteX = (transform->m_position.m_x + 1) / 2 * help->m_windowWidth;
+			float windowCordianteY = (transform->m_position.m_y + 1) / 2 * help->m_windowHeight;
 
 			graphicsPipe->m_textData.push_back(graphicpipe::TextData{ text->m_text,  windowCordianteX , windowCordianteY, text->m_fontSize, {red, green, blue }});
 			//m_funcDrawText("(C) LearnOpenGL.com", 540.0f, 570.0f, 0.5f, glm::vec3(0.3, 0.7f, 0.9f));
