@@ -28,8 +28,6 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include <iostream>
 #include <random> 
 
-
-
 void ImGuiHandler::DrawTestWindow() {
 	
 	//bool clicked = false;

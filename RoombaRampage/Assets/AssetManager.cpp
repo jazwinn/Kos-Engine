@@ -1,24 +1,36 @@
+/******************************************************************/
+/*!
+\file      AssetManager.cpp
+\author    Clarence Boey
+\par       c.boey@digipen.edu
+\date      Sept 27, 2024
+\brief     This file contains the definition of the AssetManager class,
+           which handles loading, storing, and managing various game assets.
+
+The AssetManager class provides functions for loading and managing
+images, audio files, fonts, prefabs, and entity data. It serves as a
+singleton, ensuring only one instance manages the resources for the
+entire game. Assets are stored in containers for later retrieval and use.
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/******************************************************************/
+
 #include "AssetManager.h"
 #include "../Graphics/GraphicsPipe.h"
 #include "../Application/Helper.h"
-
 #include "stb_image.h"
-
 #include "../De&Serialization/json_handler.h"
-
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <string>
 
-
-
-
 namespace assetmanager {
 
-
     std::unique_ptr<AssetManager> AssetManager::m_instancePtr = nullptr;
-
 
     void AssetManager::m_funcLoadAssets()
     {
@@ -96,13 +108,6 @@ namespace assetmanager {
         graphics->m_imageData.push_back(m_imageContainer.back());
 
     }
-   
-
-
-
-
-
-
 
     void AssetManager::m_loadEntities(const std::string& jsonFilePath)
     {
