@@ -107,7 +107,7 @@ namespace logging {
         st.load_here(32);
 
         // Resolve the stack trace to get function, file, and line information
-        backward::TraceResolver resolver;
+        backward::TraceResolver resolver{};
         resolver.load_stacktrace(st);
 
         // Log each frame of the stack trace with detailed info

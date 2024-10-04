@@ -1037,6 +1037,9 @@ CODE
 //-------------------------------------------------------------------------
 // [SECTION] INCLUDES
 //-------------------------------------------------------------------------
+#pragma warning(disable: 6011)
+#pragma warning(disable: 28182)
+#pragma warning(disable: 4805)
 
 #if defined(_MSC_VER) && !defined(_CRT_SECURE_NO_WARNINGS)
 #define _CRT_SECURE_NO_WARNINGS
@@ -17876,7 +17879,7 @@ static void ImGui::DockNodeUpdateTabBar(ImGuiDockNode* node, ImGuiWindow* host_w
 
     const bool node_was_active = (node->LastFrameActive + 1 == g.FrameCount);
     const bool closed_all = node->WantCloseAll && node_was_active;
-    const ImGuiID closed_one = node->WantCloseTabId && node_was_active;
+    const ImGuiID closed_one = node->WantCloseTabId & static_cast<ImGuiID>(node_was_active);
     node->WantCloseAll = false;
     node->WantCloseTabId = 0;
 

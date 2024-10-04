@@ -17,6 +17,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "Application.h"
 #include "../Debugging/Logging.h"
 
+
     int main(void)
     {
         
