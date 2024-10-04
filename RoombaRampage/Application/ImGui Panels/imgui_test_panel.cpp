@@ -44,7 +44,7 @@ void gui::ImGuiHandler::m_DrawTestWindow() {
 	MsgSys.m_AddListener(messaging::MessageType::AUDIOPLAY, messaging::SoundPlayed);
 	bool open = true;
 	ImGui::Begin("Test Window", &open);
-	if (ImGui::Button("Vacuum")) {
+	if (ImGui::Button("BGM")) {
 		// abit hard coded might cause crash
 		//assetManager->m_audioContainer[0]->m_playSound();
 		messaging::Message vacuumBtnClick(messaging::MessageType::AUDIOPLAY, "Test Panel");
