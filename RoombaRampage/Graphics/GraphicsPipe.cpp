@@ -121,9 +121,8 @@ namespace graphicpipe {
 		m_debugToNDCMatrix.push_back(m_testMatrix);
 		m_debugBoxCollisionChecks.push_back(false);
 
-		// Set window size and aspect ratio.
-		m_windowWidth = static_cast<int>(Helper::Helpers::GetInstance()->WindowWidth);
-		m_windowHeight = static_cast<int>(Helper::Helpers::GetInstance()->WindowHeight);
+		m_windowWidth = static_cast<int>(Helper::Helpers::GetInstance()->m_windowWidth);
+		m_windowHeight = static_cast<int>(Helper::Helpers::GetInstance()->m_windowHeight);
 		m_aspectRatio = static_cast<float>(static_cast<float>(m_windowHeight) / static_cast<float>(m_windowWidth));
 
 		// Set up array buffer and framebuffers for offscreen rendering.
@@ -457,8 +456,8 @@ namespace graphicpipe {
 
 	void GraphicsPipe::m_funcUpdate()
 	{
-		m_windowWidth = static_cast<int>(Helper::Helpers::GetInstance()->WindowWidth);
-		m_windowHeight = static_cast<int>(Helper::Helpers::GetInstance()->WindowHeight);
+		m_windowWidth = static_cast<int>(Helper::Helpers::GetInstance()->m_windowWidth);
+		m_windowHeight = static_cast<int>(Helper::Helpers::GetInstance()->m_windowHeight);
 		m_aspectRatio = static_cast<float>(static_cast<float>(m_windowHeight) / static_cast<float>(m_windowWidth));
 		if (m_modelData.size() > 0)
 		{

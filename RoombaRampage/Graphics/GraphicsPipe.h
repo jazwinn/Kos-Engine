@@ -230,7 +230,7 @@ namespace graphicpipe {
             CIRCLE_LINES  ///< Circle outline shape type.
         };
 
-        float m_frameTime{ 0.41f };     ///< Frame time (24 FPS by default).
+        float m_frameTime{ 0.20f };     ///< Frame time (24 FPS by default).
 
         /**
          * @brief Destructor for the GraphicsPipe class.

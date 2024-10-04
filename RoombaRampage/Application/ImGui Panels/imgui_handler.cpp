@@ -77,13 +77,13 @@ namespace gui {
 		m_DrawMainMenuBar();
 
 		Helper::Helpers* help = Helper::Helpers::GetInstance();
-		m_DrawPerformanceWindow(help->Fps);
+		m_DrawPerformanceWindow(help->m_fps);
 		m_DrawHierachyWindow();
 		m_DrawComponentWindow();
 		m_DrawLogsWindow();
 		m_DrawTestWindow();
 		m_DrawInputWindow();
-		m_DrawRenderScreenWindow(static_cast<unsigned int>(Helper::Helpers::GetInstance()->WindowWidth), static_cast<unsigned int>(Helper::Helpers::GetInstance()->WindowHeight));
+		m_DrawRenderScreenWindow(static_cast<unsigned int>(Helper::Helpers::GetInstance()->m_windowWidth), static_cast<unsigned int>(Helper::Helpers::GetInstance()->m_windowHeight));
 		ImGui::Render();
 		ImGuiIO& io = ImGui::GetIO();
 		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
@@ -96,6 +96,9 @@ namespace gui {
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	}
 
+
+
+
 	void ImGuiHandler::m_Shutdown()
 	{
 		// Shutdown ImGui
@@ -104,4 +107,5 @@ namespace gui {
 		ImPlot::DestroyContext();
 		ImGui::DestroyContext();
 	}
+
 }
