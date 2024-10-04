@@ -43,7 +43,7 @@ namespace assetmanager {
         m_funcLoadImage("Assets/ani_RoombaBoosters_strip6.png");
         m_funcLoadImage("Assets/ani_SeanSprite_strip4.png");
 
-        m_LoadAudio("Assets/vacuum.mp3");
+        m_LoadAudio("Assets/mindstorm.wav");
         m_LoadAudio("Assets/zwing.wav");
         m_LoadPrefab("../RoombaRampage/Json/Prefab.json");
     
