@@ -1,3 +1,21 @@
+/******************************************************************/
+/*!
+\file      debugVertexShader.vert
+\author    Sean Tiu
+\par       s.tiu@digipen.edu
+\date      2nd Oct, 2024
+\brief     A vertex shader used for debug rendering.
+
+           This shader calculates vertex positions based on the 
+           model matrix and passes a collision status to the fragment 
+           shader to aid in debugging collision detection.
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/******************************************************************/
+
 R"( #version 460 core
 
 
