@@ -67,7 +67,7 @@ private:
     static const uint64_t kHiddenBit = RAPIDJSON_UINT64_C2(0x00100000, 0x00000000);
 
     union {
-        double d_;
+        double d_{};
         uint64_t u_;
     };
 };

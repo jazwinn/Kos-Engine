@@ -16,7 +16,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 */
 /********************************************************************/
 
-#define _CRT_SECURE_NO_WARNINGS
+
 
 #include "../Dependencies/rapidjson/document.h"
 #include "../Dependencies/rapidjson/writer.h"

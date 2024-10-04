@@ -3574,8 +3574,8 @@ class TraceResolverImpl<system_tag::darwin_tag>
 struct module_data {
   std::string image_name;
   std::string module_name;
-  void *base_address;
-  DWORD load_size;
+  void *base_address = nullptr;
+  DWORD load_size = {};
 };
 
 class get_mod_info {
@@ -3609,10 +3609,9 @@ public:
 template <> class TraceResolverImpl<system_tag::windows_tag>
     : public TraceResolverImplBase {
 public:
-  TraceResolverImpl() {
-
+  TraceResolverImpl(){
+    
     HANDLE process = GetCurrentProcess();
-
     std::vector<module_data> modules;
     DWORD cbNeeded;
     std::vector<HMODULE> module_handles(1);
@@ -3632,15 +3631,16 @@ public:
     void *base = modules[0].base_address;
     IMAGE_NT_HEADERS *h = ImageNtHeader(base);
     image_type = h->FileHeader.Machine;
+    
   }
 
   static const int max_sym_len = 255;
   struct symbol_t {
-    SYMBOL_INFO sym;
-    char buffer[max_sym_len];
+      SYMBOL_INFO sym{};
+    char buffer[max_sym_len] {};
   } sym;
-
-  DWORD64 displacement;
+  
+  DWORD64 displacement = 0;
 
   ResolvedTrace resolve(ResolvedTrace t) override {
     HANDLE process = GetCurrentProcess();
@@ -3793,8 +3793,8 @@ public:
   void swap(SourceFile &b) { _file.swap(b._file); }
 
 #ifdef BACKWARD_ATLEAST_CXX11
-  SourceFile(SourceFile &&from) : _file(nullptr) { swap(from); }
-  SourceFile &operator=(SourceFile &&from) {
+  SourceFile(SourceFile &&from) noexcept: _file(nullptr) { swap(from); }
+  SourceFile &operator=(SourceFile &&from) noexcept{
     swap(from);
     return *this;
   }

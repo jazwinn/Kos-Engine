@@ -26,7 +26,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #define AUDIO_MANAGER_H
 
 #include "fmod.hpp"
-#include "fmod_errors.h"
+//#include "fmod_errors.h"
 #include <thread>
 
 namespace fmodaudio {
