@@ -91,6 +91,17 @@ namespace physicspipe {
 		float m_radius = 0.0f;
 		Circle() = default;
 		// Constructor for Circle (declaration)
+		/******************************************************************/
+		/*!
+		\fn        Circle::Circle(float radius, vector2::Vec2 shape_position, vector2::Vec2 shape_scale, vector2::Vec2 shape_velocity, int entity_ID)
+		\brief     Constructor for creating a circle physics entity.
+		\param[in] radius       Radius of the circle.
+		\param[in] shape_position Position of the circle entity.
+		\param[in] shape_scale  Scale of the circle entity.
+		\param[in] shape_velocity Velocity of the circle entity.
+		\param[in] entity_ID    Unique ID for the entity.
+		*/
+		/******************************************************************/
 		Circle(float radius, vector2::Vec2 shape_position, vector2::Vec2 shape_scale, vector2::Vec2 shape_velocity, int entity_ID);
 
 		// Overriding GetEntity for Circle
@@ -115,6 +126,18 @@ namespace physicspipe {
 		AABB m_boundingBox{};
 		Rectangle() = default;
 		// Constructor for Rectangle (declaration)
+		/******************************************************************/
+		/*!
+		\fn        Rectangle::Rectangle(float rect_height, float rect_width, vector2::Vec2 shape_position, vector2::Vec2 shape_scale, vector2::Vec2 shape_velocity, int entity_ID)
+		\brief     Constructor for creating a rectangle physics entity.
+		\param[in] rect_height  Height of the rectangle.
+		\param[in] rect_width   Width of the rectangle.
+		\param[in] shape_position Position of the rectangle entity.
+		\param[in] shape_scale  Scale of the rectangle entity.
+		\param[in] shape_velocity Velocity of the rectangle entity.
+		\param[in] entity_ID    Unique ID for the entity.
+		*/
+		/******************************************************************/
 		Rectangle(float rect_height, float rect_width, vector2::Vec2 shape_position, vector2::Vec2 shape_scale, vector2::Vec2 shape_velocity, int entity_ID);
 
 		// Overriding GetEntity for Rectangle
@@ -237,6 +260,7 @@ namespace physicspipe {
 		\return    True if a collision is detected, false otherwise.
 		*/
 		/******************************************************************/
+
 		bool m_static_CollisionCheck(const AABB, const AABB);
 	};
 }

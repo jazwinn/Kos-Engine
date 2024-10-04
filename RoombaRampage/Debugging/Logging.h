@@ -128,7 +128,23 @@ namespace logging {
         // Destructor: Closes the log file
         ~Logger();
 
+        /******************************************************************/
+        /*!
+        \fn        void Logger::m_Init(const std::string& filename)
+        \brief     Initializes the Logger by opening the specified log file.
+        \param[in] filename  The name of the file to log messages to.
+        \warning   Must be called before using the Logger to log messages.
+        */
+        /******************************************************************/
         void  m_Init(const std::string& filename);
+
+        /******************************************************************/
+        /*!
+        \fn        Logger& Logger::m_GetInstance()
+        \brief     Returns the singleton instance of the Logger class.
+        \return    Reference to the Logger instance.
+        */
+        /******************************************************************/
         static Logger& m_GetInstance();
 
         // Logs a message with a given log level
