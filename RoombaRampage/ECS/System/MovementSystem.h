@@ -22,6 +22,7 @@ namespace ecs {
 	class MovementSystem : public ISystem {
 
 	public:
+
 		void m_RegisterSystem(EntityID) override;
 
 		void m_DeregisterSystem(EntityID) override;

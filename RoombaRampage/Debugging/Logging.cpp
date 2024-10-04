@@ -24,13 +24,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 namespace logging {
 
-    /******************************************************************/
-    /*!
-    \fn        Logger& Logger::m_GetInstance()
-    \brief     Returns the singleton instance of the Logger class.
-    \return    Reference to the Logger instance.
-    */
-    /******************************************************************/
+
     Logger& Logger::m_GetInstance()
     {
         static Logger instance{};
@@ -154,14 +148,7 @@ namespace logging {
     */
     /******************************************************************/
     Logger::~Logger() { m_logFile.close(); }
-    /******************************************************************/
-    /*!
-    \fn        void Logger::m_Init(const std::string& filename)
-    \brief     Initializes the Logger by opening the specified log file.
-    \param[in] filename  The name of the file to log messages to.
-    \warning   Must be called before using the Logger to log messages.
-    */
-    /******************************************************************/
+
     void Logger::m_Init(const std::string& filename) {
         assert(!m_bInitialized && "The logger must be initialized before it is used!");
         if (m_bInitialized)

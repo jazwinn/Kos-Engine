@@ -1,3 +1,30 @@
+/******************************************************************/
+/*!
+\file      Window.cpp
+\author    Sean Tiu
+\par       s.tiu@digipen.edu
+\date      2nd Oct, 2024
+\brief
+
+           This file contains the implementation of the `AppWindow` class
+           methods, which handle the window lifecycle including initialization,
+           drawing/rendering loop, and cleanup.
+
+           The `init` method sets up GLFW and OpenGL contexts for rendering,
+           while the `Draw` method manages the rendering loop including
+           ImGui interface rendering. The `CleanUp` method is responsible
+           for releasing resources used during the window’s operation.
+
+           The application window makes use of GLFW for window and context
+           management, and OpenGL for rendering. ImGui is integrated to
+           provide a graphical interface within the application.
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/******************************************************************/
+
 #include "Window.h"
 #include "Helper.h"
 
@@ -8,33 +35,25 @@ namespace Application {
         if (!glfwInit())
             return -1;
 
-        // Get the primary monitor
-        //TOCHECK
-        //naming of monitor and mode is same as member function
-        //GLFWmonitor* monitor = glfwGetPrimaryMonitor();
-        //const GLFWvidmode* mode = glfwGetVideoMode(monitor);
-
         // Create a window based on the current screen size
-        WindowWidth = Helper::Helpers::GetInstance()->m_windowWidth;
-        WindowHeight = Helper::Helpers::GetInstance()->m_windowHeight;
+        m_windowWidth = Helper::Helpers::GetInstance()->m_windowWidth;
+        m_windowHeight = Helper::Helpers::GetInstance()->m_windowHeight;
         
         //Set Context Version
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
 
-
-       
         /* Create a windowed mode window and its OpenGL context */
         //Set third param to glfwGetPrimaryMonitor if you want fullscreen borderless
 
-        Window = glfwCreateWindow(static_cast<int>(WindowWidth), static_cast<int>(WindowHeight), "Kos", NULL, NULL);
-        if (!Window)
+       m_window = glfwCreateWindow(static_cast<int>(m_windowWidth), static_cast<int>(m_windowHeight), "Kos", NULL, NULL);
+        if (!m_window)
         {
             glfwTerminate();
             return -1;
         }
         /* Make the window's context current */
-        glfwMakeContextCurrent(Window);
+        glfwMakeContextCurrent(m_window);
 
         /* Only initialize GLEW after defining OpenGL context*/
         if (glewInit() != GLEW_OK)
@@ -52,7 +71,7 @@ namespace Application {
         Helper::Helpers *help = Helper::Helpers::GetInstance();
         glClear(GL_COLOR_BUFFER_BIT);
         int display_w, display_h;
-        glfwGetFramebufferSize(Window, &display_w, &display_h);
+        glfwGetFramebufferSize(m_window, &display_w, &display_h);
         glViewport(0, 0, display_w, display_h);
         help->m_windowHeight = static_cast<float>(display_h);
         help->m_windowWidth = static_cast<float>(display_w);
@@ -64,7 +83,7 @@ namespace Application {
 
 	int AppWindow::CleanUp() {
 
-        glfwDestroyWindow(Window);
+        glfwDestroyWindow(m_window);
         return 0;
 	}
 

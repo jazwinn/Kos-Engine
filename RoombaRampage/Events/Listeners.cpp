@@ -15,9 +15,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 
 namespace messaging {
-	/**
-	 \brief		this function is a callback function that will be attached to a message type that will call the playsound function
-	 **/
+
 	void SoundPlayed(const Message& givenMsg){
 		assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
 		assetManager->m_audioContainer[0]->m_PlaySound();

@@ -43,7 +43,7 @@ namespace assetmanager {
         m_funcLoadImage("Assets/ani_RoombaBoosters_strip6.png");
         m_funcLoadImage("Assets/ani_SeanSprite_strip4.png");
 
-        m_LoadAudio("Assets/vacuum.mp3");
+        m_LoadAudio("Assets/mindstorm.wav");
         m_LoadAudio("Assets/zwing.wav");
         m_LoadPrefab("../RoombaRampage/Json/Prefab.json");
     
@@ -105,7 +105,7 @@ namespace assetmanager {
         unsigned int textureID = image::Image::m_LoadImage(file);
        
         graphics->m_textureIDs.push_back(textureID);
-        std::cout << "Texture Binded, Texture ID: " << textureID << std::endl;
+        LOGGING_INFO("Texture Binded, Texture ID : {0} ", textureID);
         graphics->m_stripCounts.push_back(m_imageContainer.back().m_stripCount);
         graphics->m_imageData.push_back(m_imageContainer.back());
 
@@ -124,6 +124,6 @@ namespace assetmanager {
         std::cout << "Loading entities from: " << jsonFilePath << std::endl;
         Serialization::Serialize::m_LoadComponentsJson(jsonFilePath);  // Load into ECS
 
-        std::cout << "Entities successfully loaded!" << std::endl;
+        LOGGING_INFO("Entities successfully loaded!");
     }
 }

@@ -85,7 +85,30 @@ namespace gui {
         /******************************************************************/
         void m_Shutdown();
 
+        /******************************************************************/
+        /*!         
+            \fn        gui::ImGuiHandler::m_DrawMainMenuBar()
+            \brief     Renders the main menu bar and handles user input for file operations.
+            \details   This function creates a main menu bar with options like "File" and "Window."
+                       In the "File" menu, users can save the current state by either selecting the "Save" option
+                       or pressing `CTRL + S`. The function interacts with the ECS framework to save component data
+                       to a JSON file using the `Serialize::m_SaveComponentsJson` function.
+        */
+        /******************************************************************/
         void m_DrawMainMenuBar();
+
+        /******************************************************************/
+        /*!
+            \fn        gui::ImGuiHandler::m_DrawPerformanceWindow(float fps)
+            \brief     Displays the performance metrics in an ImGui window.
+            \param[in] fps The current frames-per-second value.
+            \details   This function renders a window showing performance statistics. It tracks FPS over time and
+                       displays an FPS graph using `ImGui::PlotLines`. It also displays system time information
+                       for the ECS systems, updating every second to show the percentage of total system time each
+                       system uses, along with the actual time in seconds.
+        */
+        /******************************************************************/
+
         void m_DrawPerformanceWindow(float fps);
 
         /******************************************************************/
@@ -98,7 +121,31 @@ namespace gui {
         */
         /******************************************************************/
         void m_DrawComponentWindow();
+
+        /******************************************************************/
+        /*!
+            \fn        gui::ImGuiHandler::m_DrawTestWindow()
+            \brief     Displays a test window for various ECS and ImGui functionalities.
+            \details   This function creates a test window with several buttons and options to:
+                       - Play, stop, and control audio through the asset manager.
+                       - Trigger an application crash using the `abort()` function.
+                       - Test log functionality by adding log entries.
+                       - Spawn and delete 2500 entities in the ECS.
+                       - Perform a collision test by spawning two entities with movement and collider components.
+                       - Control entity movement and reset their positions for collision testing.
+        */
+        /******************************************************************/
         void m_DrawTestWindow();
+
+        /******************************************************************/
+        /*!
+            \fn        gui::ImGuiHandler::m_DrawInputWindow()
+            \brief     Displays the input status window in ImGui.
+            \details   This function creates a window that displays the current mouse position,
+                       key status, and mouse button status. It retrieves these values from
+                       the `Input::InputSystem` and outputs them as text within the ImGui window.
+        */
+        /******************************************************************/
         void m_DrawInputWindow();
 
         /******************************************************************/
@@ -112,7 +159,40 @@ namespace gui {
         */
         /******************************************************************/
         unsigned int m_DrawHierachyWindow();
+
+        /******************************************************************/
+        /*!
+            \fn        gui::ImGuiHandler::m_DrawLogsWindow()
+            \brief     Displays the log output in an ImGui window.
+            \details   This function creates a window that displays log entries in reverse order, with the most recent log entries shown first.
+                       It retrieves the log entries from the logger instance and outputs them within an ImGui window.
+        */
+        /******************************************************************/
         void m_DrawLogsWindow();
+
+        /******************************************************************/
+        /*!
+        \fn        void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsigned int windowHeight)
+        \brief     Renders the scene texture inside an ImGui window while maintaining the correct aspect ratio.
+
+        \param[in] windowWidth
+                   The width of the OpenGL window (scene) being rendered.
+
+        \param[in] windowHeight
+                   The height of the OpenGL window (scene) being rendered.
+
+        \details   This function creates an ImGui window labeled "Scene Window" and renders
+                   the scene as a texture inside it. The function calculates the appropriate
+                   size and position for the texture within the window, ensuring that the
+                   aspect ratio is preserved when the window is resized.
+
+                   It uses the available content region size within the ImGui window to
+                   adjust the texture size. If the aspect ratio of the texture differs from
+                   that of the window, the texture is centered horizontally or vertically.
+
+        \sa        graphicpipe::GraphicsPipe::m_funcGetInstance() to get the screen texture.
+        */
+        /******************************************************************/
         void m_DrawRenderScreenWindow(unsigned int windowWidth, unsigned int windowHeight);
 
         //Getter to acess the four imgui variables

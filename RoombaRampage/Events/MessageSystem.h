@@ -19,7 +19,14 @@ namespace messaging {
 	class MessageSystem {
 	public:
 		using MessageCallback = void (*)(const Message&);
+		/**
+		 \brief		this function adds a callback to a message type to the unordered map held by the message system
+		 **/
 		void m_AddListener(MessageType listenToType, MessageCallback callback);
+
+		/**
+		 \brief		this function broadcasts/sends a message to all listeners of a specified message type
+		 **/
 		void m_SendMessage(const Message&);
 
 	private:

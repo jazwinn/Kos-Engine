@@ -1,3 +1,23 @@
+/******************************************************************/
+/*!
+\file      GraphicsPipe.cpp
+\author    Sean Tiu
+\par       s.tiu@digipen.edu
+\date      2nd Oct, 2024
+\brief     This file contains the function definitions for the GraphicsPipe
+		   class. The functions range from initializing the various buffers needed,
+		   setting up Vertex Atttribute Objects, updating the model matrices for each model,
+		   substituting new data into the buffers, preparing and linking shaders and draw
+		   functions for a frame buffer object, generic draw objects and text objects.
+
+		   It also holds the shader files used inside this file.
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/******************************************************************/
+
 #include "../Graphics/GraphicsPipe.h"
 #include "../Assets/AssetManager.h"
 #include "../Application/Application.h"
@@ -58,21 +78,19 @@ namespace graphicpipe {
 
 	std::unique_ptr<GraphicsPipe> GraphicsPipe::m_instancePtr = nullptr;
 
-	void GLAPIENTRY DebugCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam)
-	{
-		//TOCHECK
-		std::cerr << "OpenGL Debug Message: " << message << " Source " << source << " Type " << type << " ID " << id << "Severity " << severity << " Length " << length << " userParam " << userParam << std::endl;
-	}
-
+	
 	void GraphicsPipe::m_funcInit()
 	{
+		//Enable transparency for images
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glLineWidth(4.f);
 
 		m_squareMesh.m_shapeType = SQUARE;
 		m_squareLinesMesh.m_shapeType = SQUARE_LINES;
-		m_testMatrix = { 1,0,0,0,1,0,0,0,1 };
+		m_testMatrix = { 1, 0, 0, 0, 1, 0, 0, 0, 1 };
+
+		// Reserve memory for the maximum number of entities.
 		m_modelData.reserve(ecs::MaxEntity);
 		m_debugBoxData.reserve(ecs::MaxEntity);
 		m_textData.reserve(ecs::MaxEntity);
@@ -82,38 +100,36 @@ namespace graphicpipe {
 		m_frameNumbers.reserve(ecs::MaxEntity);
 		m_stripCounts.reserve(ecs::MaxEntity);
 
+		// Set up VAOs for different shapes and text rendering.
 		m_funcSetupVao(m_squareMesh);
 		m_funcSetupSquareLinesVao();
 		m_funcSetupFboVao();
 		m_funcSetupTextVao();
 		m_funcSetDrawMode(GL_FILL);
 
+		// Compile and set up shader programs for various rendering tasks.
 		m_genericShaderProgram = m_funcSetupShader(genericVertexShader, genericFragmentShader);
 		m_frameBufferShaderProgram = m_funcSetupShader(frameBufferVertexShader, frameBufferFragmentShader);
 		m_debugShaderProgram = m_funcSetupShader(debugVertexShader, debugFragmentShader);
 		m_textShaderProgram = m_funcSetupShader(textVertexShader, textFragmentShader);
 
+		// Initialize model-to-NDC transformation matrix and other drawing data.
 		m_modelToNDCMatrix.push_back(m_testMatrix);
 		m_textureOrder.push_back(0);
 		m_frameNumbers.push_back(0);
 		m_stripCounts.push_back(0);
 		m_debugToNDCMatrix.push_back(m_testMatrix);
 		m_debugBoxCollisionChecks.push_back(false);
-		//TOCHECK
-		//COMMENT THIS OUT?
-		//GLFWmonitor* monitor = glfwGetPrimaryMonitor();
-		//const GLFWvidmode* mode = glfwGetVideoMode(monitor);
 
 		m_windowWidth = static_cast<int>(Helper::Helpers::GetInstance()->m_windowWidth);
 		m_windowHeight = static_cast<int>(Helper::Helpers::GetInstance()->m_windowHeight);
 		m_aspectRatio = static_cast<float>(static_cast<float>(m_windowHeight) / static_cast<float>(m_windowWidth));
 
+		// Set up array buffer and framebuffers for offscreen rendering.
 		m_funcSetupArrayBuffer();
-		//m_funcBindImageDatafromAssetManager();
-
-
 		m_funcSetupFrameBuffer();
 
+		// Clear temporary data structures used during setup.
 		m_debugToNDCMatrix.clear();
 		m_debugBoxCollisionChecks.clear();
 		m_modelToNDCMatrix.clear();
@@ -121,12 +137,10 @@ namespace graphicpipe {
 		m_frameNumbers.clear();
 		m_stripCounts.clear();
 
+		// Enable scissor test for limiting rendering to a specific area.
 		glEnable(GL_SCISSOR_TEST);
 		glScissor(0, 0, m_windowWidth, m_windowHeight);
 
-		/*glEnable(GL_DEBUG_OUTPUT);
-		glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
-		glDebugMessageCallback(DebugCallback, nullptr);*/
 	}
 
 	GraphicsPipe::~GraphicsPipe()
@@ -425,13 +439,13 @@ namespace graphicpipe {
 
 		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE)
 		{
-			std::cout << "Framebuffer successfully created" << std::endl;
+			LOGGING_INFO("Framebuffer successfully created");
 			m_frameBufferObject = fbo;
 			m_screenTexture = texture;
 		}
 		else
 		{
-			std::cout << "Framebuffer has not been created" << std::endl;
+			LOGGING_INFO("Framebuffer has not been created");
 		}
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -645,7 +659,7 @@ namespace graphicpipe {
 		}
 		else
 		{
-			std::cout << "Shader compiled successfully" << std::endl;
+			LOGGING_INFO("Shader compiled successfully");
 		}
 
 		return lvProgram;

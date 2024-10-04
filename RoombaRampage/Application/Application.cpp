@@ -106,7 +106,7 @@ namespace Application {
            INITIALIZE Input
         --------------------------------------------------------------*/
         //call back must happen before imgui
-        Input.SetCallBack(lvWindow.Window);
+        Input.SetCallBack(lvWindow.m_window);
         LOGGING_INFO("Set Input Call Back Successful");
         
 
@@ -114,7 +114,7 @@ namespace Application {
            INITIALIZE IMGUI
         --------------------------------------------------------------*/
         const char* glsl_version = "#version 130";
-        imgui_manager.m_Initialize(lvWindow.Window, glsl_version);
+        imgui_manager.m_Initialize(lvWindow.m_window, glsl_version);
         LOGGING_INFO("Load ImGui Successful");
 
         /*--------------------------------------------------------------
@@ -137,7 +137,7 @@ namespace Application {
         /*--------------------------------------------------------------
             GAME LOOP
         --------------------------------------------------------------*/
-        while (!glfwWindowShouldClose(lvWindow.Window))
+        while (!glfwWindowShouldClose(lvWindow.m_window))
         {
             try {
                 /* Poll for and process events */
@@ -184,7 +184,7 @@ namespace Application {
                 lastFrameTime = glfwGetTime();
                 help->m_fps = 1.f / help->m_deltaTime;
 
-                glfwSwapBuffers(lvWindow.Window);
+                glfwSwapBuffers(lvWindow.m_window);
             }
             catch (const std::exception& e) {
                 LOGGING_ERROR("Exception in game loop: {}", e.what());

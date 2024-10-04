@@ -1,3 +1,21 @@
+/******************************************************************/
+/*!
+\file      textFragmentShader.frag
+\author    Sean Tiu
+\par       s.tiu@digipen.edu
+\date      2nd Oct, 2024
+\brief     A fragment shader for rendering text.
+
+           This shader samples a texture and applies a color 
+           to the text based on its RGB values, allowing for 
+           customizable text colors during rendering.
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/******************************************************************/
+
 R"( #version 460 core
 
 
