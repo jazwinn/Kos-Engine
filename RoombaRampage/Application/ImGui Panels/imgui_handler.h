@@ -113,6 +113,30 @@ namespace gui {
         /******************************************************************/
         unsigned int m_DrawHierachyWindow();
         void m_DrawLogsWindow();
+
+        /******************************************************************/
+        /*!
+        \fn        void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsigned int windowHeight)
+        \brief     Renders the scene texture inside an ImGui window while maintaining the correct aspect ratio.
+
+        \param[in] windowWidth
+                   The width of the OpenGL window (scene) being rendered.
+
+        \param[in] windowHeight
+                   The height of the OpenGL window (scene) being rendered.
+
+        \details   This function creates an ImGui window labeled "Scene Window" and renders
+                   the scene as a texture inside it. The function calculates the appropriate
+                   size and position for the texture within the window, ensuring that the
+                   aspect ratio is preserved when the window is resized.
+
+                   It uses the available content region size within the ImGui window to
+                   adjust the texture size. If the aspect ratio of the texture differs from
+                   that of the window, the texture is centered horizontally or vertically.
+
+        \sa        graphicpipe::GraphicsPipe::m_funcGetInstance() to get the screen texture.
+        */
+        /******************************************************************/
         void m_DrawRenderScreenWindow(unsigned int windowWidth, unsigned int windowHeight);
 
         //Getter to acess the four imgui variables

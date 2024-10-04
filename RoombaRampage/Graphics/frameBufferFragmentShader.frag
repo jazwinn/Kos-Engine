@@ -1,3 +1,21 @@
+/******************************************************************/
+/*!
+\file      frameBufferFragmentShader.frag
+\author    Sean Tiu
+\par       s.tiu@digipen.edu
+\date      2nd Oct, 2024
+\brief     A fragment shader for framebuffer rendering.
+
+           This shader samples from the screen texture using the 
+           provided texture coordinates and outputs the final 
+           color to the screen.
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/******************************************************************/
+
 R"( #version 460 core
 
 

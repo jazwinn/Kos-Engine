@@ -1,3 +1,22 @@
+/******************************************************************/
+/*!
+\file      genericVertexShader.vert
+\author    Sean Tiu
+\par       s.tiu@digipen.edu
+\date      2nd Oct, 2024
+\brief     A basic vertex shader for rendering textured and animated
+           sprites using instanced arrays.
+
+           This shader computes the position of each vertex using 
+           a model matrix and handles animation frames for sprites 
+           based on texture strip count and frame number.
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/******************************************************************/
+
 R"( #version 460 core
 
 
