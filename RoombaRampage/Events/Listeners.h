@@ -18,5 +18,8 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include <iostream>
 
 namespace messaging {
+	/**
+	 \brief		this function is a callback function that will be attached to a message type that will call the playsound function
+	 **/
 	void SoundPlayed(const Message& givenMsg);
 }

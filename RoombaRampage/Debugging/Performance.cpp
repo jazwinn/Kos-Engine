@@ -86,7 +86,7 @@ namespace performancetracker {
 	*/
 	/******************************************************************/
 	void Performance::m_AddSystem(ecs::TypeSystem System) {
-		m_systemTimeList[System] = { m_typeToString(System),0};
+		m_systemTimeList[System] = { m_typeToString(System),0.f};
 	}
 	/******************************************************************/
 	/*!

@@ -39,48 +39,110 @@ namespace mat3x3 {
 			m_e01{ e4 }, m_e11{ e5 }, m_e21{ e6 },
 			m_e02{ e7 }, m_e12{ e8 }, m_e22{ e9 } {}
 
+		/**
+		 \brief		this function swaps the data of 2 matrixes
+		 **/
 		void m_Mat3Swap(Mat3x3& lhs, Mat3x3& rhs);
 
+		/**
+		 \brief		this function is a member function meant for assigning an adjunct version of the callee
+		 **/
 		Mat3x3 m_Mat3Adjunct() const;
 
+		/**
+		 \brief		this function is a member function meant for getting the determinant of the callee
+		 **/
 		float m_Mat3Determinant() const;
 
+		/**
+		 \brief		this function is a member function overload for the = sign also known as the copy assignment
+		 **/
 		Mat3x3& operator=(const Mat3x3& rhs);
 
+		/**
+		 \brief		this function is a member function overload ofthe *= sign used to multiply a Mat2x2 with the callee
+		 **/
 		Mat3x3& operator*=(const Mat3x3& rhs);
 
+		/**
+		 \brief		this function is a member function overload of the += sign used to add another matrix with the callee
+		 **/
 		Mat3x3& operator+=(const Mat3x3& rhs);
 
+		/**
+		 \brief		this function is a member function overload of the -= sign used to subtract another matrix with the callee
+		 **/
 		Mat3x3& operator-=(const Mat3x3& rhs);
 
+		/**
+		 \brief		this function is a member function meant for assigning a fully positive version of the callee
+		 **/
 		Mat3x3 m_Mat3Abs() const;
 
 
 
 	};
 
+	/**
+	\brief		this function is a meant for changing a given Matrix into an identity matrix
+	**/
 	void Mat3Identity(Mat3x3& given);
 
+	/**
+	 \brief		this function is a meant for inversing a given matrix and changing the value of the given resultant matrix
+	 **/
 	void Mat3Inverse(const Mat3x3& givenIn, Mat3x3& givenOut);
 
+	/**
+	 \brief		this function is a meant for changing a given Matrix into a translation matrix with x and y
+	 **/
 	void Mat3Translate(Mat3x3& given, float x, float y);
 
+	/**
+	 \brief		this function is a meant for changing a given Matrix into a scale matrix with x and y
+	 **/
 	void Mat3Scale(Mat3x3& given, float x, float y);
 
+	/**
+	 \brief		this function is a meant for changing a given Matrix into a rotation matrix with a given angle in radian
+	 **/
 	void Mat3RotRad(Mat3x3& given, float ang);
 
+	/**
+	 \brief		this function is a meant for changing a given Matrix into a rotation matrix by converting an angle in degree to radian
+	 **/
 	void Mat3RotDeg(Mat3x3& given, float ang);
 
+	/**
+	 \brief		this is a operator overload of the * sign used to multiply 2 matrixes together without changing the matrixes themselves
+	 **/
 	Mat3x3 operator*(const Mat3x3& lhs, const Mat3x3& rhs);
 
+	/**
+	 \brief		this function is a operator overload of the + sign used to add 2 matrixes together without changing the matrixes themselves
+	 **/
 	Mat3x3 operator+(const Mat3x3& lhs, const Mat3x3& rhs);
 
+	/**
+	 \brief		this function is a operator overload of the - sign used to subtract 1 matrix from another without changing the matrixes themselves
+	 **/
 	Mat3x3 operator-(const Mat3x3& lhs, const Mat3x3& rhs);
 
+	/**
+	 \brief		this function is a operator overload of the == sign used to compare 2 matrixes and return true if they are equal
+	 **/
 	bool operator==(const Mat3x3& lhs, const Mat3x3& rhs);
 
+	/**
+	 \brief		this function is a operator overload of the <= sign used to compare 2 matrixes and return true if
+				any left matrix element is smaller than or equal to right matrix
+	 **/
 	bool operator<=(const Mat3x3& lhs, const Mat3x3& rhs);
 
+	/**
+	 \brief		this function is a operator overload of the >= sign used to compare 2 matrixes and return true if
+				any left matrix element is bigger than or equal to right matrix
+	 **/
 	bool operator>=(const Mat3x3& lhs, const Mat3x3& rhs);
 }
 #endif

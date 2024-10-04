@@ -24,17 +24,7 @@ namespace physicspipe {
 	std::vector<std::shared_ptr<PhysicsData>> Physics::m_physicsEntities;
 	std::vector<std::shared_ptr<PhysicsData>> Physics::m_collidedEntities;
 
-	/******************************************************************/
-	/*!
-	\fn        Circle::Circle(float radius, vector2::Vec2 shape_position, vector2::Vec2 shape_scale, vector2::Vec2 shape_velocity, int entity_ID)
-	\brief     Constructor for creating a circle physics entity.
-	\param[in] radius       Radius of the circle.
-	\param[in] shape_position Position of the circle entity.
-	\param[in] shape_scale  Scale of the circle entity.
-	\param[in] shape_velocity Velocity of the circle entity.
-	\param[in] entity_ID    Unique ID for the entity.
-	*/
-	/******************************************************************/
+
 	Circle::Circle(float radius, vector2::Vec2 shape_position, vector2::Vec2 shape_scale, vector2::Vec2 shape_velocity, int entity_ID)
 		: m_radius(radius)   // Initialize radius
 	{
@@ -45,18 +35,7 @@ namespace physicspipe {
 		type = EntityType::CIRCLE;  // Set type to Circle
 	}
 
-	/******************************************************************/
-	/*!
-	\fn        Rectangle::Rectangle(float rect_height, float rect_width, vector2::Vec2 shape_position, vector2::Vec2 shape_scale, vector2::Vec2 shape_velocity, int entity_ID)
-	\brief     Constructor for creating a rectangle physics entity.
-	\param[in] rect_height  Height of the rectangle.
-	\param[in] rect_width   Width of the rectangle.
-	\param[in] shape_position Position of the rectangle entity.
-	\param[in] shape_scale  Scale of the rectangle entity.
-	\param[in] shape_velocity Velocity of the rectangle entity.
-	\param[in] entity_ID    Unique ID for the entity.
-	*/
-	/******************************************************************/
+
 	Rectangle::Rectangle(float rect_height, float rect_width, vector2::Vec2 shape_position, vector2::Vec2 shape_scale, vector2::Vec2 shape_velocity, int entity_ID)
 		: m_height(rect_height), m_width(rect_width)   // Initialize height and width
 	{
@@ -66,16 +45,7 @@ namespace physicspipe {
 		m_ID = entity_ID;
 		type = EntityType::RECTANGLE;  // Set type to Rectangle
 	}
-	/******************************************************************/
-	/*!
-	\fn        bool Physics::m_static_CollisionCheck(const AABB aabb1, const AABB aabb2)
-	\brief     Performs a static collision check between two axis-aligned
-			   bounding boxes (AABB).
-	\param[in] aabb1  The first AABB for comparison.
-	\param[in] aabb2  The second AABB for comparison.
-	\return    True if a collision is detected, false otherwise.
-	*/
-	/******************************************************************/
+
 	bool Physics::m_static_CollisionCheck(const AABB aabb1, const AABB aabb2) {
 		//std::cout << "BOUNDING BOX1 MIN X " << aabb1.m_min.m_x << " Y " << aabb1.m_min.m_y << std::endl;
 		//std::cout << "BOUNDING BOX1 MAX X " << aabb1.m_max.m_x << " Y " << aabb1.m_max.m_y << std::endl;
@@ -89,44 +59,15 @@ namespace physicspipe {
 		//std::cout << "Static Collision fail " << std::endl;
 		return 1;
 	}
-	/******************************************************************/
-	/*!
-	\fn        void Physics::m_SendPhysicsData(float rect_height, float rect_width, vector2::Vec2 position, vector2::Vec2 scale, vector2::Vec2 velocity, int ID)
-	\brief     Adds a rectangle entity to the physics system.
-	\param[in] rect_height  Height of the rectangle.
-	\param[in] rect_width   Width of the rectangle.
-	\param[in] position     Position of the rectangle.
-	\param[in] scale        Scale of the rectangle.
-	\param[in] velocity     Velocity of the rectangle.
-	\param[in] ID           Unique ID of the rectangle entity.
-	*/
-	/******************************************************************/
+
 	void Physics::m_SendPhysicsData(float rect_height, float rect_width, vector2::Vec2 position, vector2::Vec2 scale, vector2::Vec2 velocity, int ID) {
 		m_physicsEntities.push_back(std::make_shared<Rectangle>(rect_height, rect_width, position, scale, velocity, ID));
 	}
-	/******************************************************************/
-	/*!
-	\fn        void Physics::m_SendPhysicsData(float radius, vector2::Vec2 position, vector2::Vec2 scale, vector2::Vec2 velocity, int ID)
-	\brief     Adds a circle entity to the physics system.
-	\param[in] radius    Radius of the circle.
-	\param[in] position  Position of the circle.
-	\param[in] scale     Scale of the circle.
-	\param[in] velocity  Velocity of the circle.
-	\param[in] ID        Unique ID of the circle entity.
-	*/
-	/******************************************************************/
+
 	void Physics::m_SendPhysicsData(float radius, vector2::Vec2 position, vector2::Vec2 scale, vector2::Vec2 velocity, int ID){
 		m_physicsEntities.push_back(std::make_shared<Circle>(radius, position, scale, velocity, ID));
 	}
-	/******************************************************************/
-	/*!
-	\fn        void Physics::m_CollisionCheck(float dt)
-	\brief     Performs collision detection between all physics entities
-			   in the system, checking for interactions between circles
-			   and rectangles.
-	\param[in] dt The time step for the collision detection process.
-	*/
-	/******************************************************************/
+
 	void Physics::m_CollisionCheck(float dt) {
 
 		//calculate boarding box
@@ -194,38 +135,19 @@ namespace physicspipe {
 		}
 		//std::cout << "Physics Entities size " << m_physicsEntities.size() << " collideEntities " << m_collidedEntities.size() << std::endl;
 	}
-	/******************************************************************/
-	/*!
-	\fn        std::vector<std::shared_ptr<PhysicsData>> Physics::m_RetrievePhysicsData()
-	\brief     Retrieves the list of physics entities that have collided
-			   in the system and clears the current entities list.
-	\return    A vector of shared pointers to collided physics entities.
-	*/
-	/******************************************************************/
+
 	std::vector<std::shared_ptr<PhysicsData>> Physics::m_RetrievePhysicsData() {
 		std::vector<std::shared_ptr	<PhysicsData>> TempCollidedEntities = m_collidedEntities;
 		this->m_ClearEntites();
 		return TempCollidedEntities;
 	}
-	/******************************************************************/
-	/*!
-	\fn        void Physics::m_ClearEntites()
-	\brief     Clears all stored physics entities and collided entities
-			   from the physics system.
-	*/
-	/******************************************************************/
+
 	void Physics::m_ClearEntites(){
 		m_physicsEntities.clear();
 		m_collidedEntities.clear();
 	}
 
-	/******************************************************************/
-	/*!
-	\fn        void Physics::m_CalculateBoundingBox()
-	\brief     Calculates and updates the axis-aligned bounding boxes
-			   (AABB) for all entities in the system.
-	*/
-	/******************************************************************/
+
 	void Physics::m_CalculateBoundingBox() {
 		//std::cout << "********************************************************************************" << std::endl;
 		//std::cout << "UPDATING BOUNDING BOX" << std::endl;
@@ -248,16 +170,7 @@ namespace physicspipe {
 		}
 		//std::cout << "********************************************************************************" << std::endl;
 	}
-	/******************************************************************/
-	/*!
-	\fn        bool Physics::m_CollisionIntersection_RectRect(const Rectangle& obj1, const Rectangle& obj2, float dt)
-	\brief     Checks for dynamic and static collision between two rectangle entities.
-	\param[in] obj1 The first rectangle entity.
-	\param[in] obj2 The second rectangle entity.
-	\param[in] dt   The time step for the collision detection process.
-	\return    True if a collision is detected, false otherwise.
-	*/
-	/******************************************************************/
+
 	bool Physics::m_CollisionIntersection_RectRect(const Rectangle& obj1, const Rectangle& obj2, float dt) {
 		//static collision
 		AABB aabb1 = obj1.m_boundingBox;
@@ -339,15 +252,7 @@ namespace physicspipe {
 		return true;
 
 	}
-	/******************************************************************/
-	/*!
-	\fn        bool Physics::m_CollisionIntersection_CircleCircle(const Circle& circle1, const Circle& circle2)
-	\brief     Checks for collision between two circle entities.
-	\param[in] circle1 The first circle entity.
-	\param[in] circle2 The second circle entity.
-	\return    True if a collision is detected, false otherwise.
-	*/
-	/******************************************************************/
+
 	bool Physics::m_CollisionIntersection_CircleCircle(const Circle& circle1, const Circle& circle2) {
 		float dx = circle2.m_position.m_x - circle1.m_position.m_x;
 		float dy = circle2.m_position.m_y - circle1.m_position.m_y;
@@ -356,15 +261,7 @@ namespace physicspipe {
 		float combineRadius = circle1.m_radius + circle2.m_radius;
 		return distance_Square <= (combineRadius * combineRadius);
 	}
-	/******************************************************************/
-	/*!
-	\fn        bool Physics::m_CollisionIntersection_CircleRect(const Circle& circle, const Rectangle& rect)
-	\brief     Checks for collision between a circle and a rectangle entity.
-	\param[in] circle The circle entity.
-	\param[in] rect   The rectangle entity.
-	\return    True if a collision is detected, false otherwise.
-	*/
-	/******************************************************************/
+
 	bool Physics::m_CollisionIntersection_CircleRect(const Circle& circle, const Rectangle& rect) {
 		vector2::Vec2 shortestDistance{};
 
