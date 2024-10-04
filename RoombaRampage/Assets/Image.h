@@ -23,6 +23,17 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 namespace image {
 
+
+	/**
+	 * @class Image
+	 * @brief Represents an image loaded into the engine.
+	 *
+	 * The Image class is responsible for loading image files, extracting metadata such as
+	 * sprite names and strip counts from filenames, handling padding for non-square textures,
+	 * and creating OpenGL textures. It also provides functionality for serialization and
+	 * deserialization of image data to and from JSON files. This class facilitates the
+	 * management of image assets within the engine.
+	 */
     class Image {
     public:
 		/**
@@ -96,17 +107,17 @@ namespace image {
 
 
 		//Image channels required for our engine
-		static int m_targetChannels;
-		static int m_imageCount;
+		static int m_targetChannels; ///< Number of color channels for the images (e.g., 3 for RGB, 4 for RGBA).
+		static int m_imageCount;      ///< Total number of images loaded into the engine.
 
 	public:
-		std::string m_spriteName{};
-		int m_width{};
-		int m_height{};
-		int m_channels{};
-		int m_stripCount{};
-		bool m_isPadded = false;
-		int m_imageID{};
+		std::string m_spriteName{}; ///< Name of the sprite associated with this image.
+		int m_width{};               ///< Width of the image in pixels.
+		int m_height{};              ///< Height of the image in pixels.
+		int m_channels{};            ///< Number of color channels in the image.
+		int m_stripCount{};          ///< Number of strips in the image (for sprite sheets).
+		bool m_isPadded = false;     ///< Indicates whether the image has been padded to be square.
+		int m_imageID{};             ///< Unique identif
     };
 }
 

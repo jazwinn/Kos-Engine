@@ -56,12 +56,12 @@ namespace image {
         unsigned char* data = stbi_load(file, &image.m_width, &image.m_height, &image.m_channels, 0);
         if (!data)
         {
-            LOGGING_ASSERT_WITH_MSG("Error: Could not load image");
+            LOGGING_ASSERT_WITH_MSG("Error: Could not load image {0}", file);
         }
 
         if (image.m_channels != m_targetChannels)
         {
-            std::cout << "Warning: Color channels for " << file << " are not following RGBA specifications" << std::endl;
+            LOGGING_WARN("Warning: Color channels for {0} are not following RGBA specifications ", file);
         }
 
         if (image.m_stripCount == 1)
@@ -90,7 +90,7 @@ namespace image {
                 m_imageCount++;
                 assetmanager->m_imageContainer.push_back(image);
                 assetmanager->m_imagedataArray.push_back(newData);
-                std::cout << "Texture Padded" << std::endl;
+                LOGGING_INFO("Texture Padded for {0}", image.m_spriteName);
             }
             else
             {
@@ -131,7 +131,7 @@ namespace image {
 
         if (std::regex_search(filename, match, pattern))
         {
-            std::cout << "Strip Success" << std::endl;
+            LOGGING_INFO("Strip Success for {0}", filename);
             return std::stoi(match[2].str());
         }
 
@@ -195,10 +195,7 @@ namespace image {
                     // Calculate source and destination indices
                     int srcIndex = (y * originalWidth + x) * originalChannels + c;
                     int dstIndex = ((y + (targetHeight - originalHeight) / 2) * targetWidth + (x + (targetWidth - originalWidth) / 2)) * targetChannels + c;
-                    //TOCHECK
-                    // Copy pixel data
-                    //paddedPixels[dstIndex] = originalPixels[srcIndex];
-                                // Ensure indices are within bounds
+
                     if (srcIndex < maxSrcIndex && dstIndex < maxDstIndex)
                     {
                         // Copy pixel data
@@ -206,8 +203,6 @@ namespace image {
                     }
                     else
                     {
-                        // Handle out-of-bounds cases (e.g., log an error or continue)
-                        // TOCHECK: You can add logging or handling logic here
                         LOGGING_ERROR("Buffer Overflow as SrcIndx > MaxSrcIndex || dstIndex > maxDstIndex");
                     }
 

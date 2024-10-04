@@ -439,13 +439,13 @@ namespace graphicpipe {
 
 		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE)
 		{
-			std::cout << "Framebuffer successfully created" << std::endl;
+			LOGGING_INFO("Framebuffer successfully created");
 			m_frameBufferObject = fbo;
 			m_screenTexture = texture;
 		}
 		else
 		{
-			std::cout << "Framebuffer has not been created" << std::endl;
+			LOGGING_INFO("Framebuffer has not been created");
 		}
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -659,7 +659,7 @@ namespace graphicpipe {
 		}
 		else
 		{
-			std::cout << "Shader compiled successfully" << std::endl;
+			LOGGING_INFO("Shader compiled successfully");
 		}
 
 		return lvProgram;
