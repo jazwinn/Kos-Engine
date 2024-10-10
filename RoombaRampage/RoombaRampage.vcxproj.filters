@@ -252,6 +252,9 @@
     <ClCompile Include="Math\Vector2.cpp">
       <Filter>Source Files\Math</Filter>
     </ClCompile>
+    <ClCompile Include="ECS\System\HierachySystem.cpp">
+      <Filter>Source Files\ECS\System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Math\Mat2x2.h">
@@ -436,6 +439,12 @@
     </ClInclude>
     <ClInclude Include="Math\Vector2.h">
       <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="ECS\Component\HierachyComponent.h">
+      <Filter>Header Files\ECS\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="ECS\System\HierachySystem.h">
+      <Filter>Header Files\ECS\System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -105,7 +105,7 @@ void gui::ImGuiHandler::m_DrawTestWindow() {
 				tc->m_position.m_x = static_cast<float>(height2(gen));
 
 			}
-			spawn = true;
+			//spawn = true;
 		}
 	}
 	ImGui::SameLine();
