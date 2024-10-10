@@ -160,6 +160,8 @@ namespace gui {
         /******************************************************************/
         unsigned int m_DrawHierachyWindow();
 
+        void m_DrawEntityNode(ecs::EntityID);
+
         /******************************************************************/
         /*!
             \fn        gui::ImGuiHandler::m_DrawLogsWindow()
@@ -195,11 +197,7 @@ namespace gui {
         /******************************************************************/
         void m_DrawRenderScreenWindow(unsigned int windowWidth, unsigned int windowHeight);
 
-        //Getter to acess the four imgui variables
-        std::vector<std::string>& GetObjectTextEntries() { return m_objTextEntries; }
-        std::vector<bool>& GetDeleteButtons() { return m_deleteButton; }
-        std::vector<bool>& GetDuplicateButtons() { return m_duplicateButton; }
-        std::vector<unsigned int>& GetObjectEntityIDs() { return m_objEntityId; }
+
 
         int m_clickedEntityId;
 
@@ -207,10 +205,6 @@ namespace gui {
 
         bool m_objectNameBox = false;
         char m_charBuffer[50] = "";  // Char Buffer
-        std::vector<std::string> m_objTextEntries;
-        std::vector<bool> m_deleteButton;
-        std::vector<bool> m_duplicateButton;
-        std::vector<unsigned int> m_objEntityId;
 
         ImVec4 clearColor = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
     };
