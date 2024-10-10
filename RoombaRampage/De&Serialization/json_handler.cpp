@@ -252,7 +252,7 @@ namespace Serialization {
 		LOGGING_INFO("Load Json Successful");
 	}
 
-	void Serialize::m_SaveComponentsJson(const std::string& filePath, const std::unordered_map<ecs::EntityID, std::bitset<ecs::ComponentType::TOTALTYPECOMPONENT>>& ECS_EntityMap, const std::vector<std::string>& objTextEntries, const std::vector<ecs::EntityID>& objEntityId)
+	void Serialize::m_SaveComponentsJson(const std::string& filePath, const std::unordered_map<ecs::EntityID, std::bitset<ecs::ComponentType::TOTALTYPECOMPONENT>>& ECS_EntityMap)
 	{
 		std::string jsonFilePath = filePath + "/Components.json";
 		m_JsonFileValidation(jsonFilePath);
@@ -275,16 +275,17 @@ namespace Serialization {
 			bool hasComponents = false;
 
 			// Find name for this entity using objEntityId
-			auto it = std::find(objEntityId.begin(), objEntityId.end(), entityId);
-			if (it != objEntityId.end()) {
-				size_t index = std::distance(objEntityId.begin(), it);
-				if (index < objTextEntries.size()) {
-					rapidjson::Value nameValue;
-					nameValue.SetString(objTextEntries[index].c_str(), allocator);
-					entityData.AddMember("name", nameValue, allocator);
-					hasComponents = true;
-				}
+
+			if (entityPair.second.test(ecs::ComponentType::TYPENAMECOMPONENT)) {
+				rapidjson::Value nameValue;
+				nameValue.SetString(static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(entityId))->m_entityName.c_str(), allocator);
+				entityData.AddMember("name", nameValue, allocator);
+				hasComponents = true;
+
 			}
+
+
+			
 
 			// Check if the entity has TransformComponent and save 
 			if (entityPair.second.test(ecs::ComponentType::TYPETRANSFORMCOMPONENT)) {

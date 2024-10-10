@@ -53,7 +53,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
     };
     static int ComponentType = 0;
 
-    if (m_objTextEntries.size() > 0) {
+    if (ecs->m_ECS_EntityMap.size() > 0) {
 
         ecs::EntityID entityID = m_clickedEntityId;
 
@@ -107,13 +107,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
             ImGui::Text("Object Name: ");
             ImGui::SameLine(slider_start_pos_x);
             ImGui::SetNextItemWidth(100.0f);
-            if (ImGui::InputText("##NAMETEXT##", &nc->m_entityName)) {
-                for (int n{}; n < m_objEntityId.size(); n++) {
-                    if (m_objEntityId[n] == entityID) {
-                        m_objTextEntries[n] = nc->m_entityName;
-                    }
-                }
-            }
+            ImGui::InputText("##NAMETEXT##", &nc->m_entityName);
         }
             
         if (EntitySignature.test(ecs::TYPETRANSFORMCOMPONENT))
