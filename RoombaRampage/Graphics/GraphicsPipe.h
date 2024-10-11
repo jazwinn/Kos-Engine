@@ -71,6 +71,7 @@ namespace graphicpipe {
         glm::vec2 m_worldCoordinates{};  ///< World coordinates of the object.
         unsigned int m_textureID{};      ///< ID of the texture used for rendering.
         float m_animationTimer{};        ///< Timer for handling animations.
+        float m_framesPerSecond{};       ///< Timer for speed of animations.
         int m_layer{};                   ///< Layer for drawing order.
     };
 

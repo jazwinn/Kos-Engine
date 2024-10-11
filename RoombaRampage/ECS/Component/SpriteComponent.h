@@ -33,7 +33,7 @@ namespace ecs {
 
 		unsigned int m_imageID;
 		unsigned int m_frameNumber;
-		int layer;
+		int m_layer;
 	};
 
 }

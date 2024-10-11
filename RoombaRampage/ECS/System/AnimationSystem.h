@@ -18,6 +18,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "System.h"
 #include "../ECS/Component/AnimationComponent.h"
 #include "../ECS/Component/TransformComponent.h"
+#include "../ECS/Component/SpriteComponent.h"
 
 #include "../ECS/ECSList.h"
 
@@ -38,6 +39,7 @@ namespace ecs {
 		//Storage to point to components
 		std::vector<TransformComponent*> m_vecTransformComponentPtr;
 		std::vector<AnimationComponent*> m_vecAnimationComponentPtr;
+		std::vector<SpriteComponent*>	 m_vecSpriteComponentPtr;
 		//std::vector<MovementComponent*> m_vecMovementComponentPtr;
 
 	};

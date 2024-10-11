@@ -82,19 +82,12 @@ namespace ecs {
 			if (ecs->m_ECS_EntityMap[sprite->m_Entity].test(TYPEANIMATIONCOMPONENT)) 
 			{
 				AnimationComponent* animation = (AnimationComponent*)ecs->m_ECS_CombinedComponentPool[TYPEANIMATIONCOMPONENT]->m_GetEntityComponent(sprite->m_Entity);
-				if (animation->m_isAnimating)
-				{
-					animation->m_frameTimer += ecs->m_DeltaTime;
-				}
-				else
-				{
-					animation->m_frameTimer = 0.f;
-				}
-				graphicsPipe->m_modelData.push_back({ transform->m_rotation, glm::vec2{transform->m_scale.m_x, transform->m_scale.m_y}, glm::vec2{transform->m_position.m_x,transform->m_position.m_y} ,sprite->m_imageID, animation->m_frameTimer, 0 });
+				
+				graphicsPipe->m_modelData.push_back({ transform->m_rotation, glm::vec2{transform->m_scale.m_x, transform->m_scale.m_y}, glm::vec2{transform->m_position.m_x,transform->m_position.m_y} ,sprite->m_imageID, animation->m_frameTimer, 0 , 0});
 			}
 			else
 			{
-				graphicsPipe->m_modelData.push_back({ transform->m_rotation, glm::vec2{transform->m_scale.m_x, transform->m_scale.m_y}, glm::vec2{transform->m_position.m_x,transform->m_position.m_y} ,sprite->m_imageID, 0, 0 });
+				graphicsPipe->m_modelData.push_back({ transform->m_rotation, glm::vec2{transform->m_scale.m_x, transform->m_scale.m_y}, glm::vec2{transform->m_position.m_x,transform->m_position.m_y} ,sprite->m_imageID, 0, 0 , 0 });
 			}
 			
 		}

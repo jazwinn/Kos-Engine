@@ -22,9 +22,11 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 */
 /******************************************************************/
 #include "../ECS.h"
+#include "../Graphics/GraphicsPipe.h"
 
 #include "AnimationSystem.h"
 #include "../Debugging/Logging.h"
+
 #include <algorithm>
 
 namespace ecs {
@@ -38,6 +40,7 @@ namespace ecs {
 			== m_vecAnimationComponentPtr.end()) {
 			m_vecTransformComponentPtr.push_back((TransformComponent*)ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(ID));
 			m_vecAnimationComponentPtr.push_back((AnimationComponent*)ecs->m_ECS_CombinedComponentPool[TYPEANIMATIONCOMPONENT]->m_GetEntityComponent(ID));
+			m_vecSpriteComponentPtr.push_back((SpriteComponent*)ecs->m_ECS_CombinedComponentPool[TYPEANIMATIONCOMPONENT]->m_GetEntityComponent(ID));
 
 		}
 	}
@@ -57,24 +60,28 @@ namespace ecs {
 
 		std::swap(m_vecAnimationComponentPtr[IndexID], m_vecAnimationComponentPtr[IndexLast]);
 		std::swap(m_vecTransformComponentPtr[IndexID], m_vecTransformComponentPtr[IndexLast]);
+		std::swap(m_vecSpriteComponentPtr[IndexID], m_vecSpriteComponentPtr[IndexLast]);
 
 		//popback the vector;
 		m_vecAnimationComponentPtr.pop_back();
 		m_vecTransformComponentPtr.pop_back();
+		m_vecSpriteComponentPtr.pop_back();
 
 	}
 
 	void AnimationSystem::m_Init() {
 
 		m_SystemSignature.set(TYPEANIMATIONCOMPONENT);
+		m_SystemSignature.set(TYPESPRITECOMPONENT);
 
 	}
 
 	void AnimationSystem::m_Update() {
 
 		ECS* ecs = ECS::m_GetInstance();
+		graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
 
-		if (m_vecAnimationComponentPtr.size() != m_vecTransformComponentPtr.size()) {
+		if (m_vecAnimationComponentPtr.size() != m_vecTransformComponentPtr.size() && m_vecAnimationComponentPtr.size() != m_vecSpriteComponentPtr.size()) {
 			//std::cout << "Error: Vecotrs container size does not Match" << std::endl;
 			LOGGING_ERROR("Error: Vecotrs container size does not Match");
 			return;
@@ -83,16 +90,24 @@ namespace ecs {
 
 		//graphicpipe::GraphicsPipe* graphicsPipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
 
-		for (int n{}; n < m_vecTransformComponentPtr.size(); n++) {
+		for (int n{}; n < m_vecAnimationComponentPtr.size(); n++) {
 			//std::cout << "Entity: " << n << "Movement System is getting Updated";
 
 			AnimationComponent* AniComp = m_vecAnimationComponentPtr[n];
 			TransformComponent* TransComp = m_vecTransformComponentPtr[n];
+			SpriteComponent* SpriteComp = m_vecSpriteComponentPtr[n];
 
 			EntityID id = AniComp->m_Entity;
 
-
-
+			if (m_vecAnimationComponentPtr[n]->m_isAnimating)
+			{
+				m_vecAnimationComponentPtr[n]->m_frameTimer += ecs->m_DeltaTime;
+			}
+			else
+			{
+				m_vecAnimationComponentPtr[n]->m_frameTimer = 0;
+			}
+			
 
 		}
 

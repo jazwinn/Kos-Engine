@@ -9,6 +9,7 @@ namespace ecs {
 	class AnimationComponent : public Component {
 
 	public:
+		float m_framesPerSecond;
 		float m_frameTimer;
 		bool m_isAnimating{ true };
 
