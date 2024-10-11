@@ -167,13 +167,10 @@ namespace gui {
                 IM_ASSERT(payload->DataSize == sizeof(ecs::EntityID));
                 ecs::EntityID childId = *static_cast<ecs::EntityID*>(payload->Data);
 
-                if (ecs->m_GetParent(childId).has_value()) {
-                    LOGGING_WARN("Entity already assigned a parent");
-                }
-                else {
-                    ecs->m_SetParent(id, childId);
-                    std::cout << "Set Parent:" << id << " Child: " << childId << std::endl;
-                }
+
+                ecs->m_SetParent(id, childId);
+                std::cout << "Set Parent:" << id << " Child: " << childId << std::endl;
+                
 
 
 
