@@ -45,8 +45,12 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
     float windowAspectRatio = windowSize.x / windowSize.y;
 
     ImVec2 imageSize;
+    imageSize.x = windowWidth / 2;
+    imageSize.y = windowHeight / 2;
 
-    if (windowAspectRatio > textureAspectRatio) 
+
+
+   if (windowAspectRatio > textureAspectRatio) 
     {
         imageSize.y = windowSize.y;
         imageSize.x = imageSize.y * textureAspectRatio;
@@ -66,6 +70,7 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
     {
         pos.y += (windowSize.y - imageSize.y) / 2;
     }
+
 
     ImGui::GetWindowDrawList()->AddImage(
         (void*)(long long unsigned int)pipe->m_screenTexture, pos,

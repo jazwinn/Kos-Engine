@@ -153,10 +153,7 @@ namespace graphicpipe {
          */
         void m_funcSetupArrayBuffer();
 
-        /**
-         * @brief Sets up the framebuffer for offscreen rendering.
-         */
-        void m_funcSetupFrameBuffer();
+       
 
         /**
          * @brief Compiles and links a shader program from vertex and fragment shader sources.
@@ -308,6 +305,11 @@ namespace graphicpipe {
          * Renders all text elements stored in the text data structures to the screen.
          */
         void m_funcDrawText();
+
+        /**
+        * @brief Sets up the framebuffer for offscreen rendering.
+        */
+        void m_funcSetupFrameBuffer();
 
         // Meshes
         Mesh m_squareMesh;              ///< Mesh for square rendering.
