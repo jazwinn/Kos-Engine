@@ -70,8 +70,27 @@ namespace ecs {
 		{
 			TransformComponent* transformComp = m_vecTransformComponentPtr[n];
 
+			if (!transformComp->m_haveParent) {
+				continue;
+			}
+			//get parents coordinate
+			if (!ecs->m_GetParent(transformComp->m_Entity).has_value()) {
+				// no parnet
+				return;
+			}
 
+			EntityID parentID = ecs->m_GetParent(transformComp->m_Entity).value();
+			TransformComponent* parentComp{nullptr};
+			for (auto& com : m_vecTransformComponentPtr) {
+				if (com->m_Entity == parentID) {
+					parentComp = com;
+				}
+			}
+			if (!parentComp) continue;
 
+			//mat3x3::Mat3Translate(transformComp->m_transformation, 1.f, 1.f);
+
+			transformComp->m_position = { parentComp->m_position.m_x + 1.f, parentComp->m_position.m_y + 1.f };
 
 		}
 

@@ -55,6 +55,7 @@ namespace ecs{
 
 		//Allocate memory to each system
 		ecs->m_ECS_SystemMap[TYPECONTROLSYSTEM] = std::make_shared<ControlSystem>();
+		ecs->m_ECS_SystemMap[TYPETRANSFORMSYSTEM] = std::make_shared<TransformSystem>();
 		ecs->m_ECS_SystemMap[TYPECOLLISIONSYSTEM] = std::make_shared<CollisionSystem>();
 		ecs->m_ECS_SystemMap[TYPECOLLISIONRESPONSESYSTEM] = std::make_shared<CollisionResponseSystem>();
 		ecs->m_ECS_SystemMap[TYPEMOVEMENTSYSTEM] = std::make_shared<MovementSystem>(); // movement should be the last logic
