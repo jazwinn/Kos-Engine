@@ -344,6 +344,12 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                ImGui::SameLine(slider_start_pos_x + 100);
                ImGui::SetNextItemWidth(100.0f);
                ImGui::DragInt("##SPF##", &ac->m_framesPerSecond, 1, 1, 60, "%d");
+
+               ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
+               ImGui::Text("Frame Timer");
+               ImGui::SameLine(slider_start_pos_x);
+               ImGui::SetNextItemWidth(100.0f);
+               ImGui::DragFloat("###TEXTXXX", &ac->m_frameTimer, 0.02f, 0.f, 1.f, "%.2f");
             }
         }
      }
