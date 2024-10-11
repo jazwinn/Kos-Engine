@@ -109,11 +109,27 @@ namespace gui {
                     break;
                 }
 
-                if (ImGui::MenuItem("Dupliate Entity")) {
-                    ecs->m_DuplicateEntity(entity.first);
+                if (ImGui::MenuItem("Duplicate Entity")) {
+                    ecs->m_DuplicateEntity(m_clickedEntityId);
                 }
 
                 ImGui::EndPopup();
+            }
+
+            if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None)) {
+                ImGui::SetDragDropPayload("Entity", &entity.first, sizeof(ecs::EntityID));
+                ImGui::Text(static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(entity.first))->m_entityName.c_str());
+                ImGui::EndDragDropSource();
+            }
+
+            if (ImGui::BeginDragDropTarget())
+            {
+                if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Entity"))
+                {
+                    
+
+                }
+                ImGui::EndDragDropTarget();
             }
 
         }
@@ -141,6 +157,8 @@ namespace gui {
            // m_DrawEntityNode(1);
             ImGui::TreePop();
         }
+
+
 
     }
 
