@@ -138,7 +138,7 @@ namespace graphicpipe {
 
 		// Enable scissor test for limiting rendering to a specific area.
 		glEnable(GL_SCISSOR_TEST);
-		glScissor(0, 0, m_windowWidth, m_windowHeight);
+		
 
 	}
 
@@ -416,31 +416,43 @@ namespace graphicpipe {
 
 	void GraphicsPipe::m_funcSetupFrameBuffer()
 	{
-		unsigned int fbo;
-		glGenFramebuffers(1, &fbo);
-		glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+		Helper::Helpers* help = Helper::Helpers::GetInstance();
+		std::cout << help->m_windowWidth << std::endl;
 
-		unsigned int texture;
-		glGenTextures(1, &texture);
-		glBindTexture(GL_TEXTURE_2D, texture);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_windowWidth, m_windowHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+		if (m_screenTexture)
+		{
+			glDeleteTextures(1,&m_screenTexture);
+		}
+		if (m_depthBufferObject)
+		{
+			glDeleteRenderbuffers(1, &m_depthBufferObject);
+		}
+		if (m_frameBufferObject)
+		{
+			glDeleteFramebuffers(1, &m_frameBufferObject);
+		}
+		glGenFramebuffers(1, &m_frameBufferObject);
+		glBindFramebuffer(GL_FRAMEBUFFER, m_frameBufferObject);
+
+		glGenTextures(1, &m_screenTexture);
+		glBindTexture(GL_TEXTURE_2D, m_screenTexture);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, help->m_windowWidth, help->m_windowHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		glBindTexture(GL_TEXTURE_2D, 0);
-		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture, 0);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_screenTexture, 0);
 
-		unsigned int rbo;
-		glGenRenderbuffers(1, &rbo);
-		glBindRenderbuffer(GL_RENDERBUFFER, rbo);
-		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, m_windowWidth, m_windowHeight);
-		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
+		
+		glGenRenderbuffers(1, &m_depthBufferObject);
+		glBindRenderbuffer(GL_RENDERBUFFER, m_depthBufferObject);
+		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, help->m_windowWidth, help->m_windowHeight);
+		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_depthBufferObject);
 
 
 		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE)
 		{
 			LOGGING_INFO("Framebuffer successfully created");
-			m_frameBufferObject = fbo;
-			m_screenTexture = texture;
 		}
 		else
 		{
@@ -448,6 +460,8 @@ namespace graphicpipe {
 		}
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+		glScissor(0, 0, help->m_windowWidth, help->m_windowHeight);
 
 	}
 
@@ -499,7 +513,7 @@ namespace graphicpipe {
 				m_frameNumbers.push_back(m_modelData[n].frameNumber);			
 			}
 		}
-
+		
 		if (m_debugBoxData.size() > 0)
 		{
 			for (int i{}; i < m_debugBoxData.size(); i++)
