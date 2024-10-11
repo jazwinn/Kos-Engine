@@ -254,6 +254,9 @@
     </ClCompile>
     <ClCompile Include="ECS\System\AnimationSystem.cpp">
       <Filter>Source Files</Filter>
+      </ClCompile>
+    <ClCompile Include="ECS\System\HierachySystem.cpp">
+      <Filter>Source Files\ECS\System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -440,8 +443,16 @@
     <ClInclude Include="Math\Vector2.h">
       <Filter>Header Files\Math</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="ECS\System\AnimationSystem.h">
       <Filter>Header Files</Filter>
+=======
+    <ClInclude Include="ECS\Component\HierachyComponent.h">
+      <Filter>Header Files\ECS\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="ECS\System\HierachySystem.h">
+      <Filter>Header Files\ECS\System</Filter>
+>>>>>>> upstream/main
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

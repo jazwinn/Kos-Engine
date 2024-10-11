@@ -28,7 +28,7 @@ void gui::ImGuiHandler::m_DrawMainMenuBar() {
     ImGuiIO& io = ImGui::GetIO();  // Get input/output data
     //If CTRL + S press, save
     if (io.KeyCtrl && ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_S))) {
-        Serialization::Serialize::m_SaveComponentsJson("../RoombaRampage/Json", ecs::ECS::m_GetInstance()->m_ECS_EntityMap, m_objTextEntries, m_objEntityId);
+        Serialization::Serialize::m_SaveComponentsJson("../RoombaRampage/Json", ecs::ECS::m_GetInstance()->m_ECS_EntityMap);
         std::cout << "Saving data..." << std::endl;
     }
 
@@ -39,7 +39,7 @@ void gui::ImGuiHandler::m_DrawMainMenuBar() {
             if (ImGui::MenuItem("Save")) {
 
 
-                Serialization::Serialize::m_SaveComponentsJson("../RoombaRampage/Json", ecs::ECS::m_GetInstance()->m_ECS_EntityMap, m_objTextEntries, m_objEntityId);
+                Serialization::Serialize::m_SaveComponentsJson("../RoombaRampage/Json", ecs::ECS::m_GetInstance()->m_ECS_EntityMap);
 
                 
             }
