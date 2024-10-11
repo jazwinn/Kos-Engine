@@ -102,7 +102,8 @@ namespace gui {
             
             if (ImGui::BeginPopupContextItem()) {
                 if (ImGui::MenuItem("Delete Entity")) {
-                    ecs->m_DeleteEntity(entity.first);
+                    ecs->m_DeleteEntity(m_clickedEntityId);
+                    m_clickedEntityId = 0;
                     //break to reinitialize
                     ImGui::EndPopup();
                     break;
@@ -137,7 +138,7 @@ namespace gui {
         
         if (open) {
             //recursion
-            m_DrawEntityNode(1);
+           // m_DrawEntityNode(1);
             ImGui::TreePop();
         }
 
