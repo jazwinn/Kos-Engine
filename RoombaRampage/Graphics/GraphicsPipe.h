@@ -333,6 +333,49 @@ namespace graphicpipe {
 
         unsigned int m_screenTexture{}; ///< Texture for rendering the screen.
         unsigned int m_proxyBackgroundTexture{}; ///< Background texture for proxy rendering.
+
+        //Shaders
+        const std::string debugVertexShader =
+        {
+        #include "../Graphics/debugVertexShader.vert"
+        };
+
+        const std::string debugFragmentShader =
+        {
+        #include  "../Graphics/debugFragmentShader.frag"
+
+        };
+
+        const std::string frameBufferVertexShader =
+        {
+         #include "../Graphics/frameBufferVertexShader.vert"
+        };
+
+        const std::string frameBufferFragmentShader =
+        {
+          #include "../Graphics/frameBufferFragmentShader.frag"
+        };
+
+
+        const std::string genericVertexShader =
+        {
+         #include "../Graphics/genericVertexShader.vert"
+        };
+
+        const std::string genericFragmentShader =
+        {
+          #include "../Graphics/genericFragmentShader.frag"
+        };
+
+        const std::string textVertexShader =
+        {
+         #include "../Graphics/textVertexShader.vert"
+        };
+
+        const std::string textFragmentShader =
+        {
+          #include "../Graphics/textFragmentShader.frag"
+        };
     };
 
 } // namespace graphicpipe

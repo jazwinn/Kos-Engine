@@ -210,7 +210,11 @@ xcopy /y /d "$(SolutionDir)Dependencies\Freetype_Font\lib\*.dll" "$(OutDir)"</Co
     <ClCompile Include="ECS\System\RenderTextSystem.cpp" />
     <ClCompile Include="Events\Listeners.cpp" />
     <ClCompile Include="Events\MessageSystem.cpp" />
+    <ClCompile Include="Graphics\GraphicsBuffers.cpp" />
+    <ClCompile Include="Graphics\GraphicsDraw.cpp" />
     <ClCompile Include="Graphics\GraphicsPipe.cpp" />
+    <ClCompile Include="Graphics\GraphicsShader.cpp" />
+    <ClCompile Include="Graphics\GraphicsVAO.cpp" />
     <ClCompile Include="Inputs\Input.cpp" />
     <ClCompile Include="Math\Mat2x2.cpp" />
     <ClCompile Include="Math\Mat3x3.cpp" />
