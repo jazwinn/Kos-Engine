@@ -83,11 +83,11 @@ namespace ecs {
 			{
 				AnimationComponent* animation = (AnimationComponent*)ecs->m_ECS_CombinedComponentPool[TYPEANIMATIONCOMPONENT]->m_GetEntityComponent(sprite->m_Entity);
 				
-				graphicsPipe->m_modelData.push_back({ transform->m_rotation, glm::vec2{transform->m_scale.m_x, transform->m_scale.m_y}, glm::vec2{transform->m_position.m_x,transform->m_position.m_y} ,sprite->m_imageID, animation->m_frameTimer, 0 , 0});
+				graphicsPipe->m_modelData.push_back({ transform->m_rotation, glm::vec2{transform->m_scale.m_x, transform->m_scale.m_y}, glm::vec2{transform->m_position.m_x,transform->m_position.m_y} ,sprite->m_imageID, animation->m_frameNumber, 0});
 			}
 			else
 			{
-				graphicsPipe->m_modelData.push_back({ transform->m_rotation, glm::vec2{transform->m_scale.m_x, transform->m_scale.m_y}, glm::vec2{transform->m_position.m_x,transform->m_position.m_y} ,sprite->m_imageID, 0, 0 , 0 });
+				graphicsPipe->m_modelData.push_back({ transform->m_rotation, glm::vec2{transform->m_scale.m_x, transform->m_scale.m_y}, glm::vec2{transform->m_position.m_x,transform->m_position.m_y} ,sprite->m_imageID, 0, 0 });
 			}
 			
 		}

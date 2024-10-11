@@ -492,14 +492,12 @@ namespace graphicpipe {
 			
 				
 
-				float totalFrameTime = m_frameTime * m_imageData[m_modelData[n].m_textureID].m_stripCount;
-				float frameTime = static_cast<float>(fmod(m_modelData[n].m_animationTimer, totalFrameTime));
-				int frameNumber = static_cast<int>(frameTime / m_frameTime);
+				
 
 				m_modelToNDCMatrix.push_back(lvNDCScale * lvTranslate * lvRotate * lvScale);
 				m_textureOrder.push_back(m_modelData[n].m_textureID);
 				m_stripCounts.push_back(m_imageData[m_modelData[n].m_textureID].m_stripCount);
-				m_frameNumbers.push_back(frameNumber);			
+				m_frameNumbers.push_back(m_modelData[n].frameNumber);			
 			}
 		}
 

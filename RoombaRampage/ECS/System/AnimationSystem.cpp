@@ -40,7 +40,7 @@ namespace ecs {
 			== m_vecAnimationComponentPtr.end()) {
 			m_vecTransformComponentPtr.push_back((TransformComponent*)ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(ID));
 			m_vecAnimationComponentPtr.push_back((AnimationComponent*)ecs->m_ECS_CombinedComponentPool[TYPEANIMATIONCOMPONENT]->m_GetEntityComponent(ID));
-			m_vecSpriteComponentPtr.push_back((SpriteComponent*)ecs->m_ECS_CombinedComponentPool[TYPEANIMATIONCOMPONENT]->m_GetEntityComponent(ID));
+			m_vecSpriteComponentPtr.push_back((SpriteComponent*)ecs->m_ECS_CombinedComponentPool[TYPESPRITECOMPONENT]->m_GetEntityComponent(ID));
 
 		}
 	}
@@ -99,9 +99,25 @@ namespace ecs {
 
 			EntityID id = AniComp->m_Entity;
 
-			if (m_vecAnimationComponentPtr[n]->m_isAnimating)
+			if (m_vecAnimationComponentPtr[n]->m_isAnimating && m_vecAnimationComponentPtr[n]->m_framesPerSecond)
 			{
 				m_vecAnimationComponentPtr[n]->m_frameTimer += ecs->m_DeltaTime;
+
+				float frameTime = 1.f / m_vecAnimationComponentPtr[n]->m_framesPerSecond;
+				float spriteTotalTime = frameTime * pipe->m_imageData[SpriteComp->m_imageID].m_stripCount;
+				if (m_vecAnimationComponentPtr[n]->m_frameTimer > spriteTotalTime)
+				{
+					AniComp->m_frameTimer = 0;
+				}
+				if (frameTime < spriteTotalTime)
+				{
+					AniComp->m_frameNumber = static_cast<int>(AniComp->m_frameTimer / frameTime);
+				}
+				
+				//float totalFrameTime = m_frameTimer * m_imageData[m_modelData[n].m_textureID].m_stripCount;
+				//float frameTime = static_cast<float>(fmod(m_modelData[n].m_animationTimer, totalFrameTime));
+				//int frameNumber = static_cast<int>(frameTime / m_frameTime);
+				//std::cout << AniComp->m_frameNumber << std::endl;
 			}
 			else
 			{
