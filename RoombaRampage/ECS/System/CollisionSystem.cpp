@@ -12,7 +12,7 @@
 		   Transform and Collider components. It registers and
 		   deregisters entities with collision-related components and
 		   updates the system to handle collisions during the game loop.
-
+		   
 		   The class extends the ISystem interface, ensuring it adheres
 		   to the system management structure within the ECS framework.
 
