@@ -160,7 +160,7 @@ namespace gui {
         /******************************************************************/
         unsigned int m_DrawHierachyWindow();
 
-        void m_DrawEntityNode(ecs::EntityID);
+        bool m_DrawEntityNode(ecs::EntityID);
 
         /******************************************************************/
         /*!
