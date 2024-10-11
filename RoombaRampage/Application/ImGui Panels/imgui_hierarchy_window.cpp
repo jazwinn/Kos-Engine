@@ -138,10 +138,10 @@ namespace gui {
         //draw context window
         if (ImGui::BeginPopupContextItem()) {
             if (ImGui::MenuItem("Delete Entity")) {
-                ecs->m_DeleteEntity(m_clickedEntityId);
+                ecs->m_DeleteEntity(id);
                 m_clickedEntityId = -1;
                 ImGui::EndPopup();
-                ImGui::TreePop();
+                if(open)ImGui::TreePop();
                 return false;
             }
 
