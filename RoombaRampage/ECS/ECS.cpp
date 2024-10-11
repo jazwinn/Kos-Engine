@@ -51,7 +51,6 @@ namespace ecs{
 		ecs->m_ECS_CombinedComponentPool[TYPEMOVEMENTCOMPONENT] = std::make_shared < ComponentPool<MovementComponent>>();
 		ecs->m_ECS_CombinedComponentPool[TYPETEXTCOMPONENT] = std::make_shared<ComponentPool<TextComponent>>();
 		ecs->m_ECS_CombinedComponentPool[TYPEANIMATIONCOMPONENT] = std::make_shared<ComponentPool<AnimationComponent>>();
-		ecs->m_ECS_CombinedComponentPool[TYPEHIERACHYCOMPONENT] = std::make_shared<ComponentPool<HierachyComponent>>();
 
 
 		//Allocate memory to each system
