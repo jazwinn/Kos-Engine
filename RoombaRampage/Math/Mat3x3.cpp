@@ -12,10 +12,34 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 /********************************************************************/
 #include "../Math/Mat3x3.h"
 
+
 namespace mat3x3{
 
 	void Mat3x3::m_Mat3Swap(Mat3x3& lhs, Mat3x3 & rhs) {
-		std::swap(lhs, rhs);
+		Mat3x3 temp(lhs);
+		lhs.m_e00 = rhs.m_e00;
+		lhs.m_e01 = rhs.m_e01;
+		lhs.m_e02 = rhs.m_e02;
+
+		lhs.m_e10 = rhs.m_e10;
+		lhs.m_e11 = rhs.m_e11;
+		lhs.m_e12 = rhs.m_e12;
+
+		lhs.m_e20 = rhs.m_e20;
+		lhs.m_e21 = rhs.m_e21;
+		lhs.m_e22 = rhs.m_e22;
+
+		rhs.m_e00 = temp.m_e00;
+		rhs.m_e01 = temp.m_e01;
+		rhs.m_e02 = temp.m_e02;
+
+		rhs.m_e10 = temp.m_e10;
+		rhs.m_e11 = temp.m_e11;
+		rhs.m_e12 = temp.m_e12;
+
+		rhs.m_e20 = temp.m_e20;
+		rhs.m_e21 = temp.m_e21;
+		rhs.m_e22 = temp.m_e22;
 	}
 
 

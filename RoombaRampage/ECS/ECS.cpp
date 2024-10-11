@@ -51,11 +51,11 @@ namespace ecs{
 		ecs->m_ECS_CombinedComponentPool[TYPEMOVEMENTCOMPONENT] = std::make_shared < ComponentPool<MovementComponent>>();
 		ecs->m_ECS_CombinedComponentPool[TYPETEXTCOMPONENT] = std::make_shared<ComponentPool<TextComponent>>();
 		ecs->m_ECS_CombinedComponentPool[TYPEANIMATIONCOMPONENT] = std::make_shared<ComponentPool<AnimationComponent>>();
-		ecs->m_ECS_CombinedComponentPool[TYPEHIERACHYCOMPONENT] = std::make_shared<ComponentPool<HierachyComponent>>();
 
 
 		//Allocate memory to each system
 		ecs->m_ECS_SystemMap[TYPECONTROLSYSTEM] = std::make_shared<ControlSystem>();
+		ecs->m_ECS_SystemMap[TYPETRANSFORMSYSTEM] = std::make_shared<TransformSystem>();
 		ecs->m_ECS_SystemMap[TYPECOLLISIONSYSTEM] = std::make_shared<CollisionSystem>();
 		ecs->m_ECS_SystemMap[TYPECOLLISIONRESPONSESYSTEM] = std::make_shared<CollisionResponseSystem>();
 		ecs->m_ECS_SystemMap[TYPEMOVEMENTSYSTEM] = std::make_shared<MovementSystem>(); // movement should be the last logic
@@ -205,6 +205,8 @@ namespace ecs{
 	bool ECS::m_DeleteEntity(EntityID ID) {
 
 		ECS* ecs = ECS::m_GetInstance();
+
+		m_RemoveParent(ID);
 		
 		//get child
 		if (m_GetChild(ID).has_value()) {

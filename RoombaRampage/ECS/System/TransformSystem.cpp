@@ -17,28 +17,27 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 /********************************************************************/
 #include "../ECS.h"
 
-#include "HierachySystem.h"
+#include "TransformSystem.h"
 #include <unordered_set>
 
 
 namespace ecs {
 
-	void HierachySystem::m_RegisterSystem(EntityID ID) {
+	void TransformSystem::m_RegisterSystem(EntityID ID) {
 		ECS* ecs = ECS::m_GetInstance();
 
 		//Checks if system already has stored the entity
 
-		if (std::find_if(m_vecHeirachyComponentPtr.begin(), m_vecHeirachyComponentPtr.end(), [ID](const auto& obj) { return obj->m_Entity == ID; })
-			== m_vecHeirachyComponentPtr.end()) {
+		if (std::find_if(m_vecTransformComponentPtr.begin(), m_vecTransformComponentPtr.end(), [ID](const auto& obj) { return obj->m_Entity == ID; })
+			== m_vecTransformComponentPtr.end()) {
 			m_vecTransformComponentPtr.push_back((TransformComponent*)ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(ID));
-			m_vecHeirachyComponentPtr.push_back((HierachyComponent*)ecs->m_ECS_CombinedComponentPool[TYPEHIERACHYCOMPONENT]->m_GetEntityComponent(ID));
 		}
 	}
 
-	void HierachySystem::m_DeregisterSystem(EntityID ID) {
+	void TransformSystem::m_DeregisterSystem(EntityID ID) {
 		//search element location for the entity
 		size_t IndexID{};
-		for (auto& ComponentPtr : m_vecHeirachyComponentPtr) {
+		for (auto& ComponentPtr : m_vecTransformComponentPtr) {
 			if (ComponentPtr->m_Entity == ID) {
 				break;
 			}
@@ -46,51 +45,52 @@ namespace ecs {
 		}
 
 		//index to the last element
-		size_t IndexLast = m_vecHeirachyComponentPtr.size() - 1;
+		size_t IndexLast = m_vecTransformComponentPtr.size() - 1;
 
-		std::swap(m_vecHeirachyComponentPtr[IndexID], m_vecHeirachyComponentPtr[IndexLast]);
 		std::swap(m_vecTransformComponentPtr[IndexID], m_vecTransformComponentPtr[IndexLast]);
 
 		//popback the vector;
-		m_vecHeirachyComponentPtr.pop_back();
 		m_vecTransformComponentPtr.pop_back();
 	}
 
-	void HierachySystem::m_Init() {
+	void TransformSystem::m_Init() {
 
 		// requires both movement component and transform component
-		m_SystemSignature.set(TYPEHIERACHYCOMPONENT);
 		m_SystemSignature.set(TYPETRANSFORMCOMPONENT);
 		//SystemSignature.set();
 
 	}
 
-	void HierachySystem::m_Update() {
+	void TransformSystem::m_Update() {
 
 		ECS* ecs = ECS::m_GetInstance();
 
-		if (m_vecHeirachyComponentPtr.size() != m_vecHeirachyComponentPtr.size()) {
-			LOGGING_ERROR("Error: Vecotrs container size does not Match");
-			return;
-		}
 
-
-		for (int n{}; n < m_vecHeirachyComponentPtr.size(); n++)
+		for (int n{}; n < m_vecTransformComponentPtr.size(); n++)
 		{
-			HierachyComponent* hierachyComp = m_vecHeirachyComponentPtr[n];
 			TransformComponent* transformComp = m_vecTransformComponentPtr[n];
 
-
-			if (hierachyComp->m_hasParent) {
-
-				
-
-
-
-
+			if (!transformComp->m_haveParent) {
+				continue;
+			}
+			//get parents coordinate
+			if (!ecs->m_GetParent(transformComp->m_Entity).has_value()) {
+				// no parnet
+				return;
 			}
 
+			EntityID parentID = ecs->m_GetParent(transformComp->m_Entity).value();
+			TransformComponent* parentComp{nullptr};
+			for (auto& com : m_vecTransformComponentPtr) {
+				if (com->m_Entity == parentID) {
+					parentComp = com;
+				}
+			}
+			if (!parentComp) continue;
 
+			//mat3x3::Mat3Translate(transformComp->m_transformation, 1.f, 1.f);
+
+			transformComp->m_position = { parentComp->m_position.m_x + 1.f, parentComp->m_position.m_y + 1.f };
 
 		}
 
