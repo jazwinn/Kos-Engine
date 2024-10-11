@@ -205,6 +205,16 @@ namespace ecs{
 	bool ECS::m_DeleteEntity(EntityID ID) {
 
 		ECS* ecs = ECS::m_GetInstance();
+		
+		//get child
+		if (m_GetChild(ID).has_value()) {
+			std::vector<EntityID> childs = m_GetChild(ID).value();
+			for (auto& x : childs) {
+				m_DeleteEntity(x);
+			}
+		}
+
+
 		// refector
 		m_DeregisterSystem(ID);
 
@@ -212,6 +222,62 @@ namespace ecs{
 
 		return true;
 	}
+
+	void ECS::m_SetParent(EntityID parent, EntityID child) {
+
+		ECS* ecs = ECS::m_GetInstance();
+
+		TransformComponent* parentTransform =  (TransformComponent*)ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(parent);
+		//checks if child is already in parent
+		if (m_GetParent(child).has_value()) {
+			return;
+		}
+
+		//checks if parent is getting dragged into its child
+		EntityID id = parent;
+		while (m_GetParent(id).has_value()) {
+			EntityID checkParentid = m_GetParent(id).value();
+			if (checkParentid == child) {
+				LOGGING_WARN("Cannot assign parent to its own child");
+				return;
+			}
+			id = checkParentid;
+
+		}
+
+
+		parentTransform->m_childID.push_back(child);
+
+		TransformComponent* childTransform = (TransformComponent*)ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(child);
+		childTransform->m_haveParent = true;
+		childTransform->m_parentID = parent;
+	}
+
+
+	std::optional<EntityID> ECS::m_GetParent(EntityID child)
+	{
+		ECS* ecs = ECS::m_GetInstance();
+		TransformComponent* childTransform = (TransformComponent*)ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(child);
+		if (!childTransform->m_haveParent) {
+			return std::optional<EntityID>();
+		}
+
+		return childTransform->m_parentID;
+
+	}
+
+	std::optional<std::vector<EntityID>>ECS::m_GetChild(EntityID parent)
+	{
+		ECS* ecs = ECS::m_GetInstance();
+		TransformComponent* parentTransform = (TransformComponent*)ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(parent);
+		if (parentTransform->m_childID.size() <= 0) {
+			return std::optional<std::vector<EntityID>>();
+		}
+
+		return parentTransform->m_childID;
+
+	}
+	
 
 }
 

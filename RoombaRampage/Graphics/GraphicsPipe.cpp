@@ -22,7 +22,6 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Assets/AssetManager.h"
 #include "../Application/Application.h"
 #include "../Application/Helper.h"
-#include "../Assets/Font.h"
 #include <iostream>
 #include <vector>
 #include <array>

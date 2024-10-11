@@ -19,7 +19,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 
 namespace mat3x3 {
-	constexpr float PI = 3.14159265359f;
+	constexpr float MAT_PI = 3.14159265359f;
 	class Mat3x3 {
 	public:
 		union {
