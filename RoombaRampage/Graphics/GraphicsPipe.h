@@ -183,6 +183,7 @@ namespace graphicpipe {
         unsigned int m_textureOrderBuffer{};        ///< Buffer for texture ordering.
         unsigned int m_debugCollisionCheckBuffer{}; ///< Buffer for collision detection in debug drawing.
         unsigned int m_frameBufferObject{};         ///< Framebuffer object for offscreen rendering.
+        unsigned int m_depthBufferObject{};         ///< Depth Buffer object for storing frame buffer data.
         unsigned int m_textBuffer{};                ///< Buffer for text rendering.
         unsigned int m_stripCountBuffer{};          ///< Buffer for sprite strip counts (animation).
         unsigned int m_frameNumberBuffer{};         ///< Buffer for managing animation frame numbers.

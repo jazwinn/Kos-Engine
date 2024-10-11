@@ -79,12 +79,13 @@ namespace Application {
         if (display_w != old_w || display_h != old_h)
         {
             graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
-            glViewport(0, 0, display_w, display_h);
+            
             old_w = display_w;
             old_h = display_h;
             help->m_windowHeight = static_cast<float>(display_h);
             help->m_windowWidth = static_cast<float>(display_w);
             pipe->m_funcSetupFrameBuffer();
+            glViewport(0, 0, display_w, display_h);
             
         }
         glClearColor(static_cast<GLclampf>(0.86), static_cast<GLclampf>(0.86), static_cast<GLclampf>(0.86), static_cast<GLclampf>(0.86));
