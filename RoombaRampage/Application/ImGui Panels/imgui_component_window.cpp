@@ -53,7 +53,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
     };
     static int ComponentType = 0;
 
-    if (ecs->m_ECS_EntityMap.size() > 0) {
+    if (ecs->m_ECS_EntityMap.size() > 0 && m_clickedEntityId >= 0) {
 
         ecs::EntityID entityID = m_clickedEntityId;
 
