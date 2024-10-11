@@ -28,6 +28,10 @@ R"( #version 460 core
     void main()
     {    
         vec4 sampled = vec4(1.0, 1.0, 1.0, texture(text, texCoords).r);
+
+        if (sampled.a < 0.5)
+        discard;
+
         color = vec4(textColor, 1.0) * sampled;
     } 
 

@@ -41,7 +41,7 @@ namespace fontmanager {
         // Load first 128 ASCII characters
         for (unsigned char c = 0; c < 128; c++) {
             // Load character glyph --> This one is to check if the font load properly
-            if (FT_Load_Char(face, c, FT_LOAD_RENDER)) {
+            if (FT_Load_Char(face, c, FT_LOAD_TARGET_MONO)) {
                 std::cout << "ERROR::FREETYPE: Failed to load Glyph" << std::endl;
                 continue;
             }
@@ -65,8 +65,8 @@ namespace fontmanager {
             // Set texture options
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
             // Store character in Characters map
             Character character = {

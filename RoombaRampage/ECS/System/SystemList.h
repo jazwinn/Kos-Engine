@@ -9,6 +9,7 @@
 #include "../ECS/System/RenderSystem.h"
 #include "../ECS/System/RenderDebugSystem.h"
 #include "../ECS/System/RenderTextSystem.h"
+#include "../ECS/System/AnimationSystem.h"
 
 #endif SYSLIST_H
 
