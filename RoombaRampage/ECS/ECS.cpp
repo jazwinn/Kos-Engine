@@ -205,6 +205,8 @@ namespace ecs{
 	bool ECS::m_DeleteEntity(EntityID ID) {
 
 		ECS* ecs = ECS::m_GetInstance();
+
+		m_RemoveParent(ID);
 		
 		//get child
 		if (m_GetChild(ID).has_value()) {
