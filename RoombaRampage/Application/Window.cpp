@@ -27,6 +27,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 #include "Window.h"
 #include "Helper.h"
+#include "../Graphics/GraphicsPipe.h"
 
 namespace Application {
 
@@ -70,11 +71,23 @@ namespace Application {
 	int AppWindow::Draw() {
         Helper::Helpers *help = Helper::Helpers::GetInstance();
         glClear(GL_COLOR_BUFFER_BIT);
+
         int display_w, display_h;
         glfwGetFramebufferSize(m_window, &display_w, &display_h);
-        glViewport(0, 0, display_w, display_h);
-        help->m_windowHeight = static_cast<float>(display_h);
-        help->m_windowWidth = static_cast<float>(display_w);
+        static GLint old_w{}, old_h{};
+        // update viewport settings in vps only if window's dimension change
+        if (display_w != old_w || display_h != old_h)
+        {
+            graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
+            
+            old_w = display_w;
+            old_h = display_h;
+            help->m_windowHeight = static_cast<float>(display_h);
+            help->m_windowWidth = static_cast<float>(display_w);
+            pipe->m_funcSetupFrameBuffer();
+            glViewport(0, 0, display_w, display_h);
+            
+        }
         glClearColor(static_cast<GLclampf>(0.86), static_cast<GLclampf>(0.86), static_cast<GLclampf>(0.86), static_cast<GLclampf>(0.86));
         glClear(GL_COLOR_BUFFER_BIT);
 

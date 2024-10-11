@@ -153,10 +153,7 @@ namespace graphicpipe {
          */
         void m_funcSetupArrayBuffer();
 
-        /**
-         * @brief Sets up the framebuffer for offscreen rendering.
-         */
-        void m_funcSetupFrameBuffer();
+       
 
         /**
          * @brief Compiles and links a shader program from vertex and fragment shader sources.
@@ -186,6 +183,7 @@ namespace graphicpipe {
         unsigned int m_textureOrderBuffer{};        ///< Buffer for texture ordering.
         unsigned int m_debugCollisionCheckBuffer{}; ///< Buffer for collision detection in debug drawing.
         unsigned int m_frameBufferObject{};         ///< Framebuffer object for offscreen rendering.
+        unsigned int m_depthBufferObject{};         ///< Depth Buffer object for storing frame buffer data.
         unsigned int m_textBuffer{};                ///< Buffer for text rendering.
         unsigned int m_stripCountBuffer{};          ///< Buffer for sprite strip counts (animation).
         unsigned int m_frameNumberBuffer{};         ///< Buffer for managing animation frame numbers.
@@ -308,6 +306,11 @@ namespace graphicpipe {
          * Renders all text elements stored in the text data structures to the screen.
          */
         void m_funcDrawText();
+
+        /**
+        * @brief Sets up the framebuffer for offscreen rendering.
+        */
+        void m_funcSetupFrameBuffer();
 
         // Meshes
         Mesh m_squareMesh;              ///< Mesh for square rendering.
