@@ -32,7 +32,11 @@ namespace ecs {
 	public:
 
 		float m_Mass{};
-
+		float m_Drag{};
+		float m_AngularDrag{};
+		bool isKinematic{ false };
+		bool freezePosition{ false };
+		bool freezeRotation{ false };
 	};
 
 }
