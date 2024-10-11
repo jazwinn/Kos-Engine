@@ -227,6 +227,8 @@ namespace ecs{
 
 		ECS* ecs = ECS::m_GetInstance();
 
+		m_RemoveParent(child);
+
 		TransformComponent* parentTransform =  (TransformComponent*)ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(parent);
 		//checks if child is already in parent
 		if (m_GetParent(child).has_value()) {
@@ -253,6 +255,31 @@ namespace ecs{
 		childTransform->m_parentID = parent;
 	}
 
+	void ECS::m_RemoveParent(EntityID child) {
+		// removes id from both the child and the parents vector
+		ECS* ecs = ECS::m_GetInstance();
+
+		if (!m_GetParent(child).has_value()) {
+			// does not have parrent
+			return;
+		}
+
+		EntityID parent = m_GetParent(child).value();
+		TransformComponent* parentTransform = (TransformComponent*)ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(parent);
+		size_t pos{};
+		for (EntityID& id : parentTransform->m_childID) {
+			if (child == id) {
+				parentTransform->m_childID.erase(parentTransform->m_childID.begin() + pos);
+				break;
+			}
+			pos++;
+		}
+
+
+		TransformComponent* childTransform = (TransformComponent*)ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(child);
+		childTransform->m_haveParent = false;
+		childTransform->m_parentID = 0;
+	}
 
 	std::optional<EntityID> ECS::m_GetParent(EntityID child)
 	{
