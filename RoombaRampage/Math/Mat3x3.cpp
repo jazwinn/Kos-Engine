@@ -80,15 +80,15 @@ namespace mat3x3{
 		Mat3x3 lvTemp{};
 		lvTemp.m_e00 = (m_e00 * rhs.m_e00) + (m_e10 * rhs.m_e01) + (m_e20 * rhs.m_e02);
 		lvTemp.m_e01 = (m_e01 * rhs.m_e00) + (m_e11 * rhs.m_e01) + (m_e21 * rhs.m_e02);
-		lvTemp.m_e02 = (m_e02 * rhs.m_e00) + (m_e21 * rhs.m_e01) + (m_e22 * rhs.m_e02);
+		lvTemp.m_e02 = (m_e02 * rhs.m_e00) + (m_e12 * rhs.m_e01) + (m_e22 * rhs.m_e02);
 
 		lvTemp.m_e10 = (m_e00 * rhs.m_e10) + (m_e10 * rhs.m_e11) + (m_e20 * rhs.m_e12);
 		lvTemp.m_e11 = (m_e01 * rhs.m_e10) + (m_e11 * rhs.m_e11) + (m_e21 * rhs.m_e12);
-		lvTemp.m_e12 = (m_e02 * rhs.m_e10) + (m_e21 * rhs.m_e11) + (m_e22 * rhs.m_e12);
+		lvTemp.m_e12 = (m_e02 * rhs.m_e10) + (m_e12 * rhs.m_e11) + (m_e22 * rhs.m_e12);
 
 		lvTemp.m_e20 = (m_e00 * rhs.m_e20) + (m_e10 * rhs.m_e21) + (m_e20 * rhs.m_e22);
 		lvTemp.m_e21 = (m_e01 * rhs.m_e20) + (m_e11 * rhs.m_e21) + (m_e21 * rhs.m_e22);
-		lvTemp.m_e22 = (m_e02 * rhs.m_e20) + (m_e21 * rhs.m_e21) + (m_e22 * rhs.m_e22);
+		lvTemp.m_e22 = (m_e02 * rhs.m_e20) + (m_e12 * rhs.m_e21) + (m_e22 * rhs.m_e22);
 		*this = lvTemp;
 		return *this;
 	}
