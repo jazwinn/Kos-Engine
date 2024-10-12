@@ -93,6 +93,14 @@ namespace mat3x3{
 		return *this;
 	}
 
+	vector2::Vec2& Mat3x3::operator*=(vector2::Vec2& rhs) const{
+		vector2::Vec2 lvTemp{ 0,0 };
+		lvTemp.m_x = (m_e00 * rhs.m_x) + (m_e10 * rhs.m_y) + (m_e20);
+		lvTemp.m_y = (m_e01 * rhs.m_x) + (m_e11 * rhs.m_y) + (m_e21);
+		rhs = lvTemp;
+		return rhs;
+	}
+
 
 	Mat3x3& Mat3x3::operator+=(const Mat3x3& rhs) {
 		m_e00 += rhs.m_e00;
@@ -231,6 +239,13 @@ namespace mat3x3{
 	Mat3x3 operator*(const Mat3x3 & lhs, const Mat3x3 & rhs) {
 		Mat3x3 lvTemp(lhs);
 		lvTemp *= rhs;
+		return lvTemp;
+	}
+
+	vector2::Vec2 operator*(const Mat3x3& lhs, const vector2::Vec2& rhs) {
+		vector2::Vec2 lvTemp{ rhs };
+		//lhs *= rhs;
+		lvTemp = (lhs *= lvTemp);
 		return lvTemp;
 	}
 

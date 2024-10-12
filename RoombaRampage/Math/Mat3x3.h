@@ -16,6 +16,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #define MAT2x2_H
 #include <algorithm>
 #include <math.h>
+#include "../Math/vector2.h"
 
 #include "vector2.h"
 
@@ -66,6 +67,8 @@ namespace mat3x3 {
 		 \brief		this function is a member function overload ofthe *= sign used to multiply a Mat2x2 with the callee
 		 **/
 		Mat3x3& operator*=(const Mat3x3& rhs);
+
+		vector2::Vec2& operator*=(vector2::Vec2& rhs) const;
 
 		/**
 		 \brief		this function is a member function overload of the += sign used to add another matrix with the callee
@@ -121,6 +124,8 @@ namespace mat3x3 {
 	 \brief		this is a operator overload of the * sign used to multiply 2 matrixes together without changing the matrixes themselves
 	 **/
 	Mat3x3 operator*(const Mat3x3& lhs, const Mat3x3& rhs);
+
+	vector2::Vec2 operator*(const Mat3x3& lhs, const vector2::Vec2& rhs);
 
 	/**
 	 \brief		this function is a operator overload of the + sign used to add 2 matrixes together without changing the matrixes themselves
