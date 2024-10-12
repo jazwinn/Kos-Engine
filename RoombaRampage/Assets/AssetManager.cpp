@@ -39,9 +39,14 @@ namespace assetmanager {
         m_funcLoadImage("Assets/Sprites/roombaTest.png");
         m_funcLoadImage("Assets/Sprites/roombaTest2.png");
         m_funcLoadImage("Assets/Sprites/roombaTest3.png");
+        m_funcLoadImage("Assets/Sprites/gunleft_02.png");
+        m_funcLoadImage("Assets/Sprites/gunright_02.png");
+        m_funcLoadImage("Assets/Sprites/boosters_tail02.png");
+
         m_funcLoadImage("Assets/Sprites/ani_RoombaBlink_strip4.png");
         m_funcLoadImage("Assets/Sprites/ani_RoombaBoosters_strip6.png");
         m_funcLoadImage("Assets/Sprites/ani_SeanSprite_strip4.png");
+
 
         m_LoadAudio("Assets/Audio/mindstorm.wav");
         m_LoadAudio("Assets/Audio/zwing.wav");

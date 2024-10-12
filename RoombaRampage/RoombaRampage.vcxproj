@@ -190,6 +190,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\Freetype_Font\lib\*.dll" "$(OutDir)"</Co
     <ClCompile Include="Debugging\Performance.cpp" />
     <ClCompile Include="Dependencies\backward\backward.cpp" />
     <ClCompile Include="Dependencies\imgui\imgui.cpp" />
+    <ClCompile Include="Dependencies\imgui\ImGuizmo.cpp" />
     <ClCompile Include="Dependencies\imgui\imgui_draw.cpp" />
     <ClCompile Include="Dependencies\imgui\imgui_impl_glfw.cpp" />
     <ClCompile Include="Dependencies\imgui\imgui_impl_opengl3.cpp" />
@@ -239,6 +240,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\Freetype_Font\lib\*.dll" "$(OutDir)"</Co
     <ClInclude Include="Dependencies\backward\backward.hpp" />
     <ClInclude Include="Dependencies\imgui\imconfig.h" />
     <ClInclude Include="Dependencies\imgui\imgui.h" />
+    <ClInclude Include="Dependencies\imgui\ImGuizmo.h" />
     <ClInclude Include="Dependencies\imgui\imgui_impl_glfw.h" />
     <ClInclude Include="Dependencies\imgui\imgui_impl_opengl3.h" />
     <ClInclude Include="Dependencies\imgui\imgui_impl_opengl3_loader.h" />

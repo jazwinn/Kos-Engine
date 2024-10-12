@@ -190,6 +190,7 @@ namespace ecs {
 
 		//No Component Allocated to Entity
 		//SAY ENTITY NOT CREATED
+		LOGGING_ASSERT("Accessing non-existence entityID")
 		return NULL;
 	}
 

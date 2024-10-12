@@ -55,6 +55,7 @@
     <ClCompile Include="Math\Mathlib.cpp" />
     <ClCompile Include="Math\Vector2.cpp" />
     <ClCompile Include="Physics\Physics.cpp" />
+    <ClCompile Include="Dependencies\imgui\ImGuizmo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Application.h" />
@@ -120,6 +121,7 @@
     <ClInclude Include="Math\Mathlib.h" />
     <ClInclude Include="Math\Vector2.h" />
     <ClInclude Include="Physics\Physics.h" />
+    <ClInclude Include="Dependencies\imgui\ImGuizmo.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Graphics\debugFragmentShader.frag" />
