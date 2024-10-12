@@ -66,9 +66,10 @@ namespace graphicpipe {
      */
     struct GraphicsData
     {
-        float m_rotate{};                ///< Rotation of the object in degrees.
-        glm::vec2 m_scale{};             ///< Scale factors for the object (x, y).
-        glm::vec2 m_worldCoordinates{};  ///< World coordinates of the object.
+        //float m_rotate{};                ///< Rotation of the object in degrees.
+        //glm::vec2 m_scale{};             ///< Scale factors for the object (x, y).
+        //glm::vec2 m_worldCoordinates{};  ///< World coordinates of the object.
+        glm::mat3 transformation{};
         unsigned int m_textureID{};      ///< ID of the texture used for rendering.
         int frameNumber{};               ///< Frame Number for handling animations.
         int m_layer{};                   ///< Layer for drawing order.

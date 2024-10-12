@@ -1,58 +1,60 @@
 [
     {
-        "name": "test",
+        "name": "Wall",
         "transform": {
             "position": {
-                "x": 0.0,
+                "x": -0.03999999910593033,
                 "y": 0.0
             },
             "rotation": 0.0,
             "scale": {
-                "x": 1.0,
-                "y": 1.0
+                "x": 2.0,
+                "y": 2.0
             }
+        },
+        "collider": {
+            "size": {
+                "x": 0.6399999856948853,
+                "y": 0.6200000047683716
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true
+        },
+        "sprite": {
+            "imageID": 1,
+            "frameNumber": 0
         }
     },
     {
-        "name": "test1",
+        "name": "Wall",
         "transform": {
             "position": {
-                "x": 0.0,
-                "y": 0.0
+                "x": 1.2799999713897705,
+                "y": 0.75
             },
             "rotation": 0.0,
             "scale": {
-                "x": 1.0,
-                "y": 1.0
+                "x": 2.0,
+                "y": 2.0
             }
-        }
-    },
-    {
-        "name": "test2",
-        "transform": {
-            "position": {
+        },
+        "collider": {
+            "size": {
+                "x": 0.6399999856948853,
+                "y": 0.6200000047683716
+            },
+            "offset": {
                 "x": 0.0,
                 "y": 0.0
             },
-            "rotation": 0.0,
-            "scale": {
-                "x": 1.0,
-                "y": 1.0
-            }
-        }
-    },
-    {
-        "name": "test3",
-        "transform": {
-            "position": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "rotation": 0.0,
-            "scale": {
-                "x": 1.0,
-                "y": 1.0
-            }
+            "drawDebug": true
+        },
+        "sprite": {
+            "imageID": 1,
+            "frameNumber": 0
         }
     }
 ]

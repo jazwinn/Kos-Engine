@@ -83,11 +83,16 @@ namespace ecs {
 			{
 				AnimationComponent* animation = (AnimationComponent*)ecs->m_ECS_CombinedComponentPool[TYPEANIMATIONCOMPONENT]->m_GetEntityComponent(sprite->m_Entity);
 				
-				graphicsPipe->m_modelData.push_back({ transform->m_rotation, glm::vec2{transform->m_scale.m_x, transform->m_scale.m_y}, glm::vec2{transform->m_position.m_x,transform->m_position.m_y} ,sprite->m_imageID, animation->m_frameNumber, 0});
+				graphicsPipe->m_modelData.push_back({glm::mat3{transform->m_transformation.m_e00,transform->m_transformation.m_e01,transform->m_transformation.m_e02, 
+																transform->m_transformation.m_e10,transform->m_transformation.m_e11, transform->m_transformation.m_e12,
+															transform->m_transformation.m_e20, transform->m_transformation.m_e21, transform->m_transformation.m_e22} ,
+															sprite->m_imageID, animation->m_frameNumber, 0});
 			}
 			else
 			{
-				graphicsPipe->m_modelData.push_back({ transform->m_rotation, glm::vec2{transform->m_scale.m_x, transform->m_scale.m_y}, glm::vec2{transform->m_position.m_x,transform->m_position.m_y} ,sprite->m_imageID, 0, 0 });
+				graphicsPipe->m_modelData.push_back({ glm::mat3{transform->m_transformation.m_e00,transform->m_transformation.m_e01,transform->m_transformation.m_e02,
+																transform->m_transformation.m_e10,transform->m_transformation.m_e11, transform->m_transformation.m_e12,
+															transform->m_transformation.m_e20, transform->m_transformation.m_e21, transform->m_transformation.m_e22},sprite->m_imageID, 0, 0 });
 			}
 			
 		}

@@ -70,6 +70,8 @@ namespace ecs {
 		{
 			TransformComponent* transformComp = m_vecTransformComponentPtr[n];
 
+			transformComp->m_transformation = mat3x3::Mat3Transform(transformComp->m_position, transformComp->m_scale, transformComp->m_rotation);
+
 			if (!transformComp->m_haveParent) {
 				continue;
 			}
@@ -89,8 +91,15 @@ namespace ecs {
 			if (!parentComp) continue;
 
 			//mat3x3::Mat3Translate(transformComp->m_transformation, 1.f, 1.f);
+			//calculate parent transformation matrix
 
-			transformComp->m_position = { parentComp->m_position.m_x + 1.f, parentComp->m_position.m_y + 1.f };
+			//
+			mat3x3::Mat3x3 parentTransformation = parentComp->m_transformation;
+			mat3x3::Mat3x3 childTransformation = mat3x3::Mat3Transform(vector2::Vec2{ 1,1 }, vector2::Vec2{1,1},0.f);
+
+
+			transformComp->m_transformation = parentTransformation + childTransformation;
+
 
 		}
 

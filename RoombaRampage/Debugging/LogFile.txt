@@ -1,33 +1,33 @@
-[INFO]: 2024-10-11 22:20:50 - Application Start
-[INFO]: 2024-10-11 22:20:50 - Load Log Successful
-[INFO]: 2024-10-11 22:20:50 - Load Config Successful
-[INFO]: 2024-10-11 22:20:51 - Load Window Successful
-[INFO]: 2024-10-11 22:20:51 - Load ECS Successful
-[INFO]: 2024-10-11 22:20:51 - Texture Padded for testBackground
-[INFO]: 2024-10-11 22:20:51 - Texture Binded, Texture ID : 1 
-[INFO]: 2024-10-11 22:20:51 - Texture Binded, Texture ID : 2 
-[INFO]: 2024-10-11 22:20:51 - Texture Binded, Texture ID : 3 
-[INFO]: 2024-10-11 22:20:51 - Texture Binded, Texture ID : 4 
-[INFO]: 2024-10-11 22:20:51 - Texture Padded for roombaTest3
-[INFO]: 2024-10-11 22:20:51 - Texture Binded, Texture ID : 5 
-[INFO]: 2024-10-11 22:20:51 - Strip Success for Assets/Sprites/ani_RoombaBlink_strip4.png
-[INFO]: 2024-10-11 22:20:51 - Texture Binded, Texture ID : 6 
-[INFO]: 2024-10-11 22:20:51 - Strip Success for Assets/Sprites/ani_RoombaBoosters_strip6.png
-[INFO]: 2024-10-11 22:20:52 - Texture Binded, Texture ID : 7 
-[INFO]: 2024-10-11 22:20:52 - Strip Success for Assets/Sprites/ani_SeanSprite_strip4.png
-[INFO]: 2024-10-11 22:20:52 - Texture Binded, Texture ID : 8 
-[INFO]: 2024-10-11 22:20:53 - Load Prefab Json Successful
-[INFO]: 2024-10-11 22:20:53 - Load Asset Successful
-[INFO]: 2024-10-11 22:20:53 - Shader compiled successfully
-[INFO]: 2024-10-11 22:20:53 - Shader compiled successfully
-[INFO]: 2024-10-11 22:20:53 - Shader compiled successfully
-[INFO]: 2024-10-11 22:20:53 - Shader compiled successfully
-[INFO]: 2024-10-11 22:20:53 - Framebuffer successfully created
-[INFO]: 2024-10-11 22:20:53 - Load Graphic Pipline Successful
-[INFO]: 2024-10-11 22:20:53 - Set Input Call Back Successful
-[INFO]: 2024-10-11 22:20:53 - Load ImGui Successful
-[INFO]: 2024-10-11 22:20:53 - Load Json Successful
-[INFO]: 2024-10-11 22:20:53 - Entities successfully loaded!
-[INFO]: 2024-10-11 22:20:53 - Application Init Successful
-[INFO]: 2024-10-11 22:20:53 - Framebuffer successfully created
-[INFO]: 2024-10-11 22:20:59 - Application Closed
+[INFO]: 2024-10-12 19:10:08 - Application Start
+[INFO]: 2024-10-12 19:10:08 - Load Log Successful
+[INFO]: 2024-10-12 19:10:08 - Load Config Successful
+[INFO]: 2024-10-12 19:10:08 - Load Window Successful
+[INFO]: 2024-10-12 19:10:08 - Load ECS Successful
+[INFO]: 2024-10-12 19:10:08 - Texture Padded for testBackground
+[INFO]: 2024-10-12 19:10:08 - Texture Binded, Texture ID : 1 
+[INFO]: 2024-10-12 19:10:08 - Texture Binded, Texture ID : 2 
+[INFO]: 2024-10-12 19:10:08 - Texture Binded, Texture ID : 3 
+[INFO]: 2024-10-12 19:10:08 - Texture Binded, Texture ID : 4 
+[INFO]: 2024-10-12 19:10:08 - Texture Padded for roombaTest3
+[INFO]: 2024-10-12 19:10:08 - Texture Binded, Texture ID : 5 
+[INFO]: 2024-10-12 19:10:08 - Strip Success for Assets/Sprites/ani_RoombaBlink_strip4.png
+[INFO]: 2024-10-12 19:10:09 - Texture Binded, Texture ID : 6 
+[INFO]: 2024-10-12 19:10:09 - Strip Success for Assets/Sprites/ani_RoombaBoosters_strip6.png
+[INFO]: 2024-10-12 19:10:09 - Texture Binded, Texture ID : 7 
+[INFO]: 2024-10-12 19:10:09 - Strip Success for Assets/Sprites/ani_SeanSprite_strip4.png
+[INFO]: 2024-10-12 19:10:09 - Texture Binded, Texture ID : 8 
+[INFO]: 2024-10-12 19:10:09 - Load Prefab Json Successful
+[INFO]: 2024-10-12 19:10:09 - Load Asset Successful
+[INFO]: 2024-10-12 19:10:09 - Shader compiled successfully
+[INFO]: 2024-10-12 19:10:09 - Shader compiled successfully
+[INFO]: 2024-10-12 19:10:09 - Shader compiled successfully
+[INFO]: 2024-10-12 19:10:09 - Shader compiled successfully
+[INFO]: 2024-10-12 19:10:09 - Framebuffer successfully created
+[INFO]: 2024-10-12 19:10:09 - Load Graphic Pipline Successful
+[INFO]: 2024-10-12 19:10:09 - Set Input Call Back Successful
+[INFO]: 2024-10-12 19:10:09 - Load ImGui Successful
+[INFO]: 2024-10-12 19:10:09 - Load Json Successful
+[INFO]: 2024-10-12 19:10:09 - Entities successfully loaded!
+[INFO]: 2024-10-12 19:10:09 - Application Init Successful
+[INFO]: 2024-10-12 19:10:09 - Framebuffer successfully created
+[INFO]: 2024-10-12 19:10:38 - Application Closed
