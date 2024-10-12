@@ -18,6 +18,9 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include <math.h>
 #include "../Math/vector2.h"
 
+#include "vector2.h"
+
+
 
 namespace mat3x3 {
 	constexpr float MAT_PI = 3.14159265359f;
@@ -83,7 +86,6 @@ namespace mat3x3 {
 		Mat3x3 m_Mat3Abs() const;
 
 
-
 	};
 
 	/**
@@ -115,6 +117,8 @@ namespace mat3x3 {
 	 \brief		this function is a meant for changing a given Matrix into a rotation matrix by converting an angle in degree to radian
 	 **/
 	void Mat3RotDeg(Mat3x3& given, float ang);
+
+	Mat3x3 Mat3Transform(vector2::Vec2 translate, vector2::Vec2 scale, float rotate);
 
 	/**
 	 \brief		this is a operator overload of the * sign used to multiply 2 matrixes together without changing the matrixes themselves
