@@ -146,6 +146,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 ImGui::SameLine();
                 ImGui::SetNextItemWidth(100.0f);
                 ImGui::DragFloat("Y", &tc->m_scale.m_y, 0.02f, 0.1f, 2.0f, "%.2f");
+
             }
         }
         if (EntitySignature.test(ecs::TYPEMOVEMENTCOMPONENT))

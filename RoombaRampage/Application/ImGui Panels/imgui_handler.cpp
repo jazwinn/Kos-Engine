@@ -71,6 +71,9 @@ namespace gui {
 	{
 		// Render ImGui
 		m_NewFrame();
+		//for gizmo - todo once camera is done
+		//ImGuizmo::SetOrthographic(true);
+		//ImGuizmo::BeginFrame();
 		//viewport docking
 		ImGui::DockSpaceOverViewport(0, ImGui::GetMainViewport());
 		//create main menu bar

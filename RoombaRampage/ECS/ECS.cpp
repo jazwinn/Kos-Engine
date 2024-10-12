@@ -198,6 +198,25 @@ namespace ecs{
 		ecs->m_ECS_EntityMap.find(NewEntity)->second = DuplicateSignature;
 		m_RegisterSystems(NewEntity);
 
+		//checks if duplicates entity has parent and assign it
+		if (m_GetParent(DuplicatesID).has_value()) {
+			TransformComponent* transform = (TransformComponent*)(ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(m_GetParent(DuplicatesID).value()));
+			transform->m_childID.push_back(NewEntity);
+		}
+
+		//checks if entity has child call recursion
+		if (m_GetChild(DuplicatesID).has_value()) {
+			//clear child id of vector for new entity
+			TransformComponent* transform = (TransformComponent*)(ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(NewEntity));
+			transform->m_childID.clear();
+
+			std::vector<EntityID> childID = m_GetChild(DuplicatesID).value();
+			for (const auto& child : childID) {
+				EntityID dupChild = m_DuplicateEntity(child);
+				m_SetParent(NewEntity, dupChild);
+			}
+		}
+
 		return NewEntity;
 
 	}
