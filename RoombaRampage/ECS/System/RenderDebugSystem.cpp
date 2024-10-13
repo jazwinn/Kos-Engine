@@ -20,6 +20,8 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "RenderDebugSystem.h"
 #include "../Physics/Physics.h"
 #include "../Graphics/GraphicsPipe.h"
+#include "../Math/Mat3x3.h"
+#include "../Math/vector2.h"
 
 namespace ecs {
 
@@ -81,7 +83,12 @@ namespace ecs {
 
 			if (collider->m_drawDebug)
 			{
-				graphicsPipe->m_debugBoxData.push_back({ 0, glm::vec2{collider->m_Size.m_x, collider->m_Size.m_y }, glm::vec3{transform->m_position.m_x + collider->m_OffSet.m_x,transform->m_position.m_y + collider->m_OffSet.m_y, 0} ,collider->m_isCollided, 0 });
+				mat3x3::Mat3x3 debugTransformation =  mat3x3::Mat3Transform(vector2::Vec2{ transform->m_transformation.m_e20 + collider->m_OffSet.m_x, transform->m_transformation.m_e21 + collider->m_OffSet.m_y }, vector2::Vec2{ collider->m_Size.m_x, collider->m_Size.m_y }, 0);
+
+				graphicsPipe->m_debugBoxData.push_back({ glm::mat3{debugTransformation.m_e00,debugTransformation.m_e01,debugTransformation.m_e02,
+																debugTransformation.m_e10,debugTransformation.m_e11, debugTransformation.m_e12,
+															debugTransformation.m_e20, debugTransformation.m_e21, debugTransformation.m_e22} ,
+														collider->m_isCollided, 0 });
 			}
 
 		}

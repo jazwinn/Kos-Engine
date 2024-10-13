@@ -74,7 +74,7 @@ namespace ecs {
 		/******************************************************************/
 		virtual bool m_HasComponent(EntityID) = 0;
 
-		//virtual bool m_DeleteEntityComponent(EntityID) = 0;
+		virtual bool m_DeleteEntityComponent(EntityID) = 0;
 		/******************************************************************/
 		/*!
 		\fn        m_DuplicateComponent(EntityID DuplicatesID, EntityID NewID)
@@ -110,7 +110,7 @@ namespace ecs {
 
 		bool m_HasComponent(EntityID) override;
 
-		//bool m_DeleteEntityComponent(EntityID) override;
+		bool m_DeleteEntityComponent(EntityID) override;
 
 		void* m_DuplicateComponent(EntityID DuplicatesID, EntityID NewID) override;
 
@@ -195,15 +195,20 @@ namespace ecs {
 	}
 
 
-	//template <typename T>
-	//bool ComponentPool<T>::m_DeleteEntityComponent(EntityID ID) {
+	template <typename T>
+	bool ComponentPool<T>::m_DeleteEntityComponent(EntityID ID) {
 
-	//	//TODO delete component from system vector
+		//TODO delete component from system vector
+		for (auto& Component : m_Pool) {
+			if (Component.m_Entity == ID && Component.m_IsLive) {
+				//Component.m_IsLive = false;
+			}
+		}
 
 
-	//	//task failed
-	//	return false;
-	//}
+		//task failed
+		return false;
+	}
 
 	template <typename T>
 	bool ComponentPool<T>::m_HasComponent(EntityID ID) { //contained any stored data

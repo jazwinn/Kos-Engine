@@ -53,9 +53,13 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
     };
     static int ComponentType = 0;
 
+
+
     if (ecs->m_ECS_EntityMap.size() > 0 && m_clickedEntityId >= 0) {
 
         ecs::EntityID entityID = m_clickedEntityId;
+
+ 
 
         ImGui::Combo("##ADDCOMPONENT", &ComponentType, ComponentNames, IM_ARRAYSIZE(ComponentNames), IM_ARRAYSIZE(ComponentNames));
         if (ComponentType == 1) {
@@ -90,7 +94,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
         const float slider_start_pos_x = 100.0f; //Padding for the slider
 
 
-        // Check if the TransformComponent exists for the entity
+
 
         ecs::compSignature EntitySignature = ecs->m_ECS_EntityMap[entityID];
 
@@ -148,10 +152,22 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 ImGui::DragFloat("Y", &tc->m_scale.m_y, 0.02f, 0.1f, 2.0f, "%.2f");
 
             }
+
         }
+        // Check if the TransformComponent exists for the entity
+
         if (EntitySignature.test(ecs::TYPEMOVEMENTCOMPONENT))
         {
-            if (ImGui::CollapsingHeader("Movement Component"))
+            bool open = ImGui::CollapsingHeader("Movement Component");
+
+            if (ImGui::BeginPopupContextItem()) {
+                if (ImGui::MenuItem("Delete Component")) {
+                    ecs->m_RemoveComponent(ecs::TYPEMOVEMENTCOMPONENT, m_clickedEntityId);
+                }
+                ImGui::EndPopup();
+            }
+
+            if (open)
             {
                 // retrieve movement component
                 ecs::MovementComponent* mc = static_cast<ecs::MovementComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEMOVEMENTCOMPONENT]
@@ -176,17 +192,27 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 ImGui::DragFloat("Y##VelY", &mc->m_Direction.m_y, 0.02f, -1.0f, 1.0f, "%.2f");
 
 
-                //// Display Resistance
-                //ImGui::AlignTextToFramePadding();
-                //ImGui::Text("Auto Move");
-                //ImGui::SameLine(slider_start_pos_x);
-                //ImGui::Checkbox("##", &mc->m_Move);
-
+                //todo put all components into a loop
             }     
+
+            
+
         }
+       
+
+
         if (EntitySignature.test(ecs::TYPECOLLIDERCOMPONENT))
         {
-            if (ImGui::CollapsingHeader("Collider Component")) {
+            bool open = ImGui::CollapsingHeader("Collider Component");
+
+            if (ImGui::BeginPopupContextItem()) {
+                if (ImGui::MenuItem("Delete Component")) {
+                    ecs->m_RemoveComponent(ecs::TYPECOLLIDERCOMPONENT, m_clickedEntityId);
+                }
+                ImGui::EndPopup();
+            }
+
+            if (open) {
 
                 //retrieve collision collider
                 ecs::ColliderComponent* cc = static_cast<ecs::ColliderComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]
@@ -226,11 +252,22 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
         }
         if (EntitySignature.test(ecs::TYPESPRITECOMPONENT))
         {
-            //retrieve sprite component
-            ecs::SpriteComponent* sc = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]
-                ->m_GetEntityComponent(entityID));
 
-            if (ImGui::CollapsingHeader("Sprite Component")) {
+            bool open = ImGui::CollapsingHeader("Sprite Component");
+
+            if (ImGui::BeginPopupContextItem()) {
+                if (ImGui::MenuItem("Delete Component")) {
+                    ecs->m_RemoveComponent(ecs::TYPESPRITECOMPONENT, m_clickedEntityId);
+                }
+                ImGui::EndPopup();
+            }
+
+            if (open) {
+
+                //retrieve sprite component
+                ecs::SpriteComponent* sc = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]
+                    ->m_GetEntityComponent(entityID));
+
                 assetmanager::AssetManager* images = assetmanager::AssetManager::m_funcGetInstance();
 
                 const char* items[] = { "AAAA", "BBBB", "CCCC", "DDDD", "EEEE" };
@@ -273,27 +310,53 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
         }
         if (EntitySignature.test(ecs::TYPEPLAYERCOMPONENT)) {
-            ecs::PlayerComponent* pc = static_cast<ecs::PlayerComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEPLAYERCOMPONENT]
-                ->m_GetEntityComponent(entityID));
-            if (ImGui::CollapsingHeader("Player Component")) {
-                
+
+            bool open = ImGui::CollapsingHeader("Player Component");
+
+            if (ImGui::BeginPopupContextItem()) {
+                if (ImGui::MenuItem("Delete Component")) {
+                    ecs->m_RemoveComponent(ecs::TYPEPLAYERCOMPONENT, m_clickedEntityId);
+                }
+                ImGui::EndPopup();
+            }
+            
+            if (open) {
+
+                ecs::PlayerComponent* pc = static_cast<ecs::PlayerComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEPLAYERCOMPONENT]
+                    ->m_GetEntityComponent(entityID));
+
                 ImGui::Checkbox("Player Control", &pc->m_Control);
             }
         }
 
         if (EntitySignature.test(ecs::TYPERIGIDBODYCOMPONENT)) {
-            //ecs::RigidBodyComponent* rc = static_cast<ecs::RigidBodyComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPERIGIDBODYCOMPONENT]
-            //    ->m_GetEntityComponent(entityID));
-            if (ImGui::CollapsingHeader("RigidBody Component")) {
+
+            bool open = ImGui::CollapsingHeader("RigidBody Component");
+
+            if (ImGui::BeginPopupContextItem()) {
+                if (ImGui::MenuItem("Delete Component")) {
+                    ecs->m_RemoveComponent(ecs::TYPERIGIDBODYCOMPONENT, m_clickedEntityId);
+                }
+                ImGui::EndPopup();
+            }
+
+            if (open) {
 
                 ImGui::Text("Work In Progress");
             }
         }
         if (EntitySignature.test(ecs::TYPETEXTCOMPONENT))
         {
+            bool open = ImGui::CollapsingHeader("Text Component");
 
+            if (ImGui::BeginPopupContextItem()) {
+                if (ImGui::MenuItem("Delete Component")) {
+                    ecs->m_RemoveComponent(ecs::TYPETEXTCOMPONENT, m_clickedEntityId);
+                }
+                ImGui::EndPopup();
+            }
 
-            if (ImGui::CollapsingHeader("Text Component"))
+            if (open)
             {
                 // Retrieve the TransformComponent
                 ecs::TextComponent* tc = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]
@@ -328,12 +391,23 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
         
         if (EntitySignature.test(ecs::TYPEANIMATIONCOMPONENT))
         {
-            //retrieve sprite component
-            ecs::AnimationComponent* ac = static_cast<ecs::AnimationComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEANIMATIONCOMPONENT]
-                ->m_GetEntityComponent(entityID));
-            graphicpipe::GraphicsPipe* graphicsPipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
+            bool open = ImGui::CollapsingHeader("Animation Component");
 
-            if (ImGui::CollapsingHeader("Animation Component")) {
+            if (ImGui::BeginPopupContextItem()) {
+                if (ImGui::MenuItem("Delete Component")) {
+                    ecs->m_RemoveComponent(ecs::TYPEANIMATIONCOMPONENT, m_clickedEntityId);
+                }
+                ImGui::EndPopup();
+            }
+            //retrieve sprite component
+
+
+            if (open) {
+
+                ecs::AnimationComponent* ac = static_cast<ecs::AnimationComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEANIMATIONCOMPONENT]
+                    ->m_GetEntityComponent(entityID));
+                graphicpipe::GraphicsPipe* graphicsPipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
+
                 ImGui::AlignTextToFramePadding();
                 ImGui::Text("Toggle Animation");
                 ImGui::SameLine(slider_start_pos_x + 40);

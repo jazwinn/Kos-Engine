@@ -111,6 +111,8 @@ namespace ecs {
 				 velocity = MovComp->m_Speed * MovComp->m_Direction;
 			}
 
+			vector2::Vec2 position{ TransComp->m_transformation.m_e20,TransComp->m_transformation.m_e21 };
+
 			if (ColComp->m_type == physicspipe::EntityType::CIRCLE) {
 				PhysicsPipeline.m_SendPhysicsData(ColComp->m_radius, TransComp->m_position + ColComp->m_OffSet, ColComp->m_Size, velocity, id);
 			}

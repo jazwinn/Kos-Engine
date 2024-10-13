@@ -18,6 +18,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../ECS.h"
 
 #include "TransformSystem.h"
+#include "../ECS/Hierachy.h"
 #include <unordered_set>
 
 
@@ -78,12 +79,12 @@ namespace ecs {
 				continue;
 			}
 			//get parents coordinate
-			if (!ecs->m_GetParent(transformComp->m_Entity).has_value()) {
+			if (!ecs::Hierachy::m_GetParent(transformComp->m_Entity).has_value()) {
 				// no parnet
 				return;
 			}
 
-			EntityID parentID = ecs->m_GetParent(transformComp->m_Entity).value();
+			EntityID parentID = ecs::Hierachy::m_GetParent(transformComp->m_Entity).value();
 			TransformComponent* parentComp{nullptr};
 			for (auto& com : m_vecTransformComponentPtr) {
 				if (com->m_Entity == parentID) {
