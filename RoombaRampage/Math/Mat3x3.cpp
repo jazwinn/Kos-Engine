@@ -12,10 +12,34 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 /********************************************************************/
 #include "../Math/Mat3x3.h"
 
+
 namespace mat3x3{
 
 	void Mat3x3::m_Mat3Swap(Mat3x3& lhs, Mat3x3 & rhs) {
-		std::swap(lhs, rhs);
+		Mat3x3 temp(lhs);
+		lhs.m_e00 = rhs.m_e00;
+		lhs.m_e01 = rhs.m_e01;
+		lhs.m_e02 = rhs.m_e02;
+
+		lhs.m_e10 = rhs.m_e10;
+		lhs.m_e11 = rhs.m_e11;
+		lhs.m_e12 = rhs.m_e12;
+
+		lhs.m_e20 = rhs.m_e20;
+		lhs.m_e21 = rhs.m_e21;
+		lhs.m_e22 = rhs.m_e22;
+
+		rhs.m_e00 = temp.m_e00;
+		rhs.m_e01 = temp.m_e01;
+		rhs.m_e02 = temp.m_e02;
+
+		rhs.m_e10 = temp.m_e10;
+		rhs.m_e11 = temp.m_e11;
+		rhs.m_e12 = temp.m_e12;
+
+		rhs.m_e20 = temp.m_e20;
+		rhs.m_e21 = temp.m_e21;
+		rhs.m_e22 = temp.m_e22;
 	}
 
 
@@ -53,20 +77,28 @@ namespace mat3x3{
 
 
 	Mat3x3 & Mat3x3::operator*=(const Mat3x3 & rhs) {
-		Mat3x3 lvTemp;
-		lvTemp.m_e00 = (m_e00 * rhs.m_e00) + (m_e01 * rhs.m_e10) + (m_e02 * rhs.m_e20);
-		lvTemp.m_e01 = (m_e10 * rhs.m_e00) + (m_e11 * rhs.m_e10) + (m_e12 * rhs.m_e20);
-		lvTemp.m_e02 = (m_e20 * rhs.m_e00) + (m_e21 * rhs.m_e10) + (m_e22 * rhs.m_e20);
+		Mat3x3 lvTemp{};
+		lvTemp.m_e00 = (m_e00 * rhs.m_e00) + (m_e10 * rhs.m_e01) + (m_e20 * rhs.m_e02);
+		lvTemp.m_e01 = (m_e01 * rhs.m_e00) + (m_e11 * rhs.m_e01) + (m_e21 * rhs.m_e02);
+		lvTemp.m_e02 = (m_e02 * rhs.m_e00) + (m_e12 * rhs.m_e01) + (m_e22 * rhs.m_e02);
 
-		lvTemp.m_e10 = (m_e00 * rhs.m_e01) + (m_e01 * rhs.m_e11) + (m_e02 * rhs.m_e21);
-		lvTemp.m_e11 = (m_e10 * rhs.m_e01) + (m_e11 * rhs.m_e11) + (m_e12 * rhs.m_e21);
-		lvTemp.m_e12 = (m_e20 * rhs.m_e01) + (m_e21 * rhs.m_e11) + (m_e22 * rhs.m_e21);
+		lvTemp.m_e10 = (m_e00 * rhs.m_e10) + (m_e10 * rhs.m_e11) + (m_e20 * rhs.m_e12);
+		lvTemp.m_e11 = (m_e01 * rhs.m_e10) + (m_e11 * rhs.m_e11) + (m_e21 * rhs.m_e12);
+		lvTemp.m_e12 = (m_e02 * rhs.m_e10) + (m_e12 * rhs.m_e11) + (m_e22 * rhs.m_e12);
 
-		lvTemp.m_e20 = (m_e00 * rhs.m_e02) + (m_e01 * rhs.m_e12) + (m_e02 * rhs.m_e22);
-		lvTemp.m_e21 = (m_e10 * rhs.m_e02) + (m_e11 * rhs.m_e12) + (m_e12 * rhs.m_e22);
-		lvTemp.m_e22 = (m_e20 * rhs.m_e02) + (m_e21 * rhs.m_e12) + (m_e22 * rhs.m_e22);
+		lvTemp.m_e20 = (m_e00 * rhs.m_e20) + (m_e10 * rhs.m_e21) + (m_e20 * rhs.m_e22);
+		lvTemp.m_e21 = (m_e01 * rhs.m_e20) + (m_e11 * rhs.m_e21) + (m_e21 * rhs.m_e22);
+		lvTemp.m_e22 = (m_e02 * rhs.m_e20) + (m_e12 * rhs.m_e21) + (m_e22 * rhs.m_e22);
 		*this = lvTemp;
 		return *this;
+	}
+
+	vector2::Vec2& Mat3x3::operator*=(vector2::Vec2& rhs) const{
+		vector2::Vec2 lvTemp{ 0,0 };
+		lvTemp.m_x = (m_e00 * rhs.m_x) + (m_e10 * rhs.m_y) + (m_e20);
+		lvTemp.m_y = (m_e01 * rhs.m_x) + (m_e11 * rhs.m_y) + (m_e21);
+		rhs = lvTemp;
+		return rhs;
 	}
 
 
@@ -160,8 +192,9 @@ namespace mat3x3{
 
 	void Mat3Translate(Mat3x3 & given, float x, float y) {
 		Mat3Identity(given);
-		given.m_e02 = x;
-		given.m_e12 = y;
+		given.m_e20 = x;
+		given.m_e21 = y;
+		given.m_e22 = 1;
 	}
 
 
@@ -169,27 +202,50 @@ namespace mat3x3{
 		Mat3Identity(given);
 		given.m_e00 = x;
 		given.m_e11 = y;
+		given.m_e22 = 1;
 	}
+
 
 
 	void Mat3RotRad(Mat3x3 & given, float ang) {
 		Mat3Identity(given);
 		given.m_e00 = cosf(ang);
-		given.m_e01 = -sinf(ang);
-		given.m_e10 = sinf(ang);
+		given.m_e10 = -sinf(ang);
+		given.m_e01 = sinf(ang);
 		given.m_e11 = cosf(ang);
+		given.m_e22 = 1;
 	}
 
 
 	void Mat3RotDeg(Mat3x3 & given, float ang) {
-		float lvRad = (ang * (PI / 180.f));
+		float lvRad = (ang * (MAT_PI / 180.f));
 		Mat3RotRad(given, lvRad);
+	}
+
+	Mat3x3 Mat3Transform(vector2::Vec2 translate,  vector2::Vec2 scale, float rotate) {
+		Mat3x3 matTranslate{}, matRotate{}, matScale{};
+
+		Mat3Translate(matTranslate, translate.m_x, translate.m_y);
+		Mat3RotDeg(matRotate, rotate);
+		Mat3Scale(matScale, scale.m_x, scale.m_y);
+
+		Mat3x3 transform = (matTranslate * matRotate) * matScale;
+
+		return transform;
+
 	}
 
 
 	Mat3x3 operator*(const Mat3x3 & lhs, const Mat3x3 & rhs) {
 		Mat3x3 lvTemp(lhs);
 		lvTemp *= rhs;
+		return lvTemp;
+	}
+
+	vector2::Vec2 operator*(const Mat3x3& lhs, const vector2::Vec2& rhs) {
+		vector2::Vec2 lvTemp{ rhs };
+		//lhs *= rhs;
+		lvTemp = (lhs *= lvTemp);
 		return lvTemp;
 	}
 

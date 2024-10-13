@@ -30,7 +30,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Dependencies/rapidjson/document.h"
 #include "../Dependencies/rapidjson/writer.h"
 #include "../Dependencies/rapidjson/stringbuffer.h"
-#include "../Application/ImGui Panels/imgui_handler.h"
+#include "imgui_handler.h"
 #include "../Application/Helper.h"
 
 namespace gui {
@@ -71,6 +71,9 @@ namespace gui {
 	{
 		// Render ImGui
 		m_NewFrame();
+		//for gizmo - todo once camera is done
+		//ImGuizmo::SetOrthographic(true);
+		//ImGuizmo::BeginFrame();
 		//viewport docking
 		ImGui::DockSpaceOverViewport(0, ImGui::GetMainViewport());
 		//create main menu bar

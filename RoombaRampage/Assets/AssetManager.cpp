@@ -34,20 +34,26 @@ namespace assetmanager {
 
     void AssetManager::m_funcLoadAssets()
     {
-        m_funcLoadImage("Assets/testBackground.png");
-        m_funcLoadImage("Assets/blackTile_test.png");
-        m_funcLoadImage("Assets/roombaTest.png");
-        m_funcLoadImage("Assets/roombaTest2.png");
-        m_funcLoadImage("Assets/roombaTest3.png");
-        m_funcLoadImage("Assets/ani_RoombaBlink_strip4.png");
-        m_funcLoadImage("Assets/ani_RoombaBoosters_strip6.png");
-        m_funcLoadImage("Assets/ani_SeanSprite_strip4.png");
+        m_funcLoadImage("Assets/Sprites/testBackground.png");
+        m_funcLoadImage("Assets/Sprites/blackTile_test.png");
+        m_funcLoadImage("Assets/Sprites/roombaTest.png");
+        m_funcLoadImage("Assets/Sprites/roombaTest2.png");
+        m_funcLoadImage("Assets/Sprites/roombaTest3.png");
+        m_funcLoadImage("Assets/Sprites/gunleft_02.png");
+        m_funcLoadImage("Assets/Sprites/gunright_02.png");
+        m_funcLoadImage("Assets/Sprites/boosters_tail02.png");
 
-        m_LoadAudio("Assets/mindstorm.wav");
-        m_LoadAudio("Assets/zwing.wav");
-        m_LoadPrefab("../RoombaRampage/Json/Prefab.json");
+        m_funcLoadImage("Assets/Sprites/ani_RoombaBlink_strip4.png");
+        m_funcLoadImage("Assets/Sprites/ani_RoombaBoosters_strip6.png");
+        m_funcLoadImage("Assets/Sprites/ani_SeanSprite_strip4.png");
+
+
+        m_LoadAudio("Assets/Audio/mindstorm.wav");
+        m_LoadAudio("Assets/Audio/zwing.wav");
+
+        m_LoadPrefab("../RoombaRampage/Assets/Prefabs/Prefab.json");
     
-        m_LoadFont("Assets/AfacadFlux-Thin.ttf");
+        m_LoadFont("Assets/Font/Roboto-Black.ttf");
 
     }
 

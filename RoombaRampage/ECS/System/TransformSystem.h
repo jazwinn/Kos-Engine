@@ -1,6 +1,6 @@
 /******************************************************************/
 /*!
-\file      HierachySystem.h
+\file      TransformSystem.h
 \author    Jaz winn
 \par       jazwinn.ng@digipen.edu
 \date      Sept 29, 2024
@@ -12,15 +12,15 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 */
 /******************************************************************/
 
-#ifndef HIERACHYSYS_H
-#define HIERACHYSYS_H
+#ifndef TRANSFORMSYS_H
+#define TRANSFORMSYS_H
 
 #include "System.h"
 #include "../ECS/ECSList.h"
 
 namespace ecs {
 
-    class HierachySystem : public ISystem {
+    class TransformSystem : public ISystem {
 
     public:
 
@@ -35,10 +35,8 @@ namespace ecs {
     private:
         std::vector<TransformComponent*> m_vecTransformComponentPtr;
 
-        std::vector<HierachyComponent*> m_vecHeirachyComponentPtr;
-
     };
 
 }
 
-#endif HIERACHYSYS_H
+#endif TRANSFORMSYS_H

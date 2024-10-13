@@ -19,9 +19,12 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_handler.h"
+
 #include "../ECS/ECS.h"
+#include "../ECS/Hierachy.h"
 #include "../../De&Serialization/json_handler.h"
 #include "../Assets/AssetManager.h"
+#include "../Debugging/Logging.h"
 
 #include<vector>
 #include<string>
@@ -94,27 +97,19 @@ namespace gui {
         }
 
 
-        for (auto& entity : ecs->m_ECS_EntityMap) {
+        for (std::unordered_map<ecs::EntityID, ecs::compSignature>::iterator entity = ecs->m_ECS_EntityMap.begin(); entity != ecs->m_ECS_EntityMap.end(); entity++ ) {
 
-
-            m_DrawEntityNode(entity.first);
-
-            
-            if (ImGui::BeginPopupContextItem()) {
-                if (ImGui::MenuItem("Delete Entity")) {
-                    ecs->m_DeleteEntity(m_clickedEntityId);
-                    m_clickedEntityId = 0;
-                    //break to reinitialize
-                    ImGui::EndPopup();
+            //draw parent entity node
+            //draw entity with no parents hahaha
+            if (!ecs::Hierachy::m_GetParent(entity->first).has_value()) {
+                if (m_DrawEntityNode(entity->first) == false) {
+                    //delete is called
                     break;
                 }
-
-                if (ImGui::MenuItem("Dupliate Entity")) {
-                    ecs->m_DuplicateEntity(entity.first);
-                }
-
-                ImGui::EndPopup();
             }
+          
+
+           
 
         }
 
@@ -124,10 +119,16 @@ namespace gui {
     }
 
 
-    void ImGuiHandler::m_DrawEntityNode(ecs::EntityID id) {
+    bool ImGuiHandler::m_DrawEntityNode(ecs::EntityID id) {
 
         ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+        ecs::TransformComponent* transCom =  static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id));
+
         ImGuiTreeNodeFlags flag = ((m_clickedEntityId == id) ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnArrow;
+        if (transCom->m_childID.size() <= 0) {
+            flag |= ImGuiTreeNodeFlags_Leaf;
+        }
+        
         bool open = ImGui::TreeNodeEx(std::to_string(id).c_str(), flag, static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id))->m_entityName.c_str());
         if (ImGui::IsItemClicked())
         {
@@ -135,13 +136,63 @@ namespace gui {
 
 
         }
+
+        //draw context window
+        if (ImGui::BeginPopupContextItem()) {
+            if (ImGui::MenuItem("Delete Entity")) {
+                ecs->m_DeleteEntity(id);
+                m_clickedEntityId = -1;
+                ImGui::EndPopup();
+                if(open)ImGui::TreePop();
+                return false;
+            }
+
+            if (ImGui::MenuItem("Duplicate Entity")) {
+                ecs->m_DuplicateEntity(m_clickedEntityId);
+            }
+
+            ImGui::EndPopup();
+        }
+
+        if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None)) {
+            ecs::EntityID index = id;
+            ImGui::SetDragDropPayload("Entity", &index, sizeof(ecs::EntityID));
+            ImGui::Text(static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id))->m_entityName.c_str());
+            //ImGui::Text(std::to_string((int)index).c_str());
+            ImGui::EndDragDropSource();
+        }
+
+        if (ImGui::BeginDragDropTarget())
+        {
+            if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Entity"))
+            {
+                IM_ASSERT(payload->DataSize == sizeof(ecs::EntityID));
+                ecs::EntityID childId = *static_cast<ecs::EntityID*>(payload->Data);
+
+
+                ecs::Hierachy::m_SetParent(id, childId);
+                std::cout << "Set Parent:" << id << " Child: " << childId << std::endl;
+                
+
+
+
+            }
+            ImGui::EndDragDropTarget();
+        }
         
         if (open) {
             //recursion
+            if (transCom->m_childID.size() > 0) {
+                for (auto& id : transCom->m_childID) {
+                    m_DrawEntityNode(id);
+                }
+            }
            // m_DrawEntityNode(1);
             ImGui::TreePop();
         }
 
+
+        return true;
     }
 
 

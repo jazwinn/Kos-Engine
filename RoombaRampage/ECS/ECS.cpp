@@ -21,6 +21,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include <algorithm>
 #include "../Debugging/Performance.h"
 #include "../Debugging/Logging.h"
+#include "Hierachy.h"
 //ECS Varaible
 
 namespace ecs{
@@ -51,17 +52,18 @@ namespace ecs{
 		ecs->m_ECS_CombinedComponentPool[TYPEMOVEMENTCOMPONENT] = std::make_shared < ComponentPool<MovementComponent>>();
 		ecs->m_ECS_CombinedComponentPool[TYPETEXTCOMPONENT] = std::make_shared<ComponentPool<TextComponent>>();
 		ecs->m_ECS_CombinedComponentPool[TYPEANIMATIONCOMPONENT] = std::make_shared<ComponentPool<AnimationComponent>>();
-		ecs->m_ECS_CombinedComponentPool[TYPEHIERACHYCOMPONENT] = std::make_shared<ComponentPool<HierachyComponent>>();
 
 
 		//Allocate memory to each system
 		ecs->m_ECS_SystemMap[TYPECONTROLSYSTEM] = std::make_shared<ControlSystem>();
+		ecs->m_ECS_SystemMap[TYPETRANSFORMSYSTEM] = std::make_shared<TransformSystem>();
 		ecs->m_ECS_SystemMap[TYPECOLLISIONSYSTEM] = std::make_shared<CollisionSystem>();
 		ecs->m_ECS_SystemMap[TYPECOLLISIONRESPONSESYSTEM] = std::make_shared<CollisionResponseSystem>();
 		ecs->m_ECS_SystemMap[TYPEMOVEMENTSYSTEM] = std::make_shared<MovementSystem>(); // movement should be the last logic
 		ecs->m_ECS_SystemMap[TYPERENDERSYSTEM] = std::make_shared<RenderSystem>();
 		ecs->m_ECS_SystemMap[TYPERENDERTEXTSYSTEM] = std::make_shared<RenderTextSystem>();
 		ecs->m_ECS_SystemMap[TYPEDEBUGDRAWINGSYSTEM] = std::make_shared<DebugDrawingSystem>();
+		ecs->m_ECS_SystemMap[TYPEANIMATIONSYSTEM] = std::make_shared<AnimationSystem>();
 
 
 		//Initialize all system Peformance
@@ -129,6 +131,29 @@ namespace ecs{
 		return ComponentPtr;
 	}
 
+	bool ECS::m_RemoveComponent(ComponentType Type, EntityID ID) {
+
+		ECS* ecs = ECS::m_GetInstance();
+
+		//checks if component already exist
+		if (!ecs->m_ECS_EntityMap[ID].test(Type)) {
+			LOGGING_WARN("Entity Component has already been removed");
+			return false;
+		}
+
+		ecs->m_ECS_CombinedComponentPool[Type]->m_DeleteEntityComponent(ID);
+
+		//deregister everthing
+		m_DeregisterSystem(ID);
+
+		ecs->m_ECS_EntityMap.find(ID)->second.reset(Type);
+
+		//register everything
+		m_RegisterSystems(ID);
+
+		return true;
+	}
+
 	void ECS::m_RegisterSystems(EntityID ID) {
 
 		ECS* ecs = ECS::m_GetInstance();
@@ -151,6 +176,7 @@ namespace ecs{
 
 			}
 		}
+
 	}
 
 	EntityID ECS::m_CreateEntity() {
@@ -197,6 +223,25 @@ namespace ecs{
 		ecs->m_ECS_EntityMap.find(NewEntity)->second = DuplicateSignature;
 		m_RegisterSystems(NewEntity);
 
+		//checks if duplicates entity has parent and assign it
+		if (Hierachy::m_GetParent(DuplicatesID).has_value()) {
+			TransformComponent* transform = (TransformComponent*)(ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(Hierachy::m_GetParent(DuplicatesID).value()));
+			transform->m_childID.push_back(NewEntity);
+		}
+
+		//checks if entity has child call recursion
+		if (Hierachy::m_GetChild(DuplicatesID).has_value()) {
+			//clear child id of vector for new entity
+			TransformComponent* transform = (TransformComponent*)(ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(NewEntity));
+			transform->m_childID.clear();
+
+			std::vector<EntityID> childID = Hierachy::m_GetChild(DuplicatesID).value();
+			for (const auto& child : childID) {
+				EntityID dupChild = m_DuplicateEntity(child);
+				Hierachy::m_SetParent(NewEntity, dupChild);
+			}
+		}
+
 		return NewEntity;
 
 	}
@@ -204,6 +249,18 @@ namespace ecs{
 	bool ECS::m_DeleteEntity(EntityID ID) {
 
 		ECS* ecs = ECS::m_GetInstance();
+
+		Hierachy::m_RemoveParent(ID);
+		
+		//get child
+		if (Hierachy::m_GetChild(ID).has_value()) {
+			std::vector<EntityID> childs = Hierachy::m_GetChild(ID).value();
+			for (auto& x : childs) {
+				m_DeleteEntity(x);
+			}
+		}
+
+
 		// refector
 		m_DeregisterSystem(ID);
 
@@ -211,6 +268,9 @@ namespace ecs{
 
 		return true;
 	}
+
+	
+	
 
 }
 

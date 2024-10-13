@@ -29,6 +29,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 #include <iostream>
 #include <bitset>
+#include <optional>
 
 namespace ecs {
 
@@ -113,6 +114,11 @@ namespace ecs {
 		*/
 		/******************************************************************/
 		static void* m_AddComponent(ComponentType, EntityID);
+
+
+		static bool m_RemoveComponent(ComponentType Type, EntityID ID);
+
+
 		/******************************************************************/
 		/*!
 		\def       m_RegisterSystems()

@@ -17,6 +17,8 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 #include "Component.h"
 #include "../Math/Vector2.h"
+#include "../Math/Mat3x3.h"
+#include <vector>
 
 namespace ecs {
 	/******************************************************************/
@@ -32,6 +34,20 @@ namespace ecs {
 		vector2::Vec2 m_position{0,0};
 		float m_rotation{};
 		vector2::Vec2 m_scale{1,1};
+
+		// TRS for entity
+		mat3x3::Mat3x3 m_transformation{};
+
+	public:
+		//for Entities with child
+		std::vector<EntityID> m_childID{};
+		
+
+		//for entities with parents
+		EntityID m_parentID{};
+		
+		bool m_haveParent{false};
+		
 	};
 
 }

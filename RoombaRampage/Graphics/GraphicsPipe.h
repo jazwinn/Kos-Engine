@@ -66,11 +66,12 @@ namespace graphicpipe {
      */
     struct GraphicsData
     {
-        float m_rotate{};                ///< Rotation of the object in degrees.
-        glm::vec2 m_scale{};             ///< Scale factors for the object (x, y).
-        glm::vec2 m_worldCoordinates{};  ///< World coordinates of the object.
+        //float m_rotate{};                ///< Rotation of the object in degrees.
+        //glm::vec2 m_scale{};             ///< Scale factors for the object (x, y).
+        //glm::vec2 m_worldCoordinates{};  ///< World coordinates of the object.
+        glm::mat3 m_transformation{};
         unsigned int m_textureID{};      ///< ID of the texture used for rendering.
-        float m_animationTimer{};        ///< Timer for handling animations.
+        int m_frameNumber{};               ///< Frame Number for handling animations.
         int m_layer{};                   ///< Layer for drawing order.
     };
 
@@ -80,9 +81,10 @@ namespace graphicpipe {
      */
     struct DebugDrawData
     {
-        float m_rotate{};                ///< Rotation of the debug shape in degrees.
+       /* float m_rotate{};                ///< Rotation of the debug shape in degrees.
         glm::vec2 m_scale{};             ///< Scale factors for the debug shape (x, y).
-        glm::vec3 m_worldCoordinates{};  ///< World coordinates of the debug shape.
+        glm::vec3 m_worldCoordinates{};  ///< World coordinates of the debug shape.*/
+        glm::mat3 m_transformation{};
         bool m_isCollided{};             ///< Collision flag for detecting collisions.
         int m_shapeType{};               ///< Type of debug shape (e.g., square, circle).
     };
@@ -153,10 +155,7 @@ namespace graphicpipe {
          */
         void m_funcSetupArrayBuffer();
 
-        /**
-         * @brief Sets up the framebuffer for offscreen rendering.
-         */
-        void m_funcSetupFrameBuffer();
+       
 
         /**
          * @brief Compiles and links a shader program from vertex and fragment shader sources.
@@ -186,6 +185,7 @@ namespace graphicpipe {
         unsigned int m_textureOrderBuffer{};        ///< Buffer for texture ordering.
         unsigned int m_debugCollisionCheckBuffer{}; ///< Buffer for collision detection in debug drawing.
         unsigned int m_frameBufferObject{};         ///< Framebuffer object for offscreen rendering.
+        unsigned int m_depthBufferObject{};         ///< Depth Buffer object for storing frame buffer data.
         unsigned int m_textBuffer{};                ///< Buffer for text rendering.
         unsigned int m_stripCountBuffer{};          ///< Buffer for sprite strip counts (animation).
         unsigned int m_frameNumberBuffer{};         ///< Buffer for managing animation frame numbers.
@@ -309,6 +309,11 @@ namespace graphicpipe {
          */
         void m_funcDrawText();
 
+        /**
+        * @brief Sets up the framebuffer for offscreen rendering.
+        */
+        void m_funcSetupFrameBuffer();
+
         // Meshes
         Mesh m_squareMesh;              ///< Mesh for square rendering.
         Mesh m_screenMesh;              ///< Mesh for screen rendering.
@@ -330,6 +335,49 @@ namespace graphicpipe {
 
         unsigned int m_screenTexture{}; ///< Texture for rendering the screen.
         unsigned int m_proxyBackgroundTexture{}; ///< Background texture for proxy rendering.
+
+        //Shaders
+        const std::string debugVertexShader =
+        {
+        #include "../Graphics/debugVertexShader.vert"
+        };
+
+        const std::string debugFragmentShader =
+        {
+        #include  "../Graphics/debugFragmentShader.frag"
+
+        };
+
+        const std::string frameBufferVertexShader =
+        {
+         #include "../Graphics/frameBufferVertexShader.vert"
+        };
+
+        const std::string frameBufferFragmentShader =
+        {
+          #include "../Graphics/frameBufferFragmentShader.frag"
+        };
+
+
+        const std::string genericVertexShader =
+        {
+         #include "../Graphics/genericVertexShader.vert"
+        };
+
+        const std::string genericFragmentShader =
+        {
+          #include "../Graphics/genericFragmentShader.frag"
+        };
+
+        const std::string textVertexShader =
+        {
+         #include "../Graphics/textVertexShader.vert"
+        };
+
+        const std::string textFragmentShader =
+        {
+          #include "../Graphics/textFragmentShader.frag"
+        };
     };
 
 } // namespace graphicpipe

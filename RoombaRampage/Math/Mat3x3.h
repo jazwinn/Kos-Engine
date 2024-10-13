@@ -16,10 +16,14 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #define MAT2x2_H
 #include <algorithm>
 #include <math.h>
+#include "../Math/vector2.h"
+
+#include "vector2.h"
+
 
 
 namespace mat3x3 {
-	constexpr float PI = 3.14159265359f;
+	constexpr float MAT_PI = 3.14159265359f;
 	class Mat3x3 {
 	public:
 		union {
@@ -64,6 +68,8 @@ namespace mat3x3 {
 		 **/
 		Mat3x3& operator*=(const Mat3x3& rhs);
 
+		vector2::Vec2& operator*=(vector2::Vec2& rhs) const;
+
 		/**
 		 \brief		this function is a member function overload of the += sign used to add another matrix with the callee
 		 **/
@@ -78,7 +84,6 @@ namespace mat3x3 {
 		 \brief		this function is a member function meant for assigning a fully positive version of the callee
 		 **/
 		Mat3x3 m_Mat3Abs() const;
-
 
 
 	};
@@ -113,10 +118,14 @@ namespace mat3x3 {
 	 **/
 	void Mat3RotDeg(Mat3x3& given, float ang);
 
+	Mat3x3 Mat3Transform(vector2::Vec2 translate, vector2::Vec2 scale, float rotate);
+
 	/**
 	 \brief		this is a operator overload of the * sign used to multiply 2 matrixes together without changing the matrixes themselves
 	 **/
 	Mat3x3 operator*(const Mat3x3& lhs, const Mat3x3& rhs);
+
+	vector2::Vec2 operator*(const Mat3x3& lhs, const vector2::Vec2& rhs);
 
 	/**
 	 \brief		this function is a operator overload of the + sign used to add 2 matrixes together without changing the matrixes themselves

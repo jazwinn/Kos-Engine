@@ -28,7 +28,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "imgui_impl_opengl3.h"
 #include "imgui_handler.h"
 #include "../ECS/ECS.h"
-#include "../Application.h"
+#include "../Application/Application.h"
 
 #include "../Graphics/GraphicsPipe.h"
 
@@ -39,38 +39,48 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
     ImGui::Begin("Scene Window");
 
     ImVec2 pos = ImGui::GetCursorScreenPos();
-    ImVec2 windowSize = ImGui::GetContentRegionAvail();
+    ImVec2 renderWindowSize = ImGui::GetContentRegionAvail();
 
     float textureAspectRatio = (float)windowWidth / (float)windowHeight;
-    float windowAspectRatio = windowSize.x / windowSize.y;
+    float renderWindowAspectRatio = renderWindowSize.x / renderWindowSize.y;
 
     ImVec2 imageSize;
+    imageSize.x = windowWidth / 2;
+    imageSize.y = windowHeight / 2;
 
-    if (windowAspectRatio > textureAspectRatio) 
+
+
+   if (renderWindowAspectRatio > textureAspectRatio) 
     {
-        imageSize.y = windowSize.y;
+        imageSize.y = renderWindowSize.y;
         imageSize.x = imageSize.y * textureAspectRatio;
     }
     else 
     {
-        imageSize.x = windowSize.x;
+        imageSize.x = renderWindowSize.x;
         imageSize.y = imageSize.x / textureAspectRatio;
     }
 
-    if (imageSize.x <= windowSize.x)
+    if (imageSize.x <= renderWindowSize.x)
     {
-        pos.x += (windowSize.x - imageSize.x) / 2;
+        pos.x += (renderWindowSize.x - imageSize.x) / 2;
     }
 
-    if (imageSize.y <= windowSize.y)
+    if (imageSize.y <= renderWindowSize.y)
     {
-        pos.y += (windowSize.y - imageSize.y) / 2;
+        pos.y += (renderWindowSize.y - imageSize.y) / 2;
     }
+
 
     ImGui::GetWindowDrawList()->AddImage(
         (void*)(long long unsigned int)pipe->m_screenTexture, pos,
         ImVec2(pos.x + imageSize.x, pos.y + imageSize.y),
         ImVec2(0, 1), ImVec2(1, 0));
+
+   /* ImGui::GetWindowDrawList()->AddImage(
+        (void*)(long long unsigned int)pipe->m_textureIDs[1], pos,
+        ImVec2(pos.x + imageSize.x, pos.y + imageSize.y),
+        ImVec2(0, 1), ImVec2(1, 0));*/
 
         ImGui::End();
    
