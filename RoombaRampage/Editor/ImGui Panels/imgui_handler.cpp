@@ -30,7 +30,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Dependencies/rapidjson/document.h"
 #include "../Dependencies/rapidjson/writer.h"
 #include "../Dependencies/rapidjson/stringbuffer.h"
-#include "../Application/ImGui Panels/imgui_handler.h"
+#include "imgui_handler.h"
 #include "../Application/Helper.h"
 
 namespace gui {

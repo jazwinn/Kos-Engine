@@ -18,6 +18,11 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 #include "Window.h"
 #include "../Assets/Audio.h"
+
+#include "imgui.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
+#include "../Editor/ImGui Panels/imgui_handler.h"
 /******************************************************************/
 /*!
 \class     Application

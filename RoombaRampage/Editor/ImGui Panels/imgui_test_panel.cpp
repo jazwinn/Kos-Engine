@@ -15,7 +15,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "imgui_impl_opengl3.h"
 #include "imgui_handler.h"
 #include "../ECS/ECS.h"
-#include "../Helper.h"
+#include "../Application/Helper.h"
 #include "../../De&Serialization/json_handler.h"
 #include "../Debugging/Logging.h"
 #include "../Assets/AssetManager.h"
