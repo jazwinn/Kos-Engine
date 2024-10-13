@@ -36,6 +36,7 @@ namespace ecs {
 
 	void RenderTextSystem::m_DeregisterSystem(EntityID ID) {
 
+
 		//search element location for the entity
 		size_t IndexID{};
 		for (auto& SpriteComponentPtr : m_vecTextComponentPtr) {

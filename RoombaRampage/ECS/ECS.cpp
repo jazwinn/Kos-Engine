@@ -21,6 +21,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include <algorithm>
 #include "../Debugging/Performance.h"
 #include "../Debugging/Logging.h"
+#include "Hierachy.h"
 //ECS Varaible
 
 namespace ecs{
@@ -130,6 +131,29 @@ namespace ecs{
 		return ComponentPtr;
 	}
 
+	bool ECS::m_RemoveComponent(ComponentType Type, EntityID ID) {
+
+		ECS* ecs = ECS::m_GetInstance();
+
+		//checks if component already exist
+		if (!ecs->m_ECS_EntityMap[ID].test(Type)) {
+			LOGGING_WARN("Entity Component has already been removed");
+			return false;
+		}
+
+		ecs->m_ECS_CombinedComponentPool[Type]->m_DeleteEntityComponent(ID);
+
+		//deregister everthing
+		m_DeregisterSystem(ID);
+
+		ecs->m_ECS_EntityMap.find(ID)->second.reset(Type);
+
+		//register everything
+		m_RegisterSystems(ID);
+
+		return true;
+	}
+
 	void ECS::m_RegisterSystems(EntityID ID) {
 
 		ECS* ecs = ECS::m_GetInstance();
@@ -152,6 +176,7 @@ namespace ecs{
 
 			}
 		}
+
 	}
 
 	EntityID ECS::m_CreateEntity() {
@@ -199,21 +224,21 @@ namespace ecs{
 		m_RegisterSystems(NewEntity);
 
 		//checks if duplicates entity has parent and assign it
-		if (m_GetParent(DuplicatesID).has_value()) {
-			TransformComponent* transform = (TransformComponent*)(ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(m_GetParent(DuplicatesID).value()));
+		if (Hierachy::m_GetParent(DuplicatesID).has_value()) {
+			TransformComponent* transform = (TransformComponent*)(ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(Hierachy::m_GetParent(DuplicatesID).value()));
 			transform->m_childID.push_back(NewEntity);
 		}
 
 		//checks if entity has child call recursion
-		if (m_GetChild(DuplicatesID).has_value()) {
+		if (Hierachy::m_GetChild(DuplicatesID).has_value()) {
 			//clear child id of vector for new entity
 			TransformComponent* transform = (TransformComponent*)(ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(NewEntity));
 			transform->m_childID.clear();
 
-			std::vector<EntityID> childID = m_GetChild(DuplicatesID).value();
+			std::vector<EntityID> childID = Hierachy::m_GetChild(DuplicatesID).value();
 			for (const auto& child : childID) {
 				EntityID dupChild = m_DuplicateEntity(child);
-				m_SetParent(NewEntity, dupChild);
+				Hierachy::m_SetParent(NewEntity, dupChild);
 			}
 		}
 
@@ -225,11 +250,11 @@ namespace ecs{
 
 		ECS* ecs = ECS::m_GetInstance();
 
-		m_RemoveParent(ID);
+		Hierachy::m_RemoveParent(ID);
 		
 		//get child
-		if (m_GetChild(ID).has_value()) {
-			std::vector<EntityID> childs = m_GetChild(ID).value();
+		if (Hierachy::m_GetChild(ID).has_value()) {
+			std::vector<EntityID> childs = Hierachy::m_GetChild(ID).value();
 			for (auto& x : childs) {
 				m_DeleteEntity(x);
 			}
@@ -244,87 +269,7 @@ namespace ecs{
 		return true;
 	}
 
-	void ECS::m_SetParent(EntityID parent, EntityID child) {
-
-		ECS* ecs = ECS::m_GetInstance();
-
-		m_RemoveParent(child);
-
-		TransformComponent* parentTransform =  (TransformComponent*)ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(parent);
-		//checks if child is already in parent
-		if (m_GetParent(child).has_value()) {
-			return;
-		}
-
-		//checks if parent is getting dragged into its child
-		EntityID id = parent;
-		while (m_GetParent(id).has_value()) {
-			EntityID checkParentid = m_GetParent(id).value();
-			if (checkParentid == child) {
-				LOGGING_WARN("Cannot assign parent to its own child");
-				return;
-			}
-			id = checkParentid;
-
-		}
-
-
-		parentTransform->m_childID.push_back(child);
-
-		TransformComponent* childTransform = (TransformComponent*)ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(child);
-		childTransform->m_haveParent = true;
-		childTransform->m_parentID = parent;
-	}
-
-	void ECS::m_RemoveParent(EntityID child) {
-		// removes id from both the child and the parents vector
-		ECS* ecs = ECS::m_GetInstance();
-
-		if (!m_GetParent(child).has_value()) {
-			// does not have parrent
-			return;
-		}
-
-		EntityID parent = m_GetParent(child).value();
-		TransformComponent* parentTransform = (TransformComponent*)ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(parent);
-		size_t pos{};
-		for (EntityID& id : parentTransform->m_childID) {
-			if (child == id) {
-				parentTransform->m_childID.erase(parentTransform->m_childID.begin() + pos);
-				break;
-			}
-			pos++;
-		}
-
-
-		TransformComponent* childTransform = (TransformComponent*)ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(child);
-		childTransform->m_haveParent = false;
-		childTransform->m_parentID = 0;
-	}
-
-	std::optional<EntityID> ECS::m_GetParent(EntityID child)
-	{
-		ECS* ecs = ECS::m_GetInstance();
-		TransformComponent* childTransform = (TransformComponent*)ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(child);
-		if (!childTransform->m_haveParent) {
-			return std::optional<EntityID>();
-		}
-
-		return childTransform->m_parentID;
-
-	}
-
-	std::optional<std::vector<EntityID>>ECS::m_GetChild(EntityID parent)
-	{
-		ECS* ecs = ECS::m_GetInstance();
-		TransformComponent* parentTransform = (TransformComponent*)ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(parent);
-		if (parentTransform->m_childID.size() <= 0) {
-			return std::optional<std::vector<EntityID>>();
-		}
-
-		return parentTransform->m_childID;
-
-	}
+	
 	
 
 }

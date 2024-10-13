@@ -114,6 +114,11 @@ namespace ecs {
 		*/
 		/******************************************************************/
 		static void* m_AddComponent(ComponentType, EntityID);
+
+
+		static bool m_RemoveComponent(ComponentType Type, EntityID ID);
+
+
 		/******************************************************************/
 		/*!
 		\def       m_RegisterSystems()
@@ -130,15 +135,6 @@ namespace ecs {
 		*/
 		/******************************************************************/
 		static void m_DeregisterSystem(EntityID);
-
-		static void m_SetParent(EntityID parent, EntityID child);
-
-		static void m_RemoveParent(EntityID child);
-
-		static std::optional<EntityID> m_GetParent(EntityID child);
-		
-
-		static std::optional<std::vector<EntityID>> m_GetChild(EntityID parent);
 
 
 		std::unordered_map<ComponentType, std::shared_ptr<IComponentPool>> m_ECS_CombinedComponentPool{};

@@ -69,9 +69,9 @@ namespace graphicpipe {
         //float m_rotate{};                ///< Rotation of the object in degrees.
         //glm::vec2 m_scale{};             ///< Scale factors for the object (x, y).
         //glm::vec2 m_worldCoordinates{};  ///< World coordinates of the object.
-        glm::mat3 transformation{};
+        glm::mat3 m_transformation{};
         unsigned int m_textureID{};      ///< ID of the texture used for rendering.
-        int frameNumber{};               ///< Frame Number for handling animations.
+        int m_frameNumber{};               ///< Frame Number for handling animations.
         int m_layer{};                   ///< Layer for drawing order.
     };
 
@@ -81,9 +81,10 @@ namespace graphicpipe {
      */
     struct DebugDrawData
     {
-        float m_rotate{};                ///< Rotation of the debug shape in degrees.
+       /* float m_rotate{};                ///< Rotation of the debug shape in degrees.
         glm::vec2 m_scale{};             ///< Scale factors for the debug shape (x, y).
-        glm::vec3 m_worldCoordinates{};  ///< World coordinates of the debug shape.
+        glm::vec3 m_worldCoordinates{};  ///< World coordinates of the debug shape.*/
+        glm::mat3 m_transformation{};
         bool m_isCollided{};             ///< Collision flag for detecting collisions.
         int m_shapeType{};               ///< Type of debug shape (e.g., square, circle).
     };

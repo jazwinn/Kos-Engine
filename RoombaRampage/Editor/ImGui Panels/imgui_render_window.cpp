@@ -28,7 +28,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "imgui_impl_opengl3.h"
 #include "imgui_handler.h"
 #include "../ECS/ECS.h"
-#include "../Application.h"
+#include "../Application/Application.h"
 
 #include "../Graphics/GraphicsPipe.h"
 

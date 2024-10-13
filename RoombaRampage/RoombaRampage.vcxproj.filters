@@ -1,19 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Application\Application.cpp" />
-    <ClCompile Include="Application\Helper.cpp" />
-    <ClCompile Include="Application\ImGui Panels\imgui_component_window.cpp" />
-    <ClCompile Include="Application\ImGui Panels\imgui_handler.cpp" />
-    <ClCompile Include="Application\ImGui Panels\imgui_hierarchy_window.cpp" />
-    <ClCompile Include="Application\ImGui Panels\imgui_logs_window.cpp" />
-    <ClCompile Include="Application\ImGui Panels\imgui_menubar.cpp" />
-    <ClCompile Include="Application\ImGui Panels\imgui_performance_window.cpp" />
-    <ClCompile Include="Application\ImGui Panels\imgui_render_window.cpp" />
-    <ClCompile Include="Application\ImGui Panels\imgui_test_panel.cpp" />
-    <ClCompile Include="Application\ImGui Panels\imgui__input_window.cpp" />
-    <ClCompile Include="Application\main.cpp" />
-    <ClCompile Include="Application\Window.cpp" />
+    <ClCompile Include="Editor\ImGui Panels\imgui_component_window.cpp" />
+    <ClCompile Include="Editor\ImGui Panels\imgui_handler.cpp" />
+    <ClCompile Include="Editor\ImGui Panels\imgui_hierarchy_window.cpp" />
+    <ClCompile Include="Editor\ImGui Panels\imgui_logs_window.cpp" />
+    <ClCompile Include="Editor\ImGui Panels\imgui_menubar.cpp" />
+    <ClCompile Include="Editor\ImGui Panels\imgui_performance_window.cpp" />
+    <ClCompile Include="Editor\ImGui Panels\imgui_render_window.cpp" />
+    <ClCompile Include="Editor\ImGui Panels\imgui_test_panel.cpp" />
+    <ClCompile Include="Editor\ImGui Panels\imgui__input_window.cpp" />
     <ClCompile Include="Assets\AssetManager.cpp" />
     <ClCompile Include="Assets\Audio.cpp" />
     <ClCompile Include="Assets\Image.cpp" />
@@ -56,13 +52,15 @@
     <ClCompile Include="Math\Vector2.cpp" />
     <ClCompile Include="Physics\Physics.cpp" />
     <ClCompile Include="Dependencies\imgui\ImGuizmo.cpp" />
+    <ClCompile Include="Application\Application.cpp" />
+    <ClCompile Include="Application\Helper.cpp" />
+    <ClCompile Include="Application\main.cpp" />
+    <ClCompile Include="Application\Window.cpp" />
+    <ClCompile Include="ECS\Hierachy.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Application\Application.h" />
-    <ClInclude Include="Application\Helper.h" />
-    <ClInclude Include="Application\ImGui Panels\imgui_handler.h" />
+    <ClInclude Include="Editor\ImGui Panels\imgui_handler.h" />
     <ClInclude Include="Application\json_handler.h" />
-    <ClInclude Include="Application\Window.h" />
     <ClInclude Include="Assets\AssetManager.h" />
     <ClInclude Include="Assets\Audio.h" />
     <ClInclude Include="Assets\Image.h" />
@@ -122,6 +120,10 @@
     <ClInclude Include="Math\Vector2.h" />
     <ClInclude Include="Physics\Physics.h" />
     <ClInclude Include="Dependencies\imgui\ImGuizmo.h" />
+    <ClInclude Include="Application\Application.h" />
+    <ClInclude Include="Application\Helper.h" />
+    <ClInclude Include="Application\Window.h" />
+    <ClInclude Include="ECS\Hierachy.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Graphics\debugFragmentShader.frag" />

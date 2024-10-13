@@ -19,7 +19,9 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_handler.h"
+
 #include "../ECS/ECS.h"
+#include "../ECS/Hierachy.h"
 #include "../../De&Serialization/json_handler.h"
 #include "../Assets/AssetManager.h"
 #include "../Debugging/Logging.h"
@@ -99,7 +101,7 @@ namespace gui {
 
             //draw parent entity node
             //draw entity with no parents hahaha
-            if (!ecs->m_GetParent(entity->first).has_value()) {
+            if (!ecs::Hierachy::m_GetParent(entity->first).has_value()) {
                 if (m_DrawEntityNode(entity->first) == false) {
                     //delete is called
                     break;
@@ -168,7 +170,7 @@ namespace gui {
                 ecs::EntityID childId = *static_cast<ecs::EntityID*>(payload->Data);
 
 
-                ecs->m_SetParent(id, childId);
+                ecs::Hierachy::m_SetParent(id, childId);
                 std::cout << "Set Parent:" << id << " Child: " << childId << std::endl;
                 
 
