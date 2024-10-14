@@ -36,6 +36,7 @@ namespace ecs{
 			System.second->m_Init();
 		}
 
+
 	}
 
 	void ECS::m_Load() {
