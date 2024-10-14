@@ -194,16 +194,7 @@ namespace graphicpipe {
         int m_windowHeight{};                       ///< The current window height.
         float m_aspectRatio{};                      ///< Aspect ratio of the window.
 
-        /**
-         * @struct Camera
-         * @brief Represents the camera's position and orientation.
-         */
-        struct Camera
-        {
-            glm::vec2 m_coordinates;   ///< Coordinates of the camera.
-            float m_angle;             ///< Rotation angle of the camera.
-        };
-
+        
         std::vector<glm::mat3> m_modelToNDCMatrix{}; ///< Model-to-NDC transformation matrices.
         std::vector<glm::mat3> m_debugToNDCMatrix{}; ///< Debug model-to-NDC matrices.
         glm::mat3 m_testMatrix{};                   ///< Test matrix for rendering.
@@ -218,6 +209,22 @@ namespace graphicpipe {
         static GLuint m_funcCompileShader(GLuint type, const std::string& shader);
 
     public:
+
+        /**
+         * @struct Camera
+         * @brief Represents the camera's position and orientation.
+         */
+        struct Camera
+        {
+            glm::vec2 m_coordinates;   ///< Coordinates of the camera.
+            glm::vec2 m_zoom;          ///< Zoom of the a=canera
+            float m_angle;             ///< Rotation angle of the camera.
+        };
+
+         Camera m_editorCamera{};
+         float m_editorCameraDragSensitivity{ 0.01f };  ///< Editor Camera Drag Sensitivity
+         float m_editorCameraZoomSensitivity{ 0.01f };  ///< Editor Camera Zoom Sensitivity
+
         /**
          * @enum ShapeType
          * @brief Enumerates different shape types for rendering.
@@ -229,8 +236,6 @@ namespace graphicpipe {
             SQUARE_LINES, ///< Square outline shape type.
             CIRCLE_LINES  ///< Circle outline shape type.
         };
-
-        float m_frameTime{ 0.20f };     ///< Frame time (24 FPS by default).
 
         /**
          * @brief Destructor for the GraphicsPipe class.
