@@ -1,39 +1,40 @@
-[INFO]: 2024-10-15 00:03:57 - Application Start
-[INFO]: 2024-10-15 00:03:57 - Load Log Successful
-[INFO]: 2024-10-15 00:03:57 - Load Config Successful
-[INFO]: 2024-10-15 00:03:57 - Load Window Successful
-[INFO]: 2024-10-15 00:03:57 - Load ECS Successful
-[INFO]: 2024-10-15 00:03:57 - Texture Padded for testBackground
-[INFO]: 2024-10-15 00:03:57 - Texture Binded, Texture ID : 1 
-[INFO]: 2024-10-15 00:03:57 - Texture Binded, Texture ID : 2 
-[INFO]: 2024-10-15 00:03:57 - Texture Binded, Texture ID : 3 
-[INFO]: 2024-10-15 00:03:57 - Texture Binded, Texture ID : 4 
-[INFO]: 2024-10-15 00:03:57 - Texture Padded for roombaTest3
-[INFO]: 2024-10-15 00:03:57 - Texture Binded, Texture ID : 5 
-[INFO]: 2024-10-15 00:03:57 - Texture Padded for gunleft
-[INFO]: 2024-10-15 00:03:57 - Texture Binded, Texture ID : 6 
-[INFO]: 2024-10-15 00:03:57 - Texture Padded for gunright
-[INFO]: 2024-10-15 00:03:57 - Texture Binded, Texture ID : 7 
-[INFO]: 2024-10-15 00:03:57 - Texture Padded for boosters
-[INFO]: 2024-10-15 00:03:57 - Texture Binded, Texture ID : 8 
-[INFO]: 2024-10-15 00:03:57 - Strip Success for Assets/Sprites/ani_RoombaBlink_strip4.png
-[INFO]: 2024-10-15 00:03:58 - Texture Binded, Texture ID : 9 
-[INFO]: 2024-10-15 00:03:58 - Strip Success for Assets/Sprites/ani_RoombaBoosters_strip6.png
-[INFO]: 2024-10-15 00:03:58 - Texture Binded, Texture ID : 10 
-[INFO]: 2024-10-15 00:03:58 - Strip Success for Assets/Sprites/ani_SeanSprite_strip4.png
-[INFO]: 2024-10-15 00:03:58 - Texture Binded, Texture ID : 11 
-[INFO]: 2024-10-15 00:03:58 - Load Prefab Json Successful
-[INFO]: 2024-10-15 00:03:58 - Load Asset Successful
-[INFO]: 2024-10-15 00:03:58 - Shader compiled successfully
-[INFO]: 2024-10-15 00:03:58 - Shader compiled successfully
-[INFO]: 2024-10-15 00:03:58 - Shader compiled successfully
-[INFO]: 2024-10-15 00:03:58 - Shader compiled successfully
-[INFO]: 2024-10-15 00:03:58 - Framebuffer successfully created
-[INFO]: 2024-10-15 00:03:58 - Load Graphic Pipline Successful
-[INFO]: 2024-10-15 00:03:58 - Set Input Call Back Successful
-[INFO]: 2024-10-15 00:03:58 - Load ImGui Successful
-[INFO]: 2024-10-15 00:03:58 - Load Json Successful
-[INFO]: 2024-10-15 00:03:58 - Entities successfully loaded!
-[INFO]: 2024-10-15 00:03:58 - Application Init Successful
-[INFO]: 2024-10-15 00:03:58 - Framebuffer successfully created
-[INFO]: 2024-10-15 00:07:16 - Application Closed
+[INFO]: 2024-10-15 00:55:11 - Application Start
+[INFO]: 2024-10-15 00:55:11 - Load Log Successful
+[INFO]: 2024-10-15 00:55:11 - Load Config Successful
+[INFO]: 2024-10-15 00:55:11 - Load Window Successful
+[INFO]: 2024-10-15 00:55:11 - Load ECS Successful
+[INFO]: 2024-10-15 00:55:11 - Texture Padded for testBackground
+[INFO]: 2024-10-15 00:55:11 - Texture Binded, Texture ID : 1 
+[INFO]: 2024-10-15 00:55:11 - Texture Binded, Texture ID : 2 
+[INFO]: 2024-10-15 00:55:11 - Texture Binded, Texture ID : 3 
+[INFO]: 2024-10-15 00:55:11 - Texture Binded, Texture ID : 4 
+[INFO]: 2024-10-15 00:55:11 - Texture Padded for roombaTest3
+[INFO]: 2024-10-15 00:55:11 - Texture Binded, Texture ID : 5 
+[INFO]: 2024-10-15 00:55:11 - Texture Padded for gunleft
+[INFO]: 2024-10-15 00:55:11 - Texture Binded, Texture ID : 6 
+[INFO]: 2024-10-15 00:55:11 - Texture Padded for gunright
+[INFO]: 2024-10-15 00:55:11 - Texture Binded, Texture ID : 7 
+[INFO]: 2024-10-15 00:55:11 - Texture Padded for boosters
+[INFO]: 2024-10-15 00:55:11 - Texture Binded, Texture ID : 8 
+[INFO]: 2024-10-15 00:55:11 - Strip Success for Assets/Sprites/ani_RoombaBlink_strip4.png
+[INFO]: 2024-10-15 00:55:12 - Texture Binded, Texture ID : 9 
+[INFO]: 2024-10-15 00:55:12 - Strip Success for Assets/Sprites/ani_RoombaBoosters_strip6.png
+[INFO]: 2024-10-15 00:55:12 - Texture Binded, Texture ID : 10 
+[INFO]: 2024-10-15 00:55:12 - Strip Success for Assets/Sprites/ani_SeanSprite_strip4.png
+[INFO]: 2024-10-15 00:55:12 - Texture Binded, Texture ID : 11 
+[INFO]: 2024-10-15 00:55:12 - Load Prefab Json Successful
+[INFO]: 2024-10-15 00:55:12 - Load Asset Successful
+[INFO]: 2024-10-15 00:55:12 - Shader compiled successfully
+[INFO]: 2024-10-15 00:55:12 - Shader compiled successfully
+[INFO]: 2024-10-15 00:55:12 - Shader compiled successfully
+[INFO]: 2024-10-15 00:55:12 - Shader compiled successfully
+[INFO]: 2024-10-15 00:55:12 - Framebuffer successfully created
+[INFO]: 2024-10-15 00:55:12 - Load Graphic Pipline Successful
+[INFO]: 2024-10-15 00:55:12 - Set Input Call Back Successful
+[INFO]: 2024-10-15 00:55:12 - Load ImGui Successful
+[INFO]: 2024-10-15 00:55:12 - Load Json Successful
+[INFO]: 2024-10-15 00:55:12 - Entities successfully loaded!
+[INFO]: 2024-10-15 00:55:12 - Application Init Successful
+[INFO]: 2024-10-15 00:55:12 - Framebuffer successfully created
+[INFO]: 2024-10-15 00:55:17 - Prefab -> Entity Created Successfully
+[INFO]: 2024-10-15 00:56:38 - Application Closed

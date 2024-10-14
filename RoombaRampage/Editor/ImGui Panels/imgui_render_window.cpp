@@ -86,7 +86,7 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
     pipe->m_editorCamera.m_zoom.x = glm::clamp(pipe->m_editorCamera.m_zoom.x, 0.1f, 10.f);
     pipe->m_editorCamera.m_zoom.y = glm::clamp(pipe->m_editorCamera.m_zoom.y, 0.1f, 10.f);
 
-    if (ImGui::IsMouseDragging(ImGuiMouseButton_Left))
+    if (ImGui::IsMouseDragging(ImGuiMouseButton_Left) && ImGui::IsWindowHovered())
     {
         ImVec2 mouseDelta = ImGui::GetMouseDragDelta(ImGuiMouseButton_Left);
 
