@@ -40,7 +40,7 @@ namespace ecs {
 			== m_vecTransformComponentPtr.end()) {
 			m_vecTransformComponentPtr.push_back((TransformComponent*)ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(ID));
 			m_vecColliderComponentPtr.push_back((ColliderComponent*)ecs->m_ECS_CombinedComponentPool[TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(ID));
-
+			m_vecNameComponentPtr.push_back((NameComponent*)ecs->m_ECS_CombinedComponentPool[TYPENAMECOMPONENT]->m_GetEntityComponent(ID));
 		}
 	}
 
@@ -59,11 +59,12 @@ namespace ecs {
 
 		std::swap(m_vecColliderComponentPtr[IndexID], m_vecColliderComponentPtr[IndexLast]);
 		std::swap(m_vecTransformComponentPtr[IndexID], m_vecTransformComponentPtr[IndexLast]);
+		std::swap(m_vecNameComponentPtr[IndexID], m_vecNameComponentPtr[IndexLast]);
 
 		//popback the vector;
 		m_vecColliderComponentPtr.pop_back();
 		m_vecTransformComponentPtr.pop_back();
-
+		m_vecNameComponentPtr.pop_back();
 	}
 
 	void CollisionSystem::m_Init() {
@@ -98,7 +99,7 @@ namespace ecs {
 			
 			ColliderComponent* ColComp = m_vecColliderComponentPtr[n];
 			TransformComponent* TransComp = m_vecTransformComponentPtr[n];
-
+			NameComponent* NameComp = m_vecNameComponentPtr[n];
 			EntityID id = ColComp->m_Entity;
 			
 
