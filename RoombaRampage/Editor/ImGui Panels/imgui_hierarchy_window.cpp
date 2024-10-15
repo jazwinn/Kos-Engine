@@ -30,6 +30,11 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include<string>
 #include <iostream>
 
+//Testing purposes! this are the three files needed!
+#include <mono/jit/jit.h>
+#include <mono/metadata/assembly.h>
+#include <mono/metadata/debug-helpers.h>
+
 namespace gui {
     unsigned int ImGuiHandler::m_DrawHierachyWindow()
     {
