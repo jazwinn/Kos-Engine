@@ -77,11 +77,28 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
         ImVec2(pos.x + imageSize.x, pos.y + imageSize.y),
         ImVec2(0, 1), ImVec2(1, 0));
 
-   /* ImGui::GetWindowDrawList()->AddImage(
-        (void*)(long long unsigned int)pipe->m_textureIDs[1], pos,
-        ImVec2(pos.x + imageSize.x, pos.y + imageSize.y),
-        ImVec2(0, 1), ImVec2(1, 0));*/
+ 
+    float scrollInput = ImGui::GetIO().MouseWheel; // Positive for zoom in, negative for zoom out
 
-        ImGui::End();
+    pipe->m_editorCamera.m_zoom.x += scrollInput * pipe->m_editorCameraZoomSensitivity;
+    pipe->m_editorCamera.m_zoom.y += scrollInput * pipe->m_editorCameraZoomSensitivity;
+
+    pipe->m_editorCamera.m_zoom.x = glm::clamp(pipe->m_editorCamera.m_zoom.x, 0.1f, 10.f);
+    pipe->m_editorCamera.m_zoom.y = glm::clamp(pipe->m_editorCamera.m_zoom.y, 0.1f, 10.f);
+
+    if (ImGui::IsMouseDragging(ImGuiMouseButton_Left) && ImGui::IsWindowHovered())
+    {
+        ImVec2 mouseDelta = ImGui::GetMouseDragDelta(ImGuiMouseButton_Left);
+
+        glm::vec2 delta = glm::vec2(mouseDelta.x, mouseDelta.y) * pipe->m_editorCameraDragSensitivity;
+
+        // Update the camera position
+        pipe->m_editorCamera.m_coordinates.x -= delta.x;
+        pipe->m_editorCamera.m_coordinates.y += delta.y;
+     
+        ImGui::ResetMouseDragDelta(ImGuiMouseButton_Left);
+    }
+
+    ImGui::End();
    
 }

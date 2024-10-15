@@ -145,11 +145,11 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 ImGui::Text("Scale");
                 ImGui::SameLine(slider_start_pos_x);
                 ImGui::SetNextItemWidth(100.0f);
-                ImGui::DragFloat("X", &tc->m_scale.m_x, 0.02f, 0.1f, 2.0f, "%.2f");
+                ImGui::DragFloat("X", &tc->m_scale.m_x, 0.02f, 0.1f, 10.0f, "%.2f");
 
                 ImGui::SameLine();
                 ImGui::SetNextItemWidth(100.0f);
-                ImGui::DragFloat("Y", &tc->m_scale.m_y, 0.02f, 0.1f, 2.0f, "%.2f");
+                ImGui::DragFloat("Y", &tc->m_scale.m_y, 0.02f, 0.1f, 10.0f, "%.2f");
 
             }
 
@@ -223,12 +223,12 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 ImGui::Text("Size");
                 ImGui::SameLine(slider_start_pos_x);
                 ImGui::SetNextItemWidth(100.0f);
-                ImGui::DragFloat("X###", &cc->m_Size.m_x, 0.02f, 0.f, 2.0f, "%.2f");
+                ImGui::DragFloat("X###", &cc->m_Size.m_x, 0.02f, 0.f, 10.0f, "%.2f");
 
 
                 ImGui::SameLine();
                 ImGui::SetNextItemWidth(100.0f);
-                ImGui::DragFloat("Y###PosY", &cc->m_Size.m_y, 0.02f, 0.f, 2.0f, "%.2f");
+                ImGui::DragFloat("Y###PosY", &cc->m_Size.m_y, 0.02f, 0.f, 10.0f, "%.2f");
    
 
                 ImGui::AlignTextToFramePadding();

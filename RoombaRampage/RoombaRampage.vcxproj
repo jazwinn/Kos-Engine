@@ -170,6 +170,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\Freetype_Font\lib\*.dll" "$(OutDir)"</Co
     <ClCompile Include="Application\Application.cpp" />
     <ClCompile Include="Application\Helper.cpp" />
     <ClCompile Include="ECS\Hierachy.cpp" />
+    <ClCompile Include="ECS\Layers.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_component_window.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_handler.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_hierarchy_window.cpp" />
@@ -229,6 +230,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\Freetype_Font\lib\*.dll" "$(OutDir)"</Co
     <ClInclude Include="Application\Application.h" />
     <ClInclude Include="Application\Helper.h" />
     <ClInclude Include="ECS\Hierachy.h" />
+    <ClInclude Include="ECS\Layers.h" />
     <ClInclude Include="Editor\ImGui Panels\imgui_handler.h" />
     <ClInclude Include="Application\json_handler.h" />
     <ClInclude Include="Application\Window.h" />

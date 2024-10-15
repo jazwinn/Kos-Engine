@@ -20,6 +20,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "Component.h"
 #include "../Physics/Physics.h"
 
+
 namespace ecs {
 /******************************************************************/
 /*!
@@ -37,6 +38,8 @@ namespace ecs {
 		vector2::Vec2 m_OffSet{};
 
 		bool m_drawDebug{true};
+
+		//layer::LAYERS m_CollideLayer{layer::DEFAULT};
 
 		// Current no implementation
 		physicspipe::EntityType m_type = physicspipe::EntityType::RECTANGLE;

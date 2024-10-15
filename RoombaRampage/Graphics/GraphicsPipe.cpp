@@ -43,6 +43,9 @@ namespace graphicpipe {
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glLineWidth(4.f);
 
+		m_editorCamera.m_coordinates = { 0.f,0.f };
+		m_editorCamera.m_zoom = { 1.f, 1.f };
+
 		m_squareMesh.m_shapeType = SQUARE;
 		m_squareLinesMesh.m_shapeType = SQUARE_LINES;
 		m_testMatrix = { 1, 0, 0, 0, 1, 0, 0, 0, 1 };
@@ -123,6 +126,18 @@ namespace graphicpipe {
 		m_windowWidth = static_cast<int>(Helper::Helpers::GetInstance()->m_windowWidth);
 		m_windowHeight = static_cast<int>(Helper::Helpers::GetInstance()->m_windowHeight);
 		m_aspectRatio = static_cast<float>(static_cast<float>(m_windowHeight) / static_cast<float>(m_windowWidth));
+
+		//Camera
+		glm::mat3 camera = glm::mat3(1.0f);
+		float left = m_editorCamera.m_coordinates.x - 1.f / m_editorCamera.m_zoom.x;
+		float right = m_editorCamera.m_coordinates.x + 1.f / m_editorCamera.m_zoom.x;
+		float bottom = m_editorCamera.m_coordinates.y - 1.f / m_editorCamera.m_zoom.y;
+		float top = m_editorCamera.m_coordinates.y + 1.f / m_editorCamera.m_zoom.y;
+		camera[0][0] = 2.0f / (right - left);
+		camera[1][1] = 2.0f / (top - bottom);
+		camera[2][0] = -(right + left) / (right - left);
+		camera[2][1] = -(top + bottom) / (top - bottom);
+
 		if (m_modelData.size() > 0)
 		{
 			for (int n{}; n < m_modelData.size(); n++)
@@ -131,8 +146,6 @@ namespace graphicpipe {
 				float widthRatio = static_cast<float>(m_imageData[m_modelData[n].m_textureID].m_width) / m_unitWidth;
 
 				float imageAspectRatio = static_cast<float>(m_imageData[m_modelData[n].m_textureID].m_width) / static_cast<float>(m_imageData[m_modelData[n].m_textureID].m_height);
-
-
 
 				m_modelData[n].m_transformation[0][0] = m_modelData[n].m_transformation[0][0] * widthRatio / imageAspectRatio;
 				m_modelData[n].m_transformation[0][1] = m_modelData[n].m_transformation[0][1] * widthRatio / imageAspectRatio;
@@ -147,25 +160,8 @@ namespace graphicpipe {
 
 				glm::mat3 lvNDCScale{ m_aspectRatio, 0, 0, 0, 1.f, 0, 0 , 0 ,1.f };
 
-				//glm::mat3 ortho = glm::mat3(1.0f);
-
-				//// Scale X and Y by aspect ratio
-				//float left = -0.5f;
-				//float right = 0.5f;
-				//float bottom = -0.5f;
-				//float top = 0.5f;
-
-				//ortho[0][0] = 2.0f / (right - left);  // Scale X
-				//ortho[1][1] = 2.0f / (top - bottom);  // Scale Y
-
-				//ortho[2][0] = -(right + left) / (right - left);  // Translate X
-				//ortho[2][1] = -(top + bottom) / (top - bottom);  // Translate Y
-
-
-
-
-
-				m_modelToNDCMatrix.push_back(lvNDCScale * m_modelData[n].m_transformation);
+				
+				m_modelToNDCMatrix.push_back(camera * lvNDCScale * m_modelData[n].m_transformation);
 				m_textureOrder.push_back(m_modelData[n].m_textureID);
 				m_stripCounts.push_back(m_imageData[m_modelData[n].m_textureID].m_stripCount);
 				m_frameNumbers.push_back(m_modelData[n].m_frameNumber);
@@ -177,7 +173,7 @@ namespace graphicpipe {
 			for (int i{}; i < m_debugBoxData.size(); i++)
 			{
 				glm::mat3 lvNDCScale{ m_aspectRatio, 0, 0, 0, 1.f, 0, 0 , 0 ,1.f };
-				m_debugToNDCMatrix.push_back(lvNDCScale * m_debugBoxData[i].m_transformation);
+				m_debugToNDCMatrix.push_back(camera * lvNDCScale * m_debugBoxData[i].m_transformation);
 				m_debugBoxCollisionChecks.push_back(static_cast<float>(m_debugBoxData[i].m_isCollided));
 
 			}

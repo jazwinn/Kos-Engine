@@ -58,6 +58,7 @@
     <ClCompile Include="Application\Window.cpp" />
     <ClCompile Include="ECS\Hierachy.cpp" />
     <ClCompile Include="Math\Vector3.cpp" />
+    <ClCompile Include="ECS\Layers.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Editor\ImGui Panels\imgui_handler.h" />
@@ -125,7 +126,11 @@
     <ClInclude Include="Application\Helper.h" />
     <ClInclude Include="Application\Window.h" />
     <ClInclude Include="ECS\Hierachy.h" />
+<<<<<<< HEAD
     <ClInclude Include="Math\Vector3.h" />
+=======
+    <ClInclude Include="ECS\Layers.h" />
+>>>>>>> upstream/main
   </ItemGroup>
   <ItemGroup>
     <None Include="Graphics\debugFragmentShader.frag" />

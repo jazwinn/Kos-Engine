@@ -17,6 +17,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 #include <string>
 #include "Component.h"
+#include "../ECS/Layers.h"
 
 
 namespace ecs {
@@ -32,6 +33,8 @@ namespace ecs {
 	public:
 
 		std::string m_entityName;
+
+		layer::LAYERS m_CollideLayer{ layer::DEFAULT };
 
 	};
 
