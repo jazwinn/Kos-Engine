@@ -230,6 +230,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
   <ItemGroup>
     <ClInclude Include="Application\Application.h" />
     <ClInclude Include="Application\Helper.h" />
+    <ClInclude Include="ECS\Component\CameraComponent.h" />
     <ClInclude Include="ECS\Hierachy.h" />
     <ClInclude Include="ECS\Layers.h" />
     <ClInclude Include="Editor\ImGui Panels\imgui_handler.h" />
