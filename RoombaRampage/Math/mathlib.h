@@ -20,7 +20,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #define PI 3.141592653589793238462643383279502884197
 namespace mathlibrary {
 	class mathlib {
-		//all is done in degree
+		//all is done in radian
 		//returns in radian
 		//x is in radian
 		double funcRadianToDegree(double x);
