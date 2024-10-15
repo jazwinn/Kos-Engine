@@ -34,7 +34,7 @@ namespace ecs {
 
 		std::string m_entityName;
 
-		layer::LAYERS m_CollideLayer{ layer::DEFAULT };
+		layer::LAYERS m_Layer{ layer::DEFAULT };
 
 	};
 

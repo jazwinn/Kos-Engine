@@ -23,6 +23,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../ECS/ECS.h"
 #include "../Assets/AssetManager.h"
 #include "../Graphics/GraphicsPipe.h"
+#include "../ECS/Layers.h"
 
 #pragma warning(push)
 #pragma warning(disable : 26495)  // Disable uninitialized variable warning
@@ -61,35 +62,37 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
  
 
-        ImGui::Combo("##ADDCOMPONENT", &ComponentType, ComponentNames, IM_ARRAYSIZE(ComponentNames), IM_ARRAYSIZE(ComponentNames));
-        if (ComponentType == 1) {
-            ecs->m_AddComponent(ecs::TYPEMOVEMENTCOMPONENT, entityID);
-            ComponentType = 0;
+        if (ImGui::Combo("##ADDCOMPONENT", &ComponentType, ComponentNames, IM_ARRAYSIZE(ComponentNames), IM_ARRAYSIZE(ComponentNames))) {
+            if (ComponentType == 1) {
+                ecs->m_AddComponent(ecs::TYPEMOVEMENTCOMPONENT, entityID);
+                ComponentType = 0;
+            }
+            if (ComponentType == 2) {
+                ecs->m_AddComponent(ecs::TYPECOLLIDERCOMPONENT, entityID);
+                ComponentType = 0;
+            }
+            if (ComponentType == 3) {
+                ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, entityID);
+                ComponentType = 0;
+            }
+            if (ComponentType == 4) {
+                ecs->m_AddComponent(ecs::TYPEPLAYERCOMPONENT, entityID);
+                ComponentType = 0;
+            }
+            if (ComponentType == 5) {
+                ecs->m_AddComponent(ecs::TYPERIGIDBODYCOMPONENT, entityID);
+                ComponentType = 0;
+            }
+            if (ComponentType == 6) {
+                ecs->m_AddComponent(ecs::TYPETEXTCOMPONENT, entityID);
+                ComponentType = 0;
+            }
+            if (ComponentType == 7) {
+                ecs->m_AddComponent(ecs::TYPEANIMATIONCOMPONENT, entityID);
+                ComponentType = 0;
+            }
         }
-        if (ComponentType == 2) {
-            ecs->m_AddComponent(ecs::TYPECOLLIDERCOMPONENT, entityID);
-            ComponentType = 0;
-        }
-        if (ComponentType == 3) {
-            ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, entityID);
-            ComponentType = 0;
-        }
-        if (ComponentType == 4) {
-            ecs->m_AddComponent(ecs::TYPEPLAYERCOMPONENT, entityID);
-            ComponentType = 0;
-        }
-        if (ComponentType == 5) {
-            ecs->m_AddComponent(ecs::TYPERIGIDBODYCOMPONENT, entityID);
-            ComponentType = 0;
-        }
-        if (ComponentType == 6) {
-            ecs->m_AddComponent(ecs::TYPETEXTCOMPONENT, entityID);
-            ComponentType = 0;
-        }
-        if (ComponentType == 7) {
-            ecs->m_AddComponent(ecs::TYPEANIMATIONCOMPONENT, entityID);
-            ComponentType = 0;
-        }
+        
 
         const float slider_start_pos_x = 100.0f; //Padding for the slider
 
@@ -112,6 +115,47 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
             ImGui::SameLine(slider_start_pos_x);
             ImGui::SetNextItemWidth(100.0f);
             ImGui::InputText("##NAMETEXT##", &nc->m_entityName);
+
+            //layer selector
+            const char* layers[] = {ecs->m_layersStack.m_layerMap[layer::DEFAULT].first.c_str(), ecs->m_layersStack.m_layerMap[layer::LAYER1].first.c_str(),ecs->m_layersStack.m_layerMap[layer::LAYER2].first.c_str(),
+                                  ecs->m_layersStack.m_layerMap[layer::LAYER3].first.c_str(), ecs->m_layersStack.m_layerMap[layer::LAYER4].first.c_str(), ecs->m_layersStack.m_layerMap[layer::LAYER5].first.c_str(), 
+                                  ecs->m_layersStack.m_layerMap[layer::LAYER6].first.c_str(), ecs->m_layersStack.m_layerMap[layer::LAYER7].first.c_str(), ecs->m_layersStack.m_layerMap[layer::LAYER8].first.c_str()};
+            int layer_current = nc->m_Layer;
+            if (ImGui::Combo("Layers", &layer_current, layers, IM_ARRAYSIZE(layers))) {
+                switch (layer_current) {
+                case 1:
+                    ecs->m_layersStack.m_SwapEntityLayer(layer::DEFAULT, nc->m_Layer, entityID);
+                    break;
+                case 2:
+                    ecs->m_layersStack.m_SwapEntityLayer(layer::LAYER1, nc->m_Layer, entityID);
+                    break;
+                case 3:
+                    ecs->m_layersStack.m_SwapEntityLayer(layer::LAYER2, nc->m_Layer, entityID);
+                    break;
+                case 4:
+                    ecs->m_layersStack.m_SwapEntityLayer(layer::LAYER3, nc->m_Layer, entityID);
+                    break;
+                case 5:
+                    ecs->m_layersStack.m_SwapEntityLayer(layer::LAYER4, nc->m_Layer, entityID);
+                    break;
+                case 6:
+                    ecs->m_layersStack.m_SwapEntityLayer(layer::LAYER5, nc->m_Layer, entityID);
+                    break;
+                case 7:
+                    ecs->m_layersStack.m_SwapEntityLayer(layer::LAYER6, nc->m_Layer, entityID);
+                    break;
+                case 8:
+                    ecs->m_layersStack.m_SwapEntityLayer(layer::LAYER7, nc->m_Layer, entityID);
+                    break;
+                case 9:
+                    ecs->m_layersStack.m_SwapEntityLayer(layer::LAYER8, nc->m_Layer, entityID);
+                    break;
+
+                }
+            }
+
+            
+        
         }
             
         if (EntitySignature.test(ecs::TYPETRANSFORMCOMPONENT))
@@ -127,11 +171,11 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 ImGui::Text("Position");
                 ImGui::SameLine(slider_start_pos_x);
                 ImGui::SetNextItemWidth(100.0f);
-                ImGui::DragFloat("X##", &tc->m_position.m_x, 0.02f, -2.f, 2.f, "%.2f");
+                ImGui::DragFloat("X##", &tc->m_position.m_x, 0.02f, -50.f, 50.f, "%.2f");
 
                 ImGui::SameLine();
                 ImGui::SetNextItemWidth(100.0f);
-                ImGui::DragFloat("Y##PosY", &tc->m_position.m_y, 0.02f, -1.0f, 1.0f, "%.2f");
+                ImGui::DragFloat("Y##PosY", &tc->m_position.m_y, 0.02f, -50.0f, 50.0f, "%.2f");
 
                 //Display Rotation
                 ImGui::AlignTextToFramePadding();
@@ -204,6 +248,10 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
         if (EntitySignature.test(ecs::TYPECOLLIDERCOMPONENT))
         {
             bool open = ImGui::CollapsingHeader("Collider Component");
+            //retrieve collision collider
+            ecs::ColliderComponent* cc = static_cast<ecs::ColliderComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]
+                ->m_GetEntityComponent(entityID));
+
 
             if (ImGui::BeginPopupContextItem()) {
                 if (ImGui::MenuItem("Delete Component")) {
@@ -213,10 +261,6 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
             }
 
             if (open) {
-
-                //retrieve collision collider
-                ecs::ColliderComponent* cc = static_cast<ecs::ColliderComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]
-                    ->m_GetEntityComponent(entityID));
 
                 //Display size
                 ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider

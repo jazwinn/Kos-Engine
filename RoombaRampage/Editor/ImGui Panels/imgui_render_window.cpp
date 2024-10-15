@@ -86,9 +86,9 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
     pipe->m_editorCamera.m_zoom.x = glm::clamp(pipe->m_editorCamera.m_zoom.x, 0.1f, 10.f);
     pipe->m_editorCamera.m_zoom.y = glm::clamp(pipe->m_editorCamera.m_zoom.y, 0.1f, 10.f);
 
-    if (ImGui::IsMouseDragging(ImGuiMouseButton_Left) && ImGui::IsWindowHovered())
+    if (ImGui::IsMouseDragging(ImGuiMouseButton_Right) && ImGui::IsWindowHovered())
     {
-        ImVec2 mouseDelta = ImGui::GetMouseDragDelta(ImGuiMouseButton_Left);
+        ImVec2 mouseDelta = ImGui::GetMouseDragDelta(ImGuiMouseButton_Right);
 
         glm::vec2 delta = glm::vec2(mouseDelta.x, mouseDelta.y) * pipe->m_editorCameraDragSensitivity;
 
@@ -96,7 +96,7 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
         pipe->m_editorCamera.m_coordinates.x -= delta.x;
         pipe->m_editorCamera.m_coordinates.y += delta.y;
      
-        ImGui::ResetMouseDragDelta(ImGuiMouseButton_Left);
+        ImGui::ResetMouseDragDelta(ImGuiMouseButton_Right);
     }
 
     ImGui::End();
