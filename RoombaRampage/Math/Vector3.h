@@ -35,21 +35,21 @@ namespace vector3 {
         };
 
         //constructor
-        Vec3() : m_x(0.0f), m_y(0.0f) , m_z(0.0f){};
-        Vec3(float _x, float _y, float _z) : m_x(_x), m_y(_y), m_z(_z) {};
+        Vec3();
+        Vec3(float _x, float _y, float _z);
 
         Vec3& operator +=(const Vec3& rhs);
         Vec3& operator -=(const Vec3& rhs);
         Vec3& operator *= (float rhs);
         Vec3& operator /= (float rhs);
-        Vec3 operator -() const;
+        Vec3  operator -() const;
         static void m_Vec3Normalize(Vec3& pResult, const Vec3& pVec0);
         static float m_Vec3Length(const Vec3& pVec0);
         static float m_Vec3SquareLength(const Vec3& pVec0);
         static float m_Vec3Distance(const Vec3& pVec0, const Vec3& pVec1);
         static float m_Vec3SquareDistance(const Vec3& pVec0, const Vec3& pVec1);
         static float m_Vec3DotProduct(const Vec3& pVec0, const Vec3& pVec1);
-        static float m_Vec3CrossProduct(const Vec3& pVec0, const Vec3& pVec1);
+        static Vec3 m_Vec3CrossProduct(const Vec3& pVec0, const Vec3& pVec1);
     };
     /******************************************************************/
    /*!
