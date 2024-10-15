@@ -66,6 +66,9 @@ namespace layer {
 
 	bool LayerStack::m_SwapEntityLayer(LAYERS newlayer, LAYERS oldlayer, ecs::EntityID id)
 	{
+		// same layer, do nothing
+		if (newlayer == oldlayer) return true;
+
 		if (m_layerMap.find(newlayer) == m_layerMap.end()) {
 			
 			LOGGING_WARN("Layer does no exist");
@@ -82,7 +85,9 @@ namespace layer {
 		m_layerMap[newlayer].second.push_back(id);
 		m_layerMap[oldlayer].second.erase(std::find(m_layerMap[oldlayer].second.begin(), m_layerMap[oldlayer].second.end(), id));
 
-
+		//assign ecs layer
+		ecs::NameComponent* nc = (ecs::NameComponent*)(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id));
+		nc->m_Layer = newlayer;
 
 		return true;
 	}

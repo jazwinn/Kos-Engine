@@ -201,6 +201,9 @@ namespace ecs{
 
 		ecs->m_EntityCount++;
 
+		//assign entity to default layer
+		ecs->m_layersStack.m_layerMap[layer::DEFAULT].second.push_back(ID);
+
 		return ID;
 	}
 
