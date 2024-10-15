@@ -247,6 +247,21 @@ namespace Serialization {
 					}
 				}
 			}
+			//if (entityData.HasMember("camera") && entityData["camera"].IsObject()) {
+			//	ecs::CameraComponent* cc = static_cast<ecs::CameraComponent*>(ecs->m_AddComponent(ecs::TYPECAMERACOMPONENT, newEntityId));
+
+			//	if (cc) {
+			//		const rapidjson::Value& camera = entityData["camera"];
+			//		if (camera.HasMember("coordinates"))
+			//		{
+			//			//cc->m_coordinates = ["coordinates"].GetFloat();
+			//		}
+			//		if (camera.HasMember("zoom"))
+			//		{
+			//			
+			//		}
+			//	}
+			//}
 		}
 
 		LOGGING_INFO("Load Json Successful");
@@ -393,12 +408,27 @@ namespace Serialization {
 				if (ac) {
 					rapidjson::Value animation(rapidjson::kObjectType);
 
+					animation.AddMember("framesPerSecond", ac->m_framesPerSecond, allocator);
 					animation.AddMember("frameTimer", ac->m_frameTimer, allocator);
 					animation.AddMember("isAnimating", ac->m_isAnimating, allocator);
 					entityData.AddMember("animation", animation, allocator);
 					hasComponents = true;  // Mark as having a component
 				}
 			}
+
+			/*if (entityPair.second.test(ecs::ComponentType::TYPECAMERACOMPONENT))
+			{
+				ecs::CameraComponent* cc = static_cast<ecs::CameraComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPECAMERACOMPONENT]->m_GetEntityComponent(entityId));
+				if (cc)
+				{
+					rapidjson::Value camera(rapidjson::kObjectType);
+					camera.AddMember("coordinates", cc->m_coordinates, allocator);
+					camera.AddMember("zoom", cc->m_zoom, allocator);
+					camera.AddMember("angle", cc->m_angle, allocator);
+					entityData.AddMember("camera", camera, allocator);
+					hasComponents = true;
+				}
+			}*/
 
 			if (hasComponents) {
 				doc.PushBack(entityData, allocator);

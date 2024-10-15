@@ -79,7 +79,7 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
 
  
     float scrollInput = ImGui::GetIO().MouseWheel; // Positive for zoom in, negative for zoom out
-
+     
     pipe->m_editorCamera.m_zoom.x += scrollInput * pipe->m_editorCameraZoomSensitivity;
     pipe->m_editorCamera.m_zoom.y += scrollInput * pipe->m_editorCameraZoomSensitivity;
 
@@ -97,6 +97,15 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
         pipe->m_editorCamera.m_coordinates.y += delta.y;
      
         ImGui::ResetMouseDragDelta(ImGuiMouseButton_Right);
+    }
+
+    //Reset Camera To Center
+    if (ImGui::IsKeyPressed(ImGuiKey_R) && ImGui::IsKeyDown(ImGuiKey_LeftCtrl))
+    {
+        pipe->m_editorCamera.m_coordinates.x = 0.f;
+        pipe->m_editorCamera.m_coordinates.y = 0.f;
+        pipe->m_editorCamera.m_zoom.x = 1.f;
+        pipe->m_editorCamera.m_zoom.y = 1.f;
     }
 
     ImGui::End();

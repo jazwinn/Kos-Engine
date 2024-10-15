@@ -128,15 +128,14 @@ namespace graphicpipe {
 		m_aspectRatio = static_cast<float>(static_cast<float>(m_windowHeight) / static_cast<float>(m_windowWidth));
 
 		//Camera
-		glm::mat3 camera = glm::mat3(1.0f);
 		float left = m_editorCamera.m_coordinates.x - 1.f / m_editorCamera.m_zoom.x;
 		float right = m_editorCamera.m_coordinates.x + 1.f / m_editorCamera.m_zoom.x;
 		float bottom = m_editorCamera.m_coordinates.y - 1.f / m_editorCamera.m_zoom.y;
 		float top = m_editorCamera.m_coordinates.y + 1.f / m_editorCamera.m_zoom.y;
-		camera[0][0] = 2.0f / (right - left);
-		camera[1][1] = 2.0f / (top - bottom);
-		camera[2][0] = -(right + left) / (right - left);
-		camera[2][1] = -(top + bottom) / (top - bottom);
+		m_editorCameraMatrix[0][0] = 2.0f / (right - left);
+		m_editorCameraMatrix[1][1] = 2.0f / (top - bottom);
+		m_editorCameraMatrix[2][0] = -(right + left) / (right - left);
+		m_editorCameraMatrix[2][1] = -(top + bottom) / (top - bottom);
 
 		if (m_modelData.size() > 0)
 		{
@@ -161,7 +160,7 @@ namespace graphicpipe {
 				glm::mat3 lvNDCScale{ m_aspectRatio, 0, 0, 0, 1.f, 0, 0 , 0 ,1.f };
 
 				
-				m_modelToNDCMatrix.push_back(camera * lvNDCScale * m_modelData[n].m_transformation);
+				m_modelToNDCMatrix.push_back(m_editorCameraMatrix * lvNDCScale * m_modelData[n].m_transformation);
 				m_textureOrder.push_back(m_modelData[n].m_textureID);
 				m_stripCounts.push_back(m_imageData[m_modelData[n].m_textureID].m_stripCount);
 				m_frameNumbers.push_back(m_modelData[n].m_frameNumber);
@@ -173,7 +172,7 @@ namespace graphicpipe {
 			for (int i{}; i < m_debugBoxData.size(); i++)
 			{
 				glm::mat3 lvNDCScale{ m_aspectRatio, 0, 0, 0, 1.f, 0, 0 , 0 ,1.f };
-				m_debugToNDCMatrix.push_back(camera * lvNDCScale * m_debugBoxData[i].m_transformation);
+				m_debugToNDCMatrix.push_back(m_editorCameraMatrix * lvNDCScale * m_debugBoxData[i].m_transformation);
 				m_debugBoxCollisionChecks.push_back(static_cast<float>(m_debugBoxData[i].m_isCollided));
 
 			}

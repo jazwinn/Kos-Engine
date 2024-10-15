@@ -222,6 +222,7 @@ namespace graphicpipe {
         };
 
          Camera m_editorCamera{};
+         glm::mat3 m_editorCameraMatrix{};
          float m_editorCameraDragSensitivity{ 0.01f };  ///< Editor Camera Drag Sensitivity
          float m_editorCameraZoomSensitivity{ 0.01f };  ///< Editor Camera Zoom Sensitivity
 
