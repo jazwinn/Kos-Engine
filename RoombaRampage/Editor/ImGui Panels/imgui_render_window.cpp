@@ -34,6 +34,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsigned int windowHeight)
 {
+
     graphicpipe::GraphicsPipe* pipe;
     pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
     ImGui::Begin("Scene Window");
@@ -77,7 +78,8 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
         ImVec2(pos.x + imageSize.x, pos.y + imageSize.y),
         ImVec2(0, 1), ImVec2(1, 0));
 
- 
+    //draw gizmo
+    m_DrawGizmo();
     float scrollInput = ImGui::GetIO().MouseWheel; // Positive for zoom in, negative for zoom out
      
     pipe->m_editorCamera.m_zoom.x += scrollInput * pipe->m_editorCameraZoomSensitivity;
@@ -108,6 +110,12 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
         pipe->m_editorCamera.m_zoom.y = 1.f;
     }
 
+
+
+
+
     ImGui::End();
    
 }
+
+

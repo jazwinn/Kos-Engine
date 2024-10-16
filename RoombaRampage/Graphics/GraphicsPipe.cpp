@@ -136,6 +136,7 @@ namespace graphicpipe {
 		m_editorCameraMatrix[1][1] = 2.0f / (top - bottom);
 		m_editorCameraMatrix[2][0] = -(right + left) / (right - left);
 		m_editorCameraMatrix[2][1] = -(top + bottom) / (top - bottom);
+		m_editorCameraMatrix[2][2] = 1;
 
 		if (m_modelData.size() > 0)
 		{
