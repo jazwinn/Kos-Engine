@@ -73,7 +73,7 @@ namespace gui {
 		m_NewFrame();
 		//for gizmo - todo once camera is done
 		//ImGuizmo::SetOrthographic(true);
-		//ImGuizmo::BeginFrame();
+		ImGuizmo::BeginFrame();
 		//viewport docking
 		ImGui::DockSpaceOverViewport(0, ImGui::GetMainViewport());
 		//create main menu bar
@@ -86,9 +86,10 @@ namespace gui {
 		m_DrawLogsWindow();
 		m_DrawTestWindow();
 		m_DrawInputWindow();
+
+		ImGuiIO& io = ImGui::GetIO();
 		m_DrawRenderScreenWindow(static_cast<unsigned int>(Helper::Helpers::GetInstance()->m_windowWidth), static_cast<unsigned int>(Helper::Helpers::GetInstance()->m_windowHeight));
 		ImGui::Render();
-		ImGuiIO& io = ImGui::GetIO();
 		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
 		{
 			GLFWwindow* backup_current_context = glfwGetCurrentContext();
