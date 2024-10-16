@@ -56,12 +56,12 @@ namespace Application {
 		static int Run();
 		/******************************************************************/
 		/*!
-		\fn        Cleanup()
+		\fn        m_Cleanup()
 		\brief     Calls upon the closing of the application. Calls the cleanup
 				   functions of all the other systems.
 		*/
 		/******************************************************************/
-		static int Cleanup();
+		static int m_Cleanup();
 
 		static AppWindow lvWindow;
 
