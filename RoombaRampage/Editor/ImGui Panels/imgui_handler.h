@@ -198,7 +198,7 @@ namespace gui {
         /******************************************************************/
         void m_DrawRenderScreenWindow(unsigned int windowWidth, unsigned int windowHeight);
 
-        void m_DrawGizmo();
+        void m_DrawGizmo(float renderPosX, float renderPosY, float renderWidth, float renderHeight);
 
         int m_clickedEntityId;
 
