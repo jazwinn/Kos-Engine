@@ -128,6 +128,7 @@ namespace gui {
 
         ecs::ECS* ecs = ecs::ECS::m_GetInstance();
         ecs::TransformComponent* transCom =  static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id));
+        if (transCom == NULL) return false;
 
         ImGuiTreeNodeFlags flag = ((m_clickedEntityId == id) ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnArrow;
         if (transCom->m_childID.size() <= 0) {
