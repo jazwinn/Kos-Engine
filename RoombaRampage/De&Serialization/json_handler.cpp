@@ -416,19 +416,23 @@ namespace Serialization {
 				}
 			}
 
-			/*if (entityPair.second.test(ecs::ComponentType::TYPECAMERACOMPONENT))
+			if (entityPair.second.test(ecs::ComponentType::TYPECAMERACOMPONENT))
 			{
 				ecs::CameraComponent* cc = static_cast<ecs::CameraComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPECAMERACOMPONENT]->m_GetEntityComponent(entityId));
 				if (cc)
 				{
 					rapidjson::Value camera(rapidjson::kObjectType);
-					camera.AddMember("coordinates", cc->m_coordinates, allocator);
-					camera.AddMember("zoom", cc->m_zoom, allocator);
+					camera.AddMember("coordinates", rapidjson::Value().SetObject()
+						.AddMember("x", cc->m_coordinates.m_x, allocator)
+						.AddMember("y", cc->m_coordinates.m_y, allocator), allocator);
+					camera.AddMember("zoom", rapidjson::Value().SetObject()
+						.AddMember("x", cc->m_zoom.m_x, allocator)
+						.AddMember("y", cc->m_zoom.m_y, allocator), allocator);
 					camera.AddMember("angle", cc->m_angle, allocator);
 					entityData.AddMember("camera", camera, allocator);
 					hasComponents = true;
 				}
-			}*/
+			}
 
 			if (hasComponents) {
 				doc.PushBack(entityData, allocator);
