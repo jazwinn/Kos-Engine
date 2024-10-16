@@ -4,10 +4,8 @@
 #include "../ECS/ECS.h"
 #include "../Math/mathlib.h"
 #include "../Application/Helper.h"
+#include "../Math/Mat3x3.h"
 
-
-//for test
-#include <glm.hpp>
 
 namespace gui {
 
@@ -15,6 +13,8 @@ namespace gui {
 
     void ImGuiHandler::m_DrawGizmo(float renderPosX, float renderPosY, float renderWidth, float renderHeight)
     {
+
+
         graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
         ecs::ECS* ecs = ecs::ECS::m_GetInstance();
         Helper::Helpers* help = Helper::Helpers::GetInstance();
@@ -91,6 +91,9 @@ namespace gui {
 
         /**************************************************************************************************/
 
+        //check if any guizmo is clicked
+        if (m_clickedEntityId < 0) return;
+
         const mat3x3::Mat3x3& transformation = transcom->m_transformation;
 
         //colum major!!
@@ -108,13 +111,16 @@ namespace gui {
         //DRAW GIZMO
                 //to render in full screen also
         ImGuizmo::SetRect(renderPosX, renderPosY, renderWidth, renderHeight);
-        if (ImGuizmo::Manipulate(cameraView, projection, mCurrentGizmoOperation, ImGuizmo::WORLD, model, NULL, useSnap? &snap[0] : NULL)) {
+        if (ImGuizmo::Manipulate(cameraView, projection, mCurrentGizmoOperation, ImGuizmo::LOCAL, model, NULL, useSnap ? &snap[0] : NULL)) {
             ImGuizmo::DecomposeMatrixToComponents(model, matrixTranslation, matrixRotation, matrixScale);
             transcom->m_position.m_x = matrixTranslation[0];
             transcom->m_position.m_y = matrixTranslation[1];
             transcom->m_rotation = matrixRotation[2];
             transcom->m_scale.m_x = matrixScale[0];
             transcom->m_scale.m_y = matrixScale[1];
+            transcom->m_transformation = mat3x3::Mat3Transform(transcom->m_position, transcom->m_scale, transcom->m_rotation);
+
+        
         }
 
 	}
