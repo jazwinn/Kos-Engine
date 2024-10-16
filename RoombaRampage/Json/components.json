@@ -3,8 +3,8 @@
         "name": "Player Object",
         "transform": {
             "position": {
-                "x": -0.29666656255722046,
-                "y": -0.0933334156870842
+                "x": 0.0,
+                "y": 0.0
             },
             "rotation": -51.0,
             "scale": {
