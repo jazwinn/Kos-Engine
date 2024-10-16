@@ -11,25 +11,6 @@
 
 namespace gui {
 
-    //void OrthoGraphic(const float l, float r, float b, const float t, float zn, const float zf, float* m16)
-    //{
-    //    m16[0] = 2 / (r - l);
-    //    m16[1] = 0.0f;
-    //    m16[2] = 0.0f;
-    //    m16[3] = 0.0f;
-    //    m16[4] = 0.0f;
-    //    m16[5] = 2 / (t - b);
-    //    m16[6] = 0.0f;
-    //    m16[7] = 0.0f;
-    //    m16[8] = 0.0f;
-    //    m16[9] = 0.0f;
-    //    m16[10] = 1.0f / (zf - zn);
-    //    m16[11] = 0.0f;
-    //    m16[12] = (l + r) / (l - r);
-    //    m16[13] = (t + b) / (b - t);
-    //    m16[14] = zn / (zn - zf);
-    //    m16[15] = 1.0f;
-    //}
 
 
     void ImGuiHandler::m_DrawGizmo(float renderPosX, float renderPosY, float renderWidth, float renderHeight)
@@ -91,24 +72,6 @@ namespace gui {
           0.f, 0.f, 1.f, 0.f,
           0.f, 0.f, 0.f, 1.f };
 
-
-        static float upx{}, upy{}, upz{}, camx{}, camy{}, camz{}, targetx{}, targety{}, targetz{};
-        ImGui::Begin("test");
-        ImGui::DragFloat("testcam X##", &camx, 0.02f, -2.f, 2.f, "%.2f");
-        ImGui::DragFloat("testcam y##", &camy, 0.02f, -2.f, 2.f, "%.2f");
-        ImGui::DragFloat("testcam z##", &camz, 0.02f, -2.f, 2.f, "%.2f");
-
-        ImGui::DragFloat("target X##", &targetx, 0.02f, -2.f, 2.f, "%.2f");
-        ImGui::DragFloat("target y##", &targety, 0.02f, -2.f, 2.f, "%.2f");
-        ImGui::DragFloat("target z##", &targetz, 0.02f, -2.f, 2.f, "%.2f");
-
-        ImGui::DragFloat("testX##", &upx, 0.02f, -2.f, 2.f, "%.2f");
-        ImGui::DragFloat("testy##", &upy, 0.02f, -2.f, 2.f, "%.2f");
-        ImGui::DragFloat("testz##", &upz, 0.02f, -2.f, 2.f, "%.2f");
-
-
-
-        ImGui::End();
 
         // dont ask how just do view transform matrix
         // bellow matrix derived from

@@ -127,7 +127,8 @@ namespace Application {
         /*--------------------------------------------------------------
            INITIALIZE MONO AND ASSEMBLY LOADING
        --------------------------------------------------------------*/
-       // Mono initialization and assembly loading
+        //TODO ecapulate into one big init function
+        // Mono initialization and assembly loading
         if (!monoManager.m_InitMono("C# Mono/ExampleScript.dll")) {
             return -1;
         }
@@ -155,6 +156,8 @@ namespace Application {
         float FPSCapTime = 1.f / help->m_fpsCap;
         double lastFrameTime = glfwGetTime();
 
+        /****************************************************************************************/
+        //SAMPLE TO REMOVE
         // Invoke the HelloWorld method
         monoManager.m_InvokeMethod("ExampleScript", "HelloWorld", nullptr, 0);
 
@@ -163,6 +166,7 @@ namespace Application {
         MonoString* message = mono_string_new(monoManager.m_GetMonoDomain(), "Calling Method 2!");
         void* args[2] = { &number, message };
         monoManager.m_InvokeMethod("ExampleScript", "PrintMessage", args, 2);
+        /****************************************************************************************/
 
         /*--------------------------------------------------------------
             GAME LOOP
