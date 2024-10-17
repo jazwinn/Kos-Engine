@@ -47,7 +47,7 @@ namespace Application {
     Input::InputSystem Input;
     assetmanager::AssetManager* AstManager;
     logging::Logger logs;
-    mono::MonoScriptHandler monoManager;  
+    mono::MonoScriptHandler ScriptManager;  
 
     // Audio Demo timer
     float audioTimer = 3.0f;
@@ -129,19 +129,10 @@ namespace Application {
        --------------------------------------------------------------*/
         //TODO ecapulate into one big init function
         // Mono initialization and assembly loading
-        if (!monoManager.m_InitMono("C# Mono/ExampleScript.dll")) {
+        if (!ScriptManager.m_InitMono("C# Mono/ExampleScript.dll")) {
             return -1;
         }
 
-        // Load the HelloWorld method
-        if (!monoManager.m_LoadMethod("ExampleScript", "HelloWorld", 0)) {
-            return -1; 
-        }
-
-        // Load the HelloWorld method
-        if (!monoManager.m_LoadMethod("ExampleScript", "PrintMessage", 2)) {
-            return -1;
-        }
 
         LOGGING_INFO("Mono initialization and method loading successful.");
 
@@ -159,13 +150,13 @@ namespace Application {
         /****************************************************************************************/
         //SAMPLE TO REMOVE
         // Invoke the HelloWorld method
-        monoManager.m_InvokeMethod("ExampleScript", "HelloWorld", nullptr, 0);
+        ScriptManager.m_InvokeMethod("ExampleScript", "HelloWorld", nullptr, 0);
 
         // Invoke the PrintMessage
         int number = 42;
-        MonoString* message = mono_string_new(monoManager.m_GetMonoDomain(), "Calling Method 2!");
+        MonoString* message = mono_string_new(ScriptManager.m_GetMonoDomain(), "Calling Method 2!");
         void* args[2] = { &number, message };
-        monoManager.m_InvokeMethod("ExampleScript", "PrintMessage", args, 2);
+        ScriptManager.m_InvokeMethod("ExampleScript", "PrintMessage", args, 2);
         /****************************************************************************************/
 
         /*--------------------------------------------------------------
