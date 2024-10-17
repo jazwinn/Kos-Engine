@@ -34,6 +34,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsigned int windowHeight)
 {
+
     graphicpipe::GraphicsPipe* pipe;
     pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
     ImGui::Begin("Scene Window");
@@ -77,9 +78,11 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
         ImVec2(pos.x + imageSize.x, pos.y + imageSize.y),
         ImVec2(0, 1), ImVec2(1, 0));
 
- 
-    float scrollInput = ImGui::GetIO().MouseWheel; // Positive for zoom in, negative for zoom out
+    //draw gizmo
+    m_DrawGizmo(pos.x, pos.y, imageSize.x, imageSize.y);
 
+    float scrollInput = ImGui::GetIO().MouseWheel; // Positive for zoom in, negative for zoom out
+     
     pipe->m_editorCamera.m_zoom.x += scrollInput * pipe->m_editorCameraZoomSensitivity;
     pipe->m_editorCamera.m_zoom.y += scrollInput * pipe->m_editorCameraZoomSensitivity;
 
@@ -99,6 +102,24 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
         ImGui::ResetMouseDragDelta(ImGuiMouseButton_Right);
     }
 
+    //Reset Camera To Center
+    if (ImGui::IsKeyDown(ImGuiKey_LeftCtrl))
+    {
+        if (ImGui::IsKeyPressed(ImGuiKey_R)) {
+            pipe->m_editorCamera.m_coordinates.x = 0.f;
+            pipe->m_editorCamera.m_coordinates.y = 0.f;
+            pipe->m_editorCamera.m_zoom.x = 1.f;
+            pipe->m_editorCamera.m_zoom.y = 1.f;
+        }
+
+    }
+
+
+
+
+
     ImGui::End();
    
 }
+
+
