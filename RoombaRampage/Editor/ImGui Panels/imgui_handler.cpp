@@ -44,7 +44,6 @@ namespace gui {
 		// Setup Dear ImGui context
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
-		ImPlot::CreateContext();
 		ImGuiIO& io = ImGui::GetIO(); (void)io;
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;  // Enable Gamepad Controls
@@ -80,15 +79,24 @@ namespace gui {
 		m_DrawMainMenuBar();
 
 		Helper::Helpers* help = Helper::Helpers::GetInstance();
-		m_DrawPerformanceWindow(help->m_fps);
-		m_DrawHierachyWindow();
-		m_DrawComponentWindow();
-		m_DrawLogsWindow();
-		m_DrawTestWindow();
-		m_DrawInputWindow();
+
+		ImVec2 windowSize = ImGui::GetIO().DisplaySize;
+		// only render when window is not minimize
+		if (windowSize.x > 0 && windowSize.y > 0) {
+			m_DrawPerformanceWindow(help->m_fps);
+			m_DrawHierachyWindow();
+			m_DrawComponentWindow();
+			m_DrawLogsWindow();
+			m_DrawTestWindow();
+			m_DrawInputWindow();
+			m_DrawRenderScreenWindow(static_cast<unsigned int>(Helper::Helpers::GetInstance()->m_windowWidth), static_cast<unsigned int>(Helper::Helpers::GetInstance()->m_windowHeight));
+			
+			
+		}
+
 
 		ImGuiIO& io = ImGui::GetIO();
-		m_DrawRenderScreenWindow(static_cast<unsigned int>(Helper::Helpers::GetInstance()->m_windowWidth), static_cast<unsigned int>(Helper::Helpers::GetInstance()->m_windowHeight));
+		
 		ImGui::Render();
 		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
 		{
@@ -108,7 +116,6 @@ namespace gui {
 		// Shutdown ImGui
 		ImGui_ImplOpenGL3_Shutdown();
 		ImGui_ImplGlfw_Shutdown();
-		ImPlot::DestroyContext();
 		ImGui::DestroyContext();
 	}
 

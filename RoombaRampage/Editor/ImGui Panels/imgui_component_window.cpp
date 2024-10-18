@@ -123,31 +123,31 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
             int layer_current = nc->m_Layer;
             if (ImGui::Combo("Layers", &layer_current, layers, IM_ARRAYSIZE(layers))) {
                 switch (layer_current) {
-                case 1:
+                case 0:
                     ecs->m_layersStack.m_SwapEntityLayer(layer::DEFAULT, nc->m_Layer, entityID);
                     break;
-                case 2:
+                case 1:
                     ecs->m_layersStack.m_SwapEntityLayer(layer::LAYER1, nc->m_Layer, entityID);
                     break;
-                case 3:
+                case 2:
                     ecs->m_layersStack.m_SwapEntityLayer(layer::LAYER2, nc->m_Layer, entityID);
                     break;
-                case 4:
+                case 3:
                     ecs->m_layersStack.m_SwapEntityLayer(layer::LAYER3, nc->m_Layer, entityID);
                     break;
-                case 5:
+                case 4:
                     ecs->m_layersStack.m_SwapEntityLayer(layer::LAYER4, nc->m_Layer, entityID);
                     break;
-                case 6:
+                case 5:
                     ecs->m_layersStack.m_SwapEntityLayer(layer::LAYER5, nc->m_Layer, entityID);
                     break;
-                case 7:
+                case 6:
                     ecs->m_layersStack.m_SwapEntityLayer(layer::LAYER6, nc->m_Layer, entityID);
                     break;
-                case 8:
+                case 7:
                     ecs->m_layersStack.m_SwapEntityLayer(layer::LAYER7, nc->m_Layer, entityID);
                     break;
-                case 9:
+                case 8:
                     ecs->m_layersStack.m_SwapEntityLayer(layer::LAYER8, nc->m_Layer, entityID);
                     break;
 

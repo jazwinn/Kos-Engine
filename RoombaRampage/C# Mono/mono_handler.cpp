@@ -33,6 +33,17 @@ namespace mono {
             std::cout << "Failed to load Mono image from the assembly." << std::endl;
             return false;
         }
+
+        //Load the method here
+        if (!m_LoadMethod("ExampleScript", "HelloWorld", 0)) {
+            std::cout << "Failed to load HelloWorld method." << std::endl;
+            return false;
+        }
+
+        if (!m_LoadMethod("ExampleScript", "PrintMessage", 2)) {
+            std::cout << "Failed to load PrintMessage method." << std::endl;
+            return false;
+        }
         return true;
     }
 
@@ -75,6 +86,8 @@ namespace mono {
             std::cout << "Method invoked successfully." << std::endl;
         }
     }
+
+
 
     void MonoScriptHandler::m_Cleanup() {
         if (m_monoDomain) {
