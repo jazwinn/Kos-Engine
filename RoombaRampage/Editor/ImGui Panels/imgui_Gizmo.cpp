@@ -40,7 +40,7 @@ namespace gui {
         if (ImGui::IsKeyDown(ImGuiKey_LeftCtrl))
         {
             if (ImGui::IsKeyPressed(ImGuiKey_Q)) {
-                useSnap = true;
+                useSnap = useSnap?false:true;
             }
 
         }
