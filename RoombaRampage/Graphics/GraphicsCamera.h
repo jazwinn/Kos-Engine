@@ -14,33 +14,28 @@ namespace graphicpipe
         static int m_windowHeight;                       ///< The current window height.
         static float m_aspectRatio;                      ///< Aspect ratio of the window.
 
-        static bool m_editorMode;
         /**
          * @struct Camera
          * @brief Represents the camera's position and orientation.
          */
-        struct Camera                  ///< ONLY MEANT FOR LEVEL EDITOR CAMERA
+        struct OrthoCamera                
         {
-            glm::vec2 m_coordinates;   ///< Coordinates of the camera.
-            glm::vec2 m_zoom;          ///< Zoom of the a=canera
-            float m_angle;             ///< Rotation angle of the camera.
+            glm::vec2 m_coordinates; 
+            glm::vec2 m_zoom;         
+            float m_angle;            
         };
-
-        static Camera m_editorCamera;
-        static glm::mat3 m_editorCameraMatrix;
-        static float m_editorCameraDragSensitivity;  ///< Editor Camera Drag Sensitivity
-        static float m_editorCameraZoomSensitivity;  ///< Editor Camera Zoom Sensitivity
 
         static void calculateAspectRatio();
         static void multiplyActiveCameraMatrix();
-        static void setActiveCamera(unsigned int index);
-        static void setLevelEditorCamera();
-        static void calculateLevelEditorCamera();
+        static void calculateCurrCamera();
+        static void setCurrCamera(unsigned int index);
 
         static GraphicsCamera* m_funcGetInstance();
 
         static glm::mat3 m_currCameraMatrix;                ///< Current camera matrix
-        static std::vector<glm::mat3> cameraMatrices;         ///< Container for camera components matrices
+
+        static OrthoCamera m_currCamera;
+        static std::vector<OrthoCamera> m_cameras;
 
     private:
         static std::unique_ptr<GraphicsCamera> m_instancePtr;

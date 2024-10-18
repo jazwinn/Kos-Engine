@@ -32,6 +32,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 #include "../Graphics/GraphicsPipe.h"
 #include "../Graphics/GraphicsCamera.h"
+#include "../Editor/EditorCamera.h"
 
 
 
@@ -39,7 +40,7 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
 {
 
     graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
-    //graphicpipe::GraphicsCamera* cam = graphicpipe::GraphicsCamera::m_funcGetInstance();
+    //EditorCamera* cam = EditorCamera::m_funcGetInstance();
     
     ImGui::Begin("Scene Window");
 
@@ -86,21 +87,21 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
 
     float scrollInput = ImGui::GetIO().MouseWheel; // Positive for zoom in, negative for zoom out
      
-    graphicpipe::GraphicsCamera::m_editorCamera.m_zoom.x += scrollInput * graphicpipe::GraphicsCamera::m_editorCameraZoomSensitivity;
-    graphicpipe::GraphicsCamera::m_editorCamera.m_zoom.y += scrollInput * graphicpipe::GraphicsCamera::m_editorCameraZoomSensitivity;
+    EditorCamera::m_editorCamera.m_zoom.x += scrollInput * EditorCamera::m_editorCameraZoomSensitivity;
+    EditorCamera::m_editorCamera.m_zoom.y += scrollInput * EditorCamera::m_editorCameraZoomSensitivity;
 
-    graphicpipe::GraphicsCamera::m_editorCamera.m_zoom.x = glm::clamp(graphicpipe::GraphicsCamera::m_editorCamera.m_zoom.x, 0.1f, 10.f);
-    graphicpipe::GraphicsCamera::m_editorCamera.m_zoom.y = glm::clamp(graphicpipe::GraphicsCamera::m_editorCamera.m_zoom.y, 0.1f, 10.f);
+    EditorCamera::m_editorCamera.m_zoom.x = glm::clamp(EditorCamera::m_editorCamera.m_zoom.x, 0.1f, 10.f);
+    EditorCamera::m_editorCamera.m_zoom.y = glm::clamp(EditorCamera::m_editorCamera.m_zoom.y, 0.1f, 10.f);
 
     if (ImGui::IsMouseDragging(ImGuiMouseButton_Right) && ImGui::IsWindowHovered())
     {
         ImVec2 mouseDelta = ImGui::GetMouseDragDelta(ImGuiMouseButton_Right);
 
-        glm::vec2 delta = glm::vec2(mouseDelta.x, mouseDelta.y) * graphicpipe::GraphicsCamera::m_editorCameraDragSensitivity;
+        glm::vec2 delta = glm::vec2(mouseDelta.x, mouseDelta.y) * EditorCamera::m_editorCameraDragSensitivity;
 
         // Update the camera position
-        graphicpipe::GraphicsCamera::m_editorCamera.m_coordinates.x -= delta.x;
-        graphicpipe::GraphicsCamera::m_editorCamera.m_coordinates.y += delta.y;
+        EditorCamera::m_editorCamera.m_coordinates.x -= delta.x;
+        EditorCamera::m_editorCamera.m_coordinates.y += delta.y;
      
         ImGui::ResetMouseDragDelta(ImGuiMouseButton_Right);
     }
@@ -108,14 +109,18 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
     //Reset Camera To Center
     if (ImGui::IsKeyDown(ImGuiKey_LeftCtrl))
     {
-        graphicpipe::GraphicsCamera::m_editorCamera.m_coordinates.x = 0.f;
-        graphicpipe::GraphicsCamera::m_editorCamera.m_coordinates.y = 0.f;
-        graphicpipe::GraphicsCamera::m_editorCamera.m_zoom.x = 1.f;
-        graphicpipe::GraphicsCamera::m_editorCamera.m_zoom.y = 1.f;
+        EditorCamera::m_editorCamera.m_coordinates.x = 0.f;
+        EditorCamera::m_editorCamera.m_coordinates.y = 0.f;
+        EditorCamera::m_editorCamera.m_zoom.x = 1.f;
+        EditorCamera::m_editorCamera.m_zoom.y = 1.f;
     }
 
+    EditorCamera::calculateLevelEditorCamera();
+    graphicpipe::GraphicsCamera::m_currCameraMatrix = EditorCamera::m_editorCameraMatrix;
     //draw gizmo
     m_DrawGizmo(pos.x, pos.y, imageSize.x, imageSize.y);
+
+  
 
 
     ImGui::End();

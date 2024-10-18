@@ -44,9 +44,6 @@ namespace graphicpipe {
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glLineWidth(4.f);
 
-		GraphicsCamera::m_editorCamera.m_coordinates = { 0.f,0.f };
-		GraphicsCamera::m_editorCamera.m_zoom = { 1.f, 1.f };
-
 		m_squareMesh.m_shapeType = SQUARE;
 		m_squareLinesMesh.m_shapeType = SQUARE_LINES;
 		m_testMatrix = { 1, 0, 0, 0, 1, 0, 0, 0, 1 };
@@ -123,27 +120,21 @@ namespace graphicpipe {
 		m_funcCalculateModelToWorldMatrix();
 		GraphicsCamera::calculateAspectRatio();
 		
-		if (GraphicsCamera::m_editorMode)
+		if (GraphicsCamera::m_cameras.size() > 0)
 		{
-			GraphicsCamera::setLevelEditorCamera();
-			GraphicsCamera::calculateLevelEditorCamera();
-			GraphicsCamera::multiplyActiveCameraMatrix();
+			GraphicsCamera::setCurrCamera(0);
+		}
+		GraphicsCamera::multiplyActiveCameraMatrix();
+
+		if (!m_gameMode)
+		{
 			m_funcDrawWindow();
 		}
-		else
-		{
-			if (GraphicsCamera::cameraMatrices.size() > 0)
-			{
-				GraphicsCamera::setActiveCamera(0);
-			}
-			
-		}
-		
 	}
 
 	void GraphicsPipe::m_funcRenderGameScene()
 	{
-		if (!GraphicsCamera::m_editorMode)
+		if (m_gameMode)
 		{
 			m_funcDraw();
 			m_funcDrawText();

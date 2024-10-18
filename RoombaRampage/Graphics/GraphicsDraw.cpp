@@ -1,6 +1,7 @@
 #include "../Graphics/GraphicsPipe.h"
 #include "../Graphics/GraphicsCamera.h"
 
+
 namespace graphicpipe
 {
 	void GraphicsPipe::m_funcDraw()
