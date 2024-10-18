@@ -8,7 +8,9 @@ namespace ecs {
 		TYPECONTROLSYSTEM,
 		TYPETRANSFORMSYSTEM,
 		TYPECOLLISIONSYSTEM,
+		//phsyic system goes here
 		TYPECOLLISIONRESPONSESYSTEM,
+		TYPELOGICSYSTEM,
 
 		//render system called the last
 		TYPEANIMATIONSYSTEM,

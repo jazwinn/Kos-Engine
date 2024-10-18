@@ -11,6 +11,7 @@
 #include "../ECS/System/RenderTextSystem.h"
 #include "../ECS/System/AnimationSystem.h"
 #include "../ECS/System/TransformSystem.h"
+#include "../ECS/System/LogicSystem.h"
 
 #endif SYSLIST_H
 
