@@ -19,6 +19,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 /******************************************************************/
 
 #include "../Graphics/GraphicsPipe.h"
+#include "../Graphics/GraphicsCamera.h"
 #include "../Assets/AssetManager.h"
 #include "../Application/Application.h"
 #include "../Application/Helper.h"
@@ -43,8 +44,8 @@ namespace graphicpipe {
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glLineWidth(4.f);
 
-		m_editorCamera.m_coordinates = { 0.f,0.f };
-		m_editorCamera.m_zoom = { 1.f, 1.f };
+		GraphicsCamera::m_editorCamera.m_coordinates = { 0.f,0.f };
+		GraphicsCamera::m_editorCamera.m_zoom = { 1.f, 1.f };
 
 		m_squareMesh.m_shapeType = SQUARE;
 		m_squareLinesMesh.m_shapeType = SQUARE_LINES;
@@ -80,10 +81,6 @@ namespace graphicpipe {
 		m_stripCounts.push_back(0);
 		m_debugToNDCMatrix.push_back(m_testMatrix);
 		m_debugBoxCollisionChecks.push_back(false);
-
-		m_windowWidth = static_cast<int>(Helper::Helpers::GetInstance()->m_windowWidth);
-		m_windowHeight = static_cast<int>(Helper::Helpers::GetInstance()->m_windowHeight);
-		m_aspectRatio = static_cast<float>(static_cast<float>(m_windowHeight) / static_cast<float>(m_windowWidth));
 
 		// Set up array buffer and framebuffers for offscreen rendering.
 		m_funcSetupArrayBuffer();
@@ -123,62 +120,34 @@ namespace graphicpipe {
 
 	void GraphicsPipe::m_funcUpdate()
 	{
-		m_windowWidth = static_cast<int>(Helper::Helpers::GetInstance()->m_windowWidth);
-		m_windowHeight = static_cast<int>(Helper::Helpers::GetInstance()->m_windowHeight);
-		m_aspectRatio = static_cast<float>(static_cast<float>(m_windowHeight) / static_cast<float>(m_windowWidth));
-
-		//Camera
-		float left = m_editorCamera.m_coordinates.x - 1.f / m_editorCamera.m_zoom.x;
-		float right = m_editorCamera.m_coordinates.x + 1.f / m_editorCamera.m_zoom.x;
-		float bottom = m_editorCamera.m_coordinates.y - 1.f / m_editorCamera.m_zoom.y;
-		float top = m_editorCamera.m_coordinates.y + 1.f / m_editorCamera.m_zoom.y;
-		m_editorCameraMatrix[0][0] = 2.0f / (right - left);
-		m_editorCameraMatrix[1][1] = 2.0f / (top - bottom);
-		m_editorCameraMatrix[2][0] = -(right + left) / (right - left);
-		m_editorCameraMatrix[2][1] = -(top + bottom) / (top - bottom);
-		m_editorCameraMatrix[2][2] = 1;
-
-		if (m_modelData.size() > 0)
+		m_funcCalculateModelToWorldMatrix();
+		GraphicsCamera::calculateAspectRatio();
+		
+		if (GraphicsCamera::m_editorMode)
 		{
-			for (int n{}; n < m_modelData.size(); n++)
-			{
-				float heightRatio = static_cast<float>(m_imageData[m_modelData[n].m_textureID].m_height) / m_unitHeight;
-				float widthRatio = static_cast<float>(m_imageData[m_modelData[n].m_textureID].m_width) / m_unitWidth;
-
-				float imageAspectRatio = static_cast<float>(m_imageData[m_modelData[n].m_textureID].m_width) / static_cast<float>(m_imageData[m_modelData[n].m_textureID].m_height);
-
-				m_modelData[n].m_transformation[0][0] = m_modelData[n].m_transformation[0][0] * widthRatio / imageAspectRatio;
-				m_modelData[n].m_transformation[0][1] = m_modelData[n].m_transformation[0][1] * widthRatio / imageAspectRatio;
-				m_modelData[n].m_transformation[1][1] = m_modelData[n].m_transformation[1][1] * heightRatio;
-				m_modelData[n].m_transformation[1][0] = m_modelData[n].m_transformation[1][0] * heightRatio;
-
-				/*glm::mat3 lvScale{ m_modelData[n].m_scale.x * widthRatio / imageAspectRatio, 0, 0, 0, m_modelData[n].m_scale.y * heightRatio , 0, 0 , 0 ,1 };
-				glm::mat3 lvRotate{ cos(m_modelData[n].m_rotate * 3.1415f / 180.f), -sin(m_modelData[n].m_rotate * 3.1415f / 180.f), 0.f,
-								   sin(m_modelData[n].m_rotate * 3.1415f / 180.f), cos(m_modelData[n].m_rotate * 3.1415f / 180.f), 0.f,
-									0.f , 0.f ,1.f };
-				glm::mat3 lvTranslate{ 1, 0, 0, 0, 1, 0, m_modelData[n].m_worldCoordinates.x , m_modelData[n].m_worldCoordinates.y ,1 };*/
-
-				glm::mat3 lvNDCScale{ m_aspectRatio, 0, 0, 0, 1.f, 0, 0 , 0 ,1.f };
-
-				
-				m_modelToNDCMatrix.push_back(m_editorCameraMatrix * lvNDCScale * m_modelData[n].m_transformation);
-				m_textureOrder.push_back(m_modelData[n].m_textureID);
-				m_stripCounts.push_back(m_imageData[m_modelData[n].m_textureID].m_stripCount);
-				m_frameNumbers.push_back(m_modelData[n].m_frameNumber);
-			}
+			GraphicsCamera::setLevelEditorCamera();
+			GraphicsCamera::calculateLevelEditorCamera();
+			GraphicsCamera::multiplyActiveCameraMatrix();
+			m_funcDrawWindow();
 		}
-
-		if (m_debugBoxData.size() > 0)
+		else
 		{
-			for (int i{}; i < m_debugBoxData.size(); i++)
+			if (GraphicsCamera::cameraMatrices.size() > 0)
 			{
-				glm::mat3 lvNDCScale{ m_aspectRatio, 0, 0, 0, 1.f, 0, 0 , 0 ,1.f };
-				m_debugToNDCMatrix.push_back(m_editorCameraMatrix * lvNDCScale * m_debugBoxData[i].m_transformation);
-				m_debugBoxCollisionChecks.push_back(static_cast<float>(m_debugBoxData[i].m_isCollided));
-
+				GraphicsCamera::setActiveCamera(0);
 			}
+			
 		}
+		
+	}
 
+	void GraphicsPipe::m_funcRenderGameScene()
+	{
+		if (!GraphicsCamera::m_editorMode)
+		{
+			m_funcDraw();
+			m_funcDrawText();
+		}
 	}
 
 }

@@ -422,13 +422,13 @@ namespace Serialization {
 				if (cc)
 				{
 					rapidjson::Value camera(rapidjson::kObjectType);
-					camera.AddMember("coordinates", rapidjson::Value().SetObject()
-						.AddMember("x", cc->m_coordinates.m_x, allocator)
-						.AddMember("y", cc->m_coordinates.m_y, allocator), allocator);
-					camera.AddMember("zoom", rapidjson::Value().SetObject()
-						.AddMember("x", cc->m_zoom.m_x, allocator)
-						.AddMember("y", cc->m_zoom.m_y, allocator), allocator);
-					camera.AddMember("angle", cc->m_angle, allocator);
+					camera.AddMember("planes", rapidjson::Value().SetObject()
+						.AddMember("left", cc->m_left, allocator)
+						.AddMember("right", cc->m_right, allocator)
+						.AddMember("top", cc->m_top, allocator)
+						.AddMember("bottom", cc->m_bottom, allocator), allocator);
+					camera.AddMember("aspectRatio", cc->m_aspectRatio, allocator);
+				
 					entityData.AddMember("camera", camera, allocator);
 					hasComponents = true;
 				}

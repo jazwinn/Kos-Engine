@@ -217,7 +217,9 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClCompile Include="Events\Listeners.cpp" />
     <ClCompile Include="Events\MessageSystem.cpp" />
     <ClCompile Include="Graphics\GraphicsBuffers.cpp" />
+    <ClCompile Include="Graphics\GraphicsCamera.cpp" />
     <ClCompile Include="Graphics\GraphicsDraw.cpp" />
+    <ClCompile Include="Graphics\GraphicsMatrix.cpp" />
     <ClCompile Include="Graphics\GraphicsPipe.cpp" />
     <ClCompile Include="Graphics\GraphicsShader.cpp" />
     <ClCompile Include="Graphics\GraphicsVAO.cpp" />
@@ -289,6 +291,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="Events\BaseMessage.h" />
     <ClInclude Include="Events\Listeners.h" />
     <ClInclude Include="Events\MessageSystem.h" />
+    <ClInclude Include="Graphics\GraphicsCamera.h" />
     <ClInclude Include="Graphics\GraphicsPipe.h" />
     <ClInclude Include="Inputs\Input.h" />
     <ClInclude Include="Math\Mat2x2.h" />
