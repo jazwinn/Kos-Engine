@@ -5,6 +5,7 @@
 #include "../Math/mathlib.h"
 #include "../Application/Helper.h"
 #include "../Math/Mat3x3.h"
+#include "../ECS/Hierachy.h"
 
 
 namespace gui {
@@ -104,21 +105,60 @@ namespace gui {
           transformation.m_e20, transformation.m_e21, 0.f, transformation.m_e22
         };
 
-        float matrixTranslation[3];
-        float matrixRotation[3];
-        float matrixScale[3];
+        float matrixTranslation[3] = { transcom->m_position.m_x, transcom->m_position.m_y, 0 };
+        float matrixRotation[3] = {0,0, transcom->m_rotation };
+        float matrixScale[3] = { transcom->m_scale.m_x, transcom->m_scale.m_y, 0};
+
+        //ImGuizmo::RecomposeMatrixFromComponents(matrixTranslation, matrixRotation, matrixScale, model);
+
 
         //DRAW GIZMO
                 //to render in full screen also
         ImGuizmo::SetRect(renderPosX, renderPosY, renderWidth, renderHeight);
-        if (ImGuizmo::Manipulate(cameraView, projection, mCurrentGizmoOperation, ImGuizmo::LOCAL, model, NULL, useSnap ? &snap[0] : NULL)) {
-            ImGuizmo::DecomposeMatrixToComponents(model, matrixTranslation, matrixRotation, matrixScale);
+        //TODO be able to swap between WORLD and LOCAL
+        if (ImGuizmo::Manipulate(cameraView, projection, mCurrentGizmoOperation, ImGuizmo::WORLD, model, NULL, useSnap ? &snap[0] : NULL)) {
+
+
+
+
+           
+            if (ecs::Hierachy::m_GetParent(m_clickedEntityId).has_value()) {
+                ecs::EntityID parentId = ecs::Hierachy::m_GetParent(m_clickedEntityId).value();
+                mat3x3::Mat3x3 worldtransformation =
+                { model[0], model[1], model[3],
+                  model[4], model[5], model[7],
+                  model[12], model[13], model[15]
+                };
+
+                mat3x3::Mat3x3 parenttransformation = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(parentId))->m_transformation;
+                mat3x3::Mat3x3 inverseparent;
+                mat3x3::Mat3Inverse( parenttransformation, inverseparent);
+
+                mat3x3::Mat3x3 childtransformation = inverseparent * worldtransformation;
+
+                float childmodel[16] =
+                { childtransformation.m_e00, childtransformation.m_e01, 0.f, childtransformation.m_e02,
+                  childtransformation.m_e10, childtransformation.m_e11, 0.f, childtransformation.m_e12,
+                  0.f, 0.f, 1.f, 0.f,//z axis
+                  childtransformation.m_e20, childtransformation.m_e21, 0.f, childtransformation.m_e22
+                };
+
+                ImGuizmo::DecomposeMatrixToComponents(childmodel, matrixTranslation, matrixRotation, matrixScale);
+
+            }
+            else {
+                ImGuizmo::DecomposeMatrixToComponents(model, matrixTranslation, matrixRotation, matrixScale);
+            }
+
+
+
+            
             transcom->m_position.m_x = matrixTranslation[0];
             transcom->m_position.m_y = matrixTranslation[1];
             transcom->m_rotation = matrixRotation[2];
             transcom->m_scale.m_x = matrixScale[0];
             transcom->m_scale.m_y = matrixScale[1];
-            transcom->m_transformation = mat3x3::Mat3Transform(transcom->m_position, transcom->m_scale, transcom->m_rotation);
+            //transcom->m_transformation = mat3x3::Mat3Transform(transcom->m_position, transcom->m_scale, transcom->m_rotation);
 
         
         }
