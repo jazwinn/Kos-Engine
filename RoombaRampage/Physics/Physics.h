@@ -29,6 +29,8 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include <memory>
 #include <new>
 #include "../Debugging/Logging.h"
+#include <map>
+#include "PhysicsLayer.h"
 
 
 
@@ -166,6 +168,7 @@ namespace physicspipe {
 		
 		static std::vector<std::shared_ptr<PhysicsData>> m_physicsEntities;
 		static std::vector<std::shared_ptr<PhysicsData>> m_collidedEntities;
+		static std::map<layer::LAYERS, std::vector<std::shared_ptr<PhysicsData>>> m_layerToEntities;
 		/******************************************************************/
 		/*!
 		\fn        void Physics::m_CalculateBoundingBox()
@@ -188,7 +191,7 @@ namespace physicspipe {
 		\param[in] ID           Unique ID of the rectangle entity.
 		*/
 		/******************************************************************/
-		void m_SendPhysicsData(float rect_height, float rect_width, vector2::Vec2 position, vector2::Vec2 scale, vector2::Vec2 velocity, int ID);
+		void m_SendPhysicsData(float rect_height, float rect_width, vector2::Vec2 position, vector2::Vec2 scale, vector2::Vec2 velocity, int ID, layer::LAYERS layerID);
 		/******************************************************************/
 		/*!
 		\fn        void Physics::m_SendPhysicsData(float radius, vector2::Vec2 position, vector2::Vec2 scale, vector2::Vec2 velocity, int ID)
@@ -200,7 +203,7 @@ namespace physicspipe {
 		\param[in] ID        Unique ID of the circle entity.
 		*/
 		/******************************************************************/
-		void m_SendPhysicsData(float radius, vector2::Vec2 position, vector2::Vec2 scale, vector2::Vec2 velocity, int ID);
+		void m_SendPhysicsData(float radius, vector2::Vec2 position, vector2::Vec2 scale, vector2::Vec2 velocity, int ID, layer::LAYERS layerID);
 		void m_CollisionCheck(float);
 		/******************************************************************/
 		/*!
@@ -262,6 +265,13 @@ namespace physicspipe {
 		/******************************************************************/
 
 		bool m_static_CollisionCheck(const AABB, const AABB);
+
+
+		void m_Init();
+		void m_Update();
+
+		void m_CollisionCheckUpdate(float dt);
+		bool CheckCollision(const std::shared_ptr<PhysicsData>& entity1, const std::shared_ptr<PhysicsData>& entity2, float dt);
 	};
 }
 #endif

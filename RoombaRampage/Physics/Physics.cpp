@@ -23,7 +23,8 @@ namespace physicspipe {
 
 	std::vector<std::shared_ptr<PhysicsData>> Physics::m_physicsEntities;
 	std::vector<std::shared_ptr<PhysicsData>> Physics::m_collidedEntities;
-
+	std::map<layer::LAYERS, std::vector<std::shared_ptr<PhysicsData>>> Physics::m_layerToEntities;
+	physicslayer::PhysicsLayer physicsLayer;
 
 	Circle::Circle(float radius, vector2::Vec2 shape_position, vector2::Vec2 shape_scale, vector2::Vec2 shape_velocity, int entity_ID)
 		: m_radius(radius)   // Initialize radius
@@ -60,12 +61,16 @@ namespace physicspipe {
 		return 1;
 	}
 
-	void Physics::m_SendPhysicsData(float rect_height, float rect_width, vector2::Vec2 position, vector2::Vec2 scale, vector2::Vec2 velocity, int ID) {
+
+
+	void Physics::m_SendPhysicsData(float rect_height, float rect_width, vector2::Vec2 position, vector2::Vec2 scale, vector2::Vec2 velocity, int ID, layer::LAYERS layerID) {
 		m_physicsEntities.push_back(std::make_shared<Rectangle>(rect_height, rect_width, position, scale, velocity, ID));
+		m_layerToEntities[layerID].push_back(std::make_shared<Rectangle>(rect_height, rect_width, position, scale, velocity, ID));
 	}
 
-	void Physics::m_SendPhysicsData(float radius, vector2::Vec2 position, vector2::Vec2 scale, vector2::Vec2 velocity, int ID){
+	void Physics::m_SendPhysicsData(float radius, vector2::Vec2 position, vector2::Vec2 scale, vector2::Vec2 velocity, int ID, layer::LAYERS layerID) {
 		m_physicsEntities.push_back(std::make_shared<Circle>(radius, position, scale, velocity, ID));
+		m_layerToEntities[layerID].push_back(std::make_shared<Circle>(radius, position, scale, velocity, ID));
 	}
 
 	void Physics::m_CollisionCheck(float dt) {
@@ -117,7 +122,7 @@ namespace physicspipe {
 					/*************************************
 						CHECK CIRCLE V CIRCLE
 					*************************************/
-					else if(m_physicsEntities[i]->GetEntity() == EntityType::CIRCLE && m_physicsEntities[j]->GetEntity() == EntityType::CIRCLE) {
+					else if (m_physicsEntities[i]->GetEntity() == EntityType::CIRCLE && m_physicsEntities[j]->GetEntity() == EntityType::CIRCLE) {
 						if (m_CollisionIntersection_CircleCircle(*dynamic_cast<Circle*>(m_physicsEntities[i].get()), *dynamic_cast<Circle*>(m_physicsEntities[j].get()))) {
 							if (std::find(m_collidedEntities.begin(), m_collidedEntities.end(), m_physicsEntities[i]) == m_collidedEntities.end()) {
 								//std::cout << "Collided" << std::endl;
@@ -138,13 +143,15 @@ namespace physicspipe {
 
 	std::vector<std::shared_ptr<PhysicsData>> Physics::m_RetrievePhysicsData() {
 		std::vector<std::shared_ptr	<PhysicsData>> TempCollidedEntities = m_collidedEntities;
+
 		this->m_ClearEntites();
 		return TempCollidedEntities;
 	}
 
-	void Physics::m_ClearEntites(){
+	void Physics::m_ClearEntites() {
 		m_physicsEntities.clear();
 		m_collidedEntities.clear();
+		m_layerToEntities.clear();
 	}
 
 
@@ -265,7 +272,7 @@ namespace physicspipe {
 	bool Physics::m_CollisionIntersection_CircleRect(const Circle& circle, const Rectangle& rect) {
 		vector2::Vec2 shortestDistance{};
 
-		
+
 		if (circle.m_position.m_x < rect.m_boundingBox.m_min.m_x) shortestDistance.m_x = rect.m_boundingBox.m_min.m_x;
 		else if (circle.m_position.m_x > rect.m_boundingBox.m_max.m_x) shortestDistance.m_x = rect.m_boundingBox.m_max.m_x;
 		else shortestDistance.m_x = circle.m_position.m_x;
@@ -281,4 +288,78 @@ namespace physicspipe {
 
 		return distance_Square <= (circle.m_radius * circle.m_radius);
 	}
+
+
+	void Physics::m_Init() {
+
+	}
+	void Physics::m_Update() {
+		/*
+			1. Update the layer matrix first
+			2. Using the update layer matrix do the collision check
+		*/
+	}
+
+	void Physics::m_CollisionCheckUpdate(float dt) {
+		std::vector<std::vector<bool>> collisionMatrix = physicsLayer.getInstance()->getMatrix();
+		// Iterate through all pairs of layers using the map keys
+		for (auto it1 = m_layerToEntities.begin(); it1 != m_layerToEntities.end(); ++it1) {
+			for (auto it2 = it1; it2 != m_layerToEntities.end(); ++it2) {
+				// Get the layer enum values
+				layer::LAYERS layer1 = it1->first;
+				layer::LAYERS layer2 = it2->first;
+
+				// Get the indices for the collision matrix (convert enum to int if necessary)
+				int index1 = static_cast<int>(layer1);
+				int index2 = static_cast<int>(layer2);
+
+				// Check the collision matrix to see if we need to check for collisions between these layers
+				if (collisionMatrix[index1][index2]) {
+					// Get the entity vectors for both layers
+					const auto& entities1 = it1->second;
+					const auto& entities2 = it2->second;
+
+					// Perform collision checks between all entities in entities1 and entities2
+					for (const auto& entity1 : entities1) {
+						for (const auto& entity2 : entities2) {
+							// Ensure you don't check an entity with itself if layer1 == layer2
+							if (layer1 == layer2 && entity1 == entity2) continue;
+
+							// Perform the actual collision check between entity1 and entity2
+							// For example, using a function like:
+							// bool isColliding = CheckCollision(entity1, entity2);
+							if (CheckCollision(entity1, entity2,dt)) {
+								std::cout << "Collision detected between entity "
+									<< entity1->m_ID << " and entity "
+									<< entity2->m_ID << std::endl;
+
+								// Store or process the collided entities as needed.
+								m_collidedEntities.push_back(entity1);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	bool Physics::CheckCollision(const std::shared_ptr<PhysicsData>& entity1, const std::shared_ptr<PhysicsData>& entity2, float dt){
+		// Check for collision based on the types of entities.
+		if (entity1->GetEntity() == EntityType::CIRCLE && entity2->GetEntity() == EntityType::CIRCLE) {
+			return m_CollisionIntersection_CircleCircle(*static_cast<Circle*>(entity1.get()), *static_cast<Circle*>(entity2.get()));
+		}
+		else if (entity1->GetEntity() == EntityType::RECTANGLE && entity2->GetEntity() == EntityType::RECTANGLE) {
+			return m_CollisionIntersection_RectRect(*static_cast<Rectangle*>(entity1.get()), *static_cast<Rectangle*>(entity2.get()), dt);
+		}
+		else if (entity1->GetEntity() == EntityType::CIRCLE && entity2->GetEntity() == EntityType::RECTANGLE) {
+			return m_CollisionIntersection_CircleRect(*static_cast<Circle*>(entity1.get()), *static_cast<Rectangle*>(entity2.get()));
+		}
+		else if (entity1->GetEntity() == EntityType::RECTANGLE && entity2->GetEntity() == EntityType::CIRCLE) {
+			return m_CollisionIntersection_CircleRect(*static_cast<Circle*>(entity2.get()), *static_cast<Rectangle*>(entity1.get()));
+		}
+
+		return false;  // If no valid collision type, return false.
+	}
+
+
+
 }

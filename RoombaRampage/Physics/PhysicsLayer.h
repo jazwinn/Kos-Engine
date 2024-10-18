@@ -3,21 +3,37 @@
 
 #include "../ECS/Layers.h"
 #include <vector>
+#include <memory>
+#include <iostream>
+#include <set>
+#include <utility>
 
 const int size = layer::LAYERS::MAXLAYER;
 namespace physicslayer {
 	class PhysicsLayer {
 	public:
-	PhysicsLayer() {
-		// Initialize the collisionMatrix with 'false'
-		collisionMatrix = std::vector<std::vector<bool>>(size, std::vector<bool>(size, false));
-	}
+    // Method to access the single instance of PhysicsLayer
+    static PhysicsLayer* getInstance() {
+        if (!instance) {
+            instance = std::make_unique<PhysicsLayer>();
+        }
+        return instance.get();
+    }
+    PhysicsLayer();
+	PhysicsLayer(const PhysicsLayer&) = delete;
+	PhysicsLayer& operator=(const PhysicsLayer&) = delete;
+
 	void setCollision(int layer1, int layer2, bool value);
+    bool shouldCollide(int layer1, int layer2);
 	void printCollisionMatrix() const;
+    bool getCollide(int layer1, int layer2);
+    std::vector<std::vector<bool>> getMatrix() const;
 
 	private:
-		std::vector<std::vector<bool>> collisionMatrix; // 2D collision matrix
+		 std::vector<std::vector<bool>> collisionMatrix; // 2D collision matrix
+         static std::unique_ptr<PhysicsLayer> instance;
 	};
+   
 }
 /*
         // Print only the upper triangle part

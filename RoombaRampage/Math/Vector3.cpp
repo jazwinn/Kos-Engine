@@ -94,4 +94,9 @@ namespace vector3 {
             pVec0.m_x * pVec1.m_y - pVec0.m_y * pVec1.m_x
         );
     }
+    Vec3 operator+(const Vec3& lhs, const Vec3& rhs)
+    {
+        return Vec3();
+    }
+
 }

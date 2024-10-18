@@ -115,10 +115,10 @@ namespace ecs {
 			vector2::Vec2 position{ TransComp->m_transformation.m_e20,TransComp->m_transformation.m_e21 };
 
 			if (ColComp->m_type == physicspipe::EntityType::CIRCLE) {
-				PhysicsPipeline.m_SendPhysicsData(ColComp->m_radius, TransComp->m_position + ColComp->m_OffSet, ColComp->m_Size, velocity, id);
+				PhysicsPipeline.m_SendPhysicsData(ColComp->m_radius, TransComp->m_position + ColComp->m_OffSet, ColComp->m_Size, velocity, id, NameComp->m_Layer);
 			}
 			else if (ColComp->m_type == physicspipe::EntityType::RECTANGLE) {
-				PhysicsPipeline.m_SendPhysicsData(ColComp->m_Size.m_y , ColComp->m_Size.m_x, TransComp->m_position + ColComp->m_OffSet, ColComp->m_Size, velocity, id);
+				PhysicsPipeline.m_SendPhysicsData(ColComp->m_Size.m_y , ColComp->m_Size.m_x, TransComp->m_position + ColComp->m_OffSet, ColComp->m_Size, velocity, id, NameComp->m_Layer);
 			}
 			else {
 				LOGGING_ERROR("NO ENTITY TYPE");
