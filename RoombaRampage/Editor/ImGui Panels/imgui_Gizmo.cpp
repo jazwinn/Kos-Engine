@@ -114,7 +114,10 @@ namespace gui {
 
         //DRAW GIZMO
                 //to render in full screen also
-        ImGuizmo::SetRect(renderPosX, renderPosY, renderWidth, renderHeight);
+        if (!ImGui::IsWindowAppearing()){
+            ImGuizmo::SetRect(renderPosX, renderPosY, renderWidth, renderHeight);
+        }
+        
         //TODO be able to swap between WORLD and LOCAL
         if (ImGuizmo::Manipulate(cameraView, projection, mCurrentGizmoOperation, ImGuizmo::WORLD, model, NULL, useSnap ? &snap[0] : NULL)) {
 
