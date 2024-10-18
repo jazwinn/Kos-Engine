@@ -32,6 +32,8 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 #include "../Graphics/GraphicsPipe.h"
 
+
+
 void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsigned int windowHeight)
 {
 
@@ -119,7 +121,9 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
 
 
     ImGui::End();
-   
+
+
 }
+
 
 
