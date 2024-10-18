@@ -50,7 +50,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
     //Add Component Window
     const char* ComponentNames[] =
     {
-        "Add Components","Movement Component", "Collider Component", "Sprite Component", "Player Component", "Rigid Body Component", "Text Component", "Animation Component"
+        "Add Components","Movement Component", "Collider Component", "Sprite Component", "Player Component", "Rigid Body Component", "Text Component", "Animation Component", "Camera Component"
     };
     static int ComponentType = 0;
 
@@ -89,6 +89,10 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
             }
             if (ComponentType == 7) {
                 ecs->m_AddComponent(ecs::TYPEANIMATIONCOMPONENT, entityID);
+                ComponentType = 0;
+            }
+            if (ComponentType == 8) {
+                ecs->m_AddComponent(ecs::TYPECAMERACOMPONENT, entityID);
                 ComponentType = 0;
             }
         }
@@ -470,6 +474,29 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                ImGui::SetNextItemWidth(100.0f);
                ImGui::DragFloat("###TEXTXXX", &ac->m_frameTimer, 0.02f, 0.f, 1.f, "%.2f");
             }
+        }
+        if (EntitySignature.test(ecs::TYPECAMERACOMPONENT))
+        {
+            bool open = ImGui::CollapsingHeader("Camera Component");
+
+            if (ImGui::BeginPopupContextItem()) {
+                if (ImGui::MenuItem("Delete Component")) {
+                    ecs->m_RemoveComponent(ecs::TYPECAMERACOMPONENT, m_clickedEntityId);
+                }
+                ImGui::EndPopup();
+            }
+
+            if (open)
+            {
+                // Retrieve the TransformComponent
+                ecs::CameraComponent* cc = static_cast<ecs::CameraComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPECAMERACOMPONENT]
+                    ->m_GetEntityComponent(entityID));
+
+
+
+
+            }
+
         }
      }
     ImGui::End();

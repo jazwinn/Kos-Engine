@@ -10,9 +10,11 @@ namespace ecs {
 	class CameraComponent : public Component {
 
 	public:
-		vector2::Vec2 m_coordinates;
-		vector2::Vec2 m_zoom;
-		float m_angle;
+		float m_left;
+		float m_right;
+		float m_top;
+		float m_bottom;
+		float m_aspectRatio;
 
 	};
 

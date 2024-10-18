@@ -1,6 +1,7 @@
 #include "imgui_handler.h"
 #include "imgui_impl_opengl3.h"
 #include "../Graphics/GraphicsPipe.h"
+#include "../Editor/EditorCamera.h"
 #include "../ECS/ECS.h"
 #include "../Math/mathlib.h"
 #include "../Application/Helper.h"
@@ -14,8 +15,6 @@ namespace gui {
 
     void ImGuiHandler::m_DrawGizmo(float renderPosX, float renderPosY, float renderWidth, float renderHeight)
     {
-
-
         graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
         ecs::ECS* ecs = ecs::ECS::m_GetInstance();
         Helper::Helpers* help = Helper::Helpers::GetInstance();
@@ -55,10 +54,10 @@ namespace gui {
           0.f, 0.f, 1, 0.f,
           0.f, 0.f, 0.f, 1.f };
 
-        projection[0] = pipe->m_editorCameraMatrix[0][0] * aspectRatio;
-        projection[5] = pipe->m_editorCameraMatrix[1][1];
-        projection[12] = pipe->m_editorCameraMatrix[2][0];
-        projection[13] = pipe->m_editorCameraMatrix[2][1];
+        projection[0] = EditorCamera::m_editorCameraMatrix[0][0] * aspectRatio;
+        projection[5] = EditorCamera::m_editorCameraMatrix[1][1];
+        projection[12] = EditorCamera::m_editorCameraMatrix[2][0];
+        projection[13] = EditorCamera::m_editorCameraMatrix[2][1];
 
 
         float cameraView[16] =

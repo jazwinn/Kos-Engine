@@ -20,6 +20,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "RenderDebugSystem.h"
 #include "../Physics/Physics.h"
 #include "../Graphics/GraphicsPipe.h"
+#include "../Graphics/GraphicsCamera.h"
 #include "../Math/Mat3x3.h"
 #include "../Math/vector2.h"
 
@@ -30,10 +31,10 @@ namespace ecs {
 
 		//Checks if system already has stored the entity
 
-		if (std::find_if(m_vecColliderComponentPtr.begin(), m_vecColliderComponentPtr.end(), [ID](const auto& obj) { return obj->m_Entity == ID; })
-			== m_vecColliderComponentPtr.end()) {
+		if (std::find_if(m_vecTransformComponentPtr.begin(), m_vecTransformComponentPtr.end(), [ID](const auto& obj) { return obj->m_Entity == ID; })
+			== m_vecTransformComponentPtr.end()) {
 			m_vecTransformComponentPtr.push_back((TransformComponent*)ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(ID));
-			m_vecColliderComponentPtr.push_back((ColliderComponent*)ecs->m_ECS_CombinedComponentPool[TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(ID));
+			//m_vecColliderComponentPtr.push_back((ColliderComponent*)ecs->m_ECS_CombinedComponentPool[TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(ID));
 		}
 	}
 
@@ -50,45 +51,60 @@ namespace ecs {
 		//index to the last element
 		size_t IndexLast = m_vecColliderComponentPtr.size() - 1;
 
-		std::swap(m_vecColliderComponentPtr[IndexID], m_vecColliderComponentPtr[IndexLast]);
+		//std::swap(m_vecColliderComponentPtr[IndexID], m_vecColliderComponentPtr[IndexLast]);
 		std::swap(m_vecTransformComponentPtr[IndexID], m_vecTransformComponentPtr[IndexLast]);
 
 		//popback the vector;
-		m_vecColliderComponentPtr.pop_back();
+		//m_vecColliderComponentPtr.pop_back();
 		m_vecTransformComponentPtr.pop_back();
 	}
 
 	void DebugDrawingSystem::m_Init() {
 
-		m_SystemSignature.set(TYPECOLLIDERCOMPONENT);
+		//m_SystemSignature.set(TYPECOLLIDERCOMPONENT);
 		m_SystemSignature.set(TYPETRANSFORMCOMPONENT);
 
 	}
 
 	void DebugDrawingSystem::m_Update() {
 
-		//ECS* ecs = ECS::m_GetInstance();
+		ECS* ecs = ECS::m_GetInstance();
 
-		if (m_vecTransformComponentPtr.size() != m_vecColliderComponentPtr.size()) {
+		/*if (m_vecTransformComponentPtr.size() != m_vecColliderComponentPtr.size()) {
 			LOGGING_ERROR("Error: Vecotrs container size does not Match");
 			return;
-		}
+		}*/
 	
 
 		graphicpipe::GraphicsPipe * graphicsPipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
-		for (int n{}; n < m_vecColliderComponentPtr.size(); n++) {
+		for (int n{}; n < m_vecTransformComponentPtr.size(); n++) {
 
 			TransformComponent* transform = m_vecTransformComponentPtr[n];
-			ColliderComponent* collider = m_vecColliderComponentPtr[n];
-
-			if (collider->m_drawDebug)
+			if (ecs->m_ECS_EntityMap[transform->m_Entity].test(TYPECOLLIDERCOMPONENT))
 			{
-				mat3x3::Mat3x3 debugTransformation =  mat3x3::Mat3Transform(vector2::Vec2{ transform->m_transformation.m_e20 + collider->m_OffSet.m_x, transform->m_transformation.m_e21 + collider->m_OffSet.m_y }, vector2::Vec2{ collider->m_Size.m_x, collider->m_Size.m_y }, 0);
+				ColliderComponent* collider = (ColliderComponent*)ecs->m_ECS_CombinedComponentPool[TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(transform->m_Entity);
 
-				graphicsPipe->m_debugBoxData.push_back({ glm::mat3{debugTransformation.m_e00,debugTransformation.m_e01,debugTransformation.m_e02,
-																debugTransformation.m_e10,debugTransformation.m_e11, debugTransformation.m_e12,
+				if (collider->m_drawDebug)
+				{
+					mat3x3::Mat3x3 debugTransformation = mat3x3::Mat3Transform(vector2::Vec2{ transform->m_transformation.m_e20 + collider->m_OffSet.m_x, transform->m_transformation.m_e21 + collider->m_OffSet.m_y }, vector2::Vec2{ collider->m_Size.m_x, collider->m_Size.m_y }, 0);
+
+					graphicsPipe->m_debugBoxData.push_back({ glm::mat3{debugTransformation.m_e00,debugTransformation.m_e01,debugTransformation.m_e02,
+																	debugTransformation.m_e10,debugTransformation.m_e11, debugTransformation.m_e12,
+																debugTransformation.m_e20, debugTransformation.m_e21, debugTransformation.m_e22} ,
+															collider->m_isCollided, 0 });
+				}
+			}
+
+			if (ecs->m_ECS_EntityMap[transform->m_Entity].test(TYPECAMERACOMPONENT))
+			{
+				CameraComponent* cam = (CameraComponent*)ecs->m_ECS_CombinedComponentPool[TYPECAMERACOMPONENT]->m_GetEntityComponent(transform->m_Entity);
+				
+				mat3x3::Mat3x3 debugTransformation = mat3x3::Mat3Transform(vector2::Vec2{ transform->m_transformation.m_e20, transform->m_transformation.m_e21}, vector2::Vec2{ transform->m_scale.m_x, transform->m_scale.m_y }, 0);
+
+				graphicsPipe->m_debugBoxData.push_back({ glm::mat3{debugTransformation.m_e00 * (1 / graphicpipe::GraphicsCamera::m_aspectRatio) * 2 ,debugTransformation.m_e01,debugTransformation.m_e02,
+																debugTransformation.m_e10,debugTransformation.m_e11 * 2, debugTransformation.m_e12,
 															debugTransformation.m_e20, debugTransformation.m_e21, debugTransformation.m_e22} ,
-														collider->m_isCollided, 0 });
+														0, 0 });
 			}
 
 			
