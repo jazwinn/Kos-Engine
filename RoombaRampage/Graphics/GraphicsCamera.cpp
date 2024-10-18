@@ -8,7 +8,7 @@ namespace graphicpipe
 	int GraphicsCamera::m_windowHeight{};
 	float GraphicsCamera::m_aspectRatio{};
 	std::unique_ptr<GraphicsCamera> GraphicsCamera::m_instancePtr = nullptr;
-	GraphicsCamera::OrthoCamera GraphicsCamera::m_currCamera{};
+	GraphicsCamera::OrthoCamera GraphicsCamera::m_currCamera{ glm::vec2(0.f,0.f), glm::vec2(1.f,1.f), 0 };
 	glm::mat3 GraphicsCamera::m_currCameraMatrix{1.f};
 	std::vector<GraphicsCamera::OrthoCamera> GraphicsCamera::m_cameras{};
 
@@ -45,14 +45,15 @@ namespace graphicpipe
 		{
 			debugMatrix = m_currCameraMatrix * debugMatrix;
 		}
+		m_cameras.clear();
 	}
 
 	void GraphicsCamera::calculateCurrCamera()
 	{
-		float left = m_currCamera.m_coordinates.x - 1.f / m_currCamera.m_zoom.x;
-		float right = m_currCamera.m_coordinates.x + 1.f / m_currCamera.m_zoom.x;
-		float bottom = m_currCamera.m_coordinates.y - 1.f / m_currCamera.m_zoom.y;
-		float top = m_currCamera.m_coordinates.y + 1.f / m_currCamera.m_zoom.y;
+		float left = m_currCamera.m_coordinates.x - m_currCamera.m_zoom.x;
+		float right = m_currCamera.m_coordinates.x + m_currCamera.m_zoom.x;
+		float bottom = m_currCamera.m_coordinates.y - m_currCamera.m_zoom.y;
+		float top = m_currCamera.m_coordinates.y + m_currCamera.m_zoom.y;
 		m_currCameraMatrix[0][0] = 2.0f / (right - left);
 		m_currCameraMatrix[1][1] = 2.0f / (top - bottom);
 		m_currCameraMatrix[2][0] = -(right + left) / (right - left);

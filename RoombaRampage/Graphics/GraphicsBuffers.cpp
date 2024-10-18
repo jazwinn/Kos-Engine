@@ -84,8 +84,6 @@ namespace graphicpipe
 	void GraphicsPipe::m_funcSetupFrameBuffer()
 	{
 		Helper::Helpers* help = Helper::Helpers::GetInstance();
-		std::cout << help->m_windowWidth << std::endl;
-
 
 		if (m_screenTexture)
 		{

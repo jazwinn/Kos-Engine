@@ -120,8 +120,9 @@ namespace graphicpipe {
 		m_funcCalculateModelToWorldMatrix();
 		GraphicsCamera::calculateAspectRatio();
 		
-		if (GraphicsCamera::m_cameras.size() > 0)
+		if (GraphicsCamera::m_cameras.size() > 0 && m_gameMode)
 		{
+			GraphicsCamera::calculateCurrCamera();
 			GraphicsCamera::setCurrCamera(0);
 		}
 		GraphicsCamera::multiplyActiveCameraMatrix();
@@ -134,6 +135,7 @@ namespace graphicpipe {
 
 	void GraphicsPipe::m_funcRenderGameScene()
 	{
+		
 		if (m_gameMode)
 		{
 			m_funcDraw();

@@ -305,7 +305,7 @@ namespace graphicpipe {
         void m_funcRenderGameScene();
 
         //Boolean Values
-        bool m_gameMode;
+        bool m_gameMode{ false };
 
         // Meshes
         Mesh m_squareMesh;              ///< Mesh for square rendering.

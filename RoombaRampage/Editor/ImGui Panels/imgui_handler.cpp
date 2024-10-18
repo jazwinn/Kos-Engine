@@ -32,6 +32,9 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Dependencies/rapidjson/stringbuffer.h"
 #include "imgui_handler.h"
 #include "../Application/Helper.h"
+#include "../Editor/EditorCamera.h"
+#include "../Graphics/GraphicsPipe.h"
+#include "../Inputs/Input.h"
 
 namespace gui {
 
@@ -68,44 +71,54 @@ namespace gui {
 
 	void ImGuiHandler::m_Render()
 	{
-		// Render ImGui
-		m_NewFrame();
-		//for gizmo - todo once camera is done
-		//ImGuizmo::SetOrthographic(true);
-		ImGuizmo::BeginFrame();
-		//viewport docking
-		ImGui::DockSpaceOverViewport(0, ImGui::GetMainViewport());
-		//create main menu bar
-		m_DrawMainMenuBar();
-
-		Helper::Helpers* help = Helper::Helpers::GetInstance();
-
-		ImVec2 windowSize = ImGui::GetIO().DisplaySize;
-		// only render when window is not minimize
-		if (windowSize.x > 0 && windowSize.y > 0) {
-			m_DrawPerformanceWindow(help->m_fps);
-			m_DrawHierachyWindow();
-			m_DrawComponentWindow();
-			m_DrawLogsWindow();
-			m_DrawTestWindow();
-			m_DrawInputWindow();
-			m_DrawRenderScreenWindow(static_cast<unsigned int>(Helper::Helpers::GetInstance()->m_windowWidth), static_cast<unsigned int>(Helper::Helpers::GetInstance()->m_windowHeight));
-			
-			
-		}
-
-
-		ImGuiIO& io = ImGui::GetIO();
-		
-		ImGui::Render();
-		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+		if (Input::InputSystem::KeyState0)
 		{
-			GLFWwindow* backup_current_context = glfwGetCurrentContext();
-			ImGui::UpdatePlatformWindows();
-			ImGui::RenderPlatformWindowsDefault();
-			glfwMakeContextCurrent(backup_current_context);
+			Input::InputSystem::KeyState0 = false;
+			graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
+			EditorCamera::m_editorMode = (EditorCamera::m_editorMode) ? false : true;
+			pipe->m_gameMode = (pipe->m_gameMode) ? false : true;
 		}
-		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+		if (EditorCamera::m_editorMode)
+		{
+			// Render ImGui
+			m_NewFrame();
+			//for gizmo - todo once camera is done
+			//ImGuizmo::SetOrthographic(true);
+			ImGuizmo::BeginFrame();
+			//viewport docking
+			ImGui::DockSpaceOverViewport(0, ImGui::GetMainViewport());
+			//create main menu bar
+			m_DrawMainMenuBar();
+
+			Helper::Helpers* help = Helper::Helpers::GetInstance();
+
+			ImVec2 windowSize = ImGui::GetIO().DisplaySize;
+			// only render when window is not minimize
+			if (windowSize.x > 0 && windowSize.y > 0) {
+				m_DrawPerformanceWindow(help->m_fps);
+				m_DrawHierachyWindow();
+				m_DrawComponentWindow();
+				m_DrawLogsWindow();
+				m_DrawTestWindow();
+				m_DrawInputWindow();
+				m_DrawRenderScreenWindow(static_cast<unsigned int>(Helper::Helpers::GetInstance()->m_windowWidth), static_cast<unsigned int>(Helper::Helpers::GetInstance()->m_windowHeight));
+			}
+
+
+			ImGuiIO& io = ImGui::GetIO();
+
+			ImGui::Render();
+			if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+			{
+				GLFWwindow* backup_current_context = glfwGetCurrentContext();
+				ImGui::UpdatePlatformWindows();
+				ImGui::RenderPlatformWindowsDefault();
+				glfwMakeContextCurrent(backup_current_context);
+			}
+			ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+		}
+	
 	}
 
 
