@@ -37,9 +37,13 @@ namespace graphicpipe
 
 		for (glm::mat3& matrix : pipe->m_modelToNDCMatrix)
 		{
-			matrix *= m_currCameraMatrix;
+			matrix = m_currCameraMatrix * matrix;
 		}
 		
+		for (glm::mat3& debugMatrix : pipe->m_debugToNDCMatrix)
+		{
+			debugMatrix = m_currCameraMatrix * debugMatrix;
+		}
 	}
 	void GraphicsCamera::setActiveCamera(unsigned int index)
 	{

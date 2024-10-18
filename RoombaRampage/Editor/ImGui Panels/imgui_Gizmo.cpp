@@ -5,36 +5,17 @@
 #include "../ECS/ECS.h"
 #include "../Math/mathlib.h"
 #include "../Application/Helper.h"
+#include "../Math/Mat3x3.h"
+#include "../ECS/Hierachy.h"
 
-
-//for test
-#include <glm.hpp>
 
 namespace gui {
 
-    //void OrthoGraphic(const float l, float r, float b, const float t, float zn, const float zf, float* m16)
-    //{
-    //    m16[0] = 2 / (r - l);
-    //    m16[1] = 0.0f;
-    //    m16[2] = 0.0f;
-    //    m16[3] = 0.0f;
-    //    m16[4] = 0.0f;
-    //    m16[5] = 2 / (t - b);
-    //    m16[6] = 0.0f;
-    //    m16[7] = 0.0f;
-    //    m16[8] = 0.0f;
-    //    m16[9] = 0.0f;
-    //    m16[10] = 1.0f / (zf - zn);
-    //    m16[11] = 0.0f;
-    //    m16[12] = (l + r) / (l - r);
-    //    m16[13] = (t + b) / (b - t);
-    //    m16[14] = zn / (zn - zf);
-    //    m16[15] = 1.0f;
-    //}
 
 
     void ImGuiHandler::m_DrawGizmo(float renderPosX, float renderPosY, float renderWidth, float renderHeight)
     {
+        graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
         ecs::ECS* ecs = ecs::ECS::m_GetInstance();
         Helper::Helpers* help = Helper::Helpers::GetInstance();
         float aspectRatio = help->m_windowHeight / help->m_windowWidth;
@@ -45,15 +26,32 @@ namespace gui {
         ImGuizmo::SetOrthographic(true);
         ImGuizmo::SetDrawlist();
 
-        ImGuiIO& io = ImGui::GetIO();
-        //Set Viewport to be Render Screen
-        ImGuizmo::SetRect(renderPosX, renderPosY, renderWidth, renderHeight);
-        
+        static ImGuizmo::OPERATION mCurrentGizmoOperation(ImGuizmo::TRANSLATE);
+        static bool useSnap(false);
+        static float snap[3] = { 1.f, 1.f, 1.f };
+
+        if (ImGui::IsKeyPressed(ImGuiKey_T))
+            mCurrentGizmoOperation = ImGuizmo::TRANSLATE;
+        if (ImGui::IsKeyPressed(ImGuiKey_E))
+            mCurrentGizmoOperation = ImGuizmo::ROTATE;
+        if (ImGui::IsKeyPressed(ImGuiKey_R))
+            mCurrentGizmoOperation = ImGuizmo::SCALE;
+        if (ImGui::IsKeyDown(ImGuiKey_LeftCtrl))
+        {
+            if (ImGui::IsKeyPressed(ImGuiKey_Q)) {
+                useSnap = true;
+            }
+
+        }
+
+
+        float n = -1.f;
+        float f = 1.f;
 
         float projection[16] =
         { 1.f, 0.f, 0.f, 0.f,
           0.f, 1.f, 0.f, 0.f,
-          0.f, 0.f, 1.f, 0.f,
+          0.f, 0.f, 1, 0.f,
           0.f, 0.f, 0.f, 1.f };
 
         projection[0] = graphicpipe::GraphicsCamera::m_editorCameraMatrix[0][0] * aspectRatio;
@@ -61,20 +59,40 @@ namespace gui {
         projection[12] = graphicpipe::GraphicsCamera::m_editorCameraMatrix[2][0];
         projection[13] = graphicpipe::GraphicsCamera::m_editorCameraMatrix[2][1];
 
-        /* projection[1] = pipe->m_editorCameraMatrix[0][1];
-       projection[4] = pipe->m_editorCameraMatrix[1][0];
-       projection[5] = pipe->m_editorCameraMatrix[1][1];
-       projection[12] = pipe->m_editorCameraMatrix[2][0];
-       projection[13] = pipe->m_editorCameraMatrix[2][1];*/
-        //float viewWidth = 10.f;
-        //float viewHeight = viewWidth * io.DisplaySize.y / io.DisplaySize.x;
-        //OrthoGraphic(-viewWidth, viewWidth, -viewHeight, viewHeight, 1000.f, -1000.f, cameraProjection);
 
         float cameraView[16] =
         { 1.f, 0.f, 0.f, 0.f,
           0.f, 1.f, 0.f, 0.f,
           0.f, 0.f, 1.f, 0.f,
           0.f, 0.f, 0.f, 1.f };
+
+        float identity[16] =
+        { 1.f, 0.f, 0.f, 0.f,
+          0.f, 1.f, 0.f, 0.f,
+          0.f, 0.f, 1.f, 0.f,
+          0.f, 0.f, 0.f, 1.f };
+
+
+        // dont ask how just do view transform matrix
+        // bellow matrix derived from
+        // pos - 0,1,0
+        // target - 0,0,0
+        // up - 0,0,-1
+        float gridviewmatrix[] =
+        { 1.f,0.f,0.f,0.f,
+          0.f,0.f,1.f,0.f,
+          0.f,1.f,0.f,0.f,
+          0.f,0.f,1.f,1.f
+        };
+
+
+
+        ImGuizmo::DrawGrid(gridviewmatrix, projection, identity, 100.f);
+
+        /**************************************************************************************************/
+
+        //check if any guizmo is clicked
+        if (m_clickedEntityId < 0) return;
 
         const mat3x3::Mat3x3& transformation = transcom->m_transformation;
 
@@ -84,22 +102,67 @@ namespace gui {
           transformation.m_e10, transformation.m_e11, 0.f, transformation.m_e12,
           0.f, 0.f, 1.f, 0.f,//z axis
           transformation.m_e20, transformation.m_e21, 0.f, transformation.m_e22
-         };
+        };
 
-        float matrixTranslation[3];
-        float matrixRotation[3];
-        float matrixScale[3];
-        //ImGuizmo::DecomposeMatrixToComponents(model, matrixTranslation, matrixRotation, matrixScale);
-        ////std::cout << matrixTranslation[0] << " , " << matrixTranslation[1] << std::endl;
+        float matrixTranslation[3] = { transcom->m_position.m_x, transcom->m_position.m_y, 0 };
+        float matrixRotation[3] = {0,0, transcom->m_rotation };
+        float matrixScale[3] = { transcom->m_scale.m_x, transcom->m_scale.m_y, 0};
+
         //ImGuizmo::RecomposeMatrixFromComponents(matrixTranslation, matrixRotation, matrixScale, model);
 
-        if (ImGuizmo::Manipulate(cameraView, projection, ImGuizmo::TRANSLATE, ImGuizmo::WORLD, model)) {
-            ImGuizmo::DecomposeMatrixToComponents(model, matrixTranslation, matrixRotation, matrixScale);
+
+        //DRAW GIZMO
+                //to render in full screen also
+        if (!ImGui::IsWindowAppearing()){
+            ImGuizmo::SetRect(renderPosX, renderPosY, renderWidth, renderHeight);
+        }
+        
+        //TODO be able to swap between WORLD and LOCAL
+        if (ImGuizmo::Manipulate(cameraView, projection, mCurrentGizmoOperation, ImGuizmo::WORLD, model, NULL, useSnap ? &snap[0] : NULL)) {
+
+
+
+
+           
+            if (ecs::Hierachy::m_GetParent(m_clickedEntityId).has_value()) {
+                ecs::EntityID parentId = ecs::Hierachy::m_GetParent(m_clickedEntityId).value();
+                mat3x3::Mat3x3 worldtransformation =
+                { model[0], model[1], model[3],
+                  model[4], model[5], model[7],
+                  model[12], model[13], model[15]
+                };
+
+                mat3x3::Mat3x3 parenttransformation = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(parentId))->m_transformation;
+                mat3x3::Mat3x3 inverseparent;
+                mat3x3::Mat3Inverse( parenttransformation, inverseparent);
+
+                mat3x3::Mat3x3 childtransformation = inverseparent * worldtransformation;
+
+                float childmodel[16] =
+                { childtransformation.m_e00, childtransformation.m_e01, 0.f, childtransformation.m_e02,
+                  childtransformation.m_e10, childtransformation.m_e11, 0.f, childtransformation.m_e12,
+                  0.f, 0.f, 1.f, 0.f,//z axis
+                  childtransformation.m_e20, childtransformation.m_e21, 0.f, childtransformation.m_e22
+                };
+
+                ImGuizmo::DecomposeMatrixToComponents(childmodel, matrixTranslation, matrixRotation, matrixScale);
+
+            }
+            else {
+                ImGuizmo::DecomposeMatrixToComponents(model, matrixTranslation, matrixRotation, matrixScale);
+            }
+
+
+
+            
             transcom->m_position.m_x = matrixTranslation[0];
             transcom->m_position.m_y = matrixTranslation[1];
             transcom->m_rotation = matrixRotation[2];
             transcom->m_scale.m_x = matrixScale[0];
             transcom->m_scale.m_y = matrixScale[1];
+            //transcom->m_transformation = mat3x3::Mat3Transform(transcom->m_position, transcom->m_scale, transcom->m_rotation);
+
+        
         }
 
 	}

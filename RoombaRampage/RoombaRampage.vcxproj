@@ -171,6 +171,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
   <ItemGroup>
     <ClCompile Include="Application\Application.cpp" />
     <ClCompile Include="Application\Helper.cpp" />
+    <ClCompile Include="C# Mono\mono_handler.cpp" />
     <ClCompile Include="ECS\Hierachy.cpp" />
     <ClCompile Include="ECS\Layers.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_component_window.cpp" />
@@ -233,6 +234,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
   <ItemGroup>
     <ClInclude Include="Application\Application.h" />
     <ClInclude Include="Application\Helper.h" />
+    <ClInclude Include="C# Mono\mono_handler.h" />
     <ClInclude Include="ECS\Component\CameraComponent.h" />
     <ClInclude Include="ECS\Hierachy.h" />
     <ClInclude Include="ECS\Layers.h" />

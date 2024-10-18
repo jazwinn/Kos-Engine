@@ -29,11 +29,11 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "Window.h"
 #include "../Debugging/Logging.h"
 #include "../Debugging/Performance.h"
+#include "../C# Mono/mono_handler.h"
 
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
-
 
 
 namespace Application {
@@ -47,7 +47,7 @@ namespace Application {
     Input::InputSystem Input;
     assetmanager::AssetManager* AstManager;
     logging::Logger logs;
-
+    mono::MonoScriptHandler ScriptManager;  
 
     // Audio Demo timer
     float audioTimer = 3.0f;
@@ -123,7 +123,19 @@ namespace Application {
         AstManager->m_loadEntities("../RoombaRampage/Json/components.json");
 
         LOGGING_INFO("Application Init Successful");
-    
+
+        /*--------------------------------------------------------------
+           INITIALIZE MONO AND ASSEMBLY LOADING
+       --------------------------------------------------------------*/
+        //TODO ecapulate into one big init function
+        // Mono initialization and assembly loading
+        if (!ScriptManager.m_InitMono("C# Mono/ExampleScript.dll")) {
+            return -1;
+        }
+
+
+        LOGGING_INFO("Mono initialization and method loading successful.");
+
         return 0;
 	}
 
@@ -134,6 +146,19 @@ namespace Application {
         ecs::ECS* ecs = ecs::ECS::m_GetInstance();
         float FPSCapTime = 1.f / help->m_fpsCap;
         double lastFrameTime = glfwGetTime();
+
+        /****************************************************************************************/
+        //SAMPLE TO REMOVE
+        // Invoke the HelloWorld method
+        ScriptManager.m_InvokeMethod("ExampleScript", "HelloWorld", nullptr, 0);
+
+        // Invoke the PrintMessage
+        int number = 42;
+        MonoString* message = mono_string_new(ScriptManager.m_GetMonoDomain(), "Calling Method 2!");
+        void* args[2] = { &number, message };
+        ScriptManager.m_InvokeMethod("ExampleScript", "PrintMessage", args, 2);
+        /****************************************************************************************/
+
         /*--------------------------------------------------------------
             GAME LOOP
         --------------------------------------------------------------*/
@@ -195,7 +220,7 @@ namespace Application {
 
 
 
-	int Application::Cleanup() {
+	int Application::m_Cleanup() {
         ecs::ECS::m_GetInstance()->m_Unload();
         imgui_manager.m_Shutdown();
         lvWindow.CleanUp();
