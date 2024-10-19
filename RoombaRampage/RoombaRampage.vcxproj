@@ -182,6 +182,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClCompile Include="Editor\ImGui Panels\imgui_Gizmo.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_handler.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_hierarchy_window.cpp" />
+    <ClCompile Include="Editor\ImGui Panels\imgui_layer_panel.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_logs_window.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_menubar.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_performance_window.cpp" />
@@ -233,7 +234,10 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClCompile Include="Math\Mat3x3.cpp" />
     <ClCompile Include="Math\Mathlib.cpp" />
     <ClCompile Include="Math\Vector2.cpp" />
+    <ClCompile Include="Math\Vector3.cpp" />
     <ClCompile Include="Physics\Physics.cpp" />
+    <ClCompile Include="Physics\PhysicsCollision.cpp" />
+    <ClCompile Include="Physics\PhysicsLayer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Application.h" />
@@ -309,7 +313,10 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="Math\Mat3x3.h" />
     <ClInclude Include="Math\Mathlib.h" />
     <ClInclude Include="Math\Vector2.h" />
+    <ClInclude Include="Math\Vector3.h" />
     <ClInclude Include="Physics\Physics.h" />
+    <ClInclude Include="Physics\PhysicsCollision.h" />
+    <ClInclude Include="Physics\PhysicsLayer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Graphics\debugFragmentShader.frag" />

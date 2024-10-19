@@ -200,6 +200,7 @@ namespace gui {
 
         void m_DrawGizmo(float renderPosX, float renderPosY, float renderWidth, float renderHeight);
 
+        void m_DrawLayerWindow();
         int m_clickedEntityId{-1};
 
     private:
