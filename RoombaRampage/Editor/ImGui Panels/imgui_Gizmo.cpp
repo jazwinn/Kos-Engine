@@ -20,7 +20,7 @@ namespace gui {
         Helper::Helpers* help = Helper::Helpers::GetInstance();
         float aspectRatio = help->m_windowHeight / help->m_windowWidth;
 
-        ecs::TransformComponent* transcom = (ecs::TransformComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(m_clickedEntityId);
+        
 
         //refer to guizmo example for snapping
         ImGuizmo::SetOrthographic(true);
@@ -93,6 +93,8 @@ namespace gui {
 
         //check if any guizmo is clicked
         if (m_clickedEntityId < 0) return;
+        ecs::TransformComponent* transcom = (ecs::TransformComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(m_clickedEntityId);
+
 
         const mat3x3::Mat3x3& transformation = transcom->m_transformation;
 
