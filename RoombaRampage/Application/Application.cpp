@@ -18,22 +18,10 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 */
 /********************************************************************/
 #include "Application.h"
-
 #include "../Graphics/GraphicsPipe.h"
 #include "../Assets/AssetManager.h"
-#include "../De&Serialization/json_handler.h"
-#include "../Debugging/Logging.h"
-#include "../Inputs/Input.h"
-#include "../ECS/ECS.h"
-#include "Helper.h"
-#include "Window.h"
-#include "../Debugging/Logging.h"
-#include "../Debugging/Performance.h"
-#include "../C# Mono/mono_handler.h"
+#include "../Assets/SceneManager.h"
 
-#include "imgui.h"
-#include "imgui_impl_glfw.h"
-#include "imgui_impl_opengl3.h"
 
 
 namespace Application {
@@ -41,19 +29,10 @@ namespace Application {
     /*--------------------------------------------------------------
       GLOBAL VARAIBLE
     --------------------------------------------------------------*/
-    AppWindow Application::lvWindow;
-    gui::ImGuiHandler Application::imgui_manager; 
+    
     graphicpipe::GraphicsPipe* pipe;
-    Input::InputSystem Input;
     assetmanager::AssetManager* AstManager;
-    logging::Logger logs;
-    mono::MonoScriptHandler ScriptManager;  
 
-    // Audio Demo timer
-    float audioTimer = 3.0f;
-    bool audio2_bool = true;
-
-    float LastTime = static_cast<float>(glfwGetTime());
     
 
     int Application::Init() {
@@ -120,9 +99,11 @@ namespace Application {
         /*--------------------------------------------------------------
             LOAD ENTITIES INTO ECS & IMGUI
         --------------------------------------------------------------*/
-        AstManager->m_loadEntities("../RoombaRampage/Json/components.json");
+        scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();
+        scenemanager->m_AddScene("./RoombaRampage/Json/Scene1.json");
+        scenemanager->m_LoadScene("Scene1");
 
-        LOGGING_INFO("Application Init Successful");
+        
 
         /*--------------------------------------------------------------
            INITIALIZE MONO AND ASSEMBLY LOADING
@@ -136,6 +117,8 @@ namespace Application {
 
         LOGGING_INFO("Mono initialization and method loading successful.");
 
+
+        LOGGING_INFO("Application Init Successful");
         return 0;
 	}
 
@@ -170,34 +153,33 @@ namespace Application {
 
                 /*--------------------------------------------------------------
                     UPDATE ECS
-                    --------------------------------------------------------------*/
+                --------------------------------------------------------------*/
                 ecs->m_Update(Helper::Helpers::GetInstance()->m_deltaTime);
 
                 /*--------------------------------------------------------------
                     UPDATE Render Pipeline
-                    --------------------------------------------------------------*/
+                --------------------------------------------------------------*/
                 pipe->m_funcUpdate();
 
                 /*--------------------------------------------------------------
                     DRAWING/RENDERING Window
-                    --------------------------------------------------------------*/
+                --------------------------------------------------------------*/
                 lvWindow.Draw();
 
                 /*--------------------------------------------------------------
-                    DRAWING/RENDERING Objects
-                    --------------------------------------------------------------*/
-                pipe->m_funcDrawWindow();
-
-
-                /*--------------------------------------------------------------
                     Draw IMGUI FRAME
-                    --------------------------------------------------------------*/
+                --------------------------------------------------------------*/
                 imgui_manager.m_Render();
 
-          
+                /*--------------------------------------------------------------
+                   Render Game Scene
+                --------------------------------------------------------------*/
+                pipe->m_funcRenderGameScene();
+
+
                 /*--------------------------------------------------------------
                     Calculate time
-                    --------------------------------------------------------------*/
+                 --------------------------------------------------------------*/
                 double currentFrameTime = glfwGetTime();
                 help->m_deltaTime = static_cast<float>(currentFrameTime - lastFrameTime);
 

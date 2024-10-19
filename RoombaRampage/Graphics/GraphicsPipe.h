@@ -113,6 +113,7 @@ namespace graphicpipe {
     class GraphicsPipe
     {
     private:
+
         int m_unitWidth{ 512 };         ///< The default width for the graphics unit.
         int m_unitHeight{ 512 };        ///< The default height for the graphics unit.
 
@@ -190,13 +191,6 @@ namespace graphicpipe {
         unsigned int m_stripCountBuffer{};          ///< Buffer for sprite strip counts (animation).
         unsigned int m_frameNumberBuffer{};         ///< Buffer for managing animation frame numbers.
 
-        int m_windowWidth{};                        ///< The current window width.
-        int m_windowHeight{};                       ///< The current window height.
-        float m_aspectRatio{};                      ///< Aspect ratio of the window.
-
-        
-        std::vector<glm::mat3> m_modelToNDCMatrix{}; ///< Model-to-NDC transformation matrices.
-        std::vector<glm::mat3> m_debugToNDCMatrix{}; ///< Debug model-to-NDC matrices.
         glm::mat3 m_testMatrix{};                   ///< Test matrix for rendering.
 
         /**
@@ -210,21 +204,7 @@ namespace graphicpipe {
 
     public:
 
-        /**
-         * @struct Camera
-         * @brief Represents the camera's position and orientation.
-         */
-        struct Camera
-        {
-            glm::vec2 m_coordinates;   ///< Coordinates of the camera.
-            glm::vec2 m_zoom;          ///< Zoom of the a=canera
-            float m_angle;             ///< Rotation angle of the camera.
-        };
-
-         Camera m_editorCamera{};
-         glm::mat3 m_editorCameraMatrix{};
-         float m_editorCameraDragSensitivity{ 0.01f };  ///< Editor Camera Drag Sensitivity
-         float m_editorCameraZoomSensitivity{ 0.01f };  ///< Editor Camera Zoom Sensitivity
+       
 
         /**
          * @enum ShapeType
@@ -320,11 +300,22 @@ namespace graphicpipe {
         */
         void m_funcSetupFrameBuffer();
 
+        void m_funcCalculateModelToWorldMatrix();
+
+        void m_funcRenderGameScene();
+
+        //Boolean Values
+        bool m_gameMode{ false };
+
         // Meshes
         Mesh m_squareMesh;              ///< Mesh for square rendering.
         Mesh m_screenMesh;              ///< Mesh for screen rendering.
         Mesh m_squareLinesMesh;         ///< Mesh for rendering square outlines.
         Mesh m_textMesh;                ///< Mesh for text rendering.
+
+        // Matrix Containers
+        std::vector<glm::mat3> m_modelToNDCMatrix{}; ///< Model-to-NDC transformation matrices.
+        std::vector<glm::mat3> m_debugToNDCMatrix{}; ///< Debug model-to-NDC matrices.
 
         // Data for rendering
         std::vector<GraphicsData> m_modelData{}; ///< Graphics data for rendering.

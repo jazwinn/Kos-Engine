@@ -115,7 +115,7 @@ xcopy /y /d "$(SolutionDir)FMOD_API\studio\lib\x64\*.dll" "$(OutDir)"</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);GLEW_STATIC;CRT_SECURE_NO_WARNINGS;CRT_SECURE_NO_WARNINGS;CRT_SECURE_NO_WARNINGSCRT_SECURE_NO_WARNINGSCRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\FMOD_API\core\inc;$(SolutionDir)Dependencies\FMOD_API\studio\inc;$(SolutionDir)Dependencies\imgui;$(SolutionDir)include;$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\glm\include;$(SolutionDir)Dependencies\stb_image\include;$(SolutionDir)Dependencies\GLEW\include\GL;$(SolutionDir)Dependencies\Freetype_Font\include;$(SolutionDir)Json Texts;$(SolutionDir)Dependencies\mono\include;$(SolutionDir)Dependencies\mono\include\mono-2.0</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\rapidjson;$(SolutionDir)Dependencies\FMOD_API\core\inc;$(SolutionDir)Dependencies\FMOD_API\studio\inc;$(SolutionDir)Dependencies\imgui;$(SolutionDir)include;$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\glm\include;$(SolutionDir)Dependencies\stb_image\include;$(SolutionDir)Dependencies\GLEW\include\GL;$(SolutionDir)Dependencies\Freetype_Font\include;$(SolutionDir)Json Texts;$(SolutionDir)Dependencies\mono\include;$(SolutionDir)Dependencies\mono\include\mono-2.0</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>26945</DisableSpecificWarnings>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
@@ -145,7 +145,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);GLEW_STATIC;CRT_SECURE_NO_WARNINGS;CRT_SECURE_NO_WARNINGS;CRT_SECURE_NO_WARNINGSCRT_SECURE_NO_WARNINGSCRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\FMOD_API\core\inc;$(SolutionDir)Dependencies\FMOD_API\studio\inc;$(SolutionDir)Dependencies\imgui;$(SolutionDir)include;$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\glm\include;$(SolutionDir)Dependencies\stb_image\include;$(SolutionDir)Dependencies\GLEW\include\GL;$(SolutionDir)Dependencies\Freetype_Font\include;;$(SolutionDir)Dependencies\mono\include;$(SolutionDir)Dependencies\mono\include\mono-2.0</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\rapidjson;$(SolutionDir)Dependencies\FMOD_API\core\inc;$(SolutionDir)Dependencies\FMOD_API\studio\inc;$(SolutionDir)Dependencies\imgui;$(SolutionDir)include;$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\glm\include;$(SolutionDir)Dependencies\stb_image\include;$(SolutionDir)Dependencies\GLEW\include\GL;$(SolutionDir)Dependencies\Freetype_Font\include;;$(SolutionDir)Dependencies\mono\include;$(SolutionDir)Dependencies\mono\include\mono-2.0</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -171,9 +171,13 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
   <ItemGroup>
     <ClCompile Include="Application\Application.cpp" />
     <ClCompile Include="Application\Helper.cpp" />
+    <ClCompile Include="Assets\SceneManager.cpp" />
     <ClCompile Include="C# Mono\mono_handler.cpp" />
     <ClCompile Include="ECS\Hierachy.cpp" />
     <ClCompile Include="ECS\Layers.cpp" />
+    <ClCompile Include="ECS\System\CameraSystem.cpp" />
+    <ClCompile Include="Editor\EditorCamera.cpp" />
+    <ClCompile Include="ECS\System\LogicSystem.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_component_window.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_Gizmo.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_handler.cpp" />
@@ -219,7 +223,9 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClCompile Include="Events\Listeners.cpp" />
     <ClCompile Include="Events\MessageSystem.cpp" />
     <ClCompile Include="Graphics\GraphicsBuffers.cpp" />
+    <ClCompile Include="Graphics\GraphicsCamera.cpp" />
     <ClCompile Include="Graphics\GraphicsDraw.cpp" />
+    <ClCompile Include="Graphics\GraphicsMatrix.cpp" />
     <ClCompile Include="Graphics\GraphicsPipe.cpp" />
     <ClCompile Include="Graphics\GraphicsShader.cpp" />
     <ClCompile Include="Graphics\GraphicsVAO.cpp" />
@@ -236,10 +242,15 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
   <ItemGroup>
     <ClInclude Include="Application\Application.h" />
     <ClInclude Include="Application\Helper.h" />
+    <ClInclude Include="Assets\SceneManager.h" />
     <ClInclude Include="C# Mono\mono_handler.h" />
     <ClInclude Include="ECS\Component\CameraComponent.h" />
+    <ClInclude Include="ECS\Component\ScriptComponent.h" />
     <ClInclude Include="ECS\Hierachy.h" />
     <ClInclude Include="ECS\Layers.h" />
+    <ClInclude Include="ECS\System\CameraSystem.h" />
+    <ClInclude Include="Editor\EditorCamera.h" />
+    <ClInclude Include="ECS\System\LogicSystem.h" />
     <ClInclude Include="Editor\ImGui Panels\imgui_handler.h" />
     <ClInclude Include="Application\json_handler.h" />
     <ClInclude Include="Application\Window.h" />
@@ -295,6 +306,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="Events\BaseMessage.h" />
     <ClInclude Include="Events\Listeners.h" />
     <ClInclude Include="Events\MessageSystem.h" />
+    <ClInclude Include="Graphics\GraphicsCamera.h" />
     <ClInclude Include="Graphics\GraphicsPipe.h" />
     <ClInclude Include="Inputs\Input.h" />
     <ClInclude Include="Math\Mat2x2.h" />

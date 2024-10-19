@@ -395,9 +395,9 @@ namespace Serialization {
 		LOGGING_INFO("Load Json Successful");
 	}
 
-	void Serialize::m_SaveComponentsJson(const std::string& filePath, const std::unordered_map<ecs::EntityID, std::bitset<ecs::ComponentType::TOTALTYPECOMPONENT>>& ECS_EntityMap)
+	void Serialize::m_SaveComponentsJson(const std::string& filePath)
 	{
-		std::string jsonFilePath = filePath + "/Components.json";
+		std::string jsonFilePath = filePath;
 		m_JsonFileValidation(jsonFilePath);
 
 		// Create JSON object to hold the updated values
@@ -411,7 +411,7 @@ namespace Serialization {
 		auto* ecs = ecs::ECS::m_GetInstance();
 
 		// Iterate through the ECS_Entitymap to save data only for active entities
-		for (const auto& entityPair : ECS_EntityMap) {
+		for (const auto& entityPair : ecs->m_ECS_EntityMap) {
 			ecs::EntityID entityId = entityPair.first;
 
 			if (savedEntities.find(entityId) != savedEntities.end()) {
@@ -430,7 +430,6 @@ namespace Serialization {
 					nameValue.SetString(static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(entityId))->m_entityName.c_str(), allocator);
 					entityData.AddMember("name", nameValue, allocator);
 					hasComponents = true;
-
 				}
 
 				// Check if the entity has TransformComponent and save 
@@ -553,17 +552,19 @@ namespace Serialization {
 					if (cc)
 					{
 						rapidjson::Value camera(rapidjson::kObjectType);
-						camera.AddMember("coordinates", rapidjson::Value().SetObject()
-							.AddMember("x", cc->m_coordinates.m_x, allocator)
-							.AddMember("y", cc->m_coordinates.m_y, allocator), allocator);
-						camera.AddMember("zoom", rapidjson::Value().SetObject()
-							.AddMember("x", cc->m_zoom.m_x, allocator)
-							.AddMember("y", cc->m_zoom.m_y, allocator), allocator);
-						camera.AddMember("angle", cc->m_angle, allocator);
+						camera.AddMember("planes", rapidjson::Value().SetObject()
+							.AddMember("left", cc->m_left, allocator)
+							.AddMember("right", cc->m_right, allocator)
+							.AddMember("top", cc->m_top, allocator)
+							.AddMember("bottom", cc->m_bottom, allocator), allocator);
+						camera.AddMember("aspectRatio", cc->m_aspectRatio, allocator);
+					
 						entityData.AddMember("camera", camera, allocator);
 						hasComponents = true;
 					}
 				}
+
+				
 
 				//Check Child Obj now
 				std::optional<std::vector<ecs::EntityID>> childrenOptional = ecs::Hierachy::m_GetChild(entityId);

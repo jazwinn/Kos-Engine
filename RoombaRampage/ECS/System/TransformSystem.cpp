@@ -20,6 +20,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "TransformSystem.h"
 #include "../ECS/Hierachy.h"
 #include <unordered_set>
+#include "../Graphics/GraphicsCamera.h"
 
 
 namespace ecs {
@@ -70,8 +71,6 @@ namespace ecs {
 		for (int n{}; n < m_vecTransformComponentPtr.size(); n++)
 		{
 			TransformComponent* transformComp = m_vecTransformComponentPtr[n];
-
-
 
 			transformComp->m_transformation = mat3x3::Mat3Transform(transformComp->m_position, transformComp->m_scale, transformComp->m_rotation);
 
