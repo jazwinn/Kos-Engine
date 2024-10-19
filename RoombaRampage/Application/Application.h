@@ -16,13 +16,21 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #ifndef APP_H
 #define APP_H
 
-#include "Window.h"
-#include "../Assets/Audio.h"
 
+
+#include "../Debugging/Logging.h"
+#include "../ECS/ECS.h"
+#include "../Inputs/Input.h"
+#include "Helper.h"
+#include "Window.h"
+
+#include "../Debugging/Logging.h"
+#include "../C# Mono/mono_handler.h"
+
+#include "../Editor/ImGui Panels/imgui_handler.h"
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
-#include "../Editor/ImGui Panels/imgui_handler.h"
 /******************************************************************/
 /*!
 \class     Application
@@ -44,7 +52,7 @@ namespace Application {
 		\brief     Initialzie all systems, managers and pipeline
 		*/
 		/******************************************************************/
-		static int Init();
+		int Init();
 
 		/******************************************************************/
 		/*!
@@ -53,7 +61,7 @@ namespace Application {
 				   update functions.
 		*/
 		/******************************************************************/
-		static int Run();
+		int Run();
 		/******************************************************************/
 		/*!
 		\fn        m_Cleanup()
@@ -61,14 +69,15 @@ namespace Application {
 				   functions of all the other systems.
 		*/
 		/******************************************************************/
-		static int m_Cleanup();
+		int m_Cleanup();
 
-		static AppWindow lvWindow;
 
 	private:
-		static gui::ImGuiHandler imgui_manager; //should only remain in Application
-
-
+		gui::ImGuiHandler imgui_manager; //should only remain in Application
+		AppWindow lvWindow;
+		Input::InputSystem Input;
+		mono::MonoScriptHandler ScriptManager;
+		logging::Logger logs;
 	};
 }
 
