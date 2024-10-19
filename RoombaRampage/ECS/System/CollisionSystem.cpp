@@ -128,7 +128,8 @@ namespace ecs {
 
 		//check for collision
 		if (m_vecColliderComponentPtr.size() > 0) {
-			PhysicsPipeline.m_CollisionCheck(ecs->m_DeltaTime);
+			//PhysicsPipeline.m_CollisionCheck(ecs->m_DeltaTime);
+			PhysicsPipeline.m_CollisionCheckUpdate(ecs->m_DeltaTime);
 		}
 	
 	}

@@ -5,11 +5,10 @@
 #include <vector>
 #include <memory>
 #include <iostream>
-#include <set>
 #include <utility>
 
-const int size = layer::LAYERS::MAXLAYER;
 namespace physicslayer {
+    const int size = layer::LAYERS::MAXLAYER;
 	class PhysicsLayer {
 	public:
     // Method to access the single instance of PhysicsLayer
@@ -24,7 +23,6 @@ namespace physicslayer {
 	PhysicsLayer& operator=(const PhysicsLayer&) = delete;
 
 	void setCollision(int layer1, int layer2, bool value);
-    bool shouldCollide(int layer1, int layer2);
 	void printCollisionMatrix() const;
     bool getCollide(int layer1, int layer2);
     std::vector<std::vector<bool>> getMatrix() const;
@@ -35,14 +33,5 @@ namespace physicslayer {
 	};
    
 }
-/*
-        // Print only the upper triangle part
-        for (int j = i; j >= 0; --j) {
-            std::cout << collisionMatrix[i][j] << " ";
-        }
-        for (int j = i + 1 ; j >= 0 ; --j){
-            std::cout << "  "; // Two spaces for each missing element
-        }
-        std::cout << std::endl;
-*/
+
 #endif

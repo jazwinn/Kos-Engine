@@ -31,6 +31,9 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Debugging/Logging.h"
 #include <map>
 #include "PhysicsLayer.h"
+#include <set>
+#include <unordered_set>
+#include <functional>
 
 
 
@@ -154,6 +157,7 @@ namespace physicspipe {
 		vector2::Vec2 m_pt1;
 		vector2::Vec2 m_normal;
 	};
+
 	/******************************************************************/
 	/*!
 	\class     Physics
@@ -169,6 +173,8 @@ namespace physicspipe {
 		static std::vector<std::shared_ptr<PhysicsData>> m_physicsEntities;
 		static std::vector<std::shared_ptr<PhysicsData>> m_collidedEntities;
 		static std::map<layer::LAYERS, std::vector<std::shared_ptr<PhysicsData>>> m_layerToEntities;
+		static std::vector<int> m_checker;
+
 		/******************************************************************/
 		/*!
 		\fn        void Physics::m_CalculateBoundingBox()
@@ -272,6 +278,7 @@ namespace physicspipe {
 
 		void m_CollisionCheckUpdate(float dt);
 		bool CheckCollision(const std::shared_ptr<PhysicsData>& entity1, const std::shared_ptr<PhysicsData>& entity2, float dt);
+		bool shouldCollide(const std::shared_ptr<PhysicsData>& entity1, const std::shared_ptr<PhysicsData>& entity2);
 	};
 }
 #endif

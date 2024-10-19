@@ -69,6 +69,8 @@
     <ClCompile Include="ECS\Hierachy.cpp" />
     <ClCompile Include="ECS\Layers.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_Gizmo.cpp" />
+    <ClCompile Include="C# Mono\mono_handler.cpp" />
+    <ClCompile Include="Editor\ImGui Panels\imgui_layer_panel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Application.h" />
@@ -147,6 +149,7 @@
     <ClInclude Include="ECS\Hierachy.h" />
     <ClInclude Include="ECS\Layers.h" />
     <ClInclude Include="ECS\Component\CameraComponent.h" />
+    <ClInclude Include="C# Mono\mono_handler.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Graphics\debugFragmentShader.frag" />

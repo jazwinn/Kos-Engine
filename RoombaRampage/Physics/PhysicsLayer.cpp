@@ -2,10 +2,10 @@
 
 namespace physicslayer {
     std::unique_ptr<PhysicsLayer> PhysicsLayer::instance = nullptr;
-    std::set<std::pair<int, int>> checkedPairs;
-    
+   
+ 
     PhysicsLayer::PhysicsLayer() {
-        collisionMatrix = {};
+        collisionMatrix = std::vector<std::vector<bool>>(size, std::vector<bool>(size, false));
     }
 
     void PhysicsLayer::printCollisionMatrix() const {
@@ -26,25 +26,14 @@ namespace physicslayer {
             collisionMatrix[col][row] = value;
         }
     }
-    bool PhysicsLayer::getCollide(int layer1, int layer2) {
+    bool PhysicsLayer::getCollide(int layer1, int layer2) {\
+        if (layer1 < 0 || layer1 >= size || layer2 < 0 || layer2 >= size) {
+            std::cerr << "Error: getCollide out of range access. Layers: " << layer1 << ", " << layer2 << std::endl;
+            return false; // Return a default value or handle the error as needed.
+        }
         return collisionMatrix[layer1][layer2];
     }
     
-    bool PhysicsLayer::shouldCollide(int layer1, int layer2) {
-        if (layer1 > layer2) {
-            std::swap(layer1, layer2);
-        }
-        std::pair<int, int> layerPair = { layer1, layer2 };
-        // Check if this pair has already been checked
-        if (checkedPairs.find(layerPair) != checkedPairs.end()) {
-            return false; // Pair has already been checked
-        }
-
-        // Add the pair to the set of checked pairs
-        checkedPairs.insert(layerPair);
-
-        return collisionMatrix[layer1][layer2];
-    }
 
     std::vector<std::vector<bool>> PhysicsLayer::getMatrix() const {
         return collisionMatrix;

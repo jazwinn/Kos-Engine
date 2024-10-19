@@ -201,7 +201,7 @@ namespace gui {
         void m_DrawGizmo(float renderPosX, float renderPosY, float renderWidth, float renderHeight);
 
         int m_clickedEntityId;
-
+        void m_DrawLayerWindow();
     private:
 
         bool m_objectNameBox = false;
