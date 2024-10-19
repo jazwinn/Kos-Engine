@@ -395,9 +395,9 @@ namespace Serialization {
 		LOGGING_INFO("Load Json Successful");
 	}
 
-	void Serialize::m_SaveComponentsJson(const std::string& filePath, const std::unordered_map<ecs::EntityID, std::bitset<ecs::ComponentType::TOTALTYPECOMPONENT>>& ECS_EntityMap)
+	void Serialize::m_SaveComponentsJson(const std::string& filePath)
 	{
-		std::string jsonFilePath = filePath + "/Components.json";
+		std::string jsonFilePath = filePath;
 		m_JsonFileValidation(jsonFilePath);
 
 		// Create JSON object to hold the updated values
@@ -411,7 +411,7 @@ namespace Serialization {
 		auto* ecs = ecs::ECS::m_GetInstance();
 
 		// Iterate through the ECS_Entitymap to save data only for active entities
-		for (const auto& entityPair : ECS_EntityMap) {
+		for (const auto& entityPair : ecs->m_ECS_EntityMap) {
 			ecs::EntityID entityId = entityPair.first;
 
 			if (savedEntities.find(entityId) != savedEntities.end()) {

@@ -72,12 +72,6 @@ namespace ecs {
 		{
 			TransformComponent* transformComp = m_vecTransformComponentPtr[n];
 
-			if (ecs->m_ECS_EntityMap[transformComp->m_Entity].test(TYPECAMERACOMPONENT))
-			{
-				CameraComponent* cam = (CameraComponent*)ecs->m_ECS_CombinedComponentPool[TYPECAMERACOMPONENT]->m_GetEntityComponent(transformComp->m_Entity);
-				graphicpipe::GraphicsCamera::m_cameras.push_back({ {transformComp->m_position.m_x,transformComp->m_position.m_y}, {transformComp->m_scale.m_x, transformComp->m_scale.m_y }, transformComp->m_rotation });
-			}
-
 			transformComp->m_transformation = mat3x3::Mat3Transform(transformComp->m_position, transformComp->m_scale, transformComp->m_rotation);
 
 			if (!transformComp->m_haveParent) {

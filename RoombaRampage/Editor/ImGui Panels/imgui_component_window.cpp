@@ -172,7 +172,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                 //Display Position
                 ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
-                ImGui::Text("Position");
+                ImGui::Text("Translation");
                 ImGui::SameLine(slider_start_pos_x);
                 ImGui::SetNextItemWidth(100.0f);
                 ImGui::DragFloat("X##", &tc->m_position.m_x, 0.02f, -50.f, 50.f, "%.2f");

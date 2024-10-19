@@ -107,7 +107,7 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
     }
 
     //Reset Camera To Center
-    if (ImGui::IsKeyDown(ImGuiKey_LeftCtrl))
+    if (ImGui::IsKeyDown(ImGuiKey_LeftCtrl) && ImGui::IsKeyDown(ImGuiKey_R))
     {
         EditorCamera::m_editorCamera.m_coordinates.x = 0.f;
         EditorCamera::m_editorCamera.m_coordinates.y = 0.f;

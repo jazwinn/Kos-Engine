@@ -20,15 +20,16 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "imgui_handler.h"
 #include "imgui_internal.h"
 
-#include "../../De&Serialization/json_handler.h"
+#include "../Assets/SceneManager.h"
 #include "../ECS/ECS.h"
 
 void gui::ImGuiHandler::m_DrawMainMenuBar() {
 
     ImGuiIO& io = ImGui::GetIO();  // Get input/output data
+    scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();
     //If CTRL + S press, save
     if (io.KeyCtrl && ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_S))) {
-        Serialization::Serialize::m_SaveComponentsJson("../RoombaRampage/Json", ecs::ECS::m_GetInstance()->m_ECS_EntityMap);
+        scenemanager->m_SaveActiveScene();
         std::cout << "Saving data..." << std::endl;
     }
 
@@ -39,17 +40,19 @@ void gui::ImGuiHandler::m_DrawMainMenuBar() {
             if (ImGui::MenuItem("Save")) {
 
 
-                Serialization::Serialize::m_SaveComponentsJson("../RoombaRampage/Json", ecs::ECS::m_GetInstance()->m_ECS_EntityMap);
+                scenemanager->m_SaveActiveScene();
 
                 
             }
             
             if (ImGui::BeginMenu("Open - Work In Progress")) {
 
-
-                if (ImGui::MenuItem("Components.json")) {
-                    //Serialization::Serialize::LoadComponentsJson("../RoombaRampage/Json/components.json", Ecs::ECS::GetInstance(), obj_text_entries);
+                for (auto& scene : scenemanager->m_availableScenes) {
+                    if (ImGui::MenuItem(scene.c_str())) {
+                        scenemanager->m_LoadScene(scene);
+                    }
                 }
+                
 
                 ImGui::EndMenu();
             }
