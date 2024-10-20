@@ -50,9 +50,9 @@ void gui::ImGuiHandler::m_DrawTestWindow() {
 		//assetManager->m_audioContainer[0]->m_playSound();
 		/*messaging::Message vacuumBtnClick(messaging::MessageType::AUDIOPLAY, "Test Panel");
 		MsgSys.m_SendMessage(vacuumBtnClick);*/
-		events::ButtonPressEvent temp(1);
-		DISPATCH_BUTTON_EVENT(temp);
-		REMOVE_BUTTON_LISTENER(m_buttonID);
+		//events::ButtonPressEvent temp(1);
+		//DISPATCH_BUTTON_EVENT(temp);
+		//REMOVE_BUTTON_LISTENER(m_buttonID);
 	}
 	ImGui::SameLine();
 	if (ImGui::Button("Sound")) {

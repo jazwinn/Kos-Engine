@@ -21,7 +21,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Graphics/GraphicsPipe.h"
 #include "../Assets/AssetManager.h"
 #include "../Assets/SceneManager.h"
-
+#include "../Events/EventHandler.h"
 
 
 namespace Application {

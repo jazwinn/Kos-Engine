@@ -39,7 +39,9 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 namespace gui {
 
-	ImGuiHandler::ImGuiHandler() {} //CTORdoing 
+	ImGuiHandler::ImGuiHandler() {
+		//REGISTER_BUTTON_LISTENER(events::ButtonEvents::EVENTBUTTONPRESS, ImGuiHandler::m_OnButtonPress, this)
+	} //CTORdoing 
 
 	ImGuiHandler::~ImGuiHandler() {} //Destructor
 
@@ -60,7 +62,7 @@ namespace gui {
 		// Setup Platform/Renderer bindings
 		ImGui_ImplGlfw_InitForOpenGL(window, true);
 		ImGui_ImplOpenGL3_Init(glsl_version);
-		REGISTER_BUTTON_LISTENER(events::ButtonEvents::EVENTBUTTONPRESS, ImGuiHandler::m_OnButtonPress, this);
+		
 	}
 
 	void ImGuiHandler::m_NewFrame()
