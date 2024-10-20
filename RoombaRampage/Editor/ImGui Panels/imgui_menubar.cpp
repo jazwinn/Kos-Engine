@@ -23,6 +23,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Assets/SceneManager.h"
 #include "../ECS/ECS.h"
 
+
 void gui::ImGuiHandler::m_DrawMainMenuBar() {
 
     ImGuiIO& io = ImGui::GetIO();  // Get input/output data
@@ -33,10 +34,19 @@ void gui::ImGuiHandler::m_DrawMainMenuBar() {
         std::cout << "Saving data..." << std::endl;
     }
 
+
+
+    bool openNewFilepopup = false;;
     if (ImGui::BeginMainMenuBar())
     {
         if (ImGui::BeginMenu("File"))
         {
+            if (ImGui::MenuItem("New")) {
+                openNewFilepopup = true;
+
+
+            }
+           
             if (ImGui::MenuItem("Save")) {
 
 
@@ -44,12 +54,14 @@ void gui::ImGuiHandler::m_DrawMainMenuBar() {
 
                 
             }
+
             
-            if (ImGui::BeginMenu("Open - Work In Progress")) {
+            if (ImGui::BeginMenu("Open")) {
 
                 for (auto& scene : scenemanager->m_availableScenes) {
                     if (ImGui::MenuItem(scene.c_str())) {
                         scenemanager->m_LoadScene(scene);
+                        m_clickedEntityId = -1;
                     }
                 }
                 
@@ -68,8 +80,46 @@ void gui::ImGuiHandler::m_DrawMainMenuBar() {
             ImGui::EndMenu();
         }
 
+        if (openNewFilepopup) {
+            ImGui::OpenPopup("New Scene");
+        }
+
+
+        if (ImGui::BeginPopupModal("New Scene", NULL, ImGuiWindowFlags_AlwaysAutoResize))
+        {
+            ImGui::Text("Enter Scene Name");
+            ImGui::Separator();
+
+            //static int unused_i = 0;
+            //ImGui::Combo("Combo", &unused_i, "Delete\0Delete harder\0");
+
+            static char str1[128] = "";
+            ImGui::InputTextWithHint(".json", "Enter scene name here", str1, IM_ARRAYSIZE(str1));
+
+            if (ImGui::Button("Save", ImVec2(120, 0))) { 
+                std::string scene = str1;
+                if (auto result = scenemanager->m_CreateNewScene(scene); result.has_value()) {
+                    std::string filepath = result.value();
+                    scenemanager->m_AddScene(filepath);
+                    scenemanager->m_activeScene = scene;
+                    scenemanager->m_SaveActiveScene();
+                }
+
+
+                ImGui::CloseCurrentPopup(); 
+
+            }
+            ImGui::SetItemDefaultFocus();
+            ImGui::SameLine();
+            if (ImGui::Button("Cancel", ImVec2(120, 0))) { ImGui::CloseCurrentPopup(); }
+            ImGui::EndPopup();
+        }
 
         ImGui::EndMainMenuBar();
     }
 
+
+
+    
 }
+

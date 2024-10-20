@@ -5,6 +5,7 @@
 #include <unordered_map>
 #include "../De&Serialization/json_handler.h"
 #include <memory>
+#include <optional>
 
 namespace scenes {
 
@@ -20,7 +21,7 @@ namespace scenes {
 		void m_AddScene(std::string filepath);
 
 		// create a json folder
-		void m_CreateNewScene(std::string scene);
+		std::optional<std::string> m_CreateNewScene(std::string scene);
 
 		void m_LoadScene(std::string scene);
 

@@ -30,7 +30,7 @@ namespace scenes {
 
     }
 
-    void SceneManager::m_CreateNewScene(std::string scene)
+    std::optional<std::string> SceneManager::m_CreateNewScene(std::string scene)
     {
         std::string jsonFilePath = m_jsonFilePath + scene + ".json";
         std::ifstream checkFile(jsonFilePath);
@@ -38,19 +38,22 @@ namespace scenes {
         if (checkFile) {
             //if file name exist
             LOGGING_WARN("JSON file already exist, select another name");
-            return;
+            return {};
         }
         //create a json file
 
         FILE* fp = std::fopen(jsonFilePath.c_str(), "wb");
+        // start with []
+        fprintf(fp, "[]");
         char writeBuffer[1];  // Buffer to optimize file writing
         rapidjson::FileWriteStream os(fp, writeBuffer, sizeof(writeBuffer));
 
         rapidjson::Writer<rapidjson::FileWriteStream> writer(os);
 
-
-
         std::fclose(fp);
+
+        // return file path
+        return jsonFilePath;
     }
 
     void SceneManager::m_LoadScene(std::string scene)

@@ -36,7 +36,7 @@ void gui::ImGuiHandler::m_DrawLayerWindow() {
     ImGui::Begin("Layer Panel", nullptr, ImGuiWindowFlags_HorizontalScrollbar);
   
     const float cellWidth = 25.0f; // Adjust width as needed
-    const float labelWidth = 130.0f; // Width for the row labels
+    const float labelWidth = 60.0f; // Width for the row labels
     const float verticalTextOffsetY = 10.0f; // Adjust as needed for better alignment
 
     // Draw the header row with vertical text
@@ -60,7 +60,7 @@ void gui::ImGuiHandler::m_DrawLayerWindow() {
         ImGui::SetCursorPosX(0.5f);
         // Draw row label with fixed width
         
-        ImGui::Text("%-*s", (int)(labelWidth / ImGui::GetFontSize()), (layers.m_layerMap[static_cast<layer::LAYERS>(row)].first).c_str()); // Adjust label width for alignment
+        ImGui::Text("%*s", (int)(labelWidth / ImGui::GetFontSize()), (layers.m_layerMap[static_cast<layer::LAYERS>(row)].first).c_str()); // Adjust label width for alignment
 
         // Draw checkboxes for this row
         for (int col = 0; col < row + 1; ++col)
