@@ -41,10 +41,11 @@ void gui::ImGuiHandler::m_DrawLayerWindow() {
 
     // Draw the header row with vertical text
     ImGui::SetCursorPosX(labelWidth); // Align column headers to start after row labels
-    for (int col = 0; col < layerCount; ++col)
+    //for (int col = layerCount-1; col >= 0; --col)
+    for(int col = 0 ; col < layerCount ; ++ col)
     {
         ImGui::SetCursorPosX(labelWidth + col * cellWidth); // Position the vertical text over each column
-        auto it = layers.m_layerMap.find(static_cast<layer::LAYERS>(col));
+        auto it = layers.m_layerMap.find(static_cast<layer::LAYERS>((layerCount-1)-col));
         if (it != layers.m_layerMap.end()) {
             DrawVerticalLabel(it->second.first, 0.0f, 210.0f); // Adjust x and y offsets as needed
         }
@@ -62,7 +63,7 @@ void gui::ImGuiHandler::m_DrawLayerWindow() {
         ImGui::Text("%-*s", (int)(labelWidth / ImGui::GetFontSize()), (layers.m_layerMap[static_cast<layer::LAYERS>(row)].first).c_str()); // Adjust label width for alignment
 
         // Draw checkboxes for this row
-        for (int col = 0; col < layerCount - row; ++col)
+        for (int col = 0; col < row + 1; ++col)
         {
             ImGui::SameLine();
             ImGui::SetCursorPosX(labelWidth + col * cellWidth);
