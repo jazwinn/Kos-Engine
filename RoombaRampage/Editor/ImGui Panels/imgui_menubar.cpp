@@ -98,12 +98,18 @@ void gui::ImGuiHandler::m_DrawMainMenuBar() {
 
             if (ImGui::Button("Save", ImVec2(120, 0))) { 
                 std::string scene = str1;
-                if (auto result = scenemanager->m_CreateNewScene(scene); result.has_value()) {
-                    std::string filepath = result.value();
-                    scenemanager->m_AddScene(filepath);
-                    scenemanager->m_activeScene = scene;
-                    scenemanager->m_SaveActiveScene();
+                if (!scene.empty()) {
+                    if (auto result = scenemanager->m_CreateNewScene(scene); result.has_value()) {
+                        std::string filepath = result.value();
+                        scenemanager->m_AddScene(filepath);
+                        scenemanager->m_activeScene = scene;
+                        scenemanager->m_SaveActiveScene();
+                    }
                 }
+                else {
+                    LOGGING_WARN("Please Insert a Scene Name");
+                }
+
 
 
                 ImGui::CloseCurrentPopup(); 
