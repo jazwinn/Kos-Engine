@@ -22,6 +22,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Events/BaseMessage.h"
 #include "../Events/MessageSystem.h"
 #include "../Events/Listeners.h"
+#include "../Events/EventHandler.h"
 
 #include<vector>
 #include<string>
@@ -47,8 +48,12 @@ void gui::ImGuiHandler::m_DrawTestWindow() {
 	if (ImGui::Button("BGM")) {
 		// abit hard coded might cause crash
 		//assetManager->m_audioContainer[0]->m_playSound();
-		messaging::Message vacuumBtnClick(messaging::MessageType::AUDIOPLAY, "Test Panel");
-		MsgSys.m_SendMessage(vacuumBtnClick);
+		/*messaging::Message vacuumBtnClick(messaging::MessageType::AUDIOPLAY, "Test Panel");
+		MsgSys.m_SendMessage(vacuumBtnClick);*/
+		events::ButtonPressEvent temp(1);
+		DISPATCH_BUTTON_EVENT(temp);
+		//Honestly unsure how to test unregistering cuz idk when it would be used
+		//REMOVE_BUTTON_LISTENER(m_buttonID);
 	}
 	ImGui::SameLine();
 	if (ImGui::Button("Sound")) {

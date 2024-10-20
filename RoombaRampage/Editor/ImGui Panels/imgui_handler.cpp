@@ -35,10 +35,13 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Editor/EditorCamera.h"
 #include "../Graphics/GraphicsPipe.h"
 #include "../Inputs/Input.h"
+#include "../Events/EventHandler.h"
 
 namespace gui {
 
-	ImGuiHandler::ImGuiHandler() {} //CTORdoing 
+	ImGuiHandler::ImGuiHandler() {
+		REGISTER_BUTTON_LISTENER(events::ButtonEvents::EVENTBUTTONPRESS, ImGuiHandler::m_OnButtonPress, this)
+	} //CTORdoing 
 
 	ImGuiHandler::~ImGuiHandler() {} //Destructor
 
@@ -59,6 +62,7 @@ namespace gui {
 		// Setup Platform/Renderer bindings
 		ImGui_ImplGlfw_InitForOpenGL(window, true);
 		ImGui_ImplOpenGL3_Init(glsl_version);
+		
 	}
 
 	void ImGuiHandler::m_NewFrame()
@@ -133,4 +137,13 @@ namespace gui {
 		ImGui::DestroyContext();
 	}
 
+
+	void ImGuiHandler::m_OnButtonPress(const events::BaseEvent<events::ButtonEvents>& givenEvent) {
+		std::cout << "Button: " << givenEvent.m_ToType<events::ButtonPressEvent>().m_GetButton() << " was pressed." << std::endl;
+		if (givenEvent.m_ToType<events::ButtonPressEvent>().m_GetButton() == 1) {
+			assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
+			assetManager->m_audioContainer[0]->m_PlaySound();
+		}
+	}
 }
+
