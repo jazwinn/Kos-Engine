@@ -6,16 +6,19 @@ namespace physicslayer {
  
     PhysicsLayer::PhysicsLayer() {
         collisionMatrix = std::vector<std::vector<bool>>(size, std::vector<bool>(size, false));
+        for (int i = 0; i < size; ++i) {
+            setCollision(0, i, true);
+        }
     }
 
     void PhysicsLayer::printCollisionMatrix() const {
         for (int i = 0; i < size; ++i) {
-            for (int j = 0; j < size - i; ++j) {
+            for (int j = 0; j < size; ++j) {
                 std::cout << collisionMatrix[i][j] << " ";
             }
-            for (int j = size - i + 1; j < size; ++j) {
-                std::cout << "  "; // Two spaces for each missing element
-            }
+            //for (int j = size - i + 1; j < size; ++j) {
+            //    std::cout << "  "; // Two spaces for each missing element
+            //}
             std::cout << std::endl;
         }
     }
