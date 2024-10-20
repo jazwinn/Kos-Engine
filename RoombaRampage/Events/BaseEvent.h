@@ -50,12 +50,17 @@ namespace events {
 	class EventDispatcher {
 	private:
 		std::unordered_map<T, std::vector<std::function<void(const BaseEvent<T>&)>>> m_listeners;
+		int m_nextID = 0;
+		std::map<int, std::pair<T, typename std::function<void(const BaseEvent<T>&)>::iterator>> m_listenerIDs;
 	public:
-		void RegisterListener(T givenEvent, std::function<void(const BaseEvent<T>&)> givenCallback) {
+		void m_RegisterListener(T givenEvent, std::function<void(const BaseEvent<T>&)> givenCallback) {
 			m_listeners[givenEvent].emplace_back(givenCallback);
+			int retID = m_nextID++;
+			m_listenerIDs[retID] = { givenEvent, std::prev(m_listeners[givenEvent].end()) };
+			return retID;
 		}
 
-		void DispatchToListeners(const BaseEvent<T>& givenEvent) {
+		void m_DispatchToListeners(const BaseEvent<T>& givenEvent) {
 			if (m_listeners.find(givenEvent.m_GetEventType()) == m_listeners.end()) {
 				return;
 			}
@@ -64,6 +69,15 @@ namespace events {
 				if (!givenEvent.m_IsHandled()) {
 					currListener(givenEvent);
 				}
+			}
+		}
+
+		int m_UnregisterListener(int ID) {
+			auto pairInMap = m_listenerIDs.find(ID);
+			if (pairInMap != m_listenerIDs.end()) {
+				auto& currListenerInfo = pairInMap->second;
+				m_listeners[currListenerInfo.first].erase(currListenerInfo.second);
+				m_listenerIDs.erase(pairInMap);
 			}
 		}
 	};
