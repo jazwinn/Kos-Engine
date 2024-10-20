@@ -51,9 +51,9 @@ namespace events {
 	private:
 		std::unordered_map<T, std::vector<std::function<void(const BaseEvent<T>&)>>> m_listeners;
 		int m_nextID = 0;
-		std::map<int, std::pair<T, typename std::function<void(const BaseEvent<T>&)>::iterator>> m_listenerIDs;
+		std::map<int, std::pair<T, typename std::vector<std::function<void(const BaseEvent<T>&)>>::iterator>> m_listenerIDs;
 	public:
-		void m_RegisterListener(T givenEvent, std::function<void(const BaseEvent<T>&)> givenCallback) {
+		int m_RegisterListener(T givenEvent, std::function<void(const BaseEvent<T>&)> givenCallback) {
 			m_listeners[givenEvent].emplace_back(givenCallback);
 			int retID = m_nextID++;
 			m_listenerIDs[retID] = { givenEvent, std::prev(m_listeners[givenEvent].end()) };
@@ -72,7 +72,7 @@ namespace events {
 			}
 		}
 
-		int m_UnregisterListener(int ID) {
+		void m_UnregisterListener(int ID) {
 			auto pairInMap = m_listenerIDs.find(ID);
 			if (pairInMap != m_listenerIDs.end()) {
 				auto& currListenerInfo = pairInMap->second;
