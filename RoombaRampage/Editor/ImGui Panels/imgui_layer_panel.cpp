@@ -45,7 +45,7 @@ void gui::ImGuiHandler::m_DrawLayerWindow() {
     for(int col = 0 ; col < layerCount ; ++ col)
     {
         ImGui::SetCursorPosX(labelWidth + col * cellWidth); // Position the vertical text over each column
-        auto it = layers.m_layerMap.find(static_cast<layer::LAYERS>((layerCount-1)-col));
+        auto it = layers.m_layerMap.find(static_cast<layer::LAYERS>(col));
         if (it != layers.m_layerMap.end()) {
             DrawVerticalLabel(it->second.first, 0.0f, 210.0f); // Adjust x and y offsets as needed
         }
