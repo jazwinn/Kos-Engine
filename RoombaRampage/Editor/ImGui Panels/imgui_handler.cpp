@@ -40,7 +40,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 namespace gui {
 
 	ImGuiHandler::ImGuiHandler() {
-		//REGISTER_BUTTON_LISTENER(events::ButtonEvents::EVENTBUTTONPRESS, ImGuiHandler::m_OnButtonPress, this)
+		REGISTER_BUTTON_LISTENER(events::ButtonEvents::EVENTBUTTONPRESS, ImGuiHandler::m_OnButtonPress, this)
 	} //CTORdoing 
 
 	ImGuiHandler::~ImGuiHandler() {} //Destructor

@@ -3,11 +3,18 @@
   <ItemGroup>
     <ClCompile Include="Application\Application.cpp" />
     <ClCompile Include="Application\Helper.cpp" />
+    <ClCompile Include="Assets\SceneManager.cpp" />
+    <ClCompile Include="C# Mono\mono_handler.cpp" />
     <ClCompile Include="ECS\Hierachy.cpp" />
     <ClCompile Include="ECS\Layers.cpp" />
+    <ClCompile Include="ECS\System\CameraSystem.cpp" />
+    <ClCompile Include="Editor\EditorCamera.cpp" />
+    <ClCompile Include="ECS\System\LogicSystem.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_component_window.cpp" />
+    <ClCompile Include="Editor\ImGui Panels\imgui_Gizmo.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_handler.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_hierarchy_window.cpp" />
+    <ClCompile Include="Editor\ImGui Panels\imgui_layer_panel.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_logs_window.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_menubar.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_performance_window.cpp" />
@@ -48,7 +55,9 @@
     <ClCompile Include="Events\Listeners.cpp" />
     <ClCompile Include="Events\MessageSystem.cpp" />
     <ClCompile Include="Graphics\GraphicsBuffers.cpp" />
+    <ClCompile Include="Graphics\GraphicsCamera.cpp" />
     <ClCompile Include="Graphics\GraphicsDraw.cpp" />
+    <ClCompile Include="Graphics\GraphicsMatrix.cpp" />
     <ClCompile Include="Graphics\GraphicsPipe.cpp" />
     <ClCompile Include="Graphics\GraphicsShader.cpp" />
     <ClCompile Include="Graphics\GraphicsVAO.cpp" />
@@ -59,30 +68,22 @@
     <ClCompile Include="Math\Vector2.cpp" />
     <ClCompile Include="Math\Vector3.cpp" />
     <ClCompile Include="Physics\Physics.cpp" />
-    <ClCompile Include="Physics\PhysicsLayer.cpp" />
     <ClCompile Include="Physics\PhysicsCollision.cpp" />
-    <ClCompile Include="Dependencies\imgui\ImGuizmo.cpp" />
-    <ClCompile Include="Application\Application.cpp" />
-    <ClCompile Include="Application\Helper.cpp" />
-    <ClCompile Include="Application\main.cpp" />
-    <ClCompile Include="Application\Window.cpp" />
-    <ClCompile Include="ECS\Hierachy.cpp" />
-    <ClCompile Include="ECS\Layers.cpp" />
-    <ClCompile Include="Editor\ImGui Panels\imgui_Gizmo.cpp" />
-    <ClCompile Include="C# Mono\mono_handler.cpp" />
-    <ClCompile Include="Editor\ImGui Panels\imgui_layer_panel.cpp" />
-    <ClCompile Include="ECS\System\LogicSystem.cpp" />
-    <ClCompile Include="Editor\EditorCamera.cpp" />
-    <ClCompile Include="Graphics\GraphicsCamera.cpp" />
-    <ClCompile Include="Graphics\GraphicsMatrix.cpp" />
-    <ClCompile Include="Assets\SceneManager.cpp" />
-    <ClCompile Include="ECS\System\CameraSystem.cpp" />
+    <ClCompile Include="Physics\PhysicsLayer.cpp" />
+    <ClCompile Include="Events\EventHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Application.h" />
     <ClInclude Include="Application\Helper.h" />
+    <ClInclude Include="Assets\SceneManager.h" />
+    <ClInclude Include="C# Mono\mono_handler.h" />
+    <ClInclude Include="ECS\Component\CameraComponent.h" />
+    <ClInclude Include="ECS\Component\ScriptComponent.h" />
     <ClInclude Include="ECS\Hierachy.h" />
     <ClInclude Include="ECS\Layers.h" />
+    <ClInclude Include="ECS\System\CameraSystem.h" />
+    <ClInclude Include="Editor\EditorCamera.h" />
+    <ClInclude Include="ECS\System\LogicSystem.h" />
     <ClInclude Include="Editor\ImGui Panels\imgui_handler.h" />
     <ClInclude Include="Application\json_handler.h" />
     <ClInclude Include="Application\Window.h" />
@@ -138,6 +139,7 @@
     <ClInclude Include="Events\BaseMessage.h" />
     <ClInclude Include="Events\Listeners.h" />
     <ClInclude Include="Events\MessageSystem.h" />
+    <ClInclude Include="Graphics\GraphicsCamera.h" />
     <ClInclude Include="Graphics\GraphicsPipe.h" />
     <ClInclude Include="Inputs\Input.h" />
     <ClInclude Include="Math\Mat2x2.h" />
@@ -146,25 +148,13 @@
     <ClInclude Include="Math\Vector2.h" />
     <ClInclude Include="Math\Vector3.h" />
     <ClInclude Include="Physics\Physics.h" />
-    <ClInclude Include="Physics\PhysicsLayer.h" />
     <ClInclude Include="Physics\PhysicsCollision.h" />
-    <ClInclude Include="Dependencies\imgui\ImGuizmo.h" />
-    <ClInclude Include="Application\Application.h" />
-    <ClInclude Include="Application\Helper.h" />
-    <ClInclude Include="Application\Window.h" />
-    <ClInclude Include="ECS\Hierachy.h" />
-    <ClInclude Include="ECS\Layers.h" />
-    <ClInclude Include="ECS\Component\CameraComponent.h" />
-    <ClInclude Include="C# Mono\mono_handler.h" />
-<<<<<<< HEAD
-=======
-    <ClInclude Include="ECS\Component\ScriptComponent.h" />
-    <ClInclude Include="ECS\System\LogicSystem.h" />
-    <ClInclude Include="Editor\EditorCamera.h" />
-    <ClInclude Include="Graphics\GraphicsCamera.h" />
-    <ClInclude Include="Assets\SceneManager.h" />
-    <ClInclude Include="ECS\System\CameraSystem.h" />
->>>>>>> upstream/main
+    <ClInclude Include="Physics\PhysicsLayer.h" />
+    <ClInclude Include="Events\BaseEvent.h" />
+    <ClInclude Include="Events\ButtonEvent.h" />
+    <ClInclude Include="Events\EventHandler.h" />
+    <ClInclude Include="Events\KeyEvent.h" />
+    <ClInclude Include="Events\MouseEvent.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Graphics\debugFragmentShader.frag" />

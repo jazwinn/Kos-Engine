@@ -220,6 +220,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClCompile Include="ECS\System\MovementSystem.cpp" />
     <ClCompile Include="ECS\System\RenderSystem.cpp" />
     <ClCompile Include="ECS\System\RenderTextSystem.cpp" />
+    <ClCompile Include="Events\EventHandler.cpp" />
     <ClCompile Include="Events\Listeners.cpp" />
     <ClCompile Include="Events\MessageSystem.cpp" />
     <ClCompile Include="Graphics\GraphicsBuffers.cpp" />
@@ -303,9 +304,14 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="ECS\System\System.h" />
     <ClInclude Include="ECS\System\SystemList.h" />
     <ClInclude Include="ECS\System\SystemType.h" />
+    <ClInclude Include="Events\BaseEvent.h" />
     <ClInclude Include="Events\BaseMessage.h" />
+    <ClInclude Include="Events\ButtonEvent.h" />
+    <ClInclude Include="Events\EventHandler.h" />
+    <ClInclude Include="Events\KeyEvent.h" />
     <ClInclude Include="Events\Listeners.h" />
     <ClInclude Include="Events\MessageSystem.h" />
+    <ClInclude Include="Events\MouseEvent.h" />
     <ClInclude Include="Graphics\GraphicsCamera.h" />
     <ClInclude Include="Graphics\GraphicsPipe.h" />
     <ClInclude Include="Inputs\Input.h" />

@@ -50,8 +50,9 @@ void gui::ImGuiHandler::m_DrawTestWindow() {
 		//assetManager->m_audioContainer[0]->m_playSound();
 		/*messaging::Message vacuumBtnClick(messaging::MessageType::AUDIOPLAY, "Test Panel");
 		MsgSys.m_SendMessage(vacuumBtnClick);*/
-		//events::ButtonPressEvent temp(1);
-		//DISPATCH_BUTTON_EVENT(temp);
+		events::ButtonPressEvent temp(1);
+		DISPATCH_BUTTON_EVENT(temp);
+		//Honestly unsure how to test unregistering cuz idk when it would be used
 		//REMOVE_BUTTON_LISTENER(m_buttonID);
 	}
 	ImGui::SameLine();
