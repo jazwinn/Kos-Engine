@@ -160,14 +160,7 @@ namespace assetmanager {
         /******************************************************************/
         void m_LoadPrefab(std::string file);
 
-        /******************************************************************/
-        /*!
-        \fn      void m_loadEntities(const std::string& jsonFilePath)
-        \brief   Loads entity data from a JSON file and initializes entities.
-        \param   jsonFilePath - Path to the JSON file containing entity data.
-        */
-        /******************************************************************/
-        void m_loadEntities(const std::string& jsonFilePath);
+
     };
 
 }

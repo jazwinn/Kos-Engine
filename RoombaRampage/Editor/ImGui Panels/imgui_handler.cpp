@@ -32,10 +32,16 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Dependencies/rapidjson/stringbuffer.h"
 #include "imgui_handler.h"
 #include "../Application/Helper.h"
+#include "../Editor/EditorCamera.h"
+#include "../Graphics/GraphicsPipe.h"
+#include "../Inputs/Input.h"
+#include "../Events/EventHandler.h"
 
 namespace gui {
 
-	ImGuiHandler::ImGuiHandler() {} //CTORdoing 
+	ImGuiHandler::ImGuiHandler() {
+		REGISTER_BUTTON_LISTENER(events::ButtonEvents::EVENTBUTTONPRESS, ImGuiHandler::m_OnButtonPress, this)
+	} //CTORdoing 
 
 	ImGuiHandler::~ImGuiHandler() {} //Destructor
 
@@ -44,7 +50,6 @@ namespace gui {
 		// Setup Dear ImGui context
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
-		ImPlot::CreateContext();
 		ImGuiIO& io = ImGui::GetIO(); (void)io;
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;  // Enable Gamepad Controls
@@ -57,6 +62,7 @@ namespace gui {
 		// Setup Platform/Renderer bindings
 		ImGui_ImplGlfw_InitForOpenGL(window, true);
 		ImGui_ImplOpenGL3_Init(glsl_version);
+		
 	}
 
 	void ImGuiHandler::m_NewFrame()
@@ -69,34 +75,55 @@ namespace gui {
 
 	void ImGuiHandler::m_Render()
 	{
-		// Render ImGui
-		m_NewFrame();
-		//for gizmo - todo once camera is done
-		//ImGuizmo::SetOrthographic(true);
-		//ImGuizmo::BeginFrame();
-		//viewport docking
-		ImGui::DockSpaceOverViewport(0, ImGui::GetMainViewport());
-		//create main menu bar
-		m_DrawMainMenuBar();
-
-		Helper::Helpers* help = Helper::Helpers::GetInstance();
-		m_DrawPerformanceWindow(help->m_fps);
-		m_DrawHierachyWindow();
-		m_DrawComponentWindow();
-		m_DrawLogsWindow();
-		m_DrawTestWindow();
-		m_DrawInputWindow();
-		m_DrawRenderScreenWindow(static_cast<unsigned int>(Helper::Helpers::GetInstance()->m_windowWidth), static_cast<unsigned int>(Helper::Helpers::GetInstance()->m_windowHeight));
-		ImGui::Render();
-		ImGuiIO& io = ImGui::GetIO();
-		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+		if (Input::InputSystem::KeyState0)
 		{
-			GLFWwindow* backup_current_context = glfwGetCurrentContext();
-			ImGui::UpdatePlatformWindows();
-			ImGui::RenderPlatformWindowsDefault();
-			glfwMakeContextCurrent(backup_current_context);
+			Input::InputSystem::KeyState0 = false;
+			graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
+			EditorCamera::m_editorMode = (EditorCamera::m_editorMode) ? false : true;
+			pipe->m_gameMode = (pipe->m_gameMode) ? false : true;
 		}
-		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+		if (EditorCamera::m_editorMode)
+		{
+			// Render ImGui
+			m_NewFrame();
+			//for gizmo - todo once camera is done
+			//ImGuizmo::SetOrthographic(true);
+			ImGuizmo::BeginFrame();
+			//viewport docking
+			ImGui::DockSpaceOverViewport(0, ImGui::GetMainViewport());
+			//create main menu bar
+			m_DrawMainMenuBar();
+
+			Helper::Helpers* help = Helper::Helpers::GetInstance();
+
+			ImVec2 windowSize = ImGui::GetIO().DisplaySize;
+			// only render when window is not minimize
+			if (windowSize.x > 0 && windowSize.y > 0) {
+				m_DrawPerformanceWindow(help->m_fps);
+				m_DrawHierachyWindow();
+				m_DrawComponentWindow();
+				m_DrawLogsWindow();
+				m_DrawTestWindow();
+				m_DrawLayerWindow();
+				m_DrawInputWindow();
+				m_DrawRenderScreenWindow(static_cast<unsigned int>(Helper::Helpers::GetInstance()->m_windowWidth), static_cast<unsigned int>(Helper::Helpers::GetInstance()->m_windowHeight));
+			}
+
+
+			ImGuiIO& io = ImGui::GetIO();
+
+			ImGui::Render();
+			if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+			{
+				GLFWwindow* backup_current_context = glfwGetCurrentContext();
+				ImGui::UpdatePlatformWindows();
+				ImGui::RenderPlatformWindowsDefault();
+				glfwMakeContextCurrent(backup_current_context);
+			}
+			ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+		}
+	
 	}
 
 
@@ -107,8 +134,16 @@ namespace gui {
 		// Shutdown ImGui
 		ImGui_ImplOpenGL3_Shutdown();
 		ImGui_ImplGlfw_Shutdown();
-		ImPlot::DestroyContext();
 		ImGui::DestroyContext();
 	}
 
+
+	void ImGuiHandler::m_OnButtonPress(const events::BaseEvent<events::ButtonEvents>& givenEvent) {
+		std::cout << "Button: " << givenEvent.m_ToType<events::ButtonPressEvent>().m_GetButton() << " was pressed." << std::endl;
+		if (givenEvent.m_ToType<events::ButtonPressEvent>().m_GetButton() == 1) {
+			assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
+			assetManager->m_audioContainer[0]->m_PlaySound();
+		}
+	}
 }
+
