@@ -204,7 +204,6 @@ xcopy /y /d "$(SolutionDir)Dependencies\Freetype_Font\lib\*.dll" "$(OutDir)"</Co
     <ClCompile Include="ECS\System\AnimationSystem.cpp" />
     <ClCompile Include="ECS\System\CollisionResponseSystem.cpp" />
     <ClCompile Include="ECS\System\CollisionSystem.cpp" />
-    <ClCompile Include="ECS\System\ControlSystem.cpp" />
     <ClCompile Include="ECS\System\TransformSystem.cpp" />
     <ClCompile Include="ECS\System\RenderDebugSystem.cpp" />
     <ClCompile Include="ECS\System\MovementSystem.cpp" />
@@ -228,6 +227,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\Freetype_Font\lib\*.dll" "$(OutDir)"</Co
     <ClInclude Include="Application\Application.h" />
     <ClInclude Include="Application\Helper.h" />
     <ClInclude Include="ECS\Hierachy.h" />
+    <ClInclude Include="ECS\System\ControlSystem.h" />
     <ClInclude Include="Editor\ImGui Panels\imgui_handler.h" />
     <ClInclude Include="Application\json_handler.h" />
     <ClInclude Include="Application\Window.h" />
@@ -271,10 +271,9 @@ xcopy /y /d "$(SolutionDir)Dependencies\Freetype_Font\lib\*.dll" "$(OutDir)"</Co
     <ClInclude Include="ECS\System\AnimationSystem.h" />
     <ClInclude Include="ECS\System\CollisionResponseSystem.h" />
     <ClInclude Include="ECS\System\CollisionSystem.h" />
-    <ClInclude Include="ECS\System\ControlSystem.h" />
     <ClInclude Include="ECS\System\TransformSystem.h" />
     <ClInclude Include="ECS\System\RenderDebugSystem.h" />
-    <ClInclude Include="ECS\System\MovementSystem.h" />
+    <ClInclude Include="ECS\System\PhysicsSystem.h" />
     <ClInclude Include="ECS\System\RenderSystem.h" />
     <ClInclude Include="ECS\System\RenderTextSystem.h" />
     <ClInclude Include="ECS\System\System.h" />

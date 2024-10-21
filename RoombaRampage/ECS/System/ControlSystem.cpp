@@ -37,7 +37,7 @@ namespace ecs {
 		if (std::find_if(m_vecMovementComponentPtr.begin(), m_vecMovementComponentPtr.end(), [ID](const auto& obj) { return obj->m_Entity == ID; })
 			== m_vecMovementComponentPtr.end()) {
 			m_vecPlayerComponentPtr.push_back((PlayerComponent*)ecs->m_ECS_CombinedComponentPool[TYPEPLAYERCOMPONENT]->m_GetEntityComponent(ID));
-			m_vecMovementComponentPtr.push_back((MovementComponent*)ecs->m_ECS_CombinedComponentPool[TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(ID));
+			//m_vecMovementComponentPtr.push_back((MovementComponent*)ecs->m_ECS_CombinedComponentPool[TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(ID));
 		}
 
 
@@ -57,18 +57,18 @@ namespace ecs {
 		size_t IndexLast = m_vecPlayerComponentPtr.size() - 1;
 
 		std::swap(m_vecPlayerComponentPtr[IndexID], m_vecPlayerComponentPtr[IndexLast]);
-		std::swap(m_vecMovementComponentPtr[IndexID], m_vecMovementComponentPtr[IndexLast]);
+		//std::swap(m_vecMovementComponentPtr[IndexID], m_vecMovementComponentPtr[IndexLast]);
 
 		//popback the vector;
 		m_vecPlayerComponentPtr.pop_back();
-		m_vecMovementComponentPtr.pop_back();
+		//m_vecMovementComponentPtr.pop_back();
 	}
 
 	void ControlSystem::m_Init() {
 
 		// requires both movement component and transform component
 		m_SystemSignature.set(TYPEPLAYERCOMPONENT);
-		m_SystemSignature.set(TYPEMOVEMENTCOMPONENT);
+		//m_SystemSignature.set(TYPEMOVEMENTCOMPONENT);
 		//SystemSignature.set();
 
 	}

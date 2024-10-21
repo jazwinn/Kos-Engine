@@ -137,21 +137,6 @@ namespace Serialization {
 				}
 			}
 
-			// Load Movement Component if it exists
-			if (entityData.HasMember("movement") && entityData["movement"].IsObject()) {
-
-				ecs::MovementComponent* mc = static_cast<ecs::MovementComponent*>(ecs->m_AddComponent(ecs::TYPEMOVEMENTCOMPONENT, newEntityId));
-
-				const rapidjson::Value& movement = entityData["movement"];
-
-				if (movement.HasMember("speed")) {
-					mc->m_Speed = movement["speed"].GetFloat();
-				}
-				if (movement.HasMember("direction") && movement["direction"].IsObject()) {
-					mc->m_Direction.m_x = movement["direction"]["x"].GetFloat();
-					mc->m_Direction.m_y = movement["direction"]["y"].GetFloat();
-				}
-			}
 
 			// Load Collider Component if it exists
 			if (entityData.HasMember("collider") && entityData["collider"].IsObject()) {
@@ -194,6 +179,17 @@ namespace Serialization {
 					const rapidjson::Value& rigidbody = entityData["rigidbody"];
 					if (rigidbody.HasMember("mass")) {
 						rb->m_Mass = rigidbody["mass"].GetFloat();
+					}
+					if (rigidbody.HasMember("velocity") && rigidbody["velocity"].IsObject()) {
+						rb->m_Velocity.m_x = rigidbody["velocity"]["x"].GetFloat();
+						rb->m_Velocity.m_y = rigidbody["velocity"]["y"].GetFloat();
+					}
+					if (rigidbody.HasMember("acceleration") && rigidbody["acceleration"].IsObject()) {
+						rb->m_Acceleration.m_x = rigidbody["acceleration"]["x"].GetFloat();
+						rb->m_Acceleration.m_y = rigidbody["acceleration"]["y"].GetFloat();
+					}
+					if (rigidbody.HasMember("isStatic")) {
+						rb->m_IsStatic = rigidbody["isStatic"].GetBool();
 					}
 				}
 			}
@@ -284,9 +280,6 @@ namespace Serialization {
 
 			}
 
-
-			
-
 			// Check if the entity has TransformComponent and save 
 			if (entityPair.second.test(ecs::ComponentType::TYPETRANSFORMCOMPONENT)) {
 				ecs::TransformComponent* tc = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(entityId));
@@ -304,19 +297,6 @@ namespace Serialization {
 				}
 			}
 
-			// Check if the entity has MovementComponent and save it
-			if (entityPair.second.test(ecs::ComponentType::TYPEMOVEMENTCOMPONENT)) {
-				ecs::MovementComponent* mc = static_cast<ecs::MovementComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(entityId));
-				if (mc) {
-					rapidjson::Value movement(rapidjson::kObjectType);
-					movement.AddMember("speed", mc->m_Speed, allocator);
-					movement.AddMember("direction", rapidjson::Value().SetObject()
-						.AddMember("x", mc->m_Direction.m_x, allocator)
-						.AddMember("y", mc->m_Direction.m_y, allocator), allocator);
-					entityData.AddMember("movement", movement, allocator);
-					hasComponents = true;  // Mark as having a component
-				}
-			}
 
 			// Check if the entity has ColliderComponent and save it
 			if (entityPair.second.test(ecs::ComponentType::TYPECOLLIDERCOMPONENT)) {
@@ -352,6 +332,14 @@ namespace Serialization {
 				if (rb) {
 					rapidjson::Value rigidbody(rapidjson::kObjectType);
 					rigidbody.AddMember("mass", rb->m_Mass, allocator);
+					rigidbody.AddMember("velocity", rapidjson::Value().SetObject()
+						.AddMember("x", rb->m_Velocity.m_x, allocator)
+						.AddMember("y", rb->m_Velocity.m_y, allocator), allocator);
+					rigidbody.AddMember("acceleration", rapidjson::Value().SetObject()
+						.AddMember("x", rb->m_Acceleration.m_x, allocator)
+						.AddMember("y", rb->m_Acceleration.m_y, allocator), allocator);
+					rigidbody.AddMember("isStatic", rb->m_IsStatic, allocator);
+
 					entityData.AddMember("rigidbody", rigidbody, allocator);
 					hasComponents = true;  // Mark as having a component
 				}

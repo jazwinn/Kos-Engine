@@ -109,12 +109,12 @@ namespace ecs {
 
 				ColComp->m_isCollided = true;
 
-				if (ecs->m_ECS_EntityMap[rigidComp->m_Entity].test(TYPEMOVEMENTCOMPONENT)) {
+				/*if (ecs->m_ECS_EntityMap[rigidComp->m_Entity].test(TYPEMOVEMENTCOMPONENT)) {
 
 					MovementComponent* movCom = (MovementComponent*)ecs->m_ECS_CombinedComponentPool[TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(rigidComp->m_Entity);
 					movCom->m_Direction = {0,0};
 
-				}
+				}*/
 
 
 			}

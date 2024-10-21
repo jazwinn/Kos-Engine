@@ -30,10 +30,6 @@ namespace ecs {
 		float m_Speed{1};
 		vector2::Vec2 m_Direction{0,0};
 	};
-
-
 }
-
-
 
 #endif MOVECOM_H

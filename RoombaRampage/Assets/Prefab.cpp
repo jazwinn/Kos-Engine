@@ -75,21 +75,6 @@ namespace prefab {
 
             }
 
-            if (prefabData.HasMember("movement") && prefabData["movement"].IsObject()) {
-
-                prefab.m_prefabSignature.set(ecs::TYPEMOVEMENTCOMPONENT);
-
-                const rapidjson::Value& movement = prefabData["movement"];
-
-                if (movement.HasMember("speed")) {
-                    prefab.m_movementComponents.m_Speed = movement["speed"].GetFloat();
-                }
-                if (movement.HasMember("direction") && movement["direction"].IsObject()) {
-                    prefab.m_movementComponents.m_Direction.m_x = movement["direction"]["x"].GetFloat();
-                    prefab.m_movementComponents.m_Direction.m_y = movement["direction"]["y"].GetFloat();
-                }
-
-            }
 
             if (prefabData.HasMember("collider") && prefabData["collider"].IsObject()) {
 
@@ -125,15 +110,64 @@ namespace prefab {
             }
 
             // Load RigidBody Component if it exists
+             // Deserialize the RigidBody Component if it exists
             if (prefabData.HasMember("rigidbody") && prefabData["rigidbody"].IsObject()) {
-
                 prefab.m_prefabSignature.set(ecs::TYPERIGIDBODYCOMPONENT);
 
                 const rapidjson::Value& rigidbody = prefabData["rigidbody"];
-                if (rigidbody.HasMember("mass")) {
-                    prefab.m_rigidBodyComponents.m_Mass = rigidbody["mass"].GetFloat();
+
+                if (rigidbody.HasMember("velocity") && rigidbody["velocity"].IsObject()) {
+                    prefab.m_rigidBodyComponents.m_Velocity.m_x = rigidbody["velocity"]["x"].GetFloat();
+                    prefab.m_rigidBodyComponents.m_Velocity.m_y = rigidbody["velocity"]["y"].GetFloat();
                 }
 
+                if (rigidbody.HasMember("acceleration") && rigidbody["acceleration"].IsObject()) {
+                    prefab.m_rigidBodyComponents.m_Acceleration.m_x = rigidbody["acceleration"]["x"].GetFloat();
+                    prefab.m_rigidBodyComponents.m_Acceleration.m_y = rigidbody["acceleration"]["y"].GetFloat();
+                }
+
+                if (rigidbody.HasMember("rotation")) {
+                    prefab.m_rigidBodyComponents.m_Rotation = rigidbody["rotation"].GetFloat();
+                }
+
+                if (rigidbody.HasMember("angularVelocity")) {
+                    prefab.m_rigidBodyComponents.m_AngularVelocity = rigidbody["angularVelocity"].GetFloat();
+                }
+
+                if (rigidbody.HasMember("angularAcceleration")) {
+                    prefab.m_rigidBodyComponents.m_AngularAcceleration = rigidbody["angularAcceleration"].GetFloat();
+                }
+
+                if (rigidbody.HasMember("mass")) {
+                    prefab.m_rigidBodyComponents.m_Mass = rigidbody["mass"].GetFloat();
+                    prefab.m_rigidBodyComponents.m_InverseMass = (prefab.m_rigidBodyComponents.m_Mass != 0.0f) ?
+                        1.0f / prefab.m_rigidBodyComponents.m_Mass : 0.0f;
+                }
+
+                if (rigidbody.HasMember("linearDamping")) {
+                    prefab.m_rigidBodyComponents.m_LinearDamping = rigidbody["linearDamping"].GetFloat();
+                }
+
+                if (rigidbody.HasMember("angularDamping")) {
+                    prefab.m_rigidBodyComponents.m_AngularDamping = rigidbody["angularDamping"].GetFloat();
+                }
+
+                if (rigidbody.HasMember("isKinematic")) {
+                    prefab.m_rigidBodyComponents.m_IsKinematic = rigidbody["isKinematic"].GetBool();
+                }
+
+                if (rigidbody.HasMember("isStatic")) {
+                    prefab.m_rigidBodyComponents.m_IsStatic = rigidbody["isStatic"].GetBool();
+                }
+
+                if (rigidbody.HasMember("force") && rigidbody["force"].IsObject()) {
+                    prefab.m_rigidBodyComponents.m_Force.m_x = rigidbody["force"]["x"].GetFloat();
+                    prefab.m_rigidBodyComponents.m_Force.m_y = rigidbody["force"]["y"].GetFloat();
+                }
+
+                if (rigidbody.HasMember("torque")) {
+                    prefab.m_rigidBodyComponents.m_Torque = rigidbody["torque"].GetFloat();
+                }
             }
 
             // Load Sprite Component if it exists
@@ -230,12 +264,6 @@ namespace prefab {
         }
 
 
-        if (prefab.m_prefabSignature.test(ecs::TYPEMOVEMENTCOMPONENT)) {
-            ecs::MovementComponent* mc = static_cast<ecs::MovementComponent*>(ecs->m_AddComponent(ecs::TYPEMOVEMENTCOMPONENT, newEntityID));
-            *mc = prefab.m_movementComponents;
-            mc->m_IsLive = true;
-            mc->m_Entity = newEntityID;
-        }
 
         if (prefab.m_prefabSignature.test(ecs::TYPECOLLIDERCOMPONENT)) {
             ecs::ColliderComponent* cc = static_cast<ecs::ColliderComponent*>(ecs->m_AddComponent(ecs::TYPECOLLIDERCOMPONENT, newEntityID));

@@ -49,9 +49,5 @@ namespace ecs {
 		bool m_haveParent{false};
 		
 	};
-
 }
-
-
-
 #endif TRANSCOM_H

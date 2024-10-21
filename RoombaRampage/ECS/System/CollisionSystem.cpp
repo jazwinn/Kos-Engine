@@ -103,21 +103,21 @@ namespace ecs {
 			
 
 			//if movement component is present, do dynamic collision
-			vector2::Vec2 velocity{};
+	/*		vector2::Vec2 velocity{};
 			if (ecs->m_ECS_EntityMap[id].test(TYPEMOVEMENTCOMPONENT)) {
 
 				MovementComponent* MovComp = static_cast<MovementComponent*>(ecs->m_ECS_CombinedComponentPool[TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(id));
 
 				 velocity = MovComp->m_Speed * MovComp->m_Direction;
-			}
+			}*/
 
 			vector2::Vec2 position{ TransComp->m_transformation.m_e20,TransComp->m_transformation.m_e21 };
 
 			if (ColComp->m_type == physicspipe::EntityType::CIRCLE) {
-				PhysicsPipeline.m_SendPhysicsData(ColComp->m_radius, TransComp->m_position + ColComp->m_OffSet, ColComp->m_Size, velocity, id);
+				//PhysicsPipeline.m_SendPhysicsData(ColComp->m_radius, TransComp->m_position + ColComp->m_OffSet, ColComp->m_Size, velocity, id);
 			}
 			else if (ColComp->m_type == physicspipe::EntityType::RECTANGLE) {
-				PhysicsPipeline.m_SendPhysicsData(ColComp->m_Size.m_y , ColComp->m_Size.m_x, TransComp->m_position + ColComp->m_OffSet, ColComp->m_Size, velocity, id);
+				//PhysicsPipeline.m_SendPhysicsData(ColComp->m_Size.m_y , ColComp->m_Size.m_x, TransComp->m_position + ColComp->m_OffSet, ColComp->m_Size, velocity, id);
 			}
 			else {
 				LOGGING_ERROR("NO ENTITY TYPE");
