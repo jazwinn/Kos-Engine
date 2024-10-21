@@ -72,9 +72,12 @@ void gui::ImGuiHandler::m_DrawMainMenuBar() {
             if (ImGui::MenuItem("Open")) {
                 char filePath[MAX_PATH];
                 std::string path = file::FileWindow::m_OpenfileDialog(filePath);
-                std::string scene = scenemanager->m_AddScene(path);
-                scenemanager->m_LoadScene(scene);
-                m_clickedEntityId = -1;
+                if (!path.empty()) {
+                    std::string scene = scenemanager->m_AddScene(path);
+                    scenemanager->m_LoadScene(scene);
+                    m_clickedEntityId = -1;
+                }
+
 
             }
 
