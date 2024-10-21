@@ -18,7 +18,7 @@ namespace scenes {
 			return m_InstancePtr.get();
 		}
 
-		void m_AddScene(std::string filepath);
+		std::string m_AddScene(std::string filepath);
 
 		// create a json folder
 		std::optional<std::string> m_CreateNewScene(std::string scene);

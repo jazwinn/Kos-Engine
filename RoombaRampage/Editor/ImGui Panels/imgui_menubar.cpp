@@ -23,6 +23,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Assets/SceneManager.h"
 #include "../ECS/ECS.h"
 
+#include "../Editor/WindowFile.h"
 
 void gui::ImGuiHandler::m_DrawMainMenuBar() {
 
@@ -56,7 +57,7 @@ void gui::ImGuiHandler::m_DrawMainMenuBar() {
             }
 
             
-            if (ImGui::BeginMenu("Open")) {
+            if (ImGui::BeginMenu("Open Recent")) {
 
                 for (auto& scene : scenemanager->m_availableScenes) {
                     if (ImGui::MenuItem(scene.c_str())) {
@@ -64,12 +65,18 @@ void gui::ImGuiHandler::m_DrawMainMenuBar() {
                         m_clickedEntityId = -1;
                     }
                 }
-                
 
                 ImGui::EndMenu();
             }
 
+            if (ImGui::MenuItem("Open")) {
+                char filePath[MAX_PATH];
+                std::string path = file::FileWindow::m_OpenfileDialog(filePath);
+                std::string scene = scenemanager->m_AddScene(path);
+                scenemanager->m_LoadScene(scene);
                 
+
+            }
 
             ImGui::EndMenu();
         }

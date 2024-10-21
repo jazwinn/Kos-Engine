@@ -71,6 +71,7 @@
     <ClCompile Include="Physics\PhysicsCollision.cpp" />
     <ClCompile Include="Physics\PhysicsLayer.cpp" />
     <ClCompile Include="Events\EventHandler.cpp" />
+    <ClCompile Include="Editor\WindowFile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Application.h" />
@@ -155,6 +156,7 @@
     <ClInclude Include="Events\EventHandler.h" />
     <ClInclude Include="Events\KeyEvent.h" />
     <ClInclude Include="Events\MouseEvent.h" />
+    <ClInclude Include="Editor\WindowFile.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Graphics\debugFragmentShader.frag" />
