@@ -74,7 +74,7 @@ void gui::ImGuiHandler::m_DrawMainMenuBar() {
                 std::string path = file::FileWindow::m_OpenfileDialog(filePath);
                 std::string scene = scenemanager->m_AddScene(path);
                 scenemanager->m_LoadScene(scene);
-                
+                m_clickedEntityId = -1;
 
             }
 
