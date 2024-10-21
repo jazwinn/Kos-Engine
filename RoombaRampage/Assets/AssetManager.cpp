@@ -22,7 +22,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Graphics/GraphicsPipe.h"
 #include "../Application/Helper.h"
 #include "stb_image.h"
-
+#include "../De&Serialization/json_handler.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -54,7 +54,6 @@ namespace assetmanager {
         m_LoadPrefab("../RoombaRampage/Assets/Prefabs/Prefab.json");
     
         m_LoadFont("Assets/Font/Roboto-Black.ttf");
-
 
     }
 
@@ -118,5 +117,19 @@ namespace assetmanager {
 
     }
 
-  
+    void AssetManager::m_loadEntities(const std::string& jsonFilePath)
+    {
+        // Ensure the JSON file exists
+        std::ifstream checkFile(jsonFilePath);
+        if (!checkFile) {
+            std::cerr << "Error: JSON file not found: " << jsonFilePath << std::endl;
+            return;
+        }
+
+        // Load entities from the JSON file
+        std::cout << "Loading entities from: " << jsonFilePath << std::endl;
+        Serialization::Serialize::m_LoadComponentsJson(jsonFilePath);  // Load into ECS
+
+        LOGGING_INFO("Entities successfully loaded!");
+    }
 }

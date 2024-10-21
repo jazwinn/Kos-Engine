@@ -1,6 +1,4 @@
 #include "../Graphics/GraphicsPipe.h"
-#include "../Graphics/GraphicsCamera.h"
-
 
 namespace graphicpipe
 {
@@ -95,6 +93,8 @@ namespace graphicpipe
 
 		m_funcDrawDebug();
 		m_funcDraw();
+
+
 		m_funcDrawText();
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -117,6 +117,8 @@ namespace graphicpipe
 		{
 			std::cout << "Uniform not found" << std::endl;
 		}
+
+		//glDrawArrays(GL_TRIANGLES, 0, 6);
 	}
 
 	void GraphicsPipe::m_funcDrawText()
@@ -127,7 +129,7 @@ namespace graphicpipe
 			for (auto& textData : m_textData) {
 				// activate corresponding render state	
 				glUseProgram(m_textShaderProgram);
-				glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(GraphicsCamera::m_windowWidth), 0.0f, static_cast<float>(GraphicsCamera::m_windowHeight));
+				glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(m_windowWidth), 0.0f, static_cast<float>(m_windowHeight));
 				glUniformMatrix4fv(glGetUniformLocation(m_textShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 
 				//int loc = glGetUniformLocation(m_textShaderProgram, "projection");

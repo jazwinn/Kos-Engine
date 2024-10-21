@@ -48,7 +48,7 @@ namespace Serialization {
 					   for later retrieval and reloading.
 		*/
 		/******************************************************************/
-		static void m_SaveComponentsJson(const std::string& filePath);
+		static void m_SaveComponentsJson(const std::string& filePath, const std::unordered_map<ecs::EntityID, std::bitset<ecs::ComponentType::TOTALTYPECOMPONENT>>& ECS_EntityMap);
 
 		/******************************************************************/
 		/*!

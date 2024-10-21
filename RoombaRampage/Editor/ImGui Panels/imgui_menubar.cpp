@@ -20,66 +20,41 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "imgui_handler.h"
 #include "imgui_internal.h"
 
-#include "../Assets/SceneManager.h"
+#include "../../De&Serialization/json_handler.h"
 #include "../ECS/ECS.h"
-
-#include "../Editor/WindowFile.h"
 
 void gui::ImGuiHandler::m_DrawMainMenuBar() {
 
     ImGuiIO& io = ImGui::GetIO();  // Get input/output data
-    scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();
     //If CTRL + S press, save
     if (io.KeyCtrl && ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_S))) {
-        scenemanager->m_SaveActiveScene();
+        Serialization::Serialize::m_SaveComponentsJson("../RoombaRampage/Json", ecs::ECS::m_GetInstance()->m_ECS_EntityMap);
         std::cout << "Saving data..." << std::endl;
     }
 
-
-
-    bool openNewFilepopup = false;;
     if (ImGui::BeginMainMenuBar())
     {
         if (ImGui::BeginMenu("File"))
         {
-            if (ImGui::MenuItem("New")) {
-                openNewFilepopup = true;
-
-
-            }
-           
             if (ImGui::MenuItem("Save")) {
 
 
-                scenemanager->m_SaveActiveScene();
+                Serialization::Serialize::m_SaveComponentsJson("../RoombaRampage/Json", ecs::ECS::m_GetInstance()->m_ECS_EntityMap);
 
                 
             }
-
             
-            if (ImGui::BeginMenu("Open Recent")) {
+            if (ImGui::BeginMenu("Open - Work In Progress")) {
 
-                for (auto& scene : scenemanager->m_availableScenes) {
-                    if (ImGui::MenuItem(scene.c_str())) {
-                        scenemanager->m_LoadScene(scene);
-                        m_clickedEntityId = -1;
-                    }
+
+                if (ImGui::MenuItem("Components.json")) {
+                    //Serialization::Serialize::LoadComponentsJson("../RoombaRampage/Json/components.json", Ecs::ECS::GetInstance(), obj_text_entries);
                 }
 
                 ImGui::EndMenu();
             }
 
-            if (ImGui::MenuItem("Open")) {
-                char filePath[MAX_PATH];
-                std::string path = file::FileWindow::m_OpenfileDialog(filePath);
-                if (!path.empty()) {
-                    std::string scene = scenemanager->m_AddScene(path);
-                    scenemanager->m_LoadScene(scene);
-                    m_clickedEntityId = -1;
-                }
-
-
-            }
+                
 
             ImGui::EndMenu();
         }
@@ -90,52 +65,8 @@ void gui::ImGuiHandler::m_DrawMainMenuBar() {
             ImGui::EndMenu();
         }
 
-        if (openNewFilepopup) {
-            ImGui::OpenPopup("New Scene");
-        }
-
-
-        if (ImGui::BeginPopupModal("New Scene", NULL, ImGuiWindowFlags_AlwaysAutoResize))
-        {
-            ImGui::Text("Enter Scene Name");
-            ImGui::Separator();
-
-            //static int unused_i = 0;
-            //ImGui::Combo("Combo", &unused_i, "Delete\0Delete harder\0");
-
-            static char str1[128] = "";
-            ImGui::InputTextWithHint(".json", "Enter scene name here", str1, IM_ARRAYSIZE(str1));
-
-            if (ImGui::Button("Save", ImVec2(120, 0))) { 
-                std::string scene = str1;
-                if (!scene.empty()) {
-                    if (auto result = scenemanager->m_CreateNewScene(scene); result.has_value()) {
-                        std::string filepath = result.value();
-                        scenemanager->m_AddScene(filepath);
-                        scenemanager->m_activeScene = scene;
-                        scenemanager->m_SaveActiveScene();
-                    }
-                }
-                else {
-                    LOGGING_WARN("Please Insert a Scene Name");
-                }
-
-
-
-                ImGui::CloseCurrentPopup(); 
-
-            }
-            ImGui::SetItemDefaultFocus();
-            ImGui::SameLine();
-            if (ImGui::Button("Cancel", ImVec2(120, 0))) { ImGui::CloseCurrentPopup(); }
-            ImGui::EndPopup();
-        }
 
         ImGui::EndMainMenuBar();
     }
 
-
-
-    
 }
-

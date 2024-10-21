@@ -18,10 +18,22 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 */
 /********************************************************************/
 #include "Application.h"
+
 #include "../Graphics/GraphicsPipe.h"
 #include "../Assets/AssetManager.h"
-#include "../Assets/SceneManager.h"
-#include "../Events/EventHandler.h"
+#include "../De&Serialization/json_handler.h"
+#include "../Debugging/Logging.h"
+#include "../Inputs/Input.h"
+#include "../ECS/ECS.h"
+#include "Helper.h"
+#include "Window.h"
+#include "../Debugging/Logging.h"
+#include "../Debugging/Performance.h"
+
+#include "imgui.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
+
 
 
 namespace Application {
@@ -29,10 +41,19 @@ namespace Application {
     /*--------------------------------------------------------------
       GLOBAL VARAIBLE
     --------------------------------------------------------------*/
-    
+    AppWindow Application::lvWindow;
+    gui::ImGuiHandler Application::imgui_manager; 
     graphicpipe::GraphicsPipe* pipe;
+    Input::InputSystem Input;
     assetmanager::AssetManager* AstManager;
+    logging::Logger logs;
 
+
+    // Audio Demo timer
+    float audioTimer = 3.0f;
+    bool audio2_bool = true;
+
+    float LastTime = static_cast<float>(glfwGetTime());
     
 
     int Application::Init() {
@@ -99,26 +120,10 @@ namespace Application {
         /*--------------------------------------------------------------
             LOAD ENTITIES INTO ECS & IMGUI
         --------------------------------------------------------------*/
-        scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();
-        scenemanager->m_AddScene("./RoombaRampage/Json/Scene1.json");
-        scenemanager->m_LoadScene("Scene1");
-
-        
-
-        /*--------------------------------------------------------------
-           INITIALIZE MONO AND ASSEMBLY LOADING
-       --------------------------------------------------------------*/
-        //TODO ecapulate into one big init function
-        // Mono initialization and assembly loading
-        if (!ScriptManager.m_InitMono("C# Mono/ExampleScript.dll")) {
-            return -1;
-        }
-
-
-        LOGGING_INFO("Mono initialization and method loading successful.");
-
+        AstManager->m_loadEntities("../RoombaRampage/Json/components.json");
 
         LOGGING_INFO("Application Init Successful");
+    
         return 0;
 	}
 
@@ -129,19 +134,6 @@ namespace Application {
         ecs::ECS* ecs = ecs::ECS::m_GetInstance();
         float FPSCapTime = 1.f / help->m_fpsCap;
         double lastFrameTime = glfwGetTime();
-
-        /****************************************************************************************/
-        //SAMPLE TO REMOVE
-        // Invoke the HelloWorld method
-        ScriptManager.m_InvokeMethod("ExampleScript", "HelloWorld", nullptr, 0);
-
-        // Invoke the PrintMessage
-        int number = 42;
-        MonoString* message = mono_string_new(ScriptManager.m_GetMonoDomain(), "Calling Method 2!");
-        void* args[2] = { &number, message };
-        ScriptManager.m_InvokeMethod("ExampleScript", "PrintMessage", args, 2);
-        /****************************************************************************************/
-
         /*--------------------------------------------------------------
             GAME LOOP
         --------------------------------------------------------------*/
@@ -153,33 +145,34 @@ namespace Application {
 
                 /*--------------------------------------------------------------
                     UPDATE ECS
-                --------------------------------------------------------------*/
+                    --------------------------------------------------------------*/
                 ecs->m_Update(Helper::Helpers::GetInstance()->m_deltaTime);
 
                 /*--------------------------------------------------------------
                     UPDATE Render Pipeline
-                --------------------------------------------------------------*/
+                    --------------------------------------------------------------*/
                 pipe->m_funcUpdate();
 
                 /*--------------------------------------------------------------
                     DRAWING/RENDERING Window
-                --------------------------------------------------------------*/
+                    --------------------------------------------------------------*/
                 lvWindow.Draw();
 
                 /*--------------------------------------------------------------
+                    DRAWING/RENDERING Objects
+                    --------------------------------------------------------------*/
+                pipe->m_funcDrawWindow();
+
+
+                /*--------------------------------------------------------------
                     Draw IMGUI FRAME
-                --------------------------------------------------------------*/
+                    --------------------------------------------------------------*/
                 imgui_manager.m_Render();
 
-                /*--------------------------------------------------------------
-                   Render Game Scene
-                --------------------------------------------------------------*/
-                pipe->m_funcRenderGameScene();
-
-
+          
                 /*--------------------------------------------------------------
                     Calculate time
-                 --------------------------------------------------------------*/
+                    --------------------------------------------------------------*/
                 double currentFrameTime = glfwGetTime();
                 help->m_deltaTime = static_cast<float>(currentFrameTime - lastFrameTime);
 
@@ -202,7 +195,7 @@ namespace Application {
 
 
 
-	int Application::m_Cleanup() {
+	int Application::Cleanup() {
         ecs::ECS::m_GetInstance()->m_Unload();
         imgui_manager.m_Shutdown();
         lvWindow.CleanUp();

@@ -32,9 +32,6 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "ImGuizmo.h"
 #include "../ECS/ECS.h"
 #include "../Assets/Audio.h"
-#include "../Events/EventHandler.h"
-
-
 
 namespace gui {
 
@@ -201,14 +198,9 @@ namespace gui {
         /******************************************************************/
         void m_DrawRenderScreenWindow(unsigned int windowWidth, unsigned int windowHeight);
 
-        void m_DrawGizmo(float renderPosX, float renderPosY, float renderWidth, float renderHeight);
 
-        void m_DrawLayerWindow();
 
-        void m_OnButtonPress(const events::BaseEvent<events::ButtonEvents>& givenEvent);
-        int m_clickedEntityId{-1};
-
-        int m_buttonID;
+        int m_clickedEntityId;
 
     private:
 

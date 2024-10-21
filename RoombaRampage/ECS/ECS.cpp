@@ -36,7 +36,6 @@ namespace ecs{
 			System.second->m_Init();
 		}
 
-
 	}
 
 	void ECS::m_Load() {
@@ -52,9 +51,7 @@ namespace ecs{
 		ecs->m_ECS_CombinedComponentPool[TYPEPLAYERCOMPONENT] = std::make_shared<ComponentPool<PlayerComponent>>();
 		ecs->m_ECS_CombinedComponentPool[TYPETEXTCOMPONENT] = std::make_shared<ComponentPool<TextComponent>>();
 		ecs->m_ECS_CombinedComponentPool[TYPEANIMATIONCOMPONENT] = std::make_shared<ComponentPool<AnimationComponent>>();
-		ecs->m_ECS_CombinedComponentPool[TYPECAMERACOMPONENT] = std::make_shared<ComponentPool<CameraComponent>>();
-		ecs->m_ECS_CombinedComponentPool[TYPECAMERACOMPONENT] = std::make_shared<ComponentPool<CameraComponent>>();
-		ecs->m_ECS_CombinedComponentPool[TYPESCRIPTCOMPONENT] = std::make_shared<ComponentPool<ScriptComponent>>();
+
 
 		//Allocate memory to each system
 		ecs->m_ECS_SystemMap[TYPECONTROLSYSTEM] = std::make_shared<ControlSystem>();
@@ -65,9 +62,8 @@ namespace ecs{
 		ecs->m_ECS_SystemMap[TYPERENDERSYSTEM] = std::make_shared<RenderSystem>();
 		ecs->m_ECS_SystemMap[TYPERENDERTEXTSYSTEM] = std::make_shared<RenderTextSystem>();
 		ecs->m_ECS_SystemMap[TYPEDEBUGDRAWINGSYSTEM] = std::make_shared<DebugDrawingSystem>();
-		ecs->m_ECS_SystemMap[TYPECAMERASYSTEM] = std::make_shared<CameraSystem>();
 		ecs->m_ECS_SystemMap[TYPEANIMATIONSYSTEM] = std::make_shared<AnimationSystem>();
-		ecs->m_ECS_SystemMap[TYPELOGICSYSTEM] = std::make_shared<LogicSystem>();
+
 
 		//Initialize all system Peformance
 		performancetracker::Performance Perform{};
@@ -202,9 +198,6 @@ namespace ecs{
 		m_AddComponent(TYPETRANSFORMCOMPONENT, ID);
 
 		ecs->m_EntityCount++;
-
-		//assign entity to default layer
-		ecs->m_layersStack.m_layerMap[layer::DEFAULT].second.push_back(ID);
 
 		return ID;
 	}

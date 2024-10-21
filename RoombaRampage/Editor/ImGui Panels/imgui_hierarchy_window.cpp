@@ -30,11 +30,6 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include<string>
 #include <iostream>
 
-//Testing purposes! this are the three files needed!
-#include <mono/jit/jit.h>
-#include <mono/metadata/assembly.h>
-#include <mono/metadata/debug-helpers.h>
-
 namespace gui {
     unsigned int ImGuiHandler::m_DrawHierachyWindow()
     {
@@ -128,7 +123,6 @@ namespace gui {
 
         ecs::ECS* ecs = ecs::ECS::m_GetInstance();
         ecs::TransformComponent* transCom =  static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id));
-        if (transCom == NULL) return false;
 
         ImGuiTreeNodeFlags flag = ((m_clickedEntityId == id) ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnArrow;
         if (transCom->m_childID.size() <= 0) {
