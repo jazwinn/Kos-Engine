@@ -10,7 +10,7 @@ namespace scenes {
 
     std::unique_ptr<SceneManager> SceneManager::m_InstancePtr = nullptr;
 
-    void SceneManager::m_AddScene(std::string filepath)
+    std::string SceneManager::m_AddScene(std::string filepath)
     {
 
         size_t lastSlash = filepath.find_last_of("/\\");
@@ -21,13 +21,13 @@ namespace scenes {
         std::string fileBaseName = fileName.substr(0, lastDot);  // Extract "test"
 
         if (std::find(m_availableScenes.begin(), m_availableScenes.end(), fileBaseName) != m_availableScenes.end()) {
-            LOGGING_WARN("Scene Already added");
-            return;
+            //LOGGING_WARN("Scene Already added");
+            return fileBaseName;
         }
 
         m_availableScenes.push_back(fileBaseName);
 
-
+        return fileBaseName;
     }
 
     std::optional<std::string> SceneManager::m_CreateNewScene(std::string scene)
