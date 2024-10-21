@@ -63,7 +63,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
         ImGui::Combo("##ADDCOMPONENT", &ComponentType, ComponentNames, IM_ARRAYSIZE(ComponentNames), IM_ARRAYSIZE(ComponentNames));
         if (ComponentType == 1) {
- //           ecs->m_AddComponent(ecs::TYPEMOVEMENTCOMPONENT, entityID);
+          // ecs->m_AddComponent(ecs::TYPEPHYSICSSYSTEM, entityID);
             ComponentType = 0;
         }
         if (ComponentType == 2) {
@@ -377,7 +377,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 ImGui::Text("Size");
                 ImGui::SameLine(slider_start_pos_x);
                 ImGui::SetNextItemWidth(100.0f);
-                ImGui::DragFloat("###TEXTXXX", &tc->m_fontSize, 0.02f, 0.f, 10.0f, "%.2f");
+                ImGui::DragFloat("####TEXTXXXX", &tc->m_fontSize, 0.02f, 0.f, 10.0f, "%.2f");
 
                 ImGui::Text("Color");
                 ImGui::SameLine();

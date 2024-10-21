@@ -57,27 +57,46 @@ namespace ecs {
 	}
 
 	void PhysicsSystem::m_Update() {
-
 		ECS* ecs = ECS::m_GetInstance();
 
 		if (m_vecRigidBodyComponentPtr.size() != m_vecTransformComponentPtr.size()) {
-			//std::cout << "Error: Vectors container size does not Match" << std::endl;
 			LOGGING_ERROR("Error: Vectors container size does not Match");
 			return;
 		}
 
-		//loops through all vecoters pointing to component
-		for (int n{}; n < m_vecRigidBodyComponentPtr.size(); n++) {
-			//std::cout << "Entity: " << n << "Movement System is getting Updated";
+		// Loop through all vectors pointing to components
+		for (int n = 0; n < m_vecRigidBodyComponentPtr.size(); n++) {
+			RigidBodyComponent* rigidBody = m_vecRigidBodyComponentPtr[n];
+			TransformComponent* transform = m_vecTransformComponentPtr[n];
 
-			RigidBodyComponent* MovComp = m_vecRigidBodyComponentPtr[n];
-			TransformComponent* TransComp = m_vecTransformComponentPtr[n];
-//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
-				//vector2::Vec2 Velocity = MovComp->m_Direction * MovComp->m_Speed;
+			// Update the rigid body with the current delta time
+			if (rigidBody->m_IsKinematic || rigidBody->m_IsStatic) {
+				// If kinematic or static, skip physics calculations
+				return;
+			}
+			else
+			{
+				// Integrate linear motion
+				vector2::Vec2 acceleration = rigidBody->m_Acceleration + rigidBody->m_Force * rigidBody->m_InverseMass;
+				rigidBody->m_Velocity += acceleration * ecs->m_DeltaTime;
+				rigidBody->m_Velocity *= rigidBody->m_LinearDamping; // Apply linear damping
 
-				//vector2::Vec2 Displacement = Velocity * ecs->m_DeltaTime;
+				// Integrate angular motion
+				float angularAcceleration = rigidBody->m_Torque * rigidBody->m_InverseMass;
+				rigidBody->m_AngularVelocity += angularAcceleration * ecs->m_DeltaTime;
+				rigidBody->m_AngularVelocity *= rigidBody->m_AngularDamping;
 
-				//TransComp->m_position += Displacement;
+				transform->m_position += rigidBody->m_Velocity * ecs->m_DeltaTime;
+				transform->m_rotation += rigidBody->m_AngularVelocity * ecs->m_DeltaTime;
+
+				rigidBody->m_Force = vector2::Vec2{ 0.0f, 0.0f };
+				rigidBody->m_Torque = 0.0f;
+			}
+
+			if (!rigidBody->m_IsStatic && !rigidBody->m_IsKinematic) {
+				transform->m_position += rigidBody->m_Velocity * ecs->m_DeltaTime;
+				transform->m_rotation += rigidBody->m_AngularVelocity * ecs->m_DeltaTime;
+			}
 		}
 	}
 

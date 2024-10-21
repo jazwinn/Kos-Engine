@@ -50,9 +50,6 @@ namespace ecs {
         // Mass and inverse mass (0 means infinite mass for static objects)
         float m_Mass{ 1.0f };
         float m_InverseMass{ 1.0f }; //Inverse mass is the reciprocal of the Mass, so it's 1/Mass.
-        // SHORT EXPLANATION FOR INVERSE MASS //
-        /* Inverse mass is usually used in 2D / 3D games, can be used to streamline the physics
-        calculations and can handle both dynamic (moving) and static (stationary) objects more effeciently.*/
 
         // Linear and angular damping (to simulate friction or air resistance, can EDIT when we test)
         float m_LinearDamping{ 0.99f };

@@ -16,7 +16,6 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #define COLLRESPSYS_H
 
 #include "System.h"
-#include "../ECS/Component/MovementComponent.h"
 #include "../ECS/Component/RigidBodyComponent.h"
 
 #include "../ECS/ECSList.h"
@@ -44,7 +43,6 @@ namespace ecs {
 		std::vector<TransformComponent*> m_vecTransformComponentPtr;
 		std::vector<ColliderComponent*> m_vecColliderComponentPtr;
 		std::vector<RigidBodyComponent*> m_vecRigidBodyComponentPtr;
-		//std::vector<MovementComponent*> m_vecMovementComponentPtr;
 
 	};
 
