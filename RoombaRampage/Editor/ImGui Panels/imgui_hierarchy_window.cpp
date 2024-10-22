@@ -112,10 +112,22 @@ namespace gui {
                     break;
                 }
             }
-          
-
            
 
+        }
+        ImGui::InvisibleButton("test", ImVec2{ ImGui::GetContentRegionAvail().x,ImGui::GetContentRegionAvail().y });
+        if (ImGui::BeginDragDropTarget())
+        {
+            
+            if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Entity"))
+            {
+                IM_ASSERT(payload->DataSize == sizeof(ecs::EntityID));
+                ecs::EntityID Id = *static_cast<ecs::EntityID*>(payload->Data);
+                ecs::Hierachy::m_RemoveParent(Id);
+
+
+            }
+            ImGui::EndDragDropTarget();
         }
 
         ImGui::End();
@@ -139,9 +151,8 @@ namespace gui {
         if (ImGui::IsItemClicked())
         {
             m_clickedEntityId = id;
-
-
         }
+       
 
         //draw context window
         if (ImGui::BeginPopupContextItem()) {
@@ -170,6 +181,7 @@ namespace gui {
 
         if (ImGui::BeginDragDropTarget())
         {
+            
             if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Entity"))
             {
                 IM_ASSERT(payload->DataSize == sizeof(ecs::EntityID));
@@ -178,14 +190,14 @@ namespace gui {
 
                 ecs::Hierachy::m_SetParent(id, childId);
                 std::cout << "Set Parent:" << id << " Child: " << childId << std::endl;
-                
-
-
 
             }
             ImGui::EndDragDropTarget();
         }
         
+
+        
+
         if (open) {
             //recursion
             if (transCom->m_childID.size() > 0) {
