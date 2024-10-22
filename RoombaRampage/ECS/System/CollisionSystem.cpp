@@ -105,11 +105,11 @@ namespace ecs {
 
 			//if movement component is present, do dynamic collision
 			vector2::Vec2 velocity{};
-			if (ecs->m_ECS_EntityMap[id].test(TYPEMOVEMENTCOMPONENT)) {
+			if (ecs->m_ECS_EntityMap[id].test(TYPERIGIDBODYCOMPONENT)) {
 
-				MovementComponent* MovComp = static_cast<MovementComponent*>(ecs->m_ECS_CombinedComponentPool[TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(id));
+				RigidBodyComponent* rigidComp = static_cast<RigidBodyComponent*>(ecs->m_ECS_CombinedComponentPool[TYPERIGIDBODYCOMPONENT]->m_GetEntityComponent(id));
 
-				 velocity = MovComp->m_Speed * MovComp->m_Direction;
+				 velocity = rigidComp->m_Velocity;
 			}
 
 			vector2::Vec2 position{ TransComp->m_transformation.m_e20,TransComp->m_transformation.m_e21 };
@@ -126,11 +126,7 @@ namespace ecs {
 
 		}
 
-		//check for collision
-		if (m_vecColliderComponentPtr.size() > 0) {
-			//PhysicsPipeline.m_CollisionCheck(ecs->m_DeltaTime);
-			PhysicsPipeline.m_CollisionCheckUpdate(ecs->m_DeltaTime);
-		}
+
 	
 	}
 		

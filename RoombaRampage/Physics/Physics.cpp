@@ -318,14 +318,20 @@ namespace physicspipe {
 	void Physics::m_Init() {
 
 	}
-	void Physics::m_Update() {
+	void Physics::m_Update(float dt) {
 		/*
 			1. Update the layer matrix first
 			2. Using the update layer matrix do the collision check
 		*/
+
+		m_CollisionCheckUpdate(dt);
+
 	}
 
 	void Physics::m_CollisionCheckUpdate(float dt) {
+
+		if (m_physicsEntities.empty())return;
+
 		m_CalculateBoundingBox();
 
 

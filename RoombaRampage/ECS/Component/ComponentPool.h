@@ -24,7 +24,6 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "Component.h"
 #include "TransformComponent.h"
 #include "NameComponent.h"
-#include "MovementComponent.h"
 #include "SpriteComponent.h"
 #include "ColliderComponent.h"
 #include "RigidBodyComponent.h"

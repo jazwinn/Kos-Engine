@@ -176,6 +176,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClCompile Include="ECS\Hierachy.cpp" />
     <ClCompile Include="ECS\Layers.cpp" />
     <ClCompile Include="ECS\System\CameraSystem.cpp" />
+    <ClCompile Include="ECS\System\PhysicsSystem.cpp" />
     <ClCompile Include="Editor\EditorCamera.cpp" />
     <ClCompile Include="ECS\System\LogicSystem.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_component_window.cpp" />
@@ -214,10 +215,8 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClCompile Include="ECS\System\AnimationSystem.cpp" />
     <ClCompile Include="ECS\System\CollisionResponseSystem.cpp" />
     <ClCompile Include="ECS\System\CollisionSystem.cpp" />
-    <ClCompile Include="ECS\System\ControlSystem.cpp" />
     <ClCompile Include="ECS\System\TransformSystem.cpp" />
     <ClCompile Include="ECS\System\RenderDebugSystem.cpp" />
-    <ClCompile Include="ECS\System\MovementSystem.cpp" />
     <ClCompile Include="ECS\System\RenderSystem.cpp" />
     <ClCompile Include="ECS\System\RenderTextSystem.cpp" />
     <ClCompile Include="Editor\WindowFile.cpp" />
@@ -251,6 +250,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="ECS\Hierachy.h" />
     <ClInclude Include="ECS\Layers.h" />
     <ClInclude Include="ECS\System\CameraSystem.h" />
+    <ClInclude Include="ECS\System\PhysicsSystem.h" />
     <ClInclude Include="Editor\EditorCamera.h" />
     <ClInclude Include="ECS\System\LogicSystem.h" />
     <ClInclude Include="Editor\ImGui Panels\imgui_handler.h" />
@@ -296,10 +296,8 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="ECS\System\AnimationSystem.h" />
     <ClInclude Include="ECS\System\CollisionResponseSystem.h" />
     <ClInclude Include="ECS\System\CollisionSystem.h" />
-    <ClInclude Include="ECS\System\ControlSystem.h" />
     <ClInclude Include="ECS\System\TransformSystem.h" />
     <ClInclude Include="ECS\System\RenderDebugSystem.h" />
-    <ClInclude Include="ECS\System\MovementSystem.h" />
     <ClInclude Include="ECS\System\RenderSystem.h" />
     <ClInclude Include="ECS\System\RenderTextSystem.h" />
     <ClInclude Include="ECS\System\System.h" />
