@@ -179,6 +179,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClCompile Include="ECS\System\PhysicsSystem.cpp" />
     <ClCompile Include="Editor\EditorCamera.cpp" />
     <ClCompile Include="ECS\System\LogicSystem.cpp" />
+    <ClCompile Include="Editor\ImGui Panels\ContentBrowser.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_component_window.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_Gizmo.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_handler.cpp" />

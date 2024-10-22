@@ -71,6 +71,7 @@
     <ClCompile Include="Events\EventHandler.cpp" />
     <ClCompile Include="Editor\WindowFile.cpp" />
     <ClCompile Include="ECS\System\PhysicsSystem.cpp" />
+    <ClCompile Include="Editor\ImGui Panels\ContentBrowser.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Application.h" />

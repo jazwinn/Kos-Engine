@@ -205,6 +205,8 @@ namespace gui {
 
         void m_DrawLayerWindow();
 
+        void m_DrawContentBrowser();
+
         void m_OnButtonPress(const events::BaseEvent<events::ButtonEvents>& givenEvent);
         int m_clickedEntityId{-1};
 
