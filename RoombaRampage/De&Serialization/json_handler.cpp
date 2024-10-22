@@ -140,20 +140,7 @@ namespace Serialization {
 			}
 
 			// Load Movement Component if it exists
-			if (entityData.HasMember("movement") && entityData["movement"].IsObject()) {
-
-				ecs::MovementComponent* mc = static_cast<ecs::MovementComponent*>(ecs->m_AddComponent(ecs::TYPEMOVEMENTCOMPONENT, newEntityId));
-
-				const rapidjson::Value& movement = entityData["movement"];
-
-				if (movement.HasMember("speed")) {
-					mc->m_Speed = movement["speed"].GetFloat();
-				}
-				if (movement.HasMember("direction") && movement["direction"].IsObject()) {
-					mc->m_Direction.m_x = movement["direction"]["x"].GetFloat();
-					mc->m_Direction.m_y = movement["direction"]["y"].GetFloat();
-				}
-			}
+			
 
 			// Load Collider Component if it exists
 			if (entityData.HasMember("collider") && entityData["collider"].IsObject()) {
@@ -303,23 +290,7 @@ namespace Serialization {
 						}
 					}
 
-					// Load child MovementComponent
-					if (childData.HasMember("movement") && childData["movement"].IsObject()) {
-						ecs::MovementComponent* childMc = static_cast<ecs::MovementComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(childEntityId));
-						
-						if (!childMc) {
-							childMc = static_cast<ecs::MovementComponent*>(ecs->m_AddComponent(ecs::TYPEMOVEMENTCOMPONENT, childEntityId));
-						}
 
-						const rapidjson::Value& movement = childData["movement"];
-						if (movement.HasMember("speed")) {
-							childMc->m_Speed = movement["speed"].GetFloat();
-						}
-						if (movement.HasMember("direction") && movement["direction"].IsObject()) {
-							childMc->m_Direction.m_x = movement["direction"]["x"].GetFloat();
-							childMc->m_Direction.m_y = movement["direction"]["y"].GetFloat();
-						}
-					}
 
 					// Load child ColliderComponent
 					if (childData.HasMember("collider") && childData["collider"].IsObject()) {
@@ -449,19 +420,7 @@ namespace Serialization {
 					}
 				}
 
-				// Check if the entity has MovementComponent and save it
-				if (entityPair.second.test(ecs::ComponentType::TYPEMOVEMENTCOMPONENT)) {
-					ecs::MovementComponent* mc = static_cast<ecs::MovementComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(entityId));
-					if (mc) {
-						rapidjson::Value movement(rapidjson::kObjectType);
-						movement.AddMember("speed", mc->m_Speed, allocator);
-						movement.AddMember("direction", rapidjson::Value().SetObject()
-							.AddMember("x", mc->m_Direction.m_x, allocator)
-							.AddMember("y", mc->m_Direction.m_y, allocator), allocator);
-						entityData.AddMember("movement", movement, allocator);
-						hasComponents = true;  // Mark as having a component
-					}
-				}
+
 
 				// Check if the entity has ColliderComponent and save it
 				if (entityPair.second.test(ecs::ComponentType::TYPECOLLIDERCOMPONENT)) {
@@ -598,17 +557,7 @@ namespace Serialization {
 							}
 
 							// Save child MovementComponent
-							if (ecs->m_ECS_EntityMap[childID].test(ecs::ComponentType::TYPEMOVEMENTCOMPONENT)) {
-								ecs::MovementComponent* mc = static_cast<ecs::MovementComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(childID));
-								if (mc) {
-									rapidjson::Value movement(rapidjson::kObjectType);
-									movement.AddMember("speed", mc->m_Speed, allocator);
-									movement.AddMember("direction", rapidjson::Value().SetObject()
-										.AddMember("x", mc->m_Direction.m_x, allocator)
-										.AddMember("y", mc->m_Direction.m_y, allocator), allocator);
-									childData.AddMember("movement", movement, allocator);
-								}
-							}
+
 
 							// Save child ColliderComponent
 							if (ecs->m_ECS_EntityMap[childID].test(ecs::ComponentType::TYPECOLLIDERCOMPONENT)) {
