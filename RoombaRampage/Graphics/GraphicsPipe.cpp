@@ -122,10 +122,13 @@ namespace graphicpipe {
 		
 		if (GraphicsCamera::m_cameras.size() > 0 && m_gameMode)
 		{
-			GraphicsCamera::calculateCurrCamera();
 			GraphicsCamera::setCurrCamera(0);
+			GraphicsCamera::calculateCurrCamera();
+			GraphicsCamera::calculateCurrView();
 		}
-		GraphicsCamera::multiplyActiveCameraMatrix();
+		//GraphicsCamera::multiplyActiveCameraMatrix();
+		GraphicsCamera::multiplyViewMatrix();
+		GraphicsCamera::multiplyOrthoMatrix();
 
 		if (!m_gameMode)
 		{

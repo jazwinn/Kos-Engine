@@ -84,7 +84,7 @@ namespace ecs {
 
 			mat3x3::Mat3x3 debugTransformation = mat3x3::Mat3Transform(vector2::Vec2{ transform->m_transformation.m_e20, transform->m_transformation.m_e21 }, vector2::Vec2{ transform->m_scale.m_x, transform->m_scale.m_y }, 0);
 			//change camera debug box tobe of different colour
-			graphicsPipe->m_debugBoxData.push_back({ glm::mat3{debugTransformation.m_e00 * (1 / graphicpipe::GraphicsCamera::m_aspectRatio) * 2 ,debugTransformation.m_e01,debugTransformation.m_e02,
+			graphicsPipe->m_debugBoxData.push_back({ glm::mat3{debugTransformation.m_e00 * 2 * (1.f/graphicpipe::GraphicsCamera::m_aspectRatio),debugTransformation.m_e01,debugTransformation.m_e02,
 															debugTransformation.m_e10,debugTransformation.m_e11 * 2, debugTransformation.m_e12,
 														debugTransformation.m_e20, debugTransformation.m_e21, debugTransformation.m_e22} ,
 													0, 0 });

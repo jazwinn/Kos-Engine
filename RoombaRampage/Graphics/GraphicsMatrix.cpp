@@ -19,7 +19,7 @@ namespace graphicpipe
 				m_modelData[n].m_transformation[1][1] = m_modelData[n].m_transformation[1][1] * heightRatio;
 				m_modelData[n].m_transformation[1][0] = m_modelData[n].m_transformation[1][0] * heightRatio;
 
-				glm::mat3 lvNDCScale{ GraphicsCamera::m_aspectRatio , 0, 0, 0, 1.f, 0, 0 , 0 ,1.f };
+				glm::mat3 lvNDCScale{ 1.f , 0, 0, 0, 1.f, 0, 0 , 0 ,1.f };
 
 				m_modelToNDCMatrix.push_back(lvNDCScale * m_modelData[n].m_transformation);
 				m_textureOrder.push_back(m_modelData[n].m_textureID);
@@ -32,7 +32,7 @@ namespace graphicpipe
 		{
 			for (int i{}; i < m_debugBoxData.size(); i++)
 			{
-				glm::mat3 lvNDCScale{GraphicsCamera::m_aspectRatio, 0, 0, 0, 1.f, 0, 0 , 0 ,1.f };
+				glm::mat3 lvNDCScale{ 1.f , 0, 0, 0, 1.f, 0, 0 , 0 ,1.f };
 				m_debugToNDCMatrix.push_back(lvNDCScale * m_debugBoxData[i].m_transformation);
 				m_debugBoxCollisionChecks.push_back(static_cast<float>(m_debugBoxData[i].m_isCollided));
 

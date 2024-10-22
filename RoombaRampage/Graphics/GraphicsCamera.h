@@ -28,11 +28,15 @@ namespace graphicpipe
         static void calculateAspectRatio();
         static void multiplyActiveCameraMatrix();
         static void calculateCurrCamera();
+        static void calculateCurrView();
         static void setCurrCamera(unsigned int index);
+        static void multiplyOrthoMatrix();
+        static void multiplyViewMatrix();
 
         static GraphicsCamera* m_funcGetInstance();
 
         static glm::mat3 m_currCameraMatrix;                ///< Current camera matrix
+        static glm::mat3 m_currViewMatrix;
 
         static OrthoCamera m_currCamera;
         static std::vector<OrthoCamera> m_cameras;
