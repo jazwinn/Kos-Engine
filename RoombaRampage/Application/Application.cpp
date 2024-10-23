@@ -110,9 +110,12 @@ namespace Application {
        --------------------------------------------------------------*/
         //TODO ecapulate into one big init function
         // Mono initialization and assembly loading
-        if (!ScriptManager.m_InitMono("C# Mono/ExampleScript.dll")) {
+        if (!ScriptManager.m_InitMono("C# Mono")) {
             return -1;
         }
+
+        std::vector<std::string> scripts = { "ExampleScriptA", "ExampleScriptB" };
+        ScriptManager.m_AddScripts(scripts);
 
 
         LOGGING_INFO("Mono initialization and method loading successful.");
@@ -132,14 +135,22 @@ namespace Application {
 
         /****************************************************************************************/
         //SAMPLE TO REMOVE
-        // Invoke the HelloWorld method
-        ScriptManager.m_InvokeMethod("ExampleScript", "HelloWorld", nullptr, 0);
+        // Invoke methods from Script A
+        if (ScriptManager.m_LoadMethod("ExampleScriptA", "ExampleScriptA", "PrintA", 0)) {
+            ScriptManager.m_InvokeMethod("ExampleScriptA", "ExampleScriptA", "PrintA", nullptr, 0);
+        }
 
-        // Invoke the PrintMessage
         int number = 42;
         MonoString* message = mono_string_new(ScriptManager.m_GetMonoDomain(), "Calling Method 2!");
         void* args[2] = { &number, message };
-        ScriptManager.m_InvokeMethod("ExampleScript", "PrintMessage", args, 2);
+        if (ScriptManager.m_LoadMethod("ExampleScriptA", "ExampleScriptA", "PrintMessage", 2)) {
+            ScriptManager.m_InvokeMethod("ExampleScriptA", "ExampleScriptA", "PrintMessage", args, 2);
+        }
+
+        // Invoke methods from Script B
+        if (ScriptManager.m_LoadMethod("ExampleScriptB", "ExampleScriptB", "PrintB", 0)) {
+            ScriptManager.m_InvokeMethod("ExampleScriptB", "ExampleScriptB", "PrintB", nullptr, 0);
+        }
         /****************************************************************************************/
 
         /*--------------------------------------------------------------

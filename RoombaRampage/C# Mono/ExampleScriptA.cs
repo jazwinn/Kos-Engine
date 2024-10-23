@@ -1,10 +1,10 @@
-public class ExampleScript
+public class ExampleScriptA
 {
     //MUST ALWAYS USE STATIC VOID! IF NOT THEY CANT DETECT!
 
-    public static void HelloWorld()
+    public static void PrintA()
     {
-        System.Console.WriteLine("C# is calling this method!!");
+        System.Console.WriteLine("C# is calling method 1 from SCRIPT A");
     }
 
     public static void PrintMessage(int number, string message)

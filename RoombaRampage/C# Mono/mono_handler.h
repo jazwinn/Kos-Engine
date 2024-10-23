@@ -4,23 +4,27 @@
 #include <mono/metadata/assembly.h>
 #include <mono/metadata/debug-helpers.h>
 #include <string>
+#include <vector>
+#include <map>
 
-namespace mono {
+namespace Script {
 
-	class MonoScriptHandler {
+	class ScriptHandler {
 	public:
-		MonoScriptHandler();
-		~MonoScriptHandler();
+		ScriptHandler();
+		~ScriptHandler();
 
 		// Initialize Mono and load C#
 		bool m_InitMono(const std::string& assemblyPath);
 
+		//Add multiple scripts and load their individual assembly
+		void m_AddScripts(const std::vector<std::string>& scriptNames);
+
 		// Find method in the C# Script
-		bool m_LoadMethod(const std::string& className, const std::string& methodName, int paramCount);
+		bool m_LoadMethod(const std::string& scriptName, const std::string& className, const std::string& methodName, int paramCount);
 
 		// Invoke method
-		void m_InvokeMethod(const std::string& className, const std::string& methodName, void** args, int paramCount);
-
+		void m_InvokeMethod(const std::string& scriptName, const std::string& className, const std::string& methodName, void** args, int paramCount);
 
 		void m_Cleanup();
 
@@ -29,11 +33,12 @@ namespace mono {
 
 	private:
 		MonoDomain* m_monoDomain = nullptr;
-		MonoAssembly* m_assembly = nullptr;
-		MonoImage* m_image = nullptr;
 		MonoClass* m_testClass = nullptr;
 
-		MonoMethod* m_method = nullptr;
+		std::map<std::string, MonoAssembly*> m_assemblies;
+		std::map<std::string, MonoImage*> m_images;
+		std::map<std::string, MonoMethod*> m_methods;
+		std::vector<std::string> m_scriptNames;
 	};
 
 	/*--------------------------------------------------------------
