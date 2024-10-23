@@ -23,7 +23,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 /******************************************************************/
 #include "../ECS.h"
 #include "../Graphics/GraphicsPipe.h"
-
+#include "../Asset Manager/AssetManager.h"
 #include "AnimationSystem.h"
 #include "../Debugging/Logging.h"
 
@@ -89,7 +89,7 @@ namespace ecs {
 
 
 		//graphicpipe::GraphicsPipe* graphicsPipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
-
+		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
 		for (int n{}; n < m_vecAnimationComponentPtr.size(); n++) {
 			//std::cout << "Entity: " << n << "Movement System is getting Updated";
 
@@ -104,7 +104,8 @@ namespace ecs {
 				m_vecAnimationComponentPtr[n]->m_frameTimer += ecs->m_DeltaTime;
 
 				float frameTime = 1.f / m_vecAnimationComponentPtr[n]->m_framesPerSecond;
-				float spriteTotalTime = frameTime * pipe->m_imageData[SpriteComp->m_imageID].m_stripCount;
+				int id = assetmanager->m_imageManager.m_imageMap.find(SpriteComp->m_imageFile)->second.m_imageID;
+				float spriteTotalTime = frameTime * pipe->m_imageData[id].m_stripCount;
 				if (m_vecAnimationComponentPtr[n]->m_frameTimer > spriteTotalTime)
 				{
 					AniComp->m_frameTimer = 0;

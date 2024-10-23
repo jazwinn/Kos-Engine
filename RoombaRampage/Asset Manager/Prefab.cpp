@@ -129,11 +129,9 @@ namespace prefab {
 
                 const rapidjson::Value& sprite = prefabData["sprite"];
                 if (sprite.HasMember("imageID")) {
-                    prefab.m_spriteComponents.m_imageID = sprite["imageID"].GetUint();
+                   
                 }
-                if (sprite.HasMember("frameNumber")) {
-                    prefab.m_spriteComponents.m_frameNumber = sprite["frameNumber"].GetUint();
-                }
+
                 
             }
 

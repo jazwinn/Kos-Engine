@@ -194,11 +194,9 @@ namespace Serialization {
 				if (sc) {
 					const rapidjson::Value& sprite = entityData["sprite"];
 					if (sprite.HasMember("imageID")) {
-						sc->m_imageID = sprite["imageID"].GetUint();
+
 					}
-					if (sprite.HasMember("frameNumber")) {
-						sc->m_frameNumber = sprite["frameNumber"].GetUint();
-					}
+
 				}
 			}
 
@@ -337,10 +335,7 @@ namespace Serialization {
 
 						const rapidjson::Value& sprite = childData["sprite"];
 						if (sprite.HasMember("imageID")) {
-							childSc->m_imageID = sprite["imageID"].GetInt();
-						}
-						if (sprite.HasMember("frameNumber")) {
-							childSc->m_frameNumber = sprite["frameNumber"].GetInt();
+	
 						}
 					}
 
@@ -466,8 +461,7 @@ namespace Serialization {
 					ecs::SpriteComponent* sc = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPESPRITECOMPONENT]->m_GetEntityComponent(entityId));
 					if (sc) {
 						rapidjson::Value sprite(rapidjson::kObjectType);
-						sprite.AddMember("imageID", sc->m_imageID, allocator);
-						sprite.AddMember("frameNumber", sc->m_frameNumber, allocator);
+
 						entityData.AddMember("sprite", sprite, allocator);
 						hasComponents = true;  // Mark as having a component
 					}
@@ -590,8 +584,7 @@ namespace Serialization {
 								ecs::SpriteComponent* sc = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPESPRITECOMPONENT]->m_GetEntityComponent(childID));
 								if (sc) {
 									rapidjson::Value sprite(rapidjson::kObjectType);
-									sprite.AddMember("imageID", sc->m_imageID, allocator);
-									sprite.AddMember("frameNumber", sc->m_frameNumber, allocator);
+
 									childData.AddMember("sprite", sprite, allocator);
 								}
 							}

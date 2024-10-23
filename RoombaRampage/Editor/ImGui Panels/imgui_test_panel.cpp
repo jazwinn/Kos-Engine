@@ -99,15 +99,7 @@ void gui::ImGuiHandler::m_DrawTestWindow() {
 
 			for (int n{}; n < 2500; n++) {
 				
-				ecs::EntityID id = ecs->m_CreateEntity();
-				list_Of_Entities.push_back(id);
-				ecs::TransformComponent* tc = (ecs::TransformComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id);
-				ecs::SpriteComponent* sc = static_cast<ecs::SpriteComponent*>(ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, id));
-				sc->m_imageID = 3;
 				
-				tc->m_scale = { 1.f,1.f };
-				tc->m_position.m_y = static_cast<float>(height(gen));
-				tc->m_position.m_x = static_cast<float>(height2(gen));
 
 			}
 			//spawn = true;
@@ -136,7 +128,7 @@ void gui::ImGuiHandler::m_DrawTestWindow() {
 			ecs::SpriteComponent* sc = static_cast<ecs::SpriteComponent*>(ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, id_1));
 			ecs::ColliderComponent* cc = static_cast<ecs::ColliderComponent*>(ecs->m_AddComponent(ecs::TYPECOLLIDERCOMPONENT, id_1));
 			ecs::RigidBodyComponent* rc = static_cast<ecs::RigidBodyComponent*>(ecs->m_AddComponent(ecs::TYPERIGIDBODYCOMPONENT, id_1));
-			sc->m_imageID = 3;
+
 			tc->m_scale = { 1.f,1.f };
 			tc->m_position.m_x = static_cast<float>(1.0f);
 			tc->m_position.m_y = static_cast<float>(0);
@@ -148,7 +140,7 @@ void gui::ImGuiHandler::m_DrawTestWindow() {
 			cc = static_cast<ecs::ColliderComponent*>(ecs->m_AddComponent(ecs::TYPECOLLIDERCOMPONENT, id_2));
 			rc = static_cast<ecs::RigidBodyComponent*>(ecs->m_AddComponent(ecs::TYPERIGIDBODYCOMPONENT, id_2));
 
-			sc->m_imageID = 3;
+
 			tc->m_scale = { 1.f,1.f };
 			tc->m_position.m_x = static_cast<float>(-1.0f);
 			tc->m_position.m_y = static_cast<float>(0);

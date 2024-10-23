@@ -69,20 +69,7 @@ namespace assetmanager {
 
     AssetManager::~AssetManager()
     {
-        for (int i = 0; i < m_imageContainer.size(); ++i)
-        {
-            if (m_imagedataArray[i])
-            {
-                if (m_imageContainer[i].m_isPadded)
-                {
-                    delete m_imagedataArray[i];
-                }
-                else
-                {
-                    stbi_image_free(m_imagedataArray[i]);
-                }
-            }
-        }
+        
     }
 
     void AssetManager::m_LoadPrefab(std::string file) {
@@ -107,14 +94,11 @@ namespace assetmanager {
 
     void AssetManager::m_funcLoadImage(const char* file)
     {
-        graphicpipe::GraphicsPipe* graphics = graphicpipe::GraphicsPipe::m_funcGetInstance();
+        
 
-        unsigned int textureID = image::Image::m_LoadImage(file);
+        m_imageManager.m_LoadImage(file);
        
-        graphics->m_textureIDs.push_back(textureID);
-        LOGGING_INFO("Texture Binded, Texture ID : {0} ", textureID);
-        graphics->m_stripCounts.push_back(m_imageContainer.back().m_stripCount);
-        graphics->m_imageData.push_back(m_imageContainer.back());
+
 
     }
 

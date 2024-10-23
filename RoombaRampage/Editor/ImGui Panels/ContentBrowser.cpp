@@ -39,7 +39,7 @@ namespace gui {
 			std::string directoryString = directoryPath.path().filename().string();
 			if (directoryPath.is_directory()) {
 				// if a folder
-				ImGui::Button(directoryString.c_str(), { thumbnail ,thumbnail });
+				ImGui::ImageButton(directoryString.c_str(), (ImTextureID)1, {thumbnail ,thumbnail});
 				if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
 					currentDirectory /= directoryPath.path().filename();
 					std::cout << currentDirectory << std::endl;

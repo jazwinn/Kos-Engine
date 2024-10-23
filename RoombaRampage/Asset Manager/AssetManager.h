@@ -73,48 +73,6 @@ namespace assetmanager {
         /******************************************************************/
         ~AssetManager();
 
-        using Font = std::map<char, text::CharacterData>;
-
-        /******************************************************************/
-        /*!
-        \var     std::vector<image::Image> m_imageContainer
-        \brief   Container for storing loaded image assets.
-        */
-        /******************************************************************/
-        std::vector<image::Image> m_imageContainer;
-
-        /******************************************************************/
-        /*!
-        \var     std::vector<unsigned char*> m_imagedataArray
-        \brief   Array for storing raw image data pointers.
-        */
-        /******************************************************************/
-        std::vector<unsigned char*> m_imagedataArray;
-
-        /******************************************************************/
-        /*!
-        \var     std::vector<std::unique_ptr<fmodaudio::FModAudio>> m_audioContainer
-        \brief   Container for storing loaded audio assets.
-        */
-        /******************************************************************/
-        std::vector<std::unique_ptr<fmodaudio::FModAudio>> m_audioContainer;
-
-        /******************************************************************/
-        /*!
-        \var     std::unordered_map<std::string, prefab::Prefab> m_prefabs
-        \brief   Map storing prefab assets by string identifier.
-        */
-        /******************************************************************/
-        std::unordered_map<std::string, prefab::Prefab> m_prefabs;
-
-        /******************************************************************/
-        /*!
-        \var     Font m_characters
-        \brief   Map storing font character data.
-        */
-        /******************************************************************/
-        Font m_characters{};
-
         /******************************************************************/
         /*!
         \fn      void m_funcLoadAssets()
@@ -160,7 +118,33 @@ namespace assetmanager {
         /******************************************************************/
         void m_LoadPrefab(std::string file);
 
+        
+        image::ImageManager m_imageManager;
 
+        /******************************************************************/
+        /*!
+        \var     std::vector<std::unique_ptr<fmodaudio::FModAudio>> m_audioContainer
+        \brief   Container for storing loaded audio assets.
+        */
+        /******************************************************************/
+        std::vector<std::unique_ptr<fmodaudio::FModAudio>> m_audioContainer;
+
+        /******************************************************************/
+        /*!
+        \var     std::unordered_map<std::string, prefab::Prefab> m_prefabs
+        \brief   Map storing prefab assets by string identifier.
+        */
+        /******************************************************************/
+        std::unordered_map<std::string, prefab::Prefab> m_prefabs;
+
+        /******************************************************************/
+        /*!
+        \var     Font m_characters
+        \brief   Map storing font character data.
+        */
+        /******************************************************************/
+        using Font = std::map<char, text::CharacterData>;
+        Font m_characters{};
     };
 
 }

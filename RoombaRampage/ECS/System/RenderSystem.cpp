@@ -20,6 +20,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "RenderSystem.h"
 #include "../ECS/Component/SpriteComponent.h"
 #include "../Graphics/GraphicsPipe.h"
+#include "../Asset Manager/AssetManager.h"
 
 namespace ecs {
 
@@ -65,6 +66,7 @@ namespace ecs {
 	{
 		//ECS* ecs = ECS::GetInstance();
 		graphicpipe::GraphicsPipe* graphicsPipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
+		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
 
 		if (m_vecSpriteComponentPtr.size() != m_vecTransformComponentPtr.size()) {
 			std::cout << "Error: Vectors container size does not Match" << std::endl;
@@ -78,7 +80,7 @@ namespace ecs {
 			SpriteComponent* sprite = m_vecSpriteComponentPtr[n];
 
 			ECS* ecs = ECS::m_GetInstance();
-
+			unsigned int id = assetmanager->m_imageManager.m_imageMap.find(sprite->m_imageFile)->second.m_imageID;
 			if (ecs->m_ECS_EntityMap[sprite->m_Entity].test(TYPEANIMATIONCOMPONENT)) 
 			{
 				AnimationComponent* animation = (AnimationComponent*)ecs->m_ECS_CombinedComponentPool[TYPEANIMATIONCOMPONENT]->m_GetEntityComponent(sprite->m_Entity);
@@ -86,13 +88,13 @@ namespace ecs {
 				graphicsPipe->m_modelData.push_back({glm::mat3{transform->m_transformation.m_e00,transform->m_transformation.m_e01,transform->m_transformation.m_e02, 
 																transform->m_transformation.m_e10,transform->m_transformation.m_e11, transform->m_transformation.m_e12,
 															transform->m_transformation.m_e20, transform->m_transformation.m_e21, transform->m_transformation.m_e22} ,
-															sprite->m_imageID, animation->m_frameNumber, 0});
+															id, animation->m_frameNumber, 0});
 			}
 			else
 			{
 				graphicsPipe->m_modelData.push_back({ glm::mat3{transform->m_transformation.m_e00,transform->m_transformation.m_e01,transform->m_transformation.m_e02,
 																transform->m_transformation.m_e10,transform->m_transformation.m_e11, transform->m_transformation.m_e12,
-															transform->m_transformation.m_e20, transform->m_transformation.m_e21, transform->m_transformation.m_e22},sprite->m_imageID, 0, 0 });
+															transform->m_transformation.m_e20, transform->m_transformation.m_e21, transform->m_transformation.m_e22},id, 0, 0 });
 			}
 			
 		}
