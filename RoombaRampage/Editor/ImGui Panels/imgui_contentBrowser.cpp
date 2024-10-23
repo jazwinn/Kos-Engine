@@ -41,10 +41,15 @@ namespace gui {
 			std::string directoryString = directoryPath.path().filename().string();
 			if (directoryPath.is_directory()) {
 				// if a folder
-				ImGui::ImageButton(directoryString.c_str(), (ImTextureID)assetmanager->m_imageManager.m_imageMap.find(fileIcon)->second.textureID, { thumbnail ,thumbnail }, { 0,1 }, { 1,0 }, {0,0,0,0});
+				if (assetmanager->m_imageManager.m_imageMap.find(fileIcon) != assetmanager->m_imageManager.m_imageMap.end()) {
+					ImGui::ImageButton(directoryString.c_str(), (ImTextureID)assetmanager->m_imageManager.m_imageMap.find(fileIcon)->second.textureID, { thumbnail ,thumbnail }, { 0,1 }, { 1,0 }, { 0,0,0,0 });
+				}
+				else {
+					ImGui::Button(directoryString.c_str(), { thumbnail ,thumbnail });
+				}
+
 				if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
 					currentDirectory /= directoryPath.path().filename();
-					std::cout << currentDirectory << std::endl;
 
 				}
 			}
@@ -52,7 +57,27 @@ namespace gui {
 				//is a texture file
 				if (directoryPath.path().filename().extension().string() == ".png") {
 					std::string fileName = directoryPath.path().filename().string();
-					ImGui::ImageButton(directoryString.c_str(), (ImTextureID)assetmanager->m_imageManager.m_imageMap.find(fileName)->second.textureID, { thumbnail ,thumbnail }, { 0,1 }, { 1,0 }, { 0,0,0,0 });
+					if (assetmanager->m_imageManager.m_imageMap.find(fileName) != assetmanager->m_imageManager.m_imageMap.end()) {
+						ImGui::ImageButton(directoryString.c_str(), (ImTextureID)assetmanager->m_imageManager.m_imageMap.find(fileName)->second.textureID, { thumbnail ,thumbnail }, { 0,1 }, { 1,0 }, { 0,0,0,0 });
+					}
+					else {
+						ImGui::Button(directoryString.c_str(), { thumbnail ,thumbnail });
+					}
+					
+					if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
+
+
+					}
+				}
+				else if (directoryPath.path().filename().extension().string() == ".wav") {
+					std::string fileName = "Audiowav.png";
+					if (assetmanager->m_imageManager.m_imageMap.find(fileName) != assetmanager->m_imageManager.m_imageMap.end()) {
+						ImGui::ImageButton(directoryString.c_str(), (ImTextureID)assetmanager->m_imageManager.m_imageMap.find(fileName)->second.textureID, { thumbnail ,thumbnail }, { 0,1 }, { 1,0 }, { 0,0,0,0 });
+					}
+					else {
+						ImGui::Button(directoryString.c_str(), { thumbnail ,thumbnail });
+					}
+
 					if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
 
 
