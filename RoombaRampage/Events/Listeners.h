@@ -14,7 +14,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #pragma once
 #include "BaseMessage.h"
 #include "../Application/Application.h"
-#include "../Assets/AssetManager.h"
+#include "../Asset Manager/AssetManager.h"
 #include <iostream>
 
 namespace messaging {

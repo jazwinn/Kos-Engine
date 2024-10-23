@@ -56,7 +56,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include <string>
 #include <vector>
 #include <memory>
-#include "../Assets/AssetManager.h"
+#include "../Asset Manager/AssetManager.h"
 
 namespace graphicpipe {
 
