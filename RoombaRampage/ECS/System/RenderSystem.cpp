@@ -81,7 +81,7 @@ namespace ecs {
 
 			ECS* ecs = ECS::m_GetInstance();
 
-			unsigned int textureid = assetmanager->m_imageManager.m_imageMap.find(sprite->m_imageFile)->second.m_imageID;
+			unsigned int textureid = assetmanager->m_imageManager.m_imageMap.find(sprite->m_imageFile)->second.textureID;
 			
 			if (ecs->m_ECS_EntityMap[sprite->m_Entity].test(TYPEANIMATIONCOMPONENT)) 
 			{
