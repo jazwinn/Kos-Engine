@@ -23,39 +23,65 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Application/Helper.h"
 #include "stb_image.h"
 
+
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <algorithm>
 
 namespace assetmanager {
 
     std::unique_ptr<AssetManager> AssetManager::m_instancePtr = nullptr;
 
-    void AssetManager::m_funcLoadAssets()
+    void AssetManager::m_funcLoadAssets(std::string Directory )
     {
-        m_funcLoadImage("Assets/Sprites/testBackground.png");
-        m_funcLoadImage("Assets/Sprites/blackTile_test.png");
-        m_funcLoadImage("Assets/Sprites/roombaTest.png");
-        m_funcLoadImage("Assets/Sprites/roombaTest2.png");
-        m_funcLoadImage("Assets/Sprites/roombaTest3.png");
-        m_funcLoadImage("Assets/Sprites/gunleft_02.png");
-        m_funcLoadImage("Assets/Sprites/gunright_02.png");
-        m_funcLoadImage("Assets/Sprites/boosters_tail02.png");
+        for (auto& directoryPath : std::filesystem::directory_iterator(Directory)) {
+            std::string filepath = directoryPath.path().string();
+            std::replace(filepath.begin(), filepath.end(), '\\', '/');
 
-        m_funcLoadImage("Assets/Sprites/ani_RoombaBlink_strip4.png");
-        m_funcLoadImage("Assets/Sprites/ani_RoombaBoosters_strip6.png");
-        m_funcLoadImage("Assets/Sprites/ani_SeanSprite_strip4.png");
+            if (directoryPath.is_directory()) {
+                m_funcLoadAssets(filepath);
+            }
+            else if (directoryPath.path().filename().extension().string() == ".png") {
+                std::cout << filepath.c_str() << std::endl;
+                m_funcLoadImage(filepath);
+                
+            }
+            else if (directoryPath.path().filename().extension().string() == ".wav") {
+
+                m_LoadAudio(filepath.c_str());
+            }
+            else if (directoryPath.path().filename().extension().string() == ".ttf") {
+                //UNCOMMENT ME TO TEST IT OUT
+                //m_LoadFont("Assets/Font/Roboto-Black.ttf");
+            }
+            
+
+        }
+
+        
+
+        //m_funcLoadImage("Assets/Sprites/testBackground.png");
+        //m_funcLoadImage("Assets/Sprites/blackTile_test.png");
+        //m_funcLoadImage("Assets/Sprites/roombaTest.png");
+        //m_funcLoadImage("Assets/Sprites/roombaTest2.png");
+        //m_funcLoadImage("Assets/Sprites/roombaTest3.png");
+        //m_funcLoadImage("Assets/Sprites/gunleft_02.png");
+        //m_funcLoadImage("Assets/Sprites/gunright_02.png");
+        //m_funcLoadImage("Assets/Sprites/boosters_tail02.png");
+
+        //m_funcLoadImage("Assets/Sprites/ani_RoombaBlink_strip4.png");
+        //m_funcLoadImage("Assets/Sprites/ani_RoombaBoosters_strip6.png");
+        //m_funcLoadImage("Assets/Sprites/ani_SeanSprite_strip4.png");
 
 
-        m_LoadAudio("Assets/Audio/mindstorm.wav");
-        m_LoadAudio("Assets/Audio/zwing.wav");
+        //m_LoadAudio("Assets/Audio/mindstorm.wav");
+        //m_LoadAudio("Assets/Audio/zwing.wav");
 
-        m_LoadPrefab("../RoombaRampage/Assets/Prefabs/Prefab.json");
-    
-        m_LoadFont("Assets/Font/Roboto-Black.ttf");
+        //m_LoadPrefab("../RoombaRampage/Assets/Prefabs/Prefab.json");
 
-
+        //m_LoadFont("Assets/Font/Roboto-Black.ttf");
     }
 
     AssetManager* AssetManager::m_funcGetInstance()
@@ -69,20 +95,7 @@ namespace assetmanager {
 
     AssetManager::~AssetManager()
     {
-        for (int i = 0; i < m_imageContainer.size(); ++i)
-        {
-            if (m_imagedataArray[i])
-            {
-                if (m_imageContainer[i].m_isPadded)
-                {
-                    delete m_imagedataArray[i];
-                }
-                else
-                {
-                    stbi_image_free(m_imagedataArray[i]);
-                }
-            }
-        }
+        
     }
 
     void AssetManager::m_LoadPrefab(std::string file) {
@@ -91,13 +104,7 @@ namespace assetmanager {
     }
 
    void AssetManager::m_LoadAudio(std::string file) {
-        std::unique_ptr<fmodaudio::FModAudio> Audio = std::make_unique<fmodaudio::FModAudio>();
-        Audio->m_Init();
-        Audio->m_CreateSound(file.c_str());
-
-        m_audioContainer.push_back(std::move(Audio));
-        Audio = nullptr;
-        
+       m_audioManager.m_LoadAudio(file); 
     }
    void AssetManager::m_LoadFont(std::string file)
    {
@@ -105,17 +112,9 @@ namespace assetmanager {
    }
  
 
-    void AssetManager::m_funcLoadImage(const char* file)
+    void AssetManager::m_funcLoadImage(std::string file)
     {
-        graphicpipe::GraphicsPipe* graphics = graphicpipe::GraphicsPipe::m_funcGetInstance();
-
-        unsigned int textureID = image::Image::m_LoadImage(file);
-       
-        graphics->m_textureIDs.push_back(textureID);
-        LOGGING_INFO("Texture Binded, Texture ID : {0} ", textureID);
-        graphics->m_stripCounts.push_back(m_imageContainer.back().m_stripCount);
-        graphics->m_imageData.push_back(m_imageContainer.back());
-
+        m_imageManager.m_LoadImage(file.c_str());
     }
 
   

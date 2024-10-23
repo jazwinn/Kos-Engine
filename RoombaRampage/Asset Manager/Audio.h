@@ -28,6 +28,9 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "fmod.hpp"
 //#include "fmod_errors.h"
 #include <thread>
+#include <string>
+#include <memory>
+#include <unordered_map>
 
 namespace fmodaudio {
 
@@ -175,5 +178,14 @@ namespace fmodaudio {
         FMOD::Sound* m_sound;      /*!< FMOD sound object to represent the loaded audio. */
         FMOD::Channel* m_channel;  /*!< FMOD channel object for controlling sound playback. */
     };
+
+
+    class AudioManager {
+    public:
+        void m_LoadAudio(std::string path);
+
+        std::unordered_map<std::string, std::unique_ptr<FModAudio>> m_soundMap;
+    };
+
 }
 #endif // AUDIO_MANAGER_H
