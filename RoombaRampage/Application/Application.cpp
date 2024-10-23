@@ -19,8 +19,8 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 /********************************************************************/
 #include "Application.h"
 #include "../Graphics/GraphicsPipe.h"
-#include "../Assets/AssetManager.h"
-#include "../Assets/SceneManager.h"
+#include "../Asset Manager/AssetManager.h"
+#include "../Asset Manager/SceneManager.h"
 #include "../Events/EventHandler.h"
 
 
@@ -100,8 +100,8 @@ namespace Application {
             LOAD ENTITIES INTO ECS & IMGUI
         --------------------------------------------------------------*/
         scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();
-        scenemanager->m_AddScene("./RoombaRampage/Json/Scene1.json");
-        scenemanager->m_LoadScene("Scene1");
+        //scenemanager->m_AddScene("./RoombaRampage/Json/Scene1.json");
+        //scenemanager->m_LoadScene("Scene1");
 
         
 

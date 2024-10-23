@@ -23,7 +23,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 
 #include <../GLEW/include/GL/glew.h>
-#include "../Assets/Audio.h"
+#include "../Asset Manager/Audio.h"
 #include "../ECS/ECS.h"
 #include "Prefab.h"
 #include "Image.h"

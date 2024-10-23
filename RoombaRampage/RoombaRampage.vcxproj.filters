@@ -3,7 +3,6 @@
   <ItemGroup>
     <ClCompile Include="Application\Application.cpp" />
     <ClCompile Include="Application\Helper.cpp" />
-    <ClCompile Include="Assets\SceneManager.cpp" />
     <ClCompile Include="C# Mono\mono_handler.cpp" />
     <ClCompile Include="ECS\Hierachy.cpp" />
     <ClCompile Include="ECS\Layers.cpp" />
@@ -23,11 +22,6 @@
     <ClCompile Include="Editor\ImGui Panels\imgui__input_window.cpp" />
     <ClCompile Include="Application\main.cpp" />
     <ClCompile Include="Application\Window.cpp" />
-    <ClCompile Include="Assets\AssetManager.cpp" />
-    <ClCompile Include="Assets\Audio.cpp" />
-    <ClCompile Include="Assets\Image.cpp" />
-    <ClCompile Include="Assets\Prefab.cpp" />
-    <ClCompile Include="Assets\Text.cpp" />
     <ClCompile Include="De&amp;Serialization\json_handler.cpp" />
     <ClCompile Include="Debugging\Logging.cpp" />
     <ClCompile Include="Debugging\Performance.cpp" />
@@ -71,11 +65,17 @@
     <ClCompile Include="Events\EventHandler.cpp" />
     <ClCompile Include="Editor\WindowFile.cpp" />
     <ClCompile Include="ECS\System\PhysicsSystem.cpp" />
+    <ClCompile Include="Editor\ImGui Panels\ContentBrowser.cpp" />
+    <ClCompile Include="Asset Manager\AssetManager.cpp" />
+    <ClCompile Include="Asset Manager\Audio.cpp" />
+    <ClCompile Include="Asset Manager\Image.cpp" />
+    <ClCompile Include="Asset Manager\Prefab.cpp" />
+    <ClCompile Include="Asset Manager\SceneManager.cpp" />
+    <ClCompile Include="Asset Manager\Text.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Application.h" />
     <ClInclude Include="Application\Helper.h" />
-    <ClInclude Include="Assets\SceneManager.h" />
     <ClInclude Include="C# Mono\mono_handler.h" />
     <ClInclude Include="ECS\Component\CameraComponent.h" />
     <ClInclude Include="ECS\Component\ScriptComponent.h" />
@@ -87,11 +87,6 @@
     <ClInclude Include="Editor\ImGui Panels\imgui_handler.h" />
     <ClInclude Include="Application\json_handler.h" />
     <ClInclude Include="Application\Window.h" />
-    <ClInclude Include="Assets\AssetManager.h" />
-    <ClInclude Include="Assets\Audio.h" />
-    <ClInclude Include="Assets\Image.h" />
-    <ClInclude Include="Assets\Prefab.h" />
-    <ClInclude Include="Assets\Text.h" />
     <ClInclude Include="De&amp;Serialization\json_handler.h" />
     <ClInclude Include="Debugging\Logging.h" />
     <ClInclude Include="Debugging\Performance.h" />
@@ -155,6 +150,12 @@
     <ClInclude Include="Events\MouseEvent.h" />
     <ClInclude Include="Editor\WindowFile.h" />
     <ClInclude Include="ECS\System\PhysicsSystem.h" />
+    <ClInclude Include="Asset Manager\AssetManager.h" />
+    <ClInclude Include="Asset Manager\Audio.h" />
+    <ClInclude Include="Asset Manager\Image.h" />
+    <ClInclude Include="Asset Manager\Prefab.h" />
+    <ClInclude Include="Asset Manager\SceneManager.h" />
+    <ClInclude Include="Asset Manager\Text.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Graphics\debugFragmentShader.frag" />

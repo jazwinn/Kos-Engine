@@ -18,7 +18,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Application/Helper.h"
 #include "../../De&Serialization/json_handler.h"
 #include "../Debugging/Logging.h"
-#include "../Assets/AssetManager.h"
+#include "../Asset Manager/AssetManager.h"
 #include "../Events/BaseMessage.h"
 #include "../Events/MessageSystem.h"
 #include "../Events/Listeners.h"

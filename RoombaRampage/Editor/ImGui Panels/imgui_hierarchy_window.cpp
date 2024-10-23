@@ -23,7 +23,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../ECS/ECS.h"
 #include "../ECS/Hierachy.h"
 #include "../../De&Serialization/json_handler.h"
-#include "../Assets/AssetManager.h"
+#include "../Asset Manager/AssetManager.h"
 #include "../Debugging/Logging.h"
 
 #include<vector>

@@ -21,7 +21,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "imgui_handler.h"
 #include "imgui_stdlib.h"
 #include "../ECS/ECS.h"
-#include "../Assets/AssetManager.h"
+#include "../Asset Manager/AssetManager.h"
 #include "../Graphics/GraphicsPipe.h"
 #include "../ECS/Layers.h"
 
