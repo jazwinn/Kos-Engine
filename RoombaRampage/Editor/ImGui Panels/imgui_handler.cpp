@@ -108,7 +108,7 @@ namespace gui {
 				m_DrawLayerWindow();
 				m_DrawInputWindow();
 				m_DrawRenderScreenWindow(static_cast<unsigned int>(Helper::Helpers::GetInstance()->m_windowWidth), static_cast<unsigned int>(Helper::Helpers::GetInstance()->m_windowHeight));
-				m_DrawGameSceneWindow();
+				//m_DrawGameSceneWindow();
 			}
 
 

@@ -134,11 +134,25 @@ namespace graphicpipe {
 		{
 			m_funcDrawWindow();
 		}
+		
+	}
+
+	void GraphicsPipe::m_funcClearContainers()
+	{
+		m_modelToNDCMatrix.clear();
+		m_textureOrder.clear();
+		m_frameNumbers.clear();
+		m_stripCounts.clear();
+		m_modelMatrix.clear();
+		m_modelData.clear();
+		m_debugToNDCMatrix.clear();
+		m_debugBoxCollisionChecks.clear();
+		m_debugBoxData.clear();
+		
 	}
 
 	void GraphicsPipe::m_funcRenderGameScene()
 	{
-		
 		if (m_gameMode)
 		{
 			m_funcDraw();

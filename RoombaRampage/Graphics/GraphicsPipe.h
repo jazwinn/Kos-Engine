@@ -304,6 +304,8 @@ namespace graphicpipe {
 
         void m_funcRenderGameScene();
 
+        void m_funcClearContainers();
+
         //Boolean Values
         bool m_gameMode{ false };
 
@@ -314,6 +316,7 @@ namespace graphicpipe {
         Mesh m_textMesh;                ///< Mesh for text rendering.
 
         // Matrix Containers
+        std::vector<glm::mat3> m_modelMatrix{};
         std::vector<glm::mat3> m_modelToNDCMatrix{}; ///< Model-to-NDC transformation matrices.
         std::vector<glm::mat3> m_debugToNDCMatrix{}; ///< Debug model-to-NDC matrices.
 

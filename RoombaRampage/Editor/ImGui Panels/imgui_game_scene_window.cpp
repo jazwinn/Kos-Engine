@@ -9,12 +9,10 @@ namespace gui
         graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
         ImGui::Begin("Game Window");
 
-        //graphicpipe::GraphicsCamera::m_currCameraMatrix = graphicpipe::GraphicsCamera::m_currCameraMatrix;
+        graphicpipe::GraphicsCamera::m_currViewMatrix;
         //pipe->m_funcUpdate();
         //pipe->m_funcDrawWindow();
         
-
-
         ImVec2 pos = ImGui::GetCursorScreenPos();
         ImVec2 renderWindowSize = ImGui::GetContentRegionAvail();
         float textureAspectRatio = graphicpipe::GraphicsCamera::m_windowWidth / graphicpipe::GraphicsCamera::m_windowHeight;

@@ -18,12 +18,7 @@ namespace graphicpipe
          * @struct Camera
          * @brief Represents the camera's position and orientation.
          */
-        struct OrthoCamera                
-        {
-            glm::vec2 m_coordinates; 
-            glm::vec2 m_zoom;         
-            float m_angle;            
-        };
+   
 
         static void calculateAspectRatio();
         static void multiplyActiveCameraMatrix();
@@ -38,8 +33,8 @@ namespace graphicpipe
         static glm::mat3 m_currCameraMatrix;                ///< Current camera matrix
         static glm::mat3 m_currViewMatrix;
 
-        static OrthoCamera m_currCamera;
-        static std::vector<OrthoCamera> m_cameras;
+        static glm::mat3 m_currCamera;
+        static std::vector<glm::mat3> m_cameras;
 
     private:
         static std::unique_ptr<GraphicsCamera> m_instancePtr;

@@ -18,7 +18,7 @@ namespace gui {
         graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
         ecs::ECS* ecs = ecs::ECS::m_GetInstance();
         Helper::Helpers* help = Helper::Helpers::GetInstance();
-        float aspectRatio = help->m_windowHeight / help->m_windowWidth;
+        float aspectRatio = help->m_windowWidth / help->m_windowHeight;
 
         
 
@@ -55,8 +55,8 @@ namespace gui {
           0.f, 0.f, 0.f, 1.f };
 
         glm::mat3 ortho{ 1.f };
-        float left = -1.f * (1.77f);
-        float right = 1.f * (1.77f);
+        float left = -1.f * (aspectRatio);
+        float right = 1.f * (aspectRatio);
         float bottom = -1.f;
         float top = 1.f;
         ortho[0][0] = (2.0f / (right - left));
@@ -77,7 +77,7 @@ namespace gui {
           0.f, 0.f, 1.f, 0.f,
           0.f, 0.f, 0.f, 1.f };
 
-       cameraView[0] = EditorCamera::m_editorViewMatrix[0][0];
+        cameraView[0] = EditorCamera::m_editorViewMatrix[0][0];
         cameraView[5] = EditorCamera::m_editorViewMatrix[1][1];
         cameraView[12] = EditorCamera::m_editorViewMatrix[2][0];
         cameraView[13] = EditorCamera::m_editorViewMatrix[2][1];
@@ -103,6 +103,8 @@ namespace gui {
 
         gridviewmatrix[0] = EditorCamera::m_editorViewMatrix[0][0];
         gridviewmatrix[9] = EditorCamera::m_editorViewMatrix[1][1];
+        gridviewmatrix[12] = EditorCamera::m_editorViewMatrix[2][0];
+        gridviewmatrix[13] = EditorCamera::m_editorViewMatrix[2][1];
 
         ImGuizmo::DrawGrid(gridviewmatrix, projection, identity, 100.f);
 

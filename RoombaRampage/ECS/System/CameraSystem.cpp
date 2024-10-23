@@ -80,12 +80,16 @@ namespace ecs {
 			TransformComponent* transform = m_vecTransformComponentPtr[n];
 			CameraComponent* cam = m_vecCameraComponentPtr[n];
 
-			graphicpipe::GraphicsCamera::m_cameras.push_back({ {transform->m_position.m_x,transform->m_position.m_y}, {transform->m_scale.m_x, transform->m_scale.m_y }, transform->m_rotation });
+			mat3x3::Mat3x3 cameraTransformation = mat3x3::Mat3Transform(vector2::Vec2{ transform->m_transformation.m_e20, transform->m_transformation.m_e21 }, vector2::Vec2{ transform->m_scale.m_x, transform->m_scale.m_y }, transform->m_rotation);
 
-			mat3x3::Mat3x3 debugTransformation = mat3x3::Mat3Transform(vector2::Vec2{ transform->m_transformation.m_e20, transform->m_transformation.m_e21 }, vector2::Vec2{ transform->m_scale.m_x, transform->m_scale.m_y }, 0);
+			graphicpipe::GraphicsCamera::m_cameras.push_back({ glm::mat3{cameraTransformation.m_e00 ,cameraTransformation.m_e01,cameraTransformation.m_e02,
+															cameraTransformation.m_e10,cameraTransformation.m_e11 , cameraTransformation.m_e12,
+														cameraTransformation.m_e20, cameraTransformation.m_e21, cameraTransformation.m_e22}});
+
+			mat3x3::Mat3x3 debugTransformation = mat3x3::Mat3Transform(vector2::Vec2{ transform->m_transformation.m_e20, transform->m_transformation.m_e21 }, vector2::Vec2{ transform->m_scale.m_x * 2 * (1.f / graphicpipe::GraphicsCamera::m_aspectRatio), transform->m_scale.m_y * 2 }, transform->m_rotation);
 			//change camera debug box tobe of different colour
-			graphicsPipe->m_debugBoxData.push_back({ glm::mat3{debugTransformation.m_e00 * 2 * (1.f/graphicpipe::GraphicsCamera::m_aspectRatio),debugTransformation.m_e01,debugTransformation.m_e02,
-															debugTransformation.m_e10,debugTransformation.m_e11 * 2, debugTransformation.m_e12,
+			graphicsPipe->m_debugBoxData.push_back({ glm::mat3{debugTransformation.m_e00,debugTransformation.m_e01,debugTransformation.m_e02,
+															debugTransformation.m_e10,debugTransformation.m_e11, debugTransformation.m_e12,
 														debugTransformation.m_e20, debugTransformation.m_e21, debugTransformation.m_e22} ,
 													0, 0 });
 

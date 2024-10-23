@@ -8,10 +8,9 @@ namespace graphicpipe
 	int GraphicsCamera::m_windowHeight{};
 	float GraphicsCamera::m_aspectRatio{};
 	std::unique_ptr<GraphicsCamera> GraphicsCamera::m_instancePtr = nullptr;
-	GraphicsCamera::OrthoCamera GraphicsCamera::m_currCamera{ glm::vec2(0.f,0.f), glm::vec2(1.f,1.f), 0 };
 	glm::mat3 GraphicsCamera::m_currCameraMatrix{1.f};
 	glm::mat3 GraphicsCamera::m_currViewMatrix{ 1.f };
-	std::vector<GraphicsCamera::OrthoCamera> GraphicsCamera::m_cameras{};
+	std::vector<glm::mat3> GraphicsCamera::m_cameras{};
 
 	GraphicsCamera* GraphicsCamera::m_funcGetInstance()
 	{
@@ -24,7 +23,7 @@ namespace graphicpipe
 
 	void GraphicsCamera::setCurrCamera(unsigned int index)
 	{
-		m_currCamera = m_cameras[index];
+		m_currCameraMatrix = m_cameras[index];
 	}
 
 	void GraphicsCamera::calculateAspectRatio()
@@ -35,7 +34,7 @@ namespace graphicpipe
 	}
 	void GraphicsCamera::multiplyActiveCameraMatrix()
 	{
-		GraphicsPipe* pipe = GraphicsPipe::m_funcGetInstance();
+		/*GraphicsPipe* pipe = GraphicsPipe::m_funcGetInstance();
 
 		for (glm::mat3& matrix : pipe->m_modelToNDCMatrix)
 		{
@@ -45,17 +44,13 @@ namespace graphicpipe
 		for (glm::mat3& debugMatrix : pipe->m_debugToNDCMatrix)
 		{
 			debugMatrix = m_currCameraMatrix * debugMatrix;
-		}
+		}*/
 	
 	}
 
 	void GraphicsCamera::calculateCurrCamera()
 	{
-		m_currCameraMatrix[0][0] = m_currCamera.m_zoom.x;
-		m_currCameraMatrix[1][1] = m_currCamera.m_zoom.y;
-		m_currCameraMatrix[2][0] = m_currCamera.m_coordinates.x;
-		m_currCameraMatrix[2][1] = m_currCamera.m_coordinates.y;
-		m_currCameraMatrix[2][2] = 1;
+
 	}
 
 	void GraphicsCamera::calculateCurrView()
@@ -92,10 +87,13 @@ namespace graphicpipe
 	void GraphicsCamera::multiplyViewMatrix()
 	{
 		GraphicsPipe* pipe = GraphicsPipe::m_funcGetInstance();
-
-		for (glm::mat3& matrix : pipe->m_modelToNDCMatrix)
+		if (!pipe->m_modelToNDCMatrix.empty())
 		{
-			matrix = m_currViewMatrix * matrix;
+			pipe->m_modelToNDCMatrix.clear();
+		}
+		for (const glm::mat3& matrix : pipe->m_modelMatrix)
+		{
+			pipe->m_modelToNDCMatrix.push_back(m_currViewMatrix * matrix);
 		}
 
 		for (glm::mat3& debugMatrix : pipe->m_debugToNDCMatrix)
@@ -103,4 +101,5 @@ namespace graphicpipe
 			debugMatrix = m_currViewMatrix * debugMatrix;
 		}
 	}
+	
 }
