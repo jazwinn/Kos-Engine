@@ -102,7 +102,7 @@ namespace image {
                 image.m_height = targetHeight;
                 image.m_channels = m_targetChannels;
                 m_imageCount++;
-                m_imageMap[image.m_spriteName + ".png"] = image;
+                m_imageMap[image.m_spriteName] = image;
                 m_imagedataArray.push_back(newData);
                 LOGGING_INFO("Texture Padded for {0}", image.m_spriteName);
             }
@@ -110,7 +110,7 @@ namespace image {
             {
                 image.m_imageID = m_imageCount;
                 m_imageCount++;
-                m_imageMap[image.m_spriteName + ".png"] = image;
+                m_imageMap[image.m_spriteName] = image;
                 m_imagedataArray.push_back(data);
             }
         }
@@ -118,7 +118,7 @@ namespace image {
         {
             image.m_imageID = m_imageCount;
             m_imageCount++;
-            m_imageMap[image.m_spriteName + ".png"] = image;
+            m_imageMap[image.m_spriteName] = image;
             m_imagedataArray.push_back(data);
         }
 
@@ -129,8 +129,10 @@ namespace image {
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_imageMap[image.m_spriteName + ".png"].m_width, m_imageMap[image.m_spriteName + ".png"].m_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, m_imagedataArray.back());
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_imageMap[image.m_spriteName].m_width, m_imageMap[image.m_spriteName].m_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, m_imagedataArray.back());
         glGenerateMipmap(GL_TEXTURE_2D);
+
+        m_imageMap.find(image.m_spriteName)->second.textureID = textureID;
 
         graphics->m_textureIDs.push_back(textureID);
         LOGGING_INFO("Texture Binded, Texture ID : {0} ", textureID);
@@ -164,13 +166,13 @@ namespace image {
 
         if (std::regex_search(filename, match, pattern))
         {
-            return match[1].str();
+            return match[0].str();
         }
 
         pattern = ("([[:alnum:]]+)([_]*)([[:alnum:]]*)\\.png"); // For single sprites
         if (std::regex_search(filename, match, pattern))
         {
-            return match[1].str();
+            return match[0].str();
         }
 
         return "Error_Cannot_Read_Sprite_Name";

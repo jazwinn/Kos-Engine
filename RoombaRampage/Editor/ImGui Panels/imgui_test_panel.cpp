@@ -57,11 +57,11 @@ void gui::ImGuiHandler::m_DrawTestWindow() {
 	}
 	ImGui::SameLine();
 	if (ImGui::Button("Sound")) {
-		assetManager->m_audioContainer[1]->m_PlaySound();
+		assetManager->m_audioManager.m_soundMap.find("mindstorm.wav")->second->m_PlaySound();
 	}
 	if (ImGui::Button("Stop Sound")) {
-		assetManager->m_audioContainer[0]->m_StopSound();
-		assetManager->m_audioContainer[1]->m_StopSound();
+		assetManager->m_audioManager.m_soundMap.find("mindstorm.wav")->second->m_StopSound();
+		assetManager->m_audioManager.m_soundMap.find("zwing.wav")->second->m_StopSound();
 	}
 	ImGui::NewLine();
 	ImGui::SeparatorText("##########################################");

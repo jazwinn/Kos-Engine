@@ -46,6 +46,7 @@ namespace image {
 		int m_stripCount{};          ///< Number of strips in the image (for sprite sheets).
 		bool m_isPadded = false;     ///< Indicates whether the image has been padded to be square.
 		int m_imageID{};             ///< Unique identif
+		unsigned int textureID{};
 	};
 
 

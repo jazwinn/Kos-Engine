@@ -25,6 +25,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "Audio.h"
 #include <chrono>
 #include <iostream>
+#include <filesystem>
 //#include <fmod_errors.h>
 
 namespace fmodaudio {
@@ -221,5 +222,24 @@ namespace fmodaudio {
         m_channel->setVolume(targetVolume);
 
         return true;
+    }
+
+
+    void AudioManager::m_LoadAudio(std::string path)
+    {
+
+        std::filesystem::path filePath = path;
+        std::string filename = filePath.filename().string();
+
+        //return if filename already exist
+        if (m_soundMap.find(filename) != m_soundMap.end()) {
+            return;
+        }
+
+
+        m_soundMap[filename] = std::make_unique<fmodaudio::FModAudio>();
+        m_soundMap.find(filename)->second->m_Init();
+        m_soundMap.find(filename)->second->m_CreateSound(path.c_str());
+
     }
 }

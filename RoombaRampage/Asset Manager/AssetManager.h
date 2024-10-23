@@ -33,6 +33,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include <map>
 #include <string>
 #include <memory>
+#include <filesystem>
 
 namespace assetmanager {
 
@@ -80,7 +81,7 @@ namespace assetmanager {
                  required by the game.
         */
         /******************************************************************/
-        void m_funcLoadAssets();
+        void m_funcLoadAssets(std::string );
 
         /******************************************************************/
         /*!
@@ -89,7 +90,7 @@ namespace assetmanager {
         \param   file - Path to the image file to load.
         */
         /******************************************************************/
-        void m_funcLoadImage(const char* file);
+        void m_funcLoadImage(std::string file);
 
         /******************************************************************/
         /*!
@@ -121,13 +122,8 @@ namespace assetmanager {
         
         image::ImageManager m_imageManager;
 
-        /******************************************************************/
-        /*!
-        \var     std::vector<std::unique_ptr<fmodaudio::FModAudio>> m_audioContainer
-        \brief   Container for storing loaded audio assets.
-        */
-        /******************************************************************/
-        std::vector<std::unique_ptr<fmodaudio::FModAudio>> m_audioContainer;
+        fmodaudio::AudioManager m_audioManager;
+
 
         /******************************************************************/
         /*!

@@ -70,7 +70,7 @@ namespace Application {
            INITIALIZE Asset Manager
         --------------------------------------------------------------*/
         AstManager = assetmanager::AssetManager::m_funcGetInstance();
-        AstManager->m_funcLoadAssets();
+        AstManager->m_funcLoadAssets("Assets");
         LOGGING_INFO("Load Asset Successful");
 
 
