@@ -103,6 +103,37 @@ namespace graphicpipe
 		}
 	}
 
+	void GraphicsPipe::m_funcDrawGamePreviewWindow()
+	{
+		glBindFramebuffer(GL_FRAMEBUFFER, m_gamePreviewFrameBufferObject);
+		glEnable(GL_DEPTH_TEST);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		m_funcDraw();
+		m_funcDrawText();
+
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		glDisable(GL_DEPTH_TEST);
+		//glClearColor(0.f, 0.f, 0.f, 1.f);
+		glClear(GL_COLOR_BUFFER_BIT);
+
+		glUseProgram(m_frameBufferShaderProgram);
+
+		glBindVertexArray(m_screenMesh.m_vaoId);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, m_screenTexture);
+		int loc = glGetUniformLocation(m_frameBufferShaderProgram, "screenTexture");
+
+		if (loc != -1)
+		{
+			glUniform1i(loc, 0);
+		}
+		else
+		{
+			std::cout << "Uniform not found" << std::endl;
+		}
+	}
+
 	void GraphicsPipe::m_funcDrawText()
 	{
 

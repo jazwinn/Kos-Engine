@@ -81,13 +81,13 @@ namespace graphicpipe
 		{
 			debugMatrix = ortho * debugMatrix;
 		}
-		m_cameras.clear();
+		//m_cameras.clear();
 	}
 
 	void GraphicsCamera::multiplyViewMatrix()
 	{
 		GraphicsPipe* pipe = GraphicsPipe::m_funcGetInstance();
-		if (!pipe->m_modelToNDCMatrix.empty())
+		if (!(pipe->m_modelToNDCMatrix.empty()))
 		{
 			pipe->m_modelToNDCMatrix.clear();
 		}
@@ -95,11 +95,11 @@ namespace graphicpipe
 		{
 			pipe->m_modelToNDCMatrix.push_back(m_currViewMatrix * matrix);
 		}
-
 		for (glm::mat3& debugMatrix : pipe->m_debugToNDCMatrix)
 		{
 			debugMatrix = m_currViewMatrix * debugMatrix;
 		}
+	
 	}
 	
 }

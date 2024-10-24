@@ -234,21 +234,14 @@ namespace Serialization {
 					}
 				}
 			}
-			//if (entityData.HasMember("camera") && entityData["camera"].IsObject()) {
-			//	ecs::CameraComponent* cc = static_cast<ecs::CameraComponent*>(ecs->m_AddComponent(ecs::TYPECAMERACOMPONENT, newEntityId));
+			if (entityData.HasMember("camera") && entityData["camera"].IsObject()) {
+				ecs::CameraComponent* cc = static_cast<ecs::CameraComponent*>(ecs->m_AddComponent(ecs::TYPECAMERACOMPONENT, newEntityId));
 
-			//	if (cc) {
-			//		const rapidjson::Value& camera = entityData["camera"];
-			//		if (camera.HasMember("coordinates"))
-			//		{
-			//			//cc->m_coordinates = ["coordinates"].GetFloat();
-			//		}
-			//		if (camera.HasMember("zoom"))
-			//		{
-			//			
-			//		}
-			//	}
-			//}
+				if (cc) {
+					const rapidjson::Value& camera = entityData["camera"];
+	
+				}
+			}
 
 			//Check child obj now
 			if (entityData.HasMember("children") && entityData["children"].IsArray()) {
@@ -505,12 +498,12 @@ namespace Serialization {
 					if (cc)
 					{
 						rapidjson::Value camera(rapidjson::kObjectType);
-						camera.AddMember("planes", rapidjson::Value().SetObject()
+						/*camera.AddMember("planes", rapidjson::Value().SetObject()
 							.AddMember("left", cc->m_left, allocator)
 							.AddMember("right", cc->m_right, allocator)
 							.AddMember("top", cc->m_top, allocator)
 							.AddMember("bottom", cc->m_bottom, allocator), allocator);
-						camera.AddMember("aspectRatio", cc->m_aspectRatio, allocator);
+						camera.AddMember("aspectRatio", cc->m_aspectRatio, allocator);*/
 					
 						entityData.AddMember("camera", camera, allocator);
 						hasComponents = true;
@@ -598,6 +591,7 @@ namespace Serialization {
 									childData.AddMember("player", player, allocator);
 								}
 							}
+
 
 							// Add this child to the parent's children array
 							childrenArray.PushBack(childData, allocator);

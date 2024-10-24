@@ -85,6 +85,7 @@ namespace Application {
             help->m_windowHeight = static_cast<float>(display_h);
             help->m_windowWidth = static_cast<float>(display_w);
             pipe->m_funcSetupFrameBuffer();
+            pipe->m_funcSetupGamePreviewFrameBuffer();
             glViewport(0, 0, display_w, display_h);
             
         }

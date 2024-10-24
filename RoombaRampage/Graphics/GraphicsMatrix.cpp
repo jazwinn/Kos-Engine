@@ -24,6 +24,7 @@ namespace graphicpipe
 				m_stripCounts.push_back(m_imageData[m_modelData[n].m_textureID].m_stripCount);
 				m_frameNumbers.push_back(m_modelData[n].m_frameNumber);
 			}
+			m_modelData.clear();
 		}
 
 		if (m_debugBoxData.size() > 0)
@@ -34,6 +35,7 @@ namespace graphicpipe
 				m_debugBoxCollisionChecks.push_back(static_cast<float>(m_debugBoxData[i].m_isCollided));
 
 			}
+			m_debugBoxData.clear();
 		}
 	}
 }
