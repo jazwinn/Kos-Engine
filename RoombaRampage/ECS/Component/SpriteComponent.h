@@ -31,7 +31,7 @@ namespace ecs {
 
 	public:
 
-		std::string m_imageFile{"roombaTest3.png"};
+		std::string m_imageFile{"Roomba.png"};
 	};
 
 }
