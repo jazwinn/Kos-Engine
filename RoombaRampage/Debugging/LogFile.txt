@@ -1,39 +1,43 @@
-[INFO]: 2024-10-24 02:03:40 - Application Start
-[INFO]: 2024-10-24 02:03:40 - Load Log Successful
-[INFO]: 2024-10-24 02:03:40 - Load Config Successful
-[INFO]: 2024-10-24 02:03:40 - Load Window Successful
-[INFO]: 2024-10-24 02:03:40 - Load ECS Successful
-[INFO]: 2024-10-24 02:03:40 - Strip Success for Assets/Texture/ani_RoombaBlink_strip4.png
-[INFO]: 2024-10-24 02:03:40 - Texture Binded, Texture ID : 1 
-[INFO]: 2024-10-24 02:03:40 - Strip Success for Assets/Texture/ani_RoombaBoosters_strip6.png
-[INFO]: 2024-10-24 02:03:40 - Texture Binded, Texture ID : 2 
-[INFO]: 2024-10-24 02:03:40 - Strip Success for Assets/Texture/ani_SeanSprite_strip4.png
-[INFO]: 2024-10-24 02:03:40 - Texture Binded, Texture ID : 3 
-[INFO]: 2024-10-24 02:03:40 - Texture Padded for Audiowav.png
-[INFO]: 2024-10-24 02:03:40 - Texture Binded, Texture ID : 4 
-[INFO]: 2024-10-24 02:03:40 - Texture Padded for Background.png
-[INFO]: 2024-10-24 02:03:40 - Texture Binded, Texture ID : 5 
-[INFO]: 2024-10-24 02:03:40 - Texture Binded, Texture ID : 6 
-[INFO]: 2024-10-24 02:03:40 - Texture Padded for boosters_tail02.png
-[INFO]: 2024-10-24 02:03:40 - Texture Binded, Texture ID : 7 
-[INFO]: 2024-10-24 02:03:41 - Texture Padded for folder.png
-[INFO]: 2024-10-24 02:03:41 - Texture Binded, Texture ID : 8 
-[INFO]: 2024-10-24 02:03:41 - Texture Padded for gunleft_02.png
-[INFO]: 2024-10-24 02:03:41 - Texture Binded, Texture ID : 9 
-[INFO]: 2024-10-24 02:03:41 - Texture Padded for gunright_02.png
-[INFO]: 2024-10-24 02:03:41 - Texture Binded, Texture ID : 10 
-[INFO]: 2024-10-24 02:03:41 - Texture Binded, Texture ID : 11 
-[INFO]: 2024-10-24 02:03:41 - Texture Binded, Texture ID : 12 
-[INFO]: 2024-10-24 02:03:41 - Texture Padded for roombaTest3.png
-[INFO]: 2024-10-24 02:03:41 - Texture Binded, Texture ID : 13 
-[INFO]: 2024-10-24 02:03:41 - Load Asset Successful
-[INFO]: 2024-10-24 02:03:41 - Shader compiled successfully
-[INFO]: 2024-10-24 02:03:41 - Shader compiled successfully
-[INFO]: 2024-10-24 02:03:41 - Shader compiled successfully
-[INFO]: 2024-10-24 02:03:41 - Shader compiled successfully
-[INFO]: 2024-10-24 02:03:41 - Load Graphic Pipline Successful
-[INFO]: 2024-10-24 02:03:41 - Set Input Call Back Successful
-[INFO]: 2024-10-24 02:03:41 - Load ImGui Successful
-[INFO]: 2024-10-24 02:03:41 - Mono initialization and method loading successful.
-[INFO]: 2024-10-24 02:03:41 - Application Init Successful
-[INFO]: 2024-10-24 02:03:57 - Application Closed
+[INFO]: 2024-10-24 13:14:07 - Application Start
+[INFO]: 2024-10-24 13:14:07 - Load Log Successful
+[INFO]: 2024-10-24 13:14:07 - Load Config Successful
+[INFO]: 2024-10-24 13:14:08 - Load Window Successful
+[INFO]: 2024-10-24 13:14:08 - Load ECS Successful
+[INFO]: 2024-10-24 13:14:08 - Strip Success for Assets/Texture/ani_RoombaBlink_strip4.png
+[INFO]: 2024-10-24 13:14:08 - Texture Binded, Texture ID : 1 
+[INFO]: 2024-10-24 13:14:08 - Strip Success for Assets/Texture/ani_RoombaBoosters_strip6.png
+[INFO]: 2024-10-24 13:14:09 - Texture Binded, Texture ID : 2 
+[INFO]: 2024-10-24 13:14:09 - Strip Success for Assets/Texture/ani_SeanSprite_strip4.png
+[INFO]: 2024-10-24 13:14:09 - Texture Binded, Texture ID : 3 
+[INFO]: 2024-10-24 13:14:09 - Texture Padded for Audiowav.png
+[INFO]: 2024-10-24 13:14:09 - Texture Binded, Texture ID : 4 
+[INFO]: 2024-10-24 13:14:09 - Texture Padded for Background.png
+[INFO]: 2024-10-24 13:14:09 - Texture Binded, Texture ID : 5 
+[INFO]: 2024-10-24 13:14:09 - Texture Binded, Texture ID : 6 
+[INFO]: 2024-10-24 13:14:09 - Texture Padded for boosters_tail02.png
+[INFO]: 2024-10-24 13:14:09 - Texture Binded, Texture ID : 7 
+[INFO]: 2024-10-24 13:14:09 - Texture Padded for folder.png
+[INFO]: 2024-10-24 13:14:09 - Texture Binded, Texture ID : 8 
+[INFO]: 2024-10-24 13:14:09 - Texture Padded for gunleft_02.png
+[INFO]: 2024-10-24 13:14:09 - Texture Binded, Texture ID : 9 
+[INFO]: 2024-10-24 13:14:09 - Texture Padded for gunright_02.png
+[INFO]: 2024-10-24 13:14:09 - Texture Binded, Texture ID : 10 
+[INFO]: 2024-10-24 13:14:09 - Texture Padded for Roomba.png
+[INFO]: 2024-10-24 13:14:09 - Texture Binded, Texture ID : 11 
+[INFO]: 2024-10-24 13:14:10 - Texture Binded, Texture ID : 12 
+[INFO]: 2024-10-24 13:14:10 - Texture Binded, Texture ID : 13 
+[INFO]: 2024-10-24 13:14:10 - Load Asset Successful
+[INFO]: 2024-10-24 13:14:10 - Shader compiled successfully
+[INFO]: 2024-10-24 13:14:10 - Shader compiled successfully
+[INFO]: 2024-10-24 13:14:10 - Shader compiled successfully
+[INFO]: 2024-10-24 13:14:10 - Shader compiled successfully
+[INFO]: 2024-10-24 13:14:10 - Load Graphic Pipline Successful
+[INFO]: 2024-10-24 13:14:10 - Set Input Call Back Successful
+[INFO]: 2024-10-24 13:14:10 - Load ImGui Successful
+[INFO]: 2024-10-24 13:14:10 - Mono initialization and method loading successful.
+[INFO]: 2024-10-24 13:14:10 - Application Init Successful
+[INFO]: 2024-10-24 13:14:55 - Load Json Successful
+[INFO]: 2024-10-24 13:14:55 - Entities successfully loaded!
+[INFO]: 2024-10-24 13:15:16 - Load Json Successful
+[INFO]: 2024-10-24 13:15:16 - Entities successfully loaded!
+[INFO]: 2024-10-24 13:16:07 - Application Closed

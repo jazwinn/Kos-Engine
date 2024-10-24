@@ -60,28 +60,7 @@ namespace assetmanager {
 
         }
 
-        
-
-        //m_funcLoadImage("Assets/Sprites/testBackground.png");
-        //m_funcLoadImage("Assets/Sprites/blackTile_test.png");
-        //m_funcLoadImage("Assets/Sprites/roombaTest.png");
-        //m_funcLoadImage("Assets/Sprites/roombaTest2.png");
-        //m_funcLoadImage("Assets/Sprites/roombaTest3.png");
-        //m_funcLoadImage("Assets/Sprites/gunleft_02.png");
-        //m_funcLoadImage("Assets/Sprites/gunright_02.png");
-        //m_funcLoadImage("Assets/Sprites/boosters_tail02.png");
-
-        //m_funcLoadImage("Assets/Sprites/ani_RoombaBlink_strip4.png");
-        //m_funcLoadImage("Assets/Sprites/ani_RoombaBoosters_strip6.png");
-        //m_funcLoadImage("Assets/Sprites/ani_SeanSprite_strip4.png");
-
-
-        //m_LoadAudio("Assets/Audio/mindstorm.wav");
-        //m_LoadAudio("Assets/Audio/zwing.wav");
-
-        //m_LoadPrefab("../RoombaRampage/Assets/Prefabs/Prefab.json");
-
-        //m_LoadFont("Assets/Font/Roboto-Black.ttf");
+       
     }
 
     AssetManager* AssetManager::m_funcGetInstance()
@@ -101,6 +80,37 @@ namespace assetmanager {
     void AssetManager::m_LoadPrefab(std::string file) {
         prefab::Prefab::m_DeSerializePrefab(file);
 
+    }
+
+    void AssetManager::m_RenameAsset(std::filesystem::path oldfilepath, std::filesystem::path newfilepath)
+    {
+        if (oldfilepath.filename().extension().string() != newfilepath.filename().extension().string()) {
+            LOGGING_WARN("Renaming assets of different type");
+            return;
+        }
+
+        // find the file extension (Update for every new file type
+        if (oldfilepath.extension().string() == ".png") {
+            //check if old file name is present
+            if (m_imageManager.m_imageMap.find(oldfilepath.filename().string()) != m_imageManager.m_imageMap.end()) {
+                //check if new file name is non existent
+                if (m_imageManager.m_imageMap.find(newfilepath.filename().string()) == m_imageManager.m_imageMap.end()) {
+
+                    //create new map of updated name
+                    m_imageManager.m_imageMap[newfilepath.filename().string()] = m_imageManager.m_imageMap.find(oldfilepath.filename().string())->second;                 
+                    //delete old name map
+                    m_imageManager.m_imageMap.erase(oldfilepath.filename().string());
+                }
+                else {
+                    return;
+                }
+            }
+            else {
+                return;
+            }
+        }
+
+        std::filesystem::rename(oldfilepath.c_str(), newfilepath.c_str());
     }
 
    void AssetManager::m_LoadAudio(std::string file) {

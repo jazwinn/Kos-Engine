@@ -158,6 +158,8 @@ namespace graphicpipe {
 			m_funcDraw();
 			m_funcDrawText();
 		}
+
+		m_funcClearContainers();
 	}
 
 }
