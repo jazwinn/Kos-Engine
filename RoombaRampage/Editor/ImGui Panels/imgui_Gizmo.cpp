@@ -18,7 +18,7 @@ namespace gui {
         graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
         ecs::ECS* ecs = ecs::ECS::m_GetInstance();
         Helper::Helpers* help = Helper::Helpers::GetInstance();
-        float aspectRatio = help->m_windowHeight / help->m_windowWidth;
+        float aspectRatio = help->m_windowWidth / help->m_windowHeight;
 
         
 
@@ -54,10 +54,21 @@ namespace gui {
           0.f, 0.f, 1, 0.f,
           0.f, 0.f, 0.f, 1.f };
 
-        projection[0] = EditorCamera::m_editorCameraMatrix[0][0] * aspectRatio;
-        projection[5] = EditorCamera::m_editorCameraMatrix[1][1];
-        projection[12] = EditorCamera::m_editorCameraMatrix[2][0];
-        projection[13] = EditorCamera::m_editorCameraMatrix[2][1];
+        glm::mat3 ortho{ 1.f };
+        float left = -1.f * (aspectRatio);
+        float right = 1.f * (aspectRatio);
+        float bottom = -1.f;
+        float top = 1.f;
+        ortho[0][0] = (2.0f / (right - left));
+        ortho[1][1] = 2.0f / (top - bottom);
+        ortho[2][0] = -(right + left) / (right - left);
+        ortho[2][1] = -(top + bottom) / (top - bottom);
+        ortho[2][2] = 1;
+
+        projection[0] = ortho[0][0];
+        projection[5] = ortho[1][1];
+        projection[12] = ortho[2][0];
+        projection[13] = ortho[2][1];
 
 
         float cameraView[16] =
@@ -65,6 +76,11 @@ namespace gui {
           0.f, 1.f, 0.f, 0.f,
           0.f, 0.f, 1.f, 0.f,
           0.f, 0.f, 0.f, 1.f };
+
+        cameraView[0] = EditorCamera::m_editorViewMatrix[0][0];
+        cameraView[5] = EditorCamera::m_editorViewMatrix[1][1];
+        cameraView[12] = EditorCamera::m_editorViewMatrix[2][0];
+        cameraView[13] = EditorCamera::m_editorViewMatrix[2][1];
 
         float identity[16] =
         { 1.f, 0.f, 0.f, 0.f,
@@ -85,7 +101,10 @@ namespace gui {
           0.f,0.f,1.f,1.f
         };
 
-
+        gridviewmatrix[0] = EditorCamera::m_editorViewMatrix[0][0];
+        gridviewmatrix[9] = EditorCamera::m_editorViewMatrix[1][1];
+        gridviewmatrix[12] = EditorCamera::m_editorViewMatrix[2][0];
+        gridviewmatrix[13] = EditorCamera::m_editorViewMatrix[2][1];
 
         ImGuizmo::DrawGrid(gridviewmatrix, projection, identity, 100.f);
 
@@ -121,10 +140,6 @@ namespace gui {
         
         //TODO be able to swap between WORLD and LOCAL
         if (ImGuizmo::Manipulate(cameraView, projection, mCurrentGizmoOperation, ImGuizmo::WORLD, model, NULL, useSnap ? &snap[0] : NULL)) {
-
-
-
-
            
             if (ecs::Hierachy::m_GetParent(m_clickedEntityId).has_value()) {
                 ecs::EntityID parentId = ecs::Hierachy::m_GetParent(m_clickedEntityId).value();

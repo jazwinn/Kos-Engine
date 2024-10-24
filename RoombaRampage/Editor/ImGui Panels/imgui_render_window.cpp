@@ -55,7 +55,6 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
     imageSize.y = windowHeight / 2;
 
 
-
    if (renderWindowAspectRatio > textureAspectRatio) 
     {
         imageSize.y = renderWindowSize.y;
@@ -116,7 +115,10 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
     }
 
     EditorCamera::calculateLevelEditorCamera();
+    EditorCamera::calculateLevelEditorView();
     graphicpipe::GraphicsCamera::m_currCameraMatrix = EditorCamera::m_editorCameraMatrix;
+    graphicpipe::GraphicsCamera::m_currViewMatrix = EditorCamera::m_editorViewMatrix;
+    
     //draw gizmo
     m_DrawGizmo(pos.x, pos.y, imageSize.x, imageSize.y);
 
