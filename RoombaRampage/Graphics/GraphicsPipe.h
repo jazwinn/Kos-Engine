@@ -187,6 +187,8 @@ namespace graphicpipe {
         unsigned int m_debugCollisionCheckBuffer{}; ///< Buffer for collision detection in debug drawing.
         unsigned int m_frameBufferObject{};         ///< Framebuffer object for offscreen rendering.
         unsigned int m_depthBufferObject{};         ///< Depth Buffer object for storing frame buffer data.
+        unsigned int m_gamePreviewFrameBufferObject{};        
+        unsigned int m_gamePreviewDepthBufferObject{};      
         unsigned int m_textBuffer{};                ///< Buffer for text rendering.
         unsigned int m_stripCountBuffer{};          ///< Buffer for sprite strip counts (animation).
         unsigned int m_frameNumberBuffer{};         ///< Buffer for managing animation frame numbers.
@@ -267,6 +269,8 @@ namespace graphicpipe {
          */
         void m_funcDrawWindow();
 
+        void m_funcDrawGamePreviewWindow();
+
         /**
          * @brief Draws all graphical elements.
          *
@@ -299,6 +303,8 @@ namespace graphicpipe {
         * @brief Sets up the framebuffer for offscreen rendering.
         */
         void m_funcSetupFrameBuffer();
+
+        void m_funcSetupGamePreviewFrameBuffer();
 
         void m_funcCalculateModelToWorldMatrix();
 
@@ -334,7 +340,7 @@ namespace graphicpipe {
         std::vector<image::Image> m_imageData{}; ///< Image data for rendering.
 
         unsigned int m_screenTexture{}; ///< Texture for rendering the screen.
-        unsigned int m_proxyBackgroundTexture{}; ///< Background texture for proxy rendering.
+        unsigned int m_gamePreviewTexture{};
 
         //Shaders
         const std::string debugVertexShader =

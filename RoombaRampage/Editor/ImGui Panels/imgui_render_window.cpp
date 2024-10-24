@@ -38,10 +38,11 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsigned int windowHeight)
 {
-
     graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
     //EditorCamera* cam = EditorCamera::m_funcGetInstance();
-    
+   //pipe->m_funcUpdate();
+   
+
     ImGui::Begin("Scene Window");
 
     ImVec2 pos = ImGui::GetCursorScreenPos();

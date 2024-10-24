@@ -1,5 +1,14 @@
+#include "imgui.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
 #include "imgui_handler.h"
+#include "../ECS/ECS.h"
+#include "../Application/Application.h"
+
 #include "../Graphics/GraphicsPipe.h"
+#include "../Graphics/GraphicsCamera.h"
+#include "../Editor/EditorCamera.h"
+
 #include "../Graphics/GraphicsCamera.h"
 
 namespace gui
@@ -7,15 +16,19 @@ namespace gui
 	void ImGuiHandler::m_DrawGameSceneWindow()
 	{
         graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
-        ImGui::Begin("Game Window");
+        //EditorCamera* cam = EditorCamera::m_funcGetInstance();   
 
-        graphicpipe::GraphicsCamera::m_currViewMatrix;
-        //pipe->m_funcUpdate();
-        //pipe->m_funcDrawWindow();
-        
+        pipe->m_gameMode = true;
+        pipe->m_funcUpdate();
+        pipe->m_funcDrawGamePreviewWindow();
+        pipe->m_gameMode = false;
+        ImGui::Begin("Render Window");
+
+
         ImVec2 pos = ImGui::GetCursorScreenPos();
         ImVec2 renderWindowSize = ImGui::GetContentRegionAvail();
-        float textureAspectRatio = graphicpipe::GraphicsCamera::m_windowWidth / graphicpipe::GraphicsCamera::m_windowHeight;
+
+        float textureAspectRatio = (float)graphicpipe::GraphicsCamera::m_windowWidth / (float)graphicpipe::GraphicsCamera::m_windowHeight;
         float renderWindowAspectRatio = renderWindowSize.x / renderWindowSize.y;
 
         ImVec2 imageSize;
@@ -44,12 +57,16 @@ namespace gui
             pos.y += (renderWindowSize.y - imageSize.y) / 2;
         }
 
-      
 
         ImGui::GetWindowDrawList()->AddImage(
-            (void*)(long long unsigned int)pipe->m_screenTexture, pos,
+            (void*)(long long unsigned int)pipe->m_gamePreviewTexture, pos,
             ImVec2(pos.x + imageSize.x, pos.y + imageSize.y),
             ImVec2(0, 1), ImVec2(1, 0));
+
+        EditorCamera::calculateLevelEditorCamera();
+        EditorCamera::calculateLevelEditorView();
+        graphicpipe::GraphicsCamera::m_currCameraMatrix = EditorCamera::m_editorCameraMatrix;
+        graphicpipe::GraphicsCamera::m_currViewMatrix = EditorCamera::m_editorViewMatrix;
 
         ImGui::End();
 	}
