@@ -107,12 +107,19 @@ namespace gui {
 			if (rename && (selectedfile == directoryString)) {
 				if (ImGui::InputText("##rename", m_charBuffer, IM_ARRAYSIZE(m_charBuffer), ImGuiInputTextFlags_EnterReturnsTrue)) {
 					//TODO check if file has extension, keep the extension
+					std::string extension{};
+					if (!directoryPath.is_directory()) {
+						extension = directoryPath.path().filename().extension().string();
+						ImGui::SameLine();
+						ImGui::Text(extension.c_str());
+					}
+
 					std::filesystem::path path = std::filesystem::current_path();
-					std::string newpath = path.string() + "\\" + currentDirectory.string() + "\\" + m_charBuffer;
+					std::string newpath = path.string() + "\\" + currentDirectory.string() + "\\" + m_charBuffer + extension;
 					std::string oldpath = path.string() + "\\" + currentDirectory.string() + "\\" + directoryString;
 
-					std::filesystem::rename(oldpath.c_str(), newpath.c_str());
 					
+					assetmanager->m_RenameAsset(oldpath, newpath);
 
 					rename = false;
 					selectedfile = {};
@@ -122,9 +129,9 @@ namespace gui {
 				}
 			}
 			else {
-				//ImGui::SetWindowFontScale(1.f);
+				ImGui::SetWindowFontScale(0.8f);
 				ImGui::Text(directoryString.c_str());
-				//ImGui::SetWindowFontScale(1.f);
+				ImGui::SetWindowFontScale(1.f);
 			}
 
 			
