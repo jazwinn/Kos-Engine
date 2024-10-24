@@ -54,7 +54,7 @@ namespace assetmanager {
             }
             else if (directoryPath.path().filename().extension().string() == ".ttf") {
                 //UNCOMMENT ME TO TEST IT OUT
-                //m_LoadFont("Assets/Font/Roboto-Black.ttf");
+                m_LoadFont("Assets/Font/Roboto-Black.ttf");
             }
             
 

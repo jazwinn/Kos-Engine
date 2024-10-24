@@ -27,7 +27,7 @@ namespace graphicpipe
 
 			for (int i = 0; i < m_textureIDs.size(); ++i)
 			{
-				glActiveTexture(GL_TEXTURE1 + i);
+				glActiveTexture(GL_TEXTURE0 + i + m_textureIDs[0]);
 				glBindTexture(GL_TEXTURE_2D, m_textureIDs[i]);
 			}
 
