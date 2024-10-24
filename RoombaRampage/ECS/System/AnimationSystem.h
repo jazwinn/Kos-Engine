@@ -40,7 +40,7 @@ namespace ecs {
 		std::vector<TransformComponent*> m_vecTransformComponentPtr;
 		std::vector<AnimationComponent*> m_vecAnimationComponentPtr;
 		std::vector<SpriteComponent*>	 m_vecSpriteComponentPtr;
-		//std::vector<MovementComponent*> m_vecMovementComponentPtr;
+		
 
 	};
 

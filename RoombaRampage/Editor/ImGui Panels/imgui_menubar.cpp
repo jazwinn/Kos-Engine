@@ -20,7 +20,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "imgui_handler.h"
 #include "imgui_internal.h"
 
-#include "../Assets/SceneManager.h"
+#include "../Asset Manager/SceneManager.h"
 #include "../ECS/ECS.h"
 
 #include "../Editor/WindowFile.h"

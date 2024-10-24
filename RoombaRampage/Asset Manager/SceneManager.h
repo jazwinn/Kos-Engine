@@ -32,7 +32,7 @@ namespace scenes {
 		void m_SaveActiveScene();
 
 
-		std::string m_jsonFilePath{ "../RoombaRampage/Json/" };
+		std::string m_jsonFilePath{ "../RoombaRampage/Assets/Scene/" };
 
 		std::string m_activeScene;
 		std::vector<std::string> m_availableScenes;

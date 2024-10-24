@@ -18,7 +18,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Application/Helper.h"
 #include "../../De&Serialization/json_handler.h"
 #include "../Debugging/Logging.h"
-#include "../Assets/AssetManager.h"
+#include "../Asset Manager/AssetManager.h"
 #include "../Events/BaseMessage.h"
 #include "../Events/MessageSystem.h"
 #include "../Events/Listeners.h"
@@ -57,11 +57,11 @@ void gui::ImGuiHandler::m_DrawTestWindow() {
 	}
 	ImGui::SameLine();
 	if (ImGui::Button("Sound")) {
-		assetManager->m_audioContainer[1]->m_PlaySound();
+		assetManager->m_audioManager.m_soundMap.find("mindstorm.wav")->second->m_PlaySound();
 	}
 	if (ImGui::Button("Stop Sound")) {
-		assetManager->m_audioContainer[0]->m_StopSound();
-		assetManager->m_audioContainer[1]->m_StopSound();
+		assetManager->m_audioManager.m_soundMap.find("mindstorm.wav")->second->m_StopSound();
+		assetManager->m_audioManager.m_soundMap.find("zwing.wav")->second->m_StopSound();
 	}
 	ImGui::NewLine();
 	ImGui::SeparatorText("##########################################");
@@ -99,15 +99,7 @@ void gui::ImGuiHandler::m_DrawTestWindow() {
 
 			for (int n{}; n < 2500; n++) {
 				
-				ecs::EntityID id = ecs->m_CreateEntity();
-				list_Of_Entities.push_back(id);
-				ecs::TransformComponent* tc = (ecs::TransformComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id);
-				ecs::SpriteComponent* sc = static_cast<ecs::SpriteComponent*>(ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, id));
-				sc->m_imageID = 3;
 				
-				tc->m_scale = { 1.f,1.f };
-				tc->m_position.m_y = static_cast<float>(height(gen));
-				tc->m_position.m_x = static_cast<float>(height2(gen));
 
 			}
 			//spawn = true;
@@ -134,10 +126,9 @@ void gui::ImGuiHandler::m_DrawTestWindow() {
 			id_1 = ecs->m_CreateEntity();
 			ecs::TransformComponent* tc = (ecs::TransformComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id_1);
 			ecs::SpriteComponent* sc = static_cast<ecs::SpriteComponent*>(ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, id_1));
-			ecs::MovementComponent* mc = static_cast<ecs::MovementComponent*>(ecs->m_AddComponent(ecs::TYPEMOVEMENTCOMPONENT, id_1));
 			ecs::ColliderComponent* cc = static_cast<ecs::ColliderComponent*>(ecs->m_AddComponent(ecs::TYPECOLLIDERCOMPONENT, id_1));
 			ecs::RigidBodyComponent* rc = static_cast<ecs::RigidBodyComponent*>(ecs->m_AddComponent(ecs::TYPERIGIDBODYCOMPONENT, id_1));
-			sc->m_imageID = 3;
+
 			tc->m_scale = { 1.f,1.f };
 			tc->m_position.m_x = static_cast<float>(1.0f);
 			tc->m_position.m_y = static_cast<float>(0);
@@ -146,11 +137,10 @@ void gui::ImGuiHandler::m_DrawTestWindow() {
 			id_2 = ecs->m_CreateEntity();
 			tc = (ecs::TransformComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id_2);
 			sc = static_cast<ecs::SpriteComponent*>(ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, id_2));
-			mc = static_cast<ecs::MovementComponent*>(ecs->m_AddComponent(ecs::TYPEMOVEMENTCOMPONENT, id_2));
 			cc = static_cast<ecs::ColliderComponent*>(ecs->m_AddComponent(ecs::TYPECOLLIDERCOMPONENT, id_2));
 			rc = static_cast<ecs::RigidBodyComponent*>(ecs->m_AddComponent(ecs::TYPERIGIDBODYCOMPONENT, id_2));
 
-			sc->m_imageID = 3;
+
 			tc->m_scale = { 1.f,1.f };
 			tc->m_position.m_x = static_cast<float>(-1.0f);
 			tc->m_position.m_y = static_cast<float>(0);
@@ -171,69 +161,5 @@ void gui::ImGuiHandler::m_DrawTestWindow() {
 	}
 
 
-	ImGui::NewLine();
-	if (collision_Flag) {
-
-		
-		if (ImGui::Button("ID_1 Reset")) {
-			ecs::MovementComponent* mc = (ecs::MovementComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(id_1);
-			ecs::TransformComponent* tc = (ecs::TransformComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id_1);
-			mc->m_Direction = { 0.f,0.f };
-			tc->m_position = { 1.f,0.f };
-		}
-
-		ImGui::SameLine();
-		if (ImGui::Button("ID_1 Up")) {
-			ecs::MovementComponent* mc = (ecs::MovementComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(id_1);
-			mc->m_Direction = { 0.f,0.1f };
-		}
-		ImGui::NewLine();
-
-		if (ImGui::Button("ID_1 Left")) {
-			ecs::MovementComponent* mc = (ecs::MovementComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(id_1);
-			mc->m_Direction = { -0.1f,0.f };
-		}
-		ImGui::SameLine();
-		if (ImGui::Button("ID_1 Down")) {
-			ecs::MovementComponent* mc = (ecs::MovementComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(id_1);
-			mc->m_Direction = { 0.f,-0.1f };
-		}
-		ImGui::SameLine();
-		if (ImGui::Button("ID_1 Right")) {
-			ecs::MovementComponent* mc = (ecs::MovementComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(id_1);
-			mc->m_Direction = { 0.1f,0.f };
-		}
-
-
-		ImGui::NewLine();
-		if (ImGui::Button("ID_2 Reset")) {
-			ecs::MovementComponent* mc = (ecs::MovementComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(id_2);
-			ecs::TransformComponent* tc = (ecs::TransformComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id_2);
-			mc->m_Direction = { 0.f,0.f };
-			tc->m_position = { -1.f,0.f };
-
-		}
-		ImGui::SameLine();
-		if (ImGui::Button("ID_2 Up")) {
-			ecs::MovementComponent* mc = (ecs::MovementComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(id_2);
-			mc->m_Direction = { 0.f,0.1f };
-		}
-		ImGui::NewLine();
-		if (ImGui::Button("ID_2 Left")) {
-			ecs::MovementComponent* mc = (ecs::MovementComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(id_2);
-			mc->m_Direction = { -0.1f,0.f };
-		}
-		ImGui::SameLine();
-		if (ImGui::Button("ID_2 Down")) {
-			ecs::MovementComponent* mc = (ecs::MovementComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(id_2);
-			mc->m_Direction = { 0.f,-0.1f };
-		}
-		ImGui::SameLine();
-		if (ImGui::Button("ID_2 Right")) {
-			ecs::MovementComponent* mc = (ecs::MovementComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(id_2);
-			mc->m_Direction = { 0.1f,0.f };
-		}
-
-	}
 	ImGui::End();
 }

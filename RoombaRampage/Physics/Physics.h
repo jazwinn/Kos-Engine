@@ -274,7 +274,7 @@ namespace physicspipe {
 
 
 		void m_Init();
-		void m_Update();
+		void m_Update(float dt);
 
 		void m_CollisionCheckUpdate(float dt);
 		bool CheckCollision(const std::shared_ptr<PhysicsData>& entity1, const std::shared_ptr<PhysicsData>& entity2, float dt);

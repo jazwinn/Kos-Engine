@@ -31,9 +31,7 @@ namespace ecs {
 
 	public:
 
-		unsigned int m_imageID;
-		unsigned int m_frameNumber;
-		int m_layer;
+		std::string m_imageFile{"roombaTest3.png"};
 	};
 
 }

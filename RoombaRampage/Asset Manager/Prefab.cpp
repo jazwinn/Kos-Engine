@@ -75,21 +75,7 @@ namespace prefab {
 
             }
 
-            if (prefabData.HasMember("movement") && prefabData["movement"].IsObject()) {
 
-                prefab.m_prefabSignature.set(ecs::TYPEMOVEMENTCOMPONENT);
-
-                const rapidjson::Value& movement = prefabData["movement"];
-
-                if (movement.HasMember("speed")) {
-                    prefab.m_movementComponents.m_Speed = movement["speed"].GetFloat();
-                }
-                if (movement.HasMember("direction") && movement["direction"].IsObject()) {
-                    prefab.m_movementComponents.m_Direction.m_x = movement["direction"]["x"].GetFloat();
-                    prefab.m_movementComponents.m_Direction.m_y = movement["direction"]["y"].GetFloat();
-                }
-
-            }
 
             if (prefabData.HasMember("collider") && prefabData["collider"].IsObject()) {
 
@@ -143,11 +129,9 @@ namespace prefab {
 
                 const rapidjson::Value& sprite = prefabData["sprite"];
                 if (sprite.HasMember("imageID")) {
-                    prefab.m_spriteComponents.m_imageID = sprite["imageID"].GetUint();
+                   
                 }
-                if (sprite.HasMember("frameNumber")) {
-                    prefab.m_spriteComponents.m_frameNumber = sprite["frameNumber"].GetUint();
-                }
+
                 
             }
 
@@ -230,12 +214,6 @@ namespace prefab {
         }
 
 
-        if (prefab.m_prefabSignature.test(ecs::TYPEMOVEMENTCOMPONENT)) {
-            ecs::MovementComponent* mc = static_cast<ecs::MovementComponent*>(ecs->m_AddComponent(ecs::TYPEMOVEMENTCOMPONENT, newEntityID));
-            *mc = prefab.m_movementComponents;
-            mc->m_IsLive = true;
-            mc->m_Entity = newEntityID;
-        }
 
         if (prefab.m_prefabSignature.test(ecs::TYPECOLLIDERCOMPONENT)) {
             ecs::ColliderComponent* cc = static_cast<ecs::ColliderComponent*>(ecs->m_AddComponent(ecs::TYPECOLLIDERCOMPONENT, newEntityID));

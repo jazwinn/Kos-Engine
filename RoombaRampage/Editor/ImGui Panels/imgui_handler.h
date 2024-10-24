@@ -31,7 +31,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "imgui_impl_opengl3.h"
 #include "ImGuizmo.h"
 #include "../ECS/ECS.h"
-#include "../Assets/Audio.h"
+#include "../Asset Manager/Audio.h"
 #include "../Events/EventHandler.h"
 
 
@@ -206,6 +206,8 @@ namespace gui {
         void m_DrawLayerWindow();
 
         void m_DrawGameSceneWindow();
+        
+        void m_DrawContentBrowser();
 
         void m_OnButtonPress(const events::BaseEvent<events::ButtonEvents>& givenEvent);
         int m_clickedEntityId{-1};

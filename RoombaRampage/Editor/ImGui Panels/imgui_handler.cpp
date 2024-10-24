@@ -107,6 +107,7 @@ namespace gui {
 				m_DrawTestWindow();
 				m_DrawLayerWindow();
 				m_DrawInputWindow();
+				m_DrawContentBrowser();
 				m_DrawRenderScreenWindow(static_cast<unsigned int>(Helper::Helpers::GetInstance()->m_windowWidth), static_cast<unsigned int>(Helper::Helpers::GetInstance()->m_windowHeight));
 				//m_DrawGameSceneWindow();
 			}
@@ -143,7 +144,7 @@ namespace gui {
 		std::cout << "Button: " << givenEvent.m_ToType<events::ButtonPressEvent>().m_GetButton() << " was pressed." << std::endl;
 		if (givenEvent.m_ToType<events::ButtonPressEvent>().m_GetButton() == 1) {
 			assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
-			assetManager->m_audioContainer[0]->m_PlaySound();
+			assetManager->m_audioManager.m_soundMap.find("zwing.wav")->second->m_PlaySound();
 		}
 	}
 }
