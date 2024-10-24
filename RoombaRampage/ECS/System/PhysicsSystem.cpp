@@ -99,6 +99,7 @@ namespace ecs {
 
 			//update physics pipline
 			physicspipe::Physics PhysicsPipeline;
+			//TODO optimize,  causing longer load time
 			PhysicsPipeline.m_Update(ecs->m_DeltaTime);
 		}
 	}
