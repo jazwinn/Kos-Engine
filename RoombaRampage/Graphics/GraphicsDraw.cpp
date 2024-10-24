@@ -48,16 +48,7 @@ namespace graphicpipe
 			glDrawElementsInstanced(m_squareMesh.m_primitiveType, m_squareMesh.m_indexElementCount, GL_UNSIGNED_SHORT, NULL, static_cast<GLsizei>(m_modelToNDCMatrix.size()));
 			glBindVertexArray(0);
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
-			m_modelToNDCMatrix.clear();
-			m_textureOrder.clear();
-			m_frameNumbers.clear();
-			m_stripCounts.clear();
 		}
-		if (!m_modelData.empty())
-		{
-			m_modelData.clear();
-		}
-
 	}
 
 	void GraphicsPipe::m_funcDrawDebug()
@@ -77,13 +68,6 @@ namespace graphicpipe
 			glDrawElementsInstanced(m_squareLinesMesh.m_primitiveType, m_squareLinesMesh.m_indexElementCount, GL_UNSIGNED_SHORT, NULL, static_cast<GLsizei>(m_debugToNDCMatrix.size()));
 			glBindVertexArray(0);
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-			m_debugToNDCMatrix.clear();
-			m_debugBoxCollisionChecks.clear();
-		}
-		if (!m_debugBoxData.empty())
-		{
-			m_debugBoxData.clear();
 		}
 	}
 
