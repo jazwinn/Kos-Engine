@@ -157,6 +157,7 @@
     <ClInclude Include="Asset Manager\SceneManager.h" />
     <ClInclude Include="Asset Manager\Text.h" />
     <ClInclude Include="Asset Manager\Reflection.h" />
+    <ClInclude Include="ECS\Component\ConvertComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Graphics\debugFragmentShader.frag" />

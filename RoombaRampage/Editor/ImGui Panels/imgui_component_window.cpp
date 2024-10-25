@@ -24,6 +24,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Asset Manager/AssetManager.h"
 #include "../Graphics/GraphicsPipe.h"
 #include "../ECS/Layers.h"
+#include "../ECS/Component/ConvertComponent.h"
 
 #pragma warning(push)
 #pragma warning(disable : 26495)  // Disable uninitialized variable warning
@@ -60,8 +61,8 @@ struct DrawComponents {
     }
 
 
-    template <typename U, std::enable_if_t<std::is_integral_v<U> && !std::is_same_v<U, int>, int> = 0>
-    void operator()(U& _args) {
+
+    void operator()(int& _args) {
         ImGui::AlignTextToFramePadding();
         ImGui::Text(m_Array[count].c_str());
         ImGui::SameLine(slider_start_pos_x);
@@ -115,6 +116,15 @@ struct DrawComponents {
         ImGui::SameLine(slider_start_pos_x);
         std::string title = "##" + m_Array[count];
         ImGui::Checkbox(title.c_str(), &_args);
+
+        count++;
+    }
+
+    void operator()(std::string& _args) {
+        ImGui::Text(m_Array[count].c_str());
+        ImGui::SameLine(slider_start_pos_x);
+        std::string title = "##" + m_Array[count];
+        ImGui::InputText(title.c_str(), &_args);
 
         count++;
     }
@@ -240,8 +250,145 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 }
             }
 
-            auto* rbc = static_cast<ecs::RigidBodyComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPERIGIDBODYCOMPONENT]->m_GetEntityComponent(entityID));
-            rbc->ApplyFunction(DrawComponents(rbc->Names()));
+            //TODO find better way to implement
+            if (EntitySignature.test(ecs::TYPETRANSFORMCOMPONENT)) {
+                if (ImGui::BeginPopupContextItem()) {
+                    if (ImGui::MenuItem("Delete Component")) {
+                        ecs->m_RemoveComponent(ecs::TYPETRANSFORMCOMPONENT, m_clickedEntityId);
+                    }
+                    ImGui::EndPopup();
+                }
+                if (ImGui::CollapsingHeader("Transform Component")) {
+                    auto* rbc = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(entityID));
+                    rbc->ApplyFunction(DrawComponents(rbc->Names()));
+                }
+
+
+            }
+            if (EntitySignature.test(ecs::TYPESPRITECOMPONENT)){
+                if (ImGui::BeginPopupContextItem()) {
+                    if (ImGui::MenuItem("Delete Component")) {
+                        ecs->m_RemoveComponent(ecs::TYPESPRITECOMPONENT, m_clickedEntityId);
+                    }
+                    ImGui::EndPopup();
+                }
+                if (ImGui::CollapsingHeader("Sprite Component")) {
+                    assetmanager::AssetManager* Asset = assetmanager::AssetManager::m_funcGetInstance();
+                    auto* sc = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(entityID));
+                    if (ImGui::BeginCombo("Images", sc->m_imageFile.c_str()))
+                    {
+                        for (const auto& image : Asset->m_imageManager.m_imageMap) {
+
+                            if (ImGui::Selectable(image.first.c_str())) {
+                                sc->m_imageFile = image.first.c_str();
+                            }
+                        }
+                        ImGui::EndCombo();
+                    }
+                }
+
+
+            }
+            if (EntitySignature.test(ecs::TYPECOLLIDERCOMPONENT)) {
+                if (ImGui::BeginPopupContextItem()) {
+                    if (ImGui::MenuItem("Delete Component")) {
+                        ecs->m_RemoveComponent(ecs::TYPECOLLIDERCOMPONENT, m_clickedEntityId);
+                    }
+                    ImGui::EndPopup();
+                }
+
+                if (ImGui::CollapsingHeader("Collider Component")) {
+                    auto* rbc = static_cast<ecs::ColliderComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(entityID));
+                    rbc->ApplyFunction(DrawComponents(rbc->Names()));
+                }
+
+
+            }
+            if (EntitySignature.test(ecs::TYPERIGIDBODYCOMPONENT)) {
+                if (ImGui::BeginPopupContextItem()) {
+                    if (ImGui::MenuItem("Delete Component")) {
+                        ecs->m_RemoveComponent(ecs::TYPERIGIDBODYCOMPONENT, m_clickedEntityId);
+                    }
+                    ImGui::EndPopup();
+                }
+
+                if (ImGui::CollapsingHeader("RigidBody Component")) {
+                    auto* rbc = static_cast<ecs::RigidBodyComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPERIGIDBODYCOMPONENT]->m_GetEntityComponent(entityID));
+                    rbc->ApplyFunction(DrawComponents(rbc->Names()));
+                }
+            }
+            if (EntitySignature.test(ecs::TYPEPLAYERCOMPONENT)) {
+                if (ImGui::BeginPopupContextItem()) {
+                    if (ImGui::MenuItem("Delete Component")) {
+                        ecs->m_RemoveComponent(ecs::TYPEPLAYERCOMPONENT, m_clickedEntityId);
+                    }
+                    ImGui::EndPopup();
+                }
+                if (ImGui::CollapsingHeader("Player Component")) {
+                    auto* rbc = static_cast<ecs::PlayerComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEPLAYERCOMPONENT]->m_GetEntityComponent(entityID));
+                    rbc->ApplyFunction(DrawComponents(rbc->Names()));
+                }
+
+
+            }
+            if (EntitySignature.test(ecs::TYPETEXTCOMPONENT)) {
+                if (ImGui::BeginPopupContextItem()) {
+                    if (ImGui::MenuItem("Delete Component")) {
+                        ecs->m_RemoveComponent(ecs::TYPETEXTCOMPONENT, m_clickedEntityId);
+                    }
+                    ImGui::EndPopup();
+                }
+                if (ImGui::CollapsingHeader("Text Component")) {
+                    auto* rbc = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(entityID));
+                    rbc->ApplyFunction(DrawComponents(rbc->Names()));
+                }
+
+
+            }
+            if (EntitySignature.test(ecs::TYPEANIMATIONCOMPONENT)) {
+                if (ImGui::BeginPopupContextItem()) {
+                    if (ImGui::MenuItem("Delete Component")) {
+                        ecs->m_RemoveComponent(ecs::TYPEANIMATIONCOMPONENT, m_clickedEntityId);
+                    }
+                    ImGui::EndPopup();
+                }
+                if (ImGui::CollapsingHeader("Animation Component")) {
+                    auto* rbc = static_cast<ecs::AnimationComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEANIMATIONCOMPONENT]->m_GetEntityComponent(entityID));
+                    rbc->ApplyFunction(DrawComponents(rbc->Names()));
+                }
+
+
+            }
+            if (EntitySignature.test(ecs::TYPECAMERACOMPONENT)) {
+                if (ImGui::BeginPopupContextItem()) {
+                    if (ImGui::MenuItem("Delete Component")) {
+                        ecs->m_RemoveComponent(ecs::TYPECAMERACOMPONENT, m_clickedEntityId);
+                    }
+                    ImGui::EndPopup();
+                }
+                if (ImGui::CollapsingHeader("Camera Component")) {
+                    auto* rbc = static_cast<ecs::CameraComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPECAMERACOMPONENT]->m_GetEntityComponent(entityID));
+                    rbc->ApplyFunction(DrawComponents(rbc->Names()));
+                }
+                
+
+            }
+            if (EntitySignature.test(ecs::TYPESCRIPTCOMPONENT)) {
+                if (ImGui::BeginPopupContextItem()) {
+                    if (ImGui::MenuItem("Delete Component")) {
+                        ecs->m_RemoveComponent(ecs::TYPESCRIPTCOMPONENT, m_clickedEntityId);
+                    }
+                    ImGui::EndPopup();
+                }
+                if (ImGui::CollapsingHeader("Script Component")) {
+                    auto* rbc = static_cast<ecs::ScriptComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESCRIPTCOMPONENT]->m_GetEntityComponent(entityID));
+                    // rbc->ApplyFunction(DrawComponents(rbc->Names()));
+                }
+
+
+            }
+
+ 
         }
 
      }

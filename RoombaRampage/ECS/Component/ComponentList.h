@@ -25,8 +25,8 @@ namespace ecs {
 */
 /******************************************************************/
 	enum ComponentType {
-		TYPETRANSFORMCOMPONENT,
 		TYPENAMECOMPONENT,
+		TYPETRANSFORMCOMPONENT,
 		TYPESPRITECOMPONENT,
 		TYPECOLLIDERCOMPONENT,
 		TYPERIGIDBODYCOMPONENT,
