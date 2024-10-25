@@ -32,6 +32,8 @@ namespace ecs {
 	public:
 
 		std::string m_imageFile{"Roomba.png"};
+
+		REFLECTABLE(SpriteComponent, m_imageFile)
 	};
 
 }

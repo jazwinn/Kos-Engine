@@ -33,6 +33,8 @@ namespace ecs {
 
 		bool m_Control{true};
 
+		REFLECTABLE(PlayerComponent, m_Control);
+
 	};
 
 }

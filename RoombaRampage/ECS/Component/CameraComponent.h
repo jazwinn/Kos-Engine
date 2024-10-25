@@ -16,6 +16,7 @@ namespace ecs {
 		float m_bottom;
 		float m_aspectRatio;
 
+		REFLECTABLE(CameraComponent, m_left, m_right, m_top, m_bottom, m_aspectRatio)
 	};
 
 }

@@ -80,9 +80,9 @@ namespace ecs {
 			//SpriteComponent* MovComp = vecSpriteComponentPtr[n];
 			TransformComponent* transform = m_vecTransformComponentPtr[n];
 			TextComponent* text = m_vecTextComponentPtr[n];
-			float red = text->m_red;
-			float green = text->m_green;
-			float blue = text->m_blue;
+			float red = text->m_color.m_x;
+			float green = text->m_color.m_y;
+			float blue = text->m_color.m_z;
 
 			float windowCordianteX = (transform->m_position.m_x + 1) / 2 * help->m_windowWidth;
 			float windowCordianteY = (transform->m_position.m_y + 1) / 2 * help->m_windowHeight;

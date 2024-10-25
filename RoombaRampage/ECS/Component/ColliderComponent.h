@@ -48,6 +48,8 @@ namespace ecs {
 
 		bool m_isCollided{ false };
 
+
+		REFLECTABLE(ColliderComponent, m_Size, m_OffSet, m_drawDebug, m_type, m_radius,  m_isCollided)
 	};
 
 }

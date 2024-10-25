@@ -118,6 +118,7 @@ xcopy /y /d "$(SolutionDir)FMOD_API\studio\lib\x64\*.dll" "$(OutDir)"</Command>
       <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\rapidjson;$(SolutionDir)Dependencies\FMOD_API\core\inc;$(SolutionDir)Dependencies\FMOD_API\studio\inc;$(SolutionDir)Dependencies\imgui;$(SolutionDir)include;$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\glm\include;$(SolutionDir)Dependencies\stb_image\include;$(SolutionDir)Dependencies\GLEW\include\GL;$(SolutionDir)Dependencies\Freetype_Font\include;$(SolutionDir)Json Texts;$(SolutionDir)Dependencies\mono\include;$(SolutionDir)Dependencies\mono\include\mono-2.0</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>26945</DisableSpecificWarnings>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <UseStandardPreprocessor>true</UseStandardPreprocessor>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -249,6 +250,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="Asset Manager\Audio.h" />
     <ClInclude Include="Asset Manager\Image.h" />
     <ClInclude Include="Asset Manager\Prefab.h" />
+    <ClInclude Include="Asset Manager\Reflection.h" />
     <ClInclude Include="Asset Manager\SceneManager.h" />
     <ClInclude Include="Asset Manager\Text.h" />
     <ClInclude Include="C# Mono\mono_handler.h" />
@@ -288,7 +290,6 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="ECS\Component\ComponentPool.h" />
     <ClInclude Include="ECS\Component\NameComponent.h" />
     <ClInclude Include="ECS\Component\PlayerComponent.h" />
-    <ClInclude Include="ECS\Component\MovementComponent.h" />
     <ClInclude Include="ECS\Component\RigidBodyComponent.h" />
     <ClInclude Include="ECS\Component\SpriteComponent.h" />
     <ClInclude Include="ECS\Component\TextComponent.h" />
