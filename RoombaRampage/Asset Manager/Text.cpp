@@ -29,7 +29,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 namespace text {
 
-	void Font::LoadFont(std::string file) {
+	void FontManager::LoadFont(std::string file) {
 
 
         FT_Library ft;
@@ -62,50 +62,102 @@ namespace text {
             // disable byte-alignment restriction
             glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
+            const int numChars = 128;
+            const int glyphWidth = face->size->metrics.max_advance >> 6;  // max glyph width
+            const int glyphHeight = face->size->metrics.height >> 6;      // max glyph height
+            const int atlasWidth = glyphWidth * 16;  // Assuming 16x8 grid for 128 characters
+            const int atlasHeight = glyphHeight * 8;
 
+            unsigned int atlasTexture;
+            glGenTextures(1, &atlasTexture);
+            glBindTexture(GL_TEXTURE_2D, atlasTexture);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, atlasWidth, atlasHeight, 0, GL_RED, GL_UNSIGNED_BYTE, nullptr);
 
-            // load first 128 characters of ASCII set
-            for (unsigned char c = 0; c < 128; c++)
-            {
-                // Load character glyph 
-                if (FT_Load_Char(face, c, FT_LOAD_RENDER))
-                {
-                    std::cout << "ERROR::FREETYTPE: Failed to load Glyph" << std::endl;
+            // Set texture parameters
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+            // Load and place each character in the atlas
+            int xOffset = 0, yOffset = 0;
+            assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+            assetmanager->m_fontManager.m_fonts[file] = {};
+            for (unsigned char c = 0; c < numChars; c++) {
+                if (FT_Load_Char(face, c, FT_LOAD_RENDER)) {
+                    std::cout << "ERROR::FREETYPE: Failed to load Glyph" << std::endl;
                     continue;
                 }
-                // generate texture
-                unsigned int texture;
-                glGenTextures(1, &texture);
-                glBindTexture(GL_TEXTURE_2D, texture);
 
-                glTexImage2D(
-                    GL_TEXTURE_2D,
-                    0,
-                    GL_RED,
-                    face->glyph->bitmap.width,
-                    face->glyph->bitmap.rows,
-                    0,
-                    GL_RED,
-                    GL_UNSIGNED_BYTE,
-                    face->glyph->bitmap.buffer
-                );
-                // set texture options
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-                // now store character for later use
+                // Upload the glyph bitmap to the correct position in the atlas
+                glTexSubImage2D(GL_TEXTURE_2D, 0, xOffset, yOffset, face->glyph->bitmap.width,
+                    face->glyph->bitmap.rows, GL_RED, GL_UNSIGNED_BYTE, face->glyph->bitmap.buffer);
+
+                // Store character data with atlas coordinates
                 CharacterData character = {
-                    texture,
+                    atlasTexture,
                     glm::ivec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
                     glm::ivec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
-                    static_cast<unsigned int>(face->glyph->advance.x)
+                    static_cast<unsigned int>(face->glyph->advance.x),
+                    glm::vec2((float)xOffset / atlasWidth, (float)yOffset / atlasHeight),
+                    glm::vec2((float)(xOffset + face->glyph->bitmap.width) / atlasWidth,
+                              (float)(yOffset + face->glyph->bitmap.rows) / atlasHeight)
                 };
-                assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
-                assetmanager->m_characters.insert(std::pair<char,CharacterData>(c, character));
+               
+                assetmanager->m_fontManager.m_fonts[file].insert(std::pair<char, CharacterData>(c, character));
+
+                // Move to the next position in the atlas
+                xOffset += glyphWidth;
+                if (xOffset + glyphWidth > atlasWidth) {
+                    xOffset = 0;
+                    yOffset += glyphHeight;
+                }
             }
             glBindTexture(GL_TEXTURE_2D, 0);
         }
+
+        //    // load first 128 characters of ASCII set
+        //    for (unsigned char c = 0; c < 128; c++)
+        //    {
+        //        // Load character glyph 
+        //        if (FT_Load_Char(face, c, FT_LOAD_RENDER))
+        //        {
+        //            std::cout << "ERROR::FREETYTPE: Failed to load Glyph" << std::endl;
+        //            continue;
+        //        }
+        //        // generate texture
+        //        unsigned int texture;
+        //        glGenTextures(1, &texture);
+        //        glBindTexture(GL_TEXTURE_2D, texture);
+
+        //        glTexImage2D(
+        //            GL_TEXTURE_2D,
+        //            0,
+        //            GL_RED,
+        //            face->glyph->bitmap.width,
+        //            face->glyph->bitmap.rows,
+        //            0,
+        //            GL_RED,
+        //            GL_UNSIGNED_BYTE,
+        //            face->glyph->bitmap.buffer
+        //        );
+        //        // set texture options
+        //        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        //        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+        //        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        //        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        //        // now store character for later use
+        //        CharacterData character = {
+        //            texture,
+        //            glm::ivec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
+        //            glm::ivec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
+        //            static_cast<unsigned int>(face->glyph->advance.x)
+        //        };
+        //        assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+        //        assetmanager->m_characters.insert(std::pair<char,CharacterData>(c, character));
+        //    }
+        //    glBindTexture(GL_TEXTURE_2D, 0);
+        //}
         // destroy FreeType once we're finished
         FT_Done_Face(face);
         FT_Done_FreeType(ft);

@@ -29,6 +29,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include <glm.hpp>
 #include <glew.h>
 #include <string>
+#include <map>
 #include <../Freetype_Font/include/ft2build.h>
 #include <../Freetype_Font/include/freetype/freetype.h>
 
@@ -51,6 +52,8 @@ namespace text {
         glm::ivec2 m_size;        ///< Size of the glyph (width and height)
         glm::ivec2 m_bearing;     ///< Offset from the baseline to the left/top of the glyph
         GLuint m_advance;         ///< Offset to advance to the next glyph
+        glm::vec2 m_topLeftTexCoords;
+        glm::vec2 m_bottomRightTexCoords; 
     };
 
     /******************************************************************/
@@ -64,7 +67,7 @@ namespace text {
              glyphs are stored as instances of the CharacterData class.
     */
     /******************************************************************/
-    class Font {
+    class FontManager {
 
     public:
 
@@ -78,6 +81,9 @@ namespace text {
         */
         /******************************************************************/
         static void LoadFont(std::string file);
+        using FontMap = std::map<char, text::CharacterData>;
+        FontMap m_characters{};
+        std::map<std::string, FontMap> m_fonts;
     };
 
 }

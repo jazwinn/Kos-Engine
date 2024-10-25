@@ -28,10 +28,15 @@ R"( #version 460 core
 		{
 			fragColor = vec4(0,1,0,1.0); // Green
 		}
-		else
+		else if (collided > 0.5 && collided < 1.0)
 		{
 			fragColor = vec4(1,0,0,1.0); // Red
 		}
+		else
+		{
+			fragColor = vec4(1.0,0.8,0.0,1.0); // Camera
+		}
+
 
 		
 	}

@@ -25,11 +25,7 @@ namespace graphicpipe
 
 			glUseProgram(m_genericShaderProgram);
 
-			for (int i = 0; i < m_textureIDs.size(); ++i)
-			{
-				glActiveTexture(GL_TEXTURE0 + i + m_textureIDs[0]);
-				glBindTexture(GL_TEXTURE_2D, m_textureIDs[i]);
-			}
+			std::cout << m_textureOrder[0] << std::endl;
 
 			GLint lvUniformVarLoc1 = glGetUniformLocation(m_genericShaderProgram, "textures");
 
@@ -42,6 +38,16 @@ namespace graphicpipe
 				std::cout << lvUniformVarLoc1 << std::endl;
 				std::cout << "Uniform variable doesn't exist!!!\n";
 				std::exit(EXIT_FAILURE);
+			}
+
+			for (int i = 0; i < m_textureIDs.size(); ++i)
+			{
+				glActiveTexture(GL_TEXTURE0 + m_textureIDs[i]);
+				glBindTexture(GL_TEXTURE_2D, m_textureIDs[i]);
+			/*	GLenum err = glGetError();
+				if (err != GL_NO_ERROR) {
+					std::cout << "First OpenGL Error: " << err << std::endl;
+				}*/
 			}
 
 			glBindVertexArray(m_squareMesh.m_vaoId);
@@ -83,24 +89,10 @@ namespace graphicpipe
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		glDisable(GL_DEPTH_TEST);
-		glClearColor(0.f, 0.f, 0.f, 1.f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		glUseProgram(m_frameBufferShaderProgram);
 
-		glBindVertexArray(m_screenMesh.m_vaoId);
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, m_screenTexture);
-		int loc = glGetUniformLocation(m_frameBufferShaderProgram, "screenTexture");
-
-		if (loc != -1)
-		{
-			glUniform1i(loc, 0);
-		}
-		else
-		{
-			std::cout << "Uniform not found" << std::endl;
-		}
 	}
 
 	void GraphicsPipe::m_funcDrawGamePreviewWindow()
@@ -114,86 +106,140 @@ namespace graphicpipe
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		glDisable(GL_DEPTH_TEST);
-		//glClearColor(0.f, 0.f, 0.f, 1.f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		glUseProgram(m_frameBufferShaderProgram);
 
-		glBindVertexArray(m_screenMesh.m_vaoId);
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, m_screenTexture);
-		int loc = glGetUniformLocation(m_frameBufferShaderProgram, "screenTexture");
-
-		if (loc != -1)
-		{
-			glUniform1i(loc, 0);
-		}
-		else
-		{
-			std::cout << "Uniform not found" << std::endl;
-		}
 	}
 
 	void GraphicsPipe::m_funcDrawText()
 	{
 
-		if (!m_textData.empty()) {
+		//if (!m_textData.empty()) {
 
+		//	for (auto& textData : m_textData) {
+		//		// activate corresponding render state	
+		//		glUseProgram(m_textShaderProgram);
+		//		glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(GraphicsCamera::m_windowWidth), 0.0f, static_cast<float>(GraphicsCamera::m_windowHeight));
+		//		glUniformMatrix4fv(glGetUniformLocation(m_textShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+
+		//		//int loc = glGetUniformLocation(m_textShaderProgram, "projection");
+
+		//		glUniform3f(glGetUniformLocation(m_textShaderProgram, "textColor"), textData.m_color.x, textData.m_color.y, textData.m_color.z);
+		//		glActiveTexture(GL_TEXTURE0);
+		//		GLint boundTexture;
+		//		glGetIntegerv(GL_TEXTURE_BINDING_2D, &boundTexture);
+		//		std::cout << "Currently bound texture to GL_TEXTURE0: " << boundTexture << std::endl;
+		//		glBindVertexArray(m_textMesh.m_vaoId);
+
+		//		// iterate through all characters
+		//		std::string::const_iterator c;
+		//		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+		//		for (c = textData.m_text.begin(); c != textData.m_text.end(); c++)
+		//		{
+		//			text::CharacterData ch = assetmanager->m_characters[*c];
+
+		//			float xpos = textData.m_x + ch.m_bearing.x * textData.m_scale;
+		//			float ypos = textData.m_y - (ch.m_size.y - ch.m_bearing.y) * textData.m_scale;
+
+		//			float w = ch.m_size.x * textData.m_scale;
+		//			float h = ch.m_size.y * textData.m_scale;
+		//			// update VBO for each character
+		//			float vertices[6][4] = {
+		//				{ xpos,     ypos + h,   0.0f, 0.0f },
+		//				{ xpos,     ypos,       0.0f, 1.0f },
+		//				{ xpos + w, ypos,       1.0f, 1.0f },
+
+		//				{ xpos,     ypos + h,   0.0f, 0.0f },
+		//				{ xpos + w, ypos,       1.0f, 1.0f },
+		//				{ xpos + w, ypos + h,   1.0f, 0.0f }
+		//			};
+		//			// render glyph texture over quad
+		//			glBindTexture(GL_TEXTURE_2D, ch.m_textureID);
+
+		//			//glGetIntegerv(GL_TEXTURE_BINDING_2D, &boundTexture);
+		//			//std::cout << "Currently bound texture to GL_TEXTURE0: " << boundTexture << std::endl;
+
+		//			// update content of VBO memory
+		//			glBindBuffer(GL_ARRAY_BUFFER, m_textBuffer);
+		//			glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
+		//			glBindBuffer(GL_ARRAY_BUFFER, 0);
+		//			// render quad
+		//			glDrawArrays(GL_TRIANGLES, 0, 6);
+
+
+		//			// now advance cursors for next glyph (note that advance is number of 1/64 pixels)
+		//			textData.m_x += (ch.m_advance >> 6) * textData.m_scale; // bitshift by 6 to get value in pixels (2^6 = 64)
+		//		}
+		//		glBindVertexArray(0);
+		//		glBindTexture(GL_TEXTURE_2D, 0);
+		//	}
+		//	if (!m_textData.empty())
+		//	{
+		//		m_textData.clear();
+		//	}
+		//}
+		if (!m_textData.empty()) {
 			for (auto& textData : m_textData) {
-				// activate corresponding render state	
+				// Activate corresponding render state
 				glUseProgram(m_textShaderProgram);
-				glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(GraphicsCamera::m_windowWidth), 0.0f, static_cast<float>(GraphicsCamera::m_windowHeight));
+				glm::mat4 projection = glm::ortho(
+					0.0f, static_cast<float>(GraphicsCamera::m_windowWidth),
+					0.0f, static_cast<float>(GraphicsCamera::m_windowHeight)
+				);
 				glUniformMatrix4fv(glGetUniformLocation(m_textShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 
-				//int loc = glGetUniformLocation(m_textShaderProgram, "projection");
-
+				// Set the text color
 				glUniform3f(glGetUniformLocation(m_textShaderProgram, "textColor"), textData.m_color.x, textData.m_color.y, textData.m_color.z);
+
 				glActiveTexture(GL_TEXTURE0);
 				glBindVertexArray(m_textMesh.m_vaoId);
 
-				// iterate through all characters
-				std::string::const_iterator c;
+				// Iterate through all characters
 				assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
-				for (c = textData.m_text.begin(); c != textData.m_text.end(); c++)
-				{
-					text::CharacterData ch = assetmanager->m_characters[*c];
+				for (const char& c : textData.m_text) {
+					text::CharacterData ch = assetmanager->m_fontManager.m_fonts[textData.m_fileName][c];
 
+					// Calculate position and size for each character quad
 					float xpos = textData.m_x + ch.m_bearing.x * textData.m_scale;
 					float ypos = textData.m_y - (ch.m_size.y - ch.m_bearing.y) * textData.m_scale;
-
 					float w = ch.m_size.x * textData.m_scale;
 					float h = ch.m_size.y * textData.m_scale;
-					// update VBO for each character
-					float vertices[6][4] = {
-						{ xpos,     ypos + h,   0.0f, 0.0f },
-						{ xpos,     ypos,       0.0f, 1.0f },
-						{ xpos + w, ypos,       1.0f, 1.0f },
 
-						{ xpos,     ypos + h,   0.0f, 0.0f },
-						{ xpos + w, ypos,       1.0f, 1.0f },
-						{ xpos + w, ypos + h,   1.0f, 0.0f }
+					// Update VBO for each character with texture coordinates from the atlas
+					float vertices[6][4] = 
+					{
+					{ xpos,     ypos + h,   ch.m_topLeftTexCoords.x, ch.m_topLeftTexCoords.y },
+					{ xpos,     ypos,       ch.m_topLeftTexCoords.x, ch.m_bottomRightTexCoords.y },
+					{ xpos + w, ypos,       ch.m_bottomRightTexCoords.x, ch.m_bottomRightTexCoords.y },
+
+					{ xpos,     ypos + h,   ch.m_topLeftTexCoords.x, ch.m_topLeftTexCoords.y },
+					{ xpos + w, ypos,       ch.m_bottomRightTexCoords.x, ch.m_bottomRightTexCoords.y },
+					{ xpos + w, ypos + h,   ch.m_bottomRightTexCoords.x, ch.m_topLeftTexCoords.y }
 					};
-					// render glyph texture over quad
+
+					// Bind the texture atlas (once for all characters)
 					glBindTexture(GL_TEXTURE_2D, ch.m_textureID);
 
-					// update content of VBO memory
+					// Update the content of the VBO memory
 					glBindBuffer(GL_ARRAY_BUFFER, m_textBuffer);
 					glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
 					glBindBuffer(GL_ARRAY_BUFFER, 0);
-					// render quad
+
+					// Render quad
 					glDrawArrays(GL_TRIANGLES, 0, 6);
 
-
-					// now advance cursors for next glyph (note that advance is number of 1/64 pixels)
-					textData.m_x += (ch.m_advance >> 6) * textData.m_scale; // bitshift by 6 to get value in pixels (2^6 = 64)
+					// Advance cursor for next glyph
+					textData.m_x += (ch.m_advance >> 6) * textData.m_scale;
 				}
+
+				// Unbind for safety
 				glBindVertexArray(0);
 				glBindTexture(GL_TEXTURE_2D, 0);
 			}
-			if (!m_textData.empty())
-			{
-				m_textData.clear();
-			}
+
+			// Clear text data after rendering
+			m_textData.clear();
 		}
 	}
 

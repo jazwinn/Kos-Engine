@@ -127,8 +127,8 @@ namespace image {
         glBindTexture(GL_TEXTURE_2D, textureID);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_imageMap[image.m_spriteName].m_width, m_imageMap[image.m_spriteName].m_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, m_imagedataArray.back());
         glGenerateMipmap(GL_TEXTURE_2D);
 
@@ -136,6 +136,7 @@ namespace image {
 
         graphics->m_textureIDs.push_back(textureID);
         LOGGING_INFO("Texture Binded, Texture ID : {0} ", textureID);
+        LOGGING_INFO("Image ID : {0} ", image.m_imageID);
         graphics->m_stripCounts.push_back(image.m_stripCount);
         graphics->m_imageData.push_back(image);
 
