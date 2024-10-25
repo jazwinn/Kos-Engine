@@ -128,6 +128,7 @@ namespace physicspipe {
 	public:
 		float m_height = 0.0f;  // For rectangular entities
 		float m_width = 0.0f;   // For rectangular entities
+		float m_rotAngle = 0.0f;
 		AABB m_boundingBox{};
 		Rectangle() = default;
 		// Constructor for Rectangle (declaration)
@@ -143,12 +144,16 @@ namespace physicspipe {
 		\param[in] entity_ID    Unique ID for the entity.
 		*/
 		/******************************************************************/
-		Rectangle(float rect_height, float rect_width, vector2::Vec2 shape_position, vector2::Vec2 shape_scale, vector2::Vec2 shape_velocity, int entity_ID);
+		Rectangle(float rect_height, float rect_width, float rect_angle, vector2::Vec2 shape_position, vector2::Vec2 shape_scale, vector2::Vec2 shape_velocity, int entity_ID);
 
 		// Overriding GetEntity for Rectangle
 		EntityType GetEntity() const override {
 			return EntityType::RECTANGLE;
 		}
+
+		//FOR SAT
+		std::vector<vector2::Vec2> getRotatedVertices() const;
+		std::vector<vector2::Vec2> getEdges() const;
 	};
 
 	struct LineSegment
@@ -174,6 +179,7 @@ namespace physicspipe {
 		static std::vector<std::shared_ptr<PhysicsData>> m_collidedEntities;
 		static std::map<layer::LAYERS, std::vector<std::shared_ptr<PhysicsData>>> m_layerToEntities;
 		static std::vector<int> m_checker;
+		static std::unique_ptr<Physics> instance;
 
 		/******************************************************************/
 		/*!
@@ -185,6 +191,14 @@ namespace physicspipe {
 		void m_CalculateBoundingBox();
 
 	public:
+		//SINGLETON
+		static Physics* getInstance() {
+			if (!instance) {
+				instance = std::make_unique<Physics>();
+			}
+			return instance.get();
+		}
+
 		/******************************************************************/
 		/*!
 		\fn        void Physics::m_SendPhysicsData(float rect_height, float rect_width, vector2::Vec2 position, vector2::Vec2 scale, vector2::Vec2 velocity, int ID)
@@ -197,7 +211,7 @@ namespace physicspipe {
 		\param[in] ID           Unique ID of the rectangle entity.
 		*/
 		/******************************************************************/
-		void m_SendPhysicsData(float rect_height, float rect_width, vector2::Vec2 position, vector2::Vec2 scale, vector2::Vec2 velocity, int ID, layer::LAYERS layerID);
+		void m_SendPhysicsData(float rect_height, float rect_width, float rect_angle, vector2::Vec2 position, vector2::Vec2 scale, vector2::Vec2 velocity, int ID, layer::LAYERS layerID);
 		/******************************************************************/
 		/*!
 		\fn        void Physics::m_SendPhysicsData(float radius, vector2::Vec2 position, vector2::Vec2 scale, vector2::Vec2 velocity, int ID)
@@ -279,6 +293,8 @@ namespace physicspipe {
 		void m_CollisionCheckUpdate(float dt);
 		bool CheckCollision(const std::shared_ptr<PhysicsData>& entity1, const std::shared_ptr<PhysicsData>& entity2, float dt);
 		bool shouldCollide(const std::shared_ptr<PhysicsData>& entity1, const std::shared_ptr<PhysicsData>& entity2);
-	};
+		void projectOntoAxis(const std::vector<vector2::Vec2>& vertices, const vector2::Vec2& axis, float& min, float& max) const;
+		bool m_TestCollisionIntersection_RectRect(const Rectangle& obj1, const Rectangle& obj2);
+};
 }
 #endif
