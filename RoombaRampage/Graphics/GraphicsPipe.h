@@ -85,7 +85,7 @@ namespace graphicpipe {
         glm::vec2 m_scale{};             ///< Scale factors for the debug shape (x, y).
         glm::vec3 m_worldCoordinates{};  ///< World coordinates of the debug shape.*/
         glm::mat3 m_transformation{};
-        bool m_isCollided{};             ///< Collision flag for detecting collisions.
+        float m_isCollided{};             ///< Collision flag for detecting collisions.
         int m_shapeType{};               ///< Type of debug shape (e.g., square, circle).
     };
 

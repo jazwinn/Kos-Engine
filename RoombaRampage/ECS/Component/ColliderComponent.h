@@ -46,7 +46,7 @@ namespace ecs {
 
 		float m_radius{};
 
-		bool m_isCollided{ false };
+		float m_isCollided{ false };
 
 	};
 
