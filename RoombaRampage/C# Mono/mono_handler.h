@@ -3,6 +3,7 @@
 #include <mono/jit/jit.h>
 #include <mono/metadata/assembly.h>
 #include <mono/metadata/debug-helpers.h>
+#include "../ECS/ECS.h"
 #include <string>
 #include <vector>
 #include <map>
@@ -19,6 +20,8 @@ namespace Script {
 
 		//Add multiple scripts and load their individual assembly
 		void m_AddScripts(const std::vector<std::string>& scriptNames);
+
+		void m_RegisterInternalCalls();
 
 		// Find method in the C# Script
 		bool m_LoadMethod(const std::string& scriptName, const std::string& className, const std::string& methodName, int paramCount);
