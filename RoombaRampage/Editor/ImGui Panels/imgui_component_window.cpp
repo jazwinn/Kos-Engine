@@ -252,12 +252,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
             //TODO find better way to implement
             if (EntitySignature.test(ecs::TYPETRANSFORMCOMPONENT)) {
-                if (ImGui::BeginPopupContextItem()) {
-                    if (ImGui::MenuItem("Delete Component")) {
-                        ecs->m_RemoveComponent(ecs::TYPETRANSFORMCOMPONENT, m_clickedEntityId);
-                    }
-                    ImGui::EndPopup();
-                }
+
                 if (ImGui::CollapsingHeader("Transform Component")) {
                     auto* rbc = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(entityID));
                     rbc->ApplyFunction(DrawComponents(rbc->Names()));

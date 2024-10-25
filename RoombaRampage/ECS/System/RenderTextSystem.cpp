@@ -78,8 +78,6 @@ namespace ecs {
 
 		for (int n{}; n < m_vecTextComponentPtr.size(); n++) {
 
-			TransformComponent* transform = m_vecTransformComponentPtr[n];
-			TextComponent* text = m_vecTextComponentPtr[n];
 
 			//std::cout << "Update Entity: " << n << std::endl;
 			//sprite not need currently
