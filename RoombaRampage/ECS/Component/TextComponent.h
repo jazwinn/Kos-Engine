@@ -17,6 +17,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 #include <string>
 #include "Component.h"
+#include "../Math/Vector3.h"
 
 
 namespace ecs {
@@ -35,8 +36,9 @@ namespace ecs {
 		std::string m_fileName{};
 		float m_fontSize{ 1 };
 
-		float m_red{}, m_green{}, m_blue{};
+		vector3::Vec3 m_color;
 
+		REFLECTABLE(TextComponent, m_text, m_fontSize, m_color)
 	};
 
 }

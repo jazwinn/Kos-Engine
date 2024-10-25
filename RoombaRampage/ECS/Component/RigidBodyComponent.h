@@ -66,6 +66,8 @@ namespace ecs {
 
         // Is Static (if true, the object is immovable and not affected by forces)
         bool m_IsStatic{ false };
+
+        REFLECTABLE(RigidBodyComponent, m_Velocity, m_Acceleration, m_Rotation, m_AngularVelocity, m_AngularAcceleration, m_Mass, m_InverseMass, m_LinearDamping, m_AngularDamping, m_Force, m_Torque, m_IsKinematic, m_IsStatic)
     };
 }
 

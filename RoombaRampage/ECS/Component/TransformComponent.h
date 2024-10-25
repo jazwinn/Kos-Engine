@@ -47,6 +47,8 @@ namespace ecs {
 		EntityID m_parentID{};
 		
 		bool m_haveParent{false};
+
+		REFLECTABLE(TransformComponent, m_position, m_rotation, m_scale)
 		
 	};
 

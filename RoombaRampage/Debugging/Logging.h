@@ -43,7 +43,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 * @param Takes an std::string_view or string in the form of "This is a log value: {0}, and {1}", followed by
 * the arguments
 */
-#define LOGGING_INFO(x, ...) logging::Logger::m_GetInstance(). m_Info( x , __VA_ARGS__ )
+#define LOGGING_INFO(x, ...) logging::Logger::m_GetInstance(). m_Info( x , ##__VA_ARGS__ )
 
 /*
 * @brief Variadic Macro for logging warnings. This macro takes in a string message, followed by the
@@ -51,7 +51,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 * @param Takes an std::string_view or string in the form of "This is a log value: {0}, and {1}", followed by
 * the arguments
 */
-#define LOGGING_WARN( x, ... ) logging::Logger::m_GetInstance().m_Warn( x , __VA_ARGS__ )
+#define LOGGING_WARN( x, ... ) logging::Logger::m_GetInstance().m_Warn( x , ##__VA_ARGS__ )
 
 /*
 * @brief Variadic Macro for logging Errors. This macro takes in a string message, followed by the
@@ -59,16 +59,16 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 * @param Takes an std::string_view or string in the form of "This is a log value: {0}, and {1}", followed by
 * the arguments
 */
-#define LOGGING_ERROR(x, ...) logging::Logger::m_GetInstance().m_Error(std::source_location::current(), x,  __VA_ARGS__)
-#define LOGGING_ERROR_NO_SOURCE_LOCATION(x, ...) logging::Logger::m_GetInstance().m_Error(x, __VA_ARGS__)
-#define LOGGING_CRASH(x, ...) logging::Logger::m_GetInstance().m_Crash(x,  __VA_ARGS__)
+#define LOGGING_ERROR(x, ...) logging::Logger::m_GetInstance().m_Error(std::source_location::current(), x,  ##__VA_ARGS__)
+#define LOGGING_ERROR_NO_SOURCE_LOCATION(x, ...) logging::Logger::m_GetInstance().m_Error(x, ##__VA_ARGS__)
+#define LOGGING_CRASH(x, ...) logging::Logger::m_GetInstance().m_Crash(x,  ##__VA_ARGS__)
 /*
 * @brief Variadic Macro for logging Debug. This macro takes in a string message, followed by the
 * necessary arguments.
 * @param Takes an std::string_view or string in the form of "This is a log value: {0}, and {1}", followed by
 * the arguments
 */
-#define LOGGING_DEBUG(x, ...) logging::Logger:: m_GetInstance().m_Debug( x, __VA_ARGS__)
+#define LOGGING_DEBUG(x, ...) logging::Logger:: m_GetInstance().m_Debug( x, ##__VA_ARGS__)
 
 /******************************************************************/
 /*!
@@ -82,7 +82,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
     if (!(x)) { \
         assert(x); \
     }
-#define LOGGING_ASSERT_WITH_MSG(x,...) logging::Logger::m_GetInstance().m_Assert(std::source_location::current(),x,__VA_ARGS__);
+#define LOGGING_ASSERT_WITH_MSG(x,...) logging::Logger::m_GetInstance().m_Assert(std::source_location::current(),x,##__VA_ARGS__);
 
 /******************************************************************/
 /*!

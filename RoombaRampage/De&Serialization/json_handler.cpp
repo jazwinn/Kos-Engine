@@ -213,9 +213,9 @@ namespace Serialization {
 						tc->m_fontSize = text["fontsize"].GetFloat();
 					}
 					if (text.HasMember("colour")) {
-						tc->m_red = text["colour"]["red"].GetFloat();
-						tc->m_green = text["colour"]["green"].GetFloat();
-						tc->m_blue = text["colour"]["blue"].GetFloat();
+						tc->m_color.m_x = text["colour"]["red"].GetFloat();
+						tc->m_color.m_y = text["colour"]["green"].GetFloat();
+						tc->m_color.m_z = text["colour"]["blue"].GetFloat();
 					}
 				}
 			}
@@ -470,9 +470,9 @@ namespace Serialization {
 						text.AddMember("text", textValue, allocator);
 						text.AddMember("fontsize", tc->m_fontSize, allocator);
 						text.AddMember("colour", rapidjson::Value().SetObject()
-							.AddMember("red", tc->m_red, allocator)
-							.AddMember("blue", tc->m_blue, allocator)
-							.AddMember("green", tc->m_green, allocator), allocator);
+							.AddMember("red", tc->m_color.m_x, allocator)
+							.AddMember("blue", tc->m_color.m_y, allocator)
+							.AddMember("green", tc->m_color.m_z, allocator), allocator);
 
 						entityData.AddMember("text", text, allocator);
 						hasComponents = true;  // Mark as having a component

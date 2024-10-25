@@ -25,8 +25,6 @@ namespace graphicpipe
 
 			glUseProgram(m_genericShaderProgram);
 
-			std::cout << m_textureOrder[0] << std::endl;
-
 			GLint lvUniformVarLoc1 = glGetUniformLocation(m_genericShaderProgram, "textures");
 
 			if (lvUniformVarLoc1 >= 0)
