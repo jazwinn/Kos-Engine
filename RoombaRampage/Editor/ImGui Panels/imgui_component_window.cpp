@@ -345,6 +345,20 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 ecs::TextComponent* tc = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]
                     ->m_GetEntityComponent(entityID));
 
+                assetmanager::AssetManager* Asset = assetmanager::AssetManager::m_funcGetInstance();
+
+                if (ImGui::BeginCombo("Fonts", tc->m_fileName.c_str()))
+                {
+                    for (const auto& font : Asset->m_fontManager.m_fonts) {
+
+                        if (ImGui::Selectable(font.first.c_str())) {
+                            tc->m_fileName = font.first.c_str();
+                        }
+
+                    }
+                    ImGui::EndCombo();
+                }
+
 
                 ImVec4 color = ImVec4(tc->m_red, tc->m_green, tc->m_blue, 255.0f / 255.0f);
                 // ImGuiColorEditFlags misc_flags = (hdr ? ImGuiColorEditFlags_HDR : 0) | (drag_and_drop ? 0 : ImGuiColorEditFlags_NoDragDrop) | (alpha_half_preview ? ImGuiColorEditFlags_AlphaPreviewHalf : (alpha_preview ? ImGuiColorEditFlags_AlphaPreview : 0)) | (options_menu ? 0 : ImGuiColorEditFlags_NoOptions);

@@ -44,7 +44,7 @@ void main()
 	float frameOffset = frameWidth * aFrameNumber;
 
 	gl_Position = vec4(vec2(modelMatrix * vec3(vertexPosition, 1.f)),
-					   -0.1 * atextureID, 1.0);
+					   -0.01 * atextureID, 1.0);
 
 	texCoords = vec2(vertexTexCoords.x * frameWidth + frameOffset, vertexTexCoords.y);
 	color = vertexColor;

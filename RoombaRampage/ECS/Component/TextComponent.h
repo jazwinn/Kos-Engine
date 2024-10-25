@@ -32,6 +32,7 @@ namespace ecs {
 	public:
 
 		std::string m_text{"Insert Text"};
+		std::string m_fileName{};
 		float m_fontSize{ 1 };
 
 		float m_red{}, m_green{}, m_blue{};

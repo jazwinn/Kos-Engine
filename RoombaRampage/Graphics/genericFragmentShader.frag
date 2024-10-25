@@ -24,14 +24,14 @@ R"( #version 460 core
 
 	layout (location=0) out vec4 fragColor;
 
-	uniform sampler2D textures[32]; // Subscript indicates max texture amount
+	uniform sampler2D textures[64]; // Subscript indicates max texture amount
 
 
 	void main()
 	{
 		 vec4 texColor = texture(textures[textureID], texCoords) * vec4(color, 1.0);
 
-		 if(texColor.a < 0.01)
+		 if(texColor.a < 0.1)
 		 discard;
     
 		fragColor = texColor;
