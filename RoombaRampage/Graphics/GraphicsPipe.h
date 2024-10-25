@@ -100,6 +100,7 @@ namespace graphicpipe {
         float m_y;                       ///< Y position of the text on screen.
         float m_scale;                   ///< Scale of the text.
         glm::vec3 m_color;               ///< Color of the text (RGB).
+        std::string m_fileName;
     };
 
     /**
@@ -114,8 +115,8 @@ namespace graphicpipe {
     {
     private:
 
-        int m_unitWidth{ 512 };         ///< The default width for the graphics unit.
-        int m_unitHeight{ 512 };        ///< The default height for the graphics unit.
+        int m_unitWidth{ 160 };         ///< The default width for the graphics unit.
+        int m_unitHeight{ 160 };        ///< The default height for the graphics unit.
 
         /**
          * @struct Mesh

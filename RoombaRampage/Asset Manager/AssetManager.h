@@ -141,8 +141,9 @@ namespace assetmanager {
         \brief   Map storing font character data.
         */
         /******************************************************************/
-        using Font = std::map<char, text::CharacterData>;
-        Font m_characters{};
+
+        text::FontManager m_fontManager;
+        
     };
 
 }
