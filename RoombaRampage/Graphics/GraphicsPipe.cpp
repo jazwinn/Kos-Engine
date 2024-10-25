@@ -30,6 +30,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include <gtc/type_ptr.hpp>
 #include <gtc/matrix_transform.hpp>
 #include "../ECS/ECSList.h"
+#include "../Editor/EditorCamera.h"
 
 namespace graphicpipe {
 
@@ -82,6 +83,7 @@ namespace graphicpipe {
 		// Set up array buffer and framebuffers for offscreen rendering.
 		m_funcSetupArrayBuffer();
 		m_funcSetupFrameBuffer();
+		m_funcSetupGamePreviewFrameBuffer();
 
 		// Clear temporary data structures used during setup.
 		m_debugToNDCMatrix.clear();
@@ -126,7 +128,6 @@ namespace graphicpipe {
 			GraphicsCamera::calculateCurrCamera();
 			GraphicsCamera::calculateCurrView();
 		}
-		//GraphicsCamera::multiplyActiveCameraMatrix();
 		GraphicsCamera::multiplyViewMatrix();
 		GraphicsCamera::multiplyOrthoMatrix();
 
@@ -148,6 +149,7 @@ namespace graphicpipe {
 		m_debugToNDCMatrix.clear();
 		m_debugBoxCollisionChecks.clear();
 		m_debugBoxData.clear();
+		GraphicsCamera::m_cameras.clear();
 		
 	}
 
