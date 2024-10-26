@@ -23,6 +23,29 @@ namespace Script {
         return true;
     }
 
+    static void m_InternalGetTransformComponent(MonoObject* entity)
+    {
+        ecs::EntityID firstEntityID = ecs::ECS::m_GetInstance()->m_ECS_EntityMap.begin()->first;
+        ecs::TransformComponent* transform = static_cast<ecs::TransformComponent*>(
+            ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(firstEntityID)
+            );
+
+        if (transform)
+        {
+            std::cout << "Entity Transform Position: " << transform->m_position.m_x << ", " << transform->m_position.m_y << std::endl;
+        }
+        else
+        {
+            std::cout << "Failed to get TransformComponent for EntityID: " << firstEntityID << std::endl;
+        }
+    }
+
+    // Register Internal Call in Mono
+    void ScriptHandler::m_RegisterInternalCalls()
+    {
+        mono_add_internal_call("Namespace.ScriptBase::GetTransformComponent", m_InternalGetTransformComponent);
+    }
+
     void ScriptHandler::m_AddScripts(const std::vector<std::string>& scriptNames) {
         for (const auto& scriptName : scriptNames) {
             m_scriptNames.push_back(scriptName);
@@ -59,7 +82,7 @@ namespace Script {
         }
 
         // Find the class inside the assembly
-        m_testClass = mono_class_from_name(image, "", className.c_str());
+        m_testClass = mono_class_from_name(image, "Namespace", className.c_str());
         if (!m_testClass) {
             std::cout << "Failed to find class: " << className << " in script: " << scriptName << std::endl;
             return false;
@@ -85,9 +108,11 @@ namespace Script {
             return;
         }
 
-        // Invoke the method with arguments
+        // Invoke the method with the instance
         MonoObject* exception = nullptr;
-        mono_runtime_invoke(method, nullptr, args, &exception);
+        MonoObject* instance = mono_object_new(m_GetMonoDomain(), mono_class_from_name(m_images[scriptName], "Namespace", className.c_str()));
+        mono_runtime_object_init(instance);
+        mono_runtime_invoke(method, instance, args, &exception);
 
         if (exception) {
             MonoString* exceptionMessage = mono_object_to_string(exception, nullptr);
