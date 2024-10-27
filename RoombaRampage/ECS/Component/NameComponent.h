@@ -36,6 +36,7 @@ namespace ecs {
 
 		layer::LAYERS m_Layer{ layer::DEFAULT };
 
+		REFLECTABLE(NameComponent, m_entityName);
 	};
 
 }

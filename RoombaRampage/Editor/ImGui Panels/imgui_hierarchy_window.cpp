@@ -172,6 +172,7 @@ namespace gui {
         }
 
         if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None)) {
+            //might undefine behaviour
             ecs::EntityID index = id;
             ImGui::SetDragDropPayload("Entity", &index, sizeof(ecs::EntityID));
             ImGui::Text(static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id))->m_entityName.c_str());

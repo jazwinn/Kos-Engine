@@ -93,7 +93,7 @@ namespace ecs {
 
 			
 
-			graphicsPipe->m_textData.push_back(graphicpipe::TextData{ text->m_text,  windowCordianteX , windowCordianteY, text->m_fontSize, {red, green, blue }, text->m_fileName});
+			graphicsPipe->m_textData.push_back(graphicpipe::TextData{ text->m_text,  windowCordianteX ,windowCordianteY, text->m_fontSize, {red, green, blue }, text->m_fileName});
 			//m_funcDrawText("(C) LearnOpenGL.com", 540.0f, 570.0f, 0.5f, glm::vec3(0.3, 0.7f, 0.9f));
 
 		}

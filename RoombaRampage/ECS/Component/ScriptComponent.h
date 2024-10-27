@@ -33,6 +33,8 @@ namespace ecs {
 
 		std::vector<std::string> m_scripts;
 
+		REFLECTABLE(ScriptComponent, m_scripts)
+
 	};
 
 }

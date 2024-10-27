@@ -31,7 +31,8 @@ namespace text {
 
 	void FontManager::LoadFont(std::string file) {
 
-
+        std::filesystem::path filepath = file;
+        std::string filename = filepath.filename().string();
         FT_Library ft;
         // All functions return a value different than 0 whenever an error occurred
         if (FT_Init_FreeType(&ft))
@@ -82,7 +83,7 @@ namespace text {
             // Load and place each character in the atlas
             int xOffset = 0, yOffset = 0;
             assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
-            assetmanager->m_fontManager.m_fonts[file] = {};
+            assetmanager->m_fontManager.m_fonts[filename] = {};
             for (unsigned char c = 0; c < numChars; c++) {
                 if (FT_Load_Char(face, c, FT_LOAD_RENDER)) {
                     std::cout << "ERROR::FREETYPE: Failed to load Glyph" << std::endl;
@@ -104,7 +105,7 @@ namespace text {
                               (float)(yOffset + face->glyph->bitmap.rows) / atlasHeight)
                 };
                
-                assetmanager->m_fontManager.m_fonts[file].insert(std::pair<char, CharacterData>(c, character));
+                assetmanager->m_fontManager.m_fonts[filename].insert(std::pair<char, CharacterData>(c, character));
 
                 // Move to the next position in the atlas
                 xOffset += glyphWidth;

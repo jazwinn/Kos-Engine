@@ -44,17 +44,16 @@ namespace ecs{
 		ECS* ecs = ECS::m_GetInstance();
 
 		//Allocate memory to each component pool
-		ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT] = std::make_shared<ComponentPool<TransformComponent>>();
-		ecs->m_ECS_CombinedComponentPool[TYPENAMECOMPONENT] = std::make_shared<ComponentPool<NameComponent>>();
-		ecs->m_ECS_CombinedComponentPool[TYPESPRITECOMPONENT] = std::make_shared < ComponentPool<SpriteComponent>>();
-		ecs->m_ECS_CombinedComponentPool[TYPECOLLIDERCOMPONENT] = std::make_shared < ComponentPool<ColliderComponent>>();
-		ecs->m_ECS_CombinedComponentPool[TYPERIGIDBODYCOMPONENT] = std::make_shared < ComponentPool<RigidBodyComponent>>();
-		ecs->m_ECS_CombinedComponentPool[TYPEPLAYERCOMPONENT] = std::make_shared<ComponentPool<PlayerComponent>>();
-		ecs->m_ECS_CombinedComponentPool[TYPETEXTCOMPONENT] = std::make_shared<ComponentPool<TextComponent>>();
-		ecs->m_ECS_CombinedComponentPool[TYPEANIMATIONCOMPONENT] = std::make_shared<ComponentPool<AnimationComponent>>();
-		ecs->m_ECS_CombinedComponentPool[TYPECAMERACOMPONENT] = std::make_shared<ComponentPool<CameraComponent>>();
-		ecs->m_ECS_CombinedComponentPool[TYPECAMERACOMPONENT] = std::make_shared<ComponentPool<CameraComponent>>();
-		ecs->m_ECS_CombinedComponentPool[TYPESCRIPTCOMPONENT] = std::make_shared<ComponentPool<ScriptComponent>>();
+		m_AddComponentToECS<NameComponent>(TYPENAMECOMPONENT);
+		m_AddComponentToECS<TransformComponent>(TYPETRANSFORMCOMPONENT);
+		m_AddComponentToECS<SpriteComponent>(TYPESPRITECOMPONENT);
+		m_AddComponentToECS<ColliderComponent>(TYPECOLLIDERCOMPONENT);
+		m_AddComponentToECS<RigidBodyComponent>(TYPERIGIDBODYCOMPONENT);
+		m_AddComponentToECS<PlayerComponent>(TYPEPLAYERCOMPONENT);
+		m_AddComponentToECS<TextComponent>(TYPETEXTCOMPONENT);
+		m_AddComponentToECS<AnimationComponent>(TYPEANIMATIONCOMPONENT);
+		m_AddComponentToECS<CameraComponent>(TYPECAMERACOMPONENT);
+		m_AddComponentToECS<ScriptComponent>(TYPESCRIPTCOMPONENT);
 
 		//Allocate memory to each system
 		ecs->m_ECS_SystemMap[TYPETRANSFORMSYSTEM] = std::make_shared<TransformSystem>();
@@ -113,6 +112,16 @@ namespace ecs{
 
 
 		//delete ecs;
+	}
+
+	template<typename T>
+	void ECS::m_AddComponentToECS(ComponentType type)
+	{
+		ECS* ecs = ECS::m_GetInstance();
+		ecs->m_ECS_CombinedComponentPool[type] = std::make_shared<ComponentPool<T>>();
+
+		//ecs->m_callFunctionToComponent_Map[type] = [](void* component, void (*func)(void*)) { T* typeComponent = static_cast<T*>(component); typeComponent->ApplyFunction(func); }; // TODO in future
+		//rbc->ApplyFunction(DrawComponents(rbc->Names()));
 	}
 
 	void* ECS::m_AddComponent(ComponentType Type, EntityID ID) {
