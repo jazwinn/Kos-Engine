@@ -138,6 +138,7 @@ namespace Application {
         double lastFrameTime = glfwGetTime();
         const double fixedDeltaTime = 1.0 / 60.0;
         help->m_fixedDeltaTime = fixedDeltaTime;
+        ecs->m_DeltaTime = fixedDeltaTime;
         double accumulatedTime = 0.0;
 
         /****************************************************************************************/
@@ -217,6 +218,7 @@ namespace Application {
                 //}
                 //lastFrameTime = glfwGetTime();
                 help->m_fps = 1.f / help->m_deltaTime;
+                
 
                 glfwSwapBuffers(lvWindow.m_window);
 

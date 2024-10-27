@@ -13,6 +13,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../ECS.h"
 
 #include "PhysicsSystem.h"
+#include "../Application/Helper.h"
 
 
 namespace ecs {
@@ -56,7 +57,7 @@ namespace ecs {
 
 	void PhysicsSystem::m_Update() {
 		ECS* ecs = ECS::m_GetInstance();
-
+		Helper::Helpers* help = Helper::Helpers::GetInstance();
 		if (m_vecRigidBodyComponentPtr.size() != m_vecTransformComponentPtr.size()) {
 			LOGGING_ERROR("Error: Vectors container size does not Match");
 			return;
@@ -66,15 +67,11 @@ namespace ecs {
 		for (int n = 0; n < m_vecRigidBodyComponentPtr.size(); n++) {
 			RigidBodyComponent* rigidBody = m_vecRigidBodyComponentPtr[n];
 			TransformComponent* transform = m_vecTransformComponentPtr[n];
-
-			// Update the rigid body with the current delta time
 			if (rigidBody->m_IsKinematic || rigidBody->m_IsStatic) {
 				// If kinematic or static, skip physics calculations
 				return;
 			}
-			else
-			{
-				// Integrate linear motion
+			for (int i = 0; i < help->currentNumberOfSteps; ++i) {
 				vector2::Vec2 acceleration = rigidBody->m_Acceleration + rigidBody->m_Force * rigidBody->m_InverseMass;
 				rigidBody->m_Velocity += acceleration * ecs->m_DeltaTime;
 				rigidBody->m_Velocity *= rigidBody->m_LinearDamping; // Apply linear damping
@@ -89,14 +86,13 @@ namespace ecs {
 
 				rigidBody->m_Force = vector2::Vec2{ 0.0f, 0.0f };
 				rigidBody->m_Torque = 0.0f;
+				// Update the rigid body with the current delta time
+				if (!rigidBody->m_IsStatic && !rigidBody->m_IsKinematic) {
+					transform->m_position += rigidBody->m_Velocity * ecs->m_DeltaTime;
+					transform->m_rotation += rigidBody->m_AngularVelocity * ecs->m_DeltaTime;
+				}
 			}
-
-			if (!rigidBody->m_IsStatic && !rigidBody->m_IsKinematic) {
-				transform->m_position += rigidBody->m_Velocity * ecs->m_DeltaTime;
-				transform->m_rotation += rigidBody->m_AngularVelocity * ecs->m_DeltaTime;
-			}
-
-
+	
 			//update physics pipline
 			physicspipe::Physics PhysicsPipeline;
 			//TODO optimize,  causing longer load time
