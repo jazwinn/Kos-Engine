@@ -36,10 +36,11 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include<vector>
 #include<string>
 #include <iostream>
-#include "../De&Serialization/json_handler.h"
+#include <filesystem>
 
 
-static const float slider_start_pos_x = 100.0f; //Padding for the slider
+static const float slider_start_pos_x = 150.0f; //Padding for the slider
+static const float slidersize = 50.f;
 
 template <typename T>
 struct DrawComponents {
@@ -50,63 +51,80 @@ struct DrawComponents {
 
     template <typename U, std::enable_if_t<std::is_floating_point_v<U>, int> = 0>
     void operator()( U& _args) {
+        
         ImGui::AlignTextToFramePadding();
         ImGui::Text(m_Array[count].c_str());
         ImGui::SameLine(slider_start_pos_x);
         ImGui::SetNextItemWidth(100.0f);
         std::string title = "##" + m_Array[count];
+        ImGui::PushItemWidth(slidersize);
         ImGui::DragFloat(title.c_str(), &_args, 1.0f, -100.0f, 100.f, "%.2f");
-
+        ImGui::PopItemWidth();
         count++;
     }
 
 
 
     void operator()(int& _args) {
+        
         ImGui::AlignTextToFramePadding();
         ImGui::Text(m_Array[count].c_str());
         ImGui::SameLine(slider_start_pos_x);
         ImGui::SetNextItemWidth(100.0f);
         std::string title = "##" + m_Array[count];
+        ImGui::PushItemWidth(slidersize);
         ImGui::DragInt(title.c_str(), &_args, 1.0f, -100.0f, 100.f);
-
+        ImGui::PopItemWidth();
         count++;
     }
 
     void operator()(vector2::Vec2& _args) {
+        
         ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
         ImGui::Text(m_Array[count].c_str());
         ImGui::SameLine(slider_start_pos_x);
         ImGui::SetNextItemWidth(100.0f);
+        ImGui::PushItemWidth(slidersize);
         std::string title = "X##" + m_Array[count];
         ImGui::DragFloat(title.c_str(), &_args.m_x, 0.02f, -50.f, 50.f, "%.2f");
 
         ImGui::SameLine();
         ImGui::SetNextItemWidth(100.0f);
         title = "Y##" + m_Array[count];
+        ImGui::PushItemWidth(slidersize);
         ImGui::DragFloat(title.c_str(), &_args.m_y, 0.02f, -50.0f, 50.0f, "%.2f");
+        
+        ImGui::PopItemWidth();
+        ImGui::PopItemWidth();
 
         count++;
     }
 
     void operator()( vector3::Vec3& _args) {
+        ImGui::PushItemWidth(slidersize);
         ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
         ImGui::Text(m_Array[count].c_str());
         ImGui::SameLine(slider_start_pos_x);
         ImGui::SetNextItemWidth(100.0f);
         std::string title = "X##" + m_Array[count];
+        ImGui::PushItemWidth(slidersize);
         ImGui::DragFloat(title.c_str(), &_args.m_x, 0.02f, -50.f, 50.f, "%.2f");
 
         ImGui::SameLine();
         ImGui::SetNextItemWidth(100.0f);
         title = "Y##" + m_Array[count];
+        ImGui::PushItemWidth(slidersize);
         ImGui::DragFloat(title.c_str(), &_args.m_y, 0.02f, -50.0f, 50.0f, "%.2f");
 
         ImGui::SameLine();
         ImGui::SetNextItemWidth(100.0f);
         title = "Z##" + m_Array[count];
+        ImGui::PushItemWidth(slidersize);
         ImGui::DragFloat(title.c_str(), &_args.m_y, 0.02f, -50.0f, 50.0f, "%.2f");
-        
+
+        ImGui::PopItemWidth();
+        ImGui::PopItemWidth();
+        ImGui::PopItemWidth();
         count++;
     }
 
@@ -142,6 +160,8 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
     std::string windowTitle = Title;
 
     ImGui::Begin(windowTitle.c_str(), &windowOpen);
+
+    
 
     //Add Component Window
     const char* ComponentNames[] =
@@ -211,44 +231,20 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
             ImGui::SameLine(slider_start_pos_x);
             ImGui::SetNextItemWidth(100.0f);
             ImGui::InputText("##NAMETEXT##", &nc->m_entityName);
-
+            
             //layer selector
             const char* layers[] = { ecs->m_layersStack.m_layerMap[layer::DEFAULT].first.c_str(), ecs->m_layersStack.m_layerMap[layer::LAYER1].first.c_str(),ecs->m_layersStack.m_layerMap[layer::LAYER2].first.c_str(),
                                   ecs->m_layersStack.m_layerMap[layer::LAYER3].first.c_str(), ecs->m_layersStack.m_layerMap[layer::LAYER4].first.c_str(), ecs->m_layersStack.m_layerMap[layer::LAYER5].first.c_str(),
                                   ecs->m_layersStack.m_layerMap[layer::LAYER6].first.c_str(), ecs->m_layersStack.m_layerMap[layer::LAYER7].first.c_str(), ecs->m_layersStack.m_layerMap[layer::LAYER8].first.c_str() };
             int layer_current = nc->m_Layer;
             if (ImGui::Combo("Layers", &layer_current, layers, IM_ARRAYSIZE(layers))) {
-                switch (layer_current) {
-                case 0:
-                    ecs->m_layersStack.m_SwapEntityLayer(layer::DEFAULT, nc->m_Layer, entityID);
-                    break;
-                case 1:
-                    ecs->m_layersStack.m_SwapEntityLayer(layer::LAYER1, nc->m_Layer, entityID);
-                    break;
-                case 2:
-                    ecs->m_layersStack.m_SwapEntityLayer(layer::LAYER2, nc->m_Layer, entityID);
-                    break;
-                case 3:
-                    ecs->m_layersStack.m_SwapEntityLayer(layer::LAYER3, nc->m_Layer, entityID);
-                    break;
-                case 4:
-                    ecs->m_layersStack.m_SwapEntityLayer(layer::LAYER4, nc->m_Layer, entityID);
-                    break;
-                case 5:
-                    ecs->m_layersStack.m_SwapEntityLayer(layer::LAYER5, nc->m_Layer, entityID);
-                    break;
-                case 6:
-                    ecs->m_layersStack.m_SwapEntityLayer(layer::LAYER6, nc->m_Layer, entityID);
-                    break;
-                case 7:
-                    ecs->m_layersStack.m_SwapEntityLayer(layer::LAYER7, nc->m_Layer, entityID);
-                    break;
-                case 8:
-                    ecs->m_layersStack.m_SwapEntityLayer(layer::LAYER8, nc->m_Layer, entityID);
-                    break;
+                ecs->m_layersStack.m_SwapEntityLayer((layer::LAYERS)layer_current, nc->m_Layer, entityID);
 
-                }
             }
+
+
+
+            bool open;
 
             //TODO find better way to implement
             if (EntitySignature.test(ecs::TYPETRANSFORMCOMPONENT)) {
@@ -256,18 +252,24 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 if (ImGui::CollapsingHeader("Transform Component")) {
                     auto* rbc = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(entityID));
                     rbc->ApplyFunction(DrawComponents(rbc->Names()));
+                    
                 }
 
 
             }
             if (EntitySignature.test(ecs::TYPESPRITECOMPONENT)){
+
+                open = ImGui::CollapsingHeader("Sprite Component");
+
                 if (ImGui::BeginPopupContextItem()) {
                     if (ImGui::MenuItem("Delete Component")) {
                         ecs->m_RemoveComponent(ecs::TYPESPRITECOMPONENT, m_clickedEntityId);
                     }
                     ImGui::EndPopup();
                 }
-                if (ImGui::CollapsingHeader("Sprite Component")) {
+
+                if (open) {
+                   
                     assetmanager::AssetManager* Asset = assetmanager::AssetManager::m_funcGetInstance();
                     auto* sc = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(entityID));
                     if (ImGui::BeginCombo("Images", sc->m_imageFile.c_str()))
@@ -280,11 +282,39 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         }
                         ImGui::EndCombo();
                     }
+
+                    if (ImGui::BeginDragDropTarget())
+                    {
+
+                        if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("file"))
+                        {
+                            IM_ASSERT(payload->DataSize == sizeof(std::filesystem::path));
+                            std::filesystem::path* filename = static_cast<std::filesystem::path*>(payload->Data);
+                            if (filename->filename().extension().string() == ".png") {
+                                if (Asset->m_imageManager.m_imageMap.find(filename->filename().string()) == Asset->m_imageManager.m_imageMap.end()) {
+                                    LOGGING_WARN("File not loaded, please reload content browser");
+                                }
+                                else {
+                                    sc->m_imageFile = filename->filename().string();
+                                }
+                            }
+                            else {
+                                LOGGING_WARN("Wrong File Type");
+                            }
+
+                            
+
+                        }
+                        ImGui::EndDragDropTarget();
+                    }
                 }
 
 
             }
             if (EntitySignature.test(ecs::TYPECOLLIDERCOMPONENT)) {
+
+                open = ImGui::CollapsingHeader("Collider Component");
+
                 if (ImGui::BeginPopupContextItem()) {
                     if (ImGui::MenuItem("Delete Component")) {
                         ecs->m_RemoveComponent(ecs::TYPECOLLIDERCOMPONENT, m_clickedEntityId);
@@ -292,7 +322,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                     ImGui::EndPopup();
                 }
 
-                if (ImGui::CollapsingHeader("Collider Component")) {
+                if (open) {
                     auto* rbc = static_cast<ecs::ColliderComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(entityID));
                     rbc->ApplyFunction(DrawComponents(rbc->Names()));
                 }
@@ -300,6 +330,9 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
             }
             if (EntitySignature.test(ecs::TYPERIGIDBODYCOMPONENT)) {
+
+                open = ImGui::CollapsingHeader("RigidBody Component");
+
                 if (ImGui::BeginPopupContextItem()) {
                     if (ImGui::MenuItem("Delete Component")) {
                         ecs->m_RemoveComponent(ecs::TYPERIGIDBODYCOMPONENT, m_clickedEntityId);
@@ -307,19 +340,25 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                     ImGui::EndPopup();
                 }
 
-                if (ImGui::CollapsingHeader("RigidBody Component")) {
+                if (open) {
                     auto* rbc = static_cast<ecs::RigidBodyComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPERIGIDBODYCOMPONENT]->m_GetEntityComponent(entityID));
                     rbc->ApplyFunction(DrawComponents(rbc->Names()));
                 }
+
+
             }
             if (EntitySignature.test(ecs::TYPEPLAYERCOMPONENT)) {
+
+                open = ImGui::CollapsingHeader("Player Component");
+
                 if (ImGui::BeginPopupContextItem()) {
                     if (ImGui::MenuItem("Delete Component")) {
                         ecs->m_RemoveComponent(ecs::TYPEPLAYERCOMPONENT, m_clickedEntityId);
                     }
                     ImGui::EndPopup();
                 }
-                if (ImGui::CollapsingHeader("Player Component")) {
+
+                if (open) {
                     auto* rbc = static_cast<ecs::PlayerComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEPLAYERCOMPONENT]->m_GetEntityComponent(entityID));
                     rbc->ApplyFunction(DrawComponents(rbc->Names()));
                 }
@@ -327,27 +366,90 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
             }
             if (EntitySignature.test(ecs::TYPETEXTCOMPONENT)) {
+
+                open = ImGui::CollapsingHeader("Text Component");
+
                 if (ImGui::BeginPopupContextItem()) {
                     if (ImGui::MenuItem("Delete Component")) {
                         ecs->m_RemoveComponent(ecs::TYPETEXTCOMPONENT, m_clickedEntityId);
                     }
                     ImGui::EndPopup();
                 }
-                if (ImGui::CollapsingHeader("Text Component")) {
-                    auto* rbc = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(entityID));
-                    rbc->ApplyFunction(DrawComponents(rbc->Names()));
-                }
 
+
+                if (open) {
+
+                    assetmanager::AssetManager* Asset = assetmanager::AssetManager::m_funcGetInstance();
+                    auto* tc = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(entityID));
+
+                    ImVec4 color = ImVec4(tc->m_color.m_x, tc->m_color.m_y, tc->m_color.m_z, 255.0f / 255.0f);
+
+                    ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
+                    ImGui::Text("Text: ");
+                    ImGui::SameLine(slider_start_pos_x);
+                    ImGui::SetNextItemWidth(100.0f);
+                    ImGui::InputText("##TEXT##", &tc->m_text);
+                    ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
+                    ImGui::Text("Size");
+                    ImGui::SameLine(slider_start_pos_x);
+                    ImGui::SetNextItemWidth(100.0f);
+                    ImGui::DragFloat("###TEXTXXX", &tc->m_fontSize, 0.02f, 0.f, 10.0f, "%.2f");
+                    ImGui::Text("Color");
+                    ImGui::SameLine();
+                    if (ImGui::ColorEdit3("##MyColor1", (float*)&color, ImGuiColorEditFlags_DisplayRGB)) {
+                        tc->m_color.m_x = color.x;
+                        tc->m_color.m_y = color.y;
+                        tc->m_color.m_z = color.z;
+                    }
+                    if (ImGui::BeginCombo("Fonts", tc->m_fileName.c_str()))
+                    {
+                        for (const auto& font : Asset->m_fontManager.m_fonts) {
+                            if (font.first.empty())continue;
+                            if (ImGui::Selectable(font.first.c_str())) {
+                                tc->m_fileName = font.first.c_str();
+                            }
+                        }
+                        ImGui::EndCombo();
+                    }
+                    if (ImGui::BeginDragDropTarget())
+                    {
+
+                        if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("file"))
+                        {
+                            IM_ASSERT(payload->DataSize == sizeof(std::filesystem::path));
+                            std::filesystem::path* filename = static_cast<std::filesystem::path*>(payload->Data);
+                            if (filename->filename().extension().string() == ".ttf") {
+                                if (Asset->m_fontManager.m_fonts.find(filename->filename().string()) == Asset->m_fontManager.m_fonts.end()) {
+                                    LOGGING_WARN("File not loaded, please reload content browser");
+                                }
+                                else {
+                                    tc->m_fileName = filename->filename().string();
+                                }
+                            }
+                            else {
+                                LOGGING_WARN("Wrong File Type");
+                            }
+
+
+
+                        }
+                        ImGui::EndDragDropTarget();
+                    }
+                }
 
             }
             if (EntitySignature.test(ecs::TYPEANIMATIONCOMPONENT)) {
+
+                open = ImGui::CollapsingHeader("Animation Component");
+
                 if (ImGui::BeginPopupContextItem()) {
                     if (ImGui::MenuItem("Delete Component")) {
                         ecs->m_RemoveComponent(ecs::TYPEANIMATIONCOMPONENT, m_clickedEntityId);
                     }
                     ImGui::EndPopup();
                 }
-                if (ImGui::CollapsingHeader("Animation Component")) {
+
+                if (open) {
                     auto* rbc = static_cast<ecs::AnimationComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEANIMATIONCOMPONENT]->m_GetEntityComponent(entityID));
                     rbc->ApplyFunction(DrawComponents(rbc->Names()));
                 }
@@ -355,13 +457,17 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
             }
             if (EntitySignature.test(ecs::TYPECAMERACOMPONENT)) {
+
+                open = ImGui::CollapsingHeader("Camera Component");
+
                 if (ImGui::BeginPopupContextItem()) {
                     if (ImGui::MenuItem("Delete Component")) {
                         ecs->m_RemoveComponent(ecs::TYPECAMERACOMPONENT, m_clickedEntityId);
                     }
                     ImGui::EndPopup();
                 }
-                if (ImGui::CollapsingHeader("Camera Component")) {
+
+                if (open) {
                     auto* rbc = static_cast<ecs::CameraComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPECAMERACOMPONENT]->m_GetEntityComponent(entityID));
                     rbc->ApplyFunction(DrawComponents(rbc->Names()));
                 }
@@ -369,13 +475,17 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
             }
             if (EntitySignature.test(ecs::TYPESCRIPTCOMPONENT)) {
+
+                open = ImGui::CollapsingHeader("Script Component");
+
                 if (ImGui::BeginPopupContextItem()) {
                     if (ImGui::MenuItem("Delete Component")) {
                         ecs->m_RemoveComponent(ecs::TYPESCRIPTCOMPONENT, m_clickedEntityId);
                     }
                     ImGui::EndPopup();
                 }
-                if (ImGui::CollapsingHeader("Script Component")) {
+
+                if (open) {
                     auto* rbc = static_cast<ecs::ScriptComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESCRIPTCOMPONENT]->m_GetEntityComponent(entityID));
                     // rbc->ApplyFunction(DrawComponents(rbc->Names()));
                 }
@@ -383,7 +493,46 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
             }
 
- 
+            //draw invinsible box
+            {
+                ImGui::InvisibleButton("##Invinsible", ImVec2{ ImGui::GetContentRegionAvail().x,ImGui::GetContentRegionAvail().y });
+
+                if (ImGui::BeginDragDropTarget())
+                {
+
+                    if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("file"))
+                    {
+                        IM_ASSERT(payload->DataSize == sizeof(std::filesystem::path));
+                        std::filesystem::path* filename = static_cast<std::filesystem::path*>(payload->Data);
+
+                        if (filename->filename().extension().string() == ".png") {
+
+                            if (!EntitySignature.test(ecs::TYPESPRITECOMPONENT)) {// does not have sprite component, create one
+                                ecs::SpriteComponent* com = static_cast<ecs::SpriteComponent*>(ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, entityID));
+                                com->m_imageFile = filename->filename().string();
+                            }
+                            else {
+                                auto* sc = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(entityID));
+                                sc->m_imageFile = filename->filename().string();
+                            }
+                        }
+
+                        if (filename->filename().extension().string() == ".ttf") {
+
+                            if (!EntitySignature.test(ecs::TYPETEXTCOMPONENT)) {// does not have sprite component, create one
+                                ecs::TextComponent* com = static_cast<ecs::TextComponent*>(ecs->m_AddComponent(ecs::TYPETEXTCOMPONENT, entityID));
+                                com->m_fileName = filename->filename().string();
+                            }
+                            else {
+                                auto* sc = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(entityID));
+                                sc->m_fileName = filename->filename().string();
+                            }
+                        }
+
+                    }
+                    ImGui::EndDragDropTarget();
+                }
+            }
         }
 
      }

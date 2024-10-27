@@ -37,6 +37,7 @@ namespace ecs {
 
 		//Store Entity ID
 		EntityID m_Entity{};
+
 	};
 
 }

@@ -68,7 +68,11 @@ namespace gui
         graphicpipe::GraphicsCamera::m_currCameraMatrix = EditorCamera::m_editorCameraMatrix;
         graphicpipe::GraphicsCamera::m_currViewMatrix = EditorCamera::m_editorViewMatrix;
 
+
+
         ImGui::End();
+
+
 	}
 
 }

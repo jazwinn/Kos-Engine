@@ -31,6 +31,9 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include <iostream>
 #include <bitset>
 #include <optional>
+#include <functional>
+
+#include <any>
 
 namespace ecs {
 
@@ -106,6 +109,11 @@ namespace ecs {
 		*/
 		/******************************************************************/
 		static bool m_DeleteEntity(EntityID);
+
+
+		template <typename T>
+		static void m_AddComponentToECS(ComponentType);
+
 		/******************************************************************/
 		/*!
 		\def       m_AddComponent()
@@ -143,6 +151,10 @@ namespace ecs {
 		std::unordered_map<TypeSystem, std::shared_ptr<ISystem>> m_ECS_SystemMap{};
 
 		std::unordered_map<EntityID, std::bitset<TOTALTYPECOMPONENT>> m_ECS_EntityMap{};
+
+		//store type conversion
+		//using ActionFunction = std::function<void(void*, void (*)(void*))>;
+		//std::unordered_map<ComponentType, ActionFunction> m_callFunctionToComponent_Map;// TODO in future, std::any doesnt work
 
 		//layering system
 		layer::LayerStack m_layersStack;

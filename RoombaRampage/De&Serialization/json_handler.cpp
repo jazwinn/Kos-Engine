@@ -620,3 +620,55 @@ namespace Serialization {
 		LOGGING_INFO("Save Json Successful");
 	}
 }
+
+
+//template <typename T>
+//struct SaveComponent {
+//
+//	T m_Array;
+//	int count{};
+//	rapidjson::Value component; 
+//
+//	SaveComponent(T _array, std::string classname) :m_Array{_array}:component(rapidjson::kObjectType) {
+//		
+//
+//	}
+//
+//
+//	template <typename U, std::enable_if_t<std::is_floating_point_v<U>, int> = 0>
+//	void operator()(U& _args) {
+//
+//		count++;
+//	}
+//
+//
+//
+//	void operator()(int& _args) {
+//
+//		count++;
+//	}
+//
+//	void operator()(vector2::Vec2& _args) {
+//
+//
+//		count++;
+//	}
+//
+//	void operator()(vector3::Vec3& _args) {
+//
+//		count++;
+//	}
+//
+//
+//	void operator()(bool& _args) {
+//
+//
+//		count++;
+//	}
+//
+//	void operator()(std::string& _args) {
+//
+//
+//		count++;
+//	}
+//};
