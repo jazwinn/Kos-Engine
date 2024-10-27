@@ -50,6 +50,10 @@ namespace Helper {
 
 		float m_fps;
 
+		int currentNumberOfSteps;
+
+		float m_fixedDeltaTime;
+
 	private:
 		static std::unique_ptr<Helpers> InstancePtr;
 
