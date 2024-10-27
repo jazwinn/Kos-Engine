@@ -27,6 +27,9 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_handler.h"
+#include "imgui_internal.h"
+
+
 #include "../ECS/ECS.h"
 #include "../Application/Application.h"
 
@@ -122,8 +125,52 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
     
     //draw gizmo
     m_DrawGizmo(pos.x, pos.y, imageSize.x, imageSize.y);
+    
+    ImGui::Dummy(renderWindowSize);
+    if (ImGui::BeginDragDropTarget())
+    {
 
-  
+        if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("file"))
+        {
+            IM_ASSERT(payload->DataSize == sizeof(std::filesystem::path));
+            std::filesystem::path* filename = static_cast<std::filesystem::path*>(payload->Data);
+
+            float screencordX = ImGui::GetMousePos().x - ImGui::GetCursorScreenPos().x;
+            float screencordY = ImGui::GetMousePos().y - ImGui::GetCursorScreenPos().y;
+
+            //TODO calculate mouse pos correctly
+            float cordX = (screencordX - renderWindowSize.x / 2.f) / (renderWindowSize.x / 2.f);
+            float cordY = (std::abs(screencordY) - renderWindowSize.y / 2.f) / (renderWindowSize.y / 2.f);
+
+            if (filename->filename().extension().string() == ".png") {
+             ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+                ecs::EntityID id = ecs->m_CreateEntity();
+                ecs::TransformComponent* transCom = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id));
+                transCom->m_position = { cordX, cordY };
+                ecs::NameComponent* nameCom = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id));
+                nameCom->m_entityName = filename->filename().stem().string();
+                ecs::SpriteComponent * spriteCom = static_cast<ecs::SpriteComponent*>(ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, id));
+                spriteCom->m_imageFile = filename->filename().string();
+
+                m_clickedEntityId = id;
+            }
+            if (filename->filename().extension().string() == ".ttf") {
+                ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+                ecs::EntityID id = ecs->m_CreateEntity();
+                ecs::TransformComponent* transCom = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id));
+                transCom->m_position = { cordX, cordY };
+                ecs::NameComponent* nameCom = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id));
+                nameCom->m_entityName = filename->filename().stem().string();
+                ecs::TextComponent* textCom = static_cast<ecs::TextComponent*>(ecs->m_AddComponent(ecs::TYPETEXTCOMPONENT, id));
+                textCom->m_fileName = filename->filename().string();
+
+                m_clickedEntityId = id;
+            }
+
+
+        }
+        ImGui::EndDragDropTarget();
+    }
 
 
     ImGui::End();

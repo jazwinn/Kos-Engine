@@ -85,7 +85,6 @@ namespace gui {
 					//ImGui::ImageButton(directoryString.c_str(), (ImTextureID)assetmanager->m_imageManager.m_imageMap.find(fileIcon)->second.textureID, { thumbnail ,thumbnail }, { 0,1 }, { 1,0 }, { 0,0,0,0 });
 					if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
 						currentDirectory /= directoryPath.path().filename();
-						std::cout << currentDirectory << std::endl;
 					}
 				}
 				else {
@@ -205,31 +204,6 @@ namespace gui {
 			ImGui::EndChild();
 		}
 
-		
-
-		//if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_SourceExtern)) {
-		//	//ecs::EntityID index = id;
-		//	//ImGui::SetDragDropPayload("Entity", &index, sizeof(ecs::EntityID));
-		//	//ImGui::Text(static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id))->m_entityName.c_str());
-		//	////ImGui::Text(std::to_string((int)index).c_str());
-		//	ImGui::EndDragDropSource();
-		//}
-
-
-		if (ImGui::BeginDragDropTarget())
-		{
-
-			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Entity"))
-			{
-				IM_ASSERT(payload->DataSize == sizeof(ecs::EntityID));
-				ecs::EntityID childId = *static_cast<ecs::EntityID*>(payload->Data);
-
-
-			}
-			ImGui::EndDragDropTarget();
-
-
-		}
 
 		ImGui::End();
 	}

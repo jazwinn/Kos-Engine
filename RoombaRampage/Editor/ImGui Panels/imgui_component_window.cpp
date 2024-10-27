@@ -290,13 +290,18 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         {
                             IM_ASSERT(payload->DataSize == sizeof(std::filesystem::path));
                             std::filesystem::path* filename = static_cast<std::filesystem::path*>(payload->Data);
-                            
-                            if (Asset->m_imageManager.m_imageMap.find(filename->filename().string()) == Asset->m_imageManager.m_imageMap.end()) {
-                                LOGGING_WARN("File not loaded, please reload content browser");
+                            if (filename->filename().extension().string() == ".png") {
+                                if (Asset->m_imageManager.m_imageMap.find(filename->filename().string()) == Asset->m_imageManager.m_imageMap.end()) {
+                                    LOGGING_WARN("File not loaded, please reload content browser");
+                                }
+                                else {
+                                    sc->m_imageFile = filename->filename().string();
+                                }
                             }
                             else {
-                                sc->m_imageFile = filename->filename().string();
+                                LOGGING_WARN("Wrong File Type");
                             }
+
                             
 
                         }
@@ -376,16 +381,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                     assetmanager::AssetManager* Asset = assetmanager::AssetManager::m_funcGetInstance();
                     auto* tc = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(entityID));
-                    if (ImGui::BeginCombo("Fonts", tc->m_fileName.c_str()))
-                    {
-                        for (const auto& font : Asset->m_fontManager.m_fonts) {
-                            if (font.first.empty())continue;
-                            if (ImGui::Selectable(font.first.c_str())) {
-                                tc->m_fileName = font.first.c_str();
-                            }
-                        }
-                        ImGui::EndCombo();
-                    }
+
                     ImVec4 color = ImVec4(tc->m_color.m_x, tc->m_color.m_y, tc->m_color.m_z, 255.0f / 255.0f);
 
                     ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
@@ -404,6 +400,40 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         tc->m_color.m_x = color.x;
                         tc->m_color.m_y = color.y;
                         tc->m_color.m_z = color.z;
+                    }
+                    if (ImGui::BeginCombo("Fonts", tc->m_fileName.c_str()))
+                    {
+                        for (const auto& font : Asset->m_fontManager.m_fonts) {
+                            if (font.first.empty())continue;
+                            if (ImGui::Selectable(font.first.c_str())) {
+                                tc->m_fileName = font.first.c_str();
+                            }
+                        }
+                        ImGui::EndCombo();
+                    }
+                    if (ImGui::BeginDragDropTarget())
+                    {
+
+                        if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("file"))
+                        {
+                            IM_ASSERT(payload->DataSize == sizeof(std::filesystem::path));
+                            std::filesystem::path* filename = static_cast<std::filesystem::path*>(payload->Data);
+                            if (filename->filename().extension().string() == ".ttf") {
+                                if (Asset->m_fontManager.m_fonts.find(filename->filename().string()) == Asset->m_fontManager.m_fonts.end()) {
+                                    LOGGING_WARN("File not loaded, please reload content browser");
+                                }
+                                else {
+                                    tc->m_fileName = filename->filename().string();
+                                }
+                            }
+                            else {
+                                LOGGING_WARN("Wrong File Type");
+                            }
+
+
+
+                        }
+                        ImGui::EndDragDropTarget();
                     }
                 }
 
@@ -477,9 +507,6 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                         if (filename->filename().extension().string() == ".png") {
 
-
-
-
                             if (!EntitySignature.test(ecs::TYPESPRITECOMPONENT)) {// does not have sprite component, create one
                                 ecs::SpriteComponent* com = static_cast<ecs::SpriteComponent*>(ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, entityID));
                                 com->m_imageFile = filename->filename().string();
@@ -490,7 +517,17 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             }
                         }
 
+                        if (filename->filename().extension().string() == ".ttf") {
 
+                            if (!EntitySignature.test(ecs::TYPETEXTCOMPONENT)) {// does not have sprite component, create one
+                                ecs::TextComponent* com = static_cast<ecs::TextComponent*>(ecs->m_AddComponent(ecs::TYPETEXTCOMPONENT, entityID));
+                                com->m_fileName = filename->filename().string();
+                            }
+                            else {
+                                auto* sc = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(entityID));
+                                sc->m_fileName = filename->filename().string();
+                            }
+                        }
 
                     }
                     ImGui::EndDragDropTarget();
