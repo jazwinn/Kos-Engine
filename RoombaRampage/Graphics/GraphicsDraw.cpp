@@ -59,7 +59,7 @@ namespace graphicpipe
 
 	void GraphicsPipe::m_funcDrawDebug()
 	{
-		if (!m_debugToNDCMatrix.empty())
+		if (!m_debugBoxToNDCMatrix.empty())
 		{
 			glBindBuffer(GL_ARRAY_BUFFER, m_debugCollisionCheckBuffer);
 			glNamedBufferData(m_debugCollisionCheckBuffer, m_debugBoxCollisionChecks.size() * sizeof(float), &m_debugBoxCollisionChecks[0], GL_DYNAMIC_DRAW);
@@ -67,11 +67,29 @@ namespace graphicpipe
 			glUseProgram(m_debugShaderProgram);
 
 			glBindBuffer(GL_ARRAY_BUFFER, m_debugMatrixArrayBuffer);
-			glNamedBufferData(m_debugMatrixArrayBuffer, m_debugToNDCMatrix.size() * sizeof(glm::mat3), &m_debugToNDCMatrix[0], GL_DYNAMIC_DRAW);
+			glNamedBufferData(m_debugMatrixArrayBuffer, m_debugBoxToNDCMatrix.size() * sizeof(glm::mat3), &m_debugBoxToNDCMatrix[0], GL_DYNAMIC_DRAW);
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 			glBindVertexArray(m_squareLinesMesh.m_vaoId);
-			glDrawElementsInstanced(m_squareLinesMesh.m_primitiveType, m_squareLinesMesh.m_indexElementCount, GL_UNSIGNED_SHORT, NULL, static_cast<GLsizei>(m_debugToNDCMatrix.size()));
+			glDrawElementsInstanced(m_squareLinesMesh.m_primitiveType, m_squareLinesMesh.m_indexElementCount, GL_UNSIGNED_SHORT, NULL, static_cast<GLsizei>(m_debugBoxToNDCMatrix.size()));
+			glBindVertexArray(0);
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+			
+		}
+		if (!m_debugCircleToNDCMatrix.empty())
+		{
+			glBindBuffer(GL_ARRAY_BUFFER, m_debugCollisionCheckBuffer);
+			glNamedBufferData(m_debugCollisionCheckBuffer, m_debugCircleCollisionChecks.size() * sizeof(float), &m_debugCircleCollisionChecks[0], GL_DYNAMIC_DRAW);
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+			glUseProgram(m_debugShaderProgram);
+
+			glBindBuffer(GL_ARRAY_BUFFER, m_debugMatrixArrayBuffer);
+			glNamedBufferData(m_debugMatrixArrayBuffer, m_debugCircleToNDCMatrix.size() * sizeof(glm::mat3), &m_debugCircleToNDCMatrix[0], GL_DYNAMIC_DRAW);
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+			glBindVertexArray(m_circleLinesMesh.m_vaoId);
+			glDrawElementsInstanced(m_circleLinesMesh.m_primitiveType, m_circleLinesMesh.m_indexElementCount, GL_UNSIGNED_SHORT, NULL, static_cast<GLsizei>(m_debugCircleToNDCMatrix.size()));
 			glBindVertexArray(0);
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
 		}

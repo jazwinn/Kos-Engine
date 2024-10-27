@@ -91,7 +91,7 @@ namespace ecs {
 					graphicsPipe->m_debugBoxData.push_back({ glm::mat3{debugTransformation.m_e00,debugTransformation.m_e01,debugTransformation.m_e02,
 																	debugTransformation.m_e10,debugTransformation.m_e11, debugTransformation.m_e12,
 																debugTransformation.m_e20, debugTransformation.m_e21, debugTransformation.m_e22} ,
-															collider->m_isCollided, 0 });
+															collider->m_isCollided, 1 });
 				}
 			}
 

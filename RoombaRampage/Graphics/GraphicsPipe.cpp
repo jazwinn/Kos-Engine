@@ -44,8 +44,6 @@ namespace graphicpipe {
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glLineWidth(4.f);
-
-		m_squareMesh.m_shapeType = SQUARE;
 		m_squareLinesMesh.m_shapeType = SQUARE_LINES;
 		m_testMatrix = { 1, 0, 0, 0, 1, 0, 0, 0, 1 };
 
@@ -54,13 +52,14 @@ namespace graphicpipe {
 		m_debugBoxData.reserve(ecs::MaxEntity);
 		m_textData.reserve(ecs::MaxEntity);
 		m_modelToNDCMatrix.reserve(ecs::MaxEntity);
-		m_debugToNDCMatrix.reserve(ecs::MaxEntity);
+		m_debugBoxToNDCMatrix.reserve(ecs::MaxEntity);
 		m_debugBoxCollisionChecks.reserve(ecs::MaxEntity);
 		m_frameNumbers.reserve(ecs::MaxEntity);
 		m_stripCounts.reserve(ecs::MaxEntity);
 
 		// Set up VAOs for different shapes and text rendering.
 		m_funcSetupVao(m_squareMesh);
+		m_funcSetupCircleLinesVao();
 		m_funcSetupSquareLinesVao();
 		m_funcSetupFboVao();
 		m_funcSetupTextVao();
@@ -77,7 +76,7 @@ namespace graphicpipe {
 		m_textureOrder.push_back(0);
 		m_frameNumbers.push_back(0);
 		m_stripCounts.push_back(0);
-		m_debugToNDCMatrix.push_back(m_testMatrix);
+		m_debugBoxToNDCMatrix.push_back(m_testMatrix);
 		m_debugBoxCollisionChecks.push_back(false);
 
 		// Set up array buffer and framebuffers for offscreen rendering.
@@ -86,7 +85,7 @@ namespace graphicpipe {
 		m_funcSetupGamePreviewFrameBuffer();
 
 		// Clear temporary data structures used during setup.
-		m_debugToNDCMatrix.clear();
+		m_debugBoxToNDCMatrix.clear();
 		m_debugBoxCollisionChecks.clear();
 		m_modelToNDCMatrix.clear();
 		m_textureOrder.clear();
@@ -146,8 +145,10 @@ namespace graphicpipe {
 		m_stripCounts.clear();
 		m_modelMatrix.clear();
 		m_modelData.clear();
-		m_debugToNDCMatrix.clear();
+		m_debugBoxToNDCMatrix.clear();
 		m_debugBoxCollisionChecks.clear();
+		m_debugCircleToNDCMatrix.clear();
+		m_debugCircleCollisionChecks.clear();
 		m_debugBoxData.clear();
 		GraphicsCamera::m_cameras.clear();
 		

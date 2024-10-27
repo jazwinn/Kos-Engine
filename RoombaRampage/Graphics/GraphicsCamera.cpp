@@ -77,7 +77,12 @@ namespace graphicpipe
 			matrix = ortho * matrix;
 		}
 
-		for (glm::mat3& debugMatrix : pipe->m_debugToNDCMatrix)
+		for (glm::mat3& debugMatrix : pipe->m_debugBoxToNDCMatrix)
+		{
+			debugMatrix = ortho * debugMatrix;
+		}
+
+		for (glm::mat3& debugMatrix : pipe->m_debugCircleToNDCMatrix)
 		{
 			debugMatrix = ortho * debugMatrix;
 		}
@@ -95,10 +100,15 @@ namespace graphicpipe
 		{
 			pipe->m_modelToNDCMatrix.push_back(m_currViewMatrix * matrix);
 		}
-		for (glm::mat3& debugMatrix : pipe->m_debugToNDCMatrix)
+		for (glm::mat3& debugMatrix : pipe->m_debugBoxToNDCMatrix)
 		{
 			debugMatrix = m_currViewMatrix * debugMatrix;
 		}
+		for (glm::mat3& debugMatrix : pipe->m_debugCircleToNDCMatrix)
+		{
+			debugMatrix = m_currViewMatrix * debugMatrix;
+		}
+
 	
 	}
 	
