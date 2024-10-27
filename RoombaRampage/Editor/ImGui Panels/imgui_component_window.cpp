@@ -36,7 +36,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include<vector>
 #include<string>
 #include <iostream>
-#include "../De&Serialization/json_handler.h"
+#include <filesystem>
 
 
 static const float slider_start_pos_x = 150.0f; //Padding for the slider
@@ -161,6 +161,8 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
     ImGui::Begin(windowTitle.c_str(), &windowOpen);
 
+    
+
     //Add Component Window
     const char* ComponentNames[] =
     {
@@ -279,6 +281,26 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             }
                         }
                         ImGui::EndCombo();
+                    }
+
+                    if (ImGui::BeginDragDropTarget())
+                    {
+
+                        if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("file"))
+                        {
+                            IM_ASSERT(payload->DataSize == sizeof(std::filesystem::path));
+                            std::filesystem::path* filename = static_cast<std::filesystem::path*>(payload->Data);
+                            
+                            if (Asset->m_imageManager.m_imageMap.find(filename->filename().string()) == Asset->m_imageManager.m_imageMap.end()) {
+                                LOGGING_WARN("File not loaded, please reload content browser");
+                            }
+                            else {
+                                sc->m_imageFile = filename->filename().string();
+                            }
+                            
+
+                        }
+                        ImGui::EndDragDropTarget();
                     }
                 }
 
@@ -441,7 +463,39 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
             }
 
- 
+            //draw invinsible box
+            {
+                ImGui::InvisibleButton("##Invinsible", ImVec2{ ImGui::GetContentRegionAvail().x,ImGui::GetContentRegionAvail().y });
+
+                if (ImGui::BeginDragDropTarget())
+                {
+
+                    if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("file"))
+                    {
+                        IM_ASSERT(payload->DataSize == sizeof(std::filesystem::path));
+                        std::filesystem::path* filename = static_cast<std::filesystem::path*>(payload->Data);
+
+                        if (filename->filename().extension().string() == ".png") {
+
+
+
+
+                            if (!EntitySignature.test(ecs::TYPESPRITECOMPONENT)) {// does not have sprite component, create one
+                                ecs::SpriteComponent* com = static_cast<ecs::SpriteComponent*>(ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, entityID));
+                                com->m_imageFile = filename->filename().string();
+                            }
+                            else {
+                                auto* sc = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(entityID));
+                                sc->m_imageFile = filename->filename().string();
+                            }
+                        }
+
+
+
+                    }
+                    ImGui::EndDragDropTarget();
+                }
+            }
         }
 
      }

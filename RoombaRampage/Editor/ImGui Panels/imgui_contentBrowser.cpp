@@ -99,8 +99,8 @@ namespace gui {
 						}
 					}
 					else if (directoryPath.path().filename().extension().string() == ".wav") {
-						std::string fileName = "Audiowav.png";
-						textorimage(directoryString, fileName);
+						std::string wavicon = "Audiowav.png";
+						textorimage(directoryString, wavicon);
 
 						if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
 
@@ -110,6 +110,14 @@ namespace gui {
 					else if (ImGui::Button(directoryString.c_str(), { thumbnail ,thumbnail })) {
 
 
+					}
+
+					if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None)) {
+						static std::filesystem::path filepath;
+						filepath = directoryPath.path();
+						ImGui::SetDragDropPayload("file", &filepath, sizeof(std::filesystem::path));
+						ImGui::Text(filepath.string().c_str());
+						ImGui::EndDragDropSource();
 					}
 				}
 
