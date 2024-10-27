@@ -1,60 +1,32 @@
 [
     {
-        "name": "Wall",
+        "name": "dwa",
         "transform": {
             "position": {
-                "x": -0.8954546451568604,
-                "y": -0.018181800842285156
-            },
-            "rotation": 0.0,
-            "scale": {
-                "x": 2.0,
-                "y": 2.0
-            }
-        },
-        "collider": {
-            "size": {
-                "x": 0.6399999856948853,
-                "y": 0.6200000047683716
-            },
-            "offset": {
                 "x": 0.0,
                 "y": 0.0
             },
-            "drawDebug": true
+            "rotation": -61.0,
+            "scale": {
+                "x": 3.0,
+                "y": 3.0
+            }
         },
-        "sprite": {
-            "imageID": 1,
-            "frameNumber": 0
-        }
+        "camera": {}
     },
     {
-        "name": "Wall",
+        "name": "dwa",
         "transform": {
             "position": {
-                "x": 0.9863634705543518,
-                "y": -0.009090904146432877
-            },
-            "rotation": 0.0,
-            "scale": {
-                "x": 2.0,
-                "y": 2.0
-            }
-        },
-        "collider": {
-            "size": {
-                "x": 0.6399999856948853,
-                "y": 0.6200000047683716
-            },
-            "offset": {
                 "x": 0.0,
                 "y": 0.0
             },
-            "drawDebug": true
+            "rotation": -61.0,
+            "scale": {
+                "x": 3.0,
+                "y": 3.0
+            }
         },
-        "sprite": {
-            "imageID": 1,
-            "frameNumber": 0
-        }
+        "camera": {}
     }
 ]

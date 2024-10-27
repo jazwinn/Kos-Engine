@@ -25,10 +25,12 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../../De&Serialization/json_handler.h"
 #include "../Asset Manager/AssetManager.h"
 #include "../Debugging/Logging.h"
+#include "../Asset Manager/SceneManager.h"
 
 #include<vector>
 #include<string>
 #include <iostream>
+#include <filesystem>
 
 //Testing purposes! this are the three files needed!
 #include <mono/jit/jit.h>
@@ -40,7 +42,8 @@ namespace gui {
     {
         //fetch ecs
         ecs::ECS* ecs = ecs::ECS::m_GetInstance();
-
+        scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();
+        assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
         // Custom window with example widgets
         bool open = true;
         ImGui::Begin("Hierachy Window", &open, ImGuiWindowFlags_MenuBar);
@@ -50,7 +53,7 @@ namespace gui {
 
             if (ImGui::BeginMenu("Prefabs"))
             {
-                assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+                
                 if (assetmanager->m_prefabs.size() > 0) {
                     for (auto prefab : assetmanager->m_prefabs) {
 
@@ -85,7 +88,8 @@ namespace gui {
             {
 
                 //create ID then push into vector
-                ecs::EntityID newEntityID = ecs->m_CreateEntity();
+                // assign to the top most scene
+                ecs::EntityID newEntityID = ecs->m_CreateEntity(ecs->m_ECS_SceneMap.begin()->first);
 
                 //set new ID to be clicked
                 m_clickedEntityId = newEntityID;
@@ -102,20 +106,60 @@ namespace gui {
         }
 
 
-        for (std::unordered_map<ecs::EntityID, ecs::compSignature>::iterator entity = ecs->m_ECS_EntityMap.begin(); entity != ecs->m_ECS_EntityMap.end(); entity++ ) {
-
-            //draw parent entity node
-            //draw entity with no parents hahaha
-            if (!ecs::Hierachy::m_GetParent(entity->first).has_value()) {
-                if (m_DrawEntityNode(entity->first) == false) {
-                    //delete is called
-                    break;
+        for (const auto& sceneentity : ecs->m_ECS_SceneMap) {
+            const auto& str = sceneentity.first.find_last_of('.');
+            //collapsing header for scene
+            bool open = ImGui::CollapsingHeader(sceneentity.first.substr(0, str).c_str());
+            if (ImGui::BeginPopupContextItem()) {
+                if (ImGui::MenuItem("Unload Scene")) {
+                    scenemanager->m_ClearScene(sceneentity.first);
                 }
+
+                if (ImGui::MenuItem("Save Scene")) {
+                    scenemanager->m_SaveScene(sceneentity.first);
+                }
+
+                ImGui::EndPopup();
             }
+            if (ImGui::BeginDragDropTarget())
+            {
+
+                if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Entity"))
+                {
+                    IM_ASSERT(payload->DataSize == sizeof(ecs::EntityID));
+                    ecs::EntityID Id = *static_cast<ecs::EntityID*>(payload->Data);
+                    const auto& scene = scenemanager->GetSceneByEntityID(Id);
+
+                    if (scene.has_value()) {
+                        scenemanager->m_SwapScenes(scene.value(), sceneentity.first, Id);
+                    }
+                    
+
+                }
+                ImGui::EndDragDropTarget();
+            }
+
+            if (open) {
+
+
+                for (auto entity : sceneentity.second) {
+                    //draw parent entity node
+                    //draw entity with no parents hahaha
+                    if (!ecs::Hierachy::m_GetParent(entity).has_value()) {
+                        if (m_DrawEntityNode(entity) == false) {
+                            //delete is called
+                            break;
+                        }
+                    }
+                }
+            }      
+        }
+
+
            
 
-        }
-        ImGui::InvisibleButton("test", ImVec2{ ImGui::GetContentRegionAvail().x,ImGui::GetContentRegionAvail().y });
+    
+        ImGui::InvisibleButton("#invbut", ImVec2{ ImGui::GetContentRegionAvail().x,ImGui::GetContentRegionAvail().y });
         if (ImGui::BeginDragDropTarget())
         {
             
@@ -125,6 +169,22 @@ namespace gui {
                 ecs::EntityID Id = *static_cast<ecs::EntityID*>(payload->Data);
                 ecs::Hierachy::m_RemoveParent(Id);
 
+
+            }
+
+            if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("file"))
+            {
+                IM_ASSERT(payload->DataSize == sizeof(std::filesystem::path));
+                std::filesystem::path* filename = static_cast<std::filesystem::path*>(payload->Data);
+
+
+                if (filename->filename().extension().string() == ".json") {
+                    scenemanager->m_LoadScene(*filename);
+                }
+                else {
+                    LOGGING_WARN("Wrong Type");
+                }
+                
 
             }
             ImGui::EndDragDropTarget();

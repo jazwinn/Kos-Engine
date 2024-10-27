@@ -3,20 +3,13 @@
         "name": "Player Object",
         "transform": {
             "position": {
-                "x": 0.0,
-                "y": 0.13333380222320557
+                "x": -1.35722815990448,
+                "y": 0.019115924835205078
             },
             "rotation": 0.0,
             "scale": {
                 "x": 1.0,
                 "y": 1.0
-            }
-        },
-        "movement": {
-            "speed": 1.0,
-            "direction": {
-                "x": 0.0,
-                "y": 0.0
             }
         },
         "collider": {
@@ -36,9 +29,6 @@
         "rigidbody": {
             "mass": 0.0
         },
-        "sprite": {
-            "imageID": 4,
-            "frameNumber": 0
-        }
+        "sprite": {}
     }
 ]

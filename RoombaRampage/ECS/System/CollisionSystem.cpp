@@ -114,6 +114,18 @@ namespace ecs {
 
 			vector2::Vec2 position{ TransComp->m_transformation.m_e20,TransComp->m_transformation.m_e21 };
 
+			//if (TransComp->m_haveParent) {
+			//	EntityID parentID = ecs::Hierachy::m_GetParent(TransComp->m_Entity).value();
+			//	//retrieve paretn transforamtion
+			//	TransformComponent* rigidComp = static_cast<TransformComponent*>(ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id));
+
+
+			//	mat3x3::Mat3x3 transform = mat3x3::Mat3Transform(position, scale, rotation);
+			//	transform = rigidComp->m_transformation * transform;
+
+			//	mat3x3::Mat3Decompose(transform, position, scale, rotation);
+			//}
+
 			if (ColComp->m_type == physicspipe::EntityType::CIRCLE) {
 				PhysicsPipeline.m_SendPhysicsData(ColComp->m_radius, TransComp->m_position + ColComp->m_OffSet, ColComp->m_Size, velocity, id, NameComp->m_Layer);
 			}

@@ -101,8 +101,9 @@ namespace Application {
             LOAD ENTITIES INTO ECS & IMGUI
         --------------------------------------------------------------*/
         scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();
-        //scenemanager->m_AddScene("./RoombaRampage/Json/Scene1.json");
-        //scenemanager->m_LoadScene("Scene1");
+        scenemanager->m_LoadScene("../RoombaRampage/Assets/Scene/Scene1.json"); // replace with opening up window dialog
+        
+        ////scenemanager->m_LoadScene("Scene1");
 
         
 
