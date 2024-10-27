@@ -136,6 +136,9 @@ namespace Application {
         ecs::ECS* ecs = ecs::ECS::m_GetInstance();
         float FPSCapTime = 1.f / help->m_fpsCap;
         double lastFrameTime = glfwGetTime();
+        const double fixedDeltaTime = 1.0 / 60.0;
+        help->m_fixedDeltaTime = fixedDeltaTime;
+        double accumulatedTime = 0.0;
 
         /****************************************************************************************/
         //SAMPLE TO REMOVE
@@ -162,10 +165,25 @@ namespace Application {
                 /* Poll for and process events */
                 glfwPollEvents();
 
+                ///*--------------------------------------------------------------
+                //    Calculate time
+                // --------------------------------------------------------------*/
+                double currentFrameTime = glfwGetTime();
+                help->m_deltaTime = currentFrameTime - lastFrameTime;
+                lastFrameTime = currentFrameTime;
+
+                accumulatedTime += help->m_deltaTime;
+                Helper::Helpers::GetInstance()->currentNumberOfSteps = 0;
+                while (accumulatedTime >= fixedDeltaTime) {
+                    accumulatedTime -= fixedDeltaTime;
+                    ++help->currentNumberOfSteps;
+                }
+
                 /*--------------------------------------------------------------
                     UPDATE ECS
                 --------------------------------------------------------------*/
-                ecs->m_Update(Helper::Helpers::GetInstance()->m_deltaTime);
+                ecs->m_Update(help->m_fixedDeltaTime); 
+                //ecs->m_Update(Helper::Helpers::GetInstance()->m_deltaTime);
 
                 /*--------------------------------------------------------------
                     UPDATE Render Pipeline
@@ -188,18 +206,16 @@ namespace Application {
                 pipe->m_funcRenderGameScene();
 
 
-                /*--------------------------------------------------------------
-                    Calculate time
-                 --------------------------------------------------------------*/
-                double currentFrameTime = glfwGetTime();
-                help->m_deltaTime = static_cast<float>(currentFrameTime - lastFrameTime);
 
-                while (help->m_deltaTime < FPSCapTime) {
-                    lastFrameTime = currentFrameTime;
-                    currentFrameTime = glfwGetTime();
-                    help->m_deltaTime += static_cast<float>(currentFrameTime - lastFrameTime);
-                }
-                lastFrameTime = glfwGetTime();
+                //double currentFrameTime = glfwGetTime();
+                //help->m_deltaTime = static_cast<float>(currentFrameTime - lastFrameTime);
+
+                //while (help->m_deltaTime < FPSCapTime) {
+                //    lastFrameTime = currentFrameTime;
+                //    currentFrameTime = glfwGetTime();
+                //    help->m_deltaTime += static_cast<float>(currentFrameTime - lastFrameTime);
+                //}
+                //lastFrameTime = glfwGetTime();
                 help->m_fps = 1.f / help->m_deltaTime;
 
                 glfwSwapBuffers(lvWindow.m_window);
