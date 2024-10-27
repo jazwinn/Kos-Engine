@@ -150,6 +150,7 @@ namespace graphicpipe {
 		m_debugCircleToNDCMatrix.clear();
 		m_debugCircleCollisionChecks.clear();
 		m_debugBoxData.clear();
+		m_textData.clear();
 		GraphicsCamera::m_cameras.clear();
 		
 	}

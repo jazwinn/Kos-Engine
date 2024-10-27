@@ -135,18 +135,30 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
             IM_ASSERT(payload->DataSize == sizeof(std::filesystem::path));
             std::filesystem::path* filename = static_cast<std::filesystem::path*>(payload->Data);
 
-            float screencordX = ImGui::GetMousePos().x - ImGui::GetCursorScreenPos().x;
-            float screencordY = ImGui::GetMousePos().y - ImGui::GetCursorScreenPos().y;
+            float screencordX = ImGui::GetMousePos().x - pos.x;
+            float screencordY = ImGui::GetMousePos().y - pos.y;
+
+            std::cout << ImGui::GetMousePos().x << std::endl;
+            std::cout << ImGui::GetCursorScreenPos().x<< std::endl;
+            std::cout << ImGui::GetMousePos().y << std::endl;
+            std::cout << ImGui::GetCursorScreenPos().y << std::endl;
+
 
             //TODO calculate mouse pos correctly
-            float cordX = (screencordX - renderWindowSize.x / 2.f) / (renderWindowSize.x / 2.f);
-            float cordY = (std::abs(screencordY) - renderWindowSize.y / 2.f) / (renderWindowSize.y / 2.f);
+            float cordX = (screencordX - imageSize.x / 2.f) / (imageSize.x / 2.f);
+            float cordY = (std::abs(screencordY) - imageSize.y / 2.f) / (imageSize.y / 2.f);
+
+            glm::vec3 translate = { cordX , -cordY, 0.f };
+            translate.x *= graphicpipe::GraphicsCamera::m_currCameraMatrix[0][0];
+            translate.y *= graphicpipe::GraphicsCamera::m_currCameraMatrix[1][1];
+            translate.x *= 1.f / graphicpipe::GraphicsCamera::m_aspectRatio;
 
             if (filename->filename().extension().string() == ".png") {
              ecs::ECS* ecs = ecs::ECS::m_GetInstance();
                 ecs::EntityID id = ecs->m_CreateEntity();
                 ecs::TransformComponent* transCom = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id));
-                transCom->m_position = { cordX, cordY };
+                transCom->m_position = { translate.x, translate.y };
+                // Insert matrix
                 ecs::NameComponent* nameCom = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id));
                 nameCom->m_entityName = filename->filename().stem().string();
                 ecs::SpriteComponent * spriteCom = static_cast<ecs::SpriteComponent*>(ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, id));
@@ -158,7 +170,8 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
                 ecs::ECS* ecs = ecs::ECS::m_GetInstance();
                 ecs::EntityID id = ecs->m_CreateEntity();
                 ecs::TransformComponent* transCom = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id));
-                transCom->m_position = { cordX, cordY };
+                transCom->m_position = { translate.x, translate.y };
+                // Insert matrix
                 ecs::NameComponent* nameCom = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id));
                 nameCom->m_entityName = filename->filename().stem().string();
                 ecs::TextComponent* textCom = static_cast<ecs::TextComponent*>(ecs->m_AddComponent(ecs::TYPETEXTCOMPONENT, id));
