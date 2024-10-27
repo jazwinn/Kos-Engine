@@ -78,24 +78,22 @@ namespace ecs {
 
 		for (int n{}; n < m_vecTextComponentPtr.size(); n++) {
 
-			TransformComponent* transform = m_vecTransformComponentPtr[n];
-			TextComponent* text = m_vecTextComponentPtr[n];
 
 			//std::cout << "Update Entity: " << n << std::endl;
 			//sprite not need currently
 			//SpriteComponent* MovComp = vecSpriteComponentPtr[n];
-			if (assetmanager->m_fontManager.m_fonts.find(text->m_fileName) == assetmanager->m_fontManager.m_fonts.end()) continue;
-
-			float red = text->m_red;
-			float green = text->m_green;
-			float blue = text->m_blue;
+			TransformComponent* transform = m_vecTransformComponentPtr[n];
+			TextComponent* text = m_vecTextComponentPtr[n];
+			float red = text->m_color.m_x;
+			float green = text->m_color.m_y;
+			float blue = text->m_color.m_z;
 
 			float windowCordianteX = (transform->m_position.m_x + 1) / 2 * help->m_windowWidth;
 			float windowCordianteY = (transform->m_position.m_y + 1) / 2 * help->m_windowHeight;
 
 			
 
-			graphicsPipe->m_textData.push_back(graphicpipe::TextData{ text->m_text,  windowCordianteX , windowCordianteY, text->m_fontSize, {red, green, blue }, text->m_fileName});
+			graphicsPipe->m_textData.push_back(graphicpipe::TextData{ text->m_text,  windowCordianteX ,windowCordianteY, text->m_fontSize, {red, green, blue }, text->m_fileName});
 			//m_funcDrawText("(C) LearnOpenGL.com", 540.0f, 570.0f, 0.5f, glm::vec3(0.3, 0.7f, 0.9f));
 
 		}

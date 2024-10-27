@@ -18,7 +18,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 #include "../ECS/Component/ComponentList.h"
 #include "../ECS/ECSList.h"
-#include "../Dependencies/rapidjson/document.h"  // Include rapidjson for serialization
+#include "../Asset Manager/Reflection.h"
 
 
 namespace ecs {
@@ -37,6 +37,7 @@ namespace ecs {
 
 		//Store Entity ID
 		EntityID m_Entity{};
+
 	};
 
 }

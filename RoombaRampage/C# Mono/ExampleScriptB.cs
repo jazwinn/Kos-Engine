@@ -1,9 +1,29 @@
-public class ExampleScriptB
-{
-    //MUST ALWAYS USE STATIC VOID! IF NOT THEY CANT DETECT!
+using System;
 
-    public static void PrintB()
+namespace Namespace
+{
+    public class ExampleScriptB : ScriptBase
     {
-        System.Console.WriteLine("C# is calling from SCRIPT B");
+        public int EntityID { get; set; }
+
+        public override void Start()
+        {
+            base.Start();
+
+            TransformComponent transform = GetTransformComponent();
+            if (transform != null)
+            {
+                Console.WriteLine($"Transform Position - X: {transform.m_position.x}, Y: {transform.m_position.y}");
+            }
+            else
+            {
+                Console.WriteLine("TransformComponent is null.");
+            }
+        }
+
+        public override void Update()
+        {
+            base.Update();
+        }
     }
 }

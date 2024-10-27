@@ -24,6 +24,8 @@ namespace physicspipe {
 	std::vector<std::shared_ptr<PhysicsData>> Physics::m_physicsEntities;
 	std::vector<std::shared_ptr<PhysicsData>> Physics::m_collidedEntities;
 	std::map<layer::LAYERS, std::vector<std::shared_ptr<PhysicsData>>> Physics::m_layerToEntities;
+	std::unique_ptr<Physics> Physics::instance = nullptr;
+
 	physicslayer::PhysicsLayer* physicsLayer = physicslayer::PhysicsLayer::getInstance(); // Get the PhysicsLayer instance
 	std::vector<int> Physics::m_checker{};
 	//std::unordered_set <std::pair<std::shared_ptr<PhysicsData>, std::shared_ptr<PhysicsData>>, PairHash> Physics::checker;
@@ -367,10 +369,10 @@ namespace physicspipe {
 									<< entity2->m_ID << std::endl;
 
 								// Store or process the collided entities as needed.
-								if (std::find(m_collidedEntities.begin(), m_collidedEntities.end(), entity1) != m_collidedEntities.end()) {
+								if (std::find(m_collidedEntities.begin(), m_collidedEntities.end(), entity1) == m_collidedEntities.end()) {
 									m_collidedEntities.push_back(entity1);
 								}
-								if (std::find(m_collidedEntities.begin(), m_collidedEntities.end(), entity2) != m_collidedEntities.end()) {
+								if (std::find(m_collidedEntities.begin(), m_collidedEntities.end(), entity2) == m_collidedEntities.end()) {
 									m_collidedEntities.push_back(entity2);
 								}
 							}

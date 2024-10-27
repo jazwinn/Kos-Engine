@@ -101,6 +101,7 @@ namespace gui {
 			// only render when window is not minimize
 			if (windowSize.x > 0 && windowSize.y > 0) {
 				m_DrawPerformanceWindow(help->m_fps);
+				m_DrawPlayPauseWindow();
 				m_DrawHierachyWindow();
 				m_DrawComponentWindow();
 				m_DrawLogsWindow();

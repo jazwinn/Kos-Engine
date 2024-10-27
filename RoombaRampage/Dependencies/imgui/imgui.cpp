@@ -155,7 +155,8 @@ CODE
      - Tab, SHIFT+Tab:              Cycle through every items.
      - Arrow keys                   Move through items using directional navigation. Tweak value.
      - Arrow keys + Alt, Shift      Tweak slower, tweak faster (when using arrow keys).
-     - Enter                        Activate item (prefer text input when possible).
+     - Enter                        Activate item (prefer text 
+     when possible).
      - Space                        Activate item (prefer tweaking with arrows when possible).
      - Escape                       Deactivate item, leave child window, close popup.
      - Page Up, Page Down           Previous page, next page.

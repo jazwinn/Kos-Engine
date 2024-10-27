@@ -36,144 +36,144 @@ namespace prefab {
         }
 
 
-        std::string fileContent((std::istreambuf_iterator<char>(inputFile)), std::istreambuf_iterator<char>());
-        inputFile.close();
+        //std::string fileContent((std::istreambuf_iterator<char>(inputFile)), std::istreambuf_iterator<char>());
+        //inputFile.close();
 
-        // Parse the JSON content
-        rapidjson::Document doc;
-        doc.Parse(fileContent.c_str());
-        assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+        //// Parse the JSON content
+        //rapidjson::Document doc;
+        //doc.Parse(fileContent.c_str());
+        //assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
 
-        for (rapidjson::SizeType i = 0; i < doc.Size(); i++) {
-            const rapidjson::Value& prefabData = doc[i];
-            
-            Prefab prefab;
+        //for (rapidjson::SizeType i = 0; i < doc.Size(); i++) {
+        //    const rapidjson::Value& prefabData = doc[i];
+        //    
+        //    Prefab prefab;
 
-            if (prefabData.HasMember("name") && prefabData["name"].IsString()) {
-                prefab.m_nameComponents.m_entityName = prefabData["name"].GetString();  // Store the name
-                if (prefab.m_nameComponents.m_entityName.empty()) {
-                    prefab.m_nameComponents.m_entityName = "OBJECT";
-                }
-            }
-            
-            if (prefabData.HasMember("transform") && prefabData["transform"].IsObject()) {
-                //set bitflag
-                prefab.m_prefabSignature.set(ecs::TYPETRANSFORMCOMPONENT);
+        //    if (prefabData.HasMember("name") && prefabData["name"].IsString()) {
+        //        prefab.m_nameComponents.m_entityName = prefabData["name"].GetString();  // Store the name
+        //        if (prefab.m_nameComponents.m_entityName.empty()) {
+        //            prefab.m_nameComponents.m_entityName = "OBJECT";
+        //        }
+        //    }
+        //    
+        //    if (prefabData.HasMember("transform") && prefabData["transform"].IsObject()) {
+        //        //set bitflag
+        //        prefab.m_prefabSignature.set(ecs::TYPETRANSFORMCOMPONENT);
 
-                const rapidjson::Value& transform = prefabData["transform"];
-                if (transform.HasMember("position") && transform["position"].IsObject()) {
-                    prefab.m_transformComponents.m_position.m_x = transform["position"]["x"].GetFloat();
-                    prefab.m_transformComponents.m_position.m_y = transform["position"]["y"].GetFloat();
-                }
-                if (transform.HasMember("rotation")) {
-                    prefab.m_transformComponents.m_rotation = transform["rotation"].GetFloat();
-                }
-                if (transform.HasMember("scale") && transform["scale"].IsObject()) {
-                    prefab.m_transformComponents.m_scale.m_x = transform["scale"]["x"].GetFloat();
-                    prefab.m_transformComponents.m_scale.m_y = transform["scale"]["y"].GetFloat();
-                }
+        //        const rapidjson::Value& transform = prefabData["transform"];
+        //        if (transform.HasMember("position") && transform["position"].IsObject()) {
+        //            prefab.m_transformComponents.m_position.m_x = transform["position"]["x"].GetFloat();
+        //            prefab.m_transformComponents.m_position.m_y = transform["position"]["y"].GetFloat();
+        //        }
+        //        if (transform.HasMember("rotation")) {
+        //            prefab.m_transformComponents.m_rotation = transform["rotation"].GetFloat();
+        //        }
+        //        if (transform.HasMember("scale") && transform["scale"].IsObject()) {
+        //            prefab.m_transformComponents.m_scale.m_x = transform["scale"]["x"].GetFloat();
+        //            prefab.m_transformComponents.m_scale.m_y = transform["scale"]["y"].GetFloat();
+        //        }
 
-            }
+        //    }
 
 
 
-            if (prefabData.HasMember("collider") && prefabData["collider"].IsObject()) {
+        //    if (prefabData.HasMember("collider") && prefabData["collider"].IsObject()) {
 
-                prefab.m_prefabSignature.set(ecs::TYPECOLLIDERCOMPONENT);
+        //        prefab.m_prefabSignature.set(ecs::TYPECOLLIDERCOMPONENT);
 
-                 const rapidjson::Value& collider = prefabData["collider"];
-                if (collider.HasMember("size") && collider["size"].IsObject()) {
-                    prefab.m_colliderComponents.m_Size.m_x = collider["size"]["x"].GetFloat();
-                    prefab.m_colliderComponents.m_Size.m_y = collider["size"]["y"].GetFloat();
-                }
-                if (collider.HasMember("offset") && collider["offset"].IsObject()) {
-                    prefab.m_colliderComponents.m_OffSet.m_x = collider["offset"]["x"].GetFloat();
-                    prefab.m_colliderComponents.m_OffSet.m_y = collider["offset"]["y"].GetFloat();
-                }
-                //if (collider.HasMember("layer")) {
-                //    prefab.m_colliderComponents.m_Layer = collider["layer"].GetUint();
-                //}
-                if (collider.HasMember("drawDebug")) {
-                    prefab.m_colliderComponents.m_drawDebug = collider["drawDebug"].GetBool();
-                }
+        //         const rapidjson::Value& collider = prefabData["collider"];
+        //        if (collider.HasMember("size") && collider["size"].IsObject()) {
+        //            prefab.m_colliderComponents.m_Size.m_x = collider["size"]["x"].GetFloat();
+        //            prefab.m_colliderComponents.m_Size.m_y = collider["size"]["y"].GetFloat();
+        //        }
+        //        if (collider.HasMember("offset") && collider["offset"].IsObject()) {
+        //            prefab.m_colliderComponents.m_OffSet.m_x = collider["offset"]["x"].GetFloat();
+        //            prefab.m_colliderComponents.m_OffSet.m_y = collider["offset"]["y"].GetFloat();
+        //        }
+        //        //if (collider.HasMember("layer")) {
+        //        //    prefab.m_colliderComponents.m_Layer = collider["layer"].GetUint();
+        //        //}
+        //        if (collider.HasMember("drawDebug")) {
+        //            prefab.m_colliderComponents.m_drawDebug = collider["drawDebug"].GetBool();
+        //        }
 
-            }
+        //    }
 
-            if (prefabData.HasMember("player") && prefabData["player"].IsObject()) {
+        //    if (prefabData.HasMember("player") && prefabData["player"].IsObject()) {
 
-                prefab.m_prefabSignature.set(ecs::TYPEPLAYERCOMPONENT);
+        //        prefab.m_prefabSignature.set(ecs::TYPEPLAYERCOMPONENT);
 
-                const rapidjson::Value& player = prefabData["player"];
-                if (player.HasMember("control")) {
-                    prefab.m_playerComponents.m_Control = player["control"].GetBool();
-                }
+        //        const rapidjson::Value& player = prefabData["player"];
+        //        if (player.HasMember("control")) {
+        //            prefab.m_playerComponents.m_Control = player["control"].GetBool();
+        //        }
 
-            }
+        //    }
 
-            // Load RigidBody Component if it exists
-            if (prefabData.HasMember("rigidbody") && prefabData["rigidbody"].IsObject()) {
+        //    // Load RigidBody Component if it exists
+        //    if (prefabData.HasMember("rigidbody") && prefabData["rigidbody"].IsObject()) {
 
-                prefab.m_prefabSignature.set(ecs::TYPERIGIDBODYCOMPONENT);
+        //        prefab.m_prefabSignature.set(ecs::TYPERIGIDBODYCOMPONENT);
 
-                const rapidjson::Value& rigidbody = prefabData["rigidbody"];
-                if (rigidbody.HasMember("mass")) {
-                    prefab.m_rigidBodyComponents.m_Mass = rigidbody["mass"].GetFloat();
-                }
+        //        const rapidjson::Value& rigidbody = prefabData["rigidbody"];
+        //        if (rigidbody.HasMember("mass")) {
+        //            prefab.m_rigidBodyComponents.m_Mass = rigidbody["mass"].GetFloat();
+        //        }
 
-            }
+        //    }
 
-            // Load Sprite Component if it exists
-            if (prefabData.HasMember("sprite") && prefabData["sprite"].IsObject()) {
+        //    // Load Sprite Component if it exists
+        //    if (prefabData.HasMember("sprite") && prefabData["sprite"].IsObject()) {
 
-                prefab.m_prefabSignature.set(ecs::TYPESPRITECOMPONENT);
+        //        prefab.m_prefabSignature.set(ecs::TYPESPRITECOMPONENT);
 
-                const rapidjson::Value& sprite = prefabData["sprite"];
-                if (sprite.HasMember("imageID")) {
-                   
-                }
+        //        const rapidjson::Value& sprite = prefabData["sprite"];
+        //        if (sprite.HasMember("imageID")) {
+        //           
+        //        }
 
-                
-            }
+        //        
+        //    }
 
-            // Load text Component if it exists
-            if (prefabData.HasMember("text") && prefabData["text"].IsObject()) {
-                
-                prefab.m_prefabSignature.set(ecs::TYPETEXTCOMPONENT);
+        //    // Load text Component if it exists
+        //    if (prefabData.HasMember("text") && prefabData["text"].IsObject()) {
+        //        
+        //        prefab.m_prefabSignature.set(ecs::TYPETEXTCOMPONENT);
 
-                const rapidjson::Value& text = prefabData["text"];
-                if (text.HasMember("text")) {
-                    prefab.m_textComponent.m_text = text["text"].GetString();
-                }
-                if (text.HasMember("fontsize")) {
-                    prefab.m_textComponent.m_fontSize = text["fontsize"].GetFloat();
-                }
-                if (text.HasMember("colour")) {
-                    prefab.m_textComponent.m_red = text["colour"]["red"].GetFloat();
-                    prefab.m_textComponent.m_green = text["colour"]["green"].GetFloat();
-                    prefab.m_textComponent.m_blue = text["colour"]["blue"].GetFloat();
-                }
-                
-            }
+        //        const rapidjson::Value& text = prefabData["text"];
+        //        if (text.HasMember("text")) {
+        //            prefab.m_textComponent.m_text = text["text"].GetString();
+        //        }
+        //        if (text.HasMember("fontsize")) {
+        //            prefab.m_textComponent.m_fontSize = text["fontsize"].GetFloat();
+        //        }
+        //        if (text.HasMember("colour")) {
+        //            prefab.m_textComponent.m_red = text["colour"]["red"].GetFloat();
+        //            prefab.m_textComponent.m_green = text["colour"]["green"].GetFloat();
+        //            prefab.m_textComponent.m_blue = text["colour"]["blue"].GetFloat();
+        //        }
+        //        
+        //    }
 
-            if (prefabData.HasMember("animation") && prefabData["animation"].IsObject()) {
-                
-                prefab.m_prefabSignature.set(ecs::TYPEANIMATIONCOMPONENT);
-             
-                const rapidjson::Value& animation = prefabData["animation"];
-                if (animation.HasMember("frameTimer"))
-                {
-                    prefab.m_animationComponent.m_frameTimer = animation["frameTimer"].GetFloat();
-                }
-                if (animation.HasMember("isAnimating"))
-                {
-                    prefab.m_animationComponent.m_isAnimating = animation["isAnimating"].GetBool();
-                }
-                
-            }
+        //    if (prefabData.HasMember("animation") && prefabData["animation"].IsObject()) {
+        //        
+        //        prefab.m_prefabSignature.set(ecs::TYPEANIMATIONCOMPONENT);
+        //     
+        //        const rapidjson::Value& animation = prefabData["animation"];
+        //        if (animation.HasMember("frameTimer"))
+        //        {
+        //            prefab.m_animationComponent.m_frameTimer = animation["frameTimer"].GetFloat();
+        //        }
+        //        if (animation.HasMember("isAnimating"))
+        //        {
+        //            prefab.m_animationComponent.m_isAnimating = animation["isAnimating"].GetBool();
+        //        }
+        //        
+        //    }
 
-            
-            assetmanager->m_prefabs[prefab.m_nameComponents.m_entityName] = prefab;
-        }
+        //    
+        //    assetmanager->m_prefabs[prefab.m_nameComponents.m_entityName] = prefab;
+        //}
 
         LOGGING_INFO("Load Prefab Json Successful");
 

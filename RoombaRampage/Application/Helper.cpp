@@ -16,9 +16,9 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 /********************************************************************/
 #include "Helper.h"
 
+
 namespace Helper {
 	std::unique_ptr<Helpers> Helpers::InstancePtr = nullptr;
-
 
 
 
