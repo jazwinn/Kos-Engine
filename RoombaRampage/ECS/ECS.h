@@ -153,7 +153,8 @@ namespace ecs {
 		std::unordered_map<EntityID, std::bitset<TOTALTYPECOMPONENT>> m_ECS_EntityMap{};
 
 		//store type conversion
-		std::unordered_map<ComponentType, std::function<std::any(void*)>> m_conversion_Map;// TODO in future, std::any doesnt work
+		//using ActionFunction = std::function<void(void*, void (*)(void*))>;
+		//std::unordered_map<ComponentType, ActionFunction> m_callFunctionToComponent_Map;// TODO in future, std::any doesnt work
 
 		//layering system
 		layer::LayerStack m_layersStack;

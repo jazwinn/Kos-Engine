@@ -18,6 +18,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "Input.h"
 #include <iostream>
 
+
 namespace Input {
 	/*--------------------------------------------------------------
 	  GLOBAL VARAIBLE
@@ -31,6 +32,8 @@ namespace Input {
 	vector2::Vec2 InputSystem::MousePosition = { 0,0 };
 	std::string InputSystem::m_mouseString;
 	std::string InputSystem::m_keyString;
+
+	std::vector<std::string> InputSystem::m_droppedFiles;
 
 
 	void InputSystem::KeyCallBack([[maybe_unused]] GLFWwindow* window, int key, [[maybe_unused]] int scancode, int action, [[maybe_unused]] int mods) {
@@ -112,10 +115,18 @@ namespace Input {
 		//std::cout << xpos << " : " << ypos << std::endl;
 
 	}
+	
 
+	void InputSystem::dropCallback(GLFWwindow* window, int count, const char** paths) {
+		m_droppedFiles.clear();
+		for (int i = 0; i < count; ++i) {
+			m_droppedFiles.emplace_back(paths[i]);
+		}
+	}
 
 	void InputSystem::SetCallBack(GLFWwindow* Window) {
 		glfwSetKeyCallback(Window, KeyCallBack);
+		glfwSetDropCallback(Window, dropCallback);
 		glfwSetMouseButtonCallback(Window, MouseButtonCallBack);
 		glfwSetCursorPosCallback(Window, mousepos_cb);
 	}

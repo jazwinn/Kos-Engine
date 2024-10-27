@@ -120,8 +120,8 @@ namespace ecs{
 		ECS* ecs = ECS::m_GetInstance();
 		ecs->m_ECS_CombinedComponentPool[type] = std::make_shared<ComponentPool<T>>();
 
-		ecs->m_conversion_Map[type] = [](void* component)->std::any { return static_cast<T*>(component); }; // TODO in future, std::any doesnt work
-
+		//ecs->m_callFunctionToComponent_Map[type] = [](void* component, void (*func)(void*)) { T* typeComponent = static_cast<T*>(component); typeComponent->ApplyFunction(func); }; // TODO in future
+		//rbc->ApplyFunction(DrawComponents(rbc->Names()));
 	}
 
 	void* ECS::m_AddComponent(ComponentType Type, EntityID ID) {

@@ -20,6 +20,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 #include <glfw3.h>
 #include <../Math/Vector2.h>
+#include <vector>
 #include <string>
 
 namespace Input {
@@ -32,6 +33,7 @@ namespace Input {
 		\brief	This function is meant to be given to GLFW as a way for GLFW to register key inputs and change the variables in this class
 		*/
 		static void KeyCallBack(GLFWwindow* window, int key, int scancode, int action, int mods);
+		static void dropCallback(GLFWwindow* window, int count, const char** paths);
 
 		/*
 		\brief	This function is meant to be given to GLFW as a way for GLFW to register mouse button inputs and change the variables in this class
@@ -59,6 +61,8 @@ namespace Input {
 
 		static std::string m_mouseString;
 		static std::string m_keyString;
+
+		static std::vector<std::string> m_droppedFiles;
 	};
 
 }
