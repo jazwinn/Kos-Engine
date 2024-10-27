@@ -27,6 +27,10 @@ namespace Input {
 	bool InputSystem::KeyStateA = false;
 	bool InputSystem::KeyStateS = false;
 	bool InputSystem::KeyStateD = false;
+	bool InputSystem::KeyStateE = false;
+	bool InputSystem::KeyStateR = false;
+	bool InputSystem::KeyStateSpace = false;
+	bool InputSystem::KeyStateEsc = false;
 	bool InputSystem::KeyState0 = false;
 
 	vector2::Vec2 InputSystem::MousePosition = { 0,0 };
@@ -54,6 +58,18 @@ namespace Input {
 			case GLFW_KEY_0:
 				KeyState0 = true;
 				break;
+			case GLFW_KEY_E:
+				KeyStateE = true;
+				break;
+			case GLFW_KEY_ESCAPE:
+				KeyStateEsc = true;
+				break;
+			case GLFW_KEY_R:
+				KeyStateR = true;
+				break;
+			case GLFW_KEY_SPACE:
+				KeyStateSpace = true;
+				break;
 			default:
 				break;
 			}
@@ -75,6 +91,18 @@ namespace Input {
 				break;
 			case GLFW_KEY_0:
 				KeyState0 = false;
+				break;
+			case GLFW_KEY_E:
+				KeyStateE = false;
+				break;
+			case GLFW_KEY_ESCAPE:
+				KeyStateEsc = false;
+				break;
+			case GLFW_KEY_R:
+				KeyStateR = false;
+				break;
+			case GLFW_KEY_SPACE:
+				KeyStateSpace = false;
 				break;
 			default:
 				break;
