@@ -73,6 +73,7 @@
     <ClCompile Include="Asset Manager\SceneManager.cpp" />
     <ClCompile Include="Asset Manager\Text.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_game_scene_window.cpp" />
+    <ClCompile Include="Editor\ImGui Panels\imgui_play_pause.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Application.h" />

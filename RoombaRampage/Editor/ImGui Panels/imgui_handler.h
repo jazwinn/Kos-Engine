@@ -199,6 +199,8 @@ namespace gui {
         \sa        graphicpipe::GraphicsPipe::m_funcGetInstance() to get the screen texture.
         */
         /******************************************************************/
+        void m_DrawPlayPauseWindow();
+
         void m_DrawRenderScreenWindow(unsigned int windowWidth, unsigned int windowHeight);
 
         void m_DrawGizmo(float renderPosX, float renderPosY, float renderWidth, float renderHeight);
