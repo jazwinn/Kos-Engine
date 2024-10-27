@@ -3,7 +3,7 @@
 namespace file {
 	std::string FileWindow::m_OpenfileDialog(char* filePath)
 	{
-
+        //OPENING THIS CAUSE FPS TO DROP BY HALF?????????
         OPENFILENAMEA ofn;
         CHAR fileSize[256] = { 0 };
         CHAR directory[256] = { 0 };

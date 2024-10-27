@@ -121,34 +121,34 @@ void gui::ImGuiHandler::m_DrawTestWindow() {
 	static ecs::EntityID id_1;
 	static ecs::EntityID id_2;
 	if (ImGui::Button("Collision Test")) {
-		if (!collision_Flag) {
-			//create player 
-			id_1 = ecs->m_CreateEntity();
-			ecs::TransformComponent* tc = (ecs::TransformComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id_1);
-			ecs::SpriteComponent* sc = static_cast<ecs::SpriteComponent*>(ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, id_1));
-			ecs::ColliderComponent* cc = static_cast<ecs::ColliderComponent*>(ecs->m_AddComponent(ecs::TYPECOLLIDERCOMPONENT, id_1));
-			ecs::RigidBodyComponent* rc = static_cast<ecs::RigidBodyComponent*>(ecs->m_AddComponent(ecs::TYPERIGIDBODYCOMPONENT, id_1));
+		//if (!collision_Flag) {
+		//	//create player 
+		//	id_1 = ecs->m_CreateEntity();
+		//	ecs::TransformComponent* tc = (ecs::TransformComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id_1);
+		//	ecs::SpriteComponent* sc = static_cast<ecs::SpriteComponent*>(ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, id_1));
+		//	ecs::ColliderComponent* cc = static_cast<ecs::ColliderComponent*>(ecs->m_AddComponent(ecs::TYPECOLLIDERCOMPONENT, id_1));
+		//	ecs::RigidBodyComponent* rc = static_cast<ecs::RigidBodyComponent*>(ecs->m_AddComponent(ecs::TYPERIGIDBODYCOMPONENT, id_1));
 
-			tc->m_scale = { 1.f,1.f };
-			tc->m_position.m_x = static_cast<float>(1.0f);
-			tc->m_position.m_y = static_cast<float>(0);
-			cc->m_Size = { 0.5f,0.5f };
+		//	tc->m_scale = { 1.f,1.f };
+		//	tc->m_position.m_x = static_cast<float>(1.0f);
+		//	tc->m_position.m_y = static_cast<float>(0);
+		//	cc->m_Size = { 0.5f,0.5f };
 
-			id_2 = ecs->m_CreateEntity();
-			tc = (ecs::TransformComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id_2);
-			sc = static_cast<ecs::SpriteComponent*>(ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, id_2));
-			cc = static_cast<ecs::ColliderComponent*>(ecs->m_AddComponent(ecs::TYPECOLLIDERCOMPONENT, id_2));
-			rc = static_cast<ecs::RigidBodyComponent*>(ecs->m_AddComponent(ecs::TYPERIGIDBODYCOMPONENT, id_2));
+		//	id_2 = ecs->m_CreateEntity();
+		//	tc = (ecs::TransformComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id_2);
+		//	sc = static_cast<ecs::SpriteComponent*>(ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, id_2));
+		//	cc = static_cast<ecs::ColliderComponent*>(ecs->m_AddComponent(ecs::TYPECOLLIDERCOMPONENT, id_2));
+		//	rc = static_cast<ecs::RigidBodyComponent*>(ecs->m_AddComponent(ecs::TYPERIGIDBODYCOMPONENT, id_2));
 
 
-			tc->m_scale = { 1.f,1.f };
-			tc->m_position.m_x = static_cast<float>(-1.0f);
-			tc->m_position.m_y = static_cast<float>(0);
-			cc->m_Size = { 0.5f,0.5f };
+		//	tc->m_scale = { 1.f,1.f };
+		//	tc->m_position.m_x = static_cast<float>(-1.0f);
+		//	tc->m_position.m_y = static_cast<float>(0);
+		//	cc->m_Size = { 0.5f,0.5f };
 
-		}
-		collision_Flag = true;
-		delete_Flag = false;
+		//}
+		//collision_Flag = true;
+		//delete_Flag = false;
 	}
 	ImGui::SameLine();
 	if (ImGui::Button("Delete")) {

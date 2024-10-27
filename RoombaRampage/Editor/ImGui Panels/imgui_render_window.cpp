@@ -144,7 +144,7 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
 
             if (filename->filename().extension().string() == ".png") {
              ecs::ECS* ecs = ecs::ECS::m_GetInstance();
-                ecs::EntityID id = ecs->m_CreateEntity();
+                ecs::EntityID id = ecs->m_CreateEntity(ecs->m_ECS_SceneMap.begin()->first); //assign to top most scene
                 ecs::TransformComponent* transCom = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id));
                 transCom->m_position = { cordX, cordY };
                 ecs::NameComponent* nameCom = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id));
@@ -156,7 +156,7 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
             }
             if (filename->filename().extension().string() == ".ttf") {
                 ecs::ECS* ecs = ecs::ECS::m_GetInstance();
-                ecs::EntityID id = ecs->m_CreateEntity();
+                ecs::EntityID id = ecs->m_CreateEntity(ecs->m_ECS_SceneMap.begin()->first); //assign to top most scene
                 ecs::TransformComponent* transCom = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id));
                 transCom->m_position = { cordX, cordY };
                 ecs::NameComponent* nameCom = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id));
