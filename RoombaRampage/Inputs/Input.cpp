@@ -33,6 +33,7 @@ namespace Input {
 	bool InputSystem::KeyStateEsc = false;
 	bool InputSystem::KeyState0 = false;
 	bool InputSystem::KeyStateLMB = false;
+	bool InputSystem::KeyStateF11 = false;
 
 	vector2::Vec2 InputSystem::MousePosition = { 0,0 };
 	std::string InputSystem::m_mouseString;
@@ -56,8 +57,8 @@ namespace Input {
 			case GLFW_KEY_D:
 				KeyStateD = true;
 				break;
-			case GLFW_KEY_0:
-				KeyState0 = true;
+			case GLFW_KEY_F11:
+				KeyStateF11 = true;
 				break;
 			case GLFW_KEY_E:
 				KeyStateE = true;
@@ -90,8 +91,8 @@ namespace Input {
 			case GLFW_KEY_D:
 				KeyStateD = false;
 				break;
-			case GLFW_KEY_0:
-				KeyState0 = false;
+			case GLFW_KEY_F11:
+				KeyStateF11 = false;
 				break;
 			case GLFW_KEY_E:
 				KeyStateE = false;

@@ -31,9 +31,16 @@ namespace graphicpipe
 		{
 			for (int i{}; i < m_debugBoxData.size(); i++)
 			{
-				m_debugToNDCMatrix.push_back(m_debugBoxData[i].m_transformation);
-				m_debugBoxCollisionChecks.push_back(static_cast<float>(m_debugBoxData[i].m_isCollided));
-
+				if (m_debugBoxData[i].m_shapeType == SQUARE_LINES)
+				{
+					m_debugBoxToNDCMatrix.push_back(m_debugBoxData[i].m_transformation);
+					m_debugBoxCollisionChecks.push_back(static_cast<float>(m_debugBoxData[i].m_isCollided));
+				}
+				else
+				{
+					m_debugCircleToNDCMatrix.push_back(m_debugBoxData[i].m_transformation);
+					m_debugCircleCollisionChecks.push_back(static_cast<float>(m_debugBoxData[i].m_isCollided));
+				}
 			}
 			m_debugBoxData.clear();
 		}

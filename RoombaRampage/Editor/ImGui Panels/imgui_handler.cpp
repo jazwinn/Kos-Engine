@@ -76,9 +76,9 @@ namespace gui {
 
 	void ImGuiHandler::m_Render()
 	{
-		if (Input::InputSystem::KeyState0)
+		if (Input::InputSystem::KeyStateF11)
 		{
-			Input::InputSystem::KeyState0 = false;
+			Input::InputSystem::KeyStateF11 = false;
 			graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
 			EditorCamera::m_editorMode = (EditorCamera::m_editorMode) ? false : true;
 			pipe->m_gameMode = (pipe->m_gameMode) ? false : true;

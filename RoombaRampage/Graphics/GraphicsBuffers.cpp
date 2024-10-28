@@ -54,7 +54,7 @@ namespace graphicpipe
 		glBindVertexArray(m_squareLinesMesh.m_vaoId);
 		glGenBuffers(1, &m_debugMatrixArrayBuffer);
 		glBindBuffer(GL_ARRAY_BUFFER, m_debugMatrixArrayBuffer);
-		glBufferData(GL_ARRAY_BUFFER, m_debugToNDCMatrix.size() * sizeof(glm::mat3), &m_debugToNDCMatrix[0], GL_DYNAMIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, m_debugBoxToNDCMatrix.size() * sizeof(glm::mat3), &m_debugBoxToNDCMatrix[0], GL_DYNAMIC_DRAW);
 		unsigned int otherLocation = 7; // Location 7
 		for (int i = 0; i < 3; ++i)
 		{
@@ -65,6 +65,25 @@ namespace graphicpipe
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 		glGenBuffers(1, &m_debugCollisionCheckBuffer);
+		glBindBuffer(GL_ARRAY_BUFFER, m_debugCollisionCheckBuffer);
+		glBufferData(GL_ARRAY_BUFFER, m_debugBoxCollisionChecks.size() * sizeof(int), &m_debugBoxCollisionChecks[0], GL_DYNAMIC_DRAW);
+		glEnableVertexAttribArray(4);
+		glVertexAttribPointer(4, 1, GL_FLOAT, GL_FALSE, sizeof(float), (void*)0);
+		glVertexAttribDivisor(4, 1);
+		glBindVertexArray(0);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+		//Circle Lines
+		glBindVertexArray(m_circleLinesMesh.m_vaoId);
+		glBindBuffer(GL_ARRAY_BUFFER, m_debugMatrixArrayBuffer);
+		glBufferData(GL_ARRAY_BUFFER, m_debugBoxToNDCMatrix.size() * sizeof(glm::mat3), &m_debugBoxToNDCMatrix[0], GL_DYNAMIC_DRAW);
+		for (int i = 0; i < 3; ++i)
+		{
+			glEnableVertexAttribArray(otherLocation + i);
+			glVertexAttribPointer(otherLocation + i, 3, GL_FLOAT, GL_FALSE, sizeof(glm::mat3), (void*)(sizeof(glm::vec3) * i));
+			glVertexAttribDivisor(otherLocation + i, 1);
+		}
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindBuffer(GL_ARRAY_BUFFER, m_debugCollisionCheckBuffer);
 		glBufferData(GL_ARRAY_BUFFER, m_debugBoxCollisionChecks.size() * sizeof(int), &m_debugBoxCollisionChecks[0], GL_DYNAMIC_DRAW);
 		glEnableVertexAttribArray(4);
