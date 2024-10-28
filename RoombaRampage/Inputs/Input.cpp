@@ -32,6 +32,7 @@ namespace Input {
 	bool InputSystem::KeyStateSpace = false;
 	bool InputSystem::KeyStateEsc = false;
 	bool InputSystem::KeyState0 = false;
+	bool InputSystem::KeyStateLMB = false;
 
 	vector2::Vec2 InputSystem::MousePosition = { 0,0 };
 	std::string InputSystem::m_mouseString;
@@ -116,7 +117,7 @@ namespace Input {
 
 
 	void InputSystem::MouseButtonCallBack([[maybe_unused]] GLFWwindow* pwin, [[maybe_unused]] int button, [[maybe_unused]] int action, [[maybe_unused]] int mod) {
-
+	
 		if (action == GLFW_PRESS) {
 			// key is press
 			InputSystem::m_mouseString = "Mouse pressed!";
@@ -126,6 +127,25 @@ namespace Input {
 		}
 		else if (action == GLFW_REPEAT) {
 			InputSystem::m_mouseString = "Mouse Repeated";
+		}
+		switch (button) {
+		case GLFW_MOUSE_BUTTON_LEFT:
+			switch (action) {
+			case GLFW_PRESS:
+				if (KeyStateLMB == GL_FALSE) {
+					KeyStateLMB = GL_TRUE;
+				}
+				else {
+					KeyStateLMB = GL_FALSE;
+				}
+				break;
+			case GLFW_RELEASE:
+				KeyStateLMB = GL_FALSE;
+				break;
+			}
+			break;
+		default:
+			break;
 		}
 		
 	}

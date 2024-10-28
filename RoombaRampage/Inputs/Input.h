@@ -60,6 +60,7 @@ namespace Input {
 		static bool KeyStateSpace;
 		static bool KeyStateR;
 		static bool KeyState0;
+		static bool KeyStateLMB;
 
 		static vector2::Vec2 MousePosition;
 

@@ -52,6 +52,18 @@ namespace performancetracker {
 			return "Render Text System";
 		case ecs::TypeSystem::TYPERENDERSYSTEM:
 			return "Render System";
+		case ecs::TypeSystem::TYPEPHYSICSSYSTEM:
+			return "Physics System";
+		case ecs::TypeSystem::TYPELOGICSYSTEM:
+			return "Logic System";
+		case ecs::TypeSystem::TYPEBUTTONSYSTEM:
+			return "Button System";
+		case ecs::TypeSystem::TYPEANIMATIONSYSTEM:
+			return "Animation System";
+		case ecs::TypeSystem::TYPECAMERASYSTEM:
+			return "Camera System";
+		case ecs::TypeSystem::TYPETRANSFORMSYSTEM:
+			return "Transform System";
 		default:
 			return "Error (Add System to Performance.cpp)";
 		}
