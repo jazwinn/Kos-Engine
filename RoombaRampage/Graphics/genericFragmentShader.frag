@@ -24,7 +24,7 @@ R"( #version 460 core
 
 	layout (location=0) out vec4 fragColor;
 
-	uniform sampler2D textures[64]; // Subscript indicates max texture amount
+	uniform sampler2D textures[32]; // Subscript indicates max texture amount
 
 
 	void main()
