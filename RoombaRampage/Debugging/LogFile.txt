@@ -1,52 +1,229 @@
-[INFO]: 2024-10-28 14:07:25 - Application Start
-[INFO]: 2024-10-28 14:07:25 - Load Log Successful
-[INFO]: 2024-10-28 14:07:25 - Load Config Successful
-[INFO]: 2024-10-28 14:07:25 - Load Window Successful
-[INFO]: 2024-10-28 14:07:25 - Load ECS Successful
-[INFO]: 2024-10-28 14:07:25 - Strip Success for Assets/Texture/ani_RoombaBlink_strip4.png
-[INFO]: 2024-10-28 14:07:25 - Texture Binded, Texture ID : 6 
-[INFO]: 2024-10-28 14:07:25 - Image ID : 0 
-[INFO]: 2024-10-28 14:07:25 - Strip Success for Assets/Texture/ani_RoombaBoosters_strip6.png
-[INFO]: 2024-10-28 14:07:25 - Texture Binded, Texture ID : 7 
-[INFO]: 2024-10-28 14:07:25 - Image ID : 1 
-[INFO]: 2024-10-28 14:07:25 - Strip Success for Assets/Texture/ani_SeanSprite_strip4.png
-[INFO]: 2024-10-28 14:07:26 - Texture Binded, Texture ID : 8 
-[INFO]: 2024-10-28 14:07:26 - Image ID : 2 
-[INFO]: 2024-10-28 14:07:26 - Texture Padded for Audiowav.png
-[INFO]: 2024-10-28 14:07:26 - Texture Binded, Texture ID : 9 
-[INFO]: 2024-10-28 14:07:26 - Image ID : 3 
-[INFO]: 2024-10-28 14:07:26 - Texture Padded for Background.png
-[INFO]: 2024-10-28 14:07:26 - Texture Binded, Texture ID : 10 
-[INFO]: 2024-10-28 14:07:26 - Image ID : 4 
-[INFO]: 2024-10-28 14:07:26 - Texture Binded, Texture ID : 11 
-[INFO]: 2024-10-28 14:07:26 - Image ID : 5 
-[INFO]: 2024-10-28 14:07:26 - Texture Padded for boosters_tail02.png
-[INFO]: 2024-10-28 14:07:26 - Texture Binded, Texture ID : 12 
-[INFO]: 2024-10-28 14:07:26 - Image ID : 6 
-[INFO]: 2024-10-28 14:07:26 - Texture Binded, Texture ID : 13 
-[INFO]: 2024-10-28 14:07:26 - Image ID : 7 
-[INFO]: 2024-10-28 14:07:26 - Texture Padded for folder.png
-[INFO]: 2024-10-28 14:07:26 - Texture Binded, Texture ID : 14 
-[INFO]: 2024-10-28 14:07:26 - Image ID : 8 
-[INFO]: 2024-10-28 14:07:26 - Texture Padded for gunleft_02.png
-[INFO]: 2024-10-28 14:07:26 - Texture Binded, Texture ID : 15 
-[INFO]: 2024-10-28 14:07:26 - Image ID : 9 
-[INFO]: 2024-10-28 14:07:26 - Texture Padded for gunright_02.png
-[INFO]: 2024-10-28 14:07:26 - Texture Binded, Texture ID : 16 
-[INFO]: 2024-10-28 14:07:26 - Image ID : 10 
-[INFO]: 2024-10-28 14:07:26 - Texture Padded for Roomba.png
-[INFO]: 2024-10-28 14:07:26 - Texture Binded, Texture ID : 17 
-[INFO]: 2024-10-28 14:07:26 - Image ID : 11 
-[INFO]: 2024-10-28 14:07:26 - Texture Binded, Texture ID : 18 
-[INFO]: 2024-10-28 14:07:26 - Image ID : 12 
-[INFO]: 2024-10-28 14:07:26 - Load Asset Successful
-[INFO]: 2024-10-28 14:07:26 - Shader compiled successfully
-[INFO]: 2024-10-28 14:07:26 - Shader compiled successfully
-[INFO]: 2024-10-28 14:07:26 - Shader compiled successfully
-[INFO]: 2024-10-28 14:07:26 - Shader compiled successfully
-[INFO]: 2024-10-28 14:07:26 - Load Graphic Pipline Successful
-[INFO]: 2024-10-28 14:07:26 - Set Input Call Back Successful
-[INFO]: 2024-10-28 14:07:26 - Load ImGui Successful
-[INFO]: 2024-10-28 14:07:26 - Mono initialization and method loading successful.
-[INFO]: 2024-10-28 14:07:26 - Application Init Successful
-[INFO]: 2024-10-28 14:08:43 - Application Closed
+[INFO]: 2024-10-28 01:14:15 - Application Start
+[INFO]: 2024-10-28 01:14:15 - Load Log Successful
+[INFO]: 2024-10-28 01:14:15 - Load Config Successful
+[INFO]: 2024-10-28 01:14:15 - Load Window Successful
+[INFO]: 2024-10-28 01:14:15 - Load ECS Successful
+[INFO]: 2024-10-28 01:14:15 - Strip Success for Assets/Texture/ani_RoombaBlink_strip4.png
+[INFO]: 2024-10-28 01:14:15 - Texture Binded, Texture ID : 6 
+[INFO]: 2024-10-28 01:14:15 - Image ID : 0 
+[INFO]: 2024-10-28 01:14:15 - Strip Success for Assets/Texture/ani_RoombaBoosters_strip6.png
+[INFO]: 2024-10-28 01:14:15 - Texture Binded, Texture ID : 7 
+[INFO]: 2024-10-28 01:14:15 - Image ID : 1 
+[INFO]: 2024-10-28 01:14:15 - Strip Success for Assets/Texture/ani_SeanSprite_strip4.png
+[INFO]: 2024-10-28 01:14:15 - Texture Binded, Texture ID : 8 
+[INFO]: 2024-10-28 01:14:15 - Image ID : 2 
+[INFO]: 2024-10-28 01:14:15 - Texture Padded for Audiowav.png
+[INFO]: 2024-10-28 01:14:15 - Texture Binded, Texture ID : 9 
+[INFO]: 2024-10-28 01:14:15 - Image ID : 3 
+[INFO]: 2024-10-28 01:14:15 - Texture Padded for Background.png
+[INFO]: 2024-10-28 01:14:15 - Texture Binded, Texture ID : 10 
+[INFO]: 2024-10-28 01:14:15 - Image ID : 4 
+[INFO]: 2024-10-28 01:14:15 - Texture Binded, Texture ID : 11 
+[INFO]: 2024-10-28 01:14:15 - Image ID : 5 
+[INFO]: 2024-10-28 01:14:15 - Texture Padded for boosters_tail02.png
+[INFO]: 2024-10-28 01:14:15 - Texture Binded, Texture ID : 12 
+[INFO]: 2024-10-28 01:14:15 - Image ID : 6 
+[INFO]: 2024-10-28 01:14:15 - Texture Binded, Texture ID : 13 
+[INFO]: 2024-10-28 01:14:15 - Image ID : 7 
+[INFO]: 2024-10-28 01:14:15 - Texture Padded for folder.png
+[INFO]: 2024-10-28 01:14:15 - Texture Binded, Texture ID : 14 
+[INFO]: 2024-10-28 01:14:15 - Image ID : 8 
+[INFO]: 2024-10-28 01:14:15 - Texture Padded for gunleft_02.png
+[INFO]: 2024-10-28 01:14:15 - Texture Binded, Texture ID : 15 
+[INFO]: 2024-10-28 01:14:15 - Image ID : 9 
+[INFO]: 2024-10-28 01:14:15 - Texture Padded for gunright_02.png
+[INFO]: 2024-10-28 01:14:15 - Texture Binded, Texture ID : 16 
+[INFO]: 2024-10-28 01:14:15 - Image ID : 10 
+[INFO]: 2024-10-28 01:14:15 - Texture Padded for Roomba.png
+[INFO]: 2024-10-28 01:14:15 - Texture Binded, Texture ID : 17 
+[INFO]: 2024-10-28 01:14:15 - Image ID : 11 
+[INFO]: 2024-10-28 01:14:15 - Texture Binded, Texture ID : 18 
+[INFO]: 2024-10-28 01:14:15 - Image ID : 12 
+[INFO]: 2024-10-28 01:14:15 - Load Asset Successful
+[INFO]: 2024-10-28 01:14:15 - Shader compiled successfully
+[INFO]: 2024-10-28 01:14:15 - Shader compiled successfully
+[INFO]: 2024-10-28 01:14:15 - Shader compiled successfully
+[INFO]: 2024-10-28 01:14:15 - Shader compiled successfully
+[INFO]: 2024-10-28 01:14:15 - Load Graphic Pipline Successful
+[INFO]: 2024-10-28 01:14:15 - Set Input Call Back Successful
+[INFO]: 2024-10-28 01:14:15 - Load ImGui Successful
+[INFO]: 2024-10-28 01:14:15 - Load Json Successful
+[INFO]: 2024-10-28 01:14:15 - Entities successfully loaded!
+[INFO]: 2024-10-28 01:14:15 - Mono initialization and method loading successful.
+[INFO]: 2024-10-28 01:14:15 - Application Init Successful
+[INFO]: 2024-10-28 01:14:36 - Load Json Successful
+[INFO]: 2024-10-28 01:14:36 - Entities successfully loaded!
+[INFO]: 2024-10-28 01:14:37 - Load Json Successful
+[INFO]: 2024-10-28 01:14:37 - Entities successfully loaded!
+[INFO]: 2024-10-28 01:14:40 - Load Json Successful
+[INFO]: 2024-10-28 01:14:40 - Entities successfully loaded!
+[ERROR]: 2024-10-28 01:14:52 - Scene already loaded
+FUNC: void __cdecl scenes::SceneManager::m_LoadScene(class std::filesystem::path) LINE: 48 FILE: C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\Asset Manager\SceneManager.cpp
+Stack trace (most recent call last):
+#8    Object "", at 00007FFA0022257D, in BaseThreadInitThunk
+#7    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 288, in __scrt_common_main_seh
+#6    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\Application\main.cpp", line 37, in main
+         35:         app.Run();
+         36: 
+      >  37:         app.m_Cleanup();
+#5    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\Application\Application.cpp", line 207, in Application::Application::Run
+        204:                 /*--------------------------------------------------------------
+        205:                    Render Game Scene
+        206:                 --------------------------------------------------------------*/
+      > 207:                 pipe->m_funcRenderGameScene();
+#4    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\Editor\ImGui Panels\imgui_handler.cpp", line 106, in gui::ImGuiHandler::m_Render
+        103: 			if (windowSize.x > 0 && windowSize.y > 0) {
+        104: 				m_DrawPerformanceWindow(help->m_fps);
+        105: 				m_DrawHierachyWindow();
+      > 106: 				m_DrawComponentWindow();
+        107: 				m_DrawLogsWindow();
+        108: 				m_DrawTestWindow();
+        109: 				m_DrawLayerWindow();
+#3    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\Editor\ImGui Panels\imgui_hierarchy_window.cpp", line 183, in gui::ImGuiHandler::m_DrawHierachyWindow
+        181:                 if (filename->filename().extension().string() == ".json") {
+        182:                     scenemanager->m_LoadScene(*filename);
+      > 183:                 }
+        184:                 else {
+        185:                     LOGGING_WARN("Wrong Type");
+        186:                 }
+#2    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\Asset Manager\SceneManager.cpp", line 49, in scenes::SceneManager::m_LoadScene
+         46:         ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+         47:         if (ecs->m_ECS_SceneMap.find(scene.filename().string()) != ecs->m_ECS_SceneMap.end()) {
+         48:             LOGGING_ERROR("Scene already loaded");
+      >  49:             return;
+         50:         }
+         51: 
+         52:         // Ensure the JSON file exists
+#1    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\Debugging\Logging.h", line 298, in logging::Logger::m_Error<>
+        295:             std::cout << "Not storing" << std::endl;
+        296:         }
+        297:         m_st.load_here(32);
+      > 298:         m_printer.print(m_st, m_logFile);
+        299:     }
+        300: 
+        301:     template <typename... Args>
+#0    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\Dependencies\backward\backward.hpp", line 1151, in backward::StackTraceImpl<backward::system_tag::windows_tag>::load_here
+       1148:       RtlCaptureContext(ctx_);
+       1149:     }
+       1150: 
+      >1151:     if (!thd_) {
+       1152:       thd_ = GetCurrentThread();
+       1153:     }
+[INFO]: 2024-10-28 01:14:58 - Load Json Successful
+[INFO]: 2024-10-28 01:14:58 - Entities successfully loaded!
+[ERROR]: 2024-10-28 01:15:01 - Scene already loaded
+FUNC: void __cdecl scenes::SceneManager::m_LoadScene(class std::filesystem::path) LINE: 48 FILE: C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\Asset Manager\SceneManager.cpp
+Stack trace (most recent call last):
+#17   Object "", at 00007FFA0022257D, in BaseThreadInitThunk
+#16   Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 288, in __scrt_common_main_seh
+#15   Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\Application\main.cpp", line 37, in main
+         35:         app.Run();
+         36: 
+      >  37:         app.m_Cleanup();
+#14   Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\Application\Application.cpp", line 207, in Application::Application::Run
+        204:                 /*--------------------------------------------------------------
+        205:                    Render Game Scene
+        206:                 --------------------------------------------------------------*/
+      > 207:                 pipe->m_funcRenderGameScene();
+#13   Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\Editor\ImGui Panels\imgui_handler.cpp", line 99, in gui::ImGuiHandler::m_Render
+         96: 			//create main menu bar
+         97: 			m_DrawMainMenuBar();
+         98: 
+      >  99: 			Helper::Helpers* help = Helper::Helpers::GetInstance();
+        100: 
+        101: 			ImVec2 windowSize = ImGui::GetIO().DisplaySize;
+        102: 			// only render when window is not minimize
+#12   Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\Editor\ImGui Panels\imgui_menubar.cpp", line 63, in gui::ImGuiHandler::m_DrawMainMenuBar
+         60:                for (auto& scene : scenemanager->m_recentFiles) {
+         61:                     if (ImGui::MenuItem(scene.filename().stem().string().c_str())) {
+         62:                         scenemanager->m_LoadScene(scene);
+      >  63:                         m_clickedEntityId = -1;
+         64:                     }
+         65:                 }
+#11   Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\Asset Manager\SceneManager.cpp", line 49, in scenes::SceneManager::m_LoadScene
+         46:         ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+         47:         if (ecs->m_ECS_SceneMap.find(scene.filename().string()) != ecs->m_ECS_SceneMap.end()) {
+         48:             LOGGING_ERROR("Scene already loaded");
+      >  49:             return;
+         50:         }
+         51: 
+         52:         // Ensure the JSON file exists
+#10   Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\Debugging\Logging.h", line 298, in logging::Logger::m_Error<>
+        295:             std::cout << "Not storing" << std::endl;
+        296:         }
+        297:         m_st.load_here(32);
+      > 298:         m_printer.print(m_st, m_logFile);
+        299:     }
+        300: 
+        301:     template <typename... Args>
+#9    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\Dependencies\backward\backward.hpp", line 1151, in backward::StackTraceImpl<backward::system_tag::windows_tag>::load_here
+       1148:       RtlCaptureContext(ctx_);
+       1149:     }
+       1150: 
+      >1151:     if (!thd_) {
+       1152:       thd_ = GetCurrentThread();
+       1153:     }
+#8    Object "", at 00007FFA0022257D, in BaseThreadInitThunk
+#7    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 288, in __scrt_common_main_seh
+#6    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\Application\main.cpp", line 37, in main
+         35:         app.Run();
+         36: 
+      >  37:         app.m_Cleanup();
+#5    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\Application\Application.cpp", line 207, in Application::Application::Run
+        204:                 /*--------------------------------------------------------------
+        205:                    Render Game Scene
+        206:                 --------------------------------------------------------------*/
+      > 207:                 pipe->m_funcRenderGameScene();
+#4    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\Editor\ImGui Panels\imgui_handler.cpp", line 106, in gui::ImGuiHandler::m_Render
+        103: 			if (windowSize.x > 0 && windowSize.y > 0) {
+        104: 				m_DrawPerformanceWindow(help->m_fps);
+        105: 				m_DrawHierachyWindow();
+      > 106: 				m_DrawComponentWindow();
+        107: 				m_DrawLogsWindow();
+        108: 				m_DrawTestWindow();
+        109: 				m_DrawLayerWindow();
+#3    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\Editor\ImGui Panels\imgui_hierarchy_window.cpp", line 183, in gui::ImGuiHandler::m_DrawHierachyWindow
+        181:                 if (filename->filename().extension().string() == ".json") {
+        182:                     scenemanager->m_LoadScene(*filename);
+      > 183:                 }
+        184:                 else {
+        185:                     LOGGING_WARN("Wrong Type");
+        186:                 }
+#2    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\Asset Manager\SceneManager.cpp", line 49, in scenes::SceneManager::m_LoadScene
+         46:         ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+         47:         if (ecs->m_ECS_SceneMap.find(scene.filename().string()) != ecs->m_ECS_SceneMap.end()) {
+         48:             LOGGING_ERROR("Scene already loaded");
+      >  49:             return;
+         50:         }
+         51: 
+         52:         // Ensure the JSON file exists
+#1    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\Debugging\Logging.h", line 298, in logging::Logger::m_Error<>
+        295:             std::cout << "Not storing" << std::endl;
+        296:         }
+        297:         m_st.load_here(32);
+      > 298:         m_printer.print(m_st, m_logFile);
+        299:     }
+        300: 
+        301:     template <typename... Args>
+#0    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGooseWorkspace\RRR\RoombaRampage\Dependencies\backward\backward.hpp", line 1151, in backward::StackTraceImpl<backward::system_tag::windows_tag>::load_here
+       1148:       RtlCaptureContext(ctx_);
+       1149:     }
+       1150: 
+      >1151:     if (!thd_) {
+       1152:       thd_ = GetCurrentThread();
+       1153:     }
+[INFO]: 2024-10-28 01:15:07 - Load Json Successful
+[INFO]: 2024-10-28 01:15:07 - Entities successfully loaded!
+[INFO]: 2024-10-28 01:15:25 - Save Json Successful
+[INFO]: 2024-10-28 01:15:27 - Save Json Successful
+[INFO]: 2024-10-28 01:15:30 - Save Json Successful
+[INFO]: 2024-10-28 01:15:31 - Save Json Successful
+[INFO]: 2024-10-28 01:15:41 - Load Json Successful
+[INFO]: 2024-10-28 01:15:41 - Entities successfully loaded!
+[INFO]: 2024-10-28 01:15:43 - Load Json Successful
+[INFO]: 2024-10-28 01:15:43 - Entities successfully loaded!
+[INFO]: 2024-10-28 01:15:46 - Load Json Successful
+[INFO]: 2024-10-28 01:15:46 - Entities successfully loaded!
+[INFO]: 2024-10-28 01:15:48 - Load Json Successful
+[INFO]: 2024-10-28 01:15:48 - Entities successfully loaded!
+[INFO]: 2024-10-28 01:16:17 - Application Closed

@@ -16,8 +16,12 @@ Reproduction or disclosure of this file or its contents without the
 prior written consent of DigiPen Institute of Technology is prohibited.
 */
 /********************************************************************/
+#ifndef JSONHANDLER_H
+#define JSONHANDLER_H
+
 
 #include "../ECS/ECS.h"
+#include <filesystem>
 
 namespace Serialization {
 	class Serialize {
@@ -33,7 +37,7 @@ namespace Serialization {
 					   The data is then applied to the appropriate entities in the ECS.
 		*/
 		/******************************************************************/
-		static void m_LoadComponentsJson(const std::string& jsonFilePath);
+		static void m_LoadComponentsJson(const std::filesystem::path& jsonFilePath);
 
 		/******************************************************************/
 		/*!
@@ -48,7 +52,7 @@ namespace Serialization {
 					   for later retrieval and reloading.
 		*/
 		/******************************************************************/
-		static void m_SaveComponentsJson(const std::string& filePath);
+		static void m_SaveComponentsJson(const std::filesystem::path& filePath);
 
 		/******************************************************************/
 		/*!
@@ -72,3 +76,8 @@ namespace Serialization {
 		static void m_JsonFileValidation(const std::string& filePath);
 	};
 }
+
+
+
+#endif JSONHANDLER_H
+
