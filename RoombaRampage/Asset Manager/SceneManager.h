@@ -4,6 +4,7 @@
 #include <string>
 #include <unordered_map>
 #include "../De&Serialization/json_handler.h"
+#include <filesystem>
 #include <memory>
 #include <optional>
 
@@ -18,24 +19,28 @@ namespace scenes {
 			return m_InstancePtr.get();
 		}
 
-		std::string m_AddScene(std::string filepath);
+		//std::string m_AddScene(std::string filepath);
 
 		// create a json folder
-		std::optional<std::string> m_CreateNewScene(std::string scene);
+		bool m_CreateNewScene(std::filesystem::path scenepath);
 
-		void m_LoadScene(std::string scene);
+		void m_LoadScene(std::filesystem::path scenepath);
+
+		void m_ClearAllScene();
 
 		void m_ClearScene(std::string scene);
 
 		void m_SaveScene(std::string scene);
 
-		void m_SaveActiveScene();
+		void m_SaveAllActiveScenes();
 
+		void m_SwapScenes(std::string oldscene, std::string newscene , ecs::EntityID id);
 
-		std::string m_jsonFilePath{ "../RoombaRampage/Assets/Scene/" };
+		static std::optional<std::string> GetSceneByEntityID(ecs::EntityID entityID);
 
-		std::string m_activeScene;
-		std::vector<std::string> m_availableScenes;
+		std::unordered_map<std::string, std::filesystem::path> m_scenePath;
+
+		std::vector<std::filesystem::path> m_recentFiles;
 
 	private:
 		static std::unique_ptr<SceneManager> m_InstancePtr;

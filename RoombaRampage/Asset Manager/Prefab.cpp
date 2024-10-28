@@ -182,84 +182,86 @@ namespace prefab {
 
     int Prefab::m_CreateEntityFromPrefab(std::string prefabString) {
 
-        assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
-        //serach for prefab that matches the map
+        //assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+        ////serach for prefab that matches the map
 
-        if (assetmanager->m_prefabs.find(prefabString) == assetmanager->m_prefabs.end()) {
-            LOGGING_ERROR("Prefab does not exist");
-            return -1;
-        }
+        //if (assetmanager->m_prefabs.find(prefabString) == assetmanager->m_prefabs.end()) {
+        //    LOGGING_ERROR("Prefab does not exist");
+        //    return -1;
+        //}
 
-        Prefab prefab = assetmanager->m_prefabs[prefabString];
+        //Prefab prefab = assetmanager->m_prefabs[prefabString];
 
-        ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+        //ecs::ECS* ecs = ecs::ECS::m_GetInstance();
 
-        ecs::EntityID newEntityID = ecs->m_CreateEntity();
+        //ecs::EntityID newEntityID = ecs->m_CreateEntity();
 
-        //allocate transform component
-        //Addon everytime a transform component is added
-        {
-            ecs::TransformComponent* tc = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(newEntityID));
-            *tc = prefab.m_transformComponents;
-            //set component back to true
-            tc->m_IsLive = true;
-            tc->m_Entity = newEntityID;
-        }
-        {
-            ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(newEntityID));
-            *nc = prefab.m_nameComponents;
-            //set component back to true
-            nc->m_IsLive = true;
-            nc->m_Entity = newEntityID;
-        }
-
-
-
-        if (prefab.m_prefabSignature.test(ecs::TYPECOLLIDERCOMPONENT)) {
-            ecs::ColliderComponent* cc = static_cast<ecs::ColliderComponent*>(ecs->m_AddComponent(ecs::TYPECOLLIDERCOMPONENT, newEntityID));
-            *cc = prefab.m_colliderComponents;
-            cc->m_IsLive = true;
-            cc->m_Entity = newEntityID;
-        }
+        ////allocate transform component
+        ////Addon everytime a transform component is added
+        //{
+        //    ecs::TransformComponent* tc = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(newEntityID));
+        //    *tc = prefab.m_transformComponents;
+        //    //set component back to true
+        //    tc->m_IsLive = true;
+        //    tc->m_Entity = newEntityID;
+        //}
+        //{
+        //    ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(newEntityID));
+        //    *nc = prefab.m_nameComponents;
+        //    //set component back to true
+        //    nc->m_IsLive = true;
+        //    nc->m_Entity = newEntityID;
+        //}
 
 
-        if (prefab.m_prefabSignature.test(ecs::TYPEPLAYERCOMPONENT)) {
-            ecs::PlayerComponent* pc = static_cast<ecs::PlayerComponent*>(ecs->m_AddComponent(ecs::TYPEPLAYERCOMPONENT, newEntityID));
-            *pc = prefab.m_playerComponents;
-            pc->m_IsLive = true;
-            pc->m_Entity = newEntityID;
-        }
 
-        if (prefab.m_prefabSignature.test(ecs::TYPERIGIDBODYCOMPONENT)) {
-            ecs::RigidBodyComponent* rb = static_cast<ecs::RigidBodyComponent*>(ecs->m_AddComponent(ecs::TYPERIGIDBODYCOMPONENT, newEntityID));
-            *rb = prefab.m_rigidBodyComponents;
-            rb->m_IsLive = true;
-            rb->m_Entity = newEntityID;
-        }
+        //if (prefab.m_prefabSignature.test(ecs::TYPECOLLIDERCOMPONENT)) {
+        //    ecs::ColliderComponent* cc = static_cast<ecs::ColliderComponent*>(ecs->m_AddComponent(ecs::TYPECOLLIDERCOMPONENT, newEntityID));
+        //    *cc = prefab.m_colliderComponents;
+        //    cc->m_IsLive = true;
+        //    cc->m_Entity = newEntityID;
+        //}
 
-        if (prefab.m_prefabSignature.test(ecs::TYPESPRITECOMPONENT)) {
-            ecs::SpriteComponent* sc = static_cast<ecs::SpriteComponent*>(ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, newEntityID));
-            *sc = prefab.m_spriteComponents;
-            sc->m_IsLive = true;
-            sc->m_Entity = newEntityID;
-        }
 
-        if (prefab.m_prefabSignature.test(ecs::TYPETEXTCOMPONENT)) {
-            ecs::TextComponent* tc = static_cast<ecs::TextComponent*>(ecs->m_AddComponent(ecs::TYPETEXTCOMPONENT, newEntityID));
-            *tc = prefab.m_textComponent;
-            tc->m_IsLive = true;
-            tc->m_Entity = newEntityID;
-        }
+        //if (prefab.m_prefabSignature.test(ecs::TYPEPLAYERCOMPONENT)) {
+        //    ecs::PlayerComponent* pc = static_cast<ecs::PlayerComponent*>(ecs->m_AddComponent(ecs::TYPEPLAYERCOMPONENT, newEntityID));
+        //    *pc = prefab.m_playerComponents;
+        //    pc->m_IsLive = true;
+        //    pc->m_Entity = newEntityID;
+        //}
 
-        if (prefab.m_prefabSignature.test(ecs::TYPEANIMATIONCOMPONENT)) {
-            ecs::AnimationComponent* ac = static_cast<ecs::AnimationComponent*>(ecs->m_AddComponent(ecs::TYPEANIMATIONCOMPONENT, newEntityID));
-            *ac = prefab.m_animationComponent;
-            ac->m_IsLive = true;
-            ac->m_Entity = newEntityID;
-        }
+        //if (prefab.m_prefabSignature.test(ecs::TYPERIGIDBODYCOMPONENT)) {
+        //    ecs::RigidBodyComponent* rb = static_cast<ecs::RigidBodyComponent*>(ecs->m_AddComponent(ecs::TYPERIGIDBODYCOMPONENT, newEntityID));
+        //    *rb = prefab.m_rigidBodyComponents;
+        //    rb->m_IsLive = true;
+        //    rb->m_Entity = newEntityID;
+        //}
 
-        LOGGING_INFO("Prefab -> Entity Created Successfully");
-        return newEntityID;
+        //if (prefab.m_prefabSignature.test(ecs::TYPESPRITECOMPONENT)) {
+        //    ecs::SpriteComponent* sc = static_cast<ecs::SpriteComponent*>(ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, newEntityID));
+        //    *sc = prefab.m_spriteComponents;
+        //    sc->m_IsLive = true;
+        //    sc->m_Entity = newEntityID;
+        //}
+
+        //if (prefab.m_prefabSignature.test(ecs::TYPETEXTCOMPONENT)) {
+        //    ecs::TextComponent* tc = static_cast<ecs::TextComponent*>(ecs->m_AddComponent(ecs::TYPETEXTCOMPONENT, newEntityID));
+        //    *tc = prefab.m_textComponent;
+        //    tc->m_IsLive = true;
+        //    tc->m_Entity = newEntityID;
+        //}
+
+        //if (prefab.m_prefabSignature.test(ecs::TYPEANIMATIONCOMPONENT)) {
+        //    ecs::AnimationComponent* ac = static_cast<ecs::AnimationComponent*>(ecs->m_AddComponent(ecs::TYPEANIMATIONCOMPONENT, newEntityID));
+        //    *ac = prefab.m_animationComponent;
+        //    ac->m_IsLive = true;
+        //    ac->m_Entity = newEntityID;
+        //}
+
+        //LOGGING_INFO("Prefab -> Entity Created Successfully");
+        //return newEntityID;
+
+        return 0;
     }
 
 

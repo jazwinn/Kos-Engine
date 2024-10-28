@@ -88,6 +88,8 @@ namespace mat3x3 {
 
 	};
 
+	void Mat3Decompose(const Mat3x3& in, vector2::Vec2& translation, vector2::Vec2& scale, float& rotate);
+
 	/**
 	\brief		this function is a meant for changing a given Matrix into an identity matrix
 	**/

@@ -31,7 +31,7 @@ void gui::ImGuiHandler::m_DrawMainMenuBar() {
     scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();
     //If CTRL + S press, save
     if (io.KeyCtrl && ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_S))) {
-        scenemanager->m_SaveActiveScene();
+        scenemanager->m_SaveAllActiveScenes();
         std::cout << "Saving data..." << std::endl;
     }
 
@@ -49,18 +49,16 @@ void gui::ImGuiHandler::m_DrawMainMenuBar() {
             }
            
             if (ImGui::MenuItem("Save")) {
-
-
-                scenemanager->m_SaveActiveScene();
-
+                
+                scenemanager->m_SaveAllActiveScenes();
                 
             }
 
             
-            if (ImGui::BeginMenu("Open Recent")) {
+            if ((scenemanager->m_recentFiles.size() > 0) && ImGui::BeginMenu("Open Recent")) {
 
-                for (auto& scene : scenemanager->m_availableScenes) {
-                    if (ImGui::MenuItem(scene.c_str())) {
+               for (auto& scene : scenemanager->m_recentFiles) {
+                    if (ImGui::MenuItem(scene.filename().stem().string().c_str())) {
                         scenemanager->m_LoadScene(scene);
                         m_clickedEntityId = -1;
                     }
@@ -70,11 +68,14 @@ void gui::ImGuiHandler::m_DrawMainMenuBar() {
             }
 
             if (ImGui::MenuItem("Open")) {
+                
+
                 char filePath[MAX_PATH];
                 std::string path = file::FileWindow::m_OpenfileDialog(filePath);
                 if (!path.empty()) {
-                    std::string scene = scenemanager->m_AddScene(path);
-                    scenemanager->m_LoadScene(scene);
+                    //clear all other scenes
+                    scenemanager->m_ClearAllScene();
+                    scenemanager->m_LoadScene(path);
                     m_clickedEntityId = -1;
                 }
 
@@ -107,13 +108,18 @@ void gui::ImGuiHandler::m_DrawMainMenuBar() {
             ImGui::InputTextWithHint(".json", "Enter scene name here", str1, IM_ARRAYSIZE(str1));
 
             if (ImGui::Button("Save", ImVec2(120, 0))) { 
-                std::string scene = str1;
+                std::string m_jsonFilePath{ "../RoombaRampage/Assets/Scene/" }; //TODO temp open window in future
+                std::string scene = m_jsonFilePath + str1 + ".json";
                 if (!scene.empty()) {
-                    if (auto result = scenemanager->m_CreateNewScene(scene); result.has_value()) {
-                        std::string filepath = result.value();
-                        scenemanager->m_AddScene(filepath);
-                        scenemanager->m_activeScene = scene;
-                        scenemanager->m_SaveActiveScene();
+                    if (scenemanager->m_CreateNewScene(scene)) {
+
+                        //remove all scenes
+                        scenemanager->m_ClearAllScene();
+
+                        scenemanager->m_LoadScene(scene);
+                    }
+                    else {
+                        LOGGING_ERROR("Fail to create scene");
                     }
                 }
                 else {

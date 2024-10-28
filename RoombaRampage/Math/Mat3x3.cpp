@@ -153,6 +153,21 @@ namespace mat3x3{
 	}
 
 
+	void Mat3Decompose(const Mat3x3& matrix, vector2::Vec2& translation, vector2::Vec2& scale, float& rotate)
+	{
+		translation.m_x = matrix.m_e20;
+		translation.m_y = matrix.m_e21;
+
+		scale.m_x = std::sqrt(matrix.m_e00 * matrix.m_e00 + matrix.m_e10 * matrix.m_e10);
+		scale.m_y = std::sqrt(matrix.m_e01 * matrix.m_e01 + matrix.m_e11 * matrix.m_e11);
+
+
+		rotate = std::atan2(matrix.m_e10 / scale.m_x, matrix.m_e00 / scale.m_x) * (180.f/MAT_PI);
+
+
+
+	}
+
 	void Mat3Identity(Mat3x3 & given) {
 		given.m_e00 = 1;
 		given.m_e01 = 0;
