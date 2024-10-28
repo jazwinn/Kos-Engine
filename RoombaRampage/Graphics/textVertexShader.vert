@@ -22,11 +22,13 @@ R"( #version 460 core
 layout (location = 0) in vec4 vertex;
 out vec2 texCoords;
 
-uniform mat4 projection;
+uniform mat3 projection;
+
+uniform mat3 view;
 
 void main()
 {
-    gl_Position = projection * vec4(vertex.xy, 0.9, 1.0); // z value to draw text in front for now
+    gl_Position = vec4(vec2(projection * vec3(view * vec3(vertex.xy, 1.f))), 0.9, 1.0); // z value to draw text in front for now
     texCoords = vertex.zw;
 }  
 

@@ -10,6 +10,7 @@ namespace graphicpipe
 	std::unique_ptr<GraphicsCamera> GraphicsCamera::m_instancePtr = nullptr;
 	glm::mat3 GraphicsCamera::m_currCameraMatrix{1.f};
 	glm::mat3 GraphicsCamera::m_currViewMatrix{ 1.f };
+	glm::mat3 GraphicsCamera::m_currOrthoMatrix{ 1.f };
 	std::vector<glm::mat3> GraphicsCamera::m_cameras{};
 
 	GraphicsCamera* GraphicsCamera::m_funcGetInstance()
@@ -61,25 +62,29 @@ namespace graphicpipe
 	void GraphicsCamera::multiplyOrthoMatrix()
 	{
 		GraphicsPipe* pipe = GraphicsPipe::m_funcGetInstance();
-		glm::mat3 ortho{ 1.f };
 		float left = -1.f * (1.f/ m_aspectRatio);
 		float right = 1.f * (1.f /m_aspectRatio);
 		float bottom = -1.f;
 		float top = 1.f;
-		ortho[0][0] = (2.0f / (right - left));
-		ortho[1][1] = 2.0f / (top - bottom);
-		ortho[2][0] = -(right + left) / (right - left);
-		ortho[2][1] = -(top + bottom) / (top - bottom);
-		ortho[2][2] = 1;
+		m_currOrthoMatrix[0][0] = (2.0f / (right - left));
+		m_currOrthoMatrix[1][1] = 2.0f / (top - bottom);
+		m_currOrthoMatrix[2][0] = -(right + left) / (right - left);
+		m_currOrthoMatrix[2][1] = -(top + bottom) / (top - bottom);
+		m_currOrthoMatrix[2][2] = 1;
 
 		for (glm::mat3& matrix : pipe->m_modelToNDCMatrix)
 		{
-			matrix = ortho * matrix;
+			matrix = m_currOrthoMatrix * matrix;
 		}
 
-		for (glm::mat3& debugMatrix : pipe->m_debugToNDCMatrix)
+		for (glm::mat3& debugMatrix : pipe->m_debugBoxToNDCMatrix)
 		{
-			debugMatrix = ortho * debugMatrix;
+			debugMatrix = m_currOrthoMatrix * debugMatrix;
+		}
+
+		for (glm::mat3& debugMatrix : pipe->m_debugCircleToNDCMatrix)
+		{
+			debugMatrix = m_currOrthoMatrix * debugMatrix;
 		}
 		//m_cameras.clear();
 	}
@@ -95,10 +100,15 @@ namespace graphicpipe
 		{
 			pipe->m_modelToNDCMatrix.push_back(m_currViewMatrix * matrix);
 		}
-		for (glm::mat3& debugMatrix : pipe->m_debugToNDCMatrix)
+		for (glm::mat3& debugMatrix : pipe->m_debugBoxToNDCMatrix)
 		{
 			debugMatrix = m_currViewMatrix * debugMatrix;
 		}
+		for (glm::mat3& debugMatrix : pipe->m_debugCircleToNDCMatrix)
+		{
+			debugMatrix = m_currViewMatrix * debugMatrix;
+		}
+
 	
 	}
 	

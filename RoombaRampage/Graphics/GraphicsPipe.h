@@ -152,6 +152,8 @@ namespace graphicpipe {
          */
         void m_funcSetupSquareLinesVao();
 
+        void m_funcSetupCircleLinesVao();
+
         /**
          * @brief Sets up the array buffer for storing model matrix data.
          */
@@ -215,8 +217,6 @@ namespace graphicpipe {
          */
         enum ShapeType
         {
-            SQUARE,       ///< Square shape type.
-            CIRCLE,       ///< Circle shape type.
             SQUARE_LINES, ///< Square outline shape type.
             CIRCLE_LINES  ///< Circle outline shape type.
         };
@@ -320,18 +320,21 @@ namespace graphicpipe {
         Mesh m_squareMesh;              ///< Mesh for square rendering.
         Mesh m_screenMesh;              ///< Mesh for screen rendering.
         Mesh m_squareLinesMesh;         ///< Mesh for rendering square outlines.
+        Mesh m_circleLinesMesh;
         Mesh m_textMesh;                ///< Mesh for text rendering.
 
         // Matrix Containers
         std::vector<glm::mat3> m_modelMatrix{};
         std::vector<glm::mat3> m_modelToNDCMatrix{}; ///< Model-to-NDC transformation matrices.
-        std::vector<glm::mat3> m_debugToNDCMatrix{}; ///< Debug model-to-NDC matrices.
+        std::vector<glm::mat3> m_debugBoxToNDCMatrix{}; ///< Debug model-to-NDC matrices.
+        std::vector<glm::mat3> m_debugCircleToNDCMatrix{};
 
         // Data for rendering
         std::vector<GraphicsData> m_modelData{}; ///< Graphics data for rendering.
         std::vector<DebugDrawData> m_debugBoxData{}; ///< Data for rendering debug boxes.
         std::vector<TextData> m_textData{}; ///< Data for rendering text.
         std::vector<float> m_debugBoxCollisionChecks{}; ///< Collision check data for debug rendering.
+        std::vector<float> m_debugCircleCollisionChecks{}; ///< Collision check data for debug rendering.
         std::vector<int> m_textureOrder{}; ///< Order of texture bindings.
 
         // Texture IDs
