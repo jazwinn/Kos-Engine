@@ -55,6 +55,7 @@ namespace ecs{
 		m_AddComponentToECS<AnimationComponent>(TYPEANIMATIONCOMPONENT);
 		m_AddComponentToECS<CameraComponent>(TYPECAMERACOMPONENT);
 		m_AddComponentToECS<ScriptComponent>(TYPESCRIPTCOMPONENT);
+		m_AddComponentToECS<ButtonComponent>(TYPEBUTTONCOMPONENT);
 
 		//Allocate memory to each system
 		ecs->m_ECS_SystemMap[TYPETRANSFORMSYSTEM] = std::make_shared<TransformSystem>();
@@ -62,6 +63,7 @@ namespace ecs{
 		ecs->m_ECS_SystemMap[TYPEPHYSICSSYSTEM] = std::make_shared<PhysicsSystem>(); 
 		ecs->m_ECS_SystemMap[TYPECOLLISIONRESPONSESYSTEM] = std::make_shared<CollisionResponseSystem>();
 		ecs->m_ECS_SystemMap[TYPELOGICSYSTEM] = std::make_shared<LogicSystem>();
+		ecs->m_ECS_SystemMap[TYPEBUTTONSYSTEM] = std::make_shared<ButtonSystem>();
 
 		ecs->m_ECS_SystemMap[TYPERENDERSYSTEM] = std::make_shared<RenderSystem>();
 		ecs->m_ECS_SystemMap[TYPERENDERTEXTSYSTEM] = std::make_shared<RenderTextSystem>();

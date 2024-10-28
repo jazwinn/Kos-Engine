@@ -13,6 +13,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../ECS.h"
 
 #include "PhysicsSystem.h"
+#include "../Application/Helper.h"
 
 
 namespace ecs {
@@ -56,7 +57,7 @@ namespace ecs {
 
 	void PhysicsSystem::m_Update() {
 		ECS* ecs = ECS::m_GetInstance();
-
+		Helper::Helpers* help = Helper::Helpers::GetInstance();
 		if (m_vecRigidBodyComponentPtr.size() != m_vecTransformComponentPtr.size()) {
 			LOGGING_ERROR("Error: Vectors container size does not Match");
 			return;
@@ -72,8 +73,7 @@ namespace ecs {
 				// If kinematic or static, skip physics calculations
 				return;
 			}
-			else
-			{
+			for (int i = 0; i < help->currentNumberOfSteps; ++i) {
 				// Integrate linear motion
 				vector2::Vec2 acceleration = rigidBody->m_Acceleration + rigidBody->m_Force * rigidBody->m_InverseMass;
 				rigidBody->m_Velocity += acceleration * ecs->m_DeltaTime;
@@ -89,18 +89,19 @@ namespace ecs {
 
 				rigidBody->m_Force = vector2::Vec2{ 0.0f, 0.0f };
 				rigidBody->m_Torque = 0.0f;
+
+
+				if (!rigidBody->m_IsStatic && !rigidBody->m_IsKinematic) {
+					transform->m_position += rigidBody->m_Velocity * ecs->m_DeltaTime;
+					transform->m_rotation += rigidBody->m_AngularVelocity * ecs->m_DeltaTime;
+				}
+
+
+				//update physics pipline
+				physicspipe::Physics PhysicsPipeline;
+				//TODO optimize,  causing longer load time
+				PhysicsPipeline.m_Update(ecs->m_DeltaTime);
 			}
-
-			if (!rigidBody->m_IsStatic && !rigidBody->m_IsKinematic) {
-				transform->m_position += rigidBody->m_Velocity * ecs->m_DeltaTime;
-				transform->m_rotation += rigidBody->m_AngularVelocity * ecs->m_DeltaTime;
-			}
-
-
-			//update physics pipline
-			physicspipe::Physics PhysicsPipeline;
-			//TODO optimize,  causing longer load time
-			PhysicsPipeline.m_Update(ecs->m_DeltaTime);
 		}
 	}
 

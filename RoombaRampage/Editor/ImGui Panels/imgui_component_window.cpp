@@ -166,7 +166,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
     //Add Component Window
     const char* ComponentNames[] =
     {
-        "Add Components", "Collider Component", "Sprite Component", "Player Component", "Rigid Body Component", "Text Component", "Animation Component", "Camera Component"
+        "Add Components", "Collider Component", "Sprite Component", "Player Component", "Rigid Body Component", "Text Component", "Animation Component", "Camera Component" , "Button Component"
     };
     static int ComponentType = 0;
 
@@ -205,6 +205,10 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
             }
             if (ComponentType == 7) {
                 ecs->m_AddComponent(ecs::TYPECAMERACOMPONENT, entityID);
+                ComponentType = 0;
+            }
+            if (ComponentType == 8) {
+                ecs->m_AddComponent(ecs::TYPEBUTTONCOMPONENT, entityID);
                 ComponentType = 0;
             }
         }
@@ -487,6 +491,25 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                 if (open) {
                     auto* rbc = static_cast<ecs::ScriptComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESCRIPTCOMPONENT]->m_GetEntityComponent(entityID));
+                    // rbc->ApplyFunction(DrawComponents(rbc->Names()));
+                }
+
+
+            }
+
+            if (EntitySignature.test(ecs::TYPEBUTTONCOMPONENT)) {
+
+                open = ImGui::CollapsingHeader("Button Component");
+
+                if (ImGui::BeginPopupContextItem()) {
+                    if (ImGui::MenuItem("Delete Component")) {
+                        ecs->m_RemoveComponent(ecs::TYPEBUTTONCOMPONENT, m_clickedEntityId);
+                    }
+                    ImGui::EndPopup();
+                }
+
+                if (open) {
+                    auto* rbc = static_cast<ecs::ButtonComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEBUTTONCOMPONENT]->m_GetEntityComponent(entityID));
                     // rbc->ApplyFunction(DrawComponents(rbc->Names()));
                 }
 

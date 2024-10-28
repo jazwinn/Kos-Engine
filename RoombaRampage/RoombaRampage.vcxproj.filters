@@ -74,6 +74,7 @@
     <ClCompile Include="Asset Manager\Text.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_game_scene_window.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_play_pause.cpp" />
+    <ClCompile Include="ECS\System\ButtonSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Application.h" />
@@ -159,6 +160,8 @@
     <ClInclude Include="Asset Manager\Text.h" />
     <ClInclude Include="Asset Manager\Reflection.h" />
     <ClInclude Include="ECS\Component\ConvertComponent.h" />
+    <ClInclude Include="ECS\Component\ButtonComponent.h" />
+    <ClInclude Include="ECS\System\ButtonSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Graphics\debugFragmentShader.frag" />

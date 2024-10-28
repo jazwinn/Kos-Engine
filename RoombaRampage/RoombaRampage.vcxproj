@@ -182,6 +182,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClCompile Include="C# Mono\mono_handler.cpp" />
     <ClCompile Include="ECS\Hierachy.cpp" />
     <ClCompile Include="ECS\Layers.cpp" />
+    <ClCompile Include="ECS\System\ButtonSystem.cpp" />
     <ClCompile Include="ECS\System\CameraSystem.cpp" />
     <ClCompile Include="ECS\System\PhysicsSystem.cpp" />
     <ClCompile Include="Editor\EditorCamera.cpp" />
@@ -256,11 +257,13 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="Asset Manager\SceneManager.h" />
     <ClInclude Include="Asset Manager\Text.h" />
     <ClInclude Include="C# Mono\mono_handler.h" />
+    <ClInclude Include="ECS\Component\ButtonComponent.h" />
     <ClInclude Include="ECS\Component\CameraComponent.h" />
     <ClInclude Include="ECS\Component\ConvertComponent.h" />
     <ClInclude Include="ECS\Component\ScriptComponent.h" />
     <ClInclude Include="ECS\Hierachy.h" />
     <ClInclude Include="ECS\Layers.h" />
+    <ClInclude Include="ECS\System\ButtonSystem.h" />
     <ClInclude Include="ECS\System\CameraSystem.h" />
     <ClInclude Include="ECS\System\PhysicsSystem.h" />
     <ClInclude Include="Editor\EditorCamera.h" />

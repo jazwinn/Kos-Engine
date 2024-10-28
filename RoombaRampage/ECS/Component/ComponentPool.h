@@ -32,6 +32,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "AnimationComponent.h"
 #include "CameraComponent.h"
 #include "ScriptComponent.h"
+#include "ButtonComponent.h"
 
 #include <algorithm>
 
