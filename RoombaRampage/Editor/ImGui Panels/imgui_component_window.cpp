@@ -58,12 +58,28 @@ struct DrawComponents {
         ImGui::SetNextItemWidth(100.0f);
         std::string title = "##" + m_Array[count];
         ImGui::PushItemWidth(slidersize);
-        ImGui::DragFloat(title.c_str(), &_args, 1.0f, -100.0f, 100.f, "%.2f");
+        ImGui::DragFloat(title.c_str(), &_args, 0.1f, -100.0f, 100.f, "%.2f");
         ImGui::PopItemWidth();
         count++;
     }
 
-
+    void operator()(physicspipe::EntityType& _args)
+    {
+        const char* shapeName = (_args == physicspipe::EntityType::CIRCLE) ? "CIRCLE" : "RECTANGLE";
+        if (ImGui::BeginCombo("Shape Types", shapeName))
+        {
+            if (ImGui::Selectable("RECTANGLE")) 
+            {
+                _args = physicspipe::EntityType::RECTANGLE;
+            }
+            if (ImGui::Selectable("CIRCLE")) 
+            {
+                _args = physicspipe::EntityType::CIRCLE;
+            }
+            ImGui::EndCombo();
+        }
+        count++;
+    }
 
     void operator()(int& _args) {
         

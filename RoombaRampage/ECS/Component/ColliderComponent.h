@@ -42,14 +42,14 @@ namespace ecs {
 		//layer::LAYERS m_CollideLayer{layer::DEFAULT};
 
 		// Current no implementation
-		physicspipe::EntityType m_type = physicspipe::EntityType::RECTANGLE;
+		physicspipe::EntityType m_type = physicspipe::EntityType::CIRCLE;
 
-		float m_radius{};
+		float m_radius{0.5f};
 
 		float m_isCollided{ false };
 
 
-		REFLECTABLE(ColliderComponent, m_Size, m_OffSet, m_drawDebug, m_radius,  m_isCollided)
+		REFLECTABLE(ColliderComponent, m_Size, m_OffSet, m_drawDebug, m_radius, m_type)
 	};
 
 }
