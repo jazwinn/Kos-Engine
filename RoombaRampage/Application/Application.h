@@ -77,7 +77,7 @@ namespace Application {
 		gui::ImGuiHandler imgui_manager; //should only remain in Application
 		AppWindow lvWindow;
 		Input::InputSystem Input;
-		Script::ScriptHandler ScriptManager;
+		
 		logging::Logger logs;
 	};
 }

@@ -13,6 +13,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../ECS.h"
 
 #include "LogicSystem.h"
+#include "../Asset Manager/AssetManager.h"
 
 
 namespace ecs {
@@ -57,7 +58,7 @@ namespace ecs {
 	void LogicSystem::m_Update() {
 
 		ECS* ecs = ECS::m_GetInstance();
-
+		assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
 		//if (m_vecMovementComponentPtr.size() != m_vecTransformComponentPtr.size()) {
 		//	//std::cout << "Error: Vectors container size does not Match" << std::endl;
 		//	LOGGING_ERROR("Error: Vectors container size does not Match");
@@ -73,8 +74,8 @@ namespace ecs {
 
 			for (const std::string& script : scriptComp->m_scripts) {
 
-				// run the scripts update fuction
-
+			// run the scripts update fuction
+				assetManager->m_scriptManager.m_InvokeMethod(script, script, "Update", nullptr, 0);
 
 			}
 		}

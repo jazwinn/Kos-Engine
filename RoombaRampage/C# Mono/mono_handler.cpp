@@ -1,66 +1,63 @@
 #include "mono_handler.h"
+#include "InternalCall.h"
 #include <iostream>
+#include <filesystem>
+#include <cstdlib>
+#include <string>
 
-namespace Script {
+namespace script {
 
-    ScriptHandler::ScriptHandler() {}
-
-    ScriptHandler::~ScriptHandler() {
-        m_Cleanup();
-    }
-
-    bool ScriptHandler::m_InitMono(const std::string& assemblyPath) {
+    ScriptHandler::ScriptHandler() {
         // Set Mono path
         mono_set_dirs("Dependencies/mono/lib", "Dependencies/mono/etc");
+
 
         // Initialize Mono runtime
         m_monoDomain = mono_jit_init("MonoDomain");
         if (!m_monoDomain) {
             std::cout << "Mono domain not initialized." << std::endl;
-            return false;
+            return;
         }
 
-        return true;
+        // initialize internal call
+        InternalCall::m_RegisterInternalCalls();
+
     }
 
-    static void m_InternalGetTransformComponent(MonoObject* entity)
+    ScriptHandler::~ScriptHandler() {
+        m_Cleanup();
+    }
+
+    void ScriptHandler::m_CompileCSharpFile(const std::filesystem::path& filePath)
     {
-        std::string sceneName = "CameraTest.json";
-        auto& sceneEntities = ecs::ECS::m_GetInstance()->m_ECS_SceneMap[sceneName];
+        std::string scriptbase = "C:/Users/ngjaz/OneDrive/Documents/roombarampage/GreyGooseWorkspace/RRR/RoombaRampage/Assets/Scripts/GameScript.dll";
+        std::filesystem::path outputDir = "C:/Users/ngjaz/OneDrive/Documents/roombarampage/GreyGooseWorkspace/RRR/RoombaRampage/Assets/Scripts/";
 
-        ecs::EntityID firstEntityID = sceneEntities.front(); // Retrieve the first EntityID in this scene
-        std::cout << "First Entity ID in C++ for scene " << sceneName << ": " << firstEntityID << std::endl;
+        std::string command = "csc /target:library /out:" + (outputDir/(filePath.filename().stem().string() + ".dll")).string() + " /reference:" + scriptbase + " " + filePath.string();
 
+        // Execute the command
+        int result = system(command.c_str());
 
-        //ecs::EntityID firstEntityID = ecs::ECS::m_GetInstance()->m_ECS_EntityMap.begin()->first;
-        //std::cout << "Last Entity ID in C++: " << firstEntityID << std::endl;
-
-        ecs::TransformComponent* transform = static_cast<ecs::TransformComponent*>(
-            ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(firstEntityID)
-            );
-
-        if (transform)
+        // Check the result of the command
+        if (result == 0)
         {
-            std::cout << "Entity Transform Position: " << transform->m_position.m_x << ", " << transform->m_position.m_y << std::endl;
+            std::cout << "Compilation successful: " + filePath.filename().stem().string() + ".dll" << std::endl;
         }
         else
         {
-            std::cout << "Failed to get TransformComponent for EntityID: " << firstEntityID << std::endl;
+            std::cerr << "Compilation failed!" << std::endl;
         }
     }
 
-    // Register Internal Call in Mono
-    void ScriptHandler::m_RegisterInternalCalls()
-    {
-        mono_add_internal_call("Namespace.ScriptBase::GetTransformComponent", m_InternalGetTransformComponent);
-    }
 
-    void ScriptHandler::m_AddScripts(const std::vector<std::string>& scriptNames) {
-        for (const auto& scriptName : scriptNames) {
-            m_scriptNames.push_back(scriptName);
+
+
+    void ScriptHandler::m_AddScripts(const std::filesystem::path& scriptpath) {
+
+            
 
             // Load assembly
-            std::string assemblyPath = "C# Mono/" + scriptName + ".dll";
+            std::string assemblyPath = scriptpath.string();
             MonoAssembly* assembly = mono_domain_assembly_open(m_monoDomain, assemblyPath.c_str());
             if (!assembly) {
                 std::cout << "Failed to load assembly: " << assemblyPath << std::endl;
@@ -75,11 +72,12 @@ namespace Script {
             }
 
             // Store the assembly and image
-            m_assemblies[scriptName] = assembly;
-            m_images[scriptName] = image;
+            std::string scriptname = scriptpath.filename().stem().string();
+            m_assemblies[scriptname] = assembly;
+            m_images[scriptname] = image;
+            m_scriptNames.push_back(scriptname);
 
-            std::cout << "Successfully added script: " << scriptName << std::endl;
-        }
+            std::cout << "Successfully added script: " << scriptname << std::endl;
     }
 
     bool ScriptHandler::m_LoadMethod(const std::string& scriptName, const std::string& className, const std::string& methodName, int paramCount) {

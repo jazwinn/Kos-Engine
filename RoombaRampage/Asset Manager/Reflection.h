@@ -6,6 +6,7 @@
 #include <tuple>
 #include <functional>
 #include <type_traits>
+#include <vector>
 
 //David Mazières implementation of for each
 /************************************************************************/
