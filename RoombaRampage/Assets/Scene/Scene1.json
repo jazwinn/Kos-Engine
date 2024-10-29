@@ -1,34 +1,83 @@
 [
     {
-        "name": "Player Object",
+        "name": "dwa",
         "transform": {
             "position": {
                 "x": 0.0,
-                "y": 0.13333380222320557
-            },
-            "rotation": 0.0,
-            "scale": {
-                "x": 1.0,
-                "y": 1.0
-            }
-        },
-        "collider": {
-            "size": {
-                "x": 1.0,
-                "y": 1.0
-            },
-            "offset": {
-                "x": 0.0,
                 "y": 0.0
             },
-            "drawDebug": true
+            "rotation": -61.0,
+            "scale": {
+                "x": 3.0,
+                "y": 3.0
+            }
         },
-        "player": {
-            "control": true
-        },
-        "rigidbody": {
-            "mass": 0.0
-        },
-        "sprite": {}
+        "camera": {},
+        "children": [
+            {
+                "name": "Player Object",
+                "transform": {
+                    "position": {
+                        "x": 0.0,
+                        "y": 0.13333380222320557
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "collider": {
+                    "size": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "offset": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "drawDebug": true
+                },
+                "rigidbody": {
+                    "mass": 0.0
+                },
+                "sprite": {},
+                "player": {
+                    "control": true
+                }
+            },
+            {
+                "name": "Player Object",
+                "transform": {
+                    "position": {
+                        "x": -1.35722815990448,
+                        "y": 0.019115924835205078
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "collider": {
+                    "size": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "offset": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "drawDebug": true
+                },
+                "rigidbody": {
+                    "mass": 0.0
+                },
+                "sprite": {},
+                "player": {
+                    "control": true
+                }
+            }
+        ]
     }
 ]

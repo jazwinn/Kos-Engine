@@ -16,6 +16,8 @@ namespace ecs {
 
 		static std::optional<std::vector<EntityID>> m_GetChild(EntityID parent);
 
+		static void m_UpdateChildScene(EntityID parent);
+
 	};
 
 }
