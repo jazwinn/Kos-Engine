@@ -138,6 +138,12 @@ namespace gui {
                         scenemanager->m_SwapScenes(scene.value(), sceneentity.first, Id);
                     }
 
+                    //if entity is a child, break from parent
+                    const auto& parent = ecs::Hierachy::m_GetParent(Id);
+                    if (parent.has_value()) {
+                        ecs::Hierachy::m_RemoveParent(Id);
+                    }
+
                     ecs::Hierachy::m_UpdateChildScene(Id);
                     
 
