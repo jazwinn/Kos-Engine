@@ -54,21 +54,10 @@ namespace gui {
           0.f, 0.f, 1, 0.f,
           0.f, 0.f, 0.f, 1.f };
 
-        glm::mat3 ortho{ 1.f };
-        float left = -1.f * (aspectRatio);
-        float right = 1.f * (aspectRatio);
-        float bottom = -1.f;
-        float top = 1.f;
-        ortho[0][0] = (2.0f / (right - left));
-        ortho[1][1] = 2.0f / (top - bottom);
-        ortho[2][0] = -(right + left) / (right - left);
-        ortho[2][1] = -(top + bottom) / (top - bottom);
-        ortho[2][2] = 1;
-
-        projection[0] = ortho[0][0];
-        projection[5] = ortho[1][1];
-        projection[12] = ortho[2][0];
-        projection[13] = ortho[2][1];
+        projection[0] = EditorCamera::m_editorOrthoMatrix[0][0];
+        projection[5] = EditorCamera::m_editorOrthoMatrix[1][1];
+        projection[12] = EditorCamera::m_editorOrthoMatrix[2][0];
+        projection[13] = EditorCamera::m_editorOrthoMatrix[2][1];
 
 
         float cameraView[16] =
