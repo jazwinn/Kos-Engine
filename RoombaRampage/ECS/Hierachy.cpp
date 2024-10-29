@@ -1,5 +1,6 @@
 
 #include "Hierachy.h"
+#include "../Asset Manager/SceneManager.h"
 
 namespace ecs {
 
@@ -82,6 +83,38 @@ namespace ecs {
 		}
 
 		return parentTransform->m_childID;
+
+	}
+
+	void Hierachy::m_UpdateChildScene(EntityID parent)
+	{
+		scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();
+		std::string parentscene = scenemanager->GetSceneByEntityID(parent).value();
+		const auto& child = m_GetChild(parent);
+
+		if (child.has_value()) {
+			auto& children = child.value();
+
+			for (auto& childid : children) {
+				//if child scene does not belong to parent scene change scene
+				//create a update child function that recurse	
+				std::string childscene = scenemanager->GetSceneByEntityID(childid).value();
+				if (parentscene != childscene) {
+					scenemanager->m_SwapScenes(childscene, parentscene, childid);
+				}
+				//check if child have more children and call a recursion
+				if (m_GetChild(childid).has_value()) {
+					m_UpdateChildScene(childid);
+				}
+
+
+			}
+
+
+		}
+
+
+		
 
 	}
 
