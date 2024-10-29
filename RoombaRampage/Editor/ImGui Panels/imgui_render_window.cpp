@@ -119,6 +119,7 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
     }
     EditorCamera::calculateLevelEditorCamera();
     EditorCamera::calculateLevelEditorView();
+    EditorCamera::calculateLevelEditorOrtho();
     graphicpipe::GraphicsCamera::m_currCameraMatrix = EditorCamera::m_editorCameraMatrix;
     graphicpipe::GraphicsCamera::m_currViewMatrix = EditorCamera::m_editorViewMatrix;
     

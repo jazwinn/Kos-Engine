@@ -3,6 +3,7 @@
 
 #include <glm.hpp>
 #include <vector>
+#include <memory>
 
 namespace graphicpipe
 

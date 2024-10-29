@@ -292,6 +292,8 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                    
                     assetmanager::AssetManager* Asset = assetmanager::AssetManager::m_funcGetInstance();
                     auto* sc = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(entityID));
+                   
+
                     if (ImGui::BeginCombo("Images", sc->m_imageFile.c_str()))
                     {
                         for (const auto& image : Asset->m_imageManager.m_imageMap) {
@@ -301,6 +303,37 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             }
                         }
                         ImGui::EndCombo();
+                    }
+
+                    if (ImGui::TreeNode("Image Layers"))
+                    {
+                        //static std::map<const char*, int> item_names;
+                        //for (const auto& [id, component] : ecs->m_ECS_EntityMap)
+                        //{
+                        //    if (ecs->m_ECS_EntityMap[id].test(ecs::TYPESPRITECOMPONENT))
+                        //    {
+                        //        ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id));
+                        //        item_names[nc->m_entityName.c_str()] = 0;
+                        //    }
+                        //}
+                        ////static const char* item_names[] = { "Item One", "Item Two", "Item Three", "Item Four", "Item Five" };
+                        //for (int n = 0; n < item_names.size() ; n++)
+                        //{
+                        //    const char* item = item_names[n];
+                        //    ImGui::Selectable(item);
+
+                        //    if (ImGui::IsItemActive() && !ImGui::IsItemHovered())
+                        //    {
+                        //        int n_next = n + (ImGui::GetMouseDragDelta(0).y < 0.f ? -1 : 1);
+                        //        if (n_next >= 0 && n_next < item_names.size())
+                        //        {
+                        //            item_names[n] = item_names[n_next];
+                        //            item_names[n_next] = item;
+                        //            ImGui::ResetMouseDragDelta();
+                        //        }
+                        //    }
+                        //}
+                        ImGui::TreePop();
                     }
 
                     if (ImGui::BeginDragDropTarget())
