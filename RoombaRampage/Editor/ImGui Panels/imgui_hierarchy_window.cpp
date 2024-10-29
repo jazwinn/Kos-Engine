@@ -111,8 +111,12 @@ namespace gui {
             //collapsing header for scene
             bool open = ImGui::CollapsingHeader(sceneentity.first.substr(0, str).c_str());
             if (ImGui::BeginPopupContextItem()) {
-                if (ImGui::MenuItem("Unload Scene")) {
+                if ((ecs->m_ECS_SceneMap.size() > 1) && ImGui::MenuItem("Unload Scene")) {
                     scenemanager->m_ClearScene(sceneentity.first);
+
+                    //break loop
+                    ImGui::EndPopup();
+                    break;
                 }
 
                 if (ImGui::MenuItem("Save Scene")) {
@@ -133,6 +137,14 @@ namespace gui {
                     if (scene.has_value()) {
                         scenemanager->m_SwapScenes(scene.value(), sceneentity.first, Id);
                     }
+
+                    //if entity is a child, break from parent
+                    const auto& parent = ecs::Hierachy::m_GetParent(Id);
+                    if (parent.has_value()) {
+                        ecs::Hierachy::m_RemoveParent(Id);
+                    }
+
+                    ecs::Hierachy::m_UpdateChildScene(Id);
                     
 
                 }
@@ -199,6 +211,8 @@ namespace gui {
     bool ImGuiHandler::m_DrawEntityNode(ecs::EntityID id) {
 
         ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+        
+
         ecs::TransformComponent* transCom =  static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id));
         if (transCom == NULL) return false;
 
@@ -251,6 +265,15 @@ namespace gui {
 
                 ecs::Hierachy::m_SetParent(id, childId);
                 std::cout << "Set Parent:" << id << " Child: " << childId << std::endl;
+
+                // update child's scene
+                ecs::Hierachy::m_UpdateChildScene(id);
+
+                //return
+                ImGui::EndDragDropTarget();
+                if (open)ImGui::TreePop();
+                return false;
+
 
             }
             ImGui::EndDragDropTarget();

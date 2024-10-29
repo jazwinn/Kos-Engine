@@ -5,6 +5,7 @@
 #include "stringbuffer.h"
 #include "filewritestream.h"
 #include "../ECS/ECS.h"
+#include "../ECS//Hierachy.h"
 
 namespace scenes {
 
@@ -96,15 +97,28 @@ namespace scenes {
     {
         ecs::ECS* ecs = ecs::ECS::m_GetInstance();
         //TODO
-        std::vector<ecs::EntityID> activeEntity;
+        //std::vector<ecs::EntityID> activeEntity;
 
-        for (auto& entity : ecs->m_ECS_SceneMap.find(scene)->second) {
-            activeEntity.push_back(entity);
-        }
+        //for (auto& entity : ecs->m_ECS_SceneMap.find(scene)->second) {
+        //    activeEntity.push_back(entity);
+        //}
 
-        //delete all entity
-        for (auto& id : activeEntity) {
-            ecs->m_DeleteEntity(id);
+        ////delete all parent entity
+        //for (auto& id : activeEntity) {
+        //    //top layer parent
+        //    if (!ecs::Hierachy::m_GetParent(id)) {
+        //        ecs->m_DeleteEntity(id);
+        //    }
+
+        //}
+
+        size_t numberOfEntityInScene = ecs->m_ECS_SceneMap.find(scene)->second.size();
+        for (int n{}; n < numberOfEntityInScene; n++) {
+            if (ecs->m_ECS_SceneMap.find(scene)->second.size() <= 0) break;
+            auto entityid = ecs->m_ECS_SceneMap.find(scene)->second.begin();
+            if (!ecs::Hierachy::m_GetParent(*entityid)) {
+                ecs->m_DeleteEntity(*entityid);
+            }
         }
 
         //remove scene from activescenes

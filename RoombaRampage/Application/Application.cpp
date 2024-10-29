@@ -223,6 +223,7 @@ namespace Application {
                 glfwSwapBuffers(lvWindow.m_window);
 
                 //sample to remove
+                //CAlling this with no scene will cause crash
                 if (Input::InputSystem::KeyStateA && Input::InputSystem::KeyStateD) {
 
                     if (ScriptManager.m_LoadMethod("ExampleScriptB", "ExampleScriptB", "Start", 0)) {
