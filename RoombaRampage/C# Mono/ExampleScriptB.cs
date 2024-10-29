@@ -10,6 +10,9 @@ namespace Namespace
         {
             base.Start();
 
+            //int firstEntityID = GetFirstEntityID();
+            //Console.WriteLine("First Entity ID in C#: " + firstEntityID);
+
             TransformComponent transform = GetTransformComponent();
             if (transform != null)
             {

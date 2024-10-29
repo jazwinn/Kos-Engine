@@ -34,9 +34,13 @@ namespace Script {
 		// getter for m_monoDomain
 		MonoDomain* m_GetMonoDomain() const;
 
+
+
 	private:
 		MonoDomain* m_monoDomain = nullptr;
 		MonoClass* m_testClass = nullptr;
+
+		//std::map<std::string, MonoObject*> m_instances;
 
 		std::map<std::string, MonoAssembly*> m_assemblies;
 		std::map<std::string, MonoImage*> m_images;
