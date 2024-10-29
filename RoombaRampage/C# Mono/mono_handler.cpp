@@ -25,7 +25,16 @@ namespace Script {
 
     static void m_InternalGetTransformComponent(MonoObject* entity)
     {
-        ecs::EntityID firstEntityID = ecs::ECS::m_GetInstance()->m_ECS_EntityMap.begin()->first;
+        std::string sceneName = "CameraTest.json";
+        auto& sceneEntities = ecs::ECS::m_GetInstance()->m_ECS_SceneMap[sceneName];
+
+        ecs::EntityID firstEntityID = sceneEntities.front(); // Retrieve the first EntityID in this scene
+        std::cout << "First Entity ID in C++ for scene " << sceneName << ": " << firstEntityID << std::endl;
+
+
+        //ecs::EntityID firstEntityID = ecs::ECS::m_GetInstance()->m_ECS_EntityMap.begin()->first;
+        //std::cout << "Last Entity ID in C++: " << firstEntityID << std::endl;
+
         ecs::TransformComponent* transform = static_cast<ecs::TransformComponent*>(
             ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(firstEntityID)
             );

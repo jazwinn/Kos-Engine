@@ -18,6 +18,9 @@ namespace Namespace
 
     public class ScriptBase
     {
+        //[MethodImpl(MethodImplOptions.InternalCall)]
+        //public extern int GetFirstEntityID();
+
         [MethodImpl(MethodImplOptions.InternalCall)]
         public extern TransformComponent GetTransformComponent();
 
