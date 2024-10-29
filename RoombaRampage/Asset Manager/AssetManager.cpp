@@ -36,6 +36,14 @@ namespace assetmanager {
 
     void AssetManager::m_funcLoadAssets(std::string Directory )
     {
+
+        //Temporary, scan for any .cs file in Assets/scripts & compileit
+
+
+
+
+
+
         for (auto& directoryPath : std::filesystem::directory_iterator(Directory)) {
             std::string filepath = directoryPath.path().string();
             std::replace(filepath.begin(), filepath.end(), '\\', '/');
@@ -56,7 +64,14 @@ namespace assetmanager {
                 //UNCOMMENT ME TO TEST IT OUT
                 m_LoadFont(filepath);
             }
-            
+            else if (directoryPath.path().filename().extension().string() == ".dll") {
+                m_LoadScript(filepath);
+                std::string filename = directoryPath.path().filename().stem().string();
+                // load start and update
+                //TODO move somewhere that is not the asset manager
+                m_scriptManager.m_LoadMethod(filename, filename, "Start", 0);
+                m_scriptManager.m_LoadMethod(filename, filename, "Update", 0);
+            }
 
         }
 
@@ -111,6 +126,11 @@ namespace assetmanager {
         }
 
         std::filesystem::rename(oldfilepath.c_str(), newfilepath.c_str());
+    }
+
+    void AssetManager::m_LoadScript(std::string file)
+    {
+        m_scriptManager.m_AddScripts(file);
     }
 
    void AssetManager::m_LoadAudio(std::string file) {
