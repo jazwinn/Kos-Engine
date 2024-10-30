@@ -326,6 +326,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="Graphics\GraphicsCamera.h" />
     <ClInclude Include="Graphics\GraphicsPipe.h" />
     <ClInclude Include="Inputs\Input.h" />
+    <ClInclude Include="Inputs\Keycodes.h" />
     <ClInclude Include="Math\Mat2x2.h" />
     <ClInclude Include="Math\Mat3x3.h" />
     <ClInclude Include="Math\Mathlib.h" />
