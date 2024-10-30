@@ -74,7 +74,7 @@ namespace ecs {
 		float mouseY = Input::InputSystem::MousePosition.m_y;
 		float minX, maxX, minY, maxY;
 
-		if (Input::InputSystem::KeyStateLMB && m_vecButtonComponentPtr.size()) {
+		if ((Input::InputSystem::m_isKeyPressed(keys::LMB) || Input::InputSystem::m_isKeyTriggered(keys::LMB)) && m_vecButtonComponentPtr.size()) {
 			for (int i = 0; i < m_vecButtonComponentPtr.size(); ++i) {
 				TransformComponent* transform = m_vecTransformComponentPtr[i];
 				ButtonComponent* button = m_vecButtonComponentPtr[i];
