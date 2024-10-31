@@ -27,12 +27,20 @@ namespace graphicpipe
 		}
 
 		glBindVertexArray(m_squareMesh.m_vaoId);
+		glGenBuffers(1, &m_layerBuffer);
+		glBindBuffer(GL_ARRAY_BUFFER, m_layerBuffer);
+		glBufferData(GL_ARRAY_BUFFER, m_layers.size() * sizeof(int), &m_layers[0], GL_DYNAMIC_DRAW);
+		glEnableVertexAttribArray(10);
+		glVertexAttribIPointer(10, 1, GL_INT, sizeof(int), (void*)0);
+		glVertexAttribDivisor(10, 1);
+
 		glGenBuffers(1, &m_textureOrderBuffer);
 		glBindBuffer(GL_ARRAY_BUFFER, m_textureOrderBuffer);
 		glBufferData(GL_ARRAY_BUFFER, m_textureOrder.size() * sizeof(int), &m_textureOrder[0], GL_DYNAMIC_DRAW);
 		glEnableVertexAttribArray(5);
 		glVertexAttribIPointer(5, 1, GL_INT, sizeof(int), (void*)0);
 		glVertexAttribDivisor(5, 1);
+
 		glGenBuffers(1, &m_stripCountBuffer);
 		glBindBuffer(GL_ARRAY_BUFFER, m_stripCountBuffer);
 		glBufferData(GL_ARRAY_BUFFER, m_stripCounts.size() * sizeof(int), &m_stripCounts[0], GL_DYNAMIC_DRAW);

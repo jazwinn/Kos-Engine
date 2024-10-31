@@ -305,34 +305,78 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         ImGui::EndCombo();
                     }
 
+
+                    if (open) {
+                        auto* rbc = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(entityID));
+                        rbc->ApplyFunction(DrawComponents(rbc->Names()));
+                    }
+
+                    static std::map<int, ecs::EntityID> layerMap;
+                    layerMap.clear();
+                    for (const auto& [id, component] : ecs->m_ECS_EntityMap)
+                    {
+                        if (ecs->m_ECS_EntityMap[id].test(ecs::TYPESPRITECOMPONENT))
+                        {
+                            ecs::SpriteComponent* sprite = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(id));
+                            int layer = sprite->m_layer;
+                            if (layerMap.find(sprite->m_layer) != layerMap.end())
+                            {
+                                while (layerMap.find(++layer) != layerMap.end())
+                                {
+                                   
+                                }
+                               
+                            }
+                            sprite->m_layer = layer;
+                            layerMap[layer] = id;
+                        }
+                    }
                     if (ImGui::TreeNode("Image Layers"))
                     {
-                        //static std::map<const char*, int> item_names;
-                        //for (const auto& [id, component] : ecs->m_ECS_EntityMap)
-                        //{
-                        //    if (ecs->m_ECS_EntityMap[id].test(ecs::TYPESPRITECOMPONENT))
-                        //    {
-                        //        ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id));
-                        //        item_names[nc->m_entityName.c_str()] = 0;
-                        //    }
-                        //}
-                        ////static const char* item_names[] = { "Item One", "Item Two", "Item Three", "Item Four", "Item Five" };
-                        //for (int n = 0; n < item_names.size() ; n++)
-                        //{
-                        //    const char* item = item_names[n];
-                        //    ImGui::Selectable(item);
+                        int count = 0;
+                        for (auto it = layerMap.begin(); it != layerMap.end(); ++it) 
+                        {
+                            ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(it->second));
+                            std::string s = std::to_string(it->second);
+                            std::string selectable = nc->m_entityName + '_' + s;
+                            ImGui::Selectable(selectable.c_str());
 
-                        //    if (ImGui::IsItemActive() && !ImGui::IsItemHovered())
-                        //    {
-                        //        int n_next = n + (ImGui::GetMouseDragDelta(0).y < 0.f ? -1 : 1);
-                        //        if (n_next >= 0 && n_next < item_names.size())
-                        //        {
-                        //            item_names[n] = item_names[n_next];
-                        //            item_names[n_next] = item;
-                        //            ImGui::ResetMouseDragDelta();
-                        //        }
-                        //    }
-                        //}
+                            if (ImGui::IsItemActive() && !ImGui::IsItemHovered())
+                            {
+                                decltype(it) n_next = (ImGui::GetMouseDragDelta(0).y < 0.f ? std::prev(it) : std::next(it));
+                                if (n_next != layerMap.end())
+                                {
+                                    ecs::SpriteComponent* sprite1 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(it->second));
+                                    ecs::SpriteComponent* sprite2 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(n_next->second));
+                                    int layer = sprite1->m_layer;
+                                    sprite1->m_layer = sprite2->m_layer;
+                                    sprite2->m_layer = layer;
+                                    ImGui::ResetMouseDragDelta();
+                                }
+                            }
+                           
+                        }
+                        ImGui::TreePop();
+                    }
+                    if (ImGui::TreeNode("Test"))
+                    {
+                        static const char* item_names[] = { "Item One", "Item Two", "Item Three", "Item Four", "Item Five" };
+                        for (int n = 0; n < 5 ; n++)
+                        {
+                            const char* item = item_names[n];
+                            ImGui::Selectable(item);
+
+                            if (ImGui::IsItemActive() && !ImGui::IsItemHovered())
+                            {
+                                int n_next = n + (ImGui::GetMouseDragDelta(0).y < 0.f ? -1 : 1);
+                                if (n_next >= 0 && n_next < 5)
+                                {
+                                    item_names[n] = item_names[n_next];
+                                    item_names[n_next] = item;
+                                    ImGui::ResetMouseDragDelta();
+                                }
+                            }
+                        }
                         ImGui::TreePop();
                     }
 

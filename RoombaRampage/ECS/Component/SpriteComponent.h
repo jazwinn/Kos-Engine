@@ -33,7 +33,7 @@ namespace ecs {
 
 		std::string m_imageFile{};
 		int m_layer{};
-		REFLECTABLE(SpriteComponent, m_imageFile);
+		REFLECTABLE(SpriteComponent, m_layer);
 	};
 
 }

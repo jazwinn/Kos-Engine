@@ -195,6 +195,7 @@ namespace graphicpipe {
         unsigned int m_textBuffer{};                ///< Buffer for text rendering.
         unsigned int m_stripCountBuffer{};          ///< Buffer for sprite strip counts (animation).
         unsigned int m_frameNumberBuffer{};         ///< Buffer for managing animation frame numbers.
+        unsigned int m_layerBuffer{};
 
         glm::mat3 m_testMatrix{};                   ///< Test matrix for rendering.
 
@@ -339,6 +340,7 @@ namespace graphicpipe {
 
         // Texture IDs
         std::vector<unsigned int> m_textureIDs{}; ///< Array of texture IDs.
+        std::vector<int> m_layers{};
         std::vector<int> m_stripCounts{}; ///< Sprite strip counts for animation.
         std::vector<int> m_frameNumbers{}; ///< Frame numbers for sprite animations.
         std::vector<image::Image> m_imageData{}; ///< Image data for rendering.

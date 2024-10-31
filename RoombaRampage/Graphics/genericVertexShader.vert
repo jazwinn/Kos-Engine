@@ -21,12 +21,13 @@ R"( #version 460 core
 
 
 layout (location=0) in vec2 vertexPosition;
-layout (location=1) in vec3 vertexColor;
+//layout (location=1) in vec3 vertexColor;
 layout (location=2) in vec2 vertexTexCoords;
 
 layout (location=3) in int aFrameNumber;
 layout (location=4) in int aStripCount;
 layout (location=5) in int atextureID;
+layout (location=10) in int aLayer;
 
 layout (location=6) in mat3 modelMatrix;
 
@@ -44,10 +45,11 @@ void main()
 	float frameOffset = frameWidth * aFrameNumber;
 
 	gl_Position = vec4(vec2(modelMatrix * vec3(vertexPosition, 1.f)),
-					   -0.01 * atextureID, 1.0);
+					   -0.01 * aLayer, 1.0);
 
 	texCoords = vec2(vertexTexCoords.x * frameWidth + frameOffset, vertexTexCoords.y);
-	color = vertexColor;
+	
+	color = vec3(1.0f,1.0f,1.0f);
 	textureID = atextureID;
 }
 

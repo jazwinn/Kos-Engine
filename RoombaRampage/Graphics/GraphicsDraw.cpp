@@ -6,6 +6,7 @@ namespace graphicpipe
 {
 	void GraphicsPipe::m_funcDraw()
 	{
+
 		if (!m_modelToNDCMatrix.empty())
 		{
 			glBindBuffer(GL_ARRAY_BUFFER, m_modelMatrixArrayBuffer);
@@ -19,6 +20,8 @@ namespace graphicpipe
 
 			glBindBuffer(GL_ARRAY_BUFFER, m_frameNumberBuffer);
 			glNamedBufferData(m_frameNumberBuffer, m_frameNumbers.size() * sizeof(int), &m_frameNumbers[0], GL_DYNAMIC_DRAW);
+			glBindBuffer(GL_ARRAY_BUFFER, m_layerBuffer);
+			glNamedBufferData(m_layerBuffer, m_layers.size() * sizeof(int), &m_layers[0], GL_DYNAMIC_DRAW);
 
 
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -47,11 +50,15 @@ namespace graphicpipe
 					std::cout << "First OpenGL Error: " << err << std::endl;
 				}*/
 			}
+			
 
 			glBindVertexArray(m_squareMesh.m_vaoId);
 			glDrawElementsInstanced(m_squareMesh.m_primitiveType, m_squareMesh.m_indexElementCount, GL_UNSIGNED_SHORT, NULL, static_cast<GLsizei>(m_modelToNDCMatrix.size()));
 			glBindVertexArray(0);
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+		
+		
 		}
 	}
 

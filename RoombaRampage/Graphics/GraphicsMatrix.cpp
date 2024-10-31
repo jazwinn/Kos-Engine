@@ -23,6 +23,7 @@ namespace graphicpipe
 				m_textureOrder.push_back(m_modelData[n].m_textureID);
 				m_stripCounts.push_back(m_imageData[m_modelData[n].m_textureID].m_stripCount);
 				m_frameNumbers.push_back(m_modelData[n].m_frameNumber);
+				m_layers.push_back(m_modelData[n].m_layer);
 			}
 			m_modelData.clear();
 		}

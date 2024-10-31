@@ -168,10 +168,10 @@ namespace graphicpipe
 		GLsizei position_data_offset = 0;
 		GLsizei position_attribute_size = sizeof(glm::vec2);
 		GLsizei position_data_size = position_attribute_size * static_cast<GLsizei>(lvPosVtx.size());
-		GLsizei color_data_offset = position_data_size;
-		GLsizei color_attribute_size = sizeof(glm::vec3);
-		GLsizei color_data_size = color_attribute_size * static_cast<GLsizei>(lvClrVtx.size());
-		GLsizei texcoord_data_offset = position_data_size + color_data_size;
+		//GLsizei color_data_offset = position_data_size;
+		//GLsizei color_attribute_size = sizeof(glm::vec3);
+		//GLsizei color_data_size = color_attribute_size * static_cast<GLsizei>(lvClrVtx.size());
+		GLsizei texcoord_data_offset = position_data_size;
 		GLsizei texcoord_attribute_size = sizeof(glm::vec2);
 		GLsizei texcoord_data_size = texcoord_attribute_size * static_cast<GLsizei>(lvTexCoords.size());
 
@@ -180,10 +180,10 @@ namespace graphicpipe
 
 		glCreateBuffers(1, &lvVboId);
 
-		glNamedBufferStorage(lvVboId, position_data_size + color_data_size + texcoord_data_size, nullptr, GL_DYNAMIC_STORAGE_BIT);
+		glNamedBufferStorage(lvVboId, position_data_size + texcoord_data_size, nullptr, GL_DYNAMIC_STORAGE_BIT);
 
 		glNamedBufferSubData(lvVboId, position_data_offset, position_data_size, lvPosVtx.data());
-		glNamedBufferSubData(lvVboId, color_data_offset, color_data_size, lvClrVtx.data());
+		//glNamedBufferSubData(lvVboId, color_data_offset, color_data_size, lvClrVtx.data());
 		glNamedBufferSubData(lvVboId, texcoord_data_offset, texcoord_data_size, lvTexCoords.data());
 
 		glCreateVertexArrays(1, &shape.m_vaoId);
@@ -193,11 +193,11 @@ namespace graphicpipe
 		glVertexArrayAttribFormat(shape.m_vaoId, 0, 2, GL_FLOAT, GL_FALSE, 0);
 		glVertexArrayAttribBinding(shape.m_vaoId, 0, 0);
 
-		glEnableVertexArrayAttrib(shape.m_vaoId, 1);
+		/*glEnableVertexArrayAttrib(shape.m_vaoId, 1);
 		glVertexArrayVertexBuffer(shape.m_vaoId, 1, lvVboId,
 			color_data_offset, color_attribute_size);
 		glVertexArrayAttribFormat(shape.m_vaoId, 1, 3, GL_FLOAT, GL_FALSE, 0);
-		glVertexArrayAttribBinding(shape.m_vaoId, 1, 1);
+		glVertexArrayAttribBinding(shape.m_vaoId, 1, 1);*/
 
 
 		glEnableVertexArrayAttrib(shape.m_vaoId, 2);
