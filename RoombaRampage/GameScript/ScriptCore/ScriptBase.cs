@@ -10,16 +10,19 @@ namespace Namespace
         public Vector2 m_scale;   
     }
 
-    public class Vector2
+    public struct Vector2
     {
-        public float x;
-        public float y;
+        public float X, Y;
     }
 
     public class ScriptBase
     {
+        // [MethodImpl(MethodImplOptions.InternalCall)]
+        // public extern int GetFirstEntityID();
+
+        //[MethodImplAttribute(MethodImplOptions.InternalCall)]
         [MethodImpl(MethodImplOptions.InternalCall)]
-        public extern TransformComponent GetTransformComponent();
+        public extern static void m_InternalGetTransformComponent(uint entity, out Vector2 pos, out Vector2 scale, out float rotate);
 
         public virtual void Start() { }
         public virtual void Update() { }

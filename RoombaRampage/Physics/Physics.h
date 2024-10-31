@@ -40,8 +40,8 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 namespace physicspipe {
 	
 	enum class EntityType {
-		CIRCLE,
-		RECTANGLE
+		RECTANGLE,
+		CIRCLE
 	};
 
 	struct AABB {

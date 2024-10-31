@@ -117,9 +117,9 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
         EditorCamera::m_editorCamera.m_zoom.x = 1.f;
         EditorCamera::m_editorCamera.m_zoom.y = 1.f;
     }
-
     EditorCamera::calculateLevelEditorCamera();
     EditorCamera::calculateLevelEditorView();
+    EditorCamera::calculateLevelEditorOrtho();
     graphicpipe::GraphicsCamera::m_currCameraMatrix = EditorCamera::m_editorCameraMatrix;
     graphicpipe::GraphicsCamera::m_currViewMatrix = EditorCamera::m_editorViewMatrix;
     
@@ -138,20 +138,17 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
             float screencordX = ImGui::GetMousePos().x - pos.x;
             float screencordY = ImGui::GetMousePos().y - pos.y;
 
-            std::cout << ImGui::GetMousePos().x << std::endl;
-            std::cout << ImGui::GetCursorScreenPos().x<< std::endl;
-            std::cout << ImGui::GetMousePos().y << std::endl;
-            std::cout << ImGui::GetCursorScreenPos().y << std::endl;
-
-
             //TODO calculate mouse pos correctly
             float cordX = (screencordX - imageSize.x / 2.f) / (imageSize.x / 2.f);
             float cordY = (std::abs(screencordY) - imageSize.y / 2.f) / (imageSize.y / 2.f);
 
             glm::vec3 translate = { cordX , -cordY, 0.f };
-            translate.x *= graphicpipe::GraphicsCamera::m_currCameraMatrix[0][0];
-            translate.y *= graphicpipe::GraphicsCamera::m_currCameraMatrix[1][1];
+            translate.x *= EditorCamera::m_editorCameraMatrix[0][0];
+            translate.y *= EditorCamera::m_editorCameraMatrix[1][1];
             translate.x *= 1.f / graphicpipe::GraphicsCamera::m_aspectRatio;
+            translate.x += EditorCamera::m_editorCameraMatrix[2][0];
+            translate.y += EditorCamera::m_editorCameraMatrix[2][1];
+            
 
             if (filename->filename().extension().string() == ".png") {
              ecs::ECS* ecs = ecs::ECS::m_GetInstance();

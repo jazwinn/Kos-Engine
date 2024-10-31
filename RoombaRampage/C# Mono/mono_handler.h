@@ -7,21 +7,21 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <filesystem>
 
-namespace Script {
+namespace script {
 
 	class ScriptHandler {
 	public:
+		// Initialize Mono and load C#
 		ScriptHandler();
 		~ScriptHandler();
 
-		// Initialize Mono and load C#
-		bool m_InitMono(const std::string& assemblyPath);
+		void m_CompileCSharpFile(const std::filesystem::path& filePath);
+
 
 		//Add multiple scripts and load their individual assembly
-		void m_AddScripts(const std::vector<std::string>& scriptNames);
-
-		void m_RegisterInternalCalls();
+		void m_AddScripts(const std::filesystem::path& scriptpath);
 
 		// Find method in the C# Script
 		bool m_LoadMethod(const std::string& scriptName, const std::string& className, const std::string& methodName, int paramCount);
@@ -34,14 +34,18 @@ namespace Script {
 		// getter for m_monoDomain
 		MonoDomain* m_GetMonoDomain() const;
 
+		std::vector<std::string> m_scriptNames;
+
 	private:
 		MonoDomain* m_monoDomain = nullptr;
 		MonoClass* m_testClass = nullptr;
 
+		//std::map<std::string, MonoObject*> m_instances;
+
 		std::map<std::string, MonoAssembly*> m_assemblies;
 		std::map<std::string, MonoImage*> m_images;
 		std::map<std::string, MonoMethod*> m_methods;
-		std::vector<std::string> m_scriptNames;
+		
 	};
 
 	/*--------------------------------------------------------------

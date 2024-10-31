@@ -20,6 +20,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "ButtonSystem.h"
 #include "../Inputs/Input.h"
 #include "../Application/Helper.h"
+#include "../Graphics/GraphicsCamera.h"
 
 namespace ecs {
 	void ButtonSystem::m_RegisterSystem(EntityID ID) {
@@ -73,12 +74,12 @@ namespace ecs {
 		float mouseY = Input::InputSystem::MousePosition.m_y;
 		float minX, maxX, minY, maxY;
 
-		if (Input::InputSystem::KeyStateLMB && m_vecButtonComponentPtr.size()) {
+		if ((Input::InputSystem::m_isKeyPressed(keys::LMB) || Input::InputSystem::m_isKeyTriggered(keys::LMB)) && m_vecButtonComponentPtr.size()) {
 			for (int i = 0; i < m_vecButtonComponentPtr.size(); ++i) {
 				TransformComponent* transform = m_vecTransformComponentPtr[i];
 				ButtonComponent* button = m_vecButtonComponentPtr[i];
-				float windowCordinateX = (transform->m_position.m_x + 0.5 )  * help->m_windowWidth;
-				float windowCordinateY = (transform->m_position.m_y + 1) / 2 * help->m_windowHeight;
+				float windowCordinateX = ((transform->m_position.m_x - graphicpipe::GraphicsCamera::m_currCameraMatrix[2][0] + graphicpipe::GraphicsCamera::m_currCameraMatrix[0][0] * (1.f/graphicpipe::GraphicsCamera::m_aspectRatio)) / (graphicpipe::GraphicsCamera::m_currCameraMatrix[0][0] * ((1.f / graphicpipe::GraphicsCamera::m_aspectRatio) * 2))) * help->m_windowWidth;
+				float windowCordinateY = ((transform->m_position.m_y - graphicpipe::GraphicsCamera::m_currCameraMatrix[2][1] + graphicpipe::GraphicsCamera::m_currCameraMatrix[1][1]) / (graphicpipe::GraphicsCamera::m_currCameraMatrix[1][1] * (1.f * 2))) * help->m_windowHeight;
 				button->m_Position = { windowCordinateX, windowCordinateY };
 				button->m_Scale = { 50,50 };
 				minX = button->m_Position.m_x - (button->m_Scale.m_x / 2.f);
