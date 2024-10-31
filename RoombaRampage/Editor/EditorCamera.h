@@ -1,4 +1,4 @@
-#ifndef EDITORCAM_H
+#ifndef m_editorOrthoMatrixEDITORCAM_H
 #define EDITORCAM_H
 
 #include <glm.hpp>
@@ -28,12 +28,14 @@
         static Camera m_editorCamera;
         static glm::mat3 m_editorCameraMatrix;
         static glm::mat3 m_editorViewMatrix;
+        static glm::mat3 m_editorOrthoMatrix;
         static float m_editorCameraDragSensitivity;  ///< Editor Camera Drag Sensitivity
         static float m_editorCameraZoomSensitivity;  ///< Editor Camera Zoom Sensitivity
 
         static void calculateLevelEditorCamera();
         static void calculateLevelEditorView();
         static void calculateLevelEditorNDC();
+        static void calculateLevelEditorOrtho();
 
 
 

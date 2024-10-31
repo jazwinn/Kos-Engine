@@ -3,81 +3,51 @@
         "name": "dwa",
         "transform": {
             "position": {
-                "x": 0.0,
+                "x": -2.259999990463257,
                 "y": 0.0
             },
-            "rotation": -61.0,
+            "rotation": 0.0,
             "scale": {
                 "x": 3.0,
                 "y": 3.0
             }
         },
-        "camera": {},
-        "children": [
-            {
-                "name": "Player Object",
-                "transform": {
-                    "position": {
-                        "x": 0.0,
-                        "y": 0.13333380222320557
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    }
-                },
-                "collider": {
-                    "size": {
-                        "x": 1.0,
-                        "y": 1.0
-                    },
-                    "offset": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "drawDebug": true
-                },
-                "rigidbody": {
-                    "mass": 0.0
-                },
-                "sprite": {},
-                "player": {
-                    "control": true
-                }
+        "collider": {
+            "size": {
+                "x": 1.0,
+                "y": 1.0
             },
-            {
-                "name": "Player Object",
-                "transform": {
-                    "position": {
-                        "x": -1.35722815990448,
-                        "y": 0.019115924835205078
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    }
-                },
-                "collider": {
-                    "size": {
-                        "x": 1.0,
-                        "y": 1.0
-                    },
-                    "offset": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "drawDebug": true
-                },
-                "rigidbody": {
-                    "mass": 0.0
-                },
-                "sprite": {},
-                "player": {
-                    "control": true
-                }
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true
+        },
+        "camera": {}
+    },
+    {
+        "name": "Test",
+        "transform": {
+            "position": {
+                "x": -0.7200000286102295,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
             }
-        ]
+        },
+        "collider": {
+            "size": {
+                "x": 1.0,
+                "y": 1.0
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true
+        }
     }
 ]
