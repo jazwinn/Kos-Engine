@@ -66,10 +66,6 @@ namespace scenes {
             m_recentFiles.push_back(scene);
         }
             
-
-
-
-
         // Load entities from the JSON file
         std::cout << "Loading entities from: " << scene.string() << std::endl;
         Serialization::Serialize::m_LoadComponentsJson(scene.string());  // Load into ECS
@@ -77,6 +73,34 @@ namespace scenes {
         LOGGING_INFO("Entities successfully loaded!");
 
     }
+
+    void SceneManager::m_ReloadScene()
+    {
+        //retrieve open scenes
+        ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+        std::vector<std::string> sce;
+        for (auto& scenes : ecs->m_ECS_SceneMap) {
+            sce.push_back(scenes.first);
+        }
+
+        //store scene path
+        std::vector<std::string> scenepath;
+        for (auto& scene : sce) {
+            scenepath.push_back(m_scenePath.find(scene)->second.string());
+        }
+        
+        //clear all scenes
+        m_ClearAllScene();
+
+        //load baack previous scene
+
+        for (auto& scene : scenepath) {
+            m_LoadScene(scene);
+        }
+
+
+    }
+
     void SceneManager::m_ClearAllScene()
     {
         ecs::ECS* ecs = ecs::ECS::m_GetInstance();

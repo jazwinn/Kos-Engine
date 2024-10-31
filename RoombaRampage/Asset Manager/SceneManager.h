@@ -26,6 +26,8 @@ namespace scenes {
 
 		void m_LoadScene(std::filesystem::path scenepath);
 
+		void m_ReloadScene();
+
 		void m_ClearAllScene();
 
 		void m_ClearScene(std::string scene);
