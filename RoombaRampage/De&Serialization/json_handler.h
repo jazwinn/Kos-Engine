@@ -1,4 +1,4 @@
-/********************************************************************/
+	/********************************************************************/
 /*!
 \file      json_handler.h
 \author    Chiu Jun Jie, junjie.c , 2301524
@@ -21,6 +21,9 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 
 #include "../ECS/ECS.h"
+#include "../Dependencies/rapidjson/document.h"
+#include "../Dependencies/rapidjson/writer.h"
+#include "../Dependencies/rapidjson/stringbuffer.h"
 #include <filesystem>
 
 namespace Serialization {
@@ -53,6 +56,10 @@ namespace Serialization {
 		*/
 		/******************************************************************/
 		static void m_SaveComponentsJson(const std::filesystem::path& filePath);
+
+		static void m_SaveEntity(ecs::EntityID entityId, rapidjson::Value& parentArray, rapidjson::Document::AllocatorType& allocator, std::unordered_set<ecs::EntityID>& savedEntities);
+
+		static void m_LoadEntity(const rapidjson::Value& entityData, std::optional<ecs::EntityID> parentID, const std::string& sceneName);
 
 		/******************************************************************/
 		/*!
