@@ -615,7 +615,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                 if (open) {
                     auto* rbc = static_cast<ecs::ButtonComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEBUTTONCOMPONENT]->m_GetEntityComponent(entityID));
-                    rbc->ApplyFunction(DrawComponents(rbc->Names()));
+                    //rbc->ApplyFunction(DrawComponents(rbc->Names()));
                 }
 
 

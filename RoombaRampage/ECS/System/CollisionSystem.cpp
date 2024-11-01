@@ -24,6 +24,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../ECS.h"
 
 #include "CollisionSystem.h"
+#include "../ECS/Hierachy.h"
 #include "../Physics/Physics.h"
 #include "../Graphics/GraphicsPipe.h"
 #include "../Debugging/Logging.h"
@@ -91,9 +92,7 @@ namespace ecs {
 		}
 
 		//create physics;
-		physicspipe::Physics PhysicsPipeline;
-		//graphicpipe::GraphicsPipe* graphicsPipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
-
+		physicspipe::Physics* PhysicsPipeline = physicspipe::Physics::getInstance();
 		for (int n{}; n < m_vecTransformComponentPtr.size(); n++) {
 			//std::cout << "Entity: " << n << "Movement System is getting Updated";
 			
@@ -125,17 +124,43 @@ namespace ecs {
 
 			//	mat3x3::Mat3Decompose(transform, position, scale, rotation);
 			//}
+			if (TransComp->m_haveParent) {
+				EntityID parentID = ecs::Hierachy::m_GetParent(TransComp->m_Entity).value();
+				TransformComponent* parentComp{ nullptr };
+				for (auto& com : m_vecTransformComponentPtr) {
+					if (com->m_Entity == parentID) {
+						parentComp = com;
+					}
+				}
+				if (!parentComp) continue;
+				mat3x3::Mat3x3 parentTransformation = parentComp->m_transformation;
+				mat3x3::Mat3x3 childTransformation = TransComp->m_transformation;
+			
+				vector2::Vec2 pos{}, scale{};
+				float rot{};
+				mat3x3::Mat3Decompose(TransComp->m_transformation, pos, scale, rot);
 
-			if (ColComp->m_type == physicspipe::EntityType::CIRCLE) {
-				PhysicsPipeline.m_SendPhysicsData(ColComp->m_radius, TransComp->m_position + ColComp->m_OffSet, ColComp->m_Size, velocity, id, NameComp->m_Layer);
-			}
-			else if (ColComp->m_type == physicspipe::EntityType::RECTANGLE) {
-				PhysicsPipeline.m_SendPhysicsData(ColComp->m_Size.m_y , ColComp->m_Size.m_x, TransComp->m_rotation, TransComp->m_position + ColComp->m_OffSet, ColComp->m_Size, velocity, id, NameComp->m_Layer);
+				if (ColComp->m_type == physicspipe::EntityType::CIRCLE) {
+					PhysicsPipeline->m_SendPhysicsData(ColComp->m_radius, pos + ColComp->m_OffSet, scale, velocity, id, NameComp->m_Layer);
+				}
+				else if (ColComp->m_type == physicspipe::EntityType::RECTANGLE) {
+					PhysicsPipeline->m_SendPhysicsData(ColComp->m_Size.m_y, ColComp->m_Size.m_x, rot, pos + ColComp->m_OffSet, scale, velocity, id, NameComp->m_Layer);
+				}
+				else {
+					LOGGING_ERROR("NO ENTITY TYPE");
+				}
 			}
 			else {
-				LOGGING_ERROR("NO ENTITY TYPE");
+				if (ColComp->m_type == physicspipe::EntityType::CIRCLE) {
+					PhysicsPipeline->m_SendPhysicsData(ColComp->m_radius, TransComp->m_position + ColComp->m_OffSet, ColComp->m_Size, velocity, id, NameComp->m_Layer);
+				}
+				else if (ColComp->m_type == physicspipe::EntityType::RECTANGLE) {
+					PhysicsPipeline->m_SendPhysicsData(ColComp->m_Size.m_y, ColComp->m_Size.m_x, TransComp->m_rotation, TransComp->m_position + ColComp->m_OffSet, ColComp->m_Size, velocity, id, NameComp->m_Layer);
+				}
+				else {
+					LOGGING_ERROR("NO ENTITY TYPE");
+				}
 			}
-
 		}
 
 

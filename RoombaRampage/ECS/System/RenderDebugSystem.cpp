@@ -84,6 +84,10 @@ namespace ecs {
 			{
 				ColliderComponent* collider = (ColliderComponent*)ecs->m_ECS_CombinedComponentPool[TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(transform->m_Entity);
 
+				/*
+					TODO debug box also follow the child
+				*/
+
 				if (collider->m_drawDebug && (collider->m_type == physicspipe::EntityType::RECTANGLE))
 				{
 					mat3x3::Mat3x3 debugTransformation = mat3x3::Mat3Transform(vector2::Vec2{ transform->m_transformation.m_e20 + collider->m_OffSet.m_x, transform->m_transformation.m_e21 + collider->m_OffSet.m_y }, vector2::Vec2{ collider->m_Size.m_x, collider->m_Size.m_y }, transform->m_rotation);

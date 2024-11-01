@@ -161,7 +161,7 @@ namespace Application {
                     accumulatedTime -= fixedDeltaTime;
                     ++help->currentNumberOfSteps;
                 }
-
+                Input.m_inputUpdate();
                 /*--------------------------------------------------------------
                     UPDATE ECS
                 --------------------------------------------------------------*/
@@ -190,6 +190,7 @@ namespace Application {
             
 
 
+               
 
                 //double currentFrameTime = glfwGetTime();
                 //help->m_deltaTime = static_cast<float>(currentFrameTime - lastFrameTime);
@@ -201,6 +202,7 @@ namespace Application {
                 //}
                 //lastFrameTime = glfwGetTime();
                 help->m_fps = 1.f / help->m_deltaTime;
+                
 
                 glfwSwapBuffers(lvWindow.m_window);
 

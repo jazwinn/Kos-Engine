@@ -73,6 +73,7 @@
     <ClCompile Include="Asset Manager\SceneManager.cpp" />
     <ClCompile Include="Asset Manager\Text.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_game_scene_window.cpp" />
+    <ClCompile Include="ECS\System\ButtonSystem.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_play_pause.cpp" />
     <ClCompile Include="ECS\System\ButtonSystem.cpp" />
     <ClCompile Include="C# Mono\InternalCall.cpp" />
@@ -165,6 +166,7 @@
     <ClInclude Include="ECS\System\ButtonSystem.h" />
     <ClInclude Include="C# Mono\InternalCall.h" />
     <ClInclude Include="Inputs\Keycodes.h" />
+    <ClInclude Include="Inputs\Mousecodes.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Graphics\debugFragmentShader.frag" />

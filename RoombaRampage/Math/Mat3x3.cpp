@@ -162,8 +162,10 @@ namespace mat3x3{
 		scale.m_y = std::sqrt(matrix.m_e01 * matrix.m_e01 + matrix.m_e11 * matrix.m_e11);
 
 
-		rotate = std::atan2(matrix.m_e10 / scale.m_x, matrix.m_e00 / scale.m_x) * (180.f/MAT_PI);
+		rotate = -(std::atan2(matrix.m_e10 / scale.m_x, matrix.m_e00 / scale.m_x) * (180.f/MAT_PI));
 
+		scale.m_x = std::round(scale.m_x * 100.0f) / 100.0f;
+		scale.m_y = std::round(scale.m_y * 100.0f) / 100.0f;
 
 
 	}

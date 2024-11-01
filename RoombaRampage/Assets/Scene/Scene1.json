@@ -3,23 +3,41 @@
         "name": "dwa",
         "transform": {
             "position": {
-                "x": 0.0,
+                "x": -2.5,
                 "y": 0.0
             },
-            "rotation": -61.0,
+            "rotation": 45.0,
             "scale": {
                 "x": 3.0,
                 "y": 3.0
             }
         },
+        "animation": {
+            "frameNumber": 0,
+            "framesPerSecond": 0,
+            "frameTimer": 0.0,
+            "isAnimating": false
+        },
         "camera": {},
+        "button": {
+            "force": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "scale": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "isClick": false
+        },
+        "script": {},
         "children": [
             {
-                "name": "Player Object",
+                "name": "Player Object 1",
                 "transform": {
                     "position": {
-                        "x": 0.0,
-                        "y": 0.13333380222320557
+                        "x": -1.0,
+                        "y": 0.0
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -36,18 +54,42 @@
                         "x": 0.0,
                         "y": 0.0
                     },
-                    "drawDebug": true
+                    "drawDebug": true,
+                    "radius": 0.5
                 },
-                "rigidbody": {
-                    "mass": 0.0
-                },
-                "sprite": {},
                 "player": {
                     "control": true
+                },
+                "rigidbody": {
+                    "linearVelocity": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "acceleration": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "rotation": 0.0,
+                    "angularVelocity": 0.0,
+                    "angularAcceleration": 0.0,
+                    "mass": 0.0,
+                    "inverseMass": 1.0,
+                    "linearDamping": 0.9900000095367432,
+                    "angularDamping": 0.9900000095367432,
+                    "force": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "torque": 0.0,
+                    "kinematic": false,
+                    "static": false
+                },
+                "sprite": {
+                    "layer": 0
                 }
             },
             {
-                "name": "Player Object",
+                "name": "Player Object 2",
                 "transform": {
                     "position": {
                         "x": -1.35722815990448,
@@ -68,16 +110,156 @@
                         "x": 0.0,
                         "y": 0.0
                     },
-                    "drawDebug": true
+                    "drawDebug": true,
+                    "radius": 0.5
                 },
-                "rigidbody": {
-                    "mass": 0.0
-                },
-                "sprite": {},
                 "player": {
                     "control": true
-                }
+                },
+                "rigidbody": {
+                    "linearVelocity": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "acceleration": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "rotation": 0.0,
+                    "angularVelocity": 0.0,
+                    "angularAcceleration": 0.0,
+                    "mass": 0.0,
+                    "inverseMass": 1.0,
+                    "linearDamping": 0.9900000095367432,
+                    "angularDamping": 0.9900000095367432,
+                    "force": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "torque": 0.0,
+                    "kinematic": false,
+                    "static": false
+                },
+                "sprite": {
+                    "layer": 0
+                },
+                "children": [
+                    {
+                        "name": "Test child",
+                        "transform": {
+                            "position": {
+                                "x": 0.0,
+                                "y": 0.0
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0
+                            }
+                        },
+                        "children": [
+                            {
+                                "name": "Test Child 2",
+                                "transform": {
+                                    "position": {
+                                        "x": -0.5600000023841858,
+                                        "y": 0.0
+                                    },
+                                    "rotation": 0.0,
+                                    "scale": {
+                                        "x": 1.0,
+                                        "y": 1.0
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ]
             }
         ]
+    },
+    {
+        "name": "ALL TEST",
+        "transform": {
+            "position": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "collider": {
+            "size": {
+                "x": 1.0,
+                "y": 1.0
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true,
+            "radius": 0.5
+        },
+        "player": {
+            "control": true
+        },
+        "rigidbody": {
+            "linearVelocity": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "acceleration": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "angularVelocity": 0.0,
+            "angularAcceleration": 0.0,
+            "mass": 1.0,
+            "inverseMass": 1.0,
+            "linearDamping": 0.9900000095367432,
+            "angularDamping": 0.9900000095367432,
+            "force": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "torque": 0.0,
+            "kinematic": false,
+            "static": false
+        },
+        "sprite": {
+            "layer": 0
+        },
+        "text": {
+            "text": "Insert Text",
+            "fontsize": 1.0,
+            "colour": {
+                "red": 0.0,
+                "blue": 0.0,
+                "green": 0.0
+            }
+        },
+        "animation": {
+            "frameNumber": 0,
+            "framesPerSecond": 0,
+            "frameTimer": 0.0,
+            "isAnimating": false
+        },
+        "camera": {},
+        "button": {
+            "force": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "scale": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "isClick": false
+        },
+        "script": {}
     }
 ]
