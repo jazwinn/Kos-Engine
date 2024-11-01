@@ -13,6 +13,7 @@ namespace script {
 
 
         // Initialize Mono runtime
+        //TODO add to another function
         m_monoDomain = mono_jit_init("MonoDomain");
         if (!m_monoDomain) {
             std::cout << "Mono domain not initialized." << std::endl;
@@ -196,6 +197,10 @@ namespace script {
         if (m_monoDomain) {
             mono_jit_cleanup(m_monoDomain);
         }
+        m_methods.clear();
+        m_scriptNames.clear();
+
+        LOGGING_DEBUG("Script Handler Cleared");
     }
 
     MonoDomain* ScriptHandler::m_GetMonoDomain() const {
