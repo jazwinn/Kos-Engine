@@ -134,15 +134,17 @@ namespace ecs {
 				}
 				if (!parentComp) continue;
 				mat3x3::Mat3x3 parentTransformation = parentComp->m_transformation;
-				TransComp->m_transformation = parentTransformation * TransComp->m_transformation;
+				mat3x3::Mat3x3 childTransformation = TransComp->m_transformation;
+			
 				vector2::Vec2 pos{}, scale{};
 				float rot{};
 				mat3x3::Mat3Decompose(TransComp->m_transformation, pos, scale, rot);
+
 				if (ColComp->m_type == physicspipe::EntityType::CIRCLE) {
 					PhysicsPipeline->m_SendPhysicsData(ColComp->m_radius, pos + ColComp->m_OffSet, scale, velocity, id, NameComp->m_Layer);
 				}
 				else if (ColComp->m_type == physicspipe::EntityType::RECTANGLE) {
-					PhysicsPipeline->m_SendPhysicsData(scale.m_x, scale.m_y, rot, pos + ColComp->m_OffSet, scale, velocity, id, NameComp->m_Layer);
+					PhysicsPipeline->m_SendPhysicsData(ColComp->m_Size.m_y, ColComp->m_Size.m_x, rot, pos + ColComp->m_OffSet, scale, velocity, id, NameComp->m_Layer);
 				}
 				else {
 					LOGGING_ERROR("NO ENTITY TYPE");

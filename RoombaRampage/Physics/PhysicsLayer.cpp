@@ -6,9 +6,7 @@ namespace physicslayer {
  
     PhysicsLayer::PhysicsLayer() {
         collisionMatrix = std::vector<std::vector<bool>>(size, std::vector<bool>(size, false));
-        for (int i = 0; i < size; ++i) {
-            setCollision(0, i, true);
-        }
+        setCollision(0, 0, true);
     }
 
     void PhysicsLayer::printCollisionMatrix() const {

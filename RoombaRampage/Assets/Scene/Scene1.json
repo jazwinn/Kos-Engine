@@ -3,10 +3,10 @@
         "name": "dwa",
         "transform": {
             "position": {
-                "x": -2.259999990463257,
+                "x": -2.5,
                 "y": 0.0
             },
-            "rotation": 0.0,
+            "rotation": 45.0,
             "scale": {
                 "x": 3.0,
                 "y": 3.0
@@ -23,31 +23,39 @@
             },
             "drawDebug": true
         },
-        "camera": {}
-    },
-    {
-        "name": "Test",
-        "transform": {
-            "position": {
-                "x": -0.7200000286102295,
-                "y": 0.0
-            },
-            "rotation": 0.0,
-            "scale": {
-                "x": 1.0,
-                "y": 1.0
-            }
+        "rigidbody": {
+            "mass": 1.0
         },
-        "collider": {
-            "size": {
-                "x": 1.0,
-                "y": 1.0
-            },
-            "offset": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "drawDebug": true
-        }
+        "camera": {},
+        "children": [
+            {
+                "name": "Test",
+                "transform": {
+                    "position": {
+                        "x": -1.0,
+                        "y": 0.0
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "collider": {
+                    "size": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "offset": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "drawDebug": true
+                },
+                "rigidbody": {
+                    "mass": 1.0
+                }
+            }
+        ]
     }
 ]
