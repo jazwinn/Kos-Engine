@@ -22,7 +22,9 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include <../Math/Vector2.h>
 #include <vector>
 #include <string>
+#include <unordered_map>
 #include "Keycodes.h"
+
 
 namespace Input {
 
@@ -55,38 +57,23 @@ namespace Input {
 		static bool m_isKeyPressed(const keyCode givenKey);
 		static bool m_isKeyReleased(const keyCode givenKey);
 
-
-		//static bool KeyStateW;
-		//static bool KeyStateA;
-		//static bool KeyStateS;
-		//static bool KeyStateD;
-		//static bool KeyStateE;
-		//static bool KeyStateEsc;
-		//static bool KeyStateSpace;
-		//static bool KeyStateR;
-		//static bool KeyState0;
-		//static bool KeyStateLMB;
-		//static bool KeyStateF11;
-
-		static int m_keyStateA;
-		static int m_keyStateW;
-		static int m_keyStateS;
-		static int m_keyStateD;
-		static int m_keyStateE;
-		static int m_keyStateR;
-		static int m_keyState0;
-		static int m_keyStateF11;
-		static int m_keyStateSpace;
-		static int m_keyStateEsc;
-		static int m_keyStateLMB;
+		void m_inputUpdate();
 
 
+		
 		static vector2::Vec2 MousePosition;
 
 		static std::string m_mouseString;
 		static std::string m_keyString;
 
 		static std::vector<std::string> m_droppedFiles;
+
+
+		static GLFWwindow* m_windowInput;
+	private:
+		inline static std::unordered_map<int, bool> m_wasTriggered;
+		inline static std::unordered_map<int, bool> m_wasPressed;
+
 	};
 
 }

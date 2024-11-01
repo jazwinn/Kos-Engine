@@ -78,7 +78,8 @@ namespace gui {
 	{
 		if (Input::InputSystem::m_isKeyTriggered(keys::F11))
 		{
-			Input::InputSystem::m_keyStateF11 = GLFW_RELEASE;
+			//std::cout << Input::InputSystem::m_isKeyTriggered(keys::F11) << std::endl;
+			//Input::InputSystem::m_keyStateF11 = GLFW_RELEASE;
 			graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
 			EditorCamera::m_editorMode = (EditorCamera::m_editorMode) ? false : true;
 			pipe->m_gameMode = (pipe->m_gameMode) ? false : true;

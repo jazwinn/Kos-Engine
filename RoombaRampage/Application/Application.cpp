@@ -161,7 +161,7 @@ namespace Application {
                     accumulatedTime -= fixedDeltaTime;
                     ++help->currentNumberOfSteps;
                 }
-
+                Input.m_inputUpdate();
                 /*--------------------------------------------------------------
                     UPDATE ECS
                 --------------------------------------------------------------*/
@@ -187,8 +187,7 @@ namespace Application {
                    Render Game Scene
                 --------------------------------------------------------------*/
                 pipe->m_funcRenderGameScene();
-
-
+               
 
                 //double currentFrameTime = glfwGetTime();
                 //help->m_deltaTime = static_cast<float>(currentFrameTime - lastFrameTime);
