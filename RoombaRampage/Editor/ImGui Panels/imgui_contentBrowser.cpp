@@ -61,7 +61,7 @@ namespace gui {
 			float panelwidth = ImGui::GetContentRegionAvail().x;
 			int columns = (int)(panelwidth / cellsize);
 			if (columns <= 0) {
-				columns = 8;
+				columns = 1;
 			}
 			ImGui::Columns(columns, 0, false);
 
