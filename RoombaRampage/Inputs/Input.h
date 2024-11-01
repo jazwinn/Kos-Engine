@@ -25,7 +25,6 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include <unordered_map>
 #include "Keycodes.h"
 
-
 namespace Input {
 
 	class InputSystem {

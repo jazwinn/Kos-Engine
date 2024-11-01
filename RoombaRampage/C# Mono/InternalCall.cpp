@@ -1,4 +1,5 @@
 #include "InternalCall.h"
+#include "../Inputs/Input.h"
 
 namespace script {
 
@@ -12,11 +13,31 @@ namespace script {
 
 	}
 
+	void InternalCall::m_InternalGetRigidBodyComponent(ecs::EntityID entity, ecs::RigidBodyComponent* rbcomp)
+	{
+		rbcomp = static_cast<ecs::RigidBodyComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPERIGIDBODYCOMPONENT]->m_GetEntityComponent(entity));
+
+	}
+
+	bool InternalCall::m_InternalCallIsKeyPressed(keyCode key)
+	{
+		if (Input::InputSystem::m_isKeyPressed(key)) {
+			std::cout << "pressed" << std::endl;
+			return true;
+		}
+		else {
+			std::cout << "not pressed" << std::endl;
+		}
+		return false;
+	}
+
 
 	void InternalCall::m_RegisterInternalCalls()
 	{
 
 		mono_add_internal_call("Namespace.ScriptBase::""m_InternalGetTransformComponent", m_InternalGetTransformComponent);
+		mono_add_internal_call("Namespace.ScriptBase::""m_InternalCallIsKeyPressed", m_InternalCallIsKeyPressed);
+		mono_add_internal_call("Namespace.ScriptBase::""m_InternalGetRigidBodyComponent", m_InternalGetRigidBodyComponent);
 
 	}
 

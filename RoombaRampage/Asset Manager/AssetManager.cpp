@@ -37,12 +37,6 @@ namespace assetmanager {
     void AssetManager::m_funcLoadAssets(std::string Directory )
     {
 
-        //Temporary, scan for any .cs file in Assets/scripts & compileit
-
-
-
-
-
 
         for (auto& directoryPath : std::filesystem::directory_iterator(Directory)) {
             std::string filepath = directoryPath.path().string();
@@ -51,31 +45,45 @@ namespace assetmanager {
             if (directoryPath.is_directory()) {
                 m_funcLoadAssets(filepath);
             }
-            else if (directoryPath.path().filename().extension().string() == ".png") {
-                std::cout << filepath.c_str() << std::endl;
-                m_funcLoadImage(filepath);
-                
-            }
-            else if (directoryPath.path().filename().extension().string() == ".wav") {
-
-                m_LoadAudio(filepath.c_str());
-            }
-            else if (directoryPath.path().filename().extension().string() == ".ttf") {
-                //UNCOMMENT ME TO TEST IT OUT
-                m_LoadFont(filepath);
-            }
-            else if (directoryPath.path().filename().extension().string() == ".dll") {
-                m_LoadScript(filepath);
-                std::string filename = directoryPath.path().filename().stem().string();
-                // load start and update
-                //TODO move somewhere that is not the asset manager
-                m_scriptManager.m_LoadMethod(filename, filename, "Start", 0);
-                m_scriptManager.m_LoadMethod(filename, filename, "Update", 0);
+            else {
+                m_LoadAsset(directoryPath.path());
             }
 
         }
 
        
+    }
+
+    void AssetManager::m_LoadAsset(std::filesystem::path directoryPath)
+    {
+        std::string filepath = directoryPath.string();
+        std::replace(filepath.begin(), filepath.end(), '\\', '/');
+
+        if (directoryPath.filename().extension().string() == ".png") {
+            std::cout << filepath.c_str() << std::endl;
+            m_funcLoadImage(filepath);
+
+        }
+        else if (directoryPath.filename().extension().string() == ".wav") {
+
+            m_LoadAudio(filepath.c_str());
+        }
+        else if (directoryPath.filename().extension().string() == ".ttf") {
+            //UNCOMMENT ME TO TEST IT OUT
+            m_LoadFont(filepath);
+        }
+        else if (directoryPath.filename().extension().string() == ".dll") {
+            m_LoadScript(filepath);
+            std::string filename = directoryPath.filename().stem().string();
+            // load start and update
+            //TODO move somewhere that is not the asset manager
+            m_scriptManager.m_LoadMethod(filename, filename, "Start", 0);
+            m_scriptManager.m_LoadMethod(filename, filename, "Update", 0);
+        }
+
+
+
+
     }
 
     AssetManager* AssetManager::m_funcGetInstance()
