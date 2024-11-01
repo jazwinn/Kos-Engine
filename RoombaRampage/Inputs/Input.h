@@ -24,7 +24,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include <string>
 #include <unordered_map>
 #include "Keycodes.h"
-#include "Mousecodes.h"
+
 
 namespace Input {
 

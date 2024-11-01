@@ -199,6 +199,7 @@ namespace Application {
                 //}
                 //lastFrameTime = glfwGetTime();
                 help->m_fps = 1.f / help->m_deltaTime;
+                
 
                 glfwSwapBuffers(lvWindow.m_window);
 

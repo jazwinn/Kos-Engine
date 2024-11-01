@@ -42,7 +42,7 @@ namespace ecs {
 		//layer::LAYERS m_CollideLayer{layer::DEFAULT};
 
 		// Current no implementation
-		physicspipe::EntityType m_type = physicspipe::EntityType::CIRCLE;
+		physicspipe::EntityType m_type = physicspipe::EntityType::RECTANGLE;
 
 		float m_radius{0.5f};
 
