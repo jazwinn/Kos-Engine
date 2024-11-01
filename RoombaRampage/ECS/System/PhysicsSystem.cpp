@@ -67,8 +67,6 @@ namespace ecs {
 		for (int n = 0; n < m_vecRigidBodyComponentPtr.size(); n++) {
 			RigidBodyComponent* rigidBody = m_vecRigidBodyComponentPtr[n];
 			TransformComponent* transform = m_vecTransformComponentPtr[n];
-
-			// Update the rigid body with the current delta time
 			if (rigidBody->m_IsKinematic || rigidBody->m_IsStatic) {
 				// If kinematic or static, skip physics calculations
 				return;

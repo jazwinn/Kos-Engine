@@ -1,4 +1,4 @@
-#ifndef EDITORCAM_H
+#ifndef m_editorOrthoMatrixEDITORCAM_H
 #define EDITORCAM_H
 
 #include <glm.hpp>
@@ -34,6 +34,7 @@
 
         static void calculateLevelEditorCamera();
         static void calculateLevelEditorView();
+        static void calculateLevelEditorNDC();
         static void calculateLevelEditorOrtho();
 
 
