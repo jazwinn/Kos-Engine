@@ -162,6 +162,13 @@ namespace Application {
                     ++help->currentNumberOfSteps;
                 }
                 Input.m_inputUpdate();
+
+                if (Input::InputSystem::m_isKeyPressed(keys::W)) {
+                    std::cout << "pressed" << std::endl;
+                }
+                else {
+                    std::cout << "not pressed" << std::endl;
+                }
                 /*--------------------------------------------------------------
                     UPDATE ECS
                 --------------------------------------------------------------*/

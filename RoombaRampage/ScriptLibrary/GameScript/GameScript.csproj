@@ -42,6 +42,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ScriptCore\Components.cs" />
+    <Compile Include="ScriptCore\KeyCode.cs" />
     <Compile Include="ScriptCore\ScriptBase.cs" />
   </ItemGroup>
   <ItemGroup>
