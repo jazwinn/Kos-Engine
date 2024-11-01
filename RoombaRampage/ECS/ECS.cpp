@@ -21,6 +21,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include <algorithm>
 #include "../Debugging/Performance.h"
 #include "../Debugging/Logging.h"
+#include "../Asset Manager/SceneManager.h"
 #include "Hierachy.h"
 //ECS Varaible
 
@@ -54,6 +55,7 @@ namespace ecs{
 		m_AddComponentToECS<AnimationComponent>(TYPEANIMATIONCOMPONENT);
 		m_AddComponentToECS<CameraComponent>(TYPECAMERACOMPONENT);
 		m_AddComponentToECS<ScriptComponent>(TYPESCRIPTCOMPONENT);
+		m_AddComponentToECS<ButtonComponent>(TYPEBUTTONCOMPONENT);
 
 		//Allocate memory to each system
 		ecs->m_ECS_SystemMap[TYPETRANSFORMSYSTEM] = std::make_shared<TransformSystem>();
@@ -61,6 +63,7 @@ namespace ecs{
 		ecs->m_ECS_SystemMap[TYPEPHYSICSSYSTEM] = std::make_shared<PhysicsSystem>(); 
 		ecs->m_ECS_SystemMap[TYPECOLLISIONRESPONSESYSTEM] = std::make_shared<CollisionResponseSystem>();
 		ecs->m_ECS_SystemMap[TYPELOGICSYSTEM] = std::make_shared<LogicSystem>();
+		ecs->m_ECS_SystemMap[TYPEBUTTONSYSTEM] = std::make_shared<ButtonSystem>();
 
 		ecs->m_ECS_SystemMap[TYPERENDERSYSTEM] = std::make_shared<RenderSystem>();
 		ecs->m_ECS_SystemMap[TYPERENDERTEXTSYSTEM] = std::make_shared<RenderTextSystem>();
@@ -192,7 +195,7 @@ namespace ecs{
 
 	}
 
-	EntityID ECS::m_CreateEntity() {
+	EntityID ECS::m_CreateEntity(std::string scene) {
 
 		ECS* ecs = ECS::m_GetInstance();
 
@@ -216,13 +219,21 @@ namespace ecs{
 		//assign entity to default layer
 		ecs->m_layersStack.m_layerMap[layer::DEFAULT].second.push_back(ID);
 
+		//assign entity to scenes
+		ecs->m_ECS_SceneMap.find(scene)->second.push_back(ID);
+
 		return ID;
 	}
 
 	EntityID ECS::m_DuplicateEntity(EntityID DuplicatesID) {
-
 		ECS* ecs = ECS::m_GetInstance();
-		EntityID NewEntity = ecs->m_CreateEntity();
+
+		const auto& result = scenes::SceneManager::GetSceneByEntityID(DuplicatesID);
+		if (!result.has_value()) {
+			LOGGING_ERROR("Scene does not exits");
+		}
+
+		EntityID NewEntity = ecs->m_CreateEntity(result.value());
 
 		compSignature DuplicateSignature = ecs->m_ECS_EntityMap.find(DuplicatesID)->second;
 
@@ -281,6 +292,13 @@ namespace ecs{
 		m_DeregisterSystem(ID);
 
 		ecs->m_ECS_EntityMap.erase(ID);
+
+		// remove entity from scene
+		const auto& result = scenes::SceneManager::GetSceneByEntityID(ID);
+		auto& entityList = ecs->m_ECS_SceneMap[result.value()];
+		auto it = std::find(entityList.begin(), entityList.end(), ID);
+		ecs->m_ECS_SceneMap.find(result.value())->second.erase(it);
+
 
 		return true;
 	}

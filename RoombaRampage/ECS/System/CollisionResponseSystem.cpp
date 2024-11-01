@@ -101,10 +101,7 @@ namespace ecs {
 			
 
 			if (ids.find(rigidComp->m_Entity) != ids.end()) {
-
 				ColComp->m_isCollided = true;
-
-
 
 			}
 

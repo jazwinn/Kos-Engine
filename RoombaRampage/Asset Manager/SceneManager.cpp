@@ -5,44 +5,30 @@
 #include "stringbuffer.h"
 #include "filewritestream.h"
 #include "../ECS/ECS.h"
+#include "../ECS//Hierachy.h"
 
 namespace scenes {
 
     std::unique_ptr<SceneManager> SceneManager::m_InstancePtr = nullptr;
 
-    std::string SceneManager::m_AddScene(std::string filepath)
+
+    bool SceneManager::m_CreateNewScene(std::filesystem::path scene)
     {
-
-        size_t lastSlash = filepath.find_last_of("/\\");
-        std::string fileName = filepath.substr(lastSlash + 1);  // Extract "test.json"
-
-        
-        size_t lastDot = fileName.find_last_of('.');
-        std::string fileBaseName = fileName.substr(0, lastDot);  // Extract "test"
-
-        if (std::find(m_availableScenes.begin(), m_availableScenes.end(), fileBaseName) != m_availableScenes.end()) {
-            //LOGGING_WARN("Scene Already added");
-            return fileBaseName;
-        }
-
-        m_availableScenes.push_back(fileBaseName);
-
-        return fileBaseName;
-    }
-
-    std::optional<std::string> SceneManager::m_CreateNewScene(std::string scene)
-    {
-        std::string jsonFilePath = m_jsonFilePath + scene + ".json";
-        std::ifstream checkFile(jsonFilePath);
+        std::ifstream checkFile(scene.string());
         //check if file name exist
         if (checkFile) {
             //if file name exist
             LOGGING_WARN("JSON file already exist, select another name");
-            return {};
+            return false;
         }
         //create a json file
 
-        FILE* fp = std::fopen(jsonFilePath.c_str(), "wb");
+        FILE* fp = std::fopen(scene.string().c_str(), "wb");
+
+        if (fp == nullptr) {
+            LOGGING_ERROR("Fail to create new Scene");
+        }
+
         // start with []
         fprintf(fp, "[]");
         char writeBuffer[1];  // Buffer to optimize file writing
@@ -53,75 +39,135 @@ namespace scenes {
         std::fclose(fp);
 
         // return file path
-        return jsonFilePath;
+        return true;
     }
 
-    void SceneManager::m_LoadScene(std::string scene)
+    void SceneManager::m_LoadScene(std::filesystem::path scene)
     {
-        if (std::find(m_availableScenes.begin(), m_availableScenes.end(), scene) == m_availableScenes.end()) {
-            LOGGING_WARN("Scene Not added");
+        ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+        if (ecs->m_ECS_SceneMap.find(scene.filename().string()) != ecs->m_ECS_SceneMap.end()) {
+            LOGGING_ERROR("Scene already loaded");
             return;
         }
-
-        if (scene == m_activeScene) {
-            LOGGING_WARN("Scene already active");
-            return;
-        }
-
-        //clear scene
-        m_ClearScene(scene);
 
         // Ensure the JSON file exists
 
-        std::string jsonFilePath = m_jsonFilePath + scene + ".json";
-        std::ifstream checkFile(jsonFilePath);
+        std::ifstream checkFile(scene.string());
         if (!checkFile) {
-            std::cerr << "Error: JSON file not found: " << jsonFilePath << std::endl;
+            std::cerr << "Error: JSON file not found: " << scene.string() << std::endl;
             return;
         }
 
+        //contain scene path
+        m_scenePath[scene.filename().string()] = scene;
+        
+        // store path to be use as recent
+        if (std::find(m_recentFiles.begin(), m_recentFiles.end(), scene) == m_recentFiles.end()) {
+            m_recentFiles.push_back(scene);
+        }
+            
+
+
+
+
         // Load entities from the JSON file
-        std::cout << "Loading entities from: " << jsonFilePath << std::endl;
-        Serialization::Serialize::m_LoadComponentsJson(jsonFilePath);  // Load into ECS
+        std::cout << "Loading entities from: " << scene.string() << std::endl;
+        Serialization::Serialize::m_LoadComponentsJson(scene.string());  // Load into ECS
 
         LOGGING_INFO("Entities successfully loaded!");
 
-
-        m_activeScene = scene;
     }
+    void SceneManager::m_ClearAllScene()
+    {
+        ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+
+        std::vector<std::string> sce;
+        for (auto& scenes : ecs->m_ECS_SceneMap) {
+            sce.push_back(scenes.first);
+        }
+
+        for (auto& scenes : sce) {
+            m_ClearScene(scenes);
+        }
+
+
+    }
+
     void SceneManager::m_ClearScene(std::string scene)
     {
         ecs::ECS* ecs = ecs::ECS::m_GetInstance();
-        
-        std::vector<ecs::EntityID> activeEntity;
+        //TODO
+        //std::vector<ecs::EntityID> activeEntity;
 
-        for (auto& entity : ecs->m_ECS_EntityMap) {
-            activeEntity.push_back(entity.first);
+        //for (auto& entity : ecs->m_ECS_SceneMap.find(scene)->second) {
+        //    activeEntity.push_back(entity);
+        //}
+
+        ////delete all parent entity
+        //for (auto& id : activeEntity) {
+        //    //top layer parent
+        //    if (!ecs::Hierachy::m_GetParent(id)) {
+        //        ecs->m_DeleteEntity(id);
+        //    }
+
+        //}
+
+        size_t numberOfEntityInScene = ecs->m_ECS_SceneMap.find(scene)->second.size();
+        for (int n{}; n < numberOfEntityInScene; n++) {
+            if (ecs->m_ECS_SceneMap.find(scene)->second.size() <= 0) break;
+            auto entityid = ecs->m_ECS_SceneMap.find(scene)->second.begin();
+            if (!ecs::Hierachy::m_GetParent(*entityid)) {
+                ecs->m_DeleteEntity(*entityid);
+            }
         }
 
-        //delete all entity
-        for (auto& id : activeEntity) {
-            ecs->m_DeleteEntity(id);
-        }
+        //remove scene from activescenes
+        ecs->m_ECS_SceneMap.erase(scene);
 
 
     }
 
     void SceneManager::m_SaveScene(std::string scene)
     {
-        if (std::find(m_availableScenes.begin(), m_availableScenes.end(), scene) == m_availableScenes.end()) {
-            LOGGING_WARN("No scene available to save");
-            return;
-        }
-        std::string jsonFilePath = m_jsonFilePath + scene + ".json";
 
-        Serialization::Serialize::m_SaveComponentsJson(jsonFilePath);
+
+        Serialization::Serialize::m_SaveComponentsJson(m_scenePath.find(scene)->second.string());
 
     }
-    void SceneManager::m_SaveActiveScene()
+    void SceneManager::m_SaveAllActiveScenes()
     {
+        ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+        for (auto& scenes : ecs->m_ECS_SceneMap) {
+            m_SaveScene(scenes.first);
+        }
+       
 
-        m_SaveScene(m_activeScene);
+    }
+
+    std::optional<std::string> SceneManager::GetSceneByEntityID(ecs::EntityID entityID) {
+        ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+        for (const auto& [sceneName, entityList] : ecs->m_ECS_SceneMap) {
+            // Check if the entityID is in the current vector of entity IDs
+            if (std::find(entityList.begin(), entityList.end(), entityID) != entityList.end()) {
+                return sceneName;  // Found the matching scene name
+            }
+        }
+        return std::nullopt;  // No match found
+    }
+
+    void SceneManager::m_SwapScenes(std::string oldscene, std::string newscene , ecs::EntityID id)
+    {
+        ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+        std::vector<ecs::EntityID>& vectorenityid = ecs->m_ECS_SceneMap.find(oldscene)->second;
+        std::vector<ecs::EntityID>::iterator it = std::find(vectorenityid.begin(), vectorenityid.end(), id);
+        if (it == vectorenityid.end()) {
+            LOGGING_ERROR("Entity not in old scene");
+            return;
+        }
+        
+        vectorenityid.erase(it);
+
+        ecs->m_ECS_SceneMap.find(newscene)->second.push_back(id);
 
     }
 }

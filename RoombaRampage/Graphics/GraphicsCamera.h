@@ -3,6 +3,7 @@
 
 #include <glm.hpp>
 #include <vector>
+#include <memory>
 
 namespace graphicpipe
 
@@ -32,6 +33,7 @@ namespace graphicpipe
 
         static glm::mat3 m_currCameraMatrix;                ///< Current camera matrix
         static glm::mat3 m_currViewMatrix;
+        static glm::mat3 m_currOrthoMatrix;
 
         static glm::mat3 m_currCamera;
         static std::vector<glm::mat3> m_cameras;

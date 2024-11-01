@@ -47,6 +47,52 @@ namespace graphicpipe
 		glBindVertexArray(0);
 	}
 
+	void GraphicsPipe::m_funcSetupCircleLinesVao()
+	{
+		std::vector<glm::vec2> lvPosVtx;
+		std::vector<GLushort> idx_vtx;
+
+		int numVertices = 36; // For example, 36 vertices
+		float radius = 0.5f;  // Circle radius
+
+		// Generate circle vertices
+		for (int i = 0; i < numVertices; ++i) {
+			float angle = 2.0f * 3.1415f * i / numVertices; // Calculate angle for each vertex
+			float x = radius * cos(angle);
+			float y = radius * sin(angle);
+			lvPosVtx.push_back(glm::vec2(x, y));
+			idx_vtx.push_back(static_cast<GLushort>(i));
+		}
+
+		GLsizei position_data_offset = 0;
+		GLsizei position_attribute_size = sizeof(glm::vec2);
+		GLsizei position_data_size = position_attribute_size * static_cast<GLsizei>(lvPosVtx.size());
+
+		unsigned int lvVboId{};
+		glCreateBuffers(1, &lvVboId);
+
+		// Allocate storage for vertex buffer and fill with circular vertices
+		glNamedBufferStorage(lvVboId, position_data_size, nullptr, GL_DYNAMIC_STORAGE_BIT);
+		glNamedBufferSubData(lvVboId, position_data_offset, position_data_size, lvPosVtx.data());
+
+		glCreateVertexArrays(1, &m_circleLinesMesh.m_vaoId);
+		glEnableVertexArrayAttrib(m_circleLinesMesh.m_vaoId, 0);
+		glVertexArrayVertexBuffer(m_circleLinesMesh.m_vaoId, 0, lvVboId, position_data_offset, position_attribute_size);
+		glVertexArrayAttribFormat(m_circleLinesMesh.m_vaoId, 0, 2, GL_FLOAT, GL_FALSE, 0);
+		glVertexArrayAttribBinding(m_circleLinesMesh.m_vaoId, 0, 0);
+
+		m_circleLinesMesh.m_primitiveType = GL_LINE_LOOP;
+		m_circleLinesMesh.m_indexElementCount = static_cast<unsigned short>(idx_vtx.size());
+
+		unsigned int ebo_hdl;
+		glCreateBuffers(1, &ebo_hdl);
+		glNamedBufferStorage(ebo_hdl, sizeof(unsigned short) * m_circleLinesMesh.m_indexElementCount,
+			idx_vtx.data(), GL_DYNAMIC_STORAGE_BIT);
+		glVertexArrayElementBuffer(m_circleLinesMesh.m_vaoId, ebo_hdl);
+
+		glBindVertexArray(0);
+	}
+
 	void GraphicsPipe::m_funcSetupFboVao()
 	{
 		float quadVertices[] =

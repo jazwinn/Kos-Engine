@@ -49,8 +49,8 @@ struct DrawComponents {
     int count{};
     
 
-    template <typename U, std::enable_if_t<std::is_floating_point_v<U>, int> = 0>
-    void operator()( U& _args) {
+
+    void operator()(float& _args) {
         
         ImGui::AlignTextToFramePadding();
         ImGui::Text(m_Array[count].c_str());
@@ -58,12 +58,40 @@ struct DrawComponents {
         ImGui::SetNextItemWidth(100.0f);
         std::string title = "##" + m_Array[count];
         ImGui::PushItemWidth(slidersize);
-        ImGui::DragFloat(title.c_str(), &_args, 1.0f, -100.0f, 100.f, "%.2f");
+        ImGui::DragFloat(title.c_str(), &_args, 0.1f, -100.0f, 100.f, "%.2f");
         ImGui::PopItemWidth();
         count++;
     }
 
 
+    void operator()(const std::vector<std::string>& _args) {
+        for (auto& arg : _args) {
+            ImGui::Text(m_Array[count].c_str());
+            ImGui::SameLine(slider_start_pos_x);
+            std::string title = "##" + m_Array[count];
+           // ImGui::InputText(title.c_str(), arg.c_str());
+        }
+
+        count++;
+    }
+
+    void operator()(physicspipe::EntityType& _args)
+    {
+        const char* shapeName = (_args == physicspipe::EntityType::CIRCLE) ? "CIRCLE" : "RECTANGLE";
+        if (ImGui::BeginCombo("Shape Types", shapeName))
+        {
+            if (ImGui::Selectable("RECTANGLE")) 
+            {
+                _args = physicspipe::EntityType::RECTANGLE;
+            }
+            if (ImGui::Selectable("CIRCLE")) 
+            {
+                _args = physicspipe::EntityType::CIRCLE;
+            }
+            ImGui::EndCombo();
+        }
+        count++;
+    }
 
     void operator()(int& _args) {
         
@@ -166,7 +194,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
     //Add Component Window
     const char* ComponentNames[] =
     {
-        "Add Components", "Collider Component", "Sprite Component", "Player Component", "Rigid Body Component", "Text Component", "Animation Component", "Camera Component"
+        "Add Components", "Collider Component", "Sprite Component", "Player Component", "Rigid Body Component", "Text Component", "Animation Component", "Camera Component" , "Button Component" , "Script Component"
     };
     static int ComponentType = 0;
 
@@ -207,16 +235,30 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 ecs->m_AddComponent(ecs::TYPECAMERACOMPONENT, entityID);
                 ComponentType = 0;
             }
+            if (ComponentType == 8) {
+                ecs->m_AddComponent(ecs::TYPEBUTTONCOMPONENT, entityID);
+                ComponentType = 0;
+            }
+            if (ComponentType == 9) {
+                ecs->m_AddComponent(ecs::TYPESCRIPTCOMPONENT, entityID);
+                ComponentType = 0;
+            }
         }
 
-
-       
+        auto deletecontext = [](ecs::ComponentType Type, ecs::EntityID ID) {
+            if (ImGui::BeginPopupContextItem()) {
+                if (ImGui::MenuItem("Delete Component")) {
+                    ecs::ECS::m_GetInstance()->m_RemoveComponent(Type, ID);
+                }
+                ImGui::EndPopup();
+            }
+        };
 
 
 
 
         ecs::compSignature EntitySignature = ecs->m_ECS_EntityMap[entityID];
-
+        assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
         ImGui::SeparatorText("Components");
 
         if (EntitySignature.test(ecs::TYPENAMECOMPONENT))
@@ -261,17 +303,14 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                 open = ImGui::CollapsingHeader("Sprite Component");
 
-                if (ImGui::BeginPopupContextItem()) {
-                    if (ImGui::MenuItem("Delete Component")) {
-                        ecs->m_RemoveComponent(ecs::TYPESPRITECOMPONENT, m_clickedEntityId);
-                    }
-                    ImGui::EndPopup();
-                }
+                deletecontext(ecs::TYPESPRITECOMPONENT, entityID);
 
                 if (open) {
                    
                     assetmanager::AssetManager* Asset = assetmanager::AssetManager::m_funcGetInstance();
                     auto* sc = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(entityID));
+                   
+
                     if (ImGui::BeginCombo("Images", sc->m_imageFile.c_str()))
                     {
                         for (const auto& image : Asset->m_imageManager.m_imageMap) {
@@ -281,6 +320,37 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             }
                         }
                         ImGui::EndCombo();
+                    }
+
+                    if (ImGui::TreeNode("Image Layers"))
+                    {
+                        //static std::map<const char*, int> item_names;
+                        //for (const auto& [id, component] : ecs->m_ECS_EntityMap)
+                        //{
+                        //    if (ecs->m_ECS_EntityMap[id].test(ecs::TYPESPRITECOMPONENT))
+                        //    {
+                        //        ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id));
+                        //        item_names[nc->m_entityName.c_str()] = 0;
+                        //    }
+                        //}
+                        ////static const char* item_names[] = { "Item One", "Item Two", "Item Three", "Item Four", "Item Five" };
+                        //for (int n = 0; n < item_names.size() ; n++)
+                        //{
+                        //    const char* item = item_names[n];
+                        //    ImGui::Selectable(item);
+
+                        //    if (ImGui::IsItemActive() && !ImGui::IsItemHovered())
+                        //    {
+                        //        int n_next = n + (ImGui::GetMouseDragDelta(0).y < 0.f ? -1 : 1);
+                        //        if (n_next >= 0 && n_next < item_names.size())
+                        //        {
+                        //            item_names[n] = item_names[n_next];
+                        //            item_names[n_next] = item;
+                        //            ImGui::ResetMouseDragDelta();
+                        //        }
+                        //    }
+                        //}
+                        ImGui::TreePop();
                     }
 
                     if (ImGui::BeginDragDropTarget())
@@ -315,12 +385,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                 open = ImGui::CollapsingHeader("Collider Component");
 
-                if (ImGui::BeginPopupContextItem()) {
-                    if (ImGui::MenuItem("Delete Component")) {
-                        ecs->m_RemoveComponent(ecs::TYPECOLLIDERCOMPONENT, m_clickedEntityId);
-                    }
-                    ImGui::EndPopup();
-                }
+                deletecontext(ecs::TYPECOLLIDERCOMPONENT, entityID);
 
                 if (open) {
                     auto* rbc = static_cast<ecs::ColliderComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(entityID));
@@ -333,12 +398,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                 open = ImGui::CollapsingHeader("RigidBody Component");
 
-                if (ImGui::BeginPopupContextItem()) {
-                    if (ImGui::MenuItem("Delete Component")) {
-                        ecs->m_RemoveComponent(ecs::TYPERIGIDBODYCOMPONENT, m_clickedEntityId);
-                    }
-                    ImGui::EndPopup();
-                }
+                deletecontext(ecs::TYPERIGIDBODYCOMPONENT, entityID);
 
                 if (open) {
                     auto* rbc = static_cast<ecs::RigidBodyComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPERIGIDBODYCOMPONENT]->m_GetEntityComponent(entityID));
@@ -351,12 +411,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                 open = ImGui::CollapsingHeader("Player Component");
 
-                if (ImGui::BeginPopupContextItem()) {
-                    if (ImGui::MenuItem("Delete Component")) {
-                        ecs->m_RemoveComponent(ecs::TYPEPLAYERCOMPONENT, m_clickedEntityId);
-                    }
-                    ImGui::EndPopup();
-                }
+                deletecontext(ecs::TYPEPLAYERCOMPONENT, entityID);
 
                 if (open) {
                     auto* rbc = static_cast<ecs::PlayerComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEPLAYERCOMPONENT]->m_GetEntityComponent(entityID));
@@ -369,12 +424,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                 open = ImGui::CollapsingHeader("Text Component");
 
-                if (ImGui::BeginPopupContextItem()) {
-                    if (ImGui::MenuItem("Delete Component")) {
-                        ecs->m_RemoveComponent(ecs::TYPETEXTCOMPONENT, m_clickedEntityId);
-                    }
-                    ImGui::EndPopup();
-                }
+                deletecontext(ecs::TYPETEXTCOMPONENT, entityID);
 
 
                 if (open) {
@@ -442,12 +492,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                 open = ImGui::CollapsingHeader("Animation Component");
 
-                if (ImGui::BeginPopupContextItem()) {
-                    if (ImGui::MenuItem("Delete Component")) {
-                        ecs->m_RemoveComponent(ecs::TYPEANIMATIONCOMPONENT, m_clickedEntityId);
-                    }
-                    ImGui::EndPopup();
-                }
+                deletecontext(ecs::TYPEANIMATIONCOMPONENT, entityID);
 
                 if (open) {
                     auto* rbc = static_cast<ecs::AnimationComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEANIMATIONCOMPONENT]->m_GetEntityComponent(entityID));
@@ -460,12 +505,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                 open = ImGui::CollapsingHeader("Camera Component");
 
-                if (ImGui::BeginPopupContextItem()) {
-                    if (ImGui::MenuItem("Delete Component")) {
-                        ecs->m_RemoveComponent(ecs::TYPECAMERACOMPONENT, m_clickedEntityId);
-                    }
-                    ImGui::EndPopup();
-                }
+                deletecontext(ecs::TYPECAMERACOMPONENT, entityID);
 
                 if (open) {
                     auto* rbc = static_cast<ecs::CameraComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPECAMERACOMPONENT]->m_GetEntityComponent(entityID));
@@ -478,16 +518,60 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                 open = ImGui::CollapsingHeader("Script Component");
 
-                if (ImGui::BeginPopupContextItem()) {
-                    if (ImGui::MenuItem("Delete Component")) {
-                        ecs->m_RemoveComponent(ecs::TYPESCRIPTCOMPONENT, m_clickedEntityId);
-                    }
-                    ImGui::EndPopup();
-                }
+                deletecontext(ecs::TYPESCRIPTCOMPONENT, entityID);
 
                 if (open) {
-                    auto* rbc = static_cast<ecs::ScriptComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESCRIPTCOMPONENT]->m_GetEntityComponent(entityID));
-                    // rbc->ApplyFunction(DrawComponents(rbc->Names()));
+                    auto* sc = static_cast<ecs::ScriptComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESCRIPTCOMPONENT]->m_GetEntityComponent(entityID));
+                    
+                   
+                    static int item_selected_idx = 0;
+                    std::string preview = {};
+                    if (sc->m_scripts.size() > 0) {
+                        preview = sc->m_scripts[0]; // change to n once loop is created
+                    }
+
+                    if (ImGui::BeginCombo("####combo 1", preview.c_str()))
+                    {
+
+                        for (const auto& scriptname : assetManager->m_scriptManager.m_scriptNames) {
+
+                            const bool is_selected{};
+                            if (ImGui::Selectable(scriptname.c_str(), is_selected)) {
+                                //TODO for now push back
+                                sc->m_scripts.push_back(scriptname);
+
+                            }
+
+                            // Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
+                            if (is_selected)
+                                ImGui::SetItemDefaultFocus();
+
+
+
+                        }
+                        for (int n = 0; n < sc->m_scripts.size(); n++)
+                        {
+                           
+                        }
+                        ImGui::EndCombo();
+                    }
+
+
+
+                }
+
+
+            }
+
+            if (EntitySignature.test(ecs::TYPEBUTTONCOMPONENT)) {
+
+                open = ImGui::CollapsingHeader("Button Component");
+
+                deletecontext(ecs::TYPEBUTTONCOMPONENT, entityID);
+
+                if (open) {
+                    auto* rbc = static_cast<ecs::ButtonComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEBUTTONCOMPONENT]->m_GetEntityComponent(entityID));
+                    //rbc->ApplyFunction(DrawComponents(rbc->Names()));
                 }
 
 

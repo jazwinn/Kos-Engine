@@ -117,9 +117,9 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
         EditorCamera::m_editorCamera.m_zoom.x = 1.f;
         EditorCamera::m_editorCamera.m_zoom.y = 1.f;
     }
-
     EditorCamera::calculateLevelEditorCamera();
     EditorCamera::calculateLevelEditorView();
+    EditorCamera::calculateLevelEditorOrtho();
     graphicpipe::GraphicsCamera::m_currCameraMatrix = EditorCamera::m_editorCameraMatrix;
     graphicpipe::GraphicsCamera::m_currViewMatrix = EditorCamera::m_editorViewMatrix;
     
@@ -135,18 +135,27 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
             IM_ASSERT(payload->DataSize == sizeof(std::filesystem::path));
             std::filesystem::path* filename = static_cast<std::filesystem::path*>(payload->Data);
 
-            float screencordX = ImGui::GetMousePos().x - ImGui::GetCursorScreenPos().x;
-            float screencordY = ImGui::GetMousePos().y - ImGui::GetCursorScreenPos().y;
+            float screencordX = ImGui::GetMousePos().x - pos.x;
+            float screencordY = ImGui::GetMousePos().y - pos.y;
 
             //TODO calculate mouse pos correctly
-            float cordX = (screencordX - renderWindowSize.x / 2.f) / (renderWindowSize.x / 2.f);
-            float cordY = (std::abs(screencordY) - renderWindowSize.y / 2.f) / (renderWindowSize.y / 2.f);
+            float cordX = (screencordX - imageSize.x / 2.f) / (imageSize.x / 2.f);
+            float cordY = (std::abs(screencordY) - imageSize.y / 2.f) / (imageSize.y / 2.f);
+
+            glm::vec3 translate = { cordX , -cordY, 0.f };
+            translate.x *= EditorCamera::m_editorCameraMatrix[0][0];
+            translate.y *= EditorCamera::m_editorCameraMatrix[1][1];
+            translate.x *= 1.f / graphicpipe::GraphicsCamera::m_aspectRatio;
+            translate.x += EditorCamera::m_editorCameraMatrix[2][0];
+            translate.y += EditorCamera::m_editorCameraMatrix[2][1];
+            
 
             if (filename->filename().extension().string() == ".png") {
              ecs::ECS* ecs = ecs::ECS::m_GetInstance();
-                ecs::EntityID id = ecs->m_CreateEntity();
+                ecs::EntityID id = ecs->m_CreateEntity(ecs->m_ECS_SceneMap.begin()->first); //assign to top most scene
                 ecs::TransformComponent* transCom = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id));
-                transCom->m_position = { cordX, cordY };
+                transCom->m_position = { translate.x, translate.y };
+                // Insert matrix
                 ecs::NameComponent* nameCom = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id));
                 nameCom->m_entityName = filename->filename().stem().string();
                 ecs::SpriteComponent * spriteCom = static_cast<ecs::SpriteComponent*>(ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, id));
@@ -156,9 +165,10 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
             }
             if (filename->filename().extension().string() == ".ttf") {
                 ecs::ECS* ecs = ecs::ECS::m_GetInstance();
-                ecs::EntityID id = ecs->m_CreateEntity();
+                ecs::EntityID id = ecs->m_CreateEntity(ecs->m_ECS_SceneMap.begin()->first); //assign to top most scene
                 ecs::TransformComponent* transCom = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id));
-                transCom->m_position = { cordX, cordY };
+                transCom->m_position = { translate.x, translate.y };
+                // Insert matrix
                 ecs::NameComponent* nameCom = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id));
                 nameCom->m_entityName = filename->filename().stem().string();
                 ecs::TextComponent* textCom = static_cast<ecs::TextComponent*>(ecs->m_AddComponent(ecs::TYPETEXTCOMPONENT, id));

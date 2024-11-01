@@ -28,7 +28,7 @@ R"( #version 460 core
 		{
 			fragColor = vec4(0,1,0,1.0); // Green
 		}
-		else if (collided > 0.5 && collided < 1.0)
+		else if (collided > 0.5 && collided < 1.5)
 		{
 			fragColor = vec4(1,0,0,1.0); // Red
 		}

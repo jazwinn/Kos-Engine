@@ -67,6 +67,16 @@ namespace Application {
         ecs->m_Load();
         ecs->m_Init();
         LOGGING_INFO("Load ECS Successful");
+
+       /*--------------------------------------------------------------
+           INITIALIZE MONO AND ASSEMBLY LOADING
+       --------------------------------------------------------------*/
+        /****************************************************************************************/
+        //SAMPLE TO REMOVE
+        //Compiles .cs
+        assetmanager::AssetManager::m_funcGetInstance()->m_scriptManager.m_CompileCSharpFile("C:/Users/ngjaz/OneDrive/Documents/roombarampage/GreyGooseWorkspace/RRR/RoombaRampage/Assets/Scripts/ExampleScriptB.cs");
+        /****************************************************************************************/
+
         /*--------------------------------------------------------------
            INITIALIZE Asset Manager
         --------------------------------------------------------------*/
@@ -101,25 +111,13 @@ namespace Application {
             LOAD ENTITIES INTO ECS & IMGUI
         --------------------------------------------------------------*/
         scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();
-        //scenemanager->m_AddScene("./RoombaRampage/Json/Scene1.json");
-        //scenemanager->m_LoadScene("Scene1");
+        scenemanager->m_LoadScene("../RoombaRampage/Assets/Scene/Scene1.json"); // replace with opening up window dialog
+        
+        ////scenemanager->m_LoadScene("Scene1");
 
         
 
-        /*--------------------------------------------------------------
-           INITIALIZE MONO AND ASSEMBLY LOADING
-       --------------------------------------------------------------*/
-        //TODO ecapulate into one big init function
-        // Mono initialization and assembly loading
-        if (!ScriptManager.m_InitMono("C# Mono")) {
-            return -1;
-        }
-
-        //Internal Calls
-        ScriptManager.m_RegisterInternalCalls();
-
-        std::vector<std::string> scripts = { "ExampleScriptA", "ExampleScriptB" };
-        ScriptManager.m_AddScripts(scripts);
+       
 
 
         LOGGING_INFO("Mono initialization and method loading successful.");
@@ -140,22 +138,6 @@ namespace Application {
         help->m_fixedDeltaTime = fixedDeltaTime;
         ecs->m_DeltaTime = fixedDeltaTime;
         double accumulatedTime = 0.0;
-
-        /****************************************************************************************/
-        //SAMPLE TO REMOVE
-        // Invoke methods from Script A
-        if (ScriptManager.m_LoadMethod("ExampleScriptA", "ExampleScriptA", "PrintA", 0)) {
-            ScriptManager.m_InvokeMethod("ExampleScriptA", "ExampleScriptA", "PrintA", nullptr, 0);
-        }
-
-        int number = 42;
-        MonoString* message = mono_string_new(ScriptManager.m_GetMonoDomain(), "Calling Method 2!");
-        void* args[2] = { &number, message };
-        if (ScriptManager.m_LoadMethod("ExampleScriptA", "ExampleScriptA", "PrintMessage", 2)) {
-            ScriptManager.m_InvokeMethod("ExampleScriptA", "ExampleScriptA", "PrintMessage", args, 2);
-        }
-        
-        /****************************************************************************************/
 
         /*--------------------------------------------------------------
             GAME LOOP
@@ -222,15 +204,6 @@ namespace Application {
 
                 glfwSwapBuffers(lvWindow.m_window);
 
-                //sample to remove
-                if (Input::InputSystem::KeyStateA && Input::InputSystem::KeyStateD) {
-
-                    if (ScriptManager.m_LoadMethod("ExampleScriptB", "ExampleScriptB", "Start", 0)) {
-
-                        ScriptManager.m_InvokeMethod("ExampleScriptB", "ExampleScriptB", "Start", nullptr, 0);
-                    }
-
-                }
             }
             catch (const std::exception& e) {
                 LOGGING_ERROR("Exception in game loop: {}", e.what());

@@ -22,6 +22,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include <../Math/Vector2.h>
 #include <vector>
 #include <string>
+#include "Keycodes.h"
 
 namespace Input {
 
@@ -50,16 +51,35 @@ namespace Input {
 		*/
 		void SetCallBack(GLFWwindow* window);
 
+		static bool m_isKeyTriggered(const keyCode givenKey);
+		static bool m_isKeyPressed(const keyCode givenKey);
+		static bool m_isKeyReleased(const keyCode givenKey);
 
-		static bool KeyStateW;
-		static bool KeyStateA;
-		static bool KeyStateS;
-		static bool KeyStateD;
-		static bool KeyStateE;
-		static bool KeyStateEsc;
-		static bool KeyStateSpace;
-		static bool KeyStateR;
-		static bool KeyState0;
+
+		//static bool KeyStateW;
+		//static bool KeyStateA;
+		//static bool KeyStateS;
+		//static bool KeyStateD;
+		//static bool KeyStateE;
+		//static bool KeyStateEsc;
+		//static bool KeyStateSpace;
+		//static bool KeyStateR;
+		//static bool KeyState0;
+		//static bool KeyStateLMB;
+		//static bool KeyStateF11;
+
+		static int m_keyStateA;
+		static int m_keyStateW;
+		static int m_keyStateS;
+		static int m_keyStateD;
+		static int m_keyStateE;
+		static int m_keyStateR;
+		static int m_keyState0;
+		static int m_keyStateF11;
+		static int m_keyStateSpace;
+		static int m_keyStateEsc;
+		static int m_keyStateLMB;
+
 
 		static vector2::Vec2 MousePosition;
 

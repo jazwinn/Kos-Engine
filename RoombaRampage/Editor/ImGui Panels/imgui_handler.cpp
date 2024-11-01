@@ -71,13 +71,14 @@ namespace gui {
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
+		ImGuizmo::BeginFrame();
 	}
 
 	void ImGuiHandler::m_Render()
 	{
-		if (Input::InputSystem::KeyState0)
+		if (Input::InputSystem::m_isKeyTriggered(keys::F11))
 		{
-			Input::InputSystem::KeyState0 = false;
+			Input::InputSystem::m_keyStateF11 = GLFW_RELEASE;
 			graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
 			EditorCamera::m_editorMode = (EditorCamera::m_editorMode) ? false : true;
 			pipe->m_gameMode = (pipe->m_gameMode) ? false : true;
@@ -89,7 +90,7 @@ namespace gui {
 			m_NewFrame();
 			//for gizmo - todo once camera is done
 			//ImGuizmo::SetOrthographic(true);
-			ImGuizmo::BeginFrame();
+			
 			//viewport docking
 			ImGui::DockSpaceOverViewport(0, ImGui::GetMainViewport());
 			//create main menu bar

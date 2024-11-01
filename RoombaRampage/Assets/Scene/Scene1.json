@@ -1,22 +1,15 @@
 [
     {
-        "name": "Player Object",
+        "name": "dwa",
         "transform": {
             "position": {
-                "x": 0.0,
+                "x": -2.259999990463257,
                 "y": 0.0
             },
             "rotation": 0.0,
             "scale": {
-                "x": 1.0,
-                "y": 1.0
-            }
-        },
-        "movement": {
-            "speed": 1.0,
-            "direction": {
-                "x": 0.0,
-                "y": 0.0
+                "x": 3.0,
+                "y": 3.0
             }
         },
         "collider": {
@@ -30,15 +23,31 @@
             },
             "drawDebug": true
         },
-        "player": {
-            "control": true
+        "camera": {}
+    },
+    {
+        "name": "Test",
+        "transform": {
+            "position": {
+                "x": -0.7200000286102295,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
         },
-        "rigidbody": {
-            "mass": 0.0
-        },
-        "sprite": {
-            "imageID": 4,
-            "frameNumber": 0
+        "collider": {
+            "size": {
+                "x": 1.0,
+                "y": 1.0
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true
         }
     }
 ]

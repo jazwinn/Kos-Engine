@@ -1,52 +1,53 @@
-[INFO]: 2024-10-27 17:13:38 - Application Start
-[INFO]: 2024-10-27 17:13:38 - Load Log Successful
-[INFO]: 2024-10-27 17:13:38 - Load Config Successful
-[INFO]: 2024-10-27 17:13:38 - Load Window Successful
-[INFO]: 2024-10-27 17:13:38 - Load ECS Successful
-[INFO]: 2024-10-27 17:13:38 - Strip Success for Assets/Texture/ani_RoombaBlink_strip4.png
-[INFO]: 2024-10-27 17:13:38 - Texture Binded, Texture ID : 6 
-[INFO]: 2024-10-27 17:13:38 - Image ID : 0 
-[INFO]: 2024-10-27 17:13:38 - Strip Success for Assets/Texture/ani_RoombaBoosters_strip6.png
-[INFO]: 2024-10-27 17:13:39 - Texture Binded, Texture ID : 7 
-[INFO]: 2024-10-27 17:13:39 - Image ID : 1 
-[INFO]: 2024-10-27 17:13:39 - Strip Success for Assets/Texture/ani_SeanSprite_strip4.png
-[INFO]: 2024-10-27 17:13:39 - Texture Binded, Texture ID : 8 
-[INFO]: 2024-10-27 17:13:39 - Image ID : 2 
-[INFO]: 2024-10-27 17:13:39 - Texture Padded for Audiowav.png
-[INFO]: 2024-10-27 17:13:39 - Texture Binded, Texture ID : 9 
-[INFO]: 2024-10-27 17:13:39 - Image ID : 3 
-[INFO]: 2024-10-27 17:13:39 - Texture Padded for Background.png
-[INFO]: 2024-10-27 17:13:39 - Texture Binded, Texture ID : 10 
-[INFO]: 2024-10-27 17:13:39 - Image ID : 4 
-[INFO]: 2024-10-27 17:13:39 - Texture Binded, Texture ID : 11 
-[INFO]: 2024-10-27 17:13:39 - Image ID : 5 
-[INFO]: 2024-10-27 17:13:39 - Texture Padded for boosters_tail02.png
-[INFO]: 2024-10-27 17:13:39 - Texture Binded, Texture ID : 12 
-[INFO]: 2024-10-27 17:13:39 - Image ID : 6 
-[INFO]: 2024-10-27 17:13:39 - Texture Binded, Texture ID : 13 
-[INFO]: 2024-10-27 17:13:39 - Image ID : 7 
-[INFO]: 2024-10-27 17:13:39 - Texture Padded for folder.png
-[INFO]: 2024-10-27 17:13:39 - Texture Binded, Texture ID : 14 
-[INFO]: 2024-10-27 17:13:39 - Image ID : 8 
-[INFO]: 2024-10-27 17:13:39 - Texture Padded for gunleft_02.png
-[INFO]: 2024-10-27 17:13:39 - Texture Binded, Texture ID : 15 
-[INFO]: 2024-10-27 17:13:39 - Image ID : 9 
-[INFO]: 2024-10-27 17:13:39 - Texture Padded for gunright_02.png
-[INFO]: 2024-10-27 17:13:39 - Texture Binded, Texture ID : 16 
-[INFO]: 2024-10-27 17:13:39 - Image ID : 10 
-[INFO]: 2024-10-27 17:13:39 - Texture Padded for Roomba.png
-[INFO]: 2024-10-27 17:13:39 - Texture Binded, Texture ID : 17 
-[INFO]: 2024-10-27 17:13:39 - Image ID : 11 
-[INFO]: 2024-10-27 17:13:39 - Texture Binded, Texture ID : 18 
-[INFO]: 2024-10-27 17:13:39 - Image ID : 12 
-[INFO]: 2024-10-27 17:13:39 - Load Asset Successful
-[INFO]: 2024-10-27 17:13:39 - Shader compiled successfully
-[INFO]: 2024-10-27 17:13:39 - Shader compiled successfully
-[INFO]: 2024-10-27 17:13:39 - Shader compiled successfully
-[INFO]: 2024-10-27 17:13:39 - Shader compiled successfully
-[INFO]: 2024-10-27 17:13:39 - Load Graphic Pipline Successful
-[INFO]: 2024-10-27 17:13:39 - Set Input Call Back Successful
-[INFO]: 2024-10-27 17:13:39 - Load ImGui Successful
-[INFO]: 2024-10-27 17:13:39 - Mono initialization and method loading successful.
-[INFO]: 2024-10-27 17:13:39 - Application Init Successful
-[INFO]: 2024-10-27 17:15:24 - Application Closed
+[INFO]: 2024-10-30 02:58:01 - Application Start
+[INFO]: 2024-10-30 02:58:01 - Load Log Successful
+[INFO]: 2024-10-30 02:58:01 - Load Config Successful
+[INFO]: 2024-10-30 02:58:02 - Load Window Successful
+[INFO]: 2024-10-30 02:58:02 - Load ECS Successful
+[INFO]: 2024-10-30 02:58:05 - Strip Success for Assets/Texture/ani_RoombaBlink_strip4.png
+[INFO]: 2024-10-30 02:58:05 - Texture Binded, Texture ID : 6 
+[INFO]: 2024-10-30 02:58:05 - Image ID : 0 
+[INFO]: 2024-10-30 02:58:05 - Strip Success for Assets/Texture/ani_RoombaBoosters_strip6.png
+[INFO]: 2024-10-30 02:58:05 - Texture Binded, Texture ID : 7 
+[INFO]: 2024-10-30 02:58:05 - Image ID : 1 
+[INFO]: 2024-10-30 02:58:05 - Strip Success for Assets/Texture/ani_SeanSprite_strip4.png
+[INFO]: 2024-10-30 02:58:06 - Texture Binded, Texture ID : 8 
+[INFO]: 2024-10-30 02:58:06 - Image ID : 2 
+[INFO]: 2024-10-30 02:58:06 - Texture Padded for Audiowav.png
+[INFO]: 2024-10-30 02:58:06 - Texture Binded, Texture ID : 9 
+[INFO]: 2024-10-30 02:58:06 - Image ID : 3 
+[INFO]: 2024-10-30 02:58:06 - Texture Padded for Background.png
+[INFO]: 2024-10-30 02:58:06 - Texture Binded, Texture ID : 10 
+[INFO]: 2024-10-30 02:58:06 - Image ID : 4 
+[INFO]: 2024-10-30 02:58:06 - Texture Binded, Texture ID : 11 
+[INFO]: 2024-10-30 02:58:06 - Image ID : 5 
+[INFO]: 2024-10-30 02:58:06 - Texture Padded for boosters_tail02.png
+[INFO]: 2024-10-30 02:58:06 - Texture Binded, Texture ID : 12 
+[INFO]: 2024-10-30 02:58:06 - Image ID : 6 
+[INFO]: 2024-10-30 02:58:06 - Texture Binded, Texture ID : 13 
+[INFO]: 2024-10-30 02:58:06 - Image ID : 7 
+[INFO]: 2024-10-30 02:58:06 - Texture Padded for folder.png
+[INFO]: 2024-10-30 02:58:06 - Texture Binded, Texture ID : 14 
+[INFO]: 2024-10-30 02:58:06 - Image ID : 8 
+[INFO]: 2024-10-30 02:58:06 - Texture Padded for gunleft_02.png
+[INFO]: 2024-10-30 02:58:06 - Texture Binded, Texture ID : 15 
+[INFO]: 2024-10-30 02:58:06 - Image ID : 9 
+[INFO]: 2024-10-30 02:58:06 - Texture Padded for gunright_02.png
+[INFO]: 2024-10-30 02:58:06 - Texture Binded, Texture ID : 16 
+[INFO]: 2024-10-30 02:58:06 - Image ID : 10 
+[INFO]: 2024-10-30 02:58:06 - Texture Padded for Roomba.png
+[INFO]: 2024-10-30 02:58:06 - Texture Binded, Texture ID : 17 
+[INFO]: 2024-10-30 02:58:06 - Image ID : 11 
+[INFO]: 2024-10-30 02:58:06 - Texture Binded, Texture ID : 18 
+[INFO]: 2024-10-30 02:58:06 - Image ID : 12 
+[INFO]: 2024-10-30 02:58:06 - Load Asset Successful
+[INFO]: 2024-10-30 02:58:06 - Shader compiled successfully
+[INFO]: 2024-10-30 02:58:06 - Shader compiled successfully
+[INFO]: 2024-10-30 02:58:06 - Shader compiled successfully
+[INFO]: 2024-10-30 02:58:06 - Shader compiled successfully
+[INFO]: 2024-10-30 02:58:06 - Load Graphic Pipline Successful
+[INFO]: 2024-10-30 02:58:06 - Set Input Call Back Successful
+[INFO]: 2024-10-30 02:58:06 - Load ImGui Successful
+[INFO]: 2024-10-30 02:58:06 - Load Json Successful
+[INFO]: 2024-10-30 02:58:06 - Entities successfully loaded!
+[INFO]: 2024-10-30 02:58:06 - Mono initialization and method loading successful.
+[INFO]: 2024-10-30 02:58:06 - Application Init Successful

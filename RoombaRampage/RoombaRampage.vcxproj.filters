@@ -75,6 +75,8 @@
     <ClCompile Include="Editor\ImGui Panels\imgui_game_scene_window.cpp" />
     <ClCompile Include="ECS\System\ButtonSystem.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_play_pause.cpp" />
+    <ClCompile Include="ECS\System\ButtonSystem.cpp" />
+    <ClCompile Include="C# Mono\InternalCall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Application.h" />
@@ -162,6 +164,8 @@
     <ClInclude Include="ECS\Component\ConvertComponent.h" />
     <ClInclude Include="ECS\Component\ButtonComponent.h" />
     <ClInclude Include="ECS\System\ButtonSystem.h" />
+    <ClInclude Include="C# Mono\InternalCall.h" />
+    <ClInclude Include="Inputs\Keycodes.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Graphics\debugFragmentShader.frag" />
