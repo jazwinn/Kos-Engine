@@ -60,7 +60,7 @@ namespace script {
 
 		2.  * Compile the C# into DLL *
 			- View > Terminal (Open VS terminal)
-			- cd "G:\Documents\RoombaOS_ForkCloneRemote\RoombaRampage\C# Mono" (Example to point to your C# file)
+			- cd "G:\Documents\RoombaOS_ForkCloneRemote\RoombaRampage\C#Mono" (Example to point to your C# file)
 			- csc /target:library ExampleScript.cs (This will compile your C# script into DLL)
 
 		3.  * Load and Invoke C# Method *

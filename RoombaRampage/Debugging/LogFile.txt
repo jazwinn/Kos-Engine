@@ -1,59 +1,57 @@
-[INFO]: 2024-11-01 20:28:01 - Application Start
-[INFO]: 2024-11-01 20:28:01 - Load Log Successful
-[INFO]: 2024-11-01 20:28:01 - Load Config Successful
-[INFO]: 2024-11-01 20:28:02 - Load Window Successful
-[INFO]: 2024-11-01 20:28:02 - Load ECS Successful
-[DEBUG]: 2024-11-01 20:28:02 - Successfully Added Script
-[DEBUG]: 2024-11-01 20:28:02 - Successfully Added Script
-[DEBUG]: 2024-11-01 20:28:02 - Successfully Added Script
-[DEBUG]: 2024-11-01 20:28:02 - Successfully Reload Script
-[DEBUG]: 2024-11-01 20:28:02 - Successfully Reload Script
-[INFO]: 2024-11-01 20:28:02 - Strip Success for Assets/Texture/ani_RoombaBlink_strip4.png
-[INFO]: 2024-11-01 20:28:02 - Texture Binded, Texture ID : 6 
-[INFO]: 2024-11-01 20:28:02 - Image ID : 0 
-[INFO]: 2024-11-01 20:28:02 - Strip Success for Assets/Texture/ani_RoombaBoosters_strip6.png
-[INFO]: 2024-11-01 20:28:03 - Texture Binded, Texture ID : 7 
-[INFO]: 2024-11-01 20:28:03 - Image ID : 1 
-[INFO]: 2024-11-01 20:28:03 - Strip Success for Assets/Texture/ani_SeanSprite_strip4.png
-[INFO]: 2024-11-01 20:28:03 - Texture Binded, Texture ID : 8 
-[INFO]: 2024-11-01 20:28:03 - Image ID : 2 
-[INFO]: 2024-11-01 20:28:03 - Texture Padded for Audiowav.png
-[INFO]: 2024-11-01 20:28:03 - Texture Binded, Texture ID : 9 
-[INFO]: 2024-11-01 20:28:03 - Image ID : 3 
-[INFO]: 2024-11-01 20:28:03 - Texture Padded for Background.png
-[INFO]: 2024-11-01 20:28:03 - Texture Binded, Texture ID : 10 
-[INFO]: 2024-11-01 20:28:03 - Image ID : 4 
-[INFO]: 2024-11-01 20:28:03 - Texture Binded, Texture ID : 11 
-[INFO]: 2024-11-01 20:28:03 - Image ID : 5 
-[INFO]: 2024-11-01 20:28:03 - Texture Padded for boosters_tail02.png
-[INFO]: 2024-11-01 20:28:03 - Texture Binded, Texture ID : 12 
-[INFO]: 2024-11-01 20:28:03 - Image ID : 6 
-[INFO]: 2024-11-01 20:28:03 - Texture Binded, Texture ID : 13 
-[INFO]: 2024-11-01 20:28:03 - Image ID : 7 
-[INFO]: 2024-11-01 20:28:03 - Texture Padded for folder.png
-[INFO]: 2024-11-01 20:28:03 - Texture Binded, Texture ID : 14 
-[INFO]: 2024-11-01 20:28:03 - Image ID : 8 
-[INFO]: 2024-11-01 20:28:03 - Texture Padded for gunleft_02.png
-[INFO]: 2024-11-01 20:28:03 - Texture Binded, Texture ID : 15 
-[INFO]: 2024-11-01 20:28:03 - Image ID : 9 
-[INFO]: 2024-11-01 20:28:03 - Texture Padded for gunright_02.png
-[INFO]: 2024-11-01 20:28:03 - Texture Binded, Texture ID : 16 
-[INFO]: 2024-11-01 20:28:03 - Image ID : 10 
-[INFO]: 2024-11-01 20:28:03 - Texture Padded for Roomba.png
-[INFO]: 2024-11-01 20:28:03 - Texture Binded, Texture ID : 17 
-[INFO]: 2024-11-01 20:28:03 - Image ID : 11 
-[INFO]: 2024-11-01 20:28:03 - Texture Binded, Texture ID : 18 
-[INFO]: 2024-11-01 20:28:03 - Image ID : 12 
-[INFO]: 2024-11-01 20:28:03 - Load Asset Successful
-[INFO]: 2024-11-01 20:28:03 - Shader compiled successfully
-[INFO]: 2024-11-01 20:28:03 - Shader compiled successfully
-[INFO]: 2024-11-01 20:28:03 - Shader compiled successfully
-[INFO]: 2024-11-01 20:28:03 - Shader compiled successfully
-[INFO]: 2024-11-01 20:28:03 - Load Graphic Pipline Successful
-[INFO]: 2024-11-01 20:28:03 - Set Input Call Back Successful
-[INFO]: 2024-11-01 20:28:03 - Load ImGui Successful
-[WARN]: 2024-11-01 20:28:03 - Entity Already Has Component
-[INFO]: 2024-11-01 20:28:03 - Load Json Successful
-[INFO]: 2024-11-01 20:28:03 - Entities successfully loaded!
-[INFO]: 2024-11-01 20:28:03 - Mono initialization and method loading successful.
-[INFO]: 2024-11-01 20:28:03 - Application Init Successful
+[INFO]: 2024-11-01 22:05:11 - Application Start
+[INFO]: 2024-11-01 22:05:11 - Load Log Successful
+[INFO]: 2024-11-01 22:05:11 - Load Config Successful
+[INFO]: 2024-11-01 22:05:11 - Load Window Successful
+[INFO]: 2024-11-01 22:05:11 - Load ECS Successful
+[DEBUG]: 2024-11-01 22:05:12 - Successfully Added Script
+[DEBUG]: 2024-11-01 22:05:12 - Successfully Added Script
+[INFO]: 2024-11-01 22:05:12 - Strip Success for Assets/Texture/ani_RoombaBlink_strip4.png
+[INFO]: 2024-11-01 22:05:12 - Texture Binded, Texture ID : 6 
+[INFO]: 2024-11-01 22:05:12 - Image ID : 0 
+[INFO]: 2024-11-01 22:05:12 - Strip Success for Assets/Texture/ani_RoombaBoosters_strip6.png
+[INFO]: 2024-11-01 22:05:12 - Texture Binded, Texture ID : 7 
+[INFO]: 2024-11-01 22:05:12 - Image ID : 1 
+[INFO]: 2024-11-01 22:05:12 - Strip Success for Assets/Texture/ani_SeanSprite_strip4.png
+[INFO]: 2024-11-01 22:05:12 - Texture Binded, Texture ID : 8 
+[INFO]: 2024-11-01 22:05:12 - Image ID : 2 
+[INFO]: 2024-11-01 22:05:12 - Texture Padded for Audiowav.png
+[INFO]: 2024-11-01 22:05:12 - Texture Binded, Texture ID : 9 
+[INFO]: 2024-11-01 22:05:12 - Image ID : 3 
+[INFO]: 2024-11-01 22:05:12 - Texture Padded for Background.png
+[INFO]: 2024-11-01 22:05:12 - Texture Binded, Texture ID : 10 
+[INFO]: 2024-11-01 22:05:12 - Image ID : 4 
+[INFO]: 2024-11-01 22:05:12 - Texture Binded, Texture ID : 11 
+[INFO]: 2024-11-01 22:05:12 - Image ID : 5 
+[INFO]: 2024-11-01 22:05:12 - Texture Padded for boosters_tail02.png
+[INFO]: 2024-11-01 22:05:12 - Texture Binded, Texture ID : 12 
+[INFO]: 2024-11-01 22:05:12 - Image ID : 6 
+[INFO]: 2024-11-01 22:05:12 - Texture Binded, Texture ID : 13 
+[INFO]: 2024-11-01 22:05:12 - Image ID : 7 
+[INFO]: 2024-11-01 22:05:12 - Texture Padded for folder.png
+[INFO]: 2024-11-01 22:05:12 - Texture Binded, Texture ID : 14 
+[INFO]: 2024-11-01 22:05:12 - Image ID : 8 
+[INFO]: 2024-11-01 22:05:12 - Texture Padded for gunleft_02.png
+[INFO]: 2024-11-01 22:05:12 - Texture Binded, Texture ID : 15 
+[INFO]: 2024-11-01 22:05:12 - Image ID : 9 
+[INFO]: 2024-11-01 22:05:12 - Texture Padded for gunright_02.png
+[INFO]: 2024-11-01 22:05:12 - Texture Binded, Texture ID : 16 
+[INFO]: 2024-11-01 22:05:12 - Image ID : 10 
+[INFO]: 2024-11-01 22:05:12 - Texture Padded for Roomba.png
+[INFO]: 2024-11-01 22:05:12 - Texture Binded, Texture ID : 17 
+[INFO]: 2024-11-01 22:05:12 - Image ID : 11 
+[INFO]: 2024-11-01 22:05:12 - Texture Binded, Texture ID : 18 
+[INFO]: 2024-11-01 22:05:12 - Image ID : 12 
+[INFO]: 2024-11-01 22:05:12 - Load Asset Successful
+[INFO]: 2024-11-01 22:05:12 - Shader compiled successfully
+[INFO]: 2024-11-01 22:05:12 - Shader compiled successfully
+[INFO]: 2024-11-01 22:05:12 - Shader compiled successfully
+[INFO]: 2024-11-01 22:05:12 - Shader compiled successfully
+[INFO]: 2024-11-01 22:05:12 - Load Graphic Pipline Successful
+[INFO]: 2024-11-01 22:05:12 - Set Input Call Back Successful
+[INFO]: 2024-11-01 22:05:12 - Load ImGui Successful
+[WARN]: 2024-11-01 22:05:12 - Entity Already Has Component
+[INFO]: 2024-11-01 22:05:12 - Load Json Successful
+[INFO]: 2024-11-01 22:05:12 - Entities successfully loaded!
+[INFO]: 2024-11-01 22:05:12 - Mono initialization and method loading successful.
+[INFO]: 2024-11-01 22:05:12 - Application Init Successful
+[INFO]: 2024-11-01 22:06:40 - Application Closed

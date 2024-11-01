@@ -17,6 +17,8 @@ namespace gui {
 		if (ImGui::Button("Play")) {
 			pause = false;
 			ecs->m_pause = true;
+
+			assetmanager::AssetManager::m_funcGetInstance()->m_scriptManager.m_CompileAllCsharpFile();
 			//help->m_fixedDeltaTime = 1.0 / 60.0;
 
 			//assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();

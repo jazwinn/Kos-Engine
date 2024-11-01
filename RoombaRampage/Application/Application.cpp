@@ -74,7 +74,7 @@ namespace Application {
         /****************************************************************************************/
         //SAMPLE TO REMOVE
         //Compiles .cs
-        assetmanager::AssetManager::m_funcGetInstance()->m_scriptManager.m_CompileCSharpFile("C:/Users/ngjaz/OneDrive/Documents/roombarampage/GreyGooseWorkspace/RRR/RoombaRampage/Assets/Asset/Scripts/Scripts CS/MovementScript.cs");
+        
         /****************************************************************************************/
 
         /*--------------------------------------------------------------

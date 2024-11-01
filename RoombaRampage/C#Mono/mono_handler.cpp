@@ -60,7 +60,7 @@ namespace script {
     void ScriptHandler::m_CompileAllCsharpFile()
     {
         // load all .cs file in /Assests/Script
-        for (auto& directoryPath : std::filesystem::directory_iterator("Assets/Scripts")) {
+        for (auto& directoryPath : std::filesystem::directory_iterator("Assets/Scripts/ScriptsCS")) {
             std::string filepath = directoryPath.path().string();
             std::replace(filepath.begin(), filepath.end(), '\\', '/');
 
@@ -77,13 +77,18 @@ namespace script {
     {
         std::filesystem::path projectBasePath = std::filesystem::current_path();
 
-        std::string scriptbase = projectBasePath.string() + "\\Assets\\Scripts\\GameScript.dll";
-        std::filesystem::path outputDir = projectBasePath.string()  + "\\Assets\\Scripts\\";
+        std::string compilepath = projectBasePath.string() + "\\C#Mono\\CompilerCSC\\bin\\csc";
 
-        std::string command = "C#Mono/CompilerCSC/bin/csc /target:library /out:" + (outputDir/(filePath.filename().stem().string() + ".dll")).string() + " /reference:" + scriptbase + " " + filePath.string();
+        std::filesystem::path referenceDLL = projectBasePath / "ScriptLibrary" / "GameScript" / "ScriptCoreDLL" / "GameScript.dll";
 
+        std::string test = filePath.filename().stem().string();
+
+        std::filesystem::path outputDLL = projectBasePath / "Assets" / "Scripts" / "ScriptsDLL" / (filePath.filename().stem().string() + ".dll");
+
+
+        std::string command = compilepath + " /target:library /out:" + outputDLL.string() + " /reference:" + referenceDLL.string() + " " + filePath.string();
         std::cout << command << std::endl;
-        // Execute the command
+        //// Execute the command
         int result = system(command.c_str());
 
         // Check the result of the command
@@ -131,9 +136,6 @@ namespace script {
                 LOGGING_DEBUG("Successfully Added Script");
             }
 
-
-
-            std::cout << "Successfully added script: " << scriptname << std::endl;
     }
 
     bool ScriptHandler::m_LoadMethod(const std::string& scriptName, const std::string& className, const std::string& methodName, int paramCount) {
