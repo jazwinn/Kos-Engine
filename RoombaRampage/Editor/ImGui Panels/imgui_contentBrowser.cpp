@@ -130,7 +130,7 @@ namespace gui {
 						selectedfile = directoryString;
 					}
 					if (ImGui::MenuItem("Delete")) {
-
+						std::filesystem::remove(directoryPath);
 					}
 					ImGui::EndPopup();
 				}
@@ -190,6 +190,9 @@ namespace gui {
 
 							// Copy directory and all contents recursively
 							std::filesystem::copy(source, destination, std::filesystem::copy_options::recursive);
+
+							//load new asset
+							assetmanager->m_LoadAsset(destination/source.filename());
 						}
 
 					}
