@@ -6,8 +6,16 @@ using keyCode = uint16_t;
 namespace keys {
     enum : keyCode {
         // From glfw3.h
-        LMB = 0,
+		LMB = 0,
+		RMB = 1,
+		MMB = 2,
+
         SPACE = 32,
+		APOSTROPHE = 39, /* ' */
+		COMMA = 44, /* , */
+		MINUS = 45, /* - */
+		PERIOD = 46, /* . */
+		SLASH = 47, /* / */
 
         NUM0 = 48, /* 0 */
         NUM1 = 49, /* 1 */
@@ -19,6 +27,9 @@ namespace keys {
         NUM7 = 55, /* 7 */
         NUM8 = 56, /* 8 */
         NUM9 = 57, /* 9 */
+
+		SEMICOLON = 59, /* ; */
+		EQUAL = 61, /* = */
 
 		A = 65,
 		B = 66,
@@ -52,6 +63,8 @@ namespace keys {
 		ENTER = 257,
 		TAB = 258,
 		BACKSPACE = 259,
+		INSERT = 260,
+		DEL = 261,
 		RIGHT = 262,
 		LEFT = 263,
 		DOWN = 264,
@@ -72,6 +85,9 @@ namespace keys {
 		LeftShift = 340,
 		LeftControl = 341,
 		LeftAlt = 342,
+		RightShift = 344,
+		RightControl = 345,
+		RightAlt = 346,
 
     };
 }
