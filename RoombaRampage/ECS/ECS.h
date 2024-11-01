@@ -165,6 +165,8 @@ namespace ecs {
 
 		float m_DeltaTime{};
 
+		bool m_pause{};
+
 	private:
 		static std::unique_ptr<ECS> m_InstancePtr;
 
