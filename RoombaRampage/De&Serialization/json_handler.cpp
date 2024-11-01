@@ -116,246 +116,10 @@ namespace Serialization {
 		// Iterate through each component entry in the JSON array
 		for (rapidjson::SizeType i = 0; i < doc.Size(); i++) {
 			const rapidjson::Value& entityData = doc[i];
-
-			// Create a new entity
-			ecs::EntityID newEntityId = ecs->m_CreateEntity(scenename);
-
-			// Load the name field
-			if (entityData.HasMember("name") && entityData["name"].IsString()) {
-				ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(newEntityId));
-				nc->m_entityName = entityData["name"].GetString();  // Store the name
-			}
-
-			// Load Transform Component if it exists
-			if (entityData.HasMember("transform") && entityData["transform"].IsObject()) {
-				ecs::TransformComponent* tc = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(newEntityId));
-
-				const rapidjson::Value& transform = entityData["transform"];
-				if (transform.HasMember("position") && transform["position"].IsObject()) {
-					tc->m_position.m_x = transform["position"]["x"].GetFloat();
-					tc->m_position.m_y = transform["position"]["y"].GetFloat();
-				}
-				if (transform.HasMember("rotation")) {
-					tc->m_rotation = transform["rotation"].GetFloat();
-				}
-				if (transform.HasMember("scale") && transform["scale"].IsObject()) {
-					tc->m_scale.m_x = transform["scale"]["x"].GetFloat();
-					tc->m_scale.m_y = transform["scale"]["y"].GetFloat();
-				}
-			}
-
-			// Load Movement Component if it exists
-			
-
-			// Load Collider Component if it exists
-			if (entityData.HasMember("collider") && entityData["collider"].IsObject()) {
-
-				ecs::ColliderComponent* cc = static_cast<ecs::ColliderComponent*>(ecs->m_AddComponent(ecs::TYPECOLLIDERCOMPONENT, newEntityId));
-
-				if (cc) {
-					const rapidjson::Value& collider = entityData["collider"];
-					if (collider.HasMember("size") && collider["size"].IsObject()) {
-						cc->m_Size.m_x = collider["size"]["x"].GetFloat();
-						cc->m_Size.m_y = collider["size"]["y"].GetFloat();
-					}
-					if (collider.HasMember("offset") && collider["offset"].IsObject()) {
-						cc->m_OffSet.m_x = collider["offset"]["x"].GetFloat();
-						cc->m_OffSet.m_y = collider["offset"]["y"].GetFloat();
-					}
-					if (collider.HasMember("drawDebug")) {
-						cc->m_drawDebug = collider["drawDebug"].GetBool();
-					}
-				}
-			}
-
-			// Load Player Component if it exists
-			if (entityData.HasMember("player") && entityData["player"].IsObject()) {
-				ecs::PlayerComponent* pc = static_cast<ecs::PlayerComponent*>(ecs->m_AddComponent(ecs::TYPEPLAYERCOMPONENT, newEntityId));
-
-				if (pc) {
-					const rapidjson::Value& player = entityData["player"];
-					if (player.HasMember("control")) {
-						pc->m_Control = player["control"].GetBool();
-					}
-				}
-			}
-
-			// Load RigidBody Component if it exists
-			if (entityData.HasMember("rigidbody") && entityData["rigidbody"].IsObject()) {
-				ecs::RigidBodyComponent* rb = static_cast<ecs::RigidBodyComponent*>(ecs->m_AddComponent(ecs::TYPERIGIDBODYCOMPONENT, newEntityId));
-
-				if (rb) {
-					const rapidjson::Value& rigidbody = entityData["rigidbody"];
-					if (rigidbody.HasMember("mass")) {
-						rb->m_Mass = rigidbody["mass"].GetFloat();
-					}
-				}
-			}
-
-			// Load Sprite Component if it exists
-			if (entityData.HasMember("sprite") && entityData["sprite"].IsObject()) {
-				ecs::SpriteComponent* sc = static_cast<ecs::SpriteComponent*>(ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, newEntityId));
-
-				if (sc) {
-					const rapidjson::Value& sprite = entityData["sprite"];
-					if (sprite.HasMember("imageID")) {
-
-					}
-
-				}
-			}
-
-			// Load Sprite Component if it exists
-			if (entityData.HasMember("text") && entityData["text"].IsObject()) {
-				ecs::TextComponent* tc = static_cast<ecs::TextComponent*>(ecs->m_AddComponent(ecs::TYPETEXTCOMPONENT, newEntityId));
-
-				if (tc) {
-					const rapidjson::Value& text = entityData["text"];
-					if (text.HasMember("text")) {
-						tc->m_text = text["text"].GetString();
-					}
-					if (text.HasMember("fontsize")) {
-						tc->m_fontSize = text["fontsize"].GetFloat();
-					}
-					if (text.HasMember("colour")) {
-						tc->m_color.m_x = text["colour"]["red"].GetFloat();
-						tc->m_color.m_y = text["colour"]["green"].GetFloat();
-						tc->m_color.m_z = text["colour"]["blue"].GetFloat();
-					}
-				}
-			}
-			if (entityData.HasMember("animation") && entityData["animation"].IsObject()) {
-				ecs::AnimationComponent* ac = static_cast<ecs::AnimationComponent*>(ecs->m_AddComponent(ecs::TYPEANIMATIONCOMPONENT, newEntityId));
-
-				if (ac) {
-					const rapidjson::Value& animation = entityData["animation"];
-					if (animation.HasMember("frameTimer"))
-					{
-						ac->m_frameTimer = animation["frameTimer"].GetFloat();
-					}
-					if (animation.HasMember("isAnimating"))
-					{
-						ac->m_isAnimating = animation["isAnimating"].GetBool();
-					}
-				}
-			}
-			if (entityData.HasMember("camera") && entityData["camera"].IsObject()) {
-				ecs::CameraComponent* cc = static_cast<ecs::CameraComponent*>(ecs->m_AddComponent(ecs::TYPECAMERACOMPONENT, newEntityId));
-
-				if (cc) {
-					const rapidjson::Value& camera = entityData["camera"];
-	
-				}
-			}
-
-			//Check child obj now
-			if (entityData.HasMember("children") && entityData["children"].IsArray()) {
-				const rapidjson::Value& childrenArray = entityData["children"];
-
-				// Loop through children array
-				for (rapidjson::SizeType j = 0; j < childrenArray.Size(); j++) {
-					const rapidjson::Value& childData = childrenArray[j];
-
-					ecs::EntityID childEntityId = ecs->m_CreateEntity(scenename);
-
-					// Load the child name
-					if (childData.HasMember("name") && childData["name"].IsString()) {
-						ecs::NameComponent* childNc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(childEntityId));
-						childNc->m_entityName = childData["name"].GetString();
-					}
-
-					// Load child TransformComponent
-					if (childData.HasMember("transform") && childData["transform"].IsObject()) {
-						ecs::TransformComponent* childTc = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(childEntityId));
-						
-						if (!childTc) {
-							childTc = static_cast<ecs::TransformComponent*>(ecs->m_AddComponent(ecs::TYPETRANSFORMCOMPONENT, childEntityId));
-						}
-
-						const rapidjson::Value& transform = childData["transform"];
-						if (transform.HasMember("position") && transform["position"].IsObject()) {
-							childTc->m_position.m_x = transform["position"]["x"].GetFloat();
-							childTc->m_position.m_y = transform["position"]["y"].GetFloat();
-						}
-						if (transform.HasMember("rotation")) {
-							childTc->m_rotation = transform["rotation"].GetFloat();
-						}
-						if (transform.HasMember("scale") && transform["scale"].IsObject()) {
-							childTc->m_scale.m_x = transform["scale"]["x"].GetFloat();
-							childTc->m_scale.m_y = transform["scale"]["y"].GetFloat();
-						}
-					}
-
-
-
-					// Load child ColliderComponent
-					if (childData.HasMember("collider") && childData["collider"].IsObject()) {
-						ecs::ColliderComponent* childCc = static_cast<ecs::ColliderComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(childEntityId));
-						
-						if (!childCc) {
-							childCc = static_cast<ecs::ColliderComponent*>(ecs->m_AddComponent(ecs::TYPECOLLIDERCOMPONENT, childEntityId));
-						}
-
-						const rapidjson::Value& collider = childData["collider"];
-						if (collider.HasMember("size") && collider["size"].IsObject()) {
-							childCc->m_Size.m_x = collider["size"]["x"].GetFloat();
-							childCc->m_Size.m_y = collider["size"]["y"].GetFloat();
-						}
-						if (collider.HasMember("offset") && collider["offset"].IsObject()) {
-							childCc->m_OffSet.m_x = collider["offset"]["x"].GetFloat();
-							childCc->m_OffSet.m_y = collider["offset"]["y"].GetFloat();
-						}
-						if (collider.HasMember("drawDebug")) {
-							childCc->m_drawDebug = collider["drawDebug"].GetBool();
-						}
-					}
-
-					// Load child RigidbodyComponent
-					if (childData.HasMember("rigidbody") && childData["rigidbody"].IsObject()) {
-						ecs::RigidBodyComponent* childRc = static_cast<ecs::RigidBodyComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPERIGIDBODYCOMPONENT]->m_GetEntityComponent(childEntityId));
-						// If the component doesn't exist, create and attach it
-						if (!childRc) {
-							childRc = static_cast<ecs::RigidBodyComponent*>(ecs->m_AddComponent(ecs::TYPERIGIDBODYCOMPONENT, childEntityId));
-						}
-
-						const rapidjson::Value& rigidbody = childData["rigidbody"];
-						if (rigidbody.HasMember("mass")) {
-							childRc->m_Mass = rigidbody["mass"].GetFloat();
-						}
-					}
-
-					if (childData.HasMember("sprite") && childData["sprite"].IsObject()) {
-						ecs::SpriteComponent* childSc = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(childEntityId));
-
-						if (!childSc) {
-							childSc = static_cast<ecs::SpriteComponent*>(ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, childEntityId));
-						}
-
-						const rapidjson::Value& sprite = childData["sprite"];
-						if (sprite.HasMember("imageID")) {
-	
-						}
-					}
-
-					// Load child PlayerComponent
-					if (childData.HasMember("player") && childData["player"].IsObject()) {
-						ecs::PlayerComponent* childPc = static_cast<ecs::PlayerComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEPLAYERCOMPONENT]->m_GetEntityComponent(childEntityId));
-						
-						if (!childPc) {
-							childPc = static_cast<ecs::PlayerComponent*>(ecs->m_AddComponent(ecs::TYPEPLAYERCOMPONENT, childEntityId));
-						}
-
-						const rapidjson::Value& player = childData["player"];
-						if (player.HasMember("control")) {
-							childPc->m_Control = player["control"].GetBool();
-						}
-					}
-
-					// Attach the child entity to the parent entity
-					ecs::Hierachy::m_SetParent(newEntityId, childEntityId);
-				}
-			}
+			m_LoadEntity(entityData, std::nullopt, scenename);
 		}
+
+		
 		LOGGING_INFO("Load Json Successful");
 	}
 
@@ -373,244 +137,11 @@ namespace Serialization {
 
 		std::unordered_set<ecs::EntityID> savedEntities;  //track saved entities
 
-		
-
-		// Iterate through the ECS_Entitymap to save data only for active 
+		//Start saving the entities
 		std::vector<ecs::EntityID> entities = ecs->m_ECS_SceneMap.find(scene.filename().string())->second;
 		for (const auto& entityId : entities) {
-
-			auto& signature = ecs->m_ECS_EntityMap.find(entityId)->second;
-
-			if (savedEntities.find(entityId) != savedEntities.end()) {
-				continue;
-			}
 			if (!ecs::Hierachy::m_GetParent(entityId).has_value()) {
-
-				// Create a new JSON object for entitydata
-				rapidjson::Value entityData(rapidjson::kObjectType);
-
-				bool hasComponents = false;
-
-				// Find name for this entity using objEntityId
-				if (signature.test(ecs::ComponentType::TYPENAMECOMPONENT)) {
-					rapidjson::Value nameValue;
-					nameValue.SetString(static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(entityId))->m_entityName.c_str(), allocator);
-					entityData.AddMember("name", nameValue, allocator);
-					hasComponents = true;
-				}
-
-				// Check if the entity has TransformComponent and save 
-				if (signature.test(ecs::ComponentType::TYPETRANSFORMCOMPONENT)) {
-					ecs::TransformComponent* tc = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(entityId));
-					if (tc) {
-						rapidjson::Value transform(rapidjson::kObjectType);
-						transform.AddMember("position", rapidjson::Value().SetObject()
-							.AddMember("x", tc->m_position.m_x, allocator)
-							.AddMember("y", tc->m_position.m_y, allocator), allocator);
-						transform.AddMember("rotation", tc->m_rotation, allocator);
-						transform.AddMember("scale", rapidjson::Value().SetObject()
-							.AddMember("x", tc->m_scale.m_x, allocator)
-							.AddMember("y", tc->m_scale.m_y, allocator), allocator);
-						entityData.AddMember("transform", transform, allocator);
-						hasComponents = true;  // Mark as having a component
-					}
-				}
-
-
-
-				// Check if the entity has ColliderComponent and save it
-				if (signature.test(ecs::ComponentType::TYPECOLLIDERCOMPONENT)) {
-					ecs::ColliderComponent* cc = static_cast<ecs::ColliderComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(entityId));
-					if (cc) {
-						rapidjson::Value collider(rapidjson::kObjectType);
-						collider.AddMember("size", rapidjson::Value().SetObject()
-							.AddMember("x", cc->m_Size.m_x, allocator)
-							.AddMember("y", cc->m_Size.m_y, allocator), allocator);
-						collider.AddMember("offset", rapidjson::Value().SetObject()
-							.AddMember("x", cc->m_OffSet.m_x, allocator)
-							.AddMember("y", cc->m_OffSet.m_y, allocator), allocator);
-						collider.AddMember("drawDebug", cc->m_drawDebug, allocator);
-						entityData.AddMember("collider", collider, allocator);
-						hasComponents = true;  // Mark as having a component
-					}
-				}
-
-				// Check if the entity has PlayerComponent and save it
-				if (signature.test(ecs::ComponentType::TYPEPLAYERCOMPONENT)) {
-					ecs::PlayerComponent* pc = static_cast<ecs::PlayerComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPEPLAYERCOMPONENT]->m_GetEntityComponent(entityId));
-					if (pc) {
-						rapidjson::Value player(rapidjson::kObjectType);
-						player.AddMember("control", pc->m_Control, allocator);
-						entityData.AddMember("player", player, allocator);
-						hasComponents = true;  // Mark as having a component
-					}
-				}
-
-				// Check if the entity has RigidBodyComponent and save it
-				if (signature.test(ecs::ComponentType::TYPERIGIDBODYCOMPONENT)) {
-					ecs::RigidBodyComponent* rb = static_cast<ecs::RigidBodyComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPERIGIDBODYCOMPONENT]->m_GetEntityComponent(entityId));
-					if (rb) {
-						rapidjson::Value rigidbody(rapidjson::kObjectType);
-						rigidbody.AddMember("mass", rb->m_Mass, allocator);
-						entityData.AddMember("rigidbody", rigidbody, allocator);
-						hasComponents = true;  // Mark as having a component
-					}
-				}
-
-				// Check if the entity has SpriteComponent and save it
-				if (signature.test(ecs::ComponentType::TYPESPRITECOMPONENT)) {
-					ecs::SpriteComponent* sc = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPESPRITECOMPONENT]->m_GetEntityComponent(entityId));
-					if (sc) {
-						rapidjson::Value sprite(rapidjson::kObjectType);
-
-						entityData.AddMember("sprite", sprite, allocator);
-						hasComponents = true;  // Mark as having a component
-					}
-				}
-
-				if (signature.test(ecs::ComponentType::TYPETEXTCOMPONENT)) {
-					ecs::TextComponent* tc = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPETEXTCOMPONENT]->m_GetEntityComponent(entityId));
-					if (tc) {
-						rapidjson::Value text(rapidjson::kObjectType);
-						rapidjson::Value textValue;
-						textValue.SetString(tc->m_text.c_str(), allocator);
-
-						text.AddMember("text", textValue, allocator);
-						text.AddMember("fontsize", tc->m_fontSize, allocator);
-						text.AddMember("colour", rapidjson::Value().SetObject()
-							.AddMember("red", tc->m_color.m_x, allocator)
-							.AddMember("blue", tc->m_color.m_y, allocator)
-							.AddMember("green", tc->m_color.m_z, allocator), allocator);
-
-						entityData.AddMember("text", text, allocator);
-						hasComponents = true;  // Mark as having a component
-					}
-				}
-
-				if (signature.test(ecs::ComponentType::TYPEANIMATIONCOMPONENT)) {
-					ecs::AnimationComponent* ac = static_cast<ecs::AnimationComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPEANIMATIONCOMPONENT]->m_GetEntityComponent(entityId));
-					if (ac) {
-						rapidjson::Value animation(rapidjson::kObjectType);
-
-						animation.AddMember("framesPerSecond", ac->m_framesPerSecond, allocator);
-						animation.AddMember("frameTimer", ac->m_frameTimer, allocator);
-						animation.AddMember("isAnimating", ac->m_isAnimating, allocator);
-						entityData.AddMember("animation", animation, allocator);
-						hasComponents = true;  // Mark as having a component
-					}
-				}
-
-				if (signature.test(ecs::ComponentType::TYPECAMERACOMPONENT))
-				{
-					ecs::CameraComponent* cc = static_cast<ecs::CameraComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPECAMERACOMPONENT]->m_GetEntityComponent(entityId));
-					if (cc)
-					{
-						rapidjson::Value camera(rapidjson::kObjectType);
-						/*camera.AddMember("planes", rapidjson::Value().SetObject()
-							.AddMember("left", cc->m_left, allocator)
-							.AddMember("right", cc->m_right, allocator)
-							.AddMember("top", cc->m_top, allocator)
-							.AddMember("bottom", cc->m_bottom, allocator), allocator);
-						camera.AddMember("aspectRatio", cc->m_aspectRatio, allocator);*/
-					
-						entityData.AddMember("camera", camera, allocator);
-						hasComponents = true;
-					}
-				}
-
-				
-
-				//Check Child Obj now
-				std::optional<std::vector<ecs::EntityID>> childrenOptional = ecs::Hierachy::m_GetChild(entityId);
-				if (childrenOptional.has_value()) {
-					std::vector<ecs::EntityID> children = childrenOptional.value();
-					if (!children.empty()) {
-						rapidjson::Value childrenArray(rapidjson::kArrayType);
-						for (const auto& childID : children) {
-							rapidjson::Value childData(rapidjson::kObjectType);
-
-							// Save the child name
-							if (ecs->m_ECS_EntityMap[childID].test(ecs::ComponentType::TYPENAMECOMPONENT)) {
-								rapidjson::Value childNameValue;
-								childNameValue.SetString(static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(childID))->m_entityName.c_str(), allocator);
-								childData.AddMember("name", childNameValue, allocator);
-							}
-
-							if (ecs->m_ECS_EntityMap[childID].test(ecs::ComponentType::TYPETRANSFORMCOMPONENT)) {
-								ecs::TransformComponent* tc = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(childID));
-								if (tc) {
-									rapidjson::Value transform(rapidjson::kObjectType);
-									transform.AddMember("position", rapidjson::Value().SetObject()
-										.AddMember("x", tc->m_position.m_x, allocator)
-										.AddMember("y", tc->m_position.m_y, allocator), allocator);
-									transform.AddMember("rotation", tc->m_rotation, allocator);
-									transform.AddMember("scale", rapidjson::Value().SetObject()
-										.AddMember("x", tc->m_scale.m_x, allocator)
-										.AddMember("y", tc->m_scale.m_y, allocator), allocator);
-									childData.AddMember("transform", transform, allocator);
-								}
-							}
-
-							// Save child MovementComponent
-
-
-							// Save child ColliderComponent
-							if (ecs->m_ECS_EntityMap[childID].test(ecs::ComponentType::TYPECOLLIDERCOMPONENT)) {
-								ecs::ColliderComponent* cc = static_cast<ecs::ColliderComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(childID));
-								if (cc) {
-									rapidjson::Value collider(rapidjson::kObjectType);
-									collider.AddMember("size", rapidjson::Value().SetObject()
-										.AddMember("x", cc->m_Size.m_x, allocator)
-										.AddMember("y", cc->m_Size.m_y, allocator), allocator);
-									collider.AddMember("offset", rapidjson::Value().SetObject()
-										.AddMember("x", cc->m_OffSet.m_x, allocator)
-										.AddMember("y", cc->m_OffSet.m_y, allocator), allocator);
-									collider.AddMember("drawDebug", cc->m_drawDebug, allocator);
-									childData.AddMember("collider", collider, allocator);
-								}
-							}
-
-							// Save child RigidbodyComponent
-							if (ecs->m_ECS_EntityMap[childID].test(ecs::ComponentType::TYPERIGIDBODYCOMPONENT)) {
-								ecs::RigidBodyComponent* rc = static_cast<ecs::RigidBodyComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPERIGIDBODYCOMPONENT]->m_GetEntityComponent(childID));
-								if (rc) {
-									rapidjson::Value rigidbody(rapidjson::kObjectType);
-									rigidbody.AddMember("mass", rc->m_Mass, allocator);
-									childData.AddMember("rigidbody", rigidbody, allocator);
-								}
-							}
-
-							// Save child SpriteComponent
-							if (ecs->m_ECS_EntityMap[childID].test(ecs::ComponentType::TYPESPRITECOMPONENT)) {
-								ecs::SpriteComponent* sc = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPESPRITECOMPONENT]->m_GetEntityComponent(childID));
-								if (sc) {
-									rapidjson::Value sprite(rapidjson::kObjectType);
-
-									childData.AddMember("sprite", sprite, allocator);
-								}
-							}
-
-							// Save child PlayerComponent
-							if (ecs->m_ECS_EntityMap[childID].test(ecs::ComponentType::TYPEPLAYERCOMPONENT)) {
-								ecs::PlayerComponent* pc = static_cast<ecs::PlayerComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPEPLAYERCOMPONENT]->m_GetEntityComponent(childID));
-								if (pc) {
-									rapidjson::Value player(rapidjson::kObjectType);
-									player.AddMember("control", pc->m_Control, allocator);
-									childData.AddMember("player", player, allocator);
-								}
-							}
-
-
-							// Add this child to the parent's children array
-							childrenArray.PushBack(childData, allocator);
-						}
-						entityData.AddMember("children", childrenArray, allocator); 
-					}
-				}
-
-				if (hasComponents) {
-					doc.PushBack(entityData, allocator);
-				}
+				m_SaveEntity(entityId, doc, allocator, savedEntities);
 			}
 		}
 
@@ -625,8 +156,447 @@ namespace Serialization {
 			outputFile.close();
 		}
 
-		LOGGING_INFO("Save Json Successful");
+		LOGGING_INFO("Save Json Successful");     
 	}
+
+	void Serialize::m_SaveEntity(ecs::EntityID entityId, rapidjson::Value& parentArray, rapidjson::Document::AllocatorType& allocator, std::unordered_set<ecs::EntityID>& savedEntities) {
+		auto* ecs = ecs::ECS::m_GetInstance();
+		auto& signature = ecs->m_ECS_EntityMap.find(entityId)->second;
+
+		if (savedEntities.find(entityId) != savedEntities.end()) {
+			return;
+		}
+
+		rapidjson::Value entityData(rapidjson::kObjectType);
+		bool hasComponents = false;
+
+		// Find and save name for this entity
+		if (signature.test(ecs::ComponentType::TYPENAMECOMPONENT)) {
+			rapidjson::Value nameValue;
+			nameValue.SetString(static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(entityId))->m_entityName.c_str(), allocator);
+			entityData.AddMember("name", nameValue, allocator);
+			hasComponents = true;
+		}
+
+		// Check if the entity has TransformComponent and save it
+		if (signature.test(ecs::ComponentType::TYPETRANSFORMCOMPONENT)) {
+			ecs::TransformComponent* tc = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(entityId));
+			if (tc) {
+				rapidjson::Value transform(rapidjson::kObjectType);
+				transform.AddMember("position", rapidjson::Value().SetObject()
+					.AddMember("x", tc->m_position.m_x, allocator)
+					.AddMember("y", tc->m_position.m_y, allocator), allocator);
+				transform.AddMember("rotation", tc->m_rotation, allocator);
+				transform.AddMember("scale", rapidjson::Value().SetObject()
+					.AddMember("x", tc->m_scale.m_x, allocator)
+					.AddMember("y", tc->m_scale.m_y, allocator), allocator);
+				entityData.AddMember("transform", transform, allocator);
+				hasComponents = true;
+			}
+		}
+
+		// Check if the entity has ColliderComponent and save it
+		if (signature.test(ecs::ComponentType::TYPECOLLIDERCOMPONENT)) {
+			ecs::ColliderComponent* cc = static_cast<ecs::ColliderComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(entityId));
+			if (cc) {
+				rapidjson::Value collider(rapidjson::kObjectType);
+				collider.AddMember("size", rapidjson::Value().SetObject()
+					.AddMember("x", cc->m_Size.m_x, allocator)
+					.AddMember("y", cc->m_Size.m_y, allocator), allocator);
+				collider.AddMember("offset", rapidjson::Value().SetObject()
+					.AddMember("x", cc->m_OffSet.m_x, allocator)
+					.AddMember("y", cc->m_OffSet.m_y, allocator), allocator);
+				collider.AddMember("drawDebug", cc->m_drawDebug, allocator);
+				collider.AddMember("radius", cc->m_radius, allocator);
+				entityData.AddMember("collider", collider, allocator);
+				hasComponents = true;  // Mark as having a component
+			}
+		}
+
+		// Check if the entity has PlayerComponent and save it
+		if (signature.test(ecs::ComponentType::TYPEPLAYERCOMPONENT)) {
+			ecs::PlayerComponent* pc = static_cast<ecs::PlayerComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPEPLAYERCOMPONENT]->m_GetEntityComponent(entityId));
+			if (pc) {
+				rapidjson::Value player(rapidjson::kObjectType);
+				player.AddMember("control", pc->m_Control, allocator);
+				entityData.AddMember("player", player, allocator);
+				hasComponents = true;  // Mark as having a component
+			}
+		}
+
+		// Check if the entity has RigidBodyComponent and save it
+		if (signature.test(ecs::ComponentType::TYPERIGIDBODYCOMPONENT)) {
+			ecs::RigidBodyComponent* rb = static_cast<ecs::RigidBodyComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPERIGIDBODYCOMPONENT]->m_GetEntityComponent(entityId));
+			if (rb) {
+				rapidjson::Value rigidbody(rapidjson::kObjectType);
+
+				rigidbody.AddMember("linearVelocity", rapidjson::Value().SetObject()
+					.AddMember("x", rb->m_Velocity.m_x, allocator)
+					.AddMember("y", rb->m_Velocity.m_y, allocator), allocator);
+				rigidbody.AddMember("acceleration", rapidjson::Value().SetObject()
+					.AddMember("x", rb->m_Acceleration.m_x, allocator)
+					.AddMember("y", rb->m_Acceleration.m_y, allocator), allocator);
+
+				rigidbody.AddMember("rotation", rb->m_Rotation, allocator);
+				rigidbody.AddMember("angularVelocity", rb->m_AngularVelocity, allocator);
+				rigidbody.AddMember("angularAcceleration", rb->m_AngularAcceleration, allocator);
+				rigidbody.AddMember("mass", rb->m_Mass, allocator);
+				rigidbody.AddMember("inverseMass", rb->m_InverseMass, allocator);
+				rigidbody.AddMember("linearDamping", rb->m_LinearDamping, allocator);
+				rigidbody.AddMember("angularDamping", rb->m_AngularDamping, allocator);
+				
+				rigidbody.AddMember("force", rapidjson::Value().SetObject()
+					.AddMember("x", rb->m_Force.m_x, allocator)
+					.AddMember("y", rb->m_Force.m_y, allocator), allocator);
+
+				rigidbody.AddMember("torque", rb->m_Torque, allocator);
+				rigidbody.AddMember("kinematic", rb->m_IsKinematic, allocator);
+				rigidbody.AddMember("static", rb->m_IsStatic, allocator);
+
+				entityData.AddMember("rigidbody", rigidbody, allocator);
+				hasComponents = true;  // Mark as having a component
+			}
+		}
+
+		// Check if the entity has SpriteComponent and save it
+		if (signature.test(ecs::ComponentType::TYPESPRITECOMPONENT)) {
+			ecs::SpriteComponent* sc = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPESPRITECOMPONENT]->m_GetEntityComponent(entityId));
+			if (sc) {
+				rapidjson::Value sprite(rapidjson::kObjectType);
+				sprite.AddMember("layer", sc->m_layer, allocator);
+				entityData.AddMember("sprite", sprite, allocator);
+				hasComponents = true;  // Mark as having a component
+			}
+		}
+
+		if (signature.test(ecs::ComponentType::TYPETEXTCOMPONENT)) {
+			ecs::TextComponent* tc = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPETEXTCOMPONENT]->m_GetEntityComponent(entityId));
+			if (tc) {
+				rapidjson::Value text(rapidjson::kObjectType);
+				rapidjson::Value textValue;
+				textValue.SetString(tc->m_text.c_str(), allocator);
+
+				text.AddMember("text", textValue, allocator);
+				text.AddMember("fontsize", tc->m_fontSize, allocator);
+				text.AddMember("colour", rapidjson::Value().SetObject()
+					.AddMember("red", tc->m_color.m_x, allocator)
+					.AddMember("blue", tc->m_color.m_y, allocator)
+					.AddMember("green", tc->m_color.m_z, allocator), allocator);
+
+				entityData.AddMember("text", text, allocator);
+				hasComponents = true;  // Mark as having a component
+			}
+		}
+
+		if (signature.test(ecs::ComponentType::TYPEANIMATIONCOMPONENT)) {
+			ecs::AnimationComponent* ac = static_cast<ecs::AnimationComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPEANIMATIONCOMPONENT]->m_GetEntityComponent(entityId));
+			if (ac) {
+				rapidjson::Value animation(rapidjson::kObjectType);
+				animation.AddMember("frameNumber", ac->m_frameNumber, allocator);
+				animation.AddMember("framesPerSecond", ac->m_framesPerSecond, allocator);
+				animation.AddMember("frameTimer", ac->m_frameTimer, allocator);
+				animation.AddMember("isAnimating", ac->m_isAnimating, allocator);
+				entityData.AddMember("animation", animation, allocator);
+				hasComponents = true;  // Mark as having a component
+			}
+		}
+
+		if (signature.test(ecs::ComponentType::TYPECAMERACOMPONENT))
+		{
+			ecs::CameraComponent* cc = static_cast<ecs::CameraComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPECAMERACOMPONENT]->m_GetEntityComponent(entityId));
+			if (cc)
+			{
+				rapidjson::Value camera(rapidjson::kObjectType);
+				/*camera.AddMember("planes", rapidjson::Value().SetObject()
+					.AddMember("left", cc->m_left, allocator)
+					.AddMember("right", cc->m_right, allocator)
+					.AddMember("top", cc->m_top, allocator)
+					.AddMember("bottom", cc->m_bottom, allocator), allocator);
+				camera.AddMember("aspectRatio", cc->m_aspectRatio, allocator);*/
+
+				entityData.AddMember("camera", camera, allocator);
+				hasComponents = true;
+			}
+		}
+
+		if (signature.test(ecs::ComponentType::TYPECAMERACOMPONENT))
+		{
+			ecs::ButtonComponent* bc = static_cast<ecs::ButtonComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPECAMERACOMPONENT]->m_GetEntityComponent(entityId));
+			if (bc)
+			{
+				rapidjson::Value button(rapidjson::kObjectType);
+	
+				button.AddMember("force", rapidjson::Value().SetObject()
+					.AddMember("x", bc->m_Position.m_x, allocator)
+					.AddMember("y", bc->m_Position.m_y, allocator), allocator);
+
+				button.AddMember("scale", rapidjson::Value().SetObject()
+					.AddMember("x", bc->m_Scale.m_x, allocator)
+					.AddMember("y", bc->m_Scale.m_y, allocator), allocator);
+
+				button.AddMember("isClick", bc->m_IsClick, allocator);
+
+				entityData.AddMember("button", button, allocator);
+				hasComponents = true;
+			}
+		}
+
+		if (signature.test(ecs::ComponentType::TYPECAMERACOMPONENT))
+		{
+			ecs::ScriptComponent* sc = static_cast<ecs::ScriptComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPECAMERACOMPONENT]->m_GetEntityComponent(entityId));
+			if (sc)
+			{
+				rapidjson::Value script(rapidjson::kObjectType);
+
+				//TENTATIVE
+
+				entityData.AddMember("script", script, allocator);
+				hasComponents = true;
+			}
+		}
+
+		// Add children
+		std::optional<std::vector<ecs::EntityID>> childrenOptional = ecs::Hierachy::m_GetChild(entityId);
+		if (childrenOptional.has_value()) {
+			std::vector<ecs::EntityID> children = childrenOptional.value();
+			if (!children.empty()) {
+				rapidjson::Value childrenArray(rapidjson::kArrayType);
+				for (const auto& childID : children) {
+					m_SaveEntity(childID, childrenArray, allocator, savedEntities);
+				}
+				entityData.AddMember("children", childrenArray, allocator);
+			}
+		}
+
+		if (hasComponents) {
+			parentArray.PushBack(entityData, allocator);
+			savedEntities.insert(entityId);
+		}
+	}
+
+	void Serialize::m_LoadEntity(const rapidjson::Value& entityData, std::optional<ecs::EntityID> parentID, const std::string& sceneName)
+	{
+		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+		ecs::EntityID newEntityId = ecs->m_CreateEntity(sceneName);
+
+		// Load the name field
+		if (entityData.HasMember("name") && entityData["name"].IsString()) {
+			ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(newEntityId));
+			nc->m_entityName = entityData["name"].GetString();  // Store the name
+		}
+
+		// Load TransformComponent if it exists
+		if (entityData.HasMember("transform") && entityData["transform"].IsObject()) {
+			ecs::TransformComponent* tc = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(newEntityId));
+
+			const rapidjson::Value& transform = entityData["transform"];
+			if (transform.HasMember("position") && transform["position"].IsObject()) {
+				tc->m_position.m_x = transform["position"]["x"].GetFloat();
+				tc->m_position.m_y = transform["position"]["y"].GetFloat();
+			}
+			if (transform.HasMember("rotation")) {
+				tc->m_rotation = transform["rotation"].GetFloat();
+			}
+			if (transform.HasMember("scale") && transform["scale"].IsObject()) {
+				tc->m_scale.m_x = transform["scale"]["x"].GetFloat();
+				tc->m_scale.m_y = transform["scale"]["y"].GetFloat();
+			}
+		}
+
+		// Load Collider Component if it exists
+		if (entityData.HasMember("collider") && entityData["collider"].IsObject()) {
+
+			ecs::ColliderComponent* cc = static_cast<ecs::ColliderComponent*>(ecs->m_AddComponent(ecs::TYPECOLLIDERCOMPONENT, newEntityId));
+
+			if (cc) {
+				const rapidjson::Value& collider = entityData["collider"];
+				if (collider.HasMember("size") && collider["size"].IsObject()) {
+					cc->m_Size.m_x = collider["size"]["x"].GetFloat();
+					cc->m_Size.m_y = collider["size"]["y"].GetFloat();
+				}
+				if (collider.HasMember("offset") && collider["offset"].IsObject()) {
+					cc->m_OffSet.m_x = collider["offset"]["x"].GetFloat();
+					cc->m_OffSet.m_y = collider["offset"]["y"].GetFloat();
+				}
+				if (collider.HasMember("drawDebug")) {
+					cc->m_drawDebug = collider["drawDebug"].GetBool();
+				}
+				if (collider.HasMember("radius")) {
+					cc->m_radius = collider["radius"].GetFloat();
+				}
+			}
+		}
+
+		// Load Player Component if it exists
+		if (entityData.HasMember("player") && entityData["player"].IsObject()) {
+			ecs::PlayerComponent* pc = static_cast<ecs::PlayerComponent*>(ecs->m_AddComponent(ecs::TYPEPLAYERCOMPONENT, newEntityId));
+
+			if (pc) {
+				const rapidjson::Value& player = entityData["player"];
+				if (player.HasMember("control")) {
+					pc->m_Control = player["control"].GetBool();
+				}
+			}
+		}
+
+		// Load RigidBody Component if it exists
+		if (entityData.HasMember("rigidbody") && entityData["rigidbody"].IsObject()) {
+			ecs::RigidBodyComponent* rb = static_cast<ecs::RigidBodyComponent*>(ecs->m_AddComponent(ecs::TYPERIGIDBODYCOMPONENT, newEntityId));
+
+			if (rb) {
+				const rapidjson::Value& rigidbody = entityData["rigidbody"];
+
+				if (rigidbody.HasMember("linearVelocity") && rigidbody["linearVelocity"].IsObject()) {
+					rb->m_Velocity.m_x = rigidbody["linearVelocity"]["x"].GetFloat();
+					rb->m_Velocity.m_y = rigidbody["linearVelocity"]["y"].GetFloat();
+				}
+				if (rigidbody.HasMember("acceleration") && rigidbody["acceleration"].IsObject()) {
+					rb->m_Acceleration.m_x = rigidbody["acceleration"]["x"].GetFloat();
+					rb->m_Acceleration.m_y = rigidbody["acceleration"]["y"].GetFloat();
+				}
+
+				if (rigidbody.HasMember("rotation")) {
+					rb->m_Rotation = rigidbody["rotation"].GetFloat();
+				}
+				if (rigidbody.HasMember("angularVelocity")) {
+					rb->m_AngularVelocity = rigidbody["angularVelocity"].GetFloat();
+				}
+				if (rigidbody.HasMember("angularAcceleration")) {
+					rb->m_AngularAcceleration = rigidbody["angularAcceleration"].GetFloat();
+				}
+				if (rigidbody.HasMember("mass")) {
+					rb->m_Mass = rigidbody["mass"].GetFloat();
+				}
+				if (rigidbody.HasMember("inverseMass")) {
+					rb->m_InverseMass = rigidbody["inverseMass"].GetFloat();
+				}
+				if (rigidbody.HasMember("linearDamping")) {
+					rb->m_LinearDamping = rigidbody["linearDamping"].GetFloat();
+				}
+
+				if (rigidbody.HasMember("force") && rigidbody["force"].IsObject()) {
+					rb->m_Force.m_x = rigidbody["force"]["x"].GetFloat();
+					rb->m_Force.m_y = rigidbody["force"]["y"].GetFloat();
+				}
+
+				if (rigidbody.HasMember("torque")) {
+					rb->m_Torque = rigidbody["torque"].GetFloat();
+				}
+				if (rigidbody.HasMember("kinematic")) {
+					rb->m_IsKinematic = rigidbody["kinematic"].GetBool();
+				}
+				if (rigidbody.HasMember("static")) {
+					rb->m_IsStatic = rigidbody["static"].GetBool();
+				}
+
+			}
+		}
+
+		// Load Sprite Component if it exists
+		if (entityData.HasMember("sprite") && entityData["sprite"].IsObject()) {
+			ecs::SpriteComponent* sc = static_cast<ecs::SpriteComponent*>(ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, newEntityId));
+
+			if (sc) {
+				const rapidjson::Value& sprite = entityData["sprite"];
+				if (sprite.HasMember("imageID")) {
+
+				}
+
+			}
+		}
+
+		// Load text Component if it exists
+		if (entityData.HasMember("text") && entityData["text"].IsObject()) {
+			ecs::TextComponent* tc = static_cast<ecs::TextComponent*>(ecs->m_AddComponent(ecs::TYPETEXTCOMPONENT, newEntityId));
+
+			if (tc) {
+				const rapidjson::Value& text = entityData["text"];
+				if (text.HasMember("text")) {
+					tc->m_text = text["text"].GetString();
+				}
+				if (text.HasMember("fontsize")) {
+					tc->m_fontSize = text["fontsize"].GetFloat();
+				}
+				if (text.HasMember("colour")) {
+					tc->m_color.m_x = text["colour"]["red"].GetFloat();
+					tc->m_color.m_y = text["colour"]["green"].GetFloat();
+					tc->m_color.m_z = text["colour"]["blue"].GetFloat();
+				}
+			}
+		}
+
+		// Load button Component if it exists
+		if (entityData.HasMember("button") && entityData["button"].IsObject()) {
+			ecs::ButtonComponent* bc = static_cast<ecs::ButtonComponent*>(ecs->m_AddComponent(ecs::TYPEANIMATIONCOMPONENT, newEntityId));
+
+			if (bc) {
+				const rapidjson::Value& button = entityData["button"];
+
+				if (button.HasMember("force") && button["force"].IsObject()) {
+					bc->m_Position.m_x = button["force"]["x"].GetFloat();
+					bc->m_Position.m_y = button["force"]["y"].GetFloat();
+				}
+
+				if (button.HasMember("scale") && button["scale"].IsObject()) {
+					bc->m_Scale.m_x = button["scale"]["x"].GetFloat();
+					bc->m_Scale.m_y = button["scale"]["y"].GetFloat();
+				}
+
+				if (button.HasMember("isClick"))
+				{
+					bc->m_IsClick = button["isClick"].GetBool();
+				}
+			}
+		}
+
+		if (entityData.HasMember("animation") && entityData["animation"].IsObject()) {
+			ecs::AnimationComponent* ac = static_cast<ecs::AnimationComponent*>(ecs->m_AddComponent(ecs::TYPEANIMATIONCOMPONENT, newEntityId));
+
+			if (ac) {
+				const rapidjson::Value& animation = entityData["animation"];
+				if (animation.HasMember("frameNumber"))
+				{
+					ac->m_frameNumber = animation["frameNumber"].GetInt();
+				}
+				if (animation.HasMember("framesPerSecond"))
+				{
+					ac->m_framesPerSecond = animation["framesPerSecond"].GetInt();
+				}
+				if (animation.HasMember("frameTimer"))
+				{
+					ac->m_frameTimer = animation["frameTimer"].GetFloat();
+				}
+				if (animation.HasMember("isAnimating"))
+				{
+					ac->m_isAnimating = animation["isAnimating"].GetBool();
+				}
+			}
+		}
+
+		// Load camera Component if it exists
+		if (entityData.HasMember("camera") && entityData["camera"].IsObject()) {
+			ecs::CameraComponent* cc = static_cast<ecs::CameraComponent*>(ecs->m_AddComponent(ecs::TYPECAMERACOMPONENT, newEntityId));
+
+			if (cc) {
+				const rapidjson::Value& camera = entityData["camera"];
+
+			}
+		}
+
+		//Attach entity to parent
+		if (parentID.has_value()) {
+			ecs::Hierachy::m_SetParent(parentID.value(), newEntityId);
+		}
+
+		// Load children 
+		if (entityData.HasMember("children") && entityData["children"].IsArray()) {
+			const rapidjson::Value& childrenArray = entityData["children"];
+			for (rapidjson::SizeType i = 0; i < childrenArray.Size(); i++) {
+				m_LoadEntity(childrenArray[i], newEntityId, sceneName);
+			}
+		}
+	}
+
 }
 
 

@@ -48,6 +48,7 @@ namespace Application {
         //Set third param to glfwGetPrimaryMonitor if you want fullscreen borderless
 
        m_window = glfwCreateWindow(static_cast<int>(m_windowWidth), static_cast<int>(m_windowHeight), "Kos", NULL, NULL);
+       Input::InputSystem::m_windowInput = m_window;
         if (!m_window)
         {
             glfwTerminate();
