@@ -85,6 +85,11 @@ namespace ecs {
 			graphicpipe::GraphicsCamera::m_cameras.push_back({ glm::mat3{cameraTransformation.m_e00 ,cameraTransformation.m_e01,cameraTransformation.m_e02,
 															cameraTransformation.m_e10,cameraTransformation.m_e11 , cameraTransformation.m_e12,
 														cameraTransformation.m_e20, cameraTransformation.m_e21, cameraTransformation.m_e22}});
+			graphicpipe::GraphicsCamera::m_currCameraRotate = transform->m_rotation;
+			graphicpipe::GraphicsCamera::m_currCameraScaleX = transform->m_scale.m_x;
+			graphicpipe::GraphicsCamera::m_currCameraScaleY = transform->m_scale.m_y;
+			graphicpipe::GraphicsCamera::m_currCameraTranslateX = transform->m_transformation.m_e20;
+			graphicpipe::GraphicsCamera::m_currCameraTranslateY = transform->m_transformation.m_e21;
 
 			mat3x3::Mat3x3 debugTransformation = mat3x3::Mat3Transform(vector2::Vec2{ transform->m_transformation.m_e20, transform->m_transformation.m_e21 }, vector2::Vec2{ transform->m_scale.m_x * 2 * (1.f / graphicpipe::GraphicsCamera::m_aspectRatio), transform->m_scale.m_y * 2 }, transform->m_rotation);
 			//change camera debug box tobe of different colour

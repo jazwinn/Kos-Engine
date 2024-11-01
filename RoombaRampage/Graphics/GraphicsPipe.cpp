@@ -56,12 +56,13 @@ namespace graphicpipe {
 		m_debugBoxCollisionChecks.reserve(ecs::MaxEntity);
 		m_frameNumbers.reserve(ecs::MaxEntity);
 		m_stripCounts.reserve(ecs::MaxEntity);
+		m_layers.reserve(ecs::MaxEntity);
 
 		// Set up VAOs for different shapes and text rendering.
 		m_funcSetupVao(m_squareMesh);
 		m_funcSetupCircleLinesVao();
 		m_funcSetupSquareLinesVao();
-		m_funcSetupFboVao();
+		m_funcSetupGridVao();
 		m_funcSetupTextVao();
 		m_funcSetDrawMode(GL_FILL);
 
@@ -70,12 +71,15 @@ namespace graphicpipe {
 		m_frameBufferShaderProgram = m_funcSetupShader(frameBufferVertexShader, frameBufferFragmentShader);
 		m_debugShaderProgram = m_funcSetupShader(debugVertexShader, debugFragmentShader);
 		m_textShaderProgram = m_funcSetupShader(textVertexShader, textFragmentShader);
+		m_gridShaderProgram = m_funcSetupShader(gridVertexShader, gridFragmentShader);
 
 		// Initialize model-to-NDC transformation matrix and other drawing data.
 		m_modelToNDCMatrix.push_back(m_testMatrix);
 		m_textureOrder.push_back(0);
 		m_frameNumbers.push_back(0);
-		m_stripCounts.push_back(0);
+		m_stripCounts.push_back({ 0,0 });
+		m_layers.push_back(0);
+		m_colors.push_back({ 0.f, 0.f, 0.f, 0.f });
 		m_debugBoxToNDCMatrix.push_back(m_testMatrix);
 		m_debugBoxCollisionChecks.push_back(false);
 
@@ -91,6 +95,8 @@ namespace graphicpipe {
 		m_textureOrder.clear();
 		m_frameNumbers.clear();
 		m_stripCounts.clear();
+		m_layers.clear();
+		m_colors.clear();
 
 		// Enable scissor test for limiting rendering to a specific area.
 		glEnable(GL_SCISSOR_TEST);
@@ -143,6 +149,7 @@ namespace graphicpipe {
 		m_textureOrder.clear();
 		m_frameNumbers.clear();
 		m_stripCounts.clear();
+		m_layers.clear();
 		m_modelMatrix.clear();
 		m_modelData.clear();
 		m_debugBoxToNDCMatrix.clear();
@@ -151,14 +158,18 @@ namespace graphicpipe {
 		m_debugCircleCollisionChecks.clear();
 		m_debugBoxData.clear();
 		m_textData.clear();
+		m_colors.clear();
 		GraphicsCamera::m_cameras.clear();
 		
 	}
 
 	void GraphicsPipe::m_funcRenderGameScene()
 	{
+
 		if (m_gameMode)
 		{
+			glEnable(GL_DEPTH_TEST);
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 			m_funcDraw();
 			m_funcDrawText();
 		}

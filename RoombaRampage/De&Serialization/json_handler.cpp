@@ -527,7 +527,7 @@ namespace Serialization {
 
 		// Load button Component if it exists
 		if (entityData.HasMember("button") && entityData["button"].IsObject()) {
-			ecs::ButtonComponent* bc = static_cast<ecs::ButtonComponent*>(ecs->m_AddComponent(ecs::TYPEANIMATIONCOMPONENT, newEntityId));
+			ecs::ButtonComponent* bc = static_cast<ecs::ButtonComponent*>(ecs->m_AddComponent(ecs::TYPEBUTTONCOMPONENT, newEntityId));
 
 			if (bc) {
 				const rapidjson::Value& button = entityData["button"];

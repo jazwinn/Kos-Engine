@@ -52,7 +52,7 @@ namespace graphicpipe
 		std::vector<glm::vec2> lvPosVtx;
 		std::vector<GLushort> idx_vtx;
 
-		int numVertices = 36; // For example, 36 vertices
+		int numVertices = 36; // 36 vertices
 		float radius = 0.5f;  // Circle radius
 
 		// Generate circle vertices
@@ -93,34 +93,56 @@ namespace graphicpipe
 		glBindVertexArray(0);
 	}
 
-	void GraphicsPipe::m_funcSetupFboVao()
+	void GraphicsPipe::m_funcSetupGridVao()
 	{
-		float quadVertices[] =
-		{
-			// Positions        // Texture Coords
-			-1.0f,  1.0f,       0.0f, 1.0f,  // Top-left
-			-1.0f, -1.0f,       0.0f, 0.0f,  // Bottom-left
-			 1.0f, -1.0f,       1.0f, 0.0f,  // Bottom-right
-			 1.0f, -1.0f,       1.0f, 0.0f,  // Bottom-right
-			 1.0f,  1.0f,       1.0f, 1.0f,  // Top-right
-			-1.0f,  1.0f,       0.0f, 1.0f   // Top-left
-		};
+		int const gridSize = 1000;
+		float const spacing = 1.f;
+		std::vector<glm::vec3> vertices;
+		m_funcSetupGrid(vertices, gridSize, spacing);
 
-		unsigned int vboID;
-		glGenVertexArrays(1, &m_screenMesh.m_vaoId);
-		glGenBuffers(1, &vboID);
+		glGenVertexArrays(1, &m_lineMesh.m_vaoId);
+		glGenBuffers(1, &m_gridBuffer);
 
-		glBindVertexArray(m_screenMesh.m_vaoId);
+		glBindVertexArray(m_lineMesh.m_vaoId);
 
-		glBindBuffer(GL_ARRAY_BUFFER, vboID);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), &quadVertices, GL_STATIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, m_gridBuffer);
+		glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), vertices.data(), GL_STATIC_DRAW);
 
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), (void*)0);
 		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindVertexArray(0);
 
+	}
+
+	
+
+	void GraphicsPipe::m_funcSetupGrid(std::vector<glm::vec3>& vertices, int gridSize, float spacing)
+	{
+		for (int i = -gridSize; i <= gridSize; ++i)
+		{
+			// Lines parallel to X-axis
+			vertices.push_back(glm::vec3(i * spacing, -gridSize * spacing, 0.f));
+			vertices.push_back(glm::vec3(i * spacing, gridSize * spacing, 0.f));
+
+			// Lines parallel to Y-axis
+			vertices.push_back(glm::vec3(-gridSize * spacing, i * spacing, 0.f));
+			vertices.push_back(glm::vec3(gridSize * spacing, i * spacing, 0.f));
+		}
+		// Lines parallel to X-axis
+		vertices.push_back(glm::vec3(0.01f, -gridSize * spacing, 0.f));
+		vertices.push_back(glm::vec3(0.01f, gridSize * spacing, 0.f));
+
+		vertices.push_back(glm::vec3(-0.01f, -gridSize * spacing, 0.f));
+		vertices.push_back(glm::vec3(-0.01f, gridSize * spacing, 0.f));
+
+		// Lines parallel to Y-axis
+		vertices.push_back(glm::vec3(-gridSize * spacing, 0.01f, 0.f));
+		vertices.push_back(glm::vec3(gridSize * spacing, 0.01f, 0.f));
+
+		vertices.push_back(glm::vec3(-gridSize * spacing, -0.01f, 0.f));
+		vertices.push_back(glm::vec3(gridSize * spacing, -0.01f, 0.f));
 	}
 
 	void GraphicsPipe::m_funcSetupTextVao()
@@ -168,10 +190,7 @@ namespace graphicpipe
 		GLsizei position_data_offset = 0;
 		GLsizei position_attribute_size = sizeof(glm::vec2);
 		GLsizei position_data_size = position_attribute_size * static_cast<GLsizei>(lvPosVtx.size());
-		GLsizei color_data_offset = position_data_size;
-		GLsizei color_attribute_size = sizeof(glm::vec3);
-		GLsizei color_data_size = color_attribute_size * static_cast<GLsizei>(lvClrVtx.size());
-		GLsizei texcoord_data_offset = position_data_size + color_data_size;
+		GLsizei texcoord_data_offset = position_data_size;
 		GLsizei texcoord_attribute_size = sizeof(glm::vec2);
 		GLsizei texcoord_data_size = texcoord_attribute_size * static_cast<GLsizei>(lvTexCoords.size());
 
@@ -180,10 +199,9 @@ namespace graphicpipe
 
 		glCreateBuffers(1, &lvVboId);
 
-		glNamedBufferStorage(lvVboId, position_data_size + color_data_size + texcoord_data_size, nullptr, GL_DYNAMIC_STORAGE_BIT);
+		glNamedBufferStorage(lvVboId, position_data_size + texcoord_data_size, nullptr, GL_DYNAMIC_STORAGE_BIT);
 
 		glNamedBufferSubData(lvVboId, position_data_offset, position_data_size, lvPosVtx.data());
-		glNamedBufferSubData(lvVboId, color_data_offset, color_data_size, lvClrVtx.data());
 		glNamedBufferSubData(lvVboId, texcoord_data_offset, texcoord_data_size, lvTexCoords.data());
 
 		glCreateVertexArrays(1, &shape.m_vaoId);
@@ -192,13 +210,6 @@ namespace graphicpipe
 			position_data_offset, position_attribute_size);
 		glVertexArrayAttribFormat(shape.m_vaoId, 0, 2, GL_FLOAT, GL_FALSE, 0);
 		glVertexArrayAttribBinding(shape.m_vaoId, 0, 0);
-
-		glEnableVertexArrayAttrib(shape.m_vaoId, 1);
-		glVertexArrayVertexBuffer(shape.m_vaoId, 1, lvVboId,
-			color_data_offset, color_attribute_size);
-		glVertexArrayAttribFormat(shape.m_vaoId, 1, 3, GL_FLOAT, GL_FALSE, 0);
-		glVertexArrayAttribBinding(shape.m_vaoId, 1, 1);
-
 
 		glEnableVertexArrayAttrib(shape.m_vaoId, 2);
 		glVertexArrayVertexBuffer(shape.m_vaoId, 2, lvVboId, texcoord_data_offset,

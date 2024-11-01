@@ -93,6 +93,12 @@ namespace Application {
         glClearColor(static_cast<GLclampf>(0.86), static_cast<GLclampf>(0.86), static_cast<GLclampf>(0.86), static_cast<GLclampf>(0.86));
         glClear(GL_COLOR_BUFFER_BIT);
 
+       /* double xPos, yPos;
+        glfwGetCursorPos(m_window, &xPos, &yPos);
+        xPos = glm::clamp(xPos, 0.0, (double)display_w);
+        yPos = glm::clamp(yPos, 0.0, (double)display_h);
+        glfwSetCursorPos(m_window, xPos, yPos);*/
+
         return 0;
 	}
 
@@ -102,5 +108,6 @@ namespace Application {
         return 0;
 	}
 
+  
 
 }

@@ -96,7 +96,7 @@ namespace ecs{
 
 			//if pause, only update render and transform
 			if (!ecs->m_pause) {
-				if (System.first == TYPETRANSFORMSYSTEM || System.first == TYPERENDERSYSTEM) {
+				if (System.first == TYPETRANSFORMSYSTEM || System.first == TYPERENDERSYSTEM || System.first == TYPERENDERTEXTSYSTEM || System.first == TYPEDEBUGDRAWINGSYSTEM || System.first == TYPECAMERASYSTEM ) {
 					System.second->m_Update();
 				}
 			}
