@@ -572,12 +572,12 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                     if (ImGui::BeginCombo("####combo 1", preview.c_str()))
                     {
 
-                        for (const auto& scriptname : assetManager->m_scriptManager.m_scriptNames) {
+                        for (const auto& scriptname : assetManager->m_scriptManager.m_ScriptMap) {
 
                             const bool is_selected{};
-                            if (ImGui::Selectable(scriptname.c_str(), is_selected)) {
+                            if (ImGui::Selectable(scriptname.first.c_str(), is_selected)) {
                                 //TODO for now push back
-                                sc->m_scripts.push_back(scriptname);
+                                sc->m_scripts.push_back(scriptname.first);
 
                             }
 

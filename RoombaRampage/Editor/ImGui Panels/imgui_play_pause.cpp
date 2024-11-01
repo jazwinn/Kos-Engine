@@ -20,8 +20,9 @@ namespace gui {
 
 			
 			assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
-			assetmanager->m_scriptManager.m_Cleanup();
+			//assetmanager->m_scriptManager.m_Cleanup();
 			assetmanager->m_scriptManager.m_CompileAllCsharpFile();
+			//assetmanager->m_scriptManager.m_ReloadAllDLL();
 			//help->m_fixedDeltaTime = 1.0 / 60.0;
 
 			//assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();

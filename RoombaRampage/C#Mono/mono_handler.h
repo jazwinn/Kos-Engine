@@ -3,6 +3,8 @@
 #include <mono/jit/jit.h>
 #include <mono/metadata/assembly.h>
 #include <mono/metadata/debug-helpers.h>
+
+
 #include "../ECS/ECS.h"
 #include <string>
 #include <vector>
@@ -11,15 +13,27 @@
 
 namespace script {
 
+	// 1 struct, 1 dll
+	struct ScriptMonoInfo {
+		std::filesystem::path m_scriptPath;
+		std::string m_fileName;
+		MonoDomain* m_scriptDomain;
+		MonoImage* m_image;
+		std::unordered_map<std::string, MonoMethod*> m_Methods;
+	};
+
 	class ScriptHandler {
 	public:
 		// Initialize Mono and load C#
 		ScriptHandler();
+
 		~ScriptHandler();
 
-		void m_ReloadAssembly(const std::string& assemblypath);
+		void m_UnloadDomain(const std::filesystem::path& filePath);
 
 		void m_CompileAllCsharpFile();
+
+		void m_ReloadAllDLL();
 
 		void m_CompileCSharpFile(const std::filesystem::path& filePath);
 
@@ -34,20 +48,15 @@ namespace script {
 
 		void m_Cleanup();
 
-		// getter for m_monoDomain
-		MonoDomain* m_GetMonoDomain() const;
 
-		std::vector<std::string> m_scriptNames;
+		/*************************************/
+		// key is filename, second is script mono data
+		std::unordered_map<std::string, ScriptMonoInfo> m_ScriptMap;
+
 
 	private:
+		// still needed for runtime
 		MonoDomain* m_monoDomain = nullptr;
-		MonoClass* m_testClass = nullptr;
-
-		//std::map<std::string, MonoObject*> m_instances;
-
-		//std::map<std::string, MonoAssembly*> m_assemblies;
-		std::map<std::string, MonoImage*> m_images;
-		std::map<std::string, MonoMethod*> m_methods;
 		
 	};
 
