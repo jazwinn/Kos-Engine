@@ -192,6 +192,9 @@ namespace Application {
                    Render Game Scene
                 --------------------------------------------------------------*/
                 pipe->m_funcRenderGameScene();
+            
+
+
                
 
                 //double currentFrameTime = glfwGetTime();

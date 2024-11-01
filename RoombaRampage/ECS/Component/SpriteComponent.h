@@ -17,6 +17,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include <string>
 
 #include "Component.h"
+#include "../Math/Vector3.h"
 
 
 namespace ecs {
@@ -33,7 +34,9 @@ namespace ecs {
 
 		std::string m_imageFile{};
 		int m_layer{};
-		REFLECTABLE(SpriteComponent, m_imageFile);
+		vector3::Vec3 m_color{ 1.f,1.f,1.f };
+		float m_alpha{ 1.f };
+		REFLECTABLE(SpriteComponent, m_layer);
 	};
 
 }

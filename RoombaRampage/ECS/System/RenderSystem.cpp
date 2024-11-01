@@ -89,16 +89,17 @@ namespace ecs {
 			{
 				AnimationComponent* animation = (AnimationComponent*)ecs->m_ECS_CombinedComponentPool[TYPEANIMATIONCOMPONENT]->m_GetEntityComponent(sprite->m_Entity);
 				
-				graphicsPipe->m_modelData.push_back({glm::mat3{transform->m_transformation.m_e00,transform->m_transformation.m_e01,transform->m_transformation.m_e02, 
+				graphicsPipe->m_modelData.push_back({ glm::mat3{transform->m_transformation.m_e00,transform->m_transformation.m_e01,transform->m_transformation.m_e02,
 																transform->m_transformation.m_e10,transform->m_transformation.m_e11, transform->m_transformation.m_e12,
 															transform->m_transformation.m_e20, transform->m_transformation.m_e21, transform->m_transformation.m_e22} ,
-															textureid, animation->m_frameNumber, 0});
+															textureid, animation->m_frameNumber, sprite->m_layer, glm::vec4{sprite->m_color.m_x,sprite->m_color.m_y, sprite->m_color.m_z, sprite->m_alpha} });
 			}
 			else
 			{
 				graphicsPipe->m_modelData.push_back({ glm::mat3{transform->m_transformation.m_e00,transform->m_transformation.m_e01,transform->m_transformation.m_e02,
 																transform->m_transformation.m_e10,transform->m_transformation.m_e11, transform->m_transformation.m_e12,
-															transform->m_transformation.m_e20, transform->m_transformation.m_e21, transform->m_transformation.m_e22},textureid, 0, 0 });
+															transform->m_transformation.m_e20, transform->m_transformation.m_e21, transform->m_transformation.m_e22},textureid, 0, sprite->m_layer 
+															, glm::vec4{sprite->m_color.m_x,sprite->m_color.m_y, sprite->m_color.m_z, sprite->m_alpha} });
 			}
 			
 		}

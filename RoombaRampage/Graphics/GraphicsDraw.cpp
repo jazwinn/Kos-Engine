@@ -14,11 +14,18 @@ namespace graphicpipe
 			glNamedBufferData(m_textureOrderBuffer, m_textureOrder.size() * sizeof(int), &m_textureOrder[0], GL_DYNAMIC_DRAW);
 
 			glBindBuffer(GL_ARRAY_BUFFER, m_stripCountBuffer);
-			glNamedBufferData(m_stripCountBuffer, m_stripCounts.size() * sizeof(int), &m_stripCounts[0], GL_DYNAMIC_DRAW);
+			glNamedBufferData(m_stripCountBuffer, m_stripCounts.size() * sizeof(glm::ivec2), &m_stripCounts[0], GL_DYNAMIC_DRAW);
+
+		/*	glBindBuffer(GL_ARRAY_BUFFER, m_frameNumberBuffer);
+			glNamedBufferData(m_frameNumberBuffer, m_frameNumbers.size() * sizeof(int), &m_frameNumbers[0], GL_DYNAMIC_DRAW);*/
+			glBindBuffer(GL_ARRAY_BUFFER, m_layerBuffer);
+			glNamedBufferData(m_layerBuffer, m_layers.size() * sizeof(int), &m_layers[0], GL_DYNAMIC_DRAW);
+
+			glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer);
+			glNamedBufferData(m_colorBuffer, m_colors.size() * sizeof(glm::vec4), &m_colors[0], GL_DYNAMIC_DRAW);
+			glBindBuffer(GL_ARRAY_BUFFER, m_layerBuffer);
 
 
-			glBindBuffer(GL_ARRAY_BUFFER, m_frameNumberBuffer);
-			glNamedBufferData(m_frameNumberBuffer, m_frameNumbers.size() * sizeof(int), &m_frameNumbers[0], GL_DYNAMIC_DRAW);
 
 
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -42,16 +49,17 @@ namespace graphicpipe
 			{
 				glActiveTexture(GL_TEXTURE0 + m_textureIDs[i]);
 				glBindTexture(GL_TEXTURE_2D, m_textureIDs[i]);
-			/*	GLenum err = glGetError();
-				if (err != GL_NO_ERROR) {
-					std::cout << "First OpenGL Error: " << err << std::endl;
-				}*/
+			
 			}
+			
 
 			glBindVertexArray(m_squareMesh.m_vaoId);
 			glDrawElementsInstanced(m_squareMesh.m_primitiveType, m_squareMesh.m_indexElementCount, GL_UNSIGNED_SHORT, NULL, static_cast<GLsizei>(m_modelToNDCMatrix.size()));
 			glBindVertexArray(0);
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+		
+		
 		}
 	}
 
@@ -95,10 +103,12 @@ namespace graphicpipe
 
 	void GraphicsPipe::m_funcDrawWindow()
 	{
+		
 		glBindFramebuffer(GL_FRAMEBUFFER, m_frameBufferObject);
 		glEnable(GL_DEPTH_TEST);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+		m_funcDrawGrid();
 		m_funcDrawDebug();
 		m_funcDraw();
 		m_funcDrawText();
@@ -140,6 +150,19 @@ namespace graphicpipe
 
 				glUniformMatrix3fv(glGetUniformLocation(m_textShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currOrthoMatrix));
 
+				glm::vec2 point = { textData.m_x, textData.m_y };
+
+				float angle = textData.m_rotate * 3.1451f / 180.f;
+
+				glm::mat3 rotationMatrix = {
+				cos(angle), -sin(angle), 0.0f,
+				sin(angle), cos(angle),  0.0f,
+				0.0f,       0.0f,       1.0 };
+
+				glUniformMatrix3fv(glGetUniformLocation(m_textShaderProgram, "rotate"), 1, GL_FALSE, glm::value_ptr(rotationMatrix));
+
+				glUniform2fv(glGetUniformLocation(m_textShaderProgram, "point"), 1, glm::value_ptr(point));
+
 				// Set the text color
 				glUniform3f(glGetUniformLocation(m_textShaderProgram, "textColor"), textData.m_color.x, textData.m_color.y, textData.m_color.z);
 
@@ -148,6 +171,7 @@ namespace graphicpipe
 
 				// Iterate through all characters
 				assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+				float origin{textData.m_x};
 				for (const char& c : textData.m_text) {
 					text::CharacterData ch = assetmanager->m_fontManager.m_fonts[textData.m_fileName][c];
 
@@ -183,7 +207,9 @@ namespace graphicpipe
 
 					// Advance cursor for next glyph
 					textData.m_x += ((ch.m_advance >> 6) * textData.m_scale) / GraphicsCamera::m_windowHeight ;
+					
 				}
+				textData.m_x = origin;
 
 				// Unbind for safety
 				glBindVertexArray(0);
@@ -192,9 +218,26 @@ namespace graphicpipe
 		}
 	}
 
+	void GraphicsPipe::m_funcDrawGrid() 
+	{
+		glUseProgram(m_gridShaderProgram);
+
+		glUniformMatrix3fv(glGetUniformLocation(m_gridShaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currViewMatrix));
+		glUniformMatrix3fv(glGetUniformLocation(m_gridShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currOrthoMatrix));
+		glBindVertexArray(m_lineMesh.m_vaoId);
+		glDrawArrays(GL_LINES, 0, 1000 * 8 + 12); // Number of vertices
+		glBindVertexArray(0);
+			
+	}
+
 	void GraphicsPipe::m_funcSetDrawMode(GLenum mode)
 	{
 		glPolygonMode(GL_FRONT_AND_BACK, mode);
+	}
+
+	void GraphicsPipe::m_drawWorldGrid()
+	{
+		
 	}
 
 }

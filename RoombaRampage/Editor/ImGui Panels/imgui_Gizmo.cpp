@@ -95,7 +95,7 @@ namespace gui {
         gridviewmatrix[12] = EditorCamera::m_editorViewMatrix[2][0];
         gridviewmatrix[13] = EditorCamera::m_editorViewMatrix[2][1];
 
-        ImGuizmo::DrawGrid(gridviewmatrix, projection, identity, 100.f);
+       // ImGuizmo::DrawGrid(gridviewmatrix, projection, identity, 100.f);
 
         /**************************************************************************************************/
 

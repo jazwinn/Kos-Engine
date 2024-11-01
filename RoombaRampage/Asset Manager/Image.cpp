@@ -137,7 +137,7 @@ namespace image {
         graphics->m_textureIDs.push_back(textureID);
         LOGGING_INFO("Texture Binded, Texture ID : {0} ", textureID);
         LOGGING_INFO("Image ID : {0} ", image.m_imageID);
-        graphics->m_stripCounts.push_back(image.m_stripCount);
+       // graphics->m_stripCounts.push_back(image.m_stripCount);
         graphics->m_imageData.push_back(image);
 
         return textureID;

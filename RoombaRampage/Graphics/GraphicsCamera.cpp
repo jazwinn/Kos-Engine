@@ -12,6 +12,11 @@ namespace graphicpipe
 	glm::mat3 GraphicsCamera::m_currViewMatrix{ 1.f };
 	glm::mat3 GraphicsCamera::m_currOrthoMatrix{ 1.f };
 	std::vector<glm::mat3> GraphicsCamera::m_cameras{};
+	float GraphicsCamera::m_currCameraRotate{};
+	float GraphicsCamera::m_currCameraScaleX{ 1.f };
+	float GraphicsCamera::m_currCameraScaleY{ 1.f };
+	float GraphicsCamera::m_currCameraTranslateX{};
+	float GraphicsCamera::m_currCameraTranslateY{};
 
 	GraphicsCamera* GraphicsCamera::m_funcGetInstance()
 	{
