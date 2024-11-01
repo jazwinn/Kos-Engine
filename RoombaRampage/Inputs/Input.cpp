@@ -23,17 +23,28 @@ namespace Input {
 	/*--------------------------------------------------------------
 	  GLOBAL VARAIBLE
 	--------------------------------------------------------------*/
-	bool InputSystem::KeyStateW = false;
-	bool InputSystem::KeyStateA = false;
-	bool InputSystem::KeyStateS = false;
-	bool InputSystem::KeyStateD = false;
-	bool InputSystem::KeyStateE = false;
-	bool InputSystem::KeyStateR = false;
-	bool InputSystem::KeyStateSpace = false;
-	bool InputSystem::KeyStateEsc = false;
-	bool InputSystem::KeyState0 = false;
-	bool InputSystem::KeyStateLMB = false;
-	bool InputSystem::KeyStateF11 = false;
+	//bool InputSystem::KeyStateW = false;
+	//bool InputSystem::KeyStateA = false;
+	//bool InputSystem::KeyStateS = false;
+	//bool InputSystem::KeyStateD = false;
+	//bool InputSystem::KeyStateE = false;
+	//bool InputSystem::KeyStateR = false;
+	//bool InputSystem::KeyStateSpace = false;
+	//bool InputSystem::KeyStateEsc = false;
+	//bool InputSystem::KeyState0 = false;
+	//bool InputSystem::KeyStateLMB = false;
+	//bool InputSystem::KeyStateF11 = false;
+	int InputSystem::m_keyStateW = 0;
+	int InputSystem::m_keyStateA = 0;
+	int InputSystem::m_keyStateS = 0;
+	int InputSystem::m_keyStateD = 0;
+	int InputSystem::m_keyStateE = 0;
+	int InputSystem::m_keyStateR = 0;
+	int InputSystem::m_keyState0 = 0;
+	int InputSystem::m_keyStateF11 = 0;
+	int InputSystem::m_keyStateSpace = 0;
+	int InputSystem::m_keyStateEsc = 0;
+	int InputSystem::m_keyStateLMB = 0;
 
 	vector2::Vec2 InputSystem::MousePosition = { 0,0 };
 	std::string InputSystem::m_mouseString;
@@ -46,31 +57,31 @@ namespace Input {
 		if (action == GLFW_PRESS) {
 			switch (key){
 			case GLFW_KEY_W:
-				KeyStateW = true;
+				m_keyStateW = GLFW_PRESS;
 				break;
 			case GLFW_KEY_A:
-				KeyStateA = true;
+				m_keyStateA = GLFW_PRESS;
 				break;
 			case GLFW_KEY_S:
-				KeyStateS = true;
+				m_keyStateS = GLFW_PRESS;
 				break;
 			case GLFW_KEY_D:
-				KeyStateD = true;
+				m_keyStateD = GLFW_PRESS;
 				break;
 			case GLFW_KEY_F11:
-				KeyStateF11 = true;
+				m_keyStateF11 = GLFW_PRESS;
 				break;
 			case GLFW_KEY_E:
-				KeyStateE = true;
+				m_keyStateE = GLFW_PRESS;
 				break;
 			case GLFW_KEY_ESCAPE:
-				KeyStateEsc = true;
+				m_keyStateEsc = GLFW_PRESS;
 				break;
 			case GLFW_KEY_R:
-				KeyStateR = true;
+				m_keyStateR = GLFW_PRESS;
 				break;
 			case GLFW_KEY_SPACE:
-				KeyStateSpace = true;
+				m_keyStateSpace = GLFW_PRESS;
 				break;
 			default:
 				break;
@@ -80,31 +91,31 @@ namespace Input {
 		else if (action == GLFW_RELEASE) {
 			switch (key) {
 			case GLFW_KEY_W:
-				KeyStateW = false;
+				m_keyStateW = GLFW_RELEASE;
 				break;
 			case GLFW_KEY_A:
-				KeyStateA = false;
+				m_keyStateA = GLFW_RELEASE;
 				break;
 			case GLFW_KEY_S:
-				KeyStateS = false;
+				m_keyStateS = GLFW_RELEASE;
 				break;
 			case GLFW_KEY_D:
-				KeyStateD = false;
+				m_keyStateD = GLFW_RELEASE;
 				break;
 			case GLFW_KEY_F11:
-				KeyStateF11 = false;
+				m_keyStateF11 = GLFW_RELEASE;
 				break;
 			case GLFW_KEY_E:
-				KeyStateE = false;
+				m_keyStateE = GLFW_RELEASE;
 				break;
 			case GLFW_KEY_ESCAPE:
-				KeyStateEsc = false;
+				m_keyStateEsc = GLFW_RELEASE;
 				break;
 			case GLFW_KEY_R:
-				KeyStateR = false;
+				m_keyStateR = GLFW_RELEASE;
 				break;
 			case GLFW_KEY_SPACE:
-				KeyStateSpace = false;
+				m_keyStateSpace = GLFW_RELEASE;
 				break;
 			default:
 				break;
@@ -113,6 +124,37 @@ namespace Input {
 		}
 		else if (action == GLFW_REPEAT) {
 			InputSystem::m_keyString = "Key Repeated";
+			switch (key) {
+			case GLFW_KEY_W:
+				m_keyStateW = GLFW_REPEAT;
+				break;
+			case GLFW_KEY_A:
+				m_keyStateA = GLFW_REPEAT;
+				break;
+			case GLFW_KEY_S:
+				m_keyStateS = GLFW_REPEAT;
+				break;
+			case GLFW_KEY_D:
+				m_keyStateD = GLFW_REPEAT;
+				break;
+			case GLFW_KEY_F11:
+				m_keyStateF11 = GLFW_REPEAT;
+				break;
+			case GLFW_KEY_E:
+				m_keyStateE = GLFW_REPEAT;
+				break;
+			case GLFW_KEY_ESCAPE:
+				m_keyStateEsc = GLFW_REPEAT;
+				break;
+			case GLFW_KEY_R:
+				m_keyStateR = GLFW_REPEAT;
+				break;
+			case GLFW_KEY_SPACE:
+				m_keyStateSpace = GLFW_REPEAT;
+				break;
+			default:
+				break;
+			}
 		}
 	}
 
@@ -133,15 +175,13 @@ namespace Input {
 		case GLFW_MOUSE_BUTTON_LEFT:
 			switch (action) {
 			case GLFW_PRESS:
-				if (KeyStateLMB == GL_FALSE) {
-					KeyStateLMB = GL_TRUE;
-				}
-				else {
-					KeyStateLMB = GL_FALSE;
-				}
+				m_keyStateLMB = GLFW_PRESS;
 				break;
 			case GLFW_RELEASE:
-				KeyStateLMB = GL_FALSE;
+				m_keyStateLMB = GLFW_RELEASE;
+				break;
+			case GLFW_REPEAT:
+				m_keyStateLMB = GLFW_REPEAT;
 				break;
 			}
 			break;
@@ -178,6 +218,127 @@ namespace Input {
 		glfwSetDropCallback(Window, dropCallback);
 		glfwSetMouseButtonCallback(Window, MouseButtonCallBack);
 		glfwSetCursorPosCallback(Window, mousepos_cb);
+	}
+
+	bool InputSystem::m_isKeyTriggered(const keyCode givenKey) {
+		switch (givenKey) {
+		case keys::W:
+			return m_keyStateW == 1? true : false;
+			break;
+		case keys::A:
+			return m_keyStateA == 1? true : false;
+			break;
+		case keys::S:
+			return m_keyStateS == 1? true : false;
+			break;
+		case keys::D:
+			return m_keyStateD == 1? true : false;
+			break;
+		case keys::E:
+			return m_keyStateE == 1 ? true : false;
+			break;
+		case keys::R:
+			return m_keyStateR == 1 ? true : false;
+			break;
+		case keys::NUM0:
+			return m_keyState0 == 1 ? true : false;
+			break;
+		case keys::LMB:
+			return m_keyStateLMB == 1 ? true : false;
+			break;
+		case keys::F11:
+			return m_keyStateF11 == 1 ? true : false;
+			break;
+		case keys::ESC:
+			return m_keyStateEsc == 1 ? true : false;
+			break;
+		case keys::SPACE:
+			return m_keyStateSpace == 1 ? true : false;
+			break;
+		default:
+			return false;
+			break;
+		}
+	}
+	bool InputSystem::m_isKeyPressed(const keyCode givenKey) {
+		switch (givenKey) {
+		case keys::W:
+			return m_keyStateW == 2 ? true : false;
+			//break;
+		case keys::A:
+			return m_keyStateW == 2 ? true : false;
+			//break;
+		case keys::S:
+			return m_keyStateW == 2 ? true : false;
+			//break;
+		case keys::D:
+			return m_keyStateW == 2 ? true : false;
+			//break;
+		case keys::E:
+			return m_keyStateE == 2 ? true : false;
+			//break;
+		case keys::R:
+			return m_keyStateR == 2 ? true : false;
+			//break;
+		case keys::NUM0:
+			return m_keyState0 == 2 ? true : false;
+			break;
+		case keys::LMB:
+			return m_keyStateLMB == 2 ? true : false;
+			//break;
+		case keys::F11:
+			return m_keyStateF11 == 2 ? true : false;
+			//break;
+		case keys::ESC:
+			return m_keyStateEsc == 2 ? true : false;
+			//break;
+		case keys::SPACE:
+			return m_keyStateSpace == 2 ? true : false;
+			//break;
+		default:
+			return false;
+			//break;
+		}
+	}
+	bool InputSystem::m_isKeyReleased(const keyCode givenKey) {
+		switch (givenKey) {
+		case keys::W:
+			return m_keyStateW == 0 ? true : false;
+			break;
+		case keys::A:
+			return m_keyStateA == 0 ? true : false;
+			break;
+		case keys::S:
+			return m_keyStateS == 0 ? true : false;
+			break;
+		case keys::D:
+			return m_keyStateD == 0 ? true : false;
+			break;
+		case keys::E:
+			return m_keyStateE == 0 ? true : false;
+			break;
+		case keys::R:
+			return m_keyStateR == 0 ? true : false;
+			break;
+		case keys::NUM0:
+			return m_keyState0 == 0 ? true : false;
+			break;
+		case keys::LMB:
+			return m_keyStateLMB == 0 ? true : false;
+			break;
+		case keys::F11:
+			return m_keyStateF11 == 0 ? true : false;
+			break;
+		case keys::ESC:
+			return m_keyStateEsc == 0 ? true : false;
+			break;
+		case keys::SPACE:
+			return m_keyStateSpace == 0 ? true : false;
+			break;
+		default:
+			return false;
+			break;
+		}
 	}
 
 
