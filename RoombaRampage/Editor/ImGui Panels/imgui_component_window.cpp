@@ -101,7 +101,7 @@ struct DrawComponents {
         ImGui::SetNextItemWidth(100.0f);
         std::string title = "##" + m_Array[count];
         ImGui::PushItemWidth(slidersize);
-        ImGui::DragInt(title.c_str(), &_args, 1.0f, -100.0f, 100.f);
+        ImGui::DragInt(title.c_str(), &_args, 1.0f, -100, 100);
         ImGui::PopItemWidth();
         count++;
     }
@@ -571,7 +571,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 deletecontext(ecs::TYPEBUTTONCOMPONENT, entityID);
 
                 if (open) {
-                    auto* rbc = static_cast<ecs::ButtonComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEBUTTONCOMPONENT]->m_GetEntityComponent(entityID));
+                    //auto* rbc = static_cast<ecs::ButtonComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEBUTTONCOMPONENT]->m_GetEntityComponent(entityID));
                     //rbc->ApplyFunction(DrawComponents(rbc->Names()));
                 }
 

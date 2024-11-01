@@ -65,7 +65,7 @@ namespace ecs {
 
 	void TransformSystem::m_Update() {
 
-		ECS* ecs = ECS::m_GetInstance();
+		//ECS* ecs = ECS::m_GetInstance();
 
 
 		for (int n{}; n < m_vecTransformComponentPtr.size(); n++)

@@ -1,12 +1,12 @@
 #include "WindowFile.h"
 
 namespace file {
-	std::string FileWindow::m_OpenfileDialog(char* filePath)
+	std::string FileWindow::m_OpenfileDialog([[maybe_unused]] char* filePath)
 	{
         //OPENING THIS CAUSE FPS TO DROP BY HALF?????????
         OPENFILENAMEA ofn;
         CHAR fileSize[256] = { 0 };
-        CHAR directory[256] = { 0 };
+        //CHAR directory[256] = { 0 };
         ZeroMemory(&ofn, sizeof(ofn));
         ofn.lStructSize = sizeof(ofn);
         ofn.hwndOwner = NULL; // Handle to the owner window (can be NULL)

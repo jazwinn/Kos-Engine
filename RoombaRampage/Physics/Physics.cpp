@@ -321,16 +321,16 @@ namespace physicspipe {
 	void Physics::m_Init() {
 
 	}
-	void Physics::m_Update(float dt) {
+	void Physics::m_Update() {
 		/*
 			1. Update the layer matrix first
 			2. Using the update layer matrix do the collision check
 		*/
 
-		m_CollisionCheckUpdate(dt);
+		m_CollisionCheckUpdate();
 	}
 
-	void Physics::m_CollisionCheckUpdate(float dt) {
+	void Physics::m_CollisionCheckUpdate() {
 
 		if (m_physicsEntities.empty()) return;
 
@@ -362,7 +362,7 @@ namespace physicspipe {
 							if (layer1 == layer2 && entity1 == entity2) continue;
 
 							// Perform the actual collision check between entity1 and entity2
-							if (CheckCollision(entity1, entity2, dt)) {
+							if (CheckCollision(entity1, entity2)) {
 							//if (shouldCollide(entity1, entity2)) {
 								std::cout << "Collision detected between entity "
 									<< entity1->m_ID << " and entity "
@@ -382,7 +382,7 @@ namespace physicspipe {
 			}
 		}
 	}
-	bool Physics::CheckCollision(const std::shared_ptr<PhysicsData>& entity1, const std::shared_ptr<PhysicsData>& entity2, float dt){
+	bool Physics::CheckCollision(const std::shared_ptr<PhysicsData>& entity1, const std::shared_ptr<PhysicsData>& entity2){
 		// Check for collision based on the types of entities.
 		if (entity1->GetEntity() == EntityType::CIRCLE && entity2->GetEntity() == EntityType::CIRCLE) {
 			return m_CollisionIntersection_CircleCircle(*static_cast<Circle*>(entity1.get()), *static_cast<Circle*>(entity2.get()));

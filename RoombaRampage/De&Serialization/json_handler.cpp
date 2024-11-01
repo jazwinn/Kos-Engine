@@ -578,7 +578,7 @@ namespace Serialization {
 			ecs::CameraComponent* cc = static_cast<ecs::CameraComponent*>(ecs->m_AddComponent(ecs::TYPECAMERACOMPONENT, newEntityId));
 
 			if (cc) {
-				const rapidjson::Value& camera = entityData["camera"];
+				//const rapidjson::Value& camera = entityData["camera"];
 
 			}
 		}

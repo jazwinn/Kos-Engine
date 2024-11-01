@@ -37,7 +37,7 @@ void gui::ImGuiHandler::m_DrawTestWindow() {
 	static int maxTime = 60;
 	static int currTime = 0;
 
-	ecs::ECS *ecs = ecs::ECS::m_GetInstance();
+	//ecs::ECS *ecs = ecs::ECS::m_GetInstance();
 	assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
 	logging::Logger log;
 

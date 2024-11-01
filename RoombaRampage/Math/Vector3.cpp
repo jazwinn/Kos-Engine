@@ -96,7 +96,44 @@ namespace vector3 {
     }
     Vec3 operator+(const Vec3& lhs, const Vec3& rhs)
     {
-        return Vec3();
+        float tempX = lhs.m_x + rhs.m_x;
+        float tempY = lhs.m_y + rhs.m_y;
+        float tempZ = lhs.m_z + rhs.m_z;
+        return Vec3(tempX, tempY, tempZ);
+    }
+    
+    Vec3 operator - (const Vec3& lhs, const Vec3& rhs) {
+        float tempX = lhs.m_x - rhs.m_x;
+        float tempY = lhs.m_y - rhs.m_y;
+        float tempZ = lhs.m_z - rhs.m_z;
+        return Vec3(tempX, tempY, tempZ);
+    }
+    Vec3 operator * (const Vec3& lhs, float rhs) {
+        float tempX = lhs.m_x * rhs;
+        float tempY = lhs.m_y * rhs;
+        float tempZ = lhs.m_z * rhs;
+        return Vec3(tempX, tempY, tempZ);
     }
 
+    Vec3 operator * (float lhs, const Vec3& rhs) {
+        float tempX = lhs * rhs.m_x;
+        float tempY = lhs * rhs.m_y;
+        float tempZ = lhs * rhs.m_z;
+        return Vec3(tempX, tempY, tempZ);
+    }
+
+    Vec3 operator / (const Vec3& lhs, float rhs) {
+        float tempX = lhs.m_x / rhs;
+        float tempY = lhs.m_y / rhs;
+        float tempZ = lhs.m_z / rhs;
+        return Vec3(tempX, tempY, tempZ);
+    }
+
+    Vec3 operator * (const Vec3& lhs, const Vec3& rhs) {
+        return Vec3(
+            lhs.m_y * rhs.m_z - lhs.m_z * rhs.m_y,
+            lhs.m_z * rhs.m_x - lhs.m_x * rhs.m_z,
+            lhs.m_x * rhs.m_y - lhs.m_y * rhs.m_x
+        );
+    }
 }

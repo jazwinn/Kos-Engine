@@ -11,7 +11,7 @@ namespace gui {
 	void ImGuiHandler::m_DrawPlayPauseWindow() {
 		static bool pause = false;
 		bool open = true;
-		Helper::Helpers* help = Helper::Helpers::GetInstance();
+		//Helper::Helpers* help = Helper::Helpers::GetInstance();
 		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
 		ImGui::Begin("Play & Pause", &open);
 		if (ImGui::Button("Play")) {

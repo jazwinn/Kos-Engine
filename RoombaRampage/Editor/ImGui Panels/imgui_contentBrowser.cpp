@@ -68,7 +68,7 @@ namespace gui {
 			auto textorimage = [](std::string directoryString, std::string fileName) {
 				assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
 				if (assetmanager->m_imageManager.m_imageMap.find(fileName) != assetmanager->m_imageManager.m_imageMap.end()) {
-					ImGui::ImageButton(directoryString.c_str(), (ImTextureID)assetmanager->m_imageManager.m_imageMap.find(fileName)->second.textureID, { thumbnail ,thumbnail }, { 0,1 }, { 1,0 }, { 0,0,0,0 });
+					ImGui::ImageButton(directoryString.c_str(), (ImTextureID)(uintptr_t)assetmanager->m_imageManager.m_imageMap.find(fileName)->second.textureID, { thumbnail ,thumbnail }, { 0,1 }, { 1,0 }, { 0,0,0,0 });
 				}
 				else {
 					ImGui::Button(directoryString.c_str(), { thumbnail ,thumbnail });
