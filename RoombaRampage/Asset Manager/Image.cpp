@@ -56,7 +56,7 @@ namespace image {
     }
     unsigned int ImageManager::m_LoadImage(const char* file) {
 
-        assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+       // assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
         graphicpipe::GraphicsPipe* graphics = graphicpipe::GraphicsPipe::m_funcGetInstance();
 
         stbi_set_flip_vertically_on_load(true);

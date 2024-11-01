@@ -37,7 +37,7 @@ void gui::ImGuiHandler::m_DrawLayerWindow() {
   
     const float cellWidth = 25.0f; // Adjust width as needed
     const float labelWidth = 60.0f; // Width for the row labels
-    const float verticalTextOffsetY = 10.0f; // Adjust as needed for better alignment
+    //const float verticalTextOffsetY = 10.0f; // Adjust as needed for better alignment
 
     // Draw the header row with vertical text
     ImGui::SetCursorPosX(labelWidth); // Align column headers to start after row labels

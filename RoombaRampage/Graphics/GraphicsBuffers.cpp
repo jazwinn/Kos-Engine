@@ -121,7 +121,7 @@ namespace graphicpipe
 
 		glGenTextures(1, &m_screenTexture);
 		glBindTexture(GL_TEXTURE_2D, m_screenTexture);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, help->m_windowWidth, help->m_windowHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, static_cast<GLsizei>(help->m_windowWidth), static_cast<GLsizei>(help->m_windowHeight), 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		glBindTexture(GL_TEXTURE_2D, 0);
@@ -130,7 +130,7 @@ namespace graphicpipe
 
 		glGenRenderbuffers(1, &m_depthBufferObject);
 		glBindRenderbuffer(GL_RENDERBUFFER, m_depthBufferObject);
-		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, help->m_windowWidth, help->m_windowHeight);
+		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, static_cast<GLsizei>(help->m_windowWidth), static_cast<GLsizei>(help->m_windowHeight));
 		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_depthBufferObject);
 
 #if DEBUG
@@ -145,7 +145,7 @@ namespace graphicpipe
 #endif
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-		glScissor(0, 0, help->m_windowWidth, help->m_windowHeight);
+		glScissor(0, 0, static_cast<GLsizei>(help->m_windowWidth), static_cast<GLsizei>(help->m_windowHeight));
 
 	}
 
@@ -170,7 +170,7 @@ namespace graphicpipe
 
 		glGenTextures(1, &m_gamePreviewTexture);
 		glBindTexture(GL_TEXTURE_2D, m_gamePreviewTexture);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, help->m_windowWidth, help->m_windowHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, static_cast<GLsizei>(help->m_windowWidth), static_cast<GLsizei>(help->m_windowHeight), 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		glBindTexture(GL_TEXTURE_2D, 0);
@@ -179,7 +179,7 @@ namespace graphicpipe
 
 		glGenRenderbuffers(1, &m_gamePreviewDepthBufferObject);
 		glBindRenderbuffer(GL_RENDERBUFFER, m_gamePreviewDepthBufferObject);
-		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, help->m_windowWidth, help->m_windowHeight);
+		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, static_cast<GLsizei>(help->m_windowWidth), static_cast<GLsizei>(help->m_windowHeight));
 		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_gamePreviewDepthBufferObject);
 
 #if DEBUG
@@ -194,7 +194,7 @@ namespace graphicpipe
 #endif
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-		glScissor(0, 0, help->m_windowWidth, help->m_windowHeight);
+		glScissor(0, 0, static_cast<GLsizei>(help->m_windowWidth), static_cast<GLsizei>(help->m_windowHeight));
 
 	}
 }

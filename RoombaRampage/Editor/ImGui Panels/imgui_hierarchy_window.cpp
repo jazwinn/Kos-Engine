@@ -109,7 +109,7 @@ namespace gui {
         for (const auto& sceneentity : ecs->m_ECS_SceneMap) {
             const auto& str = sceneentity.first.find_last_of('.');
             //collapsing header for scene
-            bool open = ImGui::CollapsingHeader(sceneentity.first.substr(0, str).c_str());
+            bool opens = ImGui::CollapsingHeader(sceneentity.first.substr(0, str).c_str());
             if (ImGui::BeginPopupContextItem()) {
                 if ((ecs->m_ECS_SceneMap.size() > 1) && ImGui::MenuItem("Unload Scene")) {
                     scenemanager->m_ClearScene(sceneentity.first);
@@ -151,7 +151,7 @@ namespace gui {
                 ImGui::EndDragDropTarget();
             }
 
-            if (open) {
+            if (opens) {
 
 
                 for (auto entity : sceneentity.second) {
@@ -216,7 +216,7 @@ namespace gui {
         ecs::TransformComponent* transCom =  static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id));
         if (transCom == NULL) return false;
 
-        ImGuiTreeNodeFlags flag = ((m_clickedEntityId == id) ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnArrow;
+        ImGuiTreeNodeFlags flag = ((static_cast<unsigned int>(m_clickedEntityId) == id) ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnArrow;
         if (transCom->m_childID.size() <= 0) {
             flag |= ImGuiTreeNodeFlags_Leaf;
         }
@@ -285,8 +285,8 @@ namespace gui {
         if (open) {
             //recursion
             if (transCom->m_childID.size() > 0) {
-                for (auto& id : transCom->m_childID) {
-                    m_DrawEntityNode(id);
+                for (auto& ids : transCom->m_childID) {
+                    m_DrawEntityNode(ids);
                 }
             }
            // m_DrawEntityNode(1);

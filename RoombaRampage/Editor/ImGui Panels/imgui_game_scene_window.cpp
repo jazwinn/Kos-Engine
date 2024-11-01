@@ -32,8 +32,8 @@ namespace gui
         float renderWindowAspectRatio = renderWindowSize.x / renderWindowSize.y;
 
         ImVec2 imageSize;
-        imageSize.x = graphicpipe::GraphicsCamera::m_windowWidth / 2;
-        imageSize.y = graphicpipe::GraphicsCamera::m_windowHeight / 2;
+        imageSize.x = graphicpipe::GraphicsCamera::m_windowWidth / 2.f;
+        imageSize.y = graphicpipe::GraphicsCamera::m_windowHeight / 2.f;
 
 
         if (renderWindowAspectRatio > textureAspectRatio)

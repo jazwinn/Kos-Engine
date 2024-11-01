@@ -31,7 +31,7 @@ namespace Input {
 	std::vector<std::string> InputSystem::m_droppedFiles;
 
 
-	void InputSystem::KeyCallBack([[maybe_unused]] GLFWwindow* window, int key, [[maybe_unused]] int scancode, int action, [[maybe_unused]] int mods) {
+	void InputSystem::KeyCallBack([[maybe_unused]] GLFWwindow* window, [[maybe_unused]] int key, [[maybe_unused]] int scancode, int action, [[maybe_unused]] int mods) {
 		if (action == GLFW_PRESS) {
 			InputSystem::m_keyString = "key pressed!";
 		}
@@ -74,7 +74,7 @@ namespace Input {
 	}
 	
 
-	void InputSystem::dropCallback(GLFWwindow* window, int count, const char** paths) {
+	void InputSystem::dropCallback([[maybe_unused]] GLFWwindow* window, int count, const char** paths) {
 		m_droppedFiles.clear();
 		for (int i = 0; i < count; ++i) {
 			m_droppedFiles.emplace_back(paths[i]);
