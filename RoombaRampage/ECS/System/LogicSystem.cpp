@@ -57,7 +57,7 @@ namespace ecs {
 
 	void LogicSystem::m_Update() {
 
-		ECS* ecs = ECS::m_GetInstance();
+		//ECS* ecs = ECS::m_GetInstance();
 		assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
 		//if (m_vecMovementComponentPtr.size() != m_vecTransformComponentPtr.size()) {
 		//	//std::cout << "Error: Vectors container size does not Match" << std::endl;
@@ -70,7 +70,7 @@ namespace ecs {
 			//std::cout << "Entity: " << n << "Movement System is getting Updated";
 
 			ScriptComponent* scriptComp = m_vecScriptComponentPtr[n];
-			EntityID id = scriptComp->m_Entity;
+			//EntityID id = scriptComp->m_Entity;
 
 			for (const std::string& script : scriptComp->m_scripts) {
 

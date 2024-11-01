@@ -61,14 +61,14 @@ namespace gui {
 			float panelwidth = ImGui::GetContentRegionAvail().x;
 			int columns = (int)(panelwidth / cellsize);
 			if (columns <= 0) {
-				columns = 8;
+				columns = 1;
 			}
 			ImGui::Columns(columns, 0, false);
 
 			auto textorimage = [](std::string directoryString, std::string fileName) {
 				assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
 				if (assetmanager->m_imageManager.m_imageMap.find(fileName) != assetmanager->m_imageManager.m_imageMap.end()) {
-					ImGui::ImageButton(directoryString.c_str(), (ImTextureID)assetmanager->m_imageManager.m_imageMap.find(fileName)->second.textureID, { thumbnail ,thumbnail }, { 0,1 }, { 1,0 }, { 0,0,0,0 });
+					ImGui::ImageButton(directoryString.c_str(), (ImTextureID)(uintptr_t)assetmanager->m_imageManager.m_imageMap.find(fileName)->second.textureID, { thumbnail ,thumbnail }, { 0,1 }, { 1,0 }, { 0,0,0,0 });
 				}
 				else {
 					ImGui::Button(directoryString.c_str(), { thumbnail ,thumbnail });
@@ -130,7 +130,7 @@ namespace gui {
 						selectedfile = directoryString;
 					}
 					if (ImGui::MenuItem("Delete")) {
-
+						std::filesystem::remove(directoryPath);
 					}
 					ImGui::EndPopup();
 				}
@@ -190,6 +190,9 @@ namespace gui {
 
 							// Copy directory and all contents recursively
 							std::filesystem::copy(source, destination, std::filesystem::copy_options::recursive);
+
+							//load new asset
+							assetmanager->m_LoadAsset(destination/source.filename());
 						}
 
 					}

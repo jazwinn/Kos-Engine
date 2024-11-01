@@ -34,7 +34,7 @@ namespace graphicpipe
 
 	void GraphicsCamera::calculateAspectRatio()
 	{
-		m_windowWidth = static_cast<float>(Helper::Helpers::GetInstance()->m_windowWidth);
+		m_windowWidth = static_cast<int>(Helper::Helpers::GetInstance()->m_windowWidth);
 		m_windowHeight = static_cast<int>(Helper::Helpers::GetInstance()->m_windowHeight);
 		m_aspectRatio = static_cast<float>(static_cast<float>(m_windowHeight) / static_cast<float>(m_windowWidth));
 	}

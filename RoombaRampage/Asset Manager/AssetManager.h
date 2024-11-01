@@ -84,6 +84,8 @@ namespace assetmanager {
         /******************************************************************/
         void m_funcLoadAssets(std::string );
 
+        void m_LoadAsset(std::filesystem::path);
+
         /******************************************************************/
         /*!
         \fn      void m_funcLoadImage(const char* file)

@@ -132,11 +132,11 @@ namespace Application {
     int Application::Run() {
         Helper::Helpers *help = Helper::Helpers::GetInstance();
         ecs::ECS* ecs = ecs::ECS::m_GetInstance();
-        float FPSCapTime = 1.f / help->m_fpsCap;
+        //float FPSCapTime = 1.f / help->m_fpsCap;
         double lastFrameTime = glfwGetTime();
         const double fixedDeltaTime = 1.0 / 60.0;
-        help->m_fixedDeltaTime = fixedDeltaTime;
-        ecs->m_DeltaTime = fixedDeltaTime;
+        help->m_fixedDeltaTime = static_cast<float>(fixedDeltaTime);
+        ecs->m_DeltaTime = static_cast<float>(fixedDeltaTime);
         double accumulatedTime = 0.0;
 
         /*--------------------------------------------------------------
@@ -152,7 +152,7 @@ namespace Application {
                 //    Calculate time
                 // --------------------------------------------------------------*/
                 double currentFrameTime = glfwGetTime();
-                help->m_deltaTime = currentFrameTime - lastFrameTime;
+                help->m_deltaTime = static_cast<float>(currentFrameTime - lastFrameTime);
                 lastFrameTime = currentFrameTime;
 
                 accumulatedTime += help->m_deltaTime;
@@ -161,7 +161,12 @@ namespace Application {
                     accumulatedTime -= fixedDeltaTime;
                     ++help->currentNumberOfSteps;
                 }
+
+                /*--------------------------------------------------------------
+                    UPDATE INPUT
+                --------------------------------------------------------------*/
                 Input.m_inputUpdate();
+
                 /*--------------------------------------------------------------
                     UPDATE ECS
                 --------------------------------------------------------------*/

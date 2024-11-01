@@ -57,6 +57,7 @@ namespace ecs {
 
 	void PhysicsSystem::m_Update() {
 		ECS* ecs = ECS::m_GetInstance();
+		physicspipe::Physics* PhysicsPipeline = physicspipe::Physics::getInstance();
 		Helper::Helpers* help = Helper::Helpers::GetInstance();
 		if (m_vecRigidBodyComponentPtr.size() != m_vecTransformComponentPtr.size()) {
 			LOGGING_ERROR("Error: Vectors container size does not Match");
@@ -96,9 +97,9 @@ namespace ecs {
 
 
 				//update physics pipline
-				physicspipe::Physics PhysicsPipeline;
+			
 				//TODO optimize,  causing longer load time
-				PhysicsPipeline.m_Update(ecs->m_DeltaTime);
+				PhysicsPipeline->m_Update();
 			}
 		}
 	}

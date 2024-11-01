@@ -64,7 +64,7 @@ namespace ecs {
 	}
 
 	void ButtonSystem::m_Update() {
-		ECS* ecs = ECS::m_GetInstance();
+		//ECS* ecs = ECS::m_GetInstance();
 		Helper::Helpers* help = Helper::Helpers::GetInstance();
 		if (m_vecTransformComponentPtr.size() != m_vecButtonComponentPtr.size()) {
 			LOGGING_ERROR("Error: Vectors container size does not Match");

@@ -15,10 +15,10 @@ namespace gui {
 
     void ImGuiHandler::m_DrawGizmo(float renderPosX, float renderPosY, float renderWidth, float renderHeight)
     {
-        graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
+       // graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
         ecs::ECS* ecs = ecs::ECS::m_GetInstance();
-        Helper::Helpers* help = Helper::Helpers::GetInstance();
-        float aspectRatio = help->m_windowWidth / help->m_windowHeight;
+        //Helper::Helpers* help = Helper::Helpers::GetInstance();
+        //float aspectRatio = help->m_windowWidth / help->m_windowHeight;
 
         
 
@@ -45,8 +45,8 @@ namespace gui {
         }
 
 
-        float n = -1.f;
-        float f = 1.f;
+        //float n = -1.f;
+        //float f = 1.f;
 
         float projection[16] =
         { 1.f, 0.f, 0.f, 0.f,

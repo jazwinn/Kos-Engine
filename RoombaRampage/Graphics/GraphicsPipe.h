@@ -99,6 +99,7 @@ namespace graphicpipe {
         std::string m_text;              ///< The text string to be rendered.
         float m_x;                       ///< X position of the text on screen.
         float m_y;                       ///< Y position of the text on screen.
+        float m_rotate;
         float m_scale;                   ///< Scale of the text.
         glm::vec3 m_color;               ///< Color of the text (RGB).
         std::string m_fileName;

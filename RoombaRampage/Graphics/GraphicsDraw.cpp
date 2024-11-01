@@ -150,6 +150,19 @@ namespace graphicpipe
 
 				glUniformMatrix3fv(glGetUniformLocation(m_textShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currOrthoMatrix));
 
+				glm::vec2 point = { textData.m_x, textData.m_y };
+
+				float angle = textData.m_rotate * 3.1451f / 180.f;
+
+				glm::mat3 rotationMatrix = {
+				cos(angle), -sin(angle), 0.0f,
+				sin(angle), cos(angle),  0.0f,
+				0.0f,       0.0f,       1.0 };
+
+				glUniformMatrix3fv(glGetUniformLocation(m_textShaderProgram, "rotate"), 1, GL_FALSE, glm::value_ptr(rotationMatrix));
+
+				glUniform2fv(glGetUniformLocation(m_textShaderProgram, "point"), 1, glm::value_ptr(point));
+
 				// Set the text color
 				glUniform3f(glGetUniformLocation(m_textShaderProgram, "textColor"), textData.m_color.x, textData.m_color.y, textData.m_color.z);
 

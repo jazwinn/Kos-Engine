@@ -288,10 +288,10 @@ namespace physicspipe {
 
 
 		void m_Init();
-		void m_Update(float dt);
+		void m_Update();
 
-		void m_CollisionCheckUpdate(float dt);
-		bool CheckCollision(const std::shared_ptr<PhysicsData>& entity1, const std::shared_ptr<PhysicsData>& entity2, float dt);
+		void m_CollisionCheckUpdate();
+		bool CheckCollision(const std::shared_ptr<PhysicsData>& entity1, const std::shared_ptr<PhysicsData>& entity2);
 		bool shouldCollide(const std::shared_ptr<PhysicsData>& entity1, const std::shared_ptr<PhysicsData>& entity2);
 		void projectOntoAxis(const std::vector<vector2::Vec2>& vertices, const vector2::Vec2& axis, float& min, float& max) const;
 		bool m_TestCollisionIntersection_RectRect(const Rectangle& obj1, const Rectangle& obj2);
