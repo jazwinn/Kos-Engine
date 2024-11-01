@@ -17,8 +17,9 @@ namespace script {
 		ScriptHandler();
 		~ScriptHandler();
 
-		void m_CompileCSharpFile(const std::filesystem::path& filePath);
+		void m_CompileAllCsharpFile();
 
+		void m_CompileCSharpFile(const std::filesystem::path& filePath);
 
 		//Add multiple scripts and load their individual assembly
 		void m_AddScripts(const std::filesystem::path& scriptpath);

@@ -348,6 +348,31 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             layerMap[layer] = id;
                         }
                     }
+                    if (ImGui::BeginDragDropTarget())
+                    {
+
+                        if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("file"))
+                        {
+                            IM_ASSERT(payload->DataSize == sizeof(std::filesystem::path));
+                            std::filesystem::path* filename = static_cast<std::filesystem::path*>(payload->Data);
+                            if (filename->filename().extension().string() == ".png") {
+                                if (Asset->m_imageManager.m_imageMap.find(filename->filename().string()) == Asset->m_imageManager.m_imageMap.end()) {
+                                    LOGGING_WARN("File not loaded, please reload content browser");
+                                }
+                                else {
+                                    sc->m_imageFile = filename->filename().string();
+                                }
+                            }
+                            else {
+                                LOGGING_WARN("Wrong File Type");
+                            }
+
+                            
+
+                        }
+                        ImGui::EndDragDropTarget();
+                    }
+
                     if (ImGui::TreeNode("Image Layers"))
                     {
                         int count = 0;
@@ -395,31 +420,6 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             }
                         }
                         ImGui::TreePop();
-                    }
-
-                    if (ImGui::BeginDragDropTarget())
-                    {
-
-                        if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("file"))
-                        {
-                            IM_ASSERT(payload->DataSize == sizeof(std::filesystem::path));
-                            std::filesystem::path* filename = static_cast<std::filesystem::path*>(payload->Data);
-                            if (filename->filename().extension().string() == ".png") {
-                                if (Asset->m_imageManager.m_imageMap.find(filename->filename().string()) == Asset->m_imageManager.m_imageMap.end()) {
-                                    LOGGING_WARN("File not loaded, please reload content browser");
-                                }
-                                else {
-                                    sc->m_imageFile = filename->filename().string();
-                                }
-                            }
-                            else {
-                                LOGGING_WARN("Wrong File Type");
-                            }
-
-                            
-
-                        }
-                        ImGui::EndDragDropTarget();
                     }
                 }
 

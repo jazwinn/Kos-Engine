@@ -301,6 +301,8 @@ namespace graphicpipe {
          */
         void m_funcDrawText();
 
+        void m_drawWorldGrid();
+
         /**
         * @brief Sets up the framebuffer for offscreen rendering.
         */

@@ -21,6 +21,8 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Inputs/Input.h"
 #include "../Application/Helper.h"
 #include "../Graphics/GraphicsCamera.h"
+#include "../Graphics/GraphicsPipe.h"
+#include "../Math/Mat3x3.h"
 
 namespace ecs {
 	void ButtonSystem::m_RegisterSystem(EntityID ID) {
@@ -78,9 +80,27 @@ namespace ecs {
 			for (int i = 0; i < m_vecButtonComponentPtr.size(); ++i) {
 				TransformComponent* transform = m_vecTransformComponentPtr[i];
 				ButtonComponent* button = m_vecButtonComponentPtr[i];
-				float windowCordinateX = ((transform->m_position.m_x - graphicpipe::GraphicsCamera::m_currCameraMatrix[2][0] + graphicpipe::GraphicsCamera::m_currCameraMatrix[0][0] * (1.f/graphicpipe::GraphicsCamera::m_aspectRatio)) / (graphicpipe::GraphicsCamera::m_currCameraMatrix[0][0] * ((1.f / graphicpipe::GraphicsCamera::m_aspectRatio) * 2))) * help->m_windowWidth;
-				float windowCordinateY = ((transform->m_position.m_y - graphicpipe::GraphicsCamera::m_currCameraMatrix[2][1] + graphicpipe::GraphicsCamera::m_currCameraMatrix[1][1]) / (graphicpipe::GraphicsCamera::m_currCameraMatrix[1][1] * (1.f * 2))) * help->m_windowHeight;
+
+				float rotate = -graphicpipe::GraphicsCamera::m_currCameraRotate * (3.14151f / 180.f);
+
+				
+				
+				float windowCordinateX = ((transform->m_transformation.m_e20 - graphicpipe::GraphicsCamera::m_currCameraMatrix[2][0] + graphicpipe::GraphicsCamera::m_currCameraScaleX * (1.f/graphicpipe::GraphicsCamera::m_aspectRatio)) / (graphicpipe::GraphicsCamera::m_currCameraScaleX * ((1.f / graphicpipe::GraphicsCamera::m_aspectRatio) * 2))) * help->m_windowWidth;
+				float windowCordinateY = ((transform->m_transformation.m_e21 - graphicpipe::GraphicsCamera::m_currCameraMatrix[2][1] + graphicpipe::GraphicsCamera::m_currCameraScaleY) / (graphicpipe::GraphicsCamera::m_currCameraScaleY * (1.f * 2)))* help->m_windowHeight;
+				
 				button->m_Position = { windowCordinateX, windowCordinateY };
+
+				float translateX = windowCordinateX - (help->m_windowWidth/2);
+				float translateY = windowCordinateY - (help->m_windowHeight/2);
+
+				float newTranslateX = translateX * cos(rotate) - translateY * sin(rotate);
+				float newTranslateY = translateX * sin(rotate) + translateY * cos(rotate);
+
+				translateX = newTranslateX + 640;
+				translateY = newTranslateY + 360;
+
+				button->m_Position = { translateX , translateY };
+
 				button->m_Scale = { 50,50 };
 				minX = button->m_Position.m_x - (button->m_Scale.m_x / 2.f);
 				maxX = button->m_Position.m_x + (button->m_Scale.m_x / 2.f);
@@ -104,10 +124,22 @@ namespace ecs {
 
 		for (int i = 0; i < m_vecButtonComponentPtr.size(); ++i) {
 			ButtonComponent* button = m_vecButtonComponentPtr[i];
+			TransformComponent* transform = m_vecTransformComponentPtr[i];
 			if (button->m_IsClick) {
 				std::cout << "clicked" << std::endl;
 				button->m_IsClick = false;
+
+				
 			}
+			mat3x3::Mat3x3 debugTransformation = mat3x3::Mat3Transform(vector2::Vec2{ transform->m_transformation.m_e20, transform->m_transformation.m_e21 }, vector2::Vec2{ 1.f, 1.f }, transform->m_rotation);
+
+			graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
+			pipe->m_debugBoxData.push_back({ glm::mat3{debugTransformation.m_e00,debugTransformation.m_e01,debugTransformation.m_e02,
+																debugTransformation.m_e10,debugTransformation.m_e11, debugTransformation.m_e12,
+															debugTransformation.m_e20, debugTransformation.m_e21, debugTransformation.m_e22} ,
+														3.f, 0 });
+
+			
 		}
 	}
 }

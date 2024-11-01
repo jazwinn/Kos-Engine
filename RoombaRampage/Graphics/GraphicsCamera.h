@@ -36,6 +36,11 @@ namespace graphicpipe
         static glm::mat3 m_currOrthoMatrix;
 
         static glm::mat3 m_currCamera;
+        static float m_currCameraRotate;
+        static float m_currCameraScaleX;
+        static float m_currCameraScaleY;
+        static float m_currCameraTranslateX;
+        static float m_currCameraTranslateY;
         static std::vector<glm::mat3> m_cameras;
 
     private:

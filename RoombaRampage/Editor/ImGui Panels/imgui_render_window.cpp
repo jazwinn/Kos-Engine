@@ -88,14 +88,19 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
 
 
 
+
+
     float scrollInput = ImGui::GetIO().MouseWheel; // Positive for zoom in, negative for zoom out
+
+    if (ImGui::IsWindowHovered())
+    {
+        EditorCamera::m_editorCamera.m_zoom.x -= scrollInput * EditorCamera::m_editorCameraZoomSensitivity;
+        EditorCamera::m_editorCamera.m_zoom.y -= scrollInput * EditorCamera::m_editorCameraZoomSensitivity;
+
+        EditorCamera::m_editorCamera.m_zoom.x = glm::clamp(EditorCamera::m_editorCamera.m_zoom.x, 0.1f, 10.f);
+        EditorCamera::m_editorCamera.m_zoom.y = glm::clamp(EditorCamera::m_editorCamera.m_zoom.y, 0.1f, 10.f);
+    }
      
-    EditorCamera::m_editorCamera.m_zoom.x -= scrollInput * EditorCamera::m_editorCameraZoomSensitivity;
-    EditorCamera::m_editorCamera.m_zoom.y -= scrollInput * EditorCamera::m_editorCameraZoomSensitivity;
-
-    EditorCamera::m_editorCamera.m_zoom.x = glm::clamp(EditorCamera::m_editorCamera.m_zoom.x, 0.1f, 10.f);
-    EditorCamera::m_editorCamera.m_zoom.y = glm::clamp(EditorCamera::m_editorCamera.m_zoom.y, 0.1f, 10.f);
-
     if (ImGui::IsMouseDragging(ImGuiMouseButton_Right) && ImGui::IsWindowHovered())
     {
         ImVec2 mouseDelta = ImGui::GetMouseDragDelta(ImGuiMouseButton_Right);

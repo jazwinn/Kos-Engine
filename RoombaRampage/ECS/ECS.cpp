@@ -92,16 +92,23 @@ namespace ecs{
 		//loops through all the system
 		for (auto& System : ecs->m_ECS_SystemMap) {
 			auto start = std::chrono::steady_clock::now();
+
+
+			//if pause, only update render and transform
+			if (!ecs->m_pause) {
+				if (System.first == TYPETRANSFORMSYSTEM || System.first == TYPERENDERSYSTEM || System.first == TYPERENDERTEXTSYSTEM || System.first == TYPEDEBUGDRAWINGSYSTEM || System.first == TYPECAMERASYSTEM ) {
+					System.second->m_Update();
+				}
+			}
+			else {
+				System.second->m_Update();
+			}
 			
 
-			System.second->m_Update();
 
 
 			auto end = std::chrono::steady_clock::now();
-
 			std::chrono::duration<float> duration = end - start;
-			
-
 			performancetracker::Performance::m_UpdateTotalSystemTime(duration.count());
 			performancetracker::Performance::m_UpdateSystemTime(System.first, duration.count());
 		

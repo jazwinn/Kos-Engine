@@ -28,7 +28,7 @@ uniform mat3 view;
 
 void main()
 {
-    gl_Position = vec4(vec2(projection * vec3(view * vec3(vertex.xy, 1.f))), 0.9, 1.0); // z value to draw text in front for now
+    gl_Position = vec4(vec2(projection * vec3(view * vec3(vertex.xy, 1.f))), 0.0, 1.0); // z value to draw text in front for now
     texCoords = vertex.zw;
 }  
 

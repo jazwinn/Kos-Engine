@@ -102,10 +102,12 @@ namespace graphicpipe
 
 	void GraphicsPipe::m_funcDrawWindow()
 	{
+		
 		glBindFramebuffer(GL_FRAMEBUFFER, m_frameBufferObject);
 		glEnable(GL_DEPTH_TEST);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+		
 		m_funcDrawDebug();
 		m_funcDraw();
 		m_funcDrawText();
@@ -155,6 +157,7 @@ namespace graphicpipe
 
 				// Iterate through all characters
 				assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+				int count{};
 				for (const char& c : textData.m_text) {
 					text::CharacterData ch = assetmanager->m_fontManager.m_fonts[textData.m_fileName][c];
 
@@ -190,7 +193,9 @@ namespace graphicpipe
 
 					// Advance cursor for next glyph
 					textData.m_x += ((ch.m_advance >> 6) * textData.m_scale) / GraphicsCamera::m_windowHeight ;
+					count += (((ch.m_advance >> 6) * textData.m_scale) / GraphicsCamera::m_windowHeight);
 				}
+				textData.m_x -= count;
 
 				// Unbind for safety
 				glBindVertexArray(0);
@@ -202,6 +207,11 @@ namespace graphicpipe
 	void GraphicsPipe::m_funcSetDrawMode(GLenum mode)
 	{
 		glPolygonMode(GL_FRONT_AND_BACK, mode);
+	}
+
+	void GraphicsPipe::m_drawWorldGrid()
+	{
+		
 	}
 
 }

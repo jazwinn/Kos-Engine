@@ -28,13 +28,32 @@ namespace script {
         m_Cleanup();
     }
 
+    void ScriptHandler::m_CompileAllCsharpFile()
+    {
+        // load all .cs file in /Assests/Script
+        for (auto& directoryPath : std::filesystem::directory_iterator("Assets/Scripts")) {
+            std::string filepath = directoryPath.path().string();
+            std::replace(filepath.begin(), filepath.end(), '\\', '/');
+
+            if (directoryPath.path().filename().extension().string() == ".cs") {
+                m_CompileCSharpFile(filepath);
+            }
+
+        }
+
+
+    }
+
     void ScriptHandler::m_CompileCSharpFile(const std::filesystem::path& filePath)
     {
-        std::string scriptbase = "C:/Users/ngjaz/OneDrive/Documents/roombarampage/GreyGooseWorkspace/RRR/RoombaRampage/Assets/Scripts/GameScript.dll";
-        std::filesystem::path outputDir = "C:/Users/ngjaz/OneDrive/Documents/roombarampage/GreyGooseWorkspace/RRR/RoombaRampage/Assets/Scripts/";
+        std::filesystem::path projectBasePath = std::filesystem::current_path();
+
+        std::string scriptbase = projectBasePath.string() + "\\Assets\\Scripts\\GameScript.dll";
+        std::filesystem::path outputDir = projectBasePath.string()  + "\\Assets\\Scripts\\";
 
         std::string command = "csc /target:library /out:" + (outputDir/(filePath.filename().stem().string() + ".dll")).string() + " /reference:" + scriptbase + " " + filePath.string();
 
+        std::cout << command << std::endl;
         // Execute the command
         int result = system(command.c_str());
 

@@ -74,7 +74,7 @@ namespace Application {
         /****************************************************************************************/
         //SAMPLE TO REMOVE
         //Compiles .cs
-        assetmanager::AssetManager::m_funcGetInstance()->m_scriptManager.m_CompileCSharpFile("C:/Users/ngjaz/OneDrive/Documents/roombarampage/GreyGooseWorkspace/RRR/RoombaRampage/Assets/Scripts/ExampleScriptB.cs");
+       // assetmanager::AssetManager::m_funcGetInstance()->m_scriptManager.m_CompileCSharpFile("C:/Users/ngjaz/OneDrive/Documents/roombarampage/GreyGooseWorkspace/RRR/RoombaRampage/Assets/Scripts/ExampleScriptB.cs");
         /****************************************************************************************/
 
         /*--------------------------------------------------------------
@@ -187,6 +187,7 @@ namespace Application {
                    Render Game Scene
                 --------------------------------------------------------------*/
                 pipe->m_funcRenderGameScene();
+            
 
 
 

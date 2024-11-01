@@ -71,7 +71,6 @@ namespace ecs {
 			std::cout << "Error: Vectors container size does not Match" << std::endl;
 			return;
 		}
-
 		//loops through all vecoters pointing to component
 
 		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
