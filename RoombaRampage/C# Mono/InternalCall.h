@@ -7,9 +7,11 @@ namespace script {
 
 	class InternalCall {
 	
-		static void m_InternalGetTransformComponent(ecs::EntityID entity, vector2::Vec2* trans, vector2::Vec2* scale, float* rotate);
+		static bool m_InternalGetTransformComponent(ecs::EntityID entity, vector2::Vec2* trans, vector2::Vec2* scale, float* rotate);
 
-		static void m_InternalGetRigidBodyComponent(ecs::EntityID entity, ecs::RigidBodyComponent* rbcomp);
+		static bool m_InternalGetVelocity(ecs::EntityID entity, vector2::Vec2* vec);
+
+		static bool m_InternalSetVelocity(ecs::EntityID entity, vector2::Vec2* vec);
 
 		static bool m_InternalCallIsKeyPressed(keyCode key);
 

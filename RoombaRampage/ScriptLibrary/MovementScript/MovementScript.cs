@@ -14,50 +14,44 @@ namespace Namespace
 
         public override void Start()
         {
-
+            //Console.WriteLine("Start");
         }
 
         public override void Update()
         {
             EntityID = 0;
-            Console.WriteLine("test");
-            if (m_InternalCallIsKeyPressed(Key.keyCode.W)){
-                Console.WriteLine("W is pressed");
+
+            //Console.WriteLine("Update");
+
+            Vector2 velocity;
+            if(!m_InternalGetVelocity(EntityID, out velocity))
+            {
+                // return cause velocity -> rigidbody is not present in entity
+                return;
             }
 
-            RigidBodyComponent rbComp;
-            m_InternalGetRigidBodyComponent(EntityID, out rbComp);
-
-            rbComp.m_Velocity.X = 0;
-            rbComp.m_Velocity.Y = 0;
+            velocity.X = 0;
+            velocity.Y = 0;
 
             if (m_InternalCallIsKeyPressed(Key.keyCode.W))
             {
-                rbComp.m_Velocity.Y = 1;
+                velocity.Y = 1;
             }
             if (m_InternalCallIsKeyPressed(Key.keyCode.S))
             {
-                rbComp.m_Velocity.Y = -1;
+                velocity.Y = -1;
             }
             if (m_InternalCallIsKeyPressed(Key.keyCode.A))
             {
-                rbComp.m_Velocity.X = -1;
+                velocity.X = -1;
             }
             if (m_InternalCallIsKeyPressed(Key.keyCode.D))
             {
-                rbComp.m_Velocity.Y = 1;
+                velocity.X = 1;
             }
 
 
-
-            //Vector2 translate, scale;
-            //float rotate;
-
-            //m_InternalGetTransformComponent(EntityID, out translate, out scale, out rotate);
-            //Console.WriteLine($"Position: {translate.X}");
-
-
-            //Console.WriteLine($"velocity: {rbComp.m_Velocity.X}" );
+            m_InternalSetVelocity(EntityID, in velocity);
 
 
         }

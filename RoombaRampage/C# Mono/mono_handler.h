@@ -17,6 +17,8 @@ namespace script {
 		ScriptHandler();
 		~ScriptHandler();
 
+		void m_ReloadAssembly(const std::string& assemblypath);
+
 		void m_CompileAllCsharpFile();
 
 		void m_CompileCSharpFile(const std::filesystem::path& filePath);
@@ -43,7 +45,7 @@ namespace script {
 
 		//std::map<std::string, MonoObject*> m_instances;
 
-		std::map<std::string, MonoAssembly*> m_assemblies;
+		//std::map<std::string, MonoAssembly*> m_assemblies;
 		std::map<std::string, MonoImage*> m_images;
 		std::map<std::string, MonoMethod*> m_methods;
 		

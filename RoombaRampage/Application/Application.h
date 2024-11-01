@@ -26,7 +26,6 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 #include "../Debugging/Logging.h"
 #include "../C# Mono/mono_handler.h"
-
 #include "../Editor/ImGui Panels/imgui_handler.h"
 #include "imgui.h"
 #include "imgui_impl_glfw.h"

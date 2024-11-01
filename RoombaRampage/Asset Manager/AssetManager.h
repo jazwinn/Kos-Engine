@@ -124,7 +124,7 @@ namespace assetmanager {
 
         void m_RenameAsset(std::filesystem::path old, std::filesystem::path _new);
 
-        void m_LoadScript(std::string file);
+        void m_LoadScript(std::filesystem::path filepath);
         
         image::ImageManager m_imageManager;
 

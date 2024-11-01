@@ -28,6 +28,35 @@ namespace script {
         m_Cleanup();
     }
 
+    void ScriptHandler::m_ReloadAssembly(const std::string& assemblypath)
+    {
+
+        // Release previous assembly references (if any)
+        if (m_images.find(assemblypath) != m_images.end()) {
+            m_images.erase(assemblypath);  // Remove from map to prevent re-use of the old reference
+        }
+
+        // Load the new assembly
+        MonoAssembly* assembly = mono_domain_assembly_open(mono_domain_get(), assemblypath.c_str());
+        if (!assembly) {
+            std::cerr << "Failed to load assembly: " << assemblypath << std::endl;
+            return;
+        }
+
+        // Store the new assembly
+        m_images[assemblypath] = mono_assembly_get_image(assembly);
+
+        // Re-fetch class and method references as needed
+        m_testClass = mono_class_from_name(m_images[assemblypath], "Namespace", "ExampleScriptB");
+        if (!m_testClass) {
+            std::cerr << "Failed to find class ExampleScriptB after reload" << std::endl;
+        }
+
+
+
+
+    }
+
     void ScriptHandler::m_CompileAllCsharpFile()
     {
         // load all .cs file in /Assests/Script
@@ -51,7 +80,7 @@ namespace script {
         std::string scriptbase = projectBasePath.string() + "\\Assets\\Scripts\\GameScript.dll";
         std::filesystem::path outputDir = projectBasePath.string()  + "\\Assets\\Scripts\\";
 
-        std::string command = "csc /target:library /out:" + (outputDir/(filePath.filename().stem().string() + ".dll")).string() + " /reference:" + scriptbase + " " + filePath.string();
+        std::string command = "C#Mono/CompilerCSC/bin/csc /target:library /out:" + (outputDir/(filePath.filename().stem().string() + ".dll")).string() + " /reference:" + scriptbase + " " + filePath.string();
 
         std::cout << command << std::endl;
         // Execute the command
@@ -74,7 +103,6 @@ namespace script {
     void ScriptHandler::m_AddScripts(const std::filesystem::path& scriptpath) {
 
             
-
             // Load assembly
             std::string assemblyPath = scriptpath.string();
             MonoAssembly* assembly = mono_domain_assembly_open(m_monoDomain, assemblyPath.c_str());
@@ -92,9 +120,18 @@ namespace script {
 
             // Store the assembly and image
             std::string scriptname = scriptpath.filename().stem().string();
-            m_assemblies[scriptname] = assembly;
-            m_images[scriptname] = image;
-            m_scriptNames.push_back(scriptname);
+
+            if (m_images.find(scriptname) != m_images.end()) {
+                m_images.find(scriptname)->second = image;
+                LOGGING_DEBUG("Successfully Reload Script");
+            }
+            else {
+                m_images[scriptname] = image;
+                m_scriptNames.push_back(scriptname);
+                LOGGING_DEBUG("Successfully Added Script");
+            }
+
+
 
             std::cout << "Successfully added script: " << scriptname << std::endl;
     }
@@ -146,9 +183,9 @@ namespace script {
             std::cerr << "Exception in C# method invocation: " << messageStr << std::endl;
             mono_free((void*)messageStr);
         }
-        else {
-            std::cout << "Method invoked successfully for script: " << scriptName << std::endl;
-        }
+        //else {
+        //    std::cout << "Method invoked successfully for script: " << scriptName << std::endl;
+        //}
     }
 
 

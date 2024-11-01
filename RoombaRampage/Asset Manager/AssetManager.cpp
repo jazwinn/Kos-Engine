@@ -73,12 +73,7 @@ namespace assetmanager {
             m_LoadFont(filepath);
         }
         else if (directoryPath.filename().extension().string() == ".dll") {
-            m_LoadScript(filepath);
-            std::string filename = directoryPath.filename().stem().string();
-            // load start and update
-            //TODO move somewhere that is not the asset manager
-            m_scriptManager.m_LoadMethod(filename, filename, "Start", 0);
-            m_scriptManager.m_LoadMethod(filename, filename, "Update", 0);
+            m_LoadScript(directoryPath);
         }
 
 
@@ -136,9 +131,16 @@ namespace assetmanager {
         std::filesystem::rename(oldfilepath.c_str(), newfilepath.c_str());
     }
 
-    void AssetManager::m_LoadScript(std::string file)
+    void AssetManager::m_LoadScript(std::filesystem::path filepath)
     {
-        m_scriptManager.m_AddScripts(file);
+        m_scriptManager.m_AddScripts(filepath.string());
+        std::string filename = filepath.filename().stem().string();
+        // load start and update
+        //TODO move somewhere that is not the asset manager
+        m_scriptManager.m_LoadMethod(filename, filename, "Start", 0);
+        m_scriptManager.m_LoadMethod(filename, filename, "Update", 0);
+
+
     }
 
    void AssetManager::m_LoadAudio(std::string file) {

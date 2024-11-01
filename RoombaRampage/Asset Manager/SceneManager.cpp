@@ -54,8 +54,11 @@ namespace scenes {
 
         std::ifstream checkFile(scene.string());
         if (!checkFile) {
-            std::cerr << "Error: JSON file not found: " << scene.string() << std::endl;
-            return;
+            if (!m_CreateNewScene(scene)) {
+                LOGGING_ERROR("Fail to Create file");
+                return;
+            }
+   
         }
 
         //contain scene path
