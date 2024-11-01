@@ -94,18 +94,18 @@ namespace ecs {
 			//std::cout << "Entity: " << n << "Movement System is getting Updated";
 
 			AnimationComponent* AniComp = m_vecAnimationComponentPtr[n];
-			TransformComponent* TransComp = m_vecTransformComponentPtr[n];
+			//TransformComponent* TransComp = m_vecTransformComponentPtr[n];
 			SpriteComponent* SpriteComp = m_vecSpriteComponentPtr[n];
 
-			EntityID id = AniComp->m_Entity;
+			//EntityID id = AniComp->m_Entity;
 
 			if (m_vecAnimationComponentPtr[n]->m_isAnimating && m_vecAnimationComponentPtr[n]->m_framesPerSecond)
 			{
 				m_vecAnimationComponentPtr[n]->m_frameTimer += ecs->m_DeltaTime;
 
 				float frameTime = 1.f / m_vecAnimationComponentPtr[n]->m_framesPerSecond;
-				int id = assetmanager->m_imageManager.m_imageMap.find(SpriteComp->m_imageFile)->second.m_imageID;
-				float spriteTotalTime = frameTime * pipe->m_imageData[id].m_stripCount;
+				int ids = assetmanager->m_imageManager.m_imageMap.find(SpriteComp->m_imageFile)->second.m_imageID;
+				float spriteTotalTime = frameTime * pipe->m_imageData[ids].m_stripCount;
 				if (m_vecAnimationComponentPtr[n]->m_frameTimer > spriteTotalTime)
 				{
 					AniComp->m_frameTimer = 0;
