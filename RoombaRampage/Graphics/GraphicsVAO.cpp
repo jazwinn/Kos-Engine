@@ -93,34 +93,56 @@ namespace graphicpipe
 		glBindVertexArray(0);
 	}
 
-	void GraphicsPipe::m_funcSetupFboVao()
+	void GraphicsPipe::m_funcSetupGridVao()
 	{
-	//	float quadVertices[] =
-	//	{
-	//		// Positions        // Texture Coords
-	//		-1.0f,  1.0f,       0.0f, 1.0f,  // Top-left
-	//		-1.0f, -1.0f,       0.0f, 0.0f,  // Bottom-left
-	//		 1.0f, -1.0f,       1.0f, 0.0f,  // Bottom-right
-	//		 1.0f, -1.0f,       1.0f, 0.0f,  // Bottom-right
-	//		 1.0f,  1.0f,       1.0f, 1.0f,  // Top-right
-	//		-1.0f,  1.0f,       0.0f, 1.0f   // Top-left
-	//	};
+		int const gridSize = 1000;
+		float const spacing = 1.f;
+		std::vector<glm::vec3> vertices;
+		m_funcSetupGrid(vertices, gridSize, spacing);
 
-	//	unsigned int vboID;
-	//	glGenVertexArrays(1, &m_screenMesh.m_vaoId);
-	//	glGenBuffers(1, &vboID);
+		glGenVertexArrays(1, &m_lineMesh.m_vaoId);
+		glGenBuffers(1, &m_gridBuffer);
 
-	//	glBindVertexArray(m_screenMesh.m_vaoId);
+		glBindVertexArray(m_lineMesh.m_vaoId);
 
-	//	glBindBuffer(GL_ARRAY_BUFFER, vboID);
-	//	glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), &quadVertices, GL_STATIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, m_gridBuffer);
+		glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), vertices.data(), GL_STATIC_DRAW);
 
-	//	glEnableVertexAttribArray(0);
-	//	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), (void*)0);
+		glEnableVertexAttribArray(0);
 
-	//	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	//	glBindVertexArray(0);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindVertexArray(0);
 
+	}
+
+	
+
+	void GraphicsPipe::m_funcSetupGrid(std::vector<glm::vec3>& vertices, int gridSize, float spacing)
+	{
+		for (int i = -gridSize; i <= gridSize; ++i)
+		{
+			// Lines parallel to X-axis
+			vertices.push_back(glm::vec3(i * spacing, -gridSize * spacing, 0.f));
+			vertices.push_back(glm::vec3(i * spacing, gridSize * spacing, 0.f));
+
+			// Lines parallel to Y-axis
+			vertices.push_back(glm::vec3(-gridSize * spacing, i * spacing, 0.f));
+			vertices.push_back(glm::vec3(gridSize * spacing, i * spacing, 0.f));
+		}
+		// Lines parallel to X-axis
+		vertices.push_back(glm::vec3(0.01f, -gridSize * spacing, 0.f));
+		vertices.push_back(glm::vec3(0.01f, gridSize * spacing, 0.f));
+
+		vertices.push_back(glm::vec3(-0.01f, -gridSize * spacing, 0.f));
+		vertices.push_back(glm::vec3(-0.01f, gridSize * spacing, 0.f));
+
+		// Lines parallel to Y-axis
+		vertices.push_back(glm::vec3(-gridSize * spacing, 0.01f, 0.f));
+		vertices.push_back(glm::vec3(gridSize * spacing, 0.01f, 0.f));
+
+		vertices.push_back(glm::vec3(-gridSize * spacing, -0.01f, 0.f));
+		vertices.push_back(glm::vec3(gridSize * spacing, -0.01f, 0.f));
 	}
 
 	void GraphicsPipe::m_funcSetupTextVao()

@@ -22,7 +22,7 @@ namespace gui
         pipe->m_funcUpdate();
         pipe->m_funcDrawGamePreviewWindow();
         pipe->m_gameMode = false;
-        ImGui::Begin("Render Window");
+        ImGui::Begin("Game Window");
 
 
         ImVec2 pos = ImGui::GetCursorScreenPos();

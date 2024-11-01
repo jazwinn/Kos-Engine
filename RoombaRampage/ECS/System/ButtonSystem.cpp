@@ -83,8 +83,6 @@ namespace ecs {
 
 				float rotate = -graphicpipe::GraphicsCamera::m_currCameraRotate * (3.14151f / 180.f);
 
-				
-				
 				float windowCordinateX = ((transform->m_transformation.m_e20 - graphicpipe::GraphicsCamera::m_currCameraMatrix[2][0] + graphicpipe::GraphicsCamera::m_currCameraScaleX * (1.f/graphicpipe::GraphicsCamera::m_aspectRatio)) / (graphicpipe::GraphicsCamera::m_currCameraScaleX * ((1.f / graphicpipe::GraphicsCamera::m_aspectRatio) * 2))) * help->m_windowWidth;
 				float windowCordinateY = ((transform->m_transformation.m_e21 - graphicpipe::GraphicsCamera::m_currCameraMatrix[2][1] + graphicpipe::GraphicsCamera::m_currCameraScaleY) / (graphicpipe::GraphicsCamera::m_currCameraScaleY * (1.f * 2)))* help->m_windowHeight;
 				

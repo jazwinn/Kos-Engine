@@ -21,10 +21,7 @@ namespace graphicpipe
 		glBindVertexArray(0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-		GLenum err = glGetError();
-		if (err != GL_NO_ERROR) {
-			std::cout << "First OpenGL Error: " << err << std::endl;
-		}
+		
 
 		glBindVertexArray(m_squareMesh.m_vaoId);
 		glGenBuffers(1, &m_layerBuffer);
@@ -43,19 +40,40 @@ namespace graphicpipe
 
 		glGenBuffers(1, &m_stripCountBuffer);
 		glBindBuffer(GL_ARRAY_BUFFER, m_stripCountBuffer);
-		glBufferData(GL_ARRAY_BUFFER, m_stripCounts.size() * sizeof(int), &m_stripCounts[0], GL_DYNAMIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, m_stripCounts.size() * sizeof(glm::ivec2), &m_stripCounts[0], GL_DYNAMIC_DRAW);
 		glEnableVertexAttribArray(4);
-		glVertexAttribIPointer(4, 1, GL_INT, sizeof(int), (void*)0);
+		glVertexAttribIPointer(4, 2, GL_INT, sizeof(glm::ivec2), (void*)0);
 		glVertexAttribDivisor(4, 1);
-		glGenBuffers(1, &m_frameNumberBuffer);
+		/*glGenBuffers(1, &m_frameNumberBuffer);
 		glBindBuffer(GL_ARRAY_BUFFER, m_frameNumberBuffer);
 		glBufferData(GL_ARRAY_BUFFER, m_frameNumbers.size() * sizeof(int), &m_frameNumbers[0], GL_DYNAMIC_DRAW);
 		glEnableVertexAttribArray(3);
 		glVertexAttribIPointer(3, 1, GL_INT, sizeof(int), (void*)0);
-		glVertexAttribDivisor(3, 1);
+		glVertexAttribDivisor(3, 1);*/
+		//glBindVertexArray(0);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+
+
+		glGenBuffers(1, &m_colorBuffer);
+
+		glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer);
+		
+		glBufferData(GL_ARRAY_BUFFER, m_colors.size() * sizeof(glm::vec4), &m_colors[0], GL_DYNAMIC_DRAW);
+
+		glEnableVertexAttribArray(11);
+
+		glVertexAttribPointer(11, 4, GL_FLOAT, GL_FALSE, sizeof(glm::vec4), (void*)0);
+		GLenum err = glGetError();
+		if (err != GL_NO_ERROR) {
+
+			std::cout << "First OpenGL Error: " << err << std::endl;
+		}
+		glVertexAttribDivisor(11, 1);
 		glBindVertexArray(0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
+		
 
 
 		//Square Lines Mesh Buffer Setup
@@ -81,6 +99,8 @@ namespace graphicpipe
 		glBindVertexArray(0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
+		
+
 		//Circle Lines
 		glBindVertexArray(m_circleLinesMesh.m_vaoId);
 		glBindBuffer(GL_ARRAY_BUFFER, m_debugMatrixArrayBuffer);
@@ -101,10 +121,7 @@ namespace graphicpipe
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 
-		err = glGetError();
-		if (err != GL_NO_ERROR) {
-			std::cout << "Third OpenGL Error: " << err << std::endl;
-		}
+		
 
 	}
 

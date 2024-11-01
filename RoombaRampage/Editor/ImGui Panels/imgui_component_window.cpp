@@ -309,8 +309,9 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                    
                     assetmanager::AssetManager* Asset = assetmanager::AssetManager::m_funcGetInstance();
                     auto* sc = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(entityID));
-                   
 
+                   
+                        
                     if (ImGui::BeginCombo("Images", sc->m_imageFile.c_str()))
                     {
                         for (const auto& image : Asset->m_imageManager.m_imageMap) {
@@ -322,32 +323,25 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         ImGui::EndCombo();
                     }
 
+                    ImVec4 color = ImVec4(sc->m_color.m_x, sc->m_color.m_y, sc->m_color.m_z, sc->m_alpha);
+
+                    ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
+                    ImGui::Text("Color");
+                    ImGui::SameLine();
+                    if (ImGui::ColorEdit3("##MyColor2", (float*)&color, ImGuiColorEditFlags_DisplayRGB))
+                    {
+                        sc->m_color.m_x = color.x;
+                        sc->m_color.m_y = color.y;
+                        sc->m_color.m_z = color.z;
+                    }
+
 
                     if (open) {
                         auto* rbc = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(entityID));
                         rbc->ApplyFunction(DrawComponents(rbc->Names()));
                     }
 
-                    static std::map<int, ecs::EntityID> layerMap;
-                    layerMap.clear();
-                    for (const auto& [id, component] : ecs->m_ECS_EntityMap)
-                    {
-                        if (ecs->m_ECS_EntityMap[id].test(ecs::TYPESPRITECOMPONENT))
-                        {
-                            ecs::SpriteComponent* sprite = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(id));
-                            int layer = sprite->m_layer;
-                            if (layerMap.find(sprite->m_layer) != layerMap.end())
-                            {
-                                while (layerMap.find(++layer) != layerMap.end())
-                                {
-                                   
-                                }
-                               
-                            }
-                            sprite->m_layer = layer;
-                            layerMap[layer] = id;
-                        }
-                    }
+                 
                     if (ImGui::BeginDragDropTarget())
                     {
 
@@ -371,6 +365,27 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                         }
                         ImGui::EndDragDropTarget();
+                    }
+
+                    static std::map<int, ecs::EntityID> layerMap;
+                    layerMap.clear();
+                    for (const auto& [id, component] : ecs->m_ECS_EntityMap)
+                    {
+                        if (ecs->m_ECS_EntityMap[id].test(ecs::TYPESPRITECOMPONENT))
+                        {
+                            ecs::SpriteComponent* sprite = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(id));
+                            int layer = sprite->m_layer;
+                            if (layerMap.find(sprite->m_layer) != layerMap.end())
+                            {
+                                while (layerMap.find(++layer) != layerMap.end())
+                                {
+
+                                }
+
+                            }
+                            sprite->m_layer = layer;
+                            layerMap[layer] = id;
+                        }
                     }
 
                     if (ImGui::TreeNode("Image Layers"))
@@ -400,27 +415,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         }
                         ImGui::TreePop();
                     }
-                    if (ImGui::TreeNode("Test"))
-                    {
-                        static const char* item_names[] = { "Item One", "Item Two", "Item Three", "Item Four", "Item Five" };
-                        for (int n = 0; n < 5 ; n++)
-                        {
-                            const char* item = item_names[n];
-                            ImGui::Selectable(item);
-
-                            if (ImGui::IsItemActive() && !ImGui::IsItemHovered())
-                            {
-                                int n_next = n + (ImGui::GetMouseDragDelta(0).y < 0.f ? -1 : 1);
-                                if (n_next >= 0 && n_next < 5)
-                                {
-                                    item_names[n] = item_names[n_next];
-                                    item_names[n_next] = item;
-                                    ImGui::ResetMouseDragDelta();
-                                }
-                            }
-                        }
-                        ImGui::TreePop();
-                    }
+                  
                 }
 
 

@@ -73,6 +73,7 @@ namespace graphicpipe {
         unsigned int m_textureID{};      ///< ID of the texture used for rendering.
         int m_frameNumber{};               ///< Frame Number for handling animations.
         int m_layer{};                   ///< Layer for drawing order.
+        glm::vec4 m_color{};
     };
 
     /**
@@ -145,7 +146,9 @@ namespace graphicpipe {
         /**
          * @brief Sets up the Vertex Array Object (VAO) for rendering to a framebuffer.
          */
-        void m_funcSetupFboVao();
+        void m_funcSetupGridVao();
+
+        void m_funcSetupGrid(std::vector<glm::vec3>& vertices, int gridSize, float spacing);
 
         /**
          * @brief Sets up the Vertex Array Object (VAO) for rendering square outlines.
@@ -182,6 +185,7 @@ namespace graphicpipe {
         unsigned int m_frameBufferShaderProgram{};  ///< Shader program for framebuffer rendering.
         unsigned int m_debugShaderProgram{};        ///< Shader program for debug rendering.
         unsigned int m_textShaderProgram{};         ///< Shader program for text rendering.
+        unsigned int m_gridShaderProgram{};
 
         // Buffers
         unsigned int m_modelMatrixArrayBuffer{};    ///< Array buffer for model matrices.
@@ -196,6 +200,8 @@ namespace graphicpipe {
         unsigned int m_stripCountBuffer{};          ///< Buffer for sprite strip counts (animation).
         unsigned int m_frameNumberBuffer{};         ///< Buffer for managing animation frame numbers.
         unsigned int m_layerBuffer{};
+        unsigned int m_gridBuffer{};
+        unsigned int m_colorBuffer{};
 
         glm::mat3 m_testMatrix{};                   ///< Test matrix for rendering.
 
@@ -287,6 +293,8 @@ namespace graphicpipe {
          */
         void m_funcDrawDebug();
 
+        void m_funcDrawGrid();
+
         /**
          * @brief Sets the drawing mode for rendering.
          *
@@ -325,6 +333,7 @@ namespace graphicpipe {
         Mesh m_squareLinesMesh;         ///< Mesh for rendering square outlines.
         Mesh m_circleLinesMesh;
         Mesh m_textMesh;                ///< Mesh for text rendering.
+        Mesh m_lineMesh;
 
         // Matrix Containers
         std::vector<glm::mat3> m_modelMatrix{};
@@ -339,11 +348,11 @@ namespace graphicpipe {
         std::vector<float> m_debugBoxCollisionChecks{}; ///< Collision check data for debug rendering.
         std::vector<float> m_debugCircleCollisionChecks{}; ///< Collision check data for debug rendering.
         std::vector<int> m_textureOrder{}; ///< Order of texture bindings.
+        std::vector<glm::vec4> m_colors{}; 
 
-        // Texture IDs
         std::vector<unsigned int> m_textureIDs{}; ///< Array of texture IDs.
         std::vector<int> m_layers{};
-        std::vector<int> m_stripCounts{}; ///< Sprite strip counts for animation.
+        std::vector<glm::ivec2> m_stripCounts{}; ///< Sprite strip counts for animation.
         std::vector<int> m_frameNumbers{}; ///< Frame numbers for sprite animations.
         std::vector<image::Image> m_imageData{}; ///< Image data for rendering.
 
@@ -381,6 +390,16 @@ namespace graphicpipe {
         const std::string genericFragmentShader =
         {
           #include "../Graphics/genericFragmentShader.frag"
+        };
+
+        const std::string gridVertexShader =
+        {
+         #include "../Graphics/gridVertexShader.vert"
+        };
+
+        const std::string gridFragmentShader =
+        {
+          #include "../Graphics/gridFragmentShader.frag"
         };
 
         const std::string textVertexShader =

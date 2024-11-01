@@ -179,5 +179,7 @@
     <None Include="Graphics\frameBufferVertexShader.vert" />
     <None Include="Graphics\textFragmentShader.frag" />
     <None Include="Graphics\textVertexShader.vert" />
+    <None Include="Graphics\gridFragmentShader.frag" />
+    <None Include="Graphics\gridVertexShader.vert" />
   </ItemGroup>
 </Project>

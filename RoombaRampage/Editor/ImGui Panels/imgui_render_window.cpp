@@ -46,7 +46,7 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
    //pipe->m_funcUpdate();
    
 
-    ImGui::Begin("Scene Window");
+    ImGui::Begin("Editor Window");
 
     ImVec2 pos = ImGui::GetCursorScreenPos();
     ImVec2 renderWindowSize = ImGui::GetContentRegionAvail();

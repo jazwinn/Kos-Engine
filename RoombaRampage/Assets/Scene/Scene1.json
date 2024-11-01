@@ -141,7 +141,7 @@
                     "static": false
                 },
                 "sprite": {
-                    "layer": 0
+                    "layer": 1
                 },
                 "children": [
                     {
@@ -179,7 +179,7 @@
         ]
     },
     {
-        "name": "ALL TEST",
+        "name": "swdfghyju",
         "transform": {
             "position": {
                 "x": 0.0,
@@ -231,7 +231,7 @@
             "static": false
         },
         "sprite": {
-            "layer": 0
+            "layer": 2
         },
         "text": {
             "text": "Insert Text",
@@ -246,7 +246,7 @@
             "frameNumber": 0,
             "framesPerSecond": 0,
             "frameTimer": 0.0,
-            "isAnimating": false
+            "isAnimating": true
         },
         "camera": {},
         "button": {
