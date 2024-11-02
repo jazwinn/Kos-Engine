@@ -102,7 +102,23 @@ namespace gui {
 						textorimage(directoryString, wavicon);
 
 						if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
+							//TODO play sound
 
+						}
+					}
+					else if (directoryPath.path().filename().extension().string() == ".cs") {
+						std::string wavicon = "ScriptIcon.png";
+						textorimage(directoryString, wavicon);
+
+						if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
+							std::string command = "code \"" + directoryPath.path().string() + "\"";
+
+							// Execute the command to open the file
+							int result = std::system(command.c_str());
+
+							if (result != 0) {
+								LOGGING_ERROR("Fail to open .cs script");
+							}
 
 						}
 					}
