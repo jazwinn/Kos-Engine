@@ -29,7 +29,7 @@ namespace Namespace
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         public extern static bool m_InternalSetVelocity(uint entity, in Vector2 Velocity);
-
+        public virtual void GetEntityID(uint id) { }
         public virtual void Start() { }
         public virtual void Update() { }
     }

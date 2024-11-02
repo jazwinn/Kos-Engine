@@ -77,6 +77,10 @@ namespace ecs {
 			// invoke start function
 			for (auto& instance : scriptComp->m_scriptInstances) {
 
+				void* params[1];
+				params[0] = &scriptComp->m_Entity; // Pass the entity ID
+
+				assetManager->m_scriptManager.m_InvokeMethod(instance.first, "GetEntityID", instance.second, params, 1);
 				assetManager->m_scriptManager.m_InvokeMethod(instance.first, "Start", instance.second ,nullptr, 0);
 
 			}

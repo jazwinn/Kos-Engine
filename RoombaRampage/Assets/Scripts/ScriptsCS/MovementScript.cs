@@ -10,7 +10,11 @@ namespace Namespace
 {
     public class MovementScript : ScriptBase
     {
-        public uint EntityID { get; set; }
+        public uint EntityID;
+
+        public override void GetEntityID(uint id){
+            EntityID = id;
+        }
 
         public override void Start()
         {
@@ -19,7 +23,6 @@ namespace Namespace
 
         public override void Update()
         {
-            EntityID = 0;
 
             //Console.WriteLine("Update");
 

@@ -96,6 +96,7 @@ namespace ecs{
 				sys->m_StartLogic();
 
 				ecs->m_state = RUNNING;
+				ecs->m_nextState = RUNNING;
 			}
 			else {
 				ecs->m_state = ecs->m_nextState;

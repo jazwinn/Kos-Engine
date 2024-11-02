@@ -210,6 +210,7 @@ namespace script {
                 std::string filename = directoryPath.path().filename().stem().string();
                 m_LoadMethod(filename, filename, "Start", 0);
                 m_LoadMethod(filename, filename, "Update", 0);
+                m_LoadMethod(filename, filename, "GetEntityID", 1);
             }
 
 
