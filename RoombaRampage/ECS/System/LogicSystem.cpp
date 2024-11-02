@@ -55,6 +55,36 @@ namespace ecs {
 
 	}
 
+	void LogicSystem::m_StartLogic()
+	{
+
+		assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
+		//loops through all vecoters pointing to component
+		for (int n{}; n < m_vecScriptComponentPtr.size(); n++) {
+			ScriptComponent* scriptComp = m_vecScriptComponentPtr[n];
+
+			//clear object instance
+			scriptComp->m_scriptInstances.clear();
+
+		
+			// create instance for each script
+			for (const std::string& script : scriptComp->m_scripts) {
+				// run the scripts update fuction
+				scriptComp->m_scriptInstances[script] = assetManager->m_scriptManager.m_CreateObjectInstance(script, script);
+
+			}
+
+			// invoke start function
+			for (auto& instance : scriptComp->m_scriptInstances) {
+
+				assetManager->m_scriptManager.m_InvokeMethod(instance.first, "Start", instance.second ,nullptr, 0);
+
+			}
+
+
+		}
+	}
+
 	void LogicSystem::m_Update() {
 
 		//ECS* ecs = ECS::m_GetInstance();
@@ -72,10 +102,10 @@ namespace ecs {
 			ScriptComponent* scriptComp = m_vecScriptComponentPtr[n];
 			//EntityID id = scriptComp->m_Entity;
 
-			for (const std::string& script : scriptComp->m_scripts) {
+			for (auto& script : scriptComp->m_scriptInstances) {
 
 			// run the scripts update fuction
-				assetManager->m_scriptManager.m_InvokeMethod(script, script, "Update", nullptr, 0);
+				assetManager->m_scriptManager.m_InvokeMethod(script.first, "Update", script.second , nullptr, 0);
 
 			}
 		}

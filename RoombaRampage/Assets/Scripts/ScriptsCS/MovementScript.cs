@@ -50,7 +50,7 @@ namespace Namespace
                 velocity.X = 1;
             }
 
-
+            
             m_InternalSetVelocity(EntityID, in velocity);
 
 

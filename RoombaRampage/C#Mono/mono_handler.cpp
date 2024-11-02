@@ -1,5 +1,6 @@
 #include "mono_handler.h"
 #include "mono/metadata/mono-gc.h"
+#include "mono/metadata/threads.h"
 #include "InternalCall.h"
 #include <iostream>
 #include <filesystem>
@@ -14,29 +15,44 @@ namespace script {
         mono_set_dirs("Dependencies/mono/lib", "Dependencies/mono/etc");
 
         // need for internal call during run time
-        m_monoDomain = mono_jit_init("MonoDomain");
+        m_rootDomain = mono_jit_init("MonoDomain");
+
+        mono_thread_set_main(mono_thread_current());
 
         // initialize internal call
         InternalCall::m_RegisterInternalCalls();
 
+        m_LoadSecondaryDomain();
+    }
+
+    void ScriptHandler::m_LoadSecondaryDomain()
+    {
+        m_AppDomain = mono_domain_create_appdomain((char*)"AppDomainRuntime", nullptr);
+        mono_domain_set(m_AppDomain, true);
+
+        //load gamescript assembly
+        m_AddScripts("ScriptLibrary/GameScript/ScriptCoreDLL/GameScript.dll");
+    }
+
+    void ScriptHandler::m_UnloadSecondaryDomain()
+    {
+        //reset any references to the MonoAssembly
+        mono_domain_set(m_rootDomain, false);
+        mono_domain_unload(m_AppDomain);
+        m_AppDomain = nullptr;
+
+        //clear entire script map
+
+        m_ScriptMap.clear();
 
     }
 
     ScriptHandler::~ScriptHandler() {
-        //for (auto& scripts : m_ScriptMap) {
 
-        //    scripts.second.m_Methods.clear();
-        //    mono_image_close(scripts.second.m_image);
-        //    if (scripts.second.m_scriptDomain) {
-        //        mono_domain_unload(scripts.second.m_scriptDomain); // Unload each domain except the root domain
 
-        //    }
-        //  
-        //}
-
-        //if (m_monoDomain) {
-        //    mono_jit_cleanup(m_monoDomain);
-        //}
+        if (m_rootDomain) {
+            mono_jit_cleanup(m_rootDomain);
+        }
     }
 
     void ScriptHandler::m_UnloadDomain(const std::filesystem::path& filePath) {
@@ -53,94 +69,15 @@ namespace script {
         scriptData.m_Methods.clear();
         if (scriptData.m_image) {
             mono_image_close(scriptData.m_image);
-            scriptData.m_image = nullptr; // Avoid dangling pointers
+            scriptData.m_image = nullptr;
         }
 
-        if (scriptData.m_scriptDomain) {
-            mono_domain_unload(scriptData.m_scriptDomain);
-            scriptData.m_scriptDomain = nullptr; // Avoid dangling pointers
-        }
 
         // Remove from map
         m_ScriptMap.erase(scriptEntry);
     }
 
 
-
-    void ScriptHandler::m_CompileAllCsharpFile()
-    {
-        // load all .cs file in /Assests/Script
-        for (auto& directoryPath : std::filesystem::directory_iterator("Assets/Scripts/ScriptsCS")) {
-            std::string filepath = directoryPath.path().string();
-            std::replace(filepath.begin(), filepath.end(), '\\', '/');
-
-            //unload domain for any open.dll file
-            std::string filename = directoryPath.path().filename().stem().string();
-            if (m_ScriptMap.find(filename) != m_ScriptMap.end()) {
-                m_UnloadDomain(directoryPath);
-            }
-
-
-            if (directoryPath.path().filename().extension().string() == ".cs") {
-                m_CompileCSharpFile(filepath);
-            }
-
-        }
-    }
-
-    void ScriptHandler::m_ReloadAllDLL()
-    {
-        //reload all .dll file
-        for (auto& directoryPath : std::filesystem::directory_iterator("Assets/Scripts/ScriptsDLL")) {
-            std::string filepath = directoryPath.path().string();
-            std::replace(filepath.begin(), filepath.end(), '\\', '/');
-
-            if (directoryPath.path().filename().extension().string() == ".dll") {
-                m_AddScripts(directoryPath);
-
-                //load all newly reloaded method
-                
-                std::string filename = directoryPath.path().filename().string();
-                m_LoadMethod(filename, filename, "Start", 0);
-                m_LoadMethod(filename, filename, "Update", 0);
-            }
-
-
-        }
-
-    }
-
-    void ScriptHandler::m_CompileCSharpFile(const std::filesystem::path& filePath)
-    {
-        std::filesystem::path projectBasePath = std::filesystem::current_path();
-
-        std::string compilepath = projectBasePath.string() + "\\C#Mono\\CompilerCSC\\bin\\csc";
-
-        std::filesystem::path referenceDLL = projectBasePath / "ScriptLibrary" / "GameScript" / "ScriptCoreDLL" / "GameScript.dll";
-
-        std::string test = filePath.filename().stem().string();
-
-        std::filesystem::path outputDLL = projectBasePath / "Assets" / "Scripts" / "ScriptsDLL" / (filePath.filename().stem().string() + ".dll");
-
-
-       std::string command = compilepath + " /target:library /out:" + outputDLL.string() + " /reference:" + referenceDLL.string() + " " + filePath.string();
-        //std::string command = compilepath + " /target:library /out:" + outputDLL.string() + " C:\\Users\\ngjaz\\OneDrive\\Documents\\roombarampage\\GreyGooseWorkspace\\RRR\\RoombaRampage\\ScriptLibrary\\GameScript\\ScriptCore\\ScriptBase.cs "  + filePath.string();
-
-
-        std::cout << command << std::endl;
-        //// Execute the command
-        int result = system(command.c_str());
-
-        // Check the result of the command
-        if (result == 0)
-        {
-            std::cout << "Compilation successful: " + filePath.filename().stem().string() + ".dll" << std::endl;
-        }
-        else
-        {
-            std::cerr << "Compilation failed!" << std::endl;
-        }
-    }
 
 
 
@@ -157,18 +94,17 @@ namespace script {
         //create new script
         m_ScriptMap[filename].m_fileName = filename;
         m_ScriptMap[filename].m_scriptPath = scriptpath;
-        m_ScriptMap[filename].m_scriptDomain = mono_domain_create();
 
         // Load assembly
         std::string assemblyPath = scriptpath.string();
-        MonoAssembly* assembly = mono_domain_assembly_open(m_ScriptMap.find(filename)->second.m_scriptDomain, assemblyPath.c_str());
-        if (!assembly) {
+        m_ScriptMap[filename].m_assembly = mono_domain_assembly_open(m_AppDomain, assemblyPath.c_str());
+        if (!m_ScriptMap[filename].m_assembly) {
             std::cout << "Failed to load assembly: " << assemblyPath << std::endl;
             return;
         }
 
         // Get Mono image
-        MonoImage* image = mono_assembly_get_image(assembly);
+        MonoImage* image = mono_assembly_get_image(m_ScriptMap[filename].m_assembly);
         if (!image) {
             std::cout << "Failed to load Mono image from assembly: " << assemblyPath << std::endl;
             return;
@@ -193,7 +129,7 @@ namespace script {
 
         // Find the class inside the assembly
         MonoClass* m_testClass = mono_class_from_name(image, "Namespace", className.c_str());
-        if (!m_testClass) {
+        if (!m_testClass) {// give exception for gamescript
             std::cout << "Failed to find class: " << className << " in script: " << scriptName << std::endl;
             return false;
         }
@@ -215,7 +151,24 @@ namespace script {
         return true;
     }
 
-    void ScriptHandler::m_InvokeMethod(const std::string& scriptName, const std::string& className, const std::string& methodName, void** args, int paramCount) {
+    MonoObject* ScriptHandler::m_CreateObjectInstance(const std::string& scriptName, const std::string& className)
+    {
+
+
+        MonoObject* inst = mono_object_new(m_AppDomain, mono_class_from_name(m_ScriptMap.find(scriptName)->second.m_image, "Namespace", className.c_str()));
+
+        if (inst == nullptr) {
+            LOGGING_ERROR("Fail to create instance");
+            return inst;
+        }
+
+        //run the construct for the object
+        mono_runtime_object_init(inst);
+
+        return inst;
+    }
+
+    void ScriptHandler::m_InvokeMethod(const std::string& scriptName, const std::string& methodName, MonoObject* objInstance, void** args, int paramCount) {
 
         // Check if the method exists
         MonoMethod* method = m_ScriptMap.find(scriptName)->second.m_Methods.find(methodName)->second;
@@ -226,9 +179,8 @@ namespace script {
 
         // Invoke the method with the instance
         MonoObject* exception = nullptr;
-        MonoObject* instance = mono_object_new(m_ScriptMap.find(scriptName)->second.m_scriptDomain, mono_class_from_name(m_ScriptMap.find(scriptName)->second.m_image, "Namespace", className.c_str()));
-        mono_runtime_object_init(instance);
-        mono_runtime_invoke(method, instance, args, &exception);
+        
+        mono_runtime_invoke(method, objInstance, args, &exception);
 
         if (exception) {
             MonoString* exceptionMessage = mono_object_to_string(exception, nullptr);
@@ -241,5 +193,87 @@ namespace script {
         //}
     }
 
+    void ScriptHandler::m_ReloadAllDLL()
+    {
+
+
+        //reload all .dll file
+        for (auto& directoryPath : std::filesystem::directory_iterator("Assets/Scripts/ScriptsDLL")) {
+            std::string filepath = directoryPath.path().string();
+            std::replace(filepath.begin(), filepath.end(), '\\', '/');
+
+            if (directoryPath.path().filename().extension().string() == ".dll") {
+                m_AddScripts(directoryPath);
+
+                //load all newly reloaded method
+
+                std::string filename = directoryPath.path().filename().stem().string();
+                m_LoadMethod(filename, filename, "Start", 0);
+                m_LoadMethod(filename, filename, "Update", 0);
+            }
+
+
+        }
+
+    }
+
+    void ScriptHandler::m_CompileCSharpFile(const std::filesystem::path& filePath)
+    {
+        //IF COMPILE ERROR, MAKE SURE TO UNLOAD ASSEMBLY AND APPDOMAIN
+        std::filesystem::path projectBasePath = std::filesystem::current_path();
+
+        std::string compilepath = projectBasePath.string() + "\\C#Mono\\CompilerCSC\\bin\\csc";
+
+        std::filesystem::path referenceDLL = projectBasePath / "ScriptLibrary" / "GameScript" / "ScriptCoreDLL" / "GameScript.dll";
+
+        std::string test = filePath.filename().stem().string();
+
+        std::filesystem::path outputDLL = projectBasePath / "Assets" / "Scripts" / "ScriptsDLL" / (filePath.filename().stem().string() + ".dll");
+
+
+        std::string command = compilepath + " /target:library /out:" + outputDLL.string() + " /reference:" + referenceDLL.string() + " " + filePath.string();
+        //std::string command = compilepath + " /target:library /out:" + outputDLL.string() + " C:\\Users\\ngjaz\\OneDrive\\Documents\\roombarampage\\GreyGooseWorkspace\\RRR\\RoombaRampage\\ScriptLibrary\\GameScript\\ScriptCore\\ScriptBase.cs "  + filePath.string();
+
+
+        std::cout << command << std::endl;
+        //// Execute the command
+        int result = system(command.c_str());
+
+        // Check the result of the command
+        if (result == 0)
+        {
+            std::cout << "Compilation successful: " + filePath.filename().stem().string() + ".dll" << std::endl;
+        }
+        else
+        {
+            std::cerr << "Compilation failed!" << std::endl;
+        }
+    }
+
+    void ScriptHandler::m_HotReloadCompileAllCsharpFile()
+    {
+        // load all .cs file in /Assests/Script
+        for (auto& directoryPath : std::filesystem::directory_iterator("Assets/Scripts/ScriptsCS")) {
+            std::string filepath = directoryPath.path().string();
+            std::replace(filepath.begin(), filepath.end(), '\\', '/');
+
+
+
+            m_UnloadSecondaryDomain();
+
+
+            if (directoryPath.path().filename().extension().string() == ".cs") {
+
+                m_CompileCSharpFile(filepath);
+;
+            }
+
+            // did u call unload secodnary domain before this?
+            if (m_AppDomain == nullptr) {
+                m_LoadSecondaryDomain();
+            }
+
+        }
+    }
 
 }

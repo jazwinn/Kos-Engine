@@ -34,7 +34,7 @@ namespace ecs {
 		size_t IndexID{};
 		for (auto& RbComponentPtr : m_vecRigidBodyComponentPtr) {
 			if (RbComponentPtr->m_Entity == ID) {
-				return;
+				break;
 			}
 			IndexID++;
 		}

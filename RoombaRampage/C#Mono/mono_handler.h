@@ -17,8 +17,8 @@ namespace script {
 	struct ScriptMonoInfo {
 		std::filesystem::path m_scriptPath;
 		std::string m_fileName;
-		MonoDomain* m_scriptDomain;
 		MonoImage* m_image;
+		MonoAssembly* m_assembly;
 		std::unordered_map<std::string, MonoMethod*> m_Methods;
 	};
 
@@ -27,13 +27,14 @@ namespace script {
 		// Initialize Mono and load C#
 		ScriptHandler();
 
+		void m_LoadSecondaryDomain();
+
+		void m_UnloadSecondaryDomain();
+
 		~ScriptHandler();
 
 		void m_UnloadDomain(const std::filesystem::path& filePath);
 
-		void m_CompileAllCsharpFile();
-
-		void m_ReloadAllDLL();
 
 		void m_CompileCSharpFile(const std::filesystem::path& filePath);
 
@@ -43,11 +44,18 @@ namespace script {
 		// Find method in the C# Script
 		bool m_LoadMethod(const std::string& scriptName, const std::string& className, const std::string& methodName, int paramCount);
 
+
+		MonoObject* m_CreateObjectInstance(const std::string& scriptName, const std::string& className);
 		// Invoke method
-		void m_InvokeMethod(const std::string& scriptName, const std::string& className, const std::string& methodName, void** args, int paramCount);
+		void m_InvokeMethod(const std::string& scriptName, const std::string& methodName, MonoObject* objInstance, void** args, int paramCount);
 
 		void m_Cleanup();
 
+
+
+		void m_HotReloadCompileAllCsharpFile();
+
+		void m_ReloadAllDLL();
 
 		/*************************************/
 		// key is filename, second is script mono data
@@ -55,8 +63,12 @@ namespace script {
 
 
 	private:
-		// still needed for runtime
-		MonoDomain* m_monoDomain = nullptr;
+		//root domain
+		MonoDomain* m_rootDomain = nullptr;
+
+		MonoDomain* m_AppDomain = nullptr;
+
+
 		
 	};
 

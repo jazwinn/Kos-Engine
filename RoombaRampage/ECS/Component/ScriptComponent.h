@@ -16,6 +16,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #define SCRIPTCOM_H
 
 #include "Component.h"
+#include <mono/metadata/object.h>
 #include <vector>
 #include <string>
 
@@ -32,6 +33,9 @@ namespace ecs {
 	public:
 
 		std::vector<std::string> m_scripts;
+
+		std::unordered_map<std::string,MonoObject*> m_scriptInstances;
+
 
 		REFLECTABLE(ScriptComponent, m_scripts)
 
