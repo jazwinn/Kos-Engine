@@ -24,7 +24,7 @@ namespace Namespace
         public override void Update()
         {
 
-            //Console.WriteLine("Update");
+            //Console.WriteLine($"Entity:{EntityID}");
 
             Vector2 velocity;
             if(!m_InternalGetVelocity(EntityID, out velocity))

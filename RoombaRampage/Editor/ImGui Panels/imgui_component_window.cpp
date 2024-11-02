@@ -564,36 +564,54 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                     
                    
                     static int item_selected_idx = 0;
-                    std::string preview = {};
-                    if (sc->m_scripts.size() > 0) {
-                        preview = sc->m_scripts[0]; // change to n once loop is created
-                    }
-
-                    if (ImGui::BeginCombo("####combo 1", preview.c_str()))
+                    std::string preview = "Add Scripts";
+                    if (ImGui::BeginCombo("####add scrip", preview.c_str()))
                     {
-
-                        for (const auto& scriptname : assetManager->m_scriptManager.m_ScriptMap) {
+                        for (const auto& scriptname : assetManager->m_scriptManager.m_CSScripts) {
 
                             const bool is_selected{};
-                            if (ImGui::Selectable(scriptname.first.c_str(), is_selected)) {
+                            if (ImGui::Selectable(scriptname.c_str(), is_selected)) {
                                 //TODO for now push back
-                                sc->m_scripts.push_back(scriptname.first);
+                                if (std::find(sc->m_scripts.begin(), sc->m_scripts.end(), scriptname) == sc->m_scripts.end()) {
+                                    sc->m_scripts.push_back(scriptname);
+                                }
+                                else {
+                                    LOGGING_WARN("Script is already inside Object");
+                                }
+                                
 
                             }
 
                             // Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
                             if (is_selected)
                                 ImGui::SetItemDefaultFocus();
-
-
-
                         }
-                        for (int n = 0; n < sc->m_scripts.size(); n++)
-                        {
-                           
-                        }
+
                         ImGui::EndCombo();
                     }
+
+
+                    if (ImGui::BeginListBox("Scripts"))
+                    {
+                        for (const auto& scriptname : sc->m_scripts)
+                        {
+
+                            ImGui::Selectable(scriptname.c_str());
+                            if (ImGui::BeginPopupContextItem()) {
+                                if (ImGui::MenuItem("Delete Component")) {
+                                    sc->m_scripts.erase(std::find(sc->m_scripts.begin(), sc->m_scripts.end(), scriptname));
+                                }
+                                ImGui::EndPopup();
+                            }
+
+                          
+
+
+                        }
+                        ImGui::EndListBox();
+                    }
+
+                   
 
 
 

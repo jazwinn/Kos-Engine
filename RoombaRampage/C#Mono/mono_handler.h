@@ -58,6 +58,8 @@ namespace script {
 		void m_ReloadAllDLL();
 
 		/*************************************/
+		std::vector<std::string> m_CSScripts; // store all scripts stored in Assets/Scripts/ScriptsCS
+
 		// key is filename, second is script mono data
 		std::unordered_map<std::string, ScriptMonoInfo> m_ScriptMap;
 

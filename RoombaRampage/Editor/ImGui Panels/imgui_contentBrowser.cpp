@@ -123,7 +123,8 @@ namespace gui {
 
 				//create context window
 				static bool rename = false;
-				static std::string selectedfile{};
+				static bool _delete = false;
+				static std::filesystem::path selectedfile{};
 				if (ImGui::BeginPopupContextItem()) {
 					if (ImGui::MenuItem("Rename")) {
 						rename = true;
@@ -131,12 +132,14 @@ namespace gui {
 					}
 					if (ImGui::MenuItem("Delete")) {
 						std::filesystem::remove(directoryPath);
+						_delete = true;
+						selectedfile = directoryString;
 					}
 					ImGui::EndPopup();
 				}
 
 
-				if (rename && (selectedfile == directoryString)) {
+				if (rename && (selectedfile.string() == directoryString)) {
 					if (ImGui::InputText("##rename", m_charBuffer, IM_ARRAYSIZE(m_charBuffer), ImGuiInputTextFlags_EnterReturnsTrue)) {
 						//TODO check if file has extension, keep the extension
 						std::string extension{};
@@ -154,7 +157,7 @@ namespace gui {
 						assetmanager->m_RenameAsset(oldpath, newpath);
 
 						rename = false;
-						selectedfile = {};
+						selectedfile.clear();
 
 						//TODO edge cases,
 						//Update assets if any of them are renamed
@@ -164,6 +167,20 @@ namespace gui {
 					ImGui::SetWindowFontScale(0.8f);
 					ImGui::Text(directoryString.c_str());
 					ImGui::SetWindowFontScale(1.f);
+				}
+
+				if (_delete){
+					
+					if (selectedfile.filename().extension().string() == ".cs") {
+
+						//erease script from scriptmanager
+					
+						assetmanager->m_scriptManager.m_CSScripts.erase(std::find(assetmanager->m_scriptManager.m_CSScripts.begin(), assetmanager->m_scriptManager.m_CSScripts.end(), selectedfile.filename().stem().string()));
+
+					}
+					
+
+					_delete = false;
 				}
 
 				ImGui::NextColumn();
@@ -186,6 +203,11 @@ namespace gui {
 									LOGGING_WARN("Directory already exists");
 									continue;
 								}
+							}
+
+							if (std::filesystem::exists(destination/source.filename())) {
+								LOGGING_WARN("Directory already in folder");
+								continue;
 							}
 
 							// Copy directory and all contents recursively
