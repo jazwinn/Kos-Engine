@@ -263,6 +263,10 @@ namespace Serialization {
 			ecs::SpriteComponent* sc = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPESPRITECOMPONENT]->m_GetEntityComponent(entityId));
 			if (sc) {
 				rapidjson::Value sprite(rapidjson::kObjectType);
+				rapidjson::Value textValue;
+				textValue.SetString(sc->m_imageFile.c_str(), allocator);
+
+				sprite.AddMember("imagefile", textValue, allocator);
 				sprite.AddMember("layer", sc->m_layer, allocator);
 				entityData.AddMember("sprite", sprite, allocator);
 				hasComponents = true;  // Mark as having a component
@@ -498,8 +502,11 @@ namespace Serialization {
 
 			if (sc) {
 				const rapidjson::Value& sprite = entityData["sprite"];
-				if (sprite.HasMember("imageID")) {
-
+				if (sprite.HasMember("imagefile")) {
+					sc->m_imageFile = sprite["imagefile"].GetString();
+				}
+				if (sprite.HasMember("layer")) {
+					sc->m_layer = sprite["layer"].GetInt();
 				}
 
 			}

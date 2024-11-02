@@ -88,21 +88,41 @@ namespace ecs{
 
 		performancetracker::Performance::m_ResetTotalSystemTime();
 		
+		//check for gamestate
+		if (ecs->m_state != ecs->m_nextState) {
+			if (ecs->m_nextState == START) {
+				//if next state is start, run the logic start script
+				std::shared_ptr<LogicSystem> sys = std::dynamic_pointer_cast<LogicSystem>(ecs->m_ECS_SystemMap.find(TYPELOGICSYSTEM)->second);
+				sys->m_StartLogic();
+
+				ecs->m_state = RUNNING;
+				ecs->m_nextState = RUNNING;
+			}
+			else {
+				ecs->m_state = ecs->m_nextState;
+			}
+
+				
+		}
+
+
+
 
 		//loops through all the system
 		for (auto& System : ecs->m_ECS_SystemMap) {
 			auto start = std::chrono::steady_clock::now();
 
 
-			//if pause, only update render and transform
-			if (!ecs->m_pause) {
-				if (System.first == TYPETRANSFORMSYSTEM || System.first == TYPERENDERSYSTEM || System.first == TYPERENDERTEXTSYSTEM || System.first == TYPEDEBUGDRAWINGSYSTEM || System.first == TYPECAMERASYSTEM ) {
-					System.second->m_Update();
+
+			if (ecs->m_state != RUNNING) {
+				if (System.first == TYPECOLLISIONSYSTEM || System.first == TYPECOLLISIONRESPONSESYSTEM || System.first == TYPELOGICSYSTEM || System.first == TYPEPHYSICSSYSTEM || System.first == TYPEBUTTONSYSTEM) {
+					//skip physics and logic if not running
+					continue;
 				}
-			}
-			else {
-				System.second->m_Update();
-			}
+			}	
+
+			System.second->m_Update();
+
 			
 
 
@@ -282,7 +302,14 @@ namespace ecs{
 
 	bool ECS::m_DeleteEntity(EntityID ID) {
 
+		
+
 		ECS* ecs = ECS::m_GetInstance();
+		//check if id is a thing
+		if (ecs->m_ECS_EntityMap.find(ID) == ecs->m_ECS_EntityMap.end()) {
+			LOGGING_ERROR("Entity Does Not Exist");
+			return false;
+		}
 
 		Hierachy::m_RemoveParent(ID);
 		

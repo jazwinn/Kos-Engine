@@ -165,12 +165,14 @@ namespace ecs {
 
 		float m_DeltaTime{};
 
-		bool m_pause{};
+		GAMESTATE m_nextState{STOP};
+		GAMESTATE m_getState() { return m_state; };
 
 	private:
 		static std::unique_ptr<ECS> m_InstancePtr;
 
-		
+		//modify from set next state
+		GAMESTATE m_state{};
 
 	};
 

@@ -72,13 +72,8 @@ namespace assetmanager {
             //UNCOMMENT ME TO TEST IT OUT
             m_LoadFont(filepath);
         }
-        else if (directoryPath.filename().extension().string() == ".dll") {
-            m_LoadScript(filepath);
-            std::string filename = directoryPath.filename().stem().string();
-            // load start and update
-            //TODO move somewhere that is not the asset manager
-            m_scriptManager.m_LoadMethod(filename, filename, "Start", 0);
-            m_scriptManager.m_LoadMethod(filename, filename, "Update", 0);
+        else if (directoryPath.filename().extension().string() == ".cs") {
+            m_LoadScript(directoryPath);
         }
 
 
@@ -136,9 +131,24 @@ namespace assetmanager {
         std::filesystem::rename(oldfilepath.c_str(), newfilepath.c_str());
     }
 
-    void AssetManager::m_LoadScript(std::string file)
+    void AssetManager::m_LoadScript(std::filesystem::path filepath)
     {
-        m_scriptManager.m_AddScripts(file);
+        //m_scriptManager.m_AddScripts(filepath.string());
+        //std::string filename = filepath.filename().stem().string();
+        //// load start and update
+        ////TODO move somewhere that is not the asset manager
+        //m_scriptManager.m_LoadMethod(filename, filename, "Start", 0);
+        //m_scriptManager.m_LoadMethod(filename, filename, "Update", 0);
+
+        std::string filename = filepath.filename().stem().string();
+        
+        if (std::find(m_scriptManager.m_CSScripts.begin(), m_scriptManager.m_CSScripts.end(), filename) == m_scriptManager.m_CSScripts.end()) {
+            //store if filename is not inside
+            m_scriptManager.m_CSScripts.push_back(filename);
+        }
+
+        
+
     }
 
    void AssetManager::m_LoadAudio(std::string file) {

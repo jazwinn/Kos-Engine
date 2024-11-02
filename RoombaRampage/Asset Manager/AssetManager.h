@@ -29,7 +29,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "Prefab.h"
 #include "Image.h"
 #include "Text.h"
-#include "../C# Mono/mono_handler.h"
+#include "../C#Mono/mono_handler.h"
 #include <vector>
 #include <map>
 #include <string>
@@ -124,7 +124,7 @@ namespace assetmanager {
 
         void m_RenameAsset(std::filesystem::path old, std::filesystem::path _new);
 
-        void m_LoadScript(std::string file);
+        void m_LoadScript(std::filesystem::path filepath);
         
         image::ImageManager m_imageManager;
 

@@ -74,7 +74,7 @@ namespace Application {
         /****************************************************************************************/
         //SAMPLE TO REMOVE
         //Compiles .cs
-       // assetmanager::AssetManager::m_funcGetInstance()->m_scriptManager.m_CompileCSharpFile("C:/Users/ngjaz/OneDrive/Documents/roombarampage/GreyGooseWorkspace/RRR/RoombaRampage/Assets/Scripts/ExampleScriptB.cs");
+        
         /****************************************************************************************/
 
         /*--------------------------------------------------------------
@@ -111,7 +111,7 @@ namespace Application {
             LOAD ENTITIES INTO ECS & IMGUI
         --------------------------------------------------------------*/
         scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();
-        scenemanager->m_LoadScene("../RoombaRampage/Assets/Scene/Scene1.json"); // replace with opening up window dialog
+        scenemanager->m_LoadScene("../RoombaRampage/Assets/Scene/Default.json"); // replace with opening up window dialog
         
         ////scenemanager->m_LoadScene("Scene1");
 

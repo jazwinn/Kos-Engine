@@ -36,6 +36,7 @@ namespace ecs {
 
         void m_Init() override;
 
+        void m_StartLogic();
 
         void m_Update() override;
 

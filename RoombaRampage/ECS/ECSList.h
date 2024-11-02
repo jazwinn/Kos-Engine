@@ -25,6 +25,14 @@ namespace ecs {
 	// Max number of entities allowed to be created
 	static EntityID MaxEntity = 3000;
 
+	enum GAMESTATE {
+		START,
+		RUNNING,
+		STOP,
+		WAIT,
+		TERMINATE
+	};
+
 }
 
 

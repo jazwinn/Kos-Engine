@@ -9,42 +9,41 @@
 namespace gui {
 	
 	void ImGuiHandler::m_DrawPlayPauseWindow() {
-		static bool pause = false;
+		static bool pause = true;
 		bool open = true;
 		//Helper::Helpers* help = Helper::Helpers::GetInstance();
 		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
 		ImGui::Begin("Play & Pause", &open);
-		if (ImGui::Button("Play")) {
+		if (pause && ImGui::Button("Play")) {
 			pause = false;
-			ecs->m_pause = true;
-			//help->m_fixedDeltaTime = 1.0 / 60.0;
+			ecs->m_nextState = (ecs->m_getState() == ecs::STOP) ? ecs::START : ecs::RUNNING;
+	
+			if (ecs->m_nextState == ecs::START) {
+				assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+				assetmanager->m_scriptManager.m_HotReloadCompileAllCsharpFile();
+				assetmanager->m_scriptManager.m_ReloadAllDLL();
+			}
 
-			//assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
 
-			//compile all .cs file
-			//assetmanager->m_scriptManager.m_CompileAllCsharpFile();
-
-
-			//std::cout << help->m_fixedDeltaTime << std::endl;
 		}
-		ImGui::SameLine();
-		if (ImGui::Button("Pause")) {
+		if (!pause && ImGui::Button("Pause")) {
 			pause = true;
-			ecs->m_pause = false;
+			ecs->m_nextState = ecs::WAIT;
 			//help->m_fixedDeltaTime = 0;
 
 			//m_clickedEntityId = -1;
 			//scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();
 			//scenemanager->m_ReloadScene();
-
-
-
-
-
-
-
-
 		}
+		
+		if (ecs->m_getState() != ecs::STOP) {
+			ImGui::SameLine();
+			if (ImGui::Button("Stop")) {
+				ecs->m_nextState = ecs::STOP;
+				pause = true;
+			}
+		}
+
 		ImGui::End();
 	}
 
