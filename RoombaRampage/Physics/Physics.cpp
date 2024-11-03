@@ -24,12 +24,10 @@ namespace physicspipe {
 	std::vector<std::shared_ptr<PhysicsData>> Physics::m_physicsEntities;
 	std::vector<std::shared_ptr<PhysicsData>> Physics::m_collidedEntities;
 	std::map<layer::LAYERS, std::vector<std::shared_ptr<PhysicsData>>> Physics::m_layerToEntities;
-	std::unique_ptr<Physics> Physics::instance = nullptr;
-
+	std::unique_ptr<Physics> Physics::m_instance = nullptr;
 	physicslayer::PhysicsLayer* physicsLayer = physicslayer::PhysicsLayer::getInstance(); // Get the PhysicsLayer instance
 	std::vector<int> Physics::m_checker{};
-	//std::unordered_set <std::pair<std::shared_ptr<PhysicsData>, std::shared_ptr<PhysicsData>>, PairHash> Physics::checker;
-	//std::set<std::pair<int, int>>Physics::checker;
+
 
 	Circle::Circle(float radius, vector2::Vec2 shape_position, vector2::Vec2 shape_scale, vector2::Vec2 shape_velocity, int entity_ID)
 		: m_radius(radius)   // Initialize radius
@@ -91,7 +89,7 @@ namespace physicspipe {
 						CHECK RECT V RECT
 					*************************************/
 					if ((m_physicsEntities[i]->GetEntity() == EntityType::RECTANGLE) && (m_physicsEntities[j]->GetEntity() == EntityType::RECTANGLE)) {
-						if (m_CollisionIntersection_RectRect(*dynamic_cast<Rectangle*>(m_physicsEntities[i].get()), *dynamic_cast<Rectangle*>(m_physicsEntities[j].get()), dt)) {
+						if (m_CollisionIntersection_RectRect_AABB(*dynamic_cast<Rectangle*>(m_physicsEntities[i].get()), *dynamic_cast<Rectangle*>(m_physicsEntities[j].get()), dt)) {
 							//checking whether if entity is alr added inside
 							if (std::find(m_collidedEntities.begin(), m_collidedEntities.end(), m_physicsEntities[i]) == m_collidedEntities.end()) {
 								//std::cout << "Collided" << std::endl;
@@ -206,7 +204,7 @@ namespace physicspipe {
 		//std::cout << "********************************************************************************" << std::endl;
 	}
 
-	bool Physics::m_CollisionIntersection_RectRect(const Rectangle& obj1, const Rectangle& obj2, float dt) {
+	bool Physics::m_CollisionIntersection_RectRect_AABB(const Rectangle& obj1, const Rectangle& obj2, float dt) {
 		//static collision
 		AABB aabb1 = obj1.m_boundingBox;
 		AABB aabb2 = obj2.m_boundingBox;
@@ -321,11 +319,8 @@ namespace physicspipe {
 	void Physics::m_Init() {
 
 	}
+
 	void Physics::m_Update() {
-		/*
-			1. Update the layer matrix first
-			2. Using the update layer matrix do the collision check
-		*/
 
 		m_CollisionCheckUpdate();
 	}
@@ -335,7 +330,6 @@ namespace physicspipe {
 		if (m_physicsEntities.empty()) return;
 
 		m_CalculateBoundingBox();
-
 
 		std::vector<std::vector<bool>> collisionMatrix = physicsLayer->getMatrix();
 		// Iterate through all pairs of layers using the map keys
@@ -362,7 +356,7 @@ namespace physicspipe {
 							if (layer1 == layer2 && entity1 == entity2) continue;
 
 							// Perform the actual collision check between entity1 and entity2
-							if (CheckCollision(entity1, entity2)) {
+							if (m_CheckCollision(entity1, entity2)) {
 							//if (shouldCollide(entity1, entity2)) {
 								std::cout << "Collision detected between entity "
 									<< entity1->m_ID << " and entity "
@@ -382,13 +376,13 @@ namespace physicspipe {
 			}
 		}
 	}
-	bool Physics::CheckCollision(const std::shared_ptr<PhysicsData>& entity1, const std::shared_ptr<PhysicsData>& entity2){
+	bool Physics::m_CheckCollision(const std::shared_ptr<PhysicsData>& entity1, const std::shared_ptr<PhysicsData>& entity2){
 		// Check for collision based on the types of entities.
 		if (entity1->GetEntity() == EntityType::CIRCLE && entity2->GetEntity() == EntityType::CIRCLE) {
 			return m_CollisionIntersection_CircleCircle(*static_cast<Circle*>(entity1.get()), *static_cast<Circle*>(entity2.get()));
 		}
 		else if (entity1->GetEntity() == EntityType::RECTANGLE && entity2->GetEntity() == EntityType::RECTANGLE) {
-			return m_TestCollisionIntersection_RectRect(*static_cast<Rectangle*>(entity1.get()), *static_cast<Rectangle*>(entity2.get()));
+			return m_CollisionIntersection_RectRect_SAT(*static_cast<Rectangle*>(entity1.get()), *static_cast<Rectangle*>(entity2.get()));
 			//return m_CollisionIntersection_RectRect(*static_cast<Rectangle*>(entity1.get()), *static_cast<Rectangle*>(entity2.get()), dt);
 		}
 		else if (entity1->GetEntity() == EntityType::CIRCLE && entity2->GetEntity() == EntityType::RECTANGLE) {
@@ -401,26 +395,7 @@ namespace physicspipe {
 		return false;  // If no valid collision type, return false.
 	}
 
-	bool Physics::shouldCollide(const std::shared_ptr<PhysicsData>& entity1, const std::shared_ptr<PhysicsData>& entity2 ) {
-
-		int counter = 0;
-		for (int i = 0; i < m_checker.size(); ++i) {
-			if (m_checker[i] == entity1.get()->m_ID || m_checker[i] == entity2.get()->m_ID) {
-				counter++;
-			}
-		}
-
-		// Add the pair to the set of checked pairs
-		if (counter == 2) {
-			return false;
-		}
-		m_checker.push_back(entity1.get()->m_ID);
-		m_checker.push_back(entity2.get()->m_ID);
-		//std::cout << m_checker.size() << std::endl;
-		return true;
-	}
-
-	std::vector<vector2::Vec2> Rectangle::getRotatedVertices() const {
+	std::vector<vector2::Vec2> Rectangle::m_getRotatedVertices() const {
 		std::vector<vector2::Vec2> vertices(4);
 		float cosTheta = mathlibrary::mathlib::funcCos(mathlibrary::mathlib::funcDegreeToRadian(m_rotAngle));
 		float sinTheta = mathlibrary::mathlib::funcSin(mathlibrary::mathlib::funcDegreeToRadian(m_rotAngle));
@@ -441,8 +416,8 @@ namespace physicspipe {
 		return vertices;
 	}
 
-	std::vector<vector2::Vec2> Rectangle::getEdges() const {
-		std::vector<vector2::Vec2> vertices = getRotatedVertices();
+	std::vector<vector2::Vec2> Rectangle::m_getEdges() const {
+		std::vector<vector2::Vec2> vertices = m_getRotatedVertices();
 		std::vector<vector2::Vec2> edges(4);
 		for (size_t i = 0; i < 4; ++i) {
 			vector2::Vec2 p1 = vertices[i];
@@ -452,7 +427,7 @@ namespace physicspipe {
 		return edges;
 	}
 
-	void Physics::projectOntoAxis(const std::vector<vector2::Vec2>& vertices, const vector2::Vec2& axis, float& min, float& max) const {
+	void Physics::m_projectOntoAxis(const std::vector<vector2::Vec2>& vertices, const vector2::Vec2& axis, float& min, float& max) const {
 		//min = max = (vertices[0].m_x * axis.m_x + vertices[0].m_y * axis.m_y);
 		min = max = vector2::Vec2::m_funcVec2DDotProduct(vertices[0], axis);
 		for (const auto& vertex : vertices) {
@@ -463,12 +438,12 @@ namespace physicspipe {
 		}
 	}
 
-	bool Physics::m_TestCollisionIntersection_RectRect(const Rectangle& obj1, const Rectangle& obj2) {
+	bool Physics::m_CollisionIntersection_RectRect_SAT(const Rectangle& obj1, const Rectangle& obj2) {
 		// Get rotated vertices and edges
-		std::vector<vector2::Vec2> verticesA = obj1.getRotatedVertices();
-		std::vector<vector2::Vec2> verticesB = obj2.getRotatedVertices();
-		std::vector<vector2::Vec2> edgesA = obj1.getEdges();
-		std::vector<vector2::Vec2> edgesB = obj2.getEdges();
+		std::vector<vector2::Vec2> verticesA = obj1.m_getRotatedVertices();
+		std::vector<vector2::Vec2> verticesB = obj2.m_getRotatedVertices();
+		std::vector<vector2::Vec2> edgesA = obj1.m_getEdges();
+		std::vector<vector2::Vec2> edgesB = obj2.m_getEdges();
 
 		// List of all the axes (normals of edges)
 		std::vector<vector2::Vec2> axes;
@@ -483,8 +458,8 @@ namespace physicspipe {
 		for (const auto& axis : axes) {
 			float minA, maxA, minB, maxB;
 			//using dot product to determine
-			projectOntoAxis(verticesA, axis, minA, maxA);
-			projectOntoAxis(verticesB, axis, minB, maxB);
+			m_projectOntoAxis(verticesA, axis, minA, maxA);
+			m_projectOntoAxis(verticesB, axis, minB, maxB);
 
 			// If there's a gap, no collision
 			if (maxA < minB || maxB < minA) {

@@ -71,8 +71,8 @@ namespace ecs {
 			for (const std::string& script : scriptComp->m_scripts) {
 
 				if (assetManager->m_scriptManager.m_ScriptMap.find(script) == assetManager->m_scriptManager.m_ScriptMap.end()) {
-					continue;
 					LOGGING_ERROR("SCRIPT NOT FOUND ! PLEASE RELAUNCH APPLIATION");
+					continue;
 				}
 
 				// retieve isntance for each object

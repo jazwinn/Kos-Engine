@@ -152,8 +152,8 @@ namespace physicspipe {
 		}
 
 		//FOR SAT
-		std::vector<vector2::Vec2> getRotatedVertices() const;
-		std::vector<vector2::Vec2> getEdges() const;
+		std::vector<vector2::Vec2> m_getRotatedVertices() const;
+		std::vector<vector2::Vec2> m_getEdges() const;
 	};
 
 	struct LineSegment
@@ -179,7 +179,7 @@ namespace physicspipe {
 		static std::vector<std::shared_ptr<PhysicsData>> m_collidedEntities;
 		static std::map<layer::LAYERS, std::vector<std::shared_ptr<PhysicsData>>> m_layerToEntities;
 		static std::vector<int> m_checker;
-		static std::unique_ptr<Physics> instance;
+		static std::unique_ptr<Physics> m_instance;
 
 		/******************************************************************/
 		/*!
@@ -193,10 +193,10 @@ namespace physicspipe {
 	public:
 		//SINGLETON
 		static Physics* getInstance() {
-			if (!instance) {
-				instance = std::make_unique<Physics>();
+			if (!m_instance) {
+				m_instance = std::make_unique<Physics>();
 			}
-			return instance.get();
+			return m_instance.get();
 		}
 
 		/******************************************************************/
@@ -224,6 +224,7 @@ namespace physicspipe {
 		*/
 		/******************************************************************/
 		void m_SendPhysicsData(float radius, vector2::Vec2 position, vector2::Vec2 scale, vector2::Vec2 velocity, int ID, layer::LAYERS layerID);
+
 		void m_CollisionCheck(float);
 		/******************************************************************/
 		/*!
@@ -252,7 +253,7 @@ namespace physicspipe {
 		\return    True if a collision is detected, false otherwise.
 		*/
 		/******************************************************************/
-		bool m_CollisionIntersection_RectRect(const Rectangle&, const Rectangle&, float );
+		bool m_CollisionIntersection_RectRect_AABB(const Rectangle&, const Rectangle&, float );
 		/******************************************************************/
 		/*!
 		\fn        bool Physics::m_CollisionIntersection_CircleRect(const Circle& circle, const Rectangle& rect)
@@ -291,10 +292,9 @@ namespace physicspipe {
 		void m_Update();
 
 		void m_CollisionCheckUpdate();
-		bool CheckCollision(const std::shared_ptr<PhysicsData>& entity1, const std::shared_ptr<PhysicsData>& entity2);
-		bool shouldCollide(const std::shared_ptr<PhysicsData>& entity1, const std::shared_ptr<PhysicsData>& entity2);
-		void projectOntoAxis(const std::vector<vector2::Vec2>& vertices, const vector2::Vec2& axis, float& min, float& max) const;
-		bool m_TestCollisionIntersection_RectRect(const Rectangle& obj1, const Rectangle& obj2);
+		bool m_CheckCollision(const std::shared_ptr<PhysicsData>& entity1, const std::shared_ptr<PhysicsData>& entity2);
+		void m_projectOntoAxis(const std::vector<vector2::Vec2>& vertices, const vector2::Vec2& axis, float& min, float& max) const;
+		bool m_CollisionIntersection_RectRect_SAT(const Rectangle& obj1, const Rectangle& obj2);
 };
 }
 #endif
