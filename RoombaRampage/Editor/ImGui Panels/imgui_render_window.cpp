@@ -127,7 +127,15 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
     EditorCamera::calculateLevelEditorOrtho();
     graphicpipe::GraphicsCamera::m_currCameraMatrix = EditorCamera::m_editorCameraMatrix;
     graphicpipe::GraphicsCamera::m_currViewMatrix = EditorCamera::m_editorViewMatrix;
-    
+    if (graphicpipe::GraphicsCamera::m_cameras.size() == 0)
+    {
+        graphicpipe::GraphicsCamera::m_currCameraScaleX = EditorCamera::m_editorCamera.m_zoom.x;
+        graphicpipe::GraphicsCamera::m_currCameraScaleY = EditorCamera::m_editorCamera.m_zoom.y;
+        graphicpipe::GraphicsCamera::m_currCameraTranslateX = EditorCamera::m_editorCamera.m_coordinates.x;
+        graphicpipe::GraphicsCamera::m_currCameraTranslateY = EditorCamera::m_editorCamera.m_coordinates.y;
+        graphicpipe::GraphicsCamera::m_currCameraRotate = 0.f;
+    }
+  
     //draw gizmo
     m_DrawGizmo(pos.x, pos.y, imageSize.x, imageSize.y);
     

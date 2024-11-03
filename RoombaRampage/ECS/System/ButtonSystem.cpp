@@ -94,17 +94,17 @@ namespace ecs {
 				float newTranslateX = translateX * cos(rotate) - translateY * sin(rotate);
 				float newTranslateY = translateX * sin(rotate) + translateY * cos(rotate);
 
-				translateX = newTranslateX + 640;
-				translateY = newTranslateY + 360;
+				translateX = newTranslateX + help->m_windowWidth/2.f;
+				translateY = newTranslateY + help->m_windowHeight/2.f;
 
 				button->m_Position = { translateX , translateY };
-
 				button->m_Scale = { 50,50 };
+
 				minX = button->m_Position.m_x - (button->m_Scale.m_x / 2.f);
 				maxX = button->m_Position.m_x + (button->m_Scale.m_x / 2.f);
 				minY = button->m_Position.m_y - (button->m_Scale.m_y / 2.f);
 				maxY = button->m_Position.m_y + (button->m_Scale.m_y / 2.f);
-				std::cout << "Mouse position ";
+			/*	std::cout << "Mouse position ";
 				std::cout << mouseX << " " << mouseY << std::endl;
 				std::cout << "Window position ";
 				std::cout << help->m_windowWidth << " " << help->m_windowHeight << std::endl;
@@ -112,7 +112,7 @@ namespace ecs {
 				std::cout << transform->m_position.m_x << " " << transform->m_position.m_y << std::endl;
 				std::cout << "button position ";
 		 		std::cout << button->m_Position.m_x << " " << button->m_Position.m_y << std::endl;
-				std::cout << minX << " " << minY << " " << maxX << " " << maxY << std::endl;
+				std::cout << minX << " " << minY << " " << maxX << " " << maxY << std::endl;*/
 				if ((minX <= mouseX && mouseX <= maxX) && (minY <= mouseY && mouseY <= maxY)) {
 					button->m_IsClick = true;
 					std::cout << " clicked " << std::endl;
