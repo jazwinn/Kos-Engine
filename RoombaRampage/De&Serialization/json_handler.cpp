@@ -323,9 +323,9 @@ namespace Serialization {
 			}
 		}
 
-		if (signature.test(ecs::ComponentType::TYPECAMERACOMPONENT))
+		if (signature.test(ecs::ComponentType::TYPEBUTTONCOMPONENT))
 		{
-			ecs::ButtonComponent* bc = static_cast<ecs::ButtonComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPECAMERACOMPONENT]->m_GetEntityComponent(entityId));
+			ecs::ButtonComponent* bc = static_cast<ecs::ButtonComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPEBUTTONCOMPONENT]->m_GetEntityComponent(entityId));
 			if (bc)
 			{
 				rapidjson::Value button(rapidjson::kObjectType);
@@ -338,16 +338,16 @@ namespace Serialization {
 					.AddMember("x", bc->m_Scale.m_x, allocator)
 					.AddMember("y", bc->m_Scale.m_y, allocator), allocator);
 
-				button.AddMember("isClick", bc->m_IsClick, allocator);
+				//button.AddMember("isClick", bc->m_IsClick, allocator);
 
 				entityData.AddMember("button", button, allocator);
 				hasComponents = true;
 			}
 		}
 
-		if (signature.test(ecs::ComponentType::TYPECAMERACOMPONENT))
+		if (signature.test(ecs::ComponentType::TYPESCRIPTCOMPONENT))
 		{
-			ecs::ScriptComponent* sc = static_cast<ecs::ScriptComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPECAMERACOMPONENT]->m_GetEntityComponent(entityId));
+			ecs::ScriptComponent* sc = static_cast<ecs::ScriptComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPESCRIPTCOMPONENT]->m_GetEntityComponent(entityId));
 			if (sc)
 			{
 				rapidjson::Value script(rapidjson::kObjectType);
