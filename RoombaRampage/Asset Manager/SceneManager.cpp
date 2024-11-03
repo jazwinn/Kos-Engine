@@ -44,6 +44,13 @@ namespace scenes {
 
     void SceneManager::m_LoadScene(std::filesystem::path scene)
     {
+        // check if it is json file type
+        if (scene.filename().extension().string() != ".json") {
+            LOGGING_WARN("File Type not .json");
+            return;
+        }
+
+
         ecs::ECS* ecs = ecs::ECS::m_GetInstance();
         if (ecs->m_ECS_SceneMap.find(scene.filename().string()) != ecs->m_ECS_SceneMap.end()) {
             LOGGING_ERROR("Scene already loaded");
