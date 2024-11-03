@@ -38,26 +38,6 @@ namespace graphicpipe
 		m_windowHeight = static_cast<int>(Helper::Helpers::GetInstance()->m_windowHeight);
 		m_aspectRatio = static_cast<float>(static_cast<float>(m_windowHeight) / static_cast<float>(m_windowWidth));
 	}
-	void GraphicsCamera::multiplyActiveCameraMatrix()
-	{
-		/*GraphicsPipe* pipe = GraphicsPipe::m_funcGetInstance();
-
-		for (glm::mat3& matrix : pipe->m_modelToNDCMatrix)
-		{
-			matrix = m_currCameraMatrix * matrix;
-		}
-		
-		for (glm::mat3& debugMatrix : pipe->m_debugToNDCMatrix)
-		{
-			debugMatrix = m_currCameraMatrix * debugMatrix;
-		}*/
-	
-	}
-
-	void GraphicsCamera::calculateCurrCamera()
-	{
-
-	}
 
 	void GraphicsCamera::calculateCurrView()
 	{
