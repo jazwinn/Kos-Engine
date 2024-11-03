@@ -12,7 +12,6 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 /********************************************************************/
 #include "../Math/Mat3x3.h"
 
-
 namespace mat3x3{
 
 	void Mat3x3::m_Mat3Swap(Mat3x3& lhs, Mat3x3 & rhs) {
@@ -160,7 +159,7 @@ namespace mat3x3{
 
 		scale.m_x = std::sqrt(matrix.m_e00 * matrix.m_e00 + matrix.m_e10 * matrix.m_e10);
 		scale.m_y = std::sqrt(matrix.m_e01 * matrix.m_e01 + matrix.m_e11 * matrix.m_e11);
-
+		
 
 		rotate = -(std::atan2(matrix.m_e10 / scale.m_x, matrix.m_e00 / scale.m_x) * (180.f/MAT_PI));
 
