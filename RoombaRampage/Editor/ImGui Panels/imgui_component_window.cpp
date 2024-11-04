@@ -284,6 +284,16 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
             }
 
+            //create overwrite button for prefab
+            if (nc->m_isPrefab) {
+                if (ImGui::Button("Overwrite")) {
+
+                }
+                ImGui::SameLine();
+                static const char* buf = nc->m_prefabName.c_str();
+                ImGui::InputText("##readonlytext", (char*)buf, strlen(buf), ImGuiInputTextFlags_ReadOnly);
+            }
+
 
 
             bool open;
@@ -602,6 +612,9 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             if (ImGui::BeginPopupContextItem()) {
                                 if (ImGui::MenuItem("Delete Component")) {
                                     sc->m_scripts.erase(std::find(sc->m_scripts.begin(), sc->m_scripts.end(), scriptname));
+                                    ImGui::EndPopup();
+     
+
                                     break;
                                 }
                                 ImGui::EndPopup();
