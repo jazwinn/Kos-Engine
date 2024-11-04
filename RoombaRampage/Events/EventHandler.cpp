@@ -1,3 +1,15 @@
+/*!
+\file      EventHandler.cpp
+\author    Elijah Teo, teo.e , 2301530
+\par       teo.e@digipen.edu
+\date      Oct 19, 2024
+\brief     This file holds the function definition for getting the instance of event handler
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/********************************************************************/
 #include "EventHandler.h"
 
 namespace events {

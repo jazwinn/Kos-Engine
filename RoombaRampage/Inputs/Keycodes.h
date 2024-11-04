@@ -1,3 +1,15 @@
+/*!
+\file      Keycodes.h
+\author    Elijah Teo, teo.e , 2301530
+\par       teo.e@digipen.edu
+\date      Oct 27, 2024
+\brief     This file holds the enums used for queries about if a button is pressed, triggered or released.
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/********************************************************************/
 #pragma once
 #include <cstdint>
 

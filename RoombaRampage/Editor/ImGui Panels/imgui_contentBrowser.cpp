@@ -103,7 +103,8 @@ namespace gui {
 
 						if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
 							//TODO play sound
-
+							events::AudioFromImgui audioDblClick(directoryPath.path().filename().string());
+							DISPATCH_BUTTON_EVENT(audioDblClick);
 						}
 					}
 					else if (directoryPath.path().filename().extension().string() == ".cs") {
