@@ -1,3 +1,16 @@
+/*!
+\file      EventHandler.h
+\author    Elijah Teo, teo.e , 2301530
+\par       teo.e@digipen.edu
+\date      Oct 19, 2024
+\brief     This file holds the Event handler class that holds 3 dispatchers one for each TYPE of event
+		   This file also contains macros for easier subscribing/registering events along with dispatching and unsubscribing/unregistering
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/********************************************************************/
 #pragma once
 #include "MouseEvent.h"
 #include "KeyEvent.h"
