@@ -77,11 +77,6 @@ namespace script {
         m_ScriptMap.erase(scriptEntry);
     }
 
-
-
-
-
-
     void ScriptHandler::m_AddScripts(const std::filesystem::path& scriptpath) {
 
             
