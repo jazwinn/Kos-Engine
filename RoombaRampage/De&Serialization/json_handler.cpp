@@ -461,7 +461,7 @@ namespace Serialization {
 			}
 			if (nc->m_isPrefab) {
 				if (name.HasMember("prefabname") && name["prefabname"].IsString()) {
-					nc->m_prefabName = name["prefabname"].IsString();
+					nc->m_prefabName = name["prefabname"].GetString();
 				}
 			}
 		}

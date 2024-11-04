@@ -612,6 +612,9 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             if (ImGui::BeginPopupContextItem()) {
                                 if (ImGui::MenuItem("Delete Component")) {
                                     sc->m_scripts.erase(std::find(sc->m_scripts.begin(), sc->m_scripts.end(), scriptname));
+                                    ImGui::EndPopup();
+     
+
                                     break;
                                 }
                                 ImGui::EndPopup();
