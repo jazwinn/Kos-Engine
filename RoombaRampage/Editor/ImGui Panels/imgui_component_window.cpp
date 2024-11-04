@@ -284,6 +284,16 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
             }
 
+            //create overwrite button for prefab
+            if (nc->m_isPrefab) {
+                if (ImGui::Button("Overwrite")) {
+
+                }
+                ImGui::SameLine();
+                static const char* buf = nc->m_prefabName.c_str();
+                ImGui::InputText("##readonlytext", (char*)buf, strlen(buf), ImGuiInputTextFlags_ReadOnly);
+            }
+
 
 
             bool open;

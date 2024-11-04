@@ -1,15 +1,20 @@
 [
     {
-        "name": "Background",
+        "name": {
+            "namestr": "Player",
+            "layer": 0,
+            "isprefab": true,
+            "prefabname": "Default.json"
+        },
         "transform": {
             "position": {
-                "x": -0.4813151955604553,
-                "y": 0.24899868667125702
+                "x": 0.0,
+                "y": 0.0
             },
             "rotation": 0.0,
             "scale": {
-                "x": 0.2200000137090683,
-                "y": 0.2200000137090683
+                "x": 1.0,
+                "y": 1.0
             }
         },
         "rigidbody": {
@@ -17,7 +22,7 @@
                 "x": 0.0,
                 "y": 0.0
             },
-            "acceleration": {
+            "linearAcceleration": {
                 "x": 0.0,
                 "y": 0.0
             },
@@ -37,8 +42,79 @@
             "static": false
         },
         "sprite": {
-            "imagefile": "ani_RoombaBoosters_strip6.png",
-            "layer": 0
-        }
+            "imagefile": "Roomba.png",
+            "layer": 0,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0
+        },
+        "script": {
+            "scripts": [
+                "MovementScript"
+            ]
+        },
+        "children": [
+            {
+                "name": {
+                    "namestr": "gunright_02",
+                    "layer": 0,
+                    "isprefab": true,
+                    "prefabname": "Default.json"
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.9573267102241516,
+                        "y": 1.7681221961975098
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "sprite": {
+                    "imagefile": "gunright_02.png",
+                    "layer": 0,
+                    "color": {
+                        "r": 1.0,
+                        "g": 1.0,
+                        "b": 1.0
+                    },
+                    "alpha": 1.0
+                }
+            },
+            {
+                "name": {
+                    "namestr": "gunleft_02",
+                    "layer": 0,
+                    "isprefab": true,
+                    "prefabname": "Default.json"
+                },
+                "transform": {
+                    "position": {
+                        "x": -0.9377890825271606,
+                        "y": 1.74858558177948
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "sprite": {
+                    "imagefile": "gunleft_02.png",
+                    "layer": 0,
+                    "color": {
+                        "r": 1.0,
+                        "g": 1.0,
+                        "b": 1.0
+                    },
+                    "alpha": 1.0
+                }
+            }
+        ]
     }
 ]

@@ -184,10 +184,27 @@ namespace Serialization {
 
 		// Find and save name for this entity
 		if (signature.test(ecs::ComponentType::TYPENAMECOMPONENT)) {
-			rapidjson::Value nameValue;
-			nameValue.SetString(static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(entityId))->m_entityName.c_str(), allocator);
-			entityData.AddMember("name", nameValue, allocator);
-			hasComponents = true;
+			ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(entityId));
+
+			if (nc) {
+				rapidjson::Value name(rapidjson::kObjectType);
+				rapidjson::Value nameValue, prefabValue;
+				nameValue.SetString(nc->m_entityName.c_str(), allocator);
+				name.AddMember("namestr", nameValue, allocator);
+				name.AddMember("layer", (int)nc->m_Layer, allocator);
+				name.AddMember("isprefab", nc->m_isPrefab, allocator);
+				if (nc->m_isPrefab) {
+					prefabValue.SetString(nc->m_prefabName.c_str(), allocator);
+					name.AddMember("prefabname", prefabValue, allocator);
+				}
+				entityData.AddMember("name", name, allocator);
+				hasComponents = true;
+
+
+
+			}
+
+
 		}
 
 		// Check if the entity has TransformComponent and save it
@@ -428,11 +445,29 @@ namespace Serialization {
 		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
 		ecs::EntityID newEntityId = ecs->m_CreateEntity(sceneName);
 
-		// Load the name field
-		if (entityData.HasMember("name") && entityData["name"].IsString()) {
+		if (entityData.HasMember("name") && entityData["name"].IsObject()) {
 			ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(newEntityId));
-			nc->m_entityName = entityData["name"].GetString();  // Store the name
+			const rapidjson::Value& name = entityData["name"];
+
+			if (name.HasMember("namestr") && name["namestr"].IsString()) {
+				nc->m_entityName = name["namestr"].GetString();  // Store the name
+			}
+			if (name.HasMember("layer") && name["layer"].IsInt()) {
+				 int layer = name["layer"].GetInt();
+				 nc->m_Layer = (layer::LAYERS)layer;
+			}
+			if (name.HasMember("isprefab") && name["isprefab"].IsBool()) {
+				nc->m_isPrefab = name["isprefab"].GetBool();
+			}
+			if (nc->m_isPrefab) {
+				if (name.HasMember("prefabname") && name["prefabname"].IsString()) {
+					nc->m_prefabName = name["prefabname"].IsString();
+				}
+			}
 		}
+
+
+		
 
 		// Load TransformComponent if it exists
 		if (entityData.HasMember("transform") && entityData["transform"].IsObject()) {
