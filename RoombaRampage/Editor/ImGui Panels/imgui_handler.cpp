@@ -153,7 +153,13 @@ namespace gui {
 		else if (givenEvent.m_ToType<events::AudioFromImgui>().m_GetEventType() == events::ButtonEvents::EVENTAUDIOFROMIMGUI) {\
 			std::string fileToBePlayed = givenEvent.m_ToType<events::AudioFromImgui>().m_GetFile();
 			assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
-			assetManager->m_audioManager.m_soundMap.find(fileToBePlayed)->second->m_PlaySound();
+			if (assetManager->m_audioManager.m_soundMap.find(fileToBePlayed)->second->m_IsPlaying()) {
+				assetManager->m_audioManager.m_soundMap.find(fileToBePlayed)->second->m_StopSound();
+			}
+			else {
+				assetManager->m_audioManager.m_soundMap.find(fileToBePlayed)->second->m_PlaySound();
+			}
+			
 		}
 	}
 }

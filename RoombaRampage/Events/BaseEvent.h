@@ -1,3 +1,17 @@
+/*!
+\file      BaseEvent.h
+\author    Elijah Teo, teo.e , 2301530
+\par       teo.e@digipen.edu
+\date      Oct 17, 2024
+\brief     This file holds the declaration and definitions for the enums that are used to type each event, along with the base
+		   class for events to inherit from and the dispatch class which will handle the storing of the listeners to events along with
+		   sending messages to each listener.
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/********************************************************************/
 #pragma once
 #include <functional>
 #include <string>
