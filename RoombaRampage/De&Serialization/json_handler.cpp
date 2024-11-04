@@ -111,7 +111,17 @@ namespace Serialization {
 		
 		//create scene
 		ecs->m_ECS_SceneMap[scenename];
-		ecs->m_ECS_SceneMap.find(scenename)->second.m_isActive = true;
+		//check if file is prefab or scene
+		if (jsonFilePath.filename().extension().string() == ".prefab") {
+			ecs->m_ECS_SceneMap.find(scenename)->second.m_isPrefab = true;
+			ecs->m_ECS_SceneMap.find(scenename)->second.m_isActive = false;
+			ecs::ECS::SceneID::m_PrefabCount++;
+		}
+		else {
+			ecs::ECS::SceneID::m_regularSceneCount++;
+		}
+
+		
 
 		/*******************INSERT INTO FUNCTION*****************************/
 

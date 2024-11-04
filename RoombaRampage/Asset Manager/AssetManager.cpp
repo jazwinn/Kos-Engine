@@ -21,6 +21,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "AssetManager.h"
 #include "../Graphics/GraphicsPipe.h"
 #include "../Application/Helper.h"
+#include "SceneManager.h"
 #include "stb_image.h"
 
 
@@ -75,6 +76,9 @@ namespace assetmanager {
         else if (directoryPath.filename().extension().string() == ".cs") {
             m_LoadScript(directoryPath);
         }
+        if (directoryPath.filename().extension().string() == ".prefab") {
+            scenes::SceneManager::m_GetInstance()->m_LoadScene(directoryPath);
+        }
 
 
 
@@ -96,7 +100,7 @@ namespace assetmanager {
     }
 
     void AssetManager::m_LoadPrefab(std::string file) {
-        prefab::Prefab::m_DeSerializePrefab(file);
+       // prefab::Prefab::m_DeSerializePrefab(file);
 
     }
 

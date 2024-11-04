@@ -29,6 +29,9 @@ namespace ecs{
 
 	std::unique_ptr<ECS> ECS::m_InstancePtr = nullptr;
 
+	size_t ECS::SceneID::m_PrefabCount{};
+	size_t ECS::SceneID::m_regularSceneCount{};
+
 
 	void ECS::m_Init() {
 		ECS* ecs = ECS::m_GetInstance();
@@ -273,15 +276,25 @@ namespace ecs{
 		return ID;
 	}
 
-	EntityID ECS::m_DuplicateEntity(EntityID DuplicatesID) {
+	EntityID ECS::m_DuplicateEntity(EntityID DuplicatesID, std::string scene) {
 		ECS* ecs = ECS::m_GetInstance();
 
-		const auto& result = scenes::SceneManager::GetSceneByEntityID(DuplicatesID);
-		if (!result.has_value()) {
-			LOGGING_ERROR("Scene does not exits");
+
+		if (scene.empty()) {
+			const auto& result = scenes::SceneManager::GetSceneByEntityID(DuplicatesID);
+			if (!result.has_value()) {
+				LOGGING_ASSERT_WITH_MSG("Scene does not exits");
+			}
+			scene = result.value();
+		}
+		else {
+			if (ecs->m_ECS_SceneMap.find(scene) == ecs->m_ECS_SceneMap.end()) {
+				LOGGING_ASSERT_WITH_MSG("Scene does not exits");
+			}
 		}
 
-		EntityID NewEntity = ecs->m_CreateEntity(result.value());
+
+		EntityID NewEntity = ecs->m_CreateEntity(scene);
 
 		compSignature DuplicateSignature = ecs->m_ECS_EntityMap.find(DuplicatesID)->second;
 
@@ -289,7 +302,8 @@ namespace ecs{
 
 			if (DuplicateSignature.test((ComponentType)n)) {
 
-				ecs->m_ECS_CombinedComponentPool[(ComponentType)n]->m_DuplicateComponent(DuplicatesID, NewEntity);
+				Component* comp = static_cast<Component*>(ecs->m_ECS_CombinedComponentPool[(ComponentType)n]->m_DuplicateComponent(DuplicatesID, NewEntity));
+				comp->m_scene = scene;
 
 			}
 
@@ -312,7 +326,7 @@ namespace ecs{
 
 			std::vector<EntityID> childID = Hierachy::m_GetChild(DuplicatesID).value();
 			for (const auto& child : childID) {
-				EntityID dupChild = m_DuplicateEntity(child);
+				EntityID dupChild = m_DuplicateEntity(child, scene);
 				Hierachy::m_SetParent(NewEntity, dupChild);
 			}
 		}

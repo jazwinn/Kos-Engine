@@ -36,6 +36,11 @@ namespace ecs {
 
 		layer::LAYERS m_Layer{ layer::DEFAULT };
 
+		bool m_isPrefab{ false };
+		
+		std::string m_prefabName{};
+
+
 		REFLECTABLE(NameComponent, m_entityName);
 	};
 
