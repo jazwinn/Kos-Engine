@@ -64,7 +64,7 @@ namespace ecs {
 		m_SystemSignature.set(TYPETEXTCOMPONENT);
 	}
 
-	void RenderTextSystem::m_Update()
+	void RenderTextSystem::m_Update(const std::string& scene)
 	{
 		//ECS* ecs = ECS::GetInstance();
 		graphicpipe::GraphicsPipe* graphicsPipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
@@ -79,12 +79,12 @@ namespace ecs {
 
 		for (int n{}; n < m_vecTextComponentPtr.size(); n++) {
 
-
-			//std::cout << "Update Entity: " << n << std::endl;
-			//sprite not need currently
-			//SpriteComponent* MovComp = vecSpriteComponentPtr[n];
 			TransformComponent* transform = m_vecTransformComponentPtr[n];
 			TextComponent* text = m_vecTextComponentPtr[n];
+
+			//skip component not of the scene
+			if (text->m_scene != scene) continue;
+
 			float red = text->m_color.m_x;
 			float green = text->m_color.m_y;
 			float blue = text->m_color.m_z;

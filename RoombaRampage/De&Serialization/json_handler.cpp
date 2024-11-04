@@ -109,8 +109,10 @@ namespace Serialization {
 		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
 		std::string scenename = jsonFilePath.filename().string();
 		
+		//create scene
 		ecs->m_ECS_SceneMap[scenename];
-		
+		ecs->m_ECS_SceneMap.find(scenename)->second.m_isActive = true;
+
 		/*******************INSERT INTO FUNCTION*****************************/
 
 		// Iterate through each component entry in the JSON array
@@ -138,7 +140,7 @@ namespace Serialization {
 		std::unordered_set<ecs::EntityID> savedEntities;  //track saved entities
 
 		//Start saving the entities
-		std::vector<ecs::EntityID> entities = ecs->m_ECS_SceneMap.find(scene.filename().string())->second;
+		std::vector<ecs::EntityID> entities = ecs->m_ECS_SceneMap.find(scene.filename().string())->second.m_sceneIDs;
 		for (const auto& entityId : entities) {
 			if (!ecs::Hierachy::m_GetParent(entityId).has_value()) {
 				m_SaveEntity(entityId, doc, allocator, savedEntities);

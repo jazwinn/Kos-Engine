@@ -146,10 +146,10 @@ namespace scenes {
 
         //}
 
-        size_t numberOfEntityInScene = ecs->m_ECS_SceneMap.find(scene)->second.size();
+        size_t numberOfEntityInScene = ecs->m_ECS_SceneMap.find(scene)->second.m_sceneIDs.size();
         for (int n{}; n < numberOfEntityInScene; n++) {
-            if (ecs->m_ECS_SceneMap.find(scene)->second.size() <= 0) break;
-            auto entityid = ecs->m_ECS_SceneMap.find(scene)->second.begin();
+            if (ecs->m_ECS_SceneMap.find(scene)->second.m_sceneIDs.size() <= 0) break;
+            auto entityid = ecs->m_ECS_SceneMap.find(scene)->second.m_sceneIDs.begin();
             if (!ecs::Hierachy::m_GetParent(*entityid)) {
                 ecs->m_DeleteEntity(*entityid);
             }
@@ -182,7 +182,7 @@ namespace scenes {
         ecs::ECS* ecs = ecs::ECS::m_GetInstance();
         for (const auto& [sceneName, entityList] : ecs->m_ECS_SceneMap) {
             // Check if the entityID is in the current vector of entity IDs
-            if (std::find(entityList.begin(), entityList.end(), entityID) != entityList.end()) {
+            if (std::find(entityList.m_sceneIDs.begin(), entityList.m_sceneIDs.end(), entityID) != entityList.m_sceneIDs.end()) {
                 return sceneName;  // Found the matching scene name
             }
         }
@@ -192,7 +192,7 @@ namespace scenes {
     void SceneManager::m_SwapScenes(std::string oldscene, std::string newscene , ecs::EntityID id)
     {
         ecs::ECS* ecs = ecs::ECS::m_GetInstance();
-        std::vector<ecs::EntityID>& vectorenityid = ecs->m_ECS_SceneMap.find(oldscene)->second;
+        std::vector<ecs::EntityID>& vectorenityid = ecs->m_ECS_SceneMap.find(oldscene)->second.m_sceneIDs;
         std::vector<ecs::EntityID>::iterator it = std::find(vectorenityid.begin(), vectorenityid.end(), id);
         if (it == vectorenityid.end()) {
             LOGGING_ERROR("Entity not in old scene");
@@ -201,7 +201,7 @@ namespace scenes {
         
         vectorenityid.erase(it);
 
-        ecs->m_ECS_SceneMap.find(newscene)->second.push_back(id);
+        ecs->m_ECS_SceneMap.find(newscene)->second.m_sceneIDs.push_back(id);
 
     }
 }

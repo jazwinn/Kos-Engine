@@ -54,11 +54,11 @@ namespace ecs {
 		virtual void m_Init() = 0;
 		/******************************************************************/
 		/*!
-		\def       m_Update()
+		\def       m_Update(const std::string&)
 		\brief     Retrieves component data and carry out the logic.
 		*/
 		/******************************************************************/
-		virtual void m_Update() = 0;
+		virtual void m_Update(const std::string&) = 0;
 
 
 	};

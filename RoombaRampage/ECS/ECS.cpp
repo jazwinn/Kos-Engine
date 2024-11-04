@@ -93,7 +93,7 @@ namespace ecs{
 			if (ecs->m_nextState == START) {
 				//if next state is start, run the logic start script
 				std::shared_ptr<LogicSystem> sys = std::dynamic_pointer_cast<LogicSystem>(ecs->m_ECS_SystemMap.find(TYPELOGICSYSTEM)->second);
-				sys->m_StartLogic();
+				sys->m_StartLogic(); //TODO? place scene?
 
 				ecs->m_state = RUNNING;
 				ecs->m_nextState = RUNNING;
@@ -121,7 +121,17 @@ namespace ecs{
 				}
 			}	
 
-			System.second->m_Update();
+			//iterate through all the scenes, check if true or false
+
+			for (const auto& scene : ecs->m_ECS_SceneMap) {
+				//only update scene's that is active
+				if (scene.second.m_isActive == true) {
+					System.second->m_Update(scene.first);
+				}
+				
+			}
+
+			
 
 			
 
@@ -165,6 +175,16 @@ namespace ecs{
 		}
 
 		void* ComponentPtr = ecs->m_ECS_CombinedComponentPool[Type]->m_AssignComponent(ID);
+
+		//assign component to a scene
+		//check for entity scene
+		const auto& scene = scenes::SceneManager::GetSceneByEntityID(ID);
+		if (scene.has_value()) {
+			static_cast<Component*>(ComponentPtr)->m_scene = scene.value();
+		}
+		else {
+			LOGGING_ASSERT_WITH_MSG("Entity not assigned scene");
+		}
 
 		ecs->m_ECS_EntityMap.find(ID)->second.set(Type);
 
@@ -237,9 +257,6 @@ namespace ecs{
 		// set bitflag to 0
 		ecs->m_ECS_EntityMap[ID] = 0;
 
-		//add transform component and name component as default
-		m_AddComponent(TYPENAMECOMPONENT, ID);
-		m_AddComponent(TYPETRANSFORMCOMPONENT, ID);
 
 		ecs->m_EntityCount++;
 
@@ -247,7 +264,11 @@ namespace ecs{
 		ecs->m_layersStack.m_layerMap[layer::DEFAULT].second.push_back(ID);
 
 		//assign entity to scenes
-		ecs->m_ECS_SceneMap.find(scene)->second.push_back(ID);
+		ecs->m_ECS_SceneMap.find(scene)->second.m_sceneIDs.push_back(ID);
+
+		//add transform component and name component as default
+		m_AddComponent(TYPENAMECOMPONENT, ID);
+		m_AddComponent(TYPETRANSFORMCOMPONENT, ID);
 
 		return ID;
 	}
@@ -329,9 +350,9 @@ namespace ecs{
 
 		// remove entity from scene
 		const auto& result = scenes::SceneManager::GetSceneByEntityID(ID);
-		auto& entityList = ecs->m_ECS_SceneMap[result.value()];
+		auto& entityList = ecs->m_ECS_SceneMap.find(result.value())->second.m_sceneIDs;
 		auto it = std::find(entityList.begin(), entityList.end(), ID);
-		ecs->m_ECS_SceneMap.find(result.value())->second.erase(it);
+		ecs->m_ECS_SceneMap.find(result.value())->second.m_sceneIDs.erase(it);
 
 
 		return true;

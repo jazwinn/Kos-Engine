@@ -74,7 +74,7 @@ namespace ecs {
 
 		/******************************************************************/
 		/*!
-		\def       m_Update()
+		\def       m_Update(const std::string&)
 		\brief     Call on all systems update function
 		*/
 		/******************************************************************/
@@ -152,7 +152,12 @@ namespace ecs {
 
 		std::unordered_map<EntityID, std::bitset<TOTALTYPECOMPONENT>> m_ECS_EntityMap{};
 
-		std::unordered_map<std::string, std::vector<EntityID>> m_ECS_SceneMap{};// store scene file name e.g. scene.json
+		struct SceneID{
+			bool m_isActive;
+			std::vector<EntityID> m_sceneIDs;
+		};
+
+		std::unordered_map<std::string, SceneID> m_ECS_SceneMap{};// store scene file name e.g. scene.json pair <active scene, vectory of scenes >
 
 		//store type conversion
 		//using ActionFunction = std::function<void(void*, void (*)(void*))>;

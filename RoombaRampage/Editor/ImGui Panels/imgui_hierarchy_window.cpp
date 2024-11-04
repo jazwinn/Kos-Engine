@@ -106,15 +106,42 @@ namespace gui {
         }
 
 
-        for (const auto& sceneentity : ecs->m_ECS_SceneMap) {
-            const auto& str = sceneentity.first.find_last_of('.');
+        for (auto& sceneentity : ecs->m_ECS_SceneMap) {
+            std::string headerstr = sceneentity.first.substr(0, sceneentity.first.find_last_of('.'));
             //collapsing header for scene
-            bool opens = ImGui::CollapsingHeader(sceneentity.first.substr(0, str).c_str());
+            bool opens{};
+            if (sceneentity.second.m_isActive == false) {
+                headerstr += " (Unloaded)";
+                ImGui::CollapsingHeader(headerstr.c_str());
+            }
+            else {
+                opens = ImGui::CollapsingHeader(headerstr.c_str());
+            }
+
+
+
+
+
             if (ImGui::BeginPopupContextItem()) {
-                if ((ecs->m_ECS_SceneMap.size() > 1) && ImGui::MenuItem("Unload Scene")) {
+                if ((ecs->m_ECS_SceneMap.size() > 1) && ImGui::MenuItem("Remove Scene")) {
                     scenemanager->m_ClearScene(sceneentity.first);
 
                     //break loop
+                    ImGui::EndPopup();
+                    break;
+                }
+
+                if ((ecs->m_ECS_SceneMap.size() > 1) && (sceneentity.second.m_isActive == true) && ImGui::MenuItem("Unload Scene")) {
+                    sceneentity.second.m_isActive = false;
+                    m_clickedEntityId = -1;
+
+                    ImGui::EndPopup();
+                    break;
+                }
+
+                if ((sceneentity.second.m_isActive == false) && ImGui::MenuItem("load Scene")) {
+                    sceneentity.second.m_isActive = true;
+
                     ImGui::EndPopup();
                     break;
                 }
@@ -154,7 +181,7 @@ namespace gui {
             if (opens) {
 
 
-                for (auto entity : sceneentity.second) {
+                for (auto entity : sceneentity.second.m_sceneIDs) {
                     //draw parent entity node
                     //draw entity with no parents hahaha
                     if (!ecs::Hierachy::m_GetParent(entity).has_value()) {

@@ -76,7 +76,7 @@ namespace ecs {
 
 	}
 
-	void AnimationSystem::m_Update() {
+	void AnimationSystem::m_Update(const std::string& scene) {
 
 		ECS* ecs = ECS::m_GetInstance();
 		graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
@@ -91,13 +91,12 @@ namespace ecs {
 		//graphicpipe::GraphicsPipe* graphicsPipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
 		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
 		for (int n{}; n < m_vecAnimationComponentPtr.size(); n++) {
-			//std::cout << "Entity: " << n << "Movement System is getting Updated";
 
 			AnimationComponent* AniComp = m_vecAnimationComponentPtr[n];
-			//TransformComponent* TransComp = m_vecTransformComponentPtr[n];
 			SpriteComponent* SpriteComp = m_vecSpriteComponentPtr[n];
 
-			//EntityID id = AniComp->m_Entity;
+			//skip component not of the scene
+			if (AniComp->m_scene != scene) continue;
 
 			if (m_vecAnimationComponentPtr[n]->m_isAnimating && m_vecAnimationComponentPtr[n]->m_framesPerSecond)
 			{

@@ -30,7 +30,7 @@ namespace ecs {
 
         void m_Init() override;
 
-        void m_Update() override;
+        void m_Update(const std::string&) override;
 
     private:
         std::vector<TransformComponent*> m_vecTransformComponentPtr;
