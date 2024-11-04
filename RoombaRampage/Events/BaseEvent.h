@@ -15,7 +15,8 @@ namespace events {
 	//};
 
 	enum class ButtonEvents{
-		EVENTBUTTONPRESS
+		EVENTBUTTONPRESS,
+		EVENTAUDIOFROMIMGUI
 	};
 
 	enum class KeyEvents {
