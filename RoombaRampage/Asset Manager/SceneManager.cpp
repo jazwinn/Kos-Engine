@@ -45,7 +45,7 @@ namespace scenes {
     void SceneManager::m_LoadScene(std::filesystem::path scene)
     {
         // check if it is json file type
-        if (scene.filename().extension().string() != ".json") {
+        if (scene.filename().extension().string() != ".json" && scene.filename().extension().string() != ".prefab") {
             LOGGING_WARN("File Type not .json");
             return;
         }
@@ -111,12 +111,14 @@ namespace scenes {
 
     }
 
-    void SceneManager::m_ClearAllScene()
+    void SceneManager::m_ClearAllScene() //EXCEPT PREFABS
     {
         ecs::ECS* ecs = ecs::ECS::m_GetInstance();
 
         std::vector<std::string> sce;
         for (auto& scenes : ecs->m_ECS_SceneMap) {
+            //exclude prefabs
+            if (scenes.second.m_isPrefab == true) continue;
             sce.push_back(scenes.first);
         }
 
@@ -130,40 +132,31 @@ namespace scenes {
     void SceneManager::m_ClearScene(std::string scene)
     {
         ecs::ECS* ecs = ecs::ECS::m_GetInstance();
-        //TODO
-        //std::vector<ecs::EntityID> activeEntity;
 
-        //for (auto& entity : ecs->m_ECS_SceneMap.find(scene)->second) {
-        //    activeEntity.push_back(entity);
-        //}
-
-        ////delete all parent entity
-        //for (auto& id : activeEntity) {
-        //    //top layer parent
-        //    if (!ecs::Hierachy::m_GetParent(id)) {
-        //        ecs->m_DeleteEntity(id);
-        //    }
-
-        //}
-
-        size_t numberOfEntityInScene = ecs->m_ECS_SceneMap.find(scene)->second.size();
+        size_t numberOfEntityInScene = ecs->m_ECS_SceneMap.find(scene)->second.m_sceneIDs.size();
         for (int n{}; n < numberOfEntityInScene; n++) {
-            if (ecs->m_ECS_SceneMap.find(scene)->second.size() <= 0) break;
-            auto entityid = ecs->m_ECS_SceneMap.find(scene)->second.begin();
+            if (ecs->m_ECS_SceneMap.find(scene)->second.m_sceneIDs.size() <= 0) break;
+            auto entityid = ecs->m_ECS_SceneMap.find(scene)->second.m_sceneIDs.begin();
             if (!ecs::Hierachy::m_GetParent(*entityid)) {
                 ecs->m_DeleteEntity(*entityid);
             }
         }
 
+        //decrement scene counter
+        if (ecs->m_ECS_SceneMap.find(scene)->second.m_isPrefab == true) {
+            ecs::ECS::SceneID::m_PrefabCount--;
+        }
+        else {
+            ecs::ECS::SceneID::m_regularSceneCount--;
+        }
+
         //remove scene from activescenes
         ecs->m_ECS_SceneMap.erase(scene);
-
 
     }
 
     void SceneManager::m_SaveScene(std::string scene)
     {
-
 
         Serialization::Serialize::m_SaveComponentsJson(m_scenePath.find(scene)->second.string());
 
@@ -182,7 +175,7 @@ namespace scenes {
         ecs::ECS* ecs = ecs::ECS::m_GetInstance();
         for (const auto& [sceneName, entityList] : ecs->m_ECS_SceneMap) {
             // Check if the entityID is in the current vector of entity IDs
-            if (std::find(entityList.begin(), entityList.end(), entityID) != entityList.end()) {
+            if (std::find(entityList.m_sceneIDs.begin(), entityList.m_sceneIDs.end(), entityID) != entityList.m_sceneIDs.end()) {
                 return sceneName;  // Found the matching scene name
             }
         }
@@ -192,7 +185,7 @@ namespace scenes {
     void SceneManager::m_SwapScenes(std::string oldscene, std::string newscene , ecs::EntityID id)
     {
         ecs::ECS* ecs = ecs::ECS::m_GetInstance();
-        std::vector<ecs::EntityID>& vectorenityid = ecs->m_ECS_SceneMap.find(oldscene)->second;
+        std::vector<ecs::EntityID>& vectorenityid = ecs->m_ECS_SceneMap.find(oldscene)->second.m_sceneIDs;
         std::vector<ecs::EntityID>::iterator it = std::find(vectorenityid.begin(), vectorenityid.end(), id);
         if (it == vectorenityid.end()) {
             LOGGING_ERROR("Entity not in old scene");
@@ -201,7 +194,20 @@ namespace scenes {
         
         vectorenityid.erase(it);
 
-        ecs->m_ECS_SceneMap.find(newscene)->second.push_back(id);
+        ecs->m_ECS_SceneMap.find(newscene)->second.m_sceneIDs.push_back(id);
+
+        //assign all of entity's scene component into new scene
+        for (size_t n{}; n < ecs::TOTALTYPECOMPONENT; n++) {
+            if (ecs->m_ECS_EntityMap.find(id)->second.test((ecs::ComponentType)n)) {
+                ecs::Component* comp = static_cast<ecs::Component*>(ecs->m_ECS_CombinedComponentPool[(ecs::ComponentType)n]->m_GetEntityComponent(id));
+                if (comp) {
+                    comp->m_scene = newscene;
+                }
+
+            }
+        }
+
+
 
     }
 }

@@ -74,7 +74,7 @@ namespace ecs {
 
 		/******************************************************************/
 		/*!
-		\def       m_Update()
+		\def       m_Update(const std::string&)
 		\brief     Call on all systems update function
 		*/
 		/******************************************************************/
@@ -101,7 +101,7 @@ namespace ecs {
 		\brief     Creates entity and duplicate the data to the new entity
 		*/
 		/******************************************************************/
-		static EntityID m_DuplicateEntity(EntityID);
+		static EntityID m_DuplicateEntity(EntityID, std::string scene = {});
 		/******************************************************************/
 		/*!
 		\def       m_DeleteEntity()
@@ -152,7 +152,16 @@ namespace ecs {
 
 		std::unordered_map<EntityID, std::bitset<TOTALTYPECOMPONENT>> m_ECS_EntityMap{};
 
-		std::unordered_map<std::string, std::vector<EntityID>> m_ECS_SceneMap{};// store scene file name e.g. scene.json
+		struct SceneID{
+			bool m_isActive{true};
+			bool m_isPrefab{ false };
+			std::vector<EntityID> m_sceneIDs;
+
+			static size_t m_regularSceneCount;
+			static size_t m_PrefabCount;
+		};
+
+		std::unordered_map<std::string, SceneID> m_ECS_SceneMap{};// store scene file name e.g. scene.json 
 
 		//store type conversion
 		//using ActionFunction = std::function<void(void*, void (*)(void*))>;

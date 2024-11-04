@@ -136,6 +136,7 @@ namespace ecs {
 			if (Component.m_IsLive == false) {
 				Component.m_IsLive = true;
 				Component.m_Entity = ID;
+				
 				return &Component;
 			}
 		}

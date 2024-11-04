@@ -69,7 +69,7 @@ namespace ecs {
 
 	}
 
-	void CollisionResponseSystem::m_Update() {
+	void CollisionResponseSystem::m_Update(const std::string& scene) {
 
 		//ECS* ecs = ECS::m_GetInstance();
 
@@ -98,7 +98,9 @@ namespace ecs {
 		{
 			RigidBodyComponent* rigidComp = m_vecRigidBodyComponentPtr[n];
 			ColliderComponent* ColComp = m_vecColliderComponentPtr[n];
-			
+
+			//skip component not of the scene
+			if (rigidComp->m_scene != scene) continue;
 
 			if (ids.find(rigidComp->m_Entity) != ids.end()) {
 				ColComp->m_isCollided = true;

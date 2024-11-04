@@ -108,8 +108,20 @@ namespace Serialization {
 
 		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
 		std::string scenename = jsonFilePath.filename().string();
-
+		
+		//create scene
 		ecs->m_ECS_SceneMap[scenename];
+		//check if file is prefab or scene
+		if (jsonFilePath.filename().extension().string() == ".prefab") {
+			ecs->m_ECS_SceneMap.find(scenename)->second.m_isPrefab = true;
+			ecs->m_ECS_SceneMap.find(scenename)->second.m_isActive = false;
+			ecs::ECS::SceneID::m_PrefabCount++;
+		}
+		else {
+			ecs::ECS::SceneID::m_regularSceneCount++;
+		}
+
+		
 
 		/*******************INSERT INTO FUNCTION*****************************/
 
@@ -138,7 +150,7 @@ namespace Serialization {
 		std::unordered_set<ecs::EntityID> savedEntities;  //track saved entities
 
 		//Start saving the entities
-		std::vector<ecs::EntityID> entities = ecs->m_ECS_SceneMap.find(scene.filename().string())->second;
+		std::vector<ecs::EntityID> entities = ecs->m_ECS_SceneMap.find(scene.filename().string())->second.m_sceneIDs;
 		for (const auto& entityId : entities) {
 			if (!ecs::Hierachy::m_GetParent(entityId).has_value()) {
 				m_SaveEntity(entityId, doc, allocator, savedEntities);

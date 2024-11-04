@@ -63,6 +63,15 @@ namespace gui {
 		// Setup Platform/Renderer bindings
 		ImGui_ImplGlfw_InitForOpenGL(window, true);
 		ImGui_ImplOpenGL3_Init(glsl_version);
+
+		//set first active scene
+		ecs::ECS* ec = ecs::ECS::m_GetInstance();
+		for (auto& scene : ec->m_ECS_SceneMap) {
+			if (!scene.second.m_isPrefab) {
+				m_activeScene = scene.first;
+				break;
+			}
+		}
 		
 	}
 

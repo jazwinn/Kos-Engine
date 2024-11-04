@@ -63,7 +63,7 @@ namespace ecs {
 
 	}
 
-	void TransformSystem::m_Update() {
+	void TransformSystem::m_Update(const std::string& scene) {
 
 		//ECS* ecs = ECS::m_GetInstance();
 
@@ -71,6 +71,9 @@ namespace ecs {
 		for (int n{}; n < m_vecTransformComponentPtr.size(); n++)
 		{
 			TransformComponent* transformComp = m_vecTransformComponentPtr[n];
+
+			//skip component not of the scene
+			if (transformComp->m_scene != scene) continue;
 
 			transformComp->m_transformation = mat3x3::Mat3Transform(transformComp->m_position, transformComp->m_scale, transformComp->m_rotation);
 

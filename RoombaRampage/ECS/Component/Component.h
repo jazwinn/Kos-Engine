@@ -38,6 +38,9 @@ namespace ecs {
 		//Store Entity ID
 		EntityID m_Entity{};
 
+		//store entity's scene
+		std::string m_scene{};
+
 	};
 
 }

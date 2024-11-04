@@ -88,7 +88,7 @@ namespace ecs {
 
         /******************************************************************/
         /*!
-        \fn      void CollisionSystem::m_Update()
+        \fn      void CollisionSystem::m_Update(const std::string&)
         \brief   Updates the CollisionSystem on every frame.
 
                  This function processes collision detection for all registered
@@ -96,7 +96,7 @@ namespace ecs {
                  handling the necessary collision responses.
         */
         /******************************************************************/
-        void m_Update() override;
+        void m_Update(const std::string&) override;
 
     private:
         //! Vector storing pointers to the TransformComponent of registered entities

@@ -55,7 +55,7 @@ namespace ecs {
 
 	}
 
-	void PhysicsSystem::m_Update() {
+	void PhysicsSystem::m_Update(const std::string& scene) {
 		ECS* ecs = ECS::m_GetInstance();
 		physicspipe::Physics* PhysicsPipeline = physicspipe::Physics::getInstance();
 		Helper::Helpers* help = Helper::Helpers::GetInstance();
@@ -68,6 +68,11 @@ namespace ecs {
 		for (int n = 0; n < m_vecRigidBodyComponentPtr.size(); n++) {
 			RigidBodyComponent* rigidBody = m_vecRigidBodyComponentPtr[n];
 			TransformComponent* transform = m_vecTransformComponentPtr[n];
+
+			//skip component not of the scene
+			if (rigidBody->m_scene != scene) continue;
+
+
 			if (rigidBody->m_IsKinematic || rigidBody->m_IsStatic) {
 				// If kinematic or static, skip physics calculations
 				return;

@@ -4,6 +4,7 @@
 #include <string>
 #include "../Asset Manager/AssetManager.h"
 #include "../Inputs/Input.h"
+#include <imgui_internal.h>
 
 namespace gui {
 
@@ -16,6 +17,7 @@ namespace gui {
 		ImGui::Begin("Content Browser");
 		
 		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
 
 		//if (currentDirectory != assetDirectory && ImGui::Button("Back")) {
 
@@ -45,6 +47,7 @@ namespace gui {
 
 
 			ImGui::BeginChild("ChildLa", ImVec2(0, ImGui::GetContentRegionAvail().y));
+
 
 			//back button
 			if (currentDirectory != assetDirectory && ImGui::Button("Back")) {
@@ -108,8 +111,8 @@ namespace gui {
 						}
 					}
 					else if (directoryPath.path().filename().extension().string() == ".cs") {
-						std::string wavicon = "ScriptIcon.png";
-						textorimage(directoryString, wavicon);
+						std::string script = "ScriptIcon.png";
+						textorimage(directoryString, script);
 
 						if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
 							std::string command = "code \"" + directoryPath.path().string() + "\"";
@@ -123,7 +126,45 @@ namespace gui {
 
 						}
 					}
-					else if (ImGui::Button(directoryString.c_str(), { thumbnail ,thumbnail })) {
+					else if (directoryPath.path().filename().extension().string() == ".prefab") {
+						std::string prefab = "";
+						textorimage(std::string(directoryPath.path().filename().extension().string() + "##" + directoryPath.path().filename().string()).c_str(), prefab);
+
+						if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
+							//skip if already in prefabscenemode
+							if (m_prefabSceneMode == true)continue;
+
+							m_prefabSceneMode = true;
+							const auto& prefabscene = ecs->m_ECS_SceneMap.find(directoryPath.path().filename().string());
+							if (prefabscene == ecs->m_ECS_SceneMap.end()) {
+								LOGGING_ERROR("Prefab not loaded");
+								continue;
+							}
+
+							
+							// clear save scene state
+							m_savedSceneState.clear();
+							// unload all regular scenes
+							for (auto& scene : ecs->m_ECS_SceneMap) {
+								if (scene.second.m_isPrefab == false) {
+									//save all scenes active state
+									m_savedSceneState[scene.first] = scene.second.m_isActive;
+								}
+
+
+								scene.second.m_isActive = false;
+							}
+
+							// set prefab to active
+							prefabscene->second.m_isActive = true;
+
+							//set prefab as active scene
+							m_activeScene = directoryPath.path().filename().string();
+
+							m_clickedEntityId = -1;
+						}
+					}
+					else if (ImGui::Button(std::string(directoryPath.path().filename().extension().string() + "##" + directoryPath.path().filename().string()).c_str(), {thumbnail ,thumbnail})) {
 
 
 					}
@@ -182,7 +223,7 @@ namespace gui {
 				}
 				else {
 					ImGui::SetWindowFontScale(0.8f);
-					ImGui::Text(directoryString.c_str());
+					ImGui::Text(directoryPath.path().filename().stem().string().c_str());
 					ImGui::SetWindowFontScale(1.f);
 				}
 
@@ -199,6 +240,8 @@ namespace gui {
 
 					_delete = false;
 				}
+
+				
 
 				ImGui::NextColumn();
 			}
@@ -240,7 +283,12 @@ namespace gui {
 				}
 			}
 
+			//if (ImGui::BeginDrapDropTargetWindow("Entity"))
+			//{
 
+
+			//	ImGui::EndDragDropTarget();
+			//}
 
 
 			ImGui::EndChild();

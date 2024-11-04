@@ -14350,6 +14350,26 @@ bool ImGui::BeginDragDropTargetCustom(const ImRect& bb, ImGuiID id)
     return true;
 }
 
+IMGUI_API bool ImGui::BeginDrapDropTargetWindow(const char* payload_type)
+{
+    using namespace ImGui;
+    ImRect inner_rect = GetCurrentWindow()->InnerRect;
+    if (BeginDragDropTargetCustom(inner_rect, GetID("##WindowBgArea")))
+        if (const ImGuiPayload* payload = AcceptDragDropPayload(payload_type, ImGuiDragDropFlags_AcceptBeforeDelivery | ImGuiDragDropFlags_AcceptNoDrawDefaultRect))
+        {
+            if (payload->IsPreview())
+            {
+                ImDrawList* draw_list = GetForegroundDrawList();
+                draw_list->AddRectFilled(inner_rect.Min, inner_rect.Max, GetColorU32(ImGuiCol_DragDropTarget, 0.05f));
+                draw_list->AddRect(inner_rect.Min, inner_rect.Max, GetColorU32(ImGuiCol_DragDropTarget), 0.0f, 0, 2.0f);
+            }
+            if (payload->IsDelivery())
+                return true;
+            EndDragDropTarget();
+        }
+    return false;
+}
+
 // We don't use BeginDragDropTargetCustom() and duplicate its code because:
 // 1) we use LastItemData's ImGuiItemStatusFlags_HoveredRect which handles items that push a temporarily clip rectangle in their code. Calling BeginDragDropTargetCustom(LastItemRect) would not handle them.
 // 2) and it's faster. as this code may be very frequently called, we want to early out as fast as we can.

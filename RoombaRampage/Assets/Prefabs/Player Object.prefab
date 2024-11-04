@@ -93,37 +93,5 @@
                 }
             }
         ]
-    },
-    {
-        "name": "Background",
-        "transform": {
-            "position": {
-                "x": 1.1328786611557007,
-                "y": 0.11755739152431488
-            },
-            "rotation": 0.0,
-            "scale": {
-                "x": 2.3399999141693115,
-                "y": 2.559999942779541
-            }
-        },
-        "sprite": {
-            "imagefile": "Background.png",
-            "layer": 0
-        }
-    },
-    {
-        "name": "test",
-        "transform": {
-            "position": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "rotation": 0.0,
-            "scale": {
-                "x": 1.0,
-                "y": 1.0
-            }
-        }
     }
 ]
