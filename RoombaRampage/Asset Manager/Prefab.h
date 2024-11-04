@@ -22,9 +22,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include <vector>
 #include <unordered_map>
 #include <string>
-#include "../ECS/Component/ComponentPool.h"
 #include "../ECS/ECSList.h"
-#include "../ECS/Component/ComponentList.h"
 
 
 namespace prefab {
@@ -32,39 +30,12 @@ namespace prefab {
 	class Prefab {
 
 	public:
-	/******************************************************************/
-	/*!
-	\fn        m_DeSerializePrefab(std::string path)
-	\brief     Reads json file and copies data into the prefab
-	\param[in] path  The file path of the json file
-	*/
-	/******************************************************************/
-		static void m_DeSerializePrefab(std::string path);
-	/******************************************************************/
-	/*!
-	\fn        m__CreateEntityFromPrefab(std::string Prefab)
-	\brief     Creates a new entity and copies the prefab data into the entity
-	\param[in] Prefab  The string name of the prefab to copy
-	*/
-	/******************************************************************/
-		static int m_CreateEntityFromPrefab(std::string Prefab);
+		static void m_CreatePrefab(std::string prefabscene, std::string insertscene = {});
 
-		
+		static void m_SaveEntitytoPrefab(ecs::EntityID);
+
 	private:
 
-		std::bitset<ecs::TOTALTYPECOMPONENT> m_prefabSignature;
-
-
-		//Add vector for every new components
-		ecs::NameComponent m_nameComponents;
-		ecs::PlayerComponent m_playerComponents;
-		ecs::SpriteComponent m_spriteComponents;
-		ecs::TransformComponent m_transformComponents;
-		ecs::ColliderComponent m_colliderComponents;
-		ecs::RigidBodyComponent m_rigidBodyComponents;
-		ecs::TextComponent m_textComponent;
-		ecs::AnimationComponent m_animationComponent;
-		
 
 
 	};

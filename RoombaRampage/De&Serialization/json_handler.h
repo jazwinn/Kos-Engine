@@ -3,13 +3,15 @@
 \file      json_handler.h
 \author    Chiu Jun Jie, junjie.c , 2301524
 \par       junjie.c@digipen.edu
-\date      Oct 02, 2024
+\date      Nov 11, 2024
 \brief     This header file declares functions that handle JSON-related operations for component serialization and
 		   deserialization in the ECS framework.
 		   - m_LoadConfig: Loads configuration settings such as window dimensions and FPS cap from a config file.
 		   - m_JsonFileValidation: Validates if the JSON file exists and creates a new one if it doesn't.
 		   - m_LoadComponentsJson: Loads component data from a JSON file into the ECS.
 		   - m_SaveComponentsJson: Saves component data from the ECS to a JSON file.
+		   - m_SaveEntity: Serializes individual entity data to a JSON structure.
+		   - m_LoadEntity: Deserializes individual entity data from a JSON structure.
 
 Copyright (C) 2024 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the
@@ -57,8 +59,31 @@ namespace Serialization {
 		/******************************************************************/
 		static void m_SaveComponentsJson(const std::filesystem::path& filePath);
 
+		/******************************************************************/
+		/*!
+			\fn        Serialize::m_SaveEntity(ecs::EntityID entityId, rapidjson::Value& parentArray, rapidjson::Document::AllocatorType& allocator, std::unordered_set<ecs::EntityID>& savedEntities)
+			\brief     Saves an individual entity's component data to a JSON structure.
+			\param[in] entityId       The ID of the entity to be saved.
+			\param[out] parentArray   The JSON value to which the entity data will be appended.
+			\param[in] allocator      The allocator used for JSON memory management.
+			\param[in,out] savedEntities A set that keeps track of saved entities to avoid redundant saves.
+			\details   This function serializes components such as `TransformComponent`, `CameraComponent`, `ScriptComponent`, and others.
+					   It appends the serialized entity data to the given JSON array, allowing hierarchical saving of parent-child relationships.
+		*/
+		/******************************************************************/
 		static void m_SaveEntity(ecs::EntityID entityId, rapidjson::Value& parentArray, rapidjson::Document::AllocatorType& allocator, std::unordered_set<ecs::EntityID>& savedEntities);
 
+		/******************************************************************/
+		/*!
+			\fn        Serialize::m_LoadEntity(const rapidjson::Value& entityData, std::optional<ecs::EntityID> parentID, const std::string& sceneName)
+			\brief     Loads an individual entity's component data from a JSON structure.
+			\param[in] entityData     The JSON value containing the entity data.
+			\param[in] parentID       The optional ID of the parent entity, used to maintain parent-child relationships.
+			\param[in] sceneName      The name of the scene to which this entity belongs.
+			\details   This function parses component data from a JSON object and assigns it to the entity in the ECS. Components such as
+					   `TransformComponent`, `CameraComponent`, `ScriptComponent`, `TextComponent`, `SpriteComponent`, etc., are reconstructed.
+		*/
+		/******************************************************************/
 		static void m_LoadEntity(const rapidjson::Value& entityData, std::optional<ecs::EntityID> parentID, const std::string& sceneName);
 
 		/******************************************************************/

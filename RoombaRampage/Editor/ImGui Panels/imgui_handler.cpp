@@ -41,6 +41,7 @@ namespace gui {
 
 	ImGuiHandler::ImGuiHandler() {
 		REGISTER_BUTTON_LISTENER(events::ButtonEvents::EVENTBUTTONPRESS, ImGuiHandler::m_OnButtonPress, this)
+		REGISTER_BUTTON_LISTENER(events::ButtonEvents::EVENTAUDIOFROMIMGUI, ImGuiHandler::m_OnButtonPress, this)
 	} //CTORdoing 
 
 	ImGuiHandler::~ImGuiHandler() {} //Destructor
@@ -62,6 +63,15 @@ namespace gui {
 		// Setup Platform/Renderer bindings
 		ImGui_ImplGlfw_InitForOpenGL(window, true);
 		ImGui_ImplOpenGL3_Init(glsl_version);
+
+		//set first active scene
+		ecs::ECS* ec = ecs::ECS::m_GetInstance();
+		for (auto& scene : ec->m_ECS_SceneMap) {
+			if (!scene.second.m_isPrefab) {
+				m_activeScene = scene.first;
+				break;
+			}
+		}
 		
 	}
 
@@ -144,10 +154,21 @@ namespace gui {
 
 
 	void ImGuiHandler::m_OnButtonPress(const events::BaseEvent<events::ButtonEvents>& givenEvent) {
-		std::cout << "Button: " << givenEvent.m_ToType<events::ButtonPressEvent>().m_GetButton() << " was pressed." << std::endl;
+		//std::cout << "Button: " << givenEvent.m_ToType<events::ButtonPressEvent>().m_GetButton() << " was pressed." << std::endl;
 		if (givenEvent.m_ToType<events::ButtonPressEvent>().m_GetButton() == 1) {
 			assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
 			assetManager->m_audioManager.m_soundMap.find("zwing.wav")->second->m_PlaySound();
+		}
+		else if (givenEvent.m_ToType<events::AudioFromImgui>().m_GetEventType() == events::ButtonEvents::EVENTAUDIOFROMIMGUI) {\
+			std::string fileToBePlayed = givenEvent.m_ToType<events::AudioFromImgui>().m_GetFile();
+			assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
+			if (assetManager->m_audioManager.m_soundMap.find(fileToBePlayed)->second->m_IsPlaying()) {
+				assetManager->m_audioManager.m_soundMap.find(fileToBePlayed)->second->m_StopSound();
+			}
+			else {
+				assetManager->m_audioManager.m_soundMap.find(fileToBePlayed)->second->m_PlaySound();
+			}
+			
 		}
 	}
 }

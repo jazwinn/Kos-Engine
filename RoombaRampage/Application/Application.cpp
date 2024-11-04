@@ -100,20 +100,19 @@ namespace Application {
         LOGGING_INFO("Set Input Call Back Successful");
         
 
-       /*--------------------------------------------------------------
-           INITIALIZE IMGUI
-        --------------------------------------------------------------*/
-        const char* glsl_version = "#version 130";
-        imgui_manager.m_Initialize(lvWindow.m_window, glsl_version);
-        LOGGING_INFO("Load ImGui Successful");
-
         /*--------------------------------------------------------------
             LOAD ENTITIES INTO ECS & IMGUI
         --------------------------------------------------------------*/
         scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();
         scenemanager->m_LoadScene("../RoombaRampage/Assets/Scene/Default.json"); // replace with opening up window dialog
         
-        ////scenemanager->m_LoadScene("Scene1");
+
+        /*--------------------------------------------------------------
+            INITIALIZE IMGUI
+         --------------------------------------------------------------*/
+        const char* glsl_version = "#version 130";
+        imgui_manager.m_Initialize(lvWindow.m_window, glsl_version);
+        LOGGING_INFO("Load ImGui Successful");
 
         
 

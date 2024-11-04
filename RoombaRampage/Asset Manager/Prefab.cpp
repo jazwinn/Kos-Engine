@@ -20,253 +20,137 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../De&Serialization/json_handler.h"
 #include "../Debugging/Logging.h"
 #include "AssetManager.h"
+#include "../ECS/Hierachy.h"
+#include "../ECS/ECS.h"
+#include "SceneManager.h"
+#include "../De&Serialization/json_handler.h"
+
+#include "../Dependencies/rapidjson/writer.h"
+#include "../Dependencies/rapidjson/stringbuffer.h"
+#include "../Dependencies/rapidjson/filewritestream.h"
+#include "../Dependencies/rapidjson/prettywriter.h"
 
 
 namespace prefab {
 
+    void AssignPrefabToNameComponent(ecs::EntityID parentid, std::string scenename) {
+        const auto& vecChild = ecs::Hierachy::m_GetChild(parentid);
+        if (!vecChild.has_value()) return;
+        for (auto& childid : vecChild.value()) {
+            ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+            ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(childid));
+            nc->m_isPrefab = true;
+            nc->m_prefabName = scenename;
 
-	void Prefab::m_DeSerializePrefab(std::string path) {
+            if (ecs::Hierachy::m_GetChild(childid).has_value()) {
+                AssignPrefabToNameComponent(childid, scenename);
+            }
+        }
+    }
 
-        // Open the JSON file for reading
-        std::ifstream inputFile(path);
-
-        if (!inputFile) {
-            LOGGING_ERROR("Failed to open Pefab JSON file for reading");
+    void Prefab::m_CreatePrefab(std::string prefabscene, std::string insertscene)
+    {
+        if (prefabscene == insertscene) {
+            LOGGING_ERROR("Cannot load onto itself");
             return;
         }
 
 
-        //std::string fileContent((std::istreambuf_iterator<char>(inputFile)), std::istreambuf_iterator<char>());
-        //inputFile.close();
 
-        //// Parse the JSON content
-        //rapidjson::Document doc;
-        //doc.Parse(fileContent.c_str());
-        //assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+        //check if prefabscene exist
+        ecs::ECS* ecs = ecs::ECS::m_GetInstance();
 
-        //for (rapidjson::SizeType i = 0; i < doc.Size(); i++) {
-        //    const rapidjson::Value& prefabData = doc[i];
-        //    
-        //    Prefab prefab;
+        if (insertscene.empty()) {
+            insertscene = ecs->m_ECS_SceneMap.begin()->first;
+        }
 
-        //    if (prefabData.HasMember("name") && prefabData["name"].IsString()) {
-        //        prefab.m_nameComponents.m_entityName = prefabData["name"].GetString();  // Store the name
-        //        if (prefab.m_nameComponents.m_entityName.empty()) {
-        //            prefab.m_nameComponents.m_entityName = "OBJECT";
-        //        }
-        //    }
-        //    
-        //    if (prefabData.HasMember("transform") && prefabData["transform"].IsObject()) {
-        //        //set bitflag
-        //        prefab.m_prefabSignature.set(ecs::TYPETRANSFORMCOMPONENT);
+        if (ecs->m_ECS_SceneMap.find(prefabscene) == ecs->m_ECS_SceneMap.end()) {
+            LOGGING_ERROR("Prefab not loaded into scene");
+            return;
+        }
+       
+        std::vector<ecs::EntityID> vecid;
 
-        //        const rapidjson::Value& transform = prefabData["transform"];
-        //        if (transform.HasMember("position") && transform["position"].IsObject()) {
-        //            prefab.m_transformComponents.m_position.m_x = transform["position"]["x"].GetFloat();
-        //            prefab.m_transformComponents.m_position.m_y = transform["position"]["y"].GetFloat();
-        //        }
-        //        if (transform.HasMember("rotation")) {
-        //            prefab.m_transformComponents.m_rotation = transform["rotation"].GetFloat();
-        //        }
-        //        if (transform.HasMember("scale") && transform["scale"].IsObject()) {
-        //            prefab.m_transformComponents.m_scale.m_x = transform["scale"]["x"].GetFloat();
-        //            prefab.m_transformComponents.m_scale.m_y = transform["scale"]["y"].GetFloat();
-        //        }
+        for (const auto& prefabentity : ecs->m_ECS_SceneMap.find(prefabscene)->second.m_sceneIDs) {
+            //duplicate only parents
+            if (ecs::Hierachy::m_GetParent(prefabentity).has_value())continue;
+            vecid.push_back(ecs->m_DuplicateEntity(prefabentity, insertscene));
+        }
 
-        //    }
+        for (auto& id : vecid) {
+            //assign parent as prefab
+            ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+            ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id));
+            nc->m_isPrefab = true;
+            nc->m_prefabName = insertscene;
+
+            const auto& vecChild = ecs::Hierachy::m_GetChild(id);
+            if (!vecChild.has_value()) continue;
+            AssignPrefabToNameComponent(id, insertscene);
+        
+        }
 
 
-
-        //    if (prefabData.HasMember("collider") && prefabData["collider"].IsObject()) {
-
-        //        prefab.m_prefabSignature.set(ecs::TYPECOLLIDERCOMPONENT);
-
-        //         const rapidjson::Value& collider = prefabData["collider"];
-        //        if (collider.HasMember("size") && collider["size"].IsObject()) {
-        //            prefab.m_colliderComponents.m_Size.m_x = collider["size"]["x"].GetFloat();
-        //            prefab.m_colliderComponents.m_Size.m_y = collider["size"]["y"].GetFloat();
-        //        }
-        //        if (collider.HasMember("offset") && collider["offset"].IsObject()) {
-        //            prefab.m_colliderComponents.m_OffSet.m_x = collider["offset"]["x"].GetFloat();
-        //            prefab.m_colliderComponents.m_OffSet.m_y = collider["offset"]["y"].GetFloat();
-        //        }
-        //        //if (collider.HasMember("layer")) {
-        //        //    prefab.m_colliderComponents.m_Layer = collider["layer"].GetUint();
-        //        //}
-        //        if (collider.HasMember("drawDebug")) {
-        //            prefab.m_colliderComponents.m_drawDebug = collider["drawDebug"].GetBool();
-        //        }
-
-        //    }
-
-        //    if (prefabData.HasMember("player") && prefabData["player"].IsObject()) {
-
-        //        prefab.m_prefabSignature.set(ecs::TYPEPLAYERCOMPONENT);
-
-        //        const rapidjson::Value& player = prefabData["player"];
-        //        if (player.HasMember("control")) {
-        //            prefab.m_playerComponents.m_Control = player["control"].GetBool();
-        //        }
-
-        //    }
-
-        //    // Load RigidBody Component if it exists
-        //    if (prefabData.HasMember("rigidbody") && prefabData["rigidbody"].IsObject()) {
-
-        //        prefab.m_prefabSignature.set(ecs::TYPERIGIDBODYCOMPONENT);
-
-        //        const rapidjson::Value& rigidbody = prefabData["rigidbody"];
-        //        if (rigidbody.HasMember("mass")) {
-        //            prefab.m_rigidBodyComponents.m_Mass = rigidbody["mass"].GetFloat();
-        //        }
-
-        //    }
-
-        //    // Load Sprite Component if it exists
-        //    if (prefabData.HasMember("sprite") && prefabData["sprite"].IsObject()) {
-
-        //        prefab.m_prefabSignature.set(ecs::TYPESPRITECOMPONENT);
-
-        //        const rapidjson::Value& sprite = prefabData["sprite"];
-        //        if (sprite.HasMember("imageID")) {
-        //           
-        //        }
-
-        //        
-        //    }
-
-        //    // Load text Component if it exists
-        //    if (prefabData.HasMember("text") && prefabData["text"].IsObject()) {
-        //        
-        //        prefab.m_prefabSignature.set(ecs::TYPETEXTCOMPONENT);
-
-        //        const rapidjson::Value& text = prefabData["text"];
-        //        if (text.HasMember("text")) {
-        //            prefab.m_textComponent.m_text = text["text"].GetString();
-        //        }
-        //        if (text.HasMember("fontsize")) {
-        //            prefab.m_textComponent.m_fontSize = text["fontsize"].GetFloat();
-        //        }
-        //        if (text.HasMember("colour")) {
-        //            prefab.m_textComponent.m_red = text["colour"]["red"].GetFloat();
-        //            prefab.m_textComponent.m_green = text["colour"]["green"].GetFloat();
-        //            prefab.m_textComponent.m_blue = text["colour"]["blue"].GetFloat();
-        //        }
-        //        
-        //    }
-
-        //    if (prefabData.HasMember("animation") && prefabData["animation"].IsObject()) {
-        //        
-        //        prefab.m_prefabSignature.set(ecs::TYPEANIMATIONCOMPONENT);
-        //     
-        //        const rapidjson::Value& animation = prefabData["animation"];
-        //        if (animation.HasMember("frameTimer"))
-        //        {
-        //            prefab.m_animationComponent.m_frameTimer = animation["frameTimer"].GetFloat();
-        //        }
-        //        if (animation.HasMember("isAnimating"))
-        //        {
-        //            prefab.m_animationComponent.m_isAnimating = animation["isAnimating"].GetBool();
-        //        }
-        //        
-        //    }
-
-        //    
-        //    assetmanager->m_prefabs[prefab.m_nameComponents.m_entityName] = prefab;
-        //}
-
-        LOGGING_INFO("Load Prefab Json Successful");
-
-	}
-
-
-    int Prefab::m_CreateEntityFromPrefab(std::string prefabString) {
-
-        //assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
-        ////serach for prefab that matches the map
-
-        //if (assetmanager->m_prefabs.find(prefabString) == assetmanager->m_prefabs.end()) {
-        //    LOGGING_ERROR("Prefab does not exist");
-        //    return -1;
-        //}
-
-        //Prefab prefab = assetmanager->m_prefabs[prefabString];
-
-        //ecs::ECS* ecs = ecs::ECS::m_GetInstance();
-
-        //ecs::EntityID newEntityID = ecs->m_CreateEntity();
-
-        ////allocate transform component
-        ////Addon everytime a transform component is added
-        //{
-        //    ecs::TransformComponent* tc = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(newEntityID));
-        //    *tc = prefab.m_transformComponents;
-        //    //set component back to true
-        //    tc->m_IsLive = true;
-        //    tc->m_Entity = newEntityID;
-        //}
-        //{
-        //    ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(newEntityID));
-        //    *nc = prefab.m_nameComponents;
-        //    //set component back to true
-        //    nc->m_IsLive = true;
-        //    nc->m_Entity = newEntityID;
-        //}
-
-
-
-        //if (prefab.m_prefabSignature.test(ecs::TYPECOLLIDERCOMPONENT)) {
-        //    ecs::ColliderComponent* cc = static_cast<ecs::ColliderComponent*>(ecs->m_AddComponent(ecs::TYPECOLLIDERCOMPONENT, newEntityID));
-        //    *cc = prefab.m_colliderComponents;
-        //    cc->m_IsLive = true;
-        //    cc->m_Entity = newEntityID;
-        //}
-
-
-        //if (prefab.m_prefabSignature.test(ecs::TYPEPLAYERCOMPONENT)) {
-        //    ecs::PlayerComponent* pc = static_cast<ecs::PlayerComponent*>(ecs->m_AddComponent(ecs::TYPEPLAYERCOMPONENT, newEntityID));
-        //    *pc = prefab.m_playerComponents;
-        //    pc->m_IsLive = true;
-        //    pc->m_Entity = newEntityID;
-        //}
-
-        //if (prefab.m_prefabSignature.test(ecs::TYPERIGIDBODYCOMPONENT)) {
-        //    ecs::RigidBodyComponent* rb = static_cast<ecs::RigidBodyComponent*>(ecs->m_AddComponent(ecs::TYPERIGIDBODYCOMPONENT, newEntityID));
-        //    *rb = prefab.m_rigidBodyComponents;
-        //    rb->m_IsLive = true;
-        //    rb->m_Entity = newEntityID;
-        //}
-
-        //if (prefab.m_prefabSignature.test(ecs::TYPESPRITECOMPONENT)) {
-        //    ecs::SpriteComponent* sc = static_cast<ecs::SpriteComponent*>(ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, newEntityID));
-        //    *sc = prefab.m_spriteComponents;
-        //    sc->m_IsLive = true;
-        //    sc->m_Entity = newEntityID;
-        //}
-
-        //if (prefab.m_prefabSignature.test(ecs::TYPETEXTCOMPONENT)) {
-        //    ecs::TextComponent* tc = static_cast<ecs::TextComponent*>(ecs->m_AddComponent(ecs::TYPETEXTCOMPONENT, newEntityID));
-        //    *tc = prefab.m_textComponent;
-        //    tc->m_IsLive = true;
-        //    tc->m_Entity = newEntityID;
-        //}
-
-        //if (prefab.m_prefabSignature.test(ecs::TYPEANIMATIONCOMPONENT)) {
-        //    ecs::AnimationComponent* ac = static_cast<ecs::AnimationComponent*>(ecs->m_AddComponent(ecs::TYPEANIMATIONCOMPONENT, newEntityID));
-        //    *ac = prefab.m_animationComponent;
-        //    ac->m_IsLive = true;
-        //    ac->m_Entity = newEntityID;
-        //}
-
-        //LOGGING_INFO("Prefab -> Entity Created Successfully");
-        //return newEntityID;
-
-        return 0;
     }
 
+    void Prefab::m_SaveEntitytoPrefab(ecs::EntityID id)
+    {
+        ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+        ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id));
+        std::string m_jsonFilePath{ "../RoombaRampage/Assets/Prefabs/" }; //TODO allow drag and drop onto content browser
+
+        std::string filename;
+
+        short count{};
+        do {
+            if (count > 0) {
+                filename = nc->m_entityName + "_" + std::to_string(count) + ".prefab";
+            }
+            else {
+                filename = nc->m_entityName + ".prefab";
+            }
+            count++;
+        } while (ecs->m_ECS_SceneMap.find(filename) != ecs->m_ECS_SceneMap.end());
+
+        std::string path = m_jsonFilePath + filename;
+        scenes::SceneManager::m_GetInstance()->m_CreateNewScene(path);
 
 
+        /*******************************SERIALIZATION START******************************************/
+
+        Serialization::Serialize::m_JsonFileValidation(path);
+
+        // Create JSON object to hold the updated values
+        rapidjson::Document doc;
+        doc.SetArray();  // Initialize as an empty array
+
+        rapidjson::Document::AllocatorType& allocator = doc.GetAllocator();
+
+        std::unordered_set<ecs::EntityID> savedEntities;  //track saved entities
+
+        //Start saving the entities
+        Serialization::Serialize::m_SaveEntity(id, doc, allocator, savedEntities);
+
+        // Write the JSON back to file
+        rapidjson::StringBuffer writeBuffer;
+        rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(writeBuffer);
+        doc.Accept(writer);
+
+        std::ofstream outputFile(path);
+        if (outputFile) {
+            outputFile << writeBuffer.GetString();
+            outputFile.close();
+        }
+
+        LOGGING_INFO("Save Prefab Successful");
+
+        /*******************************SERIALIZATION END******************************************/
 
 
+        // load prefab
+        scenes::SceneManager::m_GetInstance()->m_LoadScene(path);
+
+
+    }
 
 }

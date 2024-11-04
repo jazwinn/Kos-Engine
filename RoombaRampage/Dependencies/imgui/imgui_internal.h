@@ -3704,6 +3704,7 @@ namespace ImGui
     // Drag and Drop
     IMGUI_API bool          IsDragDropActive();
     IMGUI_API bool          BeginDragDropTargetCustom(const ImRect& bb, ImGuiID id);
+    IMGUI_API bool          BeginDrapDropTargetWindow(const char* payload_type);
     IMGUI_API void          ClearDragDrop();
     IMGUI_API bool          IsDragDropPayloadBeingAccepted();
     IMGUI_API void          RenderDragDropTargetRect(const ImRect& bb, const ImRect& item_clip_rect);

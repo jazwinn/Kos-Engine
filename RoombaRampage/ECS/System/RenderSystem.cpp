@@ -62,7 +62,7 @@ namespace ecs {
 		m_SystemSignature.set(TYPESPRITECOMPONENT);
 	}
 
-	void RenderSystem::m_Update()
+	void RenderSystem::m_Update(const std::string& scene)
 	{
 		//ECS* ecs = ECS::GetInstance();
 		graphicpipe::GraphicsPipe* graphicsPipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
@@ -78,6 +78,9 @@ namespace ecs {
 
 			TransformComponent* transform = m_vecTransformComponentPtr[n];
 			SpriteComponent* sprite = m_vecSpriteComponentPtr[n];
+
+			//skip component not of the scene
+			if (sprite->m_scene != scene) continue;
 
 			ECS* ecs = ECS::m_GetInstance();
 

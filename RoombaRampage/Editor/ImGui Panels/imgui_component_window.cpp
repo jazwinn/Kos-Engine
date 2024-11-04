@@ -323,25 +323,6 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         ImGui::EndCombo();
                     }
 
-                    ImVec4 color = ImVec4(sc->m_color.m_x, sc->m_color.m_y, sc->m_color.m_z, sc->m_alpha);
-
-                    ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
-                    ImGui::Text("Color");
-                    ImGui::SameLine();
-                    if (ImGui::ColorEdit3("##MyColor2", (float*)&color, ImGuiColorEditFlags_DisplayRGB))
-                    {
-                        sc->m_color.m_x = color.x;
-                        sc->m_color.m_y = color.y;
-                        sc->m_color.m_z = color.z;
-                    }
-
-
-                    if (open) {
-                        auto* rbc = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(entityID));
-                        rbc->ApplyFunction(DrawComponents(rbc->Names()));
-                    }
-
-                 
                     if (ImGui::BeginDragDropTarget())
                     {
 
@@ -361,11 +342,32 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                                 LOGGING_WARN("Wrong File Type");
                             }
 
-                            
+
 
                         }
                         ImGui::EndDragDropTarget();
                     }
+
+                    ImVec4 color = ImVec4(sc->m_color.m_x, sc->m_color.m_y, sc->m_color.m_z, sc->m_alpha);
+
+                    ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
+                    ImGui::Text("Color");
+                    ImGui::SameLine();
+                    if (ImGui::ColorEdit3("##MyColor2", (float*)&color, ImGuiColorEditFlags_DisplayRGB))
+                    {
+                        sc->m_color.m_x = color.x;
+                        sc->m_color.m_y = color.y;
+                        sc->m_color.m_z = color.z;
+                    }
+
+
+                    if (open) {
+                        auto* rbc = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(entityID));
+                        rbc->ApplyFunction(DrawComponents(rbc->Names()));
+                    }
+
+                 
+                  
 
                     static std::map<int, ecs::EntityID> layerMap;
                     layerMap.clear();

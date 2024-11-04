@@ -38,7 +38,7 @@ namespace ecs {
 
         void m_StartLogic();
 
-        void m_Update() override;
+        void m_Update(const std::string&) override;
 
     private:
         //! Vector storing pointers to PlayerComponent of registered entities
