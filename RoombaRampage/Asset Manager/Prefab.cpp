@@ -79,8 +79,8 @@ namespace prefab {
 
         for (auto& id : vecid) {
             //assign parent as prefab
-            ecs::ECS* ecs = ecs::ECS::m_GetInstance();
-            ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id));
+            ecs::ECS* Tempecs = ecs::ECS::m_GetInstance();
+            ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(Tempecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id));
             nc->m_isPrefab = true;
             nc->m_prefabName = insertscene;
 
