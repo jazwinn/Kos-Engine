@@ -31,9 +31,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include <iostream>
 #include <bitset>
 #include <optional>
-#include <functional>
 
-#include <any>
 
 namespace ecs {
 

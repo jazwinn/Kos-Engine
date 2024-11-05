@@ -338,6 +338,10 @@ namespace gui {
 
             if (ImGui::MenuItem("Duplicate Entity")) {
                 ecs->m_DuplicateEntity(m_clickedEntityId);
+                ImGui::EndPopup();
+                if (open)ImGui::TreePop();
+                return false;
+                //return false to reset the loop
             }
 
             if (ImGui::MenuItem("Save Prefab")) {
@@ -347,14 +351,21 @@ namespace gui {
             ImGui::EndPopup();
         }
 
-        if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None)) {
-            //might undefine behaviour
-            ecs::EntityID index = id;
-            ImGui::SetDragDropPayload("Entity", &index, sizeof(ecs::EntityID));
-            ImGui::Text(nc->m_entityName.c_str());
-            //ImGui::Text(std::to_string((int)index).c_str());
-            ImGui::EndDragDropSource();
+        //no reordering of child prefabs
+        if (nc->m_isPrefab && transCom->m_haveParent) {
+
         }
+        else {
+            if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None)) {
+                //might undefine behaviour
+                ecs::EntityID index = id;
+                ImGui::SetDragDropPayload("Entity", &index, sizeof(ecs::EntityID));
+                ImGui::Text(nc->m_entityName.c_str());
+                //ImGui::Text(std::to_string((int)index).c_str());
+                ImGui::EndDragDropSource();
+            }
+        }
+
 
         if (ImGui::BeginDragDropTarget())
         {

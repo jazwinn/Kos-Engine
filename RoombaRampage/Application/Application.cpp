@@ -68,15 +68,6 @@ namespace Application {
         ecs->m_Init();
         LOGGING_INFO("Load ECS Successful");
 
-       /*--------------------------------------------------------------
-           INITIALIZE MONO AND ASSEMBLY LOADING
-       --------------------------------------------------------------*/
-        /****************************************************************************************/
-        //SAMPLE TO REMOVE
-        //Compiles .cs
-        
-        /****************************************************************************************/
-
         /*--------------------------------------------------------------
            INITIALIZE Asset Manager
         --------------------------------------------------------------*/
@@ -116,10 +107,7 @@ namespace Application {
 
         
 
-       
-
-
-        LOGGING_INFO("Mono initialization and method loading successful.");
+      
 
 
         LOGGING_INFO("Application Init Successful");

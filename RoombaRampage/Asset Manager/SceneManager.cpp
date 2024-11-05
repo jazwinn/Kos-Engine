@@ -5,7 +5,8 @@
 #include "stringbuffer.h"
 #include "filewritestream.h"
 #include "../ECS/ECS.h"
-#include "../ECS//Hierachy.h"
+#include "../ECS/Hierachy.h"
+#include "Prefab.h"
 
 namespace scenes {
 
@@ -74,6 +75,29 @@ namespace scenes {
         // store path to be use as recent
         if (std::find(m_recentFiles.begin(), m_recentFiles.end(), scene) == m_recentFiles.end()) {
             m_recentFiles.push_back(scene);
+        }
+
+        std::string scenename = scene.filename().string();
+
+        //create new scene
+        ecs->m_ECS_SceneMap[scenename];
+        //check if file is prefab or scene
+        if (scene.filename().extension().string() == ".prefab") {
+            ecs->m_ECS_SceneMap.find(scenename)->second.m_isPrefab = true;
+            ecs->m_ECS_SceneMap.find(scenename)->second.m_isActive = false;
+
+            if (prefab::Prefab::m_prefabMap.find(scenename) != prefab::Prefab::m_prefabMap.end()) {
+                LOGGING_ERROR("prefab already exist");
+                return;
+            }
+            
+            prefab::Prefab::m_prefabMap[scenename];
+
+
+            ecs::ECS::SceneID::m_PrefabCount++;
+        }
+        else {
+            ecs::ECS::SceneID::m_regularSceneCount++;
         }
             
         // Load entities from the JSON file

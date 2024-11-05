@@ -34,9 +34,13 @@ namespace prefab {
 
 		static void m_SaveEntitytoPrefab(ecs::EntityID);
 
+		static void m_AssignEntitytoPrefab(std::string prefab, ecs::EntityID id);
+
+		static std::unordered_map < std::string, std::vector<ecs::EntityID>> m_prefabMap;
+
 	private:
 
-
+		
 
 	};
 

@@ -4,12 +4,12 @@
             "namestr": "Player",
             "layer": 0,
             "isprefab": true,
-            "prefabname": "Default.json"
+            "prefabname": "Player.prefab"
         },
         "transform": {
             "position": {
-                "x": 0.0,
-                "y": 0.0
+                "x": 12.475058555603027,
+                "y": -5.441643238067627
             },
             "rotation": 0.0,
             "scale": {
@@ -62,7 +62,7 @@
                     "namestr": "gunright_02",
                     "layer": 0,
                     "isprefab": true,
-                    "prefabname": "Default.json"
+                    "prefabname": "Player.prefab"
                 },
                 "transform": {
                     "position": {
@@ -91,7 +91,7 @@
                     "namestr": "gunleft_02",
                     "layer": 0,
                     "isprefab": true,
-                    "prefabname": "Default.json"
+                    "prefabname": "Player.prefab"
                 },
                 "transform": {
                     "position": {

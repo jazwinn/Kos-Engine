@@ -33,6 +33,8 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 namespace prefab {
 
+    std::unordered_map < std::string, std::vector<ecs::EntityID>> Prefab::m_prefabMap;
+
     void AssignPrefabToNameComponent(ecs::EntityID parentid, std::string scenename) {
         const auto& vecChild = ecs::Hierachy::m_GetChild(parentid);
         if (!vecChild.has_value()) return;
@@ -82,11 +84,11 @@ namespace prefab {
             ecs::ECS* ecs = ecs::ECS::m_GetInstance();
             ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id));
             nc->m_isPrefab = true;
-            nc->m_prefabName = insertscene;
+            nc->m_prefabName = prefabscene;
 
             const auto& vecChild = ecs::Hierachy::m_GetChild(id);
             if (!vecChild.has_value()) continue;
-            AssignPrefabToNameComponent(id, insertscene);
+            AssignPrefabToNameComponent(id, prefabscene);
         
         }
 
@@ -149,6 +151,34 @@ namespace prefab {
 
         // load prefab
         scenes::SceneManager::m_GetInstance()->m_LoadScene(path);
+
+
+    }
+
+    void Prefab::m_AssignEntitytoPrefab(std::string prefab, ecs::EntityID id)
+    {
+        if (m_prefabMap.find(prefab) == m_prefabMap.end()) {
+            LOGGING_WARN("Prefab not loaded");
+            return;
+        }
+        // only store upmost parent id
+        ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+        ecs::TransformComponent* tc = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id));
+        if (tc->m_haveParent) {
+            return;
+        }
+
+
+        // check if id is already inside
+        auto& vecid = m_prefabMap.find(prefab)->second;
+
+        if (std::find(vecid.begin(), vecid.end(), id) != vecid.end()) return;
+
+        
+        m_prefabMap.find(prefab)->second.push_back(id);
+
+
+
 
 
     }
