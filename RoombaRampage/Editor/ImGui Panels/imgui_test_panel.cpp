@@ -23,6 +23,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Events/MessageSystem.h"
 #include "../Events/Listeners.h"
 #include "../Events/EventHandler.h"
+#include <iostream>
 
 #include<vector>
 #include<string>
@@ -63,6 +64,11 @@ void gui::ImGuiHandler::m_DrawTestWindow() {
 		assetManager->m_audioManager.m_soundMap.find("mindstorm.wav")->second->m_StopSound();
 		assetManager->m_audioManager.m_soundMap.find("zwing.wav")->second->m_StopSound();
 	}
+
+
+	/*
+		1 background + 3 fx sounds
+	*/
 	ImGui::NewLine();
 	ImGui::SeparatorText("##########################################");
 	ImGui::NewLine();
@@ -121,6 +127,11 @@ void gui::ImGuiHandler::m_DrawTestWindow() {
 	static ecs::EntityID id_1;
 	static ecs::EntityID id_2;
 	if (ImGui::Button("Collision Test")) {
+		if (!collision_Flag) {
+			std::cout << "HI" << std::endl;
+			collision_Flag = true;
+			delete_Flag = false;
+		}
 		//if (!collision_Flag) {
 		//	//create player 
 		//	id_1 = ecs->m_CreateEntity();
@@ -153,8 +164,9 @@ void gui::ImGuiHandler::m_DrawTestWindow() {
 	ImGui::SameLine();
 	if (ImGui::Button("Delete")) {
 		if (!delete_Flag) {
-			ecs::ECS::m_GetInstance()->m_DeleteEntity(id_1);
-			ecs::ECS::m_GetInstance()->m_DeleteEntity(id_2);
+			std::cout << "bopes" << std::endl;
+			//ecs::ECS::m_GetInstance()->m_DeleteEntity(id_1);
+			//ecs::ECS::m_GetInstance()->m_DeleteEntity(id_2);
 			collision_Flag = false;
 			delete_Flag = true;
 		}
