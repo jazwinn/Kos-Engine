@@ -43,7 +43,47 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
 {
     graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
 
-    ImGui::Begin("Editor Window");
+    ImGuiWindowFlags window_flags = 0;
+    window_flags |= ImGuiWindowFlags_MenuBar;
+    bool open = true;
+
+    ImGui::Begin("Editor Window", &open, window_flags);
+    static bool pause = true;
+    ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+    if (ImGui::BeginMenuBar()) {
+        if (ImGui::BeginMenu("Play")) {
+            if (pause) {
+                pause = false;
+                ecs->m_nextState = (ecs->m_getState() == ecs::STOP) ? ecs::START : ecs::RUNNING;
+
+                if (ecs->m_nextState == ecs::START) {
+                    assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+                    assetmanager->m_scriptManager.m_HotReloadCompileAllCsharpFile();
+                    assetmanager->m_scriptManager.m_ReloadAllDLL();
+                }
+            }
+            ImGui::EndMenu();
+        }
+
+        if (ImGui::BeginMenu("Pause")) {
+
+            if (!pause) {
+                pause = true;
+                ecs->m_nextState = ecs::WAIT;
+            }
+            ImGui::EndMenu();
+        }
+
+        if (ImGui::BeginMenu("stop")) {
+            if (ecs->m_getState() != ecs::STOP) {
+                ecs->m_nextState = ecs::STOP;
+                pause = true;
+            }
+            ImGui::EndMenu();
+        }
+
+    }
+    ImGui::EndMenuBar();
 
     ImVec2 pos = ImGui::GetCursorScreenPos();
     ImVec2 renderWindowSize = ImGui::GetContentRegionAvail();
@@ -164,9 +204,9 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
             
 
             if (filename->filename().extension().string() == ".png") {
-             ecs::ECS* ecs = ecs::ECS::m_GetInstance();
-                ecs::EntityID id = ecs->m_CreateEntity(m_activeScene); //assign to active scene
-                ecs::TransformComponent* transCom = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id));
+             ecs::ECS* fileecs = ecs::ECS::m_GetInstance();
+                ecs::EntityID id = fileecs->m_CreateEntity(m_activeScene); //assign to active scene
+                ecs::TransformComponent* transCom = static_cast<ecs::TransformComponent*>(fileecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id));
                 transCom->m_position = { translate.x, translate.y };
                 // Insert matrix
                 ecs::NameComponent* nameCom = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id));
@@ -177,14 +217,14 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
                 m_clickedEntityId = id;
             }
             if (filename->filename().extension().string() == ".ttf") {
-                ecs::ECS* ecs = ecs::ECS::m_GetInstance();
-                ecs::EntityID id = ecs->m_CreateEntity(m_activeScene); //assign to top most scene
-                ecs::TransformComponent* transCom = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id));
+                ecs::ECS* fileecs = ecs::ECS::m_GetInstance();
+                ecs::EntityID id = fileecs->m_CreateEntity(m_activeScene); //assign to top most scene
+                ecs::TransformComponent* transCom = static_cast<ecs::TransformComponent*>(fileecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id));
                 transCom->m_position = { translate.x, translate.y };
                 // Insert matrix
-                ecs::NameComponent* nameCom = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id));
+                ecs::NameComponent* nameCom = static_cast<ecs::NameComponent*>(fileecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id));
                 nameCom->m_entityName = filename->filename().stem().string();
-                ecs::TextComponent* textCom = static_cast<ecs::TextComponent*>(ecs->m_AddComponent(ecs::TYPETEXTCOMPONENT, id));
+                ecs::TextComponent* textCom = static_cast<ecs::TextComponent*>(fileecs->m_AddComponent(ecs::TYPETEXTCOMPONENT, id));
                 textCom->m_fileName = filename->filename().string();
 
                 m_clickedEntityId = id;
