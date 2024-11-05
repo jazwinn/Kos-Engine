@@ -161,5 +161,54 @@ void gui::ImGuiHandler::m_DrawTestWindow() {
 	}
 
 
+	ImGui::SeparatorText("##########################################");
+	ImGui::NewLine();
+	static bool font_Flag = false;
+	static bool font_delete_Flag = true;
+	static ecs::EntityID fontid_1;
+	static ecs::EntityID fontid_2;
+	if (ImGui::Button("Double Font Test") && !font_Flag)
+	{
+		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+
+		fontid_1 = ecs->m_CreateEntity(m_activeScene);
+		ecs->m_AddComponent(ecs::TYPETEXTCOMPONENT, fontid_1);
+		static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(fontid_1))->m_fileName = std::string("lazy_dog.ttf");
+		static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(fontid_1))->m_text = std::string("Hello");
+		static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(fontid_1))->m_entityName = std::string("Test Font 1");
+		static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(fontid_1))->m_position = { -1.f,1.f };
+		static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(fontid_1))->m_fontSize = { 10.f };
+
+
+		fontid_2 = ecs->m_CreateEntity(m_activeScene);
+		ecs->m_AddComponent(ecs::TYPETEXTCOMPONENT, fontid_2);
+		static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(fontid_2))->m_fileName = std::string("RubikGlitch-Regular.ttf");
+		static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(fontid_2))->m_text = std::string("World");
+		static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(fontid_2))->m_entityName = std::string("Test Font 2");
+		static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(fontid_2))->m_position = { -1.f,-1.f };
+		static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(fontid_2))->m_fontSize = { 10.f };
+		font_Flag = true;
+		font_delete_Flag = false;
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("Delete Font")) 
+	{
+		if (!font_delete_Flag) 
+		{
+			ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+			if (ecs->m_ECS_EntityMap.find(fontid_1) != ecs->m_ECS_EntityMap.end())
+			{
+				ecs::ECS::m_GetInstance()->m_DeleteEntity(fontid_1);
+			}
+			if (ecs->m_ECS_EntityMap.find(fontid_2) != ecs->m_ECS_EntityMap.end())
+			{
+				ecs::ECS::m_GetInstance()->m_DeleteEntity(fontid_2);
+			}
+			font_Flag = false;
+			font_delete_Flag = true;
+		}
+	}
+
+
 	ImGui::End();
 }
