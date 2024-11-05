@@ -133,16 +133,18 @@ namespace ecs {
 
 				
 			}
-			mat3x3::Mat3x3 debugTransformation = mat3x3::Mat3Transform(vector2::Vec2{ transform->m_transformation.m_e20, transform->m_transformation.m_e21 }, vector2::Vec2{ 1.f, 1.f }, transform->m_rotation);
+			/*mat3x3::Mat3x3 debugTransformation = mat3x3::Mat3Transform(vector2::Vec2{ transform->m_transformation.m_e20, transform->m_transformation.m_e21 }, vector2::Vec2{ 1.f, 1.f }, transform->m_rotation);
 
 			graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
 			pipe->m_debugBoxData.push_back({ glm::mat3{debugTransformation.m_e00,debugTransformation.m_e01,debugTransformation.m_e02,
 																debugTransformation.m_e10,debugTransformation.m_e11, debugTransformation.m_e12,
 															debugTransformation.m_e20, debugTransformation.m_e21, debugTransformation.m_e22} ,
-														3.f, 0 });
+														3.f, 0 });*/
 
 			
 		}
 	}
 }
+
+
  

@@ -89,15 +89,13 @@ namespace ecs {
 			float green = text->m_color.m_y;
 			float blue = text->m_color.m_z;
 
-			//float windowCordianteX = (transform->m_position.m_x + 1) / 2 * help->m_windowWidth;
-			//float windowCordianteY = (transform->m_position.m_y + 1) / 2 * help->m_windowHeight;
 			vector2::Vec2 translate{};
 			vector2::Vec2 scale{};
 			float rotate{};
 			mat3x3::Mat3Decompose(transform->m_transformation, translate, scale, rotate);
 
 			graphicsPipe->m_textData.push_back(graphicpipe::TextData{ text->m_text,  transform->m_transformation.m_e20 ,transform->m_transformation.m_e21, -rotate, text->m_fontSize,  {red, green, blue}, text->m_fileName});
-			//m_funcDrawText("(C) LearnOpenGL.com", 540.0f, 570.0f, 0.5f, glm::vec3(0.3, 0.7f, 0.9f));
+		
 
 		}
 

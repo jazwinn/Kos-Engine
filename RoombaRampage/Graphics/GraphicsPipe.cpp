@@ -130,6 +130,7 @@ namespace graphicpipe {
 		if (GraphicsCamera::m_cameras.size() > 0 && m_gameMode)
 		{
 			GraphicsCamera::setCurrCamera(0);
+			
 			GraphicsCamera::calculateCurrView();
 		}
 		GraphicsCamera::multiplyViewMatrix();
