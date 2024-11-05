@@ -77,11 +77,6 @@ namespace script {
         m_ScriptMap.erase(scriptEntry);
     }
 
-
-
-
-
-
     void ScriptHandler::m_AddScripts(const std::filesystem::path& scriptpath) {
 
             
@@ -223,7 +218,7 @@ namespace script {
         //IF COMPILE ERROR, MAKE SURE TO UNLOAD ASSEMBLY AND APPDOMAIN
         std::filesystem::path projectBasePath = std::filesystem::current_path();
 
-        std::string compilepath = projectBasePath.string() + "\\C#Mono\\CompilerCSC\\bin\\csc";
+        std::string compilepath = "\"" + projectBasePath.string() + "\\C#Mono\\CompilerCSC\\bin\\csc\"";
 
         std::filesystem::path referenceDLL = projectBasePath / "ScriptLibrary" / "GameScript" / "ScriptCoreDLL" / "GameScript.dll";
 
@@ -232,13 +227,20 @@ namespace script {
         std::filesystem::path outputDLL = projectBasePath / "Assets" / "Scripts" / "ScriptsDLL" / (filePath.filename().stem().string() + ".dll");
 
 
-        std::string command = compilepath + " /target:library /out:" + outputDLL.string() + " /reference:" + referenceDLL.string() + " " + filePath.string();
+        std::string command = compilepath + " /target:library \"/out:" + outputDLL.string() + "\" \"/reference:" + referenceDLL.string() + "\" \"" + filePath.string() + "\"";
         //std::string command = compilepath + " /target:library /out:" + outputDLL.string() + " C:\\Users\\ngjaz\\OneDrive\\Documents\\roombarampage\\GreyGooseWorkspace\\RRR\\RoombaRampage\\ScriptLibrary\\GameScript\\ScriptCore\\ScriptBase.cs "  + filePath.string();
-
+        
+        // Write the command to a batch file
+        std::ofstream batchFile("run_command.bat");
+        batchFile << command << std::endl;
+        batchFile.close();
 
         std::cout << command << std::endl;
         //// Execute the command
-        int result = system(command.c_str());
+        int result = system("run_command.bat");
+
+        //remove bat file
+        std::remove("run_command.bat");
 
         // Check the result of the command
         if (result == 0)

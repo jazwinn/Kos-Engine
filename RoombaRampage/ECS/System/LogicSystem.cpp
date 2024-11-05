@@ -71,8 +71,8 @@ namespace ecs {
 			for (const std::string& script : scriptComp->m_scripts) {
 
 				if (assetManager->m_scriptManager.m_ScriptMap.find(script) == assetManager->m_scriptManager.m_ScriptMap.end()) {
-					continue;
 					LOGGING_ERROR("SCRIPT NOT FOUND ! PLEASE RELAUNCH APPLIATION");
+					continue;
 				}
 
 				// retieve isntance for each object
@@ -95,7 +95,7 @@ namespace ecs {
 		}
 	}
 
-	void LogicSystem::m_Update() {
+	void LogicSystem::m_Update(const std::string& scene) {
 
 		//ECS* ecs = ECS::m_GetInstance();
 		assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
@@ -110,7 +110,9 @@ namespace ecs {
 			//std::cout << "Entity: " << n << "Movement System is getting Updated";
 
 			ScriptComponent* scriptComp = m_vecScriptComponentPtr[n];
-			//EntityID id = scriptComp->m_Entity;
+			
+			//skip component not of the scene
+			if (scriptComp->m_scene != scene) continue;
 
 			for (auto& script : scriptComp->m_scriptInstances) {
 

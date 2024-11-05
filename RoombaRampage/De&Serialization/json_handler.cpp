@@ -109,8 +109,20 @@ namespace Serialization {
 		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
 		std::string scenename = jsonFilePath.filename().string();
 		
+		//create scene
 		ecs->m_ECS_SceneMap[scenename];
+		//check if file is prefab or scene
+		if (jsonFilePath.filename().extension().string() == ".prefab") {
+			ecs->m_ECS_SceneMap.find(scenename)->second.m_isPrefab = true;
+			ecs->m_ECS_SceneMap.find(scenename)->second.m_isActive = false;
+			ecs::ECS::SceneID::m_PrefabCount++;
+		}
+		else {
+			ecs::ECS::SceneID::m_regularSceneCount++;
+		}
+
 		
+
 		/*******************INSERT INTO FUNCTION*****************************/
 
 		// Iterate through each component entry in the JSON array
@@ -119,7 +131,7 @@ namespace Serialization {
 			m_LoadEntity(entityData, std::nullopt, scenename);
 		}
 
-		
+
 		LOGGING_INFO("Load Json Successful");
 	}
 
@@ -138,7 +150,7 @@ namespace Serialization {
 		std::unordered_set<ecs::EntityID> savedEntities;  //track saved entities
 
 		//Start saving the entities
-		std::vector<ecs::EntityID> entities = ecs->m_ECS_SceneMap.find(scene.filename().string())->second;
+		std::vector<ecs::EntityID> entities = ecs->m_ECS_SceneMap.find(scene.filename().string())->second.m_sceneIDs;
 		for (const auto& entityId : entities) {
 			if (!ecs::Hierachy::m_GetParent(entityId).has_value()) {
 				m_SaveEntity(entityId, doc, allocator, savedEntities);
@@ -156,7 +168,7 @@ namespace Serialization {
 			outputFile.close();
 		}
 
-		LOGGING_INFO("Save Json Successful");     
+		LOGGING_INFO("Save Json Successful");
 	}
 
 	void Serialize::m_SaveEntity(ecs::EntityID entityId, rapidjson::Value& parentArray, rapidjson::Document::AllocatorType& allocator, std::unordered_set<ecs::EntityID>& savedEntities) {
@@ -172,10 +184,27 @@ namespace Serialization {
 
 		// Find and save name for this entity
 		if (signature.test(ecs::ComponentType::TYPENAMECOMPONENT)) {
-			rapidjson::Value nameValue;
-			nameValue.SetString(static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(entityId))->m_entityName.c_str(), allocator);
-			entityData.AddMember("name", nameValue, allocator);
-			hasComponents = true;
+			ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(entityId));
+
+			if (nc) {
+				rapidjson::Value name(rapidjson::kObjectType);
+				rapidjson::Value nameValue, prefabValue;
+				nameValue.SetString(nc->m_entityName.c_str(), allocator);
+				name.AddMember("namestr", nameValue, allocator);
+				name.AddMember("layer", (int)nc->m_Layer, allocator);
+				name.AddMember("isprefab", nc->m_isPrefab, allocator);
+				if (nc->m_isPrefab) {
+					prefabValue.SetString(nc->m_prefabName.c_str(), allocator);
+					name.AddMember("prefabname", prefabValue, allocator);
+				}
+				entityData.AddMember("name", name, allocator);
+				hasComponents = true;
+
+
+
+			}
+
+
 		}
 
 		// Check if the entity has TransformComponent and save it
@@ -233,18 +262,21 @@ namespace Serialization {
 				rigidbody.AddMember("linearVelocity", rapidjson::Value().SetObject()
 					.AddMember("x", rb->m_Velocity.m_x, allocator)
 					.AddMember("y", rb->m_Velocity.m_y, allocator), allocator);
-				rigidbody.AddMember("acceleration", rapidjson::Value().SetObject()
+				rigidbody.AddMember("linearAcceleration", rapidjson::Value().SetObject()
 					.AddMember("x", rb->m_Acceleration.m_x, allocator)
 					.AddMember("y", rb->m_Acceleration.m_y, allocator), allocator);
 
 				rigidbody.AddMember("rotation", rb->m_Rotation, allocator);
+
 				rigidbody.AddMember("angularVelocity", rb->m_AngularVelocity, allocator);
 				rigidbody.AddMember("angularAcceleration", rb->m_AngularAcceleration, allocator);
+
 				rigidbody.AddMember("mass", rb->m_Mass, allocator);
 				rigidbody.AddMember("inverseMass", rb->m_InverseMass, allocator);
+
 				rigidbody.AddMember("linearDamping", rb->m_LinearDamping, allocator);
 				rigidbody.AddMember("angularDamping", rb->m_AngularDamping, allocator);
-				
+
 				rigidbody.AddMember("force", rapidjson::Value().SetObject()
 					.AddMember("x", rb->m_Force.m_x, allocator)
 					.AddMember("y", rb->m_Force.m_y, allocator), allocator);
@@ -268,30 +300,48 @@ namespace Serialization {
 
 				sprite.AddMember("imagefile", textValue, allocator);
 				sprite.AddMember("layer", sc->m_layer, allocator);
+
+				rapidjson::Value colorValue(rapidjson::kObjectType);
+				colorValue.AddMember("r", sc->m_color.m_x, allocator);
+				colorValue.AddMember("g", sc->m_color.m_y, allocator);
+				colorValue.AddMember("b", sc->m_color.m_z, allocator);
+				sprite.AddMember("color", colorValue, allocator);
+				sprite.AddMember("alpha", sc->m_alpha, allocator);
+
 				entityData.AddMember("sprite", sprite, allocator);
 				hasComponents = true;  // Mark as having a component
 			}
 		}
 
+		// Check if the entity has TextComponent and save it
 		if (signature.test(ecs::ComponentType::TYPETEXTCOMPONENT)) {
 			ecs::TextComponent* tc = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPETEXTCOMPONENT]->m_GetEntityComponent(entityId));
 			if (tc) {
 				rapidjson::Value text(rapidjson::kObjectType);
 				rapidjson::Value textValue;
 				textValue.SetString(tc->m_text.c_str(), allocator);
+				text.AddMember("text", textValue, allocator);
 
 				text.AddMember("text", textValue, allocator);
+
+				if (!tc->m_fileName.empty()) {
+					rapidjson::Value fileNameValue;
+					fileNameValue.SetString(tc->m_fileName.c_str(), allocator);
+					text.AddMember("filename", fileNameValue, allocator);
+				}
+
 				text.AddMember("fontsize", tc->m_fontSize, allocator);
 				text.AddMember("colour", rapidjson::Value().SetObject()
-					.AddMember("red", tc->m_color.m_x, allocator)
-					.AddMember("blue", tc->m_color.m_y, allocator)
-					.AddMember("green", tc->m_color.m_z, allocator), allocator);
+					.AddMember("r", tc->m_color.m_x, allocator)
+					.AddMember("b", tc->m_color.m_y, allocator)
+					.AddMember("g", tc->m_color.m_z, allocator), allocator);
 
 				entityData.AddMember("text", text, allocator);
 				hasComponents = true;  // Mark as having a component
 			}
 		}
 
+		// Check if the entity has AnimationComponent and save it
 		if (signature.test(ecs::ComponentType::TYPEANIMATIONCOMPONENT)) {
 			ecs::AnimationComponent* ac = static_cast<ecs::AnimationComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPEANIMATIONCOMPONENT]->m_GetEntityComponent(entityId));
 			if (ac) {
@@ -305,31 +355,35 @@ namespace Serialization {
 			}
 		}
 
+		// Check if the entity has CameraComponent and save it
 		if (signature.test(ecs::ComponentType::TYPECAMERACOMPONENT))
 		{
 			ecs::CameraComponent* cc = static_cast<ecs::CameraComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPECAMERACOMPONENT]->m_GetEntityComponent(entityId));
 			if (cc)
 			{
 				rapidjson::Value camera(rapidjson::kObjectType);
-				/*camera.AddMember("planes", rapidjson::Value().SetObject()
+
+				camera.AddMember("planes", rapidjson::Value().SetObject()
 					.AddMember("left", cc->m_left, allocator)
 					.AddMember("right", cc->m_right, allocator)
 					.AddMember("top", cc->m_top, allocator)
 					.AddMember("bottom", cc->m_bottom, allocator), allocator);
-				camera.AddMember("aspectRatio", cc->m_aspectRatio, allocator);*/
+
+				camera.AddMember("aspectRatio", cc->m_aspectRatio, allocator);
 
 				entityData.AddMember("camera", camera, allocator);
 				hasComponents = true;
 			}
 		}
 
-		if (signature.test(ecs::ComponentType::TYPECAMERACOMPONENT))
+		// Check if the entity has ButtonComponent and save it
+		if (signature.test(ecs::ComponentType::TYPEBUTTONCOMPONENT))
 		{
-			ecs::ButtonComponent* bc = static_cast<ecs::ButtonComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPECAMERACOMPONENT]->m_GetEntityComponent(entityId));
+			ecs::ButtonComponent* bc = static_cast<ecs::ButtonComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPEBUTTONCOMPONENT]->m_GetEntityComponent(entityId));
 			if (bc)
 			{
 				rapidjson::Value button(rapidjson::kObjectType);
-	
+
 				button.AddMember("force", rapidjson::Value().SetObject()
 					.AddMember("x", bc->m_Position.m_x, allocator)
 					.AddMember("y", bc->m_Position.m_y, allocator), allocator);
@@ -338,22 +392,30 @@ namespace Serialization {
 					.AddMember("x", bc->m_Scale.m_x, allocator)
 					.AddMember("y", bc->m_Scale.m_y, allocator), allocator);
 
-				button.AddMember("isClick", bc->m_IsClick, allocator);
+				//button.AddMember("isClick", bc->m_IsClick, allocator);
 
 				entityData.AddMember("button", button, allocator);
 				hasComponents = true;
 			}
 		}
 
-		if (signature.test(ecs::ComponentType::TYPECAMERACOMPONENT))
+		// Check if the entity has ScriptComponent and save it
+		if (signature.test(ecs::ComponentType::TYPESCRIPTCOMPONENT))
 		{
-			ecs::ScriptComponent* sc = static_cast<ecs::ScriptComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPECAMERACOMPONENT]->m_GetEntityComponent(entityId));
+			ecs::ScriptComponent* sc = static_cast<ecs::ScriptComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPESCRIPTCOMPONENT]->m_GetEntityComponent(entityId));
 			if (sc)
 			{
 				rapidjson::Value script(rapidjson::kObjectType);
 
 				//TENTATIVE
+				rapidjson::Value scriptArray(rapidjson::kArrayType);
+				for (const auto& scriptName : sc->m_scripts) {
+					rapidjson::Value scriptValue;
+					scriptValue.SetString(scriptName.c_str(), allocator);
+					scriptArray.PushBack(scriptValue, allocator);
+				}
 
+				script.AddMember("scripts", scriptArray, allocator);
 				entityData.AddMember("script", script, allocator);
 				hasComponents = true;
 			}
@@ -383,11 +445,29 @@ namespace Serialization {
 		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
 		ecs::EntityID newEntityId = ecs->m_CreateEntity(sceneName);
 
-		// Load the name field
-		if (entityData.HasMember("name") && entityData["name"].IsString()) {
+		if (entityData.HasMember("name") && entityData["name"].IsObject()) {
 			ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(newEntityId));
-			nc->m_entityName = entityData["name"].GetString();  // Store the name
+			const rapidjson::Value& name = entityData["name"];
+
+			if (name.HasMember("namestr") && name["namestr"].IsString()) {
+				nc->m_entityName = name["namestr"].GetString();  // Store the name
+			}
+			if (name.HasMember("layer") && name["layer"].IsInt()) {
+				 int layer = name["layer"].GetInt();
+				 nc->m_Layer = (layer::LAYERS)layer;
+			}
+			if (name.HasMember("isprefab") && name["isprefab"].IsBool()) {
+				nc->m_isPrefab = name["isprefab"].GetBool();
+			}
+			if (nc->m_isPrefab) {
+				if (name.HasMember("prefabname") && name["prefabname"].IsString()) {
+					nc->m_prefabName = name["prefabname"].GetString();
+				}
+			}
 		}
+
+
+		
 
 		// Load TransformComponent if it exists
 		if (entityData.HasMember("transform") && entityData["transform"].IsObject()) {
@@ -454,9 +534,9 @@ namespace Serialization {
 					rb->m_Velocity.m_x = rigidbody["linearVelocity"]["x"].GetFloat();
 					rb->m_Velocity.m_y = rigidbody["linearVelocity"]["y"].GetFloat();
 				}
-				if (rigidbody.HasMember("acceleration") && rigidbody["acceleration"].IsObject()) {
-					rb->m_Acceleration.m_x = rigidbody["acceleration"]["x"].GetFloat();
-					rb->m_Acceleration.m_y = rigidbody["acceleration"]["y"].GetFloat();
+				if (rigidbody.HasMember("linearAcceleration") && rigidbody["linearAcceleration"].IsObject()) {
+					rb->m_Acceleration.m_x = rigidbody["linearAcceleration"]["x"].GetFloat();
+					rb->m_Acceleration.m_y = rigidbody["linearAcceleration"]["y"].GetFloat();
 				}
 
 				if (rigidbody.HasMember("rotation")) {
@@ -468,14 +548,19 @@ namespace Serialization {
 				if (rigidbody.HasMember("angularAcceleration")) {
 					rb->m_AngularAcceleration = rigidbody["angularAcceleration"].GetFloat();
 				}
+
 				if (rigidbody.HasMember("mass")) {
 					rb->m_Mass = rigidbody["mass"].GetFloat();
 				}
 				if (rigidbody.HasMember("inverseMass")) {
 					rb->m_InverseMass = rigidbody["inverseMass"].GetFloat();
 				}
+
 				if (rigidbody.HasMember("linearDamping")) {
 					rb->m_LinearDamping = rigidbody["linearDamping"].GetFloat();
+				}
+				if (rigidbody.HasMember("angularDamping")) {
+					rb->m_AngularDamping = rigidbody["angularDamping"].GetFloat();
 				}
 
 				if (rigidbody.HasMember("force") && rigidbody["force"].IsObject()) {
@@ -509,6 +594,15 @@ namespace Serialization {
 					sc->m_layer = sprite["layer"].GetInt();
 				}
 
+				if (sprite.HasMember("color") && sprite["color"].IsObject()) {
+					const rapidjson::Value& color = sprite["color"];
+					if (color.HasMember("r")) sc->m_color.m_x = color["r"].GetFloat();
+					if (color.HasMember("g")) sc->m_color.m_y = color["g"].GetFloat();
+					if (color.HasMember("b")) sc->m_color.m_z = color["b"].GetFloat();
+				}
+				if (sprite.HasMember("alpha")) {
+					sc->m_alpha = sprite["alpha"].GetFloat();
+				}
 			}
 		}
 
@@ -521,13 +615,17 @@ namespace Serialization {
 				if (text.HasMember("text")) {
 					tc->m_text = text["text"].GetString();
 				}
+				if (text.HasMember("filename")) {
+					tc->m_fileName = text["filename"].GetString();
+				}
 				if (text.HasMember("fontsize")) {
 					tc->m_fontSize = text["fontsize"].GetFloat();
 				}
-				if (text.HasMember("colour")) {
-					tc->m_color.m_x = text["colour"]["red"].GetFloat();
-					tc->m_color.m_y = text["colour"]["green"].GetFloat();
-					tc->m_color.m_z = text["colour"]["blue"].GetFloat();
+				if (text.HasMember("color")) {
+					const rapidjson::Value& color = text["color"];
+					if (color.HasMember("r")) tc->m_color.m_x = color["r"].GetFloat();
+					if (color.HasMember("g")) tc->m_color.m_y = color["g"].GetFloat();
+					if (color.HasMember("b")) tc->m_color.m_z = color["b"].GetFloat();
 				}
 			}
 		}
@@ -549,13 +647,14 @@ namespace Serialization {
 					bc->m_Scale.m_y = button["scale"]["y"].GetFloat();
 				}
 
-				if (button.HasMember("isClick"))
-				{
-					bc->m_IsClick = button["isClick"].GetBool();
-				}
+				//if (button.HasMember("isClick"))
+				//{
+				//	bc->m_IsClick = button["isClick"].GetBool();
+				//}
 			}
 		}
 
+		// Load Animation Component if it exists
 		if (entityData.HasMember("animation") && entityData["animation"].IsObject()) {
 			ecs::AnimationComponent* ac = static_cast<ecs::AnimationComponent*>(ecs->m_AddComponent(ecs::TYPEANIMATIONCOMPONENT, newEntityId));
 
@@ -585,10 +684,40 @@ namespace Serialization {
 			ecs::CameraComponent* cc = static_cast<ecs::CameraComponent*>(ecs->m_AddComponent(ecs::TYPECAMERACOMPONENT, newEntityId));
 
 			if (cc) {
-				//const rapidjson::Value& camera = entityData["camera"];
+				const rapidjson::Value& camera = entityData["camera"];
 
+				if (camera.HasMember("planes") && camera["planes"].IsObject()) {
+					const rapidjson::Value& planes = camera["planes"];
+					if (planes.HasMember("left")) cc->m_left = planes["left"].GetFloat();
+					if (planes.HasMember("right")) cc->m_right = planes["right"].GetFloat();
+					if (planes.HasMember("top")) cc->m_top = planes["top"].GetFloat();
+					if (planes.HasMember("bottom")) cc->m_bottom = planes["bottom"].GetFloat();
+				}
+
+				if (camera.HasMember("aspectRatio")) {
+					cc->m_aspectRatio = camera["aspectRatio"].GetFloat();
+				}
 			}
 		}
+
+		// Load Script Component if it exists
+		if (entityData.HasMember("script") && entityData["script"].IsObject()) {
+			ecs::ScriptComponent* sc = static_cast<ecs::ScriptComponent*>(ecs->m_AddComponent(ecs::TYPESCRIPTCOMPONENT, newEntityId));
+
+			if (sc) {
+				const rapidjson::Value& script = entityData["script"];
+
+				if (script.HasMember("scripts") && script["scripts"].IsArray()) {
+					const rapidjson::Value& scriptArray = script["scripts"];
+					for (rapidjson::SizeType i = 0; i < scriptArray.Size(); i++) {
+						if (scriptArray[i].IsString()) {
+							sc->m_scripts.push_back(scriptArray[i].GetString());
+						}
+					}
+				}
+			}
+		}
+
 
 		//Attach entity to parent
 		if (parentID.has_value()) {

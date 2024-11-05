@@ -63,7 +63,7 @@ namespace ecs {
 		m_SystemSignature.set(TYPETRANSFORMCOMPONENT);
 	}
 
-	void ButtonSystem::m_Update() {
+	void ButtonSystem::m_Update(const std::string& scene) {
 		//ECS* ecs = ECS::m_GetInstance();
 		Helper::Helpers* help = Helper::Helpers::GetInstance();
 		if (m_vecTransformComponentPtr.size() != m_vecButtonComponentPtr.size()) {
@@ -123,6 +123,10 @@ namespace ecs {
 		for (int i = 0; i < m_vecButtonComponentPtr.size(); ++i) {
 			ButtonComponent* button = m_vecButtonComponentPtr[i];
 			TransformComponent* transform = m_vecTransformComponentPtr[i];
+
+			//skip component not of the scene
+			if (button->m_scene != scene) continue;
+
 			if (button->m_IsClick) {
 				std::cout << "clicked" << std::endl;
 				button->m_IsClick = false;

@@ -74,7 +74,7 @@ namespace ecs {
 
 	}
 
-	void CollisionSystem::m_Update() {
+	void CollisionSystem::m_Update(const std::string& scene) {
 
 		ECS* ecs = ECS::m_GetInstance();
 
@@ -100,6 +100,9 @@ namespace ecs {
 			TransformComponent* TransComp = m_vecTransformComponentPtr[n];
 			NameComponent* NameComp = m_vecNameComponentPtr[n];
 			EntityID id = ColComp->m_Entity;
+
+			//skip component not of the scene
+			if (ColComp->m_scene != scene) continue;
 			
 
 			//if movement component is present, do dynamic collision

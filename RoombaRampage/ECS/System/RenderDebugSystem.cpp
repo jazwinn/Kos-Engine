@@ -23,6 +23,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Graphics/GraphicsCamera.h"
 #include "../Math/Mat3x3.h"
 #include "../Math/vector2.h"
+#include "../ECS/Hierachy.h"
 
 namespace ecs {
 
@@ -66,7 +67,7 @@ namespace ecs {
 
 	}
 
-	void DebugDrawingSystem::m_Update() {
+	void DebugDrawingSystem::m_Update(const std::string& scene) {
 
 		ECS* ecs = ECS::m_GetInstance();
 
@@ -80,14 +81,43 @@ namespace ecs {
 		for (int n{}; n < m_vecTransformComponentPtr.size(); n++) {
 
 			TransformComponent* transform = m_vecTransformComponentPtr[n];
-			if (ecs->m_ECS_EntityMap[transform->m_Entity].test(TYPECOLLIDERCOMPONENT))
-			{
-				ColliderComponent* collider = (ColliderComponent*)ecs->m_ECS_CombinedComponentPool[TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(transform->m_Entity);
+			ColliderComponent* collider = m_vecColliderComponentPtr[n];
+			//skip component not of the scene
+			if (collider->m_scene != scene) continue;
 
-				/*
-					TODO debug box also follow the child
-				*/
+			if (transform->m_haveParent) {
+				EntityID parentID = ecs::Hierachy::m_GetParent(transform->m_Entity).value();
+				TransformComponent* parentComp{ nullptr };
+				for (auto& com : m_vecTransformComponentPtr) {
+					if (com->m_Entity == parentID) {
+						parentComp = com;
+					}
+				}
+				if (!parentComp) continue;
 
+				vector2::Vec2 pos{}, scale{};
+				float rot{};
+				mat3x3::Mat3Decompose(transform->m_transformation, pos, scale, rot);
+				if (collider->m_drawDebug && (collider->m_type == physicspipe::EntityType::RECTANGLE))
+				{
+					mat3x3::Mat3x3 debugTransformation = mat3x3::Mat3Transform(vector2::Vec2{ transform->m_transformation.m_e20 + collider->m_OffSet.m_x, transform->m_transformation.m_e21 + collider->m_OffSet.m_y }, vector2::Vec2{ collider->m_Size.m_x, collider->m_Size.m_y }, rot);
+
+					graphicsPipe->m_debugBoxData.push_back({ glm::mat3{debugTransformation.m_e00,debugTransformation.m_e01,debugTransformation.m_e02,
+																	debugTransformation.m_e10,debugTransformation.m_e11, debugTransformation.m_e12,
+																debugTransformation.m_e20, debugTransformation.m_e21, debugTransformation.m_e22} ,
+															collider->m_isCollided, static_cast<graphicpipe::GraphicsPipe::ShapeType>(collider->m_type) });
+				}
+				else if (collider->m_drawDebug && (collider->m_type == physicspipe::EntityType::CIRCLE))
+				{
+					mat3x3::Mat3x3 debugTransformation = mat3x3::Mat3Transform(vector2::Vec2{ transform->m_transformation.m_e20 + collider->m_OffSet.m_x, transform->m_transformation.m_e21 + collider->m_OffSet.m_y }, vector2::Vec2{ collider->m_radius * 2.f, collider->m_radius * 2.f }, rot);
+
+					graphicsPipe->m_debugBoxData.push_back({ glm::mat3{debugTransformation.m_e00,debugTransformation.m_e01,debugTransformation.m_e02,
+																	debugTransformation.m_e10,debugTransformation.m_e11, debugTransformation.m_e12,
+																debugTransformation.m_e20, debugTransformation.m_e21, debugTransformation.m_e22} ,
+															collider->m_isCollided, static_cast<graphicpipe::GraphicsPipe::ShapeType>(collider->m_type) });
+				}
+			}
+			else {
 				if (collider->m_drawDebug && (collider->m_type == physicspipe::EntityType::RECTANGLE))
 				{
 					mat3x3::Mat3x3 debugTransformation = mat3x3::Mat3Transform(vector2::Vec2{ transform->m_transformation.m_e20 + collider->m_OffSet.m_x, transform->m_transformation.m_e21 + collider->m_OffSet.m_y }, vector2::Vec2{ collider->m_Size.m_x, collider->m_Size.m_y }, transform->m_rotation);
@@ -95,7 +125,7 @@ namespace ecs {
 					graphicsPipe->m_debugBoxData.push_back({ glm::mat3{debugTransformation.m_e00,debugTransformation.m_e01,debugTransformation.m_e02,
 																	debugTransformation.m_e10,debugTransformation.m_e11, debugTransformation.m_e12,
 																debugTransformation.m_e20, debugTransformation.m_e21, debugTransformation.m_e22} ,
-															collider->m_isCollided, static_cast<graphicpipe::GraphicsPipe::ShapeType>(collider->m_type)});
+															collider->m_isCollided, static_cast<graphicpipe::GraphicsPipe::ShapeType>(collider->m_type) });
 				}
 				else if (collider->m_drawDebug && (collider->m_type == physicspipe::EntityType::CIRCLE))
 				{
@@ -104,7 +134,7 @@ namespace ecs {
 					graphicsPipe->m_debugBoxData.push_back({ glm::mat3{debugTransformation.m_e00,debugTransformation.m_e01,debugTransformation.m_e02,
 																	debugTransformation.m_e10,debugTransformation.m_e11, debugTransformation.m_e12,
 																debugTransformation.m_e20, debugTransformation.m_e21, debugTransformation.m_e22} ,
-															collider->m_isCollided, static_cast<graphicpipe::GraphicsPipe::ShapeType>(collider->m_type)});
+															collider->m_isCollided, static_cast<graphicpipe::GraphicsPipe::ShapeType>(collider->m_type) });
 				}
 			}
 

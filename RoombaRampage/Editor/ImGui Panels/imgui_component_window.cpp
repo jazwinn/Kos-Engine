@@ -284,6 +284,16 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
             }
 
+            //create overwrite button for prefab
+            if (nc->m_isPrefab) {
+                if (ImGui::Button("Overwrite")) {
+
+                }
+                ImGui::SameLine();
+                static const char* buf = nc->m_prefabName.c_str();
+                ImGui::InputText("##readonlytext", (char*)buf, strlen(buf), ImGuiInputTextFlags_ReadOnly);
+            }
+
 
 
             bool open;
@@ -323,25 +333,6 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         ImGui::EndCombo();
                     }
 
-                    ImVec4 color = ImVec4(sc->m_color.m_x, sc->m_color.m_y, sc->m_color.m_z, sc->m_alpha);
-
-                    ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
-                    ImGui::Text("Color");
-                    ImGui::SameLine();
-                    if (ImGui::ColorEdit3("##MyColor2", (float*)&color, ImGuiColorEditFlags_DisplayRGB))
-                    {
-                        sc->m_color.m_x = color.x;
-                        sc->m_color.m_y = color.y;
-                        sc->m_color.m_z = color.z;
-                    }
-
-
-                    if (open) {
-                        auto* rbc = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(entityID));
-                        rbc->ApplyFunction(DrawComponents(rbc->Names()));
-                    }
-
-                 
                     if (ImGui::BeginDragDropTarget())
                     {
 
@@ -361,11 +352,32 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                                 LOGGING_WARN("Wrong File Type");
                             }
 
-                            
+
 
                         }
                         ImGui::EndDragDropTarget();
                     }
+
+                    ImVec4 color = ImVec4(sc->m_color.m_x, sc->m_color.m_y, sc->m_color.m_z, sc->m_alpha);
+
+                    ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
+                    ImGui::Text("Color");
+                    ImGui::SameLine();
+                    if (ImGui::ColorEdit3("##MyColor2", (float*)&color, ImGuiColorEditFlags_DisplayRGB))
+                    {
+                        sc->m_color.m_x = color.x;
+                        sc->m_color.m_y = color.y;
+                        sc->m_color.m_z = color.z;
+                    }
+
+
+                    if (open) {
+                        auto* rbc = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(entityID));
+                        rbc->ApplyFunction(DrawComponents(rbc->Names()));
+                    }
+
+                 
+                  
 
                     static std::map<int, ecs::EntityID> layerMap;
                     layerMap.clear();
@@ -600,6 +612,9 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             if (ImGui::BeginPopupContextItem()) {
                                 if (ImGui::MenuItem("Delete Component")) {
                                     sc->m_scripts.erase(std::find(sc->m_scripts.begin(), sc->m_scripts.end(), scriptname));
+                                    ImGui::EndPopup();
+     
+
                                     break;
                                 }
                                 ImGui::EndPopup();

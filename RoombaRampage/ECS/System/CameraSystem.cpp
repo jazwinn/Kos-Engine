@@ -64,7 +64,7 @@ namespace ecs {
 
 	}
 
-	void CameraSystem::m_Update() {
+	void CameraSystem::m_Update(const std::string& scene) {
 
 		//ECS* ecs = ECS::m_GetInstance();
 
@@ -78,6 +78,9 @@ namespace ecs {
 		for (int n{}; n < m_vecTransformComponentPtr.size(); n++) {
 
 			TransformComponent* transform = m_vecTransformComponentPtr[n];
+			//skip component not of the scene
+			if (transform->m_scene != scene) continue;
+
 			//CameraComponent* cam = m_vecCameraComponentPtr[n];
 
 			mat3x3::Mat3x3 cameraTransformation = mat3x3::Mat3Transform(vector2::Vec2{ transform->m_transformation.m_e20, transform->m_transformation.m_e21 }, vector2::Vec2{ transform->m_scale.m_x, transform->m_scale.m_y }, transform->m_rotation);

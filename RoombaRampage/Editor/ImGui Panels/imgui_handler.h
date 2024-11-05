@@ -89,6 +89,8 @@ namespace gui {
         /******************************************************************/
         void m_Shutdown();
 
+    private:
+
         /******************************************************************/
         /*!         
             \fn        gui::ImGuiHandler::m_DrawMainMenuBar()
@@ -212,11 +214,15 @@ namespace gui {
         void m_DrawContentBrowser();
 
         void m_OnButtonPress(const events::BaseEvent<events::ButtonEvents>& givenEvent);
-        int m_clickedEntityId{-1};
+        
 
-        int m_buttonID;
+        int m_clickedEntityId{ -1 };
 
-    private:
+        std::string m_activeScene{};
+
+        /***********PREFAB*************/
+        bool m_prefabSceneMode{ false };
+        std::unordered_map<std::string, bool> m_savedSceneState;
 
         bool m_objectNameBox = false;
         char m_charBuffer[50] = "";  // Char Buffer

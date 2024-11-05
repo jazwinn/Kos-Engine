@@ -36,7 +36,7 @@ namespace ecs {
 
 		void m_Init() override;
 
-		void m_Update() override;
+		void m_Update(const std::string&) override;
 
 	private:
 		//Storage to point to components
