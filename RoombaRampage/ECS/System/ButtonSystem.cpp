@@ -1,6 +1,6 @@
 /******************************************************************/
 /*!
-\file      RenderDebugSystem.cpp
+\file      ButtonSystem.cpp
 \author    Ng Jaz winn, jazwinn.ng , 2301502
 \par       jazwinn.ng@digipen.edu
 \date      Oct 02, 2024
@@ -22,7 +22,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Application/Helper.h"
 #include "../Graphics/GraphicsCamera.h"
 #include "../Graphics/GraphicsPipe.h"
-#include "../Math/Mat3x3.h"
+
 
 namespace ecs {
 	void ButtonSystem::m_RegisterSystem(EntityID ID) {
@@ -122,7 +122,7 @@ namespace ecs {
 
 		for (int i = 0; i < m_vecButtonComponentPtr.size(); ++i) {
 			ButtonComponent* button = m_vecButtonComponentPtr[i];
-			TransformComponent* transform = m_vecTransformComponentPtr[i];
+			//TransformComponent* transform = m_vecTransformComponentPtr[i];
 
 			//skip component not of the scene
 			if (button->m_scene != scene) continue;

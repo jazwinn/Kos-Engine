@@ -13,7 +13,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 */
 /********************************************************************/
 #pragma once
-#include <string>
+#include "../Config/pch.h"
 
 namespace messaging {
 	enum class MessageType {

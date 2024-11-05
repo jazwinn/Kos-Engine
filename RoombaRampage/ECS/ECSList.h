@@ -14,7 +14,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 /********************************************************************/
 #ifndef ECSLIST_H
 #define ECSLIST_H
-#include <bitset>
+#include "../Config/pch.h"
 #include "../ECS/Component/ComponentList.h"
 
 namespace ecs {

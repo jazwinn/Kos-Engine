@@ -28,10 +28,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "fmod.hpp"
 //#include "fmod_errors.h"
 #include <thread>
-#include <string>
-#include <memory>
-#include <unordered_map>
-
+#include "../Config/pch.h"
 namespace fmodaudio {
 
     /******************************************************************/

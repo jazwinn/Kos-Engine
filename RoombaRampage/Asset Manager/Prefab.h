@@ -19,9 +19,6 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #ifndef PREFAB_H
 #define PREFAB_H
 
-#include <vector>
-#include <unordered_map>
-#include <string>
 #include "../ECS/ECSList.h"
 
 

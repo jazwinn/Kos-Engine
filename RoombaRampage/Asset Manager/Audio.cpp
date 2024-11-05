@@ -23,9 +23,6 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 /******************************************************************/
 
 #include "Audio.h"
-#include <chrono>
-#include <iostream>
-#include <filesystem>
 //#include <fmod_errors.h>
 
 namespace fmodaudio {

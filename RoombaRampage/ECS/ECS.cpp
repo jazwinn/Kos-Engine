@@ -15,10 +15,8 @@ Reproduction or disclosure of this file or its contents without the
 prior written consent of DigiPen Institute of Technology is prohibited.
 */
 /********************************************************************/
-#include <iostream>
 
 #include "ECS.h"
-#include <algorithm>
 #include "../Debugging/Performance.h"
 #include "../Debugging/Logging.h"
 #include "../Asset Manager/SceneManager.h"

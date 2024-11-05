@@ -20,8 +20,6 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "RenderTextSystem.h"
 #include "../Graphics/GraphicsPipe.h"
 #include "../Application/Helper.h"
-#include "../Math/Mat3x3.h"
-#include "../Math/vector2.h"
 
 namespace ecs {
 

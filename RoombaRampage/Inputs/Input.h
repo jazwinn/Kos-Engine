@@ -19,10 +19,6 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #define INPUT_H
 
 #include <glfw3.h>
-#include <../Math/Vector2.h>
-#include <vector>
-#include <string>
-#include <unordered_map>
 #include "Keycodes.h"
 
 namespace Input {

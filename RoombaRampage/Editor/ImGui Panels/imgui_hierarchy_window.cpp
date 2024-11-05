@@ -27,12 +27,6 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Debugging/Logging.h"
 #include "../Asset Manager/SceneManager.h"
 #include "../Asset Manager/Prefab.h"
-
-#include<vector>
-#include<string>
-#include <iostream>
-#include <filesystem>
-
 //Testing purposes! this are the three files needed!
 #include <mono/jit/jit.h>
 #include <mono/metadata/assembly.h>

@@ -16,9 +16,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #define TRANSCOM_H
 
 #include "Component.h"
-#include "../Math/Vector2.h"
-#include "../Math/Mat3x3.h"
-#include <vector>
+
 
 namespace ecs {
 	/******************************************************************/

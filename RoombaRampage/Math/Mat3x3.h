@@ -12,8 +12,8 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 /********************************************************************/
 #pragma warning (disable : 4201)
 #pragma warning(disable : 26495)
-#ifndef MAT2x2_H
-#define MAT2x2_H
+#ifndef MAT3x3_H
+#define MAT3x3_H
 #include <algorithm>
 #include <math.h>
 #include "../Math/vector2.h"

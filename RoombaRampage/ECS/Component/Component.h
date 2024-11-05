@@ -16,6 +16,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #ifndef COM_H
 #define COM_H
 
+#include "../Config/pch.h"
 #include "../ECS/Component/ComponentList.h"
 #include "../ECS/ECSList.h"
 #include "../Asset Manager/Reflection.h"
@@ -40,6 +41,8 @@ namespace ecs {
 
 		//store entity's scene
 		std::string m_scene{};
+
+
 
 	};
 

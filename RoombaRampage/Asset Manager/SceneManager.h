@@ -1,12 +1,8 @@
 #ifndef SCENE_H
 #define SCENE_H
 
-#include <string>
-#include <unordered_map>
+#include "../Config/pch.h"
 #include "../De&Serialization/json_handler.h"
-#include <filesystem>
-#include <memory>
-#include <optional>
 
 namespace scenes {
 

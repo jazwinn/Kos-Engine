@@ -22,19 +22,8 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #ifndef PHYSICS_H
 #define PHYSICS_H
 
-#include "../Math/Vector2.h"
-#include <vector>
-#include <algorithm>
-#include <iostream>
-#include <memory>
-#include <new>
-#include "../Debugging/Logging.h"
-#include <map>
 #include "PhysicsLayer.h"
-#include <set>
-#include <unordered_set>
-#include <functional>
-
+#include "../Debugging/Logging.h"
 
 
 namespace physicspipe {
@@ -152,7 +141,23 @@ namespace physicspipe {
 		}
 
 		//FOR SAT
+		/******************************************************************/
+		/*!
+		\fn        std::vector<vector2::Vec2> Rectangle::m_getRotatedVertices() const
+		\brief     Calculates and returns the vertices of the rectangle after
+				   applying rotation based on the current rotation angle.
+		\return    A vector of `Vec2` points representing the rotated vertices of the rectangle.
+		*/
+		/******************************************************************/
 		std::vector<vector2::Vec2> m_getRotatedVertices() const;
+		/******************************************************************/
+		/*!
+		\fn        std::vector<vector2::Vec2> Rectangle::m_getEdges() const
+		\brief     Calculates and returns the edges of the rectangle based on
+					its vertices, useful for collision detection.
+		\return    A vector of `Vec2` points representing the edges of the rectangle.
+		*/
+		/******************************************************************/
 		std::vector<vector2::Vec2> m_getEdges() const;
 	};
 
@@ -277,23 +282,57 @@ namespace physicspipe {
 		/******************************************************************/
 		/*!
 		\fn        bool Physics::m_static_CollisionCheck(const AABB aabb1, const AABB aabb2)
-		\brief     Performs a static collision check between two axis-aligned
-				   bounding boxes (AABB).
+		\brief     Performs a static collision check between two axis-aligned bounding boxes (AABB).
 		\param[in] aabb1  The first AABB for comparison.
 		\param[in] aabb2  The second AABB for comparison.
 		\return    True if a collision is detected, false otherwise.
 		*/
 		/******************************************************************/
-
 		bool m_static_CollisionCheck(const AABB, const AABB);
 
 
 		void m_Init();
 		void m_Update();
 
+		/******************************************************************/
+		/*!
+		\fn        void Physics::m_CollisionCheckUpdate()
+		\brief     Updates the collision detection process by checking for
+				   potential collisions among all entities in the physics system.
+		*/
+		/******************************************************************/
 		void m_CollisionCheckUpdate();
+		/******************************************************************/
+		/*!
+		\fn        bool Physics::m_CheckCollision(const std::shared_ptr<PhysicsData>& entity1, const std::shared_ptr<PhysicsData>& entity2)
+		\brief     Checks for a collision between two specified entities.
+		\param[in] entity1 A shared pointer to the first entity.
+		\param[in] entity2 A shared pointer to the second entity.
+		\return    True if a collision is detected between the two entities, false otherwise.
+		*/
+		/******************************************************************/
 		bool m_CheckCollision(const std::shared_ptr<PhysicsData>& entity1, const std::shared_ptr<PhysicsData>& entity2);
+		/******************************************************************/
+		/*!
+		\fn        void Physics::m_projectOntoAxis(const std::vector<vector2::Vec2>& vertices, const vector2::Vec2& axis, float& min, float& max) const
+		\brief     Projects the vertices of a shape onto a specified axis and
+				   calculates the minimum and maximum scalar values along that axis.
+		\param[in] vertices A vector of vertices representing the shape to project.
+		\param[in] axis     The axis onto which the vertices are projected.
+		\param[out] min     The minimum scalar value on the axis after projection.
+		\param[out] max     The maximum scalar value on the axis after projection.
+		*/
+		/******************************************************************/
 		void m_projectOntoAxis(const std::vector<vector2::Vec2>& vertices, const vector2::Vec2& axis, float& min, float& max) const;
+		/******************************************************************/
+		/*!
+		\fn        bool Physics::m_CollisionIntersection_RectRect_SAT(const Rectangle& obj1, const Rectangle& obj2)
+		\brief     Checks for collision between two rectangle entities using the Separating Axis Theorem (SAT).
+		\param[in] obj1 The first rectangle entity.
+		\param[in] obj2 The second rectangle entity.
+		\return    True if a collision is detected, false otherwise.
+		*/
+		/******************************************************************/
 		bool m_CollisionIntersection_RectRect_SAT(const Rectangle& obj1, const Rectangle& obj2);
 };
 }

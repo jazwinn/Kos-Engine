@@ -14,10 +14,9 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 /********************************************************************/
 #ifndef SPRITE_H
 #define SPRITE_H
-#include <string>
 
 #include "Component.h"
-#include "../Math/Vector3.h"
+
 
 
 namespace ecs {
