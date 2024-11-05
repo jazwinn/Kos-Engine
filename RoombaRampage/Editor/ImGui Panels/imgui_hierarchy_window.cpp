@@ -44,7 +44,7 @@ namespace gui {
         //fetch ecs
         ecs::ECS* ecs = ecs::ECS::m_GetInstance();
         scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();
-        assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+        //assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
         // Custom window with example widgets
         bool open = true;
         ImGui::Begin("Hierachy Window", &open);

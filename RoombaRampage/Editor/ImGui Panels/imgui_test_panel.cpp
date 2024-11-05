@@ -37,31 +37,37 @@ void gui::ImGuiHandler::m_DrawTestWindow() {
 	static int maxTime = 60;
 	static int currTime = 0;
 
-	//ecs::ECS *ecs = ecs::ECS::m_GetInstance();
-	assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
+	//assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
 	logging::Logger log;
 
 	messaging::MessageSystem MsgSys;
 	MsgSys.m_AddListener(messaging::MessageType::AUDIOPLAY, messaging::SoundPlayed);
 	bool open = true;
 	ImGui::Begin("Test Window", &open);
-	if (ImGui::Button("BGM")) {
-		// abit hard coded might cause crash
-		//assetManager->m_audioContainer[0]->m_playSound();
-		/*messaging::Message vacuumBtnClick(messaging::MessageType::AUDIOPLAY, "Test Panel");
-		MsgSys.m_SendMessage(vacuumBtnClick);*/
+	if (ImGui::Button("BGM") || Input::InputSystem::m_isKeyTriggered(keys::F1)) {
 		events::ButtonPressEvent temp(1);
 		DISPATCH_BUTTON_EVENT(temp);
 		//Honestly unsure how to test unregistering cuz idk when it would be used
 		//REMOVE_BUTTON_LISTENER(m_buttonID);
 	}
 	ImGui::SameLine();
-	if (ImGui::Button("Sound")) {
-		assetManager->m_audioManager.m_soundMap.find("mindstorm.wav")->second->m_PlaySound();
+	if (ImGui::Button("Sound1") || Input::InputSystem::m_isKeyTriggered(keys::F2)) {
+		events::ButtonPressEvent temp(2);
+		DISPATCH_BUTTON_EVENT(temp);
 	}
-	if (ImGui::Button("Stop Sound")) {
-		assetManager->m_audioManager.m_soundMap.find("mindstorm.wav")->second->m_StopSound();
-		assetManager->m_audioManager.m_soundMap.find("zwing.wav")->second->m_StopSound();
+	ImGui::SameLine();
+	if (ImGui::Button("Sound2") || Input::InputSystem::m_isKeyTriggered(keys::F3)) {
+		events::ButtonPressEvent temp(3);
+		DISPATCH_BUTTON_EVENT(temp);
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("Sound3") || Input::InputSystem::m_isKeyTriggered(keys::F4)) {
+		events::ButtonPressEvent temp(4);
+		DISPATCH_BUTTON_EVENT(temp);
+	}
+	if (ImGui::Button("Stop Sound") || Input::InputSystem::m_isKeyTriggered(keys::F5)) {
+		events::ButtonPressEvent temp(5);
+		DISPATCH_BUTTON_EVENT(temp);
 	}
 	ImGui::NewLine();
 	ImGui::SeparatorText("##########################################");
