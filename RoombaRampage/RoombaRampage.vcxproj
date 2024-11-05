@@ -356,6 +356,11 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <None Include="Graphics\textFragmentShader.frag" />
     <None Include="Graphics\textVertexShader.vert" />
   </ItemGroup>
+  <ItemGroup>
+    <Media Include="Assets\Audio\cleaver01.wav" />
+    <Media Include="Assets\Audio\gunshot01.wav" />
+    <Media Include="Assets\Audio\gunshot02.mp3" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

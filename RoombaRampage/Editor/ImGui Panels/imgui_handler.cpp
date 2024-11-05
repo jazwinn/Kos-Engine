@@ -162,16 +162,18 @@ namespace gui {
 		}
 		else if (givenEvent.m_ToType<events::ButtonPressEvent>().m_GetButton() == 3) {
 			assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
-			assetManager->m_audioManager.m_soundMap.find("zwing.wav")->second->m_PlaySound();
+			assetManager->m_audioManager.m_soundMap.find("cleaver01.wav")->second->m_PlaySound();
 		}
 		else if (givenEvent.m_ToType<events::ButtonPressEvent>().m_GetButton() == 4) {
 			assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
-			assetManager->m_audioManager.m_soundMap.find("zwing.wav")->second->m_PlaySound();
+			assetManager->m_audioManager.m_soundMap.find("gunshot01.wav")->second->m_PlaySound();
 		}
 		else if (givenEvent.m_ToType<events::ButtonPressEvent>().m_GetButton() == 5) {
 			assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
 			assetManager->m_audioManager.m_soundMap.find("mindstorm.wav")->second->m_StopSound();
 			assetManager->m_audioManager.m_soundMap.find("zwing.wav")->second->m_StopSound();
+			assetManager->m_audioManager.m_soundMap.find("cleaver01.wav")->second->m_StopSound();
+			assetManager->m_audioManager.m_soundMap.find("gunshot01.wav")->second->m_StopSound();
 		}
 		else if (givenEvent.m_ToType<events::AudioFromImgui>().m_GetEventType() == events::ButtonEvents::EVENTAUDIOFROMIMGUI) {\
 			std::string fileToBePlayed = givenEvent.m_ToType<events::AudioFromImgui>().m_GetFile();

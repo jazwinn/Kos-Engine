@@ -183,4 +183,9 @@
     <None Include="Graphics\gridFragmentShader.frag" />
     <None Include="Graphics\gridVertexShader.vert" />
   </ItemGroup>
+  <ItemGroup>
+    <Media Include="Assets\Audio\cleaver01.wav" />
+    <Media Include="Assets\Audio\gunshot01.wav" />
+    <Media Include="Assets\Audio\gunshot02.mp3" />
+  </ItemGroup>
 </Project>
