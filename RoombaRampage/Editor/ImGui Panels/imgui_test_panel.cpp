@@ -38,7 +38,7 @@ void gui::ImGuiHandler::m_DrawTestWindow() {
 	static int maxTime = 60;
 	static int currTime = 0;
 
-	//ecs::ECS *ecs = ecs::ECS::m_GetInstance();
+	ecs::ECS *ecs = ecs::ECS::m_GetInstance();
 	assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
 	logging::Logger log;
 
@@ -128,50 +128,96 @@ void gui::ImGuiHandler::m_DrawTestWindow() {
 	static ecs::EntityID id_2;
 	if (ImGui::Button("Collision Test")) {
 		if (!collision_Flag) {
-			std::cout << "HI" << std::endl;
-			collision_Flag = true;
-			delete_Flag = false;
+			//	//create player 
+		id_1 = ecs->m_CreateEntity(m_activeScene);
+		ecs::TransformComponent* tc = (ecs::TransformComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id_1);
+		ecs::SpriteComponent* sc = static_cast<ecs::SpriteComponent*>(ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, id_1));
+		ecs::ColliderComponent* cc = static_cast<ecs::ColliderComponent*>(ecs->m_AddComponent(ecs::TYPECOLLIDERCOMPONENT, id_1));
+		ecs::RigidBodyComponent* rc = static_cast<ecs::RigidBodyComponent*>(ecs->m_AddComponent(ecs::TYPERIGIDBODYCOMPONENT, id_1));
+
+		tc->m_scale = { 1.f,1.f };
+		tc->m_position.m_x = static_cast<float>(1.0f);
+		tc->m_position.m_y = static_cast<float>(0);
+		cc->m_Size = { 0.5f,0.5f };
+
+		id_2 = ecs->m_CreateEntity(m_activeScene);
+		tc = (ecs::TransformComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id_2);
+		sc = static_cast<ecs::SpriteComponent*>(ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, id_2));
+		cc = static_cast<ecs::ColliderComponent*>(ecs->m_AddComponent(ecs::TYPECOLLIDERCOMPONENT, id_2));
+		rc = static_cast<ecs::RigidBodyComponent*>(ecs->m_AddComponent(ecs::TYPERIGIDBODYCOMPONENT, id_2));
+
+
+		tc->m_scale = { 1.f,1.f };
+		tc->m_position.m_x = static_cast<float>(-1.0f);
+		tc->m_position.m_y = static_cast<float>(0);
+		cc->m_Size = { 0.5f,0.5f };
+
+		collision_Flag = true;
+		delete_Flag = false;
 		}
-		//if (!collision_Flag) {
-		//	//create player 
-		//	id_1 = ecs->m_CreateEntity();
-		//	ecs::TransformComponent* tc = (ecs::TransformComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id_1);
-		//	ecs::SpriteComponent* sc = static_cast<ecs::SpriteComponent*>(ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, id_1));
-		//	ecs::ColliderComponent* cc = static_cast<ecs::ColliderComponent*>(ecs->m_AddComponent(ecs::TYPECOLLIDERCOMPONENT, id_1));
-		//	ecs::RigidBodyComponent* rc = static_cast<ecs::RigidBodyComponent*>(ecs->m_AddComponent(ecs::TYPERIGIDBODYCOMPONENT, id_1));
-
-		//	tc->m_scale = { 1.f,1.f };
-		//	tc->m_position.m_x = static_cast<float>(1.0f);
-		//	tc->m_position.m_y = static_cast<float>(0);
-		//	cc->m_Size = { 0.5f,0.5f };
-
-		//	id_2 = ecs->m_CreateEntity();
-		//	tc = (ecs::TransformComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id_2);
-		//	sc = static_cast<ecs::SpriteComponent*>(ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, id_2));
-		//	cc = static_cast<ecs::ColliderComponent*>(ecs->m_AddComponent(ecs::TYPECOLLIDERCOMPONENT, id_2));
-		//	rc = static_cast<ecs::RigidBodyComponent*>(ecs->m_AddComponent(ecs::TYPERIGIDBODYCOMPONENT, id_2));
-
-
-		//	tc->m_scale = { 1.f,1.f };
-		//	tc->m_position.m_x = static_cast<float>(-1.0f);
-		//	tc->m_position.m_y = static_cast<float>(0);
-		//	cc->m_Size = { 0.5f,0.5f };
-
-		//}
-		//collision_Flag = true;
-		//delete_Flag = false;
 	}
 	ImGui::SameLine();
 	if (ImGui::Button("Delete")) {
 		if (!delete_Flag) {
-			std::cout << "bopes" << std::endl;
-			//ecs::ECS::m_GetInstance()->m_DeleteEntity(id_1);
-			//ecs::ECS::m_GetInstance()->m_DeleteEntity(id_2);
+			ecs->m_DeleteEntity(id_1);
+			ecs->m_DeleteEntity(id_2);
 			collision_Flag = false;
 			delete_Flag = true;
 		}
 	}
-
-
+	ImGui::NewLine();
+	if (collision_Flag) {
+		ImGui::SeparatorText("ID 1");
+		ecs::TransformComponent* tc = (ecs::TransformComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id_1);
+		ecs::TransformComponent* tc2 = (ecs::TransformComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id_2);
+		if (ImGui::Button("Rotate Left 1")) {
+			tc->m_rotation += 1.f;
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("  Up 1 ")) {
+			tc->m_position.m_y += 0.1f;
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("Rotate Right 1")) {
+			tc->m_rotation -= 1.f;
+		}
+		ImGui::NewLine();
+		if (ImGui::Button("  Left 1 ")) {
+			tc->m_position.m_x -= 0.1f;
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("  Down 1 ")) {
+			tc->m_position.m_y -= 0.1f;
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("  Right 1 ")) {
+			tc->m_position.m_x += 0.1f;
+		}
+		ImGui::NewLine();
+		ImGui::SeparatorText("ID 2");
+		if (ImGui::Button("Rotate Left 2")) {
+			tc2->m_rotation += 1.f;
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("  Up 2 ")) {
+			tc2->m_position.m_y += 0.1f;
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("Rotate Right 2")) {
+			tc2->m_rotation -= 1.f;
+		}
+		ImGui::NewLine();
+		if (ImGui::Button("  Left 2 ")) {
+			tc2->m_position.m_x -= 0.1f;
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("  Down 2 ")) {
+			tc2->m_position.m_y -= 0.1f;
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("  Right 2 ")) {
+			tc2->m_position.m_x += 0.1f;
+		}
+	}
 	ImGui::End();
 }
