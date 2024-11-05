@@ -47,6 +47,7 @@ void gui::ImGuiHandler::m_DrawTestWindow() {
 	MsgSys.m_AddListener(messaging::MessageType::AUDIOPLAY, messaging::SoundPlayed);
 	bool open = true;
 	ImGui::Begin("Test Window", &open);
+	ImGui::SeparatorText(" AUDIO ");
 	if (ImGui::Button("BGM") || Input::InputSystem::m_isKeyTriggered(keys::F1)) {
 		events::ButtonPressEvent temp(1);
 		DISPATCH_BUTTON_EVENT(temp);
@@ -79,57 +80,18 @@ void gui::ImGuiHandler::m_DrawTestWindow() {
 	*/
 	ImGui::NewLine();
 	ImGui::SeparatorText("##########################################");
+	ImGui::SeparatorText(" LOGGING ");
 	ImGui::NewLine();
 	if (ImGui::Button("Crash")) {
 		LOGGING_INFO("About to trigger abort");
 		abort();
 	}
-	ImGui::SeparatorText("##########################################");
-	ImGui::NewLine();
+	ImGui::SameLine();
 	if (ImGui::Button("Test Log")) {
 		log.m_GetInstance().m_TestingLog();
 	}
-	ImGui::SeparatorText("##########################################");
 	ImGui::NewLine();
-
-	static bool spawn = false;
-	static std::vector <ecs::EntityID> list_Of_Entities;
-	if (ImGui::Button("Spawn 2500")) {
-		
-		if (spawn) {
-			LOGGING_WARN("SPAWNING MORE THAN SET MAX ENTITY WILL CAUSE ASSERTION");
-		}
-		else {
-			int lowerBoundy = -1;
-			int upperBoundy = 1;
-
-
-
-			std::random_device rd;
-			std::mt19937 gen(rd());
-
-			std::uniform_real_distribution<float> height(static_cast<float>(lowerBoundy), static_cast<float>(upperBoundy));
-			std::uniform_real_distribution<float> height2(-1.5, 1.5);
-
-			for (int n{}; n < 2500; n++) {
-				
-				
-
-			}
-			//spawn = true;
-		}
-	}
-	ImGui::SameLine();
-	if (ImGui::Button("Delete 2500")) {
-		if (spawn) {
-			for (auto& i : list_Of_Entities) {
-				ecs::ECS::m_GetInstance()->m_DeleteEntity(i);
-			}
-		}
-	}
-	
-	ImGui::SeparatorText("##########################################");
-	ImGui::NewLine();
+	ImGui::SeparatorText(" COLLISION ");
 	static bool collision_Flag = false;
 	static bool delete_Flag = false;
 	static ecs::EntityID id_1;
