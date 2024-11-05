@@ -235,11 +235,6 @@ namespace graphicpipe
 		glPolygonMode(GL_FRONT_AND_BACK, mode);
 	}
 
-	void GraphicsPipe::m_drawWorldGrid()
-	{
-		
-	}
-
 }
 
 

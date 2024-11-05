@@ -14,11 +14,6 @@ namespace graphicpipe
         static int m_windowWidth;                        ///< The current window width.
         static int m_windowHeight;                       ///< The current window height.
         static float m_aspectRatio;                      ///< Aspect ratio of the window.
-
-        /**
-         * @struct Camera
-         * @brief Represents the camera's position and orientation.
-         */
    
 
         static void calculateAspectRatio();

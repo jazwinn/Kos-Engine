@@ -130,17 +130,15 @@ namespace graphicpipe
 			vertices.push_back(glm::vec3(-gridSize * spacing, i * spacing, 0.f));
 			vertices.push_back(glm::vec3(gridSize * spacing, i * spacing, 0.f));
 		}
-		// Lines parallel to X-axis
+		// Center Grid X axis
 		vertices.push_back(glm::vec3(0.01f, -gridSize * spacing, 0.f));
 		vertices.push_back(glm::vec3(0.01f, gridSize * spacing, 0.f));
-
 		vertices.push_back(glm::vec3(-0.01f, -gridSize * spacing, 0.f));
 		vertices.push_back(glm::vec3(-0.01f, gridSize * spacing, 0.f));
 
-		// Lines parallel to Y-axis
+		// Center Grid Y axis
 		vertices.push_back(glm::vec3(-gridSize * spacing, 0.01f, 0.f));
 		vertices.push_back(glm::vec3(gridSize * spacing, 0.01f, 0.f));
-
 		vertices.push_back(glm::vec3(-gridSize * spacing, -0.01f, 0.f));
 		vertices.push_back(glm::vec3(gridSize * spacing, -0.01f, 0.f));
 	}
