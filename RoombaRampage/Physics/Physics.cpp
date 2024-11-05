@@ -19,7 +19,6 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 */
 /******************************************************************/
 #include "Physics.h"
-#include "../Debugging/Logging.h"
 namespace physicspipe {
 
 	std::vector<std::shared_ptr<PhysicsData>> Physics::m_physicsEntities;

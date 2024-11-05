@@ -1,9 +1,6 @@
 #ifndef LAYERS_H
 #define LAYERS_H
 
-#include <unordered_map>
-#include <string>
-#include <vector>
 #include "ECSList.h"
 
 namespace layer{

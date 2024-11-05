@@ -26,7 +26,6 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "imgui_impl_opengl3.h"
 #include "implot.h"
 #include "implot_internal.h"
-#include "../ECS/ECS.h"
 #include "../Dependencies/rapidjson/document.h"
 #include "../Dependencies/rapidjson/writer.h"
 #include "../Dependencies/rapidjson/stringbuffer.h"

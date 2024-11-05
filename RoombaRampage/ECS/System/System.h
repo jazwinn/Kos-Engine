@@ -15,9 +15,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #ifndef SYSTEM_H
 #define SYSTEM_H
 
-#include <bitset>
-#include <vector>
-#include <algorithm>
+
 #include "../ECS/Component/Component.h"
 #include "SystemType.h"
 

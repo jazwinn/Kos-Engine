@@ -73,9 +73,6 @@ namespace graphicpipe
 		glBindVertexArray(0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-		
-
-
 		//Square Lines Mesh Buffer Setup
 		glBindVertexArray(m_squareLinesMesh.m_vaoId);
 		glGenBuffers(1, &m_debugMatrixArrayBuffer);

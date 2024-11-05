@@ -28,7 +28,6 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Physics/Physics.h"
 #include "../Graphics/GraphicsPipe.h"
 #include "../Debugging/Logging.h"
-#include <algorithm>
 
 namespace ecs {
 

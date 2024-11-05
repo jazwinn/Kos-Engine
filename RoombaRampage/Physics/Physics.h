@@ -22,19 +22,8 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #ifndef PHYSICS_H
 #define PHYSICS_H
 
-#include "../Math/Vector2.h"
-#include <vector>
-#include <algorithm>
-#include <iostream>
-#include <memory>
-#include <new>
-#include "../Debugging/Logging.h"
-#include <map>
 #include "PhysicsLayer.h"
-#include <set>
-#include <unordered_set>
-#include <functional>
-
+#include "../Debugging/Logging.h"
 
 
 namespace physicspipe {

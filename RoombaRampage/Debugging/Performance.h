@@ -20,15 +20,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 #ifndef PERFORMANCE_H
 #define PERFORMANCE_H
-#include <chrono>
-#include <format>
-#include <source_location>
-#include <iostream>
-#include <string>
-#include <string_view>
-#include <unordered_map>
-#include <vector>
-#include <utility>
+#include "../Config/pch.h"
 #include <../ECS/System/SystemType.h>
 
 namespace performancetracker{

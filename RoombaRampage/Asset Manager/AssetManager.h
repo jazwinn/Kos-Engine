@@ -24,17 +24,12 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 #include <../GLEW/include/GL/glew.h>
 #include "../Asset Manager/Audio.h"
-#include <../Math/vector2.h>
 #include "../ECS/ECS.h"
 #include "Prefab.h"
 #include "Image.h"
 #include "Text.h"
 #include "../C#Mono/mono_handler.h"
-#include <vector>
-#include <map>
-#include <string>
-#include <memory>
-#include <filesystem>
+
 
 namespace assetmanager {
 

@@ -20,7 +20,6 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "CollisionResponseSystem.h"
 #include "../Physics/Physics.h"
 #include "../Graphics/GraphicsPipe.h"
-#include <unordered_set>
 
 namespace ecs {
 

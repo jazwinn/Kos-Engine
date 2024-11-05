@@ -19,7 +19,6 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 #include "TransformSystem.h"
 #include "../ECS/Hierachy.h"
-#include <unordered_set>
 #include "../Graphics/GraphicsCamera.h"
 
 

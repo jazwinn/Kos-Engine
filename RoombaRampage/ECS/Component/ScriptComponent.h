@@ -17,8 +17,6 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 #include "Component.h"
 #include <mono/metadata/object.h>
-#include <vector>
-#include <string>
 
 namespace ecs {
 

@@ -22,20 +22,9 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #ifndef LOGGING_H
 #define LOGGING_H
 
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <chrono>
-#include <string>
-#include <string_view>
-#include <iomanip>
-#include <cassert>
-#include <source_location>
-#include <format>
-
+#include "../Config/pch.h"
 #include "../backward/backward.hpp"
-#include <csignal>
-#include <cstdlib>
+
 
 /*
 * @brief Variadic Macro for logging Information. This macro takes in a string message, followed by the

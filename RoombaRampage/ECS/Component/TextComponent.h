@@ -15,9 +15,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #ifndef TEXTCOM_H
 #define TEXTCOM_H
 
-#include <string>
 #include "Component.h"
-#include "../Math/Vector3.h"
 
 
 namespace ecs {

@@ -2,7 +2,6 @@
 #define CAMCOM_H
 
 #include "Component.h"
-#include "../Math/vector2.h"
 
 namespace ecs {
 

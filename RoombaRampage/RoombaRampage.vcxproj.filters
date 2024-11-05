@@ -77,6 +77,7 @@
     <ClCompile Include="C#Mono\InternalCall.cpp" />
     <ClCompile Include="C#Mono\mono_handler.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_test_panel.cpp" />
+    <ClCompile Include="Config\pch.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Application.h" />
@@ -166,6 +167,7 @@
     <ClInclude Include="Inputs\Keycodes.h" />
     <ClInclude Include="C#Mono\InternalCall.h" />
     <ClInclude Include="C#Mono\mono_handler.h" />
+    <ClInclude Include="Config\pch.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Graphics\debugFragmentShader.frag" />

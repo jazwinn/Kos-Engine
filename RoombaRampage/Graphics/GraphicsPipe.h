@@ -53,9 +53,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include <glfw3.h>
 #include <glm.hpp>
 #include <gtc/type_ptr.hpp>
-#include <string>
-#include <vector>
-#include <memory>
+#include "../Config/pch.h"
 #include "../Asset Manager/AssetManager.h"
 
 namespace graphicpipe {

@@ -25,10 +25,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #define PHYSICSLAYERR_H
 
 #include "../ECS/Layers.h"
-#include <vector>
-#include <memory>
-#include <iostream>
-#include <utility>
+#include "../Config/pch.h"
 
 namespace physicslayer {
     const int size = layer::LAYERS::MAXLAYER;

@@ -42,9 +42,6 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsigned int windowHeight)
 {
     graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
-    //EditorCamera* cam = EditorCamera::m_funcGetInstance();
-   //pipe->m_funcUpdate();
-   
 
     ImGui::Begin("Editor Window");
 
@@ -122,11 +119,14 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
         EditorCamera::m_editorCamera.m_zoom.x = 1.f;
         EditorCamera::m_editorCamera.m_zoom.y = 1.f;
     }
+
     EditorCamera::calculateLevelEditorCamera();
     EditorCamera::calculateLevelEditorView();
     EditorCamera::calculateLevelEditorOrtho();
+
     graphicpipe::GraphicsCamera::m_currCameraMatrix = EditorCamera::m_editorCameraMatrix;
     graphicpipe::GraphicsCamera::m_currViewMatrix = EditorCamera::m_editorViewMatrix;
+
     if (graphicpipe::GraphicsCamera::m_cameras.size() == 0)
     {
         graphicpipe::GraphicsCamera::m_currCameraScaleX = EditorCamera::m_editorCamera.m_zoom.x;

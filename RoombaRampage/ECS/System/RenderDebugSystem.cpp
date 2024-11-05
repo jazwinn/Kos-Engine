@@ -21,8 +21,6 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Physics/Physics.h"
 #include "../Graphics/GraphicsPipe.h"
 #include "../Graphics/GraphicsCamera.h"
-#include "../Math/Mat3x3.h"
-#include "../Math/vector2.h"
 #include "../ECS/Hierachy.h"
 
 namespace ecs {

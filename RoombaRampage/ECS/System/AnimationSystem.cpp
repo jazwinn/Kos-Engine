@@ -27,7 +27,6 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "AnimationSystem.h"
 #include "../Debugging/Logging.h"
 
-#include <algorithm>
 
 namespace ecs {
 

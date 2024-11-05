@@ -16,7 +16,6 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #ifndef BOXCOM_H
 #define BOXCOM_H
 
-#include "../Math/Vector2.h"
 #include "Component.h"
 #include "../Physics/Physics.h"
 
