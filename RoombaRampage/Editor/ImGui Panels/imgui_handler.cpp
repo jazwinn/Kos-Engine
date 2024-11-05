@@ -154,10 +154,25 @@ namespace gui {
 
 
 	void ImGuiHandler::m_OnButtonPress(const events::BaseEvent<events::ButtonEvents>& givenEvent) {
-		//std::cout << "Button: " << givenEvent.m_ToType<events::ButtonPressEvent>().m_GetButton() << " was pressed." << std::endl;
 		if (givenEvent.m_ToType<events::ButtonPressEvent>().m_GetButton() == 1) {
 			assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
+			assetManager->m_audioManager.m_soundMap.find("mindstorm.wav")->second->m_PlaySound();
+		}else if (givenEvent.m_ToType<events::ButtonPressEvent>().m_GetButton() == 2) {
+			assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
 			assetManager->m_audioManager.m_soundMap.find("zwing.wav")->second->m_PlaySound();
+		}
+		else if (givenEvent.m_ToType<events::ButtonPressEvent>().m_GetButton() == 3) {
+			assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
+			assetManager->m_audioManager.m_soundMap.find("zwing.wav")->second->m_PlaySound();
+		}
+		else if (givenEvent.m_ToType<events::ButtonPressEvent>().m_GetButton() == 4) {
+			assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
+			assetManager->m_audioManager.m_soundMap.find("zwing.wav")->second->m_PlaySound();
+		}
+		else if (givenEvent.m_ToType<events::ButtonPressEvent>().m_GetButton() == 5) {
+			assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
+			assetManager->m_audioManager.m_soundMap.find("mindstorm.wav")->second->m_StopSound();
+			assetManager->m_audioManager.m_soundMap.find("zwing.wav")->second->m_StopSound();
 		}
 		else if (givenEvent.m_ToType<events::AudioFromImgui>().m_GetEventType() == events::ButtonEvents::EVENTAUDIOFROMIMGUI) {\
 			std::string fileToBePlayed = givenEvent.m_ToType<events::AudioFromImgui>().m_GetFile();
