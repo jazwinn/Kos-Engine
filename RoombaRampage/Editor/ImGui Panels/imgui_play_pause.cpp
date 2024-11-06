@@ -45,7 +45,8 @@ namespace gui {
                 pause = true;
                 ecs->m_nextState = ecs::WAIT;
 
-                //TODO load back scene
+
+
 
 
             }
@@ -54,6 +55,10 @@ namespace gui {
                 if (ecs->m_getState() != ecs::STOP) {
                     ecs->m_nextState = ecs::STOP;
                     pause = true;
+
+                    //TODO load back scene
+                    scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();
+                    scenemanager->m_ReloadScene();
                 }
 
             }
