@@ -27,8 +27,6 @@ namespace ecs{
 
 	std::unique_ptr<ECS> ECS::m_InstancePtr = nullptr;
 
-	size_t ECS::SceneID::m_PrefabCount{};
-	size_t ECS::SceneID::m_regularSceneCount{};
 
 
 	void ECS::m_Init() {
@@ -116,7 +114,9 @@ namespace ecs{
 
 
 			if (ecs->m_state != RUNNING) {
-				if (System.first == TYPECOLLISIONSYSTEM || System.first == TYPECOLLISIONRESPONSESYSTEM || System.first == TYPELOGICSYSTEM || System.first == TYPEPHYSICSSYSTEM || System.first == TYPEBUTTONSYSTEM) {
+				if (System.first == TYPECOLLISIONSYSTEM || System.first == TYPECOLLISIONRESPONSESYSTEM || 
+					System.first == TYPELOGICSYSTEM || System.first == TYPEPHYSICSSYSTEM || 
+					System.first == TYPEBUTTONSYSTEM || System.first == TYPEANIMATIONSYSTEM) {
 					//skip physics and logic if not running
 					continue;
 				}

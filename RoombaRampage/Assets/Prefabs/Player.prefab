@@ -3,12 +3,13 @@
         "name": {
             "namestr": "Player",
             "layer": 0,
-            "isprefab": false
+            "isprefab": true,
+            "prefabname": "Player.prefab"
         },
         "transform": {
             "position": {
-                "x": 12.475058555603027,
-                "y": -5.441643238067627
+                "x": -0.11105449497699738,
+                "y": -0.5922882556915283
             },
             "rotation": 0.0,
             "scale": {
@@ -41,14 +42,20 @@
             "static": false
         },
         "sprite": {
-            "imagefile": "Roomba.png",
-            "layer": 0,
+            "imagefile": "ani_RoombaBlink_strip4.png",
+            "layer": 4,
             "color": {
                 "r": 1.0,
                 "g": 1.0,
                 "b": 1.0
             },
             "alpha": 1.0
+        },
+        "animation": {
+            "frameNumber": 1,
+            "framesPerSecond": 1,
+            "frameTimer": 1.3999993801116943,
+            "isAnimating": true
         },
         "script": {
             "scripts": [
@@ -60,7 +67,8 @@
                 "name": {
                     "namestr": "gunright_02",
                     "layer": 0,
-                    "isprefab": false
+                    "isprefab": true,
+                    "prefabname": "Player.prefab"
                 },
                 "transform": {
                     "position": {
@@ -75,7 +83,7 @@
                 },
                 "sprite": {
                     "imagefile": "gunright_02.png",
-                    "layer": 0,
+                    "layer": 6627,
                     "color": {
                         "r": 1.0,
                         "g": 1.0,
@@ -88,12 +96,13 @@
                 "name": {
                     "namestr": "gunleft_02",
                     "layer": 0,
-                    "isprefab": false
+                    "isprefab": true,
+                    "prefabname": "Player.prefab"
                 },
                 "transform": {
                     "position": {
-                        "x": -0.9377890825271606,
-                        "y": 1.74858558177948
+                        "x": -2.9208052158355713,
+                        "y": 1.9509344100952148
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -103,7 +112,7 @@
                 },
                 "sprite": {
                     "imagefile": "gunleft_02.png",
-                    "layer": 0,
+                    "layer": 6628,
                     "color": {
                         "r": 1.0,
                         "g": 1.0,

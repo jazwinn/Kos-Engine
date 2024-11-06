@@ -286,10 +286,16 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
             //create overwrite button for prefab
             if (nc->m_isPrefab) {
-                if (ImGui::Button("Overwrite")) {
+                auto* tc = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(entityID));
+                if (!tc->m_haveParent || !static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(tc->m_parentID))->m_isPrefab) {
+                    if (ImGui::Button("Overwrite")) {
 
+                        prefab::Prefab::m_OverWriteScenePrafab(entityID);
+
+                    }
+                    ImGui::SameLine();
                 }
-                ImGui::SameLine();
+                
                 static const char* buf = nc->m_prefabName.c_str();
                 ImGui::InputText("##readonlytext", (char*)buf, strlen(buf), ImGuiInputTextFlags_ReadOnly);
             }

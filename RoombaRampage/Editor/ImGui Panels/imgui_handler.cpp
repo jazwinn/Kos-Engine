@@ -103,14 +103,16 @@ namespace gui {
 			
 			//viewport docking
 			ImGui::DockSpaceOverViewport(0, ImGui::GetMainViewport());
-			//create main menu bar
-			m_DrawMainMenuBar();
 
+			//update while prefabmode is on
+			m_UpdateOnPrefabMode();
+			
 			Helper::Helpers* help = Helper::Helpers::GetInstance();
 
 			ImVec2 windowSize = ImGui::GetIO().DisplaySize;
 			// only render when window is not minimize
 			if (windowSize.x > 0 && windowSize.y > 0) {
+				m_DrawMainMenuBar();
 				m_DrawPerformanceWindow(help->m_fps);
 				//m_DrawPlayPauseWindow();
 				m_DrawHierachyWindow();
@@ -186,6 +188,18 @@ namespace gui {
 			}
 			
 		}
+	}
+	void ImGuiHandler::m_UpdateOnPrefabMode()
+	{
+		//return if not on prefab mode
+		if (m_prefabSceneMode == false) return;
+
+
+		//update all entity with prefab
+		prefab::Prefab::m_UpdateAllPrefabEntity(m_activeScene);
+
+
+
 	}
 }
 

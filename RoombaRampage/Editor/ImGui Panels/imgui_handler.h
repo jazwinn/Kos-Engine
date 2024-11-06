@@ -198,7 +198,7 @@ namespace gui {
         \sa        graphicpipe::GraphicsPipe::m_funcGetInstance() to get the screen texture.
         */
         /******************************************************************/
-        void m_DrawPlayPauseWindow();
+        void m_DrawPlayPauseBar();
 
         void m_DrawRenderScreenWindow(unsigned int windowWidth, unsigned int windowHeight);
 
@@ -211,6 +211,8 @@ namespace gui {
         void m_DrawContentBrowser();
 
         void m_OnButtonPress(const events::BaseEvent<events::ButtonEvents>& givenEvent);
+
+        void m_UpdateOnPrefabMode();
         
 
         int m_clickedEntityId{ -1 };

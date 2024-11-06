@@ -148,10 +148,9 @@ namespace ecs {
 		struct SceneID{
 			bool m_isActive{true};
 			bool m_isPrefab{ false };
+			ecs::EntityID m_prefabID = 0;
 			std::vector<EntityID> m_sceneIDs;
 
-			static size_t m_regularSceneCount;
-			static size_t m_PrefabCount;
 		};
 
 		std::unordered_map<std::string, SceneID> m_ECS_SceneMap{};// store scene file name e.g. scene.json 

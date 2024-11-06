@@ -37,53 +37,24 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Graphics/GraphicsCamera.h"
 #include "../Editor/EditorCamera.h"
 
+#include "../ECS/Hierachy.h"
+
 
 
 void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsigned int windowHeight)
 {
     graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
+    ecs::ECS* ecs = ecs::ECS::m_GetInstance();
 
     ImGuiWindowFlags window_flags = 0;
     window_flags |= ImGuiWindowFlags_MenuBar;
     bool open = true;
 
     ImGui::Begin("Editor Window", &open, window_flags);
-    static bool pause = true;
-    ecs::ECS* ecs = ecs::ECS::m_GetInstance();
-    if (ImGui::BeginMenuBar()) {
-        if (ImGui::BeginMenu("Play")) {
-            if (pause) {
-                pause = false;
-                ecs->m_nextState = (ecs->m_getState() == ecs::STOP) ? ecs::START : ecs::RUNNING;
 
-                if (ecs->m_nextState == ecs::START) {
-                    assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
-                    assetmanager->m_scriptManager.m_HotReloadCompileAllCsharpFile();
-                    assetmanager->m_scriptManager.m_ReloadAllDLL();
-                }
-            }
-            ImGui::EndMenu();
-        }
 
-        if (ImGui::BeginMenu("Pause")) {
-
-            if (!pause) {
-                pause = true;
-                ecs->m_nextState = ecs::WAIT;
-            }
-            ImGui::EndMenu();
-        }
-
-        if (ImGui::BeginMenu("stop")) {
-            if (ecs->m_getState() != ecs::STOP) {
-                ecs->m_nextState = ecs::STOP;
-                pause = true;
-            }
-            ImGui::EndMenu();
-        }
-
-    }
-    ImGui::EndMenuBar();
+    m_DrawPlayPauseBar();
+    
 
     ImVec2 pos = ImGui::GetCursorScreenPos();
     ImVec2 renderWindowSize = ImGui::GetContentRegionAvail();
@@ -214,6 +185,11 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
                 ecs::SpriteComponent * spriteCom = static_cast<ecs::SpriteComponent*>(ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, id));
                 spriteCom->m_imageFile = filename->filename().string();
 
+                if (m_prefabSceneMode) {
+                    ecs::Hierachy::m_SetParent(ecs->m_ECS_SceneMap.find(m_activeScene)->second.m_prefabID, id);
+
+                }
+
                 m_clickedEntityId = id;
             }
             if (filename->filename().extension().string() == ".ttf") {
@@ -226,6 +202,11 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
                 nameCom->m_entityName = filename->filename().stem().string();
                 ecs::TextComponent* textCom = static_cast<ecs::TextComponent*>(fileecs->m_AddComponent(ecs::TYPETEXTCOMPONENT, id));
                 textCom->m_fileName = filename->filename().string();
+
+                if (m_prefabSceneMode) {
+                    ecs::Hierachy::m_SetParent(ecs->m_ECS_SceneMap.find(m_activeScene)->second.m_prefabID, id);
+
+                }
 
                 m_clickedEntityId = id;
             }

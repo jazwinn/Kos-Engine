@@ -31,9 +31,17 @@ namespace prefab {
 
 		static void m_SaveEntitytoPrefab(ecs::EntityID);
 
+		//static void m_AssignEntitytoPrefab(std::string prefab, ecs::EntityID id);
+
+		static void m_UpdateAllPrefabEntity(std::string prefab);
+
+		static void m_UpdatePrefab(ecs::EntityID sceneprefabID, ecs::EntityID prefabid, bool isPrefabChild = false);
+
+		static void m_OverWriteScenePrafab(ecs::EntityID id);
+
 	private:
 
-
+		
 
 	};
 

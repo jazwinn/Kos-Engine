@@ -30,6 +30,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../ECS/ECS.h"
 #include "../Application/Helper.h"
 #include "../Debugging/Logging.h"
+#include "../Asset Manager/Prefab.h"
 #include "json_handler.h"
 
 #include <cstdio>
@@ -106,23 +107,8 @@ namespace Serialization {
 		rapidjson::Document doc;
 		doc.Parse(fileContent.c_str());
 
-		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
 		std::string scenename = jsonFilePath.filename().string();
 		
-		//create scene
-		ecs->m_ECS_SceneMap[scenename];
-		//check if file is prefab or scene
-		if (jsonFilePath.filename().extension().string() == ".prefab") {
-			ecs->m_ECS_SceneMap.find(scenename)->second.m_isPrefab = true;
-			ecs->m_ECS_SceneMap.find(scenename)->second.m_isActive = false;
-			ecs::ECS::SceneID::m_PrefabCount++;
-		}
-		else {
-			ecs::ECS::SceneID::m_regularSceneCount++;
-		}
-
-		
-
 		/*******************INSERT INTO FUNCTION*****************************/
 
 		// Iterate through each component entry in the JSON array
@@ -462,6 +448,7 @@ namespace Serialization {
 			if (nc->m_isPrefab) {
 				if (name.HasMember("prefabname") && name["prefabname"].IsString()) {
 					nc->m_prefabName = name["prefabname"].GetString();
+
 				}
 			}
 		}
