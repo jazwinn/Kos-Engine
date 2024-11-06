@@ -42,7 +42,7 @@
             "static": false
         },
         "sprite": {
-            "imagefile": "Roomba.png",
+            "imagefile": "ani_RoombaBlink_strip4.png",
             "layer": 4,
             "color": {
                 "r": 1.0,
@@ -50,6 +50,12 @@
                 "b": 1.0
             },
             "alpha": 1.0
+        },
+        "animation": {
+            "frameNumber": 1,
+            "framesPerSecond": 1,
+            "frameTimer": 1.3999993801116943,
+            "isAnimating": true
         },
         "script": {
             "scripts": [
@@ -77,7 +83,7 @@
                 },
                 "sprite": {
                     "imagefile": "gunright_02.png",
-                    "layer": 5,
+                    "layer": 6627,
                     "color": {
                         "r": 1.0,
                         "g": 1.0,
@@ -95,8 +101,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": -0.9377890825271606,
-                        "y": 1.74858558177948
+                        "x": -2.9208052158355713,
+                        "y": 1.9509344100952148
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -106,36 +112,7 @@
                 },
                 "sprite": {
                     "imagefile": "gunleft_02.png",
-                    "layer": 6,
-                    "color": {
-                        "r": 1.0,
-                        "g": 1.0,
-                        "b": 1.0
-                    },
-                    "alpha": 1.0
-                }
-            },
-            {
-                "name": {
-                    "namestr": "booster",
-                    "layer": 0,
-                    "isprefab": true,
-                    "prefabname": "Player.prefab"
-                },
-                "transform": {
-                    "position": {
-                        "x": -0.03372456133365631,
-                        "y": -1.753688097000122
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    }
-                },
-                "sprite": {
-                    "imagefile": "boosters_tail02.png",
-                    "layer": 7,
+                    "layer": 6628,
                     "color": {
                         "r": 1.0,
                         "g": 1.0,

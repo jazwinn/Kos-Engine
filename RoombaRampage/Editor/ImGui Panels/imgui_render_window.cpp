@@ -44,48 +44,17 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsigned int windowHeight)
 {
     graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
+    ecs::ECS* ecs = ecs::ECS::m_GetInstance();
 
     ImGuiWindowFlags window_flags = 0;
     window_flags |= ImGuiWindowFlags_MenuBar;
     bool open = true;
 
     ImGui::Begin("Editor Window", &open, window_flags);
-    static bool pause = true;
-    ecs::ECS* ecs = ecs::ECS::m_GetInstance();
-    if (ImGui::BeginMenuBar()) {
-        if (ImGui::BeginMenu("Play")) {
-            if (pause) {
-                pause = false;
-                ecs->m_nextState = (ecs->m_getState() == ecs::STOP) ? ecs::START : ecs::RUNNING;
 
-                if (ecs->m_nextState == ecs::START) {
-                    assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
-                    assetmanager->m_scriptManager.m_HotReloadCompileAllCsharpFile();
-                    assetmanager->m_scriptManager.m_ReloadAllDLL();
-                }
-            }
-            ImGui::EndMenu();
-        }
 
-        if (ImGui::BeginMenu("Pause")) {
-
-            if (!pause) {
-                pause = true;
-                ecs->m_nextState = ecs::WAIT;
-            }
-            ImGui::EndMenu();
-        }
-
-        if (ImGui::BeginMenu("stop")) {
-            if (ecs->m_getState() != ecs::STOP) {
-                ecs->m_nextState = ecs::STOP;
-                pause = true;
-            }
-            ImGui::EndMenu();
-        }
-
-    }
-    ImGui::EndMenuBar();
+    m_DrawPlayPauseBar();
+    
 
     ImVec2 pos = ImGui::GetCursorScreenPos();
     ImVec2 renderWindowSize = ImGui::GetContentRegionAvail();
