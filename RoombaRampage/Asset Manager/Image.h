@@ -18,9 +18,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #ifndef IMAGE_H
 #define IMAGE_H
 
-#include <string>
-#include <vector>
-#include <unordered_map>
+#include "../Config/pch.h"
 
 
 namespace image {

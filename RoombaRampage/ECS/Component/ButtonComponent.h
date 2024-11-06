@@ -2,7 +2,6 @@
 #define BUTTONCOM_H
 
 #include "Component.h"
-#include "../Math/vector2.h"
 
 namespace ecs {
 

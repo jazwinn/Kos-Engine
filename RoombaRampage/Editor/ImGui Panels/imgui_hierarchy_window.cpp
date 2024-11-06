@@ -27,12 +27,6 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Debugging/Logging.h"
 #include "../Asset Manager/SceneManager.h"
 #include "../Asset Manager/Prefab.h"
-
-#include<vector>
-#include<string>
-#include <iostream>
-#include <filesystem>
-
 //Testing purposes! this are the three files needed!
 #include <mono/jit/jit.h>
 #include <mono/metadata/assembly.h>
@@ -44,7 +38,7 @@ namespace gui {
         //fetch ecs
         ecs::ECS* ecs = ecs::ECS::m_GetInstance();
         scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();
-        assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+        //assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
         // Custom window with example widgets
         bool open = true;
         ImGui::Begin("Hierachy Window", &open);

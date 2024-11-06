@@ -21,8 +21,6 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Physics/Physics.h"
 #include "../Graphics/GraphicsPipe.h"
 #include "../Graphics/GraphicsCamera.h"
-#include "../Math/Mat3x3.h"
-#include "../Math/vector2.h"
 #include "../ECS/Hierachy.h"
 
 namespace ecs {
@@ -69,7 +67,7 @@ namespace ecs {
 
 	void DebugDrawingSystem::m_Update(const std::string& scene) {
 
-		ECS* ecs = ECS::m_GetInstance();
+		//ECS* ecs = ECS::m_GetInstance();
 
 		if (m_vecTransformComponentPtr.size() != m_vecColliderComponentPtr.size()) {
 			LOGGING_ERROR("Error: Vecotrs container size does not Match");

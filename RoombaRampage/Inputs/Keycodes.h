@@ -12,7 +12,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 /********************************************************************/
 #pragma once
 #include <cstdint>
-
+#include "../Config/pch.h"
 using keyCode = uint16_t;
 
 namespace keys {

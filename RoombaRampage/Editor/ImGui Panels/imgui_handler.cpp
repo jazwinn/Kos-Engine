@@ -26,7 +26,6 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "imgui_impl_opengl3.h"
 #include "implot.h"
 #include "implot_internal.h"
-#include "../ECS/ECS.h"
 #include "../Dependencies/rapidjson/document.h"
 #include "../Dependencies/rapidjson/writer.h"
 #include "../Dependencies/rapidjson/stringbuffer.h"
@@ -115,7 +114,7 @@ namespace gui {
 			if (windowSize.x > 0 && windowSize.y > 0) {
 				m_DrawMainMenuBar();
 				m_DrawPerformanceWindow(help->m_fps);
-				m_DrawPlayPauseWindow();
+				//m_DrawPlayPauseWindow();
 				m_DrawHierachyWindow();
 				m_DrawComponentWindow();
 				m_DrawLogsWindow();
@@ -156,10 +155,27 @@ namespace gui {
 
 
 	void ImGuiHandler::m_OnButtonPress(const events::BaseEvent<events::ButtonEvents>& givenEvent) {
-		//std::cout << "Button: " << givenEvent.m_ToType<events::ButtonPressEvent>().m_GetButton() << " was pressed." << std::endl;
 		if (givenEvent.m_ToType<events::ButtonPressEvent>().m_GetButton() == 1) {
 			assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
+			assetManager->m_audioManager.m_soundMap.find("mindstorm.wav")->second->m_PlaySound();
+		}else if (givenEvent.m_ToType<events::ButtonPressEvent>().m_GetButton() == 2) {
+			assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
 			assetManager->m_audioManager.m_soundMap.find("zwing.wav")->second->m_PlaySound();
+		}
+		else if (givenEvent.m_ToType<events::ButtonPressEvent>().m_GetButton() == 3) {
+			assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
+			assetManager->m_audioManager.m_soundMap.find("cleaver01.wav")->second->m_PlaySound();
+		}
+		else if (givenEvent.m_ToType<events::ButtonPressEvent>().m_GetButton() == 4) {
+			assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
+			assetManager->m_audioManager.m_soundMap.find("gunshot01.wav")->second->m_PlaySound();
+		}
+		else if (givenEvent.m_ToType<events::ButtonPressEvent>().m_GetButton() == 5) {
+			assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
+			assetManager->m_audioManager.m_soundMap.find("mindstorm.wav")->second->m_StopSound();
+			assetManager->m_audioManager.m_soundMap.find("zwing.wav")->second->m_StopSound();
+			assetManager->m_audioManager.m_soundMap.find("cleaver01.wav")->second->m_StopSound();
+			assetManager->m_audioManager.m_soundMap.find("gunshot01.wav")->second->m_StopSound();
 		}
 		else if (givenEvent.m_ToType<events::AudioFromImgui>().m_GetEventType() == events::ButtonEvents::EVENTAUDIOFROMIMGUI) {\
 			std::string fileToBePlayed = givenEvent.m_ToType<events::AudioFromImgui>().m_GetFile();

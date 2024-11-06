@@ -25,11 +25,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "stb_image.h"
 
 
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <string>
-#include <algorithm>
+
 
 namespace assetmanager {
 

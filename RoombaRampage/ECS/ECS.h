@@ -16,8 +16,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #ifndef ECS_H
 #define ECS_H
 
-#include <unordered_map>
-#include <memory>
+#include "../Config/pch.h"
 
 #include "../ECS/Component/ComponentPool.h"
 #include "../ECS/Component/Component.h"
@@ -27,10 +26,6 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 #include "ECSList.h"
 #include "../ECS/System/SystemList.h"
-
-#include <iostream>
-#include <bitset>
-#include <optional>
 
 
 namespace ecs {

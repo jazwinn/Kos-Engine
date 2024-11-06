@@ -28,8 +28,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 #include <glm.hpp>
 #include <glew.h>
-#include <string>
-#include <map>
+#include "../Config/pch.h"
 #include <../Freetype_Font/include/ft2build.h>
 #include <../Freetype_Font/include/freetype/freetype.h>
 

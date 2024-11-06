@@ -27,7 +27,7 @@ namespace physicspipe {
 	std::unique_ptr<Physics> Physics::m_instance = nullptr;
 	physicslayer::PhysicsLayer* physicsLayer = physicslayer::PhysicsLayer::getInstance(); // Get the PhysicsLayer instance
 	std::vector<int> Physics::m_checker{};
-
+	
 
 	Circle::Circle(float radius, vector2::Vec2 shape_position, vector2::Vec2 shape_scale, vector2::Vec2 shape_velocity, int entity_ID)
 		: m_radius(radius)   // Initialize radius

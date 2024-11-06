@@ -24,8 +24,8 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 #include "../ECS/ECS.h"
 #include "../Dependencies/rapidjson/document.h"
-
-#include <filesystem>
+#include "../Dependencies/rapidjson/writer.h"
+#include "../Dependencies/rapidjson/stringbuffer.h"
 
 namespace Serialization {
 	class Serialize {

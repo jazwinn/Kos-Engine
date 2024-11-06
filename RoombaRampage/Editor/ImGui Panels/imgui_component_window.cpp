@@ -408,12 +408,12 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                     if (ImGui::TreeNode("Image Layers"))
                     {
-                        int count = 0;
+                        //int count = 0;
                         for (auto it = layerMap.begin(); it != layerMap.end(); ++it) 
                         {
-                            ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(it->second));
+                            ecs::NameComponent* namec = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(it->second));
                             std::string s = std::to_string(it->second);
-                            std::string selectable = nc->m_entityName + '_' + s;
+                            std::string selectable = namec->m_entityName + '_' + s;
                             ImGui::Selectable(selectable.c_str());
 
                             if (ImGui::IsItemActive() && !ImGui::IsItemHovered())

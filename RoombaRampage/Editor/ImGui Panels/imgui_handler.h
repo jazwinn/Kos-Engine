@@ -23,9 +23,6 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 /********************************************************************/
 
 #pragma once
-#include<vector>
-#include<string>
-#include <iostream>
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"

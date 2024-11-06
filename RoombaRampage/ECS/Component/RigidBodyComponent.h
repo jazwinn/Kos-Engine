@@ -17,7 +17,6 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #ifndef RIGIDCOM_H
 #define RIGIDCOM_H
 
-#include "../Math/Vector2.h"
 #include "Component.h"
 
 namespace ecs {

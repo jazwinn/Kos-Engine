@@ -1,5 +1,4 @@
 #include "SceneManager.h"
-#include <fstream>
 #include "document.h"
 #include "writer.h"
 #include "stringbuffer.h"

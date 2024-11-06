@@ -18,7 +18,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #define COMPOOL_H
 
 
-#include <vector>
+#include "../Config/pch.h"
 
 #include "../ECS/ECSList.h"
 #include "Component.h"
@@ -34,7 +34,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "ScriptComponent.h"
 #include "ButtonComponent.h"
 
-#include <algorithm>
+
 
 
 namespace ecs {

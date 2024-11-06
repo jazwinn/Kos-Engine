@@ -13,10 +13,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 */
 /********************************************************************/
 #pragma once
-#include <functional>
-#include <string>
-#include <map>
-#include <vector>
+#include "../Config/pch.h"
 
 
 

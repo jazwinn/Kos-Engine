@@ -15,7 +15,6 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #ifndef NAMECOM_H
 #define NAMECOM_H
 
-#include <string>
 #include "Component.h"
 #include "../ECS/Layers.h"
 
