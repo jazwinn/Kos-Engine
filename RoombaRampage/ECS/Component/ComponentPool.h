@@ -167,7 +167,7 @@ namespace ecs {
 		}
 
 		
-
+		std::string saveScene = NewComponent->m_scene;
 		*NewComponent = *DuplicateComponent;//copies everything INCLUDING ID
 		NewComponent->m_Entity = NewID;//SET BACK ID
 

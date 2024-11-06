@@ -73,6 +73,13 @@ namespace gui {
 
                 ecs::EntityID newEntityID = ecs->m_CreateEntity(m_activeScene);
 
+                //if in prefab mode, assign entity to upmost parent
+                if (m_prefabSceneMode) {
+                    ecs::EntityID id = ecs->m_ECS_SceneMap.find(m_activeScene)->second.m_prefabID;
+                    ecs::Hierachy::m_SetParent(std::move(id), newEntityID);
+                }
+
+
                 //set new ID to be clicked
                 m_clickedEntityId = newEntityID;
                 //Add the string into the vector
@@ -99,6 +106,8 @@ namespace gui {
                 ImGui::SeparatorText("Prefab");
 
                 if (ImGui::Button("Back")){
+                    //save "prefab"
+                    scenemanager->m_SaveScene(m_activeScene);
                     //set current prefab back to inactive
                     ecs->m_ECS_SceneMap.find(m_activeScene)->second.m_isActive = false;
                     
@@ -120,6 +129,8 @@ namespace gui {
                     m_prefabSceneMode = false;
                     m_clickedEntityId = -1;
                 }
+
+
 
             }
             
@@ -328,16 +339,32 @@ namespace gui {
 
         //draw context window
         if (ImGui::BeginPopupContextItem()) {
-            if (ImGui::MenuItem("Delete Entity")) {
-                ecs->m_DeleteEntity(id);
-                m_clickedEntityId = -1;
-                ImGui::EndPopup();
-                if(open)ImGui::TreePop();
-                return false;
+
+            //disable if the upmost prefab
+            if (m_prefabSceneMode && (id == ecs->m_ECS_SceneMap.find(m_activeScene)->second.m_prefabID)) {
+              
+
             }
+            else {
+                if (ImGui::MenuItem("Delete Entity")) {
+                    ecs->m_DeleteEntity(id);
+                    m_clickedEntityId = -1;
+                    ImGui::EndPopup();
+                    if (open)ImGui::TreePop();
+                    return false;
+                }
+            }
+           
 
             if (ImGui::MenuItem("Duplicate Entity")) {
-                ecs->m_DuplicateEntity(m_clickedEntityId);
+                ecs::EntityID newid = ecs->m_DuplicateEntity(id);
+
+                if (m_prefabSceneMode && (!ecs::Hierachy::m_GetParent(id).has_value())) {
+                   ecs::Hierachy::m_SetParent(id, newid);
+                }
+
+
+
                 ImGui::EndPopup();
                 if (open)ImGui::TreePop();
                 return false;
@@ -352,10 +379,7 @@ namespace gui {
         }
 
         //no reordering of child prefabs
-        if (nc->m_isPrefab && transCom->m_haveParent) {
-
-        }
-        else {
+        if (!transCom->m_haveParent || !static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(transCom->m_parentID))->m_isPrefab) {
             if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None)) {
                 //might undefine behaviour
                 ecs::EntityID index = id;
@@ -364,6 +388,9 @@ namespace gui {
                 //ImGui::Text(std::to_string((int)index).c_str());
                 ImGui::EndDragDropSource();
             }
+        }
+        else {
+
         }
 
 
@@ -399,7 +426,11 @@ namespace gui {
             //recursion
             if (transCom->m_childID.size() > 0) {
                 for (auto& ids : transCom->m_childID) {
-                    m_DrawEntityNode(ids);
+                    if (!m_DrawEntityNode(ids)) {
+
+                        ImGui::TreePop();
+                        return false;
+                    }
                 }
             }
            // m_DrawEntityNode(1);

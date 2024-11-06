@@ -37,6 +37,8 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Graphics/GraphicsCamera.h"
 #include "../Editor/EditorCamera.h"
 
+#include "../ECS/Hierachy.h"
+
 
 
 void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsigned int windowHeight)
@@ -174,6 +176,11 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
                 ecs::SpriteComponent * spriteCom = static_cast<ecs::SpriteComponent*>(ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, id));
                 spriteCom->m_imageFile = filename->filename().string();
 
+                if (m_prefabSceneMode) {
+                    ecs::Hierachy::m_SetParent(ecs->m_ECS_SceneMap.find(m_activeScene)->second.m_prefabID, id);
+
+                }
+
                 m_clickedEntityId = id;
             }
             if (filename->filename().extension().string() == ".ttf") {
@@ -186,6 +193,11 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
                 nameCom->m_entityName = filename->filename().stem().string();
                 ecs::TextComponent* textCom = static_cast<ecs::TextComponent*>(ecs->m_AddComponent(ecs::TYPETEXTCOMPONENT, id));
                 textCom->m_fileName = filename->filename().string();
+
+                if (m_prefabSceneMode) {
+                    ecs::Hierachy::m_SetParent(ecs->m_ECS_SceneMap.find(m_activeScene)->second.m_prefabID, id);
+
+                }
 
                 m_clickedEntityId = id;
             }

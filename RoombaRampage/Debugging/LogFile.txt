@@ -1,60 +1,113 @@
-[INFO]: 2024-11-05 12:17:40 - Application Start
-[INFO]: 2024-11-05 12:17:40 - Load Log Successful
-[INFO]: 2024-11-05 12:17:40 - Load Config Successful
-[INFO]: 2024-11-05 12:17:40 - Load Window Successful
-[INFO]: 2024-11-05 12:17:40 - Load ECS Successful
-[DEBUG]: 2024-11-05 12:17:40 - Successfully Added Script
-[INFO]: 2024-11-05 12:17:40 - Load Json Successful
-[INFO]: 2024-11-05 12:17:40 - Entities successfully loaded!
-[INFO]: 2024-11-05 12:17:40 - Strip Success for Assets/Texture/ani_RoombaBlink_strip4.png
-[INFO]: 2024-11-05 12:17:41 - Texture Binded, Texture ID : 6 
-[INFO]: 2024-11-05 12:17:41 - Image ID : 0 
-[INFO]: 2024-11-05 12:17:41 - Strip Success for Assets/Texture/ani_RoombaBoosters_strip6.png
-[INFO]: 2024-11-05 12:17:41 - Texture Binded, Texture ID : 7 
-[INFO]: 2024-11-05 12:17:41 - Image ID : 1 
-[INFO]: 2024-11-05 12:17:41 - Strip Success for Assets/Texture/ani_SeanSprite_strip4.png
-[INFO]: 2024-11-05 12:17:41 - Texture Binded, Texture ID : 8 
-[INFO]: 2024-11-05 12:17:41 - Image ID : 2 
-[INFO]: 2024-11-05 12:17:41 - Texture Padded for Audiowav.png
-[INFO]: 2024-11-05 12:17:41 - Texture Binded, Texture ID : 9 
-[INFO]: 2024-11-05 12:17:41 - Image ID : 3 
-[INFO]: 2024-11-05 12:17:41 - Texture Padded for Background.png
-[INFO]: 2024-11-05 12:17:41 - Texture Binded, Texture ID : 10 
-[INFO]: 2024-11-05 12:17:41 - Image ID : 4 
-[INFO]: 2024-11-05 12:17:41 - Texture Binded, Texture ID : 11 
-[INFO]: 2024-11-05 12:17:41 - Image ID : 5 
-[INFO]: 2024-11-05 12:17:41 - Texture Padded for boosters_tail02.png
-[INFO]: 2024-11-05 12:17:41 - Texture Binded, Texture ID : 12 
-[INFO]: 2024-11-05 12:17:41 - Image ID : 6 
-[INFO]: 2024-11-05 12:17:41 - Texture Binded, Texture ID : 13 
-[INFO]: 2024-11-05 12:17:41 - Image ID : 7 
-[INFO]: 2024-11-05 12:17:41 - Texture Padded for folder.png
-[INFO]: 2024-11-05 12:17:41 - Texture Binded, Texture ID : 14 
-[INFO]: 2024-11-05 12:17:41 - Image ID : 8 
-[INFO]: 2024-11-05 12:17:41 - Texture Padded for gunleft_02.png
-[INFO]: 2024-11-05 12:17:41 - Texture Binded, Texture ID : 15 
-[INFO]: 2024-11-05 12:17:41 - Image ID : 9 
-[INFO]: 2024-11-05 12:17:41 - Texture Padded for gunright_02.png
-[INFO]: 2024-11-05 12:17:41 - Texture Binded, Texture ID : 16 
-[INFO]: 2024-11-05 12:17:41 - Image ID : 10 
-[INFO]: 2024-11-05 12:17:41 - Texture Padded for Roomba.png
-[INFO]: 2024-11-05 12:17:41 - Texture Binded, Texture ID : 17 
-[INFO]: 2024-11-05 12:17:41 - Image ID : 11 
-[INFO]: 2024-11-05 12:17:41 - Texture Binded, Texture ID : 18 
-[INFO]: 2024-11-05 12:17:41 - Image ID : 12 
-[INFO]: 2024-11-05 12:17:41 - Texture Padded for ScriptIcon.png
-[INFO]: 2024-11-05 12:17:41 - Texture Binded, Texture ID : 19 
-[INFO]: 2024-11-05 12:17:41 - Image ID : 13 
-[INFO]: 2024-11-05 12:17:41 - Load Asset Successful
-[INFO]: 2024-11-05 12:17:41 - Shader compiled successfully
-[INFO]: 2024-11-05 12:17:41 - Shader compiled successfully
-[INFO]: 2024-11-05 12:17:41 - Shader compiled successfully
-[INFO]: 2024-11-05 12:17:41 - Shader compiled successfully
-[INFO]: 2024-11-05 12:17:41 - Shader compiled successfully
-[INFO]: 2024-11-05 12:17:41 - Load Graphic Pipline Successful
-[INFO]: 2024-11-05 12:17:41 - Set Input Call Back Successful
-[INFO]: 2024-11-05 12:17:41 - Load Json Successful
-[INFO]: 2024-11-05 12:17:41 - Entities successfully loaded!
-[INFO]: 2024-11-05 12:17:41 - Load ImGui Successful
-[INFO]: 2024-11-05 12:17:41 - Application Init Successful
-[INFO]: 2024-11-05 12:17:50 - Application Closed
+[INFO]: 2024-11-06 11:55:47 - Application Start
+[INFO]: 2024-11-06 11:55:47 - Load Log Successful
+[INFO]: 2024-11-06 11:55:47 - Load Config Successful
+[INFO]: 2024-11-06 11:55:48 - Load Window Successful
+[INFO]: 2024-11-06 11:55:48 - Load ECS Successful
+[DEBUG]: 2024-11-06 11:55:48 - Successfully Added Script
+[INFO]: 2024-11-06 11:55:48 - Load Json Successful
+[INFO]: 2024-11-06 11:55:48 - Entities successfully loaded!
+[INFO]: 2024-11-06 11:55:48 - Strip Success for Assets/Texture/ani_RoombaBlink_strip4.png
+[INFO]: 2024-11-06 11:55:48 - Texture Binded, Texture ID : 6 
+[INFO]: 2024-11-06 11:55:48 - Image ID : 0 
+[INFO]: 2024-11-06 11:55:48 - Strip Success for Assets/Texture/ani_RoombaBoosters_strip6.png
+[INFO]: 2024-11-06 11:55:48 - Texture Binded, Texture ID : 7 
+[INFO]: 2024-11-06 11:55:48 - Image ID : 1 
+[INFO]: 2024-11-06 11:55:48 - Strip Success for Assets/Texture/ani_SeanSprite_strip4.png
+[INFO]: 2024-11-06 11:55:48 - Texture Binded, Texture ID : 8 
+[INFO]: 2024-11-06 11:55:48 - Image ID : 2 
+[INFO]: 2024-11-06 11:55:48 - Texture Padded for Audiowav.png
+[INFO]: 2024-11-06 11:55:48 - Texture Binded, Texture ID : 9 
+[INFO]: 2024-11-06 11:55:48 - Image ID : 3 
+[INFO]: 2024-11-06 11:55:48 - Texture Padded for Background.png
+[INFO]: 2024-11-06 11:55:48 - Texture Binded, Texture ID : 10 
+[INFO]: 2024-11-06 11:55:48 - Image ID : 4 
+[INFO]: 2024-11-06 11:55:48 - Texture Binded, Texture ID : 11 
+[INFO]: 2024-11-06 11:55:48 - Image ID : 5 
+[INFO]: 2024-11-06 11:55:48 - Texture Padded for boosters_tail02.png
+[INFO]: 2024-11-06 11:55:48 - Texture Binded, Texture ID : 12 
+[INFO]: 2024-11-06 11:55:48 - Image ID : 6 
+[INFO]: 2024-11-06 11:55:48 - Texture Binded, Texture ID : 13 
+[INFO]: 2024-11-06 11:55:48 - Image ID : 7 
+[INFO]: 2024-11-06 11:55:48 - Texture Padded for folder.png
+[INFO]: 2024-11-06 11:55:48 - Texture Binded, Texture ID : 14 
+[INFO]: 2024-11-06 11:55:48 - Image ID : 8 
+[INFO]: 2024-11-06 11:55:48 - Texture Padded for gunleft_02.png
+[INFO]: 2024-11-06 11:55:48 - Texture Binded, Texture ID : 15 
+[INFO]: 2024-11-06 11:55:48 - Image ID : 9 
+[INFO]: 2024-11-06 11:55:48 - Texture Padded for gunright_02.png
+[INFO]: 2024-11-06 11:55:48 - Texture Binded, Texture ID : 16 
+[INFO]: 2024-11-06 11:55:48 - Image ID : 10 
+[INFO]: 2024-11-06 11:55:48 - Texture Padded for Roomba.png
+[INFO]: 2024-11-06 11:55:48 - Texture Binded, Texture ID : 17 
+[INFO]: 2024-11-06 11:55:48 - Image ID : 11 
+[INFO]: 2024-11-06 11:55:48 - Texture Binded, Texture ID : 18 
+[INFO]: 2024-11-06 11:55:48 - Image ID : 12 
+[INFO]: 2024-11-06 11:55:48 - Texture Padded for ScriptIcon.png
+[INFO]: 2024-11-06 11:55:48 - Texture Binded, Texture ID : 19 
+[INFO]: 2024-11-06 11:55:48 - Image ID : 13 
+[INFO]: 2024-11-06 11:55:48 - Load Asset Successful
+[INFO]: 2024-11-06 11:55:48 - Shader compiled successfully
+[INFO]: 2024-11-06 11:55:48 - Shader compiled successfully
+[INFO]: 2024-11-06 11:55:48 - Shader compiled successfully
+[INFO]: 2024-11-06 11:55:48 - Shader compiled successfully
+[INFO]: 2024-11-06 11:55:48 - Shader compiled successfully
+[INFO]: 2024-11-06 11:55:48 - Load Graphic Pipline Successful
+[INFO]: 2024-11-06 11:55:48 - Set Input Call Back Successful
+[INFO]: 2024-11-06 11:55:48 - Load Json Successful
+[INFO]: 2024-11-06 11:55:48 - Entities successfully loaded!
+[INFO]: 2024-11-06 11:55:48 - Load ImGui Successful
+[INFO]: 2024-11-06 11:55:48 - Application Init Successful
+[ERROR]: 2024-11-06 11:55:59 - Scene already loaded
+FUNC: void __cdecl scenes::SceneManager::m_LoadScene(class std::filesystem::path) LINE: 57 FILE: C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGoose Workspace\RRR\RoombaRampage\Asset Manager\SceneManager.cpp
+Stack trace (most recent call last):
+#11   Object "", at 00007FFA0022257D, in BaseThreadInitThunk
+#10   Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_main.cpp", line 17, in mainCRTStartup
+#9    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 331, in __scrt_common_main
+#8    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 288, in __scrt_common_main_seh
+#7    Source "D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl", line 79, in invoke_main
+#6    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGoose Workspace\RRR\RoombaRampage\Application\main.cpp", line 37, in main
+         35:         app.Run();
+         36: 
+      >  37:         app.m_Cleanup();
+#5    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGoose Workspace\RRR\RoombaRampage\Application\Application.cpp", line 181, in Application::Application::Run
+        178:                 /*--------------------------------------------------------------
+        179:                    Render Game Scene
+        180:                 --------------------------------------------------------------*/
+      > 181:                 pipe->m_funcRenderGameScene();
+#4    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGoose Workspace\RRR\RoombaRampage\Editor\ImGui Panels\imgui_handler.cpp", line 120, in gui::ImGuiHandler::m_Render
+        117: 				m_DrawPerformanceWindow(help->m_fps);
+        118: 				m_DrawPlayPauseWindow();
+        119: 				m_DrawHierachyWindow();
+      > 120: 				m_DrawComponentWindow();
+        121: 				m_DrawLogsWindow();
+        122: 				m_DrawTestWindow();
+        123: 				m_DrawLayerWindow();
+#3    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGoose Workspace\RRR\RoombaRampage\Editor\ImGui Panels\imgui_hierarchy_window.cpp", line 293, in gui::ImGuiHandler::m_DrawHierachyWindow
+        290:                         scenemanager->m_LoadScene(*filename);
+        291:                     }
+        292: 
+      > 293:                     if (filename->filename().extension().string() == ".prefab") {
+        294: 
+        295:                         prefab::Prefab::m_CreatePrefab(filename->filename().string(), m_activeScene);
+#2    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGoose Workspace\RRR\RoombaRampage\Asset Manager\SceneManager.cpp", line 57, in scenes::SceneManager::m_LoadScene
+         55:         ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+         56:         if (ecs->m_ECS_SceneMap.find(scene.filename().string()) != ecs->m_ECS_SceneMap.end()) {
+      >  57:             LOGGING_ERROR("Scene already loaded");
+         58:             return;
+         59:         }
+#1    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGoose Workspace\RRR\RoombaRampage\Debugging\Logging.h", line 298, in logging::Logger::m_Error<>
+        295:             std::cout << "Not storing" << std::endl;
+        296:         }
+        297:         m_st.load_here(32);
+      > 298:         m_printer.print(m_st, m_logFile);
+        299:     }
+        300: 
+        301:     template <typename... Args>
+#0    Source "C:\Users\ngjaz\OneDrive\Documents\roombarampage\GreyGoose Workspace\RRR\RoombaRampage\Dependencies\backward\backward.hpp", line 1151, in backward::StackTraceImpl<backward::system_tag::windows_tag>::load_here
+       1148:       RtlCaptureContext(ctx_);
+       1149:     }
+       1150: 
+      >1151:     if (!thd_) {
+       1152:       thd_ = GetCurrentThread();
+       1153:     }
+[INFO]: 2024-11-06 11:56:06 - Application Closed

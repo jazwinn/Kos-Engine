@@ -214,6 +214,8 @@ namespace gui {
         void m_DrawContentBrowser();
 
         void m_OnButtonPress(const events::BaseEvent<events::ButtonEvents>& givenEvent);
+
+        void m_UpdateOnPrefabMode();
         
 
         int m_clickedEntityId{ -1 };

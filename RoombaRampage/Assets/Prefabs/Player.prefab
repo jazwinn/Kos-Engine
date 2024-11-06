@@ -3,12 +3,13 @@
         "name": {
             "namestr": "Player",
             "layer": 0,
-            "isprefab": false
+            "isprefab": true,
+            "prefabname": "Player.prefab"
         },
         "transform": {
             "position": {
-                "x": 12.475058555603027,
-                "y": -5.441643238067627
+                "x": -0.11105449497699738,
+                "y": -0.5922882556915283
             },
             "rotation": 0.0,
             "scale": {
@@ -42,7 +43,7 @@
         },
         "sprite": {
             "imagefile": "Roomba.png",
-            "layer": 0,
+            "layer": 4,
             "color": {
                 "r": 1.0,
                 "g": 1.0,
@@ -60,7 +61,8 @@
                 "name": {
                     "namestr": "gunright_02",
                     "layer": 0,
-                    "isprefab": false
+                    "isprefab": true,
+                    "prefabname": "Player.prefab"
                 },
                 "transform": {
                     "position": {
@@ -75,7 +77,7 @@
                 },
                 "sprite": {
                     "imagefile": "gunright_02.png",
-                    "layer": 0,
+                    "layer": 5,
                     "color": {
                         "r": 1.0,
                         "g": 1.0,
@@ -88,7 +90,8 @@
                 "name": {
                     "namestr": "gunleft_02",
                     "layer": 0,
-                    "isprefab": false
+                    "isprefab": true,
+                    "prefabname": "Player.prefab"
                 },
                 "transform": {
                     "position": {
@@ -103,7 +106,36 @@
                 },
                 "sprite": {
                     "imagefile": "gunleft_02.png",
+                    "layer": 6,
+                    "color": {
+                        "r": 1.0,
+                        "g": 1.0,
+                        "b": 1.0
+                    },
+                    "alpha": 1.0
+                }
+            },
+            {
+                "name": {
+                    "namestr": "booster",
                     "layer": 0,
+                    "isprefab": true,
+                    "prefabname": "Player.prefab"
+                },
+                "transform": {
+                    "position": {
+                        "x": -0.03372456133365631,
+                        "y": -1.753688097000122
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "sprite": {
+                    "imagefile": "boosters_tail02.png",
+                    "layer": 7,
                     "color": {
                         "r": 1.0,
                         "g": 1.0,

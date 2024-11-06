@@ -82,27 +82,27 @@ namespace scenes {
         //create new scene
         ecs->m_ECS_SceneMap[scenename];
         //check if file is prefab or scene
-        if (scene.filename().extension().string() == ".prefab") {
-            ecs->m_ECS_SceneMap.find(scenename)->second.m_isPrefab = true;
-            ecs->m_ECS_SceneMap.find(scenename)->second.m_isActive = false;
 
-            if (prefab::Prefab::m_prefabMap.find(scenename) != prefab::Prefab::m_prefabMap.end()) {
-                LOGGING_ERROR("prefab already exist");
-                return;
-            }
-            
-            prefab::Prefab::m_prefabMap[scenename];
-
-
-            ecs::ECS::SceneID::m_PrefabCount++;
-        }
-        else {
-            ecs::ECS::SceneID::m_regularSceneCount++;
-        }
             
         // Load entities from the JSON file
         std::cout << "Loading entities from: " << scene.string() << std::endl;
         Serialization::Serialize::m_LoadComponentsJson(scene.string());  // Load into ECS
+
+        if (scene.filename().extension().string() == ".prefab") {
+            ecs->m_ECS_SceneMap.find(scenename)->second.m_isPrefab = true;
+            ecs->m_ECS_SceneMap.find(scenename)->second.m_isActive = false;
+
+            for (auto& id : ecs->m_ECS_SceneMap.find(scenename)->second.m_sceneIDs) {
+                ecs::TransformComponent* tc = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id));
+                if (!tc->m_haveParent) {
+                    ecs->m_ECS_SceneMap.find(scenename)->second.m_prefabID = id;
+                    break;
+                }
+            }
+             
+
+
+        }
 
         LOGGING_INFO("Entities successfully loaded!");
 
@@ -166,13 +166,6 @@ namespace scenes {
             }
         }
 
-        //decrement scene counter
-        if (ecs->m_ECS_SceneMap.find(scene)->second.m_isPrefab == true) {
-            ecs::ECS::SceneID::m_PrefabCount--;
-        }
-        else {
-            ecs::ECS::SceneID::m_regularSceneCount--;
-        }
 
         //remove scene from activescenes
         ecs->m_ECS_SceneMap.erase(scene);

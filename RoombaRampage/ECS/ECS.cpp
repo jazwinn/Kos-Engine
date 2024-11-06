@@ -29,8 +29,6 @@ namespace ecs{
 
 	std::unique_ptr<ECS> ECS::m_InstancePtr = nullptr;
 
-	size_t ECS::SceneID::m_PrefabCount{};
-	size_t ECS::SceneID::m_regularSceneCount{};
 
 
 	void ECS::m_Init() {

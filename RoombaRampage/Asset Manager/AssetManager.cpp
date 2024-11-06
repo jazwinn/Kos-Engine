@@ -77,7 +77,6 @@ namespace assetmanager {
             m_LoadScript(directoryPath);
         }
         if (directoryPath.filename().extension().string() == ".prefab") {
-            prefab::Prefab::m_prefabMap;
 
             scenes::SceneManager::m_GetInstance()->m_LoadScene(directoryPath);
         }
