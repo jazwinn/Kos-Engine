@@ -59,6 +59,7 @@ namespace gui {
                     //TODO load back scene
                     scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();
                     scenemanager->m_ReloadScene();
+                    m_clickedEntityId = -1;
                 }
 
             }

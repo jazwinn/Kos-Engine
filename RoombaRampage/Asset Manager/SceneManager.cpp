@@ -54,7 +54,7 @@ namespace scenes {
         ecs::ECS* ecs = ecs::ECS::m_GetInstance();
         if (ecs->m_ECS_SceneMap.find(scene.filename().string()) != ecs->m_ECS_SceneMap.end()) {
 #if _DEBUG
-            LOGGING_ERROR("Scene already loaded");
+            LOGGING_WARN("Scene already loaded");
 #endif
             return;
         }
