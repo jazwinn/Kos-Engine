@@ -309,6 +309,27 @@ namespace physicspipe {
 		return collidedEntities.test(entityID); // Check if it has collided already
 	}
 
+	float Circle::GetBoundingRadius() const {
+		return m_radius;
+	}
+	float Rectangle::GetBoundingRadius() const {
+		return 0.5f * std::sqrt(m_width * m_width + m_height * m_height);
+	}
+
+	bool Physics::withinBoundingRadius(const std::shared_ptr<PhysicsData>& entity1, const std::shared_ptr<PhysicsData>& entity2) {
+		float dx = entity1->m_position.m_x - entity2->m_position.m_x;
+		float dy = entity1->m_position.m_y - entity2->m_position.m_y;
+		float distanceSquared = dx * dx + dy * dy;
+		float combinedRadius = entity1->GetBoundingRadius() + entity2->GetBoundingRadius();
+		return distanceSquared <= combinedRadius * combinedRadius;
+	}
+
+	void Physics::addCollidedEntity(const std::shared_ptr<PhysicsData>& entity) {
+		if (std::find(m_collidedEntities.begin(), m_collidedEntities.end(), entity) == m_collidedEntities.end()) {
+			m_collidedEntities.push_back(entity);
+		}
+	}
+
 	void Physics::m_CollisionCheckUpdate() {
 		if (m_physicsEntities.empty()) return;
 
@@ -318,14 +339,11 @@ namespace physicspipe {
 				int layer2 = m_physicsEntities[j]->m_layerID;
 
 				// Check if these layers should collide
-				if (physicsLayer->getCollide(layer1, layer2)) {
+				if (physicsLayer->getCollide(layer1, layer2) &&
+					withinBoundingRadius(m_physicsEntities[i], m_physicsEntities[j])) {
 					if (m_CheckCollision(m_physicsEntities[i], m_physicsEntities[j])) {
-						if (std::find(m_collidedEntities.begin(), m_collidedEntities.end(), m_physicsEntities[i]) == m_collidedEntities.end()) {
-							m_collidedEntities.emplace_back(m_physicsEntities[i]);
-						}
-						if (std::find(m_collidedEntities.begin(), m_collidedEntities.end(), m_physicsEntities[j]) == m_collidedEntities.end()) {
-							m_collidedEntities.emplace_back(m_physicsEntities[j]);
-						}
+						addCollidedEntity(m_physicsEntities[i]); 
+						addCollidedEntity(m_physicsEntities[j]);
 					}
 				}
 			}
@@ -334,12 +352,11 @@ namespace physicspipe {
 
 	bool Physics::m_CheckCollision(const std::shared_ptr<PhysicsData>& entity1, const std::shared_ptr<PhysicsData>& entity2){
 		// Check for collision based on the types of entities.
-		if (entity1->GetEntity() == EntityType::CIRCLE && entity2->GetEntity() == EntityType::CIRCLE) {
-			return m_CollisionIntersection_CircleCircle(*static_cast<Circle*>(entity1.get()), *static_cast<Circle*>(entity2.get()));
-		}
-		else if (entity1->GetEntity() == EntityType::RECTANGLE && entity2->GetEntity() == EntityType::RECTANGLE) {
+		if (entity1->GetEntity() == EntityType::RECTANGLE && entity2->GetEntity() == EntityType::RECTANGLE) {
 			return m_CollisionIntersection_RectRect_SAT(*static_cast<Rectangle*>(entity1.get()), *static_cast<Rectangle*>(entity2.get()));
-			//return m_CollisionIntersection_RectRect(*static_cast<Rectangle*>(entity1.get()), *static_cast<Rectangle*>(entity2.get()), dt);
+		}
+		else if (entity1->GetEntity() == EntityType::CIRCLE && entity2->GetEntity() == EntityType::CIRCLE) {
+			return m_CollisionIntersection_CircleCircle(*static_cast<Circle*>(entity1.get()), *static_cast<Circle*>(entity2.get()));
 		}
 		else if (entity1->GetEntity() == EntityType::CIRCLE && entity2->GetEntity() == EntityType::RECTANGLE) {
 			return m_CollisionIntersection_CircleRect(*static_cast<Circle*>(entity1.get()), *static_cast<Rectangle*>(entity2.get()));

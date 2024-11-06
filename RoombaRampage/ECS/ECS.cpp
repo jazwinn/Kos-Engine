@@ -21,6 +21,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Debugging/Logging.h"
 #include "../Asset Manager/SceneManager.h"
 #include "Hierachy.h"
+#include "../Config/pch.h"
 //ECS Varaible
 
 namespace ecs{
@@ -109,7 +110,8 @@ namespace ecs{
 
 		//loops through all the system
 		for (auto& System : ecs->m_ECS_SystemMap) {
-			auto start = std::chrono::steady_clock::now();
+			std::chrono::duration<float> duration{};
+			
 
 
 
@@ -127,19 +129,14 @@ namespace ecs{
 			for (const auto& scene : ecs->m_ECS_SceneMap) {
 				//only update scene's that is active
 				if (scene.second.m_isActive == true) {
+					auto start = std::chrono::steady_clock::now();
 					System.second->m_Update(scene.first);
+					auto end = std::chrono::steady_clock::now();
+					duration = end - start;
 				}
 				
 			}
 
-			
-
-			
-
-
-
-			auto end = std::chrono::steady_clock::now();
-			std::chrono::duration<float> duration = end - start;
 			performancetracker::Performance::m_UpdateTotalSystemTime(duration.count());
 			performancetracker::Performance::m_UpdateSystemTime(System.first, duration.count());
 		

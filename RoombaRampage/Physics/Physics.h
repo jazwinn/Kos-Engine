@@ -61,7 +61,7 @@ namespace physicspipe {
 
 		//Get entity type
 		virtual EntityType GetEntity() const = 0;
-
+		virtual float GetBoundingRadius() const = 0;
 		//Operator for equality check
 		bool operator==(const PhysicsData& other) const {
 			return (m_ID == other.m_ID);
@@ -103,6 +103,8 @@ namespace physicspipe {
 		EntityType GetEntity() const override {
 			return EntityType::CIRCLE;
 		}
+
+		float GetBoundingRadius() const;
 	};
 
 	/******************************************************************/
@@ -160,6 +162,7 @@ namespace physicspipe {
 		*/
 		/******************************************************************/
 		std::vector<vector2::Vec2> m_getEdges() const;
+		float GetBoundingRadius() const;
 	};
 
 	struct LineSegment
@@ -339,6 +342,8 @@ namespace physicspipe {
 		*/
 		/******************************************************************/
 		bool m_CollisionIntersection_RectRect_SAT(const Rectangle& obj1, const Rectangle& obj2);
+		bool withinBoundingRadius(const std::shared_ptr<PhysicsData>& entity1, const std::shared_ptr<PhysicsData>& entity2);
+		void addCollidedEntity(const std::shared_ptr<PhysicsData>& entity);
 };
 }
 #endif

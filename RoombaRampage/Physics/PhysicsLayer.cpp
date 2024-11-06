@@ -13,12 +13,12 @@ namespace physicslayer {
     }
 
     void PhysicsLayer::printCollisionMatrix() const {
-        //for (int i = 0; i < size; ++i) {
-        //    for (int j = 0; j < size; ++j) {
-        //        std::cout << collisionMatrix[i][j] << " ";
-        //    }
-        //    std::cout << std::endl;
-        //}
+        for (int i = 0; i < size; ++i) {
+            for (int j = 0; j < size; ++j) {
+                std::cout << layerCollisions[i][j] << " ";
+            }
+            std::cout << std::endl;
+        }
     }
 
     void PhysicsLayer::setCollision(int row, int col, bool value) {
