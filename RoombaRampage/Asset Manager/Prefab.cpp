@@ -49,11 +49,11 @@ namespace prefab {
         }
     }
 
-    void Prefab::m_CreatePrefab(std::string prefabscene, std::string insertscene)
+    int Prefab::m_CreatePrefab(std::string prefabscene, std::string insertscene)
     {
         if (prefabscene == insertscene) {
             LOGGING_ERROR("Cannot load onto itself");
-            return;
+            return -1;
         }
 
 
@@ -67,7 +67,7 @@ namespace prefab {
 
         if (ecs->m_ECS_SceneMap.find(prefabscene) == ecs->m_ECS_SceneMap.end()) {
             LOGGING_ERROR("Prefab not loaded into scene");
-            return;
+            return -1;
         }
        
         std::vector<ecs::EntityID> vecid;
@@ -91,7 +91,7 @@ namespace prefab {
         
         }
 
-
+        return vecid[0];
     }
 
     void Prefab::m_SaveEntitytoPrefab(ecs::EntityID id)
@@ -186,6 +186,8 @@ namespace prefab {
             ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id.first));
             ecs::TransformComponent* tc = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id.first));
             if (nc->m_isPrefab && (nc->m_prefabName == prefab)) {
+                //if sync is turn off, skip update
+                if (nc->m_syncPrefab == false) continue;
 
                 //skip all prefabs children
                 //skip if have parent and parent is a prefab

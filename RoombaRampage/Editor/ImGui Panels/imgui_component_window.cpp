@@ -58,7 +58,7 @@ struct DrawComponents {
         ImGui::SetNextItemWidth(100.0f);
         std::string title = "##" + m_Array[count];
         ImGui::PushItemWidth(slidersize);
-        ImGui::DragFloat(title.c_str(), &_args, 0.1f, -100.0f, 100.f, "%.2f");
+        ImGui::DragFloat(title.c_str(), &_args, 0.1f, -1000.0f, 1000.f, "%.2f");
         ImGui::PopItemWidth();
         count++;
     }
@@ -285,7 +285,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
             }
 
             //create overwrite button for prefab
-            if (nc->m_isPrefab) {
+            if (nc->m_isPrefab && !m_prefabSceneMode) {
                 auto* tc = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(entityID));
                 if (!tc->m_haveParent || !static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(tc->m_parentID))->m_isPrefab) {
                     if (ImGui::Button("Overwrite")) {
@@ -294,6 +294,11 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                     }
                     ImGui::SameLine();
+
+                    if (ImGui::Checkbox("Sync", &nc->m_syncPrefab)) {
+
+                        prefab::Prefab::m_UpdateAllPrefabEntity(nc->m_prefabName);
+                    }
                 }
                 
                 static const char* buf = nc->m_prefabName.c_str();
@@ -387,28 +392,36 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                     static std::map<int, ecs::EntityID> layerMap;
                     layerMap.clear();
-                    for (const auto& [id, component] : ecs->m_ECS_EntityMap)
+                    for (const auto& scene : ecs->m_ECS_SceneMap)
                     {
-                        if (ecs->m_ECS_EntityMap[id].test(ecs::TYPESPRITECOMPONENT))
+                        if (scene.second.m_isActive)
                         {
-                            ecs::SpriteComponent* sprite = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(id));
-                            const int maxLayer = 99;
-                            int layer = sprite->m_layer;
-                            if (layer >= maxLayer)
+                            for (const auto& id : scene.second.m_sceneIDs)
                             {
-                                layer = maxLayer;
-                                while (layerMap.find(--layer) != layerMap.end());
-                            }
-                            else if (layerMap.find(sprite->m_layer) != layerMap.end())
-                            {
-                                    while (layerMap.find(++layer) != layerMap.end())
+                                if (ecs->m_ECS_EntityMap[id].test(ecs::TYPESPRITECOMPONENT))
+                                {
+                                    ecs::SpriteComponent* sprite = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(id));
+                                    const int maxLayer = 99;
+                                    int layer = sprite->m_layer;
+                                    if (layer >= maxLayer)
                                     {
-
+                                        layer = maxLayer;
+                                        while (layerMap.find(--layer) != layerMap.end());
                                     }
+                                    else if (layerMap.find(sprite->m_layer) != layerMap.end())
+                                    {
+                                        while (layerMap.find(++layer) != layerMap.end())
+                                        {
+
+                                        }
+                                    }
+                                    sprite->m_layer = layer;
+                                    layerMap[layer] = id;
+                                }
                             }
-                            sprite->m_layer = layer;
-                            layerMap[layer] = id;
                         }
+                        
+                      
                     }
 
                     if (ImGui::TreeNode("Image Layers"))
@@ -521,7 +534,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                     ImGui::Text("Size");
                     ImGui::SameLine(slider_start_pos_x);
                     ImGui::SetNextItemWidth(100.0f);
-                    ImGui::DragFloat("###TEXTXXX", &tc->m_fontSize, 0.02f, 0.f, 10.0f, "%.2f");
+                    ImGui::DragFloat("###TEXTXXX", &tc->m_fontSize, 0.05f, 1.f, 1000.0f, "%.2f");
                     ImGui::Text("Color");
                     ImGui::SameLine();
                     if (ImGui::ColorEdit3("##MyColor1", (float*)&color, ImGuiColorEditFlags_DisplayRGB)) {

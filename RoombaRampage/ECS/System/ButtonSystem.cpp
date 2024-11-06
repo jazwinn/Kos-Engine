@@ -98,13 +98,13 @@ namespace ecs {
 				translateY = newTranslateY + help->m_windowHeight/2.f;
 
 				button->m_Position = { translateX , translateY };
-				button->m_Scale = { 50,50 };
+				button->m_Scale = { 75,75 };
 
 				minX = button->m_Position.m_x - (button->m_Scale.m_x / 2.f);
 				maxX = button->m_Position.m_x + (button->m_Scale.m_x / 2.f);
 				minY = button->m_Position.m_y - (button->m_Scale.m_y / 2.f);
 				maxY = button->m_Position.m_y + (button->m_Scale.m_y / 2.f);
-			/*	std::cout << "Mouse position ";
+				/*std::cout << "Mouse position ";
 				std::cout << mouseX << " " << mouseY << std::endl;
 				std::cout << "Window position ";
 				std::cout << help->m_windowWidth << " " << help->m_windowHeight << std::endl;
@@ -115,7 +115,7 @@ namespace ecs {
 				std::cout << minX << " " << minY << " " << maxX << " " << maxY << std::endl;*/
 				if ((minX <= mouseX && mouseX <= maxX) && (minY <= mouseY && mouseY <= maxY)) {
 					button->m_IsClick = true;
-					std::cout << " clicked " << std::endl;
+					//std::cout << " clicked " << std::endl;
 				}
 			}
 		}
@@ -127,11 +127,10 @@ namespace ecs {
 			//skip component not of the scene
 			if (button->m_scene != scene) continue;
 
-			if (button->m_IsClick) {
-				std::cout << "clicked" << std::endl;
+			if (button->m_IsClick) 
+			{
+				std::cout << "Button Clicked" << std::endl;
 				button->m_IsClick = false;
-
-				
 			}
 			/*mat3x3::Mat3x3 debugTransformation = mat3x3::Mat3Transform(vector2::Vec2{ transform->m_transformation.m_e20, transform->m_transformation.m_e21 }, vector2::Vec2{ 1.f, 1.f }, transform->m_rotation);
 

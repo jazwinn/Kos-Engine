@@ -17,6 +17,18 @@
                 "y": 1.0
             }
         },
+        "collider": {
+            "size": {
+                "x": 1.0,
+                "y": 1.0
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true,
+            "radius": 0.5
+        },
         "rigidbody": {
             "linearVelocity": {
                 "x": 0.0,
@@ -51,6 +63,17 @@
             },
             "alpha": 1.0
         },
+        "text": {
+            "text": "Insert Text",
+            "text": null,
+            "filename": "RubikGlitch-Regular.ttf",
+            "fontsize": 10.0,
+            "colour": {
+                "r": 0.0,
+                "b": 0.0,
+                "g": 0.0
+            }
+        },
         "script": {
             "scripts": [
                 "MovementScript"
@@ -66,8 +89,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 0.9573267102241516,
-                        "y": 1.7681221961975098
+                        "x": 4.781811714172363,
+                        "y": 1.7681220769882202
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -95,7 +118,7 @@
                 },
                 "transform": {
                     "position": {
-                        "x": -0.9377890825271606,
+                        "x": -4.023453235626221,
                         "y": 1.74858558177948
                     },
                     "rotation": 0.0,
@@ -114,41 +137,12 @@
                     },
                     "alpha": 1.0
                 }
-            },
-            {
-                "name": {
-                    "namestr": "booster",
-                    "layer": 0,
-                    "isprefab": true,
-                    "prefabname": "Player.prefab"
-                },
-                "transform": {
-                    "position": {
-                        "x": -0.03372456133365631,
-                        "y": -1.753688097000122
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    }
-                },
-                "sprite": {
-                    "imagefile": "boosters_tail02.png",
-                    "layer": 7,
-                    "color": {
-                        "r": 1.0,
-                        "g": 1.0,
-                        "b": 1.0
-                    },
-                    "alpha": 1.0
-                }
             }
         ]
     },
     {
         "name": {
-            "namestr": "test",
+            "namestr": "Wall",
             "layer": 0,
             "isprefab": false
         },
@@ -162,6 +156,87 @@
                 "x": 1.0,
                 "y": 1.0
             }
+        }
+    },
+    {
+        "name": {
+            "namestr": "blackTile_test",
+            "layer": 0,
+            "isprefab": false
+        },
+        "transform": {
+            "position": {
+                "x": -5.461480140686035,
+                "y": 2.4772226810455322
+            },
+            "rotation": 0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "collider": {
+            "size": {
+                "x": 1.0,
+                "y": 1.0
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true,
+            "radius": 0.5
+        },
+        "sprite": {
+            "imagefile": "blackTile_test.png",
+            "layer": 0,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0
+        }
+    },
+    {
+        "name": {
+            "namestr": "blackTile_test",
+            "layer": 0,
+            "isprefab": true,
+            "prefabname": "blackTile_test.prefab"
+        },
+        "transform": {
+            "position": {
+                "x": -3.2412524223327637,
+                "y": -5.573971748352051
+            },
+            "rotation": 0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "collider": {
+            "size": {
+                "x": 1.0,
+                "y": 1.0
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true,
+            "radius": 0.5
+        },
+        "sprite": {
+            "imagefile": "blackTile_test.png",
+            "layer": 1,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0
         }
     }
 ]

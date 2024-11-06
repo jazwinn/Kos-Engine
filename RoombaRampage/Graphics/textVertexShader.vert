@@ -41,7 +41,7 @@ void main()
     pos = vec3(pos.x + point.x, pos.y + point.y, pos.z);
     pos = view * pos;      // Apply view
     pos = projection * pos; // Apply projection
-    gl_Position = vec4(pos.xy, 0.0, 1.0);
+    gl_Position = vec4(pos.xy, 0.99, 1.0);
    // fragTexCoords = texCoords;
     texCoords = vertex.zw;
 }  

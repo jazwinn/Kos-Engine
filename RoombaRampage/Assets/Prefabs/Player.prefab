@@ -8,14 +8,26 @@
         },
         "transform": {
             "position": {
-                "x": -0.11105449497699738,
-                "y": -0.5922882556915283
+                "x": 1.295794129371643,
+                "y": 1.363118290901184
             },
             "rotation": 0.0,
             "scale": {
                 "x": 1.0,
                 "y": 1.0
             }
+        },
+        "collider": {
+            "size": {
+                "x": 1.0,
+                "y": 1.0
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true,
+            "radius": 0.5
         },
         "rigidbody": {
             "linearVelocity": {
@@ -42,7 +54,7 @@
             "static": false
         },
         "sprite": {
-            "imagefile": "ani_RoombaBlink_strip4.png",
+            "imagefile": "Roomba.png",
             "layer": 4,
             "color": {
                 "r": 1.0,
@@ -51,11 +63,16 @@
             },
             "alpha": 1.0
         },
-        "animation": {
-            "frameNumber": 1,
-            "framesPerSecond": 1,
-            "frameTimer": 1.3999993801116943,
-            "isAnimating": true
+        "text": {
+            "text": "Insert Text",
+            "text": null,
+            "filename": "RubikGlitch-Regular.ttf",
+            "fontsize": 10.0,
+            "colour": {
+                "r": 0.0,
+                "b": 0.0,
+                "g": 0.0
+            }
         },
         "script": {
             "scripts": [
@@ -72,8 +89,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 0.9573267102241516,
-                        "y": 1.7681221961975098
+                        "x": 4.781811714172363,
+                        "y": 1.7681220769882202
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -83,7 +100,7 @@
                 },
                 "sprite": {
                     "imagefile": "gunright_02.png",
-                    "layer": 6627,
+                    "layer": 5,
                     "color": {
                         "r": 1.0,
                         "g": 1.0,
@@ -101,8 +118,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": -2.9208052158355713,
-                        "y": 1.9509344100952148
+                        "x": -4.023453235626221,
+                        "y": 1.74858558177948
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -112,7 +129,7 @@
                 },
                 "sprite": {
                     "imagefile": "gunleft_02.png",
-                    "layer": 6628,
+                    "layer": 6,
                     "color": {
                         "r": 1.0,
                         "g": 1.0,

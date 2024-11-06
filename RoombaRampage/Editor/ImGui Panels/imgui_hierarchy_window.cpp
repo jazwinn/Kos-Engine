@@ -286,7 +286,8 @@ namespace gui {
 
                     if (filename->filename().extension().string() == ".prefab") {
 
-                        prefab::Prefab::m_CreatePrefab(filename->filename().string(), m_activeScene);
+                       prefab::Prefab::m_CreatePrefab(filename->filename().string(), m_activeScene);
+
 
                     }
 

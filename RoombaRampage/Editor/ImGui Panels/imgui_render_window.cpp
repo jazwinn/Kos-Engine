@@ -156,6 +156,8 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
 
         if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("file"))
         {
+            ecs::ECS* fileecs = ecs::ECS::m_GetInstance();
+
             IM_ASSERT(payload->DataSize == sizeof(std::filesystem::path));
             std::filesystem::path* filename = static_cast<std::filesystem::path*>(payload->Data);
 
@@ -175,7 +177,6 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
             
 
             if (filename->filename().extension().string() == ".png") {
-             ecs::ECS* fileecs = ecs::ECS::m_GetInstance();
                 ecs::EntityID id = fileecs->m_CreateEntity(m_activeScene); //assign to active scene
                 ecs::TransformComponent* transCom = static_cast<ecs::TransformComponent*>(fileecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id));
                 transCom->m_position = { translate.x, translate.y };
@@ -193,7 +194,7 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
                 m_clickedEntityId = id;
             }
             if (filename->filename().extension().string() == ".ttf") {
-                ecs::ECS* fileecs = ecs::ECS::m_GetInstance();
+                
                 ecs::EntityID id = fileecs->m_CreateEntity(m_activeScene); //assign to top most scene
                 ecs::TransformComponent* transCom = static_cast<ecs::TransformComponent*>(fileecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id));
                 transCom->m_position = { translate.x, translate.y };
@@ -209,6 +210,13 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
                 }
 
                 m_clickedEntityId = id;
+            }
+
+            if (filename->filename().extension().string() == ".prefab") {
+
+                ecs::EntityID id = prefab::Prefab::m_CreatePrefab(filename->filename().string(), m_activeScene);
+                ecs::TransformComponent* transCom = static_cast<ecs::TransformComponent*>(fileecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id));
+                transCom->m_position = { translate.x, translate.y };
             }
 
 
