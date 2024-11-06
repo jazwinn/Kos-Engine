@@ -72,9 +72,7 @@ void gui::ImGuiHandler::m_DrawTestWindow() {
 		1 background + 3 fx sounds
 	*/
 	ImGui::NewLine();
-	ImGui::SeparatorText("##########################################");
 	ImGui::SeparatorText(" LOGGING ");
-	ImGui::NewLine();
 	if (ImGui::Button("Crash")) {
 		LOGGING_INFO("About to trigger abort");
 		abort();
@@ -183,13 +181,12 @@ void gui::ImGuiHandler::m_DrawTestWindow() {
 		}
 	}
 
-
-	ImGui::SeparatorText("##########################################");
 	ImGui::NewLine();
 	static bool font_Flag = false;
 	static bool font_delete_Flag = true;
 	static ecs::EntityID fontid_1;
 	static ecs::EntityID fontid_2;
+	ImGui::SeparatorText("FONT");
 	if (ImGui::Button("Double Font Test") && !font_Flag)
 	{
 

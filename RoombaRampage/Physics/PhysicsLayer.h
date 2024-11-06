@@ -28,7 +28,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Config/pch.h"
 
 namespace physicslayer {
-    const int size = layer::LAYERS::MAXLAYER;
+    const static int size = layer::LAYERS::MAXLAYER;
 	class PhysicsLayer {
 	public:
     /******************************************************************/
@@ -96,10 +96,15 @@ namespace physicslayer {
     */
     /******************************************************************/
     std::vector<std::vector<bool>> getMatrix() const;
+    std::bitset<size>* getMat();
+    static const int getSize()  {
+        return size;
+    }
 
 	private:
 		 std::vector<std::vector<bool>> collisionMatrix; // 2D collision matrix
          static std::unique_ptr<PhysicsLayer> instance;
+         std::bitset<size> layerCollisions[size];
 	};
    
 }

@@ -55,6 +55,7 @@ namespace physicspipe {
 		vector2::Vec2 m_velocity{};                   // Current velocity of the entity
 		int m_ID = -1;                                // Unique identifier
 		EntityType type = EntityType::RECTANGLE;    // Circle or Rectangle
+		int m_layerID = -1;
 
 		virtual ~PhysicsData() = default;
 
@@ -96,7 +97,7 @@ namespace physicspipe {
 		\param[in] entity_ID    Unique ID for the entity.
 		*/
 		/******************************************************************/
-		Circle(float radius, vector2::Vec2 shape_position, vector2::Vec2 shape_scale, vector2::Vec2 shape_velocity, int entity_ID);
+		Circle(float radius, vector2::Vec2 shape_position, vector2::Vec2 shape_scale, vector2::Vec2 shape_velocity, int entity_ID, int layer_ID);
 
 		// Overriding GetEntity for Circle
 		EntityType GetEntity() const override {
@@ -133,7 +134,7 @@ namespace physicspipe {
 		\param[in] entity_ID    Unique ID for the entity.
 		*/
 		/******************************************************************/
-		Rectangle(float rect_height, float rect_width, float rect_angle, vector2::Vec2 shape_position, vector2::Vec2 shape_scale, vector2::Vec2 shape_velocity, int entity_ID);
+		Rectangle(float rect_height, float rect_width, float rect_angle, vector2::Vec2 shape_position, vector2::Vec2 shape_scale, vector2::Vec2 shape_velocity, int entity_ID, int layer_ID);
 
 		// Overriding GetEntity for Rectangle
 		EntityType GetEntity() const override {
@@ -177,6 +178,7 @@ namespace physicspipe {
 			   rectangle-rectangle collisions.
 	*/
 	/******************************************************************/
+	const int MAX_ENTITIES = 1024;
 	class Physics {
 	private:
 		
@@ -185,6 +187,7 @@ namespace physicspipe {
 		static std::map<layer::LAYERS, std::vector<std::shared_ptr<PhysicsData>>> m_layerToEntities;
 		static std::vector<int> m_checker;
 		static std::unique_ptr<Physics> m_instance;
+		std::bitset<MAX_ENTITIES> collidedEntities;
 
 		/******************************************************************/
 		/*!
@@ -194,6 +197,8 @@ namespace physicspipe {
 		*/
 		/******************************************************************/
 		void m_CalculateBoundingBox();
+		void logCollision(int entityID);
+		bool hasCollided(int entityID) const;
 
 	public:
 		//SINGLETON
