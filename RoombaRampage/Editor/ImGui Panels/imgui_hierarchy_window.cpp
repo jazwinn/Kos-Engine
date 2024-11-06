@@ -367,7 +367,10 @@ namespace gui {
             }
 
             if (ImGui::MenuItem("Save Prefab")) {
-                prefab::Prefab::m_SaveEntitytoPrefab(id);
+                if (!m_prefabSceneMode) {
+                    prefab::Prefab::m_SaveEntitytoPrefab(id);
+                }
+                
             }
 
             ImGui::EndPopup();
