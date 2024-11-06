@@ -60,6 +60,7 @@ void gui::ImGuiHandler::m_DrawMainMenuBar() {
                for (auto& scene : scenemanager->m_recentFiles) {
                     if (ImGui::MenuItem(scene.filename().stem().string().c_str())) {
                         scenemanager->m_LoadScene(scene);
+                        m_activeScene = scene.filename().string();
                         m_clickedEntityId = -1;
                     }
                 }
@@ -71,11 +72,12 @@ void gui::ImGuiHandler::m_DrawMainMenuBar() {
                 
 
                 char filePath[MAX_PATH];
-                std::string path = file::FileWindow::m_OpenfileDialog(filePath);
+                std::filesystem::path path = file::FileWindow::m_OpenfileDialog(filePath);
                 if (!path.empty()) {
                     //clear all other scenes
                     scenemanager->m_ClearAllScene();
                     scenemanager->m_LoadScene(path);
+                    m_activeScene = path.filename().string();
                     m_clickedEntityId = -1;
                 }
 
@@ -110,6 +112,7 @@ void gui::ImGuiHandler::m_DrawMainMenuBar() {
             if (ImGui::Button("Save", ImVec2(120, 0))) { 
                 std::string m_jsonFilePath{ "../RoombaRampage/Assets/Scene/" }; //TODO temp open window in future
                 std::string scene = m_jsonFilePath + str1 + ".json";
+                m_activeScene = scene;
                 if (!scene.empty()) {
                     if (scenemanager->m_CreateNewScene(scene)) {
 

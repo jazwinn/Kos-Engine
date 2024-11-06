@@ -142,7 +142,7 @@ namespace gui {
                 if (sceneentity.first == m_activeScene) {
                     headerstr += " (Active)";
                 }
-                opens = ImGui::CollapsingHeader(headerstr.c_str());
+                opens = ImGui::CollapsingHeader(headerstr.c_str(), ImGuiTreeNodeFlags_DefaultOpen);
             }
 
 

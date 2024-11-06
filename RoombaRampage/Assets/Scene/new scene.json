@@ -1,0 +1,30 @@
+[
+    {
+        "name": {
+            "namestr": "Audiowav",
+            "layer": 0,
+            "isprefab": false
+        },
+        "transform": {
+            "position": {
+                "x": -0.982197642326355,
+                "y": -0.2209944874048233
+            },
+            "rotation": 0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "sprite": {
+            "imagefile": "Audiowav.png",
+            "layer": 0,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0
+        }
+    }
+]
