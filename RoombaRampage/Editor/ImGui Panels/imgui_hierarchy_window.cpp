@@ -142,7 +142,7 @@ namespace gui {
                 if (sceneentity.first == m_activeScene) {
                     headerstr += " (Active)";
                 }
-                opens = ImGui::CollapsingHeader(headerstr.c_str());
+                opens = ImGui::CollapsingHeader(headerstr.c_str(), ImGuiTreeNodeFlags_DefaultOpen);
             }
 
 
@@ -374,7 +374,8 @@ namespace gui {
         }
 
         //no reordering of child prefabs
-        if (!transCom->m_haveParent || !static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(transCom->m_parentID))->m_isPrefab) {
+        if (!transCom->m_haveParent || !static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(transCom->m_parentID))->m_isPrefab || 
+            static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(transCom->m_parentID))->m_prefabName != nc->m_prefabName) {
             if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None)) {
                 //might undefine behaviour
                 ecs::EntityID index = id;

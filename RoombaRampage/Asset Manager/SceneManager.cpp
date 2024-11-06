@@ -53,7 +53,9 @@ namespace scenes {
 
         ecs::ECS* ecs = ecs::ECS::m_GetInstance();
         if (ecs->m_ECS_SceneMap.find(scene.filename().string()) != ecs->m_ECS_SceneMap.end()) {
+#if _DEBUG
             LOGGING_ERROR("Scene already loaded");
+#endif
             return;
         }
 
@@ -72,9 +74,18 @@ namespace scenes {
         m_scenePath[scene.filename().string()] = scene;
         
         // store path to be use as recent
-        if (std::find(m_recentFiles.begin(), m_recentFiles.end(), scene) == m_recentFiles.end()) {
-            m_recentFiles.push_back(scene);
+        if (scene.filename().extension().string() != ".prefab") {
+
+            if (std::find_if(m_recentFiles.begin(), m_recentFiles.end(),
+                [&scene](const std::filesystem::path& path) {
+                    return path.filename().string() == scene.filename().string();
+                }) == m_recentFiles.end()) {
+
+                // Add the scene to recent files if it's not already present
+                m_recentFiles.push_back(scene);
+            }
         }
+
 
         std::string scenename = scene.filename().string();
 
