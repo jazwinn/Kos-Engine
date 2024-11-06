@@ -27,7 +27,7 @@ namespace prefab {
 	class Prefab {
 
 	public:
-		static void m_CreatePrefab(std::string prefabscene, std::string insertscene = {});
+		static int m_CreatePrefab(std::string prefabscene, std::string insertscene = {});
 
 		static void m_SaveEntitytoPrefab(ecs::EntityID);
 

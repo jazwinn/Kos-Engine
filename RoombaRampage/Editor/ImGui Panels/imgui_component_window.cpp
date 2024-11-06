@@ -285,7 +285,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
             }
 
             //create overwrite button for prefab
-            if (nc->m_isPrefab) {
+            if (nc->m_isPrefab && !m_prefabSceneMode) {
                 auto* tc = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(entityID));
                 if (!tc->m_haveParent || !static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(tc->m_parentID))->m_isPrefab) {
                     if (ImGui::Button("Overwrite")) {
@@ -294,6 +294,11 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                     }
                     ImGui::SameLine();
+
+                    if (ImGui::Checkbox("Sync", &nc->m_syncPrefab)) {
+
+                        prefab::Prefab::m_UpdateAllPrefabEntity(nc->m_prefabName);
+                    }
                 }
                 
                 static const char* buf = nc->m_prefabName.c_str();
