@@ -142,7 +142,7 @@ namespace gui {
                 if (sceneentity.first == m_activeScene) {
                     headerstr += " (Active)";
                 }
-                opens = ImGui::CollapsingHeader(headerstr.c_str());
+                opens = ImGui::CollapsingHeader(headerstr.c_str(), ImGuiTreeNodeFlags_DefaultOpen);
             }
 
 
@@ -286,7 +286,8 @@ namespace gui {
 
                     if (filename->filename().extension().string() == ".prefab") {
 
-                        prefab::Prefab::m_CreatePrefab(filename->filename().string(), m_activeScene);
+                       prefab::Prefab::m_CreatePrefab(filename->filename().string(), m_activeScene);
+
 
                     }
 
@@ -366,14 +367,18 @@ namespace gui {
             }
 
             if (ImGui::MenuItem("Save Prefab")) {
-                prefab::Prefab::m_SaveEntitytoPrefab(id);
+                if (!m_prefabSceneMode) {
+                    prefab::Prefab::m_SaveEntitytoPrefab(id);
+                }
+                
             }
 
             ImGui::EndPopup();
         }
 
         //no reordering of child prefabs
-        if (!transCom->m_haveParent || !static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(transCom->m_parentID))->m_isPrefab) {
+        if (!transCom->m_haveParent || !static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(transCom->m_parentID))->m_isPrefab || 
+            static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(transCom->m_parentID))->m_prefabName != nc->m_prefabName) {
             if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None)) {
                 //might undefine behaviour
                 ecs::EntityID index = id;

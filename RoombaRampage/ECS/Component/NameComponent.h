@@ -37,6 +37,7 @@ namespace ecs {
 
 		bool m_isPrefab{ false };
 		
+		bool m_syncPrefab{true};
 		std::string m_prefabName{};
 
 

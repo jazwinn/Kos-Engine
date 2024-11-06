@@ -131,8 +131,21 @@ namespace gui {
 						textorimage(std::string(directoryPath.path().filename().extension().string() + "##" + directoryPath.path().filename().string()).c_str(), prefab);
 
 						if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
-							//skip if already in prefabscenemode
-							if (m_prefabSceneMode == true)continue;
+							//skip if active scene is filename
+							if (m_activeScene == directoryPath.path().filename())continue;
+
+
+							//skip if prefab mode alraedy true
+							if (!m_prefabSceneMode) {
+								m_savedSceneState.clear();
+								for (auto& scene : ecs->m_ECS_SceneMap) {
+									if (scene.second.m_isPrefab == false) {
+										//save all scenes active state
+										m_savedSceneState[scene.first] = scene.second.m_isActive;
+									}
+								}
+
+							}
 
 							m_prefabSceneMode = true;
 							const auto& prefabscene = ecs->m_ECS_SceneMap.find(directoryPath.path().filename().string());
@@ -141,17 +154,10 @@ namespace gui {
 								continue;
 							}
 
-							
 							// clear save scene state
-							m_savedSceneState.clear();
+
 							// unload all regular scenes
 							for (auto& scene : ecs->m_ECS_SceneMap) {
-								if (scene.second.m_isPrefab == false) {
-									//save all scenes active state
-									m_savedSceneState[scene.first] = scene.second.m_isActive;
-								}
-
-
 								scene.second.m_isActive = false;
 							}
 
