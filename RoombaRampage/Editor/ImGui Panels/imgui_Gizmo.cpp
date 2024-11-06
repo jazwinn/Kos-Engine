@@ -120,16 +120,16 @@ namespace gui {
 
         //ImGuizmo::RecomposeMatrixFromComponents(matrixTranslation, matrixRotation, matrixScale, model);
 
-
+        ImGuizmo::SetGizmoSizeClipSpace(EditorCamera::m_editorCamera.m_zoom.x / 8.f);
         //DRAW GIZMO
                 //to render in full screen also
         if (!ImGui::IsWindowAppearing()){
             ImGuizmo::SetRect(renderPosX, renderPosY, renderWidth, renderHeight);
         }
-        
         //TODO be able to swap between WORLD and LOCAL
-        if (ImGuizmo::Manipulate(cameraView, projection, mCurrentGizmoOperation, ImGuizmo::WORLD, model, NULL, useSnap ? &snap[0] : NULL)) {
-           
+        if (ImGuizmo::Manipulate(cameraView, projection, mCurrentGizmoOperation, ImGuizmo::WORLD, model, 0, useSnap ? &snap[0] : NULL)) {
+
+            
             if (ecs::Hierachy::m_GetParent(m_clickedEntityId).has_value()) {
                 ecs::EntityID parentId = ecs::Hierachy::m_GetParent(m_clickedEntityId).value();
                 mat3x3::Mat3x3 worldtransformation =
