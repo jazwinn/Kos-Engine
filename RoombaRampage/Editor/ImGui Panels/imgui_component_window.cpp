@@ -392,14 +392,19 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         if (ecs->m_ECS_EntityMap[id].test(ecs::TYPESPRITECOMPONENT))
                         {
                             ecs::SpriteComponent* sprite = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(id));
+                            const int maxLayer = 99;
                             int layer = sprite->m_layer;
-                            if (layerMap.find(sprite->m_layer) != layerMap.end())
+                            if (layer >= maxLayer)
                             {
-                                while (layerMap.find(++layer) != layerMap.end())
-                                {
+                                layer = maxLayer;
+                                while (layerMap.find(--layer) != layerMap.end());
+                            }
+                            else if (layerMap.find(sprite->m_layer) != layerMap.end())
+                            {
+                                    while (layerMap.find(++layer) != layerMap.end())
+                                    {
 
-                                }
-
+                                    }
                             }
                             sprite->m_layer = layer;
                             layerMap[layer] = id;
@@ -411,10 +416,26 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         //int count = 0;
                         for (auto it = layerMap.begin(); it != layerMap.end(); ++it) 
                         {
+                            ecs::SpriteComponent* sc = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(it->second));
                             ecs::NameComponent* namec = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(it->second));
+                            int spriteLayer = sc->m_layer;
                             std::string s = std::to_string(it->second);
-                            std::string selectable = namec->m_entityName + '_' + s;
-                            ImGui::Selectable(selectable.c_str());
+                            std::string selectable = namec->m_entityName + "_ID" + s; /*" Layer" + std::to_string(spriteLayer);*/
+                            if (it->second == m_clickedEntityId)
+                            {
+                                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 1.f, 0.f, 1.0f));
+                                selectable += "(Active)";
+                                ImGui::Selectable(selectable.c_str());
+                                ImGui::PopStyleColor();
+                            }
+                            else
+                            {
+                                ImGui::Selectable(selectable.c_str());
+                            }
+                            
+                          /*  std::ostringstream display;
+                            display << selectable << std::setw(30 - selectable.length()) << std::right << "Layer" + std::to_string(spriteLayer);*/
+                            
 
                             if (ImGui::IsItemActive() && !ImGui::IsItemHovered())
                             {

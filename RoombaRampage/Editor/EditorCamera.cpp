@@ -6,7 +6,7 @@ float EditorCamera::m_aspectRatio{};
 int EditorCamera::m_windowWidth{};
 int EditorCamera::m_windowHeight{};
 bool EditorCamera::m_editorMode = true;
-EditorCamera::Camera EditorCamera::m_editorCamera{ 1.f, 1.f ,glm::vec2(0.f,0.f), glm::vec2(1.f,1.f), 0 };
+EditorCamera::Camera EditorCamera::m_editorCamera{ 1.f, 1.f ,glm::vec2(0.f,0.f), glm::vec2(5.f,5.f), 0 };
 glm::mat3 EditorCamera::m_editorCameraMatrix{1.f};
 glm::mat3 EditorCamera::m_editorViewMatrix{ 1.f };
 glm::mat3 EditorCamera::m_editorOrthoMatrix{ 1.f };
