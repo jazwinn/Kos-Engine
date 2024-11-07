@@ -70,15 +70,16 @@ namespace ecs {
 
 		
 			// create instance for each script
-			for (const std::string& script : scriptComp->m_scripts) {
+			for (const std::string& _script : scriptComp->m_scripts) {
 
-				if (assetManager->m_scriptManager.m_ScriptMap.find(script) == assetManager->m_scriptManager.m_ScriptMap.end()) {
+				if (assetManager->m_scriptManager.m_ScriptMap.find(_script) == assetManager->m_scriptManager.m_ScriptMap.end()) {
 					LOGGING_ERROR("SCRIPT NOT FOUND ! PLEASE RELAUNCH APPLIATION");
 					continue;
 				}
 
 				// retieve isntance for each object
-				scriptComp->m_scriptInstances[script] = assetManager->m_scriptManager.m_CreateObjectInstance(script, script);
+				std::cout << _script << std::endl;
+				scriptComp->m_scriptInstances[_script] = assetManager->m_scriptManager.m_CreateObjectInstance(_script, _script);
 
 			}
 

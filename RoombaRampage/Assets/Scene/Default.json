@@ -72,11 +72,12 @@
                 "r": 0.0,
                 "b": 0.0,
                 "g": 0.0
-            }
+            },
+            "layer": 0
         },
         "script": {
             "scripts": [
-                "MovementScript"
+                "PlayerControl"
             ]
         },
         "children": [
@@ -142,32 +143,14 @@
     },
     {
         "name": {
-            "namestr": "Wall",
+            "namestr": "Moving Tile",
             "layer": 0,
             "isprefab": false
         },
         "transform": {
             "position": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "rotation": 0.0,
-            "scale": {
-                "x": 1.0,
-                "y": 1.0
-            }
-        }
-    },
-    {
-        "name": {
-            "namestr": "blackTile_test",
-            "layer": 0,
-            "isprefab": false
-        },
-        "transform": {
-            "position": {
-                "x": -5.461480140686035,
-                "y": 2.4772226810455322
+                "x": 0.47580403089523315,
+                "y": 3.936199188232422
             },
             "rotation": 0.0,
             "scale": {
@@ -175,61 +158,32 @@
                 "y": 1.0
             }
         },
-        "collider": {
-            "size": {
-                "x": 1.0,
-                "y": 1.0
-            },
-            "offset": {
+        "rigidbody": {
+            "linearVelocity": {
                 "x": 0.0,
                 "y": 0.0
             },
-            "drawDebug": true,
-            "radius": 0.5
+            "linearAcceleration": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "angularVelocity": 0.0,
+            "angularAcceleration": 0.0,
+            "mass": 1.0,
+            "inverseMass": 1.0,
+            "linearDamping": 0.9900000095367432,
+            "angularDamping": 0.9900000095367432,
+            "force": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "torque": 0.0,
+            "kinematic": false,
+            "static": false
         },
         "sprite": {
-            "imagefile": "blackTile_test.png",
-            "layer": 0,
-            "color": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
-            },
-            "alpha": 1.0
-        }
-    },
-    {
-        "name": {
-            "namestr": "blackTile_test",
-            "layer": 0,
-            "isprefab": true,
-            "prefabname": "blackTile_test.prefab"
-        },
-        "transform": {
-            "position": {
-                "x": -3.2412524223327637,
-                "y": -5.573971748352051
-            },
-            "rotation": 0.0,
-            "scale": {
-                "x": 1.0,
-                "y": 1.0
-            }
-        },
-        "collider": {
-            "size": {
-                "x": 1.0,
-                "y": 1.0
-            },
-            "offset": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "drawDebug": true,
-            "radius": 0.5
-        },
-        "sprite": {
-            "imagefile": "blackTile_test.png",
+            "imagefile": "ani_SeanSprite_strip4.png",
             "layer": 1,
             "color": {
                 "r": 1.0,
@@ -237,6 +191,17 @@
                 "b": 1.0
             },
             "alpha": 1.0
+        },
+        "animation": {
+            "frameNumber": 0,
+            "framesPerSecond": 2,
+            "frameTimer": 0.0,
+            "isAnimating": true
+        },
+        "script": {
+            "scripts": [
+                "MovingObjectScript"
+            ]
         }
     }
 ]

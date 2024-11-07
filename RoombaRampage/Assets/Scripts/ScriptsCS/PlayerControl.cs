@@ -8,9 +8,10 @@ using System.Xml;
 
 namespace Namespace
 {
-    public class MovementScript : ScriptBase
+    public class PlayerControl : ScriptBase
     {
         public uint EntityID;
+        public float speed;
 
         public override void GetEntityID(uint id){
             EntityID = id;
@@ -19,6 +20,7 @@ namespace Namespace
         public override void Start()
         {
             //Console.WriteLine("Start");
+            speed = 5;
         }
 
         public override void Update()
@@ -38,19 +40,19 @@ namespace Namespace
 
             if (m_InternalCallIsKeyPressed(Key.keyCode.W))
             {
-                velocity.Y = 1;
+                velocity.Y = speed;
             }
             if (m_InternalCallIsKeyPressed(Key.keyCode.S))
             {
-                velocity.Y = -1;
+                velocity.Y = -speed;
             }
             if (m_InternalCallIsKeyPressed(Key.keyCode.A))
             {
-                velocity.X = -1;
+                velocity.X = -speed;
             }
             if (m_InternalCallIsKeyPressed(Key.keyCode.D))
             {
-                velocity.X = 1;
+                velocity.X = speed;
             }
 
             

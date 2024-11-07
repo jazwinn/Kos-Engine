@@ -22,6 +22,10 @@ namespace Namespace
         public extern static bool m_InternalGetTransformComponent(uint entity, out Vector2 pos, out Vector2 scale, out float rotate);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern static bool m_InternalSetTransformComponent(uint entity, in Vector2 pos, in Vector2 scale, in float rotate);
+
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
         public extern static bool m_InternalCallIsKeyPressed(keyCode key);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
@@ -29,6 +33,10 @@ namespace Namespace
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         public extern static bool m_InternalSetVelocity(uint entity, in Vector2 Velocity);
+        
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern static bool m_InternalCallGetDeltaTime(out float DeltaTime);
+
         public virtual void GetEntityID(uint id) { }
         public virtual void Start() { }
         public virtual void Update() { }

@@ -35,6 +35,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Graphics/GraphicsPipe.h"
 #include "../Inputs/Input.h"
 #include "../Events/EventHandler.h"
+#include "../Application/Helper.h"
 
 namespace gui {
 
@@ -256,9 +257,12 @@ namespace gui {
 	}
 	void ImGuiHandler::m_UpdateOnPrefabMode()
 	{
+		Helper::Helpers* help = Helper::Helpers::GetInstance();
+		help->m_colour = { 0.86f, 0.86f, 0.86f };
 		//return if not on prefab mode
 		if (m_prefabSceneMode == false) return;
 
+		help->m_colour = { 0.133f, 0.23f, 0.32f };
 
 		//update all entity with prefab
 		prefab::Prefab::m_UpdateAllPrefabEntity(m_activeScene);

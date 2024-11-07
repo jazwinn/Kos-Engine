@@ -90,7 +90,7 @@ namespace Application {
             glViewport(0, 0, display_w, display_h);
             
         }
-        glClearColor(static_cast<GLclampf>(0.86), static_cast<GLclampf>(0.86), static_cast<GLclampf>(0.86), static_cast<GLclampf>(0.86));
+        glClearColor(static_cast<GLclampf>(help->m_colour.m_x), static_cast<GLclampf>(help->m_colour.m_y), static_cast<GLclampf>(help->m_colour.m_z), static_cast<GLclampf>(1));
         glClear(GL_COLOR_BUFFER_BIT);
 
        /* double xPos, yPos;
