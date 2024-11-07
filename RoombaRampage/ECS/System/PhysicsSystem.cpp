@@ -104,9 +104,10 @@ namespace ecs {
 				//update physics pipline
 			
 				//TODO optimize,  causing longer load time
-				PhysicsPipeline->m_Update();
+				
 			}
 		}
+		PhysicsPipeline->m_Update();
 	}
 
 }
