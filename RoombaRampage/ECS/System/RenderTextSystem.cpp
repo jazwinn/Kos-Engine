@@ -15,6 +15,8 @@ Reproduction or disclosure of this file or its contents without the
 prior written consent of DigiPen Institute of Technology is prohibited.
 */
 /********************************************************************/
+
+#include "../Config/pch.h"
 #include "../ECS.h"
 
 #include "RenderTextSystem.h"
@@ -92,7 +94,7 @@ namespace ecs {
 			float rotate{};
 			mat3x3::Mat3Decompose(transform->m_transformation, translate, scale, rotate);
 
-			graphicsPipe->m_textData.push_back(graphicpipe::TextData{ text->m_text,  transform->m_transformation.m_e20 ,transform->m_transformation.m_e21, -rotate, text->m_fontSize,  {red, green, blue}, text->m_fileName});
+			graphicsPipe->m_textData.push_back(graphicpipe::TextData{ text->m_text,  transform->m_transformation.m_e20 ,transform->m_transformation.m_e21, -rotate, text->m_fontSize, text->m_fontLayer , {red, green, blue}, text->m_fileName});
 		
 
 		}

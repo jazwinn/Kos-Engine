@@ -1,3 +1,4 @@
+#include "../Config/pch.h"
 #include "../Graphics/GraphicsPipe.h"
 #include "../Graphics/GraphicsCamera.h"
 
@@ -146,6 +147,8 @@ namespace graphicpipe
 				// Activate corresponding render state
 				glUseProgram(m_textShaderProgram);
 
+				glUniform1i(glGetUniformLocation(m_textShaderProgram, "layer"), textData.m_layer);
+
 				glUniformMatrix3fv(glGetUniformLocation(m_textShaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currViewMatrix));
 
 				glUniformMatrix3fv(glGetUniformLocation(m_textShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currOrthoMatrix));
@@ -172,9 +175,14 @@ namespace graphicpipe
 				// Iterate through all characters
 				assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
 				float origin{textData.m_x};
-				for (const char& c : textData.m_text) {
+				float height = GraphicsCamera::m_windowHeight;
+				for (const char& c : textData.m_text) 
+				{
 					text::CharacterData ch = assetmanager->m_fontManager.m_fonts[textData.m_fileName][c];
-
+					if (!height)
+					{
+						break;
+					}
 					// Calculate position and size for each character quad
 					float xpos = (textData.m_x + ch.m_bearing.x / GraphicsCamera::m_windowHeight * textData.m_scale);
 					float ypos = (textData.m_y - (ch.m_size.y - ch.m_bearing.y )/GraphicsCamera::m_windowHeight * textData.m_scale);

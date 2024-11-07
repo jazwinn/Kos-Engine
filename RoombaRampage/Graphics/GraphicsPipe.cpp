@@ -18,6 +18,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 */
 /******************************************************************/
 
+#include "../Config/pch.h"
 #include "../Graphics/GraphicsPipe.h"
 #include "../Graphics/GraphicsCamera.h"
 #include "../Asset Manager/AssetManager.h"

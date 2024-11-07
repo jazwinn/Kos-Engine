@@ -19,7 +19,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 */
 /******************************************************************/
 
-
+#include "../Config/pch.h"
 #include "Image.h"
 
 #define STB_IMAGE_IMPLEMENTATION

@@ -32,11 +32,12 @@ namespace ecs {
 
 		std::string m_text{"Insert Text"};
 		std::string m_fileName{};
+		int m_fontLayer{};
 		float m_fontSize{ 100.f };
 
 		vector3::Vec3 m_color;
 
-		REFLECTABLE(TextComponent, m_text, m_fontSize, m_color)
+		REFLECTABLE(TextComponent, m_fontLayer);
 	};
 
 }
