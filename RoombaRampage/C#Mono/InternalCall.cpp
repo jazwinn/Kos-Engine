@@ -2,6 +2,9 @@
 #include "../Inputs/Input.h"
 #include "../Application/Helper.h"
 
+#define MONO_ADD_INTERNAL_CALL(METHOD_NAME) \
+    mono_add_internal_call("Namespace.ScriptBase::" #METHOD_NAME, METHOD_NAME);
+
 namespace script {
 
 	bool InternalCall::m_InternalGetTransformComponent(ecs::EntityID entity, vector2::Vec2* trans, vector2::Vec2* scale, float* rotate)
@@ -17,6 +20,8 @@ namespace script {
 		return true;
 	}
 
+
+
 	bool InternalCall::m_InternalSetTransformComponent(ecs::EntityID entity, vector2::Vec2* trans, vector2::Vec2* scale, float* rotate)
 	{
 		auto* transform = static_cast<ecs::TransformComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(entity));
@@ -26,6 +31,22 @@ namespace script {
 		transform->m_position = *trans;
 		transform->m_scale = *scale;
 		transform->m_rotation = *rotate;
+
+		return true;
+	}
+
+	bool InternalCall::m_InternalGetTranslate(ecs::EntityID entity, vector2::Vec2* trans)
+	{
+		auto* transform = static_cast<ecs::TransformComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(entity));
+		*trans = { transform->m_position.m_x, transform->m_position.m_y };
+
+		return true;
+	}
+
+	bool InternalCall::m_InternalSetTranslate(ecs::EntityID entity, vector2::Vec2* trans)
+	{
+		auto* transform = static_cast<ecs::TransformComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(entity));
+		transform->m_position = *trans;
 
 		return true;
 	}
@@ -67,16 +88,39 @@ namespace script {
 		return false;
 	}
 
+	int InternalCall::m_InternalCallGetPlayer()
+	{
+
+		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+
+		for (const auto& scene : ecs->m_ECS_SceneMap) {
+			if (scene.second.m_isPrefab == false && scene.second.m_isActive) {
+				for (const auto& id : scene.second.m_sceneIDs) {
+					if (ecs->m_ECS_EntityMap.find(id)->second.test(ecs::TYPEPLAYERCOMPONENT)) {
+						return id;
+
+						break;
+					}
+				}
+			}
+		}
+
+
+		return -1;
+	}
+
 
 	void InternalCall::m_RegisterInternalCalls()
 	{
-
-		mono_add_internal_call("Namespace.ScriptBase::""m_InternalGetTransformComponent", m_InternalGetTransformComponent);
-		mono_add_internal_call("Namespace.ScriptBase::""m_InternalSetTransformComponent", m_InternalSetTransformComponent);
-		mono_add_internal_call("Namespace.ScriptBase::""m_InternalCallIsKeyPressed", m_InternalCallIsKeyPressed);
-		mono_add_internal_call("Namespace.ScriptBase::""m_InternalGetVelocity", m_InternalGetVelocity);
-		mono_add_internal_call("Namespace.ScriptBase::""m_InternalSetVelocity", m_InternalSetVelocity);
-		mono_add_internal_call("Namespace.ScriptBase::""m_InternalCallGetDeltaTime", m_InternalCallGetDeltaTime);
+		MONO_ADD_INTERNAL_CALL(m_InternalGetTransformComponent);
+		MONO_ADD_INTERNAL_CALL(m_InternalSetTransformComponent);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallIsKeyPressed);
+		MONO_ADD_INTERNAL_CALL(m_InternalGetVelocity);
+		MONO_ADD_INTERNAL_CALL(m_InternalSetVelocity);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallGetDeltaTime);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallGetPlayer);
+		MONO_ADD_INTERNAL_CALL(m_InternalGetTranslate);
+		MONO_ADD_INTERNAL_CALL(m_InternalSetTranslate);
 	}
 
 }

@@ -78,7 +78,7 @@ namespace ecs {
 				}
 
 				// retieve isntance for each object
-				std::cout << _script << std::endl;
+				//std::cout << _script << std::endl;
 				scriptComp->m_scriptInstances[_script] = assetManager->m_scriptManager.m_CreateObjectInstance(_script, _script);
 
 			}

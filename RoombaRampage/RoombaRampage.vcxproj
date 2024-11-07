@@ -329,6 +329,8 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClCompile Include="ECS\System\RenderDebugSystem.cpp" />
     <ClCompile Include="ECS\System\RenderSystem.cpp" />
     <ClCompile Include="ECS\System\RenderTextSystem.cpp" />
+    <ClCompile Include="Editor\ImGui Panels\ScriptVariable.cpp" />
+    <ClInclude Include="Editor\ImGui Panels\ScriptVariable.h" />
     <ClCompile Include="Editor\WindowFile.cpp" />
     <ClCompile Include="Events\EventHandler.cpp" />
     <ClCompile Include="Events\Listeners.cpp" />

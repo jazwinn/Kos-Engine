@@ -24,7 +24,8 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Asset Manager/AssetManager.h"
 #include "../Graphics/GraphicsPipe.h"
 #include "../ECS/Layers.h"
-#include "../ECS/Component/ConvertComponent.h"
+
+#include "ScriptVariable.h"
 
 #pragma warning(push)
 #pragma warning(disable : 26495)  // Disable uninitialized variable warning
@@ -39,7 +40,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include <filesystem>
 
 
-static const float slider_start_pos_x = 150.0f; //Padding for the slider
+static const float slider_start_pos_x = 100.0f; //Padding for the slider
 static const float slidersize = 50.f;
 
 template <typename T>
@@ -753,13 +754,57 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                 if (open) {
                     auto* sc = static_cast<ecs::ScriptComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESCRIPTCOMPONENT]->m_GetEntityComponent(entityID));
+
+                    for (const auto& scriptname : sc->m_scripts)
+                    {
+                        //print out varaibles
+                        scripteditor::ScriptEditor::DisplayScriptComponents(scriptname, entityID);
+                    }
+
                     
+                    if (ImGui::BeginListBox("Scripts"))
+                    {
+                        int n{};
+                        for (const auto& scriptname : sc->m_scripts)
+                        {
+
+
+                            ImGui::Selectable(scriptname.c_str());
+                            if (ImGui::BeginPopupContextItem()) {
+                                if (ImGui::MenuItem("Delete Component")) {
+                                    sc->m_scripts.erase(std::find(sc->m_scripts.begin(), sc->m_scripts.end(), scriptname));
+                                    ImGui::EndPopup();
+
+
+                                    break;
+                                }
+                                ImGui::EndPopup();
+                            }
+
+
+                            if (ImGui::IsItemActive() && !ImGui::IsItemHovered())
+                            {
+                                int n_next = n + (ImGui::GetMouseDragDelta(0).y < 0.f ? -1 : 1);
+                                if (n_next >= 0 && n_next < sc->m_scripts.size())
+                                {
+
+                                    std::swap(sc->m_scripts[n], sc->m_scripts[n_next]);
+                                    ImGui::ResetMouseDragDelta();
+                                }
+                            }
+
+
+                            n++;
+                        }
+                        ImGui::EndListBox();
+                    }
                    
-                    static int item_selected_idx = 0;
                     std::string preview = "Add Scripts";
                     if (ImGui::BeginCombo("####add scrip", preview.c_str()))
                     {
                         for (const auto& scriptname : assetManager->m_scriptManager.m_CSScripts) {
+
+
 
                             const bool is_selected{};
                             if (ImGui::Selectable(scriptname.c_str(), is_selected)) {
@@ -781,46 +826,6 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                         ImGui::EndCombo();
                     }
-
-
-                    if (ImGui::BeginListBox("Scripts"))
-                    {
-                        int n{};
-                        for (const auto& scriptname : sc->m_scripts)
-                        {
-
-                            ImGui::Selectable(scriptname.c_str());
-                            if (ImGui::BeginPopupContextItem()) {
-                                if (ImGui::MenuItem("Delete Component")) {
-                                    sc->m_scripts.erase(std::find(sc->m_scripts.begin(), sc->m_scripts.end(), scriptname));
-                                    ImGui::EndPopup();
-     
-
-                                    break;
-                                }
-                                ImGui::EndPopup();
-                            }
-
-
-                            if (ImGui::IsItemActive() && !ImGui::IsItemHovered())
-                            {
-                                int n_next = n + (ImGui::GetMouseDragDelta(0).y < 0.f ? -1 : 1);
-                                if (n_next >= 0 && n_next < sc->m_scripts.size())
-                                {
-
-                                    std::swap(sc->m_scripts[n], sc->m_scripts[n_next]);
-                                    ImGui::ResetMouseDragDelta();
-                                }
-                            }
-                          
-
-                            n++;
-                        }
-                        ImGui::EndListBox();
-                    }
-
-                   
-
 
 
                 }

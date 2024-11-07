@@ -81,9 +81,21 @@ void gui::ImGuiHandler::m_DrawPerformanceWindow(float fps) {
         average /= (float)IM_ARRAYSIZE(FpsValues);
         char overlay[32];
         sprintf_s(overlay, "FPS %f", average);
+
+        float minFps = FLT_MAX;
+        float maxFps = -FLT_MAX;
+
+        for (int n = 0; n < IM_ARRAYSIZE(FpsValues); n++) {
+            if (FpsValues[n] < minFps) minFps = FpsValues[n];
+            if (FpsValues[n] > maxFps) maxFps = FpsValues[n];
+        }
+
+        // Ensure there is at least some margin on the Y-axis
+        float yMin = minFps - 1.0f;
+        float yMax = maxFps + 1.0f;
         
         //TODO change to ImPlot
-        ImGui::PlotLines("##", FpsValues, IM_ARRAYSIZE(FpsValues), FpsValues_offset, overlay, 55.0f, 65.0f, ImVec2(260.f, 120.0f));
+        ImGui::PlotLines("##", FpsValues, IM_ARRAYSIZE(FpsValues), FpsValues_offset, overlay, yMin, yMax, ImVec2(260.f, 120.0f));
 
        // ImGui::PlotShaded();
     }

@@ -4,12 +4,13 @@
             "namestr": "Player",
             "layer": 0,
             "isprefab": true,
-            "prefabname": "Player.prefab"
+            "prefabname": "Player.prefab",
+            "issync": true
         },
         "transform": {
             "position": {
-                "x": -2.679213762283325,
-                "y": 0.7248331308364868
+                "x": 1.729142427444458,
+                "y": -0.5857632160186768
             },
             "rotation": 0.0,
             "scale": {
@@ -28,6 +29,9 @@
             },
             "drawDebug": true,
             "radius": 0.5
+        },
+        "player": {
+            "control": true
         },
         "rigidbody": {
             "linearVelocity": {
@@ -63,18 +67,6 @@
             },
             "alpha": 1.0
         },
-        "text": {
-            "text": "Insert Text",
-            "text": null,
-            "filename": "RubikGlitch-Regular.ttf",
-            "fontsize": 10.0,
-            "colour": {
-                "r": 0.0,
-                "b": 0.0,
-                "g": 0.0
-            },
-            "layer": 0
-        },
         "script": {
             "scripts": [
                 "PlayerControl"
@@ -86,12 +78,13 @@
                     "namestr": "gunright_02",
                     "layer": 0,
                     "isprefab": true,
-                    "prefabname": "Player.prefab"
+                    "prefabname": "Player.prefab",
+                    "issync": true
                 },
                 "transform": {
                     "position": {
-                        "x": 4.781811714172363,
-                        "y": 1.7681220769882202
+                        "x": 0.9023077487945557,
+                        "y": 1.6605082750320435
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -115,12 +108,13 @@
                     "namestr": "gunleft_02",
                     "layer": 0,
                     "isprefab": true,
-                    "prefabname": "Player.prefab"
+                    "prefabname": "Player.prefab",
+                    "issync": true
                 },
                 "transform": {
                     "position": {
-                        "x": -4.023453235626221,
-                        "y": 1.74858558177948
+                        "x": -9.709610939025879,
+                        "y": 1.8355019092559814
                     },
                     "rotation": 0.0,
                     "scale": {

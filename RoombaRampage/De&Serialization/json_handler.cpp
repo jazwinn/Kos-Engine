@@ -182,6 +182,7 @@ namespace Serialization {
 				if (nc->m_isPrefab) {
 					prefabValue.SetString(nc->m_prefabName.c_str(), allocator);
 					name.AddMember("prefabname", prefabValue, allocator);
+					name.AddMember("issync", nc->m_syncPrefab, allocator);
 				}
 				entityData.AddMember("name", name, allocator);
 				hasComponents = true;
@@ -451,6 +452,9 @@ namespace Serialization {
 				if (name.HasMember("prefabname") && name["prefabname"].IsString()) {
 					nc->m_prefabName = name["prefabname"].GetString();
 
+				}
+				if (name.HasMember("issync") && name["issync"].IsBool()) {
+					nc->m_syncPrefab = name["issync"].GetBool();
 				}
 			}
 		}
