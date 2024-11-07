@@ -8,8 +8,8 @@
         },
         "transform": {
             "position": {
-                "x": 0.44010448455810547,
-                "y": -0.5498914122581482
+                "x": -1.7048954963684082,
+                "y": 0.11010859161615372
             },
             "rotation": 0.0,
             "scale": {
@@ -143,24 +143,24 @@
     },
     {
         "name": {
-            "namestr": "Moving Tile",
+            "namestr": "Moving Camera",
             "layer": 0,
             "isprefab": false
         },
         "transform": {
             "position": {
-                "x": 0.47580403089523315,
-                "y": 3.936199188232422
+                "x": -4.934085369110107,
+                "y": -0.4425366520881653
             },
             "rotation": 0.0,
             "scale": {
-                "x": 1.0,
-                "y": 1.0
+                "x": 4.079999923706055,
+                "y": 4.079999923706055
             }
         },
         "rigidbody": {
             "linearVelocity": {
-                "x": 0.0,
+                "x": -2.0,
                 "y": 0.0
             },
             "linearAcceleration": {
@@ -182,21 +182,20 @@
             "kinematic": false,
             "static": false
         },
-        "sprite": {
-            "imagefile": "ani_SeanSprite_strip4.png",
-            "layer": 1,
-            "color": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
-            },
-            "alpha": 1.0
-        },
         "animation": {
             "frameNumber": 0,
             "framesPerSecond": 2,
             "frameTimer": 0.0,
             "isAnimating": true
+        },
+        "camera": {
+            "planes": {
+                "left": 0.0,
+                "right": 0.0,
+                "top": 0.0,
+                "bottom": 0.0
+            },
+            "aspectRatio": 104.80000305175781
         },
         "script": {
             "scripts": [
