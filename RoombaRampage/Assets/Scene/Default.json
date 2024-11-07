@@ -8,8 +8,8 @@
         },
         "transform": {
             "position": {
-                "x": 0.44010448455810547,
-                "y": -0.5498914122581482
+                "x": -1.7048954963684082,
+                "y": 0.11010859161615372
             },
             "rotation": 0.0,
             "scale": {
@@ -72,11 +72,12 @@
                 "r": 0.0,
                 "b": 0.0,
                 "g": 0.0
-            }
+            },
+            "layer": 0
         },
         "script": {
             "scripts": [
-                "MovementScript"
+                "PlayerControl"
             ]
         },
         "children": [
@@ -142,101 +143,64 @@
     },
     {
         "name": {
-            "namestr": "Wall",
+            "namestr": "Moving Camera",
             "layer": 0,
             "isprefab": false
         },
         "transform": {
             "position": {
+                "x": -4.934085369110107,
+                "y": -0.4425366520881653
+            },
+            "rotation": 0.0,
+            "scale": {
+                "x": 4.079999923706055,
+                "y": 4.079999923706055
+            }
+        },
+        "rigidbody": {
+            "linearVelocity": {
+                "x": -2.0,
+                "y": 0.0
+            },
+            "linearAcceleration": {
                 "x": 0.0,
                 "y": 0.0
             },
             "rotation": 0.0,
-            "scale": {
-                "x": 1.0,
-                "y": 1.0
-            }
-        }
-    },
-    {
-        "name": {
-            "namestr": "blackTile_test",
-            "layer": 0,
-            "isprefab": false
-        },
-        "transform": {
-            "position": {
-                "x": -5.461480140686035,
-                "y": 2.4772226810455322
-            },
-            "rotation": 0.0,
-            "scale": {
-                "x": 1.0,
-                "y": 1.0
-            }
-        },
-        "collider": {
-            "size": {
-                "x": 1.0,
-                "y": 1.0
-            },
-            "offset": {
+            "angularVelocity": 0.0,
+            "angularAcceleration": 0.0,
+            "mass": 1.0,
+            "inverseMass": 1.0,
+            "linearDamping": 0.9900000095367432,
+            "angularDamping": 0.9900000095367432,
+            "force": {
                 "x": 0.0,
                 "y": 0.0
             },
-            "drawDebug": true,
-            "radius": 0.5
+            "torque": 0.0,
+            "kinematic": false,
+            "static": false
         },
-        "sprite": {
-            "imagefile": "blackTile_test.png",
-            "layer": 0,
-            "color": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
-            },
-            "alpha": 1.0
-        }
-    },
-    {
-        "name": {
-            "namestr": "blackTile_test",
-            "layer": 0,
-            "isprefab": true,
-            "prefabname": "blackTile_test.prefab"
+        "animation": {
+            "frameNumber": 0,
+            "framesPerSecond": 2,
+            "frameTimer": 0.0,
+            "isAnimating": true
         },
-        "transform": {
-            "position": {
-                "x": -3.2412524223327637,
-                "y": -5.573971748352051
+        "camera": {
+            "planes": {
+                "left": 0.0,
+                "right": 0.0,
+                "top": 0.0,
+                "bottom": 0.0
             },
-            "rotation": 0.0,
-            "scale": {
-                "x": 1.0,
-                "y": 1.0
-            }
+            "aspectRatio": 104.80000305175781
         },
-        "collider": {
-            "size": {
-                "x": 1.0,
-                "y": 1.0
-            },
-            "offset": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "drawDebug": true,
-            "radius": 0.5
-        },
-        "sprite": {
-            "imagefile": "blackTile_test.png",
-            "layer": 1,
-            "color": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
-            },
-            "alpha": 1.0
+        "script": {
+            "scripts": [
+                "MovingObjectScript"
+            ]
         }
     }
 ]

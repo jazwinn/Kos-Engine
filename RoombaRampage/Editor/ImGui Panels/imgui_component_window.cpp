@@ -203,7 +203,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
     if (ecs->m_ECS_EntityMap.size() > 0 && m_clickedEntityId >= 0) {
 
         ecs::EntityID entityID = m_clickedEntityId;
-
+      
 
 
         if (ImGui::Combo("##ADDCOMPONENT", &ComponentType, ComponentNames, IM_ARRAYSIZE(ComponentNames), IM_ARRAYSIZE(ComponentNames))) {
@@ -254,7 +254,60 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
             }
         };
 
+        static std::map<int, std::pair<ecs::EntityID, bool>> layerMap; // Bool represents whether it's a sprite or a text
+        layerMap.clear();
 
+        for (const auto& scene : ecs->m_ECS_SceneMap)
+        {
+            if (scene.second.m_isActive)
+            {
+                for (const auto& id : scene.second.m_sceneIDs)
+                {
+                    if (ecs->m_ECS_EntityMap[id].test(ecs::TYPESPRITECOMPONENT))
+                    {
+                        ecs::SpriteComponent* sprite = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(id));
+                        const int maxLayer = 99;
+                        int layer = sprite->m_layer;
+                        if (layer >= maxLayer)
+                        {
+                            layer = maxLayer;
+                            while (layerMap.find(--layer) != layerMap.end());
+                        }
+                        else if (layerMap.find(sprite->m_layer) != layerMap.end())
+                        {
+                            while (layerMap.find(++layer) != layerMap.end())
+                            {
+
+                            }
+                        }
+                        sprite->m_layer = layer;
+                        layerMap[layer] = { id , true };
+                    }
+                    if (ecs->m_ECS_EntityMap[id].test(ecs::TYPETEXTCOMPONENT))
+                    {
+                        ecs::TextComponent* text = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(id));
+                        const int maxLayer = 99;
+                        int layer = text->m_fontLayer;
+                        if (layer >= maxLayer)
+                        {
+                            layer = maxLayer;
+                            while (layerMap.find(--layer) != layerMap.end());
+                        }
+                        else if (layerMap.find(text->m_fontLayer) != layerMap.end())
+                        {
+                            while (layerMap.find(++layer) != layerMap.end())
+                            {
+
+                            }
+                        }
+                        text->m_fontLayer = layer;
+                        layerMap[layer] = { id , false };
+                    }
+                }
+            }
+
+
+        }
 
 
         ecs::compSignature EntitySignature = ecs->m_ECS_EntityMap[entityID];
@@ -387,56 +440,29 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         rbc->ApplyFunction(DrawComponents(rbc->Names()));
                     }
 
-                 
-                  
-
-                    static std::map<int, ecs::EntityID> layerMap;
-                    layerMap.clear();
-                    for (const auto& scene : ecs->m_ECS_SceneMap)
-                    {
-                        if (scene.second.m_isActive)
-                        {
-                            for (const auto& id : scene.second.m_sceneIDs)
-                            {
-                                if (ecs->m_ECS_EntityMap[id].test(ecs::TYPESPRITECOMPONENT))
-                                {
-                                    ecs::SpriteComponent* sprite = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(id));
-                                    const int maxLayer = 99;
-                                    int layer = sprite->m_layer;
-                                    if (layer >= maxLayer)
-                                    {
-                                        layer = maxLayer;
-                                        while (layerMap.find(--layer) != layerMap.end());
-                                    }
-                                    else if (layerMap.find(sprite->m_layer) != layerMap.end())
-                                    {
-                                        while (layerMap.find(++layer) != layerMap.end())
-                                        {
-
-                                        }
-                                    }
-                                    sprite->m_layer = layer;
-                                    layerMap[layer] = id;
-                                }
-                            }
-                        }
-                        
-                      
-                    }
+               
+                    
 
                     if (ImGui::TreeNode("Image Layers"))
                     {
                         //int count = 0;
                         for (auto it = layerMap.begin(); it != layerMap.end(); ++it) 
                         {
-                            //ecs::SpriteComponent* scc = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(it->second));
-                            ecs::NameComponent* namec = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(it->second));
-                            //int spriteLayer = scc->m_layer;
-                            std::string s = std::to_string(it->second);
-                            std::string selectable = namec->m_entityName + "_ID" + s; /*" Layer" + std::to_string(spriteLayer);*/
-                            if (it->second == static_cast<unsigned int>(m_clickedEntityId))
+                            ecs::NameComponent* namec = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(it->second.first));
+                            std::string entityIDS = std::to_string(it->second.first);
+                            if (it->second.second)
                             {
-                                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 1.f, 0.f, 1.0f));
+                                entityIDS += " (Sprite)";
+                            }
+                            else
+                            {
+                                entityIDS += " (Font)";
+                            }
+
+                            std::string selectable = namec->m_entityName + "_ID" + entityIDS;
+                            if (it->second.first == static_cast<unsigned>(m_clickedEntityId))
+                            {
+                                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.3f, 0.8f, 0.f, 1.0f));
                                 selectable += "(Active)";
                                 ImGui::Selectable(selectable.c_str());
                                 ImGui::PopStyleColor();
@@ -455,11 +481,40 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                                 decltype(it) n_next = (ImGui::GetMouseDragDelta(0).y < 0.f ? std::prev(it) : std::next(it));
                                 if (n_next != layerMap.end())
                                 {
-                                    ecs::SpriteComponent* sprite1 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(it->second));
-                                    ecs::SpriteComponent* sprite2 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(n_next->second));
-                                    int layer = sprite1->m_layer;
-                                    sprite1->m_layer = sprite2->m_layer;
-                                    sprite2->m_layer = layer;
+                                    if (n_next->second.second && it->second.second)
+                                    {
+                                        ecs::SpriteComponent* sprite1 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(it->second.first));
+                                        ecs::SpriteComponent* sprite2 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(n_next->second.first));
+                                        int layer = sprite1->m_layer;
+                                        sprite1->m_layer = sprite2->m_layer;
+                                        sprite2->m_layer = layer;
+                                    }
+                                    else if (!n_next->second.second && !it->second.second)
+                                    {
+                                        ecs::TextComponent* text1 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(it->second.first));
+                                        ecs::TextComponent* text2 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(n_next->second.first));
+                                        int layer = text1->m_fontLayer;
+                                        text1->m_fontLayer = text2->m_fontLayer;
+                                        text2->m_fontLayer = layer;
+                                    }
+                                    else if (n_next->second.second && !it->second.second)
+                                    {
+                                        ecs::SpriteComponent* sprite1 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(n_next->second.first));
+                                        ecs::TextComponent* text1 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(it->second.first));
+                                        int layer = text1->m_fontLayer;
+                                        text1->m_fontLayer = sprite1->m_layer;
+                                        sprite1->m_layer = layer;
+                                    }
+                                    else
+                                    {
+                                        ecs::SpriteComponent* sprite1 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(it->second.first));
+                                        ecs::TextComponent* text1 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(n_next->second.first));
+                                        int layer = text1->m_fontLayer;
+                                        text1->m_fontLayer = sprite1->m_layer;
+                                        sprite1->m_layer = layer;
+                                    }
+                                   
+                                   
                                     ImGui::ResetMouseDragDelta();
                                 }
                             }
@@ -576,6 +631,91 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         }
                         ImGui::EndDragDropTarget();
                     }
+
+                    if (ImGui::TreeNode("Font Layers"))
+                    {
+                        //int count = 0;
+                        for (auto it = layerMap.begin(); it != layerMap.end(); ++it)
+                        {
+                            ecs::NameComponent* namec = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(it->second.first));
+                            std::string entityIDS = std::to_string(it->second.first);
+                            if (it->second.second)
+                            {
+                                entityIDS += " (Sprite)";
+                            }
+                            else
+                            {
+                                entityIDS += " (Font)";
+                            }
+
+                            std::string selectable = namec->m_entityName + "_ID" + entityIDS;
+                            if (it->second.first == static_cast<unsigned>(m_clickedEntityId))
+                            {
+                                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.f, 0.3f, 0.8f, 1.0f));
+                                selectable += "(Active)";
+                                ImGui::Selectable(selectable.c_str());
+                                ImGui::PopStyleColor();
+                            }
+                            else
+                            {
+                                ImGui::Selectable(selectable.c_str());
+                            }
+
+                            /*  std::ostringstream display;
+                              display << selectable << std::setw(30 - selectable.length()) << std::right << "Layer" + std::to_string(spriteLayer);*/
+
+
+                            if (ImGui::IsItemActive() && !ImGui::IsItemHovered())
+                            {
+                                decltype(it) n_next = (ImGui::GetMouseDragDelta(0).y < 0.f ? std::prev(it) : std::next(it));
+                                if (n_next != layerMap.end())
+                                {
+                                    if (n_next->second.second && it->second.second)
+                                    {
+                                        ecs::SpriteComponent* sprite1 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(it->second.first));
+                                        ecs::SpriteComponent* sprite2 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(n_next->second.first));
+                                        int layer = sprite1->m_layer;
+                                        sprite1->m_layer = sprite2->m_layer;
+                                        sprite2->m_layer = layer;
+                                    }
+                                    else if (!n_next->second.second && !it->second.second)
+                                    {
+                                        ecs::TextComponent* text1 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(it->second.first));
+                                        ecs::TextComponent* text2 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(n_next->second.first));
+                                        int layer = text1->m_fontLayer;
+                                        text1->m_fontLayer = text2->m_fontLayer;
+                                        text2->m_fontLayer = layer;
+                                    }
+                                    else if (n_next->second.second && !it->second.second)
+                                    {
+                                        ecs::SpriteComponent* sprite1 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(n_next->second.first));
+                                        ecs::TextComponent* text1 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(it->second.first));
+                                        int layer = text1->m_fontLayer;
+                                        text1->m_fontLayer = sprite1->m_layer;
+                                        sprite1->m_layer = layer;
+                                    }
+                                    else
+                                    {
+                                        ecs::SpriteComponent* sprite1 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(it->second.first));
+                                        ecs::TextComponent* text1 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(n_next->second.first));
+                                        int layer = text1->m_fontLayer;
+                                        text1->m_fontLayer = sprite1->m_layer;
+                                        sprite1->m_layer = layer;
+                                    }
+
+
+                                    ImGui::ResetMouseDragDelta();
+                                }
+                            }
+
+                        }
+                        ImGui::TreePop();
+                    }
+                }
+
+                if (open) {
+                    auto* rbc = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(entityID));
+                    rbc->ApplyFunction(DrawComponents(rbc->Names()));
                 }
 
             }
@@ -691,7 +831,8 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
             }
 
             //draw invinsible box
-            {
+            if (ImGui::GetContentRegionAvail().x > 0 && ImGui::GetContentRegionAvail().y > 0){
+                
                 ImGui::InvisibleButton("##Invinsible", ImVec2{ ImGui::GetContentRegionAvail().x,ImGui::GetContentRegionAvail().y });
 
                 if (ImGui::BeginDragDropTarget())

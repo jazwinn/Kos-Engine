@@ -32,8 +32,6 @@ layout (location=11) in vec4 aColor;
 
 layout (location=6) in mat3 modelMatrix;
 
-
-
 layout (location=0) out vec4 color; 
 layout (location=1) out vec2 texCoords;
 layout (location=2) flat out int textureID;

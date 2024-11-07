@@ -8,8 +8,8 @@
         },
         "transform": {
             "position": {
-                "x": -0.5904428958892822,
-                "y": 1.6932095289230347
+                "x": -2.679213762283325,
+                "y": 0.7248331308364868
             },
             "rotation": 0.0,
             "scale": {
@@ -72,11 +72,12 @@
                 "r": 0.0,
                 "b": 0.0,
                 "g": 0.0
-            }
+            },
+            "layer": 0
         },
         "script": {
             "scripts": [
-                "MovementScript"
+                "PlayerControl"
             ]
         },
         "children": [

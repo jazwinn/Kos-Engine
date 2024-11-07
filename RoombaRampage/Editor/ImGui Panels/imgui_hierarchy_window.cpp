@@ -268,9 +268,22 @@ namespace gui {
 
                 if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Entity"))
                 {
+                    
+
                     IM_ASSERT(payload->DataSize == sizeof(ecs::EntityID));
                     ecs::EntityID Id = *static_cast<ecs::EntityID*>(payload->Data);
-                    ecs::Hierachy::m_RemoveParent(Id);
+
+                    // if in prefab mode and parent does not have parent, reject
+                    if (m_prefabSceneMode && ecs::Hierachy::m_GetParent(Id).has_value() && (!ecs::Hierachy::m_GetParent(ecs::Hierachy::m_GetParent(Id).value()).has_value())) {
+                        
+                    }
+                    if (m_prefabSceneMode) {
+                        ecs::Hierachy::m_SetParent(ecs->m_ECS_SceneMap.find(m_activeScene)->second.m_prefabID, Id);
+                    }
+                    else {
+                        ecs::Hierachy::m_RemoveParent(Id);
+                    }
+                    
 
 
                 }
@@ -323,7 +336,7 @@ namespace gui {
         ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id));
 
         //create color if prefab
-        if (nc->m_isPrefab) ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.0f, 1.0f, 1.0f, 1.0f));
+        if (nc->m_isPrefab) ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.7f, 0.2f, 0.1f, 1.0f));
         bool open = ImGui::TreeNodeEx(std::to_string(id).c_str(), flag, nc->m_entityName.c_str());
         if (nc->m_isPrefab) ImGui::PopStyleColor();
 
@@ -378,8 +391,8 @@ namespace gui {
         }
 
         //no reordering of child prefabs
-        if (!transCom->m_haveParent || !static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(transCom->m_parentID))->m_isPrefab || 
-            static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(transCom->m_parentID))->m_prefabName != nc->m_prefabName) {
+        if (!transCom->m_haveParent || !static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(transCom->m_parentID))->m_isPrefab ||
+            static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(transCom->m_parentID))->m_prefabName != nc->m_prefabName || m_prefabSceneMode) {
             if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None)) {
                 //might undefine behaviour
                 ecs::EntityID index = id;
@@ -389,9 +402,7 @@ namespace gui {
                 ImGui::EndDragDropSource();
             }
         }
-        else {
 
-        }
 
 
         if (ImGui::BeginDragDropTarget())
@@ -402,17 +413,29 @@ namespace gui {
                 IM_ASSERT(payload->DataSize == sizeof(ecs::EntityID));
                 ecs::EntityID childId = *static_cast<ecs::EntityID*>(payload->Data);
 
+                // dont allow prefabs to be dragged inside prefab
+                const auto& childnc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(childId));
+                const auto& parent = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id));
 
-                ecs::Hierachy::m_SetParent(id, childId);
-                std::cout << "Set Parent:" << id << " Child: " << childId << std::endl;
 
-                // update child's scene
-                ecs::Hierachy::m_UpdateChildScene(id);
+                if (!m_prefabSceneMode && childnc->m_isPrefab && (childnc->m_prefabName == parent->m_prefabName)) {
 
-                //return
-                ImGui::EndDragDropTarget();
-                if (open)ImGui::TreePop();
-                return false;
+                    LOGGING_WARN("Unable to drag prefabs of same type into each other, pls go to prefab editor");
+                }
+                else {
+                    ecs::Hierachy::m_SetParent(id, childId);
+                    std::cout << "Set Parent:" << id << " Child: " << childId << std::endl;
+
+                    // update child's scene
+                    ecs::Hierachy::m_UpdateChildScene(id);
+
+                    //return
+                    ImGui::EndDragDropTarget();
+                    if (open)ImGui::TreePop();
+                    return false;
+                }
+
+               
 
 
             }

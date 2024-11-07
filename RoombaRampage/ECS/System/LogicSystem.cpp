@@ -70,15 +70,16 @@ namespace ecs {
 
 		
 			// create instance for each script
-			for (const std::string& script : scriptComp->m_scripts) {
+			for (const std::string& _script : scriptComp->m_scripts) {
 
-				if (assetManager->m_scriptManager.m_ScriptMap.find(script) == assetManager->m_scriptManager.m_ScriptMap.end()) {
+				if (assetManager->m_scriptManager.m_ScriptMap.find(_script) == assetManager->m_scriptManager.m_ScriptMap.end()) {
 					LOGGING_ERROR("SCRIPT NOT FOUND ! PLEASE RELAUNCH APPLIATION");
 					continue;
 				}
 
 				// retieve isntance for each object
-				scriptComp->m_scriptInstances[script] = assetManager->m_scriptManager.m_CreateObjectInstance(script, script);
+				std::cout << _script << std::endl;
+				scriptComp->m_scriptInstances[_script] = assetManager->m_scriptManager.m_CreateObjectInstance(_script, _script);
 
 			}
 
@@ -88,8 +89,8 @@ namespace ecs {
 				void* params[1];
 				params[0] = &scriptComp->m_Entity; // Pass the entity ID
 
-				assetManager->m_scriptManager.m_InvokeMethod(instance.first, "GetEntityID", instance.second, params, 1);
-				assetManager->m_scriptManager.m_InvokeMethod(instance.first, "Start", instance.second ,nullptr, 0);
+				assetManager->m_scriptManager.m_InvokeMethod(instance.first, "GetEntityID", instance.second, params);
+				assetManager->m_scriptManager.m_InvokeMethod(instance.first, "Start", instance.second ,nullptr);
 
 			}
 
@@ -119,7 +120,7 @@ namespace ecs {
 			for (auto& script : scriptComp->m_scriptInstances) {
 
 			// run the scripts update fuction
-				assetManager->m_scriptManager.m_InvokeMethod(script.first, "Update", script.second , nullptr, 0);
+				assetManager->m_scriptManager.m_InvokeMethod(script.first, "Update", script.second , nullptr);
 
 			}
 		}

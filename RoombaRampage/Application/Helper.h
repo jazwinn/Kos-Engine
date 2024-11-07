@@ -17,6 +17,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #ifndef HELP_H
 #define HELP_H
 
+#include "../Math/Vector3.h"
 #include <memory>
 
 namespace Helper {
@@ -54,6 +55,8 @@ namespace Helper {
 
 		float m_fixedDeltaTime;
 
+		vector3::Vec3 m_colour;
+		
 	private:
 		static std::unique_ptr<Helpers> InstancePtr;
 

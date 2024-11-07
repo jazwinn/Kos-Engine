@@ -55,19 +55,19 @@ void gui::ImGuiHandler::m_DrawMainMenuBar() {
                 
             }
 
-            
-            if ((scenemanager->m_recentFiles.size() > 0) && ImGui::BeginMenu("Open Recent")) {
+            // TODOm improve more test, case e.g. in prefab mode, changing scene            
+            //if ((scenemanager->m_recentFiles.size() > 0) && ImGui::BeginMenu("Open Recent")) {
 
-               for (auto& scene : scenemanager->m_recentFiles) {
-                    if (ImGui::MenuItem(scene.filename().stem().string().c_str())) {
-                        scenemanager->m_LoadScene(scene);
-                        m_activeScene = scene.filename().string();
-                        m_clickedEntityId = -1;
-                    }
-                }
+            //   for (auto& scene : scenemanager->m_recentFiles) {
+            //        if (ImGui::MenuItem(scene.filename().stem().string().c_str())) {
+            //            scenemanager->m_LoadScene(scene);
+            //            m_activeScene = scene.filename().string();
+            //            m_clickedEntityId = -1;
+            //        }
+            //    }
 
-                ImGui::EndMenu();
-            }
+            //    ImGui::EndMenu();
+            //}
 
             if (ImGui::MenuItem("Open")) {
                 
@@ -78,7 +78,14 @@ void gui::ImGuiHandler::m_DrawMainMenuBar() {
                     //clear all other scenes
                     scenemanager->m_ClearAllScene();
                     scenemanager->m_LoadScene(path);
-                    m_activeScene = path.filename().string();
+                    if (!m_prefabSceneMode) {
+                        m_activeScene = path.filename().string();
+                    }
+                    else {
+                        ecs::ECS::m_GetInstance()->m_ECS_SceneMap.find(path.filename().string())->second.m_isActive = false;
+                        m_savedSceneState[path.filename().string()] = true;
+                    }
+                    
                     m_clickedEntityId = -1;
                 }
 
