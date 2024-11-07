@@ -203,7 +203,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
     if (ecs->m_ECS_EntityMap.size() > 0 && m_clickedEntityId >= 0) {
 
         ecs::EntityID entityID = m_clickedEntityId;
-
+      
 
 
         if (ImGui::Combo("##ADDCOMPONENT", &ComponentType, ComponentNames, IM_ARRAYSIZE(ComponentNames), IM_ARRAYSIZE(ComponentNames))) {
@@ -449,20 +449,20 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         for (auto it = layerMap.begin(); it != layerMap.end(); ++it) 
                         {
                             ecs::NameComponent* namec = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(it->second.first));
-                            std::string entityID = std::to_string(it->second.first);
+                            std::string entityIDS = std::to_string(it->second.first);
                             if (it->second.second)
                             {
-                                entityID += " (Sprite)";
+                                entityIDS += " (Sprite)";
                             }
                             else
                             {
-                                entityID += " (Font)";
+                                entityIDS += " (Font)";
                             }
 
-                            std::string selectable = namec->m_entityName + "_ID" + entityID;
-                            if (it->second.first == m_clickedEntityId)
+                            std::string selectable = namec->m_entityName + "_ID" + entityIDS;
+                            if (it->second.first == static_cast<unsigned>(m_clickedEntityId))
                             {
-                                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 1.f, 0.f, 1.0f));
+                                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.3f, 0.8f, 0.f, 1.0f));
                                 selectable += "(Active)";
                                 ImGui::Selectable(selectable.c_str());
                                 ImGui::PopStyleColor();
@@ -638,20 +638,20 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         for (auto it = layerMap.begin(); it != layerMap.end(); ++it)
                         {
                             ecs::NameComponent* namec = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(it->second.first));
-                            std::string entityID = std::to_string(it->second.first);
+                            std::string entityIDS = std::to_string(it->second.first);
                             if (it->second.second)
                             {
-                                entityID += " (Sprite)";
+                                entityIDS += " (Sprite)";
                             }
                             else
                             {
-                                entityID += " (Font)";
+                                entityIDS += " (Font)";
                             }
 
-                            std::string selectable = namec->m_entityName + "_ID" + entityID;
-                            if (it->second.first == m_clickedEntityId)
+                            std::string selectable = namec->m_entityName + "_ID" + entityIDS;
+                            if (it->second.first == static_cast<unsigned>(m_clickedEntityId))
                             {
-                                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 1.f, 0.f, 1.0f));
+                                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.f, 0.3f, 0.8f, 1.0f));
                                 selectable += "(Active)";
                                 ImGui::Selectable(selectable.c_str());
                                 ImGui::PopStyleColor();

@@ -163,7 +163,7 @@ namespace script {
         return inst;
     }
 
-    void ScriptHandler::m_InvokeMethod(const std::string& scriptName, const std::string& methodName, MonoObject* objInstance, void** args, int paramCount[[maybe_unused]]) {
+    void ScriptHandler::m_InvokeMethod(const std::string& scriptName, const std::string& methodName, MonoObject* objInstance, void** args) {
 
         // Check if the method exists
         MonoMethod* method = m_ScriptMap.find(scriptName)->second.m_Methods.find(methodName)->second;
