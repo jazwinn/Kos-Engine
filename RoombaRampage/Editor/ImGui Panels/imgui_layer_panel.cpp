@@ -28,7 +28,7 @@ void DrawVerticalLabel(const std::string& text, float x, float y)
     for (char c : text)
     {
         std::string character(1, c); // Convert char to a string for drawing
-        drawList->AddText(ImVec2(pos.x, pos.y), IM_COL32(255, 255, 255, 255), character.c_str());
+        drawList->AddText(ImVec2(pos.x, pos.y), IM_COL32(0, 0, 0, 255), character.c_str());
         pos.y += ImGui::GetFontSize(); // Move down by one character height
     }
 }
@@ -48,7 +48,7 @@ void gui::ImGuiHandler::m_DrawLayerWindow() {
         ImGui::SetCursorPosX(labelWidth + col * cellWidth); // Position the vertical text over each column
         auto it = layers.m_layerMap.find(static_cast<layer::LAYERS>(col));
         if (it != layers.m_layerMap.end()) {
-            DrawVerticalLabel(it->second.first, 0.0f, 210.0f); // Adjust x and y offsets as needed
+            DrawVerticalLabel(it->second.first, 0.0f, 230.0f); // Adjust x and y offsets as needed
         }
         else {
             LOGGING_ERROR_NO_SOURCE_LOCATION("NO SUCH NAME");

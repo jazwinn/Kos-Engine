@@ -785,6 +785,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                     if (ImGui::BeginListBox("Scripts"))
                     {
+                        int n{};
                         for (const auto& scriptname : sc->m_scripts)
                         {
 
@@ -800,9 +801,20 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                                 ImGui::EndPopup();
                             }
 
+
+                            if (ImGui::IsItemActive() && !ImGui::IsItemHovered())
+                            {
+                                int n_next = n + (ImGui::GetMouseDragDelta(0).y < 0.f ? -1 : 1);
+                                if (n_next >= 0 && n_next < sc->m_scripts.size())
+                                {
+
+                                    std::swap(sc->m_scripts[n], sc->m_scripts[n_next]);
+                                    ImGui::ResetMouseDragDelta();
+                                }
+                            }
                           
 
-
+                            n++;
                         }
                         ImGui::EndListBox();
                     }
