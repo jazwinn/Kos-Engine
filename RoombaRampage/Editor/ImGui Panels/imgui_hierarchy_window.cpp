@@ -196,6 +196,10 @@ namespace gui {
 
                 if ((sceneentity.first != m_activeScene) && ImGui::MenuItem("Set Active")) {
                     m_activeScene = sceneentity.first;
+
+                    if (sceneentity.second.m_isActive == false) {
+                        sceneentity.second.m_isActive = true;
+                    }
                 }
 
                 ImGui::EndPopup();
