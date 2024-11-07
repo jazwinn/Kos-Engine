@@ -144,32 +144,6 @@ namespace script {
 
 		/******************************************************************/
 		/*!
-			\fn        void m_InvokeMethod(const std::string& scriptName, const std::string& className, const std::string& methodName, void** args, int paramCount)
-			\brief     Invokes a previously loaded method within a specified C# script.
-			\param[in] scriptName The name of the C# script file containing the method.
-			\param[in] className  The name of the class within the script containing the method.
-			\param[in] methodName The name of the method to be invoked.
-			\param[in] args       An array of arguments to pass to the method.
-			\param[in] paramCount The number of parameters being passed to the method.
-			\details   This function runs a method in the Mono runtime, allowing C# functions to interact with and modify game entities.
-					   It handles exceptions that may arise during invocation.
-		*/
-		/******************************************************************/
-		void m_InvokeMethod(const std::string& scriptName, const std::string& methodName, MonoObject* objInstance, void** args, int paramCount);
-
-		/******************************************************************/
-		/*!
-			\fn        void m_Cleanup()
-			\brief     Cleans up and unloads the Mono runtime, releasing resources.
-			\details   This function safely shuts down the Mono runtime, unloading all loaded domains,
-					   assemblies, and classes.
-		*/
-		/******************************************************************/
-		void m_Cleanup();
-
-
-		/******************************************************************/
-		/*!
 			\fn        void m_HotReloadCompileAllCsharpFile()
 			\brief     Recompiles all C# files for hot reloading, allowing scripts to be updated dynamically.
 			\details   This function recompiles all C# script files, producing updated DLLs for each file,
@@ -209,25 +183,27 @@ namespace script {
 	TUTORIAL
 	----------------------------------------------------------------
 
-		1.  * C# Script *
-			- Create your C# file (ExampleScript.cs) with the methods you want to call in C++
+	1. **Creating C# Script (e.g., TemplateScript.cs)**
+	   - There are a few requirements:
+		 - The file name must match the class name exactly.
+		 - The namespace should be named "Namespace" with a capital "N".
+		 - Ensure that the script contains three functions: `Start`, `Update`, and `GetEntityID`.
 
-		2.  * Compile the C# into DLL *
-			- View > Terminal (Open VS terminal)
-			- cd "G:\Documents\RoombaOS_ForkCloneRemote\RoombaRampage\C#Mono" (Example to point to your C# file)
-			- csc /target:library ExampleScript.cs (This will compile your C# script into DLL)
+	2. **Adding C# Script to the Project**
+	   - Save your C# script and place it in the `Scripts/ScriptsCS` folder.
+	   - In the game editor, go to the entity you want to apply the script to, add a Script Component, and then select your script (e.g., `TemplateScript`).
+	   - Note: The script won’t run until you press the Play button.
 
-		3.  * Load and Invoke C# Method *
-			- use 'm_LoadMethod()' to load the method
-			- use 'm_InvokeMethod()' to invoke the method
-			- Example to load and invoke the `HelloWorld` method:
-				```
-				monoManager.m_LoadMethod("ExampleScript", "HelloWorld", 0);
-				monoManager.m_InvokeMethod("ExampleScript", "HelloWorld", nullptr, 0);
-				```
-		4. * Always remember to clean up Mono Runtime*
-			-use 'm_Cleanup()'
+	3. **Running and Updating the Script**
+	   - After pressing Play, the system will compile your script. Once compiled successfully, the script will start running.
+	   - To update the code in the update loop, edit the `Update` function in your C# script (e.g., add a print statement).
+	   - Save your changes, return to the game, and hit Play again. The updates should now be reflected, with the `Start` and `Update` loops running as expected.
 
-	--------------------------------------------------------------*/
+	4. **Setting up Internal Core Functions**
+	   - To add a new internal core function, such as getting or setting a component, create the function as needed.
+	   - Once the function is ready, right-click and build it.
+	   - Ensure that the compiled `.dll` is stored in the `GameScript/ScriptCoreDLL` folder. This should happen automatically, but double-check if you encounter debugging issues.
+
+	----------------------------------------------------------------*/
 
 }
