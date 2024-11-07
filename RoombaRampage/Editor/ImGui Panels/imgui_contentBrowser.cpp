@@ -195,7 +195,7 @@ namespace gui {
 						selectedfile = directoryString;
 					}
 					if (ImGui::MenuItem("Delete")) {
-						std::filesystem::remove(directoryPath);
+						std::filesystem::remove_all(directoryPath.path());
 						_delete = true;
 						selectedfile = directoryString;
 					}
@@ -239,7 +239,7 @@ namespace gui {
 
 						//erease script from scriptmanager
 					
-						assetmanager->m_scriptManager.m_CSScripts.erase(std::find(assetmanager->m_scriptManager.m_CSScripts.begin(), assetmanager->m_scriptManager.m_CSScripts.end(), selectedfile.filename().stem().string()));
+						//assetmanager->m_scriptManager.m_CSScripts.erase(std::find(assetmanager->m_scriptManager.m_CSScripts.begin(), assetmanager->m_scriptManager.m_CSScripts.end(), selectedfile.filename().stem().string()));
 
 					}
 					

@@ -3,7 +3,7 @@
 \file      Helper.cpp
 \author    Ng Jaz winn, jazwinn.ng , 2301502
 \par       jazwinn.ng@digipen.edu
-\date      Oct 02, 2024
+\date      Oct 7, 2024
 \brief     This file contains the definations for the prefab class.
            It reads a json file and stores all its data. When the prefab
            is called in the game. It creates an entiy and copy
