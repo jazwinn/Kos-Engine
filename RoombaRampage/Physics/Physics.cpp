@@ -317,7 +317,7 @@ namespace physicspipe {
 		return 0.5f * std::sqrt(m_width * m_width + m_height * m_height);
 	}
 
-	bool Physics::withinBoundingRadius(const std::shared_ptr<PhysicsData>& entity1, const std::shared_ptr<PhysicsData>& entity2) {
+	bool Physics::m_withinBoundingRadius(const std::shared_ptr<PhysicsData>& entity1, const std::shared_ptr<PhysicsData>& entity2) {
 		float dx = entity1->m_position.m_x - entity2->m_position.m_x;
 		float dy = entity1->m_position.m_y - entity2->m_position.m_y;
 		float distanceSquared = dx * dx + dy * dy;
@@ -325,7 +325,7 @@ namespace physicspipe {
 		return distanceSquared <= combinedRadius * combinedRadius;
 	}
 
-	void Physics::addCollidedEntity(const std::shared_ptr<PhysicsData>& entity) {
+	void Physics::m_addCollidedEntity(const std::shared_ptr<PhysicsData>& entity) {
 		if (std::find(m_collidedEntities.begin(), m_collidedEntities.end(), entity) == m_collidedEntities.end()) {
 			m_collidedEntities.push_back(entity);
 		}
@@ -341,10 +341,10 @@ namespace physicspipe {
 
 				// Check if these layers should collide
 				if (physicsLayer->getCollide(layer1, layer2) &&
-					withinBoundingRadius(m_physicsEntities[i], m_physicsEntities[j])) {
+					m_withinBoundingRadius(m_physicsEntities[i], m_physicsEntities[j])) {
 					if (m_CheckCollision(m_physicsEntities[i], m_physicsEntities[j])) {
-						addCollidedEntity(m_physicsEntities[i]); 
-						addCollidedEntity(m_physicsEntities[j]);
+						m_addCollidedEntity(m_physicsEntities[i]); 
+						m_addCollidedEntity(m_physicsEntities[j]);
 					}
 				}
 			}
