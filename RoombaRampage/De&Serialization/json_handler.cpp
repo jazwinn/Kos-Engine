@@ -322,7 +322,7 @@ namespace Serialization {
 					.AddMember("b", tc->m_color.m_y, allocator)
 					.AddMember("g", tc->m_color.m_z, allocator), allocator);
 
-				text.AddMember("layer", tc->m_layer, allocator);
+				text.AddMember("layer", tc->m_fontLayer, allocator);
 
 				entityData.AddMember("text", text, allocator);
 				hasComponents = true;  // Mark as having a component
@@ -611,7 +611,7 @@ namespace Serialization {
 					tc->m_fontSize = text["fontsize"].GetFloat();
 				}
 				if (text.HasMember("layer")) {
-					tc->m_layer = text["layer"].GetInt();
+					tc->m_fontLayer = text["layer"].GetInt();
 				}
 				if (text.HasMember("color")) {
 					const rapidjson::Value& color = text["color"];

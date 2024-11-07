@@ -287,20 +287,20 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                     {
                         ecs::TextComponent* text = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(id));
                         const int maxLayer = 99;
-                        int layer = text->m_layer;
+                        int layer = text->m_fontLayer;
                         if (layer >= maxLayer)
                         {
                             layer = maxLayer;
                             while (layerMap.find(--layer) != layerMap.end());
                         }
-                        else if (layerMap.find(text->m_layer) != layerMap.end())
+                        else if (layerMap.find(text->m_fontLayer) != layerMap.end())
                         {
                             while (layerMap.find(++layer) != layerMap.end())
                             {
 
                             }
                         }
-                        text->m_layer = layer;
+                        text->m_fontLayer = layer;
                         layerMap[layer] = { id , false };
                     }
                 }
@@ -493,24 +493,24 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                                     {
                                         ecs::TextComponent* text1 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(it->second.first));
                                         ecs::TextComponent* text2 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(n_next->second.first));
-                                        int layer = text1->m_layer;
-                                        text1->m_layer = text2->m_layer;
-                                        text2->m_layer = layer;
+                                        int layer = text1->m_fontLayer;
+                                        text1->m_fontLayer = text2->m_fontLayer;
+                                        text2->m_fontLayer = layer;
                                     }
                                     else if (n_next->second.second && !it->second.second)
                                     {
                                         ecs::SpriteComponent* sprite1 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(n_next->second.first));
                                         ecs::TextComponent* text1 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(it->second.first));
-                                        int layer = text1->m_layer;
-                                        text1->m_layer = sprite1->m_layer;
+                                        int layer = text1->m_fontLayer;
+                                        text1->m_fontLayer = sprite1->m_layer;
                                         sprite1->m_layer = layer;
                                     }
                                     else
                                     {
                                         ecs::SpriteComponent* sprite1 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(it->second.first));
                                         ecs::TextComponent* text1 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(n_next->second.first));
-                                        int layer = text1->m_layer;
-                                        text1->m_layer = sprite1->m_layer;
+                                        int layer = text1->m_fontLayer;
+                                        text1->m_fontLayer = sprite1->m_layer;
                                         sprite1->m_layer = layer;
                                     }
                                    
@@ -682,24 +682,24 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                                     {
                                         ecs::TextComponent* text1 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(it->second.first));
                                         ecs::TextComponent* text2 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(n_next->second.first));
-                                        int layer = text1->m_layer;
-                                        text1->m_layer = text2->m_layer;
-                                        text2->m_layer = layer;
+                                        int layer = text1->m_fontLayer;
+                                        text1->m_fontLayer = text2->m_fontLayer;
+                                        text2->m_fontLayer = layer;
                                     }
                                     else if (n_next->second.second && !it->second.second)
                                     {
                                         ecs::SpriteComponent* sprite1 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(n_next->second.first));
                                         ecs::TextComponent* text1 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(it->second.first));
-                                        int layer = text1->m_layer;
-                                        text1->m_layer = sprite1->m_layer;
+                                        int layer = text1->m_fontLayer;
+                                        text1->m_fontLayer = sprite1->m_layer;
                                         sprite1->m_layer = layer;
                                     }
                                     else
                                     {
                                         ecs::SpriteComponent* sprite1 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(it->second.first));
                                         ecs::TextComponent* text1 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(n_next->second.first));
-                                        int layer = text1->m_layer;
-                                        text1->m_layer = sprite1->m_layer;
+                                        int layer = text1->m_fontLayer;
+                                        text1->m_fontLayer = sprite1->m_layer;
                                         sprite1->m_layer = layer;
                                     }
 

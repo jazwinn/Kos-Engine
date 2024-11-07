@@ -128,6 +128,7 @@ xcopy /y /d "$(SolutionDir)FMOD_API\studio\lib\x64\*.dll" "$(OutDir)"</Command>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -161,6 +162,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
