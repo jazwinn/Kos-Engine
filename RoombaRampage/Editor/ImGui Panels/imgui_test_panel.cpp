@@ -86,17 +86,19 @@ void gui::ImGuiHandler::m_DrawTestWindow() {
 	ImGui::NewLine();
 	ImGui::SeparatorText(" COLLISION ");
 	static bool collision_Flag = false;
-	static bool delete_Flag = false;
+	static bool delete_Flag = true;
 	static ecs::EntityID id_1;
 	static ecs::EntityID id_2;
 	if (ImGui::Button("Collision Test")) {
 		if (!collision_Flag) {
 			//	//create player 
 		id_1 = ecs->m_CreateEntity(m_activeScene);
-		ecs::TransformComponent* tc = (ecs::TransformComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id_1);
 		ecs::SpriteComponent* sc = static_cast<ecs::SpriteComponent*>(ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, id_1));
 		ecs::ColliderComponent* cc = static_cast<ecs::ColliderComponent*>(ecs->m_AddComponent(ecs::TYPECOLLIDERCOMPONENT, id_1));
 		ecs::RigidBodyComponent* rc = static_cast<ecs::RigidBodyComponent*>(ecs->m_AddComponent(ecs::TYPERIGIDBODYCOMPONENT, id_1));
+		ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_AddComponent(ecs::TYPENAMECOMPONENT, id_1));
+		static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id_1))->m_entityName = "ID_1";
+		ecs::TransformComponent* tc = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id_1));
 
 		tc->m_scale = { 1.f,1.f };
 		tc->m_position.m_x = static_cast<float>(1.0f);
@@ -104,10 +106,11 @@ void gui::ImGuiHandler::m_DrawTestWindow() {
 		cc->m_Size = { 0.5f,0.5f };
 
 		id_2 = ecs->m_CreateEntity(m_activeScene);
-		tc = (ecs::TransformComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id_2);
 		sc = static_cast<ecs::SpriteComponent*>(ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, id_2));
 		cc = static_cast<ecs::ColliderComponent*>(ecs->m_AddComponent(ecs::TYPECOLLIDERCOMPONENT, id_2));
 		rc = static_cast<ecs::RigidBodyComponent*>(ecs->m_AddComponent(ecs::TYPERIGIDBODYCOMPONENT, id_2));
+		nc = static_cast<ecs::NameComponent*>(ecs->m_AddComponent(ecs::TYPENAMECOMPONENT, id_2));
+		static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id_2))->m_entityName = "ID_2";
 
 
 		tc->m_scale = { 1.f,1.f };
@@ -228,7 +231,51 @@ void gui::ImGuiHandler::m_DrawTestWindow() {
 			font_delete_Flag = true;
 		}
 	}
+	ImGui::NewLine();
+	ImGui::SeparatorText("2500 Entity");
+	static std::vector<ecs::EntityID> listofEntity{};
+	static bool entity_FlagCreate = false;
+	static bool entity_FlagDelete = true;
+	static bool entity_ClickOnce = false;
+	if (ImGui::Button("2500 Entity")){
+		if (!entity_ClickOnce) {
+			if (!listofEntity.size()) {
+				int lowerBoundy = -2;
+				int upperBoundy = 2;
+				std::random_device rd;
+				std::mt19937 gen(rd());
+				std::uniform_real_distribution<float> height(static_cast<float>(lowerBoundy), static_cast<float>(upperBoundy));
+				std::uniform_real_distribution<float> height2(-2.5, 2.5);
+				for (size_t i = 0; i < 2500; ++i) {
+					ecs::EntityID id = ecs->m_CreateEntity(m_activeScene);
+					ecs::TransformComponent* tc = (ecs::TransformComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id);
+					ecs::SpriteComponent* sc = static_cast<ecs::SpriteComponent*>(ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, id));
+					sc->m_imageFile = "broombaTest2.png";
 
+					tc->m_scale = { 1.f,1.f };
+					tc->m_position.m_y = static_cast<float>(height(gen));
+					tc->m_position.m_x = static_cast<float>(height2(gen));
+					listofEntity.push_back(id);
+				}
+			}
+			else {
+				LOGGING_WARN("SPAWNING MORE THAN SET MAX ENTITY WILL CAUSE ASSERTION");
+			}
+			entity_ClickOnce = true;
+		}
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("Delete 2500")) {
+		if (listofEntity.size()) {
+			for (size_t i = 0; i < 2500; ++i) {
+				ecs->m_DeleteEntity(listofEntity[i]);
+			}
+			listofEntity.clear();
+		}
+		else {
+			LOGGING_WARN("NOTHING TO DELETE");
+		}
+	}
 
 	ImGui::End();
 }

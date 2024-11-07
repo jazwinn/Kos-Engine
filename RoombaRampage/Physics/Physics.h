@@ -342,8 +342,8 @@ namespace physicspipe {
 		*/
 		/******************************************************************/
 		bool m_CollisionIntersection_RectRect_SAT(const Rectangle& obj1, const Rectangle& obj2);
-		bool withinBoundingRadius(const std::shared_ptr<PhysicsData>& entity1, const std::shared_ptr<PhysicsData>& entity2);
-		void addCollidedEntity(const std::shared_ptr<PhysicsData>& entity);
+		bool m_withinBoundingRadius(const std::shared_ptr<PhysicsData>& entity1, const std::shared_ptr<PhysicsData>& entity2);
+		void m_addCollidedEntity(const std::shared_ptr<PhysicsData>& entity);
 };
 }
 #endif
