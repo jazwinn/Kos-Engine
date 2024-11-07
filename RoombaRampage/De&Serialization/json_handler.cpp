@@ -17,7 +17,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 /********************************************************************/
 
 
-
+#include "../Config/pch.h"
 #include "../Dependencies/rapidjson/document.h"
 #include "../Dependencies/rapidjson/writer.h"
 #include "../Dependencies/rapidjson/stringbuffer.h"

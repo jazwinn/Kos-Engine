@@ -11,7 +11,7 @@ Reproduction or disclosure of this file or its contents without the
 prior written consent of DigiPen Institute of Technology is prohibited.
 */
 /********************************************************************/
-
+#include "../Config/pch.h"
 #include "Mathlib.h"
 
 namespace mathlibrary {
