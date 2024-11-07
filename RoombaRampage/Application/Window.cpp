@@ -24,7 +24,7 @@ Reproduction or disclosure of this file or its contents without the
 prior written consent of DigiPen Institute of Technology is prohibited.
 */
 /******************************************************************/
-
+#include "../Config/pch.h"
 #include "Window.h"
 #include "Helper.h"
 #include "../Graphics/GraphicsPipe.h"

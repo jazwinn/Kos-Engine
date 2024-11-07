@@ -23,6 +23,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 */
 /******************************************************************/
 
+#include "../Config/pch.h"
 #include "Text.h"
 #include "../Debugging/Logging.h"
 #include "AssetManager.h"

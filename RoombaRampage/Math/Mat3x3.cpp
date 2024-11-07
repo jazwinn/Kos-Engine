@@ -10,6 +10,7 @@ Reproduction or disclosure of this file or its contents without the
 prior written consent of DigiPen Institute of Technology is prohibited.
 */
 /********************************************************************/
+#include "../Config/pch.h"
 #include "../Math/Mat3x3.h"
 
 namespace mat3x3{
