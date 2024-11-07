@@ -139,7 +139,7 @@ namespace gui {
 
             }
 
-            if (ecs->m_getState() != ecs::START && ImGui::Button("stop")) {
+            if (ecs->m_getState() == ecs::RUNNING && ImGui::Button("stop")) {
                 if (ecs->m_getState() != ecs::STOP) {
                     ecs->m_nextState = ecs::STOP;
                     pause = true;

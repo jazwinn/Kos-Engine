@@ -77,6 +77,7 @@
     <ClCompile Include="C#Mono\mono_handler.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_test_panel.cpp" />
     <ClCompile Include="Config\pch.cpp" />
+    <ClCompile Include="Editor\ImGui Panels\ScriptVariable.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Application.h" />
@@ -166,6 +167,7 @@
     <ClInclude Include="C#Mono\InternalCall.h" />
     <ClInclude Include="C#Mono\mono_handler.h" />
     <ClInclude Include="Config\pch.h" />
+    <ClInclude Include="Editor\ImGui Panels\ScriptVariable.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Graphics\debugFragmentShader.frag" />

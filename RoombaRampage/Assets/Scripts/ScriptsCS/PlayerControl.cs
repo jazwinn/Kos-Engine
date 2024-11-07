@@ -10,7 +10,7 @@ namespace Namespace
 {
     public class PlayerControl : ScriptBase
     {
-        public uint EntityID;
+        private uint EntityID;
         public float speed;
 
         public override void GetEntityID(uint id){

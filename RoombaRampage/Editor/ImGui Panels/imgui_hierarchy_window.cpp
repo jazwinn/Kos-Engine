@@ -50,8 +50,8 @@ namespace gui {
         //    ImGui::EndMenuBar();
         //}
 
-        std::string ObjectCountStr = "Oject Count: " + std::to_string(ecs->m_ECS_EntityMap.size());
-        ImGui::Text(ObjectCountStr.c_str());
+       /* std::string ObjectCountStr = "Oject Count: " + std::to_string(ecs->m_ECS_EntityMap.size());
+        ImGui::Text(ObjectCountStr.c_str());*/
 
         if (ImGui::Button("+ Add GameObject"))
             ImGuiHandler::m_objectNameBox ? ImGuiHandler::m_objectNameBox = false : m_objectNameBox = true;
@@ -196,6 +196,10 @@ namespace gui {
 
                 if ((sceneentity.first != m_activeScene) && ImGui::MenuItem("Set Active")) {
                     m_activeScene = sceneentity.first;
+
+                    if (sceneentity.second.m_isActive == false) {
+                        sceneentity.second.m_isActive = true;
+                    }
                 }
 
                 ImGui::EndPopup();

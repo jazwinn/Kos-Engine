@@ -27,41 +27,42 @@
 #define FOR_EACH_AGAIN() FOR_EACH_HELPER
 
 /************************************************************************/
+
+//Credit to TAs for assiting
+ 
 // Count the number of arguments (this helps with reflection of members)
 #define COUNT_ARGS_IMPL(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, count, ...) count
 #define COUNT_ARGS(...) COUNT_ARGS_IMPL(__VA_ARGS__, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0)
 
 // Simple stringification for each member
-#define TOSTRING(ARG) #ARG,// extra , to seperate each elements in the array
+#define TOSTRING(ARG) #ARG,  // Removed the extra comma to simplify usage
 
-//Creats class to string
+// Creates class to string
 #define CLASSTOSTRING(CLASS) \
-    inline static constexpr auto classname(){\
-        return #CLASS;\
+    inline static constexpr const char* classname() { \
+        return #CLASS; \
     }
 
 // This is where reflection happens for each member
-#define REFLECT_MEMBER(CLASSNAME, ...)\
-    inline auto membercount(){\
-        return  COUNT_ARGS(__VA_ARGS__);\
-    }\
-    inline auto member(){\
-        return std::tie(__VA_ARGS__);\
-    }\
-    inline static const auto Names() {\
-        return std::array<std::string, COUNT_ARGS(__VA_ARGS__)> {FOR_EACH(TOSTRING, __VA_ARGS__)};\
-    }\
-    template <typename T>\
-    void ApplyFunction(T&& function){\
-        std::tuple members = member();\
-        std::apply(\
-        [&function]<typename... ClassTypes>(ClassTypes&... _args){((function(_args)), ...);}\
-        , members);\
+#define REFLECT_MEMBER(CLASSNAME, ...) \
+    inline auto membercount() const { \
+        return COUNT_ARGS(__VA_ARGS__); \
+    } \
+    inline auto member()  { \
+        return std::tie(__VA_ARGS__); \
+    } \
+    inline static const std::array<std::string, COUNT_ARGS(__VA_ARGS__)> Names() { \
+        return {FOR_EACH(TOSTRING, __VA_ARGS__)}; \
+    } \
+    template <typename T> \
+    void ApplyFunction(T&& function) { \
+        std::tuple members = member(); \
+        std::apply([&function](auto&... args) { ((function(args)), ...); }, members); \
     }
 
 // The macro to reflect all members in the struct/class
 #define REFLECTABLE(CLASSNAME, ...) \
-    CLASSTOSTRING(CLASS)\
+    CLASSTOSTRING(CLASSNAME) \
     __VA_OPT__(REFLECT_MEMBER(CLASSNAME, __VA_ARGS__))
 
 

@@ -41,6 +41,10 @@ namespace script {
 		/******************************************************************/
 		static bool m_InternalGetTransformComponent(ecs::EntityID entity, vector2::Vec2* trans, vector2::Vec2* scale, float* rotate);
 
+		static bool m_InternalGetTranslate(ecs::EntityID entity, vector2::Vec2* trans);
+
+		static bool m_InternalSetTranslate(ecs::EntityID entity, vector2::Vec2* trans);
+
 		/******************************************************************/
 		/*!
 			\fn        bool InternalCall::m_InternalSetTransformComponent(ecs::EntityID entity, vector2::Vec2* trans, vector2::Vec2* scale, float* rotate)
@@ -94,6 +98,8 @@ namespace script {
 		*/
 		/******************************************************************/
 		static bool m_InternalCallGetDeltaTime(float* deltatime);
+
+		static int m_InternalCallGetPlayer();
 
 	public:
 

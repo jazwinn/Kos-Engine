@@ -1,15 +1,184 @@
 [
     {
         "name": {
-            "namestr": "Player",
+            "namestr": "Camera",
             "layer": 0,
-            "isprefab": true,
-            "prefabname": "Player.prefab"
+            "isprefab": false
         },
         "transform": {
             "position": {
-                "x": -1.7048954963684082,
-                "y": 0.11010859161615372
+                "x": -2.7229866981506348,
+                "y": -0.8740454912185669
+            },
+            "rotation": 0.0,
+            "scale": {
+                "x": 4.0,
+                "y": 4.0
+            }
+        },
+        "camera": {
+            "planes": {
+                "left": 0.0,
+                "right": 0.0,
+                "top": 0.0,
+                "bottom": 0.0
+            },
+            "aspectRatio": 0.0
+        },
+        "script": {
+            "scripts": [
+                "CameraFollowPlayerScript"
+            ]
+        }
+    },
+    {
+        "name": {
+            "namestr": "Player",
+            "layer": 0,
+            "isprefab": true,
+            "prefabname": "Player.prefab",
+            "issync": true
+        },
+        "transform": {
+            "position": {
+                "x": 4.909467697143555,
+                "y": -0.6736876964569092
+            },
+            "rotation": 0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "collider": {
+            "size": {
+                "x": 1.0,
+                "y": 1.0
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true,
+            "radius": 0.5
+        },
+        "player": {
+            "control": true
+        },
+        "rigidbody": {
+            "linearVelocity": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "linearAcceleration": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "angularVelocity": 0.0,
+            "angularAcceleration": 0.0,
+            "mass": 1.0,
+            "inverseMass": 1.0,
+            "linearDamping": 0.9900000095367432,
+            "angularDamping": 0.9900000095367432,
+            "force": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "torque": 0.0,
+            "kinematic": false,
+            "static": false
+        },
+        "sprite": {
+            "imagefile": "Roomba.png",
+            "layer": 4,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0
+        },
+        "script": {
+            "scripts": [
+                "PlayerControl"
+            ]
+        },
+        "children": [
+            {
+                "name": {
+                    "namestr": "gunright_02",
+                    "layer": 0,
+                    "isprefab": true,
+                    "prefabname": "Player.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.9023077487945557,
+                        "y": 1.6605082750320435
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "sprite": {
+                    "imagefile": "gunright_02.png",
+                    "layer": 5,
+                    "color": {
+                        "r": 1.0,
+                        "g": 1.0,
+                        "b": 1.0
+                    },
+                    "alpha": 1.0
+                }
+            },
+            {
+                "name": {
+                    "namestr": "gunleft_02",
+                    "layer": 0,
+                    "isprefab": true,
+                    "prefabname": "Player.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": -1.007907748222351,
+                        "y": 1.8145339488983154
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "sprite": {
+                    "imagefile": "gunleft_02.png",
+                    "layer": 6,
+                    "color": {
+                        "r": 1.0,
+                        "g": 1.0,
+                        "b": 1.0
+                    },
+                    "alpha": 1.0
+                }
+            }
+        ]
+    },
+    {
+        "name": {
+            "namestr": "blackTile_test",
+            "layer": 0,
+            "isprefab": true,
+            "prefabname": "blackTile_test_1.prefab",
+            "issync": true
+        },
+        "transform": {
+            "position": {
+                "x": -0.973591148853302,
+                "y": 4.472492694854736
             },
             "rotation": 0.0,
             "scale": {
@@ -54,148 +223,14 @@
             "static": false
         },
         "sprite": {
-            "imagefile": "Roomba.png",
-            "layer": 4,
+            "imagefile": "blackTile_test.png",
+            "layer": 1,
             "color": {
                 "r": 1.0,
                 "g": 1.0,
                 "b": 1.0
             },
             "alpha": 1.0
-        },
-        "text": {
-            "text": "Insert Text",
-            "text": null,
-            "filename": "RubikGlitch-Regular.ttf",
-            "fontsize": 10.0,
-            "colour": {
-                "r": 0.0,
-                "b": 0.0,
-                "g": 0.0
-            },
-            "layer": 0
-        },
-        "script": {
-            "scripts": [
-                "PlayerControl"
-            ]
-        },
-        "children": [
-            {
-                "name": {
-                    "namestr": "gunright_02",
-                    "layer": 0,
-                    "isprefab": true,
-                    "prefabname": "Player.prefab"
-                },
-                "transform": {
-                    "position": {
-                        "x": 4.781811714172363,
-                        "y": 1.7681220769882202
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    }
-                },
-                "sprite": {
-                    "imagefile": "gunright_02.png",
-                    "layer": 5,
-                    "color": {
-                        "r": 1.0,
-                        "g": 1.0,
-                        "b": 1.0
-                    },
-                    "alpha": 1.0
-                }
-            },
-            {
-                "name": {
-                    "namestr": "gunleft_02",
-                    "layer": 0,
-                    "isprefab": true,
-                    "prefabname": "Player.prefab"
-                },
-                "transform": {
-                    "position": {
-                        "x": -4.023453235626221,
-                        "y": 1.74858558177948
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    }
-                },
-                "sprite": {
-                    "imagefile": "gunleft_02.png",
-                    "layer": 6,
-                    "color": {
-                        "r": 1.0,
-                        "g": 1.0,
-                        "b": 1.0
-                    },
-                    "alpha": 1.0
-                }
-            }
-        ]
-    },
-    {
-        "name": {
-            "namestr": "Moving Camera",
-            "layer": 0,
-            "isprefab": false
-        },
-        "transform": {
-            "position": {
-                "x": -4.934085369110107,
-                "y": -0.4425366520881653
-            },
-            "rotation": 0.0,
-            "scale": {
-                "x": 4.079999923706055,
-                "y": 4.079999923706055
-            }
-        },
-        "rigidbody": {
-            "linearVelocity": {
-                "x": -2.0,
-                "y": 0.0
-            },
-            "linearAcceleration": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "rotation": 0.0,
-            "angularVelocity": 0.0,
-            "angularAcceleration": 0.0,
-            "mass": 1.0,
-            "inverseMass": 1.0,
-            "linearDamping": 0.9900000095367432,
-            "angularDamping": 0.9900000095367432,
-            "force": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "torque": 0.0,
-            "kinematic": false,
-            "static": false
-        },
-        "animation": {
-            "frameNumber": 0,
-            "framesPerSecond": 2,
-            "frameTimer": 0.0,
-            "isAnimating": true
-        },
-        "camera": {
-            "planes": {
-                "left": 0.0,
-                "right": 0.0,
-                "top": 0.0,
-                "bottom": 0.0
-            },
-            "aspectRatio": 104.80000305175781
         },
         "script": {
             "scripts": [

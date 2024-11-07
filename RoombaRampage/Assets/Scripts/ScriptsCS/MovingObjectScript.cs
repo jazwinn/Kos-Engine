@@ -10,15 +10,16 @@ namespace Namespace
 {
     public class MovingObjectScript : ScriptBase
     {
-        public uint EntityID;
+        private uint EntityID;
 
         
-        public float Speed { get; private set; } // Speed of movement
-
+        public float Speed; // Speed of movement
+        public bool Static;
 
         private bool movingRight = true; // Direction flag (moving right or left)
         private float timeElapsed = 0f;  // Time elapsed since the last direction change
-        private float changeDirectionInterval; // Interval (in seconds) for changing direction
+        public float changeDirectionInterval; // Interval (in seconds) for changing direction
+        private Vector2 velocity;
 
         public override void GetEntityID(uint id){
             EntityID = id;
@@ -28,10 +29,18 @@ namespace Namespace
         {
             Speed = 2;
             changeDirectionInterval = 3;
+            Static = false;
         }
 
         public override void Update()
         {
+
+            if(Static){
+                velocity.X = 0;
+                velocity.Y = 0;
+                 m_InternalSetVelocity(EntityID, in velocity);
+                 return;
+            } 
 
             //update time elapsed
             float deltatime;
@@ -54,7 +63,7 @@ namespace Namespace
             }
 
 
-            Vector2 velocity;
+            
             if(!m_InternalGetVelocity(EntityID, out velocity))
             {
                 // return cause velocity -> rigidbody is not present in entity
