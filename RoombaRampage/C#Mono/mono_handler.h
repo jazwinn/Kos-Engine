@@ -1,8 +1,8 @@
 /********************************************************************/
 /*!
 \file      mono_handler.h
-\author    
-\par       
+\author    Chiu Jun Jie, junjie.c , 2301524
+\par       junjie.c@digipen.edu
 \date      Nov 11, 2024
 \brief     This header file declares functions and structures for handling Mono runtime operations
 		   for scripting integration in the ECS framework.
@@ -34,7 +34,6 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include <mono/jit/jit.h>
 #include <mono/metadata/assembly.h>
 #include <mono/metadata/debug-helpers.h>
-
 
 #include "../ECS/ECS.h"
 #include <string>
@@ -155,7 +154,7 @@ namespace script {
 					   It handles exceptions that may arise during invocation.
 		*/
 		/******************************************************************/
-		void m_InvokeMethod(const std::string& scriptName, const std::string& methodName, MonoObject* objInstance, void** args, int paramCount);
+		void m_InvokeMethod(const std::string& scriptName, const std::string& methodName, MonoObject* objInstance, void** args);
 
 		/******************************************************************/
 		/*!
