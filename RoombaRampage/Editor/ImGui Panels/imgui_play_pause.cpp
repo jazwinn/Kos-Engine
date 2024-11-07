@@ -19,7 +19,89 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Asset Manager/AssetManager.h"
 #include "../Asset Manager/SceneManager.h"
 
+#include "Windows.h"
+#include <thread>
+
 namespace gui {
+
+    HWND hwnd;
+
+    LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+        switch (uMsg) {
+        case WM_DESTROY:
+            PostQuitMessage(0);
+            return 0;
+        case WM_PAINT: {
+            PAINTSTRUCT ps;
+            HDC hdc = BeginPaint(hwnd, &ps);
+            // Set text color and background mode
+            SetTextColor(hdc, RGB(0, 0, 0));
+            SetBkMode(hdc, TRANSPARENT);
+
+            // Draw text
+            LPCWSTR message = L"Loading, please wait...";
+            TextOut(hdc, 50, 50, message, lstrlenW(message));
+
+            EndPaint(hwnd, &ps);
+            return 0;
+        }
+        default:
+            return DefWindowProc(hwnd, uMsg, wParam, lParam);
+        }
+    }
+
+    HWND DrawLoading() {
+
+        // Register the window class
+        const char CLASS_NAME[] = "LoadingWindowClass";
+        LPCWSTR WINDOOW_TITLE = L"Starting Game";
+
+        WNDCLASS wc = {};
+        wc.lpfnWndProc = WindowProc;
+        wc.hInstance = GetModuleHandle(NULL);
+        wc.lpszClassName = (LPCWSTR)CLASS_NAME;
+        wc.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1); // Set background color
+
+        RegisterClass(&wc);
+
+        // Create the window
+        hwnd = CreateWindowEx(
+            0,                              // Optional window styles
+            (LPCWSTR)CLASS_NAME,                     // Window class
+            WINDOOW_TITLE,                   // Window title
+            WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU, // Window style (no buttons)
+            CW_USEDEFAULT, CW_USEDEFAULT,   // Position
+            300, 150,                       // Size
+            NULL,                           // Parent window
+            NULL,                           // Menu
+            GetModuleHandle(NULL),          // Instance handle
+            NULL                            // Additional application data
+        );
+
+        if (!hwnd) {
+            return hwnd;
+        }
+
+        // Show the window
+        ShowWindow(hwnd, SW_SHOW);
+        UpdateWindow(hwnd);
+
+
+        // Message loop
+        MSG msg = {};
+        while (GetMessage(&msg, NULL, 0, 0)) {
+            TranslateMessage(&msg);
+            DispatchMessage(&msg);
+        }
+
+        return hwnd;
+    }
+
+    void CloseLoadingWindow(HWND g_hwnd) {
+        if (g_hwnd) {
+            PostMessage(g_hwnd, WM_CLOSE, 0, 0);
+        }
+    }
 	
     void ImGuiHandler::m_DrawPlayPauseBar() {
         static bool pause = true;
@@ -35,10 +117,15 @@ namespace gui {
                     scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();
                     scenemanager->m_SaveAllActiveScenes();
 
-
+                    std::thread load(DrawLoading);
                     assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
                     assetmanager->m_scriptManager.m_HotReloadCompileAllCsharpFile();
                     assetmanager->m_scriptManager.m_ReloadAllDLL();
+                    CloseLoadingWindow(hwnd);
+                    load.join();
+                    
+
+
                 }
             }
             else if (!pause && ImGui::Button("Pause")) {
@@ -52,7 +139,7 @@ namespace gui {
 
             }
 
-            if (ImGui::Button("stop")) {
+            if (ecs->m_getState() != ecs::START && ImGui::Button("stop")) {
                 if (ecs->m_getState() != ecs::STOP) {
                     ecs->m_nextState = ecs::STOP;
                     pause = true;
