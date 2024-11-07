@@ -1,4 +1,4 @@
-
+#include "../Config/pch.h"
 #include "Hierachy.h"
 #include "../Asset Manager/SceneManager.h"
 

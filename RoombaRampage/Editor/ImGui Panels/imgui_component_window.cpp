@@ -14,7 +14,7 @@ Reproduction or disclosure of this file or its contents without the
 prior written consent of DigiPen Institute of Technology is prohibited.
 */
 /********************************************************************/
-
+#include "../Config/pch.h"
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
@@ -429,12 +429,12 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         //int count = 0;
                         for (auto it = layerMap.begin(); it != layerMap.end(); ++it) 
                         {
-                            ecs::SpriteComponent* sc = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(it->second));
+                            //ecs::SpriteComponent* scc = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(it->second));
                             ecs::NameComponent* namec = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(it->second));
-                            int spriteLayer = sc->m_layer;
+                            //int spriteLayer = scc->m_layer;
                             std::string s = std::to_string(it->second);
                             std::string selectable = namec->m_entityName + "_ID" + s; /*" Layer" + std::to_string(spriteLayer);*/
-                            if (it->second == m_clickedEntityId)
+                            if (it->second == static_cast<unsigned int>(m_clickedEntityId))
                             {
                                 ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 1.f, 0.f, 1.0f));
                                 selectable += "(Active)";

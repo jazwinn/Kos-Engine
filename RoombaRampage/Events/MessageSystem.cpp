@@ -1,3 +1,4 @@
+#include "../Config/pch.h"
 #include "MessageSystem.h"
 
 namespace messaging {

@@ -1,3 +1,4 @@
+#include "../Config/pch.h"
 #include "../Graphics/GraphicsPipe.h"
 namespace graphicpipe
 {
