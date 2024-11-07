@@ -56,9 +56,25 @@ namespace gui {
                     ecs->m_nextState = ecs::STOP;
                     pause = true;
 
+                    //stop all scene states
+                    std::unordered_map<std::string, bool> saveStateScene;
+
+                    for (const auto& scene : ecs->m_ECS_SceneMap) {
+                        saveStateScene[scene.first] = scene.second.m_isActive;
+                    }
+
                     //TODO load back scene
                     scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();
                     scenemanager->m_ReloadScene();
+                    m_clickedEntityId = -1;
+
+                    //set back all scene to its active/inactive state
+                    for (auto& scene : ecs->m_ECS_SceneMap) {
+                        const auto& saveState = saveStateScene.find(scene.first);
+                        if (saveState == saveStateScene.end())continue;
+
+                        scene.second.m_isActive = saveState->second;
+                    }
                 }
 
             }

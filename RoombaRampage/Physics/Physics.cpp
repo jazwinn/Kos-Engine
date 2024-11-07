@@ -29,7 +29,7 @@ namespace physicspipe {
 	std::vector<int> Physics::m_checker{};
 	
 
-	Circle::Circle(float radius, vector2::Vec2 shape_position, vector2::Vec2 shape_scale, vector2::Vec2 shape_velocity, int entity_ID)
+	Circle::Circle(float radius, vector2::Vec2 shape_position, vector2::Vec2 shape_scale, vector2::Vec2 shape_velocity, int entity_ID, int layer_ID)
 		: m_radius(radius)   // Initialize radius
 	{
 		m_position = shape_position;
@@ -37,10 +37,11 @@ namespace physicspipe {
 		m_velocity = shape_velocity;
 		m_ID = entity_ID;
 		type = EntityType::CIRCLE;  // Set type to Circle
+		m_layerID = layer_ID;
 	}
 
 
-	Rectangle::Rectangle(float rect_height, float rect_width, float rect_angle, vector2::Vec2 shape_position, vector2::Vec2 shape_scale, vector2::Vec2 shape_velocity, int entity_ID)
+	Rectangle::Rectangle(float rect_height, float rect_width, float rect_angle, vector2::Vec2 shape_position, vector2::Vec2 shape_scale, vector2::Vec2 shape_velocity, int entity_ID, int layer_ID)
 		: m_height(rect_height), m_width(rect_width)   // Initialize height and width
 	{
 		m_position = shape_position;
@@ -49,6 +50,7 @@ namespace physicspipe {
 		m_ID = entity_ID;
 		m_rotAngle = rect_angle;
 		type = EntityType::RECTANGLE;  // Set type to Rectangle
+		m_layerID = layer_ID;
 	}
 
 	bool Physics::m_static_CollisionCheck(const AABB aabb1, const AABB aabb2) {
@@ -68,13 +70,13 @@ namespace physicspipe {
 
 
 	void Physics::m_SendPhysicsData(float rect_height, float rect_width, float rect_angle, vector2::Vec2 position, vector2::Vec2 scale, vector2::Vec2 velocity, int ID, layer::LAYERS layerID) {
-		m_physicsEntities.push_back(std::make_shared<Rectangle>(rect_height, rect_width, rect_angle, position, scale, velocity, ID));
-		m_layerToEntities[layerID].push_back(std::make_shared<Rectangle>(rect_height, rect_width, rect_angle, position, scale, velocity, ID));
+		m_physicsEntities.push_back(std::make_shared<Rectangle>(rect_height, rect_width, rect_angle, position, scale, velocity, ID, static_cast<int>(layerID)));
+	//	m_layerToEntities[layerID].push_back(std::make_shared<Rectangle>(rect_height, rect_width, rect_angle, position, scale, velocity, ID));
 	}
 
 	void Physics::m_SendPhysicsData(float radius, vector2::Vec2 position, vector2::Vec2 scale, vector2::Vec2 velocity, int ID, layer::LAYERS layerID) {
-		m_physicsEntities.push_back(std::make_shared<Circle>(radius, position, scale, velocity, ID));
-		m_layerToEntities[layerID].push_back(std::make_shared<Circle>(radius, position, scale, velocity, ID));
+		m_physicsEntities.push_back(std::make_shared<Circle>(radius, position, scale, velocity, ID, static_cast<int>(layerID)));
+	//	m_layerToEntities[layerID].push_back(std::make_shared<Circle>(radius, position, scale, velocity, ID));
 	}
 
 	void Physics::m_CollisionCheck(float dt) {
@@ -173,34 +175,8 @@ namespace physicspipe {
 				dynamic_cast<Rectangle*>(m_physicsEntities[i].get())->m_boundingBox = boundingBox;
 				//std::cout << "ID " << m_physicsEntities[i].get()->m_ID << " BOUNDING BOX MIN X" << boundingBox.m_min.m_x << " MIN Y " << boundingBox.m_max.m_y << " MAX X " << boundingBox.m_max.m_x << " MAX Y" << boundingBox.m_max.m_y << std::endl;
 			}
-			else if (m_physicsEntities[i]->GetEntity() == EntityType::CIRCLE) {
-
-			}
-			else {
-
-			}
 		}
 
-		for (int i = 0; i < physicslayer::size; ++i) {
-			for (int j = 0; j < m_layerToEntities[static_cast<layer::LAYERS>(i)].size(); ++j) {
-				if ((m_layerToEntities[static_cast<layer::LAYERS>(i)].at(j)).get()->GetEntity() == EntityType::RECTANGLE) {
-					AABB boundingBox;
-					float width = dynamic_cast<Rectangle*>(m_layerToEntities[static_cast<layer::LAYERS>(i)].at(j).get())->m_width;
-					float height = dynamic_cast<Rectangle*>(m_layerToEntities[static_cast<layer::LAYERS>(i)].at(j).get())->m_height;
-					boundingBox.m_min = { m_layerToEntities[static_cast<layer::LAYERS>(i)].at(j).get()->m_position.m_x - (width * 0.5f), m_layerToEntities[static_cast<layer::LAYERS>(i)].at(j).get()->m_position.m_y - (height * 0.5f) };
-					boundingBox.m_max = { m_layerToEntities[static_cast<layer::LAYERS>(i)].at(j).get()->m_position.m_x + (width * 0.5f), m_layerToEntities[static_cast<layer::LAYERS>(i)].at(j).get()->m_position.m_y + (height * 0.5f) };
-					dynamic_cast<Rectangle*>(m_layerToEntities[static_cast<layer::LAYERS>(i)].at(j).get())->m_boundingBox = boundingBox;
-					//dynamic_cast<Rectangle*>(m_physicsEntities[i].get())->m_boundingBox = boundingBox;
-					//std::cout << "ID " << m_physicsEntities[i].get()->m_ID << " BOUNDING BOX MIN X" << boundingBox.m_min.m_x << " MIN Y " << boundingBox.m_max.m_y << " MAX X " << boundingBox.m_max.m_x << " MAX Y" << boundingBox.m_max.m_y << std::endl;
-				}
-				else if (m_physicsEntities[i]->GetEntity() == EntityType::CIRCLE) {
-
-				}
-				else {
-
-				}
-			}
-		}
 		//std::cout << "********************************************************************************" << std::endl;
 	}
 
@@ -325,65 +301,62 @@ namespace physicspipe {
 		m_CollisionCheckUpdate();
 	}
 
-	void Physics::m_CollisionCheckUpdate() {
+	void Physics::logCollision(int entityID) {
+		collidedEntities.set(entityID); // Mark entity as collided
+	}
 
+	bool Physics::hasCollided(int entityID) const {
+		return collidedEntities.test(entityID); // Check if it has collided already
+	}
+
+	float Circle::GetBoundingRadius() const {
+		return m_radius;
+	}
+	float Rectangle::GetBoundingRadius() const {
+		return 0.5f * std::sqrt(m_width * m_width + m_height * m_height);
+	}
+
+	bool Physics::withinBoundingRadius(const std::shared_ptr<PhysicsData>& entity1, const std::shared_ptr<PhysicsData>& entity2) {
+		float dx = entity1->m_position.m_x - entity2->m_position.m_x;
+		float dy = entity1->m_position.m_y - entity2->m_position.m_y;
+		float distanceSquared = dx * dx + dy * dy;
+		float combinedRadius = entity1->GetBoundingRadius() + entity2->GetBoundingRadius();
+		return distanceSquared <= combinedRadius * combinedRadius;
+	}
+
+	void Physics::addCollidedEntity(const std::shared_ptr<PhysicsData>& entity) {
+		if (std::find(m_collidedEntities.begin(), m_collidedEntities.end(), entity) == m_collidedEntities.end()) {
+			m_collidedEntities.push_back(entity);
+		}
+	}
+
+	void Physics::m_CollisionCheckUpdate() {
 		if (m_physicsEntities.empty()) return;
 
-		m_CalculateBoundingBox();
+		for (size_t i = 0; i < m_physicsEntities.size(); ++i) {
+			for (size_t j = i + 1; j < m_physicsEntities.size(); ++j) {
+				int layer1 = m_physicsEntities[i]->m_layerID;
+				int layer2 = m_physicsEntities[j]->m_layerID;
 
-		std::vector<std::vector<bool>> collisionMatrix = physicsLayer->getMatrix();
-		// Iterate through all pairs of layers using the map keys
-		for (auto it1 = m_layerToEntities.begin(); it1 != m_layerToEntities.end(); ++it1) {
-			for (auto it2 = it1; it2 != m_layerToEntities.end(); ++it2) {
-				// Get the layer enum values
-				layer::LAYERS layer1 = it1->first;
-				layer::LAYERS layer2 = it2->first;
-
-				// Get the indices for the collision matrix (convert enum to int if necessary)
-				int index1 = static_cast<int>(layer1);
-				int index2 = static_cast<int>(layer2);
-
-				// Check the collision matrix to see if we need to check for collisions between these layers
-				if (collisionMatrix[index1][index2]) {
-					// Get the entity vectors for both layers
-					const auto& entities1 = it1->second;
-					const auto& entities2 = it2->second;
-
-					// Perform collision checks between all entities in entities1 and entities2
-					for (const auto& entity1 : entities1) {
-						for (const auto& entity2 : entities2) {
-							// Ensure you don't check an entity with itself if layer1 == layer2
-							if (layer1 == layer2 && entity1 == entity2) continue;
-
-							// Perform the actual collision check between entity1 and entity2
-							if (m_CheckCollision(entity1, entity2)) {
-							//if (shouldCollide(entity1, entity2)) {
-								std::cout << "Collision detected between entity "
-									<< entity1->m_ID << " and entity "
-									<< entity2->m_ID << std::endl;
-
-								// Store or process the collided entities as needed.
-								if (std::find(m_collidedEntities.begin(), m_collidedEntities.end(), entity1) == m_collidedEntities.end()) {
-									m_collidedEntities.push_back(entity1);
-								}
-								if (std::find(m_collidedEntities.begin(), m_collidedEntities.end(), entity2) == m_collidedEntities.end()) {
-									m_collidedEntities.push_back(entity2);
-								}
-							}
-						}
+				// Check if these layers should collide
+				if (physicsLayer->getCollide(layer1, layer2) &&
+					withinBoundingRadius(m_physicsEntities[i], m_physicsEntities[j])) {
+					if (m_CheckCollision(m_physicsEntities[i], m_physicsEntities[j])) {
+						addCollidedEntity(m_physicsEntities[i]); 
+						addCollidedEntity(m_physicsEntities[j]);
 					}
 				}
 			}
 		}
 	}
+
 	bool Physics::m_CheckCollision(const std::shared_ptr<PhysicsData>& entity1, const std::shared_ptr<PhysicsData>& entity2){
 		// Check for collision based on the types of entities.
-		if (entity1->GetEntity() == EntityType::CIRCLE && entity2->GetEntity() == EntityType::CIRCLE) {
-			return m_CollisionIntersection_CircleCircle(*static_cast<Circle*>(entity1.get()), *static_cast<Circle*>(entity2.get()));
-		}
-		else if (entity1->GetEntity() == EntityType::RECTANGLE && entity2->GetEntity() == EntityType::RECTANGLE) {
+		if (entity1->GetEntity() == EntityType::RECTANGLE && entity2->GetEntity() == EntityType::RECTANGLE) {
 			return m_CollisionIntersection_RectRect_SAT(*static_cast<Rectangle*>(entity1.get()), *static_cast<Rectangle*>(entity2.get()));
-			//return m_CollisionIntersection_RectRect(*static_cast<Rectangle*>(entity1.get()), *static_cast<Rectangle*>(entity2.get()), dt);
+		}
+		else if (entity1->GetEntity() == EntityType::CIRCLE && entity2->GetEntity() == EntityType::CIRCLE) {
+			return m_CollisionIntersection_CircleCircle(*static_cast<Circle*>(entity1.get()), *static_cast<Circle*>(entity2.get()));
 		}
 		else if (entity1->GetEntity() == EntityType::CIRCLE && entity2->GetEntity() == EntityType::RECTANGLE) {
 			return m_CollisionIntersection_CircleRect(*static_cast<Circle*>(entity1.get()), *static_cast<Rectangle*>(entity2.get()));
