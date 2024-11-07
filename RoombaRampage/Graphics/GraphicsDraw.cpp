@@ -146,6 +146,8 @@ namespace graphicpipe
 				// Activate corresponding render state
 				glUseProgram(m_textShaderProgram);
 
+				glUniform1i(glGetUniformLocation(m_textShaderProgram, "layer"), textData.m_layer);
+
 				glUniformMatrix3fv(glGetUniformLocation(m_textShaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currViewMatrix));
 
 				glUniformMatrix3fv(glGetUniformLocation(m_textShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currOrthoMatrix));

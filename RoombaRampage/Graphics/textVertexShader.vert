@@ -30,6 +30,8 @@ uniform mat3 rotate;
 
 uniform vec2 point;
 
+uniform int layer;
+
 void main()
 {
     //gl_Position = vec4(vec2(projection * vec3(view * vec3(vertex.xy, 1.f))), -0.99, 1.0); 
@@ -41,7 +43,7 @@ void main()
     pos = vec3(pos.x + point.x, pos.y + point.y, pos.z);
     pos = view * pos;      // Apply view
     pos = projection * pos; // Apply projection
-    gl_Position = vec4(pos.xy, 0.99, 1.0);
+    gl_Position = vec4(pos.xy, -0.01 * layer, 1.0);
    // fragTexCoords = texCoords;
     texCoords = vertex.zw;
 }  
