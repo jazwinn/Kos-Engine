@@ -831,7 +831,8 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
             }
 
             //draw invinsible box
-            {
+            if (ImGui::GetContentRegionAvail().x > 0 && ImGui::GetContentRegionAvail().y > 0){
+                
                 ImGui::InvisibleButton("##Invinsible", ImVec2{ ImGui::GetContentRegionAvail().x,ImGui::GetContentRegionAvail().y });
 
                 if (ImGui::BeginDragDropTarget())
