@@ -1,4 +1,4 @@
-	/********************************************************************/
+/********************************************************************/
 /*!
 \file      json_handler.h
 \author    Chiu Jun Jie, junjie.c , 2301524
@@ -107,8 +107,5 @@ namespace Serialization {
 		static void m_JsonFileValidation(const std::string& filePath);
 	};
 }
-
-
-
 #endif JSONHANDLER_H
 
