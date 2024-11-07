@@ -144,6 +144,21 @@ namespace script {
 
 		/******************************************************************/
 		/*!
+			\fn        void m_InvokeMethod(const std::string& scriptName, const std::string& className, const std::string& methodName, void** args, int paramCount)
+			\brief     Invokes a previously loaded method within a specified C# script.
+			\param[in] scriptName The name of the C# script file containing the method.
+			\param[in] className  The name of the class within the script containing the method.
+			\param[in] methodName The name of the method to be invoked.
+			\param[in] args       An array of arguments to pass to the method.
+			\param[in] paramCount The number of parameters being passed to the method.
+			\details   This function runs a method in the Mono runtime, allowing C# functions to interact with and modify game entities.
+					   It handles exceptions that may arise during invocation.
+		*/
+		/******************************************************************/
+		void m_InvokeMethod(const std::string& scriptName, const std::string& methodName, MonoObject* objInstance, void** args, int paramCount);
+
+		/******************************************************************/
+		/*!
 			\fn        void m_HotReloadCompileAllCsharpFile()
 			\brief     Recompiles all C# files for hot reloading, allowing scripts to be updated dynamically.
 			\details   This function recompiles all C# script files, producing updated DLLs for each file,
