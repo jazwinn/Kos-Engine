@@ -1,4 +1,4 @@
-/********************************************************************/
+ï»¿/********************************************************************/
 /*!
 \file      mono_handler.h
 \author    Chiu Jun Jie, junjie.c , 2301524
@@ -19,8 +19,8 @@
 		   - m_HotReloadCompileAllCsharpFile: Recompiles all C# files for hot reloading.
 		   - m_ReloadAllDLL: Reloads all compiled DLLs for updated scripting.
 
-This file enables C++ and C# interoperation by using Mono’s runtime for handling and executing C# scripts
-within the game’s ECS framework. It supports functions for compiling scripts, creating object instances,
+This file enables C++ and C# interoperation by using Monoï¿½s runtime for handling and executing C# scripts
+within the gameï¿½s ECS framework. It supports functions for compiling scripts, creating object instances,
 hot reloading scripts, and invoking script methods, which allows dynamic behavior customization.
 
 Copyright (C) 2024 DigiPen Institute of Technology.
@@ -182,15 +182,11 @@ namespace script {
 		// key is filename, second is script mono data
 		std::unordered_map<std::string, ScriptMonoInfo> m_ScriptMap;
 
-
 	private:
 		//root domain
 		MonoDomain* m_rootDomain = nullptr;
 
 		MonoDomain* m_AppDomain = nullptr;
-
-
-		
 	};
 
 	/*--------------------------------------------------------------
@@ -206,7 +202,7 @@ namespace script {
 	2. **Adding C# Script to the Project**
 	   - Save your C# script and place it in the `Scripts/ScriptsCS` folder.
 	   - In the game editor, go to the entity you want to apply the script to, add a Script Component, and then select your script (e.g., `TemplateScript`).
-	   - Note: The script won’t run until you press the Play button.
+	   - Note: The script wonâ€™t run until you press the Play button.
 
 	3. **Running and Updating the Script**
 	   - After pressing Play, the system will compile your script. Once compiled successfully, the script will start running.

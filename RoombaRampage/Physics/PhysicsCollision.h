@@ -1,3 +1,0 @@
-#ifndef PHYSICSCOLLISION_H
-#define PHYSICSCOLLISION_H
-#endif
