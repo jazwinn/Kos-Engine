@@ -59,7 +59,7 @@ namespace gui {
 			}
 
 			static float padding = 20.f;
-			static float thumbnail = 64.f;
+			static float thumbnail = 80.f;
 			float cellsize = padding + thumbnail;
 
 			float panelwidth = ImGui::GetContentRegionAvail().x;

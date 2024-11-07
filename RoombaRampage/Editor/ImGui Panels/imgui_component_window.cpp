@@ -462,7 +462,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             std::string selectable = namec->m_entityName + "_ID" + entityID;
                             if (it->second.first == m_clickedEntityId)
                             {
-                                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 1.f, 0.f, 1.0f));
+                                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.3f, 0.8f, 0.f, 1.0f));
                                 selectable += "(Active)";
                                 ImGui::Selectable(selectable.c_str());
                                 ImGui::PopStyleColor();
@@ -651,7 +651,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             std::string selectable = namec->m_entityName + "_ID" + entityID;
                             if (it->second.first == m_clickedEntityId)
                             {
-                                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 1.f, 0.f, 1.0f));
+                                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.f, 0.3f, 0.8f, 1.0f));
                                 selectable += "(Active)";
                                 ImGui::Selectable(selectable.c_str());
                                 ImGui::PopStyleColor();
