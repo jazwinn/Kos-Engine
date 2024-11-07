@@ -3,19 +3,20 @@
 \file      json_handler.cpp
 \author    Chiu Jun Jie, junjie.c , 2301524
 \par       junjie.c@digipen.edu
-\date      Oct 02, 2024
+\date      Nov 11, 2024
 \brief     This file handles JSON-related operations for component serialization and deserialization in the ECS framework.
 			- m_LoadConfig: Loads configuration settings such as window dimensions and FPS cap from a config file.
 			- m_JsonFileValidation: Validates if the JSON file exists and creates a new one if it doesn't.
 			- m_LoadComponentsJson: Loads component data from a JSON file into the ECS.
 			- m_SaveComponentsJson: Saves component data from the ECS to a JSON file.
+			- m_SaveEntity: Serializes individual entity data to a JSON structure.
+			- m_LoadEntity: Deserializes individual entity data from a JSON structure.
 
 Copyright (C) 2024 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the
 prior written consent of DigiPen Institute of Technology is prohibited.
 */
 /********************************************************************/
-
 
 #include "../Config/pch.h"
 #include "../Dependencies/rapidjson/document.h"
@@ -450,13 +451,9 @@ namespace Serialization {
 			if (nc->m_isPrefab) {
 				if (name.HasMember("prefabname") && name["prefabname"].IsString()) {
 					nc->m_prefabName = name["prefabname"].GetString();
-
 				}
 			}
 		}
-
-
-		
 
 		// Load TransformComponent if it exists
 		if (entityData.HasMember("transform") && entityData["transform"].IsObject()) {

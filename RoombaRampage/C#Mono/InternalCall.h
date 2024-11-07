@@ -1,3 +1,25 @@
+/********************************************************************/
+/*!
+\file      InternalCall.h
+\author    Chiu Jun Jie, junjie.c , 2301524
+\par       junjie.c@digipen.edu
+\date      Nov 711, 2024
+\brief     This header file defines the `InternalCall` class, which contains
+		   functions that allow C# scripts to interact with ECS components.
+		   - m_InternalGetTransformComponent: Retrieves transform data of an entity.
+		   - m_InternalSetTransformComponent: Sets transform data of an entity.
+		   - m_InternalGetVelocity: Retrieves the velocity of an entity.
+		   - m_InternalSetVelocity: Sets the velocity of an entity.
+		   - m_InternalCallIsKeyPressed: Checks if a key is currently pressed.
+		   - m_InternalCallGetDeltaTime: Retrieves the fixed delta time.
+		   - m_RegisterInternalCalls: Registers internal calls for Mono scripting.
+
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/********************************************************************/
+
+
 #pragma once
 
 #include "mono_handler.h"
@@ -6,22 +28,83 @@
 namespace script {
 
 	class InternalCall {
-	
+		/******************************************************************/
+		/*!
+			\fn        bool InternalCall::m_InternalGetTransformComponent(ecs::EntityID entity, vector2::Vec2* trans, vector2::Vec2* scale, float* rotate)
+			\brief     Retrieves the transform component of a specified entity.
+			\param[in] entity The ID of the entity to retrieve the transform from.
+			\param[out] trans  Pointer to the entity's position vector.
+			\param[out] scale  Pointer to the entity's scale vector.
+			\param[out] rotate Pointer to the entity's rotation value.
+			\return    True if the transform component is found and retrieved; otherwise, false.
+		*/
+		/******************************************************************/
 		static bool m_InternalGetTransformComponent(ecs::EntityID entity, vector2::Vec2* trans, vector2::Vec2* scale, float* rotate);
 
+		/******************************************************************/
+		/*!
+			\fn        bool InternalCall::m_InternalSetTransformComponent(ecs::EntityID entity, vector2::Vec2* trans, vector2::Vec2* scale, float* rotate)
+			\brief     Sets the transform component of a specified entity.
+			\param[in] entity The ID of the entity to set the transform for.
+			\param[in] trans  Pointer to the position vector to set.
+			\param[in] scale  Pointer to the scale vector to set.
+			\param[in] rotate Pointer to the rotation value to set.
+			\return    True if the transform component is found and updated; otherwise, false.
+		*/
+		/******************************************************************/
 		static bool m_InternalSetTransformComponent(ecs::EntityID entity, vector2::Vec2* trans, vector2::Vec2* scale, float* rotate);
 
+		/******************************************************************/
+		/*!
+			\fn        bool InternalCall::m_InternalGetVelocity(ecs::EntityID entity, vector2::Vec2* vec)
+			\brief     Retrieves the velocity of a specified entity.
+			\param[in] entity The ID of the entity to retrieve the velocity from.
+			\param[out] vec   Pointer to the entity's velocity vector.
+			\return    True if the velocity component is found and retrieved; otherwise, false.
+		*/
+		/******************************************************************/
 		static bool m_InternalGetVelocity(ecs::EntityID entity, vector2::Vec2* vec);
-
+		/******************************************************************/
+		/*!
+			\fn        bool InternalCall::m_InternalSetVelocity(ecs::EntityID entity, vector2::Vec2* vec)
+			\brief     Sets the velocity of a specified entity.
+			\param[in] entity The ID of the entity to set the velocity for.
+			\param[in] vec    Pointer to the velocity vector to set.
+			\return    True if the velocity component is found and updated; otherwise, false.
+		*/
+		/******************************************************************/
 		static bool m_InternalSetVelocity(ecs::EntityID entity, vector2::Vec2* vec);
 
+		/******************************************************************/
+		/*!
+			\fn        bool InternalCall::m_InternalCallIsKeyPressed(keyCode key)
+			\brief     Checks if a specific key is currently pressed.
+			\param[in] key The key code to check.
+			\return    True if the specified key is pressed; otherwise, false.
+		*/
+		/******************************************************************/
 		static bool m_InternalCallIsKeyPressed(keyCode key);
 
+		/******************************************************************/
+		/*!
+			\fn        bool InternalCall::m_InternalCallGetDeltaTime(float* deltatime)
+			\brief     Retrieves the fixed delta time.
+			\param[out] deltatime Pointer to store the retrieved delta time value.
+			\return    Always returns false for consistency in call handling.
+		*/
+		/******************************************************************/
 		static bool m_InternalCallGetDeltaTime(float* deltatime);
 
 	public:
-		static void m_RegisterInternalCalls();
 
+		/******************************************************************/
+		/*!
+			\fn        void InternalCall::m_RegisterInternalCalls()
+			\brief     Registers internal call functions for Mono scripting,
+					   allowing C# scripts to access C++ ECS functions.
+		*/
+		/******************************************************************/
+		static void m_RegisterInternalCalls();
 	};
 
 }

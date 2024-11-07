@@ -1,3 +1,34 @@
+﻿/********************************************************************/
+/*!
+\file      mono_handler.cpp
+\author    Chiu Jun Jie, junjie.c , 2301524
+\par       junjie.c@digipen.edu
+\date      Nov 11, 2024
+\brief     This header file implements functions and structures for handling Mono runtime operations
+           for scripting integration in the ECS framework.
+           - ScriptMonoInfo: Struct to store script metadata, including the script path, filename, image, and assembly.
+           - m_LoadSecondaryDomain: Loads an additional domain for isolated script compilation.
+           - m_UnloadSecondaryDomain: Unloads the secondary domain.
+           - m_UnloadDomain: Unloads a specified domain by file path.
+           - m_CompileCSharpFile: Compiles a C# script into a DLL file.
+           - m_AddScripts: Adds and loads assemblies for multiple scripts.
+           - m_LoadMethod: Loads a specified method from a C# script, preparing it for invocation.
+           - m_CreateObjectInstance: Creates a Mono object instance from a specified script and class.
+           - m_InvokeMethod: Invokes a previously loaded method within a specified C# script.
+           - m_Cleanup: Cleans up and unloads the Mono runtime, releasing resources.
+           - m_HotReloadCompileAllCsharpFile: Recompiles all C# files for hot reloading.
+           - m_ReloadAllDLL: Reloads all compiled DLLs for updated scripting.
+
+This file enables C++ and C# interoperation by using Mono�s runtime for handling and executing C# scripts
+within the game�s ECS framework. It supports functions for compiling scripts, creating object instances,
+hot reloading scripts, and invoking script methods, which allows dynamic behavior customization.
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/********************************************************************/
+
 #include "mono_handler.h"
 #include "mono/metadata/mono-gc.h"
 #include "mono/metadata/threads.h"
@@ -42,13 +73,10 @@ namespace script {
         m_AppDomain = nullptr;
 
         //clear entire script map
-
         m_ScriptMap.clear();
-
     }
 
     ScriptHandler::~ScriptHandler() {
-
 
         if (m_rootDomain) {
             mono_jit_cleanup(m_rootDomain);
@@ -72,14 +100,11 @@ namespace script {
             scriptData.m_image = nullptr;
         }
 
-
         // Remove from map
         m_ScriptMap.erase(scriptEntry);
     }
 
-    void ScriptHandler::m_AddScripts(const std::filesystem::path& scriptpath) {
-
-            
+    void ScriptHandler::m_AddScripts(const std::filesystem::path& scriptpath) {   
         //check if dll is alread in 
         std::string filename = scriptpath.filename().stem().string();
         if (m_ScriptMap.find(filename) != m_ScriptMap.end()) {
@@ -108,10 +133,7 @@ namespace script {
         m_ScriptMap[filename].m_image = image;
         image = nullptr;
 
-        
-
         LOGGING_DEBUG("Successfully Added Script");
-
     }
 
     bool ScriptHandler::m_LoadMethod(const std::string& scriptName, const std::string& className, const std::string& methodName, int paramCount) {
@@ -148,8 +170,6 @@ namespace script {
 
     MonoObject* ScriptHandler::m_CreateObjectInstance(const std::string& scriptName, const std::string& className)
     {
-
-
         MonoObject* inst = mono_object_new(m_AppDomain, mono_class_from_name(m_ScriptMap.find(scriptName)->second.m_image, "Namespace", className.c_str()));
 
         if (inst == nullptr) {
@@ -190,8 +210,6 @@ namespace script {
 
     void ScriptHandler::m_ReloadAllDLL()
     {
-
-
         //reload all .dll file
         for (auto& directoryPath : std::filesystem::directory_iterator("Assets/Scripts/ScriptsDLL")) {
             std::string filepath = directoryPath.path().string();
@@ -207,10 +225,7 @@ namespace script {
                 m_LoadMethod(filename, filename, "Update", 0);
                 m_LoadMethod(filename, filename, "GetEntityID", 1);
             }
-
-
         }
-
     }
 
     void ScriptHandler::m_CompileCSharpFile(const std::filesystem::path& filePath)
@@ -225,7 +240,6 @@ namespace script {
         std::string test = filePath.filename().stem().string();
 
         std::filesystem::path outputDLL = projectBasePath / "Assets" / "Scripts" / "ScriptsDLL" / (filePath.filename().stem().string() + ".dll");
-
 
         std::string command = compilepath + " /target:library \"/out:" + outputDLL.string() + "\" \"/reference:" + referenceDLL.string() + "\" \"" + filePath.string() + "\"";
         //std::string command = compilepath + " /target:library /out:" + outputDLL.string() + " C:\\Users\\ngjaz\\OneDrive\\Documents\\roombarampage\\GreyGooseWorkspace\\RRR\\RoombaRampage\\ScriptLibrary\\GameScript\\ScriptCore\\ScriptBase.cs "  + filePath.string();
@@ -260,23 +274,17 @@ namespace script {
             std::string filepath = directoryPath.path().string();
             std::replace(filepath.begin(), filepath.end(), '\\', '/');
 
-
-
             m_UnloadSecondaryDomain();
-
 
             if (directoryPath.path().filename().extension().string() == ".cs") {
 
                 m_CompileCSharpFile(filepath);
-;
             }
 
             // did u call unload secodnary domain before this?
             if (m_AppDomain == nullptr) {
                 m_LoadSecondaryDomain();
             }
-
         }
     }
-
 }
