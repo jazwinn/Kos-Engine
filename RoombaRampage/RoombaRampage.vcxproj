@@ -347,7 +347,6 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClCompile Include="Math\Vector2.cpp" />
     <ClCompile Include="Math\Vector3.cpp" />
     <ClCompile Include="Physics\Physics.cpp" />
-    <ClCompile Include="Physics\PhysicsCollision.cpp" />
     <ClCompile Include="Physics\PhysicsLayer.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -437,7 +436,6 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="Math\Vector2.h" />
     <ClInclude Include="Math\Vector3.h" />
     <ClInclude Include="Physics\Physics.h" />
-    <ClInclude Include="Physics\PhysicsCollision.h" />
     <ClInclude Include="Physics\PhysicsLayer.h" />
   </ItemGroup>
   <ItemGroup>
@@ -453,6 +451,16 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <None Include="Graphics\gridVertexShader.vert" />
     <None Include="Graphics\textFragmentShader.frag" />
     <None Include="Graphics\textVertexShader.vert" />
+    <None Include="ScriptLibrary\AIScript\AIStateComponent.cs" />
+    <None Include="ScriptLibrary\AIScript\AIStateSystem.cs" />
+    <None Include="ScriptLibrary\AIScript\AStarPathfinding.cs" />
+    <None Include="ScriptLibrary\AIScript\EnemyComponent.cs" />
+    <None Include="ScriptLibrary\AIScript\EntitySetup.cs" />
+    <None Include="ScriptLibrary\AIScript\Grid.cs" />
+    <None Include="ScriptLibrary\AIScript\HealthComponent.cs" />
+    <None Include="ScriptLibrary\AIScript\Node.cs" />
+    <None Include="ScriptLibrary\AIScript\PlayerDetectionComponent.cs" />
+    <None Include="ScriptLibrary\AIScript\PositionComponent.cs" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="Assets\Audio\cleaver01.wav" />
