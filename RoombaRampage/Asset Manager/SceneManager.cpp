@@ -1,3 +1,30 @@
+/********************************************************************/
+/*!
+\file      SceneManager.cpp
+\author    Ng Jaz winn, jazwinn.ng , 2301502
+\par       jazwinn.ng@digipen.edu
+\date      Nov 11, 2024
+\brief     This file contains the definitions for the `SceneManager` class,
+           which handles the creation, loading, saving, clearing, and management
+           of scenes within the ECS framework.
+           - m_CreateNewScene: Creates a new JSON file for a scene.
+           - m_LoadScene: Loads entities from a JSON file into the ECS system.
+           - m_ReloadScene: Reloads all active scenes.
+           - m_ClearAllScene: Clears all non-prefab scenes.
+           - m_ClearScene: Removes all entities from a specified scene.
+           - m_SaveScene: Saves the current state of a specified scene to a JSON file.
+           - m_SaveAllActiveScenes: Saves all active scenes.
+           - m_SwapScenes: Moves an entity from one scene to another.
+           - GetSceneByEntityID: Finds the scene that contains a specified entity.
+
+This file supports scene management by providing functions for creating, saving,
+loading, and clearing scenes within a game, allowing dynamic control of game states.
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/********************************************************************/
 
 #include "../Config/pch.h"
 #include "SceneManager.h"

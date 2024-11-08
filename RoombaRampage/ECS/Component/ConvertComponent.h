@@ -1,3 +1,24 @@
+/********************************************************************/
+/*!
+\file      ConvertComponent.h
+\author    Ng Jaz winn, jazwinn.ng , 2301502
+\par       jazwinn.ng@digipen.edu
+\date      Nov 11, 2024
+\brief     This header file defines the `ConvertComponent` class, which provides
+		   methods for converting generic pointers to specific ECS component types.
+		   - Convert: Converts a `void*` pointer to a specific component type.
+		   - DispatchConvert: Dispatches component conversion based on an ID and returns a variant.
+
+This file enables safe and efficient casting of pointers to ECS components
+based on type IDs, facilitating component manipulation in a type-safe manner.
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/********************************************************************/
+
+
 #pragma once
 
 #include "ComponentPool.h"
