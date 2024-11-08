@@ -24,7 +24,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 namespace gui {
 
-    HWND hwnd;
+    HWND hwnds;
 
     LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         switch (uMsg) {
@@ -65,7 +65,7 @@ namespace gui {
         RegisterClass(&wc);
 
         // Create the window
-        hwnd = CreateWindowEx(
+        hwnds = CreateWindowEx(
             0,                              // Optional window styles
             (LPCWSTR)CLASS_NAME,                     // Window class
             WINDOOW_TITLE,                   // Window title
@@ -78,13 +78,13 @@ namespace gui {
             NULL                            // Additional application data
         );
 
-        if (!hwnd) {
-            return hwnd;
+        if (!hwnds) {
+            return hwnds;
         }
 
         // Show the window
-        ShowWindow(hwnd, SW_SHOW);
-        UpdateWindow(hwnd);
+        ShowWindow(hwnds, SW_SHOW);
+        UpdateWindow(hwnds);
 
 
         // Message loop
@@ -94,7 +94,7 @@ namespace gui {
             DispatchMessage(&msg);
         }
 
-        return hwnd;
+        return hwnds;
     }
 
     void CloseLoadingWindow(HWND g_hwnd) {
@@ -121,7 +121,7 @@ namespace gui {
                     assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
                     assetmanager->m_scriptManager.m_HotReloadCompileAllCsharpFile();
                     assetmanager->m_scriptManager.m_ReloadAllDLL();
-                    CloseLoadingWindow(hwnd);
+                    CloseLoadingWindow(hwnds);
                     load.join();
                     
 
