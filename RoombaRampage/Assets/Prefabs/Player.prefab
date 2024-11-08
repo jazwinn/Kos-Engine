@@ -9,8 +9,8 @@
         },
         "transform": {
             "position": {
-                "x": 1.729142427444458,
-                "y": -0.5857632160186768
+                "x": 4.909467697143555,
+                "y": -0.6736876964569092
             },
             "rotation": 0.0,
             "scale": {
@@ -75,16 +75,14 @@
         "children": [
             {
                 "name": {
-                    "namestr": "gunright_02",
+                    "namestr": "gunleft_02",
                     "layer": 0,
-                    "isprefab": true,
-                    "prefabname": "Player.prefab",
-                    "issync": true
+                    "isprefab": false
                 },
                 "transform": {
                     "position": {
-                        "x": 0.9023077487945557,
-                        "y": 1.6605082750320435
+                        "x": -1.0022130012512207,
+                        "y": 1.7569403648376465
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -93,8 +91,8 @@
                     }
                 },
                 "sprite": {
-                    "imagefile": "gunright_02.png",
-                    "layer": 5,
+                    "imagefile": "gunleft_02.png",
+                    "layer": 0,
                     "color": {
                         "r": 1.0,
                         "g": 1.0,
@@ -105,16 +103,14 @@
             },
             {
                 "name": {
-                    "namestr": "gunleft_02",
+                    "namestr": "gunright_02",
                     "layer": 0,
-                    "isprefab": true,
-                    "prefabname": "Player.prefab",
-                    "issync": true
+                    "isprefab": false
                 },
                 "transform": {
                     "position": {
-                        "x": -9.709610939025879,
-                        "y": 1.8355019092559814
+                        "x": 0.9420905113220215,
+                        "y": 1.6602915525436401
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -123,8 +119,8 @@
                     }
                 },
                 "sprite": {
-                    "imagefile": "gunleft_02.png",
-                    "layer": 6,
+                    "imagefile": "gunright_02.png",
+                    "layer": 1,
                     "color": {
                         "r": 1.0,
                         "g": 1.0,

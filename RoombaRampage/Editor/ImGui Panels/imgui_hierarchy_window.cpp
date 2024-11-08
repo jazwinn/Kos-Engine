@@ -50,7 +50,7 @@ namespace gui {
         //    ImGui::EndMenuBar();
         //}
 
-       /* std::string ObjectCountStr = "Oject Count: " + std::to_string(ecs->m_ECS_EntityMap.size());
+      /* std::string ObjectCountStr = "Oject Count: " + std::to_string(ecs->m_ECS_EntityMap.size());
         ImGui::Text(ObjectCountStr.c_str());*/
 
         if (ImGui::Button("+ Add GameObject"))
@@ -347,6 +347,8 @@ namespace gui {
         if (ImGui::IsItemClicked())
         {
             m_clickedEntityId = id;
+            //std::cout << "EntityID: " << id << std::endl;
+            
         }
        
 

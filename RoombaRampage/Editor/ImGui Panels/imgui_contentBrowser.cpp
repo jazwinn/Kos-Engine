@@ -4,6 +4,7 @@
 #include <filesystem>
 #include <string>
 #include "../Asset Manager/AssetManager.h"
+#include "../Asset Manager/SceneManager.h"
 #include "../Inputs/Input.h"
 #include <imgui_internal.h>
 
@@ -18,6 +19,7 @@ namespace gui {
 		ImGui::Begin("Content Browser");
 		
 		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+		scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();
 		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
 
 		//if (currentDirectory != assetDirectory && ImGui::Button("Back")) {
@@ -171,9 +173,30 @@ namespace gui {
 							m_clickedEntityId = -1;
 						}
 					}
+					else if (directoryPath.path().filename().extension().string() == ".json") {
+						std::string script;
+						textorimage(directoryString, script);
+
+						if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
+							std::string command = "code \"" + directoryPath.path().string() + "\"";
+
+							scenemanager->m_ClearAllScene();
+							scenemanager->m_LoadScene(directoryPath.path());
+							if (!m_prefabSceneMode) {
+								m_activeScene = directoryPath.path().filename().string();
+							}
+							else {
+								ecs::ECS::m_GetInstance()->m_ECS_SceneMap.find(directoryPath.path().filename().string())->second.m_isActive = false;
+								m_savedSceneState[directoryPath.path().filename().string()] = true;
+							}
+
+							m_clickedEntityId = -1;
+
+						}
+					}
 					else if (ImGui::Button(std::string(directoryPath.path().filename().extension().string() + "##" + directoryPath.path().filename().string()).c_str(), {thumbnail ,thumbnail})) {
 
-
+						
 					}
 
 					if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None)) {
