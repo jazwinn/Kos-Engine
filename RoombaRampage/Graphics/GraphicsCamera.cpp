@@ -1,3 +1,38 @@
+/******************************************************************/
+/*!
+\file      GraphicsCamera.cpp
+\author    Sean Tiu
+\par       s.tiu@digipen.edu
+\date      8th Nov, 2024
+\brief     This file implements the GraphicsCamera class, which manages camera transformations
+		   and viewport settings for rendering in a graphics pipeline.
+
+\details   The GraphicsCamera class is a singleton that provides static methods and members
+		   for managing the current view, orthographic projection, and aspect ratio.
+		   It includes functionality to adjust the camera's rotation, scale, and translation,
+		   and supports switching between multiple camera matrices. This file contains the
+		   implementation of camera transformation calculations, matrix multiplications,
+		   and the management of the current camera state.
+
+		   Key functions:
+		   - `m_funcGetInstance()`: Returns the single instance of the `GraphicsCamera` class.
+		   - `setCurrCamera()`: Sets the current camera matrix.
+		   - `calculateAspectRatio()`: Calculates the aspect ratio based on the window size.
+		   - `calculateCurrView()`: Calculates the current view matrix by inverting the camera matrix.
+		   - `multiplyOrthoMatrix()`: Applies an orthographic projection matrix and updates the pipeline matrices.
+		   - `multiplyViewMatrix()`: Applies the current view matrix to the model matrices in the graphics pipeline.
+
+		   Dependencies:
+		   - GraphicsPipe.h for pipeline matrix management.
+		   - Helper.h for access to window dimensions.
+		   - GLM for matrix transformations and mathematical operations.
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/******************************************************************/
+
 #include "../Config/pch.h"
 #include "../Graphics/GraphicsPipe.h"
 #include "../Application/Helper.h"

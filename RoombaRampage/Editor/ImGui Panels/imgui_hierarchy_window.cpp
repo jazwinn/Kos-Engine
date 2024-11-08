@@ -298,11 +298,11 @@ namespace gui {
                     std::filesystem::path* filename = static_cast<std::filesystem::path*>(payload->Data);
 
 
-                    if (filename->filename().extension().string() == ".json") {
+                    if (!m_prefabSceneMode && filename->filename().extension().string() == ".json") {
                         scenemanager->m_LoadScene(*filename);
                     }
 
-                    if (filename->filename().extension().string() == ".prefab") {
+                    if (!m_prefabSceneMode && filename->filename().extension().string() == ".prefab") {
 
                        prefab::Prefab::m_CreatePrefab(filename->filename().string(), m_activeScene);
 

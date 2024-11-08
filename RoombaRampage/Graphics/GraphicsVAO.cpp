@@ -1,3 +1,26 @@
+/******************************************************************/
+/*!
+\file      GraphicsPipeVaoSetup.cpp
+\author    Sean Tiu
+\par       s.tiu@digipen.edu
+\date      8th Nov, 2024
+\brief     This file contains functions for setting up Vertex Array Objects (VAOs)
+		   and Buffers for various shapes (e.g., squares, circles, grid) used in
+		   the graphics pipeline for rendering.
+
+\details   The file includes functions for creating and setting up VAOs, VBOs, and
+		   EBOs for rendering different shapes, including squares, circles, grids,
+		   and text. Each shape is stored with its respective vertex positions,
+		   texture coordinates, and colors. The grid and circle functions also
+		   generate vertices dynamically based on specified parameters (e.g., grid size, circle radius).
+
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/******************************************************************/
+
 #include "../Config/pch.h"
 #include "../Graphics/GraphicsPipe.h"
 namespace graphicpipe

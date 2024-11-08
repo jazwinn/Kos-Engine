@@ -256,59 +256,70 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
         };
 
         static std::map<int, std::pair<ecs::EntityID, bool>> layerMap; // Bool represents whether it's a sprite or a text
-        layerMap.clear();
+        static bool layerChange{ true };
+        static size_t entitySize = ecs->m_ECS_EntityMap.size();
+        static std::string sceneChange = m_activeScene;
 
-        for (const auto& scene : ecs->m_ECS_SceneMap)
+        if (layerChange || entitySize != ecs->m_ECS_EntityMap.size() || sceneChange != m_activeScene)
         {
-            if (scene.second.m_isActive)
+            layerChange = false;
+            entitySize = ecs->m_ECS_EntityMap.size();
+            sceneChange = m_activeScene;
+            layerMap.clear();
+
+            for (const auto& scene : ecs->m_ECS_SceneMap)
             {
-                for (const auto& id : scene.second.m_sceneIDs)
+                if (scene.second.m_isActive)
                 {
-                    if (ecs->m_ECS_EntityMap[id].test(ecs::TYPESPRITECOMPONENT))
+                    for (const auto& id : scene.second.m_sceneIDs)
                     {
-                        ecs::SpriteComponent* sprite = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(id));
-                        const int maxLayer = 99;
-                        int layer = sprite->m_layer;
-                        if (layer >= maxLayer)
+                        if (ecs->m_ECS_EntityMap[id].test(ecs::TYPESPRITECOMPONENT))
                         {
-                            layer = maxLayer;
-                            while (layerMap.find(--layer) != layerMap.end());
-                        }
-                        else if (layerMap.find(sprite->m_layer) != layerMap.end())
-                        {
-                            while (layerMap.find(++layer) != layerMap.end())
+                            ecs::SpriteComponent* sprite = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(id));
+                            const int maxLayer = 999;
+                            int layer = sprite->m_layer;
+                            if (layer >= maxLayer)
                             {
-
+                                layer = maxLayer;
+                                while (layerMap.find(--layer) != layerMap.end());
                             }
-                        }
-                        sprite->m_layer = layer;
-                        layerMap[layer] = { id , true };
-                    }
-                    if (ecs->m_ECS_EntityMap[id].test(ecs::TYPETEXTCOMPONENT))
-                    {
-                        ecs::TextComponent* text = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(id));
-                        const int maxLayer = 99;
-                        int layer = text->m_fontLayer;
-                        if (layer >= maxLayer)
-                        {
-                            layer = maxLayer;
-                            while (layerMap.find(--layer) != layerMap.end());
-                        }
-                        else if (layerMap.find(text->m_fontLayer) != layerMap.end())
-                        {
-                            while (layerMap.find(++layer) != layerMap.end())
+                            else if (layerMap.find(sprite->m_layer) != layerMap.end())
                             {
+                                while (layerMap.find(++layer) != layerMap.end())
+                                {
 
+                                }
                             }
+                            sprite->m_layer = layer;
+                            layerMap[layer] = { id , true };
                         }
-                        text->m_fontLayer = layer;
-                        layerMap[layer] = { id , false };
+                        if (ecs->m_ECS_EntityMap[id].test(ecs::TYPETEXTCOMPONENT))
+                        {
+                            ecs::TextComponent* text = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(id));
+                            const int maxLayer = 99;
+                            int layer = text->m_fontLayer;
+                            if (layer >= maxLayer)
+                            {
+                                layer = maxLayer;
+                                while (layerMap.find(--layer) != layerMap.end());
+                            }
+                            else if (layerMap.find(text->m_fontLayer) != layerMap.end())
+                            {
+                                while (layerMap.find(++layer) != layerMap.end())
+                                {
+
+                                }
+                            }
+                            text->m_fontLayer = layer;
+                            layerMap[layer] = { id , false };
+                        }
                     }
                 }
+
+
             }
-
-
         }
+        
 
 
         ecs::compSignature EntitySignature = ecs->m_ECS_EntityMap[entityID];
@@ -514,8 +525,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                                         text1->m_fontLayer = sprite1->m_layer;
                                         sprite1->m_layer = layer;
                                     }
-                                   
-                                   
+                                    layerChange = true;
                                     ImGui::ResetMouseDragDelta();
                                 }
                             }
@@ -703,8 +713,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                                         text1->m_fontLayer = sprite1->m_layer;
                                         sprite1->m_layer = layer;
                                     }
-
-
+                                    layerChange = true;
                                     ImGui::ResetMouseDragDelta();
                                 }
                             }

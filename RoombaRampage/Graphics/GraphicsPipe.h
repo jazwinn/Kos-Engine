@@ -3,21 +3,22 @@
 \file      GraphicsPipe.h
 \author    Sean Tiu
 \par       s.tiu@digipen.edu
-\date      2nd Oct, 2024
-\brief     The GraphicsPipe class provides a high-level interface for setting up and managing OpenGL rendering,
+\date      8th Nov, 2024
+\brief     The GraphicsPipe class provides a high-level interface for managing and executing OpenGL rendering,
            including shaders, framebuffers, VAOs, and drawing operations. It supports various graphical
-           data types, including meshes, textures, debug drawing, and text rendering. It also includes
-           functionality for animation and frame management.
+           data types, such as meshes, textures, debug drawing, and text rendering, and includes functionality
+           for animation and frame management.
 
-\details    This class is designed to handle multiple rendering operations, such as instanced drawing,
-            managing different textures, and setting up framebuffers for offscreen rendering. It also includes
-            functions for managing shader programs and rendering text using FreeType.
- 
-             Dependencies:
-            -GLEW for OpenGL extension loading.
-            -GLFW for window and context management.
-            -GLM for matrix operations and transformations.
-            -AssetManager for loading assets such as fonts and images.
+\details   This class is designed to handle multiple rendering operations, including instanced drawing,
+           managing multiple textures, and setting up framebuffers for offscreen rendering. It also includes
+           functions for managing shader programs and rendering text using FreeType. Debug and text data structures
+           are implemented to organize different rendering contexts.
+
+           Dependencies:
+           - GLEW for OpenGL extension loading.
+           - GLFW for window and context management.
+           - GLM for matrix operations and transformations.
+           - AssetManager for loading assets, such as fonts and images.
 
 Copyright (C) 2024 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the
@@ -25,26 +26,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 */
 /******************************************************************/
 
-/**
-*  @autho
- * @file GraphicsPipe.h
- * @brief Defines the GraphicsPipe class and related data structures for handling graphics rendering using OpenGL.
- *
- * The GraphicsPipe class provides a high-level interface for setting up and managing OpenGL rendering,
- * including shaders, framebuffers, VAOs, and drawing operations. It supports various graphical
- * data types, including meshes, textures, debug drawing, and text rendering. It also includes
- * functionality for animation and frame management.
- *
- * @details This class is designed to handle multiple rendering operations, such as instanced drawing,
- * managing different textures, and setting up framebuffers for offscreen rendering. It also includes
- * functions for managing shader programs and rendering text using FreeType.
- *
- * Dependencies:
- * - GLEW for OpenGL extension loading.
- * - GLFW for window and context management.
- * - GLM for matrix operations and transformations.
- * - AssetManager for loading assets such as fonts and images.
- */
+
 
 #ifndef GRAPHPIPE_H
 #define GRAPHPIPE_H

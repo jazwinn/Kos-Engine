@@ -1,3 +1,36 @@
+/******************************************************************/
+/*!
+\file      EditorCamera.cpp
+\author    Sean Tiu
+\par       s.tiu@digipen.edu
+\date      8th November, 2024
+\brief     This file contains the implementation of the EditorCamera
+           class, which provides camera control for the editor view
+           in a graphical application.
+
+           The EditorCamera is responsible for setting up and managing
+           the orthographic view, including the camera's zoom, drag
+           sensitivity, and aspect ratio. It provides methods to:
+           - Calculate the camera transformation matrix.
+           - Calculate the view matrix based on the camera position.
+           - Set up an orthographic projection matrix.
+
+           These calculations enable smooth zooming and dragging within
+           the editor, ensuring the camera view can be adjusted
+           interactively by the user.
+
+           Key features of this file:
+           - Configurable camera zoom and drag sensitivity.
+           - Camera matrix, view matrix, and orthographic projection.
+           - Static members to control aspect ratio and window size.
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/******************************************************************/
+
+
 #include "../Config/pch.h"
 #include "../Editor/EditorCamera.h"
 #include "../Graphics/GraphicsCamera.h"
@@ -7,7 +40,7 @@ float EditorCamera::m_aspectRatio{};
 int EditorCamera::m_windowWidth{};
 int EditorCamera::m_windowHeight{};
 bool EditorCamera::m_editorMode = true;
-EditorCamera::Camera EditorCamera::m_editorCamera{ 1.f, 1.f ,glm::vec2(0.f,0.f), glm::vec2(5.f,5.f), 0 };
+EditorCamera::Camera EditorCamera::m_editorCamera{ 1.f, 1.f ,glm::vec2(0.f,0.f), glm::vec2(5.f,5.f), 0 }; // Zoom Set To 5.f on Init
 glm::mat3 EditorCamera::m_editorCameraMatrix{1.f};
 glm::mat3 EditorCamera::m_editorViewMatrix{ 1.f };
 glm::mat3 EditorCamera::m_editorOrthoMatrix{ 1.f };
