@@ -1,4 +1,22 @@
+/********************************************************************/
+/*!
+\file      ScriptVariable.cpp
+\author    Ng Jaz winn, jazwinn.ng , 2301502
+\par       jazwinn.ng@digipen.edu
+\date      Nov 11, 2024
+\brief     This header file defines the `ScriptEditor` class, which provides
+           functions for displaying and modifying script components in an ECS entity.
+           - DisplayScriptComponents: Displays and allows editing of public fields
+             in a script component attached to an entity.
 
+This file enables the dynamic editing of script component fields within the ECS,
+allowing for real-time updates of properties such as integers, floats, and booleans.
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/********************************************************************/
 #include "../Config/pch.h"
 #include "ScriptVariable.h"
 

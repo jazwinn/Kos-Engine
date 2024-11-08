@@ -1,3 +1,23 @@
+/********************************************************************/
+/*!
+\file      Prefab.cpp
+\author    Ng Jaz winn, jazwinn.ng , 2301502
+\par       jazwinn.ng@digipen.edu
+\brief     This file contains the implementation of the `ImGuiHandler` class's
+           function for rendering and manipulating transformation gizmos in the editor.
+           - m_DrawGizmo: Renders a transformation gizmo for an entity, allowing translation,
+             rotation, and scaling operations within the editor view.
+
+This file leverages ImGuizmo to enable real-time manipulation of entity transforms
+in an ECS-based game engine editor, supporting operations in both world and local
+space with snapping options.
+
+Reproduction or disclosure of this file or its contents without the prior written
+consent of DigiPen Institute of Technology is prohibited.
+*/
+/********************************************************************/
+
+
 #include "../Config/pch.h"
 #include "imgui_handler.h"
 #include "imgui_impl_opengl3.h"

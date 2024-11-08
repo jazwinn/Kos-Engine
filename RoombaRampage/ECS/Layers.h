@@ -1,9 +1,9 @@
-/********************************************************************/
+/******************************************************************/
 /*!
 \file      Layers.h
-\author    Ng Jaz winn, jazwinn.ng , 2301502
-\par       jazwinn.ng@digipen.edu
-\date      Nov 11, 2024
+\author    Clarence Boey
+\par       c.boey@digipen.edu
+\date	   8 Nov, 2024
 \brief     This header file declares the `LayerStack` class and associated
 		   enums for handling layer management in the ECS framework.
 		   - LayerStack: Manages named layers that contain entities.
@@ -18,7 +18,7 @@ Copyright (C) 2024 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the
 prior written consent of DigiPen Institute of Technology is prohibited.
 */
-/********************************************************************/
+/******************************************************************/
 
 #ifndef LAYERS_H
 #define LAYERS_H
@@ -64,7 +64,7 @@ namespace layer{
 			\brief     Renames a specified layer.
 			\param[in] layer   The enum value of the layer to rename.
 			\param[in] newName The new name for the layer.
-			\details   Updates the specified layer’s name, if the layer exists.
+			\details   Updates the specified layerï¿½s name, if the layer exists.
 		*/
 		/******************************************************************/
 		void m_ChangeLayerName(LAYERS layer, std::string newName);

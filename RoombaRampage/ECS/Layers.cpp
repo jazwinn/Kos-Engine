@@ -1,25 +1,3 @@
-/********************************************************************/
-/*!
-\file      Layers.cpp
-\author    Ng Jaz winn, jazwinn.ng , 2301502
-\par       jazwinn.ng@digipen.edu
-\date      Nov 11, 2024
-\brief     This file contains the definitions for the `LayerStack` class,
-		   which manages the creation, naming, and organization of layers in the ECS.
-		   - LayerStack constructor: Initializes the default layers.
-		   - m_ChangeLayerName: Renames an existing layer.
-		   - m_SwapEntityLayer: Moves an entity to a different layer.
-		   - m_RetrieveEntityID: Retrieves entity IDs associated with a layer.
-
-This file provides tools for organizing entities into layers, which can be
-renamed, populated, and accessed as part of the ECS framework.
-
-Copyright (C) 2024 DigiPen Institute of Technology.
-Reproduction or disclosure of this file or its contents without the
-prior written consent of DigiPen Institute of Technology is prohibited.
-*/
-/********************************************************************/
-
 #include "../Config/pch.h"
 #include "Layers.h"
 #include "../Debugging/Logging.h"
