@@ -56,6 +56,7 @@ namespace scenes {
 
         if (fp == nullptr) {
             LOGGING_ERROR("Fail to create new Scene");
+            return false; 
         }
 
         // start with []

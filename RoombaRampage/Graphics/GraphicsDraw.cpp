@@ -175,7 +175,7 @@ namespace graphicpipe
 				// Iterate through all characters
 				assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
 				float origin{textData.m_x};
-				float height = GraphicsCamera::m_windowHeight;
+				float height = static_cast<float>(GraphicsCamera::m_windowHeight);
 				for (const char& c : textData.m_text) 
 				{
 					text::CharacterData ch = assetmanager->m_fontManager.m_fonts[textData.m_fileName][c];
