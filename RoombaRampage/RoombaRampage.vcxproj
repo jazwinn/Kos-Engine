@@ -120,7 +120,7 @@ xcopy /y /d "$(SolutionDir)FMOD_API\studio\lib\x64\*.dll" "$(OutDir)"</Command>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);GLEW_STATIC;CRT_SECURE_NO_WARNINGS;CRT_SECURE_NO_WARNINGS;CRT_SECURE_NO_WARNINGSCRT_SECURE_NO_WARNINGSCRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\rapidjson;$(SolutionDir)Dependencies\FMOD_API\core\inc;$(SolutionDir)Dependencies\FMOD_API\studio\inc;$(SolutionDir)Dependencies\imgui;$(SolutionDir)include;$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\glm\include;$(SolutionDir)Dependencies\stb_image\include;$(SolutionDir)Dependencies\GLEW\include\GL;$(SolutionDir)Dependencies\Freetype_Font\include;$(SolutionDir)Json Texts;$(SolutionDir)Dependencies\mono\include;$(SolutionDir)Dependencies\mono\include\mono-2.0</AdditionalIncludeDirectories>
-      <DisableSpecificWarnings>26945; 4005; 4245</DisableSpecificWarnings>
+      <DisableSpecificWarnings>26945; 4005; 4245;</DisableSpecificWarnings>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <UseStandardPreprocessor>true</UseStandardPreprocessor>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -247,7 +247,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClCompile Include="Editor\ImGui Panels\imgui_menubar.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_performance_window.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_play_pause.cpp" />
-    <ClCompile Include="Editor\ImGui Panels\imgui_render_window.cpp" />
+    <ClCompile Include="Editor\ImGui Panels\imgui_editor_window.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_test_panel.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui__input_window.cpp" />
     <ClCompile Include="Application\main.cpp" />

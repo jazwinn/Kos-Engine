@@ -1,3 +1,28 @@
+/********************************************************************/
+/*!
+\file      Reflection.h
+\author    Ng Jaz winn, jazwinn.ng , 2301502
+\par       jazwinn.ng@digipen.edu
+\date      Nov 11, 2024
+\brief     This header file provides macros for compile-time reflection, enabling
+           operations on class members without explicit enumeration.
+           - REFLECTABLE: Macro to enable reflection on specified class members.
+           - CLASSTOSTRING: Macro to retrieve the class name as a string.
+           - FOR_EACH: Macro to apply another macro to each argument in a list.
+           - COUNT_ARGS: Counts the number of arguments provided to a macro.
+           - ApplyFunction: Template function that applies a provided function to
+             each member of a class using reflection.
+
+This file allows users to perform compile-time reflection in C++, enabling
+dynamic access to class members for serialization, inspection, or function
+application without needing runtime type information.
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/********************************************************************/
+
 #ifndef REFLECT_H
 #define REFLECT_H
 
@@ -28,7 +53,7 @@
 
 /************************************************************************/
 
-//Credit to TAs for assiting
+//Credit to TAs for assisting
  
 // Count the number of arguments (this helps with reflection of members)
 #define COUNT_ARGS_IMPL(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, count, ...) count

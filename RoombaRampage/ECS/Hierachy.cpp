@@ -1,3 +1,26 @@
+/********************************************************************/
+/*!
+\file      Hierachy.cpp
+\author    Ng Jaz winn, jazwinn.ng , 2301502
+\par       jazwinn.ng@digipen.edu
+\date      Nov 11, 2024
+\brief     This file contains the definitions for the `Hierachy` class, which manages
+		   hierarchical relationships between entities in the ECS framework.
+		   - m_SetParent: Defines a parent-child relationship between entities.
+		   - m_RemoveParent: Detaches an entity from its parent.
+		   - m_GetParent: Returns the parent of a specified entity.
+		   - m_GetChild: Provides a list of children for a specified parent entity.
+		   - m_UpdateChildScene: Updates the scene for all child entities recursively.
+
+This file supports efficient parent-child relationship management, enabling scene
+organization and transformations of entities within the ECS system.
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/********************************************************************/
+
 #include "../Config/pch.h"
 #include "Hierachy.h"
 #include "../Asset Manager/SceneManager.h"

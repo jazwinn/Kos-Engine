@@ -1,9 +1,9 @@
 /******************************************************************/
 /*!
-\file      Helper.cpp
+\file      Prefab.cpp
 \author    Ng Jaz winn, jazwinn.ng , 2301502
 \par       jazwinn.ng@digipen.edu
-\date      Oct 7, 2024
+\date      Nov 11, 2024
 \brief     This file contains the definations for the prefab class.
            It reads a json file and stores all its data. When the prefab
            is called in the game. It creates an entiy and copy
@@ -183,6 +183,10 @@ namespace prefab {
 
         ecs::EntityID scenePrefabID = ecs->m_ECS_SceneMap.find(prefab)->second.m_prefabID;
 
+
+        //retrieve prefabs children id
+        const std::vector<ecs::EntityID>& childrenid = ecs->m_ECS_SceneMap.find(prefab)->second.m_sceneIDs;
+
         //the most scuff way //MAYBE prefab component?
         for (auto& id : ecs->m_ECS_EntityMap) {
             ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id.first));
@@ -191,9 +195,14 @@ namespace prefab {
                 //if sync is turn off, skip update
                 if (nc->m_syncPrefab == false) continue;
 
+
                 //skip all prefabs children
-                //skip if have parent and parent is a prefab
-                if (tc->m_haveParent && static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(tc->m_parentID))->m_isPrefab) continue;
+                if (std::find(childrenid.begin(), childrenid.end(), id.first) != childrenid.end()) continue;
+                if (tc->m_haveParent) {
+                    auto* parentnc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(tc->m_parentID));
+                    
+                    if (parentnc->m_isPrefab && parentnc->m_prefabName == prefab)continue;
+                }
 
                 m_UpdatePrefab(scenePrefabID, id.first);
 
@@ -206,6 +215,7 @@ namespace prefab {
 
     void Prefab::m_UpdatePrefab(ecs::EntityID sceneprefabID, ecs::EntityID entityid, bool isPrefabChild)
     {
+        if (sceneprefabID == entityid) return;
 
         //update all of entity with prefab
         ecs::ECS* ecs = ecs::ECS::m_GetInstance();
@@ -262,10 +272,11 @@ namespace prefab {
         //}
 
         //checks if entity has child call recursion
-        if (ecs::Hierachy::m_GetChild(sceneprefabID).has_value()) {
+        const auto& scenePrefabChild = ecs::Hierachy::m_GetChild(sceneprefabID);
+        if (scenePrefabChild.has_value()) {
             //clear child id of vector for new entity
 
-            std::vector<ecs::EntityID> childID = ecs::Hierachy::m_GetChild(sceneprefabID).value();
+            std::vector<ecs::EntityID> childID = scenePrefabChild.value();
             
             ecs::EntityID entityChild;
 
@@ -293,6 +304,7 @@ namespace prefab {
                 //check if entityid, have child, if no create child
                 if (!entitych.has_value()  || entitych.value().size() < (count +1)) {
                     //create entity and assign to entityid
+                    std::cout << "entity Create, parent:" << entityid << std::endl;
                     
                     entityChild = ecs->m_CreateEntity(scenes::SceneManager::GetSceneByEntityID(entityid).value());
                     ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(entityChild));
@@ -308,7 +320,7 @@ namespace prefab {
                     entityChild = entitych.value()[count];
                 }
 
-
+                ecs::TransformComponent* tc = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(entityChild));
 
                 m_UpdatePrefab(prefabchild, entityChild, true);
 

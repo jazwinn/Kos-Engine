@@ -1,3 +1,27 @@
+/******************************************************************/
+/*!
+\file      GraphicsCamera.h
+\author    Sean Tiu
+\par       s.tiu@digipen.edu
+\date      8th Nov, 2024
+\brief     This file defines the GraphicsCamera class, which manages camera transformations
+           and viewport settings for rendering in a graphics pipeline.
+
+\details   The GraphicsCamera class is a singleton that provides static methods and members
+           for managing the current view, orthographic projection, and aspect ratio.
+           It includes functionality to adjust the camera's rotation, scale, and translation,
+           and supports switching between multiple camera matrices.
+
+           Dependencies:
+           - GLM for matrix transformations and mathematical operations.
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/******************************************************************/
+
+
 #ifndef GRAPHCAM_H
 #define GRAPHCAM_H
 

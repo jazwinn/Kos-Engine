@@ -1,8 +1,8 @@
 /******************************************************************/
 /*!
 \file      RenderDebugSystem.cpp
-\author    Ng Jaz winn, jazwinn.ng , 2301502
-\par       jazwinn.ng@digipen.edu
+\author    Sean
+\par       
 \date      Oct 02, 2024
 \brief     This file contains the defination of the RenderDebugSystem
 		   class. It passes the debauging data into the graphics

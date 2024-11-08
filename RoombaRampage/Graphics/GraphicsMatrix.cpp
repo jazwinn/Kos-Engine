@@ -1,3 +1,25 @@
+/******************************************************************/
+/*!
+\file      GraphicsMatrix.cpp
+\author    Sean Tiu
+\par       s.tiu@digipen.edu
+\date      8th Nov, 2024
+\brief     This file implements the `GraphicsPipe` class functions for handling model transformations
+		   and managing debug box and circle data within a graphics pipeline.
+
+\details   The `GraphicsPipe` class includes functionality for calculating the transformation matrices
+		   for models, handling texture data, and performing collision checks for debug geometries.
+		   This file contains the implementation of matrix calculations that transform models from
+		   local space to world space, as well as processing debug data (boxes and circles) for visual
+		   debugging. The class supports managing model data and generating transformation matrices
+		   for rendering models and debugging.
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/******************************************************************/
+
 #include "../Config/pch.h"
 #include "../Graphics/GraphicsPipe.h"
 #include "../Graphics/GraphicsCamera.h"

@@ -1,9 +1,52 @@
+/******************************************************************/
+/*!
+\file      EditorCamera.h
+\author    Sean Tiu
+\par       s.tiu@digipen.edu
+\date      8th November, 2024
+\brief     This file defines the EditorCamera class, which manages
+           the editor-specific camera properties and transformations.
+           It includes functions for calculating the camera matrix,
+           view matrix, and orthographic projection matrix for
+           rendering scenes in an editor environment.
+
+           The EditorCamera is designed specifically for use within
+           the level editor, providing:
+           - Configurable zoom and drag sensitivities.
+           - Static transformations that apply to all instances of
+             the editor.
+           - Orthographic projections optimized for a consistent
+             editor camera view.
+
+           Key features:
+           - Camera struct for position and orientation settings.
+           - Methods to calculate matrices used for rendering.
+           - Adjustable parameters for drag and zoom sensitivity.
+
+           The class is intended for managing the viewport within
+           a level editor, allowing for smooth camera controls.
+
+           NOTE: This header file is meant only for editor camera
+           configuration, and not for in-game camera use.
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/******************************************************************/
+
 #ifndef m_editorOrthoMatrixEDITORCAM_H
 #define EDITORCAM_H
 
 #include <glm.hpp>
 #include <vector>
 
+
+    /**
+     * @class EditorCamera
+     * @brief Manages the level editor's camera, providing static camera
+     *        transformations and view configuration for an editor scene.
+     */
     class EditorCamera
     {
     public:
@@ -14,7 +57,8 @@
         static bool m_editorMode;
         /**
          * @struct Camera
-         * @brief Represents the camera's position and orientation.
+         * @brief Represents the editor camera's configuration, specifically
+         *        its position, zoom level, and orientation in the editor.
          */
         struct Camera                  ///< ONLY MEANT FOR LEVEL EDITOR CAMERA
         {
@@ -32,9 +76,17 @@
         static float m_editorCameraDragSensitivity;  ///< Editor Camera Drag Sensitivity
         static float m_editorCameraZoomSensitivity;  ///< Editor Camera Zoom Sensitivity
 
+        /**
+        * @brief Calculates the transformation matrix for the editor camera.
+        */
         static void calculateLevelEditorCamera();
+        /**
+         * @brief Calculates the view matrix for the editor camera.
+         */
         static void calculateLevelEditorView();
-        static void calculateLevelEditorNDC();
+        /**
+         * @brief Calculates the orthographic projection matrix for the editor camera.
+         */
         static void calculateLevelEditorOrtho();
 
 
