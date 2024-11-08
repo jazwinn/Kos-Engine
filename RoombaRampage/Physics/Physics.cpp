@@ -333,6 +333,7 @@ namespace physicspipe {
 
 	void Physics::m_CollisionCheckUpdate() {
 		if (m_physicsEntities.empty()) return;
+		m_CalculateBoundingBox();
 
 		for (size_t i = 0; i < m_physicsEntities.size(); ++i) {
 			for (size_t j = i + 1; j < m_physicsEntities.size(); ++j) {
@@ -340,8 +341,7 @@ namespace physicspipe {
 				int layer2 = m_physicsEntities[j]->m_layerID;
 
 				// Check if these layers should collide
-				if (physicsLayer->getCollide(layer1, layer2) &&
-					m_withinBoundingRadius(m_physicsEntities[i], m_physicsEntities[j])) {
+				if (physicsLayer->getCollide(layer1, layer2) && m_withinBoundingRadius(m_physicsEntities[i], m_physicsEntities[j])) {
 					if (m_CheckCollision(m_physicsEntities[i], m_physicsEntities[j])) {
 						m_addCollidedEntity(m_physicsEntities[i]); 
 						m_addCollidedEntity(m_physicsEntities[j]);

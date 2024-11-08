@@ -1,3 +1,16 @@
+/******************************************************************/
+/*!
+\file      imgui_layer_panel.cpp
+\author    Rayner Tan, raynerweichen.tan , 2301449
+\par       raynerweichen.tan@digipen.edu
+\date      8 Nov 2024
+\brief     This file helps with the collision layer matrix panel
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/******************************************************************/
 #include "../Config/pch.h"
 #include "imgui.h"
 #include "imgui_impl_glfw.h"

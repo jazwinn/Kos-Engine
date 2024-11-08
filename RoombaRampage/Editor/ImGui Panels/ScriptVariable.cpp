@@ -1,4 +1,22 @@
+/********************************************************************/
+/*!
+\file      ScriptVariable.cpp
+\author    Ng Jaz winn, jazwinn.ng , 2301502
+\par       jazwinn.ng@digipen.edu
+\date      Nov 11, 2024
+\brief     This header file defines the `ScriptEditor` class, which provides
+           functions for displaying and modifying script components in an ECS entity.
+           - DisplayScriptComponents: Displays and allows editing of public fields
+             in a script component attached to an entity.
 
+This file enables the dynamic editing of script component fields within the ECS,
+allowing for real-time updates of properties such as integers, floats, and booleans.
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/********************************************************************/
 #include "../Config/pch.h"
 #include "ScriptVariable.h"
 
@@ -37,38 +55,38 @@ namespace scripteditor {
                 MonoType* fieldType = mono_field_get_type(field);
                 int fieldTypeCode = mono_type_get_type(fieldType);
 
-                MonoClassField* field = mono_class_get_field_from_name(scriptclass, fieldName);
+                MonoClassField* fields = mono_class_get_field_from_name(scriptclass, fieldName);
 
                 //std::cout << "Found public field: " << fieldName << " (Type Code: " << fieldTypeCode << ")\n";
 
                 // Change the value based on type (example for int and float)
                 if (fieldTypeCode == MONO_TYPE_I4) { // Type code for int
                     int integer;
-                    mono_field_get_value(sc->m_scriptInstances.find(script)->second, field, &integer);
+                    mono_field_get_value(sc->m_scriptInstances.find(script)->second, fields, &integer);
 
                     ImGui::AlignTextToFramePadding();
-                    if (ImGui::DragInt(fieldName, &integer, 0.1f, -1000.0f, 1000.f, "%.2f")) {
-                        mono_field_set_value(sc->m_scriptInstances.find(script)->second, field, &integer);
+                    if (ImGui::DragInt(fieldName, &integer, 0.1f, static_cast<int>( - 1000.0f), static_cast<int>(1000.0f), "%.2f")) {
+                        mono_field_set_value(sc->m_scriptInstances.find(script)->second, fields, &integer);
                     }
                 }
                 else if (fieldTypeCode == MONO_TYPE_R4) { // Type code for float
                     float _float;
-                    mono_field_get_value(sc->m_scriptInstances.find(script)->second, field, &_float);
+                    mono_field_get_value(sc->m_scriptInstances.find(script)->second, fields, &_float);
 
                     ImGui::AlignTextToFramePadding();
                     if (ImGui::DragFloat(fieldName, &_float, 0.1f, -1000.0f, 1000.f, "%.2f")) {
-                        mono_field_set_value(sc->m_scriptInstances.find(script)->second, field, &_float);
+                        mono_field_set_value(sc->m_scriptInstances.find(script)->second, fields, &_float);
                     }
 
 
                 }
                 else if (fieldTypeCode == MONO_TYPE_BOOLEAN) { // Type code for float
                     bool _bool;
-                    mono_field_get_value(sc->m_scriptInstances.find(script)->second, field, &_bool);
+                    mono_field_get_value(sc->m_scriptInstances.find(script)->second, fields, &_bool);
 
                     ImGui::AlignTextToFramePadding();
                     if (ImGui::Checkbox(fieldName, &_bool)) {
-                        mono_field_set_value(sc->m_scriptInstances.find(script)->second, field, &_bool);
+                        mono_field_set_value(sc->m_scriptInstances.find(script)->second, fields, &_bool);
                     }
 
 

@@ -1,10 +1,11 @@
 /******************************************************************/
 /*!
 \file      ButtonSystem.h
-\author	
+\author	   Sean Tiu
+\co-author  Rayner Tan
 \par
 \date      Oct 02, 2024
-\brief     This file contains class for the DebugDrawingSystem
+\brief     This file contains class for the Button system
 
 
 Copyright (C) 2024 DigiPen Institute of Technology.
