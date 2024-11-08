@@ -221,6 +221,7 @@ namespace gui {
 
 
 	void ImGuiHandler::m_OnButtonPress(const events::BaseEvent<events::ButtonEvents>& givenEvent) {
+		/***************************************************TO REMOVE, FOR TESTING ONLY*****************************************************************/
 		if (givenEvent.m_ToType<events::ButtonPressEvent>().m_GetButton() == 1) {
 			assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
 			assetManager->m_audioManager.m_soundMap.find("mindstorm.wav")->second->m_PlaySound();

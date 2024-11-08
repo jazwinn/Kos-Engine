@@ -128,6 +128,8 @@ void gui::ImGuiHandler::m_DrawMainMenuBar() {
                         scenemanager->m_ClearAllScene();
 
                         scenemanager->m_LoadScene(scene);
+                        m_activeScene = std::string(str1) + ".json";
+                        m_clickedEntityId = -1;
                     }
                     else {
                         LOGGING_ERROR("Fail to create scene");
