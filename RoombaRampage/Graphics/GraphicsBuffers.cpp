@@ -1,3 +1,30 @@
+/******************************************************************/
+/*!
+\file      GraphicsBuffers.cpp
+\author    Sean Tiu
+\par       s.tiu@digipen.edu
+\date      8th Nov, 2024
+\brief     This file contains the implementation of functions in the GraphicsPipe class
+		   for setting up OpenGL buffers and framebuffers, including operations
+		   for rendering and managing textures, depth buffers, and framebuffers.
+
+\details   The GraphicsPipe functions provided here include setup operations for instanced
+		   drawing with buffer binding for model matrices, layers, texture order, strip counts,
+		   and color data. Additionally, this file contains framebuffer setup functions
+		   for general rendering as well as a game preview framebuffer.
+
+		   Dependencies:
+		   - GLEW for OpenGL extension loading.
+		   - GLFW for window and context management.
+		   - GLM for matrix operations and transformations.
+		   - Helper class for accessing window size information.
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/******************************************************************/
+
 #include "../Config/pch.h"
 #include "../Graphics/GraphicsPipe.h"
 #include "../Application/Helper.h"

@@ -1,3 +1,26 @@
+/******************************************************************/
+/*!
+\file      GraphicsDraw.cpp
+\author    Sean Tiu
+\par       s.tiu@digipen.edu
+\date      8th Nov, 2024
+\brief     Implementation of rendering functions for the GraphicsPipe class,
+		   which manages various draw calls and prepares OpenGL resources
+		   for rendering complex scenes, including 2D shapes, text, and debug views.
+
+\details   This file includes functions for:
+		   - Rendering primary and debug elements in separate framebuffers.
+		   - Binding and updating buffer data, including matrices, texture orders,
+			 and colors, for instanced drawing.
+		   - Text rendering, including character positioning, scaling, and color.
+		   - Utility functions for setting polygon modes and drawing grid overlays.
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/******************************************************************/
+
 #include "../Config/pch.h"
 #include "../Graphics/GraphicsPipe.h"
 #include "../Graphics/GraphicsCamera.h"

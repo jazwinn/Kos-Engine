@@ -247,7 +247,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClCompile Include="Editor\ImGui Panels\imgui_menubar.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_performance_window.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_play_pause.cpp" />
-    <ClCompile Include="Editor\ImGui Panels\imgui_render_window.cpp" />
+    <ClCompile Include="Editor\ImGui Panels\imgui_editor_window.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_test_panel.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui__input_window.cpp" />
     <ClCompile Include="Application\main.cpp" />
