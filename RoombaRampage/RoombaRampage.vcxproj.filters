@@ -16,7 +16,7 @@
     <ClCompile Include="Editor\ImGui Panels\imgui_logs_window.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_menubar.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_performance_window.cpp" />
-    <ClCompile Include="Editor\ImGui Panels\imgui_render_window.cpp" />
+    <ClCompile Include="Editor\ImGui Panels\imgui_editor_window.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui__input_window.cpp" />
     <ClCompile Include="Application\main.cpp" />
     <ClCompile Include="Application\Window.cpp" />

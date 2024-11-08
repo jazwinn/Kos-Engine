@@ -16,14 +16,7 @@ namespace gui {
 
     void ImGuiHandler::m_DrawGizmo(float renderPosX, float renderPosY, float renderWidth, float renderHeight)
     {
-       // graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
         ecs::ECS* ecs = ecs::ECS::m_GetInstance();
-        //Helper::Helpers* help = Helper::Helpers::GetInstance();
-        //float aspectRatio = help->m_windowWidth / help->m_windowHeight;
-
-        
-
-        //refer to guizmo example for snapping
         ImGuizmo::SetOrthographic(true);
         ImGuizmo::SetDrawlist();
 

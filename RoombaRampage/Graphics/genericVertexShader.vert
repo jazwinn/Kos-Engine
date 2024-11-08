@@ -44,7 +44,7 @@ void main()
 	float frameOffset = frameWidth * aStripCount.y;
 
 	gl_Position = vec4(vec2(modelMatrix * vec3(vertexPosition, 1.f)),
-					   -0.01 * aLayer, 1.0);
+					   -0.0001 * aLayer, 1.0);
 
 	texCoords = vec2(vertexTexCoords.x * frameWidth + frameOffset, vertexTexCoords.y);
 	

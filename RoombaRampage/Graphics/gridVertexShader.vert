@@ -1,3 +1,15 @@
+/******************************************************************/
+/*!
+\file      gridVertexShader.vert
+\author    Sean Tiu
+\par       s.tiu@digipen.edu
+\date      8th Nov, 2024
+\brief     This vertex shader is used for rendering grid lines, 
+           determining the grid line color and transforming the vertex position 
+           based on view and projection matrices.
+*/
+/******************************************************************/
+
 R"( #version 460 core
 
     layout (location = 0) in vec3 aPos;

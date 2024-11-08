@@ -1,3 +1,24 @@
+/******************************************************************/
+/*!
+\file      GraphicsPipeShader.cpp
+\author    Sean Tiu
+\par       s.tiu@digipen.edu
+\date      8th Nov, 2024
+\brief     This file contains functions related to compiling, setting up, and deleting shaders
+		   used in the graphics pipeline for rendering operations.
+
+\details   The file provides utility functions for compiling and setting up vertex and fragment
+		   shaders, as well as managing shader program creation for rendering tasks. The shaders
+		   are compiled from source code, linked into a program, and then validated. In case of
+		   compilation or linking errors, detailed error messages are printed. Additionally, functions
+		   for cleaning up shader programs after use are provided.
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/******************************************************************/
+
 #include "../Config/pch.h"
 #include "../Graphics/GraphicsPipe.h"
 

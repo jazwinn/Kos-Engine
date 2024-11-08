@@ -3,14 +3,17 @@
 \file      GraphicsPipe.cpp
 \author    Sean Tiu
 \par       s.tiu@digipen.edu
-\date      2nd Oct, 2024
-\brief     This file contains the function definitions for the GraphicsPipe
-		   class. The functions range from initializing the various buffers needed,
-		   setting up Vertex Atttribute Objects, updating the model matrices for each model,
-		   substituting new data into the buffers, preparing and linking shaders and draw
-		   functions for a frame buffer object, generic draw objects and text objects.
+\date      8th Nov, 2024
+\brief     This file implements the `GraphicsPipe` class functions for setting up and managing
+		   the rendering pipeline, including initializing shaders, buffers, and rendering models
+		   and debug geometries.
 
-		   It also holds the shader files used inside this file.
+\details   The `GraphicsPipe` class provides functionality for initializing rendering settings,
+		   setting up VAOs (Vertex Array Objects), and compiling shader programs for various
+		   tasks like drawing models, debug shapes, and text. It also handles the transformation
+		   of models from world space to normalized device coordinates (NDC) and facilitates the
+		   offscreen rendering through framebuffers. Additionally, the class manages the current
+		   camera state and updates transformations as per the game or editor mode.
 
 Copyright (C) 2024 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the
