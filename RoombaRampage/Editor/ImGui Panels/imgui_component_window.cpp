@@ -262,7 +262,6 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
         if (layerChange || entitySize != ecs->m_ECS_EntityMap.size() || sceneChange != m_activeScene)
         {
-            std::cout << "Layer Changed" << std::endl;
             layerChange = false;
             entitySize = ecs->m_ECS_EntityMap.size();
             sceneChange = m_activeScene;
