@@ -1,0 +1,110 @@
+*** Project Struction ***
+- Solution: Kos
+  >Kos Engine (C++ Project)
+  >GameScript (C# Project)
+
+*** Important Start-Up Note ***
+- Right click on GameScript in the project solution and build
+
+*** Project Settings ***
+- Build Configurations: 	Debug, Release 
+- Platform Target: 		x64 (64-bit)
+- Configuration Type: 	Application (.exe)
+- Windows SDK Version: 	10.0 (latest installed version)
+- Platform Toolset: 		Visual Studio 2022 (v143)
+- C++ Language Standard: 	ISO C++20 Standard (/std:c++20)
+- C Language Standard: 	Default (Legacy MSVC)
+
+*** C/C++ Properties ***
+- Warning Level: Level 4 (/W4)
+- SDL Checks: Yes (/sdl)
+
+*** Linker - General ***
+- Output File: 					$(OutDir)$(TargetName)$(TargetExt)
+- Enable Incremental Linking: 		Yes (/INCREMENTAL)
+- Incremental Link Database File: 	$(IntDir)$(TargetName).ilk
+- Suppress Startup Banner: 		Yes (/NOLOGO)
+- Additional Library Directories:
+  > $(SolutionDir)Dependencies\GLFW\lib-vc2022
+  > $(SolutionDir)Dependencies\GLFW\lib\Release
+- Link Library Dependencies: 		Yes
+
+*** Libraries/Dependencies - Debug and Release Configurations ***
+- ImGui: 				Immediate mode GUI library for rendering UI elements.
+- glew32s.lib: 			GLEW (OpenGL Extension Wrangler) for managing OpenGL extensions (static library).
+- glfw3.lib: 			GLFW for window creation, input handling, and OpenGL context management.
+- User32.lib: 			Windows User library for user interface components.
+- Gdi32.lib: 			GDI library for graphical device interface on Windows.
+- Shell32.lib: 			Windows Shell library for shell and file operations.
+- opengl32.lib: 			The main OpenGL library for graphics rendering.
+- freetype.lib: 			FreeType library for font rendering.
+- mono-2.0-sgen.lib: 		Mono runtime library for running .NET/C# code.
+- Comdlg32.lib: 			Windows common dialogs library.
+- fmodL_vc.lib: 			FMOD low-level library for audio playback (debug version).
+- fmodstudioL_vc.lib: 	FMOD Studio API library for managing audio events (debug version).
+
+*** Optimization - Release Configuration ***
+- Optimization: 					Maximum Optimization (Favor Speed) (/O2)
+- Inline Function Expansion: 		Default
+- Enable Intrinsic Functions: 		Yes (/Oi)
+- Favor Size or Speed: 			Neither (default)
+- Omit Frame Pointers: 			No
+- Enable Fiber-Safe Optimizations: 	No
+- Whole Program Optimization: 		Yes (/GL)
+
+*** Optimization - Debug Configuration ***
+- Optimization: 					Disabled (/Od)
+- Inline Function Expansion: 		Default
+- Enable Intrinsic Functions: 		No
+- Favor Size or Speed: 			Neither (default)
+- Omit Frame Pointers: 			No
+- Enable Fiber-Safe Optimizations: 	No
+- Whole Program Optimization: 		No
+
+*** Preprocessor Definitions - Release Configuration ***
+- _CRT_SECURE_NO_WARNINGS: 	Disables warnings about deprecated functions in the C runtime library.
+- NDEBUG: 					Disables assertions and debug-related code for the Release build.
+- _CONSOLE: 				Specifies that the application is a console application.
+- GLEW_STATIC: 				Specifies that the project is using the static version of GLEW (OpenGL Extension Wrangler).
+- %(PreprocessorDefinitions): 	This includes any inherited definitions from the parent or project-level configurations.
+
+*** Post-Build Events ***
+- Copy FMOD core DLLs to output directory:
+  Command: copy /y /d "$(SolutionDir)Dependencies\FMOD_API\core\lib\x64\*.dll" "$(OutDir)"
+- Copy FMOD studio DLLs to output directory:
+  Command: copy /y /d "$(SolutionDir)Dependencies\FMOD_API\studio\lib\x64\*.dll" "$(OutDir)"
+- Copy FreeType font DLLs to output directory:
+  Command: copy /y /d "$(SolutionDir)Dependencies\Freetype_Font\lib\*.dll" "$(OutDir)"
+- Copy Mono DLLs to output directory:
+  Command: copy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"
+  
+*** Configuration Manager Setup ***
+- The solution contains one project: Kos.
+- Configurations: 
+  > Debug: 		Used for development and testing, with no optimizations and debugging enabled. Includes `_DEBUG` preprocessor definition.
+  > Release: 		Used for the final product, with full optimizations and debugging disabled. Includes `NDEBUG` preprocessor definition.
+- Platform: 		The project is built for the x64 platform (64-bit).
+
+*** Debug Configuration ***
+- Active solution configuration: 	Debug
+- Active solution platform: 		x64
+- Build: 						Enabled 
+- Deploy: 						Disabled
+
+*** Release Configuration ***
+- Active solution configuration: 	Release
+- Active solution platform: 		x64
+- Build: 						Enabled 
+- Deploy: 						Disabled
+
+
+
+*** Compiling C# into DLL ***
+* C# Script *
+- Create your C# file (ExampleScript.cs) with the methods you want to call in C++
+
+* Compile the C# into DLL *
+- Download the 64-bit version (no GTK required). (https://www.mono-project.com/download/stable/#download-win)
+- View > Terminal (Open VS terminal)
+- cd "G:\Documents\RoombaOS_ForkCloneRemote\RoombaRampage\C#Mono" (Example to point to your C# file)
+- csc /target:library ExampleScript.cs (This will compile your C# script into DLL)

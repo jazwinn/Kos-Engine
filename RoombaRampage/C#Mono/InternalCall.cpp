@@ -126,6 +126,15 @@ namespace script {
 		return -1;
 	}
 
+	bool InternalCall::m_InternalCallIsCollided(ecs::EntityID entity)
+	{
+
+		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+
+		return static_cast<ecs::ColliderComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(entity))->m_isCollided;
+
+	}
+
 
 	void InternalCall::m_RegisterInternalCalls()
 	{
@@ -138,6 +147,7 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_InternalCallGetPlayer);
 		MONO_ADD_INTERNAL_CALL(m_InternalGetTranslate);
 		MONO_ADD_INTERNAL_CALL(m_InternalSetTranslate);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallIsCollided);
 	}
 
 }

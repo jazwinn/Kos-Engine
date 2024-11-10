@@ -46,6 +46,10 @@ namespace Namespace
         [MethodImpl(MethodImplOptions.InternalCall)]
         public extern static int m_InternalCallGetPlayer();
 
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern static bool m_InternalCallIsCollided(uint entity);
+        
+
         public virtual void GetEntityID(uint id) { }
         public virtual void Start() { }
         public virtual void Update() { }

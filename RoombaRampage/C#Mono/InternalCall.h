@@ -101,6 +101,7 @@ namespace script {
 
 		static int m_InternalCallGetPlayer();
 
+		static bool m_InternalCallIsCollided(ecs::EntityID entity);
 	public:
 
 		/******************************************************************/

@@ -30,6 +30,7 @@ void gui::ImGuiHandler::m_DrawMainMenuBar() {
 
     ImGuiIO& io = ImGui::GetIO();  // Get input/output data
     scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();
+    ecs::ECS* ecs = ecs::ECS::m_GetInstance();
     //If CTRL + S press, save
     if (io.KeyCtrl && ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_S))) {
         scenemanager->m_SaveAllActiveScenes();
@@ -69,7 +70,7 @@ void gui::ImGuiHandler::m_DrawMainMenuBar() {
             //    ImGui::EndMenu();
             //}
 
-            if (ImGui::MenuItem("Open")) {
+            if (ecs->m_ECS_SceneMap.size() < 0 || ImGui::MenuItem("Open")) {
                 
 
                 char filePath[MAX_PATH];
@@ -118,7 +119,7 @@ void gui::ImGuiHandler::m_DrawMainMenuBar() {
             ImGui::InputTextWithHint(".json", "Enter scene name here", str1, IM_ARRAYSIZE(str1));
 
             if (ImGui::Button("Save", ImVec2(120, 0))) { 
-                std::string m_jsonFilePath{ "../RoombaRampage/Assets/Scene/" }; //TODO temp open window in future
+                std::string m_jsonFilePath{ "Assets/Scene/" }; //TODO temp open window in future
                 std::string scene = m_jsonFilePath + str1 + ".json";
                 m_activeScene = scene;
                 if (!scene.empty()) {
