@@ -9,8 +9,8 @@
         },
         "transform": {
             "position": {
-                "x": 2.6034233570098877,
-                "y": -2.292491912841797
+                "x": -0.2469135969877243,
+                "y": 0.6913579702377319
             },
             "rotation": 0.0,
             "scale": {
@@ -69,40 +69,11 @@
         },
         "script": {
             "scripts": [
-                "PlayerControl"
+                "PlayerControl",
+                "CollisionResponse"
             ]
         },
         "children": [
-            {
-                "name": {
-                    "namestr": "gunleft_02",
-                    "layer": 0,
-                    "isprefab": true,
-                    "prefabname": "Player.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": -1.0022130012512207,
-                        "y": 1.7569403648376465
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    }
-                },
-                "sprite": {
-                    "imagefile": "gunleft_02.png",
-                    "layer": 0,
-                    "color": {
-                        "r": 1.0,
-                        "g": 1.0,
-                        "b": 1.0
-                    },
-                    "alpha": 1.0
-                }
-            },
             {
                 "name": {
                     "namestr": "gunright_02",
@@ -113,8 +84,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 0.9420905113220215,
-                        "y": 1.6602915525436401
+                        "x": 0.9639365673065186,
+                        "y": 1.8605352640151978
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -124,7 +95,37 @@
                 },
                 "sprite": {
                     "imagefile": "gunright_02.png",
-                    "layer": 1,
+                    "layer": 5,
+                    "color": {
+                        "r": 1.0,
+                        "g": 1.0,
+                        "b": 1.0
+                    },
+                    "alpha": 1.0
+                }
+            },
+            {
+                "name": {
+                    "namestr": "gunleft_02",
+                    "layer": 0,
+                    "isprefab": true,
+                    "prefabname": "Player.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.8813498020172119,
+                        "y": 3.992140293121338
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "sprite": {
+                    "imagefile": "gunleft_02.png",
+                    "layer": 6,
                     "color": {
                         "r": 1.0,
                         "g": 1.0,
@@ -134,5 +135,76 @@
                 }
             }
         ]
+    },
+    {
+        "name": {
+            "namestr": "blackTile_test",
+            "layer": 0,
+            "isprefab": true,
+            "prefabname": "blackTile_test_1.prefab",
+            "issync": true
+        },
+        "transform": {
+            "position": {
+                "x": -5.769261360168457,
+                "y": -2.69232177734375
+            },
+            "rotation": 0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "collider": {
+            "size": {
+                "x": 1.0,
+                "y": 1.0
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true,
+            "radius": 0.5
+        },
+        "rigidbody": {
+            "linearVelocity": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "linearAcceleration": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "angularVelocity": 0.0,
+            "angularAcceleration": 0.0,
+            "mass": 1.0,
+            "inverseMass": 1.0,
+            "linearDamping": 0.9900000095367432,
+            "angularDamping": 0.9900000095367432,
+            "force": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "torque": 0.0,
+            "kinematic": false,
+            "static": false
+        },
+        "sprite": {
+            "imagefile": "blackTile_test.png",
+            "layer": 1,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0
+        },
+        "script": {
+            "scripts": [
+                "MovingObjectScript"
+            ]
+        }
     }
 ]

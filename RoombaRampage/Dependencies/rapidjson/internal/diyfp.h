@@ -45,6 +45,11 @@ RAPIDJSON_DIAG_PUSH
 RAPIDJSON_DIAG_OFF(padded)
 #endif
 
+
+#pragma warning disable warning-list
+
+
+
 struct DiyFp {
     DiyFp() : f(), e() {}
 

@@ -100,7 +100,7 @@ namespace prefab {
     {
         ecs::ECS* ecs = ecs::ECS::m_GetInstance();
         ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id));
-        std::string m_jsonFilePath{ "../RoombaRampage/Assets/Prefabs/" }; //TODO allow drag and drop onto content browser
+        std::string m_jsonFilePath{ "Assets/Prefabs/" }; //TODO allow drag and drop onto content browser
 
         std::string filename;
 
@@ -320,7 +320,7 @@ namespace prefab {
                     entityChild = entitych.value()[count];
                 }
 
-                ecs::TransformComponent* tc = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(entityChild));
+                //ecs::TransformComponent* tc = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(entityChild));
 
                 m_UpdatePrefab(prefabchild, entityChild, true);
 
