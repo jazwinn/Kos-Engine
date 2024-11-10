@@ -76,6 +76,7 @@ namespace graphicpipe {
 		m_debugShaderProgram = m_funcSetupShader(debugVertexShader, debugFragmentShader);
 		m_textShaderProgram = m_funcSetupShader(textVertexShader, textFragmentShader);
 		m_gridShaderProgram = m_funcSetupShader(gridVertexShader, gridFragmentShader);
+		m_tilemapShaderProgram = m_funcSetupShader(tilemapVertexShader, tilemapFragmentShader);
 
 		// Initialize model-to-NDC transformation matrix and other drawing data.
 		m_modelToNDCMatrix.push_back(m_testMatrix);
@@ -163,6 +164,8 @@ namespace graphicpipe {
 		m_debugBoxData.clear();
 		m_textData.clear();
 		m_colors.clear();
+		m_tilemapData.clear();
+		m_transformedTilemaps.clear();
 		GraphicsCamera::m_cameras.clear();
 		
 	}

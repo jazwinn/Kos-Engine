@@ -134,8 +134,11 @@ namespace graphicpipe
 
 		m_funcDrawGrid();
 		m_funcDrawDebug();
+		m_funcDrawTilemap();
 		m_funcDraw();
+		
 		m_funcDrawText();
+		
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		glDisable(GL_DEPTH_TEST);
@@ -151,8 +154,11 @@ namespace graphicpipe
 		glEnable(GL_DEPTH_TEST);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+		m_funcDrawTilemap();
 		m_funcDraw();
+		
 		m_funcDrawText();
+		
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		glDisable(GL_DEPTH_TEST);
@@ -259,6 +265,58 @@ namespace graphicpipe
 		glDrawArrays(GL_LINES, 0, 1000 * 8 + 12); // Number of vertices
 		glBindVertexArray(0);
 			
+	}
+
+	void GraphicsPipe::m_funcDrawTilemap()
+	{
+		glUseProgram(m_tilemapShaderProgram);
+
+		
+
+		for (int i{}; i < m_transformedTilemaps.size(); ++i)
+		{
+			
+			
+			glActiveTexture(GL_TEXTURE0 + m_textureIDs[m_transformedTilemaps[i].m_textureID]); // Activate each texture unit
+			glBindTexture(GL_TEXTURE_2D, m_textureIDs[m_transformedTilemaps[i].m_textureID]);  // Unbind the 2D texture from that unit
+			
+			GLenum err = glGetError();
+			if (err != GL_NO_ERROR) {
+
+				std::cout << "First OpenGL Error: " << err << std::endl;
+			}
+
+			std::cout << m_transformedTilemaps[i].m_tilemapPictureSize.x << std::endl;
+
+			glUniform1i(glGetUniformLocation(m_tilemapShaderProgram, "textureID"), m_textureIDs[m_transformedTilemaps[i].m_textureID]);
+
+			glUniform1i(glGetUniformLocation(m_tilemapShaderProgram, "layer"), m_transformedTilemaps[i].m_layer);
+
+			glUniform1i(glGetUniformLocation(m_tilemapShaderProgram, "tilemapIndex"), m_transformedTilemaps[i].m_tileIndex);
+
+			glUniform1i(glGetUniformLocation(m_tilemapShaderProgram, "tilemapRows"), m_transformedTilemaps[i].m_tilemapDimensions.x);
+
+			glUniform1i(glGetUniformLocation(m_tilemapShaderProgram, "tilemapColumns"), m_transformedTilemaps[i].m_tilemapDimensions.y);
+
+			glUniform1i(glGetUniformLocation(m_tilemapShaderProgram, "tilePicSizeX"), m_transformedTilemaps[i].m_tilemapPictureSize.x);
+
+			glUniform1i(glGetUniformLocation(m_tilemapShaderProgram, "tilePicSizeY"), m_transformedTilemaps[i].m_tilemapPictureSize.y);
+
+			glUniform4f(glGetUniformLocation(m_tilemapShaderProgram, "modelColor"), m_transformedTilemaps[i].m_color.r, m_transformedTilemaps[i].m_color.g, m_transformedTilemaps[i].m_color.b, m_transformedTilemaps[i].m_color.a);
+
+			glUniformMatrix3fv(glGetUniformLocation(m_tilemapShaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currViewMatrix));
+
+			glUniformMatrix3fv(glGetUniformLocation(m_tilemapShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currOrthoMatrix));
+
+			glUniformMatrix3fv(glGetUniformLocation(m_tilemapShaderProgram, "modelMatrix"), 1, GL_FALSE, glm::value_ptr(m_transformedTilemaps[i].m_transformation));
+
+			
+
+			glBindVertexArray(m_squareMesh.m_vaoId);
+			glDrawElementsInstanced(m_squareMesh.m_primitiveType, m_squareMesh.m_indexElementCount, GL_UNSIGNED_SHORT, NULL, static_cast<GLsizei>(m_transformedTilemaps[i].m_tilemapDimensions.x * m_transformedTilemaps[i].m_tilemapDimensions.y));
+			glBindVertexArray(0);
+		}
+
 	}
 
 	void GraphicsPipe::m_funcSetDrawMode(GLenum mode)

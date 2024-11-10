@@ -9,8 +9,8 @@
         },
         "transform": {
             "position": {
-                "x": -0.2469135969877243,
-                "y": 0.6913579702377319
+                "x": -5.6425042152404785,
+                "y": 0.8988804817199707
             },
             "rotation": 0.0,
             "scale": {
@@ -205,6 +205,24 @@
             "scripts": [
                 "MovingObjectScript"
             ]
+        }
+    },
+    {
+        "name": {
+            "namestr": "dasd",
+            "layer": 0,
+            "isprefab": false
+        },
+        "transform": {
+            "position": {
+                "x": 5.222654819488525,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
         }
     }
 ]
