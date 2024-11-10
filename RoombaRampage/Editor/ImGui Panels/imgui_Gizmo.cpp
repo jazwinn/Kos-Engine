@@ -19,7 +19,7 @@ consent of DigiPen Institute of Technology is prohibited.
 
 
 #include "../Config/pch.h"
-#include "imgui_handler.h"
+#include "Editor.h"
 #include "imgui_impl_opengl3.h"
 #include "../Graphics/GraphicsPipe.h"
 #include "../Editor/EditorCamera.h"

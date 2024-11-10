@@ -144,6 +144,8 @@ namespace scenes {
 
         }
 
+
+
         LOGGING_INFO("Entities successfully loaded!");
 
     }

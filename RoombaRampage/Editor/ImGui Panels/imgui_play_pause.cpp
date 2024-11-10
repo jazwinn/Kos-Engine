@@ -14,7 +14,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
-#include "imgui_handler.h"
+#include "Editor.h"
 #include "../Application/Helper.h"
 #include "../Asset Manager/AssetManager.h"
 #include "../Asset Manager/SceneManager.h"

@@ -18,7 +18,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
-#include "imgui_handler.h"
+#include "Editor.h"
 #include "imgui_stdlib.h"
 #include "../ECS/ECS.h"
 #include "../Asset Manager/AssetManager.h"
@@ -780,7 +780,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                             ImGui::Selectable(scriptname.c_str());
                             if (ImGui::BeginPopupContextItem()) {
-                                if (ImGui::MenuItem("Delete Component")) {
+                                if (ImGui::MenuItem("Delete Script")) {
                                     sc->m_scripts.erase(std::find(sc->m_scripts.begin(), sc->m_scripts.end(), scriptname));
                                     ImGui::EndPopup();
 
