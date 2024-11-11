@@ -100,10 +100,10 @@ namespace Application {
         
 
         /*--------------------------------------------------------------
-            INITIALIZE IMGUI
+            INITIALIZE EDITOR // LAST INIT
          --------------------------------------------------------------*/
         const char* glsl_version = "#version 130";
-        imgui_manager.m_Initialize(lvWindow.m_window, glsl_version);
+        Editor.m_Initialize(lvWindow.m_window, glsl_version);
         LOGGING_INFO("Load ImGui Successful");
 
         
@@ -174,7 +174,7 @@ namespace Application {
                 /*--------------------------------------------------------------
                     Draw IMGUI FRAME
                 --------------------------------------------------------------*/
-                imgui_manager.m_Render();
+                Editor.m_Render();
 
                 /*--------------------------------------------------------------
                    Render Game Scene
@@ -211,7 +211,7 @@ namespace Application {
 
 	int Application::m_Cleanup() {
         ecs::ECS::m_GetInstance()->m_Unload();
-        imgui_manager.m_Shutdown();
+        Editor.m_Shutdown();
         lvWindow.CleanUp();
         glfwTerminate();
         LOGGING_INFO("Application Closed");

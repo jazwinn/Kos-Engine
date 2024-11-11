@@ -26,7 +26,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 #include "../Debugging/Logging.h"
 #include "../C#Mono/mono_handler.h"
-#include "../Editor/ImGui Panels/imgui_handler.h"
+#include "../Editor/ImGui Panels/Editor.h"
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
@@ -73,7 +73,7 @@ namespace Application {
 
 
 	private:
-		gui::ImGuiHandler imgui_manager; //should only remain in Application
+		gui::ImGuiHandler Editor; //should only remain in Application
 		AppWindow lvWindow;
 		Input::InputSystem Input;
 		
