@@ -36,6 +36,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Inputs/Input.h"
 #include "../Events/EventHandler.h"
 #include "../Application/Helper.h"
+#include "../Debugging/Performance.h"
 
 namespace gui {
 
@@ -178,8 +179,9 @@ namespace gui {
 			ImVec2 windowSize = ImGui::GetIO().DisplaySize;
 			// only render when window is not minimize
 			if (windowSize.x > 0 && windowSize.y > 0) {
+				std::chrono::duration<float> duration{};
+				auto start = std::chrono::steady_clock::now();
 				m_DrawMainMenuBar();
-				m_DrawPerformanceWindow(help->m_fps);
 				//m_DrawPlayPauseWindow();
 				m_DrawHierachyWindow();
 				m_DrawComponentWindow();
@@ -190,6 +192,11 @@ namespace gui {
 				m_DrawContentBrowser();
 				m_DrawRenderScreenWindow(static_cast<unsigned int>(Helper::Helpers::GetInstance()->m_windowWidth), static_cast<unsigned int>(Helper::Helpers::GetInstance()->m_windowHeight));
 				m_DrawGameSceneWindow();
+				auto end = std::chrono::steady_clock::now();
+				duration = end - start;
+				performancetracker::Performance::m_UpdateTotalSystemTime(duration.count());
+				performancetracker::Performance::m_UpdateSystemTime(ecs::TYPEIMGUISYSTEM, duration.count());
+				m_DrawPerformanceWindow(help->m_fps);
 			}
 
 

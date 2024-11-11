@@ -25,10 +25,11 @@ namespace physicspipe {
 	std::vector<std::shared_ptr<PhysicsData>> Physics::m_physicsEntities;
 	std::vector<std::shared_ptr<PhysicsData>> Physics::m_collidedEntities;
 	std::map<layer::LAYERS, std::vector<std::shared_ptr<PhysicsData>>> Physics::m_layerToEntities;
+	std::vector <std::pair<std::shared_ptr<PhysicsData>, std::shared_ptr<PhysicsData>>> Physics::m_collidedEntitiesPair;
 	std::unique_ptr<Physics> Physics::m_instance = nullptr;
 	physicslayer::PhysicsLayer* physicsLayer = physicslayer::PhysicsLayer::getInstance(); // Get the PhysicsLayer instance
 	std::vector<int> Physics::m_checker{};
-	
+
 
 	Circle::Circle(float radius, vector2::Vec2 shape_position, vector2::Vec2 shape_scale, vector2::Vec2 shape_velocity, int entity_ID, int layer_ID)
 		: m_radius(radius)   // Initialize radius
@@ -72,12 +73,12 @@ namespace physicspipe {
 
 	void Physics::m_SendPhysicsData(float rect_height, float rect_width, float rect_angle, vector2::Vec2 position, vector2::Vec2 scale, vector2::Vec2 velocity, int ID, layer::LAYERS layerID) {
 		m_physicsEntities.push_back(std::make_shared<Rectangle>(rect_height, rect_width, rect_angle, position, scale, velocity, ID, static_cast<int>(layerID)));
-	//	m_layerToEntities[layerID].push_back(std::make_shared<Rectangle>(rect_height, rect_width, rect_angle, position, scale, velocity, ID));
+		//	m_layerToEntities[layerID].push_back(std::make_shared<Rectangle>(rect_height, rect_width, rect_angle, position, scale, velocity, ID));
 	}
 
 	void Physics::m_SendPhysicsData(float radius, vector2::Vec2 position, vector2::Vec2 scale, vector2::Vec2 velocity, int ID, layer::LAYERS layerID) {
 		m_physicsEntities.push_back(std::make_shared<Circle>(radius, position, scale, velocity, ID, static_cast<int>(layerID)));
-	//	m_layerToEntities[layerID].push_back(std::make_shared<Circle>(radius, position, scale, velocity, ID));
+		//	m_layerToEntities[layerID].push_back(std::make_shared<Circle>(radius, position, scale, velocity, ID));
 	}
 
 	void Physics::m_CollisionCheck(float dt) {
@@ -334,24 +335,29 @@ namespace physicspipe {
 	void Physics::m_CollisionCheckUpdate() {
 		if (m_physicsEntities.empty()) return;
 		m_CalculateBoundingBox();
-
+		std::set<std::pair<std::shared_ptr<PhysicsData>, std::shared_ptr<PhysicsData>>> pair;
 		for (size_t i = 0; i < m_physicsEntities.size(); ++i) {
-			for (size_t j = i + 1; j < m_physicsEntities.size(); ++j) {
+			for (size_t j = 0; j < m_physicsEntities.size(); ++j) {
 				int layer1 = m_physicsEntities[i]->m_layerID;
 				int layer2 = m_physicsEntities[j]->m_layerID;
 
+				if (m_physicsEntities[i]->m_ID == m_physicsEntities[j]->m_ID) continue;
 				// Check if these layers should collide
 				if (physicsLayer->getCollide(layer1, layer2) && m_withinBoundingRadius(m_physicsEntities[i], m_physicsEntities[j])) {
 					if (m_CheckCollision(m_physicsEntities[i], m_physicsEntities[j])) {
-						m_addCollidedEntity(m_physicsEntities[i]); 
+						pair.emplace(m_physicsEntities[i], m_physicsEntities[j]);
+						m_addCollidedEntity(m_physicsEntities[i]);
 						m_addCollidedEntity(m_physicsEntities[j]);
 					}
 				}
 			}
 		}
+		std::vector<std::pair<std::shared_ptr<PhysicsData>, std::shared_ptr<PhysicsData>>> tmp (pair.begin(), pair.end());
+		m_collidedEntitiesPair = tmp;
+
 	}
 
-	bool Physics::m_CheckCollision(const std::shared_ptr<PhysicsData>& entity1, const std::shared_ptr<PhysicsData>& entity2){
+	bool Physics::m_CheckCollision(const std::shared_ptr<PhysicsData>& entity1, const std::shared_ptr<PhysicsData>& entity2) {
 		// Check for collision based on the types of entities.
 		if (entity1->GetEntity() == EntityType::RECTANGLE && entity2->GetEntity() == EntityType::RECTANGLE) {
 			return m_CollisionIntersection_RectRect_SAT(*static_cast<Rectangle*>(entity1.get()), *static_cast<Rectangle*>(entity2.get()));
@@ -442,5 +448,16 @@ namespace physicspipe {
 		}
 		// No separating axis found, so there's a collision
 		return true;
+	}
+
+	std::vector <std::pair<std::shared_ptr<PhysicsData>, std::shared_ptr<PhysicsData>>> Physics::m_RetrievePhysicsDataPair() {
+		std::vector <std::pair<std::shared_ptr<PhysicsData>, std::shared_ptr<PhysicsData>>> TempCollidedEntities = m_collidedEntitiesPair;
+
+		
+		return TempCollidedEntities;
+	}
+
+	void Physics::m_clearPair() {
+		m_collidedEntitiesPair.clear();
 	}
 }

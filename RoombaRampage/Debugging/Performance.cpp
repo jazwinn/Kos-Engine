@@ -61,6 +61,8 @@ namespace performancetracker {
 			return "Camera System";
 		case ecs::TypeSystem::TYPETRANSFORMSYSTEM:
 			return "Transform System";
+		case ecs::TypeSystem::TYPEIMGUISYSTEM:
+			return "IMGUI";
 		default:
 			return "Error (Add System to Performance.cpp)";
 		}

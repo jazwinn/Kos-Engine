@@ -187,6 +187,7 @@ namespace physicspipe {
 		
 		static std::vector<std::shared_ptr<PhysicsData>> m_physicsEntities;
 		static std::vector<std::shared_ptr<PhysicsData>> m_collidedEntities;
+		static std::vector < std::pair<std::shared_ptr<PhysicsData>, std::shared_ptr<PhysicsData>>> m_collidedEntitiesPair;
 		static std::map<layer::LAYERS, std::vector<std::shared_ptr<PhysicsData>>> m_layerToEntities;
 		static std::vector<int> m_checker;
 		static std::unique_ptr<Physics> m_instance;
@@ -248,6 +249,8 @@ namespace physicspipe {
 		*/
 		/******************************************************************/
 		std::vector<std::shared_ptr<PhysicsData>> m_RetrievePhysicsData();
+		std::vector < std::pair<std::shared_ptr<PhysicsData>, std::shared_ptr<PhysicsData>>> m_RetrievePhysicsDataPair();
+
 		/******************************************************************/
 		/*!
 		\fn        void Physics::m_ClearEntites()
@@ -343,7 +346,8 @@ namespace physicspipe {
 		/******************************************************************/
 		bool m_CollisionIntersection_RectRect_SAT(const Rectangle& obj1, const Rectangle& obj2);
 		bool m_withinBoundingRadius(const std::shared_ptr<PhysicsData>& entity1, const std::shared_ptr<PhysicsData>& entity2);
-		void m_addCollidedEntity(const std::shared_ptr<PhysicsData>& entity);
+		void m_addCollidedEntity(const std::shared_ptr<PhysicsData>& entity); 
+		void m_clearPair();
 };
 }
 #endif

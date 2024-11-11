@@ -80,7 +80,8 @@ namespace ecs {
 
 		//TODO instead of retrieving every loop, just get the address of the vector in the physics pipeline
 		physicspipe::Physics* PhysicsPipeline = physicspipe::Physics::getInstance();
-		std::vector<std::shared_ptr<physicspipe::PhysicsData>> vecCollisionEntity = PhysicsPipeline->m_RetrievePhysicsData();
+		std::vector<std::shared_ptr<physicspipe::PhysicsData>> vecCollisionEntity = PhysicsPipeline->m_RetrievePhysicsData(); 
+		std::vector < std::pair<std::shared_ptr<physicspipe::PhysicsData>, std::shared_ptr<physicspipe::PhysicsData>>> vecCollisionEntityPiar = PhysicsPipeline->m_RetrievePhysicsDataPair();
 		std::unordered_set<ecs::EntityID> ids;
 		
 		// return if no collision occuring
