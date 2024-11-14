@@ -17,6 +17,10 @@ Reproduction or disclosure of this file or its contents without the
 prior written consent of DigiPen Institute of Technology is prohibited.
 */
 /********************************************************************/
+
+
+
+
 #include "../Config/pch.h"
 #include "Application.h"
 #include "../Graphics/GraphicsPipe.h"
@@ -31,7 +35,7 @@ namespace Application {
     /*--------------------------------------------------------------
       GLOBAL VARAIBLE
     --------------------------------------------------------------*/
-    
+    #define IMGUIENABLED
     graphicpipe::GraphicsPipe* pipe;
     assetmanager::AssetManager* AstManager;
 
@@ -102,13 +106,18 @@ namespace Application {
         /*--------------------------------------------------------------
             INITIALIZE EDITOR // LAST INIT
          --------------------------------------------------------------*/
+#ifdef IMGUIENABLED
         const char* glsl_version = "#version 130";
         Editor.m_Initialize(lvWindow.m_window, glsl_version);
         LOGGING_INFO("Load ImGui Successful");
 
-        
+#endif 
 
-      
+#ifdef IMGUIENABLED
+        std::cout << "IMGUIENABLED is defined" << std::endl;
+#else
+        std::cout << "IMGUIENABLED is NOT defined" << std::endl;
+#endif      
 
 
         LOGGING_INFO("Application Init Successful");
@@ -166,22 +175,25 @@ namespace Application {
                 --------------------------------------------------------------*/
                 pipe->m_funcUpdate();
 
+
+
                 /*--------------------------------------------------------------
                     DRAWING/RENDERING Window
                 --------------------------------------------------------------*/
                 lvWindow.Draw();
 
                 /*--------------------------------------------------------------
+   Render Game Scene
+--------------------------------------------------------------*/
+                pipe->m_funcRenderGameScene();
+            
+#ifdef IMGUIENABLED
+
+                /*--------------------------------------------------------------
                     Draw IMGUI FRAME
                 --------------------------------------------------------------*/
                 Editor.m_Render();
-
-                /*--------------------------------------------------------------
-                   Render Game Scene
-                --------------------------------------------------------------*/
-                pipe->m_funcRenderGameScene();
-            
-
+#endif
 
                
 
@@ -211,7 +223,9 @@ namespace Application {
 
 	int Application::m_Cleanup() {
         ecs::ECS::m_GetInstance()->m_Unload();
+#ifdef IMGUIENABLED
         Editor.m_Shutdown();
+#endif
         lvWindow.CleanUp();
         glfwTerminate();
         LOGGING_INFO("Application Closed");

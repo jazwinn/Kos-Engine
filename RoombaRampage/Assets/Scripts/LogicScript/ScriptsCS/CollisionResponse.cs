@@ -41,8 +41,9 @@ namespace Namespace
 
             if (iscollided)
             {
-                velocity.X = 0.01 * deltatime;
-                velocity.Y = 0.01 * deltatime;
+                Console.WriteLine($"{EntityID} is Script Colliding");
+                velocity.X = 0.0f;
+                velocity.Y = 0.0f;
                 m_InternalSetVelocity(EntityID, in velocity);
             }
 
