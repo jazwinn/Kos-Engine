@@ -181,7 +181,7 @@ namespace Application {
                 --------------------------------------------------------------*/
                 pipe->m_funcRenderGameScene();
             
-
+                //glClearColor(1.f, 1.f, 1.f, 1.f);
 
                
 

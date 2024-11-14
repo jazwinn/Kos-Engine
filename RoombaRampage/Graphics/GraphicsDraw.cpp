@@ -276,7 +276,11 @@ namespace graphicpipe
 		for (int i{}; i < m_transformedTilemaps.size(); ++i)
 		{
 			
-			
+			glBindBuffer(GL_ARRAY_BUFFER, m_tileIndexBuffer);
+			glNamedBufferData(m_tileIndexBuffer, m_tileIndexes.size() * sizeof(int), &m_tileIndexes[0], GL_DYNAMIC_DRAW);
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+
 			glActiveTexture(GL_TEXTURE0 + m_textureIDs[m_transformedTilemaps[i].m_textureID]); // Activate each texture unit
 			glBindTexture(GL_TEXTURE_2D, m_textureIDs[m_transformedTilemaps[i].m_textureID]);  // Unbind the 2D texture from that unit
 			

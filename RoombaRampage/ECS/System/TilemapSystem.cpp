@@ -79,6 +79,7 @@ namespace ecs {
 																transform->m_transformation.m_e10,transform->m_transformation.m_e11, transform->m_transformation.m_e12,
 															transform->m_transformation.m_e20, transform->m_transformation.m_e21, transform->m_transformation.m_e22},textureid, glm::ivec2{tile->m_rowLength,tile->m_columnLength}, glm::ivec2{tile->m_pictureRows, tile->m_pictureColumns }, tile->m_tileIndex
 															, tile->m_tileLayer , glm::vec4{tile->m_color.m_x,tile->m_color.m_y, tile->m_color.m_z, tile->m_alpha} });
+			graphicsPipe->m_tilemapIndexArrays.push_back(tile->m_tilePictureIndex);
 
 		}
 

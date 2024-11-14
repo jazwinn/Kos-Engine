@@ -39,6 +39,8 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 float EditorCamera::m_aspectRatio{};
 int EditorCamera::m_windowWidth{};
 int EditorCamera::m_windowHeight{};
+glm::ivec2 EditorCamera::m_editorWindowPosition{};
+glm::ivec2 EditorCamera::m_editorWindowDimensions{};
 bool EditorCamera::m_editorMode = true;
 EditorCamera::Camera EditorCamera::m_editorCamera{ 1.f, 1.f ,glm::vec2(0.f,0.f), glm::vec2(5.f,5.f), 0 }; // Zoom Set To 5.f on Init
 glm::mat3 EditorCamera::m_editorCameraMatrix{1.f};
@@ -73,4 +75,22 @@ void EditorCamera::calculateLevelEditorOrtho()
     m_editorOrthoMatrix[2][0] = -(right + left) / (right - left);
     m_editorOrthoMatrix[2][1] = -(top + bottom) / (top - bottom);
     m_editorOrthoMatrix[2][2] = 1;
+}
+
+vector2::Vec2 EditorCamera::calculateWorldCoordinatesFromMouse(int mouseX, int mouseY)
+{
+    float screencoordX = mouseX - m_editorWindowPosition.x;
+    float screencoordY = mouseY - m_editorWindowPosition.y;
+
+    float cordX = (screencoordX - m_editorWindowDimensions.x / 2.f) / (m_editorWindowDimensions.x / 2.f);
+    float cordY = (std::abs(screencoordY) - m_editorWindowDimensions.y / 2.f) / (m_editorWindowDimensions.y / 2.f);
+
+    glm::vec3 translate = { cordX , -cordY, 0.f };
+    translate.x *= EditorCamera::m_editorCameraMatrix[0][0];
+    translate.y *= EditorCamera::m_editorCameraMatrix[1][1];
+    translate.x *= 1.f / graphicpipe::GraphicsCamera::m_aspectRatio;
+    translate.x += EditorCamera::m_editorCameraMatrix[2][0];
+    translate.y += EditorCamera::m_editorCameraMatrix[2][1];
+
+    return vector2::Vec2{ translate.x, translate.y };
 }

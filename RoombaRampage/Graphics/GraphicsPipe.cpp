@@ -84,6 +84,7 @@ namespace graphicpipe {
 		m_frameNumbers.push_back(0);
 		m_stripCounts.push_back({ 0,0 });
 		m_layers.push_back(0);
+		m_tileIndexes.push_back(0);
 		m_colors.push_back({ 0.f, 0.f, 0.f, 0.f });
 		m_debugBoxToNDCMatrix.push_back(m_testMatrix);
 		m_debugBoxCollisionChecks.push_back(false);
@@ -102,6 +103,7 @@ namespace graphicpipe {
 		m_stripCounts.clear();
 		m_layers.clear();
 		m_colors.clear();
+		m_tileIndexes.clear();
 
 		// Enable scissor test for limiting rendering to a specific area.
 		glEnable(GL_SCISSOR_TEST);
@@ -166,6 +168,8 @@ namespace graphicpipe {
 		m_colors.clear();
 		m_tilemapData.clear();
 		m_transformedTilemaps.clear();
+		m_tileIndexes.clear();
+		m_tilemapIndexArrays.clear();
 		GraphicsCamera::m_cameras.clear();
 		
 	}

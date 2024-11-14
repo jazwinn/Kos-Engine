@@ -66,6 +66,8 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
     ImVec2 pos = ImGui::GetCursorScreenPos();
     ImVec2 renderWindowSize = ImGui::GetContentRegionAvail();
 
+   
+
     float textureAspectRatio = (float)windowWidth / (float)windowHeight;
     float renderWindowAspectRatio = renderWindowSize.x / renderWindowSize.y;
 
@@ -101,7 +103,10 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
         ImVec2(pos.x + imageSize.x, pos.y + imageSize.y),
         ImVec2(0, 1), ImVec2(1, 0));
 
-
+    EditorCamera::m_editorWindowPosition.x = pos.x;
+    EditorCamera::m_editorWindowPosition.y = pos.y;
+    EditorCamera::m_editorWindowDimensions.x = imageSize.x;
+    EditorCamera::m_editorWindowDimensions.y = imageSize.y;
 
 
 
@@ -114,6 +119,8 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
 
         EditorCamera::m_editorCamera.m_zoom.x = glm::clamp(EditorCamera::m_editorCamera.m_zoom.x, 0.1f, 100.f);
         EditorCamera::m_editorCamera.m_zoom.y = glm::clamp(EditorCamera::m_editorCamera.m_zoom.y, 0.1f, 100.f);
+
+       
     }
      
     if (ImGui::IsMouseDragging(ImGuiMouseButton_Right) && ImGui::IsWindowHovered())

@@ -872,6 +872,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                     assetmanager::AssetManager* Asset = assetmanager::AssetManager::m_funcGetInstance();
                     auto* tmc = static_cast<ecs::TilemapComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETILEMAPCOMPONENT]->m_GetEntityComponent(entityID));
+                    auto* transform = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(entityID));
 
 
 
@@ -926,7 +927,15 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         rbc->ApplyFunction(DrawComponents(rbc->Names()));
                     }
                     Tilemap::resizeTiles(tmc, tmc->m_rowLength, tmc->m_columnLength);
-                    Tilemap::debugTileIndex(tmc);
+                    //Tilemap::debugTileIndex(tmc);
+
+                    //std::cout << EditorCamera::calculateWorldCoordinatesFromMouse(ImGui::GetMousePos().x, ImGui::GetMousePos().y).m_y << std::endl;
+
+                    if (ImGui::IsKeyPressed(ImGuiKey_M))
+                    {
+                        Tilemap::setIndividualTile(transform->m_position, EditorCamera::calculateWorldCoordinatesFromMouse(ImGui::GetMousePos().x, ImGui::GetMousePos().y), tmc, 128);
+                    }
+                   
 
                 }
 

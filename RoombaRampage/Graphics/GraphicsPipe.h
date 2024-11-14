@@ -196,6 +196,7 @@ namespace graphicpipe {
         unsigned int m_layerBuffer{};
         unsigned int m_gridBuffer{};
         unsigned int m_colorBuffer{};
+        unsigned int m_tileIndexBuffer{};
 
         glm::mat3 m_testMatrix{};                   ///< Test matrix for rendering.
 
@@ -346,6 +347,7 @@ namespace graphicpipe {
         std::vector<float> m_debugCircleCollisionChecks{}; ///< Collision check data for debug rendering.
         std::vector<int> m_textureOrder{}; ///< Order of texture bindings.
         std::vector<glm::vec4> m_colors{}; 
+        std::vector<int> m_tileIndexes{};
 
         std::vector<unsigned int> m_textureIDs{}; ///< Array of texture IDs.
         std::vector<int> m_layers{};
@@ -353,6 +355,7 @@ namespace graphicpipe {
         std::vector<int> m_frameNumbers{}; ///< Frame numbers for sprite animations.
         std::vector<image::Image> m_imageData{}; ///< Image data for rendering.
         std::vector<TilemapData> m_transformedTilemaps{};
+        std::vector<std::vector<std::vector<int>>> m_tilemapIndexArrays{};
 
         unsigned int m_screenTexture{}; ///< Texture for rendering the screen.
         unsigned int m_gamePreviewTexture{};

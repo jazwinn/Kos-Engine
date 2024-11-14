@@ -2,11 +2,11 @@ R"( #version 460 core
 
 layout (location=0) in vec2 vertexPosition;
 layout (location=2) in vec2 vertexTexCoords;
-
+layout (location=15) in int index;
 
 uniform mat3 projection;
 uniform mat3 view;
-uniform int index;
+//uniform int index;
 uniform int tilemapRows;
 uniform int tilemapColumns;
 uniform mat3 modelMatrix;
