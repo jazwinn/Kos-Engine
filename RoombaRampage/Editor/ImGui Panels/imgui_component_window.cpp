@@ -24,6 +24,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Asset Manager/AssetManager.h"
 #include "../Graphics/GraphicsPipe.h"
 #include "../ECS/Layers.h"
+#include "../Editor/TilemapCalculations.h"
 
 #include "ScriptVariable.h"
 
@@ -924,6 +925,8 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         auto* rbc = static_cast<ecs::TilemapComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETILEMAPCOMPONENT]->m_GetEntityComponent(entityID));
                         rbc->ApplyFunction(DrawComponents(rbc->Names()));
                     }
+                    Tilemap::resizeTiles(tmc, tmc->m_rowLength, tmc->m_columnLength);
+                    Tilemap::debugTileIndex(tmc);
 
                 }
 

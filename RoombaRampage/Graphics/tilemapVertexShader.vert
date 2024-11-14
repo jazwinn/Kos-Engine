@@ -6,7 +6,7 @@ layout (location=2) in vec2 vertexTexCoords;
 
 uniform mat3 projection;
 uniform mat3 view;
-uniform int tilemapIndex;
+uniform int index;
 uniform int tilemapRows;
 uniform int tilemapColumns;
 uniform mat3 modelMatrix;
@@ -27,11 +27,11 @@ void main()
 
 	float tileHeight = 1.0 / tilePicSizeY;
 
-	int y = tilemapIndex / tilePicSizeX; 
+	float y = floor(index / tilePicSizeX); 
 
-	int x = tilemapIndex % tilePicSizeY;
+	int x = index % tilePicSizeX;
 
-	float frameXOffset = tileWidth * x ;
+	float frameXOffset = tileWidth * x;
 
 	float frameYOffset = tileHeight * y;
 
@@ -39,17 +39,13 @@ void main()
 
 	int yStep = gl_InstanceID / tilemapRows;
 
-	//vec2 translate = vertexPosition + vec2(xStep,yStep);
-
-	
+	vec2 translate = vec2(matrix * vec3(xStep,-yStep, 0.f));
 
 	gl_Position = vec4(vec2(matrix * vec3(vertexPosition, 1.f)),
 					   -0.0001 * layer, 1.0);
 
-	
-
-	//gl_Position.x = gl_Position.x + tileWidth * gl_InstanceID;
-	//gl_Position.y = gl_Position.y - gl_Position.y * gl_InstanceID;
+	gl_Position.x += translate.x;
+	gl_Position.y += translate.y;
 
 	texCoords = vec2(vertexTexCoords.x * tileWidth + frameXOffset, vertexTexCoords.y * tileHeight + frameYOffset);
 	

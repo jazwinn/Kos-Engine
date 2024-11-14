@@ -280,20 +280,14 @@ namespace graphicpipe
 			glActiveTexture(GL_TEXTURE0 + m_textureIDs[m_transformedTilemaps[i].m_textureID]); // Activate each texture unit
 			glBindTexture(GL_TEXTURE_2D, m_textureIDs[m_transformedTilemaps[i].m_textureID]);  // Unbind the 2D texture from that unit
 			
-			GLenum err = glGetError();
-			if (err != GL_NO_ERROR) {
-
-				std::cout << "First OpenGL Error: " << err << std::endl;
-			}
-
-			std::cout << m_transformedTilemaps[i].m_tilemapPictureSize.x << std::endl;
+			
 
 			glUniform1i(glGetUniformLocation(m_tilemapShaderProgram, "textureID"), m_textureIDs[m_transformedTilemaps[i].m_textureID]);
 
 			glUniform1i(glGetUniformLocation(m_tilemapShaderProgram, "layer"), m_transformedTilemaps[i].m_layer);
 
-			glUniform1i(glGetUniformLocation(m_tilemapShaderProgram, "tilemapIndex"), m_transformedTilemaps[i].m_tileIndex);
-
+			glUniform1i(glGetUniformLocation(m_tilemapShaderProgram, "index"), m_transformedTilemaps[i].m_tileIndex);
+		
 			glUniform1i(glGetUniformLocation(m_tilemapShaderProgram, "tilemapRows"), m_transformedTilemaps[i].m_tilemapDimensions.x);
 
 			glUniform1i(glGetUniformLocation(m_tilemapShaderProgram, "tilemapColumns"), m_transformedTilemaps[i].m_tilemapDimensions.y);

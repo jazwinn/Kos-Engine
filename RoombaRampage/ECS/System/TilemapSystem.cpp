@@ -64,6 +64,9 @@ namespace ecs {
 			TransformComponent* transform = m_vecTransformComponentPtr[n];
 			TilemapComponent* tile = m_vecTilemapComponentPtr[n];
 
+			transform->m_transformation.m_e20 = floor(transform->m_transformation.m_e20) + 0.5f;
+			transform->m_transformation.m_e21 = floor(transform->m_transformation.m_e21) + 0.5f;
+
 			//skip component not of the scene
 			if (tile->m_scene != scene) continue;
 
@@ -74,7 +77,7 @@ namespace ecs {
 			unsigned int textureid = assetmanager->m_imageManager.m_imageMap.find(tile->m_tilemapFile)->second.m_imageID;
 			graphicsPipe->m_tilemapData.push_back({ glm::mat3{transform->m_transformation.m_e00,transform->m_transformation.m_e01,transform->m_transformation.m_e02,
 																transform->m_transformation.m_e10,transform->m_transformation.m_e11, transform->m_transformation.m_e12,
-															transform->m_transformation.m_e20, transform->m_transformation.m_e21, transform->m_transformation.m_e22},textureid, glm::ivec2{tile->m_rows,tile->m_columns}, glm::ivec2{tile->m_pictureRows, tile->m_pictureColumns }, tile->m_tileIndex
+															transform->m_transformation.m_e20, transform->m_transformation.m_e21, transform->m_transformation.m_e22},textureid, glm::ivec2{tile->m_rowLength,tile->m_columnLength}, glm::ivec2{tile->m_pictureRows, tile->m_pictureColumns }, tile->m_tileIndex
 															, tile->m_tileLayer , glm::vec4{tile->m_color.m_x,tile->m_color.m_y, tile->m_color.m_z, tile->m_alpha} });
 
 		}
