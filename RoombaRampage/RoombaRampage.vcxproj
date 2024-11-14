@@ -421,6 +421,9 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="ECS\System\SystemList.h" />
     <ClInclude Include="ECS\System\SystemType.h" />
     <ClInclude Include="Editor\WindowFile.h" />
+    <ClInclude Include="Events\Action.h" />
+    <ClInclude Include="Events\ActionEvent.h" />
+    <ClInclude Include="Events\ActionManager.h" />
     <ClInclude Include="Events\BaseEvent.h" />
     <ClInclude Include="Events\BaseMessage.h" />
     <ClInclude Include="Events\ButtonEvent.h" />
@@ -428,6 +431,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="Events\KeyEvent.h" />
     <ClInclude Include="Events\Listeners.h" />
     <ClInclude Include="Events\MessageSystem.h" />
+    <ClInclude Include="Events\ModifyAction.h" />
     <ClInclude Include="Events\MouseEvent.h" />
     <ClInclude Include="Graphics\GraphicsCamera.h" />
     <ClInclude Include="Graphics\GraphicsPipe.h" />

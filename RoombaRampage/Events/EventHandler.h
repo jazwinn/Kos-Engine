@@ -15,6 +15,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "MouseEvent.h"
 #include "KeyEvent.h"
 #include "ButtonEvent.h"
+#include <stack>
 #include <memory>
 
 #define REGISTER_BUTTON_LISTENER(eventType, func, arg) events::EventHandler::m_GetDispatchInstance()->m_buttonDispatch.m_RegisterListener(eventType, std::bind(&func, arg, std::placeholders::_1));
