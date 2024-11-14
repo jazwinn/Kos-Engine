@@ -38,6 +38,8 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include<string>
 #include <iostream>
 #include <filesystem>
+#include <type_traits>
+#include <typeinfo>
 
 
 static const float slider_start_pos_x = 100.0f; //Padding for the slider
@@ -115,13 +117,19 @@ struct DrawComponents {
         ImGui::SetNextItemWidth(100.0f);
         ImGui::PushItemWidth(slidersize);
         std::string title = "X##" + m_Array[count];
-        ImGui::DragFloat(title.c_str(), &_args.m_x, 0.02f, -50.f, 50.f, "%.2f");
-
+        vector2::Vec2 oldVal = _args;
+        bool changed = false;
+        if (ImGui::DragFloat(title.c_str(), &_args.m_x, 0.02f, -50.f, 50.f, "%.2f")) {
+            changed = true;
+        }
         ImGui::SameLine();
         ImGui::SetNextItemWidth(100.0f);
         title = "Y##" + m_Array[count];
         ImGui::PushItemWidth(slidersize);
-        ImGui::DragFloat(title.c_str(), &_args.m_y, 0.02f, -50.0f, 50.0f, "%.2f");
+        if (ImGui::DragFloat(title.c_str(), &_args.m_y, 0.02f, -50.0f, 50.0f, "%.2f")) {
+            changed = true;
+        }
+
         
         ImGui::PopItemWidth();
         ImGui::PopItemWidth();

@@ -51,6 +51,7 @@ namespace Input {
 		static bool m_isKeyTriggered(const keyCode givenKey);
 		static bool m_isKeyPressed(const keyCode givenKey);
 		static bool m_isKeyReleased(const keyCode givenKey);
+		static vector2::Vec2 m_getMousePosition();
 
 		void m_inputUpdate();
 
