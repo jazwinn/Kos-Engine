@@ -69,8 +69,8 @@
         },
         "script": {
             "scripts": [
-                "PlayerControl",
-                "MovingObjectScript"
+                "CollisionResponse",
+                "PlayerControl"
             ]
         },
         "children": [
@@ -200,11 +200,6 @@
                 "b": 1.0
             },
             "alpha": 1.0
-        },
-        "script": {
-            "scripts": [
-                "MovingObjectScript"
-            ]
         }
     },
     {
@@ -261,6 +256,40 @@
                 "b": 1.0
             },
             "alpha": 1.0
+        }
+    },
+    {
+        "name": {
+            "namestr": "ani_SeanSprite_strip4",
+            "layer": 0,
+            "isprefab": false
+        },
+        "transform": {
+            "position": {
+                "x": -2.8104302883148193,
+                "y": -2.060171127319336
+            },
+            "rotation": 0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "sprite": {
+            "imagefile": "ani_SeanSprite_strip4.png",
+            "layer": 3,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0
+        },
+        "animation": {
+            "frameNumber": 0,
+            "framesPerSecond": 3,
+            "frameTimer": 0.0,
+            "isAnimating": true
         }
     }
 ]

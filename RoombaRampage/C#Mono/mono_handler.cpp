@@ -269,8 +269,13 @@ namespace script {
 
     void ScriptHandler::m_HotReloadCompileAllCsharpFile()
     {
+        std::string cspath = "Assets/Scripts/LogicScript/ScriptsCS";
+        if (!std::filesystem::exists(cspath)) {
+            LOGGING_ERROR("Script File location does not exist");
+            return;
+        }
         // load all .cs file in /Assests/Script
-        for (auto& directoryPath : std::filesystem::directory_iterator("Assets/Scripts/ScriptsCS")) {
+        for (auto& directoryPath : std::filesystem::directory_iterator(cspath)) {
             std::string filepath = directoryPath.path().string();
             std::replace(filepath.begin(), filepath.end(), '\\', '/');
 
