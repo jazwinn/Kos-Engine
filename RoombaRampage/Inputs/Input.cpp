@@ -141,6 +141,10 @@ namespace Input {
 		return state == 0 ? true : false;
 	}
 
+	vector2::Vec2 InputSystem::m_getMousePosition() {
+		return InputSystem::MousePosition;
+	}
+
 
 
 }
