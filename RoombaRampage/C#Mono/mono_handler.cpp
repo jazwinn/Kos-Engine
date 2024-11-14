@@ -61,12 +61,13 @@ namespace script {
         m_AppDomain = mono_domain_create_appdomain((char*)"AppDomainRuntime", nullptr);
         mono_domain_set(m_AppDomain, true);
 
-        //load gamescript assembly
+        //load gamescript assembly location
         m_AddScripts("ScriptLibrary/GameScript/ScriptCoreDLL/GameScript.dll");
     }
 
     void ScriptHandler::m_UnloadSecondaryDomain()
     {
+        if (m_AppDomain == nullptr)return;
         //reset any references to the MonoAssembly
         mono_domain_set(m_rootDomain, false);
         mono_domain_unload(m_AppDomain);
@@ -267,13 +268,13 @@ namespace script {
         }
     }
 
-    void ScriptHandler::m_HotReloadCompileAllCsharpFile()
+    void ScriptHandler::m_HotReloadCompileAllCsharpFile(std::string cspath)
     {
-        std::string cspath = "Assets/Scripts/LogicScript/ScriptsCS";
         if (!std::filesystem::exists(cspath)) {
             LOGGING_ERROR("Script File location does not exist");
             return;
         }
+        
         // load all .cs file in /Assests/Script
         for (auto& directoryPath : std::filesystem::directory_iterator(cspath)) {
             std::string filepath = directoryPath.path().string();
@@ -281,6 +282,9 @@ namespace script {
 
             m_UnloadSecondaryDomain();
 
+            if (directoryPath.is_directory()) {
+                m_HotReloadCompileAllCsharpFile(filepath);
+            }
             if (directoryPath.path().filename().extension().string() == ".cs") {
 
                 m_CompileCSharpFile(filepath);

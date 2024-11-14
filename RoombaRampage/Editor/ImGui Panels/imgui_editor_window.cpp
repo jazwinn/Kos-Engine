@@ -101,6 +101,18 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
         ImVec2(pos.x + imageSize.x, pos.y + imageSize.y),
         ImVec2(0, 1), ImVec2(1, 0));
 
+    if (ImGui::IsMouseClicked(0)) {
+        //If cursor selects object, object is selected
+        ImVec2 mouse = ImGui::GetMousePos();
+        ImVec2 windowPos = ImGui::GetWindowPos();
+        ImVec2 relativeMousePos = ImVec2(mouse.x - windowPos.x, mouse.y - windowPos.y);
+        std::cout << relativeMousePos.x << " , " << relativeMousePos.y << std::endl;
+
+        //calculate AABB of each object (active scenes)
+
+        //if pos is within any of the object, set that object as active.
+
+    }
 
 
 
@@ -156,6 +168,13 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
   
     //Draw gizmo
     m_DrawGizmo(pos.x, pos.y, imageSize.x, imageSize.y);
+
+
+
+
+
+
+
     
     ImGui::Dummy(renderWindowSize);
     if (ImGui::BeginDragDropTarget())

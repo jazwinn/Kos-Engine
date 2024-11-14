@@ -12,7 +12,7 @@ namespace Namespace
     {
         private uint EntityID;
         private int playerID;
-
+        
         private Vector2 pos;
 
         public override void GetEntityID(uint id){

@@ -41,10 +41,12 @@ namespace gui {
         ImGuizmo::SetDrawlist();
 
         static ImGuizmo::OPERATION mCurrentGizmoOperation(ImGuizmo::TRANSLATE);
-        static bool useSnap(false);
+        static bool useSnap{false};
+        static bool focusMode{ false };
+
         static float snap[3] = { 1.f, 1.f, 1.f };
 
-        if (ImGui::IsKeyPressed(ImGuiKey_T))
+        if (ImGui::IsKeyPressed(ImGuiKey_W))
             mCurrentGizmoOperation = ImGuizmo::TRANSLATE;
         if (ImGui::IsKeyPressed(ImGuiKey_E))
             mCurrentGizmoOperation = ImGuizmo::ROTATE;
@@ -132,7 +134,18 @@ namespace gui {
         float matrixRotation[3] = {0,0, transcom->m_rotation };
         float matrixScale[3] = { transcom->m_scale.m_x, transcom->m_scale.m_y, 0};
 
-        //ImGuizmo::RecomposeMatrixFromComponents(matrixTranslation, matrixRotation, matrixScale, model);
+        //Focus mode for objects
+
+        if (ImGui::IsKeyDown(ImGuiKey_F)) {
+            focusMode = focusMode ? false : true;
+        }
+
+        if (focusMode) {
+            EditorCamera::m_editorCamera.m_coordinates.x = transcom->m_position.m_x;
+            EditorCamera::m_editorCamera.m_coordinates.y = transcom->m_position.m_y;
+        }
+
+
 
         ImGuizmo::SetGizmoSizeClipSpace(EditorCamera::m_editorCamera.m_zoom.x / 8.f);
         //DRAW GIZMO
