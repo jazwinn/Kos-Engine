@@ -29,6 +29,8 @@ consent of DigiPen Institute of Technology is prohibited.
 #include "../Math/Mat3x3.h"
 #include "../ECS/Hierachy.h"
 
+#include <glm.hpp>
+
 
 namespace gui {
 
@@ -136,14 +138,7 @@ namespace gui {
 
         //Focus mode for objects
 
-        if (ImGui::IsKeyDown(ImGuiKey_F)) {
-            focusMode = focusMode ? false : true;
-        }
 
-        if (focusMode) {
-            EditorCamera::m_editorCamera.m_coordinates.x = transcom->m_position.m_x;
-            EditorCamera::m_editorCamera.m_coordinates.y = transcom->m_position.m_y;
-        }
 
 
 
@@ -195,9 +190,24 @@ namespace gui {
             transcom->m_scale.m_y = matrixScale[1];
             //transcom->m_transformation = mat3x3::Mat3Transform(transcom->m_position, transcom->m_scale, transcom->m_rotation);
 
+
+
         
         }
+        else {
 
+
+          
+        }
+
+        if (ImGui::IsKeyPressed(ImGuiKey_F)) {
+            focusMode = focusMode ? false : true;
+        }
+        if (focusMode) {
+            // UDB not working as intended
+
+            EditorCamera::m_editorCamera.m_coordinates = glm::mix(EditorCamera::m_editorCamera.m_coordinates, glm::vec2{ transcom->m_position.m_x, transcom->m_position.m_y }, Helper::Helpers::GetInstance()->m_deltaTime * 4.f);
+        }
 	}
 
 
