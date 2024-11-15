@@ -46,9 +46,12 @@ namespace gui {
 			ImGui::EndChild();
 		}
 		ImGui::SameLine();
+		if (m_tilePickerMode)
 		{
-
-
+			m_DrawTilePicker();
+		}
+		else
+		{
 			ImGui::BeginChild("ChildLa", ImVec2(0, ImGui::GetContentRegionAvail().y));
 
 

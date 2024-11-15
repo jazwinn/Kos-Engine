@@ -943,6 +943,11 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         rbc->ApplyFunction(DrawComponents(rbc->Names()));
                     }
                     Tilemap::resizeTiles(tmc, tmc->m_rowLength, tmc->m_columnLength);
+
+                    if (ImGui::Button("Pick Tile"))
+                    {
+                        m_tilePickerMode = true;
+                    }
                     //Tilemap::debugTileIndex(tmc);
 
                     //std::cout << EditorCamera::calculateWorldCoordinatesFromMouse(ImGui::GetMousePos().x, ImGui::GetMousePos().y).m_y << std::endl;
