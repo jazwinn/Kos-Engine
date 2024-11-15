@@ -1,26 +1,24 @@
 [
     {
         "name": {
-            "namestr": "Player",
+            "namestr": "Bullet",
             "layer": 0,
-            "isprefab": true,
-            "prefabname": "Player.prefab",
-            "issync": true
+            "isprefab": false
         },
         "transform": {
             "position": {
-                "x": 7.7114057540893555,
-                "y": 6.280850887298584
+                "x": 7.470952033996582,
+                "y": 6.2245612144470215
             },
-            "rotation": 0.0,
+            "rotation": -137.76255798339844,
             "scale": {
-                "x": 1.0,
-                "y": 1.0
+                "x": 0.4591841995716095,
+                "y": 0.9999985098838806
             }
         },
         "collider": {
             "size": {
-                "x": 1.0,
+                "x": 0.4399999976158142,
                 "y": 1.0
             },
             "offset": {
@@ -30,17 +28,14 @@
             "drawDebug": true,
             "radius": 0.5
         },
-        "player": {
-            "control": true
-        },
         "rigidbody": {
             "linearVelocity": {
                 "x": 0.0,
                 "y": 0.0
             },
             "linearAcceleration": {
-                "x": 0.0,
-                "y": 0.0
+                "x": 1.0,
+                "y": -1.0
             },
             "rotation": 0.0,
             "angularVelocity": 0.0,
@@ -58,106 +53,36 @@
             "static": false
         },
         "sprite": {
-            "imagefile": "Roomba.png",
-            "layer": 4,
+            "imagefile": "blackTile_test.png",
+            "layer": 0,
             "color": {
                 "r": 1.0,
                 "g": 1.0,
                 "b": 1.0
             },
             "alpha": 1.0
-        },
-        "script": {
-            "scripts": [
-                "CollisionResponse",
-                "PlayerControl"
-            ]
-        },
-        "children": [
-            {
-                "name": {
-                    "namestr": "gunright_02",
-                    "layer": 0,
-                    "isprefab": true,
-                    "prefabname": "Player.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": 0.9639365673065186,
-                        "y": 1.8605352640151978
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    }
-                },
-                "sprite": {
-                    "imagefile": "gunright_02.png",
-                    "layer": 5,
-                    "color": {
-                        "r": 1.0,
-                        "g": 1.0,
-                        "b": 1.0
-                    },
-                    "alpha": 1.0
-                }
-            },
-            {
-                "name": {
-                    "namestr": "gunleft_02",
-                    "layer": 0,
-                    "isprefab": true,
-                    "prefabname": "Player.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": -1.0585962533950806,
-                        "y": 1.7504246234893799
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    }
-                },
-                "sprite": {
-                    "imagefile": "gunleft_02.png",
-                    "layer": 6,
-                    "color": {
-                        "r": 1.0,
-                        "g": 1.0,
-                        "b": 1.0
-                    },
-                    "alpha": 1.0
-                }
-            }
-        ]
+        }
     },
     {
         "name": {
-            "namestr": "blackTile_test",
+            "namestr": "Bullet 1",
             "layer": 0,
-            "isprefab": true,
-            "prefabname": "blackTile_test_1.prefab",
-            "issync": true
+            "isprefab": false
         },
         "transform": {
             "position": {
-                "x": -5.769261360168457,
-                "y": -2.69232177734375
+                "x": 7.470952033996582,
+                "y": 6.2245612144470215
             },
-            "rotation": 0.0,
+            "rotation": -137.76255798339844,
             "scale": {
-                "x": 1.0,
-                "y": 1.0
+                "x": 0.4591841995716095,
+                "y": 0.9999985098838806
             }
         },
         "collider": {
             "size": {
-                "x": 1.0,
+                "x": 0.4399999976158142,
                 "y": 1.0
             },
             "offset": {
@@ -173,8 +98,8 @@
                 "y": 0.0
             },
             "linearAcceleration": {
-                "x": 0.0,
-                "y": 0.0
+                "x": 1.0,
+                "y": -1.0
             },
             "rotation": 0.0,
             "angularVelocity": 0.0,
@@ -200,125 +125,6 @@
                 "b": 1.0
             },
             "alpha": 1.0
-        }
-    },
-    {
-        "name": {
-            "namestr": "Background",
-            "layer": 0,
-            "isprefab": false
-        },
-        "transform": {
-            "position": {
-                "x": 3.6049389839172363,
-                "y": 0.39506199955940247
-            },
-            "rotation": 0.0,
-            "scale": {
-                "x": 1.0,
-                "y": 1.0
-            }
-        },
-        "sprite": {
-            "imagefile": "Background.png",
-            "layer": 0,
-            "color": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
-            },
-            "alpha": 1.0
-        }
-    },
-    {
-        "name": {
-            "namestr": "Button",
-            "layer": 0,
-            "isprefab": false
-        },
-        "transform": {
-            "position": {
-                "x": -2.1917197704315186,
-                "y": 1.443798542022705
-            },
-            "rotation": 0.0,
-            "scale": {
-                "x": 1.0,
-                "y": 1.0
-            }
-        },
-        "sprite": {
-            "imagefile": "Button.png",
-            "layer": 2,
-            "color": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
-            },
-            "alpha": 1.0
-        }
-    },
-    {
-        "name": {
-            "namestr": "ani_SeanSprite_strip4",
-            "layer": 0,
-            "isprefab": false
-        },
-        "transform": {
-            "position": {
-                "x": -2.8104302883148193,
-                "y": -2.060171127319336
-            },
-            "rotation": 0.0,
-            "scale": {
-                "x": 1.0,
-                "y": 1.0
-            }
-        },
-        "rigidbody": {
-            "linearVelocity": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "linearAcceleration": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "rotation": 0.0,
-            "angularVelocity": 0.0,
-            "angularAcceleration": 0.0,
-            "mass": 1.0,
-            "inverseMass": 1.0,
-            "linearDamping": 0.9900000095367432,
-            "angularDamping": 0.9900000095367432,
-            "force": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "torque": 0.0,
-            "kinematic": false,
-            "static": false
-        },
-        "sprite": {
-            "imagefile": "ani_SeanSprite_strip4.png",
-            "layer": 3,
-            "color": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
-            },
-            "alpha": 1.0
-        },
-        "animation": {
-            "frameNumber": 0,
-            "framesPerSecond": 3,
-            "frameTimer": 0.0,
-            "isAnimating": true
-        },
-        "script": {
-            "scripts": [
-                "PlayerControl"
-            ]
         }
     }
 ]

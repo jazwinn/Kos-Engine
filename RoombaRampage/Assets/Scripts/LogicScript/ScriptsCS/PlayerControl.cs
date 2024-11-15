@@ -38,7 +38,7 @@ namespace Namespace
             velocity.X = 0;
             velocity.Y = 0;
 
-            if (m_InternalCallIsKeyeleased(Key.keyCode.W))
+            if (m_InternalCallIsKeyPressed(Key.keyCode.W))
             {
                 velocity.Y = speed;
             }
