@@ -6,8 +6,14 @@ namespace Tilemap
 {
 	void resizeTiles(ecs::TilemapComponent* tilemap, int rowLength, int colLength)
 	{
-		if (rowLength <= 0 || colLength <= 0)
+		if (rowLength <= 0)
 		{
+			tilemap->m_rowLength = 1;
+			return;
+		}
+		if (colLength <= 0)
+		{
+			tilemap->m_columnLength = 1;
 			return;
 		}
 		tilemap->m_rowLength = rowLength;
