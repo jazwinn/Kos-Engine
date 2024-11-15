@@ -247,7 +247,7 @@ namespace ecs{
 		ECS* ecs = ECS::m_GetInstance();
 
 		//TODO change to sth other than assert
-		if (ecs->m_EntityCount >= MaxEntity) {
+		if (ecs->m_EntityCount >= (MaxEntity - 1)) {// -1 so as to keep all the last component pool as default to reset
 			LOGGING_ASSERT_WITH_MSG("Max Entity Count has been reached");
 		}
 		//assert(ecs->m_EntityCount < MaxEntity, "Max Entity Count has been reached");

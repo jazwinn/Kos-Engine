@@ -19,7 +19,7 @@ consent of DigiPen Institute of Technology is prohibited.
 
 
 #include "../Config/pch.h"
-#include "imgui_handler.h"
+#include "Editor.h"
 #include "imgui_impl_opengl3.h"
 #include "../Graphics/GraphicsPipe.h"
 #include "../Editor/EditorCamera.h"
@@ -28,6 +28,8 @@ consent of DigiPen Institute of Technology is prohibited.
 #include "../Application/Helper.h"
 #include "../Math/Mat3x3.h"
 #include "../ECS/Hierachy.h"
+
+#include <glm.hpp>
 
 
 namespace gui {
@@ -41,10 +43,12 @@ namespace gui {
         ImGuizmo::SetDrawlist();
 
         static ImGuizmo::OPERATION mCurrentGizmoOperation(ImGuizmo::TRANSLATE);
-        static bool useSnap(false);
+        static bool useSnap{false};
+        static bool focusMode{ false };
+
         static float snap[3] = { 1.f, 1.f, 1.f };
 
-        if (ImGui::IsKeyPressed(ImGuiKey_T))
+        if (ImGui::IsKeyPressed(ImGuiKey_W))
             mCurrentGizmoOperation = ImGuizmo::TRANSLATE;
         if (ImGui::IsKeyPressed(ImGuiKey_E))
             mCurrentGizmoOperation = ImGuizmo::ROTATE;
@@ -132,7 +136,11 @@ namespace gui {
         float matrixRotation[3] = {0,0, transcom->m_rotation };
         float matrixScale[3] = { transcom->m_scale.m_x, transcom->m_scale.m_y, 0};
 
-        //ImGuizmo::RecomposeMatrixFromComponents(matrixTranslation, matrixRotation, matrixScale, model);
+        //Focus mode for objects
+
+
+
+
 
         ImGuizmo::SetGizmoSizeClipSpace(EditorCamera::m_editorCamera.m_zoom.x / 8.f);
         //DRAW GIZMO
@@ -182,9 +190,24 @@ namespace gui {
             transcom->m_scale.m_y = matrixScale[1];
             //transcom->m_transformation = mat3x3::Mat3Transform(transcom->m_position, transcom->m_scale, transcom->m_rotation);
 
+
+
         
         }
+        else {
 
+
+          
+        }
+
+        if (ImGui::IsKeyPressed(ImGuiKey_F)) {
+            focusMode = focusMode ? false : true;
+        }
+        if (focusMode) {
+            // UDB not working as intended
+
+            EditorCamera::m_editorCamera.m_coordinates = glm::mix(EditorCamera::m_editorCamera.m_coordinates, glm::vec2{ transcom->m_position.m_x, transcom->m_position.m_y }, Helper::Helpers::GetInstance()->m_deltaTime * 4.f);
+        }
 	}
 
 

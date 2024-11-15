@@ -242,7 +242,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClCompile Include="Editor\ImGui Panels\imgui_component_window.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_game_scene_window.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_Gizmo.cpp" />
-    <ClCompile Include="Editor\ImGui Panels\imgui_handler.cpp" />
+    <ClCompile Include="Editor\ImGui Panels\Editor.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_hierarchy_window.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_layer_panel.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_logs_window.cpp" />
@@ -380,7 +380,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="ECS\System\PhysicsSystem.h" />
     <ClInclude Include="Editor\EditorCamera.h" />
     <ClInclude Include="ECS\System\LogicSystem.h" />
-    <ClInclude Include="Editor\ImGui Panels\imgui_handler.h" />
+    <ClInclude Include="Editor\ImGui Panels\Editor.h" />
     <ClInclude Include="Application\json_handler.h" />
     <ClInclude Include="Application\Window.h" />
     <ClInclude Include="De&amp;Serialization\json_handler.h" />
@@ -426,6 +426,9 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="ECS\System\SystemType.h" />
     <ClInclude Include="Editor\TilemapCalculations.h" />
     <ClInclude Include="Editor\WindowFile.h" />
+    <ClInclude Include="Events\Action.h" />
+    <ClInclude Include="Events\ActionEvent.h" />
+    <ClInclude Include="Events\ActionManager.h" />
     <ClInclude Include="Events\BaseEvent.h" />
     <ClInclude Include="Events\BaseMessage.h" />
     <ClInclude Include="Events\ButtonEvent.h" />
@@ -433,6 +436,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="Events\KeyEvent.h" />
     <ClInclude Include="Events\Listeners.h" />
     <ClInclude Include="Events\MessageSystem.h" />
+    <ClInclude Include="Events\ModifyAction.h" />
     <ClInclude Include="Events\MouseEvent.h" />
     <ClInclude Include="Graphics\GraphicsCamera.h" />
     <ClInclude Include="Graphics\GraphicsPipe.h" />

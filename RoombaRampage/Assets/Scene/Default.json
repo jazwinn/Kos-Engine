@@ -9,8 +9,8 @@
         },
         "transform": {
             "position": {
-                "x": -5.6425042152404785,
-                "y": 0.8988804817199707
+                "x": 7.7114057540893555,
+                "y": 6.280850887298584
             },
             "rotation": 0.0,
             "scale": {
@@ -69,8 +69,8 @@
         },
         "script": {
             "scripts": [
-                "PlayerControl",
-                "CollisionResponse"
+                "CollisionResponse",
+                "PlayerControl"
             ]
         },
         "children": [
@@ -114,8 +114,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 0.8813498020172119,
-                        "y": 3.992140293121338
+                        "x": -1.0585962533950806,
+                        "y": 1.7504246234893799
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -200,29 +200,96 @@
                 "b": 1.0
             },
             "alpha": 1.0
-        },
-        "script": {
-            "scripts": [
-                "MovingObjectScript"
-            ]
         }
     },
     {
         "name": {
-            "namestr": "dasd",
+            "namestr": "Background",
             "layer": 0,
             "isprefab": false
         },
         "transform": {
             "position": {
-                "x": 0.0,
-                "y": 0.0
+                "x": 3.6049389839172363,
+                "y": 0.39506199955940247
             },
             "rotation": 0.0,
             "scale": {
                 "x": 1.0,
                 "y": 1.0
             }
+        },
+        "sprite": {
+            "imagefile": "Background.png",
+            "layer": 0,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0
+        }
+    },
+    {
+        "name": {
+            "namestr": "Button",
+            "layer": 0,
+            "isprefab": false
+        },
+        "transform": {
+            "position": {
+                "x": -2.1917197704315186,
+                "y": 1.443798542022705
+            },
+            "rotation": 0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "sprite": {
+            "imagefile": "Button.png",
+            "layer": 2,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0
+        }
+    },
+    {
+        "name": {
+            "namestr": "ani_SeanSprite_strip4",
+            "layer": 0,
+            "isprefab": false
+        },
+        "transform": {
+            "position": {
+                "x": -2.8104302883148193,
+                "y": -2.060171127319336
+            },
+            "rotation": 0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "sprite": {
+            "imagefile": "ani_SeanSprite_strip4.png",
+            "layer": 3,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0
+        },
+        "animation": {
+            "frameNumber": 0,
+            "framesPerSecond": 3,
+            "frameTimer": 0.0,
+            "isAnimating": true
         }
     }
 ]

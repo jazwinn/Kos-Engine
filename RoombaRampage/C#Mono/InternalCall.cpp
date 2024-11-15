@@ -130,8 +130,11 @@ namespace script {
 	{
 
 		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
-
-		return static_cast<ecs::ColliderComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(entity))->m_isCollided;
+		ecs::ColliderComponent* cc = static_cast<ecs::ColliderComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(entity));
+		if (cc == NULL) {
+			return false;
+		}
+		return cc->m_isCollided;
 
 	}
 

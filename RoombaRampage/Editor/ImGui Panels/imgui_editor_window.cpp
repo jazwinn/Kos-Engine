@@ -33,7 +33,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
-#include "imgui_handler.h"
+#include "Editor.h"
 #include "imgui_internal.h"
 
 
@@ -107,6 +107,19 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
     EditorCamera::m_editorWindowPosition.y = pos.y;
     EditorCamera::m_editorWindowDimensions.x = imageSize.x;
     EditorCamera::m_editorWindowDimensions.y = imageSize.y;
+    if (ImGui::IsMouseClicked(0)) {
+        //If cursor selects object, object is selected
+        ImVec2 mouse = ImGui::GetMousePos();
+        ImVec2 windowPos = ImGui::GetWindowPos();
+        ImVec2 relativeMousePos = ImVec2(mouse.x - windowPos.x, mouse.y - windowPos.y);
+        std::cout << relativeMousePos.x << " , " << relativeMousePos.y << std::endl;
+
+        //calculate AABB of each object (active scenes)
+
+        //if pos is within any of the object, set that object as active.
+
+    }
+
 
 
 
@@ -163,6 +176,13 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
   
     //Draw gizmo
     m_DrawGizmo(pos.x, pos.y, imageSize.x, imageSize.y);
+
+
+
+
+
+
+
     
     ImGui::Dummy(renderWindowSize);
     if (ImGui::BeginDragDropTarget())
