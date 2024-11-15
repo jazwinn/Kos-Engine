@@ -273,7 +273,7 @@ namespace graphicpipe
 
 		
 
-		for (int i{}; i < m_transformedTilemaps.size(); ++i)
+		for (int i{}; i < m_transformedTilemaps.size() && !m_tileIndexes.empty(); ++i)
 		{
 			
 			glBindBuffer(GL_ARRAY_BUFFER, m_tileIndexBuffer);

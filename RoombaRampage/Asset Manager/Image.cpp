@@ -62,8 +62,8 @@ namespace image {
         stbi_set_flip_vertically_on_load(true);
         Image image{};
         image.m_stripCount = m_extractStripCountFromFilename(file);
-
         image.m_spriteName = m_extractSpriteNameFromFilename(file);
+        image.m_isTilable = m_checkIfImageTilable(image.m_spriteName);
 
 
 
@@ -78,7 +78,15 @@ namespace image {
             LOGGING_WARN("Warning: Color channels for {0} are not following RGBA specifications ", file);
         }
 
-        if (image.m_stripCount == 1)
+        if (image.m_isTilable)
+        {
+            LOGGING_INFO("{0} labled as tilemap", image.m_spriteName);
+            image.m_imageID = m_imageCount;
+            m_imageCount++;
+            m_imageMap[image.m_spriteName] = image;
+            m_imagedataArray.push_back(data);
+        }
+        else if (image.m_stripCount == 1)
         {
             if (image.m_width != image.m_height)
             {
@@ -137,7 +145,6 @@ namespace image {
         graphics->m_textureIDs.push_back(textureID);
         LOGGING_INFO("Texture Binded, Texture ID : {0} ", textureID);
         LOGGING_INFO("Image ID : {0} ", image.m_imageID);
-       // graphics->m_stripCounts.push_back(image.m_stripCount);
         graphics->m_imageData.push_back(image);
 
         return textureID;
@@ -177,6 +184,12 @@ namespace image {
         }
 
         return "Error_Cannot_Read_Sprite_Name";
+    }
+
+    bool ImageManager::m_checkIfImageTilable(const std::string& filename)
+    {
+        std::regex pattern("^(Tile|tile)_[[:alnum:]]+\\.png$");  // Pattern for "Tile_image.png"
+        return std::regex_match(filename, pattern);
     }
 
     unsigned char* ImageManager::m_funcPadTexture(const unsigned char* originalPixels, int originalWidth, int originalHeight, int originalChannels, int targetWidth, int targetHeight, int targetChannels)

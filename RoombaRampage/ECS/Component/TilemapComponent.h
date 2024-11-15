@@ -18,12 +18,12 @@ namespace ecs {
 		int m_tileIndex{-100};
 		int m_rowLength{1};
 		int m_columnLength{1};
-		int m_pictureRows{ 1 };
-		int m_pictureColumns{ 1 };
+		int m_pictureRowLength{ 1 };
+		int m_pictureColumnLength{ 1 };
 		std::vector<std::vector<int>> m_tilePictureIndex;
 
 
-		REFLECTABLE(TilemapComponent, m_tileIndex,m_tileLayer, m_rowLength, m_columnLength, m_pictureRows, m_pictureColumns);
+		REFLECTABLE(TilemapComponent, m_tileIndex,m_tileLayer, m_rowLength, m_columnLength, m_pictureRowLength, m_pictureColumnLength);
 	};
 
 }

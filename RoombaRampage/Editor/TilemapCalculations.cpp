@@ -34,10 +34,6 @@ namespace Tilemap
 
 			for (std::vector<int>& row : tilemap->m_tilePictureIndex)
 			{
-				/*for (int& x : row)
-				{
-					std::cout << x << ' ' << std::endl;
-				}*/
 				std::rotate(row.rbegin(),
 					row.rbegin() + (ceil(originCoordinates.m_x - tileCoordinates.m_x)),
 					row.rend()); // Rotate Indexes
@@ -52,15 +48,9 @@ namespace Tilemap
 		if (tileCoordinates.m_y > floor(originCoordinates.m_y + 1))
 		{
 			resizeTiles(tilemap, tilemap->m_rowLength, tilemap->m_columnLength + ceil(tileCoordinates.m_y - (originCoordinates.m_y + 1))); //Change Column Length
-			
-			for (int i = 0; i < tilemap->m_tilePictureIndex.size(); ++i)
-			{
-				//std::cout << "Y difference" << tileCoordinates.m_y - originCoordinates.m_y << std::endl;
-				std::rotate(tilemap->m_tilePictureIndex[i].begin(),
-							tilemap->m_tilePictureIndex[i].begin() + (ceil(tileCoordinates.m_y - (originCoordinates.m_y + 1))),
-							tilemap->m_tilePictureIndex[i].end()); // Rotate Indexes
-			}
-
+			std::rotate(tilemap->m_tilePictureIndex.rbegin(),
+						tilemap->m_tilePictureIndex.rbegin() + (ceil(tileCoordinates.m_y - (originCoordinates.m_y + 1))),
+						tilemap->m_tilePictureIndex.rend()); // Rotate Indexes
 			originCoordinates.m_y = floor(tileCoordinates.m_y); //Set to center of tile
 		}
 
