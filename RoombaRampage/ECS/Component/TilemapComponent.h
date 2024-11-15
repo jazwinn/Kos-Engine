@@ -15,7 +15,7 @@ namespace ecs {
 		int m_tileLayer{};
 		vector3::Vec3 m_color{ 1.f,1.f,1.f };
 		float m_alpha{ 1.f };
-		int m_tileIndex{};
+		int m_tileIndex{-100};
 		int m_rowLength{1};
 		int m_columnLength{1};
 		int m_pictureRows{ 1 };

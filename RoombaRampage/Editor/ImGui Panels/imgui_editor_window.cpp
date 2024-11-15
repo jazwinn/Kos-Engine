@@ -125,6 +125,7 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
 
     float scrollInput = ImGui::GetIO().MouseWheel; // Positive for zoom in, negative for zoom out
 
+    //Zoom In/Out Camera
     if (ImGui::IsWindowHovered())
     {
         EditorCamera::m_editorCamera.m_zoom.x -= scrollInput * EditorCamera::m_editorCameraZoomSensitivity * EditorCamera::m_editorCamera.m_zoom.x;
@@ -135,7 +136,8 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
 
        
     }
-     
+    
+    //Move Camera Around
     if (ImGui::IsMouseDragging(ImGuiMouseButton_Right) && ImGui::IsWindowHovered())
     {
         ImVec2 mouseDelta = ImGui::GetMouseDragDelta(ImGuiMouseButton_Right);
@@ -165,6 +167,8 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
     graphicpipe::GraphicsCamera::m_currCameraMatrix = EditorCamera::m_editorCameraMatrix;
     graphicpipe::GraphicsCamera::m_currViewMatrix = EditorCamera::m_editorViewMatrix;
 
+
+    //If no Camera, Set Editor Camera as Game Camera
     if (graphicpipe::GraphicsCamera::m_cameras.size() == 0)
     {
         graphicpipe::GraphicsCamera::m_currCameraScaleX = EditorCamera::m_editorCamera.m_zoom.x;
@@ -183,7 +187,7 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
 
 
 
-    
+    //For Dragging Assets Into Editor Window
     ImGui::Dummy(renderWindowSize);
     if (ImGui::BeginDragDropTarget())
     {

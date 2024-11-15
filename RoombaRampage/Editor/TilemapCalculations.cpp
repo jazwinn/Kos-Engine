@@ -49,20 +49,20 @@ namespace Tilemap
 		{
 			resizeTiles(tilemap, tilemap->m_rowLength , ceil(originCoordinates.m_y + 1 - tileCoordinates.m_y));
 		}
-		//if (tileCoordinates.m_y > floor(originCoordinates.m_y))
-		//{
-		//	resizeTiles(tilemap, tilemap->m_rowLength, tilemap->m_columnLength + floor(tileCoordinates.m_y - originCoordinates.m_y)); //Change Column Length
-		//	
-		//	for (int i = 0; i < tilemap->m_tilePictureIndex.size(); ++i)
-		//	{
-		//		std::cout << "Y difference" << tileCoordinates.m_y - originCoordinates.m_y << std::endl;
-		//		std::rotate(tilemap->m_tilePictureIndex[i].begin(),
-		//					tilemap->m_tilePictureIndex[i].begin() + (floor(tileCoordinates.m_y - originCoordinates.m_y)),
-		//					tilemap->m_tilePictureIndex[i].end()); // Rotate Indexes
-		//	}
+		if (tileCoordinates.m_y > floor(originCoordinates.m_y + 1))
+		{
+			resizeTiles(tilemap, tilemap->m_rowLength, tilemap->m_columnLength + ceil(tileCoordinates.m_y - (originCoordinates.m_y + 1))); //Change Column Length
+			
+			for (int i = 0; i < tilemap->m_tilePictureIndex.size(); ++i)
+			{
+				//std::cout << "Y difference" << tileCoordinates.m_y - originCoordinates.m_y << std::endl;
+				std::rotate(tilemap->m_tilePictureIndex[i].begin(),
+							tilemap->m_tilePictureIndex[i].begin() + (ceil(tileCoordinates.m_y - (originCoordinates.m_y + 1))),
+							tilemap->m_tilePictureIndex[i].end()); // Rotate Indexes
+			}
 
-		//	originCoordinates.m_y = floor(tileCoordinates.m_y) + 0.5f; //Set to center of tile
-		//}
+			originCoordinates.m_y = floor(tileCoordinates.m_y); //Set to center of tile
+		}
 
 		int indexX = floor(tileCoordinates.m_x - originCoordinates.m_x);
 		int indexY = floor(originCoordinates.m_y - tileCoordinates.m_y) + 1.f;

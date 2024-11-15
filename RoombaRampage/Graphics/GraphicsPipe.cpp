@@ -179,9 +179,19 @@ namespace graphicpipe {
 
 		if (m_gameMode)
 		{
+			Helper::Helpers* help = Helper::Helpers::GetInstance();
+			/*if (GraphicsCamera::m_cameras.size() > 0 && m_gameMode)
+			{
+				GraphicsCamera::setCurrCamera(0);
+				GraphicsCamera::calculateCurrView();
+			}
+			GraphicsCamera::setCurrCamera(0);
+			GraphicsCamera::calculateCurrView();*/
+			glClearColor(0.86f, 0.86f, 0.86f, 1.f);
 			glEnable(GL_DEPTH_TEST);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 			m_funcDraw();
+			m_funcDrawTilemap();
 			m_funcDrawText();
 		}
 

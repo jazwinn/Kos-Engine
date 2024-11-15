@@ -117,6 +117,7 @@ namespace Application {
         std::cout << "IMGUIENABLED is defined" << std::endl;
 #else
         std::cout << "IMGUIENABLED is NOT defined" << std::endl;
+        pipe->m_gameMode = true;
 #endif      
 
 
@@ -192,10 +193,9 @@ namespace Application {
                    Render Game Scene
                 --------------------------------------------------------------*/
                 pipe->m_funcRenderGameScene();
-            
-                //glClearColor(1.f, 1.f, 1.f, 1.f);
+           
 
-               
+              
 
                 //double currentFrameTime = glfwGetTime();
                 //help->m_deltaTime = static_cast<float>(currentFrameTime - lastFrameTime);
