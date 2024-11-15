@@ -175,50 +175,6 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
 
 
 
-    float scrollInput = ImGui::GetIO().MouseWheel; // Positive for zoom in, negative for zoom out
-
-    //Zoom In/Out Camera
-    if (ImGui::IsWindowHovered())
-    {
-        EditorCamera::m_editorCamera.m_zoom.x -= scrollInput * EditorCamera::m_editorCameraZoomSensitivity * EditorCamera::m_editorCamera.m_zoom.x;
-        EditorCamera::m_editorCamera.m_zoom.y -= scrollInput * EditorCamera::m_editorCameraZoomSensitivity * EditorCamera::m_editorCamera.m_zoom.y;
-
-        EditorCamera::m_editorCamera.m_zoom.x = glm::clamp(EditorCamera::m_editorCamera.m_zoom.x, 0.1f, 100.f);
-        EditorCamera::m_editorCamera.m_zoom.y = glm::clamp(EditorCamera::m_editorCamera.m_zoom.y, 0.1f, 100.f);
-
-       
-    }
-    
-    //Move Camera Around
-    if (ImGui::IsMouseDragging(ImGuiMouseButton_Right) && ImGui::IsWindowHovered())
-    {
-        ImVec2 mouseDelta = ImGui::GetMouseDragDelta(ImGuiMouseButton_Right);
-
-        glm::vec2 delta = glm::vec2(mouseDelta.x, mouseDelta.y) * EditorCamera::m_editorCameraDragSensitivity * EditorCamera::m_editorCamera.m_zoom.x;
-
-        // Update the camera position
-        EditorCamera::m_editorCamera.m_coordinates.x -= delta.x;
-        EditorCamera::m_editorCamera.m_coordinates.y += delta.y;
-     
-        ImGui::ResetMouseDragDelta(ImGuiMouseButton_Right);
-    }
-
-    //Reset Camera To Center
-    if (ImGui::IsKeyDown(ImGuiKey_LeftCtrl) && ImGui::IsKeyDown(ImGuiKey_R))
-    {
-        EditorCamera::m_editorCamera.m_coordinates.x = 0.f;
-        EditorCamera::m_editorCamera.m_coordinates.y = 0.f;
-        EditorCamera::m_editorCamera.m_zoom.x = 1.f;
-        EditorCamera::m_editorCamera.m_zoom.y = 1.f;
-    }
-
-    //set tile map 
-    if (m_tilePickerMode && ImGui::IsWindowHovered() && ImGui::IsMouseDown(ImGuiMouseButton_Left))
-    {
-        auto* tmc = static_cast<ecs::TilemapComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETILEMAPCOMPONENT]->m_GetEntityComponent(m_clickedEntityId));
-        auto* transform = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(m_clickedEntityId));
-        Tilemap::setIndividualTile(transform->m_position, EditorCamera::calculateWorldCoordinatesFromMouse(ImGui::GetMousePos().x, ImGui::GetMousePos().y), tmc);
-    }
 
     EditorCamera::calculateLevelEditorCamera();
     EditorCamera::calculateLevelEditorView();
@@ -243,6 +199,50 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
 
 
 
+    float scrollInput = ImGui::GetIO().MouseWheel; // Positive for zoom in, negative for zoom out
+
+    //Zoom In/Out Camera
+    if (ImGui::IsWindowHovered())
+    {
+        EditorCamera::m_editorCamera.m_zoom.x -= scrollInput * EditorCamera::m_editorCameraZoomSensitivity * EditorCamera::m_editorCamera.m_zoom.x;
+        EditorCamera::m_editorCamera.m_zoom.y -= scrollInput * EditorCamera::m_editorCameraZoomSensitivity * EditorCamera::m_editorCamera.m_zoom.y;
+
+        EditorCamera::m_editorCamera.m_zoom.x = glm::clamp(EditorCamera::m_editorCamera.m_zoom.x, 0.1f, 100.f);
+        EditorCamera::m_editorCamera.m_zoom.y = glm::clamp(EditorCamera::m_editorCamera.m_zoom.y, 0.1f, 100.f);
+
+
+    }
+
+    //Move Camera Around
+    if (ImGui::IsMouseDragging(ImGuiMouseButton_Right) && ImGui::IsWindowHovered())
+    {
+        ImVec2 mouseDelta = ImGui::GetMouseDragDelta(ImGuiMouseButton_Right);
+
+        glm::vec2 delta = glm::vec2(mouseDelta.x, mouseDelta.y) * EditorCamera::m_editorCameraDragSensitivity * EditorCamera::m_editorCamera.m_zoom.x;
+
+        // Update the camera position
+        EditorCamera::m_editorCamera.m_coordinates.x -= delta.x;
+        EditorCamera::m_editorCamera.m_coordinates.y += delta.y;
+
+        ImGui::ResetMouseDragDelta(ImGuiMouseButton_Right);
+    }
+
+    //Reset Camera To Center
+    if (ImGui::IsKeyDown(ImGuiKey_LeftCtrl) && ImGui::IsKeyDown(ImGuiKey_R))
+    {
+        EditorCamera::m_editorCamera.m_coordinates.x = 0.f;
+        EditorCamera::m_editorCamera.m_coordinates.y = 0.f;
+        EditorCamera::m_editorCamera.m_zoom.x = 1.f;
+        EditorCamera::m_editorCamera.m_zoom.y = 1.f;
+    }
+
+    //set tile map 
+    if (m_tilePickerMode && ImGui::IsMouseDown(ImGuiMouseButton_Left) && !ImGuizmo::IsUsing() && ImGui::IsWindowHovered())
+    {
+        auto* tmc = static_cast<ecs::TilemapComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETILEMAPCOMPONENT]->m_GetEntityComponent(m_clickedEntityId));
+        auto* transform = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(m_clickedEntityId));
+        Tilemap::setIndividualTile(transform->m_position, EditorCamera::calculateWorldCoordinatesFromMouse(ImGui::GetMousePos().x, ImGui::GetMousePos().y), tmc);
+    }
 
 
 
