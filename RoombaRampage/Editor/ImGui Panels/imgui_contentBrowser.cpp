@@ -46,7 +46,7 @@ namespace gui {
 			ImGui::EndChild();
 		}
 		ImGui::SameLine();
-		if (m_tilePickerMode)
+		if (m_tilePickerMode && ecs->m_ECS_CombinedComponentPool[ecs::TYPETILEMAPCOMPONENT]->m_HasComponent(m_clickedEntityId))
 		{
 			m_DrawTilePicker();
 		}

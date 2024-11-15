@@ -84,8 +84,8 @@ namespace gui
 
 				float uvX0 = xIndex * xWidth;               // Left UV coordinate
 				float uvX1 = (xIndex + 1) * xWidth;         // Right UV coordinate
-				float uvY0 = (yIndex + 1) * yWidth;  // Top UV coordinate (flipped vertically)
-				float uvY1 = yIndex * yWidth;        // Bottom UV coordinate
+				float uvY0 = 1.f - (yIndex + 1) * yWidth;  // Top UV coordinate (flipped vertically)
+				float uvY1 = 1.f - yIndex * yWidth;        // Bottom UV coordinate
 
 				if (isTileEmpty(data, uvX0 * image->second.m_width, uvY1 * image->second.m_height, xWidth * image->second.m_width, yWidth * image->second.m_height, image->second.m_width, image->second.m_channels)) continue;
 
