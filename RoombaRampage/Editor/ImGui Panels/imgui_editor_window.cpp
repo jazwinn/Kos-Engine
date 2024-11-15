@@ -66,6 +66,8 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
     ImVec2 pos = ImGui::GetCursorScreenPos();
     ImVec2 renderWindowSize = ImGui::GetContentRegionAvail();
 
+   
+
     float textureAspectRatio = (float)windowWidth / (float)windowHeight;
     float renderWindowAspectRatio = renderWindowSize.x / renderWindowSize.y;
 
@@ -101,6 +103,10 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
         ImVec2(pos.x + imageSize.x, pos.y + imageSize.y),
         ImVec2(0, 1), ImVec2(1, 0));
 
+    EditorCamera::m_editorWindowPosition.x = pos.x;
+    EditorCamera::m_editorWindowPosition.y = pos.y;
+    EditorCamera::m_editorWindowDimensions.x = imageSize.x;
+    EditorCamera::m_editorWindowDimensions.y = imageSize.y;
     if (ImGui::IsMouseClicked(0)) {
         //If cursor selects object, object is selected
         ImVec2 mouse = ImGui::GetMousePos();
@@ -119,6 +125,7 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
 
     float scrollInput = ImGui::GetIO().MouseWheel; // Positive for zoom in, negative for zoom out
 
+    //Zoom In/Out Camera
     if (ImGui::IsWindowHovered())
     {
         EditorCamera::m_editorCamera.m_zoom.x -= scrollInput * EditorCamera::m_editorCameraZoomSensitivity * EditorCamera::m_editorCamera.m_zoom.x;
@@ -126,8 +133,11 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
 
         EditorCamera::m_editorCamera.m_zoom.x = glm::clamp(EditorCamera::m_editorCamera.m_zoom.x, 0.1f, 100.f);
         EditorCamera::m_editorCamera.m_zoom.y = glm::clamp(EditorCamera::m_editorCamera.m_zoom.y, 0.1f, 100.f);
+
+       
     }
-     
+    
+    //Move Camera Around
     if (ImGui::IsMouseDragging(ImGuiMouseButton_Right) && ImGui::IsWindowHovered())
     {
         ImVec2 mouseDelta = ImGui::GetMouseDragDelta(ImGuiMouseButton_Right);
@@ -157,6 +167,8 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
     graphicpipe::GraphicsCamera::m_currCameraMatrix = EditorCamera::m_editorCameraMatrix;
     graphicpipe::GraphicsCamera::m_currViewMatrix = EditorCamera::m_editorViewMatrix;
 
+
+    //If no Camera, Set Editor Camera as Game Camera
     if (graphicpipe::GraphicsCamera::m_cameras.size() == 0)
     {
         graphicpipe::GraphicsCamera::m_currCameraScaleX = EditorCamera::m_editorCamera.m_zoom.x;
@@ -175,7 +187,7 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
 
 
 
-    
+    //For Dragging Assets Into Editor Window
     ImGui::Dummy(renderWindowSize);
     if (ImGui::BeginDragDropTarget())
     {

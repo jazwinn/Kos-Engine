@@ -24,6 +24,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Asset Manager/AssetManager.h"
 #include "../Graphics/GraphicsPipe.h"
 #include "../ECS/Layers.h"
+#include "../Editor/TilemapCalculations.h"
 
 #include "ScriptVariable.h"
 
@@ -203,7 +204,8 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
     //Add Component Window
     const char* ComponentNames[] =
     {
-        "Add Components", "Collider Component", "Sprite Component", "Player Component", "Rigid Body Component", "Text Component", "Animation Component", "Camera Component" , "Button Component" , "Script Component"
+        "Add Components", "Collider Component", "Sprite Component", "Player Component", "Rigid Body Component", "Text Component", 
+        "Animation Component", "Camera Component" , "Button Component" , "Script Component", "Tilemap Component"
     };
     static int ComponentType = 0;
 
@@ -250,6 +252,10 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
             }
             if (ComponentType == 9) {
                 ecs->m_AddComponent(ecs::TYPESCRIPTCOMPONENT, entityID);
+                ComponentType = 0;
+            }
+            if (ComponentType == 10) {
+                ecs->m_AddComponent(ecs::TYPETILEMAPCOMPONENT, entityID);
                 ComponentType = 0;
             }
         }
@@ -867,6 +873,86 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 if (open) {
                     //auto* rbc = static_cast<ecs::ButtonComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEBUTTONCOMPONENT]->m_GetEntityComponent(entityID));
                     //rbc->ApplyFunction(DrawComponents(rbc->Names()));
+                }
+
+
+            }
+
+            if (EntitySignature.test(ecs::TYPETILEMAPCOMPONENT)) {
+
+                open = ImGui::CollapsingHeader("Tilemap Component");
+
+                CreateContext(ecs::TYPETILEMAPCOMPONENT, entityID);
+
+                if (open) {
+
+                    assetmanager::AssetManager* Asset = assetmanager::AssetManager::m_funcGetInstance();
+                    auto* tmc = static_cast<ecs::TilemapComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETILEMAPCOMPONENT]->m_GetEntityComponent(entityID));
+                    auto* transform = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(entityID));
+
+
+
+                    if (ImGui::BeginCombo("Tilemaps", tmc->m_tilemapFile.c_str()))
+                    {
+                        for (const auto& image : Asset->m_imageManager.m_imageMap) {
+
+                            if (ImGui::Selectable(image.first.c_str())) {
+                                tmc->m_tilemapFile = image.first.c_str();
+                            }
+                        }
+                        ImGui::EndCombo();
+                    }
+
+                    if (ImGui::BeginDragDropTarget())
+                    {
+
+                        if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("file"))
+                        {
+                            IM_ASSERT(payload->DataSize == sizeof(std::filesystem::path));
+                            std::filesystem::path* filename = static_cast<std::filesystem::path*>(payload->Data);
+                            if (filename->filename().extension().string() == ".png") {
+                                if (Asset->m_imageManager.m_imageMap.find(filename->filename().string()) == Asset->m_imageManager.m_imageMap.end()) {
+                                    LOGGING_WARN("File not loaded, please reload content browser");
+                                }
+                                else {
+                                    tmc->m_tilemapFile = filename->filename().string();
+                                }
+                            }
+                            else {
+                                LOGGING_WARN("Wrong File Type");
+                            }
+                        }
+                        ImGui::EndDragDropTarget();
+                    }
+
+                    ImVec4 color = ImVec4(tmc->m_color.m_x, tmc->m_color.m_y, tmc->m_color.m_z, tmc->m_alpha);
+
+                    ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
+                    ImGui::Text("Color");
+                    ImGui::SameLine();
+                    if (ImGui::ColorEdit3("##MyColor3", (float*)&color, ImGuiColorEditFlags_DisplayRGB))
+                    {
+                        tmc->m_color.m_x = color.x;
+                        tmc->m_color.m_y = color.y;
+                        tmc->m_color.m_z = color.z;
+                    }
+
+
+                    if (open) {
+                        auto* rbc = static_cast<ecs::TilemapComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETILEMAPCOMPONENT]->m_GetEntityComponent(entityID));
+                        rbc->ApplyFunction(DrawComponents(rbc->Names()));
+                    }
+                    Tilemap::resizeTiles(tmc, tmc->m_rowLength, tmc->m_columnLength);
+                    //Tilemap::debugTileIndex(tmc);
+
+                    //std::cout << EditorCamera::calculateWorldCoordinatesFromMouse(ImGui::GetMousePos().x, ImGui::GetMousePos().y).m_y << std::endl;
+
+                    if (ImGui::IsKeyPressed(ImGuiKey_M))
+                    {
+                        Tilemap::setIndividualTile(transform->m_position, EditorCamera::calculateWorldCoordinatesFromMouse(ImGui::GetMousePos().x, ImGui::GetMousePos().y), tmc);
+                    }
+                   
+
                 }
 
 

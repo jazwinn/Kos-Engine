@@ -33,6 +33,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "CameraComponent.h"
 #include "ScriptComponent.h"
 #include "ButtonComponent.h"
+#include "TilemapComponent.h"
 
 
 
