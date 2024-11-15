@@ -1,7 +1,7 @@
 #ifndef TILEMAPCALC_H
 #define TILEMAPCALC_H
 
-#include "EditorCamera.h"
+
 #include "../Graphics/GraphicsPipe.h"
 #include "../ECS/ECS.h"
 #include "../Math/vector2.h"

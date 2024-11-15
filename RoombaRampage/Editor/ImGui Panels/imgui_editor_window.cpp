@@ -45,6 +45,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Editor/EditorCamera.h"
 
 #include "../ECS/Hierachy.h"
+#include "../Editor/TilemapCalculations.h"
 
 
 
@@ -209,6 +210,14 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
         EditorCamera::m_editorCamera.m_coordinates.y = 0.f;
         EditorCamera::m_editorCamera.m_zoom.x = 1.f;
         EditorCamera::m_editorCamera.m_zoom.y = 1.f;
+    }
+
+    //set tile map 
+    if (m_tilePickerMode && ImGui::IsWindowHovered() && ImGui::IsMouseDown(ImGuiMouseButton_Left))
+    {
+        auto* tmc = static_cast<ecs::TilemapComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETILEMAPCOMPONENT]->m_GetEntityComponent(m_clickedEntityId));
+        auto* transform = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(m_clickedEntityId));
+        Tilemap::setIndividualTile(transform->m_position, EditorCamera::calculateWorldCoordinatesFromMouse(ImGui::GetMousePos().x, ImGui::GetMousePos().y), tmc);
     }
 
     EditorCamera::calculateLevelEditorCamera();

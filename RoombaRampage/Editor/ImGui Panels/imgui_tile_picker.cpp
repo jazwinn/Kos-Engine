@@ -51,10 +51,7 @@ namespace gui
 		auto* tmc = static_cast<ecs::TilemapComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETILEMAPCOMPONENT]->m_GetEntityComponent(m_clickedEntityId));
 		auto* transform = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(m_clickedEntityId));
 
-		if (ImGui::IsMouseDown(ImGuiMouseButton_Left))
-		{
-			Tilemap::setIndividualTile(transform->m_position, EditorCamera::calculateWorldCoordinatesFromMouse(ImGui::GetMousePos().x, ImGui::GetMousePos().y), tmc);
-		}
+
 
 		const float padding = 20.f;
 		const float thumbnail = 80.f;
@@ -74,7 +71,7 @@ namespace gui
 
 		if (image != assetmanager->m_imageManager.m_imageMap.end())
 		{
-			auto& data = assetmanager->m_imageManager.m_imagedataArray[image->second.m_imageID];
+			auto* data = assetmanager->m_imageManager.m_imagedataArray[image->second.m_imageID];
 			for (int i = 0; i < (tmc->m_pictureRowLength * tmc->m_pictureColumnLength); ++i)
 			{
 
