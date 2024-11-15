@@ -952,7 +952,6 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                     //std::cout << EditorCamera::calculateWorldCoordinatesFromMouse(ImGui::GetMousePos().x, ImGui::GetMousePos().y).m_y << std::endl;
 
-
                    
 
                 }
