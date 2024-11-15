@@ -277,7 +277,7 @@ namespace graphicpipe
 		{
 			
 			glBindBuffer(GL_ARRAY_BUFFER, m_tileIndexBuffer);
-			glNamedBufferData(m_tileIndexBuffer, m_tileIndexes.size() * sizeof(int), &m_tileIndexes[0], GL_DYNAMIC_DRAW);
+			glNamedBufferData(m_tileIndexBuffer, m_tileIndexes[i].size() * sizeof(int), &m_tileIndexes[i][0], GL_DYNAMIC_DRAW);
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 

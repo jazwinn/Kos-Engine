@@ -82,9 +82,11 @@ namespace graphicpipe
 				m_tilemapData[n].m_transformation[1][1] = m_tilemapData[n].m_transformation[1][1] * heightRatio;
 				m_tilemapData[n].m_transformation[1][0] = m_tilemapData[n].m_transformation[1][0] * heightRatio;
 				int moveCount = 0;
+				m_tileIndexes.push_back({});
 				for (int i = 0; i < m_tilemapIndexArrays[n].size(); ++i)
 				{
-					m_tileIndexes.insert( m_tileIndexes.end(),
+					
+					m_tileIndexes[n].insert(m_tileIndexes[n].end(),
 										  std::make_move_iterator(m_tilemapIndexArrays[n][i].begin()),
 										  std::make_move_iterator(m_tilemapIndexArrays[n][i].end())
 										);

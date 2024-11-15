@@ -347,7 +347,7 @@ namespace graphicpipe {
         std::vector<float> m_debugCircleCollisionChecks{}; ///< Collision check data for debug rendering.
         std::vector<int> m_textureOrder{}; ///< Order of texture bindings.
         std::vector<glm::vec4> m_colors{}; 
-        std::vector<int> m_tileIndexes{};
+        std::vector<std::vector<int>> m_tileIndexes{};
 
         std::vector<unsigned int> m_textureIDs{}; ///< Array of texture IDs.
         std::vector<int> m_layers{};

@@ -55,7 +55,7 @@ namespace graphicpipe
 
 		glGenBuffers(1, &m_tileIndexBuffer);
 		glBindBuffer(GL_ARRAY_BUFFER, m_tileIndexBuffer);
-		glBufferData(GL_ARRAY_BUFFER, m_tileIndexes.size() * sizeof(int), &m_tileIndexes[0], GL_DYNAMIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, m_tileIndexes.size() * sizeof(int), &m_tileIndexes[0][0], GL_DYNAMIC_DRAW);
 		glEnableVertexAttribArray(15);
 		glVertexAttribIPointer(15, 1, GL_INT, sizeof(int), (void*)0);
 		glVertexAttribDivisor(15, 1);

@@ -84,7 +84,7 @@ namespace graphicpipe {
 		m_frameNumbers.push_back(0);
 		m_stripCounts.push_back({ 0,0 });
 		m_layers.push_back(0);
-		m_tileIndexes.push_back(0);
+		m_tileIndexes.push_back({0});
 		m_colors.push_back({ 0.f, 0.f, 0.f, 0.f });
 		m_debugBoxToNDCMatrix.push_back(m_testMatrix);
 		m_debugBoxCollisionChecks.push_back(false);
