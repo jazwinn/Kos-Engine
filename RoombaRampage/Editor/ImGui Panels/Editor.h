@@ -210,6 +210,8 @@ namespace gui {
         
         void m_DrawContentBrowser();
 
+        void m_DrawTilePicker();
+
         void m_OnButtonPress(const events::BaseEvent<events::ButtonEvents>& givenEvent);
 
         void m_UpdateOnPrefabMode();
@@ -221,6 +223,7 @@ namespace gui {
 
         /***********PREFAB*************/
         bool m_prefabSceneMode{ false };
+        bool m_tilePickerMode{ false };
         std::unordered_map<std::string, bool> m_savedSceneState;
 
         bool m_objectNameBox = false;

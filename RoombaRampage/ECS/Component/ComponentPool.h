@@ -33,6 +33,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "CameraComponent.h"
 #include "ScriptComponent.h"
 #include "ButtonComponent.h"
+#include "TilemapComponent.h"
 
 
 
@@ -77,6 +78,8 @@ namespace ecs {
 		virtual bool m_HasComponent(EntityID) = 0;
 
 		virtual bool m_DeleteEntityComponent(EntityID) = 0;
+
+		virtual void m_ResetComponent(EntityID) = 0;
 		/******************************************************************/
 		/*!
 		\fn        m_DuplicateComponent(EntityID DuplicatesID, EntityID NewID)
@@ -111,6 +114,8 @@ namespace ecs {
 		void* m_GetEntityComponent(EntityID) override;
 
 		bool m_HasComponent(EntityID) override;
+		
+		void m_ResetComponent(EntityID) override;
 
 		bool m_DeleteEntityComponent(EntityID) override;
 
@@ -229,6 +234,26 @@ namespace ecs {
 		return false;
 	}
 
+	template<typename T>
+	void ComponentPool<T>::m_ResetComponent(EntityID id) {
+
+		T* ptr = static_cast<T*>(m_GetEntityComponent(id));
+
+		if (ptr) {
+			//save
+			std::string savescene = ptr->m_scene;
+			ecs::EntityID saveid = ptr->m_Entity;
+
+			*ptr = *(m_Pool.end() - 1);
+
+			//load back
+			ptr->m_scene = savescene;
+			ptr->m_Entity = saveid;
+			ptr->m_IsLive = true;
+		}
+
+
+	}
 
 }
 

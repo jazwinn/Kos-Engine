@@ -29,6 +29,8 @@ consent of DigiPen Institute of Technology is prohibited.
 #include "../Math/Mat3x3.h"
 #include "../ECS/Hierachy.h"
 
+#include <glm.hpp>
+
 
 namespace gui {
 
@@ -41,10 +43,12 @@ namespace gui {
         ImGuizmo::SetDrawlist();
 
         static ImGuizmo::OPERATION mCurrentGizmoOperation(ImGuizmo::TRANSLATE);
-        static bool useSnap(false);
+        static bool useSnap{false};
+        static bool focusMode{ false };
+
         static float snap[3] = { 1.f, 1.f, 1.f };
 
-        if (ImGui::IsKeyPressed(ImGuiKey_T))
+        if (ImGui::IsKeyPressed(ImGuiKey_W))
             mCurrentGizmoOperation = ImGuizmo::TRANSLATE;
         if (ImGui::IsKeyPressed(ImGuiKey_E))
             mCurrentGizmoOperation = ImGuizmo::ROTATE;
@@ -132,7 +136,11 @@ namespace gui {
         float matrixRotation[3] = {0,0, transcom->m_rotation };
         float matrixScale[3] = { transcom->m_scale.m_x, transcom->m_scale.m_y, 0};
 
-        //ImGuizmo::RecomposeMatrixFromComponents(matrixTranslation, matrixRotation, matrixScale, model);
+        //Focus mode for objects
+
+
+
+
 
         ImGuizmo::SetGizmoSizeClipSpace(EditorCamera::m_editorCamera.m_zoom.x / 8.f);
         //DRAW GIZMO
@@ -182,9 +190,31 @@ namespace gui {
             transcom->m_scale.m_y = matrixScale[1];
             //transcom->m_transformation = mat3x3::Mat3Transform(transcom->m_position, transcom->m_scale, transcom->m_rotation);
 
+
+
         
         }
+        else {
 
+
+          
+        }
+
+        if (ImGui::IsKeyDown(ImGuiKey_LeftShift) && ImGui::IsKeyPressed(ImGuiKey_F)) {
+            focusMode = focusMode ? false : true;
+        }
+        else if (ImGui::IsKeyPressed(ImGuiKey_F)) {
+            EditorCamera::m_editorCamera.m_coordinates.x = transcom->m_position.m_x;
+            EditorCamera::m_editorCamera.m_coordinates.y = transcom->m_position.m_y;
+        }
+        if (focusMode) {
+            // UDB not working as intended
+            const auto& coordinate = mathlibrary::mathlib::Mix(vector2::Vec2(EditorCamera::m_editorCamera.m_coordinates.x, EditorCamera::m_editorCamera.m_coordinates.y), vector2::Vec2{ matrixTranslation[0] , matrixTranslation[1] }, Helper::Helpers::GetInstance()->m_deltaTime * 3.5f);
+            EditorCamera::m_editorCamera.m_coordinates.x = coordinate.m_x;
+            EditorCamera::m_editorCamera.m_coordinates.y = coordinate.m_y;
+
+
+        }
 	}
 
 

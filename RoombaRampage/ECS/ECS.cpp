@@ -56,6 +56,7 @@ namespace ecs{
 		m_AddComponentToECS<CameraComponent>(TYPECAMERACOMPONENT);
 		m_AddComponentToECS<ScriptComponent>(TYPESCRIPTCOMPONENT);
 		m_AddComponentToECS<ButtonComponent>(TYPEBUTTONCOMPONENT);
+		m_AddComponentToECS<TilemapComponent>(TYPETILEMAPCOMPONENT);
 
 		//Allocate memory to each system
 		ecs->m_ECS_SystemMap[TYPETRANSFORMSYSTEM] = std::make_shared<TransformSystem>();
@@ -70,6 +71,7 @@ namespace ecs{
 		ecs->m_ECS_SystemMap[TYPEDEBUGDRAWINGSYSTEM] = std::make_shared<DebugDrawingSystem>();
 		ecs->m_ECS_SystemMap[TYPECAMERASYSTEM] = std::make_shared<CameraSystem>();
 		ecs->m_ECS_SystemMap[TYPEANIMATIONSYSTEM] = std::make_shared<AnimationSystem>();
+		ecs->m_ECS_SystemMap[TYPETILEMAPSYSTEM] = std::make_shared<TilemapSystem>();
 		
 
 		//Initialize all system Peformance
@@ -245,7 +247,7 @@ namespace ecs{
 		ECS* ecs = ECS::m_GetInstance();
 
 		//TODO change to sth other than assert
-		if (ecs->m_EntityCount >= MaxEntity) {
+		if (ecs->m_EntityCount >= (MaxEntity - 1)) {// -1 so as to keep all the last component pool as default to reset
 			LOGGING_ASSERT_WITH_MSG("Max Entity Count has been reached");
 		}
 		//assert(ecs->m_EntityCount < MaxEntity, "Max Entity Count has been reached");

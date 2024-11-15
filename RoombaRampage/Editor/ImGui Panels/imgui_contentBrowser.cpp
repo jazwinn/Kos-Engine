@@ -46,9 +46,12 @@ namespace gui {
 			ImGui::EndChild();
 		}
 		ImGui::SameLine();
+		if (m_tilePickerMode && ecs->m_ECS_CombinedComponentPool[ecs::TYPETILEMAPCOMPONENT]->m_HasComponent(m_clickedEntityId))
 		{
-
-
+			m_DrawTilePicker();
+		}
+		else
+		{
 			ImGui::BeginChild("ChildLa", ImVec2(0, ImGui::GetContentRegionAvail().y));
 
 

@@ -119,10 +119,11 @@ namespace gui {
 
                     std::thread load(DrawLoading);
                     assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
-                    assetmanager->m_scriptManager.m_HotReloadCompileAllCsharpFile();
+                    assetmanager->m_scriptManager.m_HotReloadCompileAllCsharpFile("Assets/Scripts");
                     assetmanager->m_scriptManager.m_ReloadAllDLL();
                     CloseLoadingWindow(hwnds);
                     load.join();
+                    //reset delta time
                     
 
 

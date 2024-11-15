@@ -43,6 +43,7 @@ namespace image {
 		int m_channels{};            ///< Number of color channels in the image.
 		int m_stripCount{};          ///< Number of strips in the image (for sprite sheets).
 		bool m_isPadded = false;     ///< Indicates whether the image has been padded to be square.
+		bool m_isTilable = false;
 		int m_imageID{};             ///< Unique identif
 		unsigned int textureID{};
 	};
@@ -81,6 +82,9 @@ namespace image {
 		 * @return std::string Extracted sprite name or error message.
 		 */
 		std::string m_extractSpriteNameFromFilename(const std::string& filename);
+		
+		
+		bool m_checkIfImageTilable(const std::string& filename);
 		/**
 		 * @brief Pads non-square textures to make them square.
 		 *

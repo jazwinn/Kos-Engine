@@ -20,7 +20,8 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #ifndef VECTOR2_H
 #define VECTOR2_H
 #include <cstddef>
-#include "Mathlib.h"
+
+
 namespace vector2 {
     class Vec2 {
     public:

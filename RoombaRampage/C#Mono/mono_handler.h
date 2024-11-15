@@ -164,7 +164,7 @@ namespace script {
 					   and enables hot reloading of scripts without restarting the engine.
 		*/
 		/******************************************************************/
-		void m_HotReloadCompileAllCsharpFile();
+		void m_HotReloadCompileAllCsharpFile(std::string path);
 
 		/******************************************************************/
 		/*!

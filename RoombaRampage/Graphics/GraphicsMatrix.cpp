@@ -28,15 +28,15 @@ namespace graphicpipe
 {
 	void GraphicsPipe::m_funcCalculateModelToWorldMatrix()
 	{
+		
+
 		if (m_modelData.size() > 0)
 		{
 			for (int n{}; n < m_modelData.size(); n++)
 			{
 				float heightRatio = static_cast<float>(m_imageData[m_modelData[n].m_textureID].m_height) / m_unitHeight;
 				float widthRatio = static_cast<float>(m_imageData[m_modelData[n].m_textureID].m_width) / m_unitWidth;
-
 				float imageAspectRatio = static_cast<float>(m_imageData[m_modelData[n].m_textureID].m_width) / static_cast<float>(m_imageData[m_modelData[n].m_textureID].m_height);
-
 				m_modelData[n].m_transformation[0][0] = m_modelData[n].m_transformation[0][0] * widthRatio / imageAspectRatio;
 				m_modelData[n].m_transformation[0][1] = m_modelData[n].m_transformation[0][1] * widthRatio / imageAspectRatio;
 				m_modelData[n].m_transformation[1][1] = m_modelData[n].m_transformation[1][1] * heightRatio;
@@ -68,6 +68,36 @@ namespace graphicpipe
 				}
 			}
 			m_debugBoxData.clear();
+		}
+
+		if (m_tilemapData.size() > 0)
+		{
+			for (int n{}; n < m_tilemapData.size(); n++)
+			{
+				float heightRatio = static_cast<float>(m_imageData[m_tilemapData[n].m_textureID].m_height) / m_unitHeight;
+				float widthRatio = static_cast<float>(m_imageData[m_tilemapData[n].m_textureID].m_width) / m_unitWidth;
+				float imageAspectRatio = static_cast<float>(m_imageData[m_tilemapData[n].m_textureID].m_width) / static_cast<float>(m_imageData[m_tilemapData[n].m_textureID].m_height);
+				m_tilemapData[n].m_transformation[0][0] = m_tilemapData[n].m_transformation[0][0] * widthRatio / imageAspectRatio;
+				m_tilemapData[n].m_transformation[0][1] = m_tilemapData[n].m_transformation[0][1] * widthRatio / imageAspectRatio;
+				m_tilemapData[n].m_transformation[1][1] = m_tilemapData[n].m_transformation[1][1] * heightRatio;
+				m_tilemapData[n].m_transformation[1][0] = m_tilemapData[n].m_transformation[1][0] * heightRatio;
+				int moveCount = 0;
+				m_tileIndexes.push_back({});
+				for (int i = 0; i < m_tilemapIndexArrays[n].size(); ++i)
+				{
+					
+					m_tileIndexes[n].insert(m_tileIndexes[n].end(),
+										  std::make_move_iterator(m_tilemapIndexArrays[n][i].begin()),
+										  std::make_move_iterator(m_tilemapIndexArrays[n][i].end())
+										);
+				}
+			}
+			/*for (int x : m_tileIndexes)
+			{
+				std::cout << x << ' ' << std::endl;
+			}*/
+			m_transformedTilemaps = std::move(m_tilemapData);
+			m_tilemapData.clear();
 		}
 	}
 }

@@ -411,6 +411,54 @@ namespace Serialization {
 			}
 		}
 
+		// Check if the entity has ButtonComponent and save it
+		if (signature.test(ecs::ComponentType::TYPETILEMAPCOMPONENT))
+		{
+			ecs::TilemapComponent* tilec = static_cast<ecs::TilemapComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPETILEMAPCOMPONENT]->m_GetEntityComponent(entityId));
+			if (tilec)
+			{
+				rapidjson::Value tile(rapidjson::kObjectType);
+				rapidjson::Value textValue;
+				textValue.SetString(tilec->m_tilemapFile.c_str(), allocator);
+
+				tile.AddMember("imagefile", textValue, allocator);
+				tile.AddMember("layer", tilec->m_tileLayer, allocator);
+
+				rapidjson::Value colorValue(rapidjson::kObjectType);
+				colorValue.AddMember("r", tilec->m_color.m_x, allocator);
+				colorValue.AddMember("g", tilec->m_color.m_y, allocator);
+				colorValue.AddMember("b", tilec->m_color.m_z, allocator);
+
+				tile.AddMember("color", colorValue, allocator);
+				tile.AddMember("alpha", tilec->m_alpha, allocator);
+
+				tile.AddMember("rowlength", tilec->m_rowLength, allocator);
+				tile.AddMember("columnlength", tilec->m_columnLength, allocator);
+				tile.AddMember("pictureRowLength", tilec->m_pictureRowLength, allocator);
+				tile.AddMember("pictureColumnLength", tilec->m_pictureColumnLength, allocator);
+
+				 //Create the main array for `tilePictureIndex`
+				rapidjson::Value tileArray(rapidjson::kArrayType);
+
+				 //Loop over each row in the 2D vector
+				for (const std::vector<int>& row : tilec->m_tilePictureIndex) {
+					// Create an array for the current row
+					rapidjson::Value tileRow(rapidjson::kArrayType);
+
+					// Add each integer in the row to the `tileRow` array
+					for (int tile : row) {
+						tileRow.PushBack(tile, allocator);  // Add integer to the row array
+					}
+
+					// Add the `tileRow` array to the main `tileArray`
+					tileArray.PushBack(tileRow, allocator);
+				}
+				tile.AddMember("tilePictureIndex", tileArray, allocator);
+				entityData.AddMember("tilemap", tile, allocator);
+				hasComponents = true;  // Mark as having a component
+			}
+		}
+
 		// Add children
 		std::optional<std::vector<ecs::EntityID>> childrenOptional = ecs::Hierachy::m_GetChild(entityId);
 		if (childrenOptional.has_value()) {
@@ -705,6 +753,59 @@ namespace Serialization {
 					for (rapidjson::SizeType i = 0; i < scriptArray.Size(); i++) {
 						if (scriptArray[i].IsString()) {
 							sc->m_scripts.push_back(scriptArray[i].GetString());
+						}
+					}
+				}
+			}
+		}
+
+
+		if (entityData.HasMember("tilemap") && entityData["tilemap"].IsObject()) {
+			ecs::TilemapComponent* tile = static_cast<ecs::TilemapComponent*>(ecs->m_AddComponent(ecs::TYPETILEMAPCOMPONENT, newEntityId));
+
+			if (tile) {
+				const rapidjson::Value& tilemap = entityData["tilemap"];
+				if (tilemap.HasMember("imagefile")) {
+					tile->m_tilemapFile = tilemap["imagefile"].GetString();
+				}
+				if (tilemap.HasMember("layer")) {
+					tile->m_tileLayer = tilemap["layer"].GetInt();
+				}
+
+				if (tilemap.HasMember("color") && tilemap["color"].IsObject()) {
+					const rapidjson::Value& color = tilemap["color"];
+					if (color.HasMember("r")) tile->m_color.m_x = color["r"].GetFloat();
+					if (color.HasMember("g")) tile->m_color.m_y = color["g"].GetFloat();
+					if (color.HasMember("b")) tile->m_color.m_z = color["b"].GetFloat();
+				}
+				if (tilemap.HasMember("alpha")) {
+					tile->m_alpha = tilemap["alpha"].GetFloat();
+				}
+				if (tilemap.HasMember("rowlength")) {
+					tile->m_rowLength = tilemap["rowlength"].GetInt();
+				}
+				if (tilemap.HasMember("columnlength")) {
+					tile->m_columnLength = tilemap["columnlength"].GetInt();
+				}
+				if (tilemap.HasMember("pictureRowLength")) {
+					tile->m_pictureRowLength = tilemap["pictureRowLength"].GetInt();
+				}
+				if (tilemap.HasMember("pictureColumnLength")) {
+					tile->m_pictureColumnLength = tilemap["pictureColumnLength"].GetInt();
+				}
+				if (tilemap.HasMember("tilePictureIndex") && tilemap["tilePictureIndex"].IsArray()) 
+				{
+					const rapidjson::Value& tileArray = tilemap["tilePictureIndex"];
+					tile->m_tilePictureIndex.resize(tileArray.Size());
+					for (rapidjson::SizeType i = 0; i < tileArray.Size(); ++i) {
+						if (tileArray[i].IsArray()) 
+						{
+							tile->m_tilePictureIndex[i].resize(tileArray[i].Size());
+							for (rapidjson::SizeType j = 0; j < tileArray[i].Size(); ++j)
+							{
+								const rapidjson::Value& tileRow = tileArray[i];
+								tile->m_tilePictureIndex[i][j] = tileRow[j].GetInt();
+							}
 						}
 					}
 				}
