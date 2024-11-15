@@ -952,7 +952,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                     //std::cout << EditorCamera::calculateWorldCoordinatesFromMouse(ImGui::GetMousePos().x, ImGui::GetMousePos().y).m_y << std::endl;
 
-                    if (ImGui::IsKeyPressed(ImGuiKey_M))
+                    if (ImGui::IsKeyPressed(ImGuiKey_M) && !tmc->m_tilemapFile.empty())
                     {
                         Tilemap::setIndividualTile(transform->m_position, EditorCamera::calculateWorldCoordinatesFromMouse(ImGui::GetMousePos().x, ImGui::GetMousePos().y), tmc);
                     }
