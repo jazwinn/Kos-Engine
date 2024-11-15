@@ -107,14 +107,65 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
     EditorCamera::m_editorWindowPosition.y = pos.y;
     EditorCamera::m_editorWindowDimensions.x = imageSize.x;
     EditorCamera::m_editorWindowDimensions.y = imageSize.y;
+
+    auto calculateworld = [pos, imageSize]()-> glm::vec3 {
+        float screencordX = ImGui::GetMousePos().x - pos.x;
+        float screencordY = ImGui::GetMousePos().y - pos.y;
+
+        //TODO calculate mouse pos correctly
+        float cordX = (screencordX - imageSize.x / 2.f) / (imageSize.x / 2.f);
+        float cordY = (std::abs(screencordY) - imageSize.y / 2.f) / (imageSize.y / 2.f);
+
+        glm::vec3 translate = { cordX , -cordY, 0.f };
+        translate.x *= EditorCamera::m_editorCameraMatrix[0][0];
+        translate.y *= EditorCamera::m_editorCameraMatrix[1][1];
+        translate.x *= 1.f / graphicpipe::GraphicsCamera::m_aspectRatio;
+        translate.x += EditorCamera::m_editorCameraMatrix[2][0];
+        translate.y += EditorCamera::m_editorCameraMatrix[2][1];
+
+        return translate;
+        };
+
     if (ImGui::IsMouseClicked(0)) {
         //If cursor selects object, object is selected
-        ImVec2 mouse = ImGui::GetMousePos();
-        ImVec2 windowPos = ImGui::GetWindowPos();
-        ImVec2 relativeMousePos = ImVec2(mouse.x - windowPos.x, mouse.y - windowPos.y);
-        std::cout << relativeMousePos.x << " , " << relativeMousePos.y << std::endl;
+        auto transform = calculateworld();
+        ImVec2 WorldMouse = ImVec2{transform.x, transform.y};
 
         //calculate AABB of each object (active scenes)
+        for (auto& sceneentity : ecs->m_ECS_SceneMap) {
+
+            if (!sceneentity.second.m_isActive) continue;
+
+            for (auto& entity : sceneentity.second.m_sceneIDs) {
+                //calculate AABB
+                auto* tc = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(entity));
+                const mat3x3::Mat3x3& transformation = tc->m_transformation;
+
+
+                vector2::Vec2 min, max;
+
+                vector2::Vec2 translation, scale;
+                float rotation;
+
+                mat3x3::Mat3Decompose(transformation, translation, scale, rotation);
+
+
+                max = vector2::Vec2{ float(translation.m_x + scale.m_x * 0.5), float(translation.m_y + scale.m_y * 0.5) };
+                min = vector2::Vec2{ float(translation.m_x - scale.m_x * 0.5), float(translation.m_y - scale.m_y * 0.5) };
+
+                if ((min.m_x <= WorldMouse.x && WorldMouse.x <= max.m_x) &&
+                    (min.m_y <= WorldMouse.y && WorldMouse.y <= max.m_y)) {
+
+                    m_clickedEntityId = entity;
+                    break;
+                }
+
+            }
+
+
+
+        }
+
 
         //if pos is within any of the object, set that object as active.
 
@@ -199,19 +250,7 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
             IM_ASSERT(payload->DataSize == sizeof(std::filesystem::path));
             std::filesystem::path* filename = static_cast<std::filesystem::path*>(payload->Data);
 
-            float screencordX = ImGui::GetMousePos().x - pos.x;
-            float screencordY = ImGui::GetMousePos().y - pos.y;
-
-            //TODO calculate mouse pos correctly
-            float cordX = (screencordX - imageSize.x / 2.f) / (imageSize.x / 2.f);
-            float cordY = (std::abs(screencordY) - imageSize.y / 2.f) / (imageSize.y / 2.f);
-
-            glm::vec3 translate = { cordX , -cordY, 0.f };
-            translate.x *= EditorCamera::m_editorCameraMatrix[0][0];
-            translate.y *= EditorCamera::m_editorCameraMatrix[1][1];
-            translate.x *= 1.f / graphicpipe::GraphicsCamera::m_aspectRatio;
-            translate.x += EditorCamera::m_editorCameraMatrix[2][0];
-            translate.y += EditorCamera::m_editorCameraMatrix[2][1];
+            glm::vec3 translate = calculateworld();
             
 
             if (filename->filename().extension().string() == ".png") {
