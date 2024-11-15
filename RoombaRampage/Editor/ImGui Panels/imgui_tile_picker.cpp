@@ -52,8 +52,8 @@ namespace gui
 
 				float uvX0 = xIndex * xWidth;               // Left UV coordinate
 				float uvX1 = (xIndex + 1) * xWidth;         // Right UV coordinate
-				float uvY0 = (yIndex + 1) * yWidth;  // Top UV coordinate (flipped vertically)
-				float uvY1 = yIndex * yWidth;        // Bottom UV coordinate
+				float uvY0 = 1.f - (yIndex + 1) * yWidth;  // Top UV coordinate (flipped vertically)
+				float uvY1 = 1.f - yIndex * yWidth;        // Bottom UV coordinate
 
 				ImGui::ImageButton(std::to_string(i).c_str(), (ImTextureID)(uintptr_t)assetmanager->m_imageManager.m_imageMap.find(tmc->m_tilemapFile)->second.textureID,
 					{ thumbnail ,thumbnail }, { uvX0, uvY1 },{ uvX1, uvY0 }, { 0,0,0,0 });

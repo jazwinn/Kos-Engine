@@ -27,7 +27,7 @@ void main()
 
 	float tileHeight = 1.0 / tilePicSizeY;
 
-	float y = floor(index / tilePicSizeX); 
+	float y = (tilePicSizeY - 1) - floor(index / tilePicSizeX); 
 
 	int x = index % tilePicSizeX;
 
