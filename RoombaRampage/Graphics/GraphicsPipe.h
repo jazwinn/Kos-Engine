@@ -109,9 +109,6 @@ namespace graphicpipe {
     {
     private:
 
-        int m_unitWidth{ 160 };         ///< The default width for the graphics unit.
-        int m_unitHeight{ 160 };        ///< The default height for the graphics unit.
-
         /**
          * @struct Mesh
          * @brief Stores mesh data for rendering.
@@ -211,7 +208,8 @@ namespace graphicpipe {
 
     public:
 
-       
+        int m_unitWidth{ 100 };         ///< The default width for the graphics unit.
+        int m_unitHeight{ 100 };        ///< The default height for the graphics unit.
 
         /**
          * @enum ShapeType

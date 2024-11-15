@@ -63,12 +63,8 @@ namespace ecs {
 
 			TransformComponent* transform = m_vecTransformComponentPtr[n];
 			TilemapComponent* tile = m_vecTilemapComponentPtr[n];
+			graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
 
-			transform->m_position.m_x = floor(transform->m_transformation.m_e20);
-			transform->m_position.m_y = floor(transform->m_transformation.m_e21);
-
-			transform->m_transformation.m_e20 = floor(transform->m_transformation.m_e20) + 0.5f;
-			transform->m_transformation.m_e21 = floor(transform->m_transformation.m_e21) + 0.5f;
 
 			//skip component not of the scene
 			if (tile->m_scene != scene) continue;
@@ -76,6 +72,18 @@ namespace ecs {
 			ECS* ecs = ECS::m_GetInstance();
 
 			if (assetmanager->m_imageManager.m_imageMap.find(tile->m_tilemapFile) == assetmanager->m_imageManager.m_imageMap.end()) continue;
+
+
+			transform->m_position.m_x = floor(transform->m_transformation.m_e20);
+			transform->m_position.m_y = floor(transform->m_transformation.m_e21);
+
+			transform->m_transformation.m_e20 = floor(transform->m_transformation.m_e20) + 0.5f;
+			transform->m_transformation.m_e21 = floor(transform->m_transformation.m_e21) + 0.5f;
+
+			//float imageWidth = assetmanager->m_imageManager.m_imageMap.find(tile->m_tilemapFile)->second.m_width / 2.f;
+			float imageHeight = assetmanager->m_imageManager.m_imageMap.find(tile->m_tilemapFile)->second.m_height;
+
+			transform->m_scale = vector2::Vec2{ pipe->m_unitHeight / imageHeight , pipe->m_unitHeight / imageHeight };
 
 			unsigned int textureid = assetmanager->m_imageManager.m_imageMap.find(tile->m_tilemapFile)->second.m_imageID;
 			graphicsPipe->m_tilemapData.push_back({ glm::mat3{transform->m_transformation.m_e00,transform->m_transformation.m_e01,transform->m_transformation.m_e02,
