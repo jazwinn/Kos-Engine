@@ -21,7 +21,7 @@ namespace Tilemap
 			row.resize(rowLength);
 		}
 	}
-	void setIndividualTile(vector2::Vec2& originCoordinates, const vector2::Vec2& tileCoordinates, ecs::TilemapComponent* tilemap, int spriteIndex)
+	void setIndividualTile(vector2::Vec2& originCoordinates, const vector2::Vec2& tileCoordinates, ecs::TilemapComponent* tilemap)
 	{
 		if ((tileCoordinates.m_x) > originCoordinates.m_x + tilemap->m_rowLength) // If selected tile is longer than current tileset
 		{
@@ -73,7 +73,7 @@ namespace Tilemap
 			return;
 		}
 
-		tilemap->m_tilePictureIndex[indexY][indexX] = spriteIndex;
+		tilemap->m_tilePictureIndex[indexY][indexX] = tilemap->m_tileIndex;
 
 	}
 	void debugTileIndex(ecs::TilemapComponent* tilemap)

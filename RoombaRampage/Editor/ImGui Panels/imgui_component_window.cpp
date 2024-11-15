@@ -933,7 +933,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                     if (ImGui::IsKeyPressed(ImGuiKey_M))
                     {
-                        Tilemap::setIndividualTile(transform->m_position, EditorCamera::calculateWorldCoordinatesFromMouse(ImGui::GetMousePos().x, ImGui::GetMousePos().y), tmc, 128);
+                        Tilemap::setIndividualTile(transform->m_position, EditorCamera::calculateWorldCoordinatesFromMouse(ImGui::GetMousePos().x, ImGui::GetMousePos().y), tmc);
                     }
                    
 
