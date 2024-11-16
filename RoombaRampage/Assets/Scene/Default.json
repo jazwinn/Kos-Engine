@@ -7,13 +7,13 @@
         },
         "transform": {
             "position": {
-                "x": 7.470952033996582,
-                "y": 6.2245612144470215
+                "x": 0.0,
+                "y": 0.0
             },
-            "rotation": -137.76255798339844,
+            "rotation": 0.0,
             "scale": {
-                "x": 0.4591841995716095,
-                "y": 0.9999985098838806
+                "x": 1.0,
+                "y": 1.0
             }
         },
         "collider": {
@@ -26,7 +26,7 @@
                 "y": 0.0
             },
             "drawDebug": true,
-            "radius": 0.5
+            "radius": 1.7999999523162842
         },
         "rigidbody": {
             "linearVelocity": {
@@ -61,70 +61,77 @@
                 "b": 1.0
             },
             "alpha": 1.0
-        }
-    },
-    {
-        "name": {
-            "namestr": "Bullet 1",
-            "layer": 0,
-            "isprefab": false
         },
-        "transform": {
-            "position": {
-                "x": 7.470952033996582,
-                "y": 6.2245612144470215
-            },
-            "rotation": -137.76255798339844,
-            "scale": {
-                "x": 0.4591841995716095,
-                "y": 0.9999985098838806
+        "children": [
+            {
+                "name": {
+                    "namestr": "Bullet 1",
+                    "layer": 0,
+                    "isprefab": false
+                },
+                "transform": {
+                    "position": {
+                        "x": -1.3329238891601563,
+                        "y": 2.518199920654297
+                    },
+                    "rotation": -137.7624969482422,
+                    "scale": {
+                        "x": 0.45918431878089905,
+                        "y": 0.9999985694885254
+                    }
+                },
+                "collider": {
+                    "size": {
+                        "x": 0.4399999976158142,
+                        "y": 1.0
+                    },
+                    "offset": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "drawDebug": true,
+                    "radius": 0.5
+                },
+                "rigidbody": {
+                    "linearVelocity": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "linearAcceleration": {
+                        "x": 1.0,
+                        "y": -1.0
+                    },
+                    "rotation": 0.0,
+                    "angularVelocity": 0.0,
+                    "angularAcceleration": 0.0,
+                    "mass": 1.0,
+                    "inverseMass": 1.0,
+                    "linearDamping": 0.9900000095367432,
+                    "angularDamping": 0.9900000095367432,
+                    "force": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "torque": 0.0,
+                    "kinematic": false,
+                    "static": false
+                },
+                "sprite": {
+                    "imagefile": "blackTile_test.png",
+                    "layer": 1,
+                    "color": {
+                        "r": 1.0,
+                        "g": 1.0,
+                        "b": 1.0
+                    },
+                    "alpha": 1.0
+                },
+                "script": {
+                    "scripts": [
+                        "PlayerControl"
+                    ]
+                }
             }
-        },
-        "collider": {
-            "size": {
-                "x": 0.4399999976158142,
-                "y": 1.0
-            },
-            "offset": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "drawDebug": true,
-            "radius": 0.5
-        },
-        "rigidbody": {
-            "linearVelocity": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "linearAcceleration": {
-                "x": 1.0,
-                "y": -1.0
-            },
-            "rotation": 0.0,
-            "angularVelocity": 0.0,
-            "angularAcceleration": 0.0,
-            "mass": 1.0,
-            "inverseMass": 1.0,
-            "linearDamping": 0.9900000095367432,
-            "angularDamping": 0.9900000095367432,
-            "force": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "torque": 0.0,
-            "kinematic": false,
-            "static": false
-        },
-        "sprite": {
-            "imagefile": "blackTile_test.png",
-            "layer": 1,
-            "color": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
-            },
-            "alpha": 1.0
-        }
+        ]
     }
 ]
