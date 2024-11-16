@@ -266,7 +266,18 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                     ecs::ECS::m_GetInstance()->m_RemoveComponent(Type, ID);
                 }
                 if (ImGui::MenuItem("Reset Component")) {
-                    ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[Type]->m_ResetComponent(ID);
+                    if (Type == ecs::TYPETRANSFORMCOMPONENT) {
+                        ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+                        const auto& tc = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(ID));
+                        tc->m_position = vector2::Vec2{0.f, 0.f};
+                        tc->m_rotation = 0.f;
+                        tc->m_scale = vector2::Vec2{1.f, 1.f};
+                    }
+                    else {
+                        ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[Type]->m_ResetComponent(ID);
+                    }
+                    
+                    
                 }
 
                 ImGui::EndPopup();
