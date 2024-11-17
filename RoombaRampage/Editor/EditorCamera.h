@@ -54,6 +54,10 @@ prior written consent of DigiPen Institute of Technology is prohibited.
         static int m_windowHeight;                       ///< The current window height.
         static float m_aspectRatio;                      ///< Aspect ratio of the window.
 
+
+        static glm::ivec2 m_editorWindowPosition;
+        static glm::ivec2 m_editorWindowDimensions;
+
         static bool m_editorMode;
         /**
          * @struct Camera
@@ -88,6 +92,9 @@ prior written consent of DigiPen Institute of Technology is prohibited.
          * @brief Calculates the orthographic projection matrix for the editor camera.
          */
         static void calculateLevelEditorOrtho();
+
+
+        static vector2::Vec2 calculateWorldCoordinatesFromMouse(int mouseX, int mouseY);
 
 
 

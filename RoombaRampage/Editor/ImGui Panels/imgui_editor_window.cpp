@@ -45,6 +45,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Editor/EditorCamera.h"
 
 #include "../ECS/Hierachy.h"
+#include "../Editor/TilemapCalculations.h"
 
 
 
@@ -65,6 +66,8 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
 
     ImVec2 pos = ImGui::GetCursorScreenPos();
     ImVec2 renderWindowSize = ImGui::GetContentRegionAvail();
+
+   
 
     float textureAspectRatio = (float)windowWidth / (float)windowHeight;
     float renderWindowAspectRatio = renderWindowSize.x / renderWindowSize.y;
@@ -101,12 +104,61 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
         ImVec2(pos.x + imageSize.x, pos.y + imageSize.y),
         ImVec2(0, 1), ImVec2(1, 0));
 
+    EditorCamera::m_editorWindowPosition.x = pos.x;
+    EditorCamera::m_editorWindowPosition.y = pos.y;
+    EditorCamera::m_editorWindowDimensions.x = imageSize.x;
+    EditorCamera::m_editorWindowDimensions.y = imageSize.y;
 
+    auto calculateworld = [pos, imageSize]()-> glm::vec3 {
+        float screencordX = ImGui::GetMousePos().x - pos.x;
+        float screencordY = ImGui::GetMousePos().y - pos.y;
+
+        //TODO calculate mouse pos correctly
+        float cordX = (screencordX - imageSize.x / 2.f) / (imageSize.x / 2.f);
+        float cordY = (std::abs(screencordY) - imageSize.y / 2.f) / (imageSize.y / 2.f);
+
+        glm::vec3 translate = { cordX , -cordY, 0.f };
+        translate.x *= EditorCamera::m_editorCameraMatrix[0][0];
+        translate.y *= EditorCamera::m_editorCameraMatrix[1][1];
+        translate.x *= 1.f / graphicpipe::GraphicsCamera::m_aspectRatio;
+        translate.x += EditorCamera::m_editorCameraMatrix[2][0];
+        translate.y += EditorCamera::m_editorCameraMatrix[2][1];
+
+        return translate;
+        };
+
+   
+
+
+
+
+
+    EditorCamera::calculateLevelEditorCamera();
+    EditorCamera::calculateLevelEditorView();
+    EditorCamera::calculateLevelEditorOrtho();
+
+    graphicpipe::GraphicsCamera::m_currCameraMatrix = EditorCamera::m_editorCameraMatrix;
+    graphicpipe::GraphicsCamera::m_currViewMatrix = EditorCamera::m_editorViewMatrix;
+
+
+    //If no Camera, Set Editor Camera as Game Camera
+    if (graphicpipe::GraphicsCamera::m_cameras.size() == 0)
+    {
+        graphicpipe::GraphicsCamera::m_currCameraScaleX = EditorCamera::m_editorCamera.m_zoom.x;
+        graphicpipe::GraphicsCamera::m_currCameraScaleY = EditorCamera::m_editorCamera.m_zoom.y;
+        graphicpipe::GraphicsCamera::m_currCameraTranslateX = EditorCamera::m_editorCamera.m_coordinates.x;
+        graphicpipe::GraphicsCamera::m_currCameraTranslateY = EditorCamera::m_editorCamera.m_coordinates.y;
+        graphicpipe::GraphicsCamera::m_currCameraRotate = 0.f;
+    }
+  
+    //Draw gizmo
+    m_DrawGizmo(pos.x, pos.y, imageSize.x, imageSize.y);
 
 
 
     float scrollInput = ImGui::GetIO().MouseWheel; // Positive for zoom in, negative for zoom out
 
+    //Zoom In/Out Camera
     if (ImGui::IsWindowHovered())
     {
         EditorCamera::m_editorCamera.m_zoom.x -= scrollInput * EditorCamera::m_editorCameraZoomSensitivity * EditorCamera::m_editorCamera.m_zoom.x;
@@ -114,8 +166,11 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
 
         EditorCamera::m_editorCamera.m_zoom.x = glm::clamp(EditorCamera::m_editorCamera.m_zoom.x, 0.1f, 100.f);
         EditorCamera::m_editorCamera.m_zoom.y = glm::clamp(EditorCamera::m_editorCamera.m_zoom.y, 0.1f, 100.f);
+
+
     }
-     
+
+    //Move Camera Around
     if (ImGui::IsMouseDragging(ImGuiMouseButton_Right) && ImGui::IsWindowHovered())
     {
         ImVec2 mouseDelta = ImGui::GetMouseDragDelta(ImGuiMouseButton_Right);
@@ -125,7 +180,7 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
         // Update the camera position
         EditorCamera::m_editorCamera.m_coordinates.x -= delta.x;
         EditorCamera::m_editorCamera.m_coordinates.y += delta.y;
-     
+
         ImGui::ResetMouseDragDelta(ImGuiMouseButton_Right);
     }
 
@@ -138,25 +193,64 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
         EditorCamera::m_editorCamera.m_zoom.y = 1.f;
     }
 
-    EditorCamera::calculateLevelEditorCamera();
-    EditorCamera::calculateLevelEditorView();
-    EditorCamera::calculateLevelEditorOrtho();
-
-    graphicpipe::GraphicsCamera::m_currCameraMatrix = EditorCamera::m_editorCameraMatrix;
-    graphicpipe::GraphicsCamera::m_currViewMatrix = EditorCamera::m_editorViewMatrix;
-
-    if (graphicpipe::GraphicsCamera::m_cameras.size() == 0)
+    //set tile map 
+    if (m_tilePickerMode && ImGui::IsMouseDown(ImGuiMouseButton_Left) && !ImGuizmo::IsUsing() && ImGui::IsWindowHovered())
     {
-        graphicpipe::GraphicsCamera::m_currCameraScaleX = EditorCamera::m_editorCamera.m_zoom.x;
-        graphicpipe::GraphicsCamera::m_currCameraScaleY = EditorCamera::m_editorCamera.m_zoom.y;
-        graphicpipe::GraphicsCamera::m_currCameraTranslateX = EditorCamera::m_editorCamera.m_coordinates.x;
-        graphicpipe::GraphicsCamera::m_currCameraTranslateY = EditorCamera::m_editorCamera.m_coordinates.y;
-        graphicpipe::GraphicsCamera::m_currCameraRotate = 0.f;
+        auto* tmc = static_cast<ecs::TilemapComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETILEMAPCOMPONENT]->m_GetEntityComponent(m_clickedEntityId));
+        auto* transform = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(m_clickedEntityId));
+        if (!tmc->m_tilemapFile.empty()) {
+            Tilemap::setIndividualTile(transform->m_position, EditorCamera::calculateWorldCoordinatesFromMouse(ImGui::GetMousePos().x, ImGui::GetMousePos().y), tmc);
+        }
+        
     }
-  
-    //Draw gizmo
-    m_DrawGizmo(pos.x, pos.y, imageSize.x, imageSize.y);
-    
+
+    if (ImGui::IsWindowHovered() && !ImGuizmo::IsUsing() && ImGui::IsMouseClicked(0)) {
+        //If cursor selects object, object is selected
+        auto transform = calculateworld();
+        ImVec2 WorldMouse = ImVec2{ transform.x, transform.y };
+        m_clickedEntityId = -1;
+        //calculate AABB of each object (active scenes)
+        for (auto& sceneentity : ecs->m_ECS_SceneMap) {
+
+            if (!sceneentity.second.m_isActive) continue;
+
+            for (auto& entity : sceneentity.second.m_sceneIDs) {
+                //calculate AABB
+                auto* tc = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(entity));
+                const mat3x3::Mat3x3& transformation = tc->m_transformation;
+
+
+                vector2::Vec2 min, max;
+
+                vector2::Vec2 translation, scale;
+                float rotation;
+
+                mat3x3::Mat3Decompose(transformation, translation, scale, rotation);
+
+
+                max = vector2::Vec2{ float(translation.m_x + scale.m_x * 0.5), float(translation.m_y + scale.m_y * 0.5) };
+                min = vector2::Vec2{ float(translation.m_x - scale.m_x * 0.5), float(translation.m_y - scale.m_y * 0.5) };
+
+                if ((min.m_x <= WorldMouse.x && WorldMouse.x <= max.m_x) &&
+                    (min.m_y <= WorldMouse.y && WorldMouse.y <= max.m_y)) {
+
+                    m_clickedEntityId = entity;
+                    break;
+                }
+
+            }
+
+
+
+        }
+
+
+        //if pos is within any of the object, set that object as active.
+
+    }
+
+
+    //For Dragging Assets Into Editor Window
     ImGui::Dummy(renderWindowSize);
     if (ImGui::BeginDragDropTarget())
     {
@@ -168,19 +262,7 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
             IM_ASSERT(payload->DataSize == sizeof(std::filesystem::path));
             std::filesystem::path* filename = static_cast<std::filesystem::path*>(payload->Data);
 
-            float screencordX = ImGui::GetMousePos().x - pos.x;
-            float screencordY = ImGui::GetMousePos().y - pos.y;
-
-            //TODO calculate mouse pos correctly
-            float cordX = (screencordX - imageSize.x / 2.f) / (imageSize.x / 2.f);
-            float cordY = (std::abs(screencordY) - imageSize.y / 2.f) / (imageSize.y / 2.f);
-
-            glm::vec3 translate = { cordX , -cordY, 0.f };
-            translate.x *= EditorCamera::m_editorCameraMatrix[0][0];
-            translate.y *= EditorCamera::m_editorCameraMatrix[1][1];
-            translate.x *= 1.f / graphicpipe::GraphicsCamera::m_aspectRatio;
-            translate.x += EditorCamera::m_editorCameraMatrix[2][0];
-            translate.y += EditorCamera::m_editorCameraMatrix[2][1];
+            glm::vec3 translate = calculateworld();
             
 
             if (filename->filename().extension().string() == ".png") {

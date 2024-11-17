@@ -235,6 +235,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClCompile Include="ECS\System\ButtonSystem.cpp" />
     <ClCompile Include="ECS\System\CameraSystem.cpp" />
     <ClCompile Include="ECS\System\PhysicsSystem.cpp" />
+    <ClCompile Include="ECS\System\TilemapSystem.cpp" />
     <ClCompile Include="Editor\EditorCamera.cpp" />
     <ClCompile Include="ECS\System\LogicSystem.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_contentBrowser.cpp" />
@@ -250,6 +251,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClCompile Include="Editor\ImGui Panels\imgui_play_pause.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_editor_window.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_test_panel.cpp" />
+    <ClCompile Include="Editor\ImGui Panels\imgui_tile_picker.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui__input_window.cpp" />
     <ClCompile Include="Application\main.cpp" />
     <ClCompile Include="Application\Window.cpp" />
@@ -331,7 +333,10 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClCompile Include="ECS\System\RenderSystem.cpp" />
     <ClCompile Include="ECS\System\RenderTextSystem.cpp" />
     <ClCompile Include="Editor\ImGui Panels\ScriptVariable.cpp" />
+    <ClInclude Include="ECS\Component\TilemapComponent.h" />
+    <ClInclude Include="ECS\System\TilemapSystem.h" />
     <ClInclude Include="Editor\ImGui Panels\ScriptVariable.h" />
+    <ClCompile Include="Editor\TilemapCalculations.cpp" />
     <ClCompile Include="Editor\WindowFile.cpp" />
     <ClCompile Include="Events\EventHandler.cpp" />
     <ClCompile Include="Events\Listeners.cpp" />
@@ -420,7 +425,11 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="ECS\System\System.h" />
     <ClInclude Include="ECS\System\SystemList.h" />
     <ClInclude Include="ECS\System\SystemType.h" />
+    <ClInclude Include="Editor\TilemapCalculations.h" />
     <ClInclude Include="Editor\WindowFile.h" />
+    <ClInclude Include="Events\Action.h" />
+    <ClInclude Include="Events\ActionEvent.h" />
+    <ClInclude Include="Events\ActionManager.h" />
     <ClInclude Include="Events\BaseEvent.h" />
     <ClInclude Include="Events\BaseMessage.h" />
     <ClInclude Include="Events\ButtonEvent.h" />
@@ -428,6 +437,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="Events\KeyEvent.h" />
     <ClInclude Include="Events\Listeners.h" />
     <ClInclude Include="Events\MessageSystem.h" />
+    <ClInclude Include="Events\ModifyAction.h" />
     <ClInclude Include="Events\MouseEvent.h" />
     <ClInclude Include="Graphics\GraphicsCamera.h" />
     <ClInclude Include="Graphics\GraphicsPipe.h" />
@@ -454,6 +464,8 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <None Include="Graphics\gridVertexShader.vert" />
     <None Include="Graphics\textFragmentShader.frag" />
     <None Include="Graphics\textVertexShader.vert" />
+    <None Include="Graphics\tilemapFragmentShader.frag" />
+    <None Include="Graphics\tilemapVertexShader.vert" />
     <None Include="ScriptLibrary\AIScript\AIStateComponent.cs" />
     <None Include="ScriptLibrary\AIScript\AIStateSystem.cs" />
     <None Include="ScriptLibrary\AIScript\AStarPathfinding.cs" />

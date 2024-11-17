@@ -25,6 +25,14 @@ namespace events {
 	//	EVENTMOUSEPRESS,EVENTMOUSERELEASE
 	//};
 
+	enum class Actions {
+		ADDCOMP,
+		TRANSLATECOMP,
+		ROTATECOMP,
+		SCALECOMP,
+		ADDIMAGE
+	};
+
 	enum class ButtonEvents{
 		EVENTBUTTONPRESS,
 		EVENTAUDIOFROMIMGUI

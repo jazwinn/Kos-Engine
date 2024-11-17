@@ -76,6 +76,7 @@ namespace graphicpipe {
 		m_debugShaderProgram = m_funcSetupShader(debugVertexShader, debugFragmentShader);
 		m_textShaderProgram = m_funcSetupShader(textVertexShader, textFragmentShader);
 		m_gridShaderProgram = m_funcSetupShader(gridVertexShader, gridFragmentShader);
+		m_tilemapShaderProgram = m_funcSetupShader(tilemapVertexShader, tilemapFragmentShader);
 
 		// Initialize model-to-NDC transformation matrix and other drawing data.
 		m_modelToNDCMatrix.push_back(m_testMatrix);
@@ -83,6 +84,7 @@ namespace graphicpipe {
 		m_frameNumbers.push_back(0);
 		m_stripCounts.push_back({ 0,0 });
 		m_layers.push_back(0);
+		m_tileIndexes.push_back({0});
 		m_colors.push_back({ 0.f, 0.f, 0.f, 0.f });
 		m_debugBoxToNDCMatrix.push_back(m_testMatrix);
 		m_debugBoxCollisionChecks.push_back(false);
@@ -101,6 +103,7 @@ namespace graphicpipe {
 		m_stripCounts.clear();
 		m_layers.clear();
 		m_colors.clear();
+		m_tileIndexes.clear();
 
 		// Enable scissor test for limiting rendering to a specific area.
 		glEnable(GL_SCISSOR_TEST);
@@ -163,6 +166,10 @@ namespace graphicpipe {
 		m_debugBoxData.clear();
 		m_textData.clear();
 		m_colors.clear();
+		m_tilemapData.clear();
+		m_transformedTilemaps.clear();
+		m_tileIndexes.clear();
+		m_tilemapIndexArrays.clear();
 		GraphicsCamera::m_cameras.clear();
 		
 	}
@@ -172,9 +179,19 @@ namespace graphicpipe {
 
 		if (m_gameMode)
 		{
+			Helper::Helpers* help = Helper::Helpers::GetInstance();
+			/*if (GraphicsCamera::m_cameras.size() > 0 && m_gameMode)
+			{
+				GraphicsCamera::setCurrCamera(0);
+				GraphicsCamera::calculateCurrView();
+			}
+			GraphicsCamera::setCurrCamera(0);
+			GraphicsCamera::calculateCurrView();*/
+			glClearColor(0.86f, 0.86f, 0.86f, 1.f);
 			glEnable(GL_DEPTH_TEST);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 			m_funcDraw();
+			m_funcDrawTilemap();
 			m_funcDrawText();
 		}
 

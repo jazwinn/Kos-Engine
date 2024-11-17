@@ -29,7 +29,64 @@ namespace GameScript.ScriptCore
         public float m_Torque;
         public bool m_IsKinematic;
         public bool m_IsStatic;
-
-
     }
+
+    public class ColliderComponent
+    {
+        public Vector2 m_Size;
+        public Vector2 m_Offset;
+        public bool m_drawDebug;
+        public float m_radius;
+        public float m_isCollided;
+    }
+
+    public class PlayerComponent
+    {
+        public bool m_Control;
+    }
+
+    public class TextComponent
+    {
+        public string m_text;
+        public string m_fileName;
+        public int m_fontLayer;
+        public float m_fontSize;
+
+        public Vector3 m_color;
+    }
+
+    public class SpriteComponent
+    {
+        public string m_imageFile;
+        public int m_layer;
+        public Vector3 m_color;
+        public float m_alpha;
+    }
+
+    public class  AnimationComponent
+    {
+        public int m_frameNumber;
+        public int m_framesPerSecond;
+        public float m_frameTimer;
+        public bool m_isAnimating;
+    }
+
+    public class CameraComponent
+    {
+        public float m_left;
+        public float m_right;
+        public float m_top;
+        public float m_bottom;
+        public float m_aspectRatio;
+    }
+
+    public class ButtomComponent
+    {
+        public Vector2 m_Position;
+        public  Vector2 m_Scale;
+        public bool m_IsClick;
+    }
+
+
+
 }
