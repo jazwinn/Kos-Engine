@@ -223,42 +223,62 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
             if (ComponentType == 1) {
                 ecs->m_AddComponent(ecs::TYPECOLLIDERCOMPONENT, entityID);
                 ComponentType = 0;
+                events::AddComponent action(entityID, ecs::TYPECOLLIDERCOMPONENT);
+                DISPATCH_ACTION_EVENT(action);
             }
             if (ComponentType == 2) {
                 ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, entityID);
                 ComponentType = 0;
+                events::AddComponent action(entityID, ecs::TYPESPRITECOMPONENT);
+                DISPATCH_ACTION_EVENT(action);
             }
             if (ComponentType == 3) {
                 ecs->m_AddComponent(ecs::TYPEPLAYERCOMPONENT, entityID);
                 ComponentType = 0;
+                events::AddComponent action(entityID, ecs::TYPEPLAYERCOMPONENT);
+                DISPATCH_ACTION_EVENT(action);
             }
             if (ComponentType == 4) {
                 ecs->m_AddComponent(ecs::TYPERIGIDBODYCOMPONENT, entityID);
                 ComponentType = 0;
+                events::AddComponent action(entityID, ecs::TYPERIGIDBODYCOMPONENT);
+                DISPATCH_ACTION_EVENT(action);
             }
             if (ComponentType == 5) {
                 ecs->m_AddComponent(ecs::TYPETEXTCOMPONENT, entityID);
                 ComponentType = 0;
+                events::AddComponent action(entityID, ecs::TYPETEXTCOMPONENT);
+                DISPATCH_ACTION_EVENT(action);
             }
             if (ComponentType == 6) {
                 ecs->m_AddComponent(ecs::TYPEANIMATIONCOMPONENT, entityID);
                 ComponentType = 0;
+                events::AddComponent action(entityID, ecs::TYPEANIMATIONCOMPONENT);
+                DISPATCH_ACTION_EVENT(action);
             }
             if (ComponentType == 7) {
                 ecs->m_AddComponent(ecs::TYPECAMERACOMPONENT, entityID);
                 ComponentType = 0;
+                events::AddComponent action(entityID, ecs::TYPECAMERACOMPONENT);
+                DISPATCH_ACTION_EVENT(action);
             }
             if (ComponentType == 8) {
                 ecs->m_AddComponent(ecs::TYPEBUTTONCOMPONENT, entityID);
                 ComponentType = 0;
+                events::AddComponent action(entityID, ecs::TYPEBUTTONCOMPONENT);
+                DISPATCH_ACTION_EVENT(action);
             }
             if (ComponentType == 9) {
                 ecs->m_AddComponent(ecs::TYPESCRIPTCOMPONENT, entityID);
                 ComponentType = 0;
+                events::AddComponent action(entityID, ecs::TYPESCRIPTCOMPONENT);
+                DISPATCH_ACTION_EVENT(action);
             }
             if (ComponentType == 10) {
                 ecs->m_AddComponent(ecs::TYPETILEMAPCOMPONENT, entityID);
                 ComponentType = 0;
+                events::AddComponent action(entityID, ecs::TYPETILEMAPCOMPONENT);
+                DISPATCH_ACTION_EVENT(action);
             }
         }
 
@@ -440,8 +460,8 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                     if (toDraw(rbc->m_position)) {
 
                         events::TransformComponentChanged action(ecs::TYPETRANSFORMCOMPONENT, entityID, rbc, oldVal);
-                        std::cout << "Old " << static_cast<ecs::TransformComponent>(action.m_getOld()).m_position.m_x << " " << static_cast<ecs::TransformComponent>(action.m_getOld()).m_position.m_y << std::endl;
-                        std::cout << "Old " << static_cast<ecs::TransformComponent>(action.m_getNew()).m_position.m_x << " " << static_cast<ecs::TransformComponent>(action.m_getNew()).m_position.m_y << std::endl;
+                        //std::cout << "Old " << static_cast<ecs::TransformComponent>(action.m_getOld()).m_position.m_x << " " << static_cast<ecs::TransformComponent>(action.m_getOld()).m_position.m_y << std::endl;
+                        //std::cout << "Old " << static_cast<ecs::TransformComponent>(action.m_getNew()).m_position.m_x << " " << static_cast<ecs::TransformComponent>(action.m_getNew()).m_position.m_y << std::endl;
                         DISPATCH_ACTION_EVENT(action);
                     }
                     if (toDraw(rbc->m_rotation)) {

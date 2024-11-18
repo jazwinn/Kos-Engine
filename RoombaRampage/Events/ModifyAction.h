@@ -23,8 +23,10 @@ namespace actions {
 	};
 
 	class AddComponentAction : public Action {
+	private:
 		ecs::EntityID m_entityID;
 		ecs::ComponentType m_type;
+	public:
 
 		AddComponentAction(ecs::EntityID inID, ecs::ComponentType inType) : m_entityID(inID), m_type(inType) {};
 
@@ -38,9 +40,10 @@ namespace actions {
 	};
 
 	class RemoveComponentAction : public Action {
+	private:
 		ecs::EntityID m_entityID;
 		ecs::ComponentType m_type;
-
+	public:
 		RemoveComponentAction(ecs::EntityID inID, ecs::ComponentType inType) : m_entityID(inID), m_type(inType) {};
 
 		void m_undoAction() override {
