@@ -148,6 +148,8 @@ namespace script {
 
 		static MonoString* m_InternalCallGetTag(ecs::EntityID entity);
 
+		static void m_InternalCallSetSceneActive(MonoString* monoString);
+
 	public:
 
 
