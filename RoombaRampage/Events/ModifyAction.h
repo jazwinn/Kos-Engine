@@ -2,21 +2,24 @@
 #include "Action.h"
 
 namespace actions {
-	class ModifyAction : public Action{
+	class ModifyTransformAction : public Action{
+	private:
 		ecs::EntityID m_entityID;
-		ecs::Component* m_changedComp;
-		ecs::Component m_oldVal, m_newVal;
-
-		ModifyAction(ecs::EntityID inID, ecs::Component* inComp, const ecs::Component& inOld, const ecs::Component& inNew) :
+		ecs::TransformComponent* m_changedComp;
+		ecs::TransformComponent m_oldVal, m_newVal;
+	public:
+		ModifyTransformAction(ecs::EntityID inID, ecs::TransformComponent* inComp, const ecs::TransformComponent inOld, const ecs::TransformComponent inNew) :
 			m_entityID(inID), m_changedComp(inComp), m_oldVal(inOld), m_newVal(inNew) {}
 
-		void undo() override {
+		void m_undoAction() override {
 			*m_changedComp = m_oldVal;
 		}
 
-		void redo() override {
+		void m_redoAction() override {
 			*m_changedComp = m_newVal;
 		}
+
+
 	};
 
 	class AddComponentAction : public Action {
@@ -25,11 +28,11 @@ namespace actions {
 
 		AddComponentAction(ecs::EntityID inID, ecs::ComponentType inType) : m_entityID(inID), m_type(inType) {};
 
-		void undo() override {
+		void m_undoAction() override {
 			ecs::ECS::m_GetInstance()->m_RemoveComponent(m_type, m_entityID);
 		}
 
-		void redo() override {
+		void m_redoAction() override {
 			ecs::ECS::m_GetInstance()->m_AddComponent(m_type, m_entityID);
 		}
 	};
@@ -40,11 +43,11 @@ namespace actions {
 
 		RemoveComponentAction(ecs::EntityID inID, ecs::ComponentType inType) : m_entityID(inID), m_type(inType) {};
 
-		void undo() override {
+		void m_undoAction() override {
 			ecs::ECS::m_GetInstance()->m_AddComponent(m_type, m_entityID);
 		}
 
-		void redo() override {
+		void m_redoAction() override {
 			ecs::ECS::m_GetInstance()->m_RemoveComponent(m_type, m_entityID);
 		}
 	};

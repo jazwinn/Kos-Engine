@@ -14,12 +14,27 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "BaseEvent.h"
 #include "../Math/vector2.h"
 #include "../Math/Mat3x3.h"
+#include "ModifyAction.h"
 
 namespace events {
-	class TranslateComponentChanged : public BaseEvent<Actions> {
+	class TransformComponentChanged : public BaseEvent<Actions> {
 	private:
-		int m_mouseButton;
+		ecs::ComponentType m_changedType;
+		ecs::EntityID m_entityChanged;
+		ecs::Component* m_changedComponent;
+		ecs::Component oldVal, newVal;
 	public:
-		TranslateComponentChanged(int givenButton) : BaseEvent<MouseEvents>(Actions::TRANSLATECOMP), m_mouseButton(givenButton) {};
+		TransformComponentChanged(ecs::ComponentType inType, ecs::EntityID inID, ecs::Component* inComp, ecs::Component inOld) : BaseEvent<Actions>(Actions::TRANSFORMCOMP), 
+			m_changedType(inType), m_entityChanged(inID), m_changedComponent(inComp), oldVal(inOld), newVal(*inComp){}
+		ecs::ComponentType m_getComponentType() { return m_changedType; }
+		ecs::EntityID m_getID() { return m_entityChanged; }
+		ecs::Component* m_getComp() { return m_changedComponent; }
+		ecs::Component m_getOld() { return oldVal; }
+		ecs::Component m_getNew() { return newVal; }
+	};
+
+	class UndoLatest : public BaseEvent<Actions> {
+	public:
+		UndoLatest() : BaseEvent<Actions>(Actions::UNDO) {}
 	};
 }
