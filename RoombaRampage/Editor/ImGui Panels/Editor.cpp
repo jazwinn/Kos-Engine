@@ -40,12 +40,21 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Application/Helper.h"
 #include "../Debugging/Performance.h"
 #include "../Asset Manager/Prefab.h"
+#include "../Events/ActionManager.h"
+#include "../Events/ModifyAction.h"
+#include "../Inputs/Input.h"
 
 namespace gui {
 
 	ImGuiHandler::ImGuiHandler() {
 		REGISTER_BUTTON_LISTENER(events::ButtonEvents::EVENTBUTTONPRESS, ImGuiHandler::m_OnButtonPress, this)
 		REGISTER_BUTTON_LISTENER(events::ButtonEvents::EVENTAUDIOFROMIMGUI, ImGuiHandler::m_OnButtonPress, this)
+		REGISTER_ACTION_LISTENER(events::Actions::BASEACTION, ImGuiHandler::m_OnAction, this)
+		REGISTER_ACTION_LISTENER(events::Actions::TRANSFORMCOMP, ImGuiHandler::m_OnAction, this)
+		REGISTER_ACTION_LISTENER(events::Actions::UNDO, ImGuiHandler::m_OnAction, this)
+		REGISTER_ACTION_LISTENER(events::Actions::REDO, ImGuiHandler::m_OnAction, this)
+		REGISTER_ACTION_LISTENER(events::Actions::ADDCOMP, ImGuiHandler::m_OnAction, this)
+		REGISTER_ACTION_LISTENER(events::Actions::REMOVECOMP, ImGuiHandler::m_OnAction, this)
 	} //CTORdoing 
 
 	ImGuiHandler::~ImGuiHandler() {} //Destructor
@@ -204,6 +213,16 @@ namespace gui {
 				m_DrawPerformanceWindow(help->m_fps);
 			}
 
+			
+			if (Input::InputSystem::m_isKeyPressed(keys::LeftControl) && Input::InputSystem::m_isKeyTriggered(keys::Z)) {
+				events::UndoLatest temp;
+				DISPATCH_ACTION_EVENT(temp);
+			}
+
+			if (Input::InputSystem::m_isKeyPressed(keys::LeftControl) && Input::InputSystem::m_isKeyTriggered(keys::Y)) {
+				events::RedoPrevious temp;
+				DISPATCH_ACTION_EVENT(temp);
+			}
 
 			ImGuiIO& io = ImGui::GetIO();
 
@@ -268,6 +287,29 @@ namespace gui {
 			
 		}
 	}
+
+	void ImGuiHandler::m_OnAction(const events::BaseEvent<events::Actions>& givenEvent) {
+		if (givenEvent.m_GetEventType() == events::Actions::TRANSFORMCOMP) {
+			auto* newAct = new actions::ModifyTransformAction(givenEvent.m_ToType<events::TransformComponentChanged>().m_getID(), givenEvent.m_ToType<events::TransformComponentChanged>().m_getComp(),
+													 givenEvent.m_ToType<events::TransformComponentChanged>().m_getOld(), givenEvent.m_ToType<events::TransformComponentChanged>().m_getNew());
+			actions::ActionManager::m_GetManagerInstance()->m_doAction(newAct);
+		}else if (givenEvent.m_GetEventType() == events::Actions::ADDCOMP) {
+			auto* newAct = new actions::AddComponentAction(givenEvent.m_ToType<events::AddComponent>().m_getID(), givenEvent.m_ToType<events::AddComponent>().m_getComponentType());
+			actions::ActionManager::m_GetManagerInstance()->m_doAction(newAct);
+		}
+		else if (givenEvent.m_GetEventType() == events::Actions::REMOVECOMP) {
+			auto* newAct = new actions::RemoveComponentAction(givenEvent.m_ToType<events::AddComponent>().m_getID(), givenEvent.m_ToType<events::AddComponent>().m_getComponentType());
+			actions::ActionManager::m_GetManagerInstance()->m_doAction(newAct);
+		}
+		else if (givenEvent.m_GetEventType() == events::Actions::UNDO) {
+			actions::ActionManager::m_GetManagerInstance()->m_undo();
+		}
+		else if (givenEvent.m_GetEventType() == events::Actions::REDO) {
+			actions::ActionManager::m_GetManagerInstance()->m_redo();
+		}
+		
+	}
+
 	void ImGuiHandler::m_UpdateOnPrefabMode()
 	{
 		Helper::Helpers* help = Helper::Helpers::GetInstance();
