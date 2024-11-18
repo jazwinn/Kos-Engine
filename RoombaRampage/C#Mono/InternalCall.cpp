@@ -22,6 +22,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "InternalCall.h"
 #include "../Inputs/Input.h"
 #include "../Application/Helper.h"
+#include "../Asset Manager/AssetManager.h"
 
 #define MONO_ADD_INTERNAL_CALL(METHOD_NAME) \
     mono_add_internal_call("Namespace.ScriptBase::" #METHOD_NAME, METHOD_NAME);
@@ -368,7 +369,36 @@ namespace script {
 		return -1;
 	}
 
-	float InternalCall::m_InternalCallIsCollided(ecs::EntityID entity, std::string collided_List)
+	MonoArray* InternalCall::m_InternalCallGetCollidedEntities(ecs::EntityID entity)
+	{
+		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+		ecs::ColliderComponent* cc = static_cast<ecs::ColliderComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(entity));
+		if (cc->m_isCollided) {
+			assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+			MonoArray* Array = mono_array_new(assetmanager->m_scriptManager.m_GetDomain(), mono_get_int32_class(), cc->m_collidedWith.size());
+			for (size_t i = 0; i < cc->m_collidedWith.size(); ++i) {
+				mono_array_set(Array, int, i, cc->m_collidedWith[i]);
+			}
+
+			return Array;
+		}
+
+		return nullptr;
+	}
+
+	MonoString* InternalCall::m_InternalCallGetTag(ecs::EntityID entity)
+	{
+		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+		ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(entity));
+
+
+		return mono_string_new(assetmanager->m_scriptManager.m_GetDomain(), nc->m_entityTag.c_str());
+
+		return nullptr;
+	}
+
+	float InternalCall::m_InternalCallIsCollided(ecs::EntityID entity)
 	{
 
 		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
@@ -376,7 +406,7 @@ namespace script {
 		if (cc == NULL) {
 			return false;
 		}
-		collided_List = (cc->m_collidedWith);
+
 		return cc->m_isCollided;
 
 	}
@@ -442,12 +472,15 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_InternalGetTranslate);
 		MONO_ADD_INTERNAL_CALL(m_InternalSetTranslate);
 
-		MONO_ADD_INTERNAL_CALL(m_InternalCallIsCollided);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallIsCollided); 
+		MONO_ADD_INTERNAL_CALL(m_InternalCallGetCollidedEntities);
 
 		MONO_ADD_INTERNAL_CALL(m_InternalGetMousePosition);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallIsKeyPressed);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallIsKeyTriggered);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallIsKeyReleased);
+
+		MONO_ADD_INTERNAL_CALL(m_InternalCallGetTag);
 
 	}
 }

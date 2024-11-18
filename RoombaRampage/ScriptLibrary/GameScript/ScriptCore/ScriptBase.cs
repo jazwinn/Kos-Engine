@@ -117,8 +117,14 @@ namespace Namespace
         public extern static int m_InternalCallGetPlayer();
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        public extern static float m_InternalCallIsCollided(uint entity, out string collidedEntities);
+        public extern static float m_InternalCallIsCollided(uint entity);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern static int[] m_InternalCallGetCollidedEntities(uint entity);
         
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern static string m_InternalCallGetTag(uint entity);
+
 
         public virtual void GetEntityID(uint id) { }
         public virtual void Start() { }

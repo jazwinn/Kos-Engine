@@ -64,7 +64,10 @@ struct DrawComponents {
         ImGui::PushItemWidth(slidersize);
         bool changed = false;
         if (ImGui::DragFloat(title.c_str(), &_args, 0.1f, -1000.0f, 1000.f, "%.2f")) {
-            changed = true;
+            if (ImGui::IsMouseReleased(ImGuiMouseButton_Left)) {
+                changed = true;
+            }
+            
         }
         ImGui::PopItemWidth();
         count++;
@@ -125,6 +128,10 @@ struct DrawComponents {
         bool changed = false;
         if (ImGui::DragFloat(title.c_str(), &_args.m_x, 0.02f, -50.f, 50.f, "%.2f")) {
             changed = true;
+            
+        }
+        if (ImGui::IsItemDeactivatedAfterEdit()) {
+            changed = true;
         }
         ImGui::SameLine();
         ImGui::SetNextItemWidth(100.0f);
@@ -135,6 +142,8 @@ struct DrawComponents {
         }
         ImGui::PopItemWidth();
         ImGui::PopItemWidth();
+
+
 
         count++;
         return changed;
