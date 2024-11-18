@@ -46,9 +46,12 @@ namespace gui {
 			ImGui::EndChild();
 		}
 		ImGui::SameLine();
+		if (m_tilePickerMode && ecs->m_ECS_CombinedComponentPool[ecs::TYPETILEMAPCOMPONENT]->m_HasComponent(m_clickedEntityId))
 		{
-
-
+			m_DrawTilePicker();
+		}
+		else
+		{
 			ImGui::BeginChild("ChildLa", ImVec2(0, ImGui::GetContentRegionAvail().y));
 
 
@@ -137,6 +140,14 @@ namespace gui {
 							//skip if active scene is filename
 							if (m_activeScene == directoryPath.path().filename())continue;
 
+							const auto& prefabscene = ecs->m_ECS_SceneMap.find(directoryPath.path().filename().string());
+							if (prefabscene == ecs->m_ECS_SceneMap.end()) {
+								LOGGING_ERROR("Prefab not loaded");
+								continue;
+							}
+							else {
+								m_prefabSceneMode = true;
+							}
 
 							//skip if prefab mode alraedy true
 							if (!m_prefabSceneMode) {
@@ -150,12 +161,7 @@ namespace gui {
 
 							}
 
-							m_prefabSceneMode = true;
-							const auto& prefabscene = ecs->m_ECS_SceneMap.find(directoryPath.path().filename().string());
-							if (prefabscene == ecs->m_ECS_SceneMap.end()) {
-								LOGGING_ERROR("Prefab not loaded");
-								continue;
-							}
+							
 
 							// clear save scene state
 
@@ -178,7 +184,6 @@ namespace gui {
 						textorimage(directoryString, script);
 
 						if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
-							std::string command = "code \"" + directoryPath.path().string() + "\"";
 
 							scenemanager->m_ClearAllScene();
 							scenemanager->m_LoadScene(directoryPath.path());

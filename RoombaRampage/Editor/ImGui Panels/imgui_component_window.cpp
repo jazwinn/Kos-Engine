@@ -24,6 +24,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Asset Manager/AssetManager.h"
 #include "../Graphics/GraphicsPipe.h"
 #include "../ECS/Layers.h"
+#include "../Editor/TilemapCalculations.h"
 
 #include "ScriptVariable.h"
 
@@ -205,7 +206,8 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
     //Add Component Window
     const char* ComponentNames[] =
     {
-        "Add Components", "Collider Component", "Sprite Component", "Player Component", "Rigid Body Component", "Text Component", "Animation Component", "Camera Component" , "Button Component" , "Script Component"
+        "Add Components", "Collider Component", "Sprite Component", "Player Component", "Rigid Body Component", "Text Component", 
+        "Animation Component", "Camera Component" , "Button Component" , "Script Component", "Tilemap Component"
     };
     static int ComponentType = 0;
 
@@ -254,6 +256,10 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 ecs->m_AddComponent(ecs::TYPESCRIPTCOMPONENT, entityID);
                 ComponentType = 0;
             }
+            if (ComponentType == 10) {
+                ecs->m_AddComponent(ecs::TYPETILEMAPCOMPONENT, entityID);
+                ComponentType = 0;
+            }
         }
 
         auto CreateContext = [](ecs::ComponentType Type, ecs::EntityID ID) {
@@ -262,7 +268,18 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                     ecs::ECS::m_GetInstance()->m_RemoveComponent(Type, ID);
                 }
                 if (ImGui::MenuItem("Reset Component")) {
-                    ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[Type]->m_ResetComponent(ID);
+                    if (Type == ecs::TYPETRANSFORMCOMPONENT) {
+                        ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+                        const auto& tc = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(ID));
+                        tc->m_position = vector2::Vec2{0.f, 0.f};
+                        tc->m_rotation = 0.f;
+                        tc->m_scale = vector2::Vec2{1.f, 1.f};
+                    }
+                    else {
+                        ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[Type]->m_ResetComponent(ID);
+                    }
+                    
+                    
                 }
 
                 ImGui::EndPopup();
@@ -363,6 +380,27 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
             }
 
+            //change tag
+            static int entityTagType = 0;
+            const char* tag_Names[] = { "Default" , "Player", "Wall","Bullet" };
+            if (ImGui::Combo("Tag", &entityTagType, tag_Names, IM_ARRAYSIZE(tag_Names), IM_ARRAYSIZE(tag_Names))) {
+                std::cout << nc->m_entityTag << std::endl;
+                if (entityTagType == 0) {
+                    nc->m_entityTag = "Default";
+                }
+                if (entityTagType == 1) {
+                    nc->m_entityTag = "Player";
+                }
+                if (entityTagType == 2) {
+                    nc->m_entityTag = "Wall";
+                } 
+                if (entityTagType == 3) {
+                    nc->m_entityTag = "Bullet";
+                }
+                std::cout << nc->m_entityTag << std::endl;
+            }
+
+           // std::cout << nc->m_entityTag << std::endl;
             //create overwrite button for prefab
             if (nc->m_isPrefab && !m_prefabSceneMode) {
                 auto* tc = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(entityID));
@@ -885,6 +923,85 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 if (open) {
                     //auto* rbc = static_cast<ecs::ButtonComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEBUTTONCOMPONENT]->m_GetEntityComponent(entityID));
                     //rbc->ApplyFunction(DrawComponents(rbc->Names()));
+                }
+
+
+            }
+
+            if (EntitySignature.test(ecs::TYPETILEMAPCOMPONENT)) {
+
+                open = ImGui::CollapsingHeader("Tilemap Component");
+
+                CreateContext(ecs::TYPETILEMAPCOMPONENT, entityID);
+
+                if (open) {
+
+                    assetmanager::AssetManager* Asset = assetmanager::AssetManager::m_funcGetInstance();
+                    auto* tmc = static_cast<ecs::TilemapComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETILEMAPCOMPONENT]->m_GetEntityComponent(entityID));
+                    auto* transform = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(entityID));
+
+
+
+                    if (ImGui::BeginCombo("Tilemaps", tmc->m_tilemapFile.c_str()))
+                    {
+                        for (const auto& image : Asset->m_imageManager.m_imageMap) {
+
+                            if (ImGui::Selectable(image.first.c_str())) {
+                                tmc->m_tilemapFile = image.first.c_str();
+                            }
+                        }
+                        ImGui::EndCombo();
+                    }
+
+                    if (ImGui::BeginDragDropTarget())
+                    {
+
+                        if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("file"))
+                        {
+                            IM_ASSERT(payload->DataSize == sizeof(std::filesystem::path));
+                            std::filesystem::path* filename = static_cast<std::filesystem::path*>(payload->Data);
+                            if (filename->filename().extension().string() == ".png") {
+                                if (Asset->m_imageManager.m_imageMap.find(filename->filename().string()) == Asset->m_imageManager.m_imageMap.end()) {
+                                    LOGGING_WARN("File not loaded, please reload content browser");
+                                }
+                                else {
+                                    tmc->m_tilemapFile = filename->filename().string();
+                                }
+                            }
+                            else {
+                                LOGGING_WARN("Wrong File Type");
+                            }
+                        }
+                        ImGui::EndDragDropTarget();
+                    }
+
+                    ImVec4 color = ImVec4(tmc->m_color.m_x, tmc->m_color.m_y, tmc->m_color.m_z, tmc->m_alpha);
+
+                    ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
+                    ImGui::Text("Color");
+                    ImGui::SameLine();
+                    if (ImGui::ColorEdit3("##MyColor3", (float*)&color, ImGuiColorEditFlags_DisplayRGB))
+                    {
+                        tmc->m_color.m_x = color.x;
+                        tmc->m_color.m_y = color.y;
+                        tmc->m_color.m_z = color.z;
+                    }
+
+
+                    if (open) {
+                        auto* rbc = static_cast<ecs::TilemapComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETILEMAPCOMPONENT]->m_GetEntityComponent(entityID));
+                        rbc->ApplyFunction(DrawComponents(rbc->Names()));
+                    }
+                    Tilemap::resizeTiles(tmc, tmc->m_rowLength, tmc->m_columnLength);
+
+                    if (ImGui::Button("Pick Tile"))
+                    {
+                        m_tilePickerMode = true;
+                    }
+                    //Tilemap::debugTileIndex(tmc);
+
+                    //std::cout << EditorCamera::calculateWorldCoordinatesFromMouse(ImGui::GetMousePos().x, ImGui::GetMousePos().y).m_y << std::endl;
+
                 }
 
 

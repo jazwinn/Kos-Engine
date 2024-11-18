@@ -40,6 +40,17 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 namespace graphicpipe {
 
+    struct TilemapData
+    {
+        glm::mat3 m_transformation{};
+        unsigned int m_textureID{};
+        glm::ivec2 m_tilemapDimensions{};
+        glm::ivec2 m_tilemapPictureSize{};
+        int m_tileIndex{};
+        int m_layer{};
+        glm::vec4 m_color{};
+    };
+
     /**
      * @struct GraphicsData
      * @brief Stores the data required for rendering a graphical object.
@@ -97,9 +108,6 @@ namespace graphicpipe {
     class GraphicsPipe
     {
     private:
-
-        int m_unitWidth{ 160 };         ///< The default width for the graphics unit.
-        int m_unitHeight{ 160 };        ///< The default height for the graphics unit.
 
         /**
          * @struct Mesh
@@ -168,6 +176,7 @@ namespace graphicpipe {
         unsigned int m_debugShaderProgram{};        ///< Shader program for debug rendering.
         unsigned int m_textShaderProgram{};         ///< Shader program for text rendering.
         unsigned int m_gridShaderProgram{};
+        unsigned int m_tilemapShaderProgram{};
 
         // Buffers
         unsigned int m_modelMatrixArrayBuffer{};    ///< Array buffer for model matrices.
@@ -184,6 +193,7 @@ namespace graphicpipe {
         unsigned int m_layerBuffer{};
         unsigned int m_gridBuffer{};
         unsigned int m_colorBuffer{};
+        unsigned int m_tileIndexBuffer{};
 
         glm::mat3 m_testMatrix{};                   ///< Test matrix for rendering.
 
@@ -198,7 +208,8 @@ namespace graphicpipe {
 
     public:
 
-       
+        int m_unitWidth{ 100 };         ///< The default width for the graphics unit.
+        int m_unitHeight{ 100 };        ///< The default height for the graphics unit.
 
         /**
          * @enum ShapeType
@@ -277,6 +288,8 @@ namespace graphicpipe {
 
         void m_funcDrawGrid();
 
+        void m_funcDrawTilemap();
+
         /**
          * @brief Sets the drawing mode for rendering.
          *
@@ -324,6 +337,7 @@ namespace graphicpipe {
         std::vector<glm::mat3> m_debugCircleToNDCMatrix{};
 
         // Data for rendering
+        std::vector<TilemapData> m_tilemapData{};
         std::vector<GraphicsData> m_modelData{}; ///< Graphics data for rendering.
         std::vector<DebugDrawData> m_debugBoxData{}; ///< Data for rendering debug boxes.
         std::vector<TextData> m_textData{}; ///< Data for rendering text.
@@ -331,12 +345,15 @@ namespace graphicpipe {
         std::vector<float> m_debugCircleCollisionChecks{}; ///< Collision check data for debug rendering.
         std::vector<int> m_textureOrder{}; ///< Order of texture bindings.
         std::vector<glm::vec4> m_colors{}; 
+        std::vector<std::vector<int>> m_tileIndexes{};
 
         std::vector<unsigned int> m_textureIDs{}; ///< Array of texture IDs.
         std::vector<int> m_layers{};
         std::vector<glm::ivec2> m_stripCounts{}; ///< Sprite strip counts for animation.
         std::vector<int> m_frameNumbers{}; ///< Frame numbers for sprite animations.
         std::vector<image::Image> m_imageData{}; ///< Image data for rendering.
+        std::vector<TilemapData> m_transformedTilemaps{};
+        std::vector<std::vector<std::vector<int>>> m_tilemapIndexArrays{};
 
         unsigned int m_screenTexture{}; ///< Texture for rendering the screen.
         unsigned int m_gamePreviewTexture{};
@@ -393,6 +410,17 @@ namespace graphicpipe {
         {
           #include "../Graphics/textFragmentShader.frag"
         };
+
+        const std::string tilemapVertexShader =
+        {
+          #include "../Graphics/tilemapVertexShader.vert"
+        };
+
+        const std::string tilemapFragmentShader =
+        {
+          #include "../Graphics/tilemapFragmentShader.frag"
+        };
+
     };
 
 } // namespace graphicpipe

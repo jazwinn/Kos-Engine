@@ -71,7 +71,7 @@ namespace ecs {
 
 	void CollisionResponseSystem::m_Update(const std::string& scene) {
 
-		//ECS* ecs = ECS::m_GetInstance();
+		ECS* ecs = ECS::m_GetInstance();
 
 		if (m_vecRigidBodyComponentPtr.size() != m_vecTransformComponentPtr.size()) {
 			LOGGING_ERROR("Error: Vecotrs container size does not Match");
@@ -80,36 +80,50 @@ namespace ecs {
 
 		//TODO instead of retrieving every loop, just get the address of the vector in the physics pipeline
 		physicspipe::Physics* PhysicsPipeline = physicspipe::Physics::getInstance();
-		std::vector<std::shared_ptr<physicspipe::PhysicsData>> vecCollisionEntity = PhysicsPipeline->m_RetrievePhysicsData();
+		std::vector<std::shared_ptr<physicspipe::PhysicsData>> vecCollisionEntity = PhysicsPipeline->m_RetrievePhysicsData(); 
+		std::vector <std::pair<std::shared_ptr<physicspipe::PhysicsData>, std::shared_ptr<physicspipe::PhysicsData>>> vecCollisionEntityPair = PhysicsPipeline->m_RetrievePhysicsDataPair();
 		std::unordered_set<ecs::EntityID> ids;
 		
 		// return if no collision occuring
-		if (!vecCollisionEntity.size()) return;
+		if (!vecCollisionEntityPair.size()) return;
 
 
 
-		for (auto& CollidedEntity : vecCollisionEntity) {
-			// create hash set
-			ids.insert(CollidedEntity->m_ID);
-		}
+		//for (auto& CollidedEntity : vecCollisionEntity) {
+		//	// create hash set
+		//	ids.insert(CollidedEntity->m_ID);
+		//}
 		
 
 		for (int n{}; n < m_vecRigidBodyComponentPtr.size(); n++)
 		{
 			RigidBodyComponent* rigidComp = m_vecRigidBodyComponentPtr[n];
 			ColliderComponent* ColComp = m_vecColliderComponentPtr[n];
-
+			ColComp->m_collidedWith = "";
 			//skip component not of the scene
-			if (rigidComp->m_scene != scene) continue;
+			if (rigidComp->m_scene != scene) continue;	
 
-			if (ids.find(rigidComp->m_Entity) != ids.end()) {
+			const EntityID check_ID = ColComp->m_Entity;
+			const auto& iterator = std::find_if(vecCollisionEntityPair.begin(), vecCollisionEntityPair.end(), [check_ID](const auto pair) { return check_ID == pair.first->m_ID; });
+			if (iterator != vecCollisionEntityPair.end()) {
+				std::string val = std::to_string(iterator->second->m_ID) + ",";
+				ColComp->m_collidedWith += val;
 				ColComp->m_isCollided = true;
-
 			}
-
-
-
 		}
+
+		
+		//for (int i{}; i < vecCollisionEntityPair.size(); ++i) {
+		//	get the collider component
+		//	ColliderComponent* cc_1 = static_cast<ecs::ColliderComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]
+		//		->m_GetEntityComponent(vecCollisionEntityPair[i].first->m_ID));
+
+		//	store insidet the vector
+
+		//	cc_1->m_collidedWith.push_back(vecCollisionEntityPair[i].second->m_ID);
+
+		//	cc_1->m_isCollided = true;
+		//}
 
 	}
 

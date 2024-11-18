@@ -31,6 +31,36 @@
             "framesPerSecond": 12,
             "frameTimer": 0.0,
             "isAnimating": true
-        }
+        },
+        "children": [
+            {
+                "name": {
+                    "namestr": "gunleft_02",
+                    "layer": 0,
+                    "isprefab": false
+                },
+                "transform": {
+                    "position": {
+                        "x": -1.1216981410980225,
+                        "y": 2.222729444503784
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "sprite": {
+                    "imagefile": "gunleft_02.png",
+                    "layer": 1,
+                    "color": {
+                        "r": 1.0,
+                        "g": 1.0,
+                        "b": 1.0
+                    },
+                    "alpha": 1.0
+                }
+            }
+        ]
     }
 ]

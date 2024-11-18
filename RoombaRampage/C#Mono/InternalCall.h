@@ -41,10 +41,6 @@ namespace script {
 		/******************************************************************/
 		static bool m_InternalGetTransformComponent(ecs::EntityID entity, vector2::Vec2* trans, vector2::Vec2* scale, float* rotate);
 
-		static bool m_InternalGetTranslate(ecs::EntityID entity, vector2::Vec2* trans);
-
-		static bool m_InternalSetTranslate(ecs::EntityID entity, vector2::Vec2* trans);
-
 		/******************************************************************/
 		/*!
 			\fn        bool InternalCall::m_InternalSetTransformComponent(ecs::EntityID entity, vector2::Vec2* trans, vector2::Vec2* scale, float* rotate)
@@ -58,6 +54,45 @@ namespace script {
 		/******************************************************************/
 		static bool m_InternalSetTransformComponent(ecs::EntityID entity, vector2::Vec2* trans, vector2::Vec2* scale, float* rotate);
 
+		static bool m_InternalGetTranslate(ecs::EntityID entity, vector2::Vec2* trans);
+
+		static bool m_InternalSetTranslate(ecs::EntityID entity, vector2::Vec2* trans);
+
+		static bool m_InternalGetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, bool* isCollided);
+
+		static bool m_InternalSetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool drawDebug, float radius, bool isCollided);
+
+		static bool m_InternalGetPlayerComponent(ecs::EntityID entity, bool* control);
+
+		static bool m_InternalSetPlayerComponent(ecs::EntityID entity, bool control);
+
+		static bool m_InternalGetRigidBodyComponent(ecs::EntityID entity, vector2::Vec2* velocity, vector2::Vec2* acceleration, float* rotation);
+
+		static bool m_InternalSetRigidBodyComponent(ecs::EntityID entity, vector2::Vec2* velocity, vector2::Vec2* acceleration, float* rotation);
+
+		static bool m_InternalGetTextComponent(ecs::EntityID entity, std::string* text, std::string* fileName, int* fontLayer, float* fontSize, vector3::Vec3* color);
+
+		static bool m_InternalSetTextComponent(ecs::EntityID entity, const std::string& text, const std::string& fileName, int fontLayer, float fontSize, const vector3::Vec3& color);
+
+		static bool m_InternalSetSpriteComponent(ecs::EntityID entity, const std::string& imageFile, int layer, const vector3::Vec3& color, float alpha);
+
+		static bool m_InternalGetSpriteComponent(ecs::EntityID entity, std::string* imageFile, int* layer, vector3::Vec3* color, float* alpha);
+
+		static bool m_InternalGetAnimationComponent(ecs::EntityID entity, int* frameNumber, int* framesPerSecond, float* frameTimer, bool* isAnimating);
+
+		static bool m_InternalSetAnimationComponent(ecs::EntityID entity, int frameNumber, int framesPerSecond, float frameTimer, bool isAnimating);
+
+		static bool m_InternalGetCameraComponent(ecs::EntityID entity, float* left, float* right, float* top, float* bottom, float* aspectRatio);
+
+		static bool m_InternalSetCameraComponent(ecs::EntityID entity, float left, float right, float top, float bottom, float aspectRatio);
+
+		static bool m_InternalGetButtonComponent(ecs::EntityID entity, vector2::Vec2* position, vector2::Vec2* scale, bool* isClick);
+
+		static bool m_InternalSetButtonComponent(ecs::EntityID entity, const vector2::Vec2& position, const vector2::Vec2& scale, bool isClick);
+
+		static bool m_InternalGetScriptNames(ecs::EntityID entity, std::vector<std::string>& scripts);
+
+		static bool m_InternalAddScriptInstance(ecs::EntityID entity, const std::string& scriptName, MonoObject* instance);
 		/******************************************************************/
 		/*!
 			\fn        bool InternalCall::m_InternalGetVelocity(ecs::EntityID entity, vector2::Vec2* vec)
@@ -89,6 +124,12 @@ namespace script {
 		/******************************************************************/
 		static bool m_InternalCallIsKeyPressed(keyCode key);
 
+		static vector2::Vec2 m_InternalGetMousePosition();
+
+		static bool m_InternalCallIsKeyReleased(keyCode key);
+
+		static bool m_InternalCallIsKeyTriggered(keyCode key);
+
 		/******************************************************************/
 		/*!
 			\fn        bool InternalCall::m_InternalCallGetDeltaTime(float* deltatime)
@@ -101,8 +142,11 @@ namespace script {
 
 		static int m_InternalCallGetPlayer();
 
-		static bool m_InternalCallIsCollided(ecs::EntityID entity);
+		static float m_InternalCallIsCollided(ecs::EntityID entity, std::string collidedList);
+
 	public:
+
+
 
 		/******************************************************************/
 		/*!

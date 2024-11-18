@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>LogicScript</RootNamespace>
     <AssemblyName>LogicScript</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -46,12 +47,6 @@
     <Compile Include="ScriptsCS\CollisionResponse.cs" />
     <Compile Include="ScriptsCS\MovingObjectScript.cs" />
     <Compile Include="ScriptsCS\PlayerControl.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\ScriptLibrary\GameScript\GameScript.csproj">
-      <Project>{785fc541-4463-4316-8b60-776cebc341b2}</Project>
-      <Name>GameScript</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

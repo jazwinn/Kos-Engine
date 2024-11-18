@@ -14,8 +14,11 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 #ifndef MATHLIB_H
 #define MATHLIB_H
+
+#include "mathlib.h"
 #include <math.h>
 #include <cmath>
+#include "vector2.h"
 
 #define PI 3.141592653589793238462643383279502884197
 namespace mathlibrary {
@@ -107,6 +110,15 @@ namespace mathlibrary {
 		static bool funcIsLessEqual(float x, float y);
 		static bool funcIsLessEqual(long double x, long double y);
 
+		template <typename T, typename U>
+		static T Mix(const T& lhs, const T& rhs, const U& a) {
+			return lhs * (1 - a) + rhs * a;
+		}
+
+
+
+
 	};
+
 }
 #endif MATHLIB_H

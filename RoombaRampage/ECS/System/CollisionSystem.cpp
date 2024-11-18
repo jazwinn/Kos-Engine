@@ -138,6 +138,11 @@ namespace ecs {
 				if (!parentComp) continue;
 				mat3x3::Mat3x3 parentTransformation = parentComp->m_transformation;
 				mat3x3::Mat3x3 childTransformation = TransComp->m_transformation;
+
+				/*
+					Child collider box doesnt rotate in accordance to the parent
+					Could be the scale issue
+				*/
 			
 				vector2::Vec2 pos{}, scale{};
 				float rot{};
@@ -155,10 +160,11 @@ namespace ecs {
 			}
 			else {
 				if (ColComp->m_type == physicspipe::EntityType::CIRCLE) {
-					PhysicsPipeline->m_SendPhysicsData(ColComp->m_radius, TransComp->m_position + ColComp->m_OffSet, ColComp->m_Size, velocity, id, NameComp->m_Layer);
+					PhysicsPipeline->m_SendPhysicsData(ColComp->m_radius, TransComp->m_position + ColComp->m_OffSet, ColComp->m_Size * TransComp->m_scale, velocity, id, NameComp->m_Layer);
 				}
 				else if (ColComp->m_type == physicspipe::EntityType::RECTANGLE) {
-					PhysicsPipeline->m_SendPhysicsData(ColComp->m_Size.m_y, ColComp->m_Size.m_x, TransComp->m_rotation, TransComp->m_position + ColComp->m_OffSet, ColComp->m_Size, velocity, id, NameComp->m_Layer);
+					//why pass same colcomp data type twice?
+					PhysicsPipeline->m_SendPhysicsData(ColComp->m_Size.m_y * TransComp->m_scale.m_y, ColComp->m_Size.m_x * TransComp->m_scale.m_x, TransComp->m_rotation, TransComp->m_position + ColComp->m_OffSet, ColComp->m_Size * TransComp->m_scale, velocity, id, NameComp->m_Layer);
 				}
 				else {
 					LOGGING_ERROR("NO ENTITY TYPE");

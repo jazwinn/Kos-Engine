@@ -35,7 +35,7 @@ namespace Application {
     /*--------------------------------------------------------------
       GLOBAL VARAIBLE
     --------------------------------------------------------------*/
-    #define IMGUIENABLED
+   #define IMGUIENABLED
     graphicpipe::GraphicsPipe* pipe;
     assetmanager::AssetManager* AstManager;
 
@@ -102,7 +102,6 @@ namespace Application {
         scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();
         scenemanager->m_LoadScene("Assets/Scene/Default.json"); // replace with opening up window dialog
         
-
         /*--------------------------------------------------------------
             INITIALIZE EDITOR // LAST INIT
          --------------------------------------------------------------*/
@@ -117,6 +116,7 @@ namespace Application {
         std::cout << "IMGUIENABLED is defined" << std::endl;
 #else
         std::cout << "IMGUIENABLED is NOT defined" << std::endl;
+        pipe->m_gameMode = true;
 #endif      
 
 
@@ -192,10 +192,9 @@ namespace Application {
                    Render Game Scene
                 --------------------------------------------------------------*/
                 pipe->m_funcRenderGameScene();
-            
+           
 
-
-               
+              
 
                 //double currentFrameTime = glfwGetTime();
                 //help->m_deltaTime = static_cast<float>(currentFrameTime - lastFrameTime);

@@ -254,6 +254,7 @@ namespace gui {
                             //delete is called
                             break;
                         }
+
                     }
                 }
             }      
@@ -339,6 +340,50 @@ namespace gui {
         
         ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id));
 
+        ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0, 0));
+
+        if (ImGui::InvisibleButton(std::string{ "##invireorderbutton" + std::to_string(id) }.c_str(), ImVec2{ImGui::GetContentRegionAvail().x , 1.f})) {
+
+        }
+
+        ImGui::PopStyleVar();
+
+        if (ImGui::BeginDragDropTarget())
+        {
+
+            if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Entity"))
+            {
+                IM_ASSERT(payload->DataSize == sizeof(ecs::EntityID));
+                ecs::EntityID SwapId = *static_cast<ecs::EntityID*>(payload->Data);
+
+                const std::string swapScene = scenes::SceneManager::GetSceneByEntityID(SwapId).value();
+                const std::string idScene = scenes::SceneManager::GetSceneByEntityID(id).value();
+
+                if (SwapId != id && swapScene == idScene) {
+
+                    auto& _scene = ecs->m_ECS_SceneMap.find(swapScene)->second;
+                    const auto& eraseit = std::find(_scene.m_sceneIDs.begin(), _scene.m_sceneIDs.end(), SwapId);
+                    
+                    if (eraseit != _scene.m_sceneIDs.end()) {
+                        _scene.m_sceneIDs.erase(eraseit);
+                    }
+
+                    const auto& IDit = std::find(_scene.m_sceneIDs.begin(), _scene.m_sceneIDs.end(), id);
+
+                    if (IDit != _scene.m_sceneIDs.end()) {
+                        _scene.m_sceneIDs.insert(IDit, SwapId);
+                    }
+
+                    
+
+
+                    //return false;
+                }
+            }
+
+            ImGui::EndDragDropTarget();
+        }
+
         //create color if prefab
         if (nc->m_isPrefab) ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.7f, 0.2f, 0.1f, 1.0f));
         bool open = ImGui::TreeNodeEx(std::to_string(id).c_str(), flag, nc->m_entityName.c_str());
@@ -396,18 +441,9 @@ namespace gui {
             ImGui::EndPopup();
         }
 
-        //no reordering of child prefabs
-        if (!transCom->m_haveParent || !static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(transCom->m_parentID))->m_isPrefab ||
-            static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(transCom->m_parentID))->m_prefabName != nc->m_prefabName || m_prefabSceneMode) {
-            if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None)) {
-                //might undefine behaviour
-                ecs::EntityID index = id;
-                ImGui::SetDragDropPayload("Entity", &index, sizeof(ecs::EntityID));
-                ImGui::Text(nc->m_entityName.c_str());
-                //ImGui::Text(std::to_string((int)index).c_str());
-                ImGui::EndDragDropSource();
-            }
-        }
+
+
+
 
 
 
@@ -441,13 +477,24 @@ namespace gui {
                     return false;
                 }
 
-               
-
-
             }
+
+
             ImGui::EndDragDropTarget();
         }
         
+        //no reordering of child prefabs
+        if (!transCom->m_haveParent || !static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(transCom->m_parentID))->m_isPrefab ||
+            static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(transCom->m_parentID))->m_prefabName != nc->m_prefabName || m_prefabSceneMode) {
+            if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None)) {
+                //might undefine behaviour
+                ecs::EntityID index = id;
+                ImGui::SetDragDropPayload("Entity", &index, sizeof(ecs::EntityID));
+                ImGui::Text(nc->m_entityName.c_str());
+                ImGui::EndDragDropSource();
+            }
+        }
+
 
         
 

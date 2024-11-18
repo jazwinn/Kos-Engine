@@ -48,15 +48,15 @@ namespace gui {
 
         static float snap[3] = { 1.f, 1.f, 1.f };
 
-        if (ImGui::IsKeyPressed(ImGuiKey_W))
+        if (ImGui::IsWindowHovered() && ImGui::IsKeyPressed(ImGuiKey_W))
             mCurrentGizmoOperation = ImGuizmo::TRANSLATE;
-        if (ImGui::IsKeyPressed(ImGuiKey_E))
+        if (ImGui::IsWindowHovered() && ImGui::IsKeyPressed(ImGuiKey_E))
             mCurrentGizmoOperation = ImGuizmo::ROTATE;
-        if (ImGui::IsKeyPressed(ImGuiKey_R))
+        if (ImGui::IsWindowHovered() && ImGui::IsKeyPressed(ImGuiKey_R))
             mCurrentGizmoOperation = ImGuizmo::SCALE;
         if (ImGui::IsKeyDown(ImGuiKey_LeftCtrl))
         {
-            if (ImGui::IsKeyPressed(ImGuiKey_Q)) {
+            if (ImGui::IsWindowHovered() && ImGui::IsKeyPressed(ImGuiKey_Q)) {
                 useSnap = useSnap?false:true;
             }
 
@@ -200,13 +200,20 @@ namespace gui {
           
         }
 
-        if (ImGui::IsKeyPressed(ImGuiKey_F)) {
+        if (ImGui::IsKeyDown(ImGuiKey_LeftShift) && ImGui::IsKeyPressed(ImGuiKey_F)) {
             focusMode = focusMode ? false : true;
+        }
+        else if (ImGui::IsKeyPressed(ImGuiKey_F)) {
+            EditorCamera::m_editorCamera.m_coordinates.x = transcom->m_position.m_x;
+            EditorCamera::m_editorCamera.m_coordinates.y = transcom->m_position.m_y;
         }
         if (focusMode) {
             // UDB not working as intended
+            const auto& coordinate = mathlibrary::mathlib::Mix(vector2::Vec2(EditorCamera::m_editorCamera.m_coordinates.x, EditorCamera::m_editorCamera.m_coordinates.y), vector2::Vec2{ matrixTranslation[0] , matrixTranslation[1] }, Helper::Helpers::GetInstance()->m_deltaTime * 3.5f);
+            EditorCamera::m_editorCamera.m_coordinates.x = coordinate.m_x;
+            EditorCamera::m_editorCamera.m_coordinates.y = coordinate.m_y;
 
-            EditorCamera::m_editorCamera.m_coordinates = glm::mix(EditorCamera::m_editorCamera.m_coordinates, glm::vec2{ transcom->m_position.m_x, transcom->m_position.m_y }, Helper::Helpers::GetInstance()->m_deltaTime * 4.f);
+
         }
 	}
 
