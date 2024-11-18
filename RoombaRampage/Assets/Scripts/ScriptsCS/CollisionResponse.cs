@@ -13,7 +13,6 @@ namespace Namespace
         private uint EntityID;
         private float iscollided;
         private float deltatime;
-        private string collidedEntities;
 
         public override void GetEntityID(uint id){
             EntityID = id;
@@ -21,7 +20,6 @@ namespace Namespace
 
         public override void Start()
         {
-            collidedEntities = "";
             iscollided = 0.0f;
         }
 
@@ -39,14 +37,20 @@ namespace Namespace
 
 
             m_InternalCallGetDeltaTime(out deltatime);
-            iscollided = m_InternalCallIsCollided(EntityID, out collidedEntities);
-            string[] parts = collidedEntities.Split(',');
+
+            
+            iscollided = m_InternalCallIsCollided(EntityID);
             if (iscollided != 0.0f)
             {
+                int[] collidedEntities = m_InternalCallGetCollidedEntities(EntityID);
 
-                foreach (var part in parts)
+                foreach (var collidedid in collidedEntities)
                 {
-                    Console.WriteLine($"{part} is Script Colliding");
+                    Console.WriteLine($"{collidedid} is Collided");
+
+                    string tag = m_InternalCallGetTag((uint)collidedid);
+
+                    Console.WriteLine($"Collided tag is {tag}");
                 }
                 //Console.WriteLine($"{EntityID} is Script Colliding");
                 //velocity.X = 0.0f;

@@ -142,7 +142,11 @@ namespace script {
 
 		static int m_InternalCallGetPlayer();
 
-		static float m_InternalCallIsCollided(ecs::EntityID entity, std::string collidedList);
+		static float m_InternalCallIsCollided(ecs::EntityID entity);
+
+		static MonoArray* m_InternalCallGetCollidedEntities(ecs::EntityID entity);
+
+		static MonoString* m_InternalCallGetTag(ecs::EntityID entity);
 
 	public:
 
