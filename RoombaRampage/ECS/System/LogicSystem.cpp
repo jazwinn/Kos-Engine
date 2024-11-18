@@ -36,7 +36,7 @@ namespace ecs {
 		size_t IndexID{};
 		for (auto& ComponentPtr : m_vecScriptComponentPtr) {
 			if (ComponentPtr->m_Entity == ID) {
-				return;
+				break;
 			}
 			IndexID++;
 		}
