@@ -23,6 +23,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Inputs/Input.h"
 #include "../Application/Helper.h"
 #include "../Asset Manager/AssetManager.h"
+#include "../Asset Manager/SceneManager.h"
 
 #define MONO_ADD_INTERNAL_CALL(METHOD_NAME) \
     mono_add_internal_call("Namespace.ScriptBase::" #METHOD_NAME, METHOD_NAME);
@@ -398,6 +399,30 @@ namespace script {
 		return nullptr;
 	}
 
+	void InternalCall::m_InternalCallSetSceneActive(MonoString* monoString)
+	{
+		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+		scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();
+
+		char* nativeString = mono_string_to_utf8(monoString);
+
+		//set all scene to inactive
+		for (auto& scene : ecs->m_ECS_SceneMap) {
+			if (scene.second.m_isPrefab == false)
+				scene.second.m_isActive = false;
+
+		}
+
+		const auto& scene = ecs->m_ECS_SceneMap.find(nativeString);
+
+		if (scene != ecs->m_ECS_SceneMap.end()) {
+			scene->second.m_isActive = true;
+		}
+
+
+		mono_free(nativeString);
+	}
+
 	float InternalCall::m_InternalCallIsCollided(ecs::EntityID entity)
 	{
 
@@ -480,7 +505,7 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_InternalCallIsKeyTriggered);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallIsKeyReleased);
 
-		MONO_ADD_INTERNAL_CALL(m_InternalCallGetTag);
-
+		MONO_ADD_INTERNAL_CALL(m_InternalCallGetTag); 
+		MONO_ADD_INTERNAL_CALL(m_InternalCallSetSceneActive);
 	}
 }

@@ -145,9 +145,6 @@ namespace gui {
 								LOGGING_ERROR("Prefab not loaded");
 								continue;
 							}
-							else {
-								m_prefabSceneMode = true;
-							}
 
 							//skip if prefab mode alraedy true
 							if (!m_prefabSceneMode) {
@@ -175,6 +172,8 @@ namespace gui {
 
 							//set prefab as active scene
 							m_activeScene = directoryPath.path().filename().string();
+
+							m_prefabSceneMode = true;
 
 							m_clickedEntityId = -1;
 						}
