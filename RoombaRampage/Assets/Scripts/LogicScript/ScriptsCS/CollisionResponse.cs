@@ -11,8 +11,9 @@ namespace Namespace
     public class CollisionResponse : ScriptBase
     {
         private uint EntityID;
-        private bool iscollided;
+        private float iscollided;
         private float deltatime;
+        private string collidedEntities;
 
         public override void GetEntityID(uint id){
             EntityID = id;
@@ -20,7 +21,8 @@ namespace Namespace
 
         public override void Start()
         {
-            iscollided = false;
+            collidedEntities = "";
+            iscollided = 0.0f;
         }
 
         public override void Update()
@@ -37,20 +39,28 @@ namespace Namespace
 
 
             m_InternalCallGetDeltaTime(out deltatime);
-            iscollided = m_InternalCallIsCollided(EntityID);
-
-            if (iscollided)
+            iscollided = m_InternalCallIsCollided(EntityID, out collidedEntities);
+            string[] parts = collidedEntities.Split(',');
+            if (iscollided != 0.0f)
             {
-                Console.WriteLine($"{EntityID} is Script Colliding");
-                velocity.X = 0.0f;
-                velocity.Y = 0.0f;
-                m_InternalSetVelocity(EntityID, in velocity);
+
+                foreach (var part in parts)
+                {
+                    Console.WriteLine($"{part} is Script Colliding");
+                }
+                //Console.WriteLine($"{EntityID} is Script Colliding");
+                //velocity.X = 0.0f;
+                //velocity.Y = 0.0f;
+                //m_InternalSetVelocity(EntityID, in velocity);
+                ///*
+                // * TED Script
+                // */
             }
 
 
 
 
-            
+
 
 
         }

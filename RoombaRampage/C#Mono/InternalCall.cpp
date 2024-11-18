@@ -368,7 +368,7 @@ namespace script {
 		return -1;
 	}
 
-	bool InternalCall::m_InternalCallIsCollided(ecs::EntityID entity)
+	float InternalCall::m_InternalCallIsCollided(ecs::EntityID entity, std::string collided_List)
 	{
 
 		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
@@ -376,6 +376,7 @@ namespace script {
 		if (cc == NULL) {
 			return false;
 		}
+		collided_List = (cc->m_collidedWith);
 		return cc->m_isCollided;
 
 	}

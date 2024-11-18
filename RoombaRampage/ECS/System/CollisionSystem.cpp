@@ -138,6 +138,11 @@ namespace ecs {
 				if (!parentComp) continue;
 				mat3x3::Mat3x3 parentTransformation = parentComp->m_transformation;
 				mat3x3::Mat3x3 childTransformation = TransComp->m_transformation;
+
+				/*
+					Child collider box doesnt rotate in accordance to the parent
+					Could be the scale issue
+				*/
 			
 				vector2::Vec2 pos{}, scale{};
 				float rot{};
