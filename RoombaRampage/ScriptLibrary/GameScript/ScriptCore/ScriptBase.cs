@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using GameScript.ScriptCore;
 using Key;
@@ -116,7 +117,7 @@ namespace Namespace
         public extern static int m_InternalCallGetPlayer();
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        public extern static bool m_InternalCallIsCollided(uint entity);
+        public extern static float m_InternalCallIsCollided(uint entity, out string collidedEntities);
         
 
         public virtual void GetEntityID(uint id) { }

@@ -378,6 +378,27 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
             }
 
+            //change tag
+            static int entityTagType = 0;
+            const char* tag_Names[] = { "Default" , "Player", "Wall","Bullet" };
+            if (ImGui::Combo("Tag", &entityTagType, tag_Names, IM_ARRAYSIZE(tag_Names), IM_ARRAYSIZE(tag_Names))) {
+                std::cout << nc->m_entityTag << std::endl;
+                if (entityTagType == 0) {
+                    nc->m_entityTag = "Default";
+                }
+                if (entityTagType == 1) {
+                    nc->m_entityTag = "Player";
+                }
+                if (entityTagType == 2) {
+                    nc->m_entityTag = "Wall";
+                } 
+                if (entityTagType == 3) {
+                    nc->m_entityTag = "Bullet";
+                }
+                std::cout << nc->m_entityTag << std::endl;
+            }
+
+           // std::cout << nc->m_entityTag << std::endl;
             //create overwrite button for prefab
             if (nc->m_isPrefab && !m_prefabSceneMode) {
                 auto* tc = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(entityID));

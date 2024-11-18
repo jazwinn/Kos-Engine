@@ -142,7 +142,7 @@ namespace script {
 
 		static int m_InternalCallGetPlayer();
 
-		static bool m_InternalCallIsCollided(ecs::EntityID entity);
+		static float m_InternalCallIsCollided(ecs::EntityID entity, std::string collidedList);
 
 	public:
 

@@ -40,8 +40,9 @@ namespace ecs {
 		bool m_syncPrefab{true};
 		std::string m_prefabName{};
 
+		std::string m_entityTag = "Default";
 
-		REFLECTABLE(NameComponent, m_entityName);
+		REFLECTABLE(NameComponent, m_entityName, m_entityTag);
 	};
 
 }
