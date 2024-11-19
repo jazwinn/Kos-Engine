@@ -208,7 +208,6 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
         //If cursor selects object, object is selected
         auto transform = calculateworld();
         ImVec2 WorldMouse = ImVec2{ transform.x, transform.y };
-        m_clickedEntityId = -1;
         //calculate AABB of each object (active scenes)
         for (auto& sceneentity : ecs->m_ECS_SceneMap) {
 

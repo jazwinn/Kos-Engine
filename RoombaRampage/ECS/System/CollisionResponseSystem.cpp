@@ -99,15 +99,14 @@ namespace ecs {
 		{
 			RigidBodyComponent* rigidComp = m_vecRigidBodyComponentPtr[n];
 			ColliderComponent* ColComp = m_vecColliderComponentPtr[n];
-			ColComp->m_collidedWith = "";
+			ColComp->m_collidedWith.clear();
 			//skip component not of the scene
 			if (rigidComp->m_scene != scene) continue;	
 
 			const EntityID check_ID = ColComp->m_Entity;
 			const auto& iterator = std::find_if(vecCollisionEntityPair.begin(), vecCollisionEntityPair.end(), [check_ID](const auto pair) { return check_ID == pair.first->m_ID; });
 			if (iterator != vecCollisionEntityPair.end()) {
-				std::string val = std::to_string(iterator->second->m_ID) + ",";
-				ColComp->m_collidedWith += val;
+				ColComp->m_collidedWith.push_back(iterator->second->m_ID);
 				ColComp->m_isCollided = true;
 			}
 		}

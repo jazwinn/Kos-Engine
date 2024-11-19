@@ -26,11 +26,13 @@ namespace events {
 	//};
 
 	enum class Actions {
+		BASEACTION,
 		ADDCOMP,
-		TRANSLATECOMP,
-		ROTATECOMP,
-		SCALECOMP,
-		ADDIMAGE
+		REMOVECOMP,
+		TRANSFORMCOMP,
+		ADDIMAGE,
+		UNDO,
+		REDO
 	};
 
 	enum class ButtonEvents{

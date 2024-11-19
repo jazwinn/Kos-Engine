@@ -46,8 +46,8 @@ namespace ecs {
 		float m_radius{0.5f};
 
 		float m_isCollided{ false };
-		//std::vector<EntityID> m_collidedWith{};
-		std::string m_collidedWith{};
+		std::vector<EntityID> m_collidedWith{};
+
 			 
 		REFLECTABLE(ColliderComponent, m_Size, m_OffSet, m_drawDebug, m_radius, m_type)
 	};

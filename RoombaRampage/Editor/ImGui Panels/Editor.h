@@ -214,6 +214,8 @@ namespace gui {
 
         void m_OnButtonPress(const events::BaseEvent<events::ButtonEvents>& givenEvent);
 
+        void m_OnAction(const events::BaseEvent<events::Actions>& givenEvent);
+
         void m_UpdateOnPrefabMode();
         
 

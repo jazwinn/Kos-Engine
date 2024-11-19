@@ -7,8 +7,8 @@
         },
         "transform": {
             "position": {
-                "x": 0.0,
-                "y": 0.0
+                "x": -7.4032111167907715,
+                "y": 1.460497498512268
             },
             "rotation": 0.0,
             "scale": {
@@ -34,8 +34,8 @@
                 "y": 0.0
             },
             "linearAcceleration": {
-                "x": 1.0,
-                "y": -1.0
+                "x": 0.0,
+                "y": 0.0
             },
             "rotation": 0.0,
             "angularVelocity": 0.0,
@@ -53,7 +53,7 @@
             "static": false
         },
         "sprite": {
-            "imagefile": "blackTile_test.png",
+            "imagefile": "ani_SeanSprite_strip4.png",
             "layer": 0,
             "color": {
                 "r": 1.0,
@@ -62,76 +62,57 @@
             },
             "alpha": 1.0
         },
-        "children": [
-            {
-                "name": {
-                    "namestr": "Bullet 1",
-                    "layer": 0,
-                    "isprefab": false
-                },
-                "transform": {
-                    "position": {
-                        "x": -1.3329238891601563,
-                        "y": 2.518199920654297
-                    },
-                    "rotation": -137.7624969482422,
-                    "scale": {
-                        "x": 0.45918431878089905,
-                        "y": 0.9999985694885254
-                    }
-                },
-                "collider": {
-                    "size": {
-                        "x": 0.4399999976158142,
-                        "y": 1.0
-                    },
-                    "offset": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "drawDebug": true,
-                    "radius": 0.5
-                },
-                "rigidbody": {
-                    "linearVelocity": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "linearAcceleration": {
-                        "x": 1.0,
-                        "y": -1.0
-                    },
-                    "rotation": 0.0,
-                    "angularVelocity": 0.0,
-                    "angularAcceleration": 0.0,
-                    "mass": 1.0,
-                    "inverseMass": 1.0,
-                    "linearDamping": 0.9900000095367432,
-                    "angularDamping": 0.9900000095367432,
-                    "force": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "torque": 0.0,
-                    "kinematic": false,
-                    "static": false
-                },
-                "sprite": {
-                    "imagefile": "blackTile_test.png",
-                    "layer": 1,
-                    "color": {
-                        "r": 1.0,
-                        "g": 1.0,
-                        "b": 1.0
-                    },
-                    "alpha": 1.0
-                },
-                "script": {
-                    "scripts": [
-                        "PlayerControl"
-                    ]
-                }
+        "animation": {
+            "frameNumber": 0,
+            "framesPerSecond": 2,
+            "frameTimer": 0.0,
+            "isAnimating": true
+        },
+        "script": {
+            "scripts": [
+                "PlayerControl",
+                "CollisionResponse"
+            ]
+        }
+    },
+    {
+        "name": {
+            "namestr": "blackTile_test",
+            "layer": 0,
+            "isprefab": false
+        },
+        "transform": {
+            "position": {
+                "x": 5.021658897399902,
+                "y": 2.3060836791992188
+            },
+            "rotation": 0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
             }
-        ]
+        },
+        "collider": {
+            "size": {
+                "x": 1.0,
+                "y": 1.0
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true,
+            "radius": 0.5
+        },
+        "sprite": {
+            "imagefile": "blackTile_test.png",
+            "layer": 1,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0
+        }
     }
 ]
