@@ -18,11 +18,11 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Asset Manager/AssetManager.h"
 
 
+
 namespace ecs {
 
 	void LogicSystem::m_RegisterSystem(EntityID ID) {
 		ECS* ecs = ECS::m_GetInstance();
-
 		if (std::find_if(m_vecScriptComponentPtr.begin(), m_vecScriptComponentPtr.end(), [ID](const auto& obj) { return obj->m_Entity == ID; })
 			== m_vecScriptComponentPtr.end()) {
 			m_vecScriptComponentPtr.push_back((ScriptComponent*)ecs->m_ECS_CombinedComponentPool[TYPESCRIPTCOMPONENT]->m_GetEntityComponent(ID));
@@ -59,41 +59,49 @@ namespace ecs {
 
 	void LogicSystem::m_StartLogic()
 	{
+		ECS* ecs = ECS::m_GetInstance();
 
-		assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
+		//reset all script instance
+		std::shared_ptr<ComponentPool<ScriptComponent>> pool = std::dynamic_pointer_cast<ComponentPool<ScriptComponent>>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESCRIPTCOMPONENT]);
+		std::for_each(pool->m_Pool.begin(), pool->m_Pool.end(), [](auto& x) {x.m_scriptInstances.clear(); });
+		
 		//loops through all vecoters pointing to component
 		for (int n{}; n < m_vecScriptComponentPtr.size(); n++) {
 			ScriptComponent* scriptComp = m_vecScriptComponentPtr[n];
 
-			//clear object instance
-			scriptComp->m_scriptInstances.clear();
+			//skip prefab
+			if (ecs->m_ECS_SceneMap.find(scriptComp->m_scene)->second.m_isPrefab)continue;
 
-		
-			// create instance for each script
-			for (const std::string& _script : scriptComp->m_scripts) {
+			CreateandStartScriptInstance(scriptComp);
 
-				if (assetManager->m_scriptManager.m_ScriptMap.find(_script) == assetManager->m_scriptManager.m_ScriptMap.end()) {
-					LOGGING_ERROR("SCRIPT NOT FOUND ! PLEASE RELAUNCH APPLIATION");
-					continue;
-				}
+		}
+	}
 
-				// retieve isntance for each object
-				//std::cout << _script << std::endl;
-				scriptComp->m_scriptInstances[_script] = assetManager->m_scriptManager.m_CreateObjectInstance(_script, _script);
 
+	void LogicSystem::CreateandStartScriptInstance(ecs::ScriptComponent* scriptComp) {
+		// create instance for each script
+
+		assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
+		for (const std::string& _script : scriptComp->m_scripts) {
+
+			if (assetManager->m_scriptManager.m_ScriptMap.find(_script) == assetManager->m_scriptManager.m_ScriptMap.end()) {
+				LOGGING_ERROR("SCRIPT NOT FOUND ! PLEASE RELAUNCH APPLIATION");
+				continue;
 			}
 
-			// invoke start function
-			for (auto& instance : scriptComp->m_scriptInstances) {
+			// retieve isntance for each object
+			//std::cout << _script << std::endl;
+			scriptComp->m_scriptInstances[_script] = assetManager->m_scriptManager.m_CreateObjectInstance(_script, _script);
+		}
 
-				void* params[1];
-				params[0] = &scriptComp->m_Entity; // Pass the entity ID
+		// invoke start function
+		for (auto& instance : scriptComp->m_scriptInstances) {
 
-				assetManager->m_scriptManager.m_InvokeMethod(instance.first, "GetEntityID", instance.second, params);
-				assetManager->m_scriptManager.m_InvokeMethod(instance.first, "Start", instance.second ,nullptr);
+			void* params[1];
+			params[0] = &scriptComp->m_Entity; // Pass the entity ID
 
-			}
-
+			assetManager->m_scriptManager.m_InvokeMethod(instance.first, "GetEntityID", instance.second, params);
+			assetManager->m_scriptManager.m_InvokeMethod(instance.first, "Start", instance.second, nullptr);
 
 		}
 	}
@@ -108,6 +116,9 @@ namespace ecs {
 		//	return;
 		//}
 
+		
+
+
 		//loops through all vecoters pointing to component
 		for (int n{}; n < m_vecScriptComponentPtr.size(); n++) {
 			//std::cout << "Entity: " << n << "Movement System is getting Updated";
@@ -116,6 +127,18 @@ namespace ecs {
 			
 			//skip component not of the scene
 			if (scriptComp->m_scene != scene) continue;
+
+
+			//check if scriptcomponent have instance
+			for (auto& scriptstring : scriptComp->m_scripts) {
+				if (scriptComp->m_scriptInstances.find(scriptstring) == scriptComp->m_scriptInstances.end()) {
+					CreateandStartScriptInstance(scriptComp);
+					LOGGING_INFO("Script Instance Created");
+					break;
+				}
+			}
+
+
 
 			for (auto& script : scriptComp->m_scriptInstances) {
 

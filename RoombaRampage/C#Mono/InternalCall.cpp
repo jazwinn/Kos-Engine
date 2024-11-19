@@ -423,6 +423,26 @@ namespace script {
 		mono_free(nativeString);
 	}
 
+	void InternalCall::m_UnloadAllScene()
+	{
+		scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();
+
+		scenemanager->m_ClearAllScene();
+
+	}
+
+	void InternalCall::m_InternalCallLoadScene(MonoString* monoString)
+	{
+		scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();
+
+		char* nativeString = mono_string_to_utf8(monoString);
+
+
+		scenemanager->m_LoadScene(nativeString);
+
+		mono_free(nativeString);
+	}
+
 	float InternalCall::m_InternalCallIsCollided(ecs::EntityID entity)
 	{
 
@@ -507,5 +527,8 @@ namespace script {
 
 		MONO_ADD_INTERNAL_CALL(m_InternalCallGetTag); 
 		MONO_ADD_INTERNAL_CALL(m_InternalCallSetSceneActive);
+
+		MONO_ADD_INTERNAL_CALL(m_UnloadAllScene);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallLoadScene);
 	}
 }

@@ -127,16 +127,19 @@ namespace ecs{
 			}	
 
 			//iterate through all the scenes, check if true or false
-
+			std::vector<decltype(ecs->m_ECS_SceneMap)::key_type> keys;
 			for (const auto& scene : ecs->m_ECS_SceneMap) {
-				//only update scene's that is active
-				if (scene.second.m_isActive == true) {
+				keys.push_back(scene.first);
+			}
+
+			for (const auto& key : keys) {
+				auto it = ecs->m_ECS_SceneMap.find(key);
+				if (it != ecs->m_ECS_SceneMap.end() && it->second.m_isActive) {
 					auto start = std::chrono::steady_clock::now();
-					System.second->m_Update(scene.first);
+					System.second->m_Update(key);
 					auto end = std::chrono::steady_clock::now();
 					duration = end - start;
 				}
-				
 			}
 
 			performancetracker::Performance::m_UpdateTotalSystemTime(duration.count());
