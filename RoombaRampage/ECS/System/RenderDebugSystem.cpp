@@ -105,14 +105,24 @@ namespace ecs {
 
 				vector2::Vec2 pos{}, scale{};
 				float rot{};
+
 				mat3x3::Mat3x3 parent_Transform = mat3x3::Mat3Transform(parentComp->m_position, parentComp->m_scale, parentComp->m_rotation);
-				mat3x3::Mat3x3 parent_Collider_Mat = mat3x3::Mat3Transform(pos, parentCollider->m_Size, rot);
-				mat3x3::Mat3x3 child_Transform = mat3x3::Mat3Transform(transform->m_position, transform->m_scale, transform->m_rotation + parentComp->m_rotation);
-				mat3x3::Mat3x3 child_Collider_Mat = mat3x3::Mat3Transform(pos, collider->m_Size, rot);
-				parent_Transform = parent_Transform * parent_Collider_Mat;
-				child_Transform = parent_Transform * child_Transform;
-				mat3x3::Mat3x3 final_Transform = child_Transform * child_Collider_Mat;
+				mat3x3::Mat3x3 child_Transform = mat3x3::Mat3Transform(transform->m_position + collider->m_OffSet, transform->m_scale * collider->m_Size, transform->m_rotation);
+				mat3x3::Mat3x3 final_Transform = parent_Transform * child_Transform;
 				mat3x3::Mat3Decompose(final_Transform, pos, scale, rot); //child 
+
+				mat3x3::Mat3x3 parent_Scale{}, parent_Rot{}, parent_Trans{}, c_Scale{}, c_Scale_collider{}, c_Rot{}, c_Trans{};
+				mat3x3::Mat3Scale(parent_Scale, parentComp->m_scale.m_x * parentCollider->m_Size.m_x, parentComp->m_scale.m_y * parentCollider->m_Size.m_y);
+				mat3x3::Mat3RotDeg(parent_Rot, parentComp->m_rotation);
+				mat3x3::Mat3Translate(parent_Trans, parentComp->m_position.m_x, parentComp->m_position.m_y);
+
+				mat3x3::Mat3Scale(c_Scale, transform->m_scale.m_x * collider->m_Size.m_x, transform->m_scale.m_y * collider->m_Size.m_y);
+				mat3x3::Mat3Scale(c_Scale_collider, collider->m_Size.m_x, collider->m_Size.m_y);
+				mat3x3::Mat3RotDeg(c_Rot, transform->m_rotation);
+				mat3x3::Mat3Translate(c_Trans, transform->m_position.m_x, transform->m_position.m_y);
+				mat3x3::Mat3x3 final_Transforms = c_Trans + parent_Trans;
+
+
 				vector2::Vec2 child_Pos{}, child_Scale{};
 				float child_Rot{};
 				mat3x3::Mat3Decompose(transform->m_transformation, child_Pos, child_Scale, child_Rot);
@@ -120,7 +130,8 @@ namespace ecs {
 				if (collider->m_drawDebug && (collider->m_type == physicspipe::EntityType::RECTANGLE))
 				{
 					//mat3x3::Mat3x3 debugTransformation = mat3x3::Mat3Transform(vector2::Vec2{ pos.m_x + collider->m_OffSet.m_x, pos.m_y + collider->m_OffSet.m_y }, scale, rot);
-					mat3x3::Mat3x3 debugTransformation = mat3x3::Mat3Transform(vector2::Vec2{ transform->m_transformation.m_e20 + collider->m_OffSet.m_x, transform->m_transformation.m_e21 + collider->m_OffSet.m_y },child_Scale, child_Rot);
+					//mat3x3::Mat3x3 debugTransformation = mat3x3::Mat3Transform(vector2::Vec2{ transform->m_transformation.m_e20 + collider->m_OffSet.m_x, transform->m_transformation.m_e21 + collider->m_OffSet.m_y },child_Scale, child_Rot);
+					mat3x3::Mat3x3 debugTransformation = final_Transform;
 
 					graphicsPipe->m_debugBoxData.push_back({ glm::mat3{debugTransformation.m_e00,debugTransformation.m_e01,debugTransformation.m_e02,
 																	debugTransformation.m_e10,debugTransformation.m_e11, debugTransformation.m_e12,
