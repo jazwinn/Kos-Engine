@@ -21,36 +21,36 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "Editor.h"
 #include "imgui_internal.h"
 
+<<<<<<< HEAD
 #include "../Asset Manager/SceneManager.h"
+=======
+#include "../../De&Serialization/json_handler.h"
+>>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 #include "../ECS/ECS.h"
-
-#include "../Editor/WindowFile.h"
 
 void gui::ImGuiHandler::m_DrawMainMenuBar() {
 
     ImGuiIO& io = ImGui::GetIO();  // Get input/output data
+<<<<<<< HEAD
     scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();
     ecs::ECS* ecs = ecs::ECS::m_GetInstance();
     //If CTRL + S press, save
     if (io.KeyCtrl && ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_S))) {
         scenemanager->m_SaveAllActiveScenes();
+=======
+    //If CTRL + S press, save
+    if (io.KeyCtrl && ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_S))) {
+        Serialization::Serialize::m_SaveComponentsJson("../RoombaRampage/Json", ecs::ECS::m_GetInstance()->m_ECS_EntityMap);
+>>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
         std::cout << "Saving data..." << std::endl;
     }
 
-
-
-    bool openNewFilepopup = false;;
     if (ImGui::BeginMainMenuBar())
     {
         if (ImGui::BeginMenu("File"))
         {
-            if (ImGui::MenuItem("New")) {
-                openNewFilepopup = true;
-
-
-            }
-           
             if (ImGui::MenuItem("Save")) {
+<<<<<<< HEAD
                 
                 scenemanager->m_SaveAllActiveScenes();
                 
@@ -66,6 +66,21 @@ void gui::ImGuiHandler::m_DrawMainMenuBar() {
             //            m_clickedEntityId = -1;
             //        }
             //    }
+=======
+
+
+                Serialization::Serialize::m_SaveComponentsJson("../RoombaRampage/Json", ecs::ECS::m_GetInstance()->m_ECS_EntityMap);
+
+                
+            }
+            
+            if (ImGui::BeginMenu("Open - Work In Progress")) {
+
+
+                if (ImGui::MenuItem("Components.json")) {
+                    //Serialization::Serialize::LoadComponentsJson("../RoombaRampage/Json/components.json", Ecs::ECS::GetInstance(), obj_text_entries);
+                }
+>>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 
             //    ImGui::EndMenu();
             //}
@@ -73,6 +88,7 @@ void gui::ImGuiHandler::m_DrawMainMenuBar() {
             if (ecs->m_ECS_SceneMap.size() < 0 || ImGui::MenuItem("Open")) {
                 
 
+<<<<<<< HEAD
                 char filePath[MAX_PATH];
                 std::filesystem::path path = file::FileWindow::m_OpenfileDialog(filePath);
                 if (!path.empty()) {
@@ -92,6 +108,9 @@ void gui::ImGuiHandler::m_DrawMainMenuBar() {
 
 
             }
+=======
+                
+>>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 
             ImGui::EndMenu();
         }
@@ -102,6 +121,7 @@ void gui::ImGuiHandler::m_DrawMainMenuBar() {
             ImGui::EndMenu();
         }
 
+<<<<<<< HEAD
         if (openNewFilepopup) {
             ImGui::OpenPopup("New Scene");
         }
@@ -150,12 +170,10 @@ void gui::ImGuiHandler::m_DrawMainMenuBar() {
             if (ImGui::Button("Cancel", ImVec2(120, 0))) { ImGui::CloseCurrentPopup(); }
             ImGui::EndPopup();
         }
+=======
+>>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 
         ImGui::EndMainMenuBar();
     }
 
-
-
-    
 }
-

@@ -23,8 +23,6 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 #include "../Config/pch.h"
 #include "../Graphics/GraphicsPipe.h"
-#include "../Graphics/GraphicsCamera.h"
-
 
 namespace graphicpipe
 {
@@ -136,7 +134,12 @@ namespace graphicpipe
 		m_funcDrawDebug();
 		m_funcDrawTilemap();
 		m_funcDraw();
+<<<<<<< HEAD
 		
+=======
+
+
+>>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 		m_funcDrawText();
 		
 
@@ -166,6 +169,19 @@ namespace graphicpipe
 
 		glUseProgram(m_frameBufferShaderProgram);
 
+<<<<<<< HEAD
+=======
+		if (loc != -1)
+		{
+			glUniform1i(loc, 0);
+		}
+		else
+		{
+			std::cout << "Uniform not found" << std::endl;
+		}
+
+		//glDrawArrays(GL_TRIANGLES, 0, 6);
+>>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 	}
 
 	void GraphicsPipe::m_funcDrawText()
@@ -175,6 +191,11 @@ namespace graphicpipe
 			for (auto& textData : m_textData) {
 				// Activate corresponding render state
 				glUseProgram(m_textShaderProgram);
+<<<<<<< HEAD
+=======
+				glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(m_windowWidth), 0.0f, static_cast<float>(m_windowHeight));
+				glUniformMatrix4fv(glGetUniformLocation(m_textShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+>>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 
 				glUniform1i(glGetUniformLocation(m_textShaderProgram, "layer"), textData.m_layer);
 

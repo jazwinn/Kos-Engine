@@ -23,11 +23,29 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 #include "../Config/pch.h"
 #include "Application.h"
+
 #include "../Graphics/GraphicsPipe.h"
+<<<<<<< HEAD
 #include "../Asset Manager/AssetManager.h"
 #include "../Asset Manager/SceneManager.h"
 #include "../Events/EventHandler.h"
 #include "../Inputs/Input.h"
+=======
+#include "../Assets/AssetManager.h"
+#include "../De&Serialization/json_handler.h"
+#include "../Debugging/Logging.h"
+#include "../Inputs/Input.h"
+#include "../ECS/ECS.h"
+#include "Helper.h"
+#include "Window.h"
+#include "../Debugging/Logging.h"
+#include "../Debugging/Performance.h"
+
+#include "imgui.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
+
+>>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 
 
 namespace Application {
@@ -35,10 +53,23 @@ namespace Application {
     /*--------------------------------------------------------------
       GLOBAL VARAIBLE
     --------------------------------------------------------------*/
+<<<<<<< HEAD
    #define IMGUIENABLED
+=======
+    AppWindow Application::lvWindow;
+    gui::ImGuiHandler Application::imgui_manager; 
+>>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
     graphicpipe::GraphicsPipe* pipe;
+    Input::InputSystem Input;
     assetmanager::AssetManager* AstManager;
+    logging::Logger logs;
 
+
+    // Audio Demo timer
+    float audioTimer = 3.0f;
+    bool audio2_bool = true;
+
+    float LastTime = static_cast<float>(glfwGetTime());
     
 
     int Application::Init() {
@@ -99,6 +130,7 @@ namespace Application {
         /*--------------------------------------------------------------
             LOAD ENTITIES INTO ECS & IMGUI
         --------------------------------------------------------------*/
+<<<<<<< HEAD
         scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();
         scenemanager->m_LoadScene("Assets/Scene/Default.json"); // replace with opening up window dialog
         
@@ -119,8 +151,12 @@ namespace Application {
         pipe->m_gameMode = true;
 #endif      
 
+=======
+        AstManager->m_loadEntities("../RoombaRampage/Json/components.json");
+>>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 
         LOGGING_INFO("Application Init Successful");
+    
         return 0;
 	}
 
@@ -131,11 +167,14 @@ namespace Application {
         ecs::ECS* ecs = ecs::ECS::m_GetInstance();
         //float FPSCapTime = 1.f / help->m_fpsCap;
         double lastFrameTime = glfwGetTime();
+<<<<<<< HEAD
         const double fixedDeltaTime = 1.0 / 60.0;
         help->m_fixedDeltaTime = static_cast<float>(fixedDeltaTime);
         ecs->m_DeltaTime = static_cast<float>(fixedDeltaTime);
         double accumulatedTime = 0.0;
 
+=======
+>>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
         /*--------------------------------------------------------------
             GAME LOOP
         --------------------------------------------------------------*/
@@ -166,25 +205,37 @@ namespace Application {
 
                 /*--------------------------------------------------------------
                     UPDATE ECS
+<<<<<<< HEAD
                 --------------------------------------------------------------*/
                 ecs->m_Update(help->m_fixedDeltaTime); 
                 //ecs->m_Update(Helper::Helpers::GetInstance()->m_deltaTime);
+=======
+                    --------------------------------------------------------------*/
+                ecs->m_Update(Helper::Helpers::GetInstance()->m_deltaTime);
+>>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 
                 /*--------------------------------------------------------------
                     UPDATE Render Pipeline
-                --------------------------------------------------------------*/
+                    --------------------------------------------------------------*/
                 pipe->m_funcUpdate();
 
 
 
                 /*--------------------------------------------------------------
                     DRAWING/RENDERING Window
-                --------------------------------------------------------------*/
+                    --------------------------------------------------------------*/
                 lvWindow.Draw();
 #ifdef IMGUIENABLED
 
                 /*--------------------------------------------------------------
+                    DRAWING/RENDERING Objects
+                    --------------------------------------------------------------*/
+                pipe->m_funcDrawWindow();
+
+
+                /*--------------------------------------------------------------
                     Draw IMGUI FRAME
+<<<<<<< HEAD
                 --------------------------------------------------------------*/
                 Editor.m_Render();
 #endif
@@ -198,6 +249,17 @@ namespace Application {
 
                 //double currentFrameTime = glfwGetTime();
                 //help->m_deltaTime = static_cast<float>(currentFrameTime - lastFrameTime);
+=======
+                    --------------------------------------------------------------*/
+                imgui_manager.m_Render();
+
+          
+                /*--------------------------------------------------------------
+                    Calculate time
+                    --------------------------------------------------------------*/
+                double currentFrameTime = glfwGetTime();
+                help->m_deltaTime = static_cast<float>(currentFrameTime - lastFrameTime);
+>>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 
                 //while (help->m_deltaTime < FPSCapTime) {
                 //    lastFrameTime = currentFrameTime;
@@ -220,7 +282,7 @@ namespace Application {
 
 
 
-	int Application::m_Cleanup() {
+	int Application::Cleanup() {
         ecs::ECS::m_GetInstance()->m_Unload();
 #ifdef IMGUIENABLED
         Editor.m_Shutdown();

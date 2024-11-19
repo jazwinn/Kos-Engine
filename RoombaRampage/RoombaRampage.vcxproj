@@ -119,8 +119,13 @@ xcopy /y /d "$(SolutionDir)FMOD_API\studio\lib\x64\*.dll" "$(OutDir)"</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);GLEW_STATIC;CRT_SECURE_NO_WARNINGS;CRT_SECURE_NO_WARNINGS;CRT_SECURE_NO_WARNINGSCRT_SECURE_NO_WARNINGSCRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+<<<<<<< HEAD
       <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\rapidjson;$(SolutionDir)Dependencies\FMOD_API\core\inc;$(SolutionDir)Dependencies\FMOD_API\studio\inc;$(SolutionDir)Dependencies\imgui;$(SolutionDir)include;$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\glm\include;$(SolutionDir)Dependencies\stb_image\include;$(SolutionDir)Dependencies\GLEW\include\GL;$(SolutionDir)Dependencies\Freetype_Font\include;$(SolutionDir)Json Texts;$(SolutionDir)Dependencies\mono\include;$(SolutionDir)Dependencies\mono\include\mono-2.0</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>26945; 4005; 4245;4083;26495;6255;6263;6001</DisableSpecificWarnings>
+=======
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\FMOD_API\core\inc;$(SolutionDir)Dependencies\FMOD_API\studio\inc;$(SolutionDir)Dependencies\imgui;$(SolutionDir)include;$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\glm\include;$(SolutionDir)Dependencies\stb_image\include;$(SolutionDir)Dependencies\GLEW\include\GL;$(SolutionDir)Dependencies\Freetype_Font\include;$(SolutionDir)Json Texts</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>26945</DisableSpecificWarnings>
+>>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
       <LanguageStandard>stdcpp20</LanguageStandard>
       <UseStandardPreprocessor>true</UseStandardPreprocessor>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -130,8 +135,8 @@ xcopy /y /d "$(SolutionDir)FMOD_API\studio\lib\x64\*.dll" "$(OutDir)"</Command>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\GLFW\lib-vc2022;$(SolutionDir)Dependencies\GLEW\\lib\Release\x64;$(SolutionDir)Dependencies\FMOD_API\core\lib\x64;$(SolutionDir)Dependencies\FMOD_API\studio\lib\x64;$(SolutionDir)Dependencies\Freetype_Font\lib;$(SolutionDir)Dependencies\mono\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glew32s.lib;glfw3.lib;User32.lib;Gdi32.lib;Shell32.lib;opengl32.lib;freetype.lib;mono-2.0-sgen.lib;Comdlg32.lib;fmodL_vc.lib;fmodstudioL_vc.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\GLFW\lib-vc2022;$(SolutionDir)Dependencies\GLEW\\lib\Release\x64;$(SolutionDir)Dependencies\FMOD_API\core\lib\x64;$(SolutionDir)Dependencies\FMOD_API\studio\lib\x64;$(SolutionDir)Dependencies\Freetype_Font\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32s.lib;glfw3.lib;User32.lib;Gdi32.lib;Shell32.lib;opengl32.lib;freetype.lib;fmodL_vc.lib;fmodstudioL_vc.lib</AdditionalDependencies>
       <IgnoreAllDefaultLibraries>
       </IgnoreAllDefaultLibraries>
       <IgnoreSpecificDefaultLibraries>
@@ -141,8 +146,7 @@ xcopy /y /d "$(SolutionDir)FMOD_API\studio\lib\x64\*.dll" "$(OutDir)"</Command>
     <PostBuildEvent>
       <Command>xcopy /y /d "$(SolutionDir)Dependencies\FMOD_API\core\lib\x64\*.dll" "$(OutDir)"
 xcopy /y /d "$(SolutionDir)Dependencies\FMOD_API\studio\lib\x64\*.dll" "$(OutDir)"
-xcopy /y /d "$(SolutionDir)Dependencies\Freetype_Font\lib\*.dll" "$(OutDir)"
-xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
+xcopy /y /d "$(SolutionDir)Dependencies\Freetype_Font\lib\*.dll" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -153,7 +157,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);GLEW_STATIC;CRT_SECURE_NO_WARNINGS;CRT_SECURE_NO_WARNINGS;CRT_SECURE_NO_WARNINGSCRT_SECURE_NO_WARNINGSCRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\rapidjson;$(SolutionDir)Dependencies\FMOD_API\core\inc;$(SolutionDir)Dependencies\FMOD_API\studio\inc;$(SolutionDir)Dependencies\imgui;$(SolutionDir)include;$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\glm\include;$(SolutionDir)Dependencies\stb_image\include;$(SolutionDir)Dependencies\GLEW\include\GL;$(SolutionDir)Dependencies\Freetype_Font\include;;$(SolutionDir)Dependencies\mono\include;$(SolutionDir)Dependencies\mono\include\mono-2.0</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\FMOD_API\core\inc;$(SolutionDir)Dependencies\FMOD_API\studio\inc;$(SolutionDir)Dependencies\imgui;$(SolutionDir)include;$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\glm\include;$(SolutionDir)Dependencies\stb_image\include;$(SolutionDir)Dependencies\GLEW\include\GL;$(SolutionDir)Dependencies\Freetype_Font\include;</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <UseStandardPreprocessor>true</UseStandardPreprocessor>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -166,8 +170,8 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\GLFW\lib-vc2022;$(SolutionDir)Dependencies\GLEW\\lib\Release\x64;$(SolutionDir)Dependencies\FMOD_API\core\lib\x64;$(SolutionDir)Dependencies\FMOD_API\studio\lib\x64;$(SolutionDir)Dependencies\Freetype_Font\lib;$(SolutionDir)Dependencies\mono\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glew32s.lib;glfw3.lib;User32.lib;Gdi32.lib;Shell32.lib;opengl32.lib;freetype.lib;mono-2.0-sgen.lib;Comdlg32.lib;fmod_vc.lib;fmodstudio_vc.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\GLFW\lib-vc2022;$(SolutionDir)Dependencies\GLEW\\lib\Release\x64;$(SolutionDir)Dependencies\FMOD_API\core\lib\x64;$(SolutionDir)Dependencies\FMOD_API\studio\lib\x64;$(SolutionDir)Dependencies\Freetype_Font\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32s.lib;glfw3.lib;User32.lib;Gdi32.lib;Shell32.lib;opengl32.lib;freetype.lib;fmod_vc.lib;fmodstudio_vc.lib</AdditionalDependencies>
       <IgnoreAllDefaultLibraries>
       </IgnoreAllDefaultLibraries>
       <IgnoreSpecificDefaultLibraries>
@@ -177,13 +181,13 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <PostBuildEvent>
       <Command>xcopy /y /d "$(SolutionDir)Dependencies\FMOD_API\core\lib\x64\*.dll" "$(OutDir)"
 xcopy /y /d "$(SolutionDir)Dependencies\FMOD_API\studio\lib\x64\*.dll" "$(OutDir)"
-xcopy /y /d "$(SolutionDir)Dependencies\Freetype_Font\lib\*.dll" "$(OutDir)"
-xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
+xcopy /y /d "$(SolutionDir)Dependencies\Freetype_Font\lib\*.dll" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application\Application.cpp" />
     <ClCompile Include="Application\Helper.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="Asset Manager\AssetManager.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../Config/pch.h</PrecompiledHeaderFile>
@@ -243,8 +247,12 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClCompile Include="Editor\ImGui Panels\imgui_game_scene_window.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_Gizmo.cpp" />
     <ClCompile Include="Editor\ImGui Panels\Editor.cpp" />
+=======
+    <ClCompile Include="ECS\Hierachy.cpp" />
+    <ClCompile Include="Editor\ImGui Panels\imgui_component_window.cpp" />
+    <ClCompile Include="Editor\ImGui Panels\imgui_handler.cpp" />
+>>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
     <ClCompile Include="Editor\ImGui Panels\imgui_hierarchy_window.cpp" />
-    <ClCompile Include="Editor\ImGui Panels\imgui_layer_panel.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_logs_window.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_menubar.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_performance_window.cpp" />
@@ -332,6 +340,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClCompile Include="ECS\System\RenderDebugSystem.cpp" />
     <ClCompile Include="ECS\System\RenderSystem.cpp" />
     <ClCompile Include="ECS\System\RenderTextSystem.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="Editor\ImGui Panels\ScriptVariable.cpp" />
     <ClInclude Include="ECS\Component\TilemapComponent.h" />
     <ClInclude Include="ECS\System\TilemapSystem.h" />
@@ -340,12 +349,12 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClCompile Include="Editor\WindowFile.cpp" />
     <ClCompile Include="Events\ActionManager.cpp" />
     <ClCompile Include="Events\EventHandler.cpp" />
+=======
+>>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
     <ClCompile Include="Events\Listeners.cpp" />
     <ClCompile Include="Events\MessageSystem.cpp" />
     <ClCompile Include="Graphics\GraphicsBuffers.cpp" />
-    <ClCompile Include="Graphics\GraphicsCamera.cpp" />
     <ClCompile Include="Graphics\GraphicsDraw.cpp" />
-    <ClCompile Include="Graphics\GraphicsMatrix.cpp" />
     <ClCompile Include="Graphics\GraphicsPipe.cpp" />
     <ClCompile Include="Graphics\GraphicsShader.cpp" />
     <ClCompile Include="Graphics\GraphicsVAO.cpp" />
@@ -354,13 +363,16 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClCompile Include="Math\Mat3x3.cpp" />
     <ClCompile Include="Math\Mathlib.cpp" />
     <ClCompile Include="Math\Vector2.cpp" />
-    <ClCompile Include="Math\Vector3.cpp" />
     <ClCompile Include="Physics\Physics.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="Physics\PhysicsLayer.cpp" />
+=======
+>>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Application.h" />
     <ClInclude Include="Application\Helper.h" />
+<<<<<<< HEAD
     <ClInclude Include="Asset Manager\AssetManager.h" />
     <ClInclude Include="Asset Manager\Audio.h" />
     <ClInclude Include="Asset Manager\Image.h" />
@@ -383,6 +395,11 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="Editor\EditorCamera.h" />
     <ClInclude Include="ECS\System\LogicSystem.h" />
     <ClInclude Include="Editor\ImGui Panels\Editor.h" />
+=======
+    <ClInclude Include="ECS\Hierachy.h" />
+    <ClInclude Include="ECS\System\ControlSystem.h" />
+    <ClInclude Include="Editor\ImGui Panels\imgui_handler.h" />
+>>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
     <ClInclude Include="Application\json_handler.h" />
     <ClInclude Include="Application\Window.h" />
     <ClInclude Include="De&amp;Serialization\json_handler.h" />
@@ -421,26 +438,33 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="ECS\System\CollisionSystem.h" />
     <ClInclude Include="ECS\System\TransformSystem.h" />
     <ClInclude Include="ECS\System\RenderDebugSystem.h" />
+<<<<<<< HEAD
+=======
+    <ClInclude Include="ECS\System\PhysicsSystem.h" />
+>>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
     <ClInclude Include="ECS\System\RenderSystem.h" />
     <ClInclude Include="ECS\System\RenderTextSystem.h" />
     <ClInclude Include="ECS\System\System.h" />
     <ClInclude Include="ECS\System\SystemList.h" />
     <ClInclude Include="ECS\System\SystemType.h" />
+<<<<<<< HEAD
     <ClInclude Include="Editor\TilemapCalculations.h" />
     <ClInclude Include="Editor\WindowFile.h" />
     <ClInclude Include="Events\Action.h" />
     <ClInclude Include="Events\ActionEvent.h" />
     <ClInclude Include="Events\ActionManager.h" />
     <ClInclude Include="Events\BaseEvent.h" />
+=======
+>>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
     <ClInclude Include="Events\BaseMessage.h" />
-    <ClInclude Include="Events\ButtonEvent.h" />
-    <ClInclude Include="Events\EventHandler.h" />
-    <ClInclude Include="Events\KeyEvent.h" />
     <ClInclude Include="Events\Listeners.h" />
     <ClInclude Include="Events\MessageSystem.h" />
+<<<<<<< HEAD
     <ClInclude Include="Events\ModifyAction.h" />
     <ClInclude Include="Events\MouseEvent.h" />
     <ClInclude Include="Graphics\GraphicsCamera.h" />
+=======
+>>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
     <ClInclude Include="Graphics\GraphicsPipe.h" />
     <ClInclude Include="Inputs\Input.h" />
     <ClInclude Include="Inputs\Keycodes.h" />
@@ -448,9 +472,11 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="Math\Mat3x3.h" />
     <ClInclude Include="Math\Mathlib.h" />
     <ClInclude Include="Math\Vector2.h" />
-    <ClInclude Include="Math\Vector3.h" />
     <ClInclude Include="Physics\Physics.h" />
+<<<<<<< HEAD
     <ClInclude Include="Physics\PhysicsLayer.h" />
+=======
+>>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
   </ItemGroup>
   <ItemGroup>
     <None Include="Graphics\debugFragmentShader.frag" />

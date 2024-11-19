@@ -10,12 +10,18 @@ Reproduction or disclosure of this file or its contents without the
 prior written consent of DigiPen Institute of Technology is prohibited.
 */
 /********************************************************************/
+<<<<<<< HEAD
 
 #include "../Config/pch.h"
 #include "../ECS.h"
 
 #include "PhysicsSystem.h"
 #include "../Application/Helper.h"
+=======
+#include "../ECS.h"
+
+#include "PhysicsSystem.h"
+>>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 
 
 namespace ecs {
@@ -36,7 +42,11 @@ namespace ecs {
 		size_t IndexID{};
 		for (auto& RbComponentPtr : m_vecRigidBodyComponentPtr) {
 			if (RbComponentPtr->m_Entity == ID) {
+<<<<<<< HEAD
 				break;
+=======
+				return;
+>>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 			}
 			IndexID++;
 		}
@@ -52,15 +62,26 @@ namespace ecs {
 	}
 
 	void PhysicsSystem::m_Init() {
+<<<<<<< HEAD
+=======
+
+		// requires both movement component and transform component
+>>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 		m_SystemSignature.set(TYPERIGIDBODYCOMPONENT);
 		m_SystemSignature.set(TYPETRANSFORMCOMPONENT);
 
 	}
 
+<<<<<<< HEAD
 	void PhysicsSystem::m_Update(const std::string& scene) {
 		ECS* ecs = ECS::m_GetInstance();
 		physicspipe::Physics* PhysicsPipeline = physicspipe::Physics::getInstance();
 		Helper::Helpers* help = Helper::Helpers::GetInstance();
+=======
+	void PhysicsSystem::m_Update() {
+		ECS* ecs = ECS::m_GetInstance();
+
+>>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 		if (m_vecRigidBodyComponentPtr.size() != m_vecTransformComponentPtr.size()) {
 			LOGGING_ERROR("Error: Vectors container size does not Match");
 			return;
@@ -71,15 +92,24 @@ namespace ecs {
 			RigidBodyComponent* rigidBody = m_vecRigidBodyComponentPtr[n];
 			TransformComponent* transform = m_vecTransformComponentPtr[n];
 
+<<<<<<< HEAD
 			//skip component not of the scene
 			if (rigidBody->m_scene != scene) continue;
 
 
+=======
+			// Update the rigid body with the current delta time
+>>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 			if (rigidBody->m_IsKinematic || rigidBody->m_IsStatic) {
 				// If kinematic or static, skip physics calculations
 				return;
 			}
+<<<<<<< HEAD
 			for (int i = 0; i < help->currentNumberOfSteps; ++i) {
+=======
+			else
+			{
+>>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 				// Integrate linear motion
 				vector2::Vec2 acceleration = rigidBody->m_Acceleration + rigidBody->m_Force * rigidBody->m_InverseMass;
 				rigidBody->m_Velocity += acceleration * ecs->m_DeltaTime;
@@ -95,6 +125,7 @@ namespace ecs {
 
 				rigidBody->m_Force = vector2::Vec2{ 0.0f, 0.0f };
 				rigidBody->m_Torque = 0.0f;
+<<<<<<< HEAD
 
 
 				if (!rigidBody->m_IsStatic && !rigidBody->m_IsKinematic) {
@@ -110,6 +141,15 @@ namespace ecs {
 			}
 		}
 		PhysicsPipeline->m_Update();
+=======
+			}
+
+			if (!rigidBody->m_IsStatic && !rigidBody->m_IsKinematic) {
+				transform->m_position += rigidBody->m_Velocity * ecs->m_DeltaTime;
+				transform->m_rotation += rigidBody->m_AngularVelocity * ecs->m_DeltaTime;
+			}
+		}
+>>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 	}
 
 }

@@ -117,6 +117,7 @@ namespace assetmanager {
         /******************************************************************/
         void m_LoadPrefab(std::string file);
 
+<<<<<<< HEAD:RoombaRampage/Asset Manager/AssetManager.h
         void m_RenameAsset(std::filesystem::path old, std::filesystem::path _new);
 
         void m_LoadScript(std::filesystem::path filepath);
@@ -144,6 +145,16 @@ namespace assetmanager {
 
         text::FontManager m_fontManager;
         
+=======
+        /******************************************************************/
+        /*!
+        \fn      void m_loadEntities(const std::string& jsonFilePath)
+        \brief   Loads entity data from a JSON file and initializes entities.
+        \param   jsonFilePath - Path to the JSON file containing entity data.
+        */
+        /******************************************************************/
+        void m_loadEntities(const std::string& jsonFilePath);
+>>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128:RoombaRampage/Assets/AssetManager.h
     };
 
 }

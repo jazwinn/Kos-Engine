@@ -35,7 +35,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
         app.Run();
 
-        app.m_Cleanup();
+        app.Cleanup();
 
 
 

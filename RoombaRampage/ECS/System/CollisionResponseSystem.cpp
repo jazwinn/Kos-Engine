@@ -108,6 +108,18 @@ namespace ecs {
 			if (iterator != vecCollisionEntityPair.end()) {
 				ColComp->m_collidedWith.push_back(iterator->second->m_ID);
 				ColComp->m_isCollided = true;
+<<<<<<< HEAD
+=======
+
+				/*if (ecs->m_ECS_EntityMap[rigidComp->m_Entity].test(TYPEMOVEMENTCOMPONENT)) {
+
+					MovementComponent* movCom = (MovementComponent*)ecs->m_ECS_CombinedComponentPool[TYPEMOVEMENTCOMPONENT]->m_GetEntityComponent(rigidComp->m_Entity);
+					movCom->m_Direction = {0,0};
+
+				}*/
+
+
+>>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 			}
 		}
 

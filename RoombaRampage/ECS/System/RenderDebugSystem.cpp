@@ -22,8 +22,13 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "RenderDebugSystem.h"
 #include "../Physics/Physics.h"
 #include "../Graphics/GraphicsPipe.h"
+<<<<<<< HEAD
 #include "../Graphics/GraphicsCamera.h"
 #include "../ECS/Hierachy.h"
+=======
+#include "../Math/Mat3x3.h"
+#include "../Math/vector2.h"
+>>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 
 namespace ecs {
 
@@ -32,8 +37,8 @@ namespace ecs {
 
 		//Checks if system already has stored the entity
 
-		if (std::find_if(m_vecTransformComponentPtr.begin(), m_vecTransformComponentPtr.end(), [ID](const auto& obj) { return obj->m_Entity == ID; })
-			== m_vecTransformComponentPtr.end()) {
+		if (std::find_if(m_vecColliderComponentPtr.begin(), m_vecColliderComponentPtr.end(), [ID](const auto& obj) { return obj->m_Entity == ID; })
+			== m_vecColliderComponentPtr.end()) {
 			m_vecTransformComponentPtr.push_back((TransformComponent*)ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(ID));
 			m_vecColliderComponentPtr.push_back((ColliderComponent*)ecs->m_ECS_CombinedComponentPool[TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(ID));
 		}
@@ -78,10 +83,11 @@ namespace ecs {
 	
 
 		graphicpipe::GraphicsPipe * graphicsPipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
-		for (int n{}; n < m_vecTransformComponentPtr.size(); n++) {
+		for (int n{}; n < m_vecColliderComponentPtr.size(); n++) {
 
 			TransformComponent* transform = m_vecTransformComponentPtr[n];
 			ColliderComponent* collider = m_vecColliderComponentPtr[n];
+<<<<<<< HEAD
 			//skip component not of the scene
 			if (collider->m_scene != scene) continue;
 
@@ -136,9 +142,19 @@ namespace ecs {
 																debugTransformation.m_e20, debugTransformation.m_e21, debugTransformation.m_e22} ,
 															collider->m_isCollided, static_cast<graphicpipe::GraphicsPipe::ShapeType>(collider->m_type) });
 				}
+=======
+
+			if (collider->m_drawDebug)
+			{
+				mat3x3::Mat3x3 debugTransformation =  mat3x3::Mat3Transform(vector2::Vec2{ transform->m_transformation.m_e20 + collider->m_OffSet.m_x, transform->m_transformation.m_e21 + collider->m_OffSet.m_y }, vector2::Vec2{ collider->m_Size.m_x, collider->m_Size.m_y }, 0);
+
+				graphicsPipe->m_debugBoxData.push_back({ glm::mat3{debugTransformation.m_e00,debugTransformation.m_e01,debugTransformation.m_e02,
+																debugTransformation.m_e10,debugTransformation.m_e11, debugTransformation.m_e12,
+															debugTransformation.m_e20, debugTransformation.m_e21, debugTransformation.m_e22} ,
+														collider->m_isCollided, 0 });
+>>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 			}
 
-			
 		}
 	}
 

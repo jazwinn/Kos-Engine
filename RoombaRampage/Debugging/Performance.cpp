@@ -39,6 +39,13 @@ namespace performancetracker {
 	/******************************************************************/
 	std::string Performance::m_typeToString(ecs::TypeSystem type) {
 		switch (type) {
+<<<<<<< HEAD
+=======
+		case ecs::TypeSystem::TYPEPHYSICSSYSTEM:
+			return "Physics System";
+		case ecs::TypeSystem::TYPECONTROLSYSTEM:
+			return "Control System";
+>>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 		case ecs::TypeSystem::TYPECOLLISIONSYSTEM:
 			return "Collision System";
 		case ecs::TypeSystem::TYPECOLLISIONRESPONSESYSTEM:

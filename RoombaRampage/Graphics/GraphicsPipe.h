@@ -108,6 +108,11 @@ namespace graphicpipe {
     class GraphicsPipe
     {
     private:
+<<<<<<< HEAD
+=======
+        int m_unitWidth{ 512 };         ///< The default width for the graphics unit.
+        int m_unitHeight{ 512 };        ///< The default height for the graphics unit.
+>>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 
         /**
          * @struct Mesh
@@ -195,6 +200,22 @@ namespace graphicpipe {
         unsigned int m_colorBuffer{};
         unsigned int m_tileIndexBuffer{};
 
+        int m_windowWidth{};                        ///< The current window width.
+        int m_windowHeight{};                       ///< The current window height.
+        float m_aspectRatio{};                      ///< Aspect ratio of the window.
+
+        /**
+         * @struct Camera
+         * @brief Represents the camera's position and orientation.
+         */
+        struct Camera
+        {
+            glm::vec2 m_coordinates;   ///< Coordinates of the camera.
+            float m_angle;             ///< Rotation angle of the camera.
+        };
+
+        std::vector<glm::mat3> m_modelToNDCMatrix{}; ///< Model-to-NDC transformation matrices.
+        std::vector<glm::mat3> m_debugToNDCMatrix{}; ///< Debug model-to-NDC matrices.
         glm::mat3 m_testMatrix{};                   ///< Test matrix for rendering.
 
         /**
@@ -207,10 +228,13 @@ namespace graphicpipe {
         static GLuint m_funcCompileShader(GLuint type, const std::string& shader);
 
     public:
+<<<<<<< HEAD
 
         int m_unitWidth{ 100 };         ///< The default width for the graphics unit.
         int m_unitHeight{ 100 };        ///< The default height for the graphics unit.
 
+=======
+>>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
         /**
          * @enum ShapeType
          * @brief Enumerates different shape types for rendering.
@@ -220,6 +244,8 @@ namespace graphicpipe {
             SQUARE_LINES, ///< Square outline shape type.
             CIRCLE_LINES  ///< Circle outline shape type.
         };
+
+        float m_frameTime{ 0.20f };     ///< Frame time (24 FPS by default).
 
         /**
          * @brief Destructor for the GraphicsPipe class.
@@ -311,6 +337,7 @@ namespace graphicpipe {
         */
         void m_funcSetupFrameBuffer();
 
+<<<<<<< HEAD
         void m_funcSetupGamePreviewFrameBuffer();
 
         void m_funcCalculateModelToWorldMatrix();
@@ -322,6 +349,8 @@ namespace graphicpipe {
         //Boolean Values
         bool m_gameMode{ false };
 
+=======
+>>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
         // Meshes
         Mesh m_squareMesh;              ///< Mesh for square rendering.
         Mesh m_screenMesh;              ///< Mesh for screen rendering.
@@ -330,12 +359,15 @@ namespace graphicpipe {
         Mesh m_textMesh;                ///< Mesh for text rendering.
         Mesh m_lineMesh;
 
+<<<<<<< HEAD
         // Matrix Containers
         std::vector<glm::mat3> m_modelMatrix{};
         std::vector<glm::mat3> m_modelToNDCMatrix{}; ///< Model-to-NDC transformation matrices.
         std::vector<glm::mat3> m_debugBoxToNDCMatrix{}; ///< Debug model-to-NDC matrices.
         std::vector<glm::mat3> m_debugCircleToNDCMatrix{};
 
+=======
+>>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
         // Data for rendering
         std::vector<TilemapData> m_tilemapData{};
         std::vector<GraphicsData> m_modelData{}; ///< Graphics data for rendering.

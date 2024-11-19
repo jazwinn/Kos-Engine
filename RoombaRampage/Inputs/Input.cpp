@@ -24,6 +24,13 @@ namespace Input {
 	/*--------------------------------------------------------------
 	  GLOBAL VARAIBLE
 	--------------------------------------------------------------*/
+<<<<<<< HEAD
+=======
+	bool InputSystem::KeyStateW = false;
+	bool InputSystem::KeyStateA = false;
+	bool InputSystem::KeyStateS = false;
+	bool InputSystem::KeyStateD = false;
+>>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 
 	vector2::Vec2 InputSystem::MousePosition = { 0,0 };
 	std::string InputSystem::m_mouseString;
@@ -34,9 +41,47 @@ namespace Input {
 
 	void InputSystem::KeyCallBack([[maybe_unused]] GLFWwindow* window, [[maybe_unused]] int key, [[maybe_unused]] int scancode, int action, [[maybe_unused]] int mods) {
 		if (action == GLFW_PRESS) {
+<<<<<<< HEAD
 			InputSystem::m_keyString = "key pressed!";
 		}
 		else if (action == GLFW_RELEASE) {
+=======
+			switch (key){
+			case GLFW_KEY_W:
+				KeyStateW = true;
+				break;
+			case GLFW_KEY_A:
+				KeyStateA = true;
+				break;
+			case GLFW_KEY_S:
+				KeyStateS = true;
+				break;
+			case GLFW_KEY_D:
+				KeyStateD = true;
+				break;
+			default:
+				break;
+			}
+			InputSystem::m_keyString = "key pressed!";
+		}
+		else if (action == GLFW_RELEASE) {
+			switch (key) {
+			case GLFW_KEY_W:
+				KeyStateW = false;
+				break;
+			case GLFW_KEY_A:
+				KeyStateA = false;
+				break;
+			case GLFW_KEY_S:
+				KeyStateS = false;
+				break;
+			case GLFW_KEY_D:
+				KeyStateD = false;
+				break;
+			default:
+				break;
+			}
+>>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 			InputSystem::m_keyString = "-";
 		}
 		else if (action == GLFW_REPEAT) {

@@ -3945,7 +3945,7 @@ void ImGui::Shutdown()
     g.IO.Fonts = NULL;
     g.DrawListSharedData.TempBuffer.clear();
 
-    // m_Cleanup of other data are conditional on actually having initialized Dear ImGui.
+    // Cleanup of other data are conditional on actually having initialized Dear ImGui.
     if (!g.Initialized)
         return;
 

@@ -16,21 +16,19 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #ifndef APP_H
 #define APP_H
 
-
-
-#include "../Debugging/Logging.h"
-#include "../ECS/ECS.h"
-#include "../Inputs/Input.h"
-#include "Helper.h"
 #include "Window.h"
+#include "../Assets/Audio.h"
 
+<<<<<<< HEAD
 #include "../Debugging/Logging.h"
 #include "../C#Mono/mono_handler.h"
 #include "../Editor/ImGui Panels/Editor.h"
+=======
+>>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
-#include "../Events/EventHandler.h"
+#include "../Editor/ImGui Panels/imgui_handler.h"
 /******************************************************************/
 /*!
 \class     Application
@@ -52,7 +50,7 @@ namespace Application {
 		\brief     Initialzie all systems, managers and pipeline
 		*/
 		/******************************************************************/
-		int Init();
+		static int Init();
 
 		/******************************************************************/
 		/*!
@@ -61,23 +59,30 @@ namespace Application {
 				   update functions.
 		*/
 		/******************************************************************/
-		int Run();
+		static int Run();
 		/******************************************************************/
 		/*!
-		\fn        m_Cleanup()
+		\fn        Cleanup()
 		\brief     Calls upon the closing of the application. Calls the cleanup
 				   functions of all the other systems.
 		*/
 		/******************************************************************/
-		int m_Cleanup();
+		static int Cleanup();
 
+		static AppWindow lvWindow;
 
 	private:
+<<<<<<< HEAD
 		gui::ImGuiHandler Editor; //should only remain in Application
 		AppWindow lvWindow;
 		Input::InputSystem Input;
 		
 		logging::Logger logs;
+=======
+		static gui::ImGuiHandler imgui_manager; //should only remain in Application
+
+
+>>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 	};
 }
 

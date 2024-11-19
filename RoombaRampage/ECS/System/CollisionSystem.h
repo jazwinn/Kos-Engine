@@ -103,8 +103,13 @@ namespace ecs {
         std::vector<TransformComponent*> m_vecTransformComponentPtr;
         //! Vector storing pointers to the ColliderComponent of registered entities
         std::vector<ColliderComponent*> m_vecColliderComponentPtr;
+<<<<<<< HEAD
         std::vector<NameComponent*>m_vecNameComponentPtr;
 
+=======
+        //std::vector<RigidBodyComponent*> vecRigidBodyComponentPtr; // Placeholder for future use
+        //std::vector<MovementComponent*> m_vecMovementComponentPtr; // Placeholder for future use
+>>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 
     };
 

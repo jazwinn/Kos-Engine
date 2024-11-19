@@ -49,9 +49,5 @@ namespace ecs {
 		REFLECTABLE(TransformComponent, m_position, m_rotation, m_scale)
 		
 	};
-
 }
-
-
-
 #endif TRANSCOM_H

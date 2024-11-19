@@ -1,0 +1,114 @@
+/********************************************************************/
+/*!
+\file      imgui_handler.cpp
+\author    Chiu Jun Jie, junjie.c , 2301524
+\par       junjie.c@digipen.edu
+\date      Oct 02, 2024
+\brief     This file defines functions that handle ImGui operations
+		   - Initialize: Sets up ImGui with GLFW and OpenGL.
+		   - NewFrame: Prepares and starts a new ImGui frame.
+		   - Render: Renders ImGui elements and windows.
+		   - Shutdown: Cleans up ImGui resources.
+		   - DrawMainMenuBar: Renders the main menu bar UI.
+		   - DrawPerformanceWindow: Displays FPS and performance metrics.
+		   - DrawComponentWindow: Manages the ECS component interface.
+		   - DrawLogsWindow: Displays logs.
+		   - DrawInputWindow: Handles input settings.
+		   - DrawRenderScreenWindow: Sets up the window for render output.
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/********************************************************************/
+
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
+#include "implot.h"
+#include "implot_internal.h"
+#include "../ECS/ECS.h"
+#include "../Dependencies/rapidjson/document.h"
+#include "../Dependencies/rapidjson/writer.h"
+#include "../Dependencies/rapidjson/stringbuffer.h"
+#include "imgui_handler.h"
+#include "../Application/Helper.h"
+
+namespace gui {
+
+	ImGuiHandler::ImGuiHandler() {} //CTORdoing 
+
+	ImGuiHandler::~ImGuiHandler() {} //Destructor
+
+	void ImGuiHandler::m_Initialize(GLFWwindow* window, const char* glsl_version)
+	{
+		// Setup Dear ImGui context
+		IMGUI_CHECKVERSION();
+		ImGui::CreateContext();
+		ImPlot::CreateContext();
+		ImGuiIO& io = ImGui::GetIO(); (void)io;
+		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
+		io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;  // Enable Gamepad Controls
+		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;// Enable Docking
+		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;// Enable Multi-Viewport / Platform Windows
+
+		// Setup Dear ImGui style
+		ImGui::StyleColorsDark();
+
+		// Setup Platform/Renderer bindings
+		ImGui_ImplGlfw_InitForOpenGL(window, true);
+		ImGui_ImplOpenGL3_Init(glsl_version);
+	}
+
+	void ImGuiHandler::m_NewFrame()
+	{
+		// Start a new ImGui frame
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
+	}
+
+	void ImGuiHandler::m_Render()
+	{
+		// Render ImGui
+		m_NewFrame();
+		//for gizmo - todo once camera is done
+		//ImGuizmo::SetOrthographic(true);
+		//ImGuizmo::BeginFrame();
+		//viewport docking
+		ImGui::DockSpaceOverViewport(0, ImGui::GetMainViewport());
+		//create main menu bar
+		m_DrawMainMenuBar();
+
+		Helper::Helpers* help = Helper::Helpers::GetInstance();
+		m_DrawPerformanceWindow(help->m_fps);
+		m_DrawHierachyWindow();
+		m_DrawComponentWindow();
+		m_DrawLogsWindow();
+		m_DrawTestWindow();
+		m_DrawInputWindow();
+		m_DrawRenderScreenWindow(static_cast<unsigned int>(Helper::Helpers::GetInstance()->m_windowWidth), static_cast<unsigned int>(Helper::Helpers::GetInstance()->m_windowHeight));
+		ImGui::Render();
+		ImGuiIO& io = ImGui::GetIO();
+		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+		{
+			GLFWwindow* backup_current_context = glfwGetCurrentContext();
+			ImGui::UpdatePlatformWindows();
+			ImGui::RenderPlatformWindowsDefault();
+			glfwMakeContextCurrent(backup_current_context);
+		}
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+	}
+
+
+
+
+	void ImGuiHandler::m_Shutdown()
+	{
+		// Shutdown ImGui
+		ImGui_ImplOpenGL3_Shutdown();
+		ImGui_ImplGlfw_Shutdown();
+		ImPlot::DestroyContext();
+		ImGui::DestroyContext();
+	}
+
+}

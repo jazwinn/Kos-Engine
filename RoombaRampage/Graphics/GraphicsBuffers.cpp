@@ -161,6 +161,8 @@ namespace graphicpipe
 	void GraphicsPipe::m_funcSetupFrameBuffer()
 	{
 		Helper::Helpers* help = Helper::Helpers::GetInstance();
+		std::cout << help->m_windowWidth << std::endl;
+
 
 		if (m_screenTexture)
 		{
@@ -191,7 +193,7 @@ namespace graphicpipe
 		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, static_cast<GLsizei>(help->m_windowWidth), static_cast<GLsizei>(help->m_windowHeight));
 		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_depthBufferObject);
 
-#if DEBUG
+
 		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE)
 		{
 			LOGGING_INFO("Framebuffer successfully created");
@@ -200,7 +202,7 @@ namespace graphicpipe
 		{
 			LOGGING_INFO("Framebuffer has not been created");
 		}
-#endif
+
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 		glScissor(0, 0, static_cast<GLsizei>(help->m_windowWidth), static_cast<GLsizei>(help->m_windowHeight));

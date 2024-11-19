@@ -16,7 +16,6 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #define NAMECOM_H
 
 #include "Component.h"
-#include "../ECS/Layers.h"
 
 
 namespace ecs {
@@ -33,6 +32,7 @@ namespace ecs {
 
 		std::string m_entityName;
 
+<<<<<<< HEAD
 		layer::LAYERS m_Layer{ layer::DEFAULT };
 
 		bool m_isPrefab{ false };
@@ -43,6 +43,8 @@ namespace ecs {
 		std::string m_entityTag = "Default";
 
 		REFLECTABLE(NameComponent, m_entityName, m_entityTag);
+=======
+>>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 	};
 
 }

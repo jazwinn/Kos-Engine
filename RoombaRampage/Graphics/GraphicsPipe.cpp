@@ -23,8 +23,12 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 #include "../Config/pch.h"
 #include "../Graphics/GraphicsPipe.h"
+<<<<<<< HEAD
 #include "../Graphics/GraphicsCamera.h"
 #include "../Asset Manager/AssetManager.h"
+=======
+#include "../Assets/AssetManager.h"
+>>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 #include "../Application/Application.h"
 #include "../Application/Helper.h"
 #include <iostream>
@@ -89,6 +93,10 @@ namespace graphicpipe {
 		m_debugBoxToNDCMatrix.push_back(m_testMatrix);
 		m_debugBoxCollisionChecks.push_back(false);
 
+		m_windowWidth = static_cast<int>(Helper::Helpers::GetInstance()->m_windowWidth);
+		m_windowHeight = static_cast<int>(Helper::Helpers::GetInstance()->m_windowHeight);
+		m_aspectRatio = static_cast<float>(static_cast<float>(m_windowHeight) / static_cast<float>(m_windowWidth));
+
 		// Set up array buffer and framebuffers for offscreen rendering.
 		m_funcSetupArrayBuffer();
 		m_funcSetupFrameBuffer();
@@ -131,11 +139,12 @@ namespace graphicpipe {
 
 	void GraphicsPipe::m_funcUpdate()
 	{
-		m_funcCalculateModelToWorldMatrix();
-		GraphicsCamera::calculateAspectRatio();
-		
-		if (GraphicsCamera::m_cameras.size() > 0 && m_gameMode)
+		m_windowWidth = static_cast<int>(Helper::Helpers::GetInstance()->m_windowWidth);
+		m_windowHeight = static_cast<int>(Helper::Helpers::GetInstance()->m_windowHeight);
+		m_aspectRatio = static_cast<float>(static_cast<float>(m_windowHeight) / static_cast<float>(m_windowWidth));
+		if (m_modelData.size() > 0)
 		{
+<<<<<<< HEAD
 			GraphicsCamera::setCurrCamera(0);
 			
 			GraphicsCamera::calculateCurrView();
@@ -196,6 +205,66 @@ namespace graphicpipe {
 		}
 
 		m_funcClearContainers();
+=======
+			for (int n{}; n < m_modelData.size(); n++)
+			{
+				float heightRatio = static_cast<float>(m_imageData[m_modelData[n].m_textureID].m_height) / m_unitHeight;
+				float widthRatio = static_cast<float>(m_imageData[m_modelData[n].m_textureID].m_width) / m_unitWidth;
+
+				float imageAspectRatio = static_cast<float>(m_imageData[m_modelData[n].m_textureID].m_width) / static_cast<float>(m_imageData[m_modelData[n].m_textureID].m_height);
+
+
+
+				m_modelData[n].m_transformation[0][0] = m_modelData[n].m_transformation[0][0] * widthRatio / imageAspectRatio;
+				m_modelData[n].m_transformation[0][1] = m_modelData[n].m_transformation[0][1] * widthRatio / imageAspectRatio;
+				m_modelData[n].m_transformation[1][1] = m_modelData[n].m_transformation[1][1] * heightRatio;
+				m_modelData[n].m_transformation[1][0] = m_modelData[n].m_transformation[1][0] * heightRatio;
+
+				/*glm::mat3 lvScale{ m_modelData[n].m_scale.x * widthRatio / imageAspectRatio, 0, 0, 0, m_modelData[n].m_scale.y * heightRatio , 0, 0 , 0 ,1 };
+				glm::mat3 lvRotate{ cos(m_modelData[n].m_rotate * 3.1415f / 180.f), -sin(m_modelData[n].m_rotate * 3.1415f / 180.f), 0.f,
+								   sin(m_modelData[n].m_rotate * 3.1415f / 180.f), cos(m_modelData[n].m_rotate * 3.1415f / 180.f), 0.f,
+									0.f , 0.f ,1.f };
+				glm::mat3 lvTranslate{ 1, 0, 0, 0, 1, 0, m_modelData[n].m_worldCoordinates.x , m_modelData[n].m_worldCoordinates.y ,1 };*/
+
+				glm::mat3 lvNDCScale{ m_aspectRatio, 0, 0, 0, 1.f, 0, 0 , 0 ,1.f };
+
+				//glm::mat3 ortho = glm::mat3(1.0f);
+
+				//// Scale X and Y by aspect ratio
+				//float left = -0.5f;
+				//float right = 0.5f;
+				//float bottom = -0.5f;
+				//float top = 0.5f;
+
+				//ortho[0][0] = 2.0f / (right - left);  // Scale X
+				//ortho[1][1] = 2.0f / (top - bottom);  // Scale Y
+
+				//ortho[2][0] = -(right + left) / (right - left);  // Translate X
+				//ortho[2][1] = -(top + bottom) / (top - bottom);  // Translate Y
+
+
+
+
+
+				m_modelToNDCMatrix.push_back(lvNDCScale * m_modelData[n].m_transformation);
+				m_textureOrder.push_back(m_modelData[n].m_textureID);
+				m_stripCounts.push_back(m_imageData[m_modelData[n].m_textureID].m_stripCount);
+				m_frameNumbers.push_back(m_modelData[n].m_frameNumber);
+			}
+		}
+
+		if (m_debugBoxData.size() > 0)
+		{
+			for (int i{}; i < m_debugBoxData.size(); i++)
+			{
+				glm::mat3 lvNDCScale{ m_aspectRatio, 0, 0, 0, 1.f, 0, 0 , 0 ,1.f };
+				m_debugToNDCMatrix.push_back(lvNDCScale * m_debugBoxData[i].m_transformation);
+				m_debugBoxCollisionChecks.push_back(static_cast<float>(m_debugBoxData[i].m_isCollided));
+
+			}
+		}
+
+>>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 	}
 
 }
