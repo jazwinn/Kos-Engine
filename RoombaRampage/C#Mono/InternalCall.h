@@ -150,6 +150,10 @@ namespace script {
 
 		static void m_InternalCallSetSceneActive(MonoString* monoString);
 
+		static void m_UnloadAllScene();
+
+		static void m_InternalCallLoadScene(MonoString* monoString);
+
 	public:
 
 

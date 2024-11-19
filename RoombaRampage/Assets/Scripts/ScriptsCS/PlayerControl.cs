@@ -54,7 +54,13 @@ namespace Namespace
             {
                 velocity.X = speed;
             }
+            if (m_InternalCallIsKeyPressed(Key.keyCode.L))
+            {
+                m_UnloadAllScene();
+                m_InternalCallLoadScene("Assets\\Scene\\Script Test.json");
+            }
 
+            m_InternalSetVelocity(EntityID, velocity);
         }
     }
 }
