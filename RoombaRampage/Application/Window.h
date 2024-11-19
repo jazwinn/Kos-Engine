@@ -55,7 +55,6 @@ namespace Application {
          * @return int 0 if initialization is successful, or a negative error code on failure.
          */
         int init();
-
         /**
          * @brief Handles the drawing loop of the window.
          *
@@ -88,24 +87,28 @@ namespace Application {
          *
          * This points to the primary monitor where the window is displayed.
          */
-        GLFWmonitor* m_monitor;
+        static GLFWmonitor* m_monitor;
 
         /**
          * @brief Pointer to the GLFW video mode structure.
          *
          * This contains details about the display's resolution, refresh rate, and color depth.
          */
-        const GLFWvidmode* m_mode;
+        static const GLFWvidmode* m_mode;
 
         /**
          * @brief Height of the application window in pixels.
          */
-        float m_windowHeight;
+        static float m_windowHeight;
 
         /**
          * @brief Width of the application window in pixels.
          */
-        float m_windowWidth;
+        static float m_windowWidth;
+
+        static bool m_fullScreen;
+
+        bool m_enabledFullScreen{ false };//use this to set launch application fullscreen or not
     };
 }
 

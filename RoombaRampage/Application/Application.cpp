@@ -102,7 +102,6 @@ namespace Application {
         scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();
         scenemanager->m_LoadScene("Assets/Scene/Default.json"); // replace with opening up window dialog
         
-
         /*--------------------------------------------------------------
             INITIALIZE EDITOR // LAST INIT
          --------------------------------------------------------------*/

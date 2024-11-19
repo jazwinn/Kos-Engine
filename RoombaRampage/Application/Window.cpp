@@ -28,8 +28,35 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "Window.h"
 #include "Helper.h"
 #include "../Graphics/GraphicsPipe.h"
+#include "../Inputs/Input.h"
 
 namespace Application {
+
+    float AppWindow::m_windowHeight;
+
+    float AppWindow::m_windowWidth;
+
+    bool AppWindow::m_fullScreen{ true };
+
+    const GLFWvidmode* AppWindow::m_mode;
+
+    GLFWmonitor* AppWindow::m_monitor;
+
+
+    static void windowFocusCallback(GLFWwindow* window, int focused)
+    {
+        if (!focused) {
+            // If the window loses focus, set it to windowed mode
+            glfwSetWindowMonitor(window, nullptr, 100, 100, AppWindow::m_windowWidth, AppWindow::m_windowHeight, 0);  // Change to windowed mode with a standard resolution
+            AppWindow::m_fullScreen = false;
+        }
+        else if (!AppWindow::m_fullScreen) {
+            // If the window regains focus, switch back to full screen
+            glfwSetWindowMonitor(window, AppWindow::m_monitor, 0, 0, AppWindow::m_mode->width, AppWindow::m_mode->height, AppWindow::m_mode->refreshRate);
+            AppWindow::m_fullScreen = true;
+        }
+
+    }
 
 	int AppWindow::init(){
         /* Initialize the library */
@@ -45,15 +72,20 @@ namespace Application {
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
 
         /* Create a windowed mode window and its OpenGL context */
-        //Set third param to glfwGetPrimaryMonitor if you want fullscreen borderless
 
-       m_window = glfwCreateWindow(static_cast<int>(m_windowWidth), static_cast<int>(m_windowHeight), "Kos", NULL, NULL);
-       Input::InputSystem::m_windowInput = m_window;
+        m_monitor = glfwGetPrimaryMonitor();
+        m_mode = glfwGetVideoMode(m_monitor);
+        m_window = glfwCreateWindow(static_cast<int>(m_windowWidth), static_cast<int>(m_windowHeight), "Kos", m_enabledFullScreen ?m_monitor : NULL , NULL);
+
+        Input::InputSystem::m_windowInput = m_window;
         if (!m_window)
         {
             glfwTerminate();
             return -1;
         }
+        //set call back
+        if(m_enabledFullScreen) glfwSetWindowFocusCallback(m_window, windowFocusCallback);
+
         /* Make the window's context current */
         glfwMakeContextCurrent(m_window);
 
@@ -69,7 +101,25 @@ namespace Application {
 	}
 
 
+
+
 	int AppWindow::Draw() {
+
+        if (Input::InputSystem::m_isKeyPressed(keys::LeftAlt) && Input::InputSystem::m_isKeyTriggered(keys::ENTER)) {
+            if (m_enabledFullScreen) {
+                glfwSetWindowFocusCallback(m_window, NULL);
+                glfwSetWindowMonitor(m_window, nullptr, 100, 100, AppWindow::m_windowWidth, AppWindow::m_windowHeight, 0);
+                m_enabledFullScreen = false;
+            }
+            else {
+                glfwSetWindowFocusCallback(m_window, windowFocusCallback);
+                glfwSetWindowMonitor(m_window, AppWindow::m_monitor, 0, 0, AppWindow::m_mode->width, AppWindow::m_mode->height, AppWindow::m_mode->refreshRate);
+
+                m_enabledFullScreen = true;
+            }
+        }
+
+
         Helper::Helpers *help = Helper::Helpers::GetInstance();
         glClear(GL_COLOR_BUFFER_BIT);
 

@@ -7,13 +7,13 @@
         },
         "transform": {
             "position": {
-                "x": 7.470952033996582,
-                "y": 6.2245612144470215
+                "x": -7.4032111167907715,
+                "y": 1.460497498512268
             },
-            "rotation": -137.76255798339844,
+            "rotation": 0.0,
             "scale": {
-                "x": 0.4591841995716095,
-                "y": 0.9999985098838806
+                "x": 1.0,
+                "y": 1.0
             }
         },
         "collider": {
@@ -26,7 +26,7 @@
                 "y": 0.0
             },
             "drawDebug": true,
-            "radius": 0.5
+            "radius": 1.7999999523162842
         },
         "rigidbody": {
             "linearVelocity": {
@@ -34,8 +34,8 @@
                 "y": 0.0
             },
             "linearAcceleration": {
-                "x": 1.0,
-                "y": -1.0
+                "x": 0.0,
+                "y": 0.0
             },
             "rotation": 0.0,
             "angularVelocity": 0.0,
@@ -53,7 +53,7 @@
             "static": false
         },
         "sprite": {
-            "imagefile": "blackTile_test.png",
+            "imagefile": "ani_SeanSprite_strip4.png",
             "layer": 0,
             "color": {
                 "r": 1.0,
@@ -61,28 +61,40 @@
                 "b": 1.0
             },
             "alpha": 1.0
+        },
+        "animation": {
+            "frameNumber": 0,
+            "framesPerSecond": 2,
+            "frameTimer": 0.0,
+            "isAnimating": true
+        },
+        "script": {
+            "scripts": [
+                "PlayerControl",
+                "CollisionResponse"
+            ]
         }
     },
     {
         "name": {
-            "namestr": "Bullet 1",
+            "namestr": "blackTile_test",
             "layer": 0,
             "isprefab": false
         },
         "transform": {
             "position": {
-                "x": 7.470952033996582,
-                "y": 6.2245612144470215
+                "x": 5.021658897399902,
+                "y": 2.3060836791992188
             },
-            "rotation": -137.76255798339844,
+            "rotation": 0.0,
             "scale": {
-                "x": 0.4591841995716095,
-                "y": 0.9999985098838806
+                "x": 1.0,
+                "y": 1.0
             }
         },
         "collider": {
             "size": {
-                "x": 0.4399999976158142,
+                "x": 1.0,
                 "y": 1.0
             },
             "offset": {
@@ -91,30 +103,6 @@
             },
             "drawDebug": true,
             "radius": 0.5
-        },
-        "rigidbody": {
-            "linearVelocity": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "linearAcceleration": {
-                "x": 1.0,
-                "y": -1.0
-            },
-            "rotation": 0.0,
-            "angularVelocity": 0.0,
-            "angularAcceleration": 0.0,
-            "mass": 1.0,
-            "inverseMass": 1.0,
-            "linearDamping": 0.9900000095367432,
-            "angularDamping": 0.9900000095367432,
-            "force": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "torque": 0.0,
-            "kinematic": false,
-            "static": false
         },
         "sprite": {
             "imagefile": "blackTile_test.png",

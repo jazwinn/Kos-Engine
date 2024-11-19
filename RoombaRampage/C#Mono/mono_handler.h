@@ -182,6 +182,8 @@ namespace script {
 		// key is filename, second is script mono data
 		std::unordered_map<std::string, ScriptMonoInfo> m_ScriptMap;
 
+		MonoDomain* m_GetDomain() { return m_AppDomain; };
+
 	private:
 		//root domain
 		MonoDomain* m_rootDomain = nullptr;

@@ -7,8 +7,8 @@
 namespace actions {
 	class Action {
 	public:
-		virtual void undo() = 0;
-		virtual void redo() = 0;
-		virtual ~Action() = 0;
+		virtual void m_undoAction() = 0;
+		virtual void m_redoAction() = 0;
+		virtual ~Action() = default;
 	};
 }

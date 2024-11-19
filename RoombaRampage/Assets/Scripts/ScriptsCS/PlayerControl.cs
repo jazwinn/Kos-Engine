@@ -55,10 +55,6 @@ namespace Namespace
                 velocity.X = speed;
             }
 
-            
-            m_InternalSetVelocity(EntityID, in velocity);
-
-
         }
     }
 }

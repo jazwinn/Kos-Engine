@@ -1,63 +1,86 @@
-[INFO]: 2024-11-15 16:08:13 - Application Start
-[INFO]: 2024-11-15 16:08:13 - Load Log Successful
-[INFO]: 2024-11-15 16:08:13 - Load Config Successful
-[INFO]: 2024-11-15 16:08:14 - Load Window Successful
-[INFO]: 2024-11-15 16:08:14 - Load ECS Successful
-[DEBUG]: 2024-11-15 16:08:14 - Successfully Added Script
-[INFO]: 2024-11-15 16:08:14 - Load Json Successful
-[INFO]: 2024-11-15 16:08:14 - Entities successfully loaded!
-[INFO]: 2024-11-15 16:08:14 - Load Json Successful
-[INFO]: 2024-11-15 16:08:14 - Entities successfully loaded!
-[INFO]: 2024-11-15 16:08:14 - Load Json Successful
-[INFO]: 2024-11-15 16:08:14 - Entities successfully loaded!
-[INFO]: 2024-11-15 16:08:14 - Strip Success for Assets/Texture/ani_RoombaBlink_strip4.png
-[INFO]: 2024-11-15 16:08:14 - Texture Binded, Texture ID : 7 
-[INFO]: 2024-11-15 16:08:14 - Image ID : 0 
-[INFO]: 2024-11-15 16:08:14 - Strip Success for Assets/Texture/ani_RoombaBoosters_strip6.png
-[INFO]: 2024-11-15 16:08:14 - Texture Binded, Texture ID : 8 
-[INFO]: 2024-11-15 16:08:14 - Image ID : 1 
-[INFO]: 2024-11-15 16:08:14 - Strip Success for Assets/Texture/ani_SeanSprite_strip4.png
-[INFO]: 2024-11-15 16:08:14 - Texture Binded, Texture ID : 9 
-[INFO]: 2024-11-15 16:08:14 - Image ID : 2 
-[INFO]: 2024-11-15 16:08:14 - Texture Binded, Texture ID : 10 
-[INFO]: 2024-11-15 16:08:14 - Image ID : 3 
-[INFO]: 2024-11-15 16:08:14 - Texture Padded for Background.png
-[INFO]: 2024-11-15 16:08:14 - Texture Binded, Texture ID : 11 
-[INFO]: 2024-11-15 16:08:14 - Image ID : 4 
-[INFO]: 2024-11-15 16:08:15 - Texture Binded, Texture ID : 12 
-[INFO]: 2024-11-15 16:08:15 - Image ID : 5 
-[INFO]: 2024-11-15 16:08:15 - Texture Padded for boosters_tail02.png
-[INFO]: 2024-11-15 16:08:15 - Texture Binded, Texture ID : 13 
-[INFO]: 2024-11-15 16:08:15 - Image ID : 6 
-[INFO]: 2024-11-15 16:08:15 - Texture Binded, Texture ID : 14 
-[INFO]: 2024-11-15 16:08:15 - Image ID : 7 
-[INFO]: 2024-11-15 16:08:15 - Texture Binded, Texture ID : 15 
-[INFO]: 2024-11-15 16:08:15 - Image ID : 8 
-[INFO]: 2024-11-15 16:08:15 - Texture Binded, Texture ID : 16 
-[INFO]: 2024-11-15 16:08:15 - Image ID : 9 
-[INFO]: 2024-11-15 16:08:15 - Texture Padded for gunleft_02.png
-[INFO]: 2024-11-15 16:08:15 - Texture Binded, Texture ID : 17 
-[INFO]: 2024-11-15 16:08:15 - Image ID : 10 
-[INFO]: 2024-11-15 16:08:15 - Texture Padded for gunright_02.png
-[INFO]: 2024-11-15 16:08:15 - Texture Binded, Texture ID : 18 
-[INFO]: 2024-11-15 16:08:15 - Image ID : 11 
-[INFO]: 2024-11-15 16:08:15 - Texture Padded for Roomba.png
-[INFO]: 2024-11-15 16:08:15 - Texture Binded, Texture ID : 19 
-[INFO]: 2024-11-15 16:08:15 - Image ID : 12 
-[INFO]: 2024-11-15 16:08:15 - Texture Binded, Texture ID : 20 
-[INFO]: 2024-11-15 16:08:15 - Image ID : 13 
-[INFO]: 2024-11-15 16:08:15 - Texture Padded for ScriptIcon.png
-[INFO]: 2024-11-15 16:08:15 - Texture Binded, Texture ID : 21 
-[INFO]: 2024-11-15 16:08:15 - Image ID : 14 
-[INFO]: 2024-11-15 16:08:15 - Load Asset Successful
-[INFO]: 2024-11-15 16:08:15 - Shader compiled successfully
-[INFO]: 2024-11-15 16:08:15 - Shader compiled successfully
-[INFO]: 2024-11-15 16:08:15 - Shader compiled successfully
-[INFO]: 2024-11-15 16:08:15 - Shader compiled successfully
-[INFO]: 2024-11-15 16:08:15 - Shader compiled successfully
-[INFO]: 2024-11-15 16:08:15 - Load Graphic Pipline Successful
-[INFO]: 2024-11-15 16:08:15 - Set Input Call Back Successful
-[INFO]: 2024-11-15 16:08:15 - Load Json Successful
-[INFO]: 2024-11-15 16:08:15 - Entities successfully loaded!
-[INFO]: 2024-11-15 16:08:15 - Load ImGui Successful
-[INFO]: 2024-11-15 16:08:15 - Application Init Successful
+[INFO]: 2024-11-18 13:07:31 - Application Start
+[INFO]: 2024-11-18 13:07:31 - Load Log Successful
+[INFO]: 2024-11-18 13:07:31 - Load Config Successful
+[INFO]: 2024-11-18 13:07:31 - Load Window Successful
+[INFO]: 2024-11-18 13:07:31 - Load ECS Successful
+[DEBUG]: 2024-11-18 13:07:31 - Successfully Added Script
+[INFO]: 2024-11-18 13:07:31 - Load Json Successful
+[INFO]: 2024-11-18 13:07:31 - Entities successfully loaded!
+[INFO]: 2024-11-18 13:07:31 - Load Json Successful
+[INFO]: 2024-11-18 13:07:31 - Entities successfully loaded!
+[INFO]: 2024-11-18 13:07:31 - Load Json Successful
+[INFO]: 2024-11-18 13:07:31 - Entities successfully loaded!
+[INFO]: 2024-11-18 13:07:31 - Strip Success for Assets/Texture/ani_RoombaBlink_strip4.png
+[INFO]: 2024-11-18 13:07:31 - Texture Binded, Texture ID : 7 
+[INFO]: 2024-11-18 13:07:31 - Image ID : 0 
+[INFO]: 2024-11-18 13:07:31 - Strip Success for Assets/Texture/ani_RoombaBoosters_strip6.png
+[INFO]: 2024-11-18 13:07:31 - Texture Binded, Texture ID : 8 
+[INFO]: 2024-11-18 13:07:31 - Image ID : 1 
+[INFO]: 2024-11-18 13:07:31 - Strip Success for Assets/Texture/ani_SeanSprite_strip4.png
+[INFO]: 2024-11-18 13:07:31 - Texture Binded, Texture ID : 9 
+[INFO]: 2024-11-18 13:07:31 - Image ID : 2 
+[INFO]: 2024-11-18 13:07:31 - Texture Binded, Texture ID : 10 
+[INFO]: 2024-11-18 13:07:31 - Image ID : 3 
+[INFO]: 2024-11-18 13:07:31 - Texture Padded for Background.png
+[INFO]: 2024-11-18 13:07:31 - Texture Binded, Texture ID : 11 
+[INFO]: 2024-11-18 13:07:31 - Image ID : 4 
+[INFO]: 2024-11-18 13:07:31 - Texture Binded, Texture ID : 12 
+[INFO]: 2024-11-18 13:07:31 - Image ID : 5 
+[INFO]: 2024-11-18 13:07:32 - Texture Padded for boosters_tail02.png
+[INFO]: 2024-11-18 13:07:32 - Texture Binded, Texture ID : 13 
+[INFO]: 2024-11-18 13:07:32 - Image ID : 6 
+[INFO]: 2024-11-18 13:07:32 - Texture Binded, Texture ID : 14 
+[INFO]: 2024-11-18 13:07:32 - Image ID : 7 
+[INFO]: 2024-11-18 13:07:32 - Texture Binded, Texture ID : 15 
+[INFO]: 2024-11-18 13:07:32 - Image ID : 8 
+[INFO]: 2024-11-18 13:07:32 - Texture Binded, Texture ID : 16 
+[INFO]: 2024-11-18 13:07:32 - Image ID : 9 
+[INFO]: 2024-11-18 13:07:32 - Texture Padded for gunleft_02.png
+[INFO]: 2024-11-18 13:07:32 - Texture Binded, Texture ID : 17 
+[INFO]: 2024-11-18 13:07:32 - Image ID : 10 
+[INFO]: 2024-11-18 13:07:32 - Texture Padded for gunright_02.png
+[INFO]: 2024-11-18 13:07:32 - Texture Binded, Texture ID : 18 
+[INFO]: 2024-11-18 13:07:32 - Image ID : 11 
+[INFO]: 2024-11-18 13:07:32 - Texture Padded for Roomba.png
+[INFO]: 2024-11-18 13:07:32 - Texture Binded, Texture ID : 19 
+[INFO]: 2024-11-18 13:07:32 - Image ID : 12 
+[INFO]: 2024-11-18 13:07:32 - Texture Binded, Texture ID : 20 
+[INFO]: 2024-11-18 13:07:32 - Image ID : 13 
+[INFO]: 2024-11-18 13:07:32 - Texture Padded for ScriptIcon.png
+[INFO]: 2024-11-18 13:07:32 - Texture Binded, Texture ID : 21 
+[INFO]: 2024-11-18 13:07:32 - Image ID : 14 
+[INFO]: 2024-11-18 13:07:32 - Tile_FloorMap.png labled as tilemap
+[INFO]: 2024-11-18 13:07:32 - Texture Binded, Texture ID : 22 
+[INFO]: 2024-11-18 13:07:32 - Image ID : 15 
+[INFO]: 2024-11-18 13:07:32 - Load Asset Successful
+[INFO]: 2024-11-18 13:07:32 - Shader compiled successfully
+[INFO]: 2024-11-18 13:07:32 - Shader compiled successfully
+[INFO]: 2024-11-18 13:07:32 - Shader compiled successfully
+[INFO]: 2024-11-18 13:07:32 - Shader compiled successfully
+[INFO]: 2024-11-18 13:07:32 - Shader compiled successfully
+[INFO]: 2024-11-18 13:07:32 - Shader compiled successfully
+[INFO]: 2024-11-18 13:07:32 - Load Graphic Pipline Successful
+[INFO]: 2024-11-18 13:07:32 - Set Input Call Back Successful
+[INFO]: 2024-11-18 13:07:32 - Load Json Successful
+[INFO]: 2024-11-18 13:07:32 - Entities successfully loaded!
+[INFO]: 2024-11-18 13:07:32 - Load ImGui Successful
+[INFO]: 2024-11-18 13:07:32 - Application Init Successful
+[INFO]: 2024-11-18 13:07:33 - Save Json Successful
+[INFO]: 2024-11-18 13:07:33 - Save Json Successful
+[INFO]: 2024-11-18 13:07:33 - Save Json Successful
+[INFO]: 2024-11-18 13:07:33 - Save Json Successful
+[DEBUG]: 2024-11-18 13:07:34 - Successfully Added Script
+[DEBUG]: 2024-11-18 13:07:35 - Successfully Added Script
+[DEBUG]: 2024-11-18 13:07:36 - Successfully Added Script
+[DEBUG]: 2024-11-18 13:07:37 - Successfully Added Script
+[DEBUG]: 2024-11-18 13:07:37 - Successfully Added Script
+[DEBUG]: 2024-11-18 13:07:37 - Successfully Added Script
+[DEBUG]: 2024-11-18 13:07:37 - Successfully Added Script
+[DEBUG]: 2024-11-18 13:07:37 - Successfully Added Script
+[DEBUG]: 2024-11-18 13:07:37 - Successfully Added Script
+[DEBUG]: 2024-11-18 13:07:37 - Successfully Added Script
+[DEBUG]: 2024-11-18 13:07:37 - Successfully Added Script
+[DEBUG]: 2024-11-18 13:07:37 - Successfully Added Script
+[DEBUG]: 2024-11-18 13:07:37 - Successfully Added Script
+[DEBUG]: 2024-11-18 13:07:37 - Successfully Added Script
+[INFO]: 2024-11-18 13:07:55 - Application Closed

@@ -140,6 +140,11 @@ namespace gui {
 							//skip if active scene is filename
 							if (m_activeScene == directoryPath.path().filename())continue;
 
+							const auto& prefabscene = ecs->m_ECS_SceneMap.find(directoryPath.path().filename().string());
+							if (prefabscene == ecs->m_ECS_SceneMap.end()) {
+								LOGGING_ERROR("Prefab not loaded");
+								continue;
+							}
 
 							//skip if prefab mode alraedy true
 							if (!m_prefabSceneMode) {
@@ -153,12 +158,7 @@ namespace gui {
 
 							}
 
-							m_prefabSceneMode = true;
-							const auto& prefabscene = ecs->m_ECS_SceneMap.find(directoryPath.path().filename().string());
-							if (prefabscene == ecs->m_ECS_SceneMap.end()) {
-								LOGGING_ERROR("Prefab not loaded");
-								continue;
-							}
+							
 
 							// clear save scene state
 
@@ -173,6 +173,8 @@ namespace gui {
 							//set prefab as active scene
 							m_activeScene = directoryPath.path().filename().string();
 
+							m_prefabSceneMode = true;
+
 							m_clickedEntityId = -1;
 						}
 					}
@@ -181,7 +183,6 @@ namespace gui {
 						textorimage(directoryString, script);
 
 						if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
-							std::string command = "code \"" + directoryPath.path().string() + "\"";
 
 							scenemanager->m_ClearAllScene();
 							scenemanager->m_LoadScene(directoryPath.path());

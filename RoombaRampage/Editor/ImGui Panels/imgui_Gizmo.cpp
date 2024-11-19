@@ -48,15 +48,15 @@ namespace gui {
 
         static float snap[3] = { 1.f, 1.f, 1.f };
 
-        if (ImGui::IsKeyPressed(ImGuiKey_W))
+        if (ImGui::IsWindowHovered() && ImGui::IsKeyPressed(ImGuiKey_W))
             mCurrentGizmoOperation = ImGuizmo::TRANSLATE;
-        if (ImGui::IsKeyPressed(ImGuiKey_E))
+        if (ImGui::IsWindowHovered() && ImGui::IsKeyPressed(ImGuiKey_E))
             mCurrentGizmoOperation = ImGuizmo::ROTATE;
-        if (ImGui::IsKeyPressed(ImGuiKey_R))
+        if (ImGui::IsWindowHovered() && ImGui::IsKeyPressed(ImGuiKey_R))
             mCurrentGizmoOperation = ImGuizmo::SCALE;
         if (ImGui::IsKeyDown(ImGuiKey_LeftCtrl))
         {
-            if (ImGui::IsKeyPressed(ImGuiKey_Q)) {
+            if (ImGui::IsWindowHovered() && ImGui::IsKeyPressed(ImGuiKey_Q)) {
                 useSnap = useSnap?false:true;
             }
 

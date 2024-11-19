@@ -142,7 +142,13 @@ namespace script {
 
 		static int m_InternalCallGetPlayer();
 
-		static bool m_InternalCallIsCollided(ecs::EntityID entity);
+		static float m_InternalCallIsCollided(ecs::EntityID entity);
+
+		static MonoArray* m_InternalCallGetCollidedEntities(ecs::EntityID entity);
+
+		static MonoString* m_InternalCallGetTag(ecs::EntityID entity);
+
+		static void m_InternalCallSetSceneActive(MonoString* monoString);
 
 	public:
 
