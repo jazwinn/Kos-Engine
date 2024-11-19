@@ -23,91 +23,92 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #define PI 3.141592653589793238462643383279502884197
 namespace mathlibrary {
 	class mathlib {
-		//all is done in degree
+	public:
+		//all is done in radian
 		//returns in radian
 		//x is in radian
-		double funcRadianToDegree(double x);
-		float funcRadianToDegree(float x);
+		static double funcRadianToDegree(double x);
+		static float funcRadianToDegree(float x);
 
-		double funcDegreeToRadian(double x);
-		float funcDegreeToRadian(float x);
+		static double funcDegreeToRadian(double x);
+		static float funcDegreeToRadian(float x);
 
-		double funcCos(double x);
-		float  funcCos(float x);
-		long double funcCos(long double x);
+		static double funcCos(double x);
+		static float  funcCos(float x);
+		static long double funcCos(long double x);
 
-		double funcSin(double x);
-		float  funcSin(float x);
-		long double funcSin(long double x);
+		static double funcSin(double x);
+		static float  funcSin(float x);
+		static long double funcSin(long double x);
 
-		double funcTan(double x);
-		float  funcTan(float x);
-		long double funcTan(long double x);
+		static double funcTan(double x);
+		static float  funcTan(float x);
+		static long double funcTan(long double x);
 
-		double funcArcCos(double x);
-		float funcArcCos(float x);
-		long double funcArcCos(long double x);
+		static double funcArcCos(double x);
+		static float funcArcCos(float x);
+		static long double funcArcCos(long double x);
 
-		double funcArcSin(double x);
-		float funcArcSin(float x);
-		long double funcArcSin(long double x);
+		static double funcArcSin(double x);
+		static float funcArcSin(float x);
+		static long double funcArcSin(long double x);
 
-		double funcArcTan(double x);
-		float funcArcTan(float x);
-		long double funcArcTan(long double x);
+		static double funcArcTan(double x);
+		static float funcArcTan(float x);
+		static long double funcArcTan(long double x);
 
-		double funcArcTan2(double y, double x);
-		float funcArcTan2(float y, float x);
-		long double funcArcTan2(long double y, long double x);
+		static double funcArcTan2(double y, double x);
+		static float funcArcTan2(float y, float x);
+		static long double funcArcTan2(long double y, long double x);
 
 
 		//power functions
-		double funcPow(double base, double exponent);
-		float funcPow(float base, float exponent);
-		long double funcPow(long double base, long double exponent);
+		static double funcPow(double base, double exponent);
+		static float funcPow(float base, float exponent);
+		static long double funcPow(long double base, long double exponent);
 
-		double funcSqrt(double base);
-		float funcSqrt(float base);
-		long double funcSqrt(long double base);
+		static double funcSqrt(double base);
+		static float funcSqrt(float base);
+		static long double funcSqrt(long double base);
 
 		//calculating the hypotenuse of a right angle triangle
-		double funcHypot(double x, double y);
-		float funcHypot(float x, float y);
-		long double funcHypot(long double x, long double y);
+		static double funcHypot(double x, double y);
+		static float funcHypot(float x, float y);
+		static long double funcHypot(long double x, long double y);
 
 		//max and min
-		double funcFmax(double x, double y);
-		float funcFmax(float x, float y);
-		long double funcFmax(long double x, long double y);
+		static double funcFmax(double x, double y);
+		static float funcFmax(float x, float y);
+		static long double funcFmax(long double x, long double y);
 
-		double funcFmin(double x, double y);
-		float funcFmin(float x, float y);
-		long double funcFmin(long double x, long double y);
+		static double funcFmin(double x, double y);
+		static float funcFmin(float x, float y);
+		static long double funcFmin(long double x, long double y);
 
-		double funcFabs(double x);
-		float funcFabs(float x);
-		long double funcFabs(long double x);
+		static double funcFabs(double x);
+		static float funcFabs(float x);
+		static long double funcFabs(long double x);
 
-		double funcAbs(double x);
-		float funcAbs(float x);
-		long double funcAbs(long double x);
+		static double funcAbs(double x);
+		static float funcAbs(float x);
+		static long double funcAbs(long double x);
 
 		//boolean
-		bool funcIsGreater(double x, double y);
-		bool funcIsGreater(float x, float y);
-		bool funcIsGreater(long double x, long double y);
+		static bool funcIsGreater(double x, double y);
+		static bool funcIsGreater(float x, float y);
+		static bool funcIsGreater(long double x, long double y);
 
-		bool funcIsGreaterEqual(double x, double y);
-		bool funcIsGreaterEqual(float x, float y);
-		bool funcIsGreaterEqual(long double x, long double y);
+		static bool funcIsGreaterEqual(double x, double y);
+		static bool funcIsGreaterEqual(float x, float y);
+		static bool funcIsGreaterEqual(long double x, long double y);
 
-		bool funcIsLess(double x, double y);
-		bool funcIsLess(float x, float y);
-		bool funcIsLess(long double x, long double y);
+		static bool funcIsLess(double x, double y);
+		static bool funcIsLess(float x, float y);
+		static bool funcIsLess(long double x, long double y);
 
-		bool funcIsLessEqual(double x, double y);
-		bool funcIsLessEqual(float x, float y);
-		bool funcIsLessEqual(long double x, long double y);
+		static bool funcIsLessEqual(double x, double y);
+		static bool funcIsLessEqual(float x, float y);
+		static bool funcIsLessEqual(long double x, long double y);
 
 		template <typename T, typename U>
 		static T Mix(const T& lhs, const T& rhs, const U& a) {

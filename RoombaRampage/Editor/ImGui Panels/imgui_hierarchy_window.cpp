@@ -26,19 +26,12 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../../De&Serialization/json_handler.h"
 #include "../Asset Manager/AssetManager.h"
 #include "../Debugging/Logging.h"
-<<<<<<< HEAD
 #include "../Asset Manager/SceneManager.h"
 #include "../Asset Manager/Prefab.h"
 //Testing purposes! this are the three files needed!
 #include <mono/jit/jit.h>
 #include <mono/metadata/assembly.h>
 #include <mono/metadata/debug-helpers.h>
-=======
-
-#include<vector>
-#include<string>
-#include <iostream>
->>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 
 namespace gui {
     unsigned int ImGuiHandler::m_DrawHierachyWindow()
@@ -338,6 +331,7 @@ namespace gui {
         
 
         ecs::TransformComponent* transCom =  static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id));
+        if (transCom == NULL) return false;
 
         ImGuiTreeNodeFlags flag = ((static_cast<unsigned int>(m_clickedEntityId) == id) ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnArrow;
         if (transCom->m_childID.size() <= 0) {

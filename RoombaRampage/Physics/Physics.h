@@ -22,19 +22,8 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #ifndef PHYSICS_H
 #define PHYSICS_H
 
-<<<<<<< HEAD
 #include "PhysicsLayer.h"
 #include "../Debugging/Logging.h"
-=======
-#include "../Math/Vector2.h"
-#include <vector>
-#include <algorithm>
-#include <iostream>
-#include <memory>
-#include <new>
-#include "../Debugging/Logging.h"
-
->>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 
 
 namespace physicspipe {
@@ -182,6 +171,7 @@ namespace physicspipe {
 		vector2::Vec2 m_pt1;
 		vector2::Vec2 m_normal;
 	};
+
 	/******************************************************************/
 	/*!
 	\class     Physics
@@ -197,15 +187,12 @@ namespace physicspipe {
 		
 		static std::vector<std::shared_ptr<PhysicsData>> m_physicsEntities;
 		static std::vector<std::shared_ptr<PhysicsData>> m_collidedEntities;
-<<<<<<< HEAD
 		static std::vector < std::pair<std::shared_ptr<PhysicsData>, std::shared_ptr<PhysicsData>>> m_collidedEntitiesPair;
 		static std::map<layer::LAYERS, std::vector<std::shared_ptr<PhysicsData>>> m_layerToEntities;
 		static std::vector<int> m_checker;
 		static std::unique_ptr<Physics> m_instance;
 		std::bitset<MAX_ENTITIES> collidedEntities;
 
-=======
->>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 		/******************************************************************/
 		/*!
 		\fn        void Physics::m_CalculateBoundingBox()
@@ -238,11 +225,7 @@ namespace physicspipe {
 		\param[in] ID           Unique ID of the rectangle entity.
 		*/
 		/******************************************************************/
-<<<<<<< HEAD
 		void m_SendPhysicsData(float rect_height, float rect_width, float rect_angle, vector2::Vec2 position, vector2::Vec2 scale, vector2::Vec2 velocity, int ID, layer::LAYERS layerID);
-=======
-		void m_SendPhysicsData(float rect_height, float rect_width, vector2::Vec2 position, vector2::Vec2 scale, vector2::Vec2 velocity, int ID);
->>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 		/******************************************************************/
 		/*!
 		\fn        void Physics::m_SendPhysicsData(float radius, vector2::Vec2 position, vector2::Vec2 scale, vector2::Vec2 velocity, int ID)
@@ -254,12 +237,8 @@ namespace physicspipe {
 		\param[in] ID        Unique ID of the circle entity.
 		*/
 		/******************************************************************/
-<<<<<<< HEAD
 		void m_SendPhysicsData(float radius, vector2::Vec2 position, vector2::Vec2 scale, vector2::Vec2 velocity, int ID, layer::LAYERS layerID);
 
-=======
-		void m_SendPhysicsData(float radius, vector2::Vec2 position, vector2::Vec2 scale, vector2::Vec2 velocity, int ID);
->>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 		void m_CollisionCheck(float);
 		/******************************************************************/
 		/*!
@@ -321,7 +300,6 @@ namespace physicspipe {
 		*/
 		/******************************************************************/
 		bool m_static_CollisionCheck(const AABB, const AABB);
-<<<<<<< HEAD
 
 
 		void m_Init();
@@ -371,8 +349,5 @@ namespace physicspipe {
 		void m_addCollidedEntity(const std::shared_ptr<PhysicsData>& entity); 
 		void m_clearPair();
 };
-=======
-	};
->>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 }
 #endif

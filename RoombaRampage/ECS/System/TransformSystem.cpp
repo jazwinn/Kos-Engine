@@ -21,11 +21,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 #include "TransformSystem.h"
 #include "../ECS/Hierachy.h"
-<<<<<<< HEAD
 #include "../Graphics/GraphicsCamera.h"
-=======
-#include <unordered_set>
->>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 
 
 namespace ecs {
@@ -77,12 +73,8 @@ namespace ecs {
 		{
 			TransformComponent* transformComp = m_vecTransformComponentPtr[n];
 
-<<<<<<< HEAD
 			//skip component not of the scene
 			if (transformComp->m_scene != scene) continue;
-=======
-
->>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 
 			transformComp->m_transformation = mat3x3::Mat3Transform(transformComp->m_position, transformComp->m_scale, transformComp->m_rotation);
 

@@ -41,7 +41,7 @@ namespace ecs {
 			== m_vecTransformComponentPtr.end()) {
 			m_vecTransformComponentPtr.push_back((TransformComponent*)ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(ID));
 			m_vecColliderComponentPtr.push_back((ColliderComponent*)ecs->m_ECS_CombinedComponentPool[TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(ID));
-
+			m_vecNameComponentPtr.push_back((NameComponent*)ecs->m_ECS_CombinedComponentPool[TYPENAMECOMPONENT]->m_GetEntityComponent(ID));
 		}
 	}
 
@@ -60,11 +60,12 @@ namespace ecs {
 
 		std::swap(m_vecColliderComponentPtr[IndexID], m_vecColliderComponentPtr[IndexLast]);
 		std::swap(m_vecTransformComponentPtr[IndexID], m_vecTransformComponentPtr[IndexLast]);
+		std::swap(m_vecNameComponentPtr[IndexID], m_vecNameComponentPtr[IndexLast]);
 
 		//popback the vector;
 		m_vecColliderComponentPtr.pop_back();
 		m_vecTransformComponentPtr.pop_back();
-
+		m_vecNameComponentPtr.pop_back();
 	}
 
 	void CollisionSystem::m_Init() {
@@ -97,7 +98,7 @@ namespace ecs {
 			
 			ColliderComponent* ColComp = m_vecColliderComponentPtr[n];
 			TransformComponent* TransComp = m_vecTransformComponentPtr[n];
-
+			NameComponent* NameComp = m_vecNameComponentPtr[n];
 			EntityID id = ColComp->m_Entity;
 
 			//skip component not of the scene
@@ -105,17 +106,11 @@ namespace ecs {
 			
 
 			//if movement component is present, do dynamic collision
-<<<<<<< HEAD
 			vector2::Vec2 velocity{};
 			if (ecs->m_ECS_EntityMap[id].test(TYPERIGIDBODYCOMPONENT)) {
-=======
-	/*		vector2::Vec2 velocity{};
-			if (ecs->m_ECS_EntityMap[id].test(TYPEMOVEMENTCOMPONENT)) {
->>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 
 				RigidBodyComponent* rigidComp = static_cast<RigidBodyComponent*>(ecs->m_ECS_CombinedComponentPool[TYPERIGIDBODYCOMPONENT]->m_GetEntityComponent(id));
 
-<<<<<<< HEAD
 				 velocity = rigidComp->m_Velocity;
 			}
 
@@ -162,18 +157,6 @@ namespace ecs {
 				else {
 					LOGGING_ERROR("NO ENTITY TYPE");
 				}
-=======
-				 velocity = MovComp->m_Speed * MovComp->m_Direction;
-			}*/
-
-			vector2::Vec2 position{ TransComp->m_transformation.m_e20,TransComp->m_transformation.m_e21 };
-
-			if (ColComp->m_type == physicspipe::EntityType::CIRCLE) {
-				//PhysicsPipeline.m_SendPhysicsData(ColComp->m_radius, TransComp->m_position + ColComp->m_OffSet, ColComp->m_Size, velocity, id);
-			}
-			else if (ColComp->m_type == physicspipe::EntityType::RECTANGLE) {
-				//PhysicsPipeline.m_SendPhysicsData(ColComp->m_Size.m_y , ColComp->m_Size.m_x, TransComp->m_position + ColComp->m_OffSet, ColComp->m_Size, velocity, id);
->>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 			}
 			else {
 				if (ColComp->m_type == physicspipe::EntityType::CIRCLE) {
@@ -189,14 +172,7 @@ namespace ecs {
 			}
 		}
 
-<<<<<<< HEAD
 
-=======
-		//check for collision
-		if (m_vecColliderComponentPtr.size() > 0) {
-			PhysicsPipeline.m_CollisionCheck(ecs->m_DeltaTime);
-		}
->>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 	
 	}
 		

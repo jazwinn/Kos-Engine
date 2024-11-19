@@ -37,6 +37,7 @@ namespace ecs{
 			System.second->m_Init();
 		}
 
+
 	}
 
 	void ECS::m_Load() {
@@ -44,7 +45,6 @@ namespace ecs{
 		ECS* ecs = ECS::m_GetInstance();
 
 		//Allocate memory to each component pool
-<<<<<<< HEAD
 		m_AddComponentToECS<NameComponent>(TYPENAMECOMPONENT);
 		m_AddComponentToECS<TransformComponent>(TYPETRANSFORMCOMPONENT);
 		m_AddComponentToECS<SpriteComponent>(TYPESPRITECOMPONENT);
@@ -57,40 +57,22 @@ namespace ecs{
 		m_AddComponentToECS<ScriptComponent>(TYPESCRIPTCOMPONENT);
 		m_AddComponentToECS<ButtonComponent>(TYPEBUTTONCOMPONENT);
 		m_AddComponentToECS<TilemapComponent>(TYPETILEMAPCOMPONENT);
-=======
-		ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT] = std::make_shared<ComponentPool<TransformComponent>>();
-		ecs->m_ECS_CombinedComponentPool[TYPENAMECOMPONENT] = std::make_shared<ComponentPool<NameComponent>>();
-		ecs->m_ECS_CombinedComponentPool[TYPESPRITECOMPONENT] = std::make_shared < ComponentPool<SpriteComponent>>();
-		ecs->m_ECS_CombinedComponentPool[TYPECOLLIDERCOMPONENT] = std::make_shared < ComponentPool<ColliderComponent>>();
-		ecs->m_ECS_CombinedComponentPool[TYPERIGIDBODYCOMPONENT] = std::make_shared < ComponentPool<RigidBodyComponent>>();
-		ecs->m_ECS_CombinedComponentPool[TYPEPLAYERCOMPONENT] = std::make_shared<ComponentPool<PlayerComponent>>();
-		ecs->m_ECS_CombinedComponentPool[TYPETEXTCOMPONENT] = std::make_shared<ComponentPool<TextComponent>>();
-		ecs->m_ECS_CombinedComponentPool[TYPEANIMATIONCOMPONENT] = std::make_shared<ComponentPool<AnimationComponent>>();
-
->>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 
 		//Allocate memory to each system
 		ecs->m_ECS_SystemMap[TYPETRANSFORMSYSTEM] = std::make_shared<TransformSystem>();
 		ecs->m_ECS_SystemMap[TYPECOLLISIONSYSTEM] = std::make_shared<CollisionSystem>();
 		ecs->m_ECS_SystemMap[TYPEPHYSICSSYSTEM] = std::make_shared<PhysicsSystem>(); 
 		ecs->m_ECS_SystemMap[TYPECOLLISIONRESPONSESYSTEM] = std::make_shared<CollisionResponseSystem>();
-<<<<<<< HEAD
 		ecs->m_ECS_SystemMap[TYPELOGICSYSTEM] = std::make_shared<LogicSystem>();
 		ecs->m_ECS_SystemMap[TYPEBUTTONSYSTEM] = std::make_shared<ButtonSystem>();
 
-=======
-		ecs->m_ECS_SystemMap[TYPEPHYSICSSYSTEM] = std::make_shared<PhysicsSystem>(); // movement should be the last logic
->>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 		ecs->m_ECS_SystemMap[TYPERENDERSYSTEM] = std::make_shared<RenderSystem>();
 		ecs->m_ECS_SystemMap[TYPERENDERTEXTSYSTEM] = std::make_shared<RenderTextSystem>();
 		ecs->m_ECS_SystemMap[TYPEDEBUGDRAWINGSYSTEM] = std::make_shared<DebugDrawingSystem>();
+		ecs->m_ECS_SystemMap[TYPECAMERASYSTEM] = std::make_shared<CameraSystem>();
 		ecs->m_ECS_SystemMap[TYPEANIMATIONSYSTEM] = std::make_shared<AnimationSystem>();
-<<<<<<< HEAD
 		ecs->m_ECS_SystemMap[TYPETILEMAPSYSTEM] = std::make_shared<TilemapSystem>();
 		
-=======
-
->>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 
 		//Initialize all system Peformance
 		performancetracker::Performance Perform{};
@@ -281,7 +263,6 @@ namespace ecs{
 
 		ecs->m_EntityCount++;
 
-<<<<<<< HEAD
 		//assign entity to default layer
 		ecs->m_layersStack.m_layerMap[layer::DEFAULT].second.push_back(ID);
 
@@ -292,8 +273,6 @@ namespace ecs{
 		m_AddComponent(TYPENAMECOMPONENT, ID);
 		m_AddComponent(TYPETRANSFORMCOMPONENT, ID);
 
-=======
->>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 		return ID;
 	}
 

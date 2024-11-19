@@ -39,9 +39,9 @@ namespace mat3x3 {
 		Mat3x3() : m_e00(0.f), m_e01(0.f), m_e02(0.f), m_e10(0.f), m_e11(0.f), m_e12(0.f), m_e20(0.f), m_e21(0.f), m_e22(0.f) {}
 
 		Mat3x3(float e1, float e2, float e3, float e4, float e5, float e6, float e7, float e8, float e9) :
-			m_e00{ e1 }, m_e10{ e2 }, m_e20{ e3 },
-			m_e01{ e4 }, m_e11{ e5 }, m_e21{ e6 },
-			m_e02{ e7 }, m_e12{ e8 }, m_e22{ e9 } {}
+			m_e00{ e1 }, m_e10{ e4 }, m_e20{ e7 },
+			m_e01{ e2 }, m_e11{ e5 }, m_e21{ e8 },
+			m_e02{ e3 }, m_e12{ e6 }, m_e22{ e9 } {}
 
 		/**
 		 \brief		this function swaps the data of 2 matrixes

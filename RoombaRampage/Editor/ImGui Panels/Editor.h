@@ -28,14 +28,10 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "imgui_impl_opengl3.h"
 #include "ImGuizmo.h"
 #include "../ECS/ECS.h"
-<<<<<<< HEAD:RoombaRampage/Editor/ImGui Panels/Editor.h
 #include "../Asset Manager/Audio.h"
 #include "../Events/EventHandler.h"
 
 
-=======
-#include "../Assets/Audio.h"
->>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128:RoombaRampage/Editor/ImGui Panels/imgui_handler.h
 
 namespace gui {
 
@@ -206,9 +202,10 @@ namespace gui {
 
         void m_DrawRenderScreenWindow(unsigned int windowWidth, unsigned int windowHeight);
 
+        void m_DrawGizmo(float renderPosX, float renderPosY, float renderWidth, float renderHeight);
 
+        void m_DrawLayerWindow();
 
-<<<<<<< HEAD:RoombaRampage/Editor/ImGui Panels/Editor.h
         void m_DrawGameSceneWindow();
         
         void m_DrawContentBrowser();
@@ -218,9 +215,6 @@ namespace gui {
         void m_OnButtonPress(const events::BaseEvent<events::ButtonEvents>& givenEvent);
 
         void m_OnAction(const events::BaseEvent<events::Actions>& givenEvent);
-=======
-        int m_clickedEntityId;
->>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128:RoombaRampage/Editor/ImGui Panels/imgui_handler.h
 
         void m_UpdateOnPrefabMode();
         

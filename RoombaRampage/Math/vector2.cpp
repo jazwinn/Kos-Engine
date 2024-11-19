@@ -104,7 +104,7 @@ float  vector2::Vec2::m_funcVec2DLength(const Vec2& pVec0) {
     float tempY = pVec0.m_y;
 
     float lengthSquare = tempX * tempX + tempY * tempY;
-    return sqrtf(lengthSquare);
+    return mathlibrary::mathlib::funcSqrt(lengthSquare);
 
 }
 
@@ -119,7 +119,7 @@ float  vector2::Vec2::m_funcVec2DDistance(const Vec2& pVec0, const Vec2& pVec1) 
     float tempDiffX = pVec0.m_x - pVec1.m_x;
     float tempDiffY = pVec0.m_x - pVec1.m_y;
     float lengthSquare = tempDiffX * tempDiffX + tempDiffY * tempDiffY;
-    return sqrtf(lengthSquare);
+    return mathlibrary::mathlib::funcSqrt(lengthSquare);
 }
 
 float  vector2::Vec2::m_funcVec2DSquareDistance(const Vec2& pVec0, const Vec2& pVec1) {

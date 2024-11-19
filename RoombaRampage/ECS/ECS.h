@@ -22,6 +22,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../ECS/Component/Component.h"
 
 #include "../ECS/System/System.h"
+#include "Layers.h"
 
 #include "ECSList.h"
 #include "../ECS/System/SystemList.h"
@@ -137,14 +138,13 @@ namespace ecs {
 		/******************************************************************/
 		static void m_DeregisterSystem(EntityID);
 
-
+		//create getters
 		std::unordered_map<ComponentType, std::shared_ptr<IComponentPool>> m_ECS_CombinedComponentPool{};
 
 		std::unordered_map<TypeSystem, std::shared_ptr<ISystem>> m_ECS_SystemMap{};
 
 		std::unordered_map<EntityID, std::bitset<TOTALTYPECOMPONENT>> m_ECS_EntityMap{};
 
-<<<<<<< HEAD
 		struct SceneID{
 			bool m_isActive{true};
 			bool m_isPrefab{ false };
@@ -162,8 +162,6 @@ namespace ecs {
 		//layering system
 		layer::LayerStack m_layersStack;
 
-=======
->>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 		EntityID m_EntityCount{};
 
 		float m_DeltaTime{};
@@ -174,12 +172,9 @@ namespace ecs {
 	private:
 		static std::unique_ptr<ECS> m_InstancePtr;
 
-<<<<<<< HEAD
 		//modify from set next state
 		GAMESTATE m_state{};
 
-=======
->>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 	};
 
 	

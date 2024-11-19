@@ -56,7 +56,6 @@ namespace Serialization {
 					   for later retrieval and reloading.
 		*/
 		/******************************************************************/
-<<<<<<< HEAD
 		static void m_SaveComponentsJson(const std::filesystem::path& filePath);
 
 		/******************************************************************/
@@ -85,9 +84,6 @@ namespace Serialization {
 		*/
 		/******************************************************************/
 		static void m_LoadEntity(const rapidjson::Value& entityData, std::optional<ecs::EntityID> parentID, const std::string& sceneName);
-=======
-		static void m_SaveComponentsJson(const std::string& filePath, const std::unordered_map<ecs::EntityID, std::bitset<ecs::ComponentType::TOTALTYPECOMPONENT>>& ECS_EntityMap);
->>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 
 		/******************************************************************/
 		/*!

@@ -30,14 +30,11 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "PlayerComponent.h"
 #include "TextComponent.h"
 #include "AnimationComponent.h"
-<<<<<<< HEAD
 #include "CameraComponent.h"
 #include "ScriptComponent.h"
 #include "ButtonComponent.h"
 #include "TilemapComponent.h"
 
-=======
->>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 
 
 

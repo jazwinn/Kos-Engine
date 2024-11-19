@@ -24,15 +24,11 @@ namespace physicspipe {
 
 	std::vector<std::shared_ptr<PhysicsData>> Physics::m_physicsEntities;
 	std::vector<std::shared_ptr<PhysicsData>> Physics::m_collidedEntities;
-<<<<<<< HEAD
 	std::map<layer::LAYERS, std::vector<std::shared_ptr<PhysicsData>>> Physics::m_layerToEntities;
 	std::vector <std::pair<std::shared_ptr<PhysicsData>, std::shared_ptr<PhysicsData>>> Physics::m_collidedEntitiesPair;
 	std::unique_ptr<Physics> Physics::m_instance = nullptr;
 	physicslayer::PhysicsLayer* physicsLayer = physicslayer::PhysicsLayer::getInstance(); // Get the PhysicsLayer instance
 	std::vector<int> Physics::m_checker{};
-=======
-
->>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 
 
 	Circle::Circle(float radius, vector2::Vec2 shape_position, vector2::Vec2 shape_scale, vector2::Vec2 shape_velocity, int entity_ID, int layer_ID)
@@ -73,7 +69,6 @@ namespace physicspipe {
 		return 1;
 	}
 
-<<<<<<< HEAD
 
 
 	void Physics::m_SendPhysicsData(float rect_height, float rect_width, float rect_angle, vector2::Vec2 position, vector2::Vec2 scale, vector2::Vec2 velocity, int ID, layer::LAYERS layerID) {
@@ -84,14 +79,6 @@ namespace physicspipe {
 	void Physics::m_SendPhysicsData(float radius, vector2::Vec2 position, vector2::Vec2 scale, vector2::Vec2 velocity, int ID, layer::LAYERS layerID) {
 		m_physicsEntities.push_back(std::make_shared<Circle>(radius, position, scale, velocity, ID, static_cast<int>(layerID)));
 		//	m_layerToEntities[layerID].push_back(std::make_shared<Circle>(radius, position, scale, velocity, ID));
-=======
-	void Physics::m_SendPhysicsData(float rect_height, float rect_width, vector2::Vec2 position, vector2::Vec2 scale, vector2::Vec2 velocity, int ID) {
-		m_physicsEntities.push_back(std::make_shared<Rectangle>(rect_height, rect_width, position, scale, velocity, ID));
-	}
-
-	void Physics::m_SendPhysicsData(float radius, vector2::Vec2 position, vector2::Vec2 scale, vector2::Vec2 velocity, int ID){
-		m_physicsEntities.push_back(std::make_shared<Circle>(radius, position, scale, velocity, ID));
->>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 	}
 
 	void Physics::m_CollisionCheck(float dt) {
@@ -143,7 +130,7 @@ namespace physicspipe {
 					/*************************************
 						CHECK CIRCLE V CIRCLE
 					*************************************/
-					else if(m_physicsEntities[i]->GetEntity() == EntityType::CIRCLE && m_physicsEntities[j]->GetEntity() == EntityType::CIRCLE) {
+					else if (m_physicsEntities[i]->GetEntity() == EntityType::CIRCLE && m_physicsEntities[j]->GetEntity() == EntityType::CIRCLE) {
 						if (m_CollisionIntersection_CircleCircle(*dynamic_cast<Circle*>(m_physicsEntities[i].get()), *dynamic_cast<Circle*>(m_physicsEntities[j].get()))) {
 							if (std::find(m_collidedEntities.begin(), m_collidedEntities.end(), m_physicsEntities[i]) == m_collidedEntities.end()) {
 								//std::cout << "Collided" << std::endl;
@@ -164,13 +151,16 @@ namespace physicspipe {
 
 	std::vector<std::shared_ptr<PhysicsData>> Physics::m_RetrievePhysicsData() {
 		std::vector<std::shared_ptr	<PhysicsData>> TempCollidedEntities = m_collidedEntities;
+
 		this->m_ClearEntites();
 		return TempCollidedEntities;
 	}
 
-	void Physics::m_ClearEntites(){
+	void Physics::m_ClearEntites() {
 		m_physicsEntities.clear();
 		m_collidedEntities.clear();
+		m_layerToEntities.clear();
+		m_checker.clear();
 	}
 
 
@@ -188,10 +178,7 @@ namespace physicspipe {
 				//std::cout << "ID " << m_physicsEntities[i].get()->m_ID << " BOUNDING BOX MIN X" << boundingBox.m_min.m_x << " MIN Y " << boundingBox.m_max.m_y << " MAX X " << boundingBox.m_max.m_x << " MAX Y" << boundingBox.m_max.m_y << std::endl;
 			}
 		}
-<<<<<<< HEAD
 
-=======
->>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 		//std::cout << "********************************************************************************" << std::endl;
 	}
 
@@ -289,7 +276,7 @@ namespace physicspipe {
 	bool Physics::m_CollisionIntersection_CircleRect(const Circle& circle, const Rectangle& rect) {
 		vector2::Vec2 shortestDistance{};
 
-		
+
 		if (circle.m_position.m_x < rect.m_boundingBox.m_min.m_x) shortestDistance.m_x = rect.m_boundingBox.m_min.m_x;
 		else if (circle.m_position.m_x > rect.m_boundingBox.m_max.m_x) shortestDistance.m_x = rect.m_boundingBox.m_max.m_x;
 		else shortestDistance.m_x = circle.m_position.m_x;
@@ -305,7 +292,6 @@ namespace physicspipe {
 
 		return distance_Square <= (circle.m_radius * circle.m_radius);
 	}
-<<<<<<< HEAD
 
 
 	void Physics::m_Init() {
@@ -474,6 +460,4 @@ namespace physicspipe {
 	void Physics::m_clearPair() {
 		m_collidedEntitiesPair.clear();
 	}
-=======
->>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 }

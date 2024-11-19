@@ -23,13 +23,10 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../ECS/ECS.h"
 #include "../Asset Manager/AssetManager.h"
 #include "../Graphics/GraphicsPipe.h"
-<<<<<<< HEAD
 #include "../ECS/Layers.h"
 #include "../Editor/TilemapCalculations.h"
 
 #include "ScriptVariable.h"
-=======
->>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 
 #pragma warning(push)
 #pragma warning(disable : 26495)  // Disable uninitialized variable warning
@@ -218,12 +215,8 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
     //Add Component Window
     const char* ComponentNames[] =
     {
-<<<<<<< HEAD
         "Add Components", "Collider Component", "Sprite Component", "Player Component", "Rigid Body Component", "Text Component", 
         "Animation Component", "Camera Component" , "Button Component" , "Script Component", "Tilemap Component"
-=======
-        "Add Components","Movement Component", "Collider Component", "Sprite Component", "Player Component", "Rigid Body Component", "Text Component", "Animation Component"
->>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
     };
     static int ComponentType = 0;
 
@@ -235,7 +228,6 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
       
 
 
-<<<<<<< HEAD
         if (ImGui::Combo("##ADDCOMPONENT", &ComponentType, ComponentNames, IM_ARRAYSIZE(ComponentNames), IM_ARRAYSIZE(ComponentNames))) {
             if (ComponentType == 1) {
                 ecs->m_AddComponent(ecs::TYPECOLLIDERCOMPONENT, entityID);
@@ -386,37 +378,8 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
 
             }
-=======
-        ImGui::Combo("##ADDCOMPONENT", &ComponentType, ComponentNames, IM_ARRAYSIZE(ComponentNames), IM_ARRAYSIZE(ComponentNames));
-        if (ComponentType == 1) {
-          // ecs->m_AddComponent(ecs::TYPEPHYSICSSYSTEM, entityID);
-            ComponentType = 0;
         }
-        if (ComponentType == 2) {
-            ecs->m_AddComponent(ecs::TYPECOLLIDERCOMPONENT, entityID);
-            ComponentType = 0;
-        }
-        if (ComponentType == 3) {
-            ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, entityID);
-            ComponentType = 0;
-        }
-        if (ComponentType == 4) {
-            ecs->m_AddComponent(ecs::TYPEPLAYERCOMPONENT, entityID);
-            ComponentType = 0;
-        }
-        if (ComponentType == 5) {
-            ecs->m_AddComponent(ecs::TYPERIGIDBODYCOMPONENT, entityID);
-            ComponentType = 0;
-        }
-        if (ComponentType == 6) {
-            ecs->m_AddComponent(ecs::TYPETEXTCOMPONENT, entityID);
-            ComponentType = 0;
-        }
-        if (ComponentType == 7) {
-            ecs->m_AddComponent(ecs::TYPEANIMATIONCOMPONENT, entityID);
-            ComponentType = 0;
->>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
-        }
+        
 
 
         ecs::compSignature EntitySignature = ecs->m_ECS_EntityMap[entityID];
@@ -435,7 +398,6 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
             ImGui::SameLine(slider_start_pos_x);
             ImGui::SetNextItemWidth(100.0f);
             ImGui::InputText("##NAMETEXT##", &nc->m_entityName);
-<<<<<<< HEAD
             
             //layer selector
             const char* layers[] = { ecs->m_layersStack.m_layerMap[layer::DEFAULT].first.c_str(), ecs->m_layersStack.m_layerMap[layer::LAYER1].first.c_str(),ecs->m_layersStack.m_layerMap[layer::LAYER2].first.c_str(),
@@ -463,104 +425,6 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 } 
                 if (entityTagType == 3) {
                     nc->m_entityTag = "Bullet";
-=======
-        }
-            
-        if (EntitySignature.test(ecs::TYPETRANSFORMCOMPONENT))
-        {    
-            if (ImGui::CollapsingHeader("Transform Component"))
-            {
-                // Retrieve the TransformComponent
-                ecs::TransformComponent* tc = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]
-                    ->m_GetEntityComponent(entityID));
-
-                //Display Position
-                ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
-                ImGui::Text("Position");
-                ImGui::SameLine(slider_start_pos_x);
-                ImGui::SetNextItemWidth(100.0f);
-                ImGui::DragFloat("X##", &tc->m_position.m_x, 0.02f, -2.f, 2.f, "%.2f");
-
-                ImGui::SameLine();
-                ImGui::SetNextItemWidth(100.0f);
-                ImGui::DragFloat("Y##PosY", &tc->m_position.m_y, 0.02f, -1.0f, 1.0f, "%.2f");
-
-                //Display Rotation
-                ImGui::AlignTextToFramePadding();
-                ImGui::Text("Rotation");
-                ImGui::SameLine(slider_start_pos_x);
-                ImGui::SetNextItemWidth(100.0f);
-                ImGui::DragFloat("##Rot", &tc->m_rotation, 1.0f, -360.0f, 360.0f, "%.2f");
-
-                //Display Scale
-                ImGui::AlignTextToFramePadding();
-                ImGui::Text("Scale");
-                ImGui::SameLine(slider_start_pos_x);
-                ImGui::SetNextItemWidth(100.0f);
-                ImGui::DragFloat("X", &tc->m_scale.m_x, 0.02f, 0.1f, 2.0f, "%.2f");
-
-                ImGui::SameLine();
-                ImGui::SetNextItemWidth(100.0f);
-                ImGui::DragFloat("Y", &tc->m_scale.m_y, 0.02f, 0.1f, 2.0f, "%.2f");
-
-            }
-
-        }
-        // Check if the TransformComponent exists for the entity
-
-        //if (EntitySignature.test(ecs::TYPEMOVEMENTCOMPONENT))
-        //{
-        //    bool open = ImGui::CollapsingHeader("Movement Component");
-
-        //    if (ImGui::BeginPopupContextItem()) {
-        //        if (ImGui::MenuItem("Delete Component")) {
-        //            ecs->m_RemoveComponent(ecs::TYPEMOVEMENTCOMPONENT, m_clickedEntityId);
-        //        }
-        //        ImGui::EndPopup();
-        //    }
-
-        //    if (open)
-        //    {
-        //        // retrieve movement component
-        //        ecs::MovementComponent* mc = static_cast<ecs::MovementComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEMOVEMENTCOMPONENT]
-        //            ->m_GetEntityComponent(entityID));
-
-        //        // Display Speed
-        //        ImGui::AlignTextToFramePadding();
-        //        ImGui::Text("Speed");
-        //        ImGui::SameLine(slider_start_pos_x);
-        //        ImGui::SetNextItemWidth(100.0f);
-        //        ImGui::DragFloat("##Speed", &mc->m_Speed, 0.01f, -10.0f, 10.0f, "%.2f");
-
-        //        // Display Velocity
-        //        ImGui::AlignTextToFramePadding();
-        //        ImGui::Text("Direction");
-        //        ImGui::SameLine(slider_start_pos_x);
-        //        ImGui::SetNextItemWidth(100.0f);
-        //        ImGui::DragFloat("X##VelX", &mc->m_Direction.m_x, 0.02f, -1.0f, 1.0f, "%.2f");
-
-        //        ImGui::SameLine();
-        //        ImGui::SetNextItemWidth(100.0f);
-        //        ImGui::DragFloat("Y##VelY", &mc->m_Direction.m_y, 0.02f, -1.0f, 1.0f, "%.2f");
-
-
-        //        //todo put all components into a loop
-        //    }     
-
-        //    
-
-        //}
-       
-
-
-        if (EntitySignature.test(ecs::TYPECOLLIDERCOMPONENT))
-        {
-            bool open = ImGui::CollapsingHeader("Collider Component");
-
-            if (ImGui::BeginPopupContextItem()) {
-                if (ImGui::MenuItem("Delete Component")) {
-                    ecs->m_RemoveComponent(ecs::TYPECOLLIDERCOMPONENT, m_clickedEntityId);
->>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
                 }
                 std::cout << nc->m_entityTag << std::endl;
             }
@@ -572,32 +436,12 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 if (!tc->m_haveParent || !static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(tc->m_parentID))->m_isPrefab) {
                     if (ImGui::Button("Overwrite")) {
 
-<<<<<<< HEAD
                         prefab::Prefab::m_OverWriteScenePrafab(entityID);
-=======
-                //retrieve collision collider
-                ecs::ColliderComponent* cc = static_cast<ecs::ColliderComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]
-                    ->m_GetEntityComponent(entityID));
-
-                //Display size
-                ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
-                ImGui::Text("Size");
-                ImGui::SameLine(slider_start_pos_x);
-                ImGui::SetNextItemWidth(100.0f);
-                ImGui::DragFloat("X###", &cc->m_Size.m_x, 0.02f, 0.f, 2.0f, "%.2f");
->>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 
                     }
                     ImGui::SameLine();
 
-<<<<<<< HEAD
                     if (ImGui::Checkbox("Sync", &nc->m_syncPrefab)) {
-=======
-                ImGui::SameLine();
-                ImGui::SetNextItemWidth(100.0f);
-                ImGui::DragFloat("Y###PosY", &cc->m_Size.m_y, 0.02f, 0.f, 2.0f, "%.2f");
-   
->>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 
                         prefab::Prefab::m_UpdateAllPrefabEntity(nc->m_prefabName);
                     }
@@ -1230,133 +1074,11 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         }
 
                     }
-<<<<<<< HEAD
                     ImGui::EndDragDropTarget();
-=======
-                    ImGui::EndListBox();
-                }
-            }
-
-
-        }
-        if (EntitySignature.test(ecs::TYPEPLAYERCOMPONENT)) {
-
-            bool open = ImGui::CollapsingHeader("Player Component");
-
-            if (ImGui::BeginPopupContextItem()) {
-                if (ImGui::MenuItem("Delete Component")) {
-                    ecs->m_RemoveComponent(ecs::TYPEPLAYERCOMPONENT, m_clickedEntityId);
-                }
-                ImGui::EndPopup();
-            }
-            
-            if (open) {
-
-                ecs::PlayerComponent* pc = static_cast<ecs::PlayerComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEPLAYERCOMPONENT]
-                    ->m_GetEntityComponent(entityID));
-
-                ImGui::Checkbox("Player Control", &pc->m_Control);
-            }
-        }
-
-        if (EntitySignature.test(ecs::TYPERIGIDBODYCOMPONENT)) {
-
-            bool open = ImGui::CollapsingHeader("RigidBody Component");
-
-            if (ImGui::BeginPopupContextItem()) {
-                if (ImGui::MenuItem("Delete Component")) {
-                    ecs->m_RemoveComponent(ecs::TYPERIGIDBODYCOMPONENT, m_clickedEntityId);
-                }
-                ImGui::EndPopup();
-            }
-
-            if (open) {
-
-                ImGui::Text("Work In Progress");
-            }
-        }
-        if (EntitySignature.test(ecs::TYPETEXTCOMPONENT))
-        {
-            bool open = ImGui::CollapsingHeader("Text Component");
-
-            if (ImGui::BeginPopupContextItem()) {
-                if (ImGui::MenuItem("Delete Component")) {
-                    ecs->m_RemoveComponent(ecs::TYPETEXTCOMPONENT, m_clickedEntityId);
-                }
-                ImGui::EndPopup();
-            }
-
-            if (open)
-            {
-                // Retrieve the TransformComponent
-                ecs::TextComponent* tc = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]
-                    ->m_GetEntityComponent(entityID));
-
-
-                ImVec4 color = ImVec4(tc->m_red, tc->m_green, tc->m_blue, 255.0f / 255.0f);
-                // ImGuiColorEditFlags misc_flags = (hdr ? ImGuiColorEditFlags_HDR : 0) | (drag_and_drop ? 0 : ImGuiColorEditFlags_NoDragDrop) | (alpha_half_preview ? ImGuiColorEditFlags_AlphaPreviewHalf : (alpha_preview ? ImGuiColorEditFlags_AlphaPreview : 0)) | (options_menu ? 0 : ImGuiColorEditFlags_NoOptions);
-
-                 //Display Position
-                ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
-                ImGui::Text("Text: ");
-                ImGui::SameLine(slider_start_pos_x);
-                ImGui::SetNextItemWidth(100.0f);
-                ImGui::InputText("##TEXT##", &tc->m_text);
-
-                ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
-                ImGui::Text("Size");
-                ImGui::SameLine(slider_start_pos_x);
-                ImGui::SetNextItemWidth(100.0f);
-                ImGui::DragFloat("####TEXTXXXX", &tc->m_fontSize, 0.02f, 0.f, 10.0f, "%.2f");
-
-                ImGui::Text("Color");
-                ImGui::SameLine();
-                if (ImGui::ColorEdit3("##MyColor1", (float*)&color, ImGuiColorEditFlags_DisplayRGB)) {
-                    tc->m_red = color.x;
-                    tc->m_green = color.y;
-                    tc->m_blue = color.z;
->>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
                 }
             }
         }
 
-<<<<<<< HEAD
-=======
-            if (ImGui::BeginPopupContextItem()) {
-                if (ImGui::MenuItem("Delete Component")) {
-                    ecs->m_RemoveComponent(ecs::TYPEANIMATIONCOMPONENT, m_clickedEntityId);
-                }
-                ImGui::EndPopup();
-            }
-            //retrieve sprite component
-
-
-            if (open) {
-
-                ecs::AnimationComponent* ac = static_cast<ecs::AnimationComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEANIMATIONCOMPONENT]
-                    ->m_GetEntityComponent(entityID));
-                graphicpipe::GraphicsPipe* graphicsPipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
-
-                ImGui::AlignTextToFramePadding();
-                ImGui::Text("Toggle Animation");
-                ImGui::SameLine(slider_start_pos_x + 40);
-                ImGui::Checkbox("####xx##", &ac->m_isAnimating);
-
-            
-               ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
-               ImGui::Text("Frames Per Second: ");
-               ImGui::SameLine(slider_start_pos_x + 100);
-               ImGui::SetNextItemWidth(100.0f);
-               ImGui::DragInt("##SPF##", &ac->m_framesPerSecond, 1, 1, 60, "%d");
-
-               ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
-               ImGui::Text("Frame Timer");
-               ImGui::SameLine(slider_start_pos_x);
-               ImGui::SetNextItemWidth(100.0f);
-               ImGui::DragFloat("###TEXTXXX", &ac->m_frameTimer, 0.02f, 0.f, 1.f, "%.2f");
-            }
-        }
->>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
      }
     ImGui::End();
 }   

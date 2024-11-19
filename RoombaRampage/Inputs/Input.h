@@ -53,14 +53,7 @@ namespace Input {
 		static bool m_isKeyReleased(const keyCode givenKey);
 		static vector2::Vec2 m_getMousePosition();
 
-<<<<<<< HEAD
 		void m_inputUpdate();
-=======
-		static bool KeyStateW;
-		static bool KeyStateA;
-		static bool KeyStateS;
-		static bool KeyStateD;
->>>>>>> 2614f36e3dde51625ed71ac1889d9f61bb456128
 
 
 		
