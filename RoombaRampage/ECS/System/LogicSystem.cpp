@@ -69,6 +69,9 @@ namespace ecs {
 		for (int n{}; n < m_vecScriptComponentPtr.size(); n++) {
 			ScriptComponent* scriptComp = m_vecScriptComponentPtr[n];
 
+			//skip prefab
+			if (ecs->m_ECS_SceneMap.find(scriptComp->m_scene)->second.m_isPrefab)continue;
+
 			CreateandStartScriptInstance(scriptComp);
 
 		}

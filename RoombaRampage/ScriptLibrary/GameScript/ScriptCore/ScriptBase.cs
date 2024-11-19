@@ -125,6 +125,12 @@ namespace Namespace
         [MethodImpl(MethodImplOptions.InternalCall)]
         public extern static string m_InternalCallGetTag(uint entity);
 
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern static void m_UnloadAllScene(); // ensure to follow up with a load scene, if no scene, engine will have undefine behaviour
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern static void m_InternalCallLoadScene(string path);
+
 
         public virtual void GetEntityID(uint id) { }
         public virtual void Start() { }
