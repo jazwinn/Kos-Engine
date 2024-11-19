@@ -246,7 +246,7 @@ namespace mat3x3{
 		Mat3RotDeg(matRotate, rotate);
 		Mat3Scale(matScale, scale.m_x, scale.m_y);
 
-		Mat3x3 transform = (matTranslate * matRotate) * matScale;
+		Mat3x3 transform = matTranslate * (matRotate * matScale);
 
 		return transform;
 
