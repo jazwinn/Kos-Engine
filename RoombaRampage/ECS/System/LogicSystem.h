@@ -44,6 +44,8 @@ namespace ecs {
         //! Vector storing pointers to PlayerComponent of registered entities
         std::vector<ScriptComponent*> m_vecScriptComponentPtr;
 
+        void CreateandStartScriptInstance(ecs::ScriptComponent* scriptComp);
+
 
     };
 

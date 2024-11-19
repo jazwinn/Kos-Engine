@@ -55,6 +55,7 @@ namespace Namespace
                 velocity.X = speed;
             }
 
+            m_InternalSetVelocity(EntityID, velocity);
         }
     }
 }
