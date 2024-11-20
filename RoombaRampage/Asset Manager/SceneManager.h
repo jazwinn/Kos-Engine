@@ -142,7 +142,9 @@ namespace scenes {
 		/******************************************************************/
 		static std::optional<std::string> GetSceneByEntityID(ecs::EntityID entityID);
 
-		std::unordered_map<std::string, std::filesystem::path> m_scenePath;
+
+		std::unordered_map<std::string, std::filesystem::path> m_unloadScenePath;
+		std::unordered_map<std::string, std::filesystem::path> m_loadScenePath;
 
 		std::vector<std::filesystem::path> m_recentFiles;
 

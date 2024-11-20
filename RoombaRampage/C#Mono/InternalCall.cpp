@@ -436,9 +436,13 @@ namespace script {
 		scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();
 
 		char* nativeString = mono_string_to_utf8(monoString);
+		std::string scenefile = std::string{ nativeString } + ".json";
 
+		const auto& scene = scenemanager->m_unloadScenePath.find(scenefile);
+		if (scene != scenemanager->m_unloadScenePath.end()) {
 
-		scenemanager->m_LoadScene(nativeString);
+			scenemanager->m_LoadScene(scene->second);
+		}
 
 		mono_free(nativeString);
 	}

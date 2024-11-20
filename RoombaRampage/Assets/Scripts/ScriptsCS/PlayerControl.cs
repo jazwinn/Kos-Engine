@@ -59,7 +59,7 @@ namespace Namespace
             if (m_InternalCallIsKeyTriggered(Key.keyCode.F))
             {
                 m_UnloadAllScene();
-                m_InternalCallLoadScene("Assets\\Scene\\Script Test.json");
+                m_InternalCallLoadScene("Script Test");
             }
             if (m_InternalCallIsKeyTriggered(Key.keyCode.G))
             {
