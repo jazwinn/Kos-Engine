@@ -201,7 +201,7 @@ namespace script {
         if (exception) {
             MonoString* exceptionMessage = mono_object_to_string(exception, nullptr);
             const char* messageStr = mono_string_to_utf8(exceptionMessage);
-            std::cerr << "Exception in C# method invocation: " << messageStr << std::endl;
+            LOGGING_ERROR("Exception in C# method invocation: %s", messageStr);
             mono_free((void*)messageStr);
         }
         //else {

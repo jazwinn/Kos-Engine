@@ -49,7 +49,7 @@ namespace Serialization {
 		file.open("./Config/Config.txt");
 
 		if (!file.is_open()) {
-			std::cerr << "Error opening config file" << std::endl;
+			LOGGING_ERROR("Error opening config file");
 			return;
 		}
 		Helper::Helpers* help = Helper::Helpers::GetInstance();
@@ -97,7 +97,7 @@ namespace Serialization {
 		std::ifstream inputFile(jsonFilePath.string());
 
 		if (!inputFile) {
-			std::cerr << "Failed to open JSON file for reading: " << jsonFilePath << std::endl;
+			LOGGING_ERROR("Failed to open JSON file for reading: %s", jsonFilePath.string().c_str());
 			return;
 		}
 
