@@ -57,6 +57,8 @@ namespace ecs{
 		m_AddComponentToECS<ScriptComponent>(TYPESCRIPTCOMPONENT);
 		m_AddComponentToECS<ButtonComponent>(TYPEBUTTONCOMPONENT);
 		m_AddComponentToECS<TilemapComponent>(TYPETILEMAPCOMPONENT);
+		m_AddComponentToECS<AudioComponent>(TYPEAUDIOCOMPONENT);
+
 
 		//Allocate memory to each system
 		ecs->m_ECS_SystemMap[TYPETRANSFORMSYSTEM] = std::make_shared<TransformSystem>();

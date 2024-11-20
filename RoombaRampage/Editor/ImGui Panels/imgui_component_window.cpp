@@ -216,7 +216,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
     const char* ComponentNames[] =
     {
         "Add Components", "Collider Component", "Sprite Component", "Player Component", "Rigid Body Component", "Text Component", 
-        "Animation Component", "Camera Component" , "Button Component" , "Script Component", "Tilemap Component"
+        "Animation Component", "Camera Component" , "Button Component" , "Script Component", "Tilemap Component", "Audio Component"
     };
     static int ComponentType = 0;
 
@@ -287,6 +287,12 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 ecs->m_AddComponent(ecs::TYPETILEMAPCOMPONENT, entityID);
                 ComponentType = 0;
                 events::AddComponent action(entityID, ecs::TYPETILEMAPCOMPONENT);
+                DISPATCH_ACTION_EVENT(action);
+            }
+            if (ComponentType == 11) {
+                ecs->m_AddComponent(ecs::TYPEAUDIOCOMPONENT, entityID);
+                ComponentType = 0;
+                events::AddComponent action(entityID, ecs::TYPEAUDIOCOMPONENT);
                 DISPATCH_ACTION_EVENT(action);
             }
         }
@@ -1031,6 +1037,20 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                     //std::cout << EditorCamera::calculateWorldCoordinatesFromMouse(ImGui::GetMousePos().x, ImGui::GetMousePos().y).m_y << std::endl;
 
+                }
+
+
+            }
+
+            if (EntitySignature.test(ecs::TYPEAUDIOCOMPONENT)) {
+
+                open = ImGui::CollapsingHeader("Audio Component");
+
+                CreateContext(ecs::TYPEAUDIOCOMPONENT, entityID);
+
+                if (open) {
+                    auto* rbc = static_cast<ecs::AudioComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEAUDIOCOMPONENT]->m_GetEntityComponent(entityID));
+                    rbc->ApplyFunction(DrawComponents(rbc->Names()));
                 }
 
 
