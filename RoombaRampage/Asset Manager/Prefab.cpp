@@ -314,7 +314,6 @@ namespace prefab {
                 //check if entityid, have child, if no create child
                 if (!entitych.has_value()  || entitych.value().size() < (count +1)) {
                     //create entity and assign to entityid
-                    std::cout << "entity Create, parent:" << entityid << std::endl;
                     
                     entityChild = ecs->m_CreateEntity(scenes::SceneManager::GetSceneByEntityID(entityid).value());
                     ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(entityChild));

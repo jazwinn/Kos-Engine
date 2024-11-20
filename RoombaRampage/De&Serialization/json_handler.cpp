@@ -75,7 +75,7 @@ namespace Serialization {
 		str3 >> temp >> help->m_fpsCap;
 
 		if (help->m_windowHeight <= 0 || help->m_windowWidth <= 0 || !help->m_fpsCap) {
-			std::cout << "Error Reading Config file (Width or Height <= 0)" << std::endl;
+			LOGGING_ERROR("Error Reading Config file (Width or Height <= 0)");
 		}
 	}
 
