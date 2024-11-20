@@ -16,6 +16,7 @@ R"( #version 460 core
 
     uniform mat3 view;
     uniform mat3 projection;
+    uniform vec3 debugColor;
 
     layout (location = 0) out vec4 col;
 
@@ -25,6 +26,10 @@ R"( #version 460 core
          if ((aPos.x < 0.1 && aPos.x > -0.1) || (aPos.y < 0.1 && aPos.y > -0.1))
          {
             col = vec4(0,0,0,1);
+         }
+         else if (debugColor.x > 0.01)
+         {
+            col = glm::vec4(debugColor, 1.0);
          }
          else
          {
