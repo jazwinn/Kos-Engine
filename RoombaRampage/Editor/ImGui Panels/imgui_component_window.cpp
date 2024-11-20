@@ -1041,20 +1041,82 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
 
             }
-
             if (EntitySignature.test(ecs::TYPEAUDIOCOMPONENT)) {
-
                 open = ImGui::CollapsingHeader("Audio Component");
 
                 CreateContext(ecs::TYPEAUDIOCOMPONENT, entityID);
 
                 if (open) {
-                    auto* rbc = static_cast<ecs::AudioComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEAUDIOCOMPONENT]->m_GetEntityComponent(entityID));
-                    rbc->ApplyFunction(DrawComponents(rbc->Names()));
+                    auto* ac = static_cast<ecs::AudioComponent*>(
+                        ecs->m_ECS_CombinedComponentPool[ecs::TYPEAUDIOCOMPONENT]->m_GetEntityComponent(entityID)
+                        );
+
+                    if (ac) {
+                        int fileIndex = 0;
+                        for (auto it = ac->m_AudioFiles.begin(); it != ac->m_AudioFiles.end();) {
+                            ImGui::PushID(fileIndex);
+
+                            bool removeFile = false;
+                            std::string headerName = "Audio File " + std::to_string(fileIndex + 1) + ": " + it->m_Name;
+
+                            ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_DefaultOpen;
+                            bool nodeOpen = ImGui::TreeNodeEx(headerName.c_str(), flags);
+
+                            if (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right)) {
+                                ImGui::OpenPopup("AudioContextMenu");
+                            }
+
+                            if (ImGui::BeginPopup("AudioContextMenu")) {
+                                if (ImGui::MenuItem("Remove")) {
+                                    removeFile = true;
+                                }
+                                ImGui::EndPopup();
+                            }
+
+                            if (nodeOpen) {
+                                char buffer[256];
+                                strncpy(buffer, it->m_FilePath.c_str(), sizeof(buffer));
+
+                                if (ImGui::InputText("File Path", buffer, sizeof(buffer))) {
+                                    it->m_FilePath = buffer;
+                                }
+
+                                ImGui::SliderFloat("Volume", &it->m_Volume, 0.0f, 1.0f);
+                                ImGui::Checkbox("Loop", &it->m_Loop);
+                                ImGui::Checkbox("Play On Start", &it->m_PlayOnStart);
+
+                                ImGui::TreePop();
+                            }
+
+                            ImGui::PopID();
+
+                            if (removeFile) {
+                                it = ac->m_AudioFiles.erase(it);
+                            }
+                            else {
+                                ++it;
+                                ++fileIndex;
+                            }
+                        }
+
+                        static char newAudioName[256] = ""; 
+                        ImGui::InputText("New Audio Name", newAudioName, sizeof(newAudioName));
+
+                        if (ImGui::Button("Add Audio File")) {
+                            if (strlen(newAudioName) > 0) {
+                  
+                                ac->m_AudioFiles.emplace_back(); 
+                                ac->m_AudioFiles.back().m_Name = newAudioName; 
+                                memset(newAudioName, 0, sizeof(newAudioName)); 
+                            }
+                            else {
+                                ImGui::Text("Please enter a valid name for the audio file.");
+                            }
+                        }
+                    }
                 }
-
-
             }
+            
 
             //draw invinsible box
             if (ImGui::GetContentRegionAvail().x > 0 && ImGui::GetContentRegionAvail().y > 0){

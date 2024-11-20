@@ -21,16 +21,21 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 namespace ecs {
 
-
-    class AudioComponent : public Component {
-
-    public:
-        std::string m_AudioFile{};
+    struct AudioFile {
+        std::string m_Name;
+        std::string m_FilePath;
         float m_Volume{ 1.0f };
         bool m_Loop{ false };
         bool m_PlayOnStart{ false };
 
-        REFLECTABLE(AudioComponent, m_AudioFile, m_Volume, m_Loop, m_PlayOnStart)
+        REFLECTABLE(AudioFile, m_FilePath, m_Volume, m_Loop, m_PlayOnStart)
+    };
+
+    class AudioComponent : public Component {
+    public:
+        std::vector<AudioFile> m_AudioFiles;
+
+        REFLECTABLE(AudioComponent, m_AudioFiles)
     };
 
 }
