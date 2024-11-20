@@ -288,6 +288,8 @@ namespace graphicpipe {
 
         void m_funcDrawGrid();
 
+        void m_funcDrawLine(glm::vec3 p0, glm::vec3 p1);
+
         void m_funcDrawTilemap();
 
         /**
