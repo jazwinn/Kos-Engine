@@ -76,7 +76,11 @@ namespace assetmanager {
 
             scenes::SceneManager::m_GetInstance()->m_LoadScene(directoryPath);
         }
+        if (directoryPath.filename().extension().string() == ".json") {
 
+            scenes::SceneManager::m_GetInstance()->m_unloadScenePath.insert(std::pair{ directoryPath.filename().string(), directoryPath});
+
+        }
 
 
 
