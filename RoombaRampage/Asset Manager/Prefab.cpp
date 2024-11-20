@@ -64,7 +64,17 @@ namespace prefab {
         ecs::ECS* ecs = ecs::ECS::m_GetInstance();
 
         if (insertscene.empty()) {
-            insertscene = ecs->m_ECS_SceneMap.begin()->first;
+            for (auto& scene : ecs->m_ECS_SceneMap) {
+
+                if (scene.second.m_isActive && (!scene.second.m_isPrefab)) {
+                    insertscene = scene.first;
+                    break;
+                }
+
+            }
+
+
+            
         }
 
         if (ecs->m_ECS_SceneMap.find(prefabscene) == ecs->m_ECS_SceneMap.end()) {
