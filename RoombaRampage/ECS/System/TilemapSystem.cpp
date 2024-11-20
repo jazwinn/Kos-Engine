@@ -54,7 +54,7 @@ namespace ecs {
 		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
 
 		if (m_vecTilemapComponentPtr.size() != m_vecTransformComponentPtr.size()) {
-			std::cout << "Error: Vectors container size does not Match" << std::endl;
+			LOGGING_ERROR("Error: Vectors container size does not match");
 			return;
 		}
 

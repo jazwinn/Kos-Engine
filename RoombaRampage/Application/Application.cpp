@@ -113,9 +113,10 @@ namespace Application {
 #endif 
 
 #ifdef IMGUIENABLED
-        std::cout << "IMGUIENABLED is defined" << std::endl;
+        LOGGING_INFO("IMGUIENABLED is defined");
+
 #else
-        std::cout << "IMGUIENABLED is NOT defined" << std::endl;
+        LOGGING_INFO("IMGUIENABLED is undefined");
         pipe->m_gameMode = true;
 #endif      
 

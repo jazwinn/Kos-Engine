@@ -108,7 +108,7 @@ namespace Application {
         /* Only initialize GLEW after defining OpenGL context*/
         if (glewInit() != GLEW_OK)
         {
-            std::cout << "Failed to initialize GLEW" << std::endl;
+            LOGGING_ERROR("Failed to initialize GLEW");
             return -1;
         }
 

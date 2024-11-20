@@ -70,7 +70,7 @@ namespace ecs {
 		graphicpipe::GraphicsPipe* graphicsPipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
 		//Helper::Helpers* help =  Helper::Helpers::GetInstance();
 		if (m_vecTextComponentPtr.size() != m_vecTransformComponentPtr.size()) {
-			std::cout << "Error: Vectors container size does not Match" << std::endl;
+			LOGGING_ERROR("Error: Vectors container size does not match");
 			return;
 		}
 		//loops through all vecoters pointing to component
