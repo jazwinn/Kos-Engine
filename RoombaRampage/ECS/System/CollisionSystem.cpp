@@ -116,17 +116,6 @@ namespace ecs {
 
 			vector2::Vec2 position{ TransComp->m_transformation.m_e20,TransComp->m_transformation.m_e21 };
 
-			//if (TransComp->m_haveParent) {
-			//	EntityID parentID = ecs::Hierachy::m_GetParent(TransComp->m_Entity).value();
-			//	//retrieve paretn transforamtion
-			//	TransformComponent* rigidComp = static_cast<TransformComponent*>(ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id));
-
-
-			//	mat3x3::Mat3x3 transform = mat3x3::Mat3Transform(position, scale, rotation);
-			//	transform = rigidComp->m_transformation * transform;
-
-			//	mat3x3::Mat3Decompose(transform, position, scale, rotation);
-			//}
 			if (TransComp->m_haveParent) {
 				EntityID parentID = ecs::Hierachy::m_GetParent(TransComp->m_Entity).value();
 				TransformComponent* parentComp{ nullptr };
@@ -136,23 +125,21 @@ namespace ecs {
 					}
 				}
 				if (!parentComp) continue;
-				mat3x3::Mat3x3 parentTransformation = parentComp->m_transformation;
-				mat3x3::Mat3x3 childTransformation = TransComp->m_transformation;
-
-				/*
-					Child collider box doesnt rotate in accordance to the parent
-					Could be the scale issue
-				*/
-			
 				vector2::Vec2 pos{}, scale{};
 				float rot{};
-				mat3x3::Mat3Decompose(TransComp->m_transformation, pos, scale, rot);
+
+				mat3x3::Mat3x3 parent_Transform = mat3x3::Mat3Transform(parentComp->m_position, parentComp->m_scale, parentComp->m_rotation);
+				mat3x3::Mat3x3 child_Transform = mat3x3::Mat3Transform(TransComp->m_position + ColComp->m_OffSet, TransComp->m_scale * ColComp->m_Size, TransComp->m_rotation);
+				mat3x3::Mat3x3 final_Transform = parent_Transform * child_Transform;
+				mat3x3::Mat3Decompose(final_Transform, pos, scale, rot);
+			
 
 				if (ColComp->m_type == physicspipe::EntityType::CIRCLE) {
-					PhysicsPipeline->m_SendPhysicsData(ColComp->m_radius, pos + ColComp->m_OffSet, scale, velocity, id, NameComp->m_Layer);
+					PhysicsPipeline->m_SendPhysicsData(ColComp->m_radius, pos, scale, velocity, id, NameComp->m_Layer);
 				}
 				else if (ColComp->m_type == physicspipe::EntityType::RECTANGLE) {
-					PhysicsPipeline->m_SendPhysicsData(ColComp->m_Size.m_y, ColComp->m_Size.m_x, rot, pos + ColComp->m_OffSet, scale, velocity, id, NameComp->m_Layer);
+					//PhysicsPipeline->m_SendPhysicsData(scale.m_y, scale.m_x, rot, pos, scale, velocity, id, NameComp->m_Layer);
+					PhysicsPipeline->m_SendPhysicsData(ColComp->m_Size.m_y * TransComp->m_scale.m_y, ColComp->m_Size.m_x * TransComp->m_scale.m_x, rot, pos, scale, velocity, id, NameComp->m_Layer);
 				}
 				else {
 					LOGGING_ERROR("NO ENTITY TYPE");
