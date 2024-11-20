@@ -158,12 +158,30 @@ namespace mat3x3{
 		translation.m_x = matrix.m_e20;
 		translation.m_y = matrix.m_e21;
 
-		scale.m_x = std::sqrt(matrix.m_e00 * matrix.m_e00 + matrix.m_e10 * matrix.m_e10);
-		scale.m_y = std::sqrt(matrix.m_e01 * matrix.m_e01 + matrix.m_e11 * matrix.m_e11);
+		scale.m_x = std::sqrt(matrix.m_e00 * matrix.m_e00 + matrix.m_e01 * matrix.m_e01);
+		scale.m_y = std::sqrt(matrix.m_e10 * matrix.m_e10 + matrix.m_e11 * matrix.m_e11);
 		
+		// Normalize the rotation components
+		float norm_e00 = matrix.m_e00 / scale.m_x;
+		float norm_e01 = matrix.m_e01 / scale.m_x;
+		float norm_e10 = matrix.m_e10 / scale.m_y;
+		float norm_e11 = matrix.m_e11 / scale.m_y;
+		// Extract raw rotation in radians
 
-		rotate = -(std::atan2(matrix.m_e10 / scale.m_x, matrix.m_e00 / scale.m_x) * (180.f/MAT_PI));
+		rotate = std::atan2(norm_e01, norm_e00);
+		rotate = rotate * (180.f / MAT_PI);
 
+		if (rotate < 0.0f) {
+			rotate += 360.0f;
+		}
+
+		// Check if the matrix represents exactly 360 degrees
+		if (rotate != 0.0f) {
+			if (std::abs(norm_e00 - 1.0f) < 1e-6f && std::abs(norm_e10 - 0.0f) < 1e-6f &&
+				std::abs(norm_e01 - 0.0f) < 1e-6f && std::abs(norm_e11 - 1.0f) < 1e-6f) {
+				rotate = 0.0f; // Treat as a full rotation
+			}
+		}
 		scale.m_x = std::round(scale.m_x * 100.0f) / 100.0f;
 		scale.m_y = std::round(scale.m_y * 100.0f) / 100.0f;
 

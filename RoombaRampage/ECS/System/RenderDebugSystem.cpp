@@ -106,17 +106,36 @@ namespace ecs {
 				vector2::Vec2 pos{}, scale{};
 				float rot{};
 
+
 				mat3x3::Mat3x3 parent_Transform = mat3x3::Mat3Transform(parentComp->m_position, parentComp->m_scale, parentComp->m_rotation);
-				mat3x3::Mat3x3 child_Transform = mat3x3::Mat3Transform(transform->m_position + collider->m_OffSet, transform->m_scale * collider->m_Size, transform->m_rotation);
+				mat3x3::Mat3x3 child_Transform = mat3x3::Mat3Transform(transform->m_position + collider->m_OffSet, transform->m_scale * collider->m_Size, 0.f);
 				mat3x3::Mat3x3 final_Transform = parent_Transform * child_Transform;
 				mat3x3::Mat3Decompose(final_Transform, pos, scale, rot); 
+				mat3x3::Mat3x3 finals = mat3x3::Mat3Transform(pos, scale, transform->m_rotation);
 
+
+				mat3x3::Mat3x3 c_RotMat{}, c_TransMat{}, c_ScaleMat{}, p_RotMat{}, p_TransMat{}, p_ScaleMat{};
+
+
+				vector2::Vec2 final_scale = parentComp->m_scale * transform->m_scale * collider->m_Size;
+				vector2::Vec2 position = parentComp->m_position + transform->m_position;
+				float parent_Rot_Angle = parentComp->m_rotation;
+				float child_Rot_Angle = transform->m_rotation;
+				mat3x3::Mat3x3 p_Rot_Angle{}, c_Rot_Angle{};
+
+				//parent scale -> child scale
+				//parent rotate -> Child rotate
+				//parent translate -> child also translate 
+				// origin is at parent
+				// child rotate itself
+				// child can scale itself
+				// child can also translate
 				
 
 				if (collider->m_drawDebug && (collider->m_type == physicspipe::EntityType::RECTANGLE))
 				{
 					
-					mat3x3::Mat3x3 debugTransformation = final_Transform;
+					mat3x3::Mat3x3 debugTransformation = finals;
 
 					graphicsPipe->m_debugBoxData.push_back({ glm::mat3{debugTransformation.m_e00,debugTransformation.m_e01,debugTransformation.m_e02,
 																	debugTransformation.m_e10,debugTransformation.m_e11, debugTransformation.m_e12,
