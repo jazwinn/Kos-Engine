@@ -131,6 +131,11 @@ namespace Namespace
         [MethodImpl(MethodImplOptions.InternalCall)]
         public extern static void m_InternalCallLoadScene(string path);
 
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern static int m_InternalCallAddPrefab(string prefab, in float x, in float y);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern static void m_InternalCallDeleteEntity(uint id);
 
         public virtual void GetEntityID(uint id) { }
         public virtual void Start() { }
