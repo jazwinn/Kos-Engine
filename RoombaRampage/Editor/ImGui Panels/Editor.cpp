@@ -252,41 +252,73 @@ namespace gui {
 
 
 	void ImGuiHandler::m_OnButtonPress(const events::BaseEvent<events::ButtonEvents>& givenEvent) {
-		/***************************************************TO REMOVE, FOR TESTING ONLY*****************************************************************/
-		if (givenEvent.m_ToType<events::ButtonPressEvent>().m_GetButton() == 1) {
-			assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
-			assetManager->m_audioManager.m_soundMap.find("mindstorm.wav")->second->m_PlaySound();
-		}else if (givenEvent.m_ToType<events::ButtonPressEvent>().m_GetButton() == 2) {
-			assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
-			assetManager->m_audioManager.m_soundMap.find("zwing.wav")->second->m_PlaySound();
+		assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
+
+		if (!assetManager) {
+			std::cerr << "AssetManager instance is null.\n";
+			return;
 		}
-		else if (givenEvent.m_ToType<events::ButtonPressEvent>().m_GetButton() == 3) {
-			assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
-			assetManager->m_audioManager.m_soundMap.find("cleaver01.wav")->second->m_PlaySound();
-		}
-		else if (givenEvent.m_ToType<events::ButtonPressEvent>().m_GetButton() == 4) {
-			assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
-			assetManager->m_audioManager.m_soundMap.find("gunshot01.wav")->second->m_PlaySound();
-		}
-		else if (givenEvent.m_ToType<events::ButtonPressEvent>().m_GetButton() == 5) {
-			assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
-			assetManager->m_audioManager.m_soundMap.find("mindstorm.wav")->second->m_StopSound();
-			assetManager->m_audioManager.m_soundMap.find("zwing.wav")->second->m_StopSound();
-			assetManager->m_audioManager.m_soundMap.find("cleaver01.wav")->second->m_StopSound();
-			assetManager->m_audioManager.m_soundMap.find("gunshot01.wav")->second->m_StopSound();
-		}
-		else if (givenEvent.m_ToType<events::AudioFromImgui>().m_GetEventType() == events::ButtonEvents::EVENTAUDIOFROMIMGUI) {\
-			std::string fileToBePlayed = givenEvent.m_ToType<events::AudioFromImgui>().m_GetFile();
-			assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
-			if (assetManager->m_audioManager.m_soundMap.find(fileToBePlayed)->second->m_IsPlaying()) {
-				assetManager->m_audioManager.m_soundMap.find(fileToBePlayed)->second->m_StopSound();
+
+		auto& soundMap = assetManager->m_audioManager.getSoundMap();
+
+		auto playSound = [&](const std::string& fileName) {
+			auto it = soundMap.find(fileName);
+			if (it != soundMap.end()) {
+				it->second->m_PlaySound();
 			}
 			else {
-				assetManager->m_audioManager.m_soundMap.find(fileToBePlayed)->second->m_PlaySound();
+				std::cerr << "Sound file not found: " << fileName << "\n";
 			}
-			
+			};
+
+		auto stopSound = [&](const std::string& fileName) {
+			auto it = soundMap.find(fileName);
+			if (it != soundMap.end()) {
+				it->second->m_StopSound();
+			}
+			else {
+				std::cerr << "Sound file not found: " << fileName << "\n";
+			}
+			};
+
+		int button = givenEvent.m_ToType<events::ButtonPressEvent>().m_GetButton();
+
+		if (button == 1) {
+			playSound("mindstorm.wav");
+		}
+		else if (button == 2) {
+			playSound("zwing.wav");
+		}
+		else if (button == 3) {
+			playSound("cleaver01.wav");
+		}
+		else if (button == 4) {
+			playSound("gunshot01.wav");
+		}
+		else if (button == 5) {
+			stopSound("mindstorm.wav");
+			stopSound("zwing.wav");
+			stopSound("cleaver01.wav");
+			stopSound("gunshot01.wav");
+		}
+		else if (givenEvent.m_ToType<events::AudioFromImgui>().m_GetEventType() == events::ButtonEvents::EVENTAUDIOFROMIMGUI) {
+			std::string fileToBePlayed = givenEvent.m_ToType<events::AudioFromImgui>().m_GetFile();
+			auto it = soundMap.find(fileToBePlayed);
+
+			if (it != soundMap.end()) {
+				if (it->second->m_IsPlaying()) {
+					it->second->m_StopSound();
+				}
+				else {
+					it->second->m_PlaySound();
+				}
+			}
+			else {
+				std::cerr << "Sound file not found: " << fileToBePlayed << "\n";
+			}
 		}
 	}
+
 
 	void ImGuiHandler::m_OnAction(const events::BaseEvent<events::Actions>& givenEvent) {
 		if (givenEvent.m_GetEventType() == events::Actions::TRANSFORMCOMP) {
