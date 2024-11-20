@@ -31,7 +31,7 @@ namespace Tilemap
 	{
 		if ((tileCoordinates.m_x) > originCoordinates.m_x + tilemap->m_rowLength) // If selected tile is longer than current tileset
 		{
-			std::cout << tileCoordinates.m_x - originCoordinates.m_x << std::endl;
+			LOGGING_INFO("Extending row length by %d", static_cast<int>(ceil(tileCoordinates.m_x - originCoordinates.m_x)));
 			resizeTiles(tilemap, ceil(tileCoordinates.m_x - originCoordinates.m_x), tilemap->m_columnLength);
 		}
 		if (tileCoordinates.m_x < floor(originCoordinates.m_x))
@@ -65,7 +65,7 @@ namespace Tilemap
 
 		if (indexX >= tilemap->m_tilePictureIndex[0].size() || indexY >= tilemap->m_tilePictureIndex.size())
 		{
-			std::cout << "Clicked Out of Range" << std::endl;
+			LOGGING_WARN("Clicked out of range: indexX=%d, indexY=%d", indexX, indexY);
 			return;
 		}
 
@@ -76,12 +76,14 @@ namespace Tilemap
 	{
 		for (int i = 0; i < tilemap->m_tilePictureIndex.size(); ++i)
 		{
-			std::cout << "Row " << i << ": ";
+			std::ostringstream rowStream;
+
+			rowStream << "Row " << i << ": ";
 			for (int j = 0; j < tilemap->m_tilePictureIndex[i].size(); ++j)
 			{
-				std::cout << tilemap->m_tilePictureIndex[i][j] << ' ';
+				rowStream << tilemap->m_tilePictureIndex[i][j] << ' ';
 			}
-			std::cout << std::endl;
+			LOGGING_INFO("%s", rowStream.str().c_str());
 		}
 	}
 }

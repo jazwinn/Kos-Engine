@@ -49,7 +49,7 @@ namespace Serialization {
 		file.open("./Config/Config.txt");
 
 		if (!file.is_open()) {
-			std::cerr << "Error opening config file" << std::endl;
+			LOGGING_ERROR("Error opening config file");
 			return;
 		}
 		Helper::Helpers* help = Helper::Helpers::GetInstance();
@@ -75,7 +75,7 @@ namespace Serialization {
 		str3 >> temp >> help->m_fpsCap;
 
 		if (help->m_windowHeight <= 0 || help->m_windowWidth <= 0 || !help->m_fpsCap) {
-			std::cout << "Error Reading Config file (Width or Height <= 0)" << std::endl;
+			LOGGING_ERROR("Error Reading Config file (Width or Height <= 0)");
 		}
 	}
 
@@ -97,7 +97,7 @@ namespace Serialization {
 		std::ifstream inputFile(jsonFilePath.string());
 
 		if (!inputFile) {
-			std::cerr << "Failed to open JSON file for reading: " << jsonFilePath << std::endl;
+			LOGGING_ERROR("Failed to open JSON file for reading: %s", jsonFilePath.string().c_str());
 			return;
 		}
 
