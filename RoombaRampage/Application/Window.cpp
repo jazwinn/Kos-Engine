@@ -28,6 +28,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "Window.h"
 #include "Helper.h"
 #include "../Graphics/GraphicsPipe.h"
+#include "../ECS/ECS.h"
 #include "../Inputs/Input.h"
 
 namespace Application {
@@ -58,6 +59,20 @@ namespace Application {
 
     }
 
+    static void iconifyCallback(GLFWwindow* window, int iconified)
+    {
+        if (iconified == GLFW_TRUE)
+        {
+            //std::cout << "Window minimized!" << std::endl;
+            ecs::ECS::m_GetInstance()->m_nextState = ecs::WAIT;
+        }
+        else
+        {
+            //std::cout << "Window restored!" << std::endl;
+
+        }
+    }
+
 	int AppWindow::init(){
         /* Initialize the library */
         if (!glfwInit())
@@ -85,6 +100,7 @@ namespace Application {
         }
         //set call back
         if(m_enabledFullScreen) glfwSetWindowFocusCallback(m_window, windowFocusCallback);
+        glfwSetWindowIconifyCallback(m_window, iconifyCallback);
 
         /* Make the window's context current */
         glfwMakeContextCurrent(m_window);
