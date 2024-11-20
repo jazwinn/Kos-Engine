@@ -132,7 +132,7 @@ namespace Namespace
         public extern static void m_InternalCallLoadScene(string path);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        public extern static int m_InternalCallAddPrefab(string prefab, in float x, in float y);
+        public extern static int m_InternalCallAddPrefab(string prefab, in float x, in float y, in float degree);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         public extern static void m_InternalCallDeleteEntity(uint id);

@@ -63,13 +63,13 @@ namespace Namespace
             }
             if (m_InternalCallIsKeyTriggered(Key.keyCode.G))
             {
-                int new_entity = m_InternalCallAddPrefab("blackTile_test_1", 0.0f, 0.0f); //do not call prefabs that share the same script as the current
+                int new_entity = m_InternalCallAddPrefab("blackTile_test_1", 0.0f, 0.0f, 45.0f); //do not call prefabs that share the same script as the current
                 queue.Enqueue(new_entity);
             }
             if (m_InternalCallIsKeyTriggered(Key.keyCode.H))
             {
                 if(queue.Count > 0){
-                    m_InternalCallDeleteEntity((uint)queue.Dequeue());
+                    m_InternalCallDeleteEntity((uint)queue.Dequeue());//
                 }
                 
             }

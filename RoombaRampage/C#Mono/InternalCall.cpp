@@ -447,7 +447,7 @@ namespace script {
 		mono_free(nativeString);
 	}
 
-	int InternalCall::m_InternalCallAddPrefab(MonoString* prefab, const float* x, const float* y)
+	int InternalCall::m_InternalCallAddPrefab(MonoString* prefab, const float* x, const float* y, const float* rotation)
 	{
 		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
 
@@ -460,6 +460,7 @@ namespace script {
 			ecs::EntityID id = prefab::Prefab::m_CreatePrefab(prefabfile);
 			ecs::TransformComponent* transCom = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id));
 			transCom->m_position = { *x, *y };
+			transCom->m_rotation = *rotation;
 
 			return (int)id;
 		}
