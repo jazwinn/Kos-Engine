@@ -154,7 +154,7 @@ namespace script {
 
 		static void m_InternalCallLoadScene(MonoString* monoString);
 
-		static int m_InternalCallAddPrefab(MonoString* prefab, const float* x, const float* y);
+		static int m_InternalCallAddPrefab(MonoString* prefab, const float* x, const float* y, const float* rotation);
 
 		static void m_InternalCallDeleteEntity(ecs::EntityID);
 
