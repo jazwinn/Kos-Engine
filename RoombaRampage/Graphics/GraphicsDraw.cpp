@@ -64,8 +64,8 @@ namespace graphicpipe
 			}
 			else
 			{
-				std::cout << lvUniformVarLoc1 << std::endl;
-				std::cout << "Uniform variable doesn't exist!!!\n";
+				LOGGING_ERROR("Uniform variable location: %d", lvUniformVarLoc1);
+				LOGGING_ERROR("Uniform variable 'textures' doesn't exist!");
 				std::exit(EXIT_FAILURE);
 			}
 
@@ -136,7 +136,7 @@ namespace graphicpipe
 		m_funcDrawDebug();
 		m_funcDrawTilemap();
 		m_funcDraw();
-		
+		m_funcDrawLine({ 1.f,1.f,0 }, { -1.f,-1.f,0 }); // Comment this out when done debugging;
 		m_funcDrawText();
 		
 
@@ -261,10 +261,43 @@ namespace graphicpipe
 
 		glUniformMatrix3fv(glGetUniformLocation(m_gridShaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currViewMatrix));
 		glUniformMatrix3fv(glGetUniformLocation(m_gridShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currOrthoMatrix));
+		glUniform3f(glGetUniformLocation(m_gridShaderProgram, "debugColor"), 0.f, 0.f, 0.f);
 		glBindVertexArray(m_lineMesh.m_vaoId);
 		glDrawArrays(GL_LINES, 0, 1000 * 8 + 12); // Number of vertices
 		glBindVertexArray(0);
 			
+	}
+
+	void GraphicsPipe::m_funcDrawLine(glm::vec3 p0, glm::vec3 p1)
+	{
+
+		std::vector<glm::vec3> vertices;
+
+		vertices.push_back(p0);
+		vertices.push_back(p1);
+
+		unsigned int vaoid;
+		unsigned int vboid;
+		glGenVertexArrays(1, &vaoid);
+		glGenBuffers(1, &vboid);
+
+		glBindVertexArray(vaoid);
+
+		glBindBuffer(GL_ARRAY_BUFFER, vboid);
+		glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), vertices.data(), GL_STATIC_DRAW);
+
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), (void*)0);
+		glEnableVertexAttribArray(0);
+
+		glUseProgram(m_gridShaderProgram);
+
+		glUniformMatrix3fv(glGetUniformLocation(m_gridShaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currViewMatrix));
+		glUniformMatrix3fv(glGetUniformLocation(m_gridShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currOrthoMatrix));
+		glUniform3f(glGetUniformLocation(m_gridShaderProgram, "debugColor"), 0.5f , 0.1f, 0.1f);
+		glDrawArrays(GL_LINES, 0, 2); // Number of vertices
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindVertexArray(0);
+
 	}
 
 	void GraphicsPipe::m_funcDrawTilemap()

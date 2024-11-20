@@ -33,8 +33,6 @@ namespace assetmanager {
 
     void AssetManager::m_funcLoadAssets(std::string Directory )
     {
-
-
         for (auto& directoryPath : std::filesystem::directory_iterator(Directory)) {
             std::string filepath = directoryPath.path().string();
             std::replace(filepath.begin(), filepath.end(), '\\', '/');
@@ -45,10 +43,7 @@ namespace assetmanager {
             else {
                 m_LoadAsset(directoryPath.path());
             }
-
         }
-
-       
     }
 
     void AssetManager::m_LoadAsset(std::filesystem::path directoryPath)
@@ -57,7 +52,7 @@ namespace assetmanager {
         std::replace(filepath.begin(), filepath.end(), '\\', '/');
 
         if (directoryPath.filename().extension().string() == ".png") {
-            std::cout << filepath.c_str() << std::endl;
+            LOGGING_INFO("Filepath: %s", filepath.c_str());
             m_funcLoadImage(filepath);
 
         }
@@ -76,10 +71,11 @@ namespace assetmanager {
 
             scenes::SceneManager::m_GetInstance()->m_LoadScene(directoryPath);
         }
+        if (directoryPath.filename().extension().string() == ".json") {
 
+            scenes::SceneManager::m_GetInstance()->m_unloadScenePath.insert(std::pair{ directoryPath.filename().string(), directoryPath});
 
-
-
+        }
     }
 
     AssetManager* AssetManager::m_funcGetInstance()

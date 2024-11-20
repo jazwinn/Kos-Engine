@@ -436,11 +436,48 @@ namespace script {
 		scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();
 
 		char* nativeString = mono_string_to_utf8(monoString);
+		std::string scenefile = std::string{ nativeString } + ".json";
 
+		const auto& scene = scenemanager->m_unloadScenePath.find(scenefile);
+		if (scene != scenemanager->m_unloadScenePath.end()) {
 
-		scenemanager->m_LoadScene(nativeString);
+			scenemanager->m_LoadScene(scene->second);
+		}
 
 		mono_free(nativeString);
+	}
+
+	int InternalCall::m_InternalCallAddPrefab(MonoString* prefab, const float* x, const float* y, const float* rotation)
+	{
+		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+
+		scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();
+
+		char* nativeString = mono_string_to_utf8(prefab);
+		std::string prefabfile = std::string{ nativeString } + ".prefab";
+
+		if (ecs->m_ECS_SceneMap.find(prefabfile) != ecs->m_ECS_SceneMap.end()) {
+			ecs::EntityID id = prefab::Prefab::m_CreatePrefab(prefabfile);
+			ecs::TransformComponent* transCom = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id));
+			transCom->m_position = { *x, *y };
+			transCom->m_rotation = *rotation;
+
+			return (int)id;
+		}
+		else {
+			LOGGING_ERROR("Prefab not loaded");
+			return -1;
+		}
+
+
+		mono_free(nativeString);
+	}
+
+	void InternalCall::m_InternalCallDeleteEntity(ecs::EntityID id)
+	{
+		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+		ecs->m_DeleteEntity(id);
+
 	}
 
 	float InternalCall::m_InternalCallIsCollided(ecs::EntityID entity)
@@ -529,6 +566,9 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_InternalCallSetSceneActive);
 
 		MONO_ADD_INTERNAL_CALL(m_UnloadAllScene);
-		MONO_ADD_INTERNAL_CALL(m_InternalCallLoadScene);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallLoadScene); 
+
+		MONO_ADD_INTERNAL_CALL(m_InternalCallAddPrefab); 
+		MONO_ADD_INTERNAL_CALL(m_InternalCallDeleteEntity);
 	}
 }

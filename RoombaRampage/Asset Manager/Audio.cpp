@@ -67,7 +67,7 @@ namespace fmodaudio {
 
     bool FModAudio::m_CreateSound(const char* soundFile) {
         if (!m_system) {
-            std::cerr << "FMOD error: System is not initialized." << std::endl;
+            LOGGING_WARN("FMOD error: System is not initialized.");
             return false;
         }
 
@@ -92,7 +92,7 @@ namespace fmodaudio {
                 //std::cerr << "FMOD error: Failed to play sound: " << FMOD_ErrorString(result) << std::endl;
                 return false;
             }
-            std::cout << "Sound played\n";
+            LOGGING_WARN("Sound played");
         }
         else {
             bool isPlaying;
@@ -103,7 +103,7 @@ namespace fmodaudio {
                     //std::cerr << "FMOD error: Failed to replay sound: " << FMOD_ErrorString(result) << std::endl;
                     return false;
                 }
-                std::cout << "Sound replayed\n";
+                LOGGING_WARN("Sound replayed");
             }
         }
 

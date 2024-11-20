@@ -42,6 +42,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\Assets\Scripts\ScriptsCS\CameraFollowPlayerScript.cs">
+      <Link>LogicScript\CameraFollowPlayerScript.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\Scripts\ScriptsCS\CollisionResponse.cs">
+      <Link>LogicScript\CollisionResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\Scripts\ScriptsCS\MovingObjectScript.cs">
+      <Link>LogicScript\MovingObjectScript.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\Scripts\ScriptsCS\PlayerControl.cs">
+      <Link>LogicScript\PlayerControl.cs</Link>
+    </Compile>
     <Compile Include="ScriptCore\Components.cs" />
     <Compile Include="ScriptCore\KeyCode.cs" />
     <Compile Include="ScriptCore\ScriptBase.cs" />

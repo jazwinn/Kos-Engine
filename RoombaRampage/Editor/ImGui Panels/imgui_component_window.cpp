@@ -419,7 +419,6 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
             static int entityTagType = 0;
             const char* tag_Names[] = { "Default" , "Player", "Wall","Bullet" };
             if (ImGui::Combo("Tag", &entityTagType, tag_Names, IM_ARRAYSIZE(tag_Names), IM_ARRAYSIZE(tag_Names))) {
-                std::cout << nc->m_entityTag << std::endl;
                 if (entityTagType == 0) {
                     nc->m_entityTag = "Default";
                 }
@@ -432,7 +431,6 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 if (entityTagType == 3) {
                     nc->m_entityTag = "Bullet";
                 }
-                std::cout << nc->m_entityTag << std::endl;
             }
 
            // std::cout << nc->m_entityTag << std::endl;
