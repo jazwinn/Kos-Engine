@@ -459,6 +459,28 @@ namespace Serialization {
 			}
 		}
 
+		// Check if the entity has AudioComponent and save it
+		if (signature.test(ecs::ComponentType::TYPEAUDIOCOMPONENT))
+		{
+			ecs::AudioComponent* ac = static_cast<ecs::AudioComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPEAUDIOCOMPONENT]->m_GetEntityComponent(entityId));
+			if (ac)
+			{
+				rapidjson::Value audio(rapidjson::kObjectType);
+				rapidjson::Value textValue;
+
+
+				textValue.SetString(ac->m_AudioFile.c_str(), allocator);
+
+				audio.AddMember("audiofile", textValue, allocator);
+				audio.AddMember("volume", ac->m_Volume, allocator);
+				audio.AddMember("loop", ac->m_Loop, allocator);
+				audio.AddMember("playonstart", ac->m_PlayOnStart, allocator);
+
+				entityData.AddMember("audio", audio, allocator);
+				hasComponents = true;
+			}
+		}
+
 		// Add children
 		std::optional<std::vector<ecs::EntityID>> childrenOptional = ecs::Hierachy::m_GetChild(entityId);
 		if (childrenOptional.has_value()) {
