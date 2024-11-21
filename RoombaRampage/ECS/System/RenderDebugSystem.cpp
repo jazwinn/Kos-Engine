@@ -106,8 +106,6 @@ namespace ecs {
 				vector2::Vec2 pos{}, scale{};
 				float rot{};
 
-				mat3x3::Mat3x3 parent_Transform = mat3x3::Mat3Transform(parentComp->m_position, parentComp->m_scale, parentComp->m_rotation);
-				mat3x3::Mat3x3 child_Transform = mat3x3::Mat3Transform(transform->m_position, transform->m_scale * collider->m_Size, 0);
 
 				mat3x3::Mat3x3 translateMatrix;
 				mat3x3::Mat3x3 translateBackMatrix;
@@ -115,22 +113,9 @@ namespace ecs {
 				mat3x3::Mat3x3 scaleMatrix;
 				mat3x3::Mat3x3 rotateMatrix;
 
-				child_Transform.m_e20 += parentComp->m_position.m_x;
-				child_Transform.m_e21 += parentComp->m_position.m_y;
 
-				mat3x3::Mat3Scale(scaleMatrix, parentComp->m_scale.m_x, parentComp->m_scale.m_y);
-				mat3x3::Mat3RotDeg(rotateMatrix, parentComp->m_rotation);
-				mat3x3::Mat3Translate(translateToOriginMatrix, -parentComp->m_position.m_x, -parentComp->m_position.m_y);
-				mat3x3::Mat3Translate(translateBackMatrix, parentComp->m_position.m_x, (parentComp->m_position.m_y));
-				child_Transform = translateBackMatrix * rotateMatrix * scaleMatrix * translateToOriginMatrix * child_Transform;
-
-				mat3x3::Mat3RotDeg(rotateMatrix, transform->m_rotation);
-				mat3x3::Mat3Translate(translateToOriginMatrix, -child_Transform.m_e20, -child_Transform.m_e21);
-				mat3x3::Mat3Translate(translateBackMatrix, child_Transform.m_e20, child_Transform.m_e21);
-
-				child_Transform = translateBackMatrix * rotateMatrix * translateToOriginMatrix * child_Transform;
-
-				mat3x3::Mat3x3 final_Transform = child_Transform * mat3x3::Mat3Transform(collider->m_OffSet, vector2::Vec2{ 1.0f,1.0f }, 0);
+				mat3x3::Mat3x3 parent_Transform = mat3x3::Mat3Transform(parentComp->m_position, parentComp->m_scale, parentComp->m_rotation);
+				
 				//mat3x3::Mat3x3 final_Transform = parent_Transform * child_Transform;
 				//mat3x3::Mat3Decompose(final_Transform, pos, scale, rot);   
 
@@ -139,7 +124,28 @@ namespace ecs {
 				if (collider->m_drawDebug && (collider->m_type == physicspipe::EntityType::RECTANGLE))
 				{
 					
+					mat3x3::Mat3x3 child_Transform = mat3x3::Mat3Transform(transform->m_position, transform->m_scale * collider->m_Size, 0);
+
+					child_Transform.m_e20 += parentComp->m_position.m_x;
+					child_Transform.m_e21 += parentComp->m_position.m_y;
+
+					mat3x3::Mat3Scale(scaleMatrix, parentComp->m_scale.m_x, parentComp->m_scale.m_y);
+					mat3x3::Mat3RotDeg(rotateMatrix, parentComp->m_rotation);
+					mat3x3::Mat3Translate(translateToOriginMatrix, -parentComp->m_position.m_x, -parentComp->m_position.m_y);
+					mat3x3::Mat3Translate(translateBackMatrix, parentComp->m_position.m_x, (parentComp->m_position.m_y));
+					child_Transform = translateBackMatrix * rotateMatrix * scaleMatrix * translateToOriginMatrix * child_Transform;
+
+					mat3x3::Mat3RotDeg(rotateMatrix, transform->m_rotation);
+					mat3x3::Mat3Translate(translateToOriginMatrix, -child_Transform.m_e20, -child_Transform.m_e21);
+					mat3x3::Mat3Translate(translateBackMatrix, child_Transform.m_e20, child_Transform.m_e21);
+
+					child_Transform = translateBackMatrix * rotateMatrix * translateToOriginMatrix * child_Transform;
+
+					mat3x3::Mat3x3 final_Transform = child_Transform * mat3x3::Mat3Transform(collider->m_OffSet, vector2::Vec2{ 1.0f,1.0f }, 0);
+
 					mat3x3::Mat3x3 debugTransformation = final_Transform;
+
+					
 
 					graphicsPipe->m_debugBoxData.push_back({ glm::mat3{debugTransformation.m_e00,debugTransformation.m_e01,debugTransformation.m_e02,
 																	debugTransformation.m_e10,debugTransformation.m_e11, debugTransformation.m_e12,
@@ -148,8 +154,30 @@ namespace ecs {
 				}
 				else if (collider->m_drawDebug && (collider->m_type == physicspipe::EntityType::CIRCLE))
 				{
-					mat3x3::Mat3x3 debugTransformation = mat3x3::Mat3Transform(vector2::Vec2{ transform->m_transformation.m_e20 + collider->m_OffSet.m_x, transform->m_transformation.m_e21 + collider->m_OffSet.m_y }, vector2::Vec2{ collider->m_radius * 2.f, collider->m_radius * 2.f }, parentComp->m_rotation);
+					mat3x3::Mat3x3 debugTransformation = mat3x3::Mat3Transform( transform->m_position , vector2::Vec2{ 1.f, 1.f }, 0);
 
+					debugTransformation.m_e20 += parentComp->m_position.m_x;
+					debugTransformation.m_e21 += parentComp->m_position.m_y;
+
+					mat3x3::Mat3Scale(scaleMatrix, parentComp->m_scale.m_x, parentComp->m_scale.m_y);
+					mat3x3::Mat3RotDeg(rotateMatrix, parentComp->m_rotation);
+					mat3x3::Mat3Translate(translateToOriginMatrix, -parentComp->m_position.m_x, -parentComp->m_position.m_y);
+					mat3x3::Mat3Translate(translateBackMatrix, parentComp->m_position.m_x, (parentComp->m_position.m_y));
+					debugTransformation = translateBackMatrix * rotateMatrix * scaleMatrix * translateToOriginMatrix * debugTransformation;
+
+
+					mat3x3::Mat3RotDeg(rotateMatrix, transform->m_rotation);
+					mat3x3::Mat3Translate(translateToOriginMatrix, -debugTransformation.m_e20, -debugTransformation.m_e21);
+					mat3x3::Mat3Translate(translateBackMatrix, debugTransformation.m_e20, debugTransformation.m_e21);
+
+					//mat3x3::Mat3x3 inverseScale{};
+					
+					//mat3x3::Mat3Inverse(scaleMatrix, inverseScale);
+
+					debugTransformation = translateBackMatrix * rotateMatrix * translateToOriginMatrix * debugTransformation;
+					
+
+					debugTransformation = debugTransformation * mat3x3::Mat3Transform(collider->m_OffSet, vector2::Vec2{ collider->m_radius * 2.f / parentComp->m_scale.m_x, collider->m_radius * 2.f / parentComp->m_scale.m_y }, 0);
 					graphicsPipe->m_debugBoxData.push_back({ glm::mat3{debugTransformation.m_e00,debugTransformation.m_e01,debugTransformation.m_e02,
 																	debugTransformation.m_e10,debugTransformation.m_e11, debugTransformation.m_e12,
 																debugTransformation.m_e20, debugTransformation.m_e21, debugTransformation.m_e22} ,
