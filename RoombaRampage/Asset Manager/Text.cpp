@@ -53,7 +53,7 @@ namespace text {
         // load font as face
         FT_Face face;
         if (FT_New_Face(ft, file.c_str(), 0, &face)) {
-            LOGGING_ERROR("ERROR::FREETYPE: Failed to load font: %s", file.c_str());
+            LOGGING_ERROR("ERROR::FREETYPE: Failed to load font: {}", file.c_str());
             return;
         }
         else {
