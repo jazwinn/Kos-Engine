@@ -252,6 +252,25 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
     }
 
 
+    //delete entity
+    if (ImGui::IsKeyPressed(ImGuiKey_Delete))
+    {
+        if (m_clickedEntityId >= 0) {
+            ecs::ECS::m_GetInstance()->m_DeleteEntity(m_clickedEntityId);
+            m_clickedEntityId = -1;
+
+        }
+    }
+
+
+
+
+
+
+
+
+
+
     //For Dragging Assets Into Editor Window
     ImGui::Dummy(renderWindowSize);
     if (ImGui::BeginDragDropTarget())
