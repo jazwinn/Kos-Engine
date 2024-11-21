@@ -64,8 +64,8 @@ namespace graphicpipe
 			}
 			else
 			{
-				std::cout << lvUniformVarLoc1 << std::endl;
-				std::cout << "Uniform variable doesn't exist!!!\n";
+				LOGGING_ERROR("Uniform variable location: %d", lvUniformVarLoc1);
+				LOGGING_ERROR("Uniform variable 'textures' doesn't exist!");
 				std::exit(EXIT_FAILURE);
 			}
 

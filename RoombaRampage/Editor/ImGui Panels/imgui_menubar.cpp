@@ -34,7 +34,7 @@ void gui::ImGuiHandler::m_DrawMainMenuBar() {
     //If CTRL + S press, save
     if (io.KeyCtrl && ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_S))) {
         scenemanager->m_SaveAllActiveScenes();
-        std::cout << "Saving data..." << std::endl;
+        LOGGING_INFO("Saving data...");
     }
 
 

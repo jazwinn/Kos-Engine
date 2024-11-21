@@ -101,7 +101,7 @@ namespace scenes {
         }
 
         //contain scene path
-        m_scenePath[scene.filename().string()] = scene;
+        m_loadScenePath[scene.filename().string()] = scene;
         
         // store path to be use as recent
         if (scene.filename().extension().string() != ".prefab") {
@@ -125,7 +125,7 @@ namespace scenes {
 
             
         // Load entities from the JSON file
-        std::cout << "Loading entities from: " << scene.string() << std::endl;
+        LOGGING_INFO("Loading entities from: {}", scene.string().c_str());
         Serialization::Serialize::m_LoadComponentsJson(scene.string());  // Load into ECS
 
         if (scene.filename().extension().string() == ".prefab") {
@@ -139,15 +139,8 @@ namespace scenes {
                     break;
                 }
             }
-             
-
-
         }
-
-
-
         LOGGING_INFO("Entities successfully loaded!");
-
     }
 
     void SceneManager::m_ReloadScene()
@@ -162,7 +155,7 @@ namespace scenes {
         //store scene path
         std::vector<std::string> scenepath;
         for (auto& scene : sce) {
-            scenepath.push_back(m_scenePath.find(scene)->second.string());
+            scenepath.push_back(m_loadScenePath.find(scene)->second.string());
         }
         
         //clear all scenes
@@ -217,7 +210,7 @@ namespace scenes {
     void SceneManager::m_SaveScene(std::string scene)
     {
 
-        Serialization::Serialize::m_SaveComponentsJson(m_scenePath.find(scene)->second.string());
+        Serialization::Serialize::m_SaveComponentsJson(m_loadScenePath.find(scene)->second.string());
 
     }
     void SceneManager::m_SaveAllActiveScenes()
