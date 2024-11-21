@@ -55,8 +55,8 @@ prior written consent of DigiPen Institute of Technology is prohibited.
         static float m_aspectRatio;                      ///< Aspect ratio of the window.
 
 
-        static glm::ivec2 m_editorWindowPosition;
-        static glm::ivec2 m_editorWindowDimensions;
+        static vector2::Vec2 m_editorWindowPosition;
+        static vector2::Vec2 m_editorWindowDimensions;
 
         static bool m_editorMode;
         /**
@@ -68,15 +68,15 @@ prior written consent of DigiPen Institute of Technology is prohibited.
         {
             float upVector;
             float rightVector;
-            glm::vec2 m_coordinates;   ///< Coordinates of the camera.
-            glm::vec2 m_zoom;          ///< Zoom of the a=canera
+            vector2::Vec2 m_coordinates;   ///< Coordinates of the camera.
+            vector2::Vec2 m_zoom;          ///< Zoom of the a=canera
             float m_angle;             ///< Rotation angle of the camera.
         };
 
         static Camera m_editorCamera;
-        static glm::mat3 m_editorCameraMatrix;
-        static glm::mat3 m_editorViewMatrix;
-        static glm::mat3 m_editorOrthoMatrix;
+        static mat3x3::Mat3x3 m_editorCameraMatrix;
+        static mat3x3::Mat3x3 m_editorViewMatrix;
+        static mat3x3::Mat3x3 m_editorOrthoMatrix;
         static float m_editorCameraDragSensitivity;  ///< Editor Camera Drag Sensitivity
         static float m_editorCameraZoomSensitivity;  ///< Editor Camera Zoom Sensitivity
 

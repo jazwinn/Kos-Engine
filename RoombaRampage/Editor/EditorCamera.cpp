@@ -39,29 +39,30 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 float EditorCamera::m_aspectRatio{};
 int EditorCamera::m_windowWidth{};
 int EditorCamera::m_windowHeight{};
-glm::ivec2 EditorCamera::m_editorWindowPosition{};
-glm::ivec2 EditorCamera::m_editorWindowDimensions{};
+
+vector2::Vec2 EditorCamera::m_editorWindowPosition{};
+vector2::Vec2 EditorCamera::m_editorWindowDimensions{};
 bool EditorCamera::m_editorMode = true;
-EditorCamera::Camera EditorCamera::m_editorCamera{ 1.f, 1.f ,glm::vec2(0.f,0.f), glm::vec2(5.f,5.f), 0 }; // Zoom Set To 5.f on Init
-glm::mat3 EditorCamera::m_editorCameraMatrix{1.f};
-glm::mat3 EditorCamera::m_editorViewMatrix{ 1.f };
-glm::mat3 EditorCamera::m_editorOrthoMatrix{ 1.f };
+EditorCamera::Camera EditorCamera::m_editorCamera{ 1.f, 1.f ,vector2::Vec2(0.f,0.f), vector2::Vec2(5.f,5.f), 0 }; // Zoom Set To 5.f on Init
+mat3x3::Mat3x3 EditorCamera::m_editorCameraMatrix{};
+mat3x3::Mat3x3 EditorCamera::m_editorViewMatrix{};
+mat3x3::Mat3x3 EditorCamera::m_editorOrthoMatrix{};
 
 float EditorCamera::m_editorCameraDragSensitivity{ 0.01f };
 float EditorCamera::m_editorCameraZoomSensitivity{ 0.10f };
 
 void EditorCamera::calculateLevelEditorCamera()
 {
-	m_editorCameraMatrix[0][0] = m_editorCamera.m_zoom.x;
-	m_editorCameraMatrix[1][1] = m_editorCamera.m_zoom.y;
-	m_editorCameraMatrix[2][0] = m_editorCamera.m_coordinates.x;
-	m_editorCameraMatrix[2][1] = m_editorCamera.m_coordinates.y;
-	m_editorCameraMatrix[2][2] = 1;
+	m_editorCameraMatrix.m_e00 = m_editorCamera.m_zoom.m_x;
+	m_editorCameraMatrix.m_e11 = m_editorCamera.m_zoom.m_y;
+	m_editorCameraMatrix.m_e20 = m_editorCamera.m_coordinates.m_x;
+	m_editorCameraMatrix.m_e21 = m_editorCamera.m_coordinates.m_y;
+	m_editorCameraMatrix.m_e22 = 1;
 }
 
 void EditorCamera::calculateLevelEditorView()
 {
-	m_editorViewMatrix = glm::inverse(m_editorCameraMatrix);
+    mat3x3::Mat3Inverse(m_editorCameraMatrix, m_editorViewMatrix);
 }
 
 void EditorCamera::calculateLevelEditorOrtho()
@@ -70,27 +71,27 @@ void EditorCamera::calculateLevelEditorOrtho()
     float right = 1.f * (1.f/graphicpipe::GraphicsCamera::m_aspectRatio);
     float bottom = -1.f;
     float top = 1.f;
-    m_editorOrthoMatrix[0][0] = (2.0f / (right - left));
-    m_editorOrthoMatrix[1][1] = 2.0f / (top - bottom);
-    m_editorOrthoMatrix[2][0] = -(right + left) / (right - left);
-    m_editorOrthoMatrix[2][1] = -(top + bottom) / (top - bottom);
-    m_editorOrthoMatrix[2][2] = 1;
+    m_editorOrthoMatrix.m_e00 = (2.0f / (right - left));
+    m_editorOrthoMatrix.m_e11 = 2.0f / (top - bottom);
+    m_editorOrthoMatrix.m_e20 = -(right + left) / (right - left);
+    m_editorOrthoMatrix.m_e21 = -(top + bottom) / (top - bottom);
+    m_editorOrthoMatrix.m_e22 = 1;
 }
 
 vector2::Vec2 EditorCamera::calculateWorldCoordinatesFromMouse(int mouseX, int mouseY)
 {
-    float screencoordX = mouseX - m_editorWindowPosition.x;
-    float screencoordY = mouseY - m_editorWindowPosition.y;
+    float screencoordX = mouseX - m_editorWindowPosition.m_x;
+    float screencoordY = mouseY - m_editorWindowPosition.m_y;
 
-    float cordX = (screencoordX - m_editorWindowDimensions.x / 2.f) / (m_editorWindowDimensions.x / 2.f);
-    float cordY = (std::abs(screencoordY) - m_editorWindowDimensions.y / 2.f) / (m_editorWindowDimensions.y / 2.f);
+    float cordX = (screencoordX - m_editorWindowDimensions.m_x / 2.f) / (m_editorWindowDimensions.m_x / 2.f);
+    float cordY = (std::abs(screencoordY) - m_editorWindowDimensions.m_y / 2.f) / (m_editorWindowDimensions.m_y / 2.f);
 
-    glm::vec3 translate = { cordX , -cordY, 0.f };
-    translate.x *= EditorCamera::m_editorCameraMatrix[0][0];
-    translate.y *= EditorCamera::m_editorCameraMatrix[1][1];
-    translate.x *= 1.f / graphicpipe::GraphicsCamera::m_aspectRatio;
-    translate.x += EditorCamera::m_editorCameraMatrix[2][0];
-    translate.y += EditorCamera::m_editorCameraMatrix[2][1];
+    vector3::Vec3 translate = { cordX , -cordY, 0.f };
+    translate.m_x *= EditorCamera::m_editorCameraMatrix.m_e00;
+    translate.m_y *= EditorCamera::m_editorCameraMatrix.m_e11;
+    translate.m_x *= 1.f / graphicpipe::GraphicsCamera::m_aspectRatio;
+    translate.m_x += EditorCamera::m_editorCameraMatrix.m_e20;
+    translate.m_y += EditorCamera::m_editorCameraMatrix.m_e21;
 
-    return vector2::Vec2{ translate.x, translate.y };
+    return vector2::Vec2{ translate.m_x, translate.m_y };
 }
