@@ -97,7 +97,7 @@ namespace Serialization {
 		std::ifstream inputFile(jsonFilePath.string());
 
 		if (!inputFile) {
-			LOGGING_ERROR("Failed to open JSON file for reading: %s", jsonFilePath.string().c_str());
+			LOGGING_ERROR("Failed to open JSON file for reading: {}", jsonFilePath.string().c_str());
 			return;
 		}
 
