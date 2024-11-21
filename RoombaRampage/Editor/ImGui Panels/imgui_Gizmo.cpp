@@ -180,12 +180,12 @@ namespace gui {
                 ImGuizmo::DecomposeMatrixToComponents(model, matrixTranslation, matrixRotation, matrixScale);
             }
 
-
+      
 
             
             transcom->m_position.m_x = matrixTranslation[0];
             transcom->m_position.m_y = matrixTranslation[1];
-            transcom->m_rotation = matrixRotation[2];
+            transcom->m_rotation = -matrixRotation[2];
             transcom->m_scale.m_x = matrixScale[0];
             transcom->m_scale.m_y = matrixScale[1];
             //transcom->m_transformation = mat3x3::Mat3Transform(transcom->m_position, transcom->m_scale, transcom->m_rotation);
