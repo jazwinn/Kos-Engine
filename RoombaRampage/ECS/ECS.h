@@ -173,7 +173,7 @@ namespace ecs {
 		static std::unique_ptr<ECS> m_InstancePtr;
 
 		//modify from set next state
-		GAMESTATE m_state{};
+		GAMESTATE m_state{STOP};
 
 	};
 
