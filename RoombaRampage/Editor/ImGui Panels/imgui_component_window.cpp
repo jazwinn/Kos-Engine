@@ -954,8 +954,8 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 CreateContext(ecs::TYPEBUTTONCOMPONENT, entityID);
 
                 if (open) {
-                    //auto* rbc = static_cast<ecs::ButtonComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEBUTTONCOMPONENT]->m_GetEntityComponent(entityID));
-                    //rbc->ApplyFunction(DrawComponents(rbc->Names()));
+                    auto* rbc = static_cast<ecs::ButtonComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEBUTTONCOMPONENT]->m_GetEntityComponent(entityID));
+                    rbc->ApplyFunction(DrawComponents(rbc->Names()));
                 }
 
 
