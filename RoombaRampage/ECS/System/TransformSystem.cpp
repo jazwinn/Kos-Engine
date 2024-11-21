@@ -128,12 +128,7 @@ namespace ecs {
 			mat3x3::Mat3Translate(translateBackMatrix, transformComp->m_transformation.m_e20, transformComp->m_transformation.m_e21);
 
 			transformComp->m_transformation = translateBackMatrix * rotateMatrix * translateToOriginMatrix * transformComp->m_transformation;
-			
-
 			//transformComp->m_transformation = parentTransformation * transformComp->m_transformation;
-
-
-
 		}
 
 	}

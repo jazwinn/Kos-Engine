@@ -29,8 +29,6 @@ consent of DigiPen Institute of Technology is prohibited.
 #include "../Math/Mat3x3.h"
 #include "../ECS/Hierachy.h"
 
-#include <glm.hpp>
-
 
 namespace gui {
 
@@ -72,10 +70,10 @@ namespace gui {
           0.f, 0.f, 1, 0.f,
           0.f, 0.f, 0.f, 1.f };
 
-        projection[0] = EditorCamera::m_editorOrthoMatrix[0][0];
-        projection[5] = EditorCamera::m_editorOrthoMatrix[1][1];
-        projection[12] = EditorCamera::m_editorOrthoMatrix[2][0];
-        projection[13] = EditorCamera::m_editorOrthoMatrix[2][1];
+        projection[0] = EditorCamera::m_editorOrthoMatrix.m_e00;
+        projection[5] = EditorCamera::m_editorOrthoMatrix.m_e11;
+        projection[12] = EditorCamera::m_editorOrthoMatrix.m_e20;
+        projection[13] = EditorCamera::m_editorOrthoMatrix.m_e21;
 
 
         float cameraView[16] =
@@ -84,10 +82,10 @@ namespace gui {
           0.f, 0.f, 1.f, 0.f,
           0.f, 0.f, 0.f, 1.f };
 
-        cameraView[0] = EditorCamera::m_editorViewMatrix[0][0];
-        cameraView[5] = EditorCamera::m_editorViewMatrix[1][1];
-        cameraView[12] = EditorCamera::m_editorViewMatrix[2][0];
-        cameraView[13] = EditorCamera::m_editorViewMatrix[2][1];
+        cameraView[0] = EditorCamera::m_editorViewMatrix.m_e00;
+        cameraView[5] = EditorCamera::m_editorViewMatrix.m_e11;
+        cameraView[12] = EditorCamera::m_editorViewMatrix.m_e20;
+        cameraView[13] = EditorCamera::m_editorViewMatrix.m_e21;
 
         float identity[16] =
         { 1.f, 0.f, 0.f, 0.f,
@@ -108,10 +106,10 @@ namespace gui {
           0.f,0.f,1.f,1.f
         };
 
-        gridviewmatrix[0] = EditorCamera::m_editorViewMatrix[0][0];
-        gridviewmatrix[9] = EditorCamera::m_editorViewMatrix[1][1];
-        gridviewmatrix[12] = EditorCamera::m_editorViewMatrix[2][0];
-        gridviewmatrix[13] = EditorCamera::m_editorViewMatrix[2][1];
+        gridviewmatrix[0] = EditorCamera::m_editorViewMatrix.m_e00;
+        gridviewmatrix[9] = EditorCamera::m_editorViewMatrix.m_e11;
+        gridviewmatrix[12] = EditorCamera::m_editorViewMatrix.m_e20;
+        gridviewmatrix[13] = EditorCamera::m_editorViewMatrix.m_e21;
 
        // ImGuizmo::DrawGrid(gridviewmatrix, projection, identity, 100.f);
 
@@ -142,7 +140,7 @@ namespace gui {
 
 
 
-        ImGuizmo::SetGizmoSizeClipSpace(EditorCamera::m_editorCamera.m_zoom.x / 8.f);
+        ImGuizmo::SetGizmoSizeClipSpace(EditorCamera::m_editorCamera.m_zoom.m_x / 8.f);
         //DRAW GIZMO
                 //to render in full screen also
         if (!ImGui::IsWindowAppearing()){
@@ -204,14 +202,14 @@ namespace gui {
             focusMode = focusMode ? false : true;
         }
         else if (ImGui::IsKeyPressed(ImGuiKey_F)) {
-            EditorCamera::m_editorCamera.m_coordinates.x = transcom->m_transformation.m_e20;
-            EditorCamera::m_editorCamera.m_coordinates.y = transcom->m_transformation.m_e21;
+            EditorCamera::m_editorCamera.m_coordinates.m_x =  transcom->m_transformation.m_e20;
+            EditorCamera::m_editorCamera.m_coordinates.m_y =  transcom->m_transformation.m_e21;
         }
         if (focusMode) {
             // UDB not working as intended
-            const auto& coordinate = mathlibrary::mathlib::Mix(vector2::Vec2(EditorCamera::m_editorCamera.m_coordinates.x, EditorCamera::m_editorCamera.m_coordinates.y), vector2::Vec2{ transcom->m_transformation.m_e20 , transcom->m_transformation.m_e21 }, Helper::Helpers::GetInstance()->m_deltaTime * 3.5f);
-            EditorCamera::m_editorCamera.m_coordinates.x = coordinate.m_x;
-            EditorCamera::m_editorCamera.m_coordinates.y = coordinate.m_y;
+            const auto& coordinate = mathlibrary::mathlib::Mix(vector2::Vec2(EditorCamera::m_editorCamera.m_coordinates.m_x, EditorCamera::m_editorCamera.m_coordinates.m_y), vector2::Vec2{ transcom->m_transformation.m_e20 , transcom->m_transformation.m_e21 }, Helper::Helpers::GetInstance()->m_deltaTime * 3.5f);
+            EditorCamera::m_editorCamera.m_coordinates.m_x = coordinate.m_x;
+            EditorCamera::m_editorCamera.m_coordinates.m_y = coordinate.m_y;
 
 
         }
