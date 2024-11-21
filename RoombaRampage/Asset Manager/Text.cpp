@@ -38,7 +38,7 @@ namespace text {
         // All functions return a value different than 0 whenever an error occurred
         if (FT_Init_FreeType(&ft))
         {
-            std::cout << "ERROR::FREETYPE: Could not init FreeType Library" << std::endl;
+            LOGGING_ERROR("ERROR::FREETYPE: Could not init FreeType Library");
             return;
         }
 
@@ -46,14 +46,14 @@ namespace text {
 
         if (file.empty())
         {
-            std::cout << "ERROR::FREETYPE: Failed to load font_name" << std::endl;
+            LOGGING_ERROR("ERROR::FREETYPE: Failed to load font_name - file path is empty");
             return;
         }
 
         // load font as face
         FT_Face face;
         if (FT_New_Face(ft, file.c_str(), 0, &face)) {
-            std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;
+            LOGGING_ERROR("ERROR::FREETYPE: Failed to load font: {}", file.c_str());
             return;
         }
         else {
@@ -87,7 +87,7 @@ namespace text {
             assetmanager->m_fontManager.m_fonts[filename] = {};
             for (unsigned char c = 0; c < numChars; c++) {
                 if (FT_Load_Char(face, c, FT_LOAD_RENDER)) {
-                    std::cout << "ERROR::FREETYPE: Failed to load Glyph" << std::endl;
+                    LOGGING_WARN("ERROR::FREETYPE: Failed to load Glyph for character: %c", c);
                     continue;
                 }
 

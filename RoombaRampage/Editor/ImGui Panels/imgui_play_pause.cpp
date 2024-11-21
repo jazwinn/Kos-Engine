@@ -106,6 +106,11 @@ namespace gui {
     void ImGuiHandler::m_DrawPlayPauseBar() {
         static bool pause = true;
         ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+        if (ecs->m_getState() == ecs::WAIT) {
+            pause = true;
+        }
+
+        
         if (ImGui::BeginMenuBar()) {
             if (pause && ImGui::Button("Play")) {
                 pause = false;
@@ -123,8 +128,8 @@ namespace gui {
                     assetmanager->m_scriptManager.m_ReloadAllDLL();
                     CloseLoadingWindow(hwnds);
                     load.join();
-                    //reset delta time
-                    
+                    //reset accumulated time
+                    Helper::Helpers::GetInstance()->m_deltaTime = 0.f;
 
 
                 }

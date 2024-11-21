@@ -40,8 +40,7 @@ namespace graphicpipe
 			glGetShaderiv(lvID, GL_INFO_LOG_LENGTH, &length);
 			char* message = (char*)malloc(length * sizeof(char));
 			glGetShaderInfoLog(lvID, length, &length, message);
-			std::cout << "Failed to Compile Shader" << std::endl;
-			std::cout << message << std::endl;
+			LOGGING_ERROR("Failed to Compile Shader: {}", message); 
 			glDeleteShader(lvID);
 			free(message);
 			//TOCHECK
@@ -72,7 +71,7 @@ namespace graphicpipe
 		{
 			GLchar infoLog[512];
 			glGetProgramInfoLog(lvProgram, 512, NULL, infoLog);
-			std::cout << "Error linking shader program:\n" << infoLog << std::endl;
+			LOGGING_ERROR("Error linking shader program: {}", infoLog);
 		}
 		else
 		{

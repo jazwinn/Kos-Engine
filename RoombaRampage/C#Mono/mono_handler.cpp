@@ -120,14 +120,14 @@ namespace script {
         std::string assemblyPath = scriptpath.string();
         m_ScriptMap[filename].m_assembly = mono_domain_assembly_open(m_AppDomain, assemblyPath.c_str());
         if (!m_ScriptMap[filename].m_assembly) {
-            std::cout << "Failed to load assembly: " << assemblyPath << std::endl;
+            LOGGING_ERROR("Failed to load assembly: {}", assemblyPath.c_str());
             return;
         }
 
         // Get Mono image
         MonoImage* image = mono_assembly_get_image(m_ScriptMap[filename].m_assembly);
         if (!image) {
-            std::cout << "Failed to load Mono image from assembly: " << assemblyPath << std::endl;
+            LOGGING_ERROR("Failed to load Mono image from assembly: {}", assemblyPath.c_str());
             return;
         }
 
@@ -141,21 +141,21 @@ namespace script {
         // Find the assembly image for the script
         MonoImage* image = m_ScriptMap.find(scriptName)->second.m_image;
         if (!image) {
-            std::cout << "Failed to find image for script: " << scriptName << std::endl;
+            LOGGING_ERROR("Failed to find image for script: {}", scriptName.c_str());
             return false;
         }
 
         // Find the class inside the assembly
         MonoClass* m_testClass = mono_class_from_name(image, "Namespace", className.c_str());
         if (!m_testClass) {// give exception for gamescript
-            std::cout << "Failed to find class: " << className << " in script: " << scriptName << std::endl;
+            LOGGING_ERROR("Failed to find class: {} in script: {}", className.c_str(), scriptName.c_str());
             return false;
         }
 
         // Find the method inside the class
         MonoMethod* method = mono_class_get_method_from_name(m_testClass, methodName.c_str(), paramCount);
         if (!method) {
-            std::cout << "Failed to find method: " << methodName << " in class: " << className << std::endl;
+            LOGGING_ERROR("Failed to find method: {} in class: {}", methodName.c_str(), className.c_str());
             return false;
         }
 
@@ -189,7 +189,7 @@ namespace script {
         // Check if the method exists
         MonoMethod* method = m_ScriptMap.find(scriptName)->second.m_Methods.find(methodName)->second;
         if (!method) {
-            std::cerr << "No method loaded to invoke for script: " << scriptName << std::endl;
+            LOGGING_ERROR("No method loaded to invoke for script {}", scriptName.c_str());
             return;
         }
 
@@ -201,7 +201,7 @@ namespace script {
         if (exception) {
             MonoString* exceptionMessage = mono_object_to_string(exception, nullptr);
             const char* messageStr = mono_string_to_utf8(exceptionMessage);
-            std::cerr << "Exception in C# method invocation: " << messageStr << std::endl;
+            LOGGING_ERROR("Exception in C# method invocation: {}", messageStr);
             mono_free((void*)messageStr);
         }
         //else {
@@ -250,7 +250,8 @@ namespace script {
         batchFile << command << std::endl;
         batchFile.close();
 
-        std::cout << command << std::endl;
+        LOGGING_INFO("Generated command: {}", command.c_str());
+
         //// Execute the command
         int result = system("run_command.bat");
 
@@ -260,11 +261,11 @@ namespace script {
         // Check the result of the command
         if (result == 0)
         {
-            std::cout << "Compilation successful: " + filePath.filename().stem().string() + ".dll" << std::endl;
+            LOGGING_INFO("Compilation successful: {}.dll", filePath.filename().stem().string().c_str());
         }
         else
         {
-            std::cerr << "Compilation failed!" << std::endl;
+            LOGGING_ERROR("Compilation failed!");
         }
     }
 

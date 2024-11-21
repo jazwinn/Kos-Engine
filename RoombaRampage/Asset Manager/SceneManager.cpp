@@ -125,7 +125,7 @@ namespace scenes {
 
             
         // Load entities from the JSON file
-        std::cout << "Loading entities from: " << scene.string() << std::endl;
+        LOGGING_INFO("Loading entities from: {}", scene.string().c_str());
         Serialization::Serialize::m_LoadComponentsJson(scene.string());  // Load into ECS
 
         if (scene.filename().extension().string() == ".prefab") {
@@ -139,15 +139,8 @@ namespace scenes {
                     break;
                 }
             }
-             
-
-
         }
-
-
-
         LOGGING_INFO("Entities successfully loaded!");
-
     }
 
     void SceneManager::m_ReloadScene()

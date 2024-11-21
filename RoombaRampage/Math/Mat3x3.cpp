@@ -160,7 +160,7 @@ namespace mat3x3{
 
 		scale.m_x = std::sqrt(matrix.m_e00 * matrix.m_e00 + matrix.m_e01 * matrix.m_e01);
 		scale.m_y = std::sqrt(matrix.m_e10 * matrix.m_e10 + matrix.m_e11 * matrix.m_e11);
-		
+
 		// Normalize the rotation components
 		float norm_e00 = matrix.m_e00 / scale.m_x;
 		float norm_e01 = matrix.m_e01 / scale.m_x;
@@ -169,7 +169,7 @@ namespace mat3x3{
 		// Extract raw rotation in radians
 
 		rotate = std::atan2(norm_e01, norm_e00);
-		rotate = rotate * (180.f / MAT_PI);
+		rotate = -rotate * (180.f / MAT_PI);
 
 		if (rotate < 0.0f) {
 			rotate += 360.0f;
@@ -184,8 +184,6 @@ namespace mat3x3{
 		}
 		scale.m_x = std::round(scale.m_x * 100.0f) / 100.0f;
 		scale.m_y = std::round(scale.m_y * 100.0f) / 100.0f;
-
-
 	}
 
 	void Mat3Identity(Mat3x3 & given) {
@@ -245,8 +243,8 @@ namespace mat3x3{
 	void Mat3RotRad(Mat3x3 & given, float ang) {
 		Mat3Identity(given);
 		given.m_e00 = cosf(ang);
-		given.m_e10 = -sinf(ang);
-		given.m_e01 = sinf(ang);
+		given.m_e10 = sinf(ang);
+		given.m_e01 = -sinf(ang);
 		given.m_e11 = cosf(ang);
 		given.m_e22 = 1;
 	}

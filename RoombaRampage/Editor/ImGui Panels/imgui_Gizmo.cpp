@@ -48,11 +48,11 @@ namespace gui {
 
         static float snap[3] = { 1.f, 1.f, 1.f };
 
-        if (ImGui::IsWindowHovered() && ImGui::IsKeyPressed(ImGuiKey_W))
+        if (ImGui::IsWindowHovered() && ImGui::IsKeyPressed(ImGuiKey_W) && !ImGuizmo::IsUsing())
             mCurrentGizmoOperation = ImGuizmo::TRANSLATE;
-        if (ImGui::IsWindowHovered() && ImGui::IsKeyPressed(ImGuiKey_E))
+        if (ImGui::IsWindowHovered() && ImGui::IsKeyPressed(ImGuiKey_E) && !ImGuizmo::IsUsing())
             mCurrentGizmoOperation = ImGuizmo::ROTATE;
-        if (ImGui::IsWindowHovered() && ImGui::IsKeyPressed(ImGuiKey_R))
+        if (ImGui::IsWindowHovered() && ImGui::IsKeyPressed(ImGuiKey_R) && !ImGuizmo::IsUsing())
             mCurrentGizmoOperation = ImGuizmo::SCALE;
         if (ImGui::IsKeyDown(ImGuiKey_LeftCtrl))
         {
@@ -180,12 +180,12 @@ namespace gui {
                 ImGuizmo::DecomposeMatrixToComponents(model, matrixTranslation, matrixRotation, matrixScale);
             }
 
-
+      
 
             
             transcom->m_position.m_x = matrixTranslation[0];
             transcom->m_position.m_y = matrixTranslation[1];
-            transcom->m_rotation = matrixRotation[2];
+            transcom->m_rotation = -matrixRotation[2];
             transcom->m_scale.m_x = matrixScale[0];
             transcom->m_scale.m_y = matrixScale[1];
             //transcom->m_transformation = mat3x3::Mat3Transform(transcom->m_position, transcom->m_scale, transcom->m_rotation);
@@ -204,12 +204,12 @@ namespace gui {
             focusMode = focusMode ? false : true;
         }
         else if (ImGui::IsKeyPressed(ImGuiKey_F)) {
-            EditorCamera::m_editorCamera.m_coordinates.x = transcom->m_position.m_x;
-            EditorCamera::m_editorCamera.m_coordinates.y = transcom->m_position.m_y;
+            EditorCamera::m_editorCamera.m_coordinates.x = transcom->m_transformation.m_e20;
+            EditorCamera::m_editorCamera.m_coordinates.y = transcom->m_transformation.m_e21;
         }
         if (focusMode) {
             // UDB not working as intended
-            const auto& coordinate = mathlibrary::mathlib::Mix(vector2::Vec2(EditorCamera::m_editorCamera.m_coordinates.x, EditorCamera::m_editorCamera.m_coordinates.y), vector2::Vec2{ matrixTranslation[0] , matrixTranslation[1] }, Helper::Helpers::GetInstance()->m_deltaTime * 3.5f);
+            const auto& coordinate = mathlibrary::mathlib::Mix(vector2::Vec2(EditorCamera::m_editorCamera.m_coordinates.x, EditorCamera::m_editorCamera.m_coordinates.y), vector2::Vec2{ transcom->m_transformation.m_e20 , transcom->m_transformation.m_e21 }, Helper::Helpers::GetInstance()->m_deltaTime * 3.5f);
             EditorCamera::m_editorCamera.m_coordinates.x = coordinate.m_x;
             EditorCamera::m_editorCamera.m_coordinates.y = coordinate.m_y;
 

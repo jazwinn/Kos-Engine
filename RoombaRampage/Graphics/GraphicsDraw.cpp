@@ -64,8 +64,8 @@ namespace graphicpipe
 			}
 			else
 			{
-				std::cout << lvUniformVarLoc1 << std::endl;
-				std::cout << "Uniform variable doesn't exist!!!\n";
+				LOGGING_ERROR("Uniform variable location: %d", lvUniformVarLoc1);
+				LOGGING_ERROR("Uniform variable 'textures' doesn't exist!");
 				std::exit(EXIT_FAILURE);
 			}
 
@@ -136,7 +136,7 @@ namespace graphicpipe
 		m_funcDrawDebug();
 		m_funcDrawTilemap();
 		m_funcDraw();
-		m_funcDrawLine({ 1.f,1.f,0 }, { -1.f,-1.f,0 }); // Comment this out when done debugging;
+		//m_funcDrawLine({ 1.f,1.f,0 }, { -1.f,-1.f,0 }); // Comment this out when done debugging;
 		m_funcDrawText();
 		
 
