@@ -171,7 +171,7 @@ namespace performancetracker {
 	*/
 	/******************************************************************/
 	void Performance::m_PrintFPS(float dt) {
-		std::cout << "FPS: " << 1 / dt << std::endl;
+		LOGGING_INFO("FPS: %.2f", 1.0f / dt);
 	}
 
 }

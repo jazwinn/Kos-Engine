@@ -102,8 +102,7 @@ namespace graphicpipe
 		glVertexAttribPointer(11, 4, GL_FLOAT, GL_FALSE, sizeof(glm::vec4), (void*)0);
 		GLenum err = glGetError();
 		if (err != GL_NO_ERROR) {
-
-			std::cout << "First OpenGL Error: " << err << std::endl;
+			LOGGING_ERROR("First OpenGL Error: 0x%X", err);
 		}
 		glVertexAttribDivisor(11, 1);
 		glBindVertexArray(0);

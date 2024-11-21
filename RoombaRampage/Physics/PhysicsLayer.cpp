@@ -15,10 +15,11 @@ namespace physicslayer {
 
     void PhysicsLayer::printCollisionMatrix() const {
         for (int i = 0; i < size; ++i) {
+            std::ostringstream rowStream;
             for (int j = 0; j < size; ++j) {
-                std::cout << layerCollisions[i][j] << " ";
+                rowStream << layerCollisions[i][j] << " ";
             }
-            std::cout << std::endl;
+            LOGGING_INFO("Collision Matrix Row {}: {}", i, rowStream.str().c_str());
         }
     }
 

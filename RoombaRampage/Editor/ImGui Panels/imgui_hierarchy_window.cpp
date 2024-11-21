@@ -466,7 +466,7 @@ namespace gui {
                 }
                 else {
                     ecs::Hierachy::m_SetParent(id, childId);
-                    std::cout << "Set Parent:" << id << " Child: " << childId << std::endl;
+                    LOGGING_INFO("Set Parent: %d, Child: %d", id, childId);
 
                     // update child's scene
                     ecs::Hierachy::m_UpdateChildScene(id);
