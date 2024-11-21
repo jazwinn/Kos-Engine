@@ -54,6 +54,8 @@ namespace script {
         InternalCall::m_RegisterInternalCalls();
 
         m_LoadSecondaryDomain();
+
+       
     }
 
     void ScriptHandler::m_LoadSecondaryDomain()
