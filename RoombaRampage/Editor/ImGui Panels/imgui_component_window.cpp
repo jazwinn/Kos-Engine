@@ -497,7 +497,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 CreateContext(ecs::TYPESPRITECOMPONENT, entityID);
 
                 if (open) {
-                   
+                    graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
                     assetmanager::AssetManager* Asset = assetmanager::AssetManager::m_funcGetInstance();
                     auto* sc = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(entityID));
 
@@ -509,6 +509,13 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                             if (ImGui::Selectable(image.first.c_str())) {
                                 sc->m_imageFile = image.first.c_str();
+                                if (!EntitySignature.test(ecs::TYPECOLLIDERCOMPONENT))
+                                {
+                                    ecs::ColliderComponent* colCom = static_cast<ecs::ColliderComponent*>(ecs->m_AddComponent(ecs::TYPECOLLIDERCOMPONENT, entityID));
+                                    assetmanager::AssetManager* assets = assetmanager::AssetManager::m_funcGetInstance();
+                                    colCom->m_Size.m_x = static_cast<float>(static_cast<float>(assets->m_imageManager.m_imageMap[sc->m_imageFile].m_width) / static_cast<float>(pipe->m_unitWidth) / assets->m_imageManager.m_imageMap[sc->m_imageFile].m_stripCount);
+                                    colCom->m_Size.m_y = static_cast<float>(assets->m_imageManager.m_imageMap[sc->m_imageFile].m_height) / static_cast<float>(pipe->m_unitHeight);
+                                }
                             }
                         }
                         ImGui::EndCombo();
@@ -1123,6 +1130,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                 if (ImGui::BeginDragDropTarget())
                 {
+                    graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
 
                     if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("file"))
                     {
@@ -1132,12 +1140,20 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         if (filename->filename().extension().string() == ".png") {
 
                             if (!EntitySignature.test(ecs::TYPESPRITECOMPONENT)) {// does not have sprite component, create one
-                                ecs::SpriteComponent* com = static_cast<ecs::SpriteComponent*>(ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, entityID));
-                                com->m_imageFile = filename->filename().string();
+                                ecs::SpriteComponent* sc = static_cast<ecs::SpriteComponent*>(ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, entityID));
+                                sc->m_imageFile = filename->filename().string();
+                                ecs::ColliderComponent* colCom = static_cast<ecs::ColliderComponent*>(ecs->m_AddComponent(ecs::TYPECOLLIDERCOMPONENT, entityID));
+                                assetmanager::AssetManager* assets = assetmanager::AssetManager::m_funcGetInstance();
+                                colCom->m_Size.m_x = static_cast<float>(static_cast<float>(assets->m_imageManager.m_imageMap[sc->m_imageFile].m_width) / static_cast<float>(pipe->m_unitWidth) / assets->m_imageManager.m_imageMap[sc->m_imageFile].m_stripCount);
+                                colCom->m_Size.m_y = static_cast<float>(assets->m_imageManager.m_imageMap[sc->m_imageFile].m_height) / static_cast<float>(pipe->m_unitHeight);
                             }
                             else {
                                 auto* sc = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(entityID));
                                 sc->m_imageFile = filename->filename().string();
+                                auto* colCom = static_cast<ecs::ColliderComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(entityID));
+                                assetmanager::AssetManager* assets = assetmanager::AssetManager::m_funcGetInstance();
+                                colCom->m_Size.m_x = static_cast<float>(static_cast<float>(assets->m_imageManager.m_imageMap[sc->m_imageFile].m_width) / static_cast<float>(pipe->m_unitWidth) / assets->m_imageManager.m_imageMap[sc->m_imageFile].m_stripCount);
+                                colCom->m_Size.m_y = static_cast<float>(assets->m_imageManager.m_imageMap[sc->m_imageFile].m_height) / static_cast<float>(pipe->m_unitHeight);
                             }
                         }
 

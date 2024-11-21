@@ -275,7 +275,11 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
                 ecs::NameComponent* nameCom = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id));
                 nameCom->m_entityName = filename->filename().stem().string();
                 ecs::SpriteComponent * spriteCom = static_cast<ecs::SpriteComponent*>(ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, id));
+                ecs::ColliderComponent* colCom = static_cast<ecs::ColliderComponent*>(ecs->m_AddComponent(ecs::TYPECOLLIDERCOMPONENT, id));
+                assetmanager::AssetManager* assets = assetmanager::AssetManager::m_funcGetInstance();
                 spriteCom->m_imageFile = filename->filename().string();
+                colCom->m_Size.m_x = static_cast<float>(static_cast<float>(assets->m_imageManager.m_imageMap[spriteCom->m_imageFile].m_width) / static_cast<float>(pipe->m_unitWidth)/ assets->m_imageManager.m_imageMap[spriteCom->m_imageFile].m_stripCount);
+                colCom->m_Size.m_y = static_cast<float>(assets->m_imageManager.m_imageMap[spriteCom->m_imageFile].m_height) / static_cast<float>(pipe->m_unitHeight);
 
                 if (m_prefabSceneMode) {
                     ecs::Hierachy::m_SetParent(ecs->m_ECS_SceneMap.find(m_activeScene)->second.m_prefabID, id);
