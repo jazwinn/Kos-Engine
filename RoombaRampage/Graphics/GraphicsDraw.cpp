@@ -136,7 +136,7 @@ namespace graphicpipe
 		m_funcDrawDebug();
 		m_funcDrawTilemap();
 		m_funcDraw();
-		m_funcDrawLine({ 1.f,1.f,0 }, { -1.f,-1.f,0 }); // Comment this out when done debugging;
+		//m_funcDrawLine({ 1.f,1.f,0 }, { -1.f,-1.f,0 }); // Comment this out when done debugging;
 		m_funcDrawText();
 		
 

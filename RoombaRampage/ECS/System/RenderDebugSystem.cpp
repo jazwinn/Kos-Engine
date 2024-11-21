@@ -107,9 +107,32 @@ namespace ecs {
 				float rot{};
 
 				mat3x3::Mat3x3 parent_Transform = mat3x3::Mat3Transform(parentComp->m_position, parentComp->m_scale, parentComp->m_rotation);
-				mat3x3::Mat3x3 child_Transform = mat3x3::Mat3Transform(transform->m_position + collider->m_OffSet, transform->m_scale * collider->m_Size, transform->m_rotation);
-				mat3x3::Mat3x3 final_Transform = parent_Transform * child_Transform;
-				mat3x3::Mat3Decompose(final_Transform, pos, scale, rot); 
+				mat3x3::Mat3x3 child_Transform = mat3x3::Mat3Transform(transform->m_position, transform->m_scale * collider->m_Size, 0);
+
+				mat3x3::Mat3x3 translateMatrix;
+				mat3x3::Mat3x3 translateBackMatrix;
+				mat3x3::Mat3x3 translateToOriginMatrix;
+				mat3x3::Mat3x3 scaleMatrix;
+				mat3x3::Mat3x3 rotateMatrix;
+
+				child_Transform.m_e20 += parentComp->m_position.m_x;
+				child_Transform.m_e21 += parentComp->m_position.m_y;
+
+				mat3x3::Mat3Scale(scaleMatrix, parentComp->m_scale.m_x, parentComp->m_scale.m_y);
+				mat3x3::Mat3RotDeg(rotateMatrix, parentComp->m_rotation);
+				mat3x3::Mat3Translate(translateToOriginMatrix, -parentComp->m_position.m_x, -parentComp->m_position.m_y);
+				mat3x3::Mat3Translate(translateBackMatrix, parentComp->m_position.m_x, (parentComp->m_position.m_y));
+				child_Transform = translateBackMatrix * rotateMatrix * scaleMatrix * translateToOriginMatrix * child_Transform;
+
+				mat3x3::Mat3RotDeg(rotateMatrix, transform->m_rotation);
+				mat3x3::Mat3Translate(translateToOriginMatrix, -child_Transform.m_e20, -child_Transform.m_e21);
+				mat3x3::Mat3Translate(translateBackMatrix, child_Transform.m_e20, child_Transform.m_e21);
+
+				child_Transform = translateBackMatrix * rotateMatrix * translateToOriginMatrix * child_Transform;
+
+				mat3x3::Mat3x3 final_Transform = child_Transform * mat3x3::Mat3Transform(collider->m_OffSet, vector2::Vec2{ 1.0f,1.0f }, 0);
+				//mat3x3::Mat3x3 final_Transform = parent_Transform * child_Transform;
+				//mat3x3::Mat3Decompose(final_Transform, pos, scale, rot);   
 
 				
 

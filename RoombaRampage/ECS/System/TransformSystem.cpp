@@ -96,20 +96,8 @@ namespace ecs {
 			}
 			if (!parentComp) continue;
 
-			//mat3x3::Mat3Translate(transformComp->m_transformation, 1.f, 1.f);
-			//calculate parent transformation matrix
 
-			//
 			mat3x3::Mat3x3 parentTransformation = parentComp->m_transformation;
-
-		
-			
-			//Child = parent first
-			// Then use parent as origin
-			// scale child, rotate child , translate child
-			// then translate back
-
-			// jesus christ
 			
 			vector2::Vec2 translate;
 			vector2::Vec2 scale;
