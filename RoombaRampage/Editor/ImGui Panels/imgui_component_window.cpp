@@ -1057,7 +1057,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                             bool removeFile = false;
                             std::string headerName = "Audio File " + std::to_string(fileIndex + 1) + ": " + it->m_Name;
-
+                            ImGui::SeparatorText(headerName.c_str());
                             if (ImGui::BeginCombo("Sounds", it->m_Name.c_str()))
                             {
                                 for (const auto& sound : assetManager->m_audioManager.getSoundMap()) {
@@ -1092,7 +1092,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             }
 
                             ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_DefaultOpen;
-                            bool nodeOpen = ImGui::TreeNodeEx(headerName.c_str(), flags);
+                            bool nodeOpen = ImGui::TreeNodeEx("Properties", flags);
 
                             if (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right)) {
                                 ImGui::OpenPopup("AudioContextMenu");
@@ -1152,6 +1152,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         if (ImGui::Button("Add Audio File")) {
                             //if (strlen(newAudioName) > 0) {
                                 
+
                                 ac->m_AudioFiles.emplace_back(); 
                                 //ac->m_AudioFiles.back().m_Name = newAudioName; 
                                 //memset(newAudioName, 0, sizeof(newAudioName)); 
