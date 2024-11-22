@@ -2197,6 +2197,7 @@ namespace IMGUIZMO_NAMESPACE
          // compute matrix & delta
          matrix_t deltaMatrixTranslation;
          deltaMatrixTranslation.Translation(delta);
+
          if (deltaMatrix)
          {
             memcpy(deltaMatrix, deltaMatrixTranslation.m16, sizeof(float) * 16);

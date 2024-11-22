@@ -119,8 +119,15 @@ namespace gui {
         if (m_clickedEntityId < 0) return;
         ecs::TransformComponent* transcom = (ecs::TransformComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(m_clickedEntityId);
 
+        
+        mat3x3::Mat3x3& transformation = transcom->m_transformation;
 
-        const mat3x3::Mat3x3& transformation = transcom->m_transformation;
+        
+
+        if (ecs::Hierachy::m_GetParent(m_clickedEntityId).has_value())
+        {
+           // transformation = transcom->m_localChildTransformation;
+        }
 
         //colum major!!
         float model[16] =
@@ -130,15 +137,24 @@ namespace gui {
           transformation.m_e20, transformation.m_e21, 0.f, transformation.m_e22
         };
 
-        float matrixTranslation[3] = { transcom->m_position.m_x, transcom->m_position.m_y, 0 };
+        float matrixTranslation[3] = { };
         float matrixRotation[3] = {0,0, transcom->m_rotation };
         float matrixScale[3] = { transcom->m_scale.m_x, transcom->m_scale.m_y, 0};
 
+
+        float originalMatrixTranslation[3] = { transcom->m_position.m_x, transcom->m_position.m_y, 0 };
+        float originalMatrixRotation[3] = { 0,0, transcom->m_rotation };
+        float originalMatrixScale[3] = { transcom->m_scale.m_x, transcom->m_scale.m_y, 0 };
+        ImGuizmo::DecomposeMatrixToComponents(model, originalMatrixTranslation, originalMatrixRotation, originalMatrixScale);
+
+        float delta[16] =
+        { 1.f,0.f,0.f,0.f,
+          0.f,0.f,1.f,0.f,
+          0.f,1.f,0.f,0.f,
+          0.f,0.f,1.f,1.f
+        };
+
         //Focus mode for objects
-
-
-
-
 
         ImGuizmo::SetGizmoSizeClipSpace(EditorCamera::m_editorCamera.m_zoom.m_x / 8.f);
         //DRAW GIZMO
@@ -147,55 +163,54 @@ namespace gui {
             ImGuizmo::SetRect(renderPosX, renderPosY, renderWidth, renderHeight);
         }
         //TODO be able to swap between WORLD and LOCAL
-        if (ImGuizmo::Manipulate(cameraView, projection, mCurrentGizmoOperation, ImGuizmo::WORLD, model, 0, useSnap ? &snap[0] : NULL)) {
-
-            
-            if (ecs::Hierachy::m_GetParent(m_clickedEntityId).has_value()) {
-                ecs::EntityID parentId = ecs::Hierachy::m_GetParent(m_clickedEntityId).value();
-                mat3x3::Mat3x3 worldtransformation =
-                { model[0], model[1], model[3],
-                  model[4], model[5], model[7],
-                  model[12], model[13], model[15]
-                };
-
-                mat3x3::Mat3x3 parenttransformation = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(parentId))->m_transformation;
-                mat3x3::Mat3x3 inverseparent;
-                mat3x3::Mat3Inverse( parenttransformation, inverseparent);
-
-                mat3x3::Mat3x3 childtransformation = inverseparent * worldtransformation;
-
-                float childmodel[16] =
-                { childtransformation.m_e00, childtransformation.m_e01, 0.f, childtransformation.m_e02,
-                  childtransformation.m_e10, childtransformation.m_e11, 0.f, childtransformation.m_e12,
-                  0.f, 0.f, 1.f, 0.f,//z axis
-                  childtransformation.m_e20, childtransformation.m_e21, 0.f, childtransformation.m_e22
-                };
-
-                ImGuizmo::DecomposeMatrixToComponents(childmodel, matrixTranslation, matrixRotation, matrixScale);
-
-            }
-            else {
-                ImGuizmo::DecomposeMatrixToComponents(model, matrixTranslation, matrixRotation, matrixScale);
-            }
-
-      
-
-            
+        if (!ecs::Hierachy::m_GetParent(m_clickedEntityId).has_value() && ImGuizmo::Manipulate(cameraView, projection, mCurrentGizmoOperation, ImGuizmo::WORLD, model, 0, useSnap ? &snap[0] : NULL))
+        {
+            ImGuizmo::DecomposeMatrixToComponents(model, matrixTranslation, matrixRotation, matrixScale);
             transcom->m_position.m_x = matrixTranslation[0];
             transcom->m_position.m_y = matrixTranslation[1];
             transcom->m_rotation = -matrixRotation[2];
             transcom->m_scale.m_x = matrixScale[0];
             transcom->m_scale.m_y = matrixScale[1];
-            //transcom->m_transformation = mat3x3::Mat3Transform(transcom->m_position, transcom->m_scale, transcom->m_rotation);
-
-
-
-        
         }
-        else {
+        else if (ecs::Hierachy::m_GetParent(m_clickedEntityId).has_value() && ImGuizmo::Manipulate(cameraView, projection, mCurrentGizmoOperation, ImGuizmo::LOCAL, model, delta, useSnap ? &snap[0] : NULL))
+        {
+            mat3x3::Mat3x3 transformation = transcom->m_localChildTransformation;
+            mat3x3::Mat3x3 original = transcom->m_transformation;
+            
+            ecs::EntityID  id = ecs::Hierachy::m_GetParent(m_clickedEntityId).value();
+            ecs::TransformComponent* parentCom = (ecs::TransformComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id);
+            
 
+            ImGuizmo::DecomposeMatrixToComponents(model, matrixTranslation, matrixRotation, matrixScale);
 
-          
+            mat3x3::Mat3x3 scale;
+            mat3x3::Mat3x3 rotate;
+            mat3x3::Mat3x3 translate;
+
+            float change = (-matrixRotation[2] - -originalMatrixRotation[2]);
+           
+            float child[16] =
+            { transformation.m_e00, transformation.m_e01, 0.f, transformation.m_e02,
+              transformation.m_e10, transformation.m_e11, 0.f, transformation.m_e12,
+              0.f, 0.f, 1.f, 0.f,//z axis
+              transformation.m_e20, transformation.m_e21, 0.f, transformation.m_e22
+            };
+            // The transformed model vs the original model
+            vector2::Vec2 translation = { model[12] - originalMatrixTranslation[0],  model[13] - originalMatrixTranslation[1] };
+
+            vector2::Vec2 tran = { delta[12], delta[13] };
+
+            std::cout << -parentCom->m_rotation << std::endl;
+            delta[12] = tran.m_x * std::cos(parentCom->m_rotation * PI/180.f) - tran.m_y * std::sin(parentCom->m_rotation * PI / 180.f); // Model new coordinates - original coordinates
+            delta[13] = tran.m_x * std::sin(parentCom->m_rotation * PI / 180.f) + tran.m_y * std::cos(parentCom->m_rotation * PI / 180.f);
+
+            std::cout << "Rotated Delta translate: " << delta[12] << " , " << delta[13] << std::endl;
+
+            transcom->m_position.m_x += delta[12];
+            transcom->m_position.m_y += delta[13];
+            transcom->m_rotation += change;
+            transcom->m_scale.m_x = matrixScale[0];
+            transcom->m_scale.m_y = matrixScale[1];
         }
 
         if (ImGui::IsKeyDown(ImGuiKey_LeftShift) && ImGui::IsKeyPressed(ImGuiKey_F)) {

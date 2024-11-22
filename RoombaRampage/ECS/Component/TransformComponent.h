@@ -40,6 +40,7 @@ namespace ecs {
 		//for Entities with child
 		std::vector<EntityID> m_childID{};
 		
+		mat3x3::Mat3x3 m_localChildTransformation{};
 
 		//for entities with parents
 		EntityID m_parentID{};
