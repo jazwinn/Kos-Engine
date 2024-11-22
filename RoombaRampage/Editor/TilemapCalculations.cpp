@@ -83,7 +83,7 @@ namespace Tilemap
 			{
 				rowStream << tilemap->m_tilePictureIndex[i][j] << ' ';
 			}
-			LOGGING_INFO("%s", rowStream.str().c_str());
+			LOGGING_INFO("{}", rowStream.str().c_str());
 		}
 	}
 }

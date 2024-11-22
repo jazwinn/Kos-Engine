@@ -128,8 +128,8 @@ namespace gui {
                     assetmanager->m_scriptManager.m_ReloadAllDLL();
                     CloseLoadingWindow(hwnds);
                     load.join();
-                    //reset delta time
-                    
+                    //reset accumulated time
+                    Helper::Helpers::GetInstance()->m_deltaTime = 0.f;
 
 
                 }

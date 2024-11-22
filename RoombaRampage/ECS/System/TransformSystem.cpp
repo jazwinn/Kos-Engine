@@ -96,16 +96,39 @@ namespace ecs {
 			}
 			if (!parentComp) continue;
 
-			//mat3x3::Mat3Translate(transformComp->m_transformation, 1.f, 1.f);
-			//calculate parent transformation matrix
 
-			//
 			mat3x3::Mat3x3 parentTransformation = parentComp->m_transformation;
+			
+			vector2::Vec2 translate;
+			vector2::Vec2 scale;
+			float rotate;
+			mat3x3::Mat3Decompose(parentTransformation, translate, scale, rotate);
+			mat3x3::Mat3x3 translateMatrix;
+			mat3x3::Mat3x3 translateBackMatrix;
+			mat3x3::Mat3x3 translateToOriginMatrix;
+			mat3x3::Mat3x3 scaleMatrix;
+			mat3x3::Mat3x3 rotateMatrix;
 
+			transformComp->m_transformation = mat3x3::Mat3Transform(translate, vector2::Vec2{ transformComp->m_scale.m_x, transformComp->m_scale.m_y }, 0);
 
-			transformComp->m_transformation = parentTransformation * transformComp->m_transformation;
+			//Set Child Position to Follow Parent
+			transformComp->m_transformation.m_e20 += transformComp->m_position.m_x;
+			transformComp->m_transformation.m_e21 += transformComp->m_position.m_y;
 
+			
+			mat3x3::Mat3Scale(scaleMatrix, scale.m_x, scale.m_y);
+			mat3x3::Mat3RotDeg(rotateMatrix, rotate);
+			mat3x3::Mat3Translate(translateToOriginMatrix, - translate.m_x,  - translate.m_y);
+			mat3x3::Mat3Translate(translateBackMatrix, translate.m_x, (translate.m_y));
+			transformComp->m_transformation = translateBackMatrix * rotateMatrix * scaleMatrix * translateToOriginMatrix * transformComp->m_transformation;
 
+			mat3x3::Mat3RotDeg(rotateMatrix, transformComp->m_rotation);
+			mat3x3::Mat3Scale(scaleMatrix, transformComp->m_scale.m_x, transformComp->m_scale.m_y);
+			mat3x3::Mat3Translate(translateToOriginMatrix, -transformComp->m_transformation.m_e20, -transformComp->m_transformation.m_e21);
+			mat3x3::Mat3Translate(translateBackMatrix, transformComp->m_transformation.m_e20, transformComp->m_transformation.m_e21);
+
+			transformComp->m_transformation = translateBackMatrix * rotateMatrix * translateToOriginMatrix * transformComp->m_transformation;
+			//transformComp->m_transformation = parentTransformation * transformComp->m_transformation;
 		}
 
 	}

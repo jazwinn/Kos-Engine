@@ -19,7 +19,7 @@ namespace physicslayer {
             for (int j = 0; j < size; ++j) {
                 rowStream << layerCollisions[i][j] << " ";
             }
-            LOGGING_INFO("Collision Matrix Row %d: %s", i, rowStream.str().c_str());
+            LOGGING_INFO("Collision Matrix Row {}: {}", i, rowStream.str().c_str());
         }
     }
 

@@ -52,7 +52,7 @@ namespace assetmanager {
         std::replace(filepath.begin(), filepath.end(), '\\', '/');
 
         if (directoryPath.filename().extension().string() == ".png") {
-            LOGGING_INFO("Filepath: %s", filepath.c_str());
+            LOGGING_INFO("Filepath: {}", filepath.c_str());
             m_funcLoadImage(filepath);
 
         }

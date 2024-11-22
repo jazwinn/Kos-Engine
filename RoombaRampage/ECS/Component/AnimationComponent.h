@@ -28,8 +28,9 @@ namespace ecs {
 		int m_framesPerSecond{};
 		float m_frameTimer{};
 		bool m_isAnimating{ true };
+		int m_stripCount{ 1 };
 
-		REFLECTABLE(AnimationComponent, m_frameNumber, m_framesPerSecond, m_frameTimer, m_isAnimating)
+		REFLECTABLE(AnimationComponent, m_frameNumber, m_framesPerSecond, m_frameTimer, m_isAnimating, m_stripCount)
 	};
 
 }
