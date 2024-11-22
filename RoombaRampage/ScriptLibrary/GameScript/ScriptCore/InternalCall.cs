@@ -129,6 +129,14 @@ public static class GetComponent
 
         return temp;
     }
+
+    public static TransformComponent GetTransformComponent(uint id)
+    {
+        TransformComponent temp = new TransformComponent();
+        InternalCall.m_InternalGetTransformComponent(id, out temp.m_position, out temp.m_scale, out temp.m_rotation);
+
+        return temp;
+    }
 }
 
 
@@ -136,7 +144,11 @@ public static class SetComponent
 {
     public static void SetSpriteComponent(uint id, SpriteComponent sprite)
     {
-        Console.WriteLine(sprite.m_imageFile.ToString());
         InternalCall.m_InternalSetSpriteComponent(id, sprite.m_imageFile, in sprite.m_layer, in sprite.m_color, in sprite.m_alpha);
+    }
+
+    public static void SetTransformComponent(uint id, TransformComponent transform)
+    {
+        InternalCall.m_InternalSetTransformComponent(id, in transform.m_position, in transform.m_scale, in transform.m_rotation);
     }
 }
