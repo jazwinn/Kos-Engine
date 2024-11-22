@@ -222,21 +222,59 @@ namespace fmodaudio {
     }
 
 
-    void AudioManager::m_LoadAudio(std::string path)
-    {
+    // AudioManager Implementation (UPDATED 21/11/2024)
+    AudioManager::AudioManager() = default;
 
-        std::filesystem::path filePath = path;
-        std::string filename = filePath.filename().string();
-
-        //return if filename already exist
-        if (m_soundMap.find(filename) != m_soundMap.end()) {
-            return;
+    AudioManager::~AudioManager() {
+        for (auto& [name, sound] : m_soundMap) {
+            sound->m_Shutdown();
         }
-
-
-        m_soundMap[filename] = std::make_unique<fmodaudio::FModAudio>();
-        m_soundMap.find(filename)->second->m_Init();
-        m_soundMap.find(filename)->second->m_CreateSound(path.c_str());
-
     }
+
+    void AudioManager::m_LoadAudio(const std::string& name, const std::string& path) {
+        if (m_soundMap.find(name) == m_soundMap.end()) {
+            auto sound = std::make_unique<FModAudio>();
+            if (sound->m_Init() && sound->m_CreateSound(path.c_str())) {
+                m_soundMap[name] = std::move(sound);
+            }
+            else {
+                std::cerr << "Failed to load audio: " << name << " from path: " << path << "\n";
+            }
+        }
+    }
+
+    void AudioManager::m_PlayAudio(const std::string& name) {
+        if (m_soundMap.find(name) != m_soundMap.end()) {
+            m_soundMap[name]->m_PlaySound();
+        }
+        else {
+            std::cerr << "Audio not found: " << name << "\n";
+        }
+    }
+
+    void AudioManager::m_StopAudio(const std::string& name) {
+        if (m_soundMap.find(name) != m_soundMap.end()) {
+            m_soundMap[name]->m_StopSound();
+        }
+    }
+
+    void AudioManager::m_SetVolume(const std::string& name, float volume) {
+        if (m_soundMap.find(name) != m_soundMap.end()) {
+            m_soundMap[name]->m_SetVolume(volume);
+        }
+    }
+
+    void AudioManager::m_SetLooping(const std::string& name, bool loop) {
+        if (m_soundMap.find(name) != m_soundMap.end()) {
+            m_soundMap[name]->m_SetLooping(loop);
+        }
+    }
+
+    bool AudioManager::m_IsPlaying(const std::string& name) {
+        if (m_soundMap.find(name) != m_soundMap.end()) {
+            return m_soundMap[name]->m_IsPlaying();
+        }
+        return false;
+    }
+
 }

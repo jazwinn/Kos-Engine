@@ -19,10 +19,10 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 */
 /********************************************************************/
 
+#ifndef INTCALL_H
+#define INTCALL_H
 
-#pragma once
-
-#include "mono_handler.h"
+#include"../ECS/ECS.h"
 #include "../Inputs/Keycodes.h"
 
 namespace script {
@@ -173,3 +173,5 @@ namespace script {
 	};
 
 }
+
+#endif

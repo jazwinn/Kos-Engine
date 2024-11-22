@@ -24,11 +24,12 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 #include <../GLEW/include/GL/glew.h>
 #include "../Asset Manager/Audio.h"
-#include "../ECS/ECS.h"
 #include "Prefab.h"
 #include "Image.h"
 #include "Text.h"
 #include "../C#Mono/mono_handler.h"
+
+#include "../C#Mono/InternalCall.h"
 
 
 namespace assetmanager {
@@ -120,12 +121,12 @@ namespace assetmanager {
         void m_RenameAsset(std::filesystem::path old, std::filesystem::path _new);
 
         void m_LoadScript(std::filesystem::path filepath);
+
+        fmodaudio::AudioManager m_audioManager;
         
         image::ImageManager m_imageManager;
 
-        fmodaudio::AudioManager m_audioManager;
-
-        script::ScriptHandler  m_scriptManager;
+        script::ScriptHandler m_scriptManager;
 
         /******************************************************************/
         /*!
