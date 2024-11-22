@@ -103,7 +103,7 @@ namespace ecs {
 				button->m_Position = { translateX , translateY };
 				//button->m_Scale = { 360,360 };
 				vector2::Vec2 pixelBox = { (graphicpipe::GraphicsCamera::m_windowHeight / 2 * button->m_Scale.m_x) / graphicpipe::GraphicsCamera::m_currCameraScaleX , (graphicpipe::GraphicsCamera::m_windowHeight / 2 * button->m_Scale.m_y) / graphicpipe::GraphicsCamera::m_currCameraScaleY };
-				std::cout << "Scale " << graphicpipe::GraphicsCamera::m_currCameraScaleX << std::endl;
+				//std::cout << "Scale " << graphicpipe::GraphicsCamera::m_currCameraScaleX << std::endl;
 
 				minX = button->m_Position.m_x - (pixelBox.m_x / 2.f);
 				maxX = button->m_Position.m_x + (pixelBox.m_x / 2.f);
@@ -134,7 +134,7 @@ namespace ecs {
 
 			if (button->m_IsClick) 
 			{
-				std::cout << "Button Clicked" << std::endl;
+				LOGGING_INFO("Button Clicked");
 				button->m_IsClick = false;
 			}
 			mat3x3::Mat3x3 debugTransformation = mat3x3::Mat3Transform(vector2::Vec2{ transform->m_transformation.m_e20, transform->m_transformation.m_e21 }, vector2::Vec2{ button->m_Scale.m_x, button->m_Scale.m_y }, transform->m_rotation);

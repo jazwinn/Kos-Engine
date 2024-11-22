@@ -41,10 +41,10 @@ namespace scripteditor {
 		auto* sc = static_cast<ecs::ScriptComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESCRIPTCOMPONENT]->m_GetEntityComponent(entityID));
 
         if (sc->m_scriptInstances.find(script) == sc->m_scriptInstances.end()) return;
-        if (assetmanager->m_scriptManager.m_ScriptMap.find(script) == assetmanager->m_scriptManager.m_ScriptMap.end()) return;
+        if (assetmanager->m_scriptManager.m_methodMap.find(script) == assetmanager->m_scriptManager.m_methodMap.end()) return;
 
-		MonoImage* image = assetmanager->m_scriptManager.m_ScriptMap.find(script)->second.m_image;
-		MonoClass* scriptclass = mono_class_from_name(image, "Namespace", script.c_str());
+		MonoImage* image = assetmanager->m_scriptManager.m_loadedDLLMap.find(assetmanager->m_scriptManager.m_outputdll)->second.m_image;
+		MonoClass* scriptclass = mono_class_from_name(image, "", script.c_str());
 
         void* iter = nullptr;
         MonoClassField* field;
