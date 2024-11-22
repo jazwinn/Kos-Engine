@@ -140,7 +140,7 @@ struct DrawComponents {
         title = "Y##" + m_Array[count];
         ImGui::PushItemWidth(slidersize);
         ImGui::DragFloat(title.c_str(), &_args.m_y, 0.02f, -50.0f, 50.0f, "%.2f");
-        if (ImGui::IsItemActivated()) {
+        if (ImGui::IsItemActivated() && !changed) {
             changed = true;
         }
         if (ImGui::IsItemDeactivatedAfterEdit()) {
@@ -483,7 +483,9 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         if (DragFloat::dragFloatCheck::m_GetInstance()->m_click(DragFloat::Comp::TRANSFORM, DragFloat::Member::POS)) {
                             events::TransformComponentChanged action(ecs::TYPETRANSFORMCOMPONENT, entityID, rbc, oldVal);
                             DISPATCH_ACTION_EVENT(action);
+                            oldVal = *rbc;
                         }
+                        
                     }
                     if (toDraw(rbc->m_rotation)) {
                         if (DragFloat::dragFloatCheck::m_GetInstance()->m_getCalledBefore() && (DragFloat::dragFloatCheck::m_GetInstance()->m_getPrevMem() != DragFloat::Member::ROT)) {
@@ -492,6 +494,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         if (DragFloat::dragFloatCheck::m_GetInstance()->m_click(DragFloat::Comp::TRANSFORM, DragFloat::Member::ROT)) {
                             events::TransformComponentChanged action(ecs::TYPETRANSFORMCOMPONENT, entityID, rbc, oldVal);
                             DISPATCH_ACTION_EVENT(action);
+                            oldVal = *rbc;
                         }
                     }
                     if (toDraw(rbc->m_scale)) {
@@ -501,6 +504,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         if (DragFloat::dragFloatCheck::m_GetInstance()->m_click(DragFloat::Comp::TRANSFORM, DragFloat::Member::SCALE)) {
                             events::TransformComponentChanged action(ecs::TYPETRANSFORMCOMPONENT, entityID, rbc, oldVal);
                             DISPATCH_ACTION_EVENT(action);
+                            oldVal = *rbc;
                         }
                     }
                     

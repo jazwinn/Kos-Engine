@@ -5,11 +5,13 @@ namespace DragFloat {
 	enum class Member{
 		POS,
 		ROT,
-		SCALE
+		SCALE,
+		NONE
 	};
 
 	enum class Comp {
-		TRANSFORM
+		TRANSFORM,
+		NONE
 	};
 
 	class dragFloatCheck {
@@ -39,7 +41,11 @@ namespace DragFloat {
 				m_lastMember = inMemb;
 				m_clicked = true;
 			}
-			else if(m_calledBefore){
+			else if(m_calledBefore && m_clicked){
+				m_lastComp = Comp::NONE;
+				m_lastMember = Member::NONE;
+				m_calledBefore = false;
+				m_clicked = false;
 				return true;
 			}
 			return false;
