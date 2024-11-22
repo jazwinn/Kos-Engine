@@ -77,7 +77,8 @@ void gui::ImGuiHandler::m_DrawTestWindow() {
 	ImGui::SeparatorText(" LOGGING ");
 	if (ImGui::Button("Crash")) {
 		LOGGING_INFO("About to trigger abort");
-		abort();
+		//abort();
+		LOGGING_ASSERT_WITH_MSG("GG");
 	}
 	ImGui::SameLine();
 	if (ImGui::Button("Test Log")) {

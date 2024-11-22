@@ -44,7 +44,7 @@ namespace physicspipe {
 
 
 	Rectangle::Rectangle(float rect_height, float rect_width, float rect_angle, vector2::Vec2 shape_position, vector2::Vec2 shape_scale, vector2::Vec2 shape_velocity, int entity_ID, int layer_ID)
-		: m_height(rect_height), m_width(rect_width)   // Initialize height and width
+		: m_height(rect_height), m_width(rect_width)  // Initialize height and width
 	{
 		m_position = shape_position;
 		m_scale = shape_scale;
@@ -71,8 +71,8 @@ namespace physicspipe {
 
 
 
-	void Physics::m_SendPhysicsData(float rect_height, float rect_width, float rect_angle, vector2::Vec2 position, vector2::Vec2 scale, vector2::Vec2 velocity, int ID, layer::LAYERS layerID) {
-		m_physicsEntities.push_back(std::make_shared<Rectangle>(rect_height, rect_width, rect_angle, position, scale, velocity, ID, static_cast<int>(layerID)));
+	void Physics::m_SendPhysicsData(float rect_height, float rect_width,float rect_angle, vector2::Vec2 position, vector2::Vec2 scale, vector2::Vec2 velocity, int ID, layer::LAYERS layerID) {
+		m_physicsEntities.push_back(std::make_shared<Rectangle>(rect_height, rect_width,rect_angle, position, scale, velocity, ID, static_cast<int>(layerID)));
 		//	m_layerToEntities[layerID].push_back(std::make_shared<Rectangle>(rect_height, rect_width, rect_angle, position, scale, velocity, ID));
 	}
 
@@ -106,7 +106,7 @@ namespace physicspipe {
 						CHECK CIRCLE V RECT
 					*************************************/
 					else if ((m_physicsEntities[i]->GetEntity() == EntityType::CIRCLE) && (m_physicsEntities[j]->GetEntity() == EntityType::RECTANGLE)) {
-						if (m_CollisionIntersection_CircleRect(*dynamic_cast<Circle*>(m_physicsEntities[i].get()), *dynamic_cast<Rectangle*>(m_physicsEntities[j].get()))) {
+						if (m_CollisionIntersection_CircleRect_AABB(*dynamic_cast<Circle*>(m_physicsEntities[i].get()), *dynamic_cast<Rectangle*>(m_physicsEntities[j].get()))) {
 							if (std::find(m_collidedEntities.begin(), m_collidedEntities.end(), m_physicsEntities[i]) == m_collidedEntities.end()) {
 								//std::cout << "Collided" << std::endl;
 								//LOGGING_DEBUG("COLLIDED");// Dont LOG uses up too much process
@@ -119,7 +119,7 @@ namespace physicspipe {
 						CHECK RECT V CIRCLE
 					*************************************/
 					else if (m_physicsEntities[j]->GetEntity() == EntityType::CIRCLE && m_physicsEntities[i]->GetEntity() == EntityType::RECTANGLE) {
-						if (m_CollisionIntersection_CircleRect(*dynamic_cast<Circle*>(m_physicsEntities[j].get()), *dynamic_cast<Rectangle*>(m_physicsEntities[i].get()))) {
+						if (m_CollisionIntersection_CircleRect_AABB(*dynamic_cast<Circle*>(m_physicsEntities[j].get()), *dynamic_cast<Rectangle*>(m_physicsEntities[i].get()))) {
 							if (std::find(m_collidedEntities.begin(), m_collidedEntities.end(), m_physicsEntities[i]) == m_collidedEntities.end()) {
 								//std::cout << "Collided" << std::endl;
 								//LOGGING_DEBUG("COLLIDED"); // Dont LOG uses up too much process
@@ -273,9 +273,78 @@ namespace physicspipe {
 		return distance_Square <= (combineRadius * combineRadius);
 	}
 
-	bool Physics::m_CollisionIntersection_CircleRect(const Circle& circle, const Rectangle& rect) {
-		vector2::Vec2 shortestDistance{};
+	void m_BuildLineSegment(LineSegment& lineSegment, const vector2::Vec2& p0, const vector2::Vec2& p1){
+		lineSegment.m_pt0 = p0;
+		lineSegment.m_pt1 = p1;
+		vector2::Vec2 dVector = p1 - p0;
+		vector2::Vec2 nVector = { dVector.m_y, -dVector.m_x };
+		vector2::Vec2::m_funcVec2Normalize(nVector, nVector);
+		lineSegment.m_normal = nVector;
+	}
 
+
+	int Physics::m_findClosestPointOnPolygon(vector2::Vec2 circle_pos, std::vector<vector2::Vec2> vertices) {
+		int result = -1;
+		float minDistance = std::numeric_limits<float>::max();
+		for (int i = 0; i < static_cast<int>(vertices.size()); ++i) {
+			vector2::Vec2 vert = vertices[i];
+			float dist = vector2::Vec2::m_funcVec2DDistance(circle_pos, vert);
+			if (dist < minDistance) {
+				minDistance = dist;
+				result = i;
+			}
+		}
+		return result;
+	}
+	void Physics::m_projectOntoCircle(vector2::Vec2 center, float radius, vector2::Vec2 axis, float& min, float& max) {
+		vector2::Vec2 dVector = axis;
+		vector2::Vec2::m_funcVec2Normalize(dVector, dVector);
+		vector2::Vec2 dVectorAndRadius = dVector * radius;
+
+		vector2::Vec2 p1 = center + dVectorAndRadius;
+		vector2::Vec2 p2 = center - dVectorAndRadius;
+
+		min = vector2::Vec2::m_funcVec2DDotProduct(p1, axis);
+		max = vector2::Vec2::m_funcVec2DDotProduct(p2, axis);
+
+		if (min > max) {
+			std::swap(min, max);
+		}
+	}
+
+	bool Physics::m_CollisionIntersection_CircleRect_SAT(const Circle& circle, const Rectangle& rect) {
+		//need the vertices of the rectangle
+		std::vector<vector2::Vec2> rect_Vertices = rect.m_getRotatedVertices();
+		std::vector<vector2::Vec2> rect_Edges = rect.m_getEdges();
+		float minA{}, maxA{}, minB{}, maxB{};
+		for (const auto& edge : rect_Edges) {
+			vector2::Vec2 axis = { -edge.m_y, edge.m_x };
+			m_projectOntoAxis(rect_Vertices, axis, minA, maxA);
+			m_projectOntoCircle(circle.m_position, circle.m_radius, axis, minB, maxB);
+
+			if (minA >= maxB || minB >= maxA)
+			{
+				return false;
+			}
+		}
+
+		int closePointIndex = m_findClosestPointOnPolygon(circle.m_position, rect_Vertices);
+		vector2::Vec2 closePoint = rect_Vertices[closePointIndex];
+
+		vector2::Vec2 axis = closePoint - circle.m_position;
+		vector2::Vec2::m_funcVec2Normalize(axis, axis);
+		m_projectOntoAxis(rect_Vertices, axis, minA, maxA);
+		m_projectOntoCircle(circle.m_position, circle.m_radius, axis, minB, maxB);
+
+		if (minA >= maxB || minB >= maxA) return false;
+
+
+		return true;
+
+	}
+
+	bool Physics::m_CollisionIntersection_CircleRect_AABB(const Circle& circle, const Rectangle& rect) {
+		vector2::Vec2 shortestDistance{};
 
 		if (circle.m_position.m_x < rect.m_boundingBox.m_min.m_x) shortestDistance.m_x = rect.m_boundingBox.m_min.m_x;
 		else if (circle.m_position.m_x > rect.m_boundingBox.m_max.m_x) shortestDistance.m_x = rect.m_boundingBox.m_max.m_x;
@@ -284,7 +353,6 @@ namespace physicspipe {
 		if (circle.m_position.m_y < rect.m_boundingBox.m_min.m_y) shortestDistance.m_y = rect.m_boundingBox.m_min.m_y;
 		else if (circle.m_position.m_y > rect.m_boundingBox.m_max.m_y) shortestDistance.m_y = rect.m_boundingBox.m_max.m_y;
 		else shortestDistance.m_y = circle.m_position.m_y;
-
 
 		float Y_Square = static_cast<float>(pow((circle.m_position.m_x - shortestDistance.m_x), 2));
 		float X_Square = static_cast<float>(pow((circle.m_position.m_y - shortestDistance.m_y), 2));
@@ -366,10 +434,10 @@ namespace physicspipe {
 			return m_CollisionIntersection_CircleCircle(*static_cast<Circle*>(entity1.get()), *static_cast<Circle*>(entity2.get()));
 		}
 		else if (entity1->GetEntity() == EntityType::CIRCLE && entity2->GetEntity() == EntityType::RECTANGLE) {
-			return m_CollisionIntersection_CircleRect(*static_cast<Circle*>(entity1.get()), *static_cast<Rectangle*>(entity2.get()));
+			return m_CollisionIntersection_CircleRect_SAT(*static_cast<Circle*>(entity1.get()), *static_cast<Rectangle*>(entity2.get()));
 		}
 		else if (entity1->GetEntity() == EntityType::RECTANGLE && entity2->GetEntity() == EntityType::CIRCLE) {
-			return m_CollisionIntersection_CircleRect(*static_cast<Circle*>(entity2.get()), *static_cast<Rectangle*>(entity1.get()));
+			return m_CollisionIntersection_CircleRect_SAT(*static_cast<Circle*>(entity2.get()), *static_cast<Rectangle*>(entity1.get()));
 		}
 
 		return false;  // If no valid collision type, return false.
@@ -377,22 +445,29 @@ namespace physicspipe {
 
 	std::vector<vector2::Vec2> Rectangle::m_getRotatedVertices() const {
 		std::vector<vector2::Vec2> vertices(4);
+		float hw{}, hh{};
+		
+		//Calculate the angle
 		float cosTheta = mathlibrary::mathlib::funcCos(mathlibrary::mathlib::funcDegreeToRadian(m_rotAngle));
 		float sinTheta = mathlibrary::mathlib::funcSin(mathlibrary::mathlib::funcDegreeToRadian(m_rotAngle));
 
-		// Calculate the half-width and half-height
-		float hw = m_width * 0.5f;
-		float hh = m_height * 0.5f;
-
+		//the scale of collider box
+		hw = m_width * 0.5f;
+		hh = m_height * 0.5f;
+		
 		// Center of the rectangle
 		vector2::Vec2 center = m_position;
+		
+		//calculate the scale and rotate
+		vertices[0] = { ((-hw) * cosTheta) - ((hh) * sinTheta), ((-hw) * sinTheta) + ((hh) * cosTheta) };	 // Top - Left
+		vertices[1] = { ((hw) * cosTheta) - ((hh) * sinTheta), ((hw) * sinTheta) + ((hh) * cosTheta) };		 // Top - Right
+		vertices[2] = { ((hw) * cosTheta) - ((-hh) * sinTheta), ((hw) * sinTheta) + ((-hh) * cosTheta) };	 // Bottom - Right
+		vertices[3] = { ((-hw) * cosTheta) - ((-hh) * sinTheta), ((-hw) * sinTheta) + ((-hh) * cosTheta) };  // Bottom - Left
 
-		// Calculate the rotated positions of each corner
-		vertices[0] = { center.m_x - hw * cosTheta + hh * sinTheta, center.m_y - hw * sinTheta - hh * cosTheta }; // Top-left
-		vertices[1] = { center.m_x + hw * cosTheta + hh * sinTheta, center.m_y + hw * sinTheta - hh * cosTheta }; // Top-right
-		vertices[2] = { center.m_x + hw * cosTheta - hh * sinTheta, center.m_y + hw * sinTheta + hh * cosTheta }; // Bottom-right
-		vertices[3] = { center.m_x - hw * cosTheta - hh * sinTheta, center.m_y - hw * sinTheta + hh * cosTheta }; // Bottom-left
-
+		//translate the vertices
+		for (auto& vert : vertices) {
+			vert += center;
+		}		
 		return vertices;
 	}
 
@@ -452,8 +527,6 @@ namespace physicspipe {
 
 	std::vector <std::pair<std::shared_ptr<PhysicsData>, std::shared_ptr<PhysicsData>>> Physics::m_RetrievePhysicsDataPair() {
 		std::vector <std::pair<std::shared_ptr<PhysicsData>, std::shared_ptr<PhysicsData>>> TempCollidedEntities = m_collidedEntitiesPair;
-
-		
 		return TempCollidedEntities;
 	}
 

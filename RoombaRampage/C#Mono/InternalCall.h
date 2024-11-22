@@ -74,10 +74,6 @@ namespace script {
 
 		static bool m_InternalSetTextComponent(ecs::EntityID entity, const std::string& text, const std::string& fileName, int fontLayer, float fontSize, const vector3::Vec3& color);
 
-		static bool m_InternalSetSpriteComponent(ecs::EntityID entity, const std::string& imageFile, int layer, const vector3::Vec3& color, float alpha);
-
-		static bool m_InternalGetSpriteComponent(ecs::EntityID entity, std::string* imageFile, int* layer, vector3::Vec3* color, float* alpha);
-
 		static bool m_InternalGetAnimationComponent(ecs::EntityID entity, int* frameNumber, int* framesPerSecond, float* frameTimer, bool* isAnimating);
 
 		static bool m_InternalSetAnimationComponent(ecs::EntityID entity, int frameNumber, int framesPerSecond, float frameTimer, bool isAnimating);
@@ -157,6 +153,10 @@ namespace script {
 		static int m_InternalCallAddPrefab(MonoString* prefab, const float* x, const float* y, const float* rotation);
 
 		static void m_InternalCallDeleteEntity(ecs::EntityID);
+
+		static bool m_InternalGetSpriteComponent(ecs::EntityID entity, MonoString** imageFile, int* layer, vector3::Vec3* color, float* alpha);
+
+		static bool m_InternalSetSpriteComponent(ecs::EntityID entity, MonoString* imageFile, const int* layer, const vector3::Vec3* color, const float* alpha);
 
 	public:
 

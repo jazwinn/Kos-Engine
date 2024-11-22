@@ -28,19 +28,19 @@ Reproduction or disclosure of this file or its contents without the
 prior written consent of DigiPen Institute of Technology is prohibited.
 */
 /********************************************************************/
+#include "../Config/pch.h"
 #include "mono_handler.h"
 #include "mono/metadata/mono-gc.h"
 #include "mono/metadata/threads.h"
 #include "InternalCall.h"
-#include <iostream>
-#include <filesystem>
-#include <cstdlib>
-#include <string>
-#include <thread>
 
 namespace script {
 
     ScriptHandler::ScriptHandler() {
+
+        //set output dll filename
+        m_outputdll = "LogicScript";
+
         // Set Mono path
         mono_set_dirs("Dependencies/mono/lib", "Dependencies/mono/etc");
 
@@ -75,7 +75,7 @@ namespace script {
         m_AppDomain = nullptr;
 
         //clear entire script map
-        m_ScriptMap.clear();
+        m_loadedDLLMap.clear();
     }
 
     ScriptHandler::~ScriptHandler() {
@@ -87,8 +87,8 @@ namespace script {
 
     void ScriptHandler::m_UnloadDomain(const std::filesystem::path& filePath) {
         std::string filename = filePath.filename().stem().string();
-        auto scriptEntry = m_ScriptMap.find(filename);
-        if (scriptEntry == m_ScriptMap.end()) {
+        auto scriptEntry = m_loadedDLLMap.find(filename);
+        if (scriptEntry == m_loadedDLLMap.end()) {
             LOGGING_ERROR("Script does not exist");
             return;
         }
@@ -96,43 +96,43 @@ namespace script {
 
         // Free methods and image
         auto& scriptData = scriptEntry->second;
-        scriptData.m_Methods.clear();
+        m_methodMap.clear();
         if (scriptData.m_image) {
             mono_image_close(scriptData.m_image);
             scriptData.m_image = nullptr;
         }
 
         // Remove from map
-        m_ScriptMap.erase(scriptEntry);
+        m_loadedDLLMap.erase(scriptEntry);
     }
 
     void ScriptHandler::m_AddScripts(const std::filesystem::path& scriptpath) {   
         //check if dll is alread in 
         std::string filename = scriptpath.filename().stem().string();
-        if (m_ScriptMap.find(filename) != m_ScriptMap.end()) {
+        if (m_loadedDLLMap.find(filename) != m_loadedDLLMap.end()) {
             LOGGING_ERROR("Script Already loaded");
             return;
         }
         //create new script
-        m_ScriptMap[filename].m_fileName = filename;
-        m_ScriptMap[filename].m_scriptPath = scriptpath;
+        m_loadedDLLMap[filename].m_fileName = filename;
+        m_loadedDLLMap[filename].m_scriptPath = scriptpath;
 
         // Load assembly
         std::string assemblyPath = scriptpath.string();
-        m_ScriptMap[filename].m_assembly = mono_domain_assembly_open(m_AppDomain, assemblyPath.c_str());
-        if (!m_ScriptMap[filename].m_assembly) {
+        m_loadedDLLMap[filename].m_assembly = mono_domain_assembly_open(m_AppDomain, assemblyPath.c_str());
+        if (!m_loadedDLLMap[filename].m_assembly) {
             LOGGING_ERROR("Failed to load assembly: {}", assemblyPath.c_str());
             return;
         }
 
         // Get Mono image
-        MonoImage* image = mono_assembly_get_image(m_ScriptMap[filename].m_assembly);
+        MonoImage* image = mono_assembly_get_image(m_loadedDLLMap[filename].m_assembly);
         if (!image) {
             LOGGING_ERROR("Failed to load Mono image from assembly: {}", assemblyPath.c_str());
             return;
         }
 
-        m_ScriptMap[filename].m_image = image;
+        m_loadedDLLMap[filename].m_image = image;
         image = nullptr;
 
         LOGGING_DEBUG("Successfully Added Script");
@@ -140,14 +140,14 @@ namespace script {
 
     bool ScriptHandler::m_LoadMethod(const std::string& scriptName, const std::string& className, const std::string& methodName, int paramCount) {
         // Find the assembly image for the script
-        MonoImage* image = m_ScriptMap.find(scriptName)->second.m_image;
+        MonoImage* image = m_loadedDLLMap.find(scriptName)->second.m_image;
         if (!image) {
             LOGGING_ERROR("Failed to find image for script: {}", scriptName.c_str());
             return false;
         }
 
         // Find the class inside the assembly
-        MonoClass* m_testClass = mono_class_from_name(image, "Namespace", className.c_str());
+        MonoClass* m_testClass = mono_class_from_name(image, "", className.c_str());
         if (!m_testClass) {// give exception for gamescript
             LOGGING_ERROR("Failed to find class: {} in script: {}", className.c_str(), scriptName.c_str());
             return false;
@@ -159,12 +159,14 @@ namespace script {
             LOGGING_ERROR("Failed to find method: {} in class: {}", methodName.c_str(), className.c_str());
             return false;
         }
-
-        if (m_ScriptMap.find(scriptName)->second.m_Methods.find(methodName) != m_ScriptMap.find(scriptName)->second.m_Methods.end()) {
-            LOGGING_ERROR("METHOD ALREADY LOADED");
-        }
-        //create new method
-        m_ScriptMap.find(scriptName)->second.m_Methods[methodName] = method;
+        
+        //
+        //if (m_methodMap.find(scriptName)->second.find(methodName) != m_methodMap.find(scriptName)->second.end()) {
+        //    LOGGING_ERROR("METHOD ALREADY LOADED");
+        //    //return false;
+        //}
+        //Add method into container
+        m_methodMap[className][methodName] = method;
         method = nullptr;
 
         return true;
@@ -172,7 +174,7 @@ namespace script {
 
     MonoObject* ScriptHandler::m_CreateObjectInstance(const std::string& scriptName, const std::string& className)
     {
-        MonoObject* inst = mono_object_new(m_AppDomain, mono_class_from_name(m_ScriptMap.find(scriptName)->second.m_image, "Namespace", className.c_str()));
+        MonoObject* inst = mono_object_new(m_AppDomain, mono_class_from_name(m_loadedDLLMap.find(scriptName)->second.m_image, "", className.c_str()));
 
         if (inst == nullptr) {
             LOGGING_ERROR("Fail to create instance");
@@ -185,12 +187,13 @@ namespace script {
         return inst;
     }
 
-    void ScriptHandler::m_InvokeMethod(const std::string& scriptName, const std::string& methodName, MonoObject* objInstance, void** args) {
+    void ScriptHandler::m_InvokeMethod(const std::string& className, const std::string& func, MonoObject* objInstance, void** args) {
 
         // Check if the method exists
-        MonoMethod* method = m_ScriptMap.find(scriptName)->second.m_Methods.find(methodName)->second;
+        MonoMethod* method = m_methodMap.find(className)->second.find(func)->second;
+
         if (!method) {
-            LOGGING_ERROR("No method loaded to invoke for script {}", scriptName.c_str());
+            LOGGING_ERROR("No method loaded to invoke for script {}", className.c_str());
             return;
         }
 
@@ -213,6 +216,7 @@ namespace script {
     void ScriptHandler::m_ReloadAllDLL()
     {
         //reload all .dll file
+        //by right only logiscript.dll only
         for (auto& directoryPath : std::filesystem::directory_iterator("Assets/Scripts/ScriptsDLL")) {
             std::string filepath = directoryPath.path().string();
             std::replace(filepath.begin(), filepath.end(), '\\', '/');
@@ -223,9 +227,13 @@ namespace script {
                 //load all newly reloaded method
 
                 std::string filename = directoryPath.path().filename().stem().string();
-                m_LoadMethod(filename, filename, "Start", 0);
-                m_LoadMethod(filename, filename, "Update", 0);
-                m_LoadMethod(filename, filename, "GetEntityID", 1);
+
+                for (auto& script : m_CSScripts) {
+                    m_LoadMethod(filename, script.first, "Start", 0);
+                    m_LoadMethod(filename, script.first, "Update", 0);
+                    m_LoadMethod(filename, script.first, "GetEntityID", 1);
+
+                }
             }
         }
     }
@@ -244,8 +252,54 @@ namespace script {
         std::filesystem::path outputDLL = projectBasePath / "Assets" / "Scripts" / "ScriptsDLL" / (filePath.filename().stem().string() + ".dll");
 
         std::string command = compilepath + " /target:library \"/out:" + outputDLL.string() + "\" \"/reference:" + referenceDLL.string() + "\" \"" + filePath.string() + "\"";
-        //std::string command = compilepath + " /target:library /out:" + outputDLL.string() + " C:\\Users\\ngjaz\\OneDrive\\Documents\\roombarampage\\GreyGooseWorkspace\\RRR\\RoombaRampage\\ScriptLibrary\\GameScript\\ScriptCore\\ScriptBase.cs "  + filePath.string();
         
+        // Write the command to a batch file
+        std::ofstream batchFile("run_command.bat");
+        batchFile << command << std::endl;
+        batchFile.close();
+
+        LOGGING_INFO("Generated command: {}", command.c_str());
+
+        //// Execute the command
+        int result = system("run_command.bat");
+            
+        //remove bat file
+        std::remove("run_command.bat");
+
+        // Check the result of the command
+        if (result == 0)
+        {
+            LOGGING_INFO("Compilation successful: {}.dll", filePath.filename().stem().string().c_str());
+        }
+        else
+        {
+            LOGGING_ERROR("Compilation failed!");
+        }
+    }
+
+    void ScriptHandler::m_CompileAllCSharptoSingleDLL()
+    {
+        //
+        m_UnloadSecondaryDomain();
+        if (m_AppDomain == nullptr) {
+            m_LoadSecondaryDomain();
+        }
+
+        //IF COMPILE ERROR, MAKE SURE TO UNLOAD ASSEMBLY AND APPDOMAIN
+        std::filesystem::path projectBasePath = std::filesystem::current_path();
+
+        std::string compilepath = "\"" + projectBasePath.string() + "\\C#Mono\\CompilerCSC\\bin\\csc\"";
+
+        std::filesystem::path referenceDLL = projectBasePath / "ScriptLibrary" / "GameScript" / "ScriptCoreDLL" / "GameScript.dll";
+
+        std::string Accfile;
+
+        std::for_each(m_CSScripts.begin(), m_CSScripts.end(), [&Accfile](const std::pair<std::string, std::filesystem::path>& file_path) { Accfile += ("\"" + file_path.second.string() + "\" ");});
+
+        std::filesystem::path outputDLL = projectBasePath / "Assets" / "Scripts" / "ScriptsDLL" / (m_outputdll + ".dll");
+
+        std::string command = compilepath + " /target:library \"/out:" + outputDLL.string() + "\" \"/reference:" + referenceDLL.string() + "\" " + Accfile;
+
         // Write the command to a batch file
         std::ofstream batchFile("run_command.bat");
         batchFile << command << std::endl;
@@ -262,13 +316,15 @@ namespace script {
         // Check the result of the command
         if (result == 0)
         {
-            LOGGING_INFO("Compilation successful: {}.dll", filePath.filename().stem().string().c_str());
+            LOGGING_INFO("Compilation successful: {}.dll", m_outputdll);
         }
         else
         {
             LOGGING_ERROR("Compilation failed!");
         }
+
     }
+
 
     void ScriptHandler::m_HotReloadCompileAllCsharpFile(std::string cspath)
     {

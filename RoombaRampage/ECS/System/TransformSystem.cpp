@@ -77,7 +77,11 @@ namespace ecs {
 			if (transformComp->m_scene != scene) continue;
 
 			transformComp->m_transformation = mat3x3::Mat3Transform(transformComp->m_position, transformComp->m_scale, transformComp->m_rotation);
-
+			vector2::Vec2 pos{}, scale_s{};
+			float rot{};
+			mat3x3::Mat3Decompose(transformComp->m_transformation, pos, scale_s, rot);
+			//std::cout << rot << std::endl;
+			//std::cout << scale_s.m_x << " " << scale_s.m_y << std::endl;
 			if (!transformComp->m_haveParent) {
 				continue;
 			}
@@ -109,6 +113,8 @@ namespace ecs {
 			mat3x3::Mat3x3 scaleMatrix;
 			mat3x3::Mat3x3 rotateMatrix;
 
+			transformComp->m_localChildTransformation = mat3x3::Mat3Transform(transformComp->m_position, vector2::Vec2{ transformComp->m_scale.m_x, transformComp->m_scale.m_y }, transformComp->m_rotation);
+
 			transformComp->m_transformation = mat3x3::Mat3Transform(translate, vector2::Vec2{ transformComp->m_scale.m_x, transformComp->m_scale.m_y }, 0);
 
 			//Set Child Position to Follow Parent
@@ -128,6 +134,8 @@ namespace ecs {
 			mat3x3::Mat3Translate(translateBackMatrix, transformComp->m_transformation.m_e20, transformComp->m_transformation.m_e21);
 
 			transformComp->m_transformation = translateBackMatrix * rotateMatrix * translateToOriginMatrix * transformComp->m_transformation;
+
+
 			//transformComp->m_transformation = parentTransformation * transformComp->m_transformation;
 		}
 
