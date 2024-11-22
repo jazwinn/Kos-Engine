@@ -24,7 +24,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Asset Manager/SceneManager.h"
 
 #define MONO_ADD_INTERNAL_CALL(METHOD_NAME) \
-    mono_add_internal_call("Namespace.ScriptBase::" #METHOD_NAME, METHOD_NAME);
+    mono_add_internal_call("Namespace.InternalCall::" #METHOD_NAME, METHOD_NAME);
 
 namespace script {
 
@@ -183,13 +183,15 @@ namespace script {
 	}
 
 	//Sprite Component
-	bool InternalCall::m_InternalGetSpriteComponent(ecs::EntityID entity, std::string* imageFile, int* layer, vector3::Vec3* color, float* alpha)
+	bool InternalCall::m_InternalGetSpriteComponent(ecs::EntityID entity, MonoString** imageFile, int* layer, vector3::Vec3* color, float* alpha)
 	{
 		auto* spriteComponent = static_cast<ecs::SpriteComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(entity));
 
 		if (spriteComponent == nullptr) return false;
 
-		*imageFile = spriteComponent->m_imageFile;
+
+
+		*imageFile = mono_string_new(mono_domain_get(), spriteComponent->m_imageFile.c_str());
 		*layer = spriteComponent->m_layer;
 		*color = spriteComponent->m_color;
 		*alpha = spriteComponent->m_alpha;
@@ -197,16 +199,21 @@ namespace script {
 		return true;
 	}
 
-	bool InternalCall::m_InternalSetSpriteComponent(ecs::EntityID entity, const std::string& imageFile, int layer, const vector3::Vec3& color, float alpha)
+	bool InternalCall::m_InternalSetSpriteComponent(ecs::EntityID entity, MonoString* imageFile, const int* layer, const vector3::Vec3* color, const float* alpha)
 	{
 		auto* spriteComponent = static_cast<ecs::SpriteComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(entity));
 
 		if (spriteComponent == nullptr) return false;
 
-		spriteComponent->m_imageFile = imageFile;
-		spriteComponent->m_layer = layer;
-		spriteComponent->m_color = color;
-		spriteComponent->m_alpha = alpha;
+		char* nativeString = mono_string_to_utf8(imageFile);
+		std::string imagefile = nativeString;
+
+		spriteComponent->m_imageFile = imagefile;
+		spriteComponent->m_layer = *layer;
+		spriteComponent->m_color = *color;
+		spriteComponent->m_alpha = *alpha;
+
+		mono_free(nativeString);
 
 		return true;
 	}
@@ -449,7 +456,7 @@ namespace script {
 	{
 		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
 
-		scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();
+		scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();	
 
 		char* nativeString = mono_string_to_utf8(prefab);
 		std::string prefabfile = std::string{ nativeString } + ".prefab";

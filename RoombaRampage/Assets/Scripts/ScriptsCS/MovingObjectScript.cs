@@ -38,13 +38,13 @@ namespace Namespace
             if(Static){
                 velocity.X = 0;
                 velocity.Y = 0;
-                 m_InternalSetVelocity(EntityID, in velocity);
+                InternalCall.m_InternalSetVelocity(EntityID, in velocity);
                  return;
             } 
 
             //update time elapsed
             float deltatime;
-            m_InternalCallGetDeltaTime(out deltatime);
+            InternalCall.m_InternalCallGetDeltaTime(out deltatime);
             timeElapsed += deltatime;
 
             //Console.WriteLine($"timeelapsed:{timeElapsed}");
@@ -64,7 +64,7 @@ namespace Namespace
 
 
             
-            if(!m_InternalGetVelocity(EntityID, out velocity))
+            if(!InternalCall.m_InternalGetVelocity(EntityID, out velocity))
             {
                 // return cause velocity -> rigidbody is not present in entity
                 return;
@@ -83,7 +83,7 @@ namespace Namespace
 
 
 
-            m_InternalSetVelocity(EntityID, in velocity);
+            InternalCall.m_InternalSetVelocity(EntityID, in velocity);
 
 
         }

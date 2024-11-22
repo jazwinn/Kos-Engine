@@ -255,7 +255,7 @@ namespace script {
 
         //// Execute the command
         int result = system("run_command.bat");
-
+            
         //remove bat file
         std::remove("run_command.bat");
 

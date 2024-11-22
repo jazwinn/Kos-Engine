@@ -7,6 +7,16 @@ using System.Threading.Tasks;
 
 namespace GameScript.ScriptCore
 {
+
+    public struct Vector2
+    {
+        public float X, Y;
+    }
+
+    public struct Vector3
+    {
+        public float R, G, B;
+    }
     public class TransformComponent
     {
         public Vector2 m_position;
