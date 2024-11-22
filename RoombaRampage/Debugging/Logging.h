@@ -305,10 +305,29 @@ namespace logging {
         std::cout << s_RED << logEntry.str() << s_CLOSE << std::endl;
         m_log_list.push_back(logEntry.str());
 
-        // Output to log file
-        if (m_logFile.is_open()) {
-            m_logFile << logEntry.str() << "\n";
-            m_logFile.flush(); // Ensure immediate write to file
+        std::string title = "Error";
+        std::wstring tile_wstring = std::wstring(title.begin(), title.end());
+        std::string entry = logEntry.str();
+        std::wstring entry_W = std::wstring(entry.begin(), entry.end());
+
+        int msgboxID = MessageBox(
+            NULL,
+            entry_W.c_str(),
+            tile_wstring.c_str(),
+            MB_ICONQUESTION | MB_OK | MB_DEFBUTTON2
+        );
+
+        switch (msgboxID)
+        {
+        case IDOK:
+            // Output to log file
+            if (m_logFile.is_open()) {
+                m_logFile << logEntry.str() << "\n";
+                m_logFile.flush(); // Ensure immediate write to file
+            }
+            break;
+        default:
+            break;
         }
     }
 

@@ -116,6 +116,14 @@ namespace ecs {
 
 			vector2::Vec2 position{ TransComp->m_transformation.m_e20,TransComp->m_transformation.m_e21 };
 
+			mat3x3::Mat3x3 translateMatrix;
+			mat3x3::Mat3x3 translateBackMatrix;
+			mat3x3::Mat3x3 translateToOriginMatrix;
+			mat3x3::Mat3x3 scaleMatrix;
+			mat3x3::Mat3x3 rotateMatrix;
+			vector2::Vec2 pos{}, scale{};
+			float rot{};
+
 			if (TransComp->m_haveParent) {
 				EntityID parentID = ecs::Hierachy::m_GetParent(TransComp->m_Entity).value();
 				TransformComponent* parentComp{ nullptr };
@@ -125,21 +133,20 @@ namespace ecs {
 					}
 				}
 				if (!parentComp) continue;
-				vector2::Vec2 pos{}, scale{};
-				float rot{};
-
-				mat3x3::Mat3x3 parent_Transform = mat3x3::Mat3Transform(parentComp->m_position, parentComp->m_scale, parentComp->m_rotation);
-				mat3x3::Mat3x3 child_Transform = mat3x3::Mat3Transform(TransComp->m_position + ColComp->m_OffSet, TransComp->m_scale * ColComp->m_Size, TransComp->m_rotation);
-				mat3x3::Mat3x3 final_Transform = parent_Transform * child_Transform;
-				mat3x3::Mat3Decompose(final_Transform, pos, scale, rot);
-			
-
+							
 				if (ColComp->m_type == physicspipe::EntityType::CIRCLE) {
+
+					
+					mat3x3::Mat3Decompose(ColComp->m_collider_Transformation, pos, scale, rot);
+
 					PhysicsPipeline->m_SendPhysicsData(ColComp->m_radius, pos, scale, velocity, id, NameComp->m_Layer);
 				}
 				else if (ColComp->m_type == physicspipe::EntityType::RECTANGLE) {
-					//PhysicsPipeline->m_SendPhysicsData(scale.m_y, scale.m_x, rot, pos, scale, velocity, id, NameComp->m_Layer);
-					PhysicsPipeline->m_SendPhysicsData(ColComp->m_Size.m_y * TransComp->m_scale.m_y, ColComp->m_Size.m_x * TransComp->m_scale.m_x, rot, pos, scale, velocity, id, NameComp->m_Layer);
+					
+					//vector2::Vec2 child_Scale = ColComp->m_Size * TransComp->m_scale;
+					//PhysicsPipeline->m_SendPhysicsData(child_Scale.m_y, child_Scale.m_x, TransComp->m_rotation, parentComp->m_rotation, parentComp->m_position, parentComp->m_scale, velocity, id, NameComp->m_Layer, true, TransComp->m_position, TransComp.);
+					mat3x3::Mat3Decompose(ColComp->m_collider_Transformation, pos, scale, rot);
+					PhysicsPipeline->m_SendPhysicsData(scale.m_y, scale.m_x, rot, rot, pos, scale, velocity, id, NameComp->m_Layer, true, pos, scale);
 				}
 				else {
 					LOGGING_ERROR("NO ENTITY TYPE");
@@ -147,11 +154,39 @@ namespace ecs {
 			}
 			else {
 				if (ColComp->m_type == physicspipe::EntityType::CIRCLE) {
-					PhysicsPipeline->m_SendPhysicsData(ColComp->m_radius, TransComp->m_position + ColComp->m_OffSet, ColComp->m_Size * TransComp->m_scale, velocity, id, NameComp->m_Layer);
+
+					mat3x3::Mat3x3 debugTransformation = mat3x3::Mat3Transform(TransComp->m_position, vector2::Vec2{ 1.f, 1.f }, 0);
+
+					mat3x3::Mat3RotDeg(rotateMatrix, TransComp->m_rotation);
+					mat3x3::Mat3Translate(translateToOriginMatrix, -debugTransformation.m_e20, -debugTransformation.m_e21);
+					mat3x3::Mat3Translate(translateBackMatrix, debugTransformation.m_e20, debugTransformation.m_e21);
+
+					debugTransformation = translateBackMatrix * rotateMatrix * translateToOriginMatrix * debugTransformation;
+
+
+					debugTransformation = debugTransformation * mat3x3::Mat3Transform(ColComp->m_OffSet, vector2::Vec2{ ColComp->m_radius * 2.f, ColComp->m_radius * 2.f }, 0);
+					//ColComp->m_collider_Transformation = debugTransformation;
+					mat3x3::Mat3Decompose(debugTransformation, pos, scale, rot);
+
+					PhysicsPipeline->m_SendPhysicsData(ColComp->m_radius, pos, scale, velocity, id, NameComp->m_Layer);
 				}
 				else if (ColComp->m_type == physicspipe::EntityType::RECTANGLE) {
-					//why pass same colcomp data type twice?
-					PhysicsPipeline->m_SendPhysicsData(ColComp->m_Size.m_y * TransComp->m_scale.m_y, ColComp->m_Size.m_x * TransComp->m_scale.m_x, TransComp->m_rotation, TransComp->m_position + ColComp->m_OffSet, ColComp->m_Size * TransComp->m_scale, velocity, id, NameComp->m_Layer);
+
+					mat3x3::Mat3x3 debugTransformation = mat3x3::Mat3Transform(vector2::Vec2{ TransComp->m_transformation.m_e20 , TransComp->m_transformation.m_e21 }, TransComp->m_scale, 0);
+
+					mat3x3::Mat3RotDeg(rotateMatrix, TransComp->m_rotation);
+					mat3x3::Mat3Translate(translateToOriginMatrix, -debugTransformation.m_e20, -debugTransformation.m_e21);
+					mat3x3::Mat3Translate(translateBackMatrix, debugTransformation.m_e20, debugTransformation.m_e21);
+
+					debugTransformation = translateBackMatrix * rotateMatrix * translateToOriginMatrix * debugTransformation;
+
+					debugTransformation = debugTransformation * mat3x3::Mat3Transform(ColComp->m_OffSet, vector2::Vec2{ ColComp->m_Size.m_x , ColComp->m_Size.m_y }, 0);
+
+
+					ColComp->m_collider_Transformation = debugTransformation;
+
+					mat3x3::Mat3Decompose(debugTransformation, pos, scale, rot);
+					PhysicsPipeline->m_SendPhysicsData(scale.m_y, scale.m_x, 0.f,  rot, pos, scale, velocity, id, NameComp->m_Layer, false);
 				}
 				else {
 					LOGGING_ERROR("NO ENTITY TYPE");

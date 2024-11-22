@@ -56,6 +56,7 @@ namespace physicspipe {
 		int m_ID = -1;                                // Unique identifier
 		EntityType type = EntityType::RECTANGLE;    // Circle or Rectangle
 		int m_layerID = -1;
+		bool is_Parent = false;
 
 		virtual ~PhysicsData() = default;
 
@@ -121,6 +122,9 @@ namespace physicspipe {
 		float m_height = 0.0f;  // For rectangular entities
 		float m_width = 0.0f;   // For rectangular entities
 		float m_rotAngle = 0.0f;
+		float m_childAngle = 0.0f;
+		vector2::Vec2 m_childPosition{};
+		vector2::Vec2 m_childScale{};
 		AABB m_boundingBox{};
 		Rectangle() = default;
 		// Constructor for Rectangle (declaration)
@@ -136,7 +140,8 @@ namespace physicspipe {
 		\param[in] entity_ID    Unique ID for the entity.
 		*/
 		/******************************************************************/
-		Rectangle(float rect_height, float rect_width, float rect_angle, vector2::Vec2 shape_position, vector2::Vec2 shape_scale, vector2::Vec2 shape_velocity, int entity_ID, int layer_ID);
+		Rectangle(float rect_height, float rect_width, float m_childAngle, float rect_angle, vector2::Vec2 shape_position, vector2::Vec2 shape_scale,
+			vector2::Vec2 shape_velocity, int entity_ID, int layer_ID, bool isParent ,vector2::Vec2 child_position = {}, vector2::Vec2 m_childScale = {});
 
 		// Overriding GetEntity for Rectangle
 		EntityType GetEntity() const override {
@@ -225,7 +230,8 @@ namespace physicspipe {
 		\param[in] ID           Unique ID of the rectangle entity.
 		*/
 		/******************************************************************/
-		void m_SendPhysicsData(float rect_height, float rect_width, float rect_angle, vector2::Vec2 position, vector2::Vec2 scale, vector2::Vec2 velocity, int ID, layer::LAYERS layerID);
+		void m_SendPhysicsData(float rect_height, float rect_width, float m_childAngle, float rect_angle, vector2::Vec2 position, vector2::Vec2 scale,
+			vector2::Vec2 velocity, int ID, layer::LAYERS layerID ,bool isParent, vector2::Vec2 child_position = {}, vector2::Vec2 m_childScale = {});
 		/******************************************************************/
 		/*!
 		\fn        void Physics::m_SendPhysicsData(float radius, vector2::Vec2 position, vector2::Vec2 scale, vector2::Vec2 velocity, int ID)
