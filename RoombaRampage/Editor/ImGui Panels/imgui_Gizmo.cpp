@@ -176,16 +176,14 @@ namespace gui {
         {
             mat3x3::Mat3x3 transformation = transcom->m_localChildTransformation;
             mat3x3::Mat3x3 original = transcom->m_transformation;
-            
-            std::cout << "Delta translate : " << delta[12] << ", " << delta[13] << std::endl;
 
             ecs::EntityID  id = ecs::Hierachy::m_GetParent(m_clickedEntityId).value();
             ecs::TransformComponent* parentCom = (ecs::TransformComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id);
             
             ImGuizmo::DecomposeMatrixToComponents(model, matrixTranslation, matrixRotation, matrixScale);
 
-            float scaleXChange = (matrixScale[0] - originalMatrixScale[0]);
-            float scaleYChange = (matrixScale[1] - originalMatrixScale[1]);
+            float scaleXChange = ((matrixScale[0] - originalMatrixScale[0])) / parentCom->m_scale.m_x;
+            float scaleYChange = (matrixScale[1] - originalMatrixScale[1]) / parentCom->m_scale.m_y;
             float change = (-matrixRotation[2] - -originalMatrixRotation[2]);
             // The transformed model vs the original model
             vector2::Vec2 translation = { (model[12] - originalMatrixTranslation[0]) ,  model[13] - originalMatrixTranslation[1] };
