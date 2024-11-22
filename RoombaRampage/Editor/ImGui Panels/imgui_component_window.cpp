@@ -235,12 +235,21 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 events::AddComponent action(entityID, ecs::TYPECOLLIDERCOMPONENT);
                 DISPATCH_ACTION_EVENT(action);
             }
-            if (ComponentType == 2) {
-                ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, entityID);
-                ComponentType = 0;
-                events::AddComponent action(entityID, ecs::TYPESPRITECOMPONENT);
-                DISPATCH_ACTION_EVENT(action);
+            if (ComponentType == 2 ) {
+                if (!ecs->m_ECS_EntityMap[entityID].test(ecs::TYPETILEMAPCOMPONENT))
+                {
+                    ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, entityID);
+                    ComponentType = 0;
+                    events::AddComponent action(entityID, ecs::TYPESPRITECOMPONENT);
+                    DISPATCH_ACTION_EVENT(action);
+                }
+                else
+                {
+                    LOGGING_WARN("Restriction: Tilemap Component Not Allowed With Sprite Component");
+                    ComponentType = 0;
+                }
             }
+           
             if (ComponentType == 3) {
                 ecs->m_AddComponent(ecs::TYPEPLAYERCOMPONENT, entityID);
                 ComponentType = 0;
@@ -284,11 +293,21 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 DISPATCH_ACTION_EVENT(action);
             }
             if (ComponentType == 10) {
-                ecs->m_AddComponent(ecs::TYPETILEMAPCOMPONENT, entityID);
-                ComponentType = 0;
-                events::AddComponent action(entityID, ecs::TYPETILEMAPCOMPONENT);
-                DISPATCH_ACTION_EVENT(action);
+                if (!ecs->m_ECS_EntityMap[entityID].test(ecs::TYPESPRITECOMPONENT))
+                {
+                    ecs->m_AddComponent(ecs::TYPETILEMAPCOMPONENT, entityID);
+                    ComponentType = 0;
+                    events::AddComponent action(entityID, ecs::TYPETILEMAPCOMPONENT);
+                    DISPATCH_ACTION_EVENT(action);
+                }
+                else
+                {
+                    LOGGING_WARN("Restriction: Tilemap Component Not Allowed With Sprite Component");
+                    ComponentType = 0;
+                }
+                
             }
+            
             if (ComponentType == 11) {
                 ecs->m_AddComponent(ecs::TYPEAUDIOCOMPONENT, entityID);
                 ComponentType = 0;
@@ -1139,21 +1158,63 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                         if (filename->filename().extension().string() == ".png") {
 
+                            assetmanager::AssetManager* assets = assetmanager::AssetManager::m_funcGetInstance();
+
                             if (!EntitySignature.test(ecs::TYPESPRITECOMPONENT)) {// does not have sprite component, create one
-                                ecs::SpriteComponent* sc = static_cast<ecs::SpriteComponent*>(ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, entityID));
-                                sc->m_imageFile = filename->filename().string();
-                                ecs::ColliderComponent* colCom = static_cast<ecs::ColliderComponent*>(ecs->m_AddComponent(ecs::TYPECOLLIDERCOMPONENT, entityID));
-                                assetmanager::AssetManager* assets = assetmanager::AssetManager::m_funcGetInstance();
-                                colCom->m_Size.m_x = static_cast<float>(static_cast<float>(assets->m_imageManager.m_imageMap[sc->m_imageFile].m_width) / static_cast<float>(pipe->m_unitWidth) / assets->m_imageManager.m_imageMap[sc->m_imageFile].m_stripCount);
-                                colCom->m_Size.m_y = static_cast<float>(assets->m_imageManager.m_imageMap[sc->m_imageFile].m_height) / static_cast<float>(pipe->m_unitHeight);
+                                if (!ecs->m_ECS_EntityMap[entityID].test(ecs::TYPETILEMAPCOMPONENT))
+                                {
+                                    ecs::SpriteComponent* sc = static_cast<ecs::SpriteComponent*>(ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, entityID));
+                                    sc->m_imageFile = filename->filename().string();
+                                    ecs::ColliderComponent* colCom = static_cast<ecs::ColliderComponent*>(ecs->m_AddComponent(ecs::TYPECOLLIDERCOMPONENT, entityID));
+                                   
+                                    colCom->m_Size.m_x = static_cast<float>(static_cast<float>(assets->m_imageManager.m_imageMap[sc->m_imageFile].m_width) / static_cast<float>(pipe->m_unitWidth) / assets->m_imageManager.m_imageMap[sc->m_imageFile].m_stripCount);
+                                    colCom->m_Size.m_y = static_cast<float>(assets->m_imageManager.m_imageMap[sc->m_imageFile].m_height) / static_cast<float>(pipe->m_unitHeight);
+                                    if (!ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEANIMATIONCOMPONENT) && assets->m_imageManager.m_imageMap[sc->m_imageFile].m_stripCount != 1)
+                                    {
+                                        ecs::AnimationComponent* aniCom = static_cast<ecs::AnimationComponent*>(ecs->m_AddComponent(ecs::TYPEANIMATIONCOMPONENT, entityID));
+                                        aniCom->m_stripCount = assets->m_imageManager.m_imageMap[sc->m_imageFile].m_stripCount;
+                                    }
+                                    else if (ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEANIMATIONCOMPONENT))
+                                    {
+                                        auto* ac = static_cast<ecs::AnimationComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEANIMATIONCOMPONENT]->m_GetEntityComponent(entityID));
+                                        ac->m_stripCount = assets->m_imageManager.m_imageMap[sc->m_imageFile].m_stripCount;
+                                    }
+                                }
+                                else
+                                {
+                                    LOGGING_WARN("Restriction: Tilemap Component Not Allowed With Sprite Component");
+                                }
+                               
                             }
                             else {
+
                                 auto* sc = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(entityID));
-                                sc->m_imageFile = filename->filename().string();
-                                auto* colCom = static_cast<ecs::ColliderComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(entityID));
-                                assetmanager::AssetManager* assets = assetmanager::AssetManager::m_funcGetInstance();
-                                colCom->m_Size.m_x = static_cast<float>(static_cast<float>(assets->m_imageManager.m_imageMap[sc->m_imageFile].m_width) / static_cast<float>(pipe->m_unitWidth) / assets->m_imageManager.m_imageMap[sc->m_imageFile].m_stripCount);
-                                colCom->m_Size.m_y = static_cast<float>(assets->m_imageManager.m_imageMap[sc->m_imageFile].m_height) / static_cast<float>(pipe->m_unitHeight);
+
+                                if (!ecs->m_ECS_EntityMap[entityID].test(ecs::TYPETILEMAPCOMPONENT))
+                                {
+                                    
+                                    sc->m_imageFile = filename->filename().string();
+                                    auto* colCom = static_cast<ecs::ColliderComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(entityID));
+                                    assetmanager::AssetManager* assets = assetmanager::AssetManager::m_funcGetInstance();
+                                    colCom->m_Size.m_x = static_cast<float>(static_cast<float>(assets->m_imageManager.m_imageMap[sc->m_imageFile].m_width) / static_cast<float>(pipe->m_unitWidth) / assets->m_imageManager.m_imageMap[sc->m_imageFile].m_stripCount);
+                                    colCom->m_Size.m_y = static_cast<float>(assets->m_imageManager.m_imageMap[sc->m_imageFile].m_height) / static_cast<float>(pipe->m_unitHeight);
+
+                                }
+                                else
+                                {
+                                    LOGGING_WARN("Restriction: Tilemap Component Not Allowed With Sprite Component");
+                                }
+                                if (!ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEANIMATIONCOMPONENT) && assets->m_imageManager.m_imageMap[sc->m_imageFile].m_stripCount != 1)
+                                {
+                                    ecs::AnimationComponent* aniCom = static_cast<ecs::AnimationComponent*>(ecs->m_AddComponent(ecs::TYPEANIMATIONCOMPONENT, entityID));
+                                    aniCom->m_stripCount = assets->m_imageManager.m_imageMap[sc->m_imageFile].m_stripCount;
+                                }
+                                else if (ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEANIMATIONCOMPONENT))
+                                {
+                                    auto* ac = static_cast<ecs::AnimationComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEANIMATIONCOMPONENT]->m_GetEntityComponent(entityID));
+                                    ac->m_stripCount = assets->m_imageManager.m_imageMap[sc->m_imageFile].m_stripCount;
+                                }
+                               
                             }
                         }
 
