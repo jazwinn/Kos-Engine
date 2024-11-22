@@ -55,6 +55,7 @@
       <Link>LogicScript\PlayerControl.cs</Link>
     </Compile>
     <Compile Include="ScriptCore\Components.cs" />
+    <Compile Include="ScriptCore\InternalCall.cs" />
     <Compile Include="ScriptCore\KeyCode.cs" />
     <Compile Include="ScriptCore\ScriptBase.cs" />
   </ItemGroup>
