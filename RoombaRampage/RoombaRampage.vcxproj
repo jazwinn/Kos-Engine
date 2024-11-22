@@ -232,6 +232,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     </ClCompile>
     <ClCompile Include="ECS\Hierachy.cpp" />
     <ClCompile Include="ECS\Layers.cpp" />
+    <ClCompile Include="ECS\System\AudioSystem.cpp" />
     <ClCompile Include="ECS\System\ButtonSystem.cpp" />
     <ClCompile Include="ECS\System\CameraSystem.cpp" />
     <ClCompile Include="ECS\System\PhysicsSystem.cpp" />
@@ -335,11 +336,13 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClCompile Include="Editor\ImGui Panels\ScriptVariable.cpp" />
     <ClInclude Include="ECS\Component\AudioComponent.h" />
     <ClInclude Include="ECS\Component\TilemapComponent.h" />
+    <ClInclude Include="ECS\System\AudioSystem.h" />
     <ClInclude Include="ECS\System\TilemapSystem.h" />
     <ClInclude Include="Editor\ImGui Panels\ScriptVariable.h" />
     <ClCompile Include="Editor\TilemapCalculations.cpp" />
     <ClCompile Include="Editor\WindowFile.cpp" />
     <ClCompile Include="Events\ActionManager.cpp" />
+    <ClCompile Include="Events\DragFloat.cpp" />
     <ClCompile Include="Events\EventHandler.cpp" />
     <ClCompile Include="Events\Listeners.cpp" />
     <ClCompile Include="Events\MessageSystem.cpp" />
@@ -435,6 +438,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="Events\BaseEvent.h" />
     <ClInclude Include="Events\BaseMessage.h" />
     <ClInclude Include="Events\ButtonEvent.h" />
+    <ClInclude Include="Events\DragFloat.h" />
     <ClInclude Include="Events\EventHandler.h" />
     <ClInclude Include="Events\KeyEvent.h" />
     <ClInclude Include="Events\Listeners.h" />

@@ -222,6 +222,19 @@ namespace gui {
 
 
         }
+        static ecs::TransformComponent tempComp;
+        static bool wasClicked = false;
+        if (ImGuizmo::IsUsingAny()) {
+            if (!wasClicked) {
+                wasClicked = true;
+                tempComp = *transcom;
+            }
+        }
+        if (!ImGuizmo::IsUsingAny() && wasClicked) {
+            wasClicked = false;
+            events::TransformComponentChanged action(ecs::TYPETRANSFORMCOMPONENT, m_clickedEntityId, transcom, tempComp);
+            DISPATCH_ACTION_EVENT(action);
+        }
 	}
 
 

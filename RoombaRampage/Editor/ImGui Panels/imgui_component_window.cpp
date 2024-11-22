@@ -25,6 +25,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Graphics/GraphicsPipe.h"
 #include "../ECS/Layers.h"
 #include "../Editor/TilemapCalculations.h"
+#include "../Events/DragFloat.h"
 
 #include "ScriptVariable.h"
 
@@ -63,11 +64,12 @@ struct DrawComponents {
         std::string title = "##" + m_Array[count];
         ImGui::PushItemWidth(slidersize);
         bool changed = false;
-        if (ImGui::DragFloat(title.c_str(), &_args, 0.1f, -1000.0f, 1000.f, "%.2f")) {
-            if (ImGui::IsMouseReleased(ImGuiMouseButton_Left)) {
-                changed = true;
-            }
-            
+        ImGui::DragFloat(title.c_str(), &_args, 0.1f, -1000.0f, 1000.f, "%.2f");
+        if (ImGui::IsItemActivated()) {
+            changed = true;
+        }
+        if (ImGui::IsItemDeactivatedAfterEdit()) {
+            changed = true;
         }
         ImGui::PopItemWidth();
         count++;
@@ -126,9 +128,9 @@ struct DrawComponents {
         ImGui::PushItemWidth(slidersize);
         std::string title = "X##" + m_Array[count];
         bool changed = false;
-        if (ImGui::DragFloat(title.c_str(), &_args.m_x, 0.02f, -50.f, 50.f, "%.2f")) {
+        ImGui::DragFloat(title.c_str(), &_args.m_x, 0.02f, -50.f, 50.f, "%.2f");
+        if(ImGui::IsItemActivated()){
             changed = true;
-            
         }
         if (ImGui::IsItemDeactivatedAfterEdit()) {
             changed = true;
@@ -137,7 +139,11 @@ struct DrawComponents {
         ImGui::SetNextItemWidth(100.0f);
         title = "Y##" + m_Array[count];
         ImGui::PushItemWidth(slidersize);
-        if (ImGui::DragFloat(title.c_str(), &_args.m_y, 0.02f, -50.0f, 50.0f, "%.2f")) {
+        ImGui::DragFloat(title.c_str(), &_args.m_y, 0.02f, -50.0f, 50.0f, "%.2f");
+        if (ImGui::IsItemActivated() && !changed) {
+            changed = true;
+        }
+        if (ImGui::IsItemDeactivatedAfterEdit()) {
             changed = true;
         }
         ImGui::PopItemWidth();
@@ -235,21 +241,12 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 events::AddComponent action(entityID, ecs::TYPECOLLIDERCOMPONENT);
                 DISPATCH_ACTION_EVENT(action);
             }
-            if (ComponentType == 2 ) {
-                if (!ecs->m_ECS_EntityMap[entityID].test(ecs::TYPETILEMAPCOMPONENT))
-                {
-                    ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, entityID);
-                    ComponentType = 0;
-                    events::AddComponent action(entityID, ecs::TYPESPRITECOMPONENT);
-                    DISPATCH_ACTION_EVENT(action);
-                }
-                else
-                {
-                    LOGGING_WARN("Restriction: Tilemap Component Not Allowed With Sprite Component");
-                    ComponentType = 0;
-                }
+            if (ComponentType == 2) {
+                ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, entityID);
+                ComponentType = 0;
+                events::AddComponent action(entityID, ecs::TYPESPRITECOMPONENT);
+                DISPATCH_ACTION_EVENT(action);
             }
-           
             if (ComponentType == 3) {
                 ecs->m_AddComponent(ecs::TYPEPLAYERCOMPONENT, entityID);
                 ComponentType = 0;
@@ -293,21 +290,11 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 DISPATCH_ACTION_EVENT(action);
             }
             if (ComponentType == 10) {
-                if (!ecs->m_ECS_EntityMap[entityID].test(ecs::TYPESPRITECOMPONENT))
-                {
-                    ecs->m_AddComponent(ecs::TYPETILEMAPCOMPONENT, entityID);
-                    ComponentType = 0;
-                    events::AddComponent action(entityID, ecs::TYPETILEMAPCOMPONENT);
-                    DISPATCH_ACTION_EVENT(action);
-                }
-                else
-                {
-                    LOGGING_WARN("Restriction: Tilemap Component Not Allowed With Sprite Component");
-                    ComponentType = 0;
-                }
-                
+                ecs->m_AddComponent(ecs::TYPETILEMAPCOMPONENT, entityID);
+                ComponentType = 0;
+                events::AddComponent action(entityID, ecs::TYPETILEMAPCOMPONENT);
+                DISPATCH_ACTION_EVENT(action);
             }
-            
             if (ComponentType == 11) {
                 ecs->m_AddComponent(ecs::TYPEAUDIOCOMPONENT, entityID);
                 ComponentType = 0;
@@ -487,22 +474,38 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                 if (open) {
                     auto* rbc = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(entityID));
-                    ecs::TransformComponent oldVal = *rbc;
                     DrawComponents toDraw(rbc->Names());
+                    static ecs::TransformComponent oldVal = *rbc;
                     if (toDraw(rbc->m_position)) {
-
-                        events::TransformComponentChanged action(ecs::TYPETRANSFORMCOMPONENT, entityID, rbc, oldVal);
-                        //std::cout << "Old " << static_cast<ecs::TransformComponent>(action.m_getOld()).m_position.m_x << " " << static_cast<ecs::TransformComponent>(action.m_getOld()).m_position.m_y << std::endl;
-                        //std::cout << "Old " << static_cast<ecs::TransformComponent>(action.m_getNew()).m_position.m_x << " " << static_cast<ecs::TransformComponent>(action.m_getNew()).m_position.m_y << std::endl;
-                        DISPATCH_ACTION_EVENT(action);
+                        if ((DragFloat::dragFloatCheck::m_GetInstance()->m_getPrevMem() != DragFloat::Member::POS)) {
+                            oldVal = *rbc;
+                        }
+                        if (DragFloat::dragFloatCheck::m_GetInstance()->m_click(DragFloat::Comp::TRANSFORM, DragFloat::Member::POS)) {
+                            events::TransformComponentChanged action(ecs::TYPETRANSFORMCOMPONENT, entityID, rbc, oldVal);
+                            DISPATCH_ACTION_EVENT(action);
+                            oldVal = *rbc;
+                        }
+                        
                     }
                     if (toDraw(rbc->m_rotation)) {
-                        events::TransformComponentChanged action(ecs::TYPETRANSFORMCOMPONENT, entityID, rbc, oldVal);
-                        DISPATCH_ACTION_EVENT(action);
+                        if ((DragFloat::dragFloatCheck::m_GetInstance()->m_getPrevMem() != DragFloat::Member::ROT)) {
+                            oldVal = *rbc;
+                        }
+                        if (DragFloat::dragFloatCheck::m_GetInstance()->m_click(DragFloat::Comp::TRANSFORM, DragFloat::Member::ROT)) {
+                            events::TransformComponentChanged action(ecs::TYPETRANSFORMCOMPONENT, entityID, rbc, oldVal);
+                            DISPATCH_ACTION_EVENT(action);
+                            oldVal = *rbc;
+                        }
                     }
                     if (toDraw(rbc->m_scale)) {
-                        events::TransformComponentChanged action(ecs::TYPETRANSFORMCOMPONENT, entityID, rbc, oldVal);
-                        DISPATCH_ACTION_EVENT(action);
+                        if ((DragFloat::dragFloatCheck::m_GetInstance()->m_getPrevMem() != DragFloat::Member::SCALE)) {
+                            oldVal = *rbc;
+                        }
+                        if (DragFloat::dragFloatCheck::m_GetInstance()->m_click(DragFloat::Comp::TRANSFORM, DragFloat::Member::SCALE)) {
+                            events::TransformComponentChanged action(ecs::TYPETRANSFORMCOMPONENT, entityID, rbc, oldVal);
+                            DISPATCH_ACTION_EVENT(action);
+                            oldVal = *rbc;
+                        }
                     }
                     
                 }
@@ -516,7 +519,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 CreateContext(ecs::TYPESPRITECOMPONENT, entityID);
 
                 if (open) {
-                    graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
+                   
                     assetmanager::AssetManager* Asset = assetmanager::AssetManager::m_funcGetInstance();
                     auto* sc = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(entityID));
 
@@ -528,13 +531,6 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                             if (ImGui::Selectable(image.first.c_str())) {
                                 sc->m_imageFile = image.first.c_str();
-                                if (!EntitySignature.test(ecs::TYPECOLLIDERCOMPONENT))
-                                {
-                                    ecs::ColliderComponent* colCom = static_cast<ecs::ColliderComponent*>(ecs->m_AddComponent(ecs::TYPECOLLIDERCOMPONENT, entityID));
-                                    assetmanager::AssetManager* assets = assetmanager::AssetManager::m_funcGetInstance();
-                                    colCom->m_Size.m_x = static_cast<float>(static_cast<float>(assets->m_imageManager.m_imageMap[sc->m_imageFile].m_width) / static_cast<float>(pipe->m_unitWidth) / assets->m_imageManager.m_imageMap[sc->m_imageFile].m_stripCount);
-                                    colCom->m_Size.m_y = static_cast<float>(assets->m_imageManager.m_imageMap[sc->m_imageFile].m_height) / static_cast<float>(pipe->m_unitHeight);
-                                }
                             }
                         }
                         ImGui::EndCombo();
@@ -947,10 +943,10 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
 
                             const bool is_selected{};
-                            if (ImGui::Selectable(scriptname.c_str(), is_selected)) {
+                            if (ImGui::Selectable(scriptname.first.c_str(), is_selected)) {
                                 //TODO for now push back
-                                if (std::find(sc->m_scripts.begin(), sc->m_scripts.end(), scriptname) == sc->m_scripts.end()) {
-                                    sc->m_scripts.push_back(scriptname);
+                                if (std::find(sc->m_scripts.begin(), sc->m_scripts.end(), scriptname.first) == sc->m_scripts.end()) {
+                                    sc->m_scripts.push_back(scriptname.first);
                                 }
                                 else {
                                     LOGGING_WARN("Script is already inside Object");
@@ -980,8 +976,8 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 CreateContext(ecs::TYPEBUTTONCOMPONENT, entityID);
 
                 if (open) {
-                    auto* rbc = static_cast<ecs::ButtonComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEBUTTONCOMPONENT]->m_GetEntityComponent(entityID));
-                    rbc->ApplyFunction(DrawComponents(rbc->Names()));
+                    //auto* rbc = static_cast<ecs::ButtonComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEBUTTONCOMPONENT]->m_GetEntityComponent(entityID));
+                    //rbc->ApplyFunction(DrawComponents(rbc->Names()));
                 }
 
 
@@ -1074,6 +1070,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                     auto* ac = static_cast<ecs::AudioComponent*>(
                         ecs->m_ECS_CombinedComponentPool[ecs::TYPEAUDIOCOMPONENT]->m_GetEntityComponent(entityID)
                         );
+                        assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
 
                     if (ac) {
                         int fileIndex = 0;
@@ -1082,6 +1079,39 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                             bool removeFile = false;
                             std::string headerName = "Audio File " + std::to_string(fileIndex + 1) + ": " + it->m_Name;
+
+                            if (ImGui::BeginCombo("Sounds", it->m_Name.c_str()))
+                            {
+                                for (const auto& sound : assetManager->m_audioManager.getSoundMap()) {
+
+                                    if (ImGui::Selectable(sound.first.c_str())) {
+                                        it->m_Name = sound.first.c_str();
+                                    }
+                                }
+                                ImGui::EndCombo();
+                            }
+                            if (ImGui::BeginDragDropTarget())
+                            {
+
+                                if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("file"))
+                                {
+                                    IM_ASSERT(payload->DataSize == sizeof(std::filesystem::path));
+                                    std::filesystem::path* filename = static_cast<std::filesystem::path*>(payload->Data);
+                                    if (filename->filename().extension().string() == ".png") {
+                                        if (assetManager->m_audioManager.getSoundMap().find(filename->filename().string()) == assetManager->m_audioManager.getSoundMap().end()) {
+                                            LOGGING_WARN("File not loaded, please reload content browser");
+                                        }
+                                        else {
+                                            assetManager->m_LoadAudio(filename->filename().string());
+                                        }
+                                    }
+                                    else {
+                                        LOGGING_WARN("Wrong File Type");
+                                    }
+
+                                }
+                                ImGui::EndDragDropTarget();
+                            }
 
                             ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_DefaultOpen;
                             bool nodeOpen = ImGui::TreeNodeEx(headerName.c_str(), flags);
@@ -1097,17 +1127,32 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                                 ImGui::EndPopup();
                             }
 
+                        
+
                             if (nodeOpen) {
                                 char buffer[256];
                                 strncpy(buffer, it->m_FilePath.c_str(), sizeof(buffer));
 
-                                if (ImGui::InputText("File Path", buffer, sizeof(buffer))) {
+                                /*if (ImGui::InputText("File Path", buffer, sizeof(buffer))) {
                                     it->m_FilePath = buffer;
-                                }
+                                    assetManager->m_LoadAudio(buffer);
+                                }*/
 
                                 ImGui::SliderFloat("Volume", &it->m_Volume, 0.0f, 1.0f);
                                 ImGui::Checkbox("Loop", &it->m_Loop);
                                 ImGui::Checkbox("Play On Start", &it->m_PlayOnStart);
+                                if (ImGui::Button("Stop Sound"))
+                                {
+                                    std::string fileName = it->m_FilePath.c_str();
+                                    size_t lastSlashPos = fileName.find_last_of("/\\");  // Handles both UNIX and Windows paths
+                                    size_t lastDotPos = fileName.find_last_of('.');
+
+                                    if (lastDotPos == std::string::npos) {
+                                        lastDotPos = fileName.length();
+                                    }
+                                    fileName = fileName.substr(lastSlashPos + 1, lastDotPos - lastSlashPos - 1);
+                                    assetManager->m_audioManager.m_StopAudio(it->m_FilePath.c_str());
+                                }
 
                                 ImGui::TreePop();
                             }
@@ -1124,18 +1169,18 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         }
 
                         static char newAudioName[256] = ""; 
-                        ImGui::InputText("New Audio Name", newAudioName, sizeof(newAudioName));
+                        //ImGui::InputText("New Audio Name", newAudioName, sizeof(newAudioName));
 
                         if (ImGui::Button("Add Audio File")) {
-                            if (strlen(newAudioName) > 0) {
-                  
+                            //if (strlen(newAudioName) > 0) {
+                                
                                 ac->m_AudioFiles.emplace_back(); 
-                                ac->m_AudioFiles.back().m_Name = newAudioName; 
-                                memset(newAudioName, 0, sizeof(newAudioName)); 
-                            }
-                            else {
-                                ImGui::Text("Please enter a valid name for the audio file.");
-                            }
+                                //ac->m_AudioFiles.back().m_Name = newAudioName; 
+                                //memset(newAudioName, 0, sizeof(newAudioName)); 
+                            //}
+                            //else {
+                             //   ImGui::Text("Please enter a valid name for the audio file.");
+                            //}
                         }
                     }
                 }
@@ -1149,7 +1194,6 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                 if (ImGui::BeginDragDropTarget())
                 {
-                    graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
 
                     if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("file"))
                     {
@@ -1158,63 +1202,13 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                         if (filename->filename().extension().string() == ".png") {
 
-                            assetmanager::AssetManager* assets = assetmanager::AssetManager::m_funcGetInstance();
-
                             if (!EntitySignature.test(ecs::TYPESPRITECOMPONENT)) {// does not have sprite component, create one
-                                if (!ecs->m_ECS_EntityMap[entityID].test(ecs::TYPETILEMAPCOMPONENT))
-                                {
-                                    ecs::SpriteComponent* sc = static_cast<ecs::SpriteComponent*>(ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, entityID));
-                                    sc->m_imageFile = filename->filename().string();
-                                    ecs::ColliderComponent* colCom = static_cast<ecs::ColliderComponent*>(ecs->m_AddComponent(ecs::TYPECOLLIDERCOMPONENT, entityID));
-                                   
-                                    colCom->m_Size.m_x = static_cast<float>(static_cast<float>(assets->m_imageManager.m_imageMap[sc->m_imageFile].m_width) / static_cast<float>(pipe->m_unitWidth) / assets->m_imageManager.m_imageMap[sc->m_imageFile].m_stripCount);
-                                    colCom->m_Size.m_y = static_cast<float>(assets->m_imageManager.m_imageMap[sc->m_imageFile].m_height) / static_cast<float>(pipe->m_unitHeight);
-                                    if (!ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEANIMATIONCOMPONENT) && assets->m_imageManager.m_imageMap[sc->m_imageFile].m_stripCount != 1)
-                                    {
-                                        ecs::AnimationComponent* aniCom = static_cast<ecs::AnimationComponent*>(ecs->m_AddComponent(ecs::TYPEANIMATIONCOMPONENT, entityID));
-                                        aniCom->m_stripCount = assets->m_imageManager.m_imageMap[sc->m_imageFile].m_stripCount;
-                                    }
-                                    else if (ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEANIMATIONCOMPONENT))
-                                    {
-                                        auto* ac = static_cast<ecs::AnimationComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEANIMATIONCOMPONENT]->m_GetEntityComponent(entityID));
-                                        ac->m_stripCount = assets->m_imageManager.m_imageMap[sc->m_imageFile].m_stripCount;
-                                    }
-                                }
-                                else
-                                {
-                                    LOGGING_WARN("Restriction: Tilemap Component Not Allowed With Sprite Component");
-                                }
-                               
+                                ecs::SpriteComponent* com = static_cast<ecs::SpriteComponent*>(ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, entityID));
+                                com->m_imageFile = filename->filename().string();
                             }
                             else {
-
                                 auto* sc = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(entityID));
-
-                                if (!ecs->m_ECS_EntityMap[entityID].test(ecs::TYPETILEMAPCOMPONENT))
-                                {
-                                    
-                                    sc->m_imageFile = filename->filename().string();
-                                    auto* colCom = static_cast<ecs::ColliderComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(entityID));
-                                    assetmanager::AssetManager* assets = assetmanager::AssetManager::m_funcGetInstance();
-                                    colCom->m_Size.m_x = static_cast<float>(static_cast<float>(assets->m_imageManager.m_imageMap[sc->m_imageFile].m_width) / static_cast<float>(pipe->m_unitWidth) / assets->m_imageManager.m_imageMap[sc->m_imageFile].m_stripCount);
-                                    colCom->m_Size.m_y = static_cast<float>(assets->m_imageManager.m_imageMap[sc->m_imageFile].m_height) / static_cast<float>(pipe->m_unitHeight);
-
-                                }
-                                else
-                                {
-                                    LOGGING_WARN("Restriction: Tilemap Component Not Allowed With Sprite Component");
-                                }
-                                if (!ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEANIMATIONCOMPONENT) && assets->m_imageManager.m_imageMap[sc->m_imageFile].m_stripCount != 1)
-                                {
-                                    ecs::AnimationComponent* aniCom = static_cast<ecs::AnimationComponent*>(ecs->m_AddComponent(ecs::TYPEANIMATIONCOMPONENT, entityID));
-                                    aniCom->m_stripCount = assets->m_imageManager.m_imageMap[sc->m_imageFile].m_stripCount;
-                                }
-                                else if (ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEANIMATIONCOMPONENT))
-                                {
-                                    auto* ac = static_cast<ecs::AnimationComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEANIMATIONCOMPONENT]->m_GetEntityComponent(entityID));
-                                    ac->m_stripCount = assets->m_imageManager.m_imageMap[sc->m_imageFile].m_stripCount;
-                                }
-                               
+                                sc->m_imageFile = filename->filename().string();
                             }
                         }
 

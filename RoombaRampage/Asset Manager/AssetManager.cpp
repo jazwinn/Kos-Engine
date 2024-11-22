@@ -139,18 +139,25 @@ namespace assetmanager {
 
         std::string filename = filepath.filename().stem().string();
         
-        if (std::find(m_scriptManager.m_CSScripts.begin(), m_scriptManager.m_CSScripts.end(), filename) == m_scriptManager.m_CSScripts.end()) {
+        if (std::find_if(m_scriptManager.m_CSScripts.begin(), m_scriptManager.m_CSScripts.end(), [&filename](const std::pair<std::string, std::filesystem::path>& scriptpair) {return scriptpair.first == filename ;}) == m_scriptManager.m_CSScripts.end()) {
             //store if filename is not inside
-            m_scriptManager.m_CSScripts.push_back(filename);
+            m_scriptManager.m_CSScripts.push_back(std::pair{filename, filepath});
         }
-
-        
 
     }
 
    void AssetManager::m_LoadAudio(std::string file) {
-       m_audioManager.m_LoadAudio(file); 
-    }
+       std::string fileName = file;
+       size_t lastSlashPos = fileName.find_last_of("/\\");  // Handles both UNIX and Windows paths
+       size_t lastDotPos = fileName.find_last_of('.');
+
+       if (lastDotPos == std::string::npos) {
+           lastDotPos = fileName.length(); 
+       }
+       fileName = fileName.substr(lastSlashPos + 1, lastDotPos - lastSlashPos - 1);
+       m_audioManager.m_LoadAudio(fileName,file); 
+   }
+
    void AssetManager::m_LoadFont(std::string file)
    {
        text::FontManager::LoadFont(file);
