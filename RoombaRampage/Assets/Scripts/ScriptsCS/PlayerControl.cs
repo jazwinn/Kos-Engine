@@ -31,7 +31,8 @@ namespace Namespace
             //Console.WriteLine($"Entity:{EntityID}");
 
             Vector2 velocity;
-            if(!m_InternalGetVelocity(EntityID, out velocity))
+            
+            if(!InternalCall.m_InternalGetVelocity(EntityID, out velocity))
             {
                 // return cause velocity -> rigidbody is not present in entity
                 return;
@@ -40,41 +41,53 @@ namespace Namespace
             velocity.X = 0;
             velocity.Y = 0;
 
-            if (m_InternalCallIsKeyPressed(Key.keyCode.W))
+            if (InternalCall.m_InternalCallIsKeyPressed(Key.keyCode.W))
             {
                 velocity.Y = speed;
             }
-            if (m_InternalCallIsKeyPressed(Key.keyCode.S))
+            if (InternalCall.m_InternalCallIsKeyPressed(Key.keyCode.S))
             {
                 velocity.Y = -speed;
             }
-            if (m_InternalCallIsKeyPressed(Key.keyCode.A))
+            if (InternalCall.m_InternalCallIsKeyPressed(Key.keyCode.A))
             {
                 velocity.X = -speed;
             }
-            if (m_InternalCallIsKeyPressed(Key.keyCode.D))
+            if (InternalCall.m_InternalCallIsKeyPressed(Key.keyCode.D))
             {
                 velocity.X = speed;
             }
-            if (m_InternalCallIsKeyTriggered(Key.keyCode.F))
+            if (InternalCall.m_InternalCallIsKeyTriggered(Key.keyCode.F))
             {
-                m_UnloadAllScene();
-                m_InternalCallLoadScene("Script Test");
+                InternalCall.m_UnloadAllScene();
+                InternalCall.m_InternalCallLoadScene("Script Test");
             }
-            if (m_InternalCallIsKeyTriggered(Key.keyCode.G))
+            if (InternalCall.m_InternalCallIsKeyTriggered(Key.keyCode.G))
             {
-                int new_entity = m_InternalCallAddPrefab("blackTile_test_1", 0.0f, 0.0f, 45.0f); //do not call prefabs that share the same script as the current
+                int new_entity = InternalCall.m_InternalCallAddPrefab("blackTile_test_1", 0.0f, 0.0f, 45.0f); //do not call prefabs that share the same script as the current
                 queue.Enqueue(new_entity);
             }
-            if (m_InternalCallIsKeyTriggered(Key.keyCode.H))
+            if (InternalCall.m_InternalCallIsKeyTriggered(Key.keyCode.H))
             {
                 if(queue.Count > 0){
-                    m_InternalCallDeleteEntity((uint)queue.Dequeue());//
+                    InternalCall.m_InternalCallDeleteEntity((uint)queue.Dequeue());//
                 }
                 
             }
 
-            m_InternalSetVelocity(EntityID, velocity);
+            if (InternalCall.m_InternalCallIsKeyTriggered(Key.keyCode.X))
+            {
+                var sprite = GetComponent.GetSpriteComponent(EntityID);
+
+                Console.WriteLine($"Image is : {sprite.m_imageFile}"); // get sprite component
+
+                sprite.m_imageFile = "Button.png";
+
+                SetComponent.SetSpriteComponent(EntityID, sprite); // set sprite component
+
+            }
+
+            InternalCall.m_InternalSetVelocity(EntityID, velocity);
         }
     }
 }

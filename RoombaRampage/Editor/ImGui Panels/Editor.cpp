@@ -327,11 +327,11 @@ namespace gui {
 			actions::ActionManager::m_GetManagerInstance()->m_doAction(newAct);
 		}else if (givenEvent.m_GetEventType() == events::Actions::ADDCOMP) {
 			auto* newAct = new actions::AddComponentAction(givenEvent.m_ToType<events::AddComponent>().m_getID(), givenEvent.m_ToType<events::AddComponent>().m_getComponentType());
-			actions::ActionManager::m_GetManagerInstance()->m_doAction(newAct);
+			actions::ActionManager::m_GetManagerInstance()->m_push(newAct);
 		}
 		else if (givenEvent.m_GetEventType() == events::Actions::REMOVECOMP) {
 			auto* newAct = new actions::RemoveComponentAction(givenEvent.m_ToType<events::AddComponent>().m_getID(), givenEvent.m_ToType<events::AddComponent>().m_getComponentType());
-			actions::ActionManager::m_GetManagerInstance()->m_doAction(newAct);
+			actions::ActionManager::m_GetManagerInstance()->m_push(newAct);
 		}
 		else if (givenEvent.m_GetEventType() == events::Actions::UNDO) {
 			actions::ActionManager::m_GetManagerInstance()->m_undo();

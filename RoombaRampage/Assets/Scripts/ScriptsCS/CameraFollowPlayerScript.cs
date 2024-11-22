@@ -21,7 +21,7 @@ namespace Namespace
 
         public override void Start()
         {
-            playerID = m_InternalCallGetPlayer();
+            playerID = InternalCall.m_InternalCallGetPlayer();
 
             if(playerID < 0){
                Console.WriteLine("Player Component not present in entity");
@@ -34,9 +34,9 @@ namespace Namespace
              //Console.WriteLine($"Player:{playerID}");
             if(playerID < 0) return;
 
-            m_InternalGetTranslate((uint)playerID, out pos);
+            InternalCall.m_InternalGetTranslate((uint)playerID, out pos);
 
-            m_InternalSetTranslate(EntityID, in pos);
+            InternalCall.m_InternalSetTranslate(EntityID, in pos);
 
 
 

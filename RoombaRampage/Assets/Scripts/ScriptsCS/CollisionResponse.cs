@@ -27,28 +27,27 @@ namespace Namespace
         {
 
             //Console.WriteLine($"Entity:{EntityID}");
-
             Vector2 velocity;
-            if (!m_InternalGetVelocity(EntityID, out velocity))
+            if (!InternalCall.m_InternalGetVelocity(EntityID, out velocity))
             {
                 // return cause velocity -> rigidbody is not present in entity
                 return;
             }
 
 
-            m_InternalCallGetDeltaTime(out deltatime);
+            InternalCall.m_InternalCallGetDeltaTime(out deltatime);
 
             
-            iscollided = m_InternalCallIsCollided(EntityID);
+            iscollided = InternalCall.m_InternalCallIsCollided(EntityID);
             if (iscollided != 0.0f)
             {
-                int[] collidedEntities = m_InternalCallGetCollidedEntities(EntityID);
+                int[] collidedEntities = InternalCall.m_InternalCallGetCollidedEntities(EntityID);
 
                 foreach (var collidedid in collidedEntities)
                 {
                     Console.WriteLine($"{collidedid} is Collided");
 
-                    string tag = m_InternalCallGetTag((uint)collidedid);
+                    string tag = InternalCall.m_InternalCallGetTag((uint)collidedid);
 
                     Console.WriteLine($"Collided tag is {tag}");
                 }
