@@ -144,8 +144,6 @@ namespace assetmanager {
             m_scriptManager.m_CSScripts.push_back(filename);
         }
 
-        
-
     }
 
    void AssetManager::m_LoadAudio(std::string file) {
@@ -159,7 +157,8 @@ namespace assetmanager {
        fileName.substr(lastSlashPos + 1, lastDotPos - lastSlashPos - 1);
 
        m_audioManager.m_LoadAudio(fileName,file); 
-    }
+   }
+
    void AssetManager::m_LoadFont(std::string file)
    {
        text::FontManager::LoadFont(file);
