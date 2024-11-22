@@ -9,8 +9,8 @@
         },
         "transform": {
             "position": {
-                "x": 1.654394268989563,
-                "y": -1.9988582134246826
+                "x": -0.9056365489959717,
+                "y": 0.18280313909053802
             },
             "rotation": -0.0,
             "scale": {
@@ -152,6 +152,30 @@
                 "y": 1.0
             }
         },
+        "rigidbody": {
+            "linearVelocity": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "linearAcceleration": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "angularVelocity": 0.0,
+            "angularAcceleration": 0.0,
+            "mass": 1.0,
+            "inverseMass": 1.0,
+            "linearDamping": 0.9900000095367432,
+            "angularDamping": 0.9900000095367432,
+            "force": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "torque": 0.0,
+            "kinematic": false,
+            "static": false
+        },
         "sprite": {
             "imagefile": "Button.png",
             "layer": 0,
@@ -164,13 +188,18 @@
         },
         "button": {
             "force": {
-                "x": 1941.214599609375,
-                "y": 1129.75048828125
+                "x": 1850.6947021484375,
+                "y": 360.0
             },
             "scale": {
                 "x": 1.0,
                 "y": 1.0
             }
+        },
+        "script": {
+            "scripts": [
+                "MovingObjectScript"
+            ]
         }
     }
 ]

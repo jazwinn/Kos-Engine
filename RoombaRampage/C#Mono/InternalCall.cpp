@@ -24,7 +24,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Asset Manager/SceneManager.h"
 
 #define MONO_ADD_INTERNAL_CALL(METHOD_NAME) \
-    mono_add_internal_call("Namespace.InternalCall::" #METHOD_NAME, METHOD_NAME);
+    mono_add_internal_call("InternalCall::" #METHOD_NAME, METHOD_NAME);
 
 namespace script {
 

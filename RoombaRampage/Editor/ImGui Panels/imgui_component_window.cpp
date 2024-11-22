@@ -943,10 +943,10 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
 
                             const bool is_selected{};
-                            if (ImGui::Selectable(scriptname.c_str(), is_selected)) {
+                            if (ImGui::Selectable(scriptname.first.c_str(), is_selected)) {
                                 //TODO for now push back
-                                if (std::find(sc->m_scripts.begin(), sc->m_scripts.end(), scriptname) == sc->m_scripts.end()) {
-                                    sc->m_scripts.push_back(scriptname);
+                                if (std::find(sc->m_scripts.begin(), sc->m_scripts.end(), scriptname.first) == sc->m_scripts.end()) {
+                                    sc->m_scripts.push_back(scriptname.first);
                                 }
                                 else {
                                     LOGGING_WARN("Script is already inside Object");

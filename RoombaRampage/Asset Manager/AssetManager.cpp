@@ -139,9 +139,9 @@ namespace assetmanager {
 
         std::string filename = filepath.filename().stem().string();
         
-        if (std::find(m_scriptManager.m_CSScripts.begin(), m_scriptManager.m_CSScripts.end(), filename) == m_scriptManager.m_CSScripts.end()) {
+        if (std::find_if(m_scriptManager.m_CSScripts.begin(), m_scriptManager.m_CSScripts.end(), [&filename](const std::pair<std::string, std::filesystem::path>& scriptpair) {return scriptpair.first == filename ;}) == m_scriptManager.m_CSScripts.end()) {
             //store if filename is not inside
-            m_scriptManager.m_CSScripts.push_back(filename);
+            m_scriptManager.m_CSScripts.push_back(std::pair{filename, filepath});
         }
 
     }
