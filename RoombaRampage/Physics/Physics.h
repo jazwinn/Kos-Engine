@@ -56,7 +56,6 @@ namespace physicspipe {
 		int m_ID = -1;                                // Unique identifier
 		EntityType type = EntityType::RECTANGLE;    // Circle or Rectangle
 		int m_layerID = -1;
-		bool is_Parent = false;
 
 		virtual ~PhysicsData() = default;
 
@@ -122,9 +121,6 @@ namespace physicspipe {
 		float m_height = 0.0f;  // For rectangular entities
 		float m_width = 0.0f;   // For rectangular entities
 		float m_rotAngle = 0.0f;
-		float m_childAngle = 0.0f;
-		vector2::Vec2 m_childPosition{};
-		vector2::Vec2 m_childScale{};
 		AABB m_boundingBox{};
 		Rectangle() = default;
 		// Constructor for Rectangle (declaration)
@@ -140,8 +136,8 @@ namespace physicspipe {
 		\param[in] entity_ID    Unique ID for the entity.
 		*/
 		/******************************************************************/
-		Rectangle(float rect_height, float rect_width, float m_childAngle, float rect_angle, vector2::Vec2 shape_position, vector2::Vec2 shape_scale,
-			vector2::Vec2 shape_velocity, int entity_ID, int layer_ID, bool isParent ,vector2::Vec2 child_position = {}, vector2::Vec2 m_childScale = {});
+		Rectangle(float rect_height, float rect_width, float rect_angle, vector2::Vec2 shape_position, vector2::Vec2 shape_scale,
+			vector2::Vec2 shape_velocity, int entity_ID, int layer_ID);
 
 		// Overriding GetEntity for Rectangle
 		EntityType GetEntity() const override {
@@ -176,6 +172,8 @@ namespace physicspipe {
 		vector2::Vec2 m_pt1;
 		vector2::Vec2 m_normal;
 	};
+
+	void m_BuildLineSegment(LineSegment& lineSegment, const vector2::Vec2& p0, const vector2::Vec2& p1);
 
 	/******************************************************************/
 	/*!
@@ -230,8 +228,8 @@ namespace physicspipe {
 		\param[in] ID           Unique ID of the rectangle entity.
 		*/
 		/******************************************************************/
-		void m_SendPhysicsData(float rect_height, float rect_width, float m_childAngle, float rect_angle, vector2::Vec2 position, vector2::Vec2 scale,
-			vector2::Vec2 velocity, int ID, layer::LAYERS layerID ,bool isParent, vector2::Vec2 child_position = {}, vector2::Vec2 m_childScale = {});
+		void m_SendPhysicsData(float rect_height, float rect_width, float rect_angle, vector2::Vec2 position, vector2::Vec2 scale,
+			vector2::Vec2 velocity, int ID, layer::LAYERS layerID);
 		/******************************************************************/
 		/*!
 		\fn        void Physics::m_SendPhysicsData(float radius, vector2::Vec2 position, vector2::Vec2 scale, vector2::Vec2 velocity, int ID)
@@ -285,7 +283,8 @@ namespace physicspipe {
 		\return    True if a collision is detected, false otherwise.
 		*/
 		/******************************************************************/
-		bool m_CollisionIntersection_CircleRect(const Circle&, const Rectangle&);
+		bool m_CollisionIntersection_CircleRect_AABB(const Circle&, const Rectangle&);
+		bool m_CollisionIntersection_CircleRect_SAT(const Circle&, const Rectangle&);
 		/******************************************************************/
 		/*!
 		\fn        bool Physics::m_CollisionIntersection_CircleCircle(const Circle& circle1, const Circle& circle2)
@@ -354,6 +353,11 @@ namespace physicspipe {
 		bool m_withinBoundingRadius(const std::shared_ptr<PhysicsData>& entity1, const std::shared_ptr<PhysicsData>& entity2);
 		void m_addCollidedEntity(const std::shared_ptr<PhysicsData>& entity); 
 		void m_clearPair();
+
+		void m_projectOntoCircle(vector2::Vec2 center, float radius, vector2::Vec2 axis, float& min, float& max);
+
+		int m_findClosestPointOnPolygon(vector2::Vec2 circle_pos, std::vector<vector2::Vec2> vertices);
+
 };
 }
 #endif
