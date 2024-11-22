@@ -25,6 +25,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Graphics/GraphicsPipe.h"
 #include "../ECS/Layers.h"
 #include "../Editor/TilemapCalculations.h"
+#include "../Events/DragFloat.h"
 
 #include "ScriptVariable.h"
 
@@ -63,11 +64,12 @@ struct DrawComponents {
         std::string title = "##" + m_Array[count];
         ImGui::PushItemWidth(slidersize);
         bool changed = false;
-        if (ImGui::DragFloat(title.c_str(), &_args, 0.1f, -1000.0f, 1000.f, "%.2f")) {
-            if (ImGui::IsMouseReleased(ImGuiMouseButton_Left)) {
-                changed = true;
-            }
-            
+        ImGui::DragFloat(title.c_str(), &_args, 0.1f, -1000.0f, 1000.f, "%.2f");
+        if (ImGui::IsItemActivated()) {
+            changed = true;
+        }
+        if (ImGui::IsItemDeactivatedAfterEdit()) {
+            changed = true;
         }
         ImGui::PopItemWidth();
         count++;
@@ -126,9 +128,9 @@ struct DrawComponents {
         ImGui::PushItemWidth(slidersize);
         std::string title = "X##" + m_Array[count];
         bool changed = false;
-        if (ImGui::DragFloat(title.c_str(), &_args.m_x, 0.02f, -50.f, 50.f, "%.2f")) {
+        ImGui::DragFloat(title.c_str(), &_args.m_x, 0.02f, -50.f, 50.f, "%.2f");
+        if(ImGui::IsItemActivated()){
             changed = true;
-            
         }
         if (ImGui::IsItemDeactivatedAfterEdit()) {
             changed = true;
@@ -137,7 +139,11 @@ struct DrawComponents {
         ImGui::SetNextItemWidth(100.0f);
         title = "Y##" + m_Array[count];
         ImGui::PushItemWidth(slidersize);
-        if (ImGui::DragFloat(title.c_str(), &_args.m_y, 0.02f, -50.0f, 50.0f, "%.2f")) {
+        ImGui::DragFloat(title.c_str(), &_args.m_y, 0.02f, -50.0f, 50.0f, "%.2f");
+        if (ImGui::IsItemActivated()) {
+            changed = true;
+        }
+        if (ImGui::IsItemDeactivatedAfterEdit()) {
             changed = true;
         }
         ImGui::PopItemWidth();
@@ -468,22 +474,34 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                 if (open) {
                     auto* rbc = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(entityID));
-                    ecs::TransformComponent oldVal = *rbc;
                     DrawComponents toDraw(rbc->Names());
+                    static ecs::TransformComponent oldVal = *rbc;
                     if (toDraw(rbc->m_position)) {
-
-                        events::TransformComponentChanged action(ecs::TYPETRANSFORMCOMPONENT, entityID, rbc, oldVal);
-                        //std::cout << "Old " << static_cast<ecs::TransformComponent>(action.m_getOld()).m_position.m_x << " " << static_cast<ecs::TransformComponent>(action.m_getOld()).m_position.m_y << std::endl;
-                        //std::cout << "Old " << static_cast<ecs::TransformComponent>(action.m_getNew()).m_position.m_x << " " << static_cast<ecs::TransformComponent>(action.m_getNew()).m_position.m_y << std::endl;
-                        DISPATCH_ACTION_EVENT(action);
+                        if (DragFloat::dragFloatCheck::m_GetInstance()->m_getCalledBefore() && (DragFloat::dragFloatCheck::m_GetInstance()->m_getPrevMem() != DragFloat::Member::POS)) {
+                            oldVal = *rbc;
+                        }
+                        if (DragFloat::dragFloatCheck::m_GetInstance()->m_click(DragFloat::Comp::TRANSFORM, DragFloat::Member::POS)) {
+                            events::TransformComponentChanged action(ecs::TYPETRANSFORMCOMPONENT, entityID, rbc, oldVal);
+                            DISPATCH_ACTION_EVENT(action);
+                        }
                     }
                     if (toDraw(rbc->m_rotation)) {
-                        events::TransformComponentChanged action(ecs::TYPETRANSFORMCOMPONENT, entityID, rbc, oldVal);
-                        DISPATCH_ACTION_EVENT(action);
+                        if (DragFloat::dragFloatCheck::m_GetInstance()->m_getCalledBefore() && (DragFloat::dragFloatCheck::m_GetInstance()->m_getPrevMem() != DragFloat::Member::ROT)) {
+                            oldVal = *rbc;
+                        }
+                        if (DragFloat::dragFloatCheck::m_GetInstance()->m_click(DragFloat::Comp::TRANSFORM, DragFloat::Member::ROT)) {
+                            events::TransformComponentChanged action(ecs::TYPETRANSFORMCOMPONENT, entityID, rbc, oldVal);
+                            DISPATCH_ACTION_EVENT(action);
+                        }
                     }
                     if (toDraw(rbc->m_scale)) {
-                        events::TransformComponentChanged action(ecs::TYPETRANSFORMCOMPONENT, entityID, rbc, oldVal);
-                        DISPATCH_ACTION_EVENT(action);
+                        if (DragFloat::dragFloatCheck::m_GetInstance()->m_getCalledBefore() && (DragFloat::dragFloatCheck::m_GetInstance()->m_getPrevMem() != DragFloat::Member::SCALE)) {
+                            oldVal = *rbc;
+                        }
+                        if (DragFloat::dragFloatCheck::m_GetInstance()->m_click(DragFloat::Comp::TRANSFORM, DragFloat::Member::SCALE)) {
+                            events::TransformComponentChanged action(ecs::TYPETRANSFORMCOMPONENT, entityID, rbc, oldVal);
+                            DISPATCH_ACTION_EVENT(action);
+                        }
                     }
                     
                 }
