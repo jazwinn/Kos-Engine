@@ -110,19 +110,6 @@ namespace ecs {
 				if (!parentComp) continue;
 				if (!parentCollider) continue;
 
-				vector2::Vec2 pos{}, scale{};
-				float rot{};
-
-
-
-
-				mat3x3::Mat3x3 parent_Transform = mat3x3::Mat3Transform(parentComp->m_position, parentComp->m_scale, parentComp->m_rotation);
-				
-				//mat3x3::Mat3x3 final_Transform = parent_Transform * child_Transform;
-				//mat3x3::Mat3Decompose(final_Transform, pos, scale, rot);   
-
-				
-
 				if (collider->m_drawDebug && (collider->m_type == physicspipe::EntityType::RECTANGLE))
 				{
 					
@@ -148,7 +135,7 @@ namespace ecs {
 					mat3x3::Mat3x3 debugTransformation = final_Transform;
 
 					
-
+					collider->m_collider_Transformation = debugTransformation;
 					graphicsPipe->m_debugBoxData.push_back({ glm::mat3{debugTransformation.m_e00,debugTransformation.m_e01,debugTransformation.m_e02,
 																	debugTransformation.m_e10,debugTransformation.m_e11, debugTransformation.m_e12,
 																debugTransformation.m_e20, debugTransformation.m_e21, debugTransformation.m_e22} ,
@@ -176,6 +163,8 @@ namespace ecs {
 					
 
 					debugTransformation = debugTransformation * mat3x3::Mat3Transform(collider->m_OffSet, vector2::Vec2{ collider->m_radius * 2.f / parentComp->m_scale.m_x, collider->m_radius * 2.f / parentComp->m_scale.m_y }, 0);
+					collider->m_collider_Transformation = debugTransformation;
+
 					graphicsPipe->m_debugBoxData.push_back({ glm::mat3{debugTransformation.m_e00,debugTransformation.m_e01,debugTransformation.m_e02,
 																	debugTransformation.m_e10,debugTransformation.m_e11, debugTransformation.m_e12,
 																debugTransformation.m_e20, debugTransformation.m_e21, debugTransformation.m_e22} ,
@@ -197,7 +186,7 @@ namespace ecs {
 					debugTransformation = debugTransformation * mat3x3::Mat3Transform(collider->m_OffSet, vector2::Vec2{ collider->m_Size.m_x , collider->m_Size.m_y }, 0);
 
 					
-
+					collider->m_collider_Transformation = debugTransformation;
 					graphicsPipe->m_debugBoxData.push_back({ glm::mat3{debugTransformation.m_e00,debugTransformation.m_e01,debugTransformation.m_e02,
 																	debugTransformation.m_e10,debugTransformation.m_e11, debugTransformation.m_e12,
 																debugTransformation.m_e20, debugTransformation.m_e21, debugTransformation.m_e22} ,
@@ -215,6 +204,8 @@ namespace ecs {
 
 
 					debugTransformation = debugTransformation * mat3x3::Mat3Transform(collider->m_OffSet, vector2::Vec2{ collider->m_radius * 2.f, collider->m_radius * 2.f}, 0);
+					collider->m_collider_Transformation = debugTransformation;
+
 					graphicsPipe->m_debugBoxData.push_back({ glm::mat3{debugTransformation.m_e00,debugTransformation.m_e01,debugTransformation.m_e02,
 																	debugTransformation.m_e10,debugTransformation.m_e11, debugTransformation.m_e12,
 																debugTransformation.m_e20, debugTransformation.m_e21, debugTransformation.m_e22} ,

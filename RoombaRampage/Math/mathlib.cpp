@@ -19,8 +19,8 @@ namespace mathlibrary {
 	double mathlib::funcRadianToDegree(double x) { return x * (180.0 / PI); }
 	float  mathlib::funcRadianToDegree(float x) { return static_cast<float>(x * (180.0f / PI)); }
 
-	double  mathlib::funcDegreeToRadian(double x) { return x * (PI / 180.0); }
-	float mathlib::funcDegreeToRadian(float x) { return static_cast<float>(x * (PI / 180.0f)); }
+	double  mathlib::funcDegreeToRadian(double x) { return x * (PI / -180.0); }
+	float mathlib::funcDegreeToRadian(float x) { return static_cast<float>(x * (PI / -180.0f)); }
 
 
 	double mathlib::funcCos(double x) { return cos(x); }

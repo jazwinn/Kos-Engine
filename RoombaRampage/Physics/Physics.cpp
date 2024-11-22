@@ -43,16 +43,20 @@ namespace physicspipe {
 	}
 
 
-	Rectangle::Rectangle(float rect_height, float rect_width, float rect_angle, vector2::Vec2 shape_position, vector2::Vec2 shape_scale, vector2::Vec2 shape_velocity, int entity_ID, int layer_ID)
-		: m_height(rect_height), m_width(rect_width)   // Initialize height and width
+	Rectangle::Rectangle(float rect_height, float rect_width, float childAngle, float rect_angle, vector2::Vec2 shape_position, vector2::Vec2 shape_scale, vector2::Vec2 shape_velocity, int entity_ID, int layer_ID, bool isParent, vector2::Vec2 child_position, vector2::Vec2 child_scale)
+		: m_height(rect_height), m_width(rect_width)  // Initialize height and width
 	{
 		m_position = shape_position;
 		m_scale = shape_scale;
 		m_velocity = shape_velocity;
 		m_ID = entity_ID;
 		m_rotAngle = rect_angle;
+		m_childAngle = childAngle;
 		type = EntityType::RECTANGLE;  // Set type to Rectangle
 		m_layerID = layer_ID;
+		m_childPosition = child_position;
+		m_childScale = child_scale;
+		is_Parent = isParent;
 	}
 
 	bool Physics::m_static_CollisionCheck(const AABB aabb1, const AABB aabb2) {
@@ -71,8 +75,8 @@ namespace physicspipe {
 
 
 
-	void Physics::m_SendPhysicsData(float rect_height, float rect_width, float rect_angle, vector2::Vec2 position, vector2::Vec2 scale, vector2::Vec2 velocity, int ID, layer::LAYERS layerID) {
-		m_physicsEntities.push_back(std::make_shared<Rectangle>(rect_height, rect_width, rect_angle, position, scale, velocity, ID, static_cast<int>(layerID)));
+	void Physics::m_SendPhysicsData(float rect_height, float rect_width, float child_angle ,float rect_angle, vector2::Vec2 position, vector2::Vec2 scale, vector2::Vec2 velocity, int ID, layer::LAYERS layerID , bool isParent, vector2::Vec2 child_position, vector2::Vec2 child_scale) {
+		m_physicsEntities.push_back(std::make_shared<Rectangle>(rect_height, rect_width, child_angle ,rect_angle, position, scale, velocity, ID, static_cast<int>(layerID), isParent, child_position, child_scale));
 		//	m_layerToEntities[layerID].push_back(std::make_shared<Rectangle>(rect_height, rect_width, rect_angle, position, scale, velocity, ID));
 	}
 
@@ -377,22 +381,87 @@ namespace physicspipe {
 
 	std::vector<vector2::Vec2> Rectangle::m_getRotatedVertices() const {
 		std::vector<vector2::Vec2> vertices(4);
-		float cosTheta = mathlibrary::mathlib::funcCos(mathlibrary::mathlib::funcDegreeToRadian(m_rotAngle));
-		float sinTheta = mathlibrary::mathlib::funcSin(mathlibrary::mathlib::funcDegreeToRadian(m_rotAngle));
+		float hw{}, hh{};
+		//it is parent
 
-		// Calculate the half-width and half-height
-		float hw = m_width * 0.5f;
-		float hh = m_height * 0.5f;
+		if (!is_Parent) {
+			float cosTheta = mathlibrary::mathlib::funcCos(mathlibrary::mathlib::funcDegreeToRadian(m_rotAngle));
+			float sinTheta = mathlibrary::mathlib::funcSin(mathlibrary::mathlib::funcDegreeToRadian(m_rotAngle));
+			float radian = m_rotAngle * (PI / -180.f);
+			//float cosTheta = std::cos(radian);
+			//float sinTheta = std::sin(radian);
+			// Calculate the half-width and half-height
+			hw = m_width * 0.5f;
+			hh = m_height * 0.5f;
 
-		// Center of the rectangle
-		vector2::Vec2 center = m_position;
+		
+			// Center of the rectangle
+			vector2::Vec2 center = m_position;
+	
+			// Calculate the rotated positions of each corner
+			//vertices[0] = { (center.m_x - hw) * cosTheta + hh * sinTheta, (center.m_y - hw) * sinTheta - hh * cosTheta }; // Top-left
+			//vertices[1] = { (center.m_x + hw) * cosTheta + hh * sinTheta, (center.m_y + hw) * sinTheta - hh * cosTheta }; // Top-right
+			//vertices[2] = { (center.m_x + hw) * cosTheta - hh * sinTheta, (center.m_y + hw) * sinTheta + hh * cosTheta }; // Bottom-right
+			//vertices[3] = { (center.m_x - hw) * cosTheta - hh * sinTheta, (center.m_y - hw) * sinTheta + hh * cosTheta }; // Bottom-left
 
-		// Calculate the rotated positions of each corner
-		vertices[0] = { center.m_x - hw * cosTheta + hh * sinTheta, center.m_y - hw * sinTheta - hh * cosTheta }; // Top-left
-		vertices[1] = { center.m_x + hw * cosTheta + hh * sinTheta, center.m_y + hw * sinTheta - hh * cosTheta }; // Top-right
-		vertices[2] = { center.m_x + hw * cosTheta - hh * sinTheta, center.m_y + hw * sinTheta + hh * cosTheta }; // Bottom-right
-		vertices[3] = { center.m_x - hw * cosTheta - hh * sinTheta, center.m_y - hw * sinTheta + hh * cosTheta }; // Bottom-left
+			//vertices[0] = { ((center.m_x - hw) * cosTheta) - ((center.m_y + hh) * sinTheta), ((center.m_x - hw) * sinTheta) + ((center.m_y + hh) * cosTheta) }; // Top - Left
+			//vertices[1] = { ((center.m_x + hw) * cosTheta) - ((center.m_y + hh) * sinTheta), ((center.m_x + hw) * sinTheta) + ((center.m_y + hh) * cosTheta) }; // Top - Right
+			//vertices[2] = { ((center.m_x + hw) * cosTheta) - ((center.m_y - hh) * sinTheta), ((center.m_x + hw) * sinTheta) + ((center.m_y - hh) * cosTheta) }; // Bottom - Right
+			//vertices[3] = { ((center.m_x - hw) * cosTheta) - ((center.m_y - hh) * sinTheta), ((center.m_x - hw) * sinTheta) + ((center.m_y - hh) * cosTheta) }; // Bottom - Left
 
+
+			vertices[0] = { ((-hw) * cosTheta) - ((hh) * sinTheta), ((-hw) * sinTheta) + ((hh) * cosTheta) }; // Top - Left
+			vertices[1] = { ((hw) * cosTheta) - ((hh) * sinTheta), ((hw) * sinTheta) + ((hh) * cosTheta) }; // Top - Right
+			vertices[2] = { ((hw) * cosTheta) - ((-hh) * sinTheta), ((hw) * sinTheta) + ((-hh) * cosTheta) }; // Bottom - Right
+			vertices[3] = { ((-hw) * cosTheta) - ((-hh) * sinTheta), ((-hw) * sinTheta) + ((-hh) * cosTheta) }; // Bottom - Left
+
+			for (auto& vert : vertices) {
+				//std::cout << vert.m_x << " " << vert.m_y << std::endl;
+				vert += center;
+			}
+
+			std::cout << "ID" << m_ID << "   Pos: " << m_position.m_x << ", " << m_position.m_y << std::endl;
+			std::cout << "Vertex Top Left : " << vertices[0].m_x << ", " << vertices[0].m_y << std::endl;
+			std::cout << "Vertex Top Right : " << vertices[1].m_x << ", " << vertices[1].m_y << std::endl;
+			std::cout << "Vertex Bottom Right : " << vertices[2].m_x << ", " << vertices[2].m_y << std::endl;
+			std::cout << "Vertex Bottom Left : " << vertices[3].m_x << ", " << vertices[3].m_y << std::endl;
+			
+			std::cout << std::endl;
+
+		}
+		else {
+		//is child
+			float cosTheta = mathlibrary::mathlib::funcCos(mathlibrary::mathlib::funcDegreeToRadian(m_childAngle));
+			float sinTheta = mathlibrary::mathlib::funcSin(mathlibrary::mathlib::funcDegreeToRadian(m_childAngle));
+			
+			//scale 
+			hw = m_childScale.m_x * 0.5f;
+			hh = m_childScale.m_y * 0.5f;
+
+			//vector2::Vec2 parent_Center = m_childPosition;
+			//vertices[0] = { parent_Center.m_x - hw * cosTheta + hh * sinTheta, parent_Center.m_y - hw * sinTheta - hh * cosTheta }; // Top-left
+			//vertices[1] = { parent_Center.m_x + hw * cosTheta + hh * sinTheta, parent_Center.m_y + hw * sinTheta - hh * cosTheta }; // Top-right
+			//vertices[2] = { parent_Center.m_x + hw * cosTheta - hh * sinTheta, parent_Center.m_y + hw * sinTheta + hh * cosTheta }; // Bottom-right
+			//vertices[3] = { parent_Center.m_x - hw * cosTheta - hh * sinTheta, parent_Center.m_y - hw * sinTheta + hh * cosTheta }; // Bottom-left
+
+			vertices[0] = { ((-hw) * cosTheta) - ((hh)*sinTheta), ((-hw) * sinTheta) + ((hh)*cosTheta) }; // Top - Left
+			vertices[1] = { ((hw)*cosTheta) - ((hh)*sinTheta), ((hw)*sinTheta) + ((hh)*cosTheta) }; // Top - Right
+			vertices[2] = { ((hw)*cosTheta) - ((-hh) * sinTheta), ((hw)*sinTheta) + ((-hh) * cosTheta) }; // Bottom - Right
+			vertices[3] = { ((-hw) * cosTheta) - ((-hh) * sinTheta), ((-hw) * sinTheta) + ((-hh) * cosTheta) }; // Bottom - Left
+
+			std::cout << std::endl;
+			for (auto& vert : vertices) {
+				std::cout << vert.m_x << " " << vert.m_y << std::endl;
+			}
+			vector2::Vec2 center = m_position;
+			for (auto& vert : vertices) {
+				//std::cout << vert.m_x << " " << vert.m_y << std::endl;
+				vert += center;
+			}
+
+			std::cout << std::endl;
+
+		}
 		return vertices;
 	}
 
