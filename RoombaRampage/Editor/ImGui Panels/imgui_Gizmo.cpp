@@ -177,40 +177,34 @@ namespace gui {
             mat3x3::Mat3x3 transformation = transcom->m_localChildTransformation;
             mat3x3::Mat3x3 original = transcom->m_transformation;
             
+            std::cout << "Delta translate : " << delta[12] << ", " << delta[13] << std::endl;
+
             ecs::EntityID  id = ecs::Hierachy::m_GetParent(m_clickedEntityId).value();
             ecs::TransformComponent* parentCom = (ecs::TransformComponent*)ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id);
             
-
             ImGuizmo::DecomposeMatrixToComponents(model, matrixTranslation, matrixRotation, matrixScale);
 
-            mat3x3::Mat3x3 scale;
-            mat3x3::Mat3x3 rotate;
-            mat3x3::Mat3x3 translate;
-
+            float scaleXChange = (matrixScale[0] - originalMatrixScale[0]);
+            float scaleYChange = (matrixScale[1] - originalMatrixScale[1]);
             float change = (-matrixRotation[2] - -originalMatrixRotation[2]);
-           
-            float child[16] =
-            { transformation.m_e00, transformation.m_e01, 0.f, transformation.m_e02,
-              transformation.m_e10, transformation.m_e11, 0.f, transformation.m_e12,
-              0.f, 0.f, 1.f, 0.f,//z axis
-              transformation.m_e20, transformation.m_e21, 0.f, transformation.m_e22
-            };
             // The transformed model vs the original model
-            vector2::Vec2 translation = { model[12] - originalMatrixTranslation[0],  model[13] - originalMatrixTranslation[1] };
+            vector2::Vec2 translation = { (model[12] - originalMatrixTranslation[0]) ,  model[13] - originalMatrixTranslation[1] };
 
-            vector2::Vec2 tran = { delta[12], delta[13] };
+            vector2::Vec2 tran = { delta[12] , delta[13] };
 
-            std::cout << -parentCom->m_rotation << std::endl;
-            delta[12] = tran.m_x * std::cos(parentCom->m_rotation * PI/180.f) - tran.m_y * std::sin(parentCom->m_rotation * PI / 180.f); // Model new coordinates - original coordinates
-            delta[13] = tran.m_x * std::sin(parentCom->m_rotation * PI / 180.f) + tran.m_y * std::cos(parentCom->m_rotation * PI / 180.f);
+            delta[12] = translation.m_x * std::cos(parentCom->m_rotation * PI/180.f) - translation.m_y * std::sin(parentCom->m_rotation * PI / 180.f); // Model new coordinates - original coordinates
+            delta[13] = translation.m_x * std::sin(parentCom->m_rotation * PI / 180.f) + translation.m_y * std::cos(parentCom->m_rotation * PI / 180.f);
 
-            std::cout << "Rotated Delta translate: " << delta[12] << " , " << delta[13] << std::endl;
-
-            transcom->m_position.m_x += delta[12];
-            transcom->m_position.m_y += delta[13];
-            transcom->m_rotation += change;
-            transcom->m_scale.m_x = matrixScale[0];
-            transcom->m_scale.m_y = matrixScale[1];
+            //std::cout << "Rotated Delta translate: " << delta[12] << " , " << delta[13] << std::endl;
+            if (parentCom->m_scale.m_x != 0 || parentCom->m_scale.m_y != 0)
+            {
+                transcom->m_position.m_x += delta[12] / parentCom->m_scale.m_x;
+                transcom->m_position.m_y += delta[13] / parentCom->m_scale.m_y;
+                transcom->m_rotation += change;
+                transcom->m_scale.m_x += scaleXChange;
+                transcom->m_scale.m_y += scaleYChange;
+            }
+            
         }
 
         if (ImGui::IsKeyDown(ImGuiKey_LeftShift) && ImGui::IsKeyPressed(ImGuiKey_F)) {
