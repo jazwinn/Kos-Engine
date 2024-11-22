@@ -477,7 +477,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                     DrawComponents toDraw(rbc->Names());
                     static ecs::TransformComponent oldVal = *rbc;
                     if (toDraw(rbc->m_position)) {
-                        if (DragFloat::dragFloatCheck::m_GetInstance()->m_getCalledBefore() && (DragFloat::dragFloatCheck::m_GetInstance()->m_getPrevMem() != DragFloat::Member::POS)) {
+                        if ((DragFloat::dragFloatCheck::m_GetInstance()->m_getPrevMem() != DragFloat::Member::POS)) {
                             oldVal = *rbc;
                         }
                         if (DragFloat::dragFloatCheck::m_GetInstance()->m_click(DragFloat::Comp::TRANSFORM, DragFloat::Member::POS)) {
@@ -488,7 +488,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         
                     }
                     if (toDraw(rbc->m_rotation)) {
-                        if (DragFloat::dragFloatCheck::m_GetInstance()->m_getCalledBefore() && (DragFloat::dragFloatCheck::m_GetInstance()->m_getPrevMem() != DragFloat::Member::ROT)) {
+                        if ((DragFloat::dragFloatCheck::m_GetInstance()->m_getPrevMem() != DragFloat::Member::ROT)) {
                             oldVal = *rbc;
                         }
                         if (DragFloat::dragFloatCheck::m_GetInstance()->m_click(DragFloat::Comp::TRANSFORM, DragFloat::Member::ROT)) {
@@ -498,7 +498,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         }
                     }
                     if (toDraw(rbc->m_scale)) {
-                        if (DragFloat::dragFloatCheck::m_GetInstance()->m_getCalledBefore() && (DragFloat::dragFloatCheck::m_GetInstance()->m_getPrevMem() != DragFloat::Member::SCALE)) {
+                        if ((DragFloat::dragFloatCheck::m_GetInstance()->m_getPrevMem() != DragFloat::Member::SCALE)) {
                             oldVal = *rbc;
                         }
                         if (DragFloat::dragFloatCheck::m_GetInstance()->m_click(DragFloat::Comp::TRANSFORM, DragFloat::Member::SCALE)) {
