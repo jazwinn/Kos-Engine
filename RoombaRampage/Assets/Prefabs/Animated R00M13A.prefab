@@ -30,7 +30,8 @@
             "frameNumber": 0,
             "framesPerSecond": 12,
             "frameTimer": 0.0,
-            "isAnimating": true
+            "isAnimating": true,
+            "stripCount": 1
         },
         "children": [
             {

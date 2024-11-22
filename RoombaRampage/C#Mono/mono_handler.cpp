@@ -28,7 +28,6 @@ Reproduction or disclosure of this file or its contents without the
 prior written consent of DigiPen Institute of Technology is prohibited.
 */
 /********************************************************************/
-
 #include "mono_handler.h"
 #include "mono/metadata/mono-gc.h"
 #include "mono/metadata/threads.h"
@@ -54,6 +53,8 @@ namespace script {
         InternalCall::m_RegisterInternalCalls();
 
         m_LoadSecondaryDomain();
+
+       
     }
 
     void ScriptHandler::m_LoadSecondaryDomain()

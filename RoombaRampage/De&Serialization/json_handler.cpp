@@ -340,7 +340,9 @@ namespace Serialization {
 				animation.AddMember("framesPerSecond", ac->m_framesPerSecond, allocator);
 				animation.AddMember("frameTimer", ac->m_frameTimer, allocator);
 				animation.AddMember("isAnimating", ac->m_isAnimating, allocator);
+				animation.AddMember("stripCount", ac->m_stripCount, allocator);
 				entityData.AddMember("animation", animation, allocator);
+				
 				hasComponents = true;  // Mark as having a component
 			}
 		}
@@ -745,6 +747,10 @@ namespace Serialization {
 				if (animation.HasMember("isAnimating"))
 				{
 					ac->m_isAnimating = animation["isAnimating"].GetBool();
+				}
+				if (animation.HasMember("stripCount"))
+				{
+					ac->m_stripCount = animation["stripCount"].GetInt();
 				}
 			}
 		}

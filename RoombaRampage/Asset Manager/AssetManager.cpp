@@ -144,13 +144,20 @@ namespace assetmanager {
             m_scriptManager.m_CSScripts.push_back(filename);
         }
 
-        
-
     }
 
    void AssetManager::m_LoadAudio(std::string file) {
-       m_audioManager.m_LoadAudio(file); 
-    }
+       std::string fileName = file;
+       size_t lastSlashPos = fileName.find_last_of("/\\");  // Handles both UNIX and Windows paths
+       size_t lastDotPos = fileName.find_last_of('.');
+
+       if (lastDotPos == std::string::npos) {
+           lastDotPos = fileName.length(); 
+       }
+       fileName = fileName.substr(lastSlashPos + 1, lastDotPos - lastSlashPos - 1);
+       m_audioManager.m_LoadAudio(fileName,file); 
+   }
+
    void AssetManager::m_LoadFont(std::string file)
    {
        text::FontManager::LoadFont(file);

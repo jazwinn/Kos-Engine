@@ -101,8 +101,12 @@ namespace gui
 
         EditorCamera::calculateLevelEditorCamera();
         EditorCamera::calculateLevelEditorView();
-        graphicpipe::GraphicsCamera::m_currCameraMatrix = EditorCamera::m_editorCameraMatrix;
-        graphicpipe::GraphicsCamera::m_currViewMatrix = EditorCamera::m_editorViewMatrix;
+        graphicpipe::GraphicsCamera::m_currCameraMatrix = { EditorCamera::m_editorCameraMatrix.m_e00, EditorCamera::m_editorCameraMatrix.m_e01 ,EditorCamera::m_editorCameraMatrix.m_e02 ,
+                                                            EditorCamera::m_editorCameraMatrix.m_e10 ,EditorCamera::m_editorCameraMatrix.m_e11 ,EditorCamera::m_editorCameraMatrix.m_e12 ,
+                                                            EditorCamera::m_editorCameraMatrix.m_e20 ,EditorCamera::m_editorCameraMatrix.m_e21 ,EditorCamera::m_editorCameraMatrix.m_e22 };
+        graphicpipe::GraphicsCamera::m_currViewMatrix = { EditorCamera::m_editorViewMatrix.m_e00, EditorCamera::m_editorViewMatrix.m_e01, EditorCamera::m_editorViewMatrix.m_e02,
+                                                          EditorCamera::m_editorViewMatrix.m_e10 ,EditorCamera::m_editorViewMatrix.m_e11 ,EditorCamera::m_editorViewMatrix.m_e12 ,
+                                                          EditorCamera::m_editorViewMatrix.m_e20 ,EditorCamera::m_editorViewMatrix.m_e21 ,EditorCamera::m_editorViewMatrix.m_e22 };
 
         ImGui::End();
 

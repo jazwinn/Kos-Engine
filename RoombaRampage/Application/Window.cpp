@@ -69,7 +69,7 @@ namespace Application {
         else
         {
             //std::cout << "Window restored!" << std::endl;
-
+            ecs::ECS::m_GetInstance()->m_nextState = ecs::RUNNING;
         }
     }
 

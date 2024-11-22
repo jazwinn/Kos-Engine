@@ -62,6 +62,7 @@ namespace graphicpipe {
         //glm::vec2 m_worldCoordinates{};  ///< World coordinates of the object.
         glm::mat3 m_transformation{};
         unsigned int m_textureID{};      ///< ID of the texture used for rendering.
+        int m_stripCount{};            
         int m_frameNumber{};               ///< Frame Number for handling animations.
         int m_layer{};                   ///< Layer for drawing order.
         glm::vec4 m_color{};
