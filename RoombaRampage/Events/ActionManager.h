@@ -36,6 +36,10 @@ namespace actions {
 			}
 		}
 
+		void m_push(Action* inAction) {
+			m_undoStack.push(inAction);
+		}
+
 		~ActionManager() {
 			while (!m_undoStack.empty()) {
 				delete m_undoStack.top();
