@@ -1,68 +1,133 @@
-[INFO]: 2024-11-20 13:14:00 - Application Start
-[INFO]: 2024-11-20 13:14:00 - Load Log Successful
-[INFO]: 2024-11-20 13:14:00 - Load Config Successful
-[INFO]: 2024-11-20 13:14:00 - Load Window Successful
-[INFO]: 2024-11-20 13:14:00 - Load ECS Successful
-[DEBUG]: 2024-11-20 13:14:00 - Successfully Added Script
-[INFO]: 2024-11-20 13:14:00 - Load Json Successful
-[INFO]: 2024-11-20 13:14:00 - Entities successfully loaded!
-[INFO]: 2024-11-20 13:14:00 - Load Json Successful
-[INFO]: 2024-11-20 13:14:00 - Entities successfully loaded!
-[INFO]: 2024-11-20 13:14:00 - Load Json Successful
-[INFO]: 2024-11-20 13:14:00 - Entities successfully loaded!
-[INFO]: 2024-11-20 13:14:00 - Strip Success for Assets/Texture/ani_RoombaBlink_strip4.png
-[INFO]: 2024-11-20 13:14:00 - Texture Binded, Texture ID : 7 
-[INFO]: 2024-11-20 13:14:00 - Image ID : 0 
-[INFO]: 2024-11-20 13:14:00 - Strip Success for Assets/Texture/ani_RoombaBoosters_strip6.png
-[INFO]: 2024-11-20 13:14:00 - Texture Binded, Texture ID : 8 
-[INFO]: 2024-11-20 13:14:00 - Image ID : 1 
-[INFO]: 2024-11-20 13:14:00 - Strip Success for Assets/Texture/ani_SeanSprite_strip4.png
-[INFO]: 2024-11-20 13:14:00 - Texture Binded, Texture ID : 9 
-[INFO]: 2024-11-20 13:14:00 - Image ID : 2 
-[INFO]: 2024-11-20 13:14:00 - Texture Binded, Texture ID : 10 
-[INFO]: 2024-11-20 13:14:00 - Image ID : 3 
-[INFO]: 2024-11-20 13:14:00 - Texture Padded for Background.png
-[INFO]: 2024-11-20 13:14:00 - Texture Binded, Texture ID : 11 
-[INFO]: 2024-11-20 13:14:00 - Image ID : 4 
-[INFO]: 2024-11-20 13:14:00 - Texture Binded, Texture ID : 12 
-[INFO]: 2024-11-20 13:14:00 - Image ID : 5 
-[INFO]: 2024-11-20 13:14:00 - Texture Padded for boosters_tail02.png
-[INFO]: 2024-11-20 13:14:00 - Texture Binded, Texture ID : 13 
-[INFO]: 2024-11-20 13:14:00 - Image ID : 6 
-[INFO]: 2024-11-20 13:14:00 - Texture Binded, Texture ID : 14 
-[INFO]: 2024-11-20 13:14:00 - Image ID : 7 
-[INFO]: 2024-11-20 13:14:00 - Texture Binded, Texture ID : 15 
-[INFO]: 2024-11-20 13:14:00 - Image ID : 8 
-[INFO]: 2024-11-20 13:14:00 - Texture Binded, Texture ID : 16 
-[INFO]: 2024-11-20 13:14:00 - Image ID : 9 
-[INFO]: 2024-11-20 13:14:00 - Texture Padded for gunleft_02.png
-[INFO]: 2024-11-20 13:14:00 - Texture Binded, Texture ID : 17 
-[INFO]: 2024-11-20 13:14:00 - Image ID : 10 
-[INFO]: 2024-11-20 13:14:00 - Texture Padded for gunright_02.png
-[INFO]: 2024-11-20 13:14:00 - Texture Binded, Texture ID : 18 
-[INFO]: 2024-11-20 13:14:00 - Image ID : 11 
-[INFO]: 2024-11-20 13:14:00 - Texture Padded for Roomba.png
-[INFO]: 2024-11-20 13:14:00 - Texture Binded, Texture ID : 19 
-[INFO]: 2024-11-20 13:14:00 - Image ID : 12 
-[INFO]: 2024-11-20 13:14:00 - Texture Binded, Texture ID : 20 
-[INFO]: 2024-11-20 13:14:00 - Image ID : 13 
-[INFO]: 2024-11-20 13:14:00 - Texture Padded for ScriptIcon.png
-[INFO]: 2024-11-20 13:14:00 - Texture Binded, Texture ID : 21 
-[INFO]: 2024-11-20 13:14:00 - Image ID : 14 
-[INFO]: 2024-11-20 13:14:00 - Tile_FloorMap.png labled as tilemap
-[INFO]: 2024-11-20 13:14:00 - Texture Binded, Texture ID : 22 
-[INFO]: 2024-11-20 13:14:00 - Image ID : 15 
-[INFO]: 2024-11-20 13:14:00 - Load Asset Successful
-[INFO]: 2024-11-20 13:14:00 - Shader compiled successfully
-[INFO]: 2024-11-20 13:14:00 - Shader compiled successfully
-[INFO]: 2024-11-20 13:14:00 - Shader compiled successfully
-[INFO]: 2024-11-20 13:14:00 - Shader compiled successfully
-[INFO]: 2024-11-20 13:14:00 - Shader compiled successfully
-[INFO]: 2024-11-20 13:14:00 - Load Graphic Pipline Successful
-[INFO]: 2024-11-20 13:14:00 - Set Input Call Back Successful
-[INFO]: 2024-11-20 13:14:00 - Load Json Successful
-[INFO]: 2024-11-20 13:14:00 - Entities successfully loaded!
-[INFO]: 2024-11-20 13:14:00 - Load ImGui Successful
-[INFO]: 2024-11-20 13:14:00 - Application Init Successful
-[WARN]: 2024-11-20 13:14:05 - Entity Already Has Component
-[INFO]: 2024-11-20 13:16:07 - Application Closed
+[INFO]: 2024-11-22 21:03:30 - Application Start
+[INFO]: 2024-11-22 21:03:30 - Load Log Successful
+[INFO]: 2024-11-22 21:03:30 - Load Config Successful
+[INFO]: 2024-11-22 21:03:30 - Load Window Successful
+[INFO]: 2024-11-22 21:03:30 - Load ECS Successful
+[DEBUG]: 2024-11-22 21:03:30 - Successfully Added Script
+[INFO]: 2024-11-22 21:03:30 - Loading entities from: Assets/Prefabs\Animated R00M13A.prefab
+[INFO]: 2024-11-22 21:03:30 - Load Json Successful
+[INFO]: 2024-11-22 21:03:30 - Entities successfully loaded!
+[INFO]: 2024-11-22 21:03:30 - Loading entities from: Assets/Prefabs\blackTile_test_1.prefab
+[INFO]: 2024-11-22 21:03:30 - Load Json Successful
+[INFO]: 2024-11-22 21:03:30 - Entities successfully loaded!
+[INFO]: 2024-11-22 21:03:30 - Loading entities from: Assets/Prefabs\Player.prefab
+[INFO]: 2024-11-22 21:03:30 - Load Json Successful
+[INFO]: 2024-11-22 21:03:30 - Entities successfully loaded!
+[INFO]: 2024-11-22 21:03:30 - Filepath: Assets/Texture/ani_RoombaBlink_strip4.png
+[INFO]: 2024-11-22 21:03:30 - Strip Success for Assets/Texture/ani_RoombaBlink_strip4.png
+[INFO]: 2024-11-22 21:03:31 - Texture Binded, Texture ID : 7 
+[INFO]: 2024-11-22 21:03:31 - Image ID : 0 
+[INFO]: 2024-11-22 21:03:31 - Filepath: Assets/Texture/ani_RoombaBoosters_strip6.png
+[INFO]: 2024-11-22 21:03:31 - Strip Success for Assets/Texture/ani_RoombaBoosters_strip6.png
+[INFO]: 2024-11-22 21:03:31 - Texture Binded, Texture ID : 8 
+[INFO]: 2024-11-22 21:03:31 - Image ID : 1 
+[INFO]: 2024-11-22 21:03:31 - Filepath: Assets/Texture/ani_SeanSprite_strip4.png
+[INFO]: 2024-11-22 21:03:31 - Strip Success for Assets/Texture/ani_SeanSprite_strip4.png
+[INFO]: 2024-11-22 21:03:31 - Texture Binded, Texture ID : 9 
+[INFO]: 2024-11-22 21:03:31 - Image ID : 2 
+[INFO]: 2024-11-22 21:03:31 - Filepath: Assets/Texture/Audiowav.png
+[INFO]: 2024-11-22 21:03:31 - Texture Binded, Texture ID : 10 
+[INFO]: 2024-11-22 21:03:31 - Image ID : 3 
+[INFO]: 2024-11-22 21:03:31 - Filepath: Assets/Texture/Background.png
+[INFO]: 2024-11-22 21:03:31 - Texture Padded for Background.png
+[INFO]: 2024-11-22 21:03:31 - Texture Binded, Texture ID : 11 
+[INFO]: 2024-11-22 21:03:31 - Image ID : 4 
+[INFO]: 2024-11-22 21:03:31 - Filepath: Assets/Texture/blackTile_test.png
+[INFO]: 2024-11-22 21:03:31 - Texture Binded, Texture ID : 12 
+[INFO]: 2024-11-22 21:03:31 - Image ID : 5 
+[INFO]: 2024-11-22 21:03:31 - Filepath: Assets/Texture/boosters_tail02.png
+[INFO]: 2024-11-22 21:03:31 - Texture Padded for boosters_tail02.png
+[INFO]: 2024-11-22 21:03:31 - Texture Binded, Texture ID : 13 
+[INFO]: 2024-11-22 21:03:31 - Image ID : 6 
+[INFO]: 2024-11-22 21:03:31 - Filepath: Assets/Texture/broombaTest2.png
+[INFO]: 2024-11-22 21:03:31 - Texture Binded, Texture ID : 14 
+[INFO]: 2024-11-22 21:03:31 - Image ID : 7 
+[INFO]: 2024-11-22 21:03:31 - Filepath: Assets/Texture/Button.png
+[INFO]: 2024-11-22 21:03:31 - Texture Binded, Texture ID : 15 
+[INFO]: 2024-11-22 21:03:31 - Image ID : 8 
+[INFO]: 2024-11-22 21:03:31 - Filepath: Assets/Texture/folder.png
+[INFO]: 2024-11-22 21:03:31 - Texture Binded, Texture ID : 16 
+[INFO]: 2024-11-22 21:03:31 - Image ID : 9 
+[INFO]: 2024-11-22 21:03:31 - Filepath: Assets/Texture/gunleft_02.png
+[INFO]: 2024-11-22 21:03:31 - Texture Padded for gunleft_02.png
+[INFO]: 2024-11-22 21:03:31 - Texture Binded, Texture ID : 17 
+[INFO]: 2024-11-22 21:03:31 - Image ID : 10 
+[INFO]: 2024-11-22 21:03:31 - Filepath: Assets/Texture/gunright_02.png
+[INFO]: 2024-11-22 21:03:31 - Texture Padded for gunright_02.png
+[INFO]: 2024-11-22 21:03:31 - Texture Binded, Texture ID : 18 
+[INFO]: 2024-11-22 21:03:31 - Image ID : 11 
+[INFO]: 2024-11-22 21:03:31 - Filepath: Assets/Texture/Roomba.png
+[INFO]: 2024-11-22 21:03:31 - Texture Padded for Roomba.png
+[INFO]: 2024-11-22 21:03:31 - Texture Binded, Texture ID : 19 
+[INFO]: 2024-11-22 21:03:31 - Image ID : 12 
+[INFO]: 2024-11-22 21:03:31 - Filepath: Assets/Texture/roombaTest.png
+[INFO]: 2024-11-22 21:03:31 - Texture Binded, Texture ID : 20 
+[INFO]: 2024-11-22 21:03:31 - Image ID : 13 
+[INFO]: 2024-11-22 21:03:31 - Filepath: Assets/Texture/ScriptIcon.png
+[INFO]: 2024-11-22 21:03:31 - Texture Padded for ScriptIcon.png
+[INFO]: 2024-11-22 21:03:31 - Texture Binded, Texture ID : 21 
+[INFO]: 2024-11-22 21:03:31 - Image ID : 14 
+[INFO]: 2024-11-22 21:03:31 - Filepath: Assets/Texture/Tile_FloorMap.png
+[INFO]: 2024-11-22 21:03:31 - Tile_FloorMap.png labled as tilemap
+[INFO]: 2024-11-22 21:03:31 - Texture Binded, Texture ID : 22 
+[INFO]: 2024-11-22 21:03:31 - Image ID : 15 
+[INFO]: 2024-11-22 21:03:31 - Load Asset Successful
+[INFO]: 2024-11-22 21:03:31 - Shader compiled successfully
+[INFO]: 2024-11-22 21:03:31 - Shader compiled successfully
+[INFO]: 2024-11-22 21:03:31 - Shader compiled successfully
+[INFO]: 2024-11-22 21:03:31 - Shader compiled successfully
+[INFO]: 2024-11-22 21:03:31 - Shader compiled successfully
+[INFO]: 2024-11-22 21:03:31 - Shader compiled successfully
+[INFO]: 2024-11-22 21:03:31 - Load Graphic Pipline Successful
+[INFO]: 2024-11-22 21:03:31 - Set Input Call Back Successful
+[INFO]: 2024-11-22 21:03:31 - Loading entities from: Assets/Scene/Default.json
+[INFO]: 2024-11-22 21:03:31 - Load Json Successful
+[INFO]: 2024-11-22 21:03:31 - Entities successfully loaded!
+[INFO]: 2024-11-22 21:03:31 - Load ImGui Successful
+[INFO]: 2024-11-22 21:03:31 - IMGUIENABLED is defined
+[INFO]: 2024-11-22 21:03:31 - Application Init Successful
+[INFO]: 2024-11-22 21:03:32 - Save Json Successful
+[INFO]: 2024-11-22 21:03:32 - Save Json Successful
+[INFO]: 2024-11-22 21:03:32 - Save Json Successful
+[INFO]: 2024-11-22 21:03:32 - Save Json Successful
+[DEBUG]: 2024-11-22 21:03:32 - Successfully Added Script
+[INFO]: 2024-11-22 21:03:32 - Generated command: "C:\Users\ngjaz\OneDrive\Documents\roombarampage\RoombaRampage\RoombaRampage\C#Mono\CompilerCSC\bin\csc" /target:library "/out:C:\Users\ngjaz\OneDrive\Documents\roombarampage\RoombaRampage\RoombaRampage\Assets\Scripts\ScriptsDLL\LogicScript.dll" "/reference:C:\Users\ngjaz\OneDrive\Documents\roombarampage\RoombaRampage\RoombaRampage\ScriptLibrary\GameScript\ScriptCoreDLL\GameScript.dll" "Assets/Scripts/ScriptsCS\CameraFollowPlayerScript.cs" "Assets/Scripts/ScriptsCS\CollisionResponse.cs" "Assets/Scripts/ScriptsCS\MovingObjectScript.cs" "Assets/Scripts/ScriptsCS\PlayerControl.cs" 
+[INFO]: 2024-11-22 21:03:33 - Compilation successful: LogicScript.dll
+[DEBUG]: 2024-11-22 21:03:33 - Successfully Added Script
+[WARN]: 2024-11-22 21:03:37 - Scene already loaded
+[WARN]: 2024-11-22 21:03:37 - Scene already loaded
+[WARN]: 2024-11-22 21:03:37 - Scene already loaded
+[INFO]: 2024-11-22 21:03:37 - Loading entities from: Assets/Scene/Default.json
+[INFO]: 2024-11-22 21:03:37 - Load Json Successful
+[INFO]: 2024-11-22 21:03:37 - Entities successfully loaded!
+[INFO]: 2024-11-22 21:03:58 - Save Json Successful
+[INFO]: 2024-11-22 21:03:58 - Save Json Successful
+[INFO]: 2024-11-22 21:03:58 - Save Json Successful
+[INFO]: 2024-11-22 21:03:58 - Save Json Successful
+[DEBUG]: 2024-11-22 21:03:58 - Successfully Added Script
+[INFO]: 2024-11-22 21:03:58 - Generated command: "C:\Users\ngjaz\OneDrive\Documents\roombarampage\RoombaRampage\RoombaRampage\C#Mono\CompilerCSC\bin\csc" /target:library "/out:C:\Users\ngjaz\OneDrive\Documents\roombarampage\RoombaRampage\RoombaRampage\Assets\Scripts\ScriptsDLL\LogicScript.dll" "/reference:C:\Users\ngjaz\OneDrive\Documents\roombarampage\RoombaRampage\RoombaRampage\ScriptLibrary\GameScript\ScriptCoreDLL\GameScript.dll" "Assets/Scripts/ScriptsCS\CameraFollowPlayerScript.cs" "Assets/Scripts/ScriptsCS\CollisionResponse.cs" "Assets/Scripts/ScriptsCS\MovingObjectScript.cs" "Assets/Scripts/ScriptsCS\PlayerControl.cs" 
+[INFO]: 2024-11-22 21:03:59 - Compilation successful: LogicScript.dll
+[DEBUG]: 2024-11-22 21:03:59 - Successfully Added Script
+[WARN]: 2024-11-22 21:04:33 - Scene already loaded
+[WARN]: 2024-11-22 21:04:33 - Scene already loaded
+[WARN]: 2024-11-22 21:04:33 - Scene already loaded
+[INFO]: 2024-11-22 21:04:33 - Loading entities from: Assets/Scene/Default.json
+[INFO]: 2024-11-22 21:04:33 - Load Json Successful
+[INFO]: 2024-11-22 21:04:33 - Entities successfully loaded!
+[INFO]: 2024-11-22 21:04:47 - Save Json Successful
+[INFO]: 2024-11-22 21:04:47 - Save Json Successful
+[INFO]: 2024-11-22 21:04:47 - Save Json Successful
+[INFO]: 2024-11-22 21:04:47 - Save Json Successful
+[DEBUG]: 2024-11-22 21:04:47 - Successfully Added Script
+[INFO]: 2024-11-22 21:04:47 - Generated command: "C:\Users\ngjaz\OneDrive\Documents\roombarampage\RoombaRampage\RoombaRampage\C#Mono\CompilerCSC\bin\csc" /target:library "/out:C:\Users\ngjaz\OneDrive\Documents\roombarampage\RoombaRampage\RoombaRampage\Assets\Scripts\ScriptsDLL\LogicScript.dll" "/reference:C:\Users\ngjaz\OneDrive\Documents\roombarampage\RoombaRampage\RoombaRampage\ScriptLibrary\GameScript\ScriptCoreDLL\GameScript.dll" "Assets/Scripts/ScriptsCS\CameraFollowPlayerScript.cs" "Assets/Scripts/ScriptsCS\CollisionResponse.cs" "Assets/Scripts/ScriptsCS\MovingObjectScript.cs" "Assets/Scripts/ScriptsCS\PlayerControl.cs" 
+[INFO]: 2024-11-22 21:04:48 - Compilation successful: LogicScript.dll
+[DEBUG]: 2024-11-22 21:04:48 - Successfully Added Script
+[INFO]: 2024-11-22 21:04:59 - Script Instance Created
+[INFO]: 2024-11-22 21:05:08 - Script Instance Created
+[INFO]: 2024-11-22 21:05:10 - Script Instance Created
+[WARN]: 2024-11-22 21:06:11 - Scene already loaded
+[WARN]: 2024-11-22 21:06:11 - Scene already loaded
+[WARN]: 2024-11-22 21:06:11 - Scene already loaded
+[INFO]: 2024-11-22 21:06:11 - Loading entities from: Assets/Scene/Default.json
+[INFO]: 2024-11-22 21:06:11 - Load Json Successful
+[INFO]: 2024-11-22 21:06:11 - Entities successfully loaded!

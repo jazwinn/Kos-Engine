@@ -176,12 +176,25 @@ namespace fmodaudio {
         FMOD::Channel* m_channel;  /*!< FMOD channel object for controlling sound playback. */
     };
 
-
     class AudioManager {
     public:
-        void m_LoadAudio(std::string path);
+        AudioManager();
+        ~AudioManager();
 
-        std::unordered_map<std::string, std::unique_ptr<FModAudio>> m_soundMap;
+        void m_LoadAudio(const std::string& name, const std::string& path);
+        void m_PlayAudio(const std::string& name);
+        void m_StopAudio(const std::string& name);
+        void m_SetVolume(const std::string& name, float volume);
+        void m_SetLooping(const std::string& name, bool loop);
+        bool m_IsPlaying(const std::string& name);
+
+        // Getter for m_soundMap
+        std::unordered_map<std::string, std::unique_ptr<FModAudio>>& getSoundMap() {
+            return m_soundMap;
+        }
+
+    private:
+        std::unordered_map<std::string, std::unique_ptr<FModAudio>> m_soundMap; // Map of sound names to FModAudio objects
     };
 
 }

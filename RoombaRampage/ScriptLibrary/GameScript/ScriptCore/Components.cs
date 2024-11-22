@@ -1,92 +1,95 @@
-﻿using Namespace;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameScript.ScriptCore
+public struct Vector2
 {
-    public class TransformComponent
-    {
-        public Vector2 m_position;
-        public float m_rotation;
-        public Vector2 m_scale;
-    }
+    public float X, Y;
+}
 
-    public class RigidBodyComponent
-    {
-        public Vector2 m_Velocity;
-        public Vector2 m_Acceleration;
-        public float m_Rotation;
-        public float m_AngularVelocity;
-        public float m_AngularAcceleration;
-        public float m_Mass;
-        public float m_InverseMass;
-        public float m_LinearDamping;
-        public float m_AngularDamping;
-        public Vector2 m_Force;
-        public float m_Torque;
-        public bool m_IsKinematic;
-        public bool m_IsStatic;
-    }
+public struct Vector3
+{
+    public float R, G, B;
+}
+public class TransformComponent
+{
+    public Vector2 m_position;
+    public float m_rotation;
+    public Vector2 m_scale;
+}
 
-    public class ColliderComponent
-    {
-        public Vector2 m_Size;
-        public Vector2 m_Offset;
-        public bool m_drawDebug;
-        public float m_radius;
-        public float m_isCollided;
-    }
+public class RigidBodyComponent
+{
+    public Vector2 m_Velocity;
+    public Vector2 m_Acceleration;
+    public float m_Rotation;
+    public float m_AngularVelocity;
+    public float m_AngularAcceleration;
+    public float m_Mass;
+    public float m_InverseMass;
+    public float m_LinearDamping;
+    public float m_AngularDamping;
+    public Vector2 m_Force;
+    public float m_Torque;
+    public bool m_IsKinematic;
+    public bool m_IsStatic;
+}
 
-    public class PlayerComponent
-    {
-        public bool m_Control;
-    }
+public class ColliderComponent
+{
+    public Vector2 m_Size;
+    public Vector2 m_Offset;
+    public bool m_drawDebug;
+    public float m_radius;
+    public float m_isCollided;
+}
 
-    public class TextComponent
-    {
-        public string m_text;
-        public string m_fileName;
-        public int m_fontLayer;
-        public float m_fontSize;
+public class PlayerComponent
+{
+    public bool m_Control;
+}
 
-        public Vector3 m_color;
-    }
+public class TextComponent
+{
+    public string m_text;
+    public string m_fileName;
+    public int m_fontLayer;
+    public float m_fontSize;
 
-    public class SpriteComponent
-    {
-        public string m_imageFile;
-        public int m_layer;
-        public Vector3 m_color;
-        public float m_alpha;
-    }
+    public Vector3 m_color;
+}
 
-    public class  AnimationComponent
-    {
-        public int m_frameNumber;
-        public int m_framesPerSecond;
-        public float m_frameTimer;
-        public bool m_isAnimating;
-    }
+public class SpriteComponent
+{
+    public string m_imageFile;
+    public int m_layer;
+    public Vector3 m_color;
+    public float m_alpha;
+}
 
-    public class CameraComponent
-    {
-        public float m_left;
-        public float m_right;
-        public float m_top;
-        public float m_bottom;
-        public float m_aspectRatio;
-    }
+public class AnimationComponent
+{
+    public int m_frameNumber;
+    public int m_framesPerSecond;
+    public float m_frameTimer;
+    public bool m_isAnimating;
+}
 
-    public class ButtomComponent
-    {
-        public Vector2 m_Position;
-        public  Vector2 m_Scale;
-        public bool m_IsClick;
-    }
+public class CameraComponent
+{
+    public float m_left;
+    public float m_right;
+    public float m_top;
+    public float m_bottom;
+    public float m_aspectRatio;
+}
 
-
-
+public class ButtomComponent
+{
+    public Vector2 m_Position;
+    public Vector2 m_Scale;
+    public bool m_IsClick;
 }

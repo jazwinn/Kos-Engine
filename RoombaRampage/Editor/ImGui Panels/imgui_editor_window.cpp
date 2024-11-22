@@ -104,12 +104,12 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
         ImVec2(pos.x + imageSize.x, pos.y + imageSize.y),
         ImVec2(0, 1), ImVec2(1, 0));
 
-    EditorCamera::m_editorWindowPosition.x = pos.x;
-    EditorCamera::m_editorWindowPosition.y = pos.y;
-    EditorCamera::m_editorWindowDimensions.x = imageSize.x;
-    EditorCamera::m_editorWindowDimensions.y = imageSize.y;
+    EditorCamera::m_editorWindowPosition.m_x = pos.x;
+    EditorCamera::m_editorWindowPosition.m_y = pos.y;
+    EditorCamera::m_editorWindowDimensions.m_x = imageSize.x;
+    EditorCamera::m_editorWindowDimensions.m_y = imageSize.y;
 
-    auto calculateworld = [pos, imageSize]()-> glm::vec3 {
+    auto calculateworld = [pos, imageSize]()-> vector3::Vec3 {
         float screencordX = ImGui::GetMousePos().x - pos.x;
         float screencordY = ImGui::GetMousePos().y - pos.y;
 
@@ -117,12 +117,12 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
         float cordX = (screencordX - imageSize.x / 2.f) / (imageSize.x / 2.f);
         float cordY = (std::abs(screencordY) - imageSize.y / 2.f) / (imageSize.y / 2.f);
 
-        glm::vec3 translate = { cordX , -cordY, 0.f };
-        translate.x *= EditorCamera::m_editorCameraMatrix[0][0];
-        translate.y *= EditorCamera::m_editorCameraMatrix[1][1];
-        translate.x *= 1.f / graphicpipe::GraphicsCamera::m_aspectRatio;
-        translate.x += EditorCamera::m_editorCameraMatrix[2][0];
-        translate.y += EditorCamera::m_editorCameraMatrix[2][1];
+        vector3::Vec3 translate = { cordX , -cordY, 0.f };
+        translate.m_x *= EditorCamera::m_editorCameraMatrix.m_e00;
+        translate.m_y *= EditorCamera::m_editorCameraMatrix.m_e11;
+        translate.m_x *= 1.f / graphicpipe::GraphicsCamera::m_aspectRatio;
+        translate.m_x += EditorCamera::m_editorCameraMatrix.m_e20;
+        translate.m_y += EditorCamera::m_editorCameraMatrix.m_e21;
 
         return translate;
         };
@@ -137,17 +137,20 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
     EditorCamera::calculateLevelEditorView();
     EditorCamera::calculateLevelEditorOrtho();
 
-    graphicpipe::GraphicsCamera::m_currCameraMatrix = EditorCamera::m_editorCameraMatrix;
-    graphicpipe::GraphicsCamera::m_currViewMatrix = EditorCamera::m_editorViewMatrix;
-
+    graphicpipe::GraphicsCamera::m_currCameraMatrix = { EditorCamera::m_editorCameraMatrix.m_e00, EditorCamera::m_editorCameraMatrix.m_e01 ,EditorCamera::m_editorCameraMatrix.m_e02 ,
+                                                           EditorCamera::m_editorCameraMatrix.m_e10 ,EditorCamera::m_editorCameraMatrix.m_e11 ,EditorCamera::m_editorCameraMatrix.m_e12 ,
+                                                           EditorCamera::m_editorCameraMatrix.m_e20 ,EditorCamera::m_editorCameraMatrix.m_e21 ,EditorCamera::m_editorCameraMatrix.m_e22 };
+    graphicpipe::GraphicsCamera::m_currViewMatrix = { EditorCamera::m_editorViewMatrix.m_e00, EditorCamera::m_editorViewMatrix.m_e01, EditorCamera::m_editorViewMatrix.m_e02,
+                                                      EditorCamera::m_editorViewMatrix.m_e10 ,EditorCamera::m_editorViewMatrix.m_e11 ,EditorCamera::m_editorViewMatrix.m_e12 ,
+                                                      EditorCamera::m_editorViewMatrix.m_e20 ,EditorCamera::m_editorViewMatrix.m_e21 ,EditorCamera::m_editorViewMatrix.m_e22 };
 
     //If no Camera, Set Editor Camera as Game Camera
     if (graphicpipe::GraphicsCamera::m_cameras.size() == 0)
     {
-        graphicpipe::GraphicsCamera::m_currCameraScaleX = EditorCamera::m_editorCamera.m_zoom.x;
-        graphicpipe::GraphicsCamera::m_currCameraScaleY = EditorCamera::m_editorCamera.m_zoom.y;
-        graphicpipe::GraphicsCamera::m_currCameraTranslateX = EditorCamera::m_editorCamera.m_coordinates.x;
-        graphicpipe::GraphicsCamera::m_currCameraTranslateY = EditorCamera::m_editorCamera.m_coordinates.y;
+        graphicpipe::GraphicsCamera::m_currCameraScaleX = EditorCamera::m_editorCamera.m_zoom.m_x;
+        graphicpipe::GraphicsCamera::m_currCameraScaleY = EditorCamera::m_editorCamera.m_zoom.m_y;
+        graphicpipe::GraphicsCamera::m_currCameraTranslateX = EditorCamera::m_editorCamera.m_coordinates.m_x;
+        graphicpipe::GraphicsCamera::m_currCameraTranslateY = EditorCamera::m_editorCamera.m_coordinates.m_y;
         graphicpipe::GraphicsCamera::m_currCameraRotate = 0.f;
     }
   
@@ -161,11 +164,11 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
     //Zoom In/Out Camera
     if (ImGui::IsWindowHovered())
     {
-        EditorCamera::m_editorCamera.m_zoom.x -= scrollInput * EditorCamera::m_editorCameraZoomSensitivity * EditorCamera::m_editorCamera.m_zoom.x;
-        EditorCamera::m_editorCamera.m_zoom.y -= scrollInput * EditorCamera::m_editorCameraZoomSensitivity * EditorCamera::m_editorCamera.m_zoom.y;
+        EditorCamera::m_editorCamera.m_zoom.m_x -= scrollInput * EditorCamera::m_editorCameraZoomSensitivity * EditorCamera::m_editorCamera.m_zoom.m_x;
+        EditorCamera::m_editorCamera.m_zoom.m_y -= scrollInput * EditorCamera::m_editorCameraZoomSensitivity * EditorCamera::m_editorCamera.m_zoom.m_y;
 
-        EditorCamera::m_editorCamera.m_zoom.x = glm::clamp(EditorCamera::m_editorCamera.m_zoom.x, 0.1f, 100.f);
-        EditorCamera::m_editorCamera.m_zoom.y = glm::clamp(EditorCamera::m_editorCamera.m_zoom.y, 0.1f, 100.f);
+        EditorCamera::m_editorCamera.m_zoom.m_x = std::clamp(EditorCamera::m_editorCamera.m_zoom.m_x, 0.1f, 100.f);
+        EditorCamera::m_editorCamera.m_zoom.m_y = std::clamp(EditorCamera::m_editorCamera.m_zoom.m_y, 0.1f, 100.f);
 
 
     }
@@ -175,11 +178,11 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
     {
         ImVec2 mouseDelta = ImGui::GetMouseDragDelta(ImGuiMouseButton_Right);
 
-        glm::vec2 delta = glm::vec2(mouseDelta.x, mouseDelta.y) * EditorCamera::m_editorCameraDragSensitivity * EditorCamera::m_editorCamera.m_zoom.x;
+        vector2::Vec2 delta = vector2::Vec2(mouseDelta.x, mouseDelta.y) * EditorCamera::m_editorCameraDragSensitivity * EditorCamera::m_editorCamera.m_zoom.m_x;
 
         // Update the camera position
-        EditorCamera::m_editorCamera.m_coordinates.x -= delta.x;
-        EditorCamera::m_editorCamera.m_coordinates.y += delta.y;
+        EditorCamera::m_editorCamera.m_coordinates.m_x -= delta.m_x;
+        EditorCamera::m_editorCamera.m_coordinates.m_y += delta.m_y;
 
         ImGui::ResetMouseDragDelta(ImGuiMouseButton_Right);
     }
@@ -187,10 +190,10 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
     //Reset Camera To Center
     if (ImGui::IsKeyDown(ImGuiKey_LeftCtrl) && ImGui::IsKeyDown(ImGuiKey_R))
     {
-        EditorCamera::m_editorCamera.m_coordinates.x = 0.f;
-        EditorCamera::m_editorCamera.m_coordinates.y = 0.f;
-        EditorCamera::m_editorCamera.m_zoom.x = 1.f;
-        EditorCamera::m_editorCamera.m_zoom.y = 1.f;
+        EditorCamera::m_editorCamera.m_coordinates.m_x = 0.f;
+        EditorCamera::m_editorCamera.m_coordinates.m_y = 0.f;
+        EditorCamera::m_editorCamera.m_zoom.m_x = 1.f;
+        EditorCamera::m_editorCamera.m_zoom.m_y = 1.f;
     }
 
     //set tile map 
@@ -207,7 +210,7 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
     if (ImGui::IsWindowHovered() && !ImGuizmo::IsUsing() && ImGui::IsMouseClicked(0)) {
         //If cursor selects object, object is selected
         auto transform = calculateworld();
-        ImVec2 WorldMouse = ImVec2{ transform.x, transform.y };
+        ImVec2 WorldMouse = ImVec2{ transform.m_x, transform.m_y };
         //calculate AABB of each object (active scenes)
         for (auto& sceneentity : ecs->m_ECS_SceneMap) {
 
@@ -280,18 +283,41 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
             IM_ASSERT(payload->DataSize == sizeof(std::filesystem::path));
             std::filesystem::path* filename = static_cast<std::filesystem::path*>(payload->Data);
 
-            glm::vec3 translate = calculateworld();
+            vector3::Vec3 translate = calculateworld();
             
 
             if (filename->filename().extension().string() == ".png") {
                 ecs::EntityID id = fileecs->m_CreateEntity(m_activeScene); //assign to active scene
                 ecs::TransformComponent* transCom = static_cast<ecs::TransformComponent*>(fileecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id));
-                transCom->m_position = { translate.x, translate.y };
+                transCom->m_position = { translate.m_x, translate.m_y };
                 // Insert matrix
                 ecs::NameComponent* nameCom = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id));
                 nameCom->m_entityName = filename->filename().stem().string();
-                ecs::SpriteComponent * spriteCom = static_cast<ecs::SpriteComponent*>(ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, id));
-                spriteCom->m_imageFile = filename->filename().string();
+                if (!ecs->m_ECS_EntityMap[id].test(ecs::TYPETILEMAPCOMPONENT))
+                {
+                    ecs::SpriteComponent* spriteCom = static_cast<ecs::SpriteComponent*>(ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, id));
+                    ecs::ColliderComponent* colCom = static_cast<ecs::ColliderComponent*>(ecs->m_AddComponent(ecs::TYPECOLLIDERCOMPONENT, id));
+                    assetmanager::AssetManager* assets = assetmanager::AssetManager::m_funcGetInstance();
+                    spriteCom->m_imageFile = filename->filename().string();
+                    colCom->m_Size.m_x = static_cast<float>(static_cast<float>(assets->m_imageManager.m_imageMap[spriteCom->m_imageFile].m_width) / static_cast<float>(pipe->m_unitWidth) / assets->m_imageManager.m_imageMap[spriteCom->m_imageFile].m_stripCount);
+                    colCom->m_Size.m_y = static_cast<float>(assets->m_imageManager.m_imageMap[spriteCom->m_imageFile].m_height) / static_cast<float>(pipe->m_unitHeight);
+                    if (!ecs->m_ECS_EntityMap[id].test(ecs::TYPEANIMATIONCOMPONENT) && assets->m_imageManager.m_imageMap[spriteCom->m_imageFile].m_stripCount != 1)
+                    {
+                        ecs::AnimationComponent* aniCom = static_cast<ecs::AnimationComponent*>(ecs->m_AddComponent(ecs::TYPEANIMATIONCOMPONENT, id));
+                        aniCom->m_stripCount = assets->m_imageManager.m_imageMap[spriteCom->m_imageFile].m_stripCount;
+                    }
+                    else if (ecs->m_ECS_EntityMap[id].test(ecs::TYPEANIMATIONCOMPONENT))
+                    {
+                        auto* ac = static_cast<ecs::AnimationComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEANIMATIONCOMPONENT]->m_GetEntityComponent(id));
+                        ac->m_stripCount = assets->m_imageManager.m_imageMap[spriteCom->m_imageFile].m_stripCount;
+                    }
+                }
+                else
+                {
+                    LOGGING_WARN("Restriction: Tilemap Component Not Allowed With Sprite Component");
+                }
+                
+                
 
                 if (m_prefabSceneMode) {
                     ecs::Hierachy::m_SetParent(ecs->m_ECS_SceneMap.find(m_activeScene)->second.m_prefabID, id);
@@ -304,7 +330,7 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
                 
                 ecs::EntityID id = fileecs->m_CreateEntity(m_activeScene); //assign to top most scene
                 ecs::TransformComponent* transCom = static_cast<ecs::TransformComponent*>(fileecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id));
-                transCom->m_position = { translate.x, translate.y };
+                transCom->m_position = { translate.m_x, translate.m_y };
                 // Insert matrix
                 ecs::NameComponent* nameCom = static_cast<ecs::NameComponent*>(fileecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id));
                 nameCom->m_entityName = filename->filename().stem().string();
@@ -324,7 +350,7 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
                 if (ecs->m_ECS_SceneMap.find(filename->filename().string()) != ecs->m_ECS_SceneMap.end()) {
                     ecs::EntityID id = prefab::Prefab::m_CreatePrefab(filename->filename().string(), m_activeScene);
                     ecs::TransformComponent* transCom = static_cast<ecs::TransformComponent*>(fileecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id));
-                    transCom->m_position = { translate.x, translate.y };
+                    transCom->m_position = { translate.m_x, translate.m_y };
                 }
                 else {
                     LOGGING_ERROR("Prefab not loaded");

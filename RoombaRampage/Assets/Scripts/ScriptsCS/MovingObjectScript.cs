@@ -1,4 +1,4 @@
-﻿using GameScript.ScriptCore;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,86 +6,84 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace Namespace
+public class MovingObjectScript : ScriptBase
 {
-    public class MovingObjectScript : ScriptBase
+    private uint EntityID;
+
+    public float Speed; // Speed of movement
+    public bool Static;
+
+    private bool movingRight = true; // Direction flag (moving right or left)
+    private float timeElapsed = 0f;  // Time elapsed since the last direction change
+    public float changeDirectionInterval; // Interval (in seconds) for changing direction
+    private Vector2 velocity;
+
+    public override void GetEntityID(uint id)
     {
-        private uint EntityID;
+        EntityID = id;
+    }
 
-        
-        public float Speed; // Speed of movement
-        public bool Static;
+    public override void Start()
+    {
+        Speed = 2;
+        changeDirectionInterval = 3;
+        Static = false;
+    }
 
-        private bool movingRight = true; // Direction flag (moving right or left)
-        private float timeElapsed = 0f;  // Time elapsed since the last direction change
-        public float changeDirectionInterval; // Interval (in seconds) for changing direction
-        private Vector2 velocity;
+    public override void Update()
+    {
 
-        public override void GetEntityID(uint id){
-            EntityID = id;
+        if (Static)
+        {
+            velocity.X = 0;
+            velocity.Y = 0;
+            InternalCall.m_InternalSetVelocity(EntityID, in velocity);
+            return;
         }
 
-        public override void Start()
+        //update time elapsed
+        float deltatime;
+        InternalCall.m_InternalCallGetDeltaTime(out deltatime);
+        timeElapsed += deltatime;
+
+        //Console.WriteLine($"timeelapsed:{timeElapsed}");
+
+        if (timeElapsed > changeDirectionInterval)
         {
-            Speed = 2;
-            changeDirectionInterval = 3;
-            Static = false;
-        }
-
-        public override void Update()
-        {
-
-            if(Static){
-                velocity.X = 0;
-                velocity.Y = 0;
-                 m_InternalSetVelocity(EntityID, in velocity);
-                 return;
-            } 
-
-            //update time elapsed
-            float deltatime;
-            m_InternalCallGetDeltaTime(out deltatime);
-            timeElapsed += deltatime;
-
-            //Console.WriteLine($"timeelapsed:{timeElapsed}");
-
-            if (timeElapsed > changeDirectionInterval)
-            {
-                if (movingRight)
-                {
-                    movingRight = false; 
-                }
-                else
-                {
-                    movingRight = true;
-                }
-                timeElapsed = 0;
-            }
-
-
-            
-            if(!m_InternalGetVelocity(EntityID, out velocity))
-            {
-                // return cause velocity -> rigidbody is not present in entity
-                return;
-            }
-
             if (movingRight)
             {
-                velocity.X = Speed;
+                movingRight = false;
             }
             else
             {
-                velocity.X = -Speed;
+                movingRight = true;
             }
-
-
-
-
-
-            m_InternalSetVelocity(EntityID, in velocity);
-
-
+            timeElapsed = 0;
         }
+
+
+
+        if (!InternalCall.m_InternalGetVelocity(EntityID, out velocity))
+        {
+            // return cause velocity -> rigidbody is not present in entity
+            return;
+        }
+
+        if (movingRight)
+        {
+            velocity.X = Speed;
+        }
+        else
+        {
+            velocity.X = -Speed;
+        }
+
+        Console.WriteLine(PlayerControl.yolo);
+
+
+
+        InternalCall.m_InternalSetVelocity(EntityID, in velocity);
+
+
     }
 }

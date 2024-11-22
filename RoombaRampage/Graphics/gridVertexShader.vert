@@ -29,7 +29,7 @@ R"( #version 460 core
          }
          else if (debugColor.x > 0.01)
          {
-            col = glm::vec4(debugColor, 1.0);
+            col = vec4(debugColor, 1.0);
          }
          else
          {

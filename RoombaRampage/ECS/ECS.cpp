@@ -71,9 +71,11 @@ namespace ecs{
 		ecs->m_ECS_SystemMap[TYPERENDERSYSTEM] = std::make_shared<RenderSystem>();
 		ecs->m_ECS_SystemMap[TYPERENDERTEXTSYSTEM] = std::make_shared<RenderTextSystem>();
 		ecs->m_ECS_SystemMap[TYPEDEBUGDRAWINGSYSTEM] = std::make_shared<DebugDrawingSystem>();
+		ecs->m_ECS_SystemMap[TYPEAUDIOSYSTEM] = std::make_shared<AudioSystem>();
 		ecs->m_ECS_SystemMap[TYPECAMERASYSTEM] = std::make_shared<CameraSystem>();
 		ecs->m_ECS_SystemMap[TYPEANIMATIONSYSTEM] = std::make_shared<AnimationSystem>();
 		ecs->m_ECS_SystemMap[TYPETILEMAPSYSTEM] = std::make_shared<TilemapSystem>();
+
 		
 
 		//Initialize all system Peformance
@@ -122,7 +124,7 @@ namespace ecs{
 			if (ecs->m_state != RUNNING) {
 				if (System.first == TYPECOLLISIONSYSTEM || System.first == TYPECOLLISIONRESPONSESYSTEM || 
 					System.first == TYPELOGICSYSTEM || System.first == TYPEPHYSICSSYSTEM || 
-					System.first == TYPEBUTTONSYSTEM || System.first == TYPEANIMATIONSYSTEM) {
+					System.first == TYPEANIMATIONSYSTEM) {
 					//skip physics and logic if not running
 					continue;
 				}

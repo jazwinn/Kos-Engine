@@ -20,7 +20,7 @@ namespace messaging {
 
 	void SoundPlayed(const Message& givenMsg){
 		assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
-		assetManager->m_audioManager.m_soundMap.find("zwing.wav")->second->m_PlaySound();
-		LOGGING_INFO("Sound has been played! Messaging system called from: {}", givenMsg.m_GetData().c_str());
+		assetManager->m_audioManager.getSoundMap().find("zwing.wav")->second->m_PlaySound();
+		LOGGING_INFO("Sound has been played! Messaging system called from: %s", givenMsg.m_GetData().c_str());
 	}
 }

@@ -35,7 +35,7 @@ namespace Application {
     /*--------------------------------------------------------------
       GLOBAL VARAIBLE
     --------------------------------------------------------------*/
-   #define IMGUIENABLED
+    #define IMGUIENABLED
     graphicpipe::GraphicsPipe* pipe;
     assetmanager::AssetManager* AstManager;
 
@@ -114,12 +114,15 @@ namespace Application {
 
 #ifdef IMGUIENABLED
         LOGGING_INFO("IMGUIENABLED is defined");
-
+        
 #else
         LOGGING_INFO("IMGUIENABLED is undefined");
         pipe->m_gameMode = true;
+        ecs->m_nextState = ecs::START;
+        assetmanager::AssetManager::m_funcGetInstance()->m_scriptManager.m_ReloadAllDLL();
+        
 #endif      
-
+        
 
         LOGGING_INFO("Application Init Successful");
         return 0;
@@ -136,6 +139,8 @@ namespace Application {
         help->m_fixedDeltaTime = static_cast<float>(fixedDeltaTime);
         ecs->m_DeltaTime = static_cast<float>(fixedDeltaTime);
         double accumulatedTime = 0.0;
+
+        
 
         /*--------------------------------------------------------------
             GAME LOOP

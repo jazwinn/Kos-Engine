@@ -28,8 +28,8 @@ Reproduction or disclosure of this file or its contents without the
 prior written consent of DigiPen Institute of Technology is prohibited.
 */
 /********************************************************************/
-
-#pragma once
+#ifndef MONOHAND_H
+#define MONOHAND_H
 
 #include <mono/jit/jit.h>
 #include <mono/metadata/assembly.h>
@@ -49,7 +49,6 @@ namespace script {
 		std::string m_fileName;
 		MonoImage* m_image;
 		MonoAssembly* m_assembly;
-		std::unordered_map<std::string, MonoMethod*> m_Methods;
 	};
 
 	class ScriptHandler {
@@ -101,6 +100,8 @@ namespace script {
 		*/
 		/******************************************************************/
 		void m_CompileCSharpFile(const std::filesystem::path& filePath);
+
+		void m_CompileAllCSharptoSingleDLL();
 
 		/******************************************************************/
 		/*!
@@ -177,12 +178,16 @@ namespace script {
 		void m_ReloadAllDLL();
 
 		/*************************************/
-		std::vector<std::string> m_CSScripts; // store all scripts stored in Assets/Scripts/ScriptsCS
+		std::vector<std::pair<std::string, std::filesystem::path>> m_CSScripts; // stall all scripts in the asset folder
 
 		// key is filename, second is script mono data
-		std::unordered_map<std::string, ScriptMonoInfo> m_ScriptMap;
+		std::unordered_map<std::string, ScriptMonoInfo> m_loadedDLLMap;
+
+		std::unordered_map <std::string, std::unordered_map<std::string, MonoMethod*>> m_methodMap;
 
 		MonoDomain* m_GetDomain() { return m_AppDomain; };
+
+		std::string m_outputdll;
 
 	private:
 		//root domain
@@ -219,3 +224,5 @@ namespace script {
 	----------------------------------------------------------------*/
 
 }
+
+#endif
