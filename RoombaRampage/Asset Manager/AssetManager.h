@@ -95,7 +95,6 @@ namespace assetmanager {
         /*!
         \fn      void m_LoadAudio(std::string file)
         \brief   Loads an audio file and stores it in the audio container.
-        \param   name - name of the audio to be used
         \param   file - Path to the audio file to load.
         */
         /******************************************************************/

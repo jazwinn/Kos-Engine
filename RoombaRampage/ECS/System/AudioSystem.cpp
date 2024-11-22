@@ -58,7 +58,6 @@ namespace ecs {
                     auto it = assetManager->m_audioManager.getSoundMap().find(audioFile.m_Name);
                     if (it != assetManager->m_audioManager.getSoundMap().end()) {
                         auto& sound = it->second;
-
                         sound->m_SetVolume(audioFile.m_Volume);
                         sound->m_SetLooping(audioFile.m_Loop);
 

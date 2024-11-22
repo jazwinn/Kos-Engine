@@ -154,8 +154,7 @@ namespace assetmanager {
        if (lastDotPos == std::string::npos) {
            lastDotPos = fileName.length(); 
        }
-       fileName.substr(lastSlashPos + 1, lastDotPos - lastSlashPos - 1);
-
+       fileName = fileName.substr(lastSlashPos + 1, lastDotPos - lastSlashPos - 1);
        m_audioManager.m_LoadAudio(fileName,file); 
    }
 
