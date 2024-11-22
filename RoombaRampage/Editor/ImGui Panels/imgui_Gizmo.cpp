@@ -221,7 +221,7 @@ namespace gui {
                 tempComp = *transcom;
             }
         }
-        if (!ImGuizmo::IsUsingAny()) {
+        if (!ImGuizmo::IsUsingAny() && wasClicked) {
             wasClicked = false;
             events::TransformComponentChanged action(ecs::TYPETRANSFORMCOMPONENT, m_clickedEntityId, transcom, tempComp);
             DISPATCH_ACTION_EVENT(action);
