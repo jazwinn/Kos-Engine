@@ -140,6 +140,15 @@ namespace scenes {
                 }
             }
         }
+        else {
+            
+            for (const auto& prefabscene : ecs->m_ECS_SceneMap) {
+                if (prefabscene.second.m_isPrefab) {
+                    prefab::Prefab::m_UpdateAllPrefabEntity(prefabscene.first);
+                }
+            }
+            
+        }
         LOGGING_INFO("Entities successfully loaded!");
     }
 
