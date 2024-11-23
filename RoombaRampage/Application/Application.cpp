@@ -35,7 +35,6 @@ namespace Application {
     /*--------------------------------------------------------------
       GLOBAL VARAIBLE
     --------------------------------------------------------------*/
-    #define IMGUIENABLED
     graphicpipe::GraphicsPipe* pipe;
     assetmanager::AssetManager* AstManager;
 
