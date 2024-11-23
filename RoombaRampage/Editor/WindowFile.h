@@ -16,9 +16,9 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #ifndef WINFILE_H
 #define WINFILE_H
 
+#include "../Config/pch.h"
 #include <Windows.h>
 #include <commdlg.h>
-#include <string>
 
 namespace file {
 
@@ -28,7 +28,7 @@ namespace file {
 
 		static std::string m_OpenfileDialog(char* filepath);
 
-
+		//static std::string m_BackupAndDelete(const std::filesystem::path& path);
 
 	};
 

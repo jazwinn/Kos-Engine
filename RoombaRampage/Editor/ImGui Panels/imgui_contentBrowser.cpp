@@ -12,7 +12,29 @@ namespace gui {
 
 	static std::filesystem::path assetDirectory = "Assets";
 	static std::filesystem::path currentDirectory  = assetDirectory;
-	static const char* fileIcon = "folder.png";
+	static const char* fileIcon = "FolderIcon.png";
+
+
+	void MoveFolder(const std::filesystem::path& newDirectory) {
+		if (ImGui::BeginDragDropTarget())
+		{
+			assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("file"))
+			{
+
+				IM_ASSERT(payload->DataSize == sizeof(std::filesystem::path));
+				std::filesystem::path* filename = static_cast<std::filesystem::path*>(payload->Data);
+
+
+				if (newDirectory == *filename) return;
+				std::filesystem::path destinationFile = newDirectory / filename->filename();
+				
+				std::filesystem::rename(*filename, destinationFile);
+
+			}
+			ImGui::EndDragDropTarget();
+		}
+	}
 
 	void ImGuiHandler::m_DrawContentBrowser() {
 
@@ -35,7 +57,10 @@ namespace gui {
 			static bool isSelected{ false };
 			for (auto& directoryPath : std::filesystem::directory_iterator(assetDirectory)) {
 				std::string directoryString = directoryPath.path().filename().string();
-				if (ImGui::Selectable (directoryString.c_str())) {
+				isSelected = ImGui::Selectable(directoryString.c_str());
+				MoveFolder(assetDirectory/directoryPath.path().filename());
+
+				if (isSelected) {
 
 					currentDirectory = assetDirectory/directoryPath.path().filename();
 
@@ -54,10 +79,38 @@ namespace gui {
 		{
 			ImGui::BeginChild("ChildLa", ImVec2(0, ImGui::GetContentRegionAvail().y));
 
+			if (ImGui::BeginPopupContextWindow()) {
+				if (ImGui::MenuItem("Add Folder")) {
+
+					std::string path = "/New Folder";
+
+					int count{1};
+					while (std::filesystem::exists(currentDirectory.string() + path)) {
+						path = "/New Folder_" + std::to_string(count++);
+					}
+
+					if (std::filesystem::create_directories(currentDirectory.string() + path)) {
+
+						LOGGING_INFO("Directory created successfully!");
+					}
+					else {
+						LOGGING_ERROR("Directory already exists or failed to create!");
+					}
+
+				}
+				ImGui::EndPopup();
+			}
+
 
 			//back button
-			if (currentDirectory != assetDirectory && ImGui::Button("Back")) {
-				currentDirectory = currentDirectory.parent_path();
+			
+			if (currentDirectory != assetDirectory) {
+				bool open = ImGui::Button("Back");
+				MoveFolder(currentDirectory.parent_path());
+				if (open) {
+					currentDirectory = currentDirectory.parent_path();
+				}
+				
 			}
 			else {
 				ImGui::NewLine();
@@ -91,7 +144,10 @@ namespace gui {
 				if (directoryPath.is_directory()) {
 					// if a folder
 					textorimage(directoryString, fileIcon);
-					//ImGui::ImageButton(directoryString.c_str(), (ImTextureID)assetmanager->m_imageManager.m_imageMap.find(fileIcon)->second.textureID, { thumbnail ,thumbnail }, { 0,1 }, { 1,0 }, { 0,0,0,0 });
+					
+					MoveFolder(currentDirectory / directoryPath.path().filename());
+
+
 					if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
 						currentDirectory /= directoryPath.path().filename();
 					}
@@ -203,15 +259,15 @@ namespace gui {
 						
 					}
 
-					if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None)) {
-						static std::filesystem::path filepath;
-						filepath = directoryPath.path();
-						ImGui::SetDragDropPayload("file", &filepath, sizeof(std::filesystem::path));
-						ImGui::Text(filepath.string().c_str());
-						ImGui::EndDragDropSource();
-					}
-				}
 
+				}
+				if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None)) {
+					static std::filesystem::path filepath;
+					filepath = directoryPath.path();
+					ImGui::SetDragDropPayload("file", &filepath, sizeof(std::filesystem::path));
+					ImGui::Text(filepath.string().c_str());
+					ImGui::EndDragDropSource();
+				}
 
 				//create context window
 				static bool rename = false;
