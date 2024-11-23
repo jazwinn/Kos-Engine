@@ -292,12 +292,15 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
                 transCom->m_position = { translate.m_x, translate.m_y };
                 // Insert matrix
                 ecs::NameComponent* nameCom = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id));
+                ecs::SpriteComponent* spriteCom = static_cast<ecs::SpriteComponent*>(ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, id));
+                assetmanager::AssetManager* assets = assetmanager::AssetManager::m_funcGetInstance();
                 nameCom->m_entityName = filename->filename().stem().string();
-                if (!ecs->m_ECS_EntityMap[id].test(ecs::TYPETILEMAPCOMPONENT))
+
+                if (!ecs->m_ECS_EntityMap[id].test(ecs::TYPETILEMAPCOMPONENT) && (assets->m_imageManager.m_imageMap.find(filename->filename().string()) != assets->m_imageManager.m_imageMap.end()))
                 {
-                    ecs::SpriteComponent* spriteCom = static_cast<ecs::SpriteComponent*>(ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, id));
+                   
                     ecs::ColliderComponent* colCom = static_cast<ecs::ColliderComponent*>(ecs->m_AddComponent(ecs::TYPECOLLIDERCOMPONENT, id));
-                    assetmanager::AssetManager* assets = assetmanager::AssetManager::m_funcGetInstance();
+                    
                     spriteCom->m_imageFile = filename->filename().string();
                     colCom->m_Size.m_x = static_cast<float>(static_cast<float>(assets->m_imageManager.m_imageMap[spriteCom->m_imageFile].m_width) / static_cast<float>(pipe->m_unitWidth) / assets->m_imageManager.m_imageMap[spriteCom->m_imageFile].m_stripCount);
                     colCom->m_Size.m_y = static_cast<float>(assets->m_imageManager.m_imageMap[spriteCom->m_imageFile].m_height) / static_cast<float>(pipe->m_unitHeight);
@@ -314,7 +317,7 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
                 }
                 else
                 {
-                    LOGGING_WARN("Restriction: Tilemap Component Not Allowed With Sprite Component");
+                    LOGGING_WARN("Restriction: Tilemap Component Not Allowed With Sprite Component or Please Reload Content Browser");
                 }
                 
                 

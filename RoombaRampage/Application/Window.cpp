@@ -165,11 +165,7 @@ namespace Application {
         glClearColor(static_cast<GLclampf>(help->m_colour.m_x), static_cast<GLclampf>(help->m_colour.m_y), static_cast<GLclampf>(help->m_colour.m_z), static_cast<GLclampf>(1));
         glClear(GL_COLOR_BUFFER_BIT);
 
-       /* double xPos, yPos;
-        glfwGetCursorPos(m_window, &xPos, &yPos);
-        xPos = glm::clamp(xPos, 0.0, (double)display_w);
-        yPos = glm::clamp(yPos, 0.0, (double)display_h);
-        glfwSetCursorPos(m_window, xPos, yPos);*/
+
 
         return 0;
 	}

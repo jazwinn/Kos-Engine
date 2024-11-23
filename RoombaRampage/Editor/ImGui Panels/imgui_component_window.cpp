@@ -421,16 +421,20 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
             }
 
-            //change tag
-            std::vector<std::string> tags = file::FileWindow::readEditorConfig("./Editor/editorConfig.txt");
-            static int entityTagType = 0;
             // Convert vector to array of char* for ImGui
-            std::vector<const char*> tag_Names(tags.size());
-            std::transform(tags.begin(), tags.end(), tag_Names.begin(), [](const std::string& tag) {
+            std::vector<const char*> tag_Names(m_tags.size());
+            std::transform(m_tags.begin(), m_tags.end(), tag_Names.begin(), [](const std::string& tag) {
                 return tag.c_str();
                 });
-            if (ImGui::Combo("Tag", &entityTagType, tag_Names.data(), static_cast<int>(tag_Names.size()))) {
-                nc->m_entityTag = tags[entityTagType];
+
+            int item{};
+            const auto& it = std::find(tag_Names.begin(), tag_Names.end(), nc->m_entityTag);
+            if (it != tag_Names.end()) {
+                item = std::distance(tag_Names.begin(), it);
+            }
+            
+            if (ImGui::Combo("Tag", &item, tag_Names.data(), static_cast<int>(tag_Names.size()))) {
+                nc->m_entityTag = m_tags[item];
             }
 
            // std::cout << nc->m_entityTag << std::endl;
