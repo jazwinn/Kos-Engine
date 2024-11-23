@@ -80,7 +80,6 @@ namespace ecs {
 
 		//TODO instead of retrieving every loop, just get the address of the vector in the physics pipeline
 		physicspipe::Physics* PhysicsPipeline = physicspipe::Physics::getInstance();
-		std::vector<std::shared_ptr<physicspipe::PhysicsData>> vecCollisionEntity = PhysicsPipeline->m_RetrievePhysicsData(); 
 		std::vector <std::pair<std::shared_ptr<physicspipe::PhysicsData>, std::shared_ptr<physicspipe::PhysicsData>>> vecCollisionEntityPair = PhysicsPipeline->m_RetrievePhysicsDataPair();
 		std::unordered_set<ecs::EntityID> ids;
 		
@@ -104,7 +103,7 @@ namespace ecs {
 			if (rigidComp->m_scene != scene) continue;	
 
 			const EntityID check_ID = ColComp->m_Entity;
-			const auto& iterator = std::find_if(vecCollisionEntityPair.begin(), vecCollisionEntityPair.end(), [check_ID](const auto pair) { return check_ID == pair.first->m_ID; });
+			const auto& iterator = std::find_if(vecCollisionEntityPair.begin(), vecCollisionEntityPair.end(), [check_ID](const auto pair) { return (check_ID == pair.first->m_ID); });
 			if (iterator != vecCollisionEntityPair.end()) {
 				ColComp->m_collidedWith.push_back(iterator->second->m_ID);
 				ColComp->m_isCollided = true;
