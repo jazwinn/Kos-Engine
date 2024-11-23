@@ -64,12 +64,18 @@ namespace Application {
         if (iconified == GLFW_TRUE)
         {
             //std::cout << "Window minimized!" << std::endl;
-            ecs::ECS::m_GetInstance()->m_nextState = ecs::WAIT;
+            if (ecs::ECS::m_GetInstance()->m_getState() == ecs::RUNNING) {
+                ecs::ECS::m_GetInstance()->m_nextState = ecs::WAIT;
+            }
+            
         }
         else
         {
             //std::cout << "Window restored!" << std::endl;
-            ecs::ECS::m_GetInstance()->m_nextState = ecs::RUNNING;
+            if (ecs::ECS::m_GetInstance()->m_getState() == ecs::WAIT) {
+                ecs::ECS::m_GetInstance()->m_nextState = ecs::RUNNING;
+            }
+            
         }
     }
 
