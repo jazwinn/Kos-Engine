@@ -99,6 +99,11 @@ namespace assetmanager {
 
     void AssetManager::m_RenameAsset(std::filesystem::path oldfilepath, std::filesystem::path newfilepath)
     {
+        if (oldfilepath == newfilepath) {
+            return;
+        }
+
+
         if (oldfilepath.filename().extension().string() != newfilepath.filename().extension().string()) {
             LOGGING_WARN("Renaming assets of different type");
             return;
