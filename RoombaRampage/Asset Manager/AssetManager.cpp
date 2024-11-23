@@ -135,12 +135,6 @@ namespace assetmanager {
 
     void AssetManager::m_LoadScript(std::filesystem::path filepath)
     {
-        //m_scriptManager.m_AddScripts(filepath.string());
-        //std::string filename = filepath.filename().stem().string();
-        //// load start and update
-        ////TODO move somewhere that is not the asset manager
-        //m_scriptManager.m_LoadMethod(filename, filename, "Start", 0);
-        //m_scriptManager.m_LoadMethod(filename, filename, "Update", 0);
 
         std::string filename = filepath.filename().stem().string();
         
@@ -153,25 +147,47 @@ namespace assetmanager {
 
    void AssetManager::m_LoadAudio(std::string file) {
        std::string fileName = file;
-       size_t lastSlashPos = fileName.find_last_of("/\\");  // Handles both UNIX and Windows paths
-       size_t lastDotPos = fileName.find_last_of('.');
 
-       if (lastDotPos == std::string::npos) {
-           lastDotPos = fileName.length(); 
+       const auto & audiomap = m_audioManager.getSoundMap();
+       if (audiomap.find(fileName) == audiomap.end()) {
+           size_t lastSlashPos = fileName.find_last_of("/\\");  // Handles both UNIX and Windows paths
+           size_t lastDotPos = fileName.find_last_of('.');
+
+           if (lastDotPos == std::string::npos) {
+               lastDotPos = fileName.length();
+           }
+           fileName = fileName.substr(lastSlashPos + 1, lastDotPos - lastSlashPos - 1);
+           m_audioManager.m_LoadAudio(fileName, file);
        }
-       fileName = fileName.substr(lastSlashPos + 1, lastDotPos - lastSlashPos - 1);
-       m_audioManager.m_LoadAudio(fileName,file); 
+       else {
+           LOGGING_WARN("Audio Already Loaded");
+       }
+
    }
 
    void AssetManager::m_LoadFont(std::string file)
    {
-       text::FontManager::LoadFont(file);
+       std::filesystem::path filepath = file;
+       std::string filename = filepath.filename().string();
+       if (m_fontManager.m_fonts.find(filename) == m_fontManager.m_fonts.end()) {
+           text::FontManager::LoadFont(file);
+       }
+       else {
+           LOGGING_WARN("Font Already Loaded");
+       }
    }
  
 
     void AssetManager::m_funcLoadImage(std::string file)
     {
-        m_imageManager.m_LoadImage(file.c_str());
+        std::filesystem::path path = file;
+        if (m_imageManager.m_imageMap.find(path.filename().string()) == m_imageManager.m_imageMap.end()) {
+            m_imageManager.m_LoadImage(file.c_str());
+        }
+        else {
+            LOGGING_WARN("Image Already Loaded");
+        }
+        
     }
 
   
