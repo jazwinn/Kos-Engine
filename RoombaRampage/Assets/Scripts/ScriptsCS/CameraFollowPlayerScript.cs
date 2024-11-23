@@ -19,13 +19,19 @@ public class CameraFollowPlayerScript : ScriptBase
 
     public override void Start()
     {
-        playerID = InternalCall.m_InternalCallGetPlayer();
+        playerID = InternalCall.m_InternalCallGetTagID("Player");
 
         if (playerID < 0)
         {
             Console.WriteLine("Player Component not present in entity");
         }
 
+        int[] collidedEntities = InternalCall.m_InternalCallGetTagIDs("Default");
+        foreach (var tagid in collidedEntities)
+        {
+
+            Console.WriteLine($"Default tag is {tagid}");
+        }
     }
 
     public override void Update()
