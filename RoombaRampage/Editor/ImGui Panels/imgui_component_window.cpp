@@ -28,7 +28,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Events/DragFloat.h"
 
 #include "ScriptVariable.h"
-
+#include "../Editor/WindowFile.h"
 #pragma warning(push)
 #pragma warning(disable : 26495)  // Disable uninitialized variable warning
 #include "../Dependencies/rapidjson/document.h"
@@ -422,21 +422,15 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
             }
 
             //change tag
+            std::vector<std::string> tags = file::FileWindow::readEditorConfig("./Editor/editorConfig.txt");
             static int entityTagType = 0;
-            const char* tag_Names[] = { "Default" , "Player", "Wall","Bullet" };
-            if (ImGui::Combo("Tag", &entityTagType, tag_Names, IM_ARRAYSIZE(tag_Names), IM_ARRAYSIZE(tag_Names))) {
-                if (entityTagType == 0) {
-                    nc->m_entityTag = "Default";
-                }
-                if (entityTagType == 1) {
-                    nc->m_entityTag = "Player";
-                }
-                if (entityTagType == 2) {
-                    nc->m_entityTag = "Wall";
-                } 
-                if (entityTagType == 3) {
-                    nc->m_entityTag = "Bullet";
-                }
+            // Convert vector to array of char* for ImGui
+            std::vector<const char*> tag_Names(tags.size());
+            std::transform(tags.begin(), tags.end(), tag_Names.begin(), [](const std::string& tag) {
+                return tag.c_str();
+                });
+            if (ImGui::Combo("Tag", &entityTagType, tag_Names.data(), static_cast<int>(tag_Names.size()))) {
+                nc->m_entityTag = tags[entityTagType];
             }
 
            // std::cout << nc->m_entityTag << std::endl;

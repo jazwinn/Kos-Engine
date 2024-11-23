@@ -42,7 +42,9 @@ namespace logging {
         m_logFile.open(filename,std::ios::out | std::ios::trunc);
         //std::cout << filename << std::endl;
         if (!m_logFile.is_open()) {
+#ifdef IMGUIENABLED
             std::cerr << "Error opening log file." << std::endl;
+#endif
         }
     }
     /******************************************************************/
@@ -153,11 +155,15 @@ namespace logging {
         assert(!m_bInitialized && "The logger must be initialized before it is used!");
         if (m_bInitialized)
         {
+#ifdef IMGUIENABLED
             std::cout << "The logger must be initialized before it is used!" << std::endl;
+#endif
             return;
         }
         else {
+#ifdef IMGUIENABLED
             std::cout << "Logger initialized" << std::endl;
+#endif
         }
 
         m_bInitialized = true;
@@ -222,7 +228,9 @@ namespace logging {
         logEntry << "[" << current_Time << "] " << m_LevelToString(level) << ": " << message << "\n";
 
         // Output to console
+#ifdef IMGUIENABLED
         std::cout << m_ColorToString(level) << logEntry.str() << s_CLOSE << std::endl;
+#endif
         m_log_list.push_back(logEntry.str());
         // Output to log file
         if (m_logFile.is_open()) {

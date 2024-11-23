@@ -27,7 +27,7 @@ namespace file {
 	public:	
 
 		static std::string m_OpenfileDialog(char* filepath);
-
+		static std::vector<std::string> readEditorConfig(const std::string& filePath);
 		//static std::string m_BackupAndDelete(const std::filesystem::path& path);
 
 	};
