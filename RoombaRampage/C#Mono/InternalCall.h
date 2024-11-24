@@ -122,7 +122,7 @@ namespace script {
 			\return    Always returns false for consistency in call handling.
 		*/
 		/******************************************************************/
-		static bool m_InternalCallGetDeltaTime(float* deltatime);
+		static float m_InternalCallGetDeltaTime();
 
 		static int m_InternalCallGetTagID(MonoString* tag);
 

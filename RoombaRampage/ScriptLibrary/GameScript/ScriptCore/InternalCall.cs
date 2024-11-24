@@ -84,7 +84,7 @@ public static class InternalCall
     public extern static bool m_InternalSetVelocity(uint entity, in Vector2 Velocity);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static bool m_InternalCallGetDeltaTime(out float DeltaTime);
+    public extern static float m_InternalCallGetDeltaTime();
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static int m_InternalCallGetTagID(string tag);
