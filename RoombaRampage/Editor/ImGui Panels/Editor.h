@@ -227,9 +227,12 @@ namespace gui {
         bool m_prefabSceneMode{ false };
         bool m_tilePickerMode{ false };
         std::unordered_map<std::string, bool> m_savedSceneState;
+        /******************************/
 
         bool m_objectNameBox = false;
         char m_charBuffer[50] = "";  // Char Buffer
+
+        std::vector<std::string>m_tags;
 
         ImVec4 clearColor = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
     };

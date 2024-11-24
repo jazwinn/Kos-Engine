@@ -62,7 +62,8 @@ namespace image {
         stbi_set_flip_vertically_on_load(true);
         Image image{};
         image.m_stripCount = m_extractStripCountFromFilename(file);
-        image.m_spriteName = m_extractSpriteNameFromFilename(file);
+        //image.m_spriteName = m_extractSpriteNameFromFilename(file);
+        image.m_spriteName = std::filesystem::path{ file }.filename().string();
         image.m_isTilable = m_checkIfImageTilable(image.m_spriteName);
 
 
