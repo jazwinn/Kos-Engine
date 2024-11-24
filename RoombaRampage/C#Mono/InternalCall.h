@@ -136,7 +136,9 @@ namespace script {
 		/******************************************************************/
 		static bool m_InternalCallGetDeltaTime(float* deltatime);
 
-		static int m_InternalCallGetPlayer();
+		static int m_InternalCallGetTagID(MonoString* tag);
+
+		static MonoArray* m_InternalCallGetTagIDs(MonoString* tag);
 
 		static float m_InternalCallIsCollided(ecs::EntityID entity);
 

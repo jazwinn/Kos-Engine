@@ -9,8 +9,8 @@
         },
         "transform": {
             "position": {
-                "x": 1.654394268989563,
-                "y": -1.9988582134246826
+                "x": -0.9056365489959717,
+                "y": 0.18280313909053802
             },
             "rotation": -0.0,
             "scale": {
@@ -152,6 +152,30 @@
                 "y": 1.0
             }
         },
+        "rigidbody": {
+            "linearVelocity": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "linearAcceleration": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "angularVelocity": 0.0,
+            "angularAcceleration": 0.0,
+            "mass": 1.0,
+            "inverseMass": 1.0,
+            "linearDamping": 0.9900000095367432,
+            "angularDamping": 0.9900000095367432,
+            "force": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "torque": 0.0,
+            "kinematic": false,
+            "static": false
+        },
         "sprite": {
             "imagefile": "Button.png",
             "layer": 0,
@@ -164,13 +188,65 @@
         },
         "button": {
             "force": {
-                "x": 1941.214599609375,
-                "y": 1129.75048828125
+                "x": 1323.4056396484375,
+                "y": 360.0
             },
             "scale": {
                 "x": 1.0,
                 "y": 1.0
             }
+        },
+        "script": {
+            "scripts": [
+                "MovingObjectScript"
+            ]
+        }
+    },
+    {
+        "name": {
+            "namestr": "ani_RoombaBlink_strip4",
+            "layer": 0,
+            "isprefab": false
+        },
+        "transform": {
+            "position": {
+                "x": -5.917532444000244,
+                "y": 1.284230351448059
+            },
+            "rotation": 0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "collider": {
+            "size": {
+                "x": 6.400000095367432,
+                "y": 6.400000095367432
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true,
+            "radius": 0.5
+        },
+        "sprite": {
+            "imagefile": "ani_RoombaBlink_strip4.png",
+            "layer": 1,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0
+        },
+        "animation": {
+            "frameNumber": 0,
+            "framesPerSecond": 2,
+            "frameTimer": 0.0,
+            "isAnimating": true,
+            "stripCount": 4
         }
     }
 ]

@@ -24,7 +24,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Asset Manager/SceneManager.h"
 
 #define MONO_ADD_INTERNAL_CALL(METHOD_NAME) \
-    mono_add_internal_call("Namespace.InternalCall::" #METHOD_NAME, METHOD_NAME);
+    mono_add_internal_call("InternalCall::" #METHOD_NAME, METHOD_NAME);
 
 namespace script {
 
@@ -365,15 +365,20 @@ namespace script {
 		Helper::Helpers::GetInstance()->m_timeScale = 0.0f;
 	}
 
-	int InternalCall::m_InternalCallGetPlayer()
+
+	int InternalCall::m_InternalCallGetTagID(MonoString* monostring)
 	{
 
 		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+		char* nativeString = mono_string_to_utf8(monostring);
+		std::string tag = nativeString;
+		mono_free(nativeString);
 
 		for (const auto& scene : ecs->m_ECS_SceneMap) {
 			if (scene.second.m_isPrefab == false && scene.second.m_isActive) {
 				for (const auto& id : scene.second.m_sceneIDs) {
-					if (ecs->m_ECS_EntityMap.find(id)->second.test(ecs::TYPEPLAYERCOMPONENT)) {
+					ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id));
+					if (nc->m_entityTag == tag) {
 						return id;
 
 						break;
@@ -384,6 +389,39 @@ namespace script {
 
 
 		return -1;
+	}
+
+	MonoArray* InternalCall::m_InternalCallGetTagIDs(MonoString* monostring)
+	{
+		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+		char* nativeString = mono_string_to_utf8(monostring);
+		std::string tag = nativeString;
+		mono_free(nativeString);
+
+		std::vector<int> tagIDs;
+
+		for (const auto& scene : ecs->m_ECS_SceneMap) {
+			if (scene.second.m_isPrefab == false && scene.second.m_isActive) {
+				for (const auto& id : scene.second.m_sceneIDs) {
+					ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id));
+					if (nc->m_entityTag == tag) {
+						tagIDs.push_back(id);
+					}
+				}
+			}
+		}
+
+		if (tagIDs.size() > 0) {
+			MonoArray* Array = mono_array_new(assetmanager::AssetManager::m_funcGetInstance()->m_scriptManager.m_GetDomain(), mono_get_int32_class(), tagIDs.size());
+			for (size_t i = 0; i < tagIDs.size(); ++i) {
+				mono_array_set(Array, int, i, tagIDs[i]);
+			}
+
+			return Array;
+		}
+
+
+		return nullptr;
 	}
 
 	MonoArray* InternalCall::m_InternalCallGetCollidedEntities(ecs::EntityID entity)
@@ -565,7 +603,8 @@ namespace script {
 
 		MONO_ADD_INTERNAL_CALL(m_InternalCallGetDeltaTime);
 
-		MONO_ADD_INTERNAL_CALL(m_InternalCallGetPlayer);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallGetTagID);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallGetTagIDs);
 
 		MONO_ADD_INTERNAL_CALL(m_InternalGetTranslate);
 		MONO_ADD_INTERNAL_CALL(m_InternalSetTranslate);
@@ -578,7 +617,9 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_InternalCallIsKeyTriggered);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallIsKeyReleased);
 
-		MONO_ADD_INTERNAL_CALL(m_InternalCallGetTag); 
+		MONO_ADD_INTERNAL_CALL(m_InternalCallGetTag);
+
+
 		MONO_ADD_INTERNAL_CALL(m_InternalCallSetSceneActive);
 
 		MONO_ADD_INTERNAL_CALL(m_UnloadAllScene);
