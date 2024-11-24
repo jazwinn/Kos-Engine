@@ -163,7 +163,6 @@ namespace Application {
                     accumulatedTime -= (fixedDeltaTime * help->m_timeScale);
                     ++help->currentNumberOfSteps;
                 }
-                std::cout << help->currentNumberOfSteps << std::endl;
                 /*--------------------------------------------------------------
                     UPDATE INPUT
                 --------------------------------------------------------------*/
