@@ -356,9 +356,8 @@ namespace script {
 
 	float InternalCall::m_InternalCallGetDeltaTime()
 	{
-		*deltatime = Helper::Helpers::GetInstance()->m_fixedDeltaTime;
 
-		return false;
+		return Helper::Helpers::GetInstance()->m_fixedDeltaTime;
 	}
 
 	/*
