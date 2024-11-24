@@ -42,139 +42,30 @@ namespace fmodaudio {
     /******************************************************************/
     class FModAudio {
     public:
-        /******************************************************************/
-        /*!
-        \fn     FModAudio::FModAudio()
-        \brief  Constructor that initializes member variables to null.
-        */
-        /******************************************************************/
         FModAudio();
-
-        /******************************************************************/
-        /*!
-        \fn     FModAudio::~FModAudio()
-        \brief  Destructor that stops any sound playing and releases
-                system resources.
-        */
-        /******************************************************************/
         ~FModAudio();
 
-        /******************************************************************/
-        /*!
-        \fn     bool FModAudio::m_Init()
-        \brief  Initializes the FMOD system for audio playback.
-        \return Returns true if the system is initialized successfully,
-                otherwise false and logs an error.
-        */
-        /******************************************************************/
         bool m_Init();
-
-        /******************************************************************/
-        /*!
-        \fn     void FModAudio::m_Shutdown()
-        \brief  Shuts down the FMOD system, releasing any allocated resources.
-        */
-        /******************************************************************/
         void m_Shutdown();
 
-        /******************************************************************/
-        /*!
-        \fn     bool FModAudio::m_CreateSound(const char* soundFile)
-        \brief  Loads a sound file for playback.
-        \param  soundFile - The path to the sound file to be loaded.
-        \return Returns true if the sound is created successfully,
-                otherwise false and logs an error.
-        */
-        /******************************************************************/
         bool m_CreateSound(const char* soundFile);
-
-        /******************************************************************/
-        /*!
-        \fn     bool FModAudio::m_PlaySound()
-        \brief  Plays the loaded sound file. If the sound is already playing,
-                it will be restarted if it's not currently playing.
-        \return Returns true if the sound is played successfully,
-                otherwise false and logs an error.
-        */
-        /******************************************************************/
-        bool m_PlaySound();
-
-        /******************************************************************/
-        /*!
-        \fn     void FModAudio::m_StopSound()
-        \brief  Stops the currently playing sound and releases the channel.
-        */
-        /******************************************************************/
-        void m_StopSound();
-
-        /******************************************************************/
-        /*!
-        \fn     bool FModAudio::m_PauseSound()
-        \brief  Toggles the pause state of the currently playing sound.
-        \return Returns true if the pause state is successfully toggled,
-                otherwise false and logs an error.
-        */
-        /******************************************************************/
-        bool m_PauseSound();
-
-        /******************************************************************/
-        /*!
-        \fn     bool FModAudio::m_FadeSound(float targetVolume, float fadeDuration)
-        \brief  Fades the sound volume smoothly to the target volume over
-                the specified duration.
-        \param  targetVolume - The final volume after fading (0.0 to 1.0).
-        \param  fadeDuration - The duration of the fade effect in seconds.
-        \return Returns true if the fade is successful, otherwise false and logs an error.
-        */
-        /******************************************************************/
-        bool m_FadeSound(float targetVolume, float fadeDuration);
-
-        /******************************************************************/
-        /*!
-        \fn     bool FModAudio::m_SetLooping(bool loop)
-        \brief  Sets whether the sound should loop after playback.
-        \param  loop - A boolean flag, true to enable looping, false to disable.
-        \return Returns true if the looping mode is successfully set,
-                otherwise false and logs an error.
-        */
-        /******************************************************************/
-        bool m_SetLooping(bool loop);
-
-        /******************************************************************/
-        /*!
-        \fn     bool FModAudio::m_SetVolume(float volume)
-        \brief  Sets the volume of the currently playing sound.
-        \param  volume - The desired volume level (0.0 to 1.0).
-        \return Returns true if the volume is set successfully,
-                otherwise false and logs an error.
-        */
-        /******************************************************************/
-        bool m_SetVolume(float volume);
-
-        /******************************************************************/
-        /*!
-        \fn     bool FModAudio::m_SetPan(float pan)
-        \brief  Sets the stereo panning of the currently playing sound.
-        \param  pan - The desired panning value (-1.0 for left, 1.0 for right, 0.0 for center).
-        \return Returns true if the pan is set successfully, otherwise false and logs an error.
-        */
-        /******************************************************************/
-        bool m_SetPan(float pan);
-
-        /******************************************************************/
-        /*!
-        \fn     bool FModAudio::m_IsPlaying()
-        \brief  Checks if the sound is currently playing.
-        \return Returns true if the sound is playing, otherwise false.
-        */
-        /******************************************************************/
-        bool m_IsPlaying();
+        bool m_PlaySound(const std::string& entityId);
+        void m_StopSound(const std::string& entityId); 
+        void m_StopAllSounds();
+        bool m_PauseSound(const std::string& entityId);  // Modified to pause sound by entityId
+        bool m_FadeSound(const std::string& entityId, float targetVolume, float fadeDuration);  // Fade by entityId
+        bool m_SetLooping(const std::string& entityId, bool loop);  // Set looping by entityId
+        bool m_SetVolume(const std::string& entityId, float volume);  // Set volume by entityId
+        bool m_SetPan(const std::string& entityId, float pan);  // Set pan by entityId
+        bool m_IsPlaying(const std::string& entityId);  // Check if sound is playing for entityId
 
     private:
         FMOD::System* m_system;    /*!< FMOD system object to manage sound playback. */
         FMOD::Sound* m_sound;      /*!< FMOD sound object to represent the loaded audio. */
-        FMOD::Channel* m_channel;  /*!< FMOD channel object for controlling sound playback. */
+        std::unordered_map<std::string, FMOD::Channel*> m_entityChannels;  /*!< Map of entity ID to its playing FMOD channel. */
     };
+
+
 
     class AudioManager {
     public:
@@ -182,20 +73,18 @@ namespace fmodaudio {
         ~AudioManager();
 
         void m_LoadAudio(const std::string& name, const std::string& path);
-        void m_PlayAudio(const std::string& name);
-        void m_StopAudio(const std::string& name);
-        void m_SetVolume(const std::string& name, float volume);
-        void m_SetLooping(const std::string& name, bool loop);
-        bool m_IsPlaying(const std::string& name);
+        void m_PlayAudioForEntity(const std::string& entityId, const std::string& name, float volume);
+        void m_StopAudioForEntity(const std::string& entityId, const std::string& name);
+        void m_SetVolumeForEntity(const std::string& entityId, const std::string& name, float volume);
+        void m_SetLoopingForEntity(const std::string& entityId, const std::string& name, bool loop);
+        bool m_IsPlayingForEntity(const std::string& entityId, const std::string& name);
 
-        // Getter for m_soundMap
         std::unordered_map<std::string, std::unique_ptr<FModAudio>>& getSoundMap() {
             return m_soundMap;
         }
 
     private:
-        std::unordered_map<std::string, std::unique_ptr<FModAudio>> m_soundMap; // Map of sound names to FModAudio objects
+        std::unordered_map<std::string, std::unique_ptr<FModAudio>> m_soundMap;
     };
-
 }
 #endif // AUDIO_MANAGER_H

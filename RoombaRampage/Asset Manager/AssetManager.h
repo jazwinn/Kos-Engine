@@ -98,7 +98,7 @@ namespace assetmanager {
         \param   file - Path to the audio file to load.
         */
         /******************************************************************/
-        void m_LoadAudio(std::string file);
+        void m_LoadAudio(const std::string& file);
 
         /******************************************************************/
         /*!
