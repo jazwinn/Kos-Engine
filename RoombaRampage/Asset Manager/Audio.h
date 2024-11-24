@@ -83,7 +83,7 @@ namespace fmodaudio {
         void m_UnpauseAudioForEntity(const std::string& entityId, const std::string& name);
         void m_SetVolumeForEntity(const std::string& entityId, const std::string& name, float volume);
         void m_SetLoopingForEntity(const std::string& entityId, const std::string& name, bool loop);
-        void m_SetPlayOnStartForEntity(const std::string& entityId, bool playOnStart);
+        void m_SetPlayOnStartForEntity(const std::string& entityId, const std::string& audioName, bool playOnStart);
         bool m_IsPlayingForEntity(const std::string& entityId, const std::string& name);
         void m_PauseAllSounds();
         void m_UnpauseAllSounds();
