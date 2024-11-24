@@ -155,15 +155,14 @@ namespace Application {
                 // --------------------------------------------------------------*/
                 double currentFrameTime = glfwGetTime();
                 help->m_deltaTime = static_cast<float>(currentFrameTime - lastFrameTime);
+                //help->m_deltaTime = static_cast<float>(currentFrameTime - lastFrameTime) * help->m_timeScale;
                 lastFrameTime = currentFrameTime;
-
-                accumulatedTime += help->m_deltaTime;
+                accumulatedTime += (help->m_deltaTime * help->m_timeScale);
                 Helper::Helpers::GetInstance()->currentNumberOfSteps = 0;
-                while (accumulatedTime >= fixedDeltaTime) {
-                    accumulatedTime -= fixedDeltaTime;
+                while (accumulatedTime >= (fixedDeltaTime * help->m_timeScale )) {
+                    accumulatedTime -= (fixedDeltaTime * help->m_timeScale);
                     ++help->currentNumberOfSteps;
                 }
-
                 /*--------------------------------------------------------------
                     UPDATE INPUT
                 --------------------------------------------------------------*/
@@ -172,7 +171,8 @@ namespace Application {
                 /*--------------------------------------------------------------
                     UPDATE ECS
                 --------------------------------------------------------------*/
-                ecs->m_Update(help->m_fixedDeltaTime); 
+                //ecs->m_Update(help->m_fixedDeltaTime * help->m_timeScale); 
+                ecs->m_Update(help->m_fixedDeltaTime * help->m_timeScale);
                 //ecs->m_Update(Helper::Helpers::GetInstance()->m_deltaTime);
 
                 /*--------------------------------------------------------------

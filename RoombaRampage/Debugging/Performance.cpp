@@ -63,6 +63,10 @@ namespace performancetracker {
 			return "Transform System";
 		case ecs::TypeSystem::TYPEIMGUISYSTEM:
 			return "IMGUI";
+		case ecs::TypeSystem::TYPETILEMAPSYSTEM:
+			return "Tile Map System";
+		case ecs::TypeSystem::TYPEAUDIOSYSTEM:
+			return "Audio System";
 		default:
 			return "Error (Add System to Performance.cpp)";
 		}
