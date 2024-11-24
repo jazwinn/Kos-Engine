@@ -354,7 +354,7 @@ namespace script {
 	}
 
 
-	bool InternalCall::m_InternalCallGetDeltaTime(float* deltatime)
+	float InternalCall::m_InternalCallGetDeltaTime()
 	{
 		*deltatime = Helper::Helpers::GetInstance()->m_fixedDeltaTime;
 

@@ -33,7 +33,7 @@ public class CollisionResponse : ScriptBase
         }
 
 
-        InternalCall.m_InternalCallGetDeltaTime(out deltatime);
+        deltatime = InternalCall.m_InternalCallGetDeltaTime();
 
 
         iscollided = InternalCall.m_InternalCallIsCollided(EntityID);
