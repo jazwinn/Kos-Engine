@@ -146,7 +146,7 @@ namespace assetmanager {
     }
 
     void AssetManager::m_LoadAudio(const std::string& file) {
-        const std::set<std::string> supportedFormats = { ".mp3", ".wav", ".ogg" };
+        const std::set<std::string> supportedFormats = { ".wav", ".ogg" };
 
         if (!std::filesystem::exists(file)) {
            // std::cerr << "Error: Audio file not found: " << file << "\n";
@@ -156,6 +156,7 @@ namespace assetmanager {
         std::string extension = file.substr(file.find_last_of('.'));
         if (supportedFormats.find(extension) == supportedFormats.end()) {
             //std::cerr << "Error: Unsupported audio format: " << extension << "\n";
+            LOGGING_ERROR("Unsupported audio format: " + extension);
             return;
         }
 
@@ -167,6 +168,14 @@ namespace assetmanager {
         if (lastDotPos == std::string::npos || lastDotPos < lastSlashPos) lastDotPos = fileName.length();
 
         fileName = file.substr(lastSlashPos + 1, lastDotPos - lastSlashPos - 1);
+
+        //check if audio is already loaded
+        const auto& audiomap = m_audioManager.getSoundMap();
+        if (audiomap.find(fileName) != audiomap.end()) {
+            LOGGING_WARN("Sound Already Loaded");
+            return;
+        }
+
 
         m_audioManager.m_LoadAudio(fileName, file);
     }
