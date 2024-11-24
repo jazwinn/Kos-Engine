@@ -1072,38 +1072,11 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             ImGui::PushID(fileIndex);
 
                             bool removeFile = false;
-                            std::string headerName = "Audio File " + std::to_string(fileIndex + 1) + ": " + it->m_Name;
-                            ImGui::SeparatorText(headerName.c_str());
-                            if (ImGui::BeginCombo("Sounds", it->m_Name.c_str())) {
-                                for (const auto& sound : assetManager->m_audioManager.getSoundMap()) {
-                                    if (ImGui::Selectable(sound.first.c_str())) {
-                                        it->m_Name = sound.first.c_str();
-                                    }
-                                }
-                                ImGui::EndCombo();
-                            }
-
-                            if (ImGui::BeginDragDropTarget()) {
-                                if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("file")) {
-                                    IM_ASSERT(payload->DataSize == sizeof(std::filesystem::path));
-                                    std::filesystem::path* filename = static_cast<std::filesystem::path*>(payload->Data);
-                                    if (filename->filename().extension().string() == ".ogg" || ".wav" || ".mp3") {
-                                        if (assetManager->m_audioManager.getSoundMap().find(filename->filename().string()) == assetManager->m_audioManager.getSoundMap().end()) {
-                                            LOGGING_WARN("File not loaded, please reload content browser");
-                                        }
-                                        else {
-                                            assetManager->m_LoadAudio(filename->filename().string());
-                                        }
-                                    }
-                                    else {
-                                        LOGGING_WARN("Wrong File Type");
-                                    }
-                                }
-                                ImGui::EndDragDropTarget();
-                            }
+                            
 
                             ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_DefaultOpen;
-                            bool nodeOpen = ImGui::TreeNodeEx("Properties", flags);
+                            std::string headerName = "Audio File " + std::to_string(fileIndex + 1) + ": " + it->m_Name;
+                            bool nodeOpen = ImGui::TreeNodeEx(headerName.c_str(), flags);
 
                             if (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right)) {
                                 ImGui::OpenPopup("AudioContextMenu");
@@ -1120,6 +1093,35 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                                 char buffer[256];
                                 strncpy(buffer, it->m_FilePath.c_str(), sizeof(buffer));
 
+
+                                if (ImGui::BeginCombo("Sounds", it->m_Name.c_str())) {
+                                    for (const auto& sound : assetManager->m_audioManager.getSoundMap()) {
+                                        if (ImGui::Selectable(sound.first.c_str())) {
+                                            it->m_Name = sound.first.c_str();
+                                        }
+                                    }
+                                    ImGui::EndCombo();
+                                }
+
+                                if (ImGui::BeginDragDropTarget()) {
+                                    if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("file")) {
+                                        IM_ASSERT(payload->DataSize == sizeof(std::filesystem::path));
+                                        std::filesystem::path* filename = static_cast<std::filesystem::path*>(payload->Data);
+                                        if (filename->filename().extension().string() == ".ogg" || ".wav" || ".mp3") {
+                                            if (assetManager->m_audioManager.getSoundMap().find(filename->filename().string()) == assetManager->m_audioManager.getSoundMap().end()) {
+                                                LOGGING_WARN("File not loaded, please reload content browser");
+                                            }
+                                            else {
+                                                assetManager->m_LoadAudio(filename->filename().string());
+                                            }
+                                        }
+                                        else {
+                                            LOGGING_WARN("Wrong File Type");
+                                        }
+                                    }
+                                    ImGui::EndDragDropTarget();
+                                }
+
                                 ImGui::SliderFloat("Volume", &it->m_Volume, 0.0f, 1.0f);
                                 assetManager->m_audioManager.m_SetVolumeForEntity(std::to_string(entityID), it->m_Name, it->m_Volume);
 
@@ -1127,9 +1129,18 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                                 assetManager->m_audioManager.m_SetLoopingForEntity(std::to_string(entityID), it->m_Name, it->m_Loop);
 
                                 if (ImGui::Checkbox("Play On Start", &it->m_PlayOnStart)) {
+                                    if (it->m_PlayOnStart) {
+                                        for (auto& audioFile : ac->m_AudioFiles) {
+                                            if (&audioFile != &(*it)) {
+                                                audioFile.m_PlayOnStart = false;
+                                            }
+                                        }
+                                    }
                                     auto& audioManager = assetManager->m_audioManager;
-                                    audioManager.m_SetPlayOnStartForEntity(std::to_string(entityID), it->m_PlayOnStart);
+                                    audioManager.m_SetPlayOnStartForEntity(std::to_string(entityID), it->m_Name, it->m_PlayOnStart);
                                 }
+
+
 
                                 bool isPaused = false;
                                 auto& audioManager = assetManager->m_audioManager;
@@ -1172,9 +1183,17 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             }
                         }
 
+                        ImGui::Separator();
+
                         static char newAudioName[256] = "";
                         if (ImGui::Button("Add Audio File")) {
                             ac->m_AudioFiles.emplace_back();
+                        }
+
+                        if (ImGui::Button("Stop All Sounds"))
+                        {
+                            auto& audioManager = assetManager->m_audioManager;
+                            audioManager.m_StopAllSounds();
                         }
                     }
                 }
