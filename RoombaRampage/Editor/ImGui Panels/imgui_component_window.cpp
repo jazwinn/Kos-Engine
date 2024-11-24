@@ -1093,7 +1093,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                                 {
                                     IM_ASSERT(payload->DataSize == sizeof(std::filesystem::path));
                                     std::filesystem::path* filename = static_cast<std::filesystem::path*>(payload->Data);
-                                    if (filename->filename().extension().string() == ".png") {
+                                    if (filename->filename().extension().string() == ".ogg" || ".wav" || ".mp3") {
                                         if (assetManager->m_audioManager.getSoundMap().find(filename->filename().string()) == assetManager->m_audioManager.getSoundMap().end()) {
                                             LOGGING_WARN("File not loaded, please reload content browser");
                                         }
@@ -1139,7 +1139,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                                     auto& audioManager = assetManager->m_audioManager;
                                     audioManager.m_StopAudioForEntity(std::to_string(entityID),key);
 
-                                    std::cout << "Attempting to stop sound with key: " << key << std::endl;
+                                    //std::cout << "Attempting to stop sound with key: " << key << std::endl;
                                 }
 
                                 ImGui::TreePop();

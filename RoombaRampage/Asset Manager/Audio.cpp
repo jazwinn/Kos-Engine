@@ -232,7 +232,7 @@ namespace fmodaudio {
         }
         else {
             //TODO Handle error (e.g., logging or notification)
-            std::cerr << "Failed to load audio: " << path << std::endl;
+            //std::cerr << "Failed to load audio: " << path << std::endl;
         }
     }
 
@@ -242,11 +242,12 @@ namespace fmodaudio {
             FModAudio* sound = it->second.get();
             if (sound->m_PlaySound(entityId)) {
                 sound->m_SetVolume(entityId, volume);
+                std::cout << entityId << std::endl;
             }
         }
         else {
             //TODO Handle error (e.g., logging or notification)
-            std::cerr << "Sound not found: " << name << std::endl;
+            //std::cerr << "Sound not found: " << name << std::endl;
         }
     }
 
@@ -258,7 +259,7 @@ namespace fmodaudio {
         }
         else {
             //TODO Handle error (e.g., logging or notification)
-            std::cerr << "Sound not found: " << name << std::endl;
+            //std::cerr << "Sound not found: " << name << std::endl;
         }
     }
 
@@ -270,7 +271,7 @@ namespace fmodaudio {
         }
         else {
             //TODO Handle error (e.g., logging or notification)
-            std::cerr << "Sound not found: " << name << std::endl;
+            //std::cerr << "Sound not found: " << name << std::endl;
         }
     }
 
@@ -282,7 +283,7 @@ namespace fmodaudio {
         }
         else {
             //TODO Handle error (e.g., logging or notification)
-            std::cerr << "Sound not found: " << name << std::endl;
+            //std::cerr << "Sound not found: " << name << std::endl;
         }
     }
 
@@ -295,7 +296,7 @@ namespace fmodaudio {
         }
         else {
             //TODO Handle error (e.g., logging or notification)
-            std::cerr << "Sound not found: " << name << std::endl;
+            //std::cerr << "Sound not found: " << name << std::endl;
             return false;
         }
     }

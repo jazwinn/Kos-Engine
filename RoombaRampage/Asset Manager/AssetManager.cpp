@@ -149,13 +149,13 @@ namespace assetmanager {
         const std::set<std::string> supportedFormats = { ".mp3", ".wav", ".ogg" };
 
         if (!std::filesystem::exists(file)) {
-            std::cerr << "Error: Audio file not found: " << file << "\n";
+           // std::cerr << "Error: Audio file not found: " << file << "\n";
             return;
         }
 
         std::string extension = file.substr(file.find_last_of('.'));
         if (supportedFormats.find(extension) == supportedFormats.end()) {
-            std::cerr << "Error: Unsupported audio format: " << extension << "\n";
+            //std::cerr << "Error: Unsupported audio format: " << extension << "\n";
             return;
         }
 

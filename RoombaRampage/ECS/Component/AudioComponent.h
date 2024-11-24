@@ -34,7 +34,6 @@ namespace ecs {
 
     class AudioComponent : public Component {
     public:
-        std::string m_EntityId;
         std::vector<AudioFile> m_AudioFiles;
 
         REFLECTABLE(AudioComponent, m_AudioFiles)
