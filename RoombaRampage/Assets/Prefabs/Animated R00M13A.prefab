@@ -3,7 +3,8 @@
         "name": {
             "namestr": "Animated R00M13A",
             "layer": 0,
-            "isprefab": false
+            "isprefab": false,
+            "tagstr": "Default"
         },
         "transform": {
             "position": {
@@ -38,7 +39,8 @@
                 "name": {
                     "namestr": "gunleft_02",
                     "layer": 0,
-                    "isprefab": false
+                    "isprefab": false,
+                    "tagstr": "Default"
                 },
                 "transform": {
                     "position": {
