@@ -160,6 +160,8 @@ namespace script {
 
 		static bool m_InternalSetSpriteComponent(ecs::EntityID entity, MonoString* imageFile, const int* layer, const vector3::Vec3* color, const float* alpha);
 
+		static vector2::Vec2 m_InternalGetWorldMousePosition();
+
 	public:
 
 

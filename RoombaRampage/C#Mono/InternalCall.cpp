@@ -22,6 +22,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Application/Helper.h"
 #include "../Asset Manager/AssetManager.h"
 #include "../Asset Manager/SceneManager.h"
+#include "../Graphics/GraphicsCamera.h"
 
 #define MONO_ADD_INTERNAL_CALL(METHOD_NAME) \
     mono_add_internal_call("InternalCall::" #METHOD_NAME, METHOD_NAME);
@@ -513,6 +514,32 @@ namespace script {
 
 
 		mono_free(nativeString);
+	}
+
+	vector2::Vec2 InternalCall::m_InternalGetWorldMousePosition() {
+		//Get mouse pos
+		vector2::Vec2 mouse_Pos = Input::InputSystem::m_getMousePosition();
+		//window height width
+		float width = Helper::Helpers::GetInstance()->m_windowWidth;
+		float height = Helper::Helpers::GetInstance()->m_windowHeight;
+		//world coordinate
+		float world_Mouse_Pos_X = (mouse_Pos.m_x - (width / 2.f)) / (width / 2.f);
+		float world_Mouse_Pos_Y = (std::abs(mouse_Pos.m_y) - (height / 2.f)) / (height / 2.f);
+		vector2::Vec2 world_Mouse_Pos{ world_Mouse_Pos_X, world_Mouse_Pos_Y };
+		//include the camera
+		//scale according to camera scale
+		world_Mouse_Pos.m_x *= graphicpipe::GraphicsCamera::m_currCameraScaleX;
+		world_Mouse_Pos.m_y *= graphicpipe::GraphicsCamera::m_currCameraScaleY;
+
+		//aspect ratio
+		world_Mouse_Pos.m_x *= 1.f / graphicpipe::GraphicsCamera::m_aspectRatio;
+
+		//translate 
+		world_Mouse_Pos.m_x += graphicpipe::GraphicsCamera::m_currCameraMatrix[2][0];
+		world_Mouse_Pos.m_y += graphicpipe::GraphicsCamera::m_currCameraMatrix[2][1];
+
+		return world_Mouse_Pos;
+
 	}
 
 	void InternalCall::m_InternalCallDeleteEntity(ecs::EntityID id)
