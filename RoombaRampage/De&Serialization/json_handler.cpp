@@ -470,23 +470,23 @@ namespace Serialization {
 				);
 
 			if (ac) {
-				rapidjson::Value audioArray(rapidjson::kArrayType); // Array to store multiple audio files
+				rapidjson::Value audioArray(rapidjson::kArrayType);
 
 				for (const auto& audioFile : ac->m_AudioFiles) {
-					rapidjson::Value audioObject(rapidjson::kObjectType); // Object for each audio file
+					rapidjson::Value audioObject(rapidjson::kObjectType);
 
 					rapidjson::Value filePathValue;
 					filePathValue.SetString(audioFile.m_FilePath.c_str(), allocator);
 
-					audioObject.AddMember("audiofile", filePathValue, allocator);
+					audioObject.AddMember("name", rapidjson::Value().SetString(audioFile.m_Name.c_str(), allocator), allocator);
 					audioObject.AddMember("volume", audioFile.m_Volume, allocator);
 					audioObject.AddMember("loop", audioFile.m_Loop, allocator);
-					audioObject.AddMember("playonstart", audioFile.m_PlayOnStart, allocator);
+					audioObject.AddMember("playOnStart", audioFile.m_PlayOnStart, allocator);
 
-					audioArray.PushBack(audioObject, allocator); // Add the object to the array
+					audioArray.PushBack(audioObject, allocator);
 				}
 
-				entityData.AddMember("audio", audioArray, allocator); // Add the array to entityData
+				entityData.AddMember("audio", audioArray, allocator);
 				hasComponents = true;
 			}
 		}
@@ -852,6 +852,35 @@ namespace Serialization {
 			}
 		}
 
+		// Load AudioComponent if it exists
+		if (entityData.HasMember("audio") && entityData["audio"].IsArray()) {
+			ecs::AudioComponent* ac = static_cast<ecs::AudioComponent*>(
+				ecs->m_AddComponent(ecs::TYPEAUDIOCOMPONENT, newEntityId)
+				);
+
+			if (ac) {
+				const rapidjson::Value& audioArray = entityData["audio"];
+				for (rapidjson::SizeType i = 0; i < audioArray.Size(); ++i) {
+					const rapidjson::Value& audioObject = audioArray[i];
+					ecs::AudioFile audioFile;
+
+					if (audioObject.HasMember("name") && audioObject["name"].IsString()) {
+						audioFile.m_Name = audioObject["name"].GetString();
+					}
+					if (audioObject.HasMember("volume")) {
+						audioFile.m_Volume = audioObject["volume"].GetFloat();
+					}
+					if (audioObject.HasMember("loop")) {
+						audioFile.m_Loop = audioObject["loop"].GetBool();
+					}
+					if (audioObject.HasMember("playonstart")) {
+						audioFile.m_PlayOnStart = audioObject["playonstart"].GetBool();
+					}
+
+					ac->m_AudioFiles.push_back(audioFile);
+				}
+			}
+		}
 
 		//Attach entity to parent
 		if (parentID.has_value()) {
