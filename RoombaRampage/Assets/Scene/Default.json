@@ -4,15 +4,16 @@
             "namestr": "Player",
             "layer": 0,
             "isprefab": true,
+            "tagstr": "Default",
             "prefabname": "Player.prefab",
-            "issync": true
+            "issync": false
         },
         "transform": {
             "position": {
                 "x": -0.9056365489959717,
                 "y": 0.18280313909053802
             },
-            "rotation": -0.0,
+            "rotation": 0.0,
             "scale": {
                 "x": 1.0,
                 "y": 1.0
@@ -72,12 +73,21 @@
                 "PlayerControl"
             ]
         },
+        "audio": [
+            {
+                "name": "zwing",
+                "volume": 1.0,
+                "loop": false,
+                "playOnStart": false
+            }
+        ],
         "children": [
             {
                 "name": {
                     "namestr": "gunright_02",
                     "layer": 0,
                     "isprefab": true,
+                    "tagstr": "Default",
                     "prefabname": "Player.prefab",
                     "issync": true
                 },
@@ -108,6 +118,7 @@
                     "namestr": "gunleft_02",
                     "layer": 0,
                     "isprefab": true,
+                    "tagstr": "Default",
                     "prefabname": "Player.prefab",
                     "issync": true
                 },
@@ -139,14 +150,15 @@
         "name": {
             "namestr": "button",
             "layer": 0,
-            "isprefab": false
+            "isprefab": false,
+            "tagstr": "Default"
         },
         "transform": {
             "position": {
-                "x": 16.815204620361328,
-                "y": 0.0
+                "x": 18.668781280517578,
+                "y": 1.7846707105636597
             },
-            "rotation": -0.0,
+            "rotation": 0.0,
             "scale": {
                 "x": 1.0,
                 "y": 1.0
@@ -154,7 +166,7 @@
         },
         "rigidbody": {
             "linearVelocity": {
-                "x": 0.0,
+                "x": 2.0,
                 "y": 0.0
             },
             "linearAcceleration": {
@@ -188,12 +200,12 @@
         },
         "button": {
             "force": {
-                "x": 1323.4056396484375,
-                "y": 360.0
+                "x": 893.5161743164063,
+                "y": 404.0159606933594
             },
             "scale": {
-                "x": 1.0,
-                "y": 1.0
+                "x": 1.559999942779541,
+                "y": 9.380000114440918
             }
         },
         "script": {
@@ -203,10 +215,10 @@
         },
         "audio": [
             {
-                "audiofile": "",
+                "name": "cleaver01",
                 "volume": 1.0,
                 "loop": false,
-                "playonstart": false
+                "playOnStart": false
             }
         ]
     }
