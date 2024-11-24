@@ -65,57 +65,46 @@ namespace fmodaudio {
         }
     }
 
-    bool FModAudio::m_CreateSound(const char* soundFile) {
-        if (!m_system) {
-            LOGGING_WARN("FMOD error: System is not initialized.");
-            return false;
-        }
-
-        FMOD_RESULT result = m_system->createSound(soundFile, FMOD_DEFAULT, nullptr, &m_sound);
-        if (result != FMOD_OK) {
-            //std::cerr << "FMOD error: Failed to create sound: " << FMOD_ErrorString(result) << std::endl;
-            return false;
-        }
-
-        return true;
+    bool FModAudio::m_CreateSound(const char* filePath) {
+        FMOD_RESULT result = m_system->createSound(filePath, FMOD_DEFAULT, nullptr, &m_sound);
+        return result == FMOD_OK;
     }
 
     bool FModAudio::m_PlaySound() {
-        if (!m_sound) {
-           // std::cerr << "FMOD error: Sound is not created." << std::endl;
+        if (!m_system || !m_sound) {
+            std::cerr << "FMOD system or sound not initialized.\n";
             return false;
         }
 
-        if (!m_channel) {
-            FMOD_RESULT result = m_system->playSound(m_sound, nullptr, false, &m_channel);
-            if (result != FMOD_OK) {
-                //std::cerr << "FMOD error: Failed to play sound: " << FMOD_ErrorString(result) << std::endl;
-                return false;
-            }
-            LOGGING_WARN("Sound played");
+        FMOD::Channel* newChannel = nullptr;
+        FMOD_RESULT result = m_system->playSound(m_sound, nullptr, false, &newChannel);
+
+        if (result != FMOD_OK) {
+            std::cerr << "Failed to play sound.\n";
+            return false;
         }
-        else {
-            bool isPlaying;
-            m_channel->isPlaying(&isPlaying);
-            if (!isPlaying) {
-                FMOD_RESULT result = m_system->playSound(m_sound, nullptr, false, &m_channel);
-                if (result != FMOD_OK) {
-                    //std::cerr << "FMOD error: Failed to replay sound: " << FMOD_ErrorString(result) << std::endl;
-                    return false;
-                }
-                LOGGING_WARN("Sound replayed");
-            }
+
+        if (newChannel) {
+            m_channel = newChannel;
+            m_channel->setVolume(1.0f);
         }
 
         return true;
     }
 
+
+
     void FModAudio::m_StopSound() {
         if (m_channel) {
+            std::cout << "Stopping sound on channel." << std::endl;
             m_channel->stop();
             m_channel = nullptr;
         }
+        else {
+            std::cerr << "No active channel to stop sound." << std::endl;
+        }
     }
+
 
     bool FModAudio::m_SetVolume(float volume) {
         if (!m_channel) {
@@ -253,8 +242,13 @@ namespace fmodaudio {
     }
 
     void AudioManager::m_StopAudio(const std::string& name) {
-        if (m_soundMap.find(name) != m_soundMap.end()) {
-            m_soundMap[name]->m_StopSound();
+        auto it = m_soundMap.find(name);
+        if (it != m_soundMap.end()) {
+            it->second->m_StopSound();
+            std::cout << "Stopped sound with key: " << name << std::endl;
+        }
+        else {
+            std::cerr << "Error: Sound not found for key: " << name << std::endl;
         }
     }
 

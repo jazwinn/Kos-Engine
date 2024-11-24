@@ -204,8 +204,6 @@ struct DrawComponents {
 };
 
 
-
-
 void gui::ImGuiHandler::m_DrawComponentWindow()
 {
     bool windowOpen = true;
@@ -1133,25 +1131,15 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                                 char buffer[256];
                                 strncpy(buffer, it->m_FilePath.c_str(), sizeof(buffer));
 
-                                /*if (ImGui::InputText("File Path", buffer, sizeof(buffer))) {
-                                    it->m_FilePath = buffer;
-                                    assetManager->m_LoadAudio(buffer);
-                                }*/
-
                                 ImGui::SliderFloat("Volume", &it->m_Volume, 0.0f, 1.0f);
                                 ImGui::Checkbox("Loop", &it->m_Loop);
                                 ImGui::Checkbox("Play On Start", &it->m_PlayOnStart);
-                                if (ImGui::Button("Stop Sound"))
-                                {
-                                    std::string fileName = it->m_FilePath.c_str();
-                                    size_t lastSlashPos = fileName.find_last_of("/\\");  // Handles both UNIX and Windows paths
-                                    size_t lastDotPos = fileName.find_last_of('.');
+                                if (ImGui::Button("Stop Sound")) {
+                                    std::string key = it->m_Name;
+                                    auto& audioManager = assetManager->m_audioManager;
+                                    audioManager.m_StopAudio(key);
 
-                                    if (lastDotPos == std::string::npos) {
-                                        lastDotPos = fileName.length();
-                                    }
-                                    fileName = fileName.substr(lastSlashPos + 1, lastDotPos - lastSlashPos - 1);
-                                    assetManager->m_audioManager.m_StopAudio(it->m_FilePath.c_str());
+                                    std::cout << "Attempting to stop sound with key: " << key << std::endl;
                                 }
 
                                 ImGui::TreePop();

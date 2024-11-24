@@ -27,6 +27,7 @@ namespace ecs {
         float m_Volume{ 1.0f };
         bool m_Loop{ false };
         bool m_PlayOnStart{ false };
+        bool m_HasPlayed{ false };
 
         REFLECTABLE(AudioFile, m_FilePath, m_Volume, m_Loop, m_PlayOnStart)
     };

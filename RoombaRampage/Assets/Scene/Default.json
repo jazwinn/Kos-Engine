@@ -200,6 +200,14 @@
             "scripts": [
                 "MovingObjectScript"
             ]
-        }
+        },
+        "audio": [
+            {
+                "audiofile": "",
+                "volume": 1.0,
+                "loop": false,
+                "playonstart": false
+            }
+        ]
     }
 ]

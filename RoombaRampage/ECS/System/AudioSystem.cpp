@@ -40,20 +40,19 @@ namespace ecs {
         ECS* ecs = ECS::m_GetInstance();
         assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
 
-        int n{ 0 };
         if (m_vecAudioComponentPtr.empty()) {
             return;
         }
 
+        int n{ 0 };
         for (auto& audioCompPtr : m_vecAudioComponentPtr) {
-            
             TransformComponent* transform = m_vecTransformComponentPtr[n];
             n++;
-            //skip component not of the scene
+
+            // Skip components not part of the current scene
             if (transform->m_scene != scene) continue;
 
             for (auto& audioFile : audioCompPtr->m_AudioFiles) {
-
                 if (audioFile.m_PlayOnStart) {
                     auto it = assetManager->m_audioManager.getSoundMap().find(audioFile.m_Name);
                     if (it != assetManager->m_audioManager.getSoundMap().end()) {
@@ -61,16 +60,16 @@ namespace ecs {
                         sound->m_SetVolume(audioFile.m_Volume);
                         sound->m_SetLooping(audioFile.m_Loop);
 
+                        // Only play if it's not already playing
                         if (!sound->m_IsPlaying()) {
                             sound->m_PlaySound();
+                            audioFile.m_PlayOnStart = false; // Reset the flag after the sound starts
                         }
                     }
                     else {
                         std::cerr << "Audio file " << audioFile.m_Name << " not found in the sound map." << std::endl;
                     }
-
                 }
-                // Can add additional conditions here if you want to stop, pause, or modify playback state (can check with Design Team)
             }
         }
     }
