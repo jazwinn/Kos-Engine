@@ -1156,7 +1156,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                                     audioManager.m_StopAudioForEntity(std::to_string(entityID), key);
                                 }
 
-                            
+
 
                                 ImGui::TreePop();
                             }
@@ -1171,23 +1171,6 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                                 ++fileIndex;
                             }
                         }
-
-              /*          if (ImGui::Button("Stop All Sounds for this Entity")) {
-                            auto& audioManager = assetManager->m_audioManager;
-                            for (auto& audioFile : ac->m_AudioFiles) {
-                                audioManager.m_StopAudioForEntity(std::to_string(entityID), audioFile.m_Name);
-                            }
-                        }*/
-
-                        //if (ImGui::Button("Pause All Sounds (Global)")) {
-                        //    auto& audioManager = assetManager->m_audioManager;
-                        //    audioManager.m_PauseAllSounds();
-                        //}
-
-                        //if (ImGui::Button("Unpause All Sounds (Global)")) {
-                        //    auto& audioManager = assetManager->m_audioManager;
-                        //    audioManager.m_UnpauseAllSounds();  // Unpauses all sounds globally
-                        //}
 
                         static char newAudioName[256] = "";
                         if (ImGui::Button("Add Audio File")) {
