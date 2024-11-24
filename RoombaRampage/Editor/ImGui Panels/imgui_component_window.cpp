@@ -1126,13 +1126,37 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                                 ImGui::Checkbox("Loop", &it->m_Loop);
                                 assetManager->m_audioManager.m_SetLoopingForEntity(std::to_string(entityID), it->m_Name, it->m_Loop);
 
-                                ImGui::Checkbox("Play On Start", &it->m_PlayOnStart);
+                                if (ImGui::Checkbox("Play On Start", &it->m_PlayOnStart)) {
+                                    auto& audioManager = assetManager->m_audioManager;
+                                    audioManager.m_SetPlayOnStartForEntity(std::to_string(entityID), it->m_PlayOnStart);
+                                }
+
+                                bool isPaused = false;
+                                auto& audioManager = assetManager->m_audioManager;
+                                if (audioManager.getSoundMap().find(it->m_Name) != audioManager.getSoundMap().end()) {
+                                    auto& sound = audioManager.getSoundMap()[it->m_Name];
+
+                                    if (sound->m_GetChannelForEntity(std::to_string(entityID))) {
+                                        sound->m_GetChannelForEntity(std::to_string(entityID))->getPaused(&isPaused);
+                                    }
+
+                                    if (ImGui::Checkbox("Pause Sound", &isPaused)) {
+                                        if (isPaused) {
+                                            audioManager.m_PauseAudioForEntity(std::to_string(entityID), it->m_Name);
+                                        }
+                                        else {
+                                            audioManager.m_UnpauseAudioForEntity(std::to_string(entityID), it->m_Name);
+                                        }
+                                    }
+                                }
 
                                 if (ImGui::Button("Stop Sound")) {
                                     std::string key = it->m_Name;
                                     auto& audioManager = assetManager->m_audioManager;
                                     audioManager.m_StopAudioForEntity(std::to_string(entityID), key);
                                 }
+
+                            
 
                                 ImGui::TreePop();
                             }
@@ -1148,22 +1172,22 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             }
                         }
 
-                        if (ImGui::Button("Stop All Sounds for this Entity")) {
+              /*          if (ImGui::Button("Stop All Sounds for this Entity")) {
                             auto& audioManager = assetManager->m_audioManager;
                             for (auto& audioFile : ac->m_AudioFiles) {
                                 audioManager.m_StopAudioForEntity(std::to_string(entityID), audioFile.m_Name);
                             }
-                        }
+                        }*/
 
-                        if (ImGui::Button("Pause All Sounds (Global)")) {
-                            auto& audioManager = assetManager->m_audioManager;
-                            audioManager.m_PauseAllSounds();
-                        }
+                        //if (ImGui::Button("Pause All Sounds (Global)")) {
+                        //    auto& audioManager = assetManager->m_audioManager;
+                        //    audioManager.m_PauseAllSounds();
+                        //}
 
-                        if (ImGui::Button("Unpause All Sounds (Global)")) {
-                            auto& audioManager = assetManager->m_audioManager;
-                            audioManager.m_UnpauseAllSounds();  // Unpauses all sounds globally
-                        }
+                        //if (ImGui::Button("Unpause All Sounds (Global)")) {
+                        //    auto& audioManager = assetManager->m_audioManager;
+                        //    audioManager.m_UnpauseAllSounds();  // Unpauses all sounds globally
+                        //}
 
                         static char newAudioName[256] = "";
                         if (ImGui::Button("Add Audio File")) {
