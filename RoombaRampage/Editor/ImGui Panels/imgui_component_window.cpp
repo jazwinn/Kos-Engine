@@ -1137,7 +1137,10 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                                 assetManager->m_audioManager.m_SetVolumeForEntity(std::to_string(entityID), it->m_Name, it->m_Volume);
 
                                 ImGui::Checkbox("Loop", &it->m_Loop);
+                                assetManager->m_audioManager.m_SetLoopingForEntity(std::to_string(entityID), it->m_Name, it->m_Loop);
+
                                 ImGui::Checkbox("Play On Start", &it->m_PlayOnStart);
+
                                 if (ImGui::Button("Stop Sound")) {
                                     std::string key = it->m_Name;
                                     auto& audioManager = assetManager->m_audioManager;

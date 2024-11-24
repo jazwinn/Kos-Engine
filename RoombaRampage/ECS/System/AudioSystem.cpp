@@ -52,26 +52,28 @@ namespace ecs {
             if (transform->m_scene != scene) continue;
 
             for (auto& audioFile : audioCompPtr->m_AudioFiles) {
-                if (audioFile.m_PlayOnStart) {
-                    auto it = assetManager->m_audioManager.getSoundMap().find(audioFile.m_Name);
-                    if (it != assetManager->m_audioManager.getSoundMap().end()) {
-                        auto& sound = it->second;
+                auto it = assetManager->m_audioManager.getSoundMap().find(audioFile.m_Name);
+                if (it != assetManager->m_audioManager.getSoundMap().end()) {
+                    auto& sound = it->second;
 
-                        sound->m_SetVolume(std::to_string(audioCompPtr->m_Entity),audioFile.m_Volume);
-                        sound->m_SetLooping(std::to_string(audioCompPtr->m_Entity),audioFile.m_Loop);
+                    sound->m_SetVolume(std::to_string(audioCompPtr->m_Entity), audioFile.m_Volume);
 
+                    sound->m_SetLooping(std::to_string(audioCompPtr->m_Entity), audioFile.m_Loop);
+
+                    if (audioFile.m_PlayOnStart) {
                         if (!sound->m_IsPlaying(std::to_string(audioCompPtr->m_Entity))) {
                             sound->m_PlaySound(std::to_string(audioCompPtr->m_Entity));
                             audioFile.m_PlayOnStart = false;
                         }
                     }
-                    else {
-                        //std::cerr << "Audio file " << audioFile.m_Name << " not found in the sound map." << std::endl;
-                    }
                 }
-                // Can add more conditions to handle volume changes, panning, etc. for future reference <<<<<
+                else {
+                    //std::cerr << "Audio file " << audioFile.m_Name << " not found in the sound map." << std::endl;
+                }
             }
         }
     }
+
+
 
 }

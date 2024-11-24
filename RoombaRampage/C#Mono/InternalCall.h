@@ -160,6 +160,13 @@ namespace script {
 
 		static bool m_InternalCallIsKeyTriggered(keyCode key);
 
+		/*
+		 TIME_SCALE 
+		*/
+		static void m_InternalCallSetTimeScale(const float x);
+
+		static void m_InternalCallResetTimeScale();
+
 	public:
 
 

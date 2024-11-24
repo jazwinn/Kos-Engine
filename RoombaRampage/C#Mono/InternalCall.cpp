@@ -360,6 +360,18 @@ namespace script {
 		return false;
 	}
 
+	/*
+	 TIME SCALE
+	*/
+	void InternalCall::m_InternalCallSetTimeScale(const float x) {
+		Helper::Helpers::GetInstance()->m_timeScale = x;
+	}
+
+	void InternalCall::m_InternalCallResetTimeScale() {
+		Helper::Helpers::GetInstance()->m_timeScale = 0.0f;
+	}
+
+
 	int InternalCall::m_InternalCallGetTagID(MonoString* monostring)
 	{
 

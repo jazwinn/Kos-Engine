@@ -60,6 +60,7 @@ namespace fmodaudio {
         bool m_SetVolume(const std::string& entityId, float volume); 
         bool m_SetPan(const std::string& entityId, float pan);  
         bool m_IsPlaying(const std::string& entityId);  
+        FMOD::Channel* m_GetChannelForEntity(const std::string& entityId);
 
     private:
         FMOD::System* m_system;    /*!< FMOD system object to manage sound playback. */
@@ -80,7 +81,6 @@ namespace fmodaudio {
         void m_SetVolumeForEntity(const std::string& entityId, const std::string& name, float volume);
         void m_SetLoopingForEntity(const std::string& entityId, const std::string& name, bool loop);
         bool m_IsPlayingForEntity(const std::string& entityId, const std::string& name);
-
         void m_PauseAllSounds();
         void m_UnpauseAllSounds();
         void m_StopAllSounds();

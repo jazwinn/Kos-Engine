@@ -230,6 +230,15 @@ namespace fmodaudio {
         return true;
     }
 
+    FMOD::Channel* FModAudio::m_GetChannelForEntity(const std::string& entityId) {
+        auto it = m_entityChannels.find(entityId);
+        if (it != m_entityChannels.end()) {
+            return it->second;  
+        }
+        return nullptr;
+    }
+
+
 
 
 
@@ -238,7 +247,6 @@ namespace fmodaudio {
     }
 
     AudioManager::~AudioManager() {
-        // Clean up all sounds and stop any ongoing playback
         for (auto& pair : m_soundMap) {
             FModAudio* sound = pair.second.get();
             if (sound) {
@@ -301,12 +309,12 @@ namespace fmodaudio {
     void AudioManager::m_SetLoopingForEntity(const std::string& entityId, const std::string& name, bool loop) {
         auto it = m_soundMap.find(name);
         if (it != m_soundMap.end()) {
-            FModAudio* sound = it->second.get();
-            sound->m_SetLooping(entityId, loop);
-        }
-        else {
-            //TODO Handle error (e.g., logging or notification)
-            //std::cerr << "Sound not found: " << name << std::endl;
+            auto& audio = it->second;
+            FMOD::Channel* channel = audio->m_GetChannelForEntity(entityId);
+            if (channel) {
+                // Set the loop count: -1 for infinite loop, 0 for no loop, or a specific number for limited loops :))
+                channel->setLoopCount(loop ? -1 : 0);
+            }
         }
     }
 
@@ -351,5 +359,4 @@ namespace fmodaudio {
             }
         }
     }
-
 }
