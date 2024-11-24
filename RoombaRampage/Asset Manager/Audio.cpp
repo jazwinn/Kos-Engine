@@ -343,7 +343,7 @@ namespace fmodaudio {
         }
     }
 
-    void AudioManager::m_SetPlayOnStartForEntity(const std::string& entityId, bool playOnStart) {
+    void AudioManager::m_SetPlayOnStartForEntity(const std::string& entityId, const std::string& audioName, bool playOnStart) {
         auto* ecs = ecs::ECS::m_GetInstance();
         auto* entityComponent = ecs->m_ECS_CombinedComponentPool[ecs::TYPEAUDIOCOMPONENT]->m_GetEntityComponent(std::stoi(entityId));
 
@@ -351,11 +351,15 @@ namespace fmodaudio {
             ecs::AudioComponent* ac = static_cast<ecs::AudioComponent*>(entityComponent);
 
             for (auto& audioFile : ac->m_AudioFiles) {
-                audioFile.m_PlayOnStart = playOnStart;
+                if (audioFile.m_Name == audioName) {
+                    audioFile.m_PlayOnStart = playOnStart;
+                }
+                else if (playOnStart) {
+                    audioFile.m_PlayOnStart = false;
+                }
             }
         }
     }
-
 
 
     bool AudioManager::m_IsPlayingForEntity(const std::string& entityId, const std::string& name) {
