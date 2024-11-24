@@ -145,25 +145,41 @@ namespace assetmanager {
 
     }
 
-   void AssetManager::m_LoadAudio(std::string file) {
-       std::string fileName = file;
+    void AssetManager::m_LoadAudio(const std::string& file) {
+        const std::set<std::string> supportedFormats = { ".wav", ".ogg" };
 
-       const auto & audiomap = m_audioManager.getSoundMap();
-       if (audiomap.find(fileName) == audiomap.end()) {
-           size_t lastSlashPos = fileName.find_last_of("/\\");  // Handles both UNIX and Windows paths
-           size_t lastDotPos = fileName.find_last_of('.');
+        if (!std::filesystem::exists(file)) {
+           // std::cerr << "Error: Audio file not found: " << file << "\n";
+            return;
+        }
 
-           if (lastDotPos == std::string::npos) {
-               lastDotPos = fileName.length();
-           }
-           fileName = fileName.substr(lastSlashPos + 1, lastDotPos - lastSlashPos - 1);
-           m_audioManager.m_LoadAudio(fileName, file);
-       }
-       else {
-           LOGGING_WARN("Audio Already Loaded");
-       }
+        std::string extension = file.substr(file.find_last_of('.'));
+        if (supportedFormats.find(extension) == supportedFormats.end()) {
+            //std::cerr << "Error: Unsupported audio format: " << extension << "\n";
+            LOGGING_ERROR("Unsupported audio format: " + extension);
+            return;
+        }
 
-   }
+        std::string fileName = file;
+        size_t lastSlashPos = fileName.find_last_of("/\\");
+        size_t lastDotPos = fileName.find_last_of('.');
+
+        if (lastSlashPos == std::string::npos) lastSlashPos = -1;
+        if (lastDotPos == std::string::npos || lastDotPos < lastSlashPos) lastDotPos = fileName.length();
+
+        fileName = file.substr(lastSlashPos + 1, lastDotPos - lastSlashPos - 1);
+
+        //check if audio is already loaded
+        const auto& audiomap = m_audioManager.getSoundMap();
+        if (audiomap.find(fileName) != audiomap.end()) {
+            LOGGING_WARN("Sound Already Loaded");
+            return;
+        }
+
+
+        m_audioManager.m_LoadAudio(fileName, file);
+    }
+
 
    void AssetManager::m_LoadFont(std::string file)
    {

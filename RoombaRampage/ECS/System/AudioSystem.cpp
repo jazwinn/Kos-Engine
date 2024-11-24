@@ -40,39 +40,40 @@ namespace ecs {
         ECS* ecs = ECS::m_GetInstance();
         assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
 
-        int n{ 0 };
         if (m_vecAudioComponentPtr.empty()) {
             return;
         }
 
+        int n{ 0 };
         for (auto& audioCompPtr : m_vecAudioComponentPtr) {
-            
             TransformComponent* transform = m_vecTransformComponentPtr[n];
             n++;
-            //skip component not of the scene
+
             if (transform->m_scene != scene) continue;
 
             for (auto& audioFile : audioCompPtr->m_AudioFiles) {
+                auto it = assetManager->m_audioManager.getSoundMap().find(audioFile.m_Name);
+                if (it != assetManager->m_audioManager.getSoundMap().end()) {
+                    auto& sound = it->second;
 
-                if (audioFile.m_PlayOnStart) {
-                    auto it = assetManager->m_audioManager.getSoundMap().find(audioFile.m_Name);
-                    if (it != assetManager->m_audioManager.getSoundMap().end()) {
-                        auto& sound = it->second;
-                        sound->m_SetVolume(audioFile.m_Volume);
-                        sound->m_SetLooping(audioFile.m_Loop);
+                    sound->m_SetVolume(std::to_string(audioCompPtr->m_Entity), audioFile.m_Volume);
 
-                        if (!sound->m_IsPlaying()) {
-                            sound->m_PlaySound();
+                    sound->m_SetLooping(std::to_string(audioCompPtr->m_Entity), audioFile.m_Loop);
+
+                    if (audioFile.m_PlayOnStart) {
+                        if (!sound->m_IsPlaying(std::to_string(audioCompPtr->m_Entity))) {
+                            sound->m_PlaySound(std::to_string(audioCompPtr->m_Entity));
+                            audioFile.m_PlayOnStart = false;
                         }
                     }
-                    else {
-                        std::cerr << "Audio file " << audioFile.m_Name << " not found in the sound map." << std::endl;
-                    }
-
                 }
-                // Can add additional conditions here if you want to stop, pause, or modify playback state (can check with Design Team)
+                else {
+                    //std::cerr << "Audio file " << audioFile.m_Name << " not found in the sound map." << std::endl;
+                }
             }
         }
     }
+
+
 
 }
