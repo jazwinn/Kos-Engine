@@ -533,7 +533,7 @@ namespace script {
 		mono_free(nativeString);
 	}
 
-	vector2::Vec2 InternalCall::m_InternalGetWorldMousePosition() {
+	void InternalCall::m_InternalGetWorldMousePosition(vector2::Vec2* mousecord) {
 		//Get mouse pos
 		vector2::Vec2 mouse_Pos = Input::InputSystem::m_getMousePosition();
 		//window height width
@@ -555,7 +555,7 @@ namespace script {
 		world_Mouse_Pos.m_x += graphicpipe::GraphicsCamera::m_currCameraMatrix[2][0];
 		world_Mouse_Pos.m_y += graphicpipe::GraphicsCamera::m_currCameraMatrix[2][1];
 
-		return world_Mouse_Pos;
+		*mousecord = world_Mouse_Pos;
 
 	}
 
@@ -658,6 +658,10 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_InternalCallIsKeyPressed);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallIsKeyTriggered);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallIsKeyReleased);
+		MONO_ADD_INTERNAL_CALL(m_InternalGetWorldMousePosition);
+
+		MONO_ADD_INTERNAL_CALL(m_InternalCallSetTimeScale);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallResetTimeScale);
 
 	}
 }

@@ -127,6 +127,15 @@ public static class InternalCall
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static bool m_InternalCallIsKeyTriggered(keyCode key);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static void m_InternalGetWorldMousePosition(out Vector2 mousepos);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static void m_InternalCallSetTimeScale(in float timescale);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static void m_InternalCallResetTimeScale();
 }
 
 public static class GetComponent

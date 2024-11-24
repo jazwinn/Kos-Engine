@@ -167,7 +167,7 @@ namespace script {
 
 		static void m_InternalCallResetTimeScale();
 
-		static vector2::Vec2 m_InternalGetWorldMousePosition();
+		static void m_InternalGetWorldMousePosition(vector2::Vec2* mousecord);
 
 	public:
 
