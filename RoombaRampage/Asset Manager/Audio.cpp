@@ -100,29 +100,6 @@ namespace fmodaudio {
         m_entityChannels.clear();
     }
 
-    void FModAudio::m_PauseAllSounds() {
-        for (auto& pair : m_entityChannels) {
-            FMOD::Channel* channel = pair.second;
-            if (channel) {
-                channel->setPaused(true);
-            }
-        }
-    }
-
-    bool FModAudio::m_UnpauseAllSounds() {
-        for (auto& channelPair : m_entityChannels) {
-            FMOD::Channel* channel = channelPair.second;
-            if (channel) {
-                bool isPaused = false;
-                channel->getPaused(&isPaused);
-                if (isPaused) {
-                    channel->setPaused(false);
-                }
-            }
-        }
-        return true;
-    }
-
     bool FModAudio::m_SetVolume(const std::string& entityId, float volume) {
         volume = std::clamp(volume, 0.0f, 1.0f);
 
@@ -323,33 +300,4 @@ namespace fmodaudio {
             return false;
         }
     }
-
-    void AudioManager::m_PauseAllSounds() {
-        for (auto& soundPair : m_soundMap) {
-            FModAudio* audio = soundPair.second.get();
-            if (audio) {
-                audio->m_PauseAllSounds();
-            }
-        }
-    }
-
-    void AudioManager::m_UnpauseAllSounds() {
-        for (auto& soundPair : m_soundMap) {
-            FModAudio* audio = soundPair.second.get();
-            if (audio) {
-                audio->m_UnpauseAllSounds();
-            }
-        }
-    }
-
-
-    void AudioManager::m_StopAllSounds() {
-        for (auto& soundPair : m_soundMap) {
-            FModAudio* audio = soundPair.second.get();
-            if (audio) {
-                audio->m_StopAllSounds();
-            }
-        }
-    }
-
 }

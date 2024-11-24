@@ -52,14 +52,12 @@ namespace fmodaudio {
         bool m_PlaySound(const std::string& entityId);
         void m_StopSound(const std::string& entityId); 
         void m_StopAllSounds();
-        void m_PauseAllSounds();
-        bool m_UnpauseAllSounds();
-        bool m_PauseSound(const std::string& entityId); 
-        bool m_FadeSound(const std::string& entityId, float targetVolume, float fadeDuration); 
-        bool m_SetLooping(const std::string& entityId, bool loop);  
-        bool m_SetVolume(const std::string& entityId, float volume); 
-        bool m_SetPan(const std::string& entityId, float pan);  
-        bool m_IsPlaying(const std::string& entityId);  
+        bool m_PauseSound(const std::string& entityId);  // Modified to pause sound by entityId
+        bool m_FadeSound(const std::string& entityId, float targetVolume, float fadeDuration);  // Fade by entityId
+        bool m_SetLooping(const std::string& entityId, bool loop);  // Set looping by entityId
+        bool m_SetVolume(const std::string& entityId, float volume);  // Set volume by entityId
+        bool m_SetPan(const std::string& entityId, float pan);  // Set pan by entityId
+        bool m_IsPlaying(const std::string& entityId);  // Check if sound is playing for entityId
 
     private:
         FMOD::System* m_system;    /*!< FMOD system object to manage sound playback. */
@@ -80,10 +78,6 @@ namespace fmodaudio {
         void m_SetVolumeForEntity(const std::string& entityId, const std::string& name, float volume);
         void m_SetLoopingForEntity(const std::string& entityId, const std::string& name, bool loop);
         bool m_IsPlayingForEntity(const std::string& entityId, const std::string& name);
-
-        void m_PauseAllSounds();
-        void m_UnpauseAllSounds();
-        void m_StopAllSounds();
 
         std::unordered_map<std::string, std::unique_ptr<FModAudio>>& getSoundMap() {
             return m_soundMap;
