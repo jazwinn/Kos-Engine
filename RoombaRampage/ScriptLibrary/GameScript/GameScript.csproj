@@ -21,7 +21,7 @@
     <OutputPath>ScriptCoreDLL\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,7 +29,7 @@
     <OutputPath>ScriptCoreDLL\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -42,18 +42,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\Assets\Scripts\ScriptsCS\CameraFollowPlayerScript.cs">
+    <None Include="..\..\Assets\Scripts\ScriptsCS\CameraFollowPlayerScript.cs">
       <Link>LogicScript\CameraFollowPlayerScript.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Assets\Scripts\ScriptsCS\CollisionResponse.cs">
+    </None>
+    <None Include="..\..\Assets\Scripts\ScriptsCS\CollisionResponse.cs">
       <Link>LogicScript\CollisionResponse.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Assets\Scripts\ScriptsCS\MovingObjectScript.cs">
+    </None>
+    <None Include="..\..\Assets\Scripts\ScriptsCS\MovingObjectScript.cs">
       <Link>LogicScript\MovingObjectScript.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Assets\Scripts\ScriptsCS\PlayerControl.cs">
+    </None>
+    <None Include="..\..\Assets\Scripts\ScriptsCS\PlayerControl.cs">
       <Link>LogicScript\PlayerControl.cs</Link>
-    </Compile>
+    </None>
     <Compile Include="ScriptCore\Components.cs" />
     <Compile Include="ScriptCore\InternalCall.cs" />
     <Compile Include="ScriptCore\KeyCode.cs" />
