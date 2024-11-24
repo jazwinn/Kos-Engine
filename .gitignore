@@ -6,6 +6,7 @@
 *.user
 *.userosscache
 *.sln.docstates
+*.dll
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
@@ -395,8 +396,6 @@ FodyWeavers.xsd
 *.sln.iml
 
 #exceptions
-!Logs/
 !Json/
 !Application/
 !Dependencies/
-!imgui.ini

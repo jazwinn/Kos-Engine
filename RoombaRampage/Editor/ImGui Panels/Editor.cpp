@@ -43,6 +43,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Events/ActionManager.h"
 #include "../Events/ModifyAction.h"
 #include "../Inputs/Input.h"
+#include "../Editor/WindowFile.h"
 
 namespace gui {
 
@@ -151,7 +152,7 @@ namespace gui {
 			}
 		}
 
-
+		m_tags = file::FileWindow::readEditorConfig("./Editor/editorConfig.txt");
 		
 	}
 
@@ -261,7 +262,7 @@ namespace gui {
 
 		auto& soundMap = assetManager->m_audioManager.getSoundMap();
 
-		auto playSound = [&](const std::string& fileName) {
+		/*auto playSound = [&](const std::string& fileName) {
 			auto it = soundMap.find(fileName);
 			if (it != soundMap.end()) {
 				it->second->m_PlaySound();
@@ -269,9 +270,9 @@ namespace gui {
 			else {
 				std::cerr << "Sound file not found: " << fileName << "\n";
 			}
-			};
+			};*/
 
-		auto stopSound = [&](const std::string& fileName) {
+		/*auto stopSound = [&](const std::string& fileName) {
 			auto it = soundMap.find(fileName);
 			if (it != soundMap.end()) {
 				it->second->m_StopSound();
@@ -279,11 +280,11 @@ namespace gui {
 			else {
 				std::cerr << "Sound file not found: " << fileName << "\n";
 			}
-			};
+			};*/
 
 		int button = givenEvent.m_ToType<events::ButtonPressEvent>().m_GetButton();
 
-		if (button == 1) {
+		/*if (button == 1) {
 			playSound("mindstorm.wav");
 		}
 		else if (button == 2) {
@@ -316,7 +317,7 @@ namespace gui {
 			else {
 				std::cerr << "Sound file not found: " << fileToBePlayed << "\n";
 			}
-		}
+		}*/
 	}
 
 

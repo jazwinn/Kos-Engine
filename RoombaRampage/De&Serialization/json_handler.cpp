@@ -175,11 +175,13 @@ namespace Serialization {
 
 			if (nc) {
 				rapidjson::Value name(rapidjson::kObjectType);
-				rapidjson::Value nameValue, prefabValue;
+				rapidjson::Value nameValue, prefabValue, tagValue;
 				nameValue.SetString(nc->m_entityName.c_str(), allocator);
 				name.AddMember("namestr", nameValue, allocator);
 				name.AddMember("layer", (int)nc->m_Layer, allocator);
 				name.AddMember("isprefab", nc->m_isPrefab, allocator);
+				tagValue.SetString(nc->m_entityTag.c_str(), allocator);
+				name.AddMember("tagstr", tagValue, allocator);
 				if (nc->m_isPrefab) {
 					prefabValue.SetString(nc->m_prefabName.c_str(), allocator);
 					name.AddMember("prefabname", prefabValue, allocator);
@@ -527,6 +529,9 @@ namespace Serialization {
 			}
 			if (name.HasMember("isprefab") && name["isprefab"].IsBool()) {
 				nc->m_isPrefab = name["isprefab"].GetBool();
+			}
+			if (name.HasMember("tagstr") && name["tagstr"].IsString()) {
+				nc->m_entityTag = name["tagstr"].GetString();
 			}
 			if (nc->m_isPrefab) {
 				if (name.HasMember("prefabname") && name["prefabname"].IsString()) {

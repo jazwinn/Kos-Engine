@@ -38,7 +38,6 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #ifndef m_editorOrthoMatrixEDITORCAM_H
 #define EDITORCAM_H
 
-#include <glm.hpp>
 #include <vector>
 
 

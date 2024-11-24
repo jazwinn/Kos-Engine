@@ -18,6 +18,12 @@ public static class InternalCall
     public extern static bool m_InternalSetTransformComponent(uint entity, in Vector2 pos, in Vector2 scale, in float rotate);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static bool m_InternalGetTranslate(uint entity, out Vector2 pos);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static bool m_InternalSetTranslate(uint entity, in Vector2 pos);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static bool m_InternalGetColliderComponent(uint entity, out Vector2 size, out Vector2 offset, out bool drawDebug, out float radius, out bool isCollided);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
@@ -36,22 +42,22 @@ public static class InternalCall
     public extern static bool m_InternalSetRigidBodyComponent(uint entity, in Vector2 velocity, in Vector2 acceleration, in float rotation);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static bool m_InternalGetTextComponent(uint entity, out string text, out string fileName, out int fontLayer, out float fontSize, out Vector3 color);
+    public extern static bool m_InternalGetTextComponent(uint entity,out string text,out string fileName, out int fontLayer,out float fontSize,out Vector3 color );
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static bool m_InternalSetTextComponent(uint entity, in string text, in string fileName, in int fontLayer, in float fontSize, in Vector3 color);
-
-    [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static bool m_InternalGetSpriteComponent(uint entity, out string imageFile, out int layer, out Vector3 color, out float alpha);
-
-    [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static bool m_InternalSetSpriteComponent(uint entity, string imageFile, in int layer, in Vector3 color, in float alpha);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static bool m_InternalGetAnimationComponent(uint entity, out int frameNumber, out int framesPerSecond, out float frameTimer, out bool isAnimating);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static bool m_InternalSetAnimationComponent(uint entity, in int frameNumber, in int framesPerSecond, in float frameTimer, in bool isAnimating);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static bool m_InternalGetSpriteComponent(uint entity, out string imageFile, out int layer, out Vector3 color, out float alpha);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static bool m_InternalSetSpriteComponent(uint entity, string imageFile, in int layer, in Vector3 color, in float alpha);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static bool m_InternalGetCameraComponent(uint entity, out float left, out float right, out float top, out float bottom, out float aspectRatio);
@@ -66,24 +72,11 @@ public static class InternalCall
     public extern static bool m_InternalSetButtonComponent(uint entity, in Vector2 position, in Vector2 scale, bool isClick);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static bool m_InternalGetTranslate(uint entity, out Vector2 pos);
+    public extern static bool m_InternalGetScriptNames(uint entityID, out IntPtr scriptArray);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static bool m_InternalSetTranslate(uint entity, in Vector2 pos);
-
-
-    [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static bool m_InternalCallIsKeyPressed(keyCode key);
-
-    [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static Vector2 m_InternalGetMousePosition();
-
-    [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static bool m_InternalCallIsKeyReleased(keyCode key);
-
-    [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static bool m_InternalCallIsKeyTriggered(keyCode key);
-
+    public extern static bool m_InternalAddScriptInstance(uint entity, string scriptName, object instance);
+    
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static bool m_InternalGetVelocity(uint entity, out Vector2 Velocity);
 
@@ -94,16 +87,19 @@ public static class InternalCall
     public extern static bool m_InternalCallGetDeltaTime(out float DeltaTime);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static int m_InternalCallGetPlayer();
+    public extern static int m_InternalCallGetTagID(string tag);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static float m_InternalCallIsCollided(uint entity);
+    public extern static int[] m_InternalCallGetTagIDs(string tag);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static int[] m_InternalCallGetCollidedEntities(uint entity);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static string m_InternalCallGetTag(uint entity);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static void m_InternalCallSetSceneActive(string sceneName);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static void m_UnloadAllScene(); // ensure to follow up with a load scene, if no scene, engine will have undefine behaviour
@@ -117,7 +113,20 @@ public static class InternalCall
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static void m_InternalCallDeleteEntity(uint id);
 
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static bool m_InternalCallIsKeyPressed(keyCode key);
 
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static float m_InternalCallIsCollided(uint entity);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static Vector2 m_InternalGetMousePosition();
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static bool m_InternalCallIsKeyReleased(keyCode key);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static bool m_InternalCallIsKeyTriggered(keyCode key);
 }
 
 public static class GetComponent

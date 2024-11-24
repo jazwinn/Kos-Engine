@@ -41,8 +41,6 @@ namespace script {
 		return true;
 	}
 
-
-
 	bool InternalCall::m_InternalSetTransformComponent(ecs::EntityID entity, vector2::Vec2* trans, vector2::Vec2* scale, float* rotate)
 	{
 		auto* transform = static_cast<ecs::TransformComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(entity));
@@ -152,14 +150,15 @@ namespace script {
 	}
 
 	//Text Component
-	bool InternalCall::m_InternalGetTextComponent(ecs::EntityID entity, std::string* text, std::string* fileName, int* fontLayer, float* fontSize, vector3::Vec3* color)
+	bool InternalCall::m_InternalGetTextComponent(ecs::EntityID entity, MonoString** text, MonoString** fileName, int* fontLayer, float* fontSize, vector3::Vec3* color)
 	{
 		auto* textComponent = static_cast<ecs::TextComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(entity));
 
 		if (textComponent == nullptr) return false;
 
-		*text = textComponent->m_text;
-		*fileName = textComponent->m_fileName;
+		*text = mono_string_new(mono_domain_get(), textComponent->m_text.c_str());
+		*fileName = mono_string_new(mono_domain_get(), textComponent->m_fileName.c_str());
+
 		*fontLayer = textComponent->m_fontLayer;
 		*fontSize = textComponent->m_fontSize;
 		*color = textComponent->m_color;
@@ -167,20 +166,56 @@ namespace script {
 		return true;
 	}
 
-	bool InternalCall::m_InternalSetTextComponent(ecs::EntityID entity, const std::string& text, const std::string& fileName, int fontLayer, float fontSize, const vector3::Vec3& color)
+	bool InternalCall::m_InternalSetTextComponent(ecs::EntityID entity, MonoString* text, MonoString* fileName, int fontLayer, float fontSize, const vector3::Vec3& color)
 	{
 		auto* textComponent = static_cast<ecs::TextComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(entity));
 
-		if (textComponent == nullptr) return false;
+		char* nativeText = mono_string_to_utf8(text);
+		std::string ctText = nativeText;
+		textComponent->m_text = ctText;
 
-		textComponent->m_text = text;
-		textComponent->m_fileName = fileName;
+		char* nativeFile = mono_string_to_utf8(fileName);
+		std::string ctFileName = nativeFile;
+		textComponent->m_fileName = ctFileName;
+
 		textComponent->m_fontLayer = fontLayer;
 		textComponent->m_fontSize = fontSize;
 		textComponent->m_color = color;
 
+		mono_free(nativeText);
+		mono_free(nativeFile);
 		return true;
 	}
+
+	//Animation Component
+	bool InternalCall::m_InternalGetAnimationComponent(ecs::EntityID entity, int* frameNumber, int* framesPerSecond, float* frameTimer, bool* isAnimating)
+	{
+		auto* animComponent = static_cast<ecs::AnimationComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPEANIMATIONCOMPONENT]->m_GetEntityComponent(entity));
+
+		if (animComponent == nullptr) return false;
+
+		*frameNumber = animComponent->m_frameNumber;
+		*framesPerSecond = animComponent->m_framesPerSecond;
+		*frameTimer = animComponent->m_frameTimer;
+		*isAnimating = animComponent->m_isAnimating;
+
+		return true;
+	}
+
+	bool InternalCall::m_InternalSetAnimationComponent(ecs::EntityID entity, int frameNumber, int framesPerSecond, float frameTimer, bool isAnimating)
+	{
+		auto* animComponent = static_cast<ecs::AnimationComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPEANIMATIONCOMPONENT]->m_GetEntityComponent(entity));
+
+		if (animComponent == nullptr) return false;
+
+		animComponent->m_frameNumber = frameNumber;
+		animComponent->m_framesPerSecond = framesPerSecond;
+		animComponent->m_frameTimer = frameTimer;
+		animComponent->m_isAnimating = isAnimating;
+
+		return true;
+	}
+
 
 	//Sprite Component
 	bool InternalCall::m_InternalGetSpriteComponent(ecs::EntityID entity, MonoString** imageFile, int* layer, vector3::Vec3* color, float* alpha)
@@ -214,35 +249,6 @@ namespace script {
 		spriteComponent->m_alpha = *alpha;
 
 		mono_free(nativeString);
-
-		return true;
-	}
-
-	//Animation Component
-	bool InternalCall::m_InternalGetAnimationComponent(ecs::EntityID entity, int* frameNumber, int* framesPerSecond, float* frameTimer, bool* isAnimating)
-	{
-		auto* animComponent = static_cast<ecs::AnimationComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPEANIMATIONCOMPONENT]->m_GetEntityComponent(entity));
-
-		if (animComponent == nullptr) return false;
-
-		*frameNumber = animComponent->m_frameNumber;
-		*framesPerSecond = animComponent->m_framesPerSecond;
-		*frameTimer = animComponent->m_frameTimer;
-		*isAnimating = animComponent->m_isAnimating;
-
-		return true;
-	}
-
-	bool InternalCall::m_InternalSetAnimationComponent(ecs::EntityID entity, int frameNumber, int framesPerSecond, float frameTimer, bool isAnimating)
-	{
-		auto* animComponent = static_cast<ecs::AnimationComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPEANIMATIONCOMPONENT]->m_GetEntityComponent(entity));
-
-		if (animComponent == nullptr) return false;
-
-		animComponent->m_frameNumber = frameNumber;
-		animComponent->m_framesPerSecond = framesPerSecond;
-		animComponent->m_frameTimer = frameTimer;
-		animComponent->m_isAnimating = isAnimating;
 
 		return true;
 	}
@@ -354,15 +360,19 @@ namespace script {
 		return false;
 	}
 
-	int InternalCall::m_InternalCallGetPlayer()
+	int InternalCall::m_InternalCallGetTagID(MonoString* monostring)
 	{
 
 		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+		char* nativeString = mono_string_to_utf8(monostring);
+		std::string tag = nativeString;
+		mono_free(nativeString);
 
 		for (const auto& scene : ecs->m_ECS_SceneMap) {
 			if (scene.second.m_isPrefab == false && scene.second.m_isActive) {
 				for (const auto& id : scene.second.m_sceneIDs) {
-					if (ecs->m_ECS_EntityMap.find(id)->second.test(ecs::TYPEPLAYERCOMPONENT)) {
+					ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id));
+					if (nc->m_entityTag == tag) {
 						return id;
 
 						break;
@@ -373,6 +383,39 @@ namespace script {
 
 
 		return -1;
+	}
+
+	MonoArray* InternalCall::m_InternalCallGetTagIDs(MonoString* monostring)
+	{
+		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+		char* nativeString = mono_string_to_utf8(monostring);
+		std::string tag = nativeString;
+		mono_free(nativeString);
+
+		std::vector<int> tagIDs;
+
+		for (const auto& scene : ecs->m_ECS_SceneMap) {
+			if (scene.second.m_isPrefab == false && scene.second.m_isActive) {
+				for (const auto& id : scene.second.m_sceneIDs) {
+					ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id));
+					if (nc->m_entityTag == tag) {
+						tagIDs.push_back(id);
+					}
+				}
+			}
+		}
+
+		if (tagIDs.size() > 0) {
+			MonoArray* Array = mono_array_new(assetmanager::AssetManager::m_funcGetInstance()->m_scriptManager.m_GetDomain(), mono_get_int32_class(), tagIDs.size());
+			for (size_t i = 0; i < tagIDs.size(); ++i) {
+				mono_array_set(Array, int, i, tagIDs[i]);
+			}
+
+			return Array;
+		}
+
+
+		return nullptr;
 	}
 
 	MonoArray* InternalCall::m_InternalCallGetCollidedEntities(ecs::EntityID entity)
@@ -522,6 +565,9 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_InternalGetTransformComponent);
 		MONO_ADD_INTERNAL_CALL(m_InternalSetTransformComponent);
 
+		MONO_ADD_INTERNAL_CALL(m_InternalGetTranslate);
+		MONO_ADD_INTERNAL_CALL(m_InternalSetTranslate);
+
 		MONO_ADD_INTERNAL_CALL(m_InternalGetColliderComponent);
 		MONO_ADD_INTERNAL_CALL(m_InternalSetColliderComponent);
 
@@ -534,11 +580,11 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_InternalGetTextComponent);
 		MONO_ADD_INTERNAL_CALL(m_InternalSetTextComponent);
 
-		MONO_ADD_INTERNAL_CALL(m_InternalGetSpriteComponent);
-		MONO_ADD_INTERNAL_CALL(m_InternalSetSpriteComponent);
-
 		MONO_ADD_INTERNAL_CALL(m_InternalGetAnimationComponent);
 		MONO_ADD_INTERNAL_CALL(m_InternalSetAnimationComponent);
+
+		MONO_ADD_INTERNAL_CALL(m_InternalGetSpriteComponent);
+		MONO_ADD_INTERNAL_CALL(m_InternalSetSpriteComponent);
 
 		MONO_ADD_INTERNAL_CALL(m_InternalGetCameraComponent);
 		MONO_ADD_INTERNAL_CALL(m_InternalSetCameraComponent);
@@ -554,26 +600,26 @@ namespace script {
 
 		MONO_ADD_INTERNAL_CALL(m_InternalCallGetDeltaTime);
 
-		MONO_ADD_INTERNAL_CALL(m_InternalCallGetPlayer);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallGetTagID);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallGetTagIDs);
 
-		MONO_ADD_INTERNAL_CALL(m_InternalGetTranslate);
-		MONO_ADD_INTERNAL_CALL(m_InternalSetTranslate);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallGetCollidedEntities);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallGetTag);
+
+		MONO_ADD_INTERNAL_CALL(m_InternalCallSetSceneActive);
+
+		MONO_ADD_INTERNAL_CALL(m_UnloadAllScene);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallLoadScene);
+
+		MONO_ADD_INTERNAL_CALL(m_InternalCallAddPrefab);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallDeleteEntity);
 
 		MONO_ADD_INTERNAL_CALL(m_InternalCallIsCollided); 
-		MONO_ADD_INTERNAL_CALL(m_InternalCallGetCollidedEntities);
 
 		MONO_ADD_INTERNAL_CALL(m_InternalGetMousePosition);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallIsKeyPressed);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallIsKeyTriggered);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallIsKeyReleased);
 
-		MONO_ADD_INTERNAL_CALL(m_InternalCallGetTag); 
-		MONO_ADD_INTERNAL_CALL(m_InternalCallSetSceneActive);
-
-		MONO_ADD_INTERNAL_CALL(m_UnloadAllScene);
-		MONO_ADD_INTERNAL_CALL(m_InternalCallLoadScene); 
-
-		MONO_ADD_INTERNAL_CALL(m_InternalCallAddPrefab); 
-		MONO_ADD_INTERNAL_CALL(m_InternalCallDeleteEntity);
 	}
 }
