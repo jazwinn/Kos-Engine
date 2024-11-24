@@ -200,53 +200,14 @@
             "scripts": [
                 "MovingObjectScript"
             ]
-        }
-    },
-    {
-        "name": {
-            "namestr": "ani_RoombaBlink_strip4",
-            "layer": 0,
-            "isprefab": false
         },
-        "transform": {
-            "position": {
-                "x": -5.917532444000244,
-                "y": 1.284230351448059
-            },
-            "rotation": 0.0,
-            "scale": {
-                "x": 1.0,
-                "y": 1.0
+        "audio": [
+            {
+                "audiofile": "",
+                "volume": 1.0,
+                "loop": false,
+                "playonstart": false
             }
-        },
-        "collider": {
-            "size": {
-                "x": 6.400000095367432,
-                "y": 6.400000095367432
-            },
-            "offset": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "drawDebug": true,
-            "radius": 0.5
-        },
-        "sprite": {
-            "imagefile": "ani_RoombaBlink_strip4.png",
-            "layer": 1,
-            "color": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
-            },
-            "alpha": 1.0
-        },
-        "animation": {
-            "frameNumber": 0,
-            "framesPerSecond": 2,
-            "frameTimer": 0.0,
-            "isAnimating": true,
-            "stripCount": 4
-        }
+        ]
     }
 ]
