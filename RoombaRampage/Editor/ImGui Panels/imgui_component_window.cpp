@@ -1130,12 +1130,14 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                                 strncpy(buffer, it->m_FilePath.c_str(), sizeof(buffer));
 
                                 ImGui::SliderFloat("Volume", &it->m_Volume, 0.0f, 1.0f);
+                                assetManager->m_audioManager.m_SetVolumeForEntity(std::to_string(entityID), it->m_Name, it->m_Volume);
+
                                 ImGui::Checkbox("Loop", &it->m_Loop);
                                 ImGui::Checkbox("Play On Start", &it->m_PlayOnStart);
                                 if (ImGui::Button("Stop Sound")) {
                                     std::string key = it->m_Name;
                                     auto& audioManager = assetManager->m_audioManager;
-                                    audioManager.m_StopAudio(key);
+                                    audioManager.m_StopAudioForEntity(std::to_string(entityID),key);
 
                                     std::cout << "Attempting to stop sound with key: " << key << std::endl;
                                 }

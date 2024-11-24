@@ -49,7 +49,6 @@ namespace ecs {
             TransformComponent* transform = m_vecTransformComponentPtr[n];
             n++;
 
-            // Skip components not part of the current scene
             if (transform->m_scene != scene) continue;
 
             for (auto& audioFile : audioCompPtr->m_AudioFiles) {
@@ -57,19 +56,20 @@ namespace ecs {
                     auto it = assetManager->m_audioManager.getSoundMap().find(audioFile.m_Name);
                     if (it != assetManager->m_audioManager.getSoundMap().end()) {
                         auto& sound = it->second;
-                        sound->m_SetVolume(audioFile.m_Volume);
-                        sound->m_SetLooping(audioFile.m_Loop);
 
-                        // Only play if it's not already playing
-                        if (!sound->m_IsPlaying()) {
-                            sound->m_PlaySound();
-                            audioFile.m_PlayOnStart = false; // Reset the flag after the sound starts
+                        sound->m_SetVolume(audioCompPtr->m_EntityId,audioFile.m_Volume);
+                        sound->m_SetLooping(audioCompPtr->m_EntityId,audioFile.m_Loop);
+
+                        if (!sound->m_IsPlaying(audioCompPtr->m_EntityId)) {
+                            sound->m_PlaySound(audioCompPtr->m_EntityId);
+                            audioFile.m_PlayOnStart = false;
                         }
                     }
                     else {
                         std::cerr << "Audio file " << audioFile.m_Name << " not found in the sound map." << std::endl;
                     }
                 }
+                // Can add more conditions to handle volume changes, panning, etc. for future reference <<<<<
             }
         }
     }
