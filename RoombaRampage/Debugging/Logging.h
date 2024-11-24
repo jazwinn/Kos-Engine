@@ -24,7 +24,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 #include "../Config/pch.h"
 #include "../backward/backward.hpp"
-#include "Windows.h"
+#include "../Application/Window.h"
 
 
 /*
@@ -82,6 +82,10 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 */
 /******************************************************************/
 #define LOGGING_INIT_LOGS( filename ) logging::Logger::m_GetInstance().m_Init( filename )
+
+#define LOGGING_POPUP(x, ...) logging::Logger::m_GetInstance().m_Popup( x, ##__VA_ARGS__)
+
+//#define LOGGING_POPUP(x , ...) logging::Logger::m_GetInstance().m_Popup(x , ##__VA_ARGS__)
 
 namespace logging {
 
@@ -160,6 +164,13 @@ namespace logging {
 
         template <typename... Args>
         void  m_Debug(const std::string_view message, Args&&... args);
+
+
+        template <typename... Args>
+        void  m_Popup(const std::string_view message, Args&&... args);
+
+        //template <typename... Args>
+        //void  m_Popup(const std::string_view message, Args&&... args);
         /******************************************************************/
         /*!
         \fn        std::string Logger::m_GetCurrentTimestamp()
@@ -218,13 +229,18 @@ namespace logging {
 
         if (!m_bInitialized)
         {
+#ifdef IMGUIENABLED
+
             std::cout << "The logger must be initialized before it is used!" << std::endl;
+#endif
             return;
         }
 
         std::stringstream logEntry;
         logEntry << "[INFO]: " << m_GetCurrentTimestamp() << " - " << std::vformat(message, std::make_format_args(args...));
+#ifdef IMGUIENABLED
         std::cout << s_BLUE << logEntry.str() << s_CLOSE << std::endl;
+#endif
         m_log_list.push_back(logEntry.str());
 
         // Output to log file
@@ -241,12 +257,16 @@ namespace logging {
 
         if (!m_bInitialized)
         {
+#ifdef IMGUIENABLED
             std::cout << "The logger must be initialized before it is used!" << std::endl;
+#endif
             return;
         }
         std::stringstream logEntry;
         logEntry << "[WARN]: " << m_GetCurrentTimestamp() << " - " << std::vformat(message, std::make_format_args(args...));
+#ifdef  IMGUIENABLED
         std::cout << s_YELLOW << logEntry.str() << s_CLOSE << std::endl;
+#endif
         m_log_list.push_back(logEntry.str());
 
         // Output to log file
@@ -265,24 +285,45 @@ namespace logging {
 
         if (!m_bInitialized)
         {
+#ifdef IMGUIENABLED
             std::cout << "The logger must be initialized before it is used!" << std::endl;
+#endif
             return;
         }
 
         std::stringstream logEntry;
         logEntry << "[ERROR]: " << m_GetCurrentTimestamp() << " - " << std::vformat(message, std::make_format_args(args...))
             << "\nFUNC: " << location.function_name() << " LINE: " << location.line() << " FILE: " << location.file_name();
-
+#ifdef IMGUIENABLED
         std::cout << s_RED << logEntry.str() << s_CLOSE << std::endl;
+#endif // IMGUIENABLED
+
+
         m_log_list.push_back(logEntry.str());
 
-        // Output to log file
-        if (m_logFile.is_open()) {
-            m_logFile << logEntry.str() << "\n";
-            m_logFile.flush(); // Ensure immediate write to file
-        }
-        else {
-            std::cout << "Not storing" << std::endl;
+        std::string title = "Error";
+        std::wstring tile_wstring = std::wstring(title.begin(), title.end());
+        std::string entry = logEntry.str();
+        std::wstring entry_W = std::wstring(entry.begin(), entry.end());
+
+        int msgboxID = MessageBox(
+            NULL,
+            entry_W.c_str(),
+            tile_wstring.c_str(),
+            MB_ICONQUESTION | MB_OK | MB_DEFBUTTON2
+        );
+
+        switch (msgboxID)
+        {
+        case IDOK:
+            // Output to log file
+            if (m_logFile.is_open()) {
+                m_logFile << logEntry.str() << "\n";
+                m_logFile.flush(); // Ensure immediate write to file
+            }
+            break;
+        default:
+            break;
         }
         m_st.load_here(32);
         m_printer.print(m_st, m_logFile);
@@ -295,14 +336,19 @@ namespace logging {
 
         if (!m_bInitialized)
         {
+#ifdef IMGUIENABLED
             std::cout << "The logger must be initialized before it is used!" << std::endl;
+#endif
             return;
         }
 
         std::stringstream logEntry;
         logEntry << "[ERROR]: " << m_GetCurrentTimestamp() << " - " << std::vformat(message, std::make_format_args(args...));
 
+#ifdef IMGUIENABLED
         std::cout << s_RED << logEntry.str() << s_CLOSE << std::endl;
+#endif // IMGUIENABLED
+
         m_log_list.push_back(logEntry.str());
 
         std::string title = "Error";
@@ -338,14 +384,17 @@ namespace logging {
 
         if (!m_bInitialized)
         {
+#ifdef IMGUIENABLED
             std::cout << "The logger must be initialized before it is used!" << std::endl;
+#endif
             return;
         }
 
         std::stringstream logEntry;
         logEntry << "[CRASH]: " << m_GetCurrentTimestamp() << " - " << std::vformat(message, std::make_format_args(args...));
-
+#ifdef IMGUIENABLED
         std::cout << s_RED << logEntry.str() << s_CLOSE << std::endl;
+#endif    
         m_log_list.push_back(logEntry.str());
 
         // Output to log file
@@ -362,15 +411,18 @@ namespace logging {
 
         if (!m_bInitialized)
         {
+#ifdef IMGUIENABLED
             std::cout << "The logger must be initialized before it is used!" << std::endl;
+#endif
             return;
         }
 
         std::stringstream logEntry;
         logEntry << "[ASSERTION]: " << m_GetCurrentTimestamp() << " - " << std::vformat(message, std::make_format_args(args...))
         << "\nFUNC: " << location.function_name() << " LINE: " << location.line() << " FILE: " << location.file_name();
-
+#ifdef IMGUIENABLED
         std::cout << s_RED << logEntry.str() << s_CLOSE << std::endl;
+#endif
         m_log_list.push_back(logEntry.str());
 
         std::string title = "Assertion Failed";
@@ -411,14 +463,17 @@ namespace logging {
 
         if (!m_bInitialized)
         {
+#ifdef IMGUIENABLED
             std::cout << "The logger must be initialized before it is used!" << std::endl;
+#endif
             return;
         }
 
         std::stringstream logEntry;
         logEntry << "[DEBUG]: " << m_GetCurrentTimestamp() << " - " << std::vformat(message, std::make_format_args(args...));
-
+#ifdef IMGUIENABLED
         std::cout << s_GREEN << logEntry.str() << s_CLOSE << std::endl;
+#endif // IMGUIENABLED       
         m_log_list.push_back(logEntry.str());
 
         // Output to log file
@@ -428,6 +483,56 @@ namespace logging {
         }
 
     }
+
+    template <typename... Args>
+    void Logger::m_Popup(const std::string_view message, Args&&... args)
+    {
+        assert(m_bInitialized && "The logger must be initialized before it is used!");
+
+        if (!m_bInitialized)
+        {
+#ifdef IMGUIENABLED
+            std::cout << "The logger must be initialized before it is used!" << std::endl;
+#endif
+            return;
+        }
+
+        std::stringstream logEntry;
+        logEntry << "[POPUP]: " << m_GetCurrentTimestamp() << " - " << std::vformat(message, std::make_format_args(args...));
+
+#ifdef IMGUIENABLED
+        std::cout << s_GREEN << logEntry.str() << s_CLOSE << std::endl;
+#endif // IMGUIENABLED
+      
+        m_log_list.push_back(logEntry.str());
+
+        std::string title = "POP UP";
+        std::wstring tile_wstring = std::wstring(title.begin(), title.end());
+        std::string entry = logEntry.str();
+        std::wstring entry_W = std::wstring(entry.begin(), entry.end());
+
+        int msgboxID = MessageBox(
+            NULL,
+            entry_W.c_str(),
+            tile_wstring.c_str(),
+            MB_ICONQUESTION | MB_OK | MB_DEFBUTTON2
+        );
+
+        switch (msgboxID)
+        {
+        case IDOK:
+            // Output to log file
+            if (m_logFile.is_open()) {
+                m_logFile << logEntry.str() << "\n";
+                m_logFile.flush(); // Ensure immediate write to file
+            }
+            break;
+        default:
+            break;
+        }
+
+    }
+
 }
 
 /**************************************************

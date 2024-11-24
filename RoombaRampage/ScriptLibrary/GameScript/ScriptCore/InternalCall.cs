@@ -94,7 +94,10 @@ public static class InternalCall
     public extern static bool m_InternalCallGetDeltaTime(out float DeltaTime);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static int m_InternalCallGetPlayer();
+    public extern static int m_InternalCallGetTagID(string tag);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static int[] m_InternalCallGetTagIDs(string tag);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static float m_InternalCallIsCollided(uint entity);

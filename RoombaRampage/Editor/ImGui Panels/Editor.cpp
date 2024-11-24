@@ -43,6 +43,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Events/ActionManager.h"
 #include "../Events/ModifyAction.h"
 #include "../Inputs/Input.h"
+#include "../Editor/WindowFile.h"
 
 namespace gui {
 
@@ -151,7 +152,7 @@ namespace gui {
 			}
 		}
 
-
+		m_tags = file::FileWindow::readEditorConfig("./Editor/editorConfig.txt");
 		
 	}
 

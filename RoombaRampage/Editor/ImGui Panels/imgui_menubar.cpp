@@ -75,7 +75,7 @@ void gui::ImGuiHandler::m_DrawMainMenuBar() {
 
                 char filePath[MAX_PATH];
                 std::filesystem::path path = file::FileWindow::m_OpenfileDialog(filePath);
-                if (!path.empty()) {
+                if (!path.empty() && (path.filename().extension().string() == ".json")) {
                     //clear all other scenes
                     scenemanager->m_ClearAllScene();
                     scenemanager->m_LoadScene(path);
@@ -88,6 +88,9 @@ void gui::ImGuiHandler::m_DrawMainMenuBar() {
                     }
                     
                     m_clickedEntityId = -1;
+                }
+                else {
+                    LOGGING_ERROR("Wrong File Type, only .json");
                 }
 
 

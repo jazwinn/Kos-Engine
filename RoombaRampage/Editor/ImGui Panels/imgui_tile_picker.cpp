@@ -89,7 +89,7 @@ namespace gui
 				float uvY0 = 1.f - (yIndex + 1) * yWidth;  // Top UV coordinate (flipped vertically)
 				float uvY1 = 1.f - yIndex * yWidth;        // Bottom UV coordinate
 
-				if (isTileEmpty(data, uvX0 * image->second.m_width, uvY1 * image->second.m_height, xWidth * image->second.m_width, yWidth * image->second.m_height, image->second.m_width, image->second.m_height,  image->second.m_channels)) continue;
+				if (image->second.m_isTilable && isTileEmpty(data, uvX0 * image->second.m_width, uvY1 * image->second.m_height, xWidth * image->second.m_width, yWidth * image->second.m_height, image->second.m_width, image->second.m_height,  image->second.m_channels)) continue;
 
 				ImGui::ImageButton(std::to_string(i).c_str(), (ImTextureID)(uintptr_t)assetmanager->m_imageManager.m_imageMap.find(tmc->m_tilemapFile)->second.textureID,
 					{ thumbnail ,thumbnail }, { uvX0, uvY1 },{ uvX1, uvY0 }, { 1,1,1,1 });

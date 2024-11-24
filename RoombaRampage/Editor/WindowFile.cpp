@@ -27,6 +27,27 @@ namespace file {
 
 		return std::string();
 	}
+    // Function to read `editorConfig.txt` and return its contents as a vector of strings
+    std::vector<std::string> FileWindow::readEditorConfig(const std::string& filePath) {
+        std::vector<std::string> configData;
+        std::ifstream file(filePath);
+
+        if (file.is_open()) {
+            std::string line;
+            while (std::getline(file, line)) {
+                // Add non-empty lines to the vector
+                if (!line.empty()) {
+                    configData.push_back(line);
+                }
+            }
+            file.close();
+        }
+        else {
+            LOGGING_ERROR("FAILED TO OPEN FILE: {} ", filePath);
+            //std::cerr << "Failed to open file: " << filePath << std::endl;
+        }
+        return configData;
+    }
 }
 
 
