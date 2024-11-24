@@ -158,6 +158,13 @@ namespace script {
 
 		static bool m_InternalSetSpriteComponent(ecs::EntityID entity, MonoString* imageFile, const int* layer, const vector3::Vec3* color, const float* alpha);
 
+		/*
+		 TIME_SCALE 
+		*/
+		static void m_InternalCallSetTimeScale(const float x);
+
+		static void m_InternalCallResetTimeScale();
+
 	public:
 
 

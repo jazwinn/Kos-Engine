@@ -28,10 +28,6 @@ namespace Helper {
 */
 /******************************************************************/
 	class Helpers {
-
-	private:
-
-
 	public:
 		//singleton
 		static Helpers* GetInstance() {
@@ -56,6 +52,8 @@ namespace Helper {
 		float m_fixedDeltaTime;
 
 		vector3::Vec3 m_colour;
+
+		float m_timeScale = 1.0f; //default to 1x
 		
 	private:
 		static std::unique_ptr<Helpers> InstancePtr;
