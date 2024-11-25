@@ -44,6 +44,10 @@ namespace assetmanager {
                 m_LoadAsset(directoryPath.path());
             }
         }
+
+        //initialize scene
+        scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();
+        scenemanager->m_LoadScene("Assets/Scene/Default.json");
     }
 
     void AssetManager::m_LoadAsset(std::filesystem::path directoryPath)

@@ -165,7 +165,7 @@ namespace gui {
 		ImGuizmo::BeginFrame();
 	}
 
-	void ImGuiHandler::m_Render()
+	void ImGuiHandler::m_update()
 	{
 		if (Input::InputSystem::m_isKeyTriggered(keys::F11))
 		{
@@ -225,19 +225,24 @@ namespace gui {
 				DISPATCH_ACTION_EVENT(temp);
 			}
 
-			ImGuiIO& io = ImGui::GetIO();
-
-			ImGui::Render();
-			if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-			{
-				GLFWwindow* backup_current_context = glfwGetCurrentContext();
-				ImGui::UpdatePlatformWindows();
-				ImGui::RenderPlatformWindowsDefault();
-				glfwMakeContextCurrent(backup_current_context);
-			}
-			ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+			
 		}
 	
+	}
+
+	void ImGuiHandler::m_render()
+	{
+		ImGuiIO& io = ImGui::GetIO();
+
+		ImGui::Render();
+		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+		{
+			GLFWwindow* backup_current_context = glfwGetCurrentContext();
+			ImGui::UpdatePlatformWindows();
+			ImGui::RenderPlatformWindowsDefault();
+			glfwMakeContextCurrent(backup_current_context);
+		}
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	}
 
 

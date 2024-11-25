@@ -74,7 +74,9 @@ namespace gui {
                         It also manages ImGui's viewport and platform-specific rendering.
         */
         /******************************************************************/
-        void m_Render();
+        void m_update();
+
+        void m_render();
 
         /******************************************************************/
         /*!
