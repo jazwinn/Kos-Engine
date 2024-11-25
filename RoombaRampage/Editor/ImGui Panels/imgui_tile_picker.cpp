@@ -38,12 +38,12 @@ namespace gui
 
 	void ImGuiHandler::m_DrawTilePicker()
 	{
-
 		if (ImGui::Button("Back")) 
 		{
 			m_tilePickerMode = false;
 			return;
 		}
+		
 		ImGui::SameLine();
 		ImGui::BeginChild("ChildLb", ImVec2(0, ImGui::GetContentRegionAvail().y));
 
