@@ -235,6 +235,19 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
         if (ImGui::Combo("##ADDCOMPONENT", &ComponentType, ComponentNames, IM_ARRAYSIZE(ComponentNames), IM_ARRAYSIZE(ComponentNames))) {
             if (ComponentType == 1) {
                 ecs->m_AddComponent(ecs::TYPECOLLIDERCOMPONENT, entityID);
+                if (ecs->m_ECS_EntityMap[entityID].test(ecs::TYPESPRITECOMPONENT))
+                {
+                    graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
+                    ecs::ColliderComponent* colCom = static_cast<ecs::ColliderComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(entityID));
+                    ecs::SpriteComponent* spriteCom = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(entityID));
+                    if (!spriteCom->m_imageFile.empty())
+                    {
+                        assetmanager::AssetManager* assets = assetmanager::AssetManager::m_funcGetInstance();
+                        colCom->m_Size.m_x = static_cast<float>(static_cast<float>(assets->m_imageManager.m_imageMap[spriteCom->m_imageFile].m_width) / static_cast<float>(pipe->m_unitWidth) / assets->m_imageManager.m_imageMap[spriteCom->m_imageFile].m_stripCount);
+                        colCom->m_Size.m_y = static_cast<float>(assets->m_imageManager.m_imageMap[spriteCom->m_imageFile].m_height) / static_cast<float>(pipe->m_unitHeight);
+                    }
+                }
+               
                 ComponentType = 0;
                 events::AddComponent action(entityID, ecs::TYPECOLLIDERCOMPONENT);
                 DISPATCH_ACTION_EVENT(action);
