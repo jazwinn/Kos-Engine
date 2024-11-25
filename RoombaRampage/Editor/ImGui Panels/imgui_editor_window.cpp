@@ -264,13 +264,6 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
 
 
 
-
-
-
-
-
-
-
     //For Dragging Assets Into Editor Window
     ImGui::Dummy(renderWindowSize);
     if (ImGui::BeginDragDropTarget())

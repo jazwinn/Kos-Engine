@@ -122,7 +122,7 @@ namespace script {
 			\return    Always returns false for consistency in call handling.
 		*/
 		/******************************************************************/
-		static bool m_InternalCallGetDeltaTime(float* deltatime);
+		static float m_InternalCallGetDeltaTime();
 
 		static int m_InternalCallGetTagID(MonoString* tag);
 
@@ -166,6 +166,8 @@ namespace script {
 		static void m_InternalCallSetTimeScale(const float x);
 
 		static void m_InternalCallResetTimeScale();
+
+		static void m_InternalGetWorldMousePosition(vector2::Vec2* mousecord);
 
 	public:
 

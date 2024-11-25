@@ -3,7 +3,8 @@
         "name": {
             "namestr": "blackTile_test",
             "layer": 0,
-            "isprefab": false
+            "isprefab": false,
+            "tagstr": "Default"
         },
         "transform": {
             "position": {

@@ -55,6 +55,7 @@ namespace fmodaudio {
         void m_PauseAllSounds();
         bool m_UnpauseAllSounds();
         bool m_PauseSound(const std::string& entityId); 
+        bool m_UnpauseSound(const std::string& entityId);
         bool m_FadeSound(const std::string& entityId, float targetVolume, float fadeDuration); 
         bool m_SetLooping(const std::string& entityId, bool loop);  
         bool m_SetVolume(const std::string& entityId, float volume); 
@@ -78,8 +79,11 @@ namespace fmodaudio {
         void m_LoadAudio(const std::string& name, const std::string& path);
         void m_PlayAudioForEntity(const std::string& entityId, const std::string& name, float volume);
         void m_StopAudioForEntity(const std::string& entityId, const std::string& name);
+        void m_PauseAudioForEntity(const std::string& entityId, const std::string& name);
+        void m_UnpauseAudioForEntity(const std::string& entityId, const std::string& name);
         void m_SetVolumeForEntity(const std::string& entityId, const std::string& name, float volume);
         void m_SetLoopingForEntity(const std::string& entityId, const std::string& name, bool loop);
+        void m_SetPlayOnStartForEntity(const std::string& entityId, const std::string& audioName, bool playOnStart);
         bool m_IsPlayingForEntity(const std::string& entityId, const std::string& name);
         void m_PauseAllSounds();
         void m_UnpauseAllSounds();

@@ -84,7 +84,7 @@ public static class InternalCall
     public extern static bool m_InternalSetVelocity(uint entity, in Vector2 Velocity);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static bool m_InternalCallGetDeltaTime(out float DeltaTime);
+    public extern static float m_InternalCallGetDeltaTime();
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static int m_InternalCallGetTagID(string tag);
@@ -127,6 +127,15 @@ public static class InternalCall
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static bool m_InternalCallIsKeyTriggered(keyCode key);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static void m_InternalGetWorldMousePosition(out Vector2 mousepos);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static void m_InternalCallSetTimeScale(in float timescale);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static void m_InternalCallResetTimeScale();
 }
 
 public static class GetComponent
