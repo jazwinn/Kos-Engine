@@ -55,7 +55,7 @@ namespace ecs {
 		\brief     Allocate memory to the the heap and storing it on a map
 		*/
 		/******************************************************************/
-		static void m_Load();
+		void m_Load();
 
 		/******************************************************************/
 		/*!
@@ -63,7 +63,7 @@ namespace ecs {
 		\brief     Call on all systems initialization
 		*/
 		/******************************************************************/
-		static void m_Init();
+		void m_Init();
 
 		/******************************************************************/
 		/*!
@@ -71,7 +71,7 @@ namespace ecs {
 		\brief     Call on all systems update function
 		*/
 		/******************************************************************/
-		static void m_Update(float DeltaTime);
+		void m_Update(float DeltaTime);
 
 		/******************************************************************/
 		/*!
@@ -79,7 +79,7 @@ namespace ecs {
 		\brief     Release all memeory allocated
 		*/
 		/******************************************************************/
-		static void m_Unload();
+		void m_Unload();
 
 		/******************************************************************/
 		/*!
@@ -87,25 +87,25 @@ namespace ecs {
 		\brief     Creates an entity with a name & transform component
 		*/
 		/******************************************************************/
-		static EntityID m_CreateEntity(std::string scene);
+		EntityID m_CreateEntity(std::string scene);
 		/******************************************************************/
 		/*!
 		\def       m_DuplicateEntity()
 		\brief     Creates entity and duplicate the data to the new entity
 		*/
 		/******************************************************************/
-		static EntityID m_DuplicateEntity(EntityID, std::string scene = {});
+		EntityID m_DuplicateEntity(EntityID, std::string scene = {});
 		/******************************************************************/
 		/*!
 		\def       m_DeleteEntity()
 		\brief     Removes entities component pointer from all system
 		*/
 		/******************************************************************/
-		static bool m_DeleteEntity(EntityID);
+		bool m_DeleteEntity(EntityID);
 
 
 		template <typename T>
-		static void m_AddComponentToECS(ComponentType);
+		void m_AddComponentToECS(ComponentType);
 
 		/******************************************************************/
 		/*!
@@ -115,10 +115,10 @@ namespace ecs {
 		\return	   pointer to the newly created component
 		*/
 		/******************************************************************/
-		static void* m_AddComponent(ComponentType, EntityID);
+		void* m_AddComponent(ComponentType, EntityID);
 
 
-		static bool m_RemoveComponent(ComponentType Type, EntityID ID);
+		bool m_RemoveComponent(ComponentType Type, EntityID ID);
 
 
 		/******************************************************************/
@@ -129,14 +129,14 @@ namespace ecs {
 				   in the system
 		*/
 		/******************************************************************/
-		static void m_RegisterSystems(EntityID);
+		void m_RegisterSystems(EntityID);
 		/******************************************************************/
 		/*!
 		\def       m_DeregisterSystem()
 		\brief     Removes entity's component from the system
 		*/
 		/******************************************************************/
-		static void m_DeregisterSystem(EntityID);
+		void m_DeregisterSystem(EntityID);
 
 		//create getters
 		std::unordered_map<ComponentType, std::shared_ptr<IComponentPool>> m_ECS_CombinedComponentPool{};

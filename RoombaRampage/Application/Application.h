@@ -73,7 +73,9 @@ namespace Application {
 
 
 	private:
+#ifdef IMGUIENABLED
 		gui::ImGuiHandler Editor; //should only remain in Application
+#endif
 		AppWindow lvWindow;
 		Input::InputSystem Input;
 		

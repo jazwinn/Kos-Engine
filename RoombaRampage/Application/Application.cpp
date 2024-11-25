@@ -93,13 +93,7 @@ namespace Application {
         //call back must happen before imgui
         Input.SetCallBack(lvWindow.m_window);
         LOGGING_INFO("Set Input Call Back Successful");
-        
 
-        /*--------------------------------------------------------------
-            LOAD ENTITIES INTO ECS & IMGUI
-        --------------------------------------------------------------*/
-        scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();
-        scenemanager->m_LoadScene("Assets/Scene/Default.json"); // replace with opening up window dialog
         
         /*--------------------------------------------------------------
             INITIALIZE EDITOR // LAST INIT
@@ -180,18 +174,25 @@ namespace Application {
                 --------------------------------------------------------------*/
                 pipe->m_funcUpdate();
 
+#ifdef IMGUIENABLED
 
+                /*--------------------------------------------------------------
+                    Update IMGUI FRAME
+                --------------------------------------------------------------*/
+                Editor.m_update();
+#endif
 
                 /*--------------------------------------------------------------
                     DRAWING/RENDERING Window
                 --------------------------------------------------------------*/
                 lvWindow.Draw();
+
 #ifdef IMGUIENABLED
 
                 /*--------------------------------------------------------------
                     Draw IMGUI FRAME
                 --------------------------------------------------------------*/
-                Editor.m_Render();
+                Editor.m_render();
 #endif
                 /*--------------------------------------------------------------
                    Render Game Scene
