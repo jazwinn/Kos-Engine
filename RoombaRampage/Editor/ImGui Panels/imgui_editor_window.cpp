@@ -196,8 +196,17 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
         EditorCamera::m_editorCamera.m_zoom.m_y = 1.f;
     }
 
+    static unsigned int lastEntity{};
+
+    // Clean up behaviours when switching entities
+    if (lastEntity != m_clickedEntityId)
+    {
+        lastEntity = m_clickedEntityId;
+        m_tilePickerMode = false;
+    }
+
     //set tile map 
-    if (m_tilePickerMode && ImGui::IsMouseDown(ImGuiMouseButton_Left) && !ImGuizmo::IsUsing() && ImGui::IsWindowHovered())
+    if (m_tilePickerMode && ImGui::IsMouseDown(ImGuiMouseButton_Left) && !ImGuizmo::IsUsing() && ImGui::IsWindowHovered() && ecs->m_ECS_EntityMap[m_clickedEntityId].test(ecs::TYPETILEMAPCOMPONENT))
     {
         auto* tmc = static_cast<ecs::TilemapComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETILEMAPCOMPONENT]->m_GetEntityComponent(m_clickedEntityId));
         auto* transform = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(m_clickedEntityId));
@@ -207,7 +216,7 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
         
     }
 
-    if (ImGui::IsWindowHovered() && !ImGuizmo::IsUsing() && ImGui::IsMouseClicked(0)) {
+    if (ImGui::IsWindowHovered() && !ImGuizmo::IsUsing() && ImGui::IsMouseClicked(0) && !m_tilePickerMode) {
         //If cursor selects object, object is selected
         auto transform = calculateworld();
         ImVec2 WorldMouse = ImVec2{ transform.m_x, transform.m_y };

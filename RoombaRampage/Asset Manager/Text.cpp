@@ -85,6 +85,7 @@ namespace text {
             int xOffset = 0, yOffset = 0;
             assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
             assetmanager->m_fontManager.m_fonts[filename] = {};
+      
             for (unsigned char c = 0; c < numChars; c++) {
                 if (FT_Load_Char(face, c, FT_LOAD_RENDER)) {
                     LOGGING_WARN("ERROR::FREETYPE: Failed to load Glyph for character: %c", c);
@@ -95,18 +96,36 @@ namespace text {
                 glTexSubImage2D(GL_TEXTURE_2D, 0, xOffset, yOffset, face->glyph->bitmap.width,
                     face->glyph->bitmap.rows, GL_RED, GL_UNSIGNED_BYTE, face->glyph->bitmap.buffer);
 
-                // Store character data with atlas coordinates
-                CharacterData character = {
-                    atlasTexture,
-                    glm::ivec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
-                    glm::ivec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
-                    static_cast<unsigned int>(face->glyph->advance.x),
-                    glm::vec2((float)xOffset / atlasWidth, (float)yOffset / atlasHeight),
-                    glm::vec2((float)(xOffset + face->glyph->bitmap.width) / atlasWidth,
-                              (float)(yOffset + face->glyph->bitmap.rows) / atlasHeight)
-                };
-               
-                assetmanager->m_fontManager.m_fonts[filename].insert(std::pair<char, CharacterData>(c, character));
+                if (c == 'p')
+                {
+                    // Store character data with atlas coordinates
+                    CharacterData character = {
+                        atlasTexture,
+                        glm::ivec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
+                        glm::ivec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
+                        static_cast<unsigned int>(face->glyph->advance.x),
+                        glm::vec2((float)xOffset / atlasWidth, (float)yOffset / atlasHeight),
+                        glm::vec2((float)(xOffset + face->glyph->bitmap.width) / atlasWidth,
+                                  (float)(yOffset + face->glyph->bitmap.rows) / atlasHeight)
+                    };
+                    assetmanager->m_fontManager.m_fonts[filename].insert(std::pair<char, CharacterData>(c, character));
+                }
+                else
+                {
+                    // Store character data with atlas coordinates
+                    CharacterData character = {
+                        atlasTexture,
+                        glm::ivec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
+                        glm::ivec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
+                        static_cast<unsigned int>(face->glyph->advance.x),
+                        glm::vec2((float)xOffset / atlasWidth, (float)yOffset / atlasHeight),
+                        glm::vec2((float)(xOffset + face->glyph->bitmap.width) / atlasWidth,
+                                  (float)(yOffset + face->glyph->bitmap.rows) / atlasHeight)
+                    };
+                    assetmanager->m_fontManager.m_fonts[filename].insert(std::pair<char, CharacterData>(c, character));
+                }
+
+                 
 
                 // Move to the next position in the atlas
                 xOffset += glyphWidth;

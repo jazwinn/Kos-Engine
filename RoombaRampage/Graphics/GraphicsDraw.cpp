@@ -217,6 +217,16 @@ namespace graphicpipe
 					float ypos = (textData.m_y - (ch.m_size.y - ch.m_bearing.y )/GraphicsCamera::m_windowHeight * textData.m_scale);
 					float w = ch.m_size.x * textData.m_scale / GraphicsCamera::m_windowHeight;
 					float h = ch.m_size.y * textData.m_scale / GraphicsCamera::m_windowHeight;
+
+					if (c == 'p' || c == 'j' || c == 'q' || c == 'y' || c == 'g')
+					{
+						ypos = textData.m_y - (((ch.m_size.y - assetmanager->m_fontManager.m_fonts[textData.m_fileName]['e'].m_size.y) - (ch.m_bearing.y - assetmanager->m_fontManager.m_fonts[textData.m_fileName]['e'].m_bearing.y))  * textData.m_scale) / GraphicsCamera::m_windowHeight;
+					}
+
+					if (c == 'Q' || c == 'J')
+					{
+						ypos = textData.m_y - (((ch.m_size.y - assetmanager->m_fontManager.m_fonts[textData.m_fileName]['e'].m_size.y) - (ch.m_bearing.y - assetmanager->m_fontManager.m_fonts[textData.m_fileName]['e'].m_bearing.y)) * textData.m_scale) / GraphicsCamera::m_windowHeight;
+					}
 		
 
 					// Update VBO for each character with texture coordinates from the atlas
