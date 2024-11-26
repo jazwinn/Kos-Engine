@@ -39,7 +39,7 @@ namespace graphicpipe
 			int length;
 			glGetShaderiv(lvID, GL_INFO_LOG_LENGTH, &length);
 			char* message = (char*)malloc(length * sizeof(char));
-			glGetShaderInfoLog(lvID, length, &length, message);
+			glGetShaderInfoLog(lvID, length, &length, message);	
 			LOGGING_ERROR("Failed to Compile Shader: {}", message); 
 			glDeleteShader(lvID);
 			free(message);
