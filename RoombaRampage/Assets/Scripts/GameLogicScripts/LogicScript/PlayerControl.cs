@@ -66,10 +66,12 @@ public class PlayerControl : ScriptBase
         {
             velocity.X = speed;
         }
+        InternalCall.m_InternalSetVelocity(EntityID, velocity);
+
         if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.F))
         {
             InternalCall.m_UnloadAllScene();
-            InternalCall.m_InternalCallLoadScene("Script Test");
+            InternalCall.m_InternalCallLoadScene("ScriptTest");
         }
         if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.G))
         {
@@ -102,8 +104,13 @@ public class PlayerControl : ScriptBase
             intframespersecond = 1;
             InternalCall.m_InternalSetAnimationComponent(EntityID, in framenumber, in intframespersecond, in frametimer, in isanimation);
         }
-
-        InternalCall.m_InternalSetVelocity(EntityID, velocity);
+        
+        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.C))
+        {
+            intframespersecond = 1;
+            InternalCall.m_InternalCallCloseWindow();
+        }
+        
 
        Vector2 worldpos;
        InternalCall.m_InternalGetWorldMousePosition(out worldpos);

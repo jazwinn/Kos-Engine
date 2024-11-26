@@ -169,6 +169,8 @@ namespace script {
 
 		static void m_InternalGetWorldMousePosition(vector2::Vec2* mousecord);
 
+		static void m_InternalCallCloseWindow();
+
 	public:
 
 

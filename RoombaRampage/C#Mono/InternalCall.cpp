@@ -559,6 +559,11 @@ namespace script {
 
 	}
 
+	void InternalCall::m_InternalCallCloseWindow()
+	{
+		Helper::Helpers::GetInstance()->m_closeWindow = true;
+	}
+
 	void InternalCall::m_InternalCallDeleteEntity(ecs::EntityID id)
 	{
 		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
@@ -662,6 +667,7 @@ namespace script {
 
 		MONO_ADD_INTERNAL_CALL(m_InternalCallSetTimeScale);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallResetTimeScale);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallCloseWindow);
 
 	}
 }
