@@ -73,7 +73,7 @@ public class PlayerControl : ScriptBase
         }
         if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.G))
         {
-            int new_entity = InternalCall.m_InternalCallAddPrefab("blackTile_test_1", 0.0f, 0.0f, 45.0f); //do not call prefabs that share the same script as the current
+            int new_entity = InternalCall.m_InternalCallAddPrefab("blackTile", 0.0f, 0.0f, 45.0f); //do not call prefabs that share the same script as the current
             queue.Enqueue(new_entity);
         }
         if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.H))
@@ -108,7 +108,7 @@ public class PlayerControl : ScriptBase
        Vector2 worldpos;
        InternalCall.m_InternalGetWorldMousePosition(out worldpos);
 
-       Console.WriteLine($"x is : {worldpos.X} , y is : {worldpos.Y}");
+       //Console.WriteLine($"x is : {worldpos.X} , y is : {worldpos.Y}");
 
 
 
