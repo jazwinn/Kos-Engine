@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Reflection.Emit;
+using System.Data.SqlClient;
 
 public static class InternalCall
 {
@@ -24,7 +25,7 @@ public static class InternalCall
     public extern static bool m_InternalSetTranslate(uint entity, in Vector2 pos);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static bool m_InternalGetColliderComponent(uint entity, out Vector2 size, out Vector2 offset, out bool drawDebug, out float radius, out bool isCollided);
+    public extern static bool m_InternalGetColliderComponent(uint entity, out Vector2 size, out Vector2 offset, out bool drawDebug, out float radius, out int bockflag ,out float isCollided);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static bool m_InternalSetColliderComponent(uint entity, in Vector2 size, in Vector2 offset, in bool drawDebug, in float radius, in bool isCollided);
@@ -159,6 +160,13 @@ public static class GetComponent
         TransformComponent temp = new TransformComponent();
         InternalCall.m_InternalGetTransformComponent(id, out temp.m_position, out temp.m_scale, out temp.m_rotation);
 
+        return temp;
+    }
+
+    public static ColliderComponent GetColliderComponent(uint id)
+    {
+        ColliderComponent temp = new ColliderComponent();
+        InternalCall.m_InternalGetColliderComponent(id, out temp.m_Size, out temp.m_Offset, out temp.m_drawDebug, out temp.m_radius, out temp.m_blockedFlag, out temp.m_isCollided);
         return temp;
     }
 }

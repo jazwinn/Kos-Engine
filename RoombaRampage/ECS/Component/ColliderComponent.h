@@ -45,9 +45,16 @@ namespace ecs {
 
 		float m_radius{0.5f};
 
+
+
 		float m_isCollided{ false };
+
+
+		// no need to serialize or reflect
 		std::vector<EntityID> m_collidedWith{};
-		int m_blockedFlag = -1;
+
+		int m_blockedFlag = 0;
+
 		mat3x3::Mat3x3 m_collider_Transformation{};
 		 
 		REFLECTABLE(ColliderComponent, m_Size, m_OffSet, m_drawDebug, m_radius, m_type)
