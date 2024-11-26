@@ -37,6 +37,8 @@ namespace Helper {
 			return InstancePtr.get();
 		}
 
+		std::string m_startScene;
+
 		float m_windowWidth;
 
 		float m_windowHeight;
