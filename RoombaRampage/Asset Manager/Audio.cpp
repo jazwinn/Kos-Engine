@@ -284,7 +284,6 @@ namespace fmodaudio {
             FModAudio* sound = it->second.get();
             if (sound->m_PlaySound(entityId)) {
                 sound->m_SetVolume(entityId, volume);
-                std::cout << entityId << std::endl;
             }
         }
         else {
