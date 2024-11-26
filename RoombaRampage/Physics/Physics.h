@@ -38,6 +38,14 @@ namespace physicspipe {
 		vector2::Vec2 m_max;
 	};
 
+	enum CollisionFlag {
+		NONE = 0,        // No collision
+		LEFT = 1 << 0,   // Blocked on the left 1 
+		RIGHT = 1 << 1,  // Blocked on the right 2 
+		UP = 1 << 2,     // Blocked on the top 4
+		DOWN = 1 << 3    // Blocked on the bottom 8
+	};
+
 	/**********************************
 		BASE CLASS
 	**********************************/
@@ -56,8 +64,8 @@ namespace physicspipe {
 		int m_ID = -1;                                // Unique identifier
 		EntityType type = EntityType::RECTANGLE;    // Circle or Rectangle
 		int m_layerID = -1;
-		std::vector<std::string> m_blockedDirections;
-
+		//std::vector<std::string> m_blockedDirections;
+		int m_collisionFlags = NONE;
 		virtual ~PhysicsData() = default;
 
 		//Get entity type
@@ -70,15 +78,29 @@ namespace physicspipe {
 
 
 		// Clear blocked directions
-		void ClearBlockedDirections() {
-			m_blockedDirections.clear();
+		//void ClearBlockedDirections() {
+		//	m_blockedDirections.clear();
+		//}
+
+		//// Add a blocked direction
+		//void AddBlockedDirection(const std::string& direction) {
+		//	if (std::find(m_blockedDirections.begin(), m_blockedDirections.end(), direction) == m_blockedDirections.end()) {
+		//		m_blockedDirections.push_back(direction);
+		//	}
+		//}
+
+		void ClearCollisionFlags() {
+			m_collisionFlags = NONE;
 		}
 
-		// Add a blocked direction
-		void AddBlockedDirection(const std::string& direction) {
-			if (std::find(m_blockedDirections.begin(), m_blockedDirections.end(), direction) == m_blockedDirections.end()) {
-				m_blockedDirections.push_back(direction);
-			}
+		// Add a collision flag
+		void AddCollisionFlag(CollisionFlag flag) {
+			m_collisionFlags |= flag;
+		}
+
+		// Check if a specific flag is set
+		bool HasCollisionFlag(CollisionFlag flag) const {
+			return m_collisionFlags & flag;
 		}
 	};
 

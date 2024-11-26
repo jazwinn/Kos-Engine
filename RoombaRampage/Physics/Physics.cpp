@@ -354,12 +354,16 @@ namespace physicspipe {
 		if (std::abs(collisionNormal.m_x) > std::abs(collisionNormal.m_y)) {
 			// Horizontal collision
 			if (collisionNormal.m_x > 0) {
-				const_cast<Circle&>(circle).AddBlockedDirection("left");
-				const_cast<Rectangle&>(rect).AddBlockedDirection("right");
+				//const_cast<Circle&>(circle).AddBlockedDirection("left");
+				//const_cast<Rectangle&>(rect).AddBlockedDirection("right");
+				const_cast<Circle&>(circle).AddCollisionFlag(LEFT);
+				const_cast<Rectangle&>(rect).AddCollisionFlag(RIGHT);
 			}
 			else {
-				const_cast<Circle&>(circle).AddBlockedDirection("right");
-				const_cast<Rectangle&>(rect).AddBlockedDirection("left");
+				//const_cast<Circle&>(circle).AddBlockedDirection("right");
+				//const_cast<Rectangle&>(rect).AddBlockedDirection("left");
+				const_cast<Circle&>(circle).AddCollisionFlag(RIGHT);
+				const_cast<Rectangle&>(rect).AddCollisionFlag(LEFT);
 				//const_cast<Circle&>(circle).AddBlockedDirection("left");
 				//const_cast<Rectangle&>(rect).AddBlockedDirection("right");
 			}
@@ -367,14 +371,18 @@ namespace physicspipe {
 		else {
 			// Vertical collision
 			if (collisionNormal.m_y > 0) {
-				const_cast<Circle&>(circle).AddBlockedDirection("up");
-				const_cast<Rectangle&>(rect).AddBlockedDirection("down");
+				//const_cast<Circle&>(circle).AddBlockedDirection("up");
+				//const_cast<Rectangle&>(rect).AddBlockedDirection("down");
+				const_cast<Circle&>(circle).AddCollisionFlag(UP);
+				const_cast<Rectangle&>(rect).AddCollisionFlag(DOWN);
 				//const_cast<Circle&>(circle).AddBlockedDirection("down");
 				//const_cast<Rectangle&>(rect).AddBlockedDirection("up");
 			}
 			else {
-				const_cast<Circle&>(circle).AddBlockedDirection("down");
-				const_cast<Rectangle&>(rect).AddBlockedDirection("up");
+				//const_cast<Circle&>(circle).AddBlockedDirection("down");
+				//const_cast<Rectangle&>(rect).AddBlockedDirection("up");
+				const_cast<Circle&>(circle).AddCollisionFlag(DOWN);
+				const_cast<Rectangle&>(rect).AddCollisionFlag(UP);
 				//const_cast<Circle&>(circle).AddBlockedDirection("up");
 				//const_cast<Rectangle&>(rect).AddBlockedDirection("down");
 			}
@@ -447,7 +455,7 @@ namespace physicspipe {
 
 		// Reset blocked directions for all entities
 		for (auto& entity : m_physicsEntities) {
-			entity->ClearBlockedDirections();
+			entity->ClearCollisionFlags();
 		}
 
 		m_CalculateBoundingBox();
@@ -590,16 +598,17 @@ namespace physicspipe {
 			// Horizontal collision
 			if (smallestAxis.m_x > 0) {
 				if (isEntity1Blocked) {
-					//const_cast<Rectangle&>(obj1).AddBlockedDirection("left");
-					//const_cast<Rectangle&>(obj2).AddBlockedDirection("right");
-					const_cast<Rectangle&>(obj1).AddBlockedDirection("right");
-					const_cast<Rectangle&>(obj2).AddBlockedDirection("left");
-				}
-				else {
 					//const_cast<Rectangle&>(obj1).AddBlockedDirection("right");
 					//const_cast<Rectangle&>(obj2).AddBlockedDirection("left");
-					const_cast<Rectangle&>(obj1).AddBlockedDirection("left");
-					const_cast<Rectangle&>(obj2).AddBlockedDirection("right");
+					const_cast<Rectangle&>(obj1).AddCollisionFlag(RIGHT);
+					const_cast<Rectangle&>(obj2).AddCollisionFlag(LEFT);
+
+				}
+				else {
+					//const_cast<Rectangle&>(obj1).AddBlockedDirection("left");
+					//const_cast<Rectangle&>(obj2).AddBlockedDirection("right");
+					const_cast<Rectangle&>(obj1).AddCollisionFlag(LEFT);
+					const_cast<Rectangle&>(obj2).AddCollisionFlag(RIGHT);
 				}
 			}
 		}
@@ -609,14 +618,18 @@ namespace physicspipe {
 				if (isEntity1Blocked) {
 					//const_cast<Rectangle&>(obj1).AddBlockedDirection("down");
 					//const_cast<Rectangle&>(obj2).AddBlockedDirection("up");
-					const_cast<Rectangle&>(obj1).AddBlockedDirection("up");
-					const_cast<Rectangle&>(obj2).AddBlockedDirection("down");
+					//const_cast<Rectangle&>(obj1).AddBlockedDirection("up");
+					//const_cast<Rectangle&>(obj2).AddBlockedDirection("down");
+					const_cast<Rectangle&>(obj1).AddCollisionFlag(UP);
+					const_cast<Rectangle&>(obj2).AddCollisionFlag(DOWN);
 				}
 				else {
 					//const_cast<Rectangle&>(obj1).AddBlockedDirection("up");
 					//const_cast<Rectangle&>(obj2).AddBlockedDirection("down");
-					const_cast<Rectangle&>(obj1).AddBlockedDirection("down");
-					const_cast<Rectangle&>(obj2).AddBlockedDirection("up");
+					//const_cast<Rectangle&>(obj1).AddBlockedDirection("down");
+					//const_cast<Rectangle&>(obj2).AddBlockedDirection("up");
+					const_cast<Rectangle&>(obj1).AddCollisionFlag(DOWN);
+					const_cast<Rectangle&>(obj2).AddCollisionFlag(UP);
 				}
 			}
 		}
