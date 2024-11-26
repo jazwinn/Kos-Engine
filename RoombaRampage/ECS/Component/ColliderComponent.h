@@ -47,6 +47,7 @@ namespace ecs {
 
 		float m_isCollided{ false };
 		std::vector<EntityID> m_collidedWith{};
+		int m_blockedFlag = -1;
 		mat3x3::Mat3x3 m_collider_Transformation{};
 		 
 		REFLECTABLE(ColliderComponent, m_Size, m_OffSet, m_drawDebug, m_radius, m_type)
