@@ -73,7 +73,7 @@ namespace script {
 	}
 
 	//Collider Component
-	bool InternalCall::m_InternalGetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, int* m_blockedFlag, bool* isCollided)
+	bool InternalCall::m_InternalGetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, int* m_blockedFlag, float* isCollided, bool* collisionCheck)
 	{
 		auto* collider = static_cast<ecs::ColliderComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(entity));
 
@@ -85,11 +85,12 @@ namespace script {
 		*radius = collider->m_radius;
 		*isCollided = collider->m_isCollided;
 		*m_blockedFlag = collider->m_blockedFlag;
+		*collisionCheck = collider->m_CollisionCheck;
 
 		return true;
 	}
 
-	bool InternalCall::m_InternalSetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool drawDebug, float radius, bool isCollided)
+	bool InternalCall::m_InternalSetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, int* m_blockedFlag, float* isCollided, bool* collisionCheck)
 	{
 		auto* collider = static_cast<ecs::ColliderComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(entity));
 
@@ -97,9 +98,11 @@ namespace script {
 
 		collider->m_Size = *size;
 		collider->m_OffSet = *offset;
-		collider->m_drawDebug = drawDebug;
-		collider->m_radius = radius;
-		collider->m_isCollided = isCollided;
+		collider->m_drawDebug = *drawDebug;
+		collider->m_radius = *radius;
+		collider->m_isCollided = *isCollided;
+		collider->m_blockedFlag = *m_blockedFlag;
+		collider->m_CollisionCheck = *collisionCheck;
 
 		return true;
 	}

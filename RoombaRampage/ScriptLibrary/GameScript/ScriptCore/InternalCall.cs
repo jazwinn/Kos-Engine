@@ -25,10 +25,10 @@ public static class InternalCall
     public extern static bool m_InternalSetTranslate(uint entity, in Vector2 pos);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static bool m_InternalGetColliderComponent(uint entity, out Vector2 size, out Vector2 offset, out bool drawDebug, out float radius, out int bockflag ,out float isCollided);
+    public extern static bool m_InternalGetColliderComponent(uint entity, out Vector2 size, out Vector2 offset, out bool drawDebug, out float radius, out int bockflag ,out float isCollided, out bool collisionCheck);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static bool m_InternalSetColliderComponent(uint entity, in Vector2 size, in Vector2 offset, in bool drawDebug, in float radius, in bool isCollided);
+    public extern static bool m_InternalSetColliderComponent(uint entity, in Vector2 size, in Vector2 offset, in bool drawDebug, in float radius, in int bockflag, in float isCollided, in bool collisionCheck);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static bool m_InternalGetPlayerComponent(uint entity, out bool control);
@@ -175,7 +175,7 @@ public static class GetComponent
     public static ColliderComponent GetColliderComponent(uint id)
     {
         ColliderComponent temp = new ColliderComponent();
-        InternalCall.m_InternalGetColliderComponent(id, out temp.m_Size, out temp.m_Offset, out temp.m_drawDebug, out temp.m_radius, out temp.m_blockedFlag, out temp.m_isCollided);
+        InternalCall.m_InternalGetColliderComponent(id, out temp.m_Size, out temp.m_Offset, out temp.m_drawDebug, out temp.m_radius, out temp.m_blockedFlag, out temp.m_isCollided, out temp.m_collisionCheck);
         return temp;
     }
 }
@@ -191,5 +191,10 @@ public static class SetComponent
     public static void SetTransformComponent(uint id, TransformComponent transform)
     {
         InternalCall.m_InternalSetTransformComponent(id, in transform.m_position, in transform.m_scale, in transform.m_rotation);
+    }
+
+    public static void SetCollisionComponent(uint id, ColliderComponent transform)
+    {
+        InternalCall.m_InternalSetColliderComponent(id, in transform.m_Size, in transform.m_Offset, in transform.m_drawDebug, in transform.m_radius, in transform.m_blockedFlag, in transform.m_isCollided, in transform.m_collisionCheck);
     }
 }
