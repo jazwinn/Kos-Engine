@@ -135,7 +135,7 @@ namespace ecs {
 			if (button->m_IsClick) 
 			{
 				LOGGING_INFO("Button Clicked");
-				button->m_IsClick = false;
+				button->m_IsClick = true;
 			}
 			mat3x3::Mat3x3 debugTransformation = mat3x3::Mat3Transform(vector2::Vec2{ transform->m_transformation.m_e20, transform->m_transformation.m_e21 }, vector2::Vec2{ button->m_Scale.m_x, button->m_Scale.m_y }, transform->m_rotation);
 

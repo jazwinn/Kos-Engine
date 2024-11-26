@@ -63,17 +63,21 @@ public class CollisionResponse : ScriptBase
             // */
         }
 
-
-        InternalCall.m_InternalGetButtonComponent(EntityID, out position, out scale, out isclick);
-
-        if(isclick == true)
+        if (InternalCall.m_InternalCallIsKeyPressed(keyCode.LMB))
         {
-            Console.WriteLine($"Button is clicked : {isclick}");
+            InternalCall.m_InternalGetButtonComponent(EntityID, out position, out scale, out isclick);
+
+            if (isclick == true)
+            {
+                Console.WriteLine($"Button is clicked : {isclick}");
+            }
+            else
+            {
+                Console.WriteLine($"Button not clicked");
+            }
         }
-        else
-        {
-            Console.WriteLine($"Button not clicked");
-        }
+
+
 
 
 
