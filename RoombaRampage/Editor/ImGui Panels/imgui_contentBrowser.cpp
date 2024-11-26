@@ -121,7 +121,7 @@ namespace gui {
 			}
 
 			static float padding = 20.f;
-			static float thumbnail = 80.f;
+			static float thumbnail = 100.f;
 			float cellsize = padding + thumbnail;
 
 			float panelwidth = ImGui::GetContentRegionAvail().x;
@@ -134,7 +134,16 @@ namespace gui {
 			auto textorimage = [](std::string directoryString, std::string fileName) {
 				assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
 				if (assetmanager->m_imageManager.m_imageMap.find(fileName) != assetmanager->m_imageManager.m_imageMap.end()) {
-					ImGui::ImageButton(directoryString.c_str(), (ImTextureID)(uintptr_t)assetmanager->m_imageManager.m_imageMap.find(fileName)->second.textureID, { thumbnail ,thumbnail }, { 0,1 }, { 1,0 }, { 0,0,0,0 });
+					float imageRatio =  static_cast<float>(assetmanager->m_imageManager.m_imageMap.find(fileName)->second.m_height) / static_cast<float>(assetmanager->m_imageManager.m_imageMap.find(fileName)->second.m_width);
+					if (imageRatio > 1)
+					{
+						ImGui::ImageButton(directoryString.c_str(), (ImTextureID)(uintptr_t)assetmanager->m_imageManager.m_imageMap.find(fileName)->second.textureID, { thumbnail / imageRatio ,thumbnail }, { 0 ,1 }, { 1 ,0 }, { 0,0,0,0 });
+					}
+					else
+					{
+						ImGui::ImageButton(directoryString.c_str(), (ImTextureID)(uintptr_t)assetmanager->m_imageManager.m_imageMap.find(fileName)->second.textureID, { thumbnail ,thumbnail * imageRatio }, { 0 ,1 }, { 1 ,0 }, { 0,0,0,0 });
+					}
+					
 				}
 				else {
 					ImGui::Button(directoryString.c_str(), { thumbnail ,thumbnail });
@@ -157,7 +166,7 @@ namespace gui {
 					}
 				}
 				else {
-					if (directoryPath.path().filename().extension().string() == ".png") {
+					if (directoryPath.path().filename().extension().string() == ".png" || directoryPath.path().filename().extension().string() == ".jpg") {
 						std::string fileName = directoryPath.path().filename().string();
 						textorimage(directoryString, fileName);
 
