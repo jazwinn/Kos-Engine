@@ -1120,7 +1120,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                                     if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("file")) {
                                         IM_ASSERT(payload->DataSize == sizeof(std::filesystem::path));
                                         std::filesystem::path* filename = static_cast<std::filesystem::path*>(payload->Data);
-                                        if (filename->filename().extension().string() == ".ogg" || ".wav" || ".mp3") {
+                                        if (filename->filename().extension().string() == ".ogg" || ".wav") {
                                             if (assetManager->m_audioManager.getSoundMap().find(filename->filename().string()) == assetManager->m_audioManager.getSoundMap().end()) {
                                                 LOGGING_WARN("File not loaded, please reload content browser");
                                             }

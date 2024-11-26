@@ -227,6 +227,7 @@ namespace Serialization {
 					.AddMember("y", cc->m_OffSet.m_y, allocator), allocator);
 				collider.AddMember("drawDebug", cc->m_drawDebug, allocator);
 				collider.AddMember("radius", cc->m_radius, allocator);
+				collider.AddMember("shapetype", (int)cc->m_type, allocator);
 				entityData.AddMember("collider", collider, allocator);
 				hasComponents = true;  // Mark as having a component
 			}
@@ -581,6 +582,9 @@ namespace Serialization {
 				}
 				if (collider.HasMember("radius")) {
 					cc->m_radius = collider["radius"].GetFloat();
+				}
+				if (collider.HasMember("shapetype")) {
+					cc->m_type = (physicspipe::EntityType)collider["shapetype"].GetInt();
 				}
 			}
 		}
