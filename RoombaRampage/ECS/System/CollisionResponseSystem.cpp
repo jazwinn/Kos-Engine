@@ -99,6 +99,7 @@ namespace ecs {
 		{
 			RigidBodyComponent* rigidComp = m_vecRigidBodyComponentPtr[n];
 			ColliderComponent* ColComp = m_vecColliderComponentPtr[n];
+
 			ColComp->m_collidedWith.clear();
 			//skip component not of the scene
 			if (rigidComp->m_scene != scene) continue;	
@@ -108,7 +109,19 @@ namespace ecs {
 			if (iterator != vecCollisionEntityPair.end()) {
 				ColComp->m_collidedWith.push_back(iterator->second->m_ID);
 				ColComp->m_isCollided = true;
+				ColComp->m_blockedDirection = iterator->first->m_blockedDirections;
+				//std::cout << iterator->first->m_position.m_x << " " << iterator->first->m_position.m_y << std::endl;
+				//for (size_t i = 0; i < iterator->first->m_blockedDirections.size(); ++i) {
+				//	std::cout << iterator->first->m_blockedDirections[i] << " ";
+				//}
+				//std::cout << std::endl;
+				//std::cout << iterator->second->m_position.m_x << " " << iterator->second->m_position.m_y << std::endl;
+				//for (size_t i = 0; i < iterator->second->m_blockedDirections.size(); ++i) {
+				//	std::cout << iterator->second->m_blockedDirections[i] << " ";
+				//}
+				//std::cout << std::endl;
 			}
+			
 		}
 
 		

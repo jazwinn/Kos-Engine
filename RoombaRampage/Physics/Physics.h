@@ -56,6 +56,7 @@ namespace physicspipe {
 		int m_ID = -1;                                // Unique identifier
 		EntityType type = EntityType::RECTANGLE;    // Circle or Rectangle
 		int m_layerID = -1;
+		std::vector<std::string> m_blockedDirections;
 
 		virtual ~PhysicsData() = default;
 
@@ -66,7 +67,21 @@ namespace physicspipe {
 		bool operator==(const PhysicsData& other) const {
 			return (m_ID == other.m_ID);
 		}
+
+
+		// Clear blocked directions
+		void ClearBlockedDirections() {
+			m_blockedDirections.clear();
+		}
+
+		// Add a blocked direction
+		void AddBlockedDirection(const std::string& direction) {
+			if (std::find(m_blockedDirections.begin(), m_blockedDirections.end(), direction) == m_blockedDirections.end()) {
+				m_blockedDirections.push_back(direction);
+			}
+		}
 	};
+
 
 	/**********************************
 		DERIVED CLASS
