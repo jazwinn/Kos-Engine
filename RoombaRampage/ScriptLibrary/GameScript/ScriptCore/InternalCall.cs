@@ -73,11 +73,11 @@ public static class InternalCall
     public extern static bool m_InternalSetButtonComponent(uint entity, in Vector2 position, in Vector2 scale, bool isClick);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static bool m_InternalGetScriptNames(uint entityID, out IntPtr scriptArray);
+    public extern static string[] m_InternalGetScriptNames(uint entityID);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static bool m_InternalAddScriptInstance(uint entity, string scriptName, object instance);
-    
+    public extern static bool m_InternalAddScriptInstance(uint entityID, string scriptName, object instance);
+
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static bool m_InternalGetVelocity(uint entity, out Vector2 Velocity);
 
