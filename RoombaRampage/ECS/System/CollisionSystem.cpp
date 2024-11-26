@@ -105,6 +105,10 @@ namespace ecs {
 			if (ColComp->m_scene != scene) continue;
 			
 
+			//skip those if collision track that is false
+
+			if (ColComp->m_CollisionCheck == false) continue;
+
 			//if movement component is present, do dynamic collision
 			vector2::Vec2 velocity{};
 			if (ecs->m_ECS_EntityMap[id].test(TYPERIGIDBODYCOMPONENT)) {

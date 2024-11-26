@@ -136,6 +136,14 @@ public class PlayerControl : ScriptBase
             InternalCall.m_InternalCallStopAudio(EntityID, "TestLoop.wav");
         }
 
+        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.E))
+        {
+            
+            var collisionComponent = GetComponent.GetColliderComponent(EntityID);
+            collisionComponent.m_collisionCheck = collisionComponent.m_collisionCheck? false : true;
+            SetComponent.SetCollisionComponent(EntityID, collisionComponent);
+        }
+
         Vector2 worldpos;
        InternalCall.m_InternalGetWorldMousePosition(out worldpos);
 
