@@ -54,7 +54,7 @@ namespace assetmanager {
         std::string filepath = directoryPath.string();
         std::replace(filepath.begin(), filepath.end(), '\\', '/');
 
-        if (directoryPath.filename().extension().string() == ".png") {
+        if (directoryPath.filename().extension().string() == ".png" || directoryPath.filename().extension().string() == ".jpg") {
             LOGGING_INFO("Filepath: {}", filepath.c_str());
             m_funcLoadImage(filepath);
 
@@ -188,7 +188,7 @@ namespace assetmanager {
         }
 
         // find the file extension (Update for every new file type
-        if (oldfilepath.extension().string() == ".png") {
+        if (oldfilepath.extension().string() == ".png" || oldfilepath.extension().string() == ".jpg") {
             //check if old file name is present
             if (m_imageManager.m_imageMap.find(oldfilepath.filename().string()) != m_imageManager.m_imageMap.end()) {
                 //check if new file name is non existent
