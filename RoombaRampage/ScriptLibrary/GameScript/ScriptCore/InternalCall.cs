@@ -143,6 +143,15 @@ public static class InternalCall
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static int[] m_InternalCallGetChildrenID(uint id, out bool have_children);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static void m_InternalCallPlayAudio(uint id, string monoString);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static void m_InternalCallStopAudio(uint id, string monoString);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static void m_InternalCallStopAllAudio();
 }
 
 public static class GetComponent

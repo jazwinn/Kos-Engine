@@ -177,6 +177,12 @@ namespace script {
 
 		static MonoArray* m_InternalCallGetChildrenID(ecs::EntityID id, bool* have_children);
 
+		static void m_InternalCallPlayAudio(ecs::EntityID id, MonoString* monoString);
+
+		static void m_InternalCallStopAudio(ecs::EntityID id, MonoString* monoString);
+
+		static void m_InternalCallStopAllAudio();
+
 	public:
 
 
