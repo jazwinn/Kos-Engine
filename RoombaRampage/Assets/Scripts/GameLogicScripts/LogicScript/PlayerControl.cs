@@ -17,14 +17,15 @@ public class PlayerControl : ScriptBase
     private int framenumber;
     private int intframespersecond;
     private float frametimer;
-    bool isanimation;
+    private bool isanimation;
+    private int stripcount;
 
     private Queue<int> queue = new Queue<int>();
 
     public override void GetEntityID(uint id)
     {
         EntityID = id;
-        InternalCall.m_InternalGetAnimationComponent(EntityID, out framenumber, out intframespersecond, out frametimer, out isanimation);
+       
     }
 
     public override void Start()
@@ -32,6 +33,7 @@ public class PlayerControl : ScriptBase
         //Console.WriteLine("Start");
         speed = 5;
         yolo = "sean very extremely gay"; //used in movingobjectscript
+        InternalCall.m_InternalGetAnimationComponent(EntityID, out framenumber, out intframespersecond, out frametimer, out isanimation, out stripcount);
     }
 
     public override void Update()
@@ -101,8 +103,23 @@ public class PlayerControl : ScriptBase
 
         if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.Z))
         {
-            intframespersecond = 1;
-            InternalCall.m_InternalSetAnimationComponent(EntityID, in framenumber, in intframespersecond, in frametimer, in isanimation);
+            intframespersecond = 0;
+            stripcount = 1;
+            InternalCall.m_InternalSetAnimationComponent(EntityID, in framenumber, in intframespersecond, in frametimer, in isanimation, in stripcount);
+        }
+        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.V))
+        {
+            bool have_children;
+            int[] childs = InternalCall.m_InternalCallGetChildrenID(EntityID, out have_children);
+
+            if (have_children)
+            {
+                foreach (var id in childs)
+                {
+                    Console.WriteLine($"{id} is child");
+                }
+            }
+
         }
         
         if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.C))

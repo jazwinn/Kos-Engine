@@ -74,9 +74,9 @@ namespace script {
 
 		static bool m_InternalSetTextComponent(ecs::EntityID entity, MonoString* text, MonoString* fileName, int fontLayer, float fontSize, const vector3::Vec3& color);
 
-		static bool m_InternalGetAnimationComponent(ecs::EntityID entity, int* frameNumber, int* framesPerSecond, float* frameTimer, bool* isAnimating);
+		static bool m_InternalGetAnimationComponent(ecs::EntityID entity, int* frameNumber, int* framesPerSecond, float* frameTimer, bool* isAnimating, int* stripcount);
 
-		static bool m_InternalSetAnimationComponent(ecs::EntityID entity, int* frameNumber, int* framesPerSecond, float* frameTimer, bool* isAnimating);
+		static bool m_InternalSetAnimationComponent(ecs::EntityID entity, int* frameNumber, int* framesPerSecond, float* frameTimer, bool* isAnimating, int* stripcount);
 
 		static bool m_InternalGetSpriteComponent(ecs::EntityID entity, MonoString** imageFile, int* layer, vector3::Vec3* color, float* alpha);
 
@@ -170,6 +170,8 @@ namespace script {
 		static void m_InternalGetWorldMousePosition(vector2::Vec2* mousecord);
 
 		static void m_InternalCallCloseWindow();
+
+		static MonoArray* m_InternalCallGetChildrenID(ecs::EntityID id, bool* have_children);
 
 	public:
 
