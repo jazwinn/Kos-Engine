@@ -1138,9 +1138,20 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                                 ImGui::SliderFloat("Volume", &it->m_Volume, 0.0f, 1.0f);
                                 assetManager->m_audioManager.m_SetVolumeForEntity(std::to_string(entityID), it->m_Name, it->m_Volume);
 
-                                bool wasLooping = it->m_Loop; // Save current looping state
+                                bool wasLooping = it->m_Loop;
 
-                                // Checkbox for Play On Start
+                                if (ImGui::Button("Play Sound")) {
+                                    std::string key = it->m_Name;
+                                    auto& audioManager = assetManager->m_audioManager;
+                                    if (!audioManager.m_IsPlayingForEntity(std::to_string(entityID), key)) {
+                                        audioManager.m_PlayAudioForEntity(std::to_string(entityID), key, it->m_Volume);
+                                    }
+                                    else {
+                                        audioManager.m_StopAudioForEntity(std::to_string(entityID), it->m_Name);
+                                        audioManager.m_PlayAudioForEntity(std::to_string(entityID), key, it->m_Volume);
+                                    }
+                                }
+    
                                 if (ImGui::Checkbox("Play On Start", &it->m_PlayOnStart)) {
                                     auto& audioManager = assetManager->m_audioManager;
 
@@ -1153,7 +1164,6 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                                         audioManager.m_StopAudioForEntity(std::to_string(entityID), it->m_Name);
 
-                                        audioManager.m_PlayAudioForEntity(std::to_string(entityID), it->m_Name, it->m_Volume);
                                     }
                                     else {
                                         audioManager.m_StopAudioForEntity(std::to_string(entityID), it->m_Name);
