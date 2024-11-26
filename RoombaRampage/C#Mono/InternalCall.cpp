@@ -203,16 +203,16 @@ namespace script {
 		return true;
 	}
 
-	bool InternalCall::m_InternalSetAnimationComponent(ecs::EntityID entity, int* frameNumber, int* framesPerSecond, float* frameTimer, bool* isAnimating)
+	bool InternalCall::m_InternalSetAnimationComponent(ecs::EntityID entity, int frameNumber, int framesPerSecond, float frameTimer, bool isAnimating)
 	{
 		auto* animComponent = static_cast<ecs::AnimationComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPEANIMATIONCOMPONENT]->m_GetEntityComponent(entity));
 
 		if (animComponent == nullptr) return false;
 
-		animComponent->m_frameNumber = *frameNumber;
-		animComponent->m_framesPerSecond = *framesPerSecond;
-		animComponent->m_frameTimer = *frameTimer;
-		animComponent->m_isAnimating = *isAnimating;
+		animComponent->m_frameNumber = frameNumber;
+		animComponent->m_framesPerSecond = framesPerSecond;
+		animComponent->m_frameTimer = frameTimer;
+		animComponent->m_isAnimating = isAnimating;
 
 		return true;
 	}
