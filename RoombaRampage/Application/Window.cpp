@@ -169,7 +169,9 @@ namespace Application {
         glClearColor(static_cast<GLclampf>(help->m_colour.m_x), static_cast<GLclampf>(help->m_colour.m_y), static_cast<GLclampf>(help->m_colour.m_z), static_cast<GLclampf>(1));
         glClear(GL_COLOR_BUFFER_BIT);
 
-
+        if (help->m_closeWindow) {
+            glfwSetWindowShouldClose(m_window, GLFW_TRUE);
+        }
 
         return 0;
 	}

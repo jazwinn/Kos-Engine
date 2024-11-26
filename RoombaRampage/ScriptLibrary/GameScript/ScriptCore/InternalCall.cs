@@ -48,10 +48,10 @@ public static class InternalCall
     public extern static bool m_InternalSetTextComponent(uint entity, in string text, in string fileName, in int fontLayer, in float fontSize, in Vector3 color);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static bool m_InternalGetAnimationComponent(uint entity, out int frameNumber, out int framesPerSecond, out float frameTimer, out bool isAnimating);
+    public extern static bool m_InternalGetAnimationComponent(uint entity, out int frameNumber, out int framesPerSecond, out float frameTimer, out bool isAnimating, out int stripcount);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static bool m_InternalSetAnimationComponent(uint entity, in int frameNumber, in int framesPerSecond, in float frameTimer, in bool isAnimating);
+    public extern static bool m_InternalSetAnimationComponent(uint entity, in int frameNumber, in int framesPerSecond, in float frameTimer, in bool isAnimating, in int stripcount);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static bool m_InternalGetSpriteComponent(uint entity, out string imageFile, out int layer, out Vector3 color, out float alpha);
@@ -136,6 +136,12 @@ public static class InternalCall
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static void m_InternalCallResetTimeScale();
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static void m_InternalCallCloseWindow();
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static int[] m_InternalCallGetChildrenID(uint id, out bool have_children);
 }
 
 public static class GetComponent

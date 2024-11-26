@@ -186,7 +186,7 @@ namespace scenes {
         std::vector<std::string> sce;
         for (auto& scenes : ecs->m_ECS_SceneMap) {
             //exclude prefabs
-            //if (scenes.second.m_isPrefab == true) continue;
+            if (scenes.second.m_isPrefab == true) continue;
             sce.push_back(scenes.first);
         }
 
