@@ -233,71 +233,94 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
 
         if (ImGui::Combo("##ADDCOMPONENT", &ComponentType, ComponentNames, IM_ARRAYSIZE(ComponentNames), IM_ARRAYSIZE(ComponentNames))) {
+            ecs::compSignature EntitySignature = ecs->m_ECS_EntityMap[entityID];
             if (ComponentType == 1) {
                 ecs->m_AddComponent(ecs::TYPECOLLIDERCOMPONENT, entityID);
                 ComponentType = 0;
-                events::AddComponent action(entityID, ecs::TYPECOLLIDERCOMPONENT);
-                DISPATCH_ACTION_EVENT(action);
+                if (!EntitySignature.test(ecs::TYPECOLLIDERCOMPONENT)) {
+                    events::AddComponent action(entityID, ecs::TYPECOLLIDERCOMPONENT);
+                    DISPATCH_ACTION_EVENT(action);
+                }
             }
             if (ComponentType == 2) {
                 ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, entityID);
                 ComponentType = 0;
-                events::AddComponent action(entityID, ecs::TYPESPRITECOMPONENT);
-                DISPATCH_ACTION_EVENT(action);
+                if (!EntitySignature.test(ecs::TYPESPRITECOMPONENT)) {
+                    events::AddComponent action(entityID, ecs::TYPESPRITECOMPONENT);
+                    DISPATCH_ACTION_EVENT(action);
+                }
             }
             if (ComponentType == 3) {
                 ecs->m_AddComponent(ecs::TYPEPLAYERCOMPONENT, entityID);
                 ComponentType = 0;
-                events::AddComponent action(entityID, ecs::TYPEPLAYERCOMPONENT);
-                DISPATCH_ACTION_EVENT(action);
+                if (!EntitySignature.test(ecs::TYPEPLAYERCOMPONENT)) {
+                    events::AddComponent action(entityID, ecs::TYPEPLAYERCOMPONENT);
+                    DISPATCH_ACTION_EVENT(action);
+                }
             }
             if (ComponentType == 4) {
                 ecs->m_AddComponent(ecs::TYPERIGIDBODYCOMPONENT, entityID);
                 ComponentType = 0;
-                events::AddComponent action(entityID, ecs::TYPERIGIDBODYCOMPONENT);
-                DISPATCH_ACTION_EVENT(action);
+                if (!EntitySignature.test(ecs::TYPERIGIDBODYCOMPONENT)) {
+                    events::AddComponent action(entityID, ecs::TYPERIGIDBODYCOMPONENT);
+                    DISPATCH_ACTION_EVENT(action);
+                }
             }
             if (ComponentType == 5) {
                 ecs->m_AddComponent(ecs::TYPETEXTCOMPONENT, entityID);
                 ComponentType = 0;
-                events::AddComponent action(entityID, ecs::TYPETEXTCOMPONENT);
-                DISPATCH_ACTION_EVENT(action);
+                if (!EntitySignature.test(ecs::TYPETEXTCOMPONENT)) {
+                    events::AddComponent action(entityID, ecs::TYPETEXTCOMPONENT);
+                    DISPATCH_ACTION_EVENT(action);
+                }
             }
             if (ComponentType == 6) {
                 ecs->m_AddComponent(ecs::TYPEANIMATIONCOMPONENT, entityID);
                 ComponentType = 0;
-                events::AddComponent action(entityID, ecs::TYPEANIMATIONCOMPONENT);
-                DISPATCH_ACTION_EVENT(action);
+                if (!EntitySignature.test(ecs::TYPEANIMATIONCOMPONENT)) {
+                    events::AddComponent action(entityID, ecs::TYPEANIMATIONCOMPONENT);
+                    DISPATCH_ACTION_EVENT(action);
+                }
             }
             if (ComponentType == 7) {
                 ecs->m_AddComponent(ecs::TYPECAMERACOMPONENT, entityID);
                 ComponentType = 0;
-                events::AddComponent action(entityID, ecs::TYPECAMERACOMPONENT);
-                DISPATCH_ACTION_EVENT(action);
+                if (!EntitySignature.test(ecs::TYPECAMERACOMPONENT)) {
+                    events::AddComponent action(entityID, ecs::TYPECAMERACOMPONENT);
+                    DISPATCH_ACTION_EVENT(action);
+                }
             }
             if (ComponentType == 8) {
                 ecs->m_AddComponent(ecs::TYPEBUTTONCOMPONENT, entityID);
                 ComponentType = 0;
-                events::AddComponent action(entityID, ecs::TYPEBUTTONCOMPONENT);
-                DISPATCH_ACTION_EVENT(action);
+                if (!EntitySignature.test(ecs::TYPEBUTTONCOMPONENT)) {
+                    events::AddComponent action(entityID, ecs::TYPEBUTTONCOMPONENT);
+                    DISPATCH_ACTION_EVENT(action);
+                }
             }
             if (ComponentType == 9) {
                 ecs->m_AddComponent(ecs::TYPESCRIPTCOMPONENT, entityID);
                 ComponentType = 0;
-                events::AddComponent action(entityID, ecs::TYPESCRIPTCOMPONENT);
-                DISPATCH_ACTION_EVENT(action);
+                if (!EntitySignature.test(ecs::TYPESCRIPTCOMPONENT)) {
+                    events::AddComponent action(entityID, ecs::TYPESCRIPTCOMPONENT);
+                    DISPATCH_ACTION_EVENT(action);
+                }
             }
             if (ComponentType == 10) {
                 ecs->m_AddComponent(ecs::TYPETILEMAPCOMPONENT, entityID);
                 ComponentType = 0;
-                events::AddComponent action(entityID, ecs::TYPETILEMAPCOMPONENT);
-                DISPATCH_ACTION_EVENT(action);
+                if (!EntitySignature.test(ecs::TYPETILEMAPCOMPONENT)) {
+                    events::AddComponent action(entityID, ecs::TYPETILEMAPCOMPONENT);
+                    DISPATCH_ACTION_EVENT(action);
+                }
             }
             if (ComponentType == 11) {
                 ecs->m_AddComponent(ecs::TYPEAUDIOCOMPONENT, entityID);
                 ComponentType = 0;
-                events::AddComponent action(entityID, ecs::TYPEAUDIOCOMPONENT);
-                DISPATCH_ACTION_EVENT(action);
+                if (!EntitySignature.test(ecs::TYPEAUDIOCOMPONENT)) {
+                    events::AddComponent action(entityID, ecs::TYPEAUDIOCOMPONENT);
+                    DISPATCH_ACTION_EVENT(action);
+                }
             }
         }
 

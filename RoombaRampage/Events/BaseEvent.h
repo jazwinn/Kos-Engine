@@ -31,6 +31,10 @@ namespace events {
 		REMOVECOMP,
 		TRANSFORMCOMP,
 		ADDIMAGE,
+		ADDENT,
+		DELENT,
+		ADDCHILD,
+		REMOVECHILD,
 		UNDO,
 		REDO
 	};
