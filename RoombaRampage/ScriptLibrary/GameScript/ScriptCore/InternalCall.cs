@@ -136,6 +136,9 @@ public static class InternalCall
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static void m_InternalCallResetTimeScale();
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static void m_InternalCallCloseWindow();
 }
 
 public static class GetComponent

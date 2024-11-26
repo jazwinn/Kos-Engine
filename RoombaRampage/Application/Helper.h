@@ -41,6 +41,8 @@ namespace Helper {
 
 		float m_windowHeight;
 
+		bool m_closeWindow{ false };
+
 		float m_deltaTime;
 
 		float m_fpsCap;
