@@ -131,6 +131,8 @@ namespace scenes {
 		/******************************************************************/
 		void m_SwapScenes(std::string oldscene, std::string newscene , ecs::EntityID id);
 
+		void m_AssignEntityNewSceneName(const std::string& scene, ecs::EntityID id);
+		
 		/******************************************************************/
 		/*!
 			\fn        static std::optional<std::string> GetSceneByEntityID(ecs::EntityID entityID)
@@ -141,6 +143,8 @@ namespace scenes {
 		*/
 		/******************************************************************/
 		static std::optional<std::string> GetSceneByEntityID(ecs::EntityID entityID);
+
+
 
 
 		std::unordered_map<std::string, std::filesystem::path> m_unloadScenePath;

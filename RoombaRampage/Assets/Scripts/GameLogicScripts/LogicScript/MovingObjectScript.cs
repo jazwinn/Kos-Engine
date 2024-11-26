@@ -78,7 +78,7 @@ public class MovingObjectScript : ScriptBase
             velocity.X = -Speed;
         }
 
-        Console.WriteLine(PlayerControl.yolo);
+        //Console.WriteLine(PlayerControl.yolo);
 
 
 

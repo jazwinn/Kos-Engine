@@ -23,6 +23,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Application/Helper.h"
 #include "SceneManager.h"
 #include "stb_image.h"
+#include "../ECS/ECS.h"
 
 
 
@@ -45,9 +46,7 @@ namespace assetmanager {
             }
         }
 
-        //initialize scene
-        scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();
-        scenemanager->m_LoadScene("Assets/Scene/Default.json");
+
     }
 
     void AssetManager::m_LoadAsset(std::filesystem::path directoryPath)
@@ -101,41 +100,7 @@ namespace assetmanager {
 
     }
 
-    void AssetManager::m_RenameAsset(std::filesystem::path oldfilepath, std::filesystem::path newfilepath)
-    {
-        if (oldfilepath == newfilepath) {
-            return;
-        }
-
-
-        if (oldfilepath.filename().extension().string() != newfilepath.filename().extension().string()) {
-            LOGGING_WARN("Renaming assets of different type");
-            return;
-        }
-
-        // find the file extension (Update for every new file type
-        if (oldfilepath.extension().string() == ".png") {
-            //check if old file name is present
-            if (m_imageManager.m_imageMap.find(oldfilepath.filename().string()) != m_imageManager.m_imageMap.end()) {
-                //check if new file name is non existent
-                if (m_imageManager.m_imageMap.find(newfilepath.filename().string()) == m_imageManager.m_imageMap.end()) {
-
-                    //create new map of updated name
-                    m_imageManager.m_imageMap[newfilepath.filename().string()] = m_imageManager.m_imageMap.find(oldfilepath.filename().string())->second;                 
-                    //delete old name map
-                    m_imageManager.m_imageMap.erase(oldfilepath.filename().string());
-                }
-                else {
-                    return;
-                }
-            }
-            else {
-                return;
-            }
-        }
-
-        std::filesystem::rename(oldfilepath.c_str(), newfilepath.c_str());
-    }
+   
 
     void AssetManager::m_LoadScript(std::filesystem::path filepath)
     {
@@ -210,5 +175,118 @@ namespace assetmanager {
         
     }
 
-  
+    void AssetManager::m_RenameAsset(std::filesystem::path oldfilepath, std::filesystem::path newfilepath)
+    {
+        if (oldfilepath == newfilepath) {
+            return;
+        }
+
+
+        if (oldfilepath.filename().extension().string() != newfilepath.filename().extension().string()) {
+            LOGGING_WARN("Renaming assets of different type");
+            return;
+        }
+
+        // find the file extension (Update for every new file type
+        if (oldfilepath.extension().string() == ".png") {
+            //check if old file name is present
+            if (m_imageManager.m_imageMap.find(oldfilepath.filename().string()) != m_imageManager.m_imageMap.end()) {
+                //check if new file name is non existent
+                if (m_imageManager.m_imageMap.find(newfilepath.filename().string()) == m_imageManager.m_imageMap.end()) {
+
+                    //create new map of updated name
+                    m_imageManager.m_imageMap[newfilepath.filename().string()] = m_imageManager.m_imageMap.find(oldfilepath.filename().string())->second;
+                    //delete old name map
+                    m_imageManager.m_imageMap.erase(oldfilepath.filename().string());
+                }
+                else {
+                    return;
+                }
+            }
+            else {
+                return;
+            }
+        }
+        if (oldfilepath.extension().string() == ".prefab" || oldfilepath.extension().string() == ".json") {
+            ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+            scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();
+            const auto& prefab = ecs->m_ECS_SceneMap.find(oldfilepath.filename().string());
+            if (prefab != ecs->m_ECS_SceneMap.end()) {
+                if (ecs->m_ECS_SceneMap.find(newfilepath.filename().string()) == ecs->m_ECS_SceneMap.end()) {
+                    ecs->m_ECS_SceneMap[newfilepath.filename().string()] = ecs->m_ECS_SceneMap.find(oldfilepath.filename().string())->second;
+                    ecs->m_ECS_SceneMap.erase(oldfilepath.filename().string());
+
+                    if (scenemanager->m_loadScenePath.find(oldfilepath.filename().string()) != scenemanager->m_loadScenePath.end()) {
+                        scenemanager->m_loadScenePath[newfilepath.filename().string()] = newfilepath;
+                        scenemanager->m_loadScenePath.erase(oldfilepath.filename().string());
+                    }
+
+                    //update entityid component with new scene name
+                    for (const auto id : ecs->m_ECS_SceneMap.find(newfilepath.filename().string())->second.m_sceneIDs) {
+                        scenemanager->m_AssignEntityNewSceneName(newfilepath.filename().string(), id);
+                    }
+
+
+                }
+                else {
+                    return;
+                }
+            }
+            else {
+                return;
+            }
+        }
+        if (oldfilepath.extension().string() == ".wav") {
+            //check if old file name is present
+            auto& soundmap = m_audioManager.getSoundMap();
+            if (soundmap.find(oldfilepath.filename().stem().string()) != soundmap.end()) {
+                //check if new file name is non existent
+                if (soundmap.find(newfilepath.filename().stem().string()) == soundmap.end()) {
+
+                    //create new map of updated name
+                    soundmap[newfilepath.filename().stem().string()] = std::move(soundmap.find(oldfilepath.filename().stem().string())->second);
+                    //delete old name map
+                    soundmap.erase(oldfilepath.filename().stem().string());
+                }
+                else {
+                    return;
+                }
+            }
+            else {
+                return;
+            }
+        }
+        if (oldfilepath.extension().string() == ".ttf") {
+            //check if old file name is present
+            auto& textmap = m_fontManager.m_fonts;
+            if (textmap.find(oldfilepath.filename().string()) != textmap.end()) {
+                //check if new file name is non existent
+                if (textmap.find(newfilepath.filename().string()) == textmap.end()) {
+
+                    //create new map of updated name
+                    textmap[newfilepath.filename().string()] = std::move(textmap.find(oldfilepath.filename().string())->second);
+                    //delete old name map
+                    textmap.erase(oldfilepath.filename().string());
+                }
+                else {
+                    return;
+                }
+            }
+            else {
+                return;
+            }
+        }
+        if (oldfilepath.extension().string() == ".cs") {
+            LOGGING_POPUP("No Renaming of scripts, class name must be the same as filename");
+            return;
+            //check if old file name is present
+            //const auto& it = std::find_if(m_scriptManager.m_CSScripts.begin(), m_scriptManager.m_CSScripts.end(), [oldfilepath](const auto& script) {return script.first == oldfilepath.filename(); });
+            //if (it != m_scriptManager.m_CSScripts.end()) {
+            //    m_scriptManager.m_CSScripts.erase(it);
+            //    m_scriptManager.m_CSScripts.push_back(std::pair{ newfilepath.filename().string(), newfilepath });
+            //}
+        }
+
+        std::filesystem::rename(oldfilepath.c_str(), newfilepath.c_str());
+    }
 }

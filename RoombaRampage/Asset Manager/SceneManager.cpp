@@ -186,7 +186,7 @@ namespace scenes {
         std::vector<std::string> sce;
         for (auto& scenes : ecs->m_ECS_SceneMap) {
             //exclude prefabs
-            if (scenes.second.m_isPrefab == true) continue;
+            //if (scenes.second.m_isPrefab == true) continue;
             sce.push_back(scenes.first);
         }
 
@@ -218,8 +218,11 @@ namespace scenes {
 
     void SceneManager::m_SaveScene(std::string scene)
     {
-
-        Serialization::Serialize::m_SaveComponentsJson(m_loadScenePath.find(scene)->second.string());
+        const auto& scenepath = m_loadScenePath.find(scene);
+        if (scenepath != m_loadScenePath.end()) {
+            Serialization::Serialize::m_SaveComponentsJson(scenepath->second.string());
+        }
+       
 
     }
     void SceneManager::m_SaveAllActiveScenes()
@@ -257,7 +260,6 @@ namespace scenes {
 
         ecs->m_ECS_SceneMap.find(newscene)->second.m_sceneIDs.push_back(id);
 
-        //assign all of entity's scene component into new scene
         for (size_t n{}; n < ecs::TOTALTYPECOMPONENT; n++) {
             if (ecs->m_ECS_EntityMap.find(id)->second.test((ecs::ComponentType)n)) {
                 ecs::Component* comp = static_cast<ecs::Component*>(ecs->m_ECS_CombinedComponentPool[(ecs::ComponentType)n]->m_GetEntityComponent(id));
@@ -269,6 +271,30 @@ namespace scenes {
         }
 
 
+
+    }
+    void SceneManager::m_AssignEntityNewSceneName(const std::string& scene, ecs::EntityID id)
+    {
+        ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+        //assign all of entity's scene component into new scene
+        for (size_t n{}; n < ecs::TOTALTYPECOMPONENT; n++) {
+            if (ecs->m_ECS_EntityMap.find(id)->second.test((ecs::ComponentType)n)) {
+                ecs::Component* comp = static_cast<ecs::Component*>(ecs->m_ECS_CombinedComponentPool[(ecs::ComponentType)n]->m_GetEntityComponent(id));
+                if (comp) {
+                    comp->m_scene = scene;
+                }
+
+            }
+        }
+
+        //if id has children, call recurse
+        const auto& child = ecs::Hierachy::m_GetChild(id);
+        if (child.has_value()) {
+            for (auto id : child.value()) {
+                m_AssignEntityNewSceneName(scene , id);
+            }
+            
+        }
 
     }
 }

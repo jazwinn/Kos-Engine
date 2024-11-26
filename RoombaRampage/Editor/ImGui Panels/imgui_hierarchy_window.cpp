@@ -431,7 +431,7 @@ namespace gui {
                 //return false to reset the loop
             }
 
-            if (ImGui::MenuItem("Save Prefab")) {
+            if (ImGui::MenuItem("Create Prefab")) {
                 if (!m_prefabSceneMode) {
                     prefab::Prefab::m_SaveEntitytoPrefab(id);
                 }
