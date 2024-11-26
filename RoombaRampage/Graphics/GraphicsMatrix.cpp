@@ -28,8 +28,7 @@ namespace graphicpipe
 {
 	void GraphicsPipe::m_funcCalculateModelToWorldMatrix()
 	{
-		
-
+		//assetmanager::AssetManager* assets = assetmanager::AssetManager::m_funcGetInstance();
 		if (m_modelData.size() > 0)
 		{
 			for (int n{}; n < m_modelData.size(); n++)
@@ -37,11 +36,18 @@ namespace graphicpipe
 				float heightRatio = static_cast<float>(m_imageData[m_modelData[n].m_textureID].m_height) / m_unitHeight;
 				float widthRatio = static_cast<float>(m_imageData[m_modelData[n].m_textureID].m_width) / m_unitWidth;
 				float imageAspectRatio = static_cast<float>(m_imageData[m_modelData[n].m_textureID].m_width) / static_cast<float>(m_imageData[m_modelData[n].m_textureID].m_height);
-				m_modelData[n].m_transformation[0][0] = m_modelData[n].m_transformation[0][0] * widthRatio / imageAspectRatio;
-				m_modelData[n].m_transformation[0][1] = m_modelData[n].m_transformation[0][1] * widthRatio / imageAspectRatio;
+				if (m_modelData[n].m_stripCount != 1)
+				{
+					m_modelData[n].m_transformation[0][0] = m_modelData[n].m_transformation[0][0] * widthRatio / imageAspectRatio;
+					m_modelData[n].m_transformation[0][1] = m_modelData[n].m_transformation[0][1] * widthRatio / imageAspectRatio;
+				}
+				else
+				{
+					m_modelData[n].m_transformation[0][0] = m_modelData[n].m_transformation[0][0] * widthRatio;
+					m_modelData[n].m_transformation[0][1] = m_modelData[n].m_transformation[0][1] * widthRatio;
+				}
 				m_modelData[n].m_transformation[1][1] = m_modelData[n].m_transformation[1][1] * heightRatio;
 				m_modelData[n].m_transformation[1][0] = m_modelData[n].m_transformation[1][0] * heightRatio;
-
 				m_modelMatrix.push_back(m_modelData[n].m_transformation);
 				m_textureOrder.push_back(m_modelData[n].m_textureID);
 				m_stripCounts.push_back({ m_modelData[n].m_stripCount, m_modelData[n].m_frameNumber });

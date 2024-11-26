@@ -82,7 +82,11 @@ namespace ecs {
 				TransformComponent* transform = m_vecTransformComponentPtr[i];
 				ButtonComponent* button = m_vecButtonComponentPtr[i];
 
-	
+				//reset button
+				if (button->m_IsClick)
+				{
+					button->m_IsClick = false;
+				}
 
 				float rotate = -graphicpipe::GraphicsCamera::m_currCameraRotate * (3.14151f / 180.f);
 
@@ -120,6 +124,7 @@ namespace ecs {
 				std::cout << minX << " " << minY << " " << maxX << " " << maxY << std::endl;*/
 				if ((minX <= mouseX && mouseX <= maxX) && (minY <= mouseY && mouseY <= maxY)) {
 					button->m_IsClick = true;
+					LOGGING_INFO("Button Clicked");
 					//std::cout << " clicked " << std::endl;
 				}
 			}
@@ -132,11 +137,7 @@ namespace ecs {
 			//skip component not of the scene
 			if (button->m_scene != scene) continue;
 
-			if (button->m_IsClick) 
-			{
-				LOGGING_INFO("Button Clicked");
-				button->m_IsClick = false;
-			}
+
 			mat3x3::Mat3x3 debugTransformation = mat3x3::Mat3Transform(vector2::Vec2{ transform->m_transformation.m_e20, transform->m_transformation.m_e21 }, vector2::Vec2{ button->m_Scale.m_x, button->m_Scale.m_y }, transform->m_rotation);
 
 			graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();

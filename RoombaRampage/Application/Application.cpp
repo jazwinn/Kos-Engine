@@ -77,6 +77,8 @@ namespace Application {
         --------------------------------------------------------------*/
         AstManager = assetmanager::AssetManager::m_funcGetInstance();
         AstManager->m_funcLoadAssets("Assets");
+        scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();
+        scenemanager->m_LoadScene(Helper::Helpers::GetInstance()->m_startScene);
         LOGGING_INFO("Load Asset Successful");
 
 

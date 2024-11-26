@@ -32,7 +32,9 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include <glfw3.h>
 #include "../Inputs/Input.h"
 
+#ifdef _DEBUG
 #define IMGUIENABLED
+#endif
 
 namespace Application {
 
