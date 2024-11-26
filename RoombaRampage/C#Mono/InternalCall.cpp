@@ -73,7 +73,7 @@ namespace script {
 	}
 
 	//Collider Component
-	bool InternalCall::m_InternalGetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, bool* isCollided)
+	bool InternalCall::m_InternalGetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, int* m_blockedFlag, bool* isCollided)
 	{
 		auto* collider = static_cast<ecs::ColliderComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(entity));
 
@@ -84,6 +84,7 @@ namespace script {
 		*drawDebug = collider->m_drawDebug;
 		*radius = collider->m_radius;
 		*isCollided = collider->m_isCollided;
+		*m_blockedFlag = collider->m_blockedFlag;
 
 		return true;
 	}
