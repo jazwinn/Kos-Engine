@@ -76,10 +76,36 @@ namespace image {
 
         if (image.m_channels != m_targetChannels)
         {
+
             LOGGING_WARN("Warning: Color channels for {0} are not following RGBA specifications ", file);
+           
+            int targetHeight{};
+            int targetWidth{};
+            if (image.m_width > image.m_height)
+            {
+                targetHeight = image.m_width;
+                targetWidth = image.m_width;
+            }
+            else
+            {
+                targetHeight = image.m_height;
+                targetWidth = image.m_height;
+            }
+            unsigned char* newData = m_funcPadTexture(data, image.m_width, image.m_height, image.m_channels, targetWidth, targetHeight, m_targetChannels);
+            stbi_image_free(data);
+            image.m_isPadded = true;
+            image.m_imageID = m_imageCount;
+            image.m_width = targetWidth;
+            image.m_height = targetHeight;
+            image.m_channels = m_targetChannels;
+            m_imageCount++;
+            m_imageMap[image.m_spriteName] = image;
+            m_imagedataArray.push_back(newData);
+            LOGGING_INFO("Texture Padded for {0}", image.m_spriteName);
+           
         }
 
-        if (image.m_isTilable)
+        else if (image.m_isTilable)
         {
             LOGGING_INFO("{0} labled as tilemap", image.m_spriteName);
             image.m_imageID = m_imageCount;
@@ -89,7 +115,7 @@ namespace image {
         }
         else if (image.m_stripCount == 1)
         {
-            if (image.m_width != image.m_height)
+            /*if (image.m_width != image.m_height)
             {
                 int targetHeight{};
                 int targetWidth{};
@@ -116,12 +142,12 @@ namespace image {
                 LOGGING_INFO("Texture Padded for {0}", image.m_spriteName);
             }
             else
-            {
+            {*/
                 image.m_imageID = m_imageCount;
                 m_imageCount++;
                 m_imageMap[image.m_spriteName] = image;
                 m_imagedataArray.push_back(data);
-            }
+           // }
         }
         else
         {
@@ -164,6 +190,13 @@ namespace image {
             return std::stoi(match[2].str());
         }
 
+        pattern = ("([[:alnum:]])_strip([[:digit:]]+)\\.jpg");
+        if (std::regex_search(filename, match, pattern))
+        {
+            LOGGING_INFO("Strip Success for {0}", filename);
+            return std::stoi(match[2].str());
+        }
+
         // Default to 1 if no number is found
         return 1;
     }
@@ -178,7 +211,19 @@ namespace image {
             return match[0].str();
         }
 
+        pattern = ("([_[:alnum:]]+)([_]+)([[:alnum:]]*)\\.jpg"); // For single sprites
+        if (std::regex_search(filename, match, pattern))
+        {
+            return match[0].str();
+        }
+
         pattern = ("([[:alnum:]]+)([_]*)([[:alnum:]]*)\\.png"); // For single sprites
+        if (std::regex_search(filename, match, pattern))
+        {
+            return match[0].str();
+        }
+        
+        pattern = ("([[:alnum:]]+)([_]*)([[:alnum:]]*)\\.jpg"); // For single sprites
         if (std::regex_search(filename, match, pattern))
         {
             return match[0].str();
@@ -190,6 +235,12 @@ namespace image {
     bool ImageManager::m_checkIfImageTilable(const std::string& filename)
     {
         std::regex pattern("^(Tile|tile)_[[:alnum:]]+\\.png$");  // Pattern for "Tile_image.png"
+
+        if (!std::regex_match(filename, pattern))
+        {
+            pattern = ("^(Tile|tile)_[[:alnum:]]+\\.jpg$");
+        }
+
         return std::regex_match(filename, pattern);
     }
 

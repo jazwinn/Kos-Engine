@@ -552,7 +552,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         {
                             IM_ASSERT(payload->DataSize == sizeof(std::filesystem::path));
                             std::filesystem::path* filename = static_cast<std::filesystem::path*>(payload->Data);
-                            if (filename->filename().extension().string() == ".png") {
+                            if (filename->filename().extension().string() == ".png" || filename->filename().extension().string() == ".jpg") {
                                 if (Asset->m_imageManager.m_imageMap.find(filename->filename().string()) == Asset->m_imageManager.m_imageMap.end()) {
                                     LOGGING_WARN("File not loaded, please reload content browser");
                                 }
@@ -1024,7 +1024,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         {
                             IM_ASSERT(payload->DataSize == sizeof(std::filesystem::path));
                             std::filesystem::path* filename = static_cast<std::filesystem::path*>(payload->Data);
-                            if (filename->filename().extension().string() == ".png") {
+                            if (filename->filename().extension().string() == ".png" || filename->filename().extension().string() == ".jpg") {
                                 if (Asset->m_imageManager.m_imageMap.find(filename->filename().string()) == Asset->m_imageManager.m_imageMap.end()) {
                                     LOGGING_WARN("File not loaded, please reload content browser");
                                 }
@@ -1228,7 +1228,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         IM_ASSERT(payload->DataSize == sizeof(std::filesystem::path));
                         std::filesystem::path* filename = static_cast<std::filesystem::path*>(payload->Data);
 
-                        if (filename->filename().extension().string() == ".png") {
+                        if (filename->filename().extension().string() == ".png" || filename->filename().extension().string() == ".jpg") {
 
                             if (!EntitySignature.test(ecs::TYPESPRITECOMPONENT)) {// does not have sprite component, create one
                                 ecs::SpriteComponent* com = static_cast<ecs::SpriteComponent*>(ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, entityID));
