@@ -23,6 +23,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Asset Manager/AssetManager.h"
 #include "../Asset Manager/SceneManager.h"
 #include "../Graphics/GraphicsCamera.h"
+#include "../ECS/Hierachy.h"
 
 #define MONO_ADD_INTERNAL_CALL(METHOD_NAME) \
     mono_add_internal_call("InternalCall::" #METHOD_NAME, METHOD_NAME);
@@ -189,7 +190,7 @@ namespace script {
 	}
 
 	//Animation Component
-	bool InternalCall::m_InternalGetAnimationComponent(ecs::EntityID entity, int* frameNumber, int* framesPerSecond, float* frameTimer, bool* isAnimating)
+	bool InternalCall::m_InternalGetAnimationComponent(ecs::EntityID entity, int* frameNumber, int* framesPerSecond, float* frameTimer, bool* isAnimating, int* stripcount)
 	{
 		auto* animComponent = static_cast<ecs::AnimationComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPEANIMATIONCOMPONENT]->m_GetEntityComponent(entity));
 
@@ -199,11 +200,12 @@ namespace script {
 		*framesPerSecond = animComponent->m_framesPerSecond;
 		*frameTimer = animComponent->m_frameTimer;
 		*isAnimating = animComponent->m_isAnimating;
+		*stripcount = animComponent->m_stripCount;
 
 		return true;
 	}
 
-	bool InternalCall::m_InternalSetAnimationComponent(ecs::EntityID entity, int* frameNumber, int* framesPerSecond, float* frameTimer, bool* isAnimating)
+	bool InternalCall::m_InternalSetAnimationComponent(ecs::EntityID entity, int* frameNumber, int* framesPerSecond, float* frameTimer, bool* isAnimating, int* stripcount)
 	{
 		auto* animComponent = static_cast<ecs::AnimationComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPEANIMATIONCOMPONENT]->m_GetEntityComponent(entity));
 
@@ -213,6 +215,7 @@ namespace script {
 		animComponent->m_framesPerSecond = *framesPerSecond;
 		animComponent->m_frameTimer = *frameTimer;
 		animComponent->m_isAnimating = *isAnimating;
+		animComponent->m_stripCount = *stripcount;
 
 		return true;
 	}
@@ -564,6 +567,27 @@ namespace script {
 		Helper::Helpers::GetInstance()->m_closeWindow = true;
 	}
 
+	MonoArray* InternalCall::m_InternalCallGetChildrenID(ecs::EntityID id, bool* have_children)
+	{
+
+		const auto& childs = ecs::Hierachy::m_GetChild(id);
+
+		if (childs.has_value()) {
+			assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+			MonoArray* Array = mono_array_new(assetmanager->m_scriptManager.m_GetDomain(), mono_get_int32_class(), childs.value().size());
+			for (size_t i = 0; i < childs.value().size(); ++i) {
+				mono_array_set(Array, int, i, childs.value()[i]);
+
+			}
+
+			*have_children = true;
+			return Array;
+		}
+
+		*have_children = false;
+		return nullptr;
+	}
+
 	void InternalCall::m_InternalCallDeleteEntity(ecs::EntityID id)
 	{
 		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
@@ -668,6 +692,6 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_InternalCallSetTimeScale);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallResetTimeScale);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallCloseWindow);
-
+		MONO_ADD_INTERNAL_CALL(m_InternalCallGetChildrenID);
 	}
 }
