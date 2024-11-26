@@ -58,7 +58,7 @@ namespace script {
 
 		static bool m_InternalSetTranslate(ecs::EntityID entity, vector2::Vec2* trans);
 
-		static bool m_InternalGetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, bool* isCollided);
+		static bool m_InternalGetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, int* m_blockedFlag, bool* isCollided);
 
 		static bool m_InternalSetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool drawDebug, float radius, bool isCollided);
 
@@ -70,13 +70,17 @@ namespace script {
 
 		static bool m_InternalSetRigidBodyComponent(ecs::EntityID entity, vector2::Vec2* velocity, vector2::Vec2* acceleration, float* rotation);
 
-		static bool m_InternalGetTextComponent(ecs::EntityID entity, std::string* text, std::string* fileName, int* fontLayer, float* fontSize, vector3::Vec3* color);
+		static bool m_InternalGetTextComponent(ecs::EntityID entity, MonoString** text, MonoString** imageFile, int* fontLayer, float* fontSize, vector3::Vec3* color);
 
-		static bool m_InternalSetTextComponent(ecs::EntityID entity, const std::string& text, const std::string& fileName, int fontLayer, float fontSize, const vector3::Vec3& color);
+		static bool m_InternalSetTextComponent(ecs::EntityID entity, MonoString* text, MonoString* fileName, int fontLayer, float fontSize, const vector3::Vec3& color);
 
-		static bool m_InternalGetAnimationComponent(ecs::EntityID entity, int* frameNumber, int* framesPerSecond, float* frameTimer, bool* isAnimating);
+		static bool m_InternalGetAnimationComponent(ecs::EntityID entity, int* frameNumber, int* framesPerSecond, float* frameTimer, bool* isAnimating, int* stripcount);
 
-		static bool m_InternalSetAnimationComponent(ecs::EntityID entity, int frameNumber, int framesPerSecond, float frameTimer, bool isAnimating);
+		static bool m_InternalSetAnimationComponent(ecs::EntityID entity, int* frameNumber, int* framesPerSecond, float* frameTimer, bool* isAnimating, int* stripcount);
+
+		static bool m_InternalGetSpriteComponent(ecs::EntityID entity, MonoString** imageFile, int* layer, vector3::Vec3* color, float* alpha);
+
+		static bool m_InternalSetSpriteComponent(ecs::EntityID entity, MonoString* imageFile, const int* layer, const vector3::Vec3* color, const float* alpha);
 
 		static bool m_InternalGetCameraComponent(ecs::EntityID entity, float* left, float* right, float* top, float* bottom, float* aspectRatio);
 
@@ -86,9 +90,13 @@ namespace script {
 
 		static bool m_InternalSetButtonComponent(ecs::EntityID entity, const vector2::Vec2& position, const vector2::Vec2& scale, bool isClick);
 
-		static bool m_InternalGetScriptNames(ecs::EntityID entity, std::vector<std::string>& scripts);
+		//static bool m_InternalGetScriptNames(ecs::EntityID entity, std::vector<std::string>& scripts);
 
-		static bool m_InternalAddScriptInstance(ecs::EntityID entity, const std::string& scriptName, MonoObject* instance);
+		static MonoArray* m_InternalGetScriptNames(ecs::EntityID entity);
+
+		static bool m_InternalAddScriptInstance(ecs::EntityID entity, MonoString* monoScriptName, MonoObject* instance);
+
+		//static bool m_InternalAddScriptInstance(ecs::EntityID entity, const std::string& scriptName, MonoObject* instance);
 		/******************************************************************/
 		/*!
 			\fn        bool InternalCall::m_InternalGetVelocity(ecs::EntityID entity, vector2::Vec2* vec)
@@ -112,35 +120,17 @@ namespace script {
 
 		/******************************************************************/
 		/*!
-			\fn        bool InternalCall::m_InternalCallIsKeyPressed(keyCode key)
-			\brief     Checks if a specific key is currently pressed.
-			\param[in] key The key code to check.
-			\return    True if the specified key is pressed; otherwise, false.
-		*/
-		/******************************************************************/
-		static bool m_InternalCallIsKeyPressed(keyCode key);
-
-		static vector2::Vec2 m_InternalGetMousePosition();
-
-		static bool m_InternalCallIsKeyReleased(keyCode key);
-
-		static bool m_InternalCallIsKeyTriggered(keyCode key);
-
-		/******************************************************************/
-		/*!
 			\fn        bool InternalCall::m_InternalCallGetDeltaTime(float* deltatime)
 			\brief     Retrieves the fixed delta time.
 			\param[out] deltatime Pointer to store the retrieved delta time value.
 			\return    Always returns false for consistency in call handling.
 		*/
 		/******************************************************************/
-		static bool m_InternalCallGetDeltaTime(float* deltatime);
+		static float m_InternalCallGetDeltaTime();
 
 		static int m_InternalCallGetTagID(MonoString* tag);
 
 		static MonoArray* m_InternalCallGetTagIDs(MonoString* tag);
-
-		static float m_InternalCallIsCollided(ecs::EntityID entity);
 
 		static MonoArray* m_InternalCallGetCollidedEntities(ecs::EntityID entity);
 
@@ -156,9 +146,36 @@ namespace script {
 
 		static void m_InternalCallDeleteEntity(ecs::EntityID);
 
-		static bool m_InternalGetSpriteComponent(ecs::EntityID entity, MonoString** imageFile, int* layer, vector3::Vec3* color, float* alpha);
+		static float m_InternalCallIsCollided(ecs::EntityID entity);
 
-		static bool m_InternalSetSpriteComponent(ecs::EntityID entity, MonoString* imageFile, const int* layer, const vector3::Vec3* color, const float* alpha);
+		static vector2::Vec2 m_InternalGetMousePosition();
+
+		/******************************************************************/
+		/*!
+			\fn        bool InternalCall::m_InternalCallIsKeyPressed(keyCode key)
+			\brief     Checks if a specific key is currently pressed.
+			\param[in] key The key code to check.
+			\return    True if the specified key is pressed; otherwise, false.
+		*/
+		/******************************************************************/
+		static bool m_InternalCallIsKeyPressed(keyCode key);
+
+		static bool m_InternalCallIsKeyReleased(keyCode key);
+
+		static bool m_InternalCallIsKeyTriggered(keyCode key);
+
+		/*
+		 TIME_SCALE 
+		*/
+		static void m_InternalCallSetTimeScale(const float x);
+
+		static void m_InternalCallResetTimeScale();
+
+		static void m_InternalGetWorldMousePosition(vector2::Vec2* mousecord);
+
+		static void m_InternalCallCloseWindow();
+
+		static MonoArray* m_InternalCallGetChildrenID(ecs::EntityID id, bool* have_children);
 
 	public:
 

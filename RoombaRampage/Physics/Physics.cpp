@@ -30,7 +30,6 @@ namespace physicspipe {
 	physicslayer::PhysicsLayer* physicsLayer = physicslayer::PhysicsLayer::getInstance(); // Get the PhysicsLayer instance
 	std::vector<int> Physics::m_checker{};
 
-
 	Circle::Circle(float radius, vector2::Vec2 shape_position, vector2::Vec2 shape_scale, vector2::Vec2 shape_velocity, int entity_ID, int layer_ID)
 		: m_radius(radius)   // Initialize radius
 	{
@@ -317,6 +316,8 @@ namespace physicspipe {
 		std::vector<vector2::Vec2> rect_Vertices = rect.m_getRotatedVertices();
 		std::vector<vector2::Vec2> rect_Edges = rect.m_getEdges();
 		float minA{}, maxA{}, minB{}, maxB{};
+		float minOverlap = std::numeric_limits<float>::max();
+		vector2::Vec2 collisionNormal;
 		for (const auto& edge : rect_Edges) {
 			vector2::Vec2 axis = { -edge.m_y, edge.m_x };
 			m_projectOntoAxis(rect_Vertices, axis, minA, maxA);
@@ -325,6 +326,11 @@ namespace physicspipe {
 			if (minA >= maxB || minB >= maxA)
 			{
 				return false;
+			}
+			float overlap = std::min(maxA, maxB) - std::max(minA, minB);
+			if (overlap < minOverlap) {
+				minOverlap = overlap;
+				collisionNormal = axis;
 			}
 		}
 
@@ -337,6 +343,50 @@ namespace physicspipe {
 		m_projectOntoCircle(circle.m_position, circle.m_radius, axis, minB, maxB);
 
 		if (minA >= maxB || minB >= maxA) return false;
+		float overlap = std::min(maxA, maxB) - std::max(minA, minB);
+		if (overlap < minOverlap) {
+			minOverlap = overlap;
+			collisionNormal = axis;
+		}
+
+		// Step 4: Determine blocked directions for both circle and rectangle
+		vector2::Vec2 deltaPosition = circle.m_position - rect.m_position;
+		if (std::abs(collisionNormal.m_x) > std::abs(collisionNormal.m_y)) {
+			// Horizontal collision
+			if (collisionNormal.m_x > 0) {
+				//const_cast<Circle&>(circle).AddBlockedDirection("left");
+				//const_cast<Rectangle&>(rect).AddBlockedDirection("right");
+				const_cast<Circle&>(circle).AddCollisionFlag(LEFT);
+				const_cast<Rectangle&>(rect).AddCollisionFlag(RIGHT);
+			}
+			else {
+				//const_cast<Circle&>(circle).AddBlockedDirection("right");
+				//const_cast<Rectangle&>(rect).AddBlockedDirection("left");
+				const_cast<Circle&>(circle).AddCollisionFlag(RIGHT);
+				const_cast<Rectangle&>(rect).AddCollisionFlag(LEFT);
+				//const_cast<Circle&>(circle).AddBlockedDirection("left");
+				//const_cast<Rectangle&>(rect).AddBlockedDirection("right");
+			}
+		}
+		else {
+			// Vertical collision
+			if (collisionNormal.m_y > 0) {
+				//const_cast<Circle&>(circle).AddBlockedDirection("up");
+				//const_cast<Rectangle&>(rect).AddBlockedDirection("down");
+				const_cast<Circle&>(circle).AddCollisionFlag(UP);
+				const_cast<Rectangle&>(rect).AddCollisionFlag(DOWN);
+				//const_cast<Circle&>(circle).AddBlockedDirection("down");
+				//const_cast<Rectangle&>(rect).AddBlockedDirection("up");
+			}
+			else {
+				//const_cast<Circle&>(circle).AddBlockedDirection("down");
+				//const_cast<Rectangle&>(rect).AddBlockedDirection("up");
+				const_cast<Circle&>(circle).AddCollisionFlag(DOWN);
+				const_cast<Rectangle&>(rect).AddCollisionFlag(UP);
+				//const_cast<Circle&>(circle).AddBlockedDirection("up");
+				//const_cast<Rectangle&>(rect).AddBlockedDirection("down");
+			}
+		}
 
 
 		return true;
@@ -402,6 +452,12 @@ namespace physicspipe {
 
 	void Physics::m_CollisionCheckUpdate() {
 		if (m_physicsEntities.empty()) return;
+
+		// Reset blocked directions for all entities
+		for (auto& entity : m_physicsEntities) {
+			entity->ClearCollisionFlags();
+		}
+
 		m_CalculateBoundingBox();
 		std::set<std::pair<std::shared_ptr<PhysicsData>, std::shared_ptr<PhysicsData>>> pair;
 		for (size_t i = 0; i < m_physicsEntities.size(); ++i) {
@@ -509,6 +565,9 @@ namespace physicspipe {
 			axes.push_back({ -edge.m_y, edge.m_x });
 		}
 
+		float minOverlap = std::numeric_limits<float>::max();
+		vector2::Vec2 smallestAxis{};
+		bool isEntity1Blocked = false;
 		// Check for overlap on all axes
 		for (const auto& axis : axes) {
 			float minA, maxA, minB, maxB;
@@ -520,7 +579,65 @@ namespace physicspipe {
 			if (maxA < minB || maxB < minA) {
 				return false;
 			}
+
+			//calculate Overlap
+			float overlap = std::min(maxA, maxB) - std::max(minA, minB);
+			// Track the smallest overlap axis for primary collision direction
+			if (overlap < minOverlap) {
+				minOverlap = overlap;
+				smallestAxis = axis;
+
+				// Determine if the blocking is for obj1 or obj2
+				vector2::Vec2 deltaPosition = obj2.m_position - obj1.m_position;
+				isEntity1Blocked = (vector2::Vec2::m_funcVec2DDotProduct(deltaPosition, smallestAxis) > 0);
+			}
 		}
+
+		// Add blocked directions based on the smallest axis
+		if (std::abs(smallestAxis.m_x) > std::abs(smallestAxis.m_y)) {
+			// Horizontal collision
+			if (smallestAxis.m_x > 0) {
+				if (isEntity1Blocked) {
+					//const_cast<Rectangle&>(obj1).AddBlockedDirection("right");
+					//const_cast<Rectangle&>(obj2).AddBlockedDirection("left");
+					const_cast<Rectangle&>(obj1).AddCollisionFlag(RIGHT);
+					const_cast<Rectangle&>(obj2).AddCollisionFlag(LEFT);
+
+				}
+				else {
+					//const_cast<Rectangle&>(obj1).AddBlockedDirection("left");
+					//const_cast<Rectangle&>(obj2).AddBlockedDirection("right");
+					const_cast<Rectangle&>(obj1).AddCollisionFlag(LEFT);
+					const_cast<Rectangle&>(obj2).AddCollisionFlag(RIGHT);
+				}
+			}
+		}
+		else {
+			// Vertical collision
+			if (smallestAxis.m_y > 0) {
+				if (isEntity1Blocked) {
+					//const_cast<Rectangle&>(obj1).AddBlockedDirection("down");
+					//const_cast<Rectangle&>(obj2).AddBlockedDirection("up");
+					//const_cast<Rectangle&>(obj1).AddBlockedDirection("up");
+					//const_cast<Rectangle&>(obj2).AddBlockedDirection("down");
+					const_cast<Rectangle&>(obj1).AddCollisionFlag(UP);
+					const_cast<Rectangle&>(obj2).AddCollisionFlag(DOWN);
+				}
+				else {
+					//const_cast<Rectangle&>(obj1).AddBlockedDirection("up");
+					//const_cast<Rectangle&>(obj2).AddBlockedDirection("down");
+					//const_cast<Rectangle&>(obj1).AddBlockedDirection("down");
+					//const_cast<Rectangle&>(obj2).AddBlockedDirection("up");
+					const_cast<Rectangle&>(obj1).AddCollisionFlag(DOWN);
+					const_cast<Rectangle&>(obj2).AddCollisionFlag(UP);
+				}
+			}
+		}
+
+
+
+
+
 		// No separating axis found, so there's a collision
 		return true;
 	}

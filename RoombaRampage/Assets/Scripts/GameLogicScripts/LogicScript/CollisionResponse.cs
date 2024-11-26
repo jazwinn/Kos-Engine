@@ -11,6 +11,10 @@ public class CollisionResponse : ScriptBase
     private float iscollided;
     private float deltatime;
 
+    private Vector2 position;
+    private Vector2 scale;
+    private bool isclick;
+
     public override void GetEntityID(uint id)
     {
         EntityID = id;
@@ -33,13 +37,14 @@ public class CollisionResponse : ScriptBase
         }
 
 
-        InternalCall.m_InternalCallGetDeltaTime(out deltatime);
+        deltatime = InternalCall.m_InternalCallGetDeltaTime();
 
 
         iscollided = InternalCall.m_InternalCallIsCollided(EntityID);
         if (iscollided != 0.0f)
         {
             int[] collidedEntities = InternalCall.m_InternalCallGetCollidedEntities(EntityID);
+            Console.WriteLine(collidedEntities.Length);
 
             foreach (var collidedid in collidedEntities)
             {
@@ -58,7 +63,19 @@ public class CollisionResponse : ScriptBase
             // */
         }
 
+        if (InternalCall.m_InternalCallIsKeyPressed(keyCode.LMB))
+        {
+            InternalCall.m_InternalGetButtonComponent(EntityID, out position, out scale, out isclick);
 
+            if (isclick == true)
+            {
+                Console.WriteLine($"Button is clicked : {isclick}");
+            }
+            else
+            {
+                Console.WriteLine($"Button not clicked");
+            }
+        }
 
 
 

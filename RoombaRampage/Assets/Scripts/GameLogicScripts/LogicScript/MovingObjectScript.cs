@@ -43,7 +43,7 @@ public class MovingObjectScript : ScriptBase
 
         //update time elapsed
         float deltatime;
-        InternalCall.m_InternalCallGetDeltaTime(out deltatime);
+        deltatime = InternalCall.m_InternalCallGetDeltaTime();
         timeElapsed += deltatime;
 
         //Console.WriteLine($"timeelapsed:{timeElapsed}");
@@ -78,7 +78,7 @@ public class MovingObjectScript : ScriptBase
             velocity.X = -Speed;
         }
 
-        Console.WriteLine(PlayerControl.yolo);
+        //Console.WriteLine(PlayerControl.yolo);
 
 
 

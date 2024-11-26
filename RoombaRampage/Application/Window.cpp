@@ -61,21 +61,25 @@ namespace Application {
 
     static void iconifyCallback(GLFWwindow* window, int iconified)
     {
+        auto& audioManager = assetmanager::AssetManager::m_funcGetInstance()->m_audioManager;
+
         if (iconified == GLFW_TRUE)
         {
             //std::cout << "Window minimized!" << std::endl;
+            audioManager.m_PauseAllSounds();  // Pause all sounds
+
             if (ecs::ECS::m_GetInstance()->m_getState() == ecs::RUNNING) {
                 ecs::ECS::m_GetInstance()->m_nextState = ecs::WAIT;
             }
-            
         }
         else
         {
             //std::cout << "Window restored!" << std::endl;
+            audioManager.m_UnpauseAllSounds();  // Unpause all sounds
+
             if (ecs::ECS::m_GetInstance()->m_getState() == ecs::WAIT) {
                 ecs::ECS::m_GetInstance()->m_nextState = ecs::RUNNING;
             }
-            
         }
     }
 
@@ -165,7 +169,9 @@ namespace Application {
         glClearColor(static_cast<GLclampf>(help->m_colour.m_x), static_cast<GLclampf>(help->m_colour.m_y), static_cast<GLclampf>(help->m_colour.m_z), static_cast<GLclampf>(1));
         glClear(GL_COLOR_BUFFER_BIT);
 
-
+        if (help->m_closeWindow) {
+            glfwSetWindowShouldClose(m_window, GLFW_TRUE);
+        }
 
         return 0;
 	}

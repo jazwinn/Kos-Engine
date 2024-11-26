@@ -32,7 +32,9 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include <glfw3.h>
 #include "../Inputs/Input.h"
 
+#ifdef _DEBUG
 #define IMGUIENABLED
+#endif
 
 namespace Application {
 
@@ -107,8 +109,12 @@ namespace Application {
         static float m_windowWidth;
 
         static bool m_fullScreen;
-
+#ifdef IMGUIENABLED
         bool m_enabledFullScreen{ false };//use this to set launch application fullscreen or not
+#else
+        bool m_enabledFullScreen{ true };//use this to set launch application fullscreen or not
+#endif
+
     };
 }
 

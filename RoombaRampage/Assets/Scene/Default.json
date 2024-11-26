@@ -1,16 +1,106 @@
 [
     {
         "name": {
+            "namestr": "button",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": 24.63953399658203,
+                "y": 1.7846707105636597
+            },
+            "rotation": 0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "collider": {
+            "size": {
+                "x": 1.600000023841858,
+                "y": 1.600000023841858
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true,
+            "radius": 0.5
+        },
+        "rigidbody": {
+            "linearVelocity": {
+                "x": 2.0,
+                "y": 0.0
+            },
+            "linearAcceleration": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "angularVelocity": 0.0,
+            "angularAcceleration": 0.0,
+            "mass": 1.0,
+            "inverseMass": 1.0,
+            "linearDamping": 0.9900000095367432,
+            "angularDamping": 0.9900000095367432,
+            "force": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "torque": 0.0,
+            "kinematic": false,
+            "static": false
+        },
+        "sprite": {
+            "imagefile": "Button.png",
+            "layer": 0,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0
+        },
+        "button": {
+            "force": {
+                "x": 2414.04638671875,
+                "y": 488.4963073730469
+            },
+            "scale": {
+                "x": 1.559999942779541,
+                "y": 9.380000114440918
+            }
+        },
+        "script": {
+            "scripts": [
+                "MovingObjectScript",
+                "CollisionResponse"
+            ]
+        },
+        "audio": [
+            {
+                "name": "cleaver01",
+                "volume": 1.0,
+                "loop": false,
+                "playOnStart": false
+            }
+        ]
+    },
+    {
+        "name": {
             "namestr": "Player",
             "layer": 0,
             "isprefab": true,
-            "prefabname": "Player.prefab",
+            "tagstr": "Default",
+            "prefabname": "Player123.prefab",
             "issync": true
         },
         "transform": {
             "position": {
-                "x": -0.9056365489959717,
-                "y": 0.18280313909053802
+                "x": -8.755471229553223,
+                "y": 4.657242298126221
             },
             "rotation": -0.0,
             "scale": {
@@ -78,7 +168,8 @@
                     "namestr": "gunright_02",
                     "layer": 0,
                     "isprefab": true,
-                    "prefabname": "Player.prefab",
+                    "tagstr": "Default",
+                    "prefabname": "Player123.prefab",
                     "issync": true
                 },
                 "transform": {
@@ -108,7 +199,8 @@
                     "namestr": "gunleft_02",
                     "layer": 0,
                     "isprefab": true,
-                    "prefabname": "Player.prefab",
+                    "tagstr": "Default",
+                    "prefabname": "Player123.prefab",
                     "issync": true
                 },
                 "transform": {
@@ -132,81 +224,6 @@
                     },
                     "alpha": 1.0
                 }
-            }
-        ]
-    },
-    {
-        "name": {
-            "namestr": "button",
-            "layer": 0,
-            "isprefab": false
-        },
-        "transform": {
-            "position": {
-                "x": 16.815204620361328,
-                "y": 0.0
-            },
-            "rotation": -0.0,
-            "scale": {
-                "x": 1.0,
-                "y": 1.0
-            }
-        },
-        "rigidbody": {
-            "linearVelocity": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "linearAcceleration": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "rotation": 0.0,
-            "angularVelocity": 0.0,
-            "angularAcceleration": 0.0,
-            "mass": 1.0,
-            "inverseMass": 1.0,
-            "linearDamping": 0.9900000095367432,
-            "angularDamping": 0.9900000095367432,
-            "force": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "torque": 0.0,
-            "kinematic": false,
-            "static": false
-        },
-        "sprite": {
-            "imagefile": "Button.png",
-            "layer": 0,
-            "color": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
-            },
-            "alpha": 1.0
-        },
-        "button": {
-            "force": {
-                "x": 1323.4056396484375,
-                "y": 360.0
-            },
-            "scale": {
-                "x": 1.0,
-                "y": 1.0
-            }
-        },
-        "script": {
-            "scripts": [
-                "MovingObjectScript"
-            ]
-        },
-        "audio": [
-            {
-                "audiofile": "",
-                "volume": 1.0,
-                "loop": false,
-                "playonstart": false
             }
         ]
     }

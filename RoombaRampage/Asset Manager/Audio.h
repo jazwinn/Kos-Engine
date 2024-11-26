@@ -52,12 +52,16 @@ namespace fmodaudio {
         bool m_PlaySound(const std::string& entityId);
         void m_StopSound(const std::string& entityId); 
         void m_StopAllSounds();
-        bool m_PauseSound(const std::string& entityId);  // Modified to pause sound by entityId
-        bool m_FadeSound(const std::string& entityId, float targetVolume, float fadeDuration);  // Fade by entityId
-        bool m_SetLooping(const std::string& entityId, bool loop);  // Set looping by entityId
-        bool m_SetVolume(const std::string& entityId, float volume);  // Set volume by entityId
-        bool m_SetPan(const std::string& entityId, float pan);  // Set pan by entityId
-        bool m_IsPlaying(const std::string& entityId);  // Check if sound is playing for entityId
+        void m_PauseAllSounds();
+        bool m_UnpauseAllSounds();
+        bool m_PauseSound(const std::string& entityId); 
+        bool m_UnpauseSound(const std::string& entityId);
+        bool m_FadeSound(const std::string& entityId, float targetVolume, float fadeDuration); 
+        bool m_SetLooping(const std::string& entityId, bool loop);  
+        bool m_SetVolume(const std::string& entityId, float volume); 
+        bool m_SetPan(const std::string& entityId, float pan);  
+        bool m_IsPlaying(const std::string& entityId);  
+        FMOD::Channel* m_GetChannelForEntity(const std::string& entityId);
 
     private:
         FMOD::System* m_system;    /*!< FMOD system object to manage sound playback. */
@@ -75,9 +79,15 @@ namespace fmodaudio {
         void m_LoadAudio(const std::string& name, const std::string& path);
         void m_PlayAudioForEntity(const std::string& entityId, const std::string& name, float volume);
         void m_StopAudioForEntity(const std::string& entityId, const std::string& name);
+        void m_PauseAudioForEntity(const std::string& entityId, const std::string& name);
+        void m_UnpauseAudioForEntity(const std::string& entityId, const std::string& name);
         void m_SetVolumeForEntity(const std::string& entityId, const std::string& name, float volume);
         void m_SetLoopingForEntity(const std::string& entityId, const std::string& name, bool loop);
+        void m_SetPlayOnStartForEntity(const std::string& entityId, const std::string& audioName, bool playOnStart);
         bool m_IsPlayingForEntity(const std::string& entityId, const std::string& name);
+        void m_PauseAllSounds();
+        void m_UnpauseAllSounds();
+        void m_StopAllSounds();
 
         std::unordered_map<std::string, std::unique_ptr<FModAudio>>& getSoundMap() {
             return m_soundMap;

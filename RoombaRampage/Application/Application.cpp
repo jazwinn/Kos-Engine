@@ -77,6 +77,8 @@ namespace Application {
         --------------------------------------------------------------*/
         AstManager = assetmanager::AssetManager::m_funcGetInstance();
         AstManager->m_funcLoadAssets("Assets");
+        scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();
+        scenemanager->m_LoadScene(Helper::Helpers::GetInstance()->m_startScene);
         LOGGING_INFO("Load Asset Successful");
 
 
@@ -93,13 +95,7 @@ namespace Application {
         //call back must happen before imgui
         Input.SetCallBack(lvWindow.m_window);
         LOGGING_INFO("Set Input Call Back Successful");
-        
 
-        /*--------------------------------------------------------------
-            LOAD ENTITIES INTO ECS & IMGUI
-        --------------------------------------------------------------*/
-        scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();
-        scenemanager->m_LoadScene("Assets/Scene/Default.json"); // replace with opening up window dialog
         
         /*--------------------------------------------------------------
             INITIALIZE EDITOR // LAST INIT
@@ -155,15 +151,14 @@ namespace Application {
                 // --------------------------------------------------------------*/
                 double currentFrameTime = glfwGetTime();
                 help->m_deltaTime = static_cast<float>(currentFrameTime - lastFrameTime);
+                //help->m_deltaTime = static_cast<float>(currentFrameTime - lastFrameTime) * help->m_timeScale;
                 lastFrameTime = currentFrameTime;
-
-                accumulatedTime += help->m_deltaTime;
+                accumulatedTime += (help->m_deltaTime * help->m_timeScale);
                 Helper::Helpers::GetInstance()->currentNumberOfSteps = 0;
-                while (accumulatedTime >= fixedDeltaTime) {
-                    accumulatedTime -= fixedDeltaTime;
+                while (accumulatedTime >= (fixedDeltaTime * help->m_timeScale )) {
+                    accumulatedTime -= (fixedDeltaTime * help->m_timeScale);
                     ++help->currentNumberOfSteps;
                 }
-
                 /*--------------------------------------------------------------
                     UPDATE INPUT
                 --------------------------------------------------------------*/
@@ -172,7 +167,8 @@ namespace Application {
                 /*--------------------------------------------------------------
                     UPDATE ECS
                 --------------------------------------------------------------*/
-                ecs->m_Update(help->m_fixedDeltaTime); 
+                //ecs->m_Update(help->m_fixedDeltaTime * help->m_timeScale); 
+                ecs->m_Update(help->m_fixedDeltaTime * help->m_timeScale);
                 //ecs->m_Update(Helper::Helpers::GetInstance()->m_deltaTime);
 
                 /*--------------------------------------------------------------
@@ -180,18 +176,25 @@ namespace Application {
                 --------------------------------------------------------------*/
                 pipe->m_funcUpdate();
 
+#ifdef IMGUIENABLED
 
+                /*--------------------------------------------------------------
+                    Update IMGUI FRAME
+                --------------------------------------------------------------*/
+                Editor.m_update();
+#endif
 
                 /*--------------------------------------------------------------
                     DRAWING/RENDERING Window
                 --------------------------------------------------------------*/
                 lvWindow.Draw();
+
 #ifdef IMGUIENABLED
 
                 /*--------------------------------------------------------------
                     Draw IMGUI FRAME
                 --------------------------------------------------------------*/
-                Editor.m_Render();
+                Editor.m_render();
 #endif
                 /*--------------------------------------------------------------
                    Render Game Scene

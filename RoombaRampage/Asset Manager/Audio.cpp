@@ -21,7 +21,7 @@ Reproduction or disclosure of this file or its contents without the
 prior written consent of DigiPen Institute of Technology is prohibited.
 */
 /******************************************************************/
-
+#include "../ECS/ECS.h"
 #include "Audio.h"
 //#include <fmod_errors.h>
 
@@ -29,7 +29,7 @@ namespace fmodaudio {
     FModAudio::FModAudio() : m_system(nullptr), m_sound(nullptr) {}
 
     FModAudio::~FModAudio() {
-        m_StopAllSounds();  // Stop all sounds associated with this object
+        m_StopAllSounds();
         m_Shutdown();
     }
 
@@ -74,12 +74,10 @@ namespace fmodaudio {
             return false;
         }
 
-        // Store the channel by entity ID
         m_entityChannels[entityId] = newChannel;
 
-        // Set default properties for the channel (e.g., volume)
         if (newChannel) {
-            newChannel->setVolume(1.0f);  // Set default volume
+            newChannel->setVolume(1.0f); 
         }
 
         return true;
@@ -89,15 +87,38 @@ namespace fmodaudio {
         auto it = m_entityChannels.find(entityId);
         if (it != m_entityChannels.end()) {
             it->second->stop();
-            m_entityChannels.erase(it);  // Remove the channel from the map after stopping
+            m_entityChannels.erase(it);
         }
     }
 
     void FModAudio::m_StopAllSounds() {
         for (auto& pair : m_entityChannels) {
-            pair.second->stop();  // Stop each sound
+            pair.second->stop();
         }
         m_entityChannels.clear();
+    }
+
+    void FModAudio::m_PauseAllSounds() {
+        for (auto& pair : m_entityChannels) {
+            FMOD::Channel* channel = pair.second;
+            if (channel) {
+                channel->setPaused(true);
+            }
+        }
+    }
+
+    bool FModAudio::m_UnpauseAllSounds() {
+        for (auto& channelPair : m_entityChannels) {
+            FMOD::Channel* channel = channelPair.second;
+            if (channel) {
+                bool isPaused = false;
+                channel->getPaused(&isPaused);
+                if (isPaused) {
+                    channel->setPaused(false);
+                }
+            }
+        }
+        return true;
     }
 
     bool FModAudio::m_SetVolume(const std::string& entityId, float volume) {
@@ -131,20 +152,33 @@ namespace fmodaudio {
     }
 
     bool FModAudio::m_PauseSound(const std::string& entityId) {
-        auto it = m_entityChannels.find(entityId);
-        if (it != m_entityChannels.end()) {
-            bool paused;
-            it->second->getPaused(&paused);
-            FMOD_RESULT result = it->second->setPaused(!paused);
-            if (result != FMOD_OK) {
-                return false;
+        auto channelIt = m_entityChannels.find(entityId);
+        if (channelIt != m_entityChannels.end()) {
+            FMOD::Channel* channel = channelIt->second;
+            bool isPaused = false;
+            channel->getPaused(&isPaused);
+            if (!isPaused) {
+                channel->setPaused(true);
+                return true;
             }
-            return true;
         }
-        else {
-            return false;
-        }
+        return false;
     }
+
+    bool FModAudio::m_UnpauseSound(const std::string& entityId) {
+        auto channelIt = m_entityChannels.find(entityId);
+        if (channelIt != m_entityChannels.end()) {
+            FMOD::Channel* channel = channelIt->second;
+            bool isPaused = false;
+            channel->getPaused(&isPaused);
+            if (isPaused) {
+                channel->setPaused(false);
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     bool FModAudio::m_IsPlaying(const std::string& entityId) {
         auto it = m_entityChannels.find(entityId);
@@ -207,6 +241,15 @@ namespace fmodaudio {
         return true;
     }
 
+    FMOD::Channel* FModAudio::m_GetChannelForEntity(const std::string& entityId) {
+        auto it = m_entityChannels.find(entityId);
+        if (it != m_entityChannels.end()) {
+            return it->second;  
+        }
+        return nullptr;
+    }
+
+
 
 
 
@@ -215,7 +258,6 @@ namespace fmodaudio {
     }
 
     AudioManager::~AudioManager() {
-        // Clean up all sounds and stop any ongoing playback
         for (auto& pair : m_soundMap) {
             FModAudio* sound = pair.second.get();
             if (sound) {
@@ -263,6 +305,20 @@ namespace fmodaudio {
         }
     }
 
+    void AudioManager::m_PauseAudioForEntity(const std::string& entityId, const std::string& name) {
+        auto& sound = m_soundMap[name];
+        if (sound) {
+            sound->m_PauseSound(entityId);
+        }
+    }
+
+    void AudioManager::m_UnpauseAudioForEntity(const std::string& entityId, const std::string& name) {
+        auto& sound = m_soundMap[name];
+        if (sound) {
+            sound->m_UnpauseSound(entityId);
+        }
+    }
+
     void AudioManager::m_SetVolumeForEntity(const std::string& entityId, const std::string& name, float volume) {
         auto it = m_soundMap.find(name);
         if (it != m_soundMap.end()) {
@@ -278,17 +334,35 @@ namespace fmodaudio {
     void AudioManager::m_SetLoopingForEntity(const std::string& entityId, const std::string& name, bool loop) {
         auto it = m_soundMap.find(name);
         if (it != m_soundMap.end()) {
-            FModAudio* sound = it->second.get();
-            sound->m_SetLooping(entityId, loop);
-        }
-        else {
-            //TODO Handle error (e.g., logging or notification)
-            //std::cerr << "Sound not found: " << name << std::endl;
+            auto& audio = it->second;
+            FMOD::Channel* channel = audio->m_GetChannelForEntity(entityId);
+            if (channel) {
+                // Set the loop count: -1 for infinite loop, 0 for no loop, or a specific number for limited loops :))
+                channel->setLoopCount(loop ? -1 : 0);
+            }
         }
     }
 
+    void AudioManager::m_SetPlayOnStartForEntity(const std::string& entityId, const std::string& audioName, bool playOnStart) {
+        auto* ecs = ecs::ECS::m_GetInstance();
+        auto* entityComponent = ecs->m_ECS_CombinedComponentPool[ecs::TYPEAUDIOCOMPONENT]->m_GetEntityComponent(std::stoi(entityId));
+
+        if (entityComponent) {
+            ecs::AudioComponent* ac = static_cast<ecs::AudioComponent*>(entityComponent);
+
+            for (auto& audioFile : ac->m_AudioFiles) {
+                if (audioFile.m_Name == audioName) {
+                    audioFile.m_PlayOnStart = playOnStart;
+                }
+                else if (playOnStart) {
+                    audioFile.m_PlayOnStart = false;
+                }
+            }
+        }
+    }
+
+
     bool AudioManager::m_IsPlayingForEntity(const std::string& entityId, const std::string& name) {
-        // Find the sound in the map by name
         auto it = m_soundMap.find(name);
         if (it != m_soundMap.end()) {
             FModAudio* sound = it->second.get();
@@ -298,6 +372,34 @@ namespace fmodaudio {
             //TODO Handle error (e.g., logging or notification)
             //std::cerr << "Sound not found: " << name << std::endl;
             return false;
+        }
+    }
+
+    void AudioManager::m_PauseAllSounds() {
+        for (auto& soundPair : m_soundMap) {
+            FModAudio* audio = soundPair.second.get();
+            if (audio) {
+                audio->m_PauseAllSounds();
+            }
+        }
+    }
+
+    void AudioManager::m_UnpauseAllSounds() {
+        for (auto& soundPair : m_soundMap) {
+            FModAudio* audio = soundPair.second.get();
+            if (audio) {
+                audio->m_UnpauseAllSounds();
+            }
+        }
+    }
+
+
+    void AudioManager::m_StopAllSounds() {
+        for (auto& soundPair : m_soundMap) {
+            FModAudio* audio = soundPair.second.get();
+            if (audio) {
+                audio->m_StopAllSounds();
+            }
         }
     }
 }

@@ -217,6 +217,16 @@ namespace graphicpipe
 					float ypos = (textData.m_y - (ch.m_size.y - ch.m_bearing.y )/GraphicsCamera::m_windowHeight * textData.m_scale);
 					float w = ch.m_size.x * textData.m_scale / GraphicsCamera::m_windowHeight;
 					float h = ch.m_size.y * textData.m_scale / GraphicsCamera::m_windowHeight;
+
+					if (c == 'p' || c == 'j' || c == 'q' || c == 'y' || c == 'g')
+					{
+						ypos = textData.m_y - (((ch.m_size.y - assetmanager->m_fontManager.m_fonts[textData.m_fileName]['e'].m_size.y) - (ch.m_bearing.y - assetmanager->m_fontManager.m_fonts[textData.m_fileName]['e'].m_bearing.y))  * textData.m_scale) / GraphicsCamera::m_windowHeight;
+					}
+
+					if (c == 'Q' || c == 'J')
+					{
+						ypos = textData.m_y - (((ch.m_size.y - assetmanager->m_fontManager.m_fonts[textData.m_fileName]['e'].m_size.y) - (ch.m_bearing.y - assetmanager->m_fontManager.m_fonts[textData.m_fileName]['e'].m_bearing.y)) * textData.m_scale) / GraphicsCamera::m_windowHeight;
+					}
 		
 
 					// Update VBO for each character with texture coordinates from the atlas
@@ -308,7 +318,10 @@ namespace graphicpipe
 
 		for (int i{}; i < m_transformedTilemaps.size() && !m_tileIndexes.empty(); ++i)
 		{
-			
+			if (m_tileIndexes[i].empty())
+			{
+				continue;
+			}
 			glBindBuffer(GL_ARRAY_BUFFER, m_tileIndexBuffer);
 			glNamedBufferData(m_tileIndexBuffer, m_tileIndexes[i].size() * sizeof(int), &m_tileIndexes[i][0], GL_DYNAMIC_DRAW);
 			glBindBuffer(GL_ARRAY_BUFFER, 0);

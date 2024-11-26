@@ -169,7 +169,7 @@ namespace gui {
 		ImGuizmo::BeginFrame();
 	}
 
-	void ImGuiHandler::m_Render()
+	void ImGuiHandler::m_update()
 	{
 		if (Input::InputSystem::m_isKeyTriggered(keys::F11))
 		{
@@ -229,9 +229,19 @@ namespace gui {
 				DISPATCH_ACTION_EVENT(temp);
 			}
 
-			ImGuiIO& io = ImGui::GetIO();
+			
+		}
+	
+	}
 
+	void ImGuiHandler::m_render()
+	{
+		ImGuiIO& io = ImGui::GetIO();
+
+		if (EditorCamera::m_editorMode)
+		{
 			ImGui::Render();
+
 			if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
 			{
 				GLFWwindow* backup_current_context = glfwGetCurrentContext();
@@ -241,7 +251,6 @@ namespace gui {
 			}
 			ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		}
-	
 	}
 
 

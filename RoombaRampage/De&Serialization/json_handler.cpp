@@ -55,24 +55,20 @@ namespace Serialization {
 		Helper::Helpers* help = Helper::Helpers::GetInstance();
 
 		std::string line;
-		std::string temp;
+		
+		char* str[256];
 
-		//get height
-		std::getline(file, line);
-		std::stringstream str{ line };
-		str >> temp >> help->m_windowHeight;
-		//get width
-		line.clear();
-		temp.clear();
-		std::getline(file, line);
-		std::stringstream str2{ line };
-		str2 >> temp >> help->m_windowWidth;
+		while (std::getline(file, line)) { // Read line by line
+			std::stringstream str{ line };
+			std::string temp;
+			str >> temp;
+			if (temp == "WindowHeight:") str >> help->m_windowHeight;
+			if (temp == "WindowWidth:") str >> help->m_windowWidth;
+			if (temp == "FpsCap:") str >> help->m_fpsCap;
+			if (temp == "StartScene:") str >> help->m_startScene;
+		}
 
-		line.clear();
-		temp.clear();
-		std::getline(file, line);
-		std::stringstream str3{ line };
-		str3 >> temp >> help->m_fpsCap;
+
 
 		if (help->m_windowHeight <= 0 || help->m_windowWidth <= 0 || !help->m_fpsCap) {
 			LOGGING_ERROR("Error Reading Config file (Width or Height <= 0)");
@@ -227,6 +223,7 @@ namespace Serialization {
 					.AddMember("y", cc->m_OffSet.m_y, allocator), allocator);
 				collider.AddMember("drawDebug", cc->m_drawDebug, allocator);
 				collider.AddMember("radius", cc->m_radius, allocator);
+				collider.AddMember("shapetype", (int)cc->m_type, allocator);
 				entityData.AddMember("collider", collider, allocator);
 				hasComponents = true;  // Mark as having a component
 			}
@@ -470,23 +467,23 @@ namespace Serialization {
 				);
 
 			if (ac) {
-				rapidjson::Value audioArray(rapidjson::kArrayType); // Array to store multiple audio files
+				rapidjson::Value audioArray(rapidjson::kArrayType);
 
 				for (const auto& audioFile : ac->m_AudioFiles) {
-					rapidjson::Value audioObject(rapidjson::kObjectType); // Object for each audio file
+					rapidjson::Value audioObject(rapidjson::kObjectType);
 
 					rapidjson::Value filePathValue;
 					filePathValue.SetString(audioFile.m_FilePath.c_str(), allocator);
 
-					audioObject.AddMember("audiofile", filePathValue, allocator);
+					audioObject.AddMember("name", rapidjson::Value().SetString(audioFile.m_Name.c_str(), allocator), allocator);
 					audioObject.AddMember("volume", audioFile.m_Volume, allocator);
 					audioObject.AddMember("loop", audioFile.m_Loop, allocator);
-					audioObject.AddMember("playonstart", audioFile.m_PlayOnStart, allocator);
+					audioObject.AddMember("playOnStart", audioFile.m_PlayOnStart, allocator);
 
-					audioArray.PushBack(audioObject, allocator); // Add the object to the array
+					audioArray.PushBack(audioObject, allocator);
 				}
 
-				entityData.AddMember("audio", audioArray, allocator); // Add the array to entityData
+				entityData.AddMember("audio", audioArray, allocator);
 				hasComponents = true;
 			}
 		}
@@ -581,6 +578,9 @@ namespace Serialization {
 				}
 				if (collider.HasMember("radius")) {
 					cc->m_radius = collider["radius"].GetFloat();
+				}
+				if (collider.HasMember("shapetype")) {
+					cc->m_type = (physicspipe::EntityType)collider["shapetype"].GetInt();
 				}
 			}
 		}
@@ -852,6 +852,35 @@ namespace Serialization {
 			}
 		}
 
+		// Load AudioComponent if it exists
+		if (entityData.HasMember("audio") && entityData["audio"].IsArray()) {
+			ecs::AudioComponent* ac = static_cast<ecs::AudioComponent*>(
+				ecs->m_AddComponent(ecs::TYPEAUDIOCOMPONENT, newEntityId)
+				);
+
+			if (ac) {
+				const rapidjson::Value& audioArray = entityData["audio"];
+				for (rapidjson::SizeType i = 0; i < audioArray.Size(); ++i) {
+					const rapidjson::Value& audioObject = audioArray[i];
+					ecs::AudioFile audioFile;
+
+					if (audioObject.HasMember("name") && audioObject["name"].IsString()) {
+						audioFile.m_Name = audioObject["name"].GetString();
+					}
+					if (audioObject.HasMember("volume")) {
+						audioFile.m_Volume = audioObject["volume"].GetFloat();
+					}
+					if (audioObject.HasMember("loop")) {
+						audioFile.m_Loop = audioObject["loop"].GetBool();
+					}
+					if (audioObject.HasMember("playonstart")) {
+						audioFile.m_PlayOnStart = audioObject["playonstart"].GetBool();
+					}
+
+					ac->m_AudioFiles.push_back(audioFile);
+				}
+			}
+		}
 
 		//Attach entity to parent
 		if (parentID.has_value()) {

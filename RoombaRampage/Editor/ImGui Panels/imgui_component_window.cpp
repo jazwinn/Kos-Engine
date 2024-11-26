@@ -236,6 +236,19 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
             ecs::compSignature EntitySignature = ecs->m_ECS_EntityMap[entityID];
             if (ComponentType == 1) {
                 ecs->m_AddComponent(ecs::TYPECOLLIDERCOMPONENT, entityID);
+                if (ecs->m_ECS_EntityMap[entityID].test(ecs::TYPESPRITECOMPONENT))
+                {
+                    graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
+                    ecs::ColliderComponent* colCom = static_cast<ecs::ColliderComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(entityID));
+                    ecs::SpriteComponent* spriteCom = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(entityID));
+                    if (!spriteCom->m_imageFile.empty())
+                    {
+                        assetmanager::AssetManager* assets = assetmanager::AssetManager::m_funcGetInstance();
+                        colCom->m_Size.m_x = static_cast<float>(static_cast<float>(assets->m_imageManager.m_imageMap[spriteCom->m_imageFile].m_width) / static_cast<float>(pipe->m_unitWidth) / assets->m_imageManager.m_imageMap[spriteCom->m_imageFile].m_stripCount);
+                        colCom->m_Size.m_y = static_cast<float>(assets->m_imageManager.m_imageMap[spriteCom->m_imageFile].m_height) / static_cast<float>(pipe->m_unitHeight);
+                    }
+                }
+               
                 ComponentType = 0;
                 if (!EntitySignature.test(ecs::TYPECOLLIDERCOMPONENT)) {
                     events::AddComponent action(entityID, ecs::TYPECOLLIDERCOMPONENT);
@@ -562,7 +575,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         {
                             IM_ASSERT(payload->DataSize == sizeof(std::filesystem::path));
                             std::filesystem::path* filename = static_cast<std::filesystem::path*>(payload->Data);
-                            if (filename->filename().extension().string() == ".png") {
+                            if (filename->filename().extension().string() == ".png" || filename->filename().extension().string() == ".jpg") {
                                 if (Asset->m_imageManager.m_imageMap.find(filename->filename().string()) == Asset->m_imageManager.m_imageMap.end()) {
                                     LOGGING_WARN("File not loaded, please reload content browser");
                                 }
@@ -995,8 +1008,8 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 CreateContext(ecs::TYPEBUTTONCOMPONENT, entityID);
 
                 if (open) {
-                    //auto* rbc = static_cast<ecs::ButtonComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEBUTTONCOMPONENT]->m_GetEntityComponent(entityID));
-                    //rbc->ApplyFunction(DrawComponents(rbc->Names()));
+                    auto* rbc = static_cast<ecs::ButtonComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEBUTTONCOMPONENT]->m_GetEntityComponent(entityID));
+                    rbc->ApplyFunction(DrawComponents(rbc->Names()));
                 }
 
 
@@ -1034,7 +1047,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         {
                             IM_ASSERT(payload->DataSize == sizeof(std::filesystem::path));
                             std::filesystem::path* filename = static_cast<std::filesystem::path*>(payload->Data);
-                            if (filename->filename().extension().string() == ".png") {
+                            if (filename->filename().extension().string() == ".png" || filename->filename().extension().string() == ".jpg") {
                                 if (Asset->m_imageManager.m_imageMap.find(filename->filename().string()) == Asset->m_imageManager.m_imageMap.end()) {
                                     LOGGING_WARN("File not loaded, please reload content browser");
                                 }
@@ -1086,10 +1099,8 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 CreateContext(ecs::TYPEAUDIOCOMPONENT, entityID);
 
                 if (open) {
-                    auto* ac = static_cast<ecs::AudioComponent*>(
-                        ecs->m_ECS_CombinedComponentPool[ecs::TYPEAUDIOCOMPONENT]->m_GetEntityComponent(entityID)
-                        );
-                        assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
+                    auto* ac = static_cast<ecs::AudioComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEAUDIOCOMPONENT]->m_GetEntityComponent(entityID));
+                    assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
 
                     if (ac) {
                         int fileIndex = 0;
@@ -1097,43 +1108,11 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             ImGui::PushID(fileIndex);
 
                             bool removeFile = false;
-                            std::string headerName = "Audio File " + std::to_string(fileIndex + 1) + ": " + it->m_Name;
-                            ImGui::SeparatorText(headerName.c_str());
-                            if (ImGui::BeginCombo("Sounds", it->m_Name.c_str()))
-                            {
-                                for (const auto& sound : assetManager->m_audioManager.getSoundMap()) {
-
-                                    if (ImGui::Selectable(sound.first.c_str())) {
-                                        it->m_Name = sound.first.c_str();
-                                    }
-                                }
-                                ImGui::EndCombo();
-                            }
-                            if (ImGui::BeginDragDropTarget())
-                            {
-
-                                if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("file"))
-                                {
-                                    IM_ASSERT(payload->DataSize == sizeof(std::filesystem::path));
-                                    std::filesystem::path* filename = static_cast<std::filesystem::path*>(payload->Data);
-                                    if (filename->filename().extension().string() == ".ogg" || ".wav" || ".mp3") {
-                                        if (assetManager->m_audioManager.getSoundMap().find(filename->filename().string()) == assetManager->m_audioManager.getSoundMap().end()) {
-                                            LOGGING_WARN("File not loaded, please reload content browser");
-                                        }
-                                        else {
-                                            assetManager->m_LoadAudio(filename->filename().string());
-                                        }
-                                    }
-                                    else {
-                                        LOGGING_WARN("Wrong File Type");
-                                    }
-
-                                }
-                                ImGui::EndDragDropTarget();
-                            }
+                            
 
                             ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_DefaultOpen;
-                            bool nodeOpen = ImGui::TreeNodeEx("Properties", flags);
+                            std::string headerName = "Audio File " + std::to_string(fileIndex + 1) + ": " + it->m_Name;
+                            bool nodeOpen = ImGui::TreeNodeEx(headerName.c_str(), flags);
 
                             if (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right)) {
                                 ImGui::OpenPopup("AudioContextMenu");
@@ -1146,24 +1125,85 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                                 ImGui::EndPopup();
                             }
 
-                        
-
                             if (nodeOpen) {
                                 char buffer[256];
                                 strncpy(buffer, it->m_FilePath.c_str(), sizeof(buffer));
+
+
+                                if (ImGui::BeginCombo("Sounds", it->m_Name.c_str())) {
+                                    for (const auto& sound : assetManager->m_audioManager.getSoundMap()) {
+                                        if (ImGui::Selectable(sound.first.c_str())) {
+                                            it->m_Name = sound.first.c_str();
+                                        }
+                                    }
+                                    ImGui::EndCombo();
+                                }
+
+                                if (ImGui::BeginDragDropTarget()) {
+                                    if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("file")) {
+                                        IM_ASSERT(payload->DataSize == sizeof(std::filesystem::path));
+                                        std::filesystem::path* filename = static_cast<std::filesystem::path*>(payload->Data);
+                                        if (filename->filename().extension().string() == ".ogg" || ".wav") {
+                                            if (assetManager->m_audioManager.getSoundMap().find(filename->filename().string()) == assetManager->m_audioManager.getSoundMap().end()) {
+                                                LOGGING_WARN("File not loaded, please reload content browser");
+                                            }
+                                            else {
+                                                assetManager->m_LoadAudio(filename->filename().string());
+                                            }
+                                        }
+                                        else {
+                                            LOGGING_WARN("Wrong File Type");
+                                        }
+                                    }
+                                    ImGui::EndDragDropTarget();
+                                }
 
                                 ImGui::SliderFloat("Volume", &it->m_Volume, 0.0f, 1.0f);
                                 assetManager->m_audioManager.m_SetVolumeForEntity(std::to_string(entityID), it->m_Name, it->m_Volume);
 
                                 ImGui::Checkbox("Loop", &it->m_Loop);
-                                ImGui::Checkbox("Play On Start", &it->m_PlayOnStart);
+                                assetManager->m_audioManager.m_SetLoopingForEntity(std::to_string(entityID), it->m_Name, it->m_Loop);
+
+                                if (ImGui::Checkbox("Play On Start", &it->m_PlayOnStart)) {
+                                    if (it->m_PlayOnStart) {
+                                        for (auto& audioFile : ac->m_AudioFiles) {
+                                            if (&audioFile != &(*it)) {
+                                                audioFile.m_PlayOnStart = false;
+                                            }
+                                        }
+                                    }
+                                    auto& audioManager = assetManager->m_audioManager;
+                                    audioManager.m_SetPlayOnStartForEntity(std::to_string(entityID), it->m_Name, it->m_PlayOnStart);
+                                }
+
+
+
+                                bool isPaused = false;
+                                auto& audioManager = assetManager->m_audioManager;
+                                if (audioManager.getSoundMap().find(it->m_Name) != audioManager.getSoundMap().end()) {
+                                    auto& sound = audioManager.getSoundMap()[it->m_Name];
+
+                                    if (sound->m_GetChannelForEntity(std::to_string(entityID))) {
+                                        sound->m_GetChannelForEntity(std::to_string(entityID))->getPaused(&isPaused);
+                                    }
+
+                                    if (ImGui::Checkbox("Pause Sound", &isPaused)) {
+                                        if (isPaused) {
+                                            audioManager.m_PauseAudioForEntity(std::to_string(entityID), it->m_Name);
+                                        }
+                                        else {
+                                            audioManager.m_UnpauseAudioForEntity(std::to_string(entityID), it->m_Name);
+                                        }
+                                    }
+                                }
+
                                 if (ImGui::Button("Stop Sound")) {
                                     std::string key = it->m_Name;
                                     auto& audioManager = assetManager->m_audioManager;
-                                    audioManager.m_StopAudioForEntity(std::to_string(entityID),key);
-
-                                    //std::cout << "Attempting to stop sound with key: " << key << std::endl;
+                                    audioManager.m_StopAudioForEntity(std::to_string(entityID), key);
                                 }
+
+
 
                                 ImGui::TreePop();
                             }
@@ -1171,6 +1211,9 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             ImGui::PopID();
 
                             if (removeFile) {
+                                /*std::string key = it->m_Name;
+                                auto& audioManager = assetManager->m_audioManager;
+                                audioManager.m_StopAudioForEntity(std::to_string(entityID), key);*/
                                 it = ac->m_AudioFiles.erase(it);
                             }
                             else {
@@ -1179,24 +1222,23 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             }
                         }
 
-                        static char newAudioName[256] = ""; 
-                        //ImGui::InputText("New Audio Name", newAudioName, sizeof(newAudioName));
+                        ImGui::Separator();
 
+                        static char newAudioName[256] = "";
                         if (ImGui::Button("Add Audio File")) {
-                            //if (strlen(newAudioName) > 0) {
-                                
+                            ac->m_AudioFiles.emplace_back();
+                        }
 
-                                ac->m_AudioFiles.emplace_back(); 
-                                //ac->m_AudioFiles.back().m_Name = newAudioName; 
-                                //memset(newAudioName, 0, sizeof(newAudioName)); 
-                            //}
-                            //else {
-                             //   ImGui::Text("Please enter a valid name for the audio file.");
-                            //}
+                        if (ImGui::Button("Stop All Sounds"))
+                        {
+                            auto& audioManager = assetManager->m_audioManager;
+                            audioManager.m_StopAllSounds();
                         }
                     }
                 }
             }
+
+
             
 
             //draw invinsible box
@@ -1212,7 +1254,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         IM_ASSERT(payload->DataSize == sizeof(std::filesystem::path));
                         std::filesystem::path* filename = static_cast<std::filesystem::path*>(payload->Data);
 
-                        if (filename->filename().extension().string() == ".png") {
+                        if (filename->filename().extension().string() == ".png" || filename->filename().extension().string() == ".jpg") {
 
                             if (!EntitySignature.test(ecs::TYPESPRITECOMPONENT)) {// does not have sprite component, create one
                                 ecs::SpriteComponent* com = static_cast<ecs::SpriteComponent*>(ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, entityID));

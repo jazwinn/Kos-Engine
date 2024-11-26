@@ -18,8 +18,8 @@
 R"( #version 460 core
 
 
-	in vec4 col;
-	out vec4 fragColor;
+	layout (location = 0) in vec4 col;
+	layout (location = 0) out vec4 fragColor;
 
 	void main() 
 	{
