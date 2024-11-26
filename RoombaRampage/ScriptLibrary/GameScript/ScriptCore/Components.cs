@@ -14,6 +14,16 @@ public struct Vector3
 {
     public float R, G, B;
 }
+
+public enum CollisionFlag
+{
+    NONE = 0,
+    LEFT = 1 << 0,
+    RIGHT = 1 << 1,
+    UP = 1 << 2,
+    DOWN = 1 << 3,
+
+}
 public class TransformComponent
 {
     public Vector2 m_position;
@@ -45,6 +55,7 @@ public class ColliderComponent
     public bool m_drawDebug;
     public float m_radius;
     public float m_isCollided;
+    public int m_blockedFlag;
 }
 
 public class PlayerComponent

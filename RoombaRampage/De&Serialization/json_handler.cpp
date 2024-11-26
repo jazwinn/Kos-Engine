@@ -55,24 +55,20 @@ namespace Serialization {
 		Helper::Helpers* help = Helper::Helpers::GetInstance();
 
 		std::string line;
-		std::string temp;
+		
+		char* str[256];
 
-		//get height
-		std::getline(file, line);
-		std::stringstream str{ line };
-		str >> temp >> help->m_windowHeight;
-		//get width
-		line.clear();
-		temp.clear();
-		std::getline(file, line);
-		std::stringstream str2{ line };
-		str2 >> temp >> help->m_windowWidth;
+		while (std::getline(file, line)) { // Read line by line
+			std::stringstream str{ line };
+			std::string temp;
+			str >> temp;
+			if (temp == "WindowHeight:") str >> help->m_windowHeight;
+			if (temp == "WindowWidth:") str >> help->m_windowWidth;
+			if (temp == "FpsCap:") str >> help->m_fpsCap;
+			if (temp == "StartScene:") str >> help->m_startScene;
+		}
 
-		line.clear();
-		temp.clear();
-		std::getline(file, line);
-		std::stringstream str3{ line };
-		str3 >> temp >> help->m_fpsCap;
+
 
 		if (help->m_windowHeight <= 0 || help->m_windowWidth <= 0 || !help->m_fpsCap) {
 			LOGGING_ERROR("Error Reading Config file (Width or Height <= 0)");
@@ -227,6 +223,7 @@ namespace Serialization {
 					.AddMember("y", cc->m_OffSet.m_y, allocator), allocator);
 				collider.AddMember("drawDebug", cc->m_drawDebug, allocator);
 				collider.AddMember("radius", cc->m_radius, allocator);
+				collider.AddMember("shapetype", (int)cc->m_type, allocator);
 				entityData.AddMember("collider", collider, allocator);
 				hasComponents = true;  // Mark as having a component
 			}
@@ -581,6 +578,9 @@ namespace Serialization {
 				}
 				if (collider.HasMember("radius")) {
 					cc->m_radius = collider["radius"].GetFloat();
+				}
+				if (collider.HasMember("shapetype")) {
+					cc->m_type = (physicspipe::EntityType)collider["shapetype"].GetInt();
 				}
 			}
 		}

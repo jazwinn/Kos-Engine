@@ -58,7 +58,7 @@ namespace script {
 
 		static bool m_InternalSetTranslate(ecs::EntityID entity, vector2::Vec2* trans);
 
-		static bool m_InternalGetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, bool* isCollided);
+		static bool m_InternalGetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, int* m_blockedFlag, bool* isCollided);
 
 		static bool m_InternalSetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool drawDebug, float radius, bool isCollided);
 
@@ -90,9 +90,13 @@ namespace script {
 
 		static bool m_InternalSetButtonComponent(ecs::EntityID entity, const vector2::Vec2& position, const vector2::Vec2& scale, bool isClick);
 
-		static bool m_InternalGetScriptNames(ecs::EntityID entity, std::vector<std::string>& scripts);
+		//static bool m_InternalGetScriptNames(ecs::EntityID entity, std::vector<std::string>& scripts);
 
-		static bool m_InternalAddScriptInstance(ecs::EntityID entity, const std::string& scriptName, MonoObject* instance);
+		static MonoArray* m_InternalGetScriptNames(ecs::EntityID entity);
+
+		static bool m_InternalAddScriptInstance(ecs::EntityID entity, MonoString* monoScriptName, MonoObject* instance);
+
+		//static bool m_InternalAddScriptInstance(ecs::EntityID entity, const std::string& scriptName, MonoObject* instance);
 		/******************************************************************/
 		/*!
 			\fn        bool InternalCall::m_InternalGetVelocity(ecs::EntityID entity, vector2::Vec2* vec)
