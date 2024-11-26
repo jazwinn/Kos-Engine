@@ -1188,6 +1188,9 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             ImGui::PopID();
 
                             if (removeFile) {
+                                /*std::string key = it->m_Name;
+                                auto& audioManager = assetManager->m_audioManager;
+                                audioManager.m_StopAudioForEntity(std::to_string(entityID), key);*/
                                 it = ac->m_AudioFiles.erase(it);
                             }
                             else {
