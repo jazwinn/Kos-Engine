@@ -631,6 +631,46 @@ namespace script {
 		return nullptr;
 	}
 
+	void InternalCall::m_InternalCallPlayAudio(ecs::EntityID id, MonoString* monoString)
+	{
+		char* nativeString = mono_string_to_utf8(monoString);
+
+		//check if audio component is present
+		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+		ecs::AudioComponent* aud = static_cast<ecs::AudioComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEAUDIOCOMPONENT]->m_GetEntityComponent(id));
+
+		if (aud == nullptr) return;
+
+		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+		std::filesystem::path filepath = nativeString;
+		const auto& it = std::find_if(aud->m_AudioFiles.begin(), aud->m_AudioFiles.end(), [filepath](const auto& audio) {return audio.m_Name == filepath.filename().stem().string(); });
+		
+		if (it != aud->m_AudioFiles.end()) {
+			assetmanager->m_audioManager.m_PlayAudioForEntity(std::to_string(id), filepath.filename().stem().string(), it->m_Volume);
+		}
+		
+
+		mono_free(nativeString);
+	}
+
+	void InternalCall::m_InternalCallStopAudio(ecs::EntityID id, MonoString* monoString)
+	{
+		char* nativeString = mono_string_to_utf8(monoString);
+		std::filesystem::path filepath = nativeString;
+
+		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+		assetmanager->m_audioManager.m_StopAudioForEntity(std::to_string(id), filepath.filename().stem().string());
+
+		mono_free(nativeString);
+	}
+
+	void InternalCall::m_InternalCallStopAllAudio()
+	{
+		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+		assetmanager->m_audioManager.m_StopAllSounds();
+
+	}
+
 	void InternalCall::m_InternalCallDeleteEntity(ecs::EntityID id)
 	{
 		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
@@ -736,5 +776,12 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_InternalCallResetTimeScale);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallCloseWindow);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallGetChildrenID);
+
+
+		MONO_ADD_INTERNAL_CALL(m_InternalCallPlayAudio);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallStopAudio);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallStopAllAudio);
+
+
 	}
 }

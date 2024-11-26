@@ -126,9 +126,17 @@ public class PlayerControl : ScriptBase
             intframespersecond = 1;
             InternalCall.m_InternalCallCloseWindow();
         }
-        
 
-       Vector2 worldpos;
+        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.J))
+        {
+            InternalCall.m_InternalCallPlayAudio(EntityID, "TestLoop.wav");
+        }
+        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.K))
+        {
+            InternalCall.m_InternalCallStopAudio(EntityID, "TestLoop.wav");
+        }
+
+        Vector2 worldpos;
        InternalCall.m_InternalGetWorldMousePosition(out worldpos);
 
        //Console.WriteLine($"x is : {worldpos.X} , y is : {worldpos.Y}");
