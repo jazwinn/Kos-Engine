@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Versioning;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,11 +14,17 @@ public class PlayerControl : ScriptBase
     private uint EntityID;
     public float speed;
 
+    private int framenumber;
+    private int intframespersecond;
+    private float frametimer;
+    bool isanimation;
+
     private Queue<int> queue = new Queue<int>();
 
     public override void GetEntityID(uint id)
     {
         EntityID = id;
+        InternalCall.m_InternalGetAnimationComponent(EntityID, out framenumber, out intframespersecond, out frametimer, out isanimation);
     }
 
     public override void Start()
@@ -88,6 +95,12 @@ public class PlayerControl : ScriptBase
 
             SetComponent.SetSpriteComponent(EntityID, sprite); // set sprite component
 
+        }
+
+        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.Z))
+        {
+            intframespersecond = 1;
+            InternalCall.m_InternalSetAnimationComponent(EntityID, in framenumber, in intframespersecond, in frametimer, in isanimation);
         }
 
         InternalCall.m_InternalSetVelocity(EntityID, velocity);
