@@ -23,7 +23,6 @@ namespace actions {
 				previousAction->m_undoAction();
 				m_redoStack.push(previousAction);
 				m_undoStack.pop();
-
 			}
 		}
 
@@ -38,6 +37,18 @@ namespace actions {
 
 		void m_push(Action* inAction) {
 			m_undoStack.push(inAction);
+			while (!m_redoStack.empty()) {
+				delete m_redoStack.top();
+				m_redoStack.pop();
+			}
+		}
+		
+		bool checkUndo() {
+			return m_undoStack.empty();
+		}
+
+		bool checkRedo() {
+			return m_redoStack.empty();
 		}
 
 		~ActionManager() {
