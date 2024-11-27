@@ -228,7 +228,7 @@ namespace gui {
 				auto end = std::chrono::steady_clock::now();
 				duration = end - start;
 				performancetracker::Performance::m_UpdateTotalSystemTime(duration.count());
-				performancetracker::Performance::m_UpdateSystemTime(ecs::TYPEIMGUISYSTEM, duration.count());
+				performancetracker::Performance::m_UpdateSystemTime(ecs::TOTALTYPESYSTEM, duration.count());
 				m_DrawPerformanceWindow(help->m_fps);
 			}
 
