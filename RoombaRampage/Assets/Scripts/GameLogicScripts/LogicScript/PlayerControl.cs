@@ -144,6 +144,17 @@ public class PlayerControl : ScriptBase
             SetComponent.SetCollisionComponent(EntityID, collisionComponent);
         }
 
+        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.R))
+        {
+
+            InternalCall.m_InternalCallSetTimeScale(2.0f);
+        }
+        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.T))
+        {
+
+            InternalCall.m_InternalCallResetTimeScale();
+        }
+
         Vector2 worldpos;
        InternalCall.m_InternalGetWorldMousePosition(out worldpos);
 
