@@ -103,7 +103,9 @@ namespace ecs {
 				m_vecAnimationComponentPtr[n]->m_frameTimer += ecs->m_DeltaTime;
 
 				float frameTime = 1.f / m_vecAnimationComponentPtr[n]->m_framesPerSecond;
-				int ids = assetmanager->m_imageManager.m_imageMap.find(SpriteComp->m_imageFile)->second.m_imageID;
+				const auto& image = assetmanager->m_imageManager.m_imageMap.find(SpriteComp->m_imageFile);
+				if (image == assetmanager->m_imageManager.m_imageMap.end()) continue;
+				int ids = image->second.m_imageID;
 				//float spriteTotalTime = frameTime * pipe->m_imageData[ids].m_stripCount;
 				//std::cout << m_vecAnimationComponentPtr[n]->m_stripCount << std::endl;
 				float spriteTotalTime = frameTime * m_vecAnimationComponentPtr[n]->m_stripCount;
