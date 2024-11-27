@@ -72,7 +72,7 @@ namespace script {
 
 		static bool m_InternalGetTextComponent(ecs::EntityID entity, MonoString** text, MonoString** imageFile, int* fontLayer, float* fontSize, vector3::Vec3* color);
 
-		static bool m_InternalSetTextComponent(ecs::EntityID entity, MonoString* text, MonoString* fileName, int fontLayer, float fontSize, const vector3::Vec3& color);
+		static bool m_InternalSetTextComponent(ecs::EntityID entity, MonoString* text, MonoString* fileName, int* fontLayer, float* fontSize, const vector3::Vec3* color);
 
 		static bool m_InternalGetAnimationComponent(ecs::EntityID entity, int* frameNumber, int* framesPerSecond, float* frameTimer, bool* isAnimating, int* stripcount);
 

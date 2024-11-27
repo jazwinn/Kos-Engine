@@ -175,7 +175,7 @@ namespace script {
 		return true;
 	}
 
-	bool InternalCall::m_InternalSetTextComponent(ecs::EntityID entity, MonoString* text, MonoString* fileName, int fontLayer, float fontSize, const vector3::Vec3& color)
+	bool InternalCall::m_InternalSetTextComponent(ecs::EntityID entity, MonoString* text, MonoString* fileName, int* fontLayer, float* fontSize, const vector3::Vec3* color)
 	{
 		auto* textComponent = static_cast<ecs::TextComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(entity));
 
@@ -187,9 +187,9 @@ namespace script {
 		std::string ctFileName = nativeFile;
 		textComponent->m_fileName = ctFileName;
 
-		textComponent->m_fontLayer = fontLayer;
-		textComponent->m_fontSize = fontSize;
-		textComponent->m_color = color;
+		textComponent->m_fontLayer = *fontLayer;
+		textComponent->m_fontSize = *fontSize;
+		textComponent->m_color = *color;
 
 		mono_free(nativeText);
 		mono_free(nativeFile);

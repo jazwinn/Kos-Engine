@@ -164,6 +164,20 @@ namespace Application {
                 --------------------------------------------------------------*/
                 Input.m_inputUpdate();
 
+
+                /*--------------------------------------------------------------
+                    UPDATE ECS
+                --------------------------------------------------------------*/
+                //ecs->m_Update(help->m_fixedDeltaTime * help->m_timeScale); 
+                ecs->m_Update(help->m_fixedDeltaTime * help->m_timeScale);
+                //ecs->m_Update(Helper::Helpers::GetInstance()->m_deltaTime);
+
+
+                /*--------------------------------------------------------------
+                    UPDATE Render Pipeline
+                --------------------------------------------------------------*/
+                pipe->m_funcUpdate();
+
 #ifdef IMGUIENABLED
 
                 /*--------------------------------------------------------------
@@ -173,23 +187,11 @@ namespace Application {
 #endif
 
                 /*--------------------------------------------------------------
-                    UPDATE ECS
-                --------------------------------------------------------------*/
-                //ecs->m_Update(help->m_fixedDeltaTime * help->m_timeScale); 
-                ecs->m_Update(help->m_fixedDeltaTime * help->m_timeScale);
-                //ecs->m_Update(Helper::Helpers::GetInstance()->m_deltaTime);
-
-                /*--------------------------------------------------------------
-                    UPDATE Render Pipeline
-                --------------------------------------------------------------*/
-                pipe->m_funcUpdate();
-
-
-
-                /*--------------------------------------------------------------
                     DRAWING/RENDERING Window
                 --------------------------------------------------------------*/
                 lvWindow.Draw();
+
+
 
 #ifdef IMGUIENABLED
 
