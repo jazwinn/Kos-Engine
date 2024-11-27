@@ -21,6 +21,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Debugging/Logging.h"
 #include "../Asset Manager/SceneManager.h"
 #include "Hierachy.h"
+#include "../Application/Helper.h"
 
 //ECS Varaible
 
@@ -80,7 +81,7 @@ namespace ecs{
 
 		//Initialize all system Peformance
 		performancetracker::Performance Perform{};
-		for (int n{}; n < TOTALTYPESYSTEM; n++) {
+		for (int n{}; n <= TOTALTYPESYSTEM; n++) {
 			Perform.m_AddSystem((TypeSystem)n);
 		}
 	}
@@ -98,6 +99,8 @@ namespace ecs{
 		if (ecs->m_state != ecs->m_nextState) {
 			if (ecs->m_nextState == START) {
 				//if next state is start, run the logic start script
+			    Helper::Helpers::GetInstance()->currentNumberOfSteps = 0;
+				Helper::Helpers::GetInstance()->m_timeScale = 1;
 				std::shared_ptr<LogicSystem> sys = std::dynamic_pointer_cast<LogicSystem>(ecs->m_ECS_SystemMap.find(TYPELOGICSYSTEM)->second);
 				sys->m_StartLogic(); //TODO? place scene?
 
@@ -122,7 +125,7 @@ namespace ecs{
 
 
 			if (ecs->m_state != RUNNING) {
-				if (System.first == TYPECOLLISIONSYSTEM || System.first == TYPECOLLISIONRESPONSESYSTEM || 
+				if (System.first == TYPECOLLISIONRESPONSESYSTEM || 
 					System.first == TYPELOGICSYSTEM || System.first == TYPEPHYSICSSYSTEM || 
 					System.first == TYPEANIMATIONSYSTEM) {
 					//skip physics and logic if not running

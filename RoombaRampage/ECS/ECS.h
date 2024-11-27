@@ -141,7 +141,7 @@ namespace ecs {
 		//create getters
 		std::unordered_map<ComponentType, std::shared_ptr<IComponentPool>> m_ECS_CombinedComponentPool{};
 
-		std::unordered_map<TypeSystem, std::shared_ptr<ISystem>> m_ECS_SystemMap{};
+		std::map<TypeSystem, std::shared_ptr<ISystem>> m_ECS_SystemMap{};
 
 		std::unordered_map<EntityID, std::bitset<TOTALTYPECOMPONENT>> m_ECS_EntityMap{};
 

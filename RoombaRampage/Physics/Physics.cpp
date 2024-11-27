@@ -269,7 +269,40 @@ namespace physicspipe {
 		float distance_Square = dx * dx + dy * dy;
 
 		float combineRadius = circle1.m_radius + circle2.m_radius;
-		return distance_Square <= (combineRadius * combineRadius);
+		vector2::Vec2 delta = circle2.m_position - circle1.m_position;
+
+		//return distance_Square <= (combineRadius * combineRadius);
+
+		if (distance_Square >= (combineRadius * combineRadius)) {
+			return false; // no collision
+		}
+
+		vector2::Vec2 collisionNormal = delta;
+		vector2::Vec2::m_funcVec2Normalize(collisionNormal, collisionNormal);
+		if (std::abs(collisionNormal.m_x) > std::abs(collisionNormal.m_y)) {
+			// Horizontal collision
+			if (collisionNormal.m_x > 0) {
+				const_cast<Circle&>(circle1).AddCollisionFlag(RIGHT);
+				const_cast<Circle&>(circle2).AddCollisionFlag(LEFT);
+			}
+			else {
+				const_cast<Circle&>(circle1).AddCollisionFlag(LEFT);
+				const_cast<Circle&>(circle2).AddCollisionFlag(RIGHT);
+			}
+		}
+		else {
+			// Vertical collision
+			if (collisionNormal.m_y > 0) {
+				const_cast<Circle&>(circle1).AddCollisionFlag(DOWN);
+				const_cast<Circle&>(circle2).AddCollisionFlag(UP);
+			}
+			else {
+				const_cast<Circle&>(circle1).AddCollisionFlag(UP);
+				const_cast<Circle&>(circle2).AddCollisionFlag(DOWN);
+			}
+		}
+
+		return true;
 	}
 
 	void m_BuildLineSegment(LineSegment& lineSegment, const vector2::Vec2& p0, const vector2::Vec2& p1){
@@ -436,6 +469,8 @@ namespace physicspipe {
 		return 0.5f * std::sqrt(m_width * m_width + m_height * m_height);
 	}
 
+
+
 	bool Physics::m_withinBoundingRadius(const std::shared_ptr<PhysicsData>& entity1, const std::shared_ptr<PhysicsData>& entity2) {
 		float dx = entity1->m_position.m_x - entity2->m_position.m_x;
 		float dy = entity1->m_position.m_y - entity2->m_position.m_y;
@@ -549,6 +584,16 @@ namespace physicspipe {
 		}
 	}
 
+	vector2::Vec2 Rectangle::TransformToLocalSpace(const vector2::Vec2& globalVector) const
+	{
+		float cosTheta = mathlibrary::mathlib::funcCos(-mathlibrary::mathlib::funcDegreeToRadian(m_rotAngle));
+		float sinTheta = mathlibrary::mathlib::funcSin(-mathlibrary::mathlib::funcDegreeToRadian(m_rotAngle));
+		return {
+			globalVector.m_x* cosTheta - globalVector.m_y * sinTheta,  // x' calculation
+		   globalVector.m_x * sinTheta + globalVector.m_y * cosTheta // y' calculation
+		};
+	}
+
 	bool Physics::m_CollisionIntersection_RectRect_SAT(const Rectangle& obj1, const Rectangle& obj2) {
 		// Get rotated vertices and edges
 		std::vector<vector2::Vec2> verticesA = obj1.m_getRotatedVertices();
@@ -592,21 +637,44 @@ namespace physicspipe {
 				isEntity1Blocked = (vector2::Vec2::m_funcVec2DDotProduct(deltaPosition, smallestAxis) > 0);
 			}
 		}
+		//vector2::Vec2 smallestAxisNormalized = smallestAxis;
+		//vector2::Vec2::m_funcVec2Normalize(smallestAxisNormalized, smallestAxisNormalized);
+		//vector2::Vec2 localAxis = obj1.TransformToLocalSpace(smallestAxisNormalized);
+		//if (std::abs(localAxis.m_x) > std::abs(localAxis.m_y)) {
+		//	if (localAxis.m_x > 0) {
+		//		const_cast<Rectangle&>(obj1).AddCollisionFlag(LEFT);
+		//		//const_cast<Rectangle&>(obj2).AddCollisionFlag(LEFT);
+		//	}
+		//	else {
+		//		const_cast<Rectangle&>(obj1).AddCollisionFlag(RIGHT);
+		//		//const_cast<Rectangle&>(obj2).AddCollisionFlag(RIGHT);
+		//	}
+
+		//}
+		//else {
+		//	if (localAxis.m_y > 0) {
+		//		const_cast<Rectangle&>(obj1).AddCollisionFlag(UP);
+		//		//const_cast<Rectangle&>(obj2).AddCollisionFlag(DOWN);
+		//	}
+		//	else {
+		//		const_cast<Rectangle&>(obj1).AddCollisionFlag(DOWN);
+		//		//const_cast<Rectangle&>(obj2).AddCollisionFlag(UP);
+		//	}
+		//		
+		//}
+
+
 
 		// Add blocked directions based on the smallest axis
 		if (std::abs(smallestAxis.m_x) > std::abs(smallestAxis.m_y)) {
 			// Horizontal collision
 			if (smallestAxis.m_x > 0) {
 				if (isEntity1Blocked) {
-					//const_cast<Rectangle&>(obj1).AddBlockedDirection("right");
-					//const_cast<Rectangle&>(obj2).AddBlockedDirection("left");
 					const_cast<Rectangle&>(obj1).AddCollisionFlag(RIGHT);
 					const_cast<Rectangle&>(obj2).AddCollisionFlag(LEFT);
 
 				}
 				else {
-					//const_cast<Rectangle&>(obj1).AddBlockedDirection("left");
-					//const_cast<Rectangle&>(obj2).AddBlockedDirection("right");
 					const_cast<Rectangle&>(obj1).AddCollisionFlag(LEFT);
 					const_cast<Rectangle&>(obj2).AddCollisionFlag(RIGHT);
 				}
@@ -616,18 +684,10 @@ namespace physicspipe {
 			// Vertical collision
 			if (smallestAxis.m_y > 0) {
 				if (isEntity1Blocked) {
-					//const_cast<Rectangle&>(obj1).AddBlockedDirection("down");
-					//const_cast<Rectangle&>(obj2).AddBlockedDirection("up");
-					//const_cast<Rectangle&>(obj1).AddBlockedDirection("up");
-					//const_cast<Rectangle&>(obj2).AddBlockedDirection("down");
 					const_cast<Rectangle&>(obj1).AddCollisionFlag(UP);
 					const_cast<Rectangle&>(obj2).AddCollisionFlag(DOWN);
 				}
 				else {
-					//const_cast<Rectangle&>(obj1).AddBlockedDirection("up");
-					//const_cast<Rectangle&>(obj2).AddBlockedDirection("down");
-					//const_cast<Rectangle&>(obj1).AddBlockedDirection("down");
-					//const_cast<Rectangle&>(obj2).AddBlockedDirection("up");
 					const_cast<Rectangle&>(obj1).AddCollisionFlag(DOWN);
 					const_cast<Rectangle&>(obj2).AddCollisionFlag(UP);
 				}
@@ -644,6 +704,7 @@ namespace physicspipe {
 
 	std::vector <std::pair<std::shared_ptr<PhysicsData>, std::shared_ptr<PhysicsData>>> Physics::m_RetrievePhysicsDataPair() {
 		std::vector <std::pair<std::shared_ptr<PhysicsData>, std::shared_ptr<PhysicsData>>> TempCollidedEntities = m_collidedEntitiesPair;
+		this->m_clearPair();
 		return TempCollidedEntities;
 	}
 

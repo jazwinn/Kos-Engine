@@ -151,18 +151,26 @@ namespace Application {
                 // --------------------------------------------------------------*/
                 double currentFrameTime = glfwGetTime();
                 help->m_deltaTime = static_cast<float>(currentFrameTime - lastFrameTime);
-                //help->m_deltaTime = static_cast<float>(currentFrameTime - lastFrameTime) * help->m_timeScale;
                 lastFrameTime = currentFrameTime;
                 accumulatedTime += (help->m_deltaTime * help->m_timeScale);
                 Helper::Helpers::GetInstance()->currentNumberOfSteps = 0;
-                while (accumulatedTime >= (fixedDeltaTime * help->m_timeScale )) {
-                    accumulatedTime -= (fixedDeltaTime * help->m_timeScale);
+                while (accumulatedTime >= (fixedDeltaTime  )) {
+                    accumulatedTime -= (fixedDeltaTime);
                     ++help->currentNumberOfSteps;
                 }
+                
                 /*--------------------------------------------------------------
                     UPDATE INPUT
                 --------------------------------------------------------------*/
                 Input.m_inputUpdate();
+
+#ifdef IMGUIENABLED
+
+                /*--------------------------------------------------------------
+                    Update IMGUI FRAME
+                --------------------------------------------------------------*/
+                Editor.m_update();
+#endif
 
                 /*--------------------------------------------------------------
                     UPDATE ECS
@@ -176,13 +184,7 @@ namespace Application {
                 --------------------------------------------------------------*/
                 pipe->m_funcUpdate();
 
-#ifdef IMGUIENABLED
 
-                /*--------------------------------------------------------------
-                    Update IMGUI FRAME
-                --------------------------------------------------------------*/
-                Editor.m_update();
-#endif
 
                 /*--------------------------------------------------------------
                     DRAWING/RENDERING Window

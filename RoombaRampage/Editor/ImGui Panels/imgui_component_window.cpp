@@ -233,6 +233,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
 
         if (ImGui::Combo("##ADDCOMPONENT", &ComponentType, ComponentNames, IM_ARRAYSIZE(ComponentNames), IM_ARRAYSIZE(ComponentNames))) {
+            ecs::compSignature EntitySignature = ecs->m_ECS_EntityMap[entityID];
             if (ComponentType == 1) {
                 ecs->m_AddComponent(ecs::TYPECOLLIDERCOMPONENT, entityID);
                 if (ecs->m_ECS_EntityMap[entityID].test(ecs::TYPESPRITECOMPONENT))
@@ -249,68 +250,90 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 }
                
                 ComponentType = 0;
-                events::AddComponent action(entityID, ecs::TYPECOLLIDERCOMPONENT);
-                DISPATCH_ACTION_EVENT(action);
+                if (!EntitySignature.test(ecs::TYPECOLLIDERCOMPONENT)) {
+                    events::AddComponent action(entityID, ecs::TYPECOLLIDERCOMPONENT);
+                    DISPATCH_ACTION_EVENT(action);
+                }
             }
             if (ComponentType == 2) {
                 ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, entityID);
                 ComponentType = 0;
-                events::AddComponent action(entityID, ecs::TYPESPRITECOMPONENT);
-                DISPATCH_ACTION_EVENT(action);
+                if (!EntitySignature.test(ecs::TYPESPRITECOMPONENT)) {
+                    events::AddComponent action(entityID, ecs::TYPESPRITECOMPONENT);
+                    DISPATCH_ACTION_EVENT(action);
+                }
             }
             if (ComponentType == 3) {
                 ecs->m_AddComponent(ecs::TYPEPLAYERCOMPONENT, entityID);
                 ComponentType = 0;
-                events::AddComponent action(entityID, ecs::TYPEPLAYERCOMPONENT);
-                DISPATCH_ACTION_EVENT(action);
+                if (!EntitySignature.test(ecs::TYPEPLAYERCOMPONENT)) {
+                    events::AddComponent action(entityID, ecs::TYPEPLAYERCOMPONENT);
+                    DISPATCH_ACTION_EVENT(action);
+                }
             }
             if (ComponentType == 4) {
                 ecs->m_AddComponent(ecs::TYPERIGIDBODYCOMPONENT, entityID);
                 ComponentType = 0;
-                events::AddComponent action(entityID, ecs::TYPERIGIDBODYCOMPONENT);
-                DISPATCH_ACTION_EVENT(action);
+                if (!EntitySignature.test(ecs::TYPERIGIDBODYCOMPONENT)) {
+                    events::AddComponent action(entityID, ecs::TYPERIGIDBODYCOMPONENT);
+                    DISPATCH_ACTION_EVENT(action);
+                }
             }
             if (ComponentType == 5) {
                 ecs->m_AddComponent(ecs::TYPETEXTCOMPONENT, entityID);
                 ComponentType = 0;
-                events::AddComponent action(entityID, ecs::TYPETEXTCOMPONENT);
-                DISPATCH_ACTION_EVENT(action);
+                if (!EntitySignature.test(ecs::TYPETEXTCOMPONENT)) {
+                    events::AddComponent action(entityID, ecs::TYPETEXTCOMPONENT);
+                    DISPATCH_ACTION_EVENT(action);
+                }
             }
             if (ComponentType == 6) {
                 ecs->m_AddComponent(ecs::TYPEANIMATIONCOMPONENT, entityID);
                 ComponentType = 0;
-                events::AddComponent action(entityID, ecs::TYPEANIMATIONCOMPONENT);
-                DISPATCH_ACTION_EVENT(action);
+                if (!EntitySignature.test(ecs::TYPEANIMATIONCOMPONENT)) {
+                    events::AddComponent action(entityID, ecs::TYPEANIMATIONCOMPONENT);
+                    DISPATCH_ACTION_EVENT(action);
+                }
             }
             if (ComponentType == 7) {
                 ecs->m_AddComponent(ecs::TYPECAMERACOMPONENT, entityID);
                 ComponentType = 0;
-                events::AddComponent action(entityID, ecs::TYPECAMERACOMPONENT);
-                DISPATCH_ACTION_EVENT(action);
+                if (!EntitySignature.test(ecs::TYPECAMERACOMPONENT)) {
+                    events::AddComponent action(entityID, ecs::TYPECAMERACOMPONENT);
+                    DISPATCH_ACTION_EVENT(action);
+                }
             }
             if (ComponentType == 8) {
                 ecs->m_AddComponent(ecs::TYPEBUTTONCOMPONENT, entityID);
                 ComponentType = 0;
-                events::AddComponent action(entityID, ecs::TYPEBUTTONCOMPONENT);
-                DISPATCH_ACTION_EVENT(action);
+                if (!EntitySignature.test(ecs::TYPEBUTTONCOMPONENT)) {
+                    events::AddComponent action(entityID, ecs::TYPEBUTTONCOMPONENT);
+                    DISPATCH_ACTION_EVENT(action);
+                }
             }
             if (ComponentType == 9) {
                 ecs->m_AddComponent(ecs::TYPESCRIPTCOMPONENT, entityID);
                 ComponentType = 0;
-                events::AddComponent action(entityID, ecs::TYPESCRIPTCOMPONENT);
-                DISPATCH_ACTION_EVENT(action);
+                if (!EntitySignature.test(ecs::TYPESCRIPTCOMPONENT)) {
+                    events::AddComponent action(entityID, ecs::TYPESCRIPTCOMPONENT);
+                    DISPATCH_ACTION_EVENT(action);
+                }
             }
             if (ComponentType == 10) {
                 ecs->m_AddComponent(ecs::TYPETILEMAPCOMPONENT, entityID);
                 ComponentType = 0;
-                events::AddComponent action(entityID, ecs::TYPETILEMAPCOMPONENT);
-                DISPATCH_ACTION_EVENT(action);
+                if (!EntitySignature.test(ecs::TYPETILEMAPCOMPONENT)) {
+                    events::AddComponent action(entityID, ecs::TYPETILEMAPCOMPONENT);
+                    DISPATCH_ACTION_EVENT(action);
+                }
             }
             if (ComponentType == 11) {
                 ecs->m_AddComponent(ecs::TYPEAUDIOCOMPONENT, entityID);
                 ComponentType = 0;
-                events::AddComponent action(entityID, ecs::TYPEAUDIOCOMPONENT);
-                DISPATCH_ACTION_EVENT(action);
+                if (!EntitySignature.test(ecs::TYPEAUDIOCOMPONENT)) {
+                    events::AddComponent action(entityID, ecs::TYPEAUDIOCOMPONENT);
+                    DISPATCH_ACTION_EVENT(action);
+                }
             }
         }
 
@@ -1157,20 +1180,51 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                                 ImGui::SliderFloat("Volume", &it->m_Volume, 0.0f, 1.0f);
                                 assetManager->m_audioManager.m_SetVolumeForEntity(std::to_string(entityID), it->m_Name, it->m_Volume);
 
-                                ImGui::Checkbox("Loop", &it->m_Loop);
-                                assetManager->m_audioManager.m_SetLoopingForEntity(std::to_string(entityID), it->m_Name, it->m_Loop);
+                                bool wasLooping = it->m_Loop;
 
+                                if (ImGui::Button("Play Sound")) {
+                                    std::string key = it->m_Name;
+                                    auto& audioManager = assetManager->m_audioManager;
+                                    if (!audioManager.m_IsPlayingForEntity(std::to_string(entityID), key)) {
+                                        audioManager.m_PlayAudioForEntity(std::to_string(entityID), key, it->m_Volume);
+                                    }
+                                    else {
+                                        audioManager.m_StopAudioForEntity(std::to_string(entityID), it->m_Name);
+                                        audioManager.m_PlayAudioForEntity(std::to_string(entityID), key, it->m_Volume);
+                                    }
+                                }
+    
                                 if (ImGui::Checkbox("Play On Start", &it->m_PlayOnStart)) {
+                                    auto& audioManager = assetManager->m_audioManager;
+
                                     if (it->m_PlayOnStart) {
                                         for (auto& audioFile : ac->m_AudioFiles) {
                                             if (&audioFile != &(*it)) {
                                                 audioFile.m_PlayOnStart = false;
                                             }
                                         }
+
+                                        audioManager.m_StopAudioForEntity(std::to_string(entityID), it->m_Name);
+
                                     }
-                                    auto& audioManager = assetManager->m_audioManager;
+                                    else {
+                                        audioManager.m_StopAudioForEntity(std::to_string(entityID), it->m_Name);
+                                    }
+
                                     audioManager.m_SetPlayOnStartForEntity(std::to_string(entityID), it->m_Name, it->m_PlayOnStart);
                                 }
+
+                                if (ImGui::Checkbox("Loop", &it->m_Loop)) {
+                                    auto& audioManager = assetManager->m_audioManager;
+
+                                    audioManager.m_SetLoopingForEntity(std::to_string(entityID), it->m_Name, it->m_Loop);
+
+                                    if (it->m_Loop != wasLooping && audioManager.m_IsPlayingForEntity(std::to_string(entityID), it->m_Name)) {
+                                        audioManager.m_StopAudioForEntity(std::to_string(entityID), it->m_Name);
+                                        audioManager.m_PlayAudioForEntity(std::to_string(entityID), it->m_Name, it->m_Volume);
+                                    }
+                                }
+
 
 
 
@@ -1207,9 +1261,9 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             ImGui::PopID();
 
                             if (removeFile) {
-                                /*std::string key = it->m_Name;
+                                std::string key = it->m_Name;
                                 auto& audioManager = assetManager->m_audioManager;
-                                audioManager.m_StopAudioForEntity(std::to_string(entityID), key);*/
+                                audioManager.m_StopAudioForEntity(std::to_string(entityID), key);
                                 it = ac->m_AudioFiles.erase(it);
                             }
                             else {

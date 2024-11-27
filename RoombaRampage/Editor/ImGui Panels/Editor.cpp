@@ -56,6 +56,10 @@ namespace gui {
 		REGISTER_ACTION_LISTENER(events::Actions::REDO, ImGuiHandler::m_OnAction, this)
 		REGISTER_ACTION_LISTENER(events::Actions::ADDCOMP, ImGuiHandler::m_OnAction, this)
 		REGISTER_ACTION_LISTENER(events::Actions::REMOVECOMP, ImGuiHandler::m_OnAction, this)
+		REGISTER_ACTION_LISTENER(events::Actions::ADDENT, ImGuiHandler::m_OnAction, this)
+		REGISTER_ACTION_LISTENER(events::Actions::DELENT, ImGuiHandler::m_OnAction, this)
+		REGISTER_ACTION_LISTENER(events::Actions::ADDCHILD, ImGuiHandler::m_OnAction, this)
+		REGISTER_ACTION_LISTENER(events::Actions::REMOVECHILD, ImGuiHandler::m_OnAction, this)
 	} //CTORdoing 
 
 	ImGuiHandler::~ImGuiHandler() {} //Destructor
@@ -190,6 +194,24 @@ namespace gui {
 			m_UpdateOnPrefabMode();
 			
 			Helper::Helpers* help = Helper::Helpers::GetInstance();
+			ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+
+			//check if "m_activeScene", if not find first active scene
+			const auto& scene = ecs->m_ECS_SceneMap.find(m_activeScene);
+			if (scene == ecs->m_ECS_SceneMap.end()) {
+				for (auto& _scene : ecs->m_ECS_SceneMap) {
+					if (!_scene.second.m_isPrefab) {
+						m_activeScene = _scene.first;
+						_scene.second.m_isActive = true;
+					}
+				}
+			}
+
+			//check if selected entityid is loaded
+			if (ecs->m_ECS_EntityMap.find(m_clickedEntityId) == ecs->m_ECS_EntityMap.end()) {
+				m_clickedEntityId = -1;
+			}
+
 
 			ImVec2 windowSize = ImGui::GetIO().DisplaySize;
 			// only render when window is not minimize
@@ -210,7 +232,7 @@ namespace gui {
 				auto end = std::chrono::steady_clock::now();
 				duration = end - start;
 				performancetracker::Performance::m_UpdateTotalSystemTime(duration.count());
-				performancetracker::Performance::m_UpdateSystemTime(ecs::TYPEIMGUISYSTEM, duration.count());
+				performancetracker::Performance::m_UpdateSystemTime(ecs::TOTALTYPESYSTEM, duration.count());
 				m_DrawPerformanceWindow(help->m_fps);
 			}
 
@@ -332,15 +354,33 @@ namespace gui {
 
 	void ImGuiHandler::m_OnAction(const events::BaseEvent<events::Actions>& givenEvent) {
 		if (givenEvent.m_GetEventType() == events::Actions::TRANSFORMCOMP) {
-			auto* newAct = new actions::ModifyTransformAction(givenEvent.m_ToType<events::TransformComponentChanged>().m_getID(), givenEvent.m_ToType<events::TransformComponentChanged>().m_getComp(),
-													 givenEvent.m_ToType<events::TransformComponentChanged>().m_getOld(), givenEvent.m_ToType<events::TransformComponentChanged>().m_getNew());
+			auto* newAct = new actions::ModifyTransformAction(givenEvent.m_ToType<events::TransformComponentChanged>().m_GetID(), givenEvent.m_ToType<events::TransformComponentChanged>().m_GetComp(),
+															  givenEvent.m_ToType<events::TransformComponentChanged>().m_GetOldPos(), givenEvent.m_ToType<events::TransformComponentChanged>().m_GetOldRot(),
+															  givenEvent.m_ToType<events::TransformComponentChanged>().m_GetOldScale(), givenEvent.m_ToType<events::TransformComponentChanged>().m_GetOldTrans());
+			//ModifyTransformAction(ecs::EntityID inID, ecs::TransformComponent* inComp, vector2::Vec2 inOldPos, float inOldRot, vector2::Vec2 inOldScale, mat3x3::Mat3x3 inOldTrans)
 			actions::ActionManager::m_GetManagerInstance()->m_doAction(newAct);
 		}else if (givenEvent.m_GetEventType() == events::Actions::ADDCOMP) {
-			auto* newAct = new actions::AddComponentAction(givenEvent.m_ToType<events::AddComponent>().m_getID(), givenEvent.m_ToType<events::AddComponent>().m_getComponentType());
+			auto* newAct = new actions::AddComponentAction(givenEvent.m_ToType<events::AddComponent>().m_GetID(), givenEvent.m_ToType<events::AddComponent>().m_GetComponentType());
 			actions::ActionManager::m_GetManagerInstance()->m_push(newAct);
 		}
 		else if (givenEvent.m_GetEventType() == events::Actions::REMOVECOMP) {
-			auto* newAct = new actions::RemoveComponentAction(givenEvent.m_ToType<events::AddComponent>().m_getID(), givenEvent.m_ToType<events::AddComponent>().m_getComponentType());
+			auto* newAct = new actions::RemoveComponentAction(givenEvent.m_ToType<events::RemoveComponent>().m_GetID(), givenEvent.m_ToType<events::RemoveComponent>().m_GetComponentType());
+			actions::ActionManager::m_GetManagerInstance()->m_push(newAct);
+		}
+		else if (givenEvent.m_GetEventType() == events::Actions::ADDENT) {
+			auto* newAct = new actions::AddEntityAction(givenEvent.m_ToType<events::AddEntity>().m_GetID(), givenEvent.m_ToType<events::AddEntity>().m_GetSignature(), givenEvent.m_ToType<events::AddEntity>().m_GetScene(), givenEvent.m_ToType<events::AddEntity>().m_GetName());
+			actions::ActionManager::m_GetManagerInstance()->m_push(newAct);
+		}
+		else if (givenEvent.m_GetEventType() == events::Actions::DELENT) {
+			auto* newAct = new actions::RemoveEntityAction(givenEvent.m_ToType<events::RemoveEntity>().m_GetID(), givenEvent.m_ToType<events::RemoveEntity>().m_GetSignature(), givenEvent.m_ToType<events::RemoveEntity>().m_GetScene(), givenEvent.m_ToType<events::RemoveEntity>().m_GetName());
+			actions::ActionManager::m_GetManagerInstance()->m_push(newAct);
+		}
+		else if (givenEvent.m_GetEventType() == events::Actions::ADDCHILD) {
+			auto* newAct = new actions::AddEntityWithParentAction(givenEvent.m_ToType<events::AddChild>().m_GetID(), givenEvent.m_ToType<events::AddChild>().m_GetParentID(), givenEvent.m_ToType<events::AddChild>().m_GetScene(), givenEvent.m_ToType<events::AddChild>().m_GetName(), givenEvent.m_ToType<events::AddChild>().m_GetSignature());
+			actions::ActionManager::m_GetManagerInstance()->m_push(newAct);
+		}
+		else if (givenEvent.m_GetEventType() == events::Actions::REMOVECHILD) {
+			auto* newAct = new actions::RemoveEntityWithParentAction(givenEvent.m_ToType<events::RemoveChild>().m_GetID(), givenEvent.m_ToType<events::RemoveChild>().m_GetParentID(), givenEvent.m_ToType<events::RemoveChild>().m_GetScene(), givenEvent.m_ToType<events::RemoveChild>().m_GetName(), givenEvent.m_ToType<events::RemoveChild>().m_GetSignature());
 			actions::ActionManager::m_GetManagerInstance()->m_push(newAct);
 		}
 		else if (givenEvent.m_GetEventType() == events::Actions::UNDO) {
@@ -348,6 +388,7 @@ namespace gui {
 		}
 		else if (givenEvent.m_GetEventType() == events::Actions::REDO) {
 			actions::ActionManager::m_GetManagerInstance()->m_redo();
+
 		}
 		
 	}

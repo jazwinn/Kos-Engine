@@ -109,7 +109,7 @@ namespace ecs {
 				
 			}
 		}
-		PhysicsPipeline->m_Update();
+		//PhysicsPipeline->m_Update();
 	}
 
 }

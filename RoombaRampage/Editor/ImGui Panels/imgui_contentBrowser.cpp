@@ -12,7 +12,7 @@ namespace gui {
 
 	static std::filesystem::path assetDirectory = "Assets";
 	static std::filesystem::path currentDirectory  = assetDirectory;
-	static const char* fileIcon = "FolderIcon.png";
+	static const char* fileIcon = "img_folderIcon.png";
 
 
 	void MoveFolder(const std::filesystem::path& newDirectory) {
@@ -176,7 +176,7 @@ namespace gui {
 						}
 					}
 					else if (directoryPath.path().filename().extension().string() == ".wav") {
-						std::string wavicon = "Audiowav.png";
+						std::string wavicon = "img_audioWav.png";
 						textorimage(directoryString, wavicon);
 
 						if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
@@ -186,7 +186,7 @@ namespace gui {
 						}
 					}
 					else if (directoryPath.path().filename().extension().string() == ".cs") {
-						std::string script = "ScriptIcon.png";
+						std::string script = "img_scriptIcon.png";
 						textorimage(directoryString, script);
 
 						if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {

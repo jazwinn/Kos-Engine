@@ -265,6 +265,14 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
     if (ImGui::IsKeyPressed(ImGuiKey_Delete))
     {
         if (m_clickedEntityId >= 0) {
+            if (ecs::Hierachy::m_GetParent(m_clickedEntityId).has_value()) {
+                events::RemoveChild removeEvent(m_clickedEntityId, ecs::Hierachy::m_GetParent(m_clickedEntityId), &m_activeScene, static_cast<ecs::NameComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(m_clickedEntityId))->m_entityName, ecs->m_ECS_EntityMap[m_clickedEntityId]);
+                DISPATCH_ACTION_EVENT(removeEvent);
+            }
+            else {
+                events::RemoveEntity removeEvent(m_clickedEntityId, &m_activeScene, static_cast<ecs::NameComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(m_clickedEntityId))->m_entityName, ecs->m_ECS_EntityMap[m_clickedEntityId]);
+                DISPATCH_ACTION_EVENT(removeEvent);
+            }
             ecs::ECS::m_GetInstance()->m_DeleteEntity(m_clickedEntityId);
             m_clickedEntityId = -1;
 
@@ -286,7 +294,7 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
             std::filesystem::path* filename = static_cast<std::filesystem::path*>(payload->Data);
 
             vector3::Vec3 translate = calculateworld();
-            
+
 
             if (filename->filename().extension().string() == ".png" || filename->filename().extension().string() == ".jpg") {
                 assetmanager::AssetManager* assets = assetmanager::AssetManager::m_funcGetInstance();

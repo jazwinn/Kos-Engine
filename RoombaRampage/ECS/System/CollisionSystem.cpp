@@ -93,6 +93,7 @@ namespace ecs {
 
 		//create physics;
 		physicspipe::Physics* PhysicsPipeline = physicspipe::Physics::getInstance();
+
 		for (int n{}; n < m_vecTransformComponentPtr.size(); n++) {
 			//std::cout << "Entity: " << n << "Movement System is getting Updated";
 			
@@ -104,6 +105,10 @@ namespace ecs {
 			//skip component not of the scene
 			if (ColComp->m_scene != scene) continue;
 			
+
+			//skip those if collision track that is false
+
+			if (ColComp->m_CollisionCheck == false) continue;
 
 			//if movement component is present, do dynamic collision
 			vector2::Vec2 velocity{};
@@ -135,16 +140,57 @@ namespace ecs {
 				if (!parentComp) continue;
 							
 				if (ColComp->m_type == physicspipe::EntityType::CIRCLE) {
+					mat3x3::Mat3x3 debugTransformation = mat3x3::Mat3Transform(TransComp->m_position, vector2::Vec2{ 1.f, 1.f }, 0);
 
+					debugTransformation.m_e20 += parentComp->m_position.m_x;
+					debugTransformation.m_e21 += parentComp->m_position.m_y;
+
+					mat3x3::Mat3Scale(scaleMatrix, parentComp->m_scale.m_x, parentComp->m_scale.m_y);
+					mat3x3::Mat3RotDeg(rotateMatrix, parentComp->m_rotation);
+					mat3x3::Mat3Translate(translateToOriginMatrix, -parentComp->m_position.m_x, -parentComp->m_position.m_y);
+					mat3x3::Mat3Translate(translateBackMatrix, parentComp->m_position.m_x, (parentComp->m_position.m_y));
+					debugTransformation = translateBackMatrix * rotateMatrix * scaleMatrix * translateToOriginMatrix * debugTransformation;
+
+
+					mat3x3::Mat3RotDeg(rotateMatrix, TransComp->m_rotation);
+					mat3x3::Mat3Translate(translateToOriginMatrix, -debugTransformation.m_e20, -debugTransformation.m_e21);
+					mat3x3::Mat3Translate(translateBackMatrix, debugTransformation.m_e20, debugTransformation.m_e21);
+
+					debugTransformation = translateBackMatrix * rotateMatrix * translateToOriginMatrix * debugTransformation;
+
+
+					debugTransformation = debugTransformation * mat3x3::Mat3Transform(ColComp->m_OffSet, vector2::Vec2{ ColComp->m_radius * 2.f / parentComp->m_scale.m_x, ColComp->m_radius * 2.f / parentComp->m_scale.m_y }, 0);
+					ColComp->m_collider_Transformation = debugTransformation;
 					
 					mat3x3::Mat3Decompose(ColComp->m_collider_Transformation, pos, scale, rot);
 
 					PhysicsPipeline->m_SendPhysicsData(ColComp->m_radius, pos, scale, velocity, id, NameComp->m_Layer);
 				}
 				else if (ColComp->m_type == physicspipe::EntityType::RECTANGLE) {
+					mat3x3::Mat3x3 child_Transform = mat3x3::Mat3Transform(TransComp->m_position, TransComp->m_scale, 0);
+
+					child_Transform.m_e20 += parentComp->m_position.m_x;
+					child_Transform.m_e21 += parentComp->m_position.m_y;
+
+					mat3x3::Mat3Scale(scaleMatrix, parentComp->m_scale.m_x, parentComp->m_scale.m_y);
+					mat3x3::Mat3RotDeg(rotateMatrix, parentComp->m_rotation);
+					mat3x3::Mat3Translate(translateToOriginMatrix, -parentComp->m_position.m_x, -parentComp->m_position.m_y);
+					mat3x3::Mat3Translate(translateBackMatrix, parentComp->m_position.m_x, (parentComp->m_position.m_y));
+					child_Transform = translateBackMatrix * rotateMatrix * scaleMatrix * translateToOriginMatrix * child_Transform;
+
+					mat3x3::Mat3RotDeg(rotateMatrix, TransComp->m_rotation);
+					mat3x3::Mat3Translate(translateToOriginMatrix, -child_Transform.m_e20, -child_Transform.m_e21);
+					mat3x3::Mat3Translate(translateBackMatrix, child_Transform.m_e20, child_Transform.m_e21);
+
+					child_Transform = translateBackMatrix * rotateMatrix * translateToOriginMatrix * child_Transform;
+
+					mat3x3::Mat3x3 final_Transform = child_Transform * mat3x3::Mat3Transform(ColComp->m_OffSet, vector2::Vec2{ ColComp->m_Size.m_x , ColComp->m_Size.m_y }, 0);
+
+					mat3x3::Mat3x3 debugTransformation = final_Transform;
+
+
+					ColComp->m_collider_Transformation = debugTransformation;
 					
-					//vector2::Vec2 child_Scale = ColComp->m_Size * TransComp->m_scale;
-					//PhysicsPipeline->m_SendPhysicsData(child_Scale.m_y, child_Scale.m_x, TransComp->m_rotation, parentComp->m_rotation, parentComp->m_position, parentComp->m_scale, velocity, id, NameComp->m_Layer, true, TransComp->m_position, TransComp.);
 					mat3x3::Mat3Decompose(ColComp->m_collider_Transformation, pos, scale, rot);
 					PhysicsPipeline->m_SendPhysicsData(scale.m_y, scale.m_x, rot, pos, scale, velocity, id, NameComp->m_Layer);
 				}
@@ -155,12 +201,35 @@ namespace ecs {
 			else {
 				if (ColComp->m_type == physicspipe::EntityType::CIRCLE) {
 
+					mat3x3::Mat3x3 debugTransformation = mat3x3::Mat3Transform(TransComp->m_position, vector2::Vec2{ 1.f, 1.f }, 0);
+
+					mat3x3::Mat3RotDeg(rotateMatrix, TransComp->m_rotation);
+					mat3x3::Mat3Translate(translateToOriginMatrix, -debugTransformation.m_e20, -debugTransformation.m_e21);
+					mat3x3::Mat3Translate(translateBackMatrix, debugTransformation.m_e20, debugTransformation.m_e21);
+
+					debugTransformation = translateBackMatrix * rotateMatrix * translateToOriginMatrix * debugTransformation;
+
+
+					debugTransformation = debugTransformation * mat3x3::Mat3Transform(ColComp->m_OffSet, vector2::Vec2{ ColComp->m_radius * 2.f, ColComp->m_radius * 2.f }, 0);
+					ColComp->m_collider_Transformation = debugTransformation;
+
 					mat3x3::Mat3Decompose(ColComp->m_collider_Transformation, pos, scale, rot);
 
 					PhysicsPipeline->m_SendPhysicsData(ColComp->m_radius, pos, scale, velocity, id, NameComp->m_Layer);
 				}
 				else if (ColComp->m_type == physicspipe::EntityType::RECTANGLE) {
+					mat3x3::Mat3x3 debugTransformation = mat3x3::Mat3Transform(vector2::Vec2{ TransComp->m_transformation.m_e20 , TransComp->m_transformation.m_e21 }, TransComp->m_scale, 0);
 
+					mat3x3::Mat3RotDeg(rotateMatrix, TransComp->m_rotation);
+					mat3x3::Mat3Translate(translateToOriginMatrix, -debugTransformation.m_e20, -debugTransformation.m_e21);
+					mat3x3::Mat3Translate(translateBackMatrix, debugTransformation.m_e20, debugTransformation.m_e21);
+
+					debugTransformation = translateBackMatrix * rotateMatrix * translateToOriginMatrix * debugTransformation;
+
+					debugTransformation = debugTransformation * mat3x3::Mat3Transform(ColComp->m_OffSet, vector2::Vec2{ ColComp->m_Size.m_x , ColComp->m_Size.m_y }, 0);
+
+
+					ColComp->m_collider_Transformation = debugTransformation;
 					mat3x3::Mat3Decompose(ColComp->m_collider_Transformation, pos, scale, rot);
 					PhysicsPipeline->m_SendPhysicsData(scale.m_y, scale.m_x, rot, pos, scale, velocity, id, NameComp->m_Layer);
 
@@ -170,9 +239,6 @@ namespace ecs {
 				}
 			}
 		}
-
-
-	
 	}
 		
 
