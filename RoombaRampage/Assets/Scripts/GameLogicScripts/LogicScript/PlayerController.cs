@@ -24,55 +24,38 @@ public class PlayerController : ScriptBase
     private float startingRoombaRotate;
 
     private Vector2 movement;
-    private ColliderComponent EntityCollider;
-    public CollisionFlag collisionFlag;
+    private int[] collidedEntities;
 
-    //private int test;
+    //Sprite Variables
+    private string startingSprite;
+    private int startingLayer;
+    private Vector3 startingColor;
+    private float startingAlpha;
+
+    private bool isDead;
+
+    private string playerDeathTexture;
 
     public override void Start()
     {
+        InternalCall.m_InternalCallSetTimeScale(1);
+        playerDeathTexture = "img_roombertDeath.png";
+
         InternalCall.m_InternalGetTransformComponent(EntityID, out startingRoombaPos, out startingRoombaScale, out startingRoombaRotate);
-        EntityCollider = new ColliderComponent();
+        InternalCall.m_InternalGetSpriteComponent(EntityID, out startingSprite, out startingLayer, out startingColor, out startingAlpha);
+
+        isDead = false;
+
         speed = 5;
     }
 
     public override void Update()
     {
-        #region Shooting
+        if (GameController.gameIsPaused) { return; }
 
-        //reset entiycollider
-        collisionFlag = CollisionFlag.NONE;
-
-        if (InternalCall.m_InternalCallIsCollided(EntityID) != 0.0f)
-        {
-            int[] collidedEntities = InternalCall.m_InternalCallGetCollidedEntities(EntityID);
-
-            foreach (int collidedEntitiesID in collidedEntities)
-            {
-                if (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID) == "Wall")
-                {
-                    //InternalCall.m_InternalCallDeleteEntity(EntityID);
-                    movement.X = 0;
-                    movement.Y = 0;
-                    InternalCall.m_InternalSetVelocity(EntityID, movement);
-
-                    EntityCollider = GetComponent.GetColliderComponent(EntityID);
-                    collisionFlag = (CollisionFlag)EntityCollider.m_blockedFlag;
-                    Console.WriteLine($"blockflag is : { EntityCollider.m_blockedFlag}");
-
-                }
-            }
-        }
-
-
-
-
-
-        #endregion
+        if (isDead) { return; }
 
         #region Movement WASD
-
-
 
         if (!InternalCall.m_InternalGetVelocity(EntityID, out movement))
         {
@@ -83,22 +66,22 @@ public class PlayerController : ScriptBase
         movement.X = 0;
         movement.Y = 0;
 
-        if (InternalCall.m_InternalCallIsKeyPressed(keyCode.W) && !collisionFlag.HasFlag(CollisionFlag.UP))
+        if (InternalCall.m_InternalCallIsKeyPressed(keyCode.W))
         {
             movement.Y = speed; // Move up if not blocked
         }
 
-        if (InternalCall.m_InternalCallIsKeyPressed(keyCode.S) && !collisionFlag.HasFlag(CollisionFlag.DOWN))
+        if (InternalCall.m_InternalCallIsKeyPressed(keyCode.S))
         {
             movement.Y = -speed; // Move down if not blocked
         }
 
-        if (InternalCall.m_InternalCallIsKeyPressed(keyCode.A) && !collisionFlag.HasFlag(CollisionFlag.LEFT))
+        if (InternalCall.m_InternalCallIsKeyPressed(keyCode.A))
         {
             movement.X = -speed; // Move left if not blocked
         }
 
-        if (InternalCall.m_InternalCallIsKeyPressed(keyCode.D) && !collisionFlag.HasFlag(CollisionFlag.RIGHT))
+        if (InternalCall.m_InternalCallIsKeyPressed(keyCode.D))
         {
             movement.X = speed; // Move right if not blocked
         }
@@ -108,6 +91,7 @@ public class PlayerController : ScriptBase
         #endregion
 
         #region Mouse Rotation
+
         Vector2 mousePos;
         Vector2 roombaPos;
 
@@ -115,7 +99,7 @@ public class PlayerController : ScriptBase
         InternalCall.m_InternalGetWorldMousePosition(out mousePos);
 
         //Get pos of player
-        InternalCall.m_InternalGetTranslate(EntityID, out roombaPos);
+        InternalCall.m_InternalGetTransformComponent(EntityID, out roombaPos, out startingRoombaScale, out startingRoombaRotate);
 
         Vector2 direction;
 
@@ -128,11 +112,33 @@ public class PlayerController : ScriptBase
         InternalCall.m_InternalSetTransformComponent(EntityID, roombaPos, startingRoombaScale, rotationFloat);
 
         #endregion
-        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.LMB))
+
+        #region Shooting
+        if (InternalCall.m_InternalCallIsCollided(EntityID) != 0.0f)
         {
-            //InternalCall.m_InternalCallAddPrefab(string prefab, in float x, in float y, in float degree);
-            InternalCall.m_InternalCallAddPrefab("PlayerBullet", roombaPos.X, roombaPos.Y, rotationFloat);
+            collidedEntities = InternalCall.m_InternalCallGetCollidedEntities(EntityID);
+
+            foreach (int collidedEntitiesID in collidedEntities)
+            {
+                if (InternalCall.m_InternalCallGetTag((uint) collidedEntitiesID) == "Enemy")
+                {
+                    var collisionComponent = GetComponent.GetColliderComponent(EntityID);
+                    collisionComponent.m_collisionCheck = !collisionComponent.m_collisionCheck;
+                    SetComponent.SetCollisionComponent(EntityID, collisionComponent);
+
+                    InternalCall.m_InternalSetAnimationComponent(EntityID, 0, 0, 0, false, 1);
+                    InternalCall.m_InternalSetSpriteComponent(EntityID, playerDeathTexture, startingLayer, startingColor, startingAlpha);
+
+                    movement.X = 0;
+                    movement.Y = 0;
+
+                    InternalCall.m_InternalSetVelocity(EntityID, movement);
+
+                    isDead = true;
+                }
+            }
         }
 
+        #endregion
     }
 }

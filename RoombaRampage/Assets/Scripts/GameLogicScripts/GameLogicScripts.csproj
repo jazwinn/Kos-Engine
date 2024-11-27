@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>GameLogicScripts</RootNamespace>
     <AssemblyName>GameLogicScripts</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -55,9 +56,16 @@
   <ItemGroup>
     <Compile Include="LogicScript\CameraFollowPlayerScript.cs" />
     <Compile Include="LogicScript\CollisionResponse.cs" />
+    <Compile Include="LogicScript\EnemyBloodPool.cs" />
+    <Compile Include="LogicScript\EnemyController.cs" />
+    <Compile Include="LogicScript\GameController.cs" />
     <Compile Include="LogicScript\MovingObjectScript.cs" />
+    <Compile Include="LogicScript\PlayerBullet.cs" />
     <Compile Include="LogicScript\PlayerControl.cs" />
     <Compile Include="LogicScript\PlayerController.cs" />
+    <Compile Include="LogicScript\PlayerGun.cs" />
+    <Compile Include="LogicScript\PlayerMelee.cs" />
+    <Compile Include="LogicScript\PlayerMeleeKillZone.cs" />
     <Compile Include="LogicScript\UIBulletCounter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
