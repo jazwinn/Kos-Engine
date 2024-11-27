@@ -62,22 +62,24 @@ namespace Application {
     static void iconifyCallback(GLFWwindow* window, int iconified)
     {
         auto& audioManager = assetmanager::AssetManager::m_funcGetInstance()->m_audioManager;
-
+        ecs::ECS* ecs = ecs::ECS::m_GetInstance();
         if (iconified == GLFW_TRUE)
         {
-            //std::cout << "Window minimized!" << std::endl;
+            
             audioManager.m_PauseAllSounds();  // Pause all sounds
 
-            if (ecs::ECS::m_GetInstance()->m_getState() == ecs::RUNNING) {
+            if (ecs->m_getState() == ecs::RUNNING) {
+                //std::cout << "Window minimized!" << std::endl;
                 ecs::ECS::m_GetInstance()->m_nextState = ecs::WAIT;
             }
         }
         else
         {
-            //std::cout << "Window restored!" << std::endl;
+            
             audioManager.m_UnpauseAllSounds();  // Unpause all sounds
 
-            if (ecs::ECS::m_GetInstance()->m_getState() == ecs::WAIT) {
+            if (ecs->m_getState() == ecs::WAIT) {
+                //std::cout << "Window restored!" << std::endl;
                 ecs::ECS::m_GetInstance()->m_nextState = ecs::RUNNING;
             }
         }

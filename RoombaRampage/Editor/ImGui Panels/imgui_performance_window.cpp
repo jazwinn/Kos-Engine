@@ -115,7 +115,7 @@ void gui::ImGuiHandler::m_DrawPerformanceWindow(float fps) {
             VectorSystemText.push_back(EcsTime);
 
             //add time for each sytem
-            for (int n{}; n < ecs::TOTALTYPESYSTEM; n++) {
+            for (int n{}; n <= ecs::TOTALTYPESYSTEM; n++) {
 
                 float Percentage = ((performancetracker::Performance::m_GetSystemTime((ecs::TypeSystem)n)) / performancetracker::Performance::m_GetTotalSystemTime()) * 100.f;
 
