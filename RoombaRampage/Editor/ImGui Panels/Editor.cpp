@@ -223,7 +223,7 @@ namespace gui {
 				m_DrawHierachyWindow();
 				m_DrawComponentWindow();
 				m_DrawLogsWindow();
-				m_DrawTestWindow();
+				//m_DrawTestWindow();
 				m_DrawLayerWindow();
 				m_DrawInputWindow();
 				m_DrawContentBrowser();

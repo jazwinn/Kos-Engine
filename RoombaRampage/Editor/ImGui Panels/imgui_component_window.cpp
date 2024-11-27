@@ -563,6 +563,25 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                             if (ImGui::Selectable(image.first.c_str())) {
                                 sc->m_imageFile = image.first.c_str();
+                                if (!ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEANIMATIONCOMPONENT))
+                                {
+                                    assetmanager::AssetManager* assets = assetmanager::AssetManager::m_funcGetInstance();
+                                    graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
+                                    if (assets->m_imageManager.m_imageMap[sc->m_imageFile].m_stripCount > 1)
+                                    {
+                                       
+                                        ecs::AnimationComponent* com = static_cast<ecs::AnimationComponent*>(ecs->m_AddComponent(ecs::TYPEANIMATIONCOMPONENT, entityID));
+                                        com->m_stripCount = assets->m_imageManager.m_imageMap[sc->m_imageFile].m_stripCount;
+                                        
+                                       
+                                    }
+                                }
+                                else 
+                                {
+                                    assetmanager::AssetManager* assets = assetmanager::AssetManager::m_funcGetInstance();
+                                    ecs::AnimationComponent* com = static_cast<ecs::AnimationComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEANIMATIONCOMPONENT]->m_GetEntityComponent(entityID));
+                                    com->m_stripCount = assets->m_imageManager.m_imageMap[sc->m_imageFile].m_stripCount;
+                                }
                             }
                         }
                         ImGui::EndCombo();
@@ -1290,10 +1309,42 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             if (!EntitySignature.test(ecs::TYPESPRITECOMPONENT)) {// does not have sprite component, create one
                                 ecs::SpriteComponent* com = static_cast<ecs::SpriteComponent*>(ecs->m_AddComponent(ecs::TYPESPRITECOMPONENT, entityID));
                                 com->m_imageFile = filename->filename().string();
+                                if (!ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEANIMATIONCOMPONENT))
+                                {
+                                    assetmanager::AssetManager* assets = assetmanager::AssetManager::m_funcGetInstance();
+                                    graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
+                                    if (assets->m_imageManager.m_imageMap[com->m_imageFile].m_stripCount > 1)
+                                    {
+                                        ecs::AnimationComponent* ani = static_cast<ecs::AnimationComponent*>(ecs->m_AddComponent(ecs::TYPEANIMATIONCOMPONENT, entityID));
+                                        ani->m_stripCount = assets->m_imageManager.m_imageMap[com->m_imageFile].m_stripCount;
+                                    }
+                                }
+                                else
+                                {
+                                    assetmanager::AssetManager* assets = assetmanager::AssetManager::m_funcGetInstance();
+                                    ecs::AnimationComponent* ani = static_cast<ecs::AnimationComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEANIMATIONCOMPONENT]->m_GetEntityComponent(entityID));
+                                    ani->m_stripCount = assets->m_imageManager.m_imageMap[com->m_imageFile].m_stripCount;
+                                }
                             }
                             else {
                                 auto* sc = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(entityID));
                                 sc->m_imageFile = filename->filename().string();
+                                if (!ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEANIMATIONCOMPONENT))
+                                {
+                                    assetmanager::AssetManager* assets = assetmanager::AssetManager::m_funcGetInstance();
+                                    graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
+                                    if (assets->m_imageManager.m_imageMap[sc->m_imageFile].m_stripCount > 1)
+                                    {
+                                        ecs::AnimationComponent* ani = static_cast<ecs::AnimationComponent*>(ecs->m_AddComponent(ecs::TYPEANIMATIONCOMPONENT, entityID));
+                                        ani->m_stripCount = assets->m_imageManager.m_imageMap[sc->m_imageFile].m_stripCount;
+                                    }
+                                }
+                                else
+                                {
+                                    assetmanager::AssetManager* assets = assetmanager::AssetManager::m_funcGetInstance();
+                                    ecs::AnimationComponent* ani = static_cast<ecs::AnimationComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEANIMATIONCOMPONENT]->m_GetEntityComponent(entityID));
+                                    ani->m_stripCount = assets->m_imageManager.m_imageMap[sc->m_imageFile].m_stripCount;
+                                }
                             }
                         }
 
