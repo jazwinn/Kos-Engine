@@ -73,6 +73,9 @@ namespace Serialization {
 		if (help->m_windowHeight <= 0 || help->m_windowWidth <= 0 || !help->m_fpsCap) {
 			LOGGING_ERROR("Error Reading Config file (Width or Height <= 0)");
 		}
+
+		LoadPhysicsLayerMatrix();
+
 	}
 
 	void Serialize::m_JsonFileValidation(const std::string& filePath) {
@@ -900,7 +903,50 @@ namespace Serialization {
 			}
 		}
 	}
+	void Serialization::Serialize::SavePhysicsLayerMatrix() {
+		std::ofstream file("./Physics/PhysicsLayerMatrix.txt");
+		if (!file.is_open()) {
+			LOGGING_ERROR("Could not open PhysicsLayerMatrix.txt for writing.");
+			return;
+		}
+		auto size = physicslayer::PhysicsLayer::getSize();
+		auto matrix = physicslayer::PhysicsLayer::getInstance()->getMat();
+		for (int i = 0; i < size; ++i) {
+			for (int j = 0; j < size; ++j) {
+				file << matrix[i][j] << " ";
+			}
+			file << "\n";
+		}
 
+		file.close();
+		LOGGING_INFO("Collision matrix saved to PhysicsLayerMatrix.txt");
+	}
+
+	void Serialization::Serialize::LoadPhysicsLayerMatrix() {
+		std::ifstream file("./Physics/PhysicsLayerMatrix.txt");
+		if (!file.is_open()) {
+			LOGGING_ERROR("Could not open PhysicsLayerMatrix.txt for reading.");
+			return;
+		}
+
+		std::string line;
+		int row = 0;
+		auto size = physicslayer::PhysicsLayer::getSize();
+		physicslayer::PhysicsLayer* layer = physicslayer::PhysicsLayer::getInstance();
+		while (std::getline(file, line) && row < size) {
+			std::istringstream iss(line);
+			int col = 0;
+			int value;
+			while (iss >> value && col < size) {
+				layer->setCollision(row, col, value == 1);
+				++col;
+			}
+			++row;
+		}
+
+		file.close();
+		LOGGING_INFO("Collision matrix loaded from PhysicsLayerMatrix.txt");
+	}
 }
 
 

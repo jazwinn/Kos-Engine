@@ -28,7 +28,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Config/pch.h"
 
 namespace physicslayer {
-    const static int size = layer::LAYERS::MAXLAYER;
+    constexpr int size = layer::LAYERS::MAXLAYER;
 	class PhysicsLayer {
 	public:
     /******************************************************************/
@@ -97,6 +97,7 @@ namespace physicslayer {
     /******************************************************************/
     std::vector<std::vector<bool>> getMatrix() const;
     std::bitset<size>* getMat();
+    const std::bitset<size>* getMat() const;
     static const int getSize()  {
         return size;
     }
