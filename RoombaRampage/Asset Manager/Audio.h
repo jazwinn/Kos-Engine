@@ -29,6 +29,8 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 //#include "fmod_errors.h"
 #include <thread>
 #include "../Config/pch.h"
+
+#include "../ECS/ECS.h"
 namespace fmodaudio {
 
     /******************************************************************/
@@ -61,7 +63,7 @@ namespace fmodaudio {
         bool m_SetVolume(const std::string& entityId, float volume); 
         bool m_SetPan(const std::string& entityId, float pan);  
         bool m_IsPlaying(const std::string& entityId);  
-        FMOD::Channel* m_GetChannelForEntity(const std::string& entityId);
+        FMOD::Channel* m_GetChannelForEntity(ecs::EntityID entityId);
 
     private:
         FMOD::System* m_system;    /*!< FMOD system object to manage sound playback. */
@@ -75,16 +77,18 @@ namespace fmodaudio {
     public:
         AudioManager();
         ~AudioManager();
-
+        //For Audio
         void m_LoadAudio(const std::string& name, const std::string& path);
-        void m_PlayAudioForEntity(const std::string& entityId, const std::string& name, float volume);
-        void m_StopAudioForEntity(const std::string& entityId, const std::string& name);
-        void m_PauseAudioForEntity(const std::string& entityId, const std::string& name);
-        void m_UnpauseAudioForEntity(const std::string& entityId, const std::string& name);
-        void m_SetVolumeForEntity(const std::string& entityId, const std::string& name, float volume);
-        void m_SetLoopingForEntity(const std::string& entityId, const std::string& name, bool loop);
-        void m_SetPlayOnStartForEntity(const std::string& entityId, const std::string& audioName, bool playOnStart);
-        bool m_IsPlayingForEntity(const std::string& entityId, const std::string& name);
+        //For Entities
+        void m_PlayAudioForEntity(ecs::EntityID entityId, const std::string& name, float volume);
+        void m_StopAudioForEntity(ecs::EntityID entityId, const std::string& name);
+        void m_PauseAudioForEntity(ecs::EntityID entityId, const std::string& name);
+        void m_UnpauseAudioForEntity(ecs::EntityID entityId, const std::string& name);
+        void m_SetVolumeForEntity(ecs::EntityID entityId, const std::string& name, float volume);
+        void m_SetLoopingForEntity(ecs::EntityID entityId, const std::string& name, bool loop);
+        void m_SetPlayOnStartForEntity(ecs::EntityID entityId, const std::string& audioName, bool playOnStart);
+        bool m_IsPlayingForEntity(ecs::EntityID entityId, const std::string& name);
+        //For all Audio Components
         void m_PauseAllSounds();
         void m_UnpauseAllSounds();
         void m_StopAllSounds();
@@ -96,5 +100,6 @@ namespace fmodaudio {
     private:
         std::unordered_map<std::string, std::unique_ptr<FModAudio>> m_soundMap;
     };
+
 }
 #endif // AUDIO_MANAGER_H

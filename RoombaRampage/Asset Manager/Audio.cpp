@@ -241,19 +241,16 @@ namespace fmodaudio {
         return true;
     }
 
-    FMOD::Channel* FModAudio::m_GetChannelForEntity(const std::string& entityId) {
-        auto it = m_entityChannels.find(entityId);
+    FMOD::Channel* FModAudio::m_GetChannelForEntity(ecs::EntityID entityId) {
+        std::string entityIdStr = std::to_string(entityId);
+        auto it = m_entityChannels.find(entityIdStr);
         if (it != m_entityChannels.end()) {
-            return it->second;  
+            return it->second;
         }
         return nullptr;
     }
 
-
-
-
-
-    // AudioManager Implementation (UPDATED 24/11/2024)
+    // AudioManager Implementation (UPDATED 28/11/2024)
     AudioManager::AudioManager() {
     }
 
@@ -278,73 +275,74 @@ namespace fmodaudio {
         }
     }
 
-    void AudioManager::m_PlayAudioForEntity(const std::string& entityId, const std::string& name, float volume) {
+    void AudioManager::m_PlayAudioForEntity(ecs::EntityID entityId, const std::string& name, float volume) {
         auto it = m_soundMap.find(name);
         if (it != m_soundMap.end()) {
             FModAudio* sound = it->second.get();
-            if (sound->m_PlaySound(entityId)) {
-                sound->m_SetVolume(entityId, volume);
+            std::string entityIdStr = std::to_string(entityId);
+            if (sound->m_PlaySound(entityIdStr)) {
+                sound->m_SetVolume(entityIdStr, volume);
             }
         }
         else {
-            //TODO Handle error (e.g., logging or notification)
-            //std::cerr << "Sound not found: " << name << std::endl;
+            // TODO Handle error (e.g., logging or notification)
+            // std::cerr << "Sound not found: " << name << std::endl;
         }
     }
 
-    void AudioManager::m_StopAudioForEntity(const std::string& entityId, const std::string& name) {
+    void AudioManager::m_StopAudioForEntity(ecs::EntityID entityId, const std::string& name) {
         auto it = m_soundMap.find(name);
         if (it != m_soundMap.end()) {
             FModAudio* sound = it->second.get();
-            sound->m_StopSound(entityId);
+            sound->m_StopSound(std::to_string(entityId));
         }
         else {
-            //TODO Handle error (e.g., logging or notification)
-            //std::cerr << "Sound not found: " << name << std::endl;
+            // TODO Handle error (e.g., logging or notification)
+            // std::cerr << "Sound not found: " << name << std::endl;
         }
     }
 
-    void AudioManager::m_PauseAudioForEntity(const std::string& entityId, const std::string& name) {
+    void AudioManager::m_PauseAudioForEntity(ecs::EntityID entityId, const std::string& name) {
         auto& sound = m_soundMap[name];
         if (sound) {
-            sound->m_PauseSound(entityId);
+            sound->m_PauseSound(std::to_string(entityId));
         }
     }
 
-    void AudioManager::m_UnpauseAudioForEntity(const std::string& entityId, const std::string& name) {
+    void AudioManager::m_UnpauseAudioForEntity(ecs::EntityID entityId, const std::string& name) {
         auto& sound = m_soundMap[name];
         if (sound) {
-            sound->m_UnpauseSound(entityId);
+            sound->m_UnpauseSound(std::to_string(entityId));
         }
     }
 
-    void AudioManager::m_SetVolumeForEntity(const std::string& entityId, const std::string& name, float volume) {
+    void AudioManager::m_SetVolumeForEntity(ecs::EntityID entityId, const std::string& name, float volume) {
         auto it = m_soundMap.find(name);
         if (it != m_soundMap.end()) {
             FModAudio* sound = it->second.get();
-            sound->m_SetVolume(entityId, volume);
+            sound->m_SetVolume(std::to_string(entityId), volume);
         }
         else {
-            //TODO Handle error (e.g., logging or notification)
-            //std::cerr << "Sound not found: " << name << std::endl;
+            // TODO Handle error (e.g., logging or notification)
+            // std::cerr << "Sound not found: " << name << std::endl;
         }
     }
 
-    void AudioManager::m_SetLoopingForEntity(const std::string& entityId, const std::string& name, bool loop) {
+    void AudioManager::m_SetLoopingForEntity(ecs::EntityID entityId, const std::string& name, bool loop) {
         auto it = m_soundMap.find(name);
         if (it != m_soundMap.end()) {
             auto& audio = it->second;
-            FMOD::Channel* channel = audio->m_GetChannelForEntity(entityId);
+            FMOD::Channel* channel = audio->m_GetChannelForEntity(entityId); 
             if (channel) {
-                // Set the loop count: -1 for infinite loop, 0 for no loop, or a specific number for limited loops :))
+                // Set the loop count: -1 for infinite loop, 0 for no loop, or a specific number for limited loops
                 channel->setLoopCount(loop ? -1 : 0);
             }
         }
     }
 
-    void AudioManager::m_SetPlayOnStartForEntity(const std::string& entityId, const std::string& audioName, bool playOnStart) {
+    void AudioManager::m_SetPlayOnStartForEntity(ecs::EntityID entityId, const std::string& audioName, bool playOnStart) {
         auto* ecs = ecs::ECS::m_GetInstance();
-        auto* entityComponent = ecs->m_ECS_CombinedComponentPool[ecs::TYPEAUDIOCOMPONENT]->m_GetEntityComponent(std::stoi(entityId));
+        auto* entityComponent = ecs->m_ECS_CombinedComponentPool[ecs::TYPEAUDIOCOMPONENT]->m_GetEntityComponent(entityId);
 
         if (entityComponent) {
             ecs::AudioComponent* ac = static_cast<ecs::AudioComponent*>(entityComponent);
@@ -360,19 +358,19 @@ namespace fmodaudio {
         }
     }
 
-
-    bool AudioManager::m_IsPlayingForEntity(const std::string& entityId, const std::string& name) {
+    bool AudioManager::m_IsPlayingForEntity(ecs::EntityID entityId, const std::string& name) {
         auto it = m_soundMap.find(name);
         if (it != m_soundMap.end()) {
             FModAudio* sound = it->second.get();
-            return sound->m_IsPlaying(entityId);
+            return sound->m_IsPlaying(std::to_string(entityId));
         }
         else {
-            //TODO Handle error (e.g., logging or notification)
-            //std::cerr << "Sound not found: " << name << std::endl;
+            // TODO Handle error (e.g., logging or notification)
+            // std::cerr << "Sound not found: " << name << std::endl;
             return false;
         }
     }
+
 
     void AudioManager::m_PauseAllSounds() {
         for (auto& soundPair : m_soundMap) {

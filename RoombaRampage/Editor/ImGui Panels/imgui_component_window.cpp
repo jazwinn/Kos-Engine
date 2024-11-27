@@ -1178,19 +1178,19 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                                 }
 
                                 ImGui::SliderFloat("Volume", &it->m_Volume, 0.0f, 1.0f);
-                                assetManager->m_audioManager.m_SetVolumeForEntity(std::to_string(entityID), it->m_Name, it->m_Volume);
+                                assetManager->m_audioManager.m_SetVolumeForEntity(entityID, it->m_Name, it->m_Volume);
 
                                 bool wasLooping = it->m_Loop;
 
                                 if (ImGui::Button("Play Sound")) {
                                     std::string key = it->m_Name;
                                     auto& audioManager = assetManager->m_audioManager;
-                                    if (!audioManager.m_IsPlayingForEntity(std::to_string(entityID), key)) {
-                                        audioManager.m_PlayAudioForEntity(std::to_string(entityID), key, it->m_Volume);
+                                    if (!audioManager.m_IsPlayingForEntity(entityID, key)) {
+                                        audioManager.m_PlayAudioForEntity(entityID, key, it->m_Volume);
                                     }
                                     else {
-                                        audioManager.m_StopAudioForEntity(std::to_string(entityID), it->m_Name);
-                                        audioManager.m_PlayAudioForEntity(std::to_string(entityID), key, it->m_Volume);
+                                        audioManager.m_StopAudioForEntity(entityID, it->m_Name);
+                                        audioManager.m_PlayAudioForEntity(entityID, key, it->m_Volume);
                                     }
                                 }
     
@@ -1204,24 +1204,24 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                                             }
                                         }
 
-                                        audioManager.m_StopAudioForEntity(std::to_string(entityID), it->m_Name);
+                                        audioManager.m_StopAudioForEntity(entityID, it->m_Name);
 
                                     }
                                     else {
-                                        audioManager.m_StopAudioForEntity(std::to_string(entityID), it->m_Name);
+                                        audioManager.m_StopAudioForEntity(entityID, it->m_Name);
                                     }
 
-                                    audioManager.m_SetPlayOnStartForEntity(std::to_string(entityID), it->m_Name, it->m_PlayOnStart);
+                                    audioManager.m_SetPlayOnStartForEntity(entityID, it->m_Name, it->m_PlayOnStart);
                                 }
 
                                 if (ImGui::Checkbox("Loop", &it->m_Loop)) {
                                     auto& audioManager = assetManager->m_audioManager;
 
-                                    audioManager.m_SetLoopingForEntity(std::to_string(entityID), it->m_Name, it->m_Loop);
+                                    audioManager.m_SetLoopingForEntity(entityID, it->m_Name, it->m_Loop);
 
-                                    if (it->m_Loop != wasLooping && audioManager.m_IsPlayingForEntity(std::to_string(entityID), it->m_Name)) {
-                                        audioManager.m_StopAudioForEntity(std::to_string(entityID), it->m_Name);
-                                        audioManager.m_PlayAudioForEntity(std::to_string(entityID), it->m_Name, it->m_Volume);
+                                    if (it->m_Loop != wasLooping && audioManager.m_IsPlayingForEntity(entityID, it->m_Name)) {
+                                        audioManager.m_StopAudioForEntity(entityID, it->m_Name);
+                                        audioManager.m_PlayAudioForEntity(entityID, it->m_Name, it->m_Volume);
                                     }
                                 }
 
@@ -1233,16 +1233,16 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                                 if (audioManager.getSoundMap().find(it->m_Name) != audioManager.getSoundMap().end()) {
                                     auto& sound = audioManager.getSoundMap()[it->m_Name];
 
-                                    if (sound->m_GetChannelForEntity(std::to_string(entityID))) {
-                                        sound->m_GetChannelForEntity(std::to_string(entityID))->getPaused(&isPaused);
+                                    if (sound->m_GetChannelForEntity(entityID)) {
+                                        sound->m_GetChannelForEntity(entityID)->getPaused(&isPaused);
                                     }
 
                                     if (ImGui::Checkbox("Pause Sound", &isPaused)) {
                                         if (isPaused) {
-                                            audioManager.m_PauseAudioForEntity(std::to_string(entityID), it->m_Name);
+                                            audioManager.m_PauseAudioForEntity(entityID, it->m_Name);
                                         }
                                         else {
-                                            audioManager.m_UnpauseAudioForEntity(std::to_string(entityID), it->m_Name);
+                                            audioManager.m_UnpauseAudioForEntity(entityID, it->m_Name);
                                         }
                                     }
                                 }
@@ -1250,7 +1250,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                                 if (ImGui::Button("Stop Sound")) {
                                     std::string key = it->m_Name;
                                     auto& audioManager = assetManager->m_audioManager;
-                                    audioManager.m_StopAudioForEntity(std::to_string(entityID), key);
+                                    audioManager.m_StopAudioForEntity(entityID, key);
                                 }
 
 
@@ -1263,7 +1263,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             if (removeFile) {
                                 std::string key = it->m_Name;
                                 auto& audioManager = assetManager->m_audioManager;
-                                audioManager.m_StopAudioForEntity(std::to_string(entityID), key);
+                                audioManager.m_StopAudioForEntity(entityID, key);
                                 it = ac->m_AudioFiles.erase(it);
                             }
                             else {
