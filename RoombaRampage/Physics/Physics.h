@@ -201,6 +201,7 @@ namespace physicspipe {
 		/******************************************************************/
 		std::vector<vector2::Vec2> m_getEdges() const;
 		float GetBoundingRadius() const;
+		vector2::Vec2 TransformToLocalSpace(const vector2::Vec2& globalVector) const;
 	};
 
 	struct LineSegment
