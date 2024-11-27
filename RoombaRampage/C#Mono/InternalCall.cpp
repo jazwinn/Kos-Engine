@@ -58,8 +58,11 @@ namespace script {
 
 	bool InternalCall::m_InternalGetTranslate(ecs::EntityID entity, vector2::Vec2* trans)
 	{
-		auto* transform = static_cast<ecs::TransformComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(entity));
-		*trans = { transform->m_position.m_x, transform->m_position.m_y };
+		auto* transform = static_cast<ecs::TransformComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(entity)); 
+		vector2::Vec2 translate, rotate; 
+		float scale; 
+		mat3x3::Mat3Decompose(transform->m_transformation, translate, rotate, scale); 
+		*trans = translate;
 
 		return true;
 	}

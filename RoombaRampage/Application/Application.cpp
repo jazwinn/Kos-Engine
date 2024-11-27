@@ -154,8 +154,8 @@ namespace Application {
                 lastFrameTime = currentFrameTime;
                 accumulatedTime += (help->m_deltaTime * help->m_timeScale);
                 Helper::Helpers::GetInstance()->currentNumberOfSteps = 0;
-                while (accumulatedTime >= (fixedDeltaTime * help->m_timeScale )) {
-                    accumulatedTime -= (fixedDeltaTime * help->m_timeScale);
+                while (accumulatedTime >= (fixedDeltaTime  )) {
+                    accumulatedTime -= (fixedDeltaTime);
                     ++help->currentNumberOfSteps;
                 }
                 
