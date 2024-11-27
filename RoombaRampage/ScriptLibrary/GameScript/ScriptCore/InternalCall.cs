@@ -46,7 +46,7 @@ public static class InternalCall
     public extern static bool m_InternalGetTextComponent(uint entity,out string text,out string fileName, out int fontLayer,out float fontSize,out Vector3 color );
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static bool m_InternalSetTextComponent(uint entity, in string text, in string fileName, in int fontLayer, in float fontSize, in Vector3 color);
+    public extern static bool m_InternalSetTextComponent(uint entity, string text, string fileName, in int fontLayer, in float fontSize, in Vector3 color);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static bool m_InternalGetAnimationComponent(uint entity, out int frameNumber, out int framesPerSecond, out float frameTimer, out bool isAnimating, out int stripcount);
@@ -178,6 +178,13 @@ public static class GetComponent
         InternalCall.m_InternalGetColliderComponent(id, out temp.m_Size, out temp.m_Offset, out temp.m_drawDebug, out temp.m_radius, out temp.m_blockedFlag, out temp.m_isCollided, out temp.m_collisionCheck);
         return temp;
     }
+
+    public static TextComponent GetTextComponent(uint id)
+    {
+        TextComponent temp = new TextComponent();
+        InternalCall.m_InternalGetTextComponent(id, out temp.m_text, out temp.m_fileName, out temp.m_fontLayer, out temp.m_fontSize, out temp.m_color);
+        return temp;
+    }
 }
 
 
@@ -196,5 +203,10 @@ public static class SetComponent
     public static void SetCollisionComponent(uint id, ColliderComponent transform)
     {
         InternalCall.m_InternalSetColliderComponent(id, in transform.m_Size, in transform.m_Offset, in transform.m_drawDebug, in transform.m_radius, in transform.m_blockedFlag, in transform.m_isCollided, in transform.m_collisionCheck);
+    }
+
+    public static void SetTextComponent(uint id, TextComponent text)
+    {
+        InternalCall.m_InternalSetTextComponent(id, text.m_text, text.m_fileName, in text.m_fontLayer, in text.m_fontSize, in text.m_color);
     }
 }

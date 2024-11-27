@@ -58,6 +58,7 @@
     <Compile Include="LogicScript\MovingObjectScript.cs" />
     <Compile Include="LogicScript\PlayerControl.cs" />
     <Compile Include="LogicScript\PlayerController.cs" />
+    <Compile Include="LogicScript\UIBulletCounter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
