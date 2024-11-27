@@ -1,0 +1,83 @@
+[
+    {
+        "name": {
+            "namestr": "PlayerBullet",
+            "layer": 0,
+            "isprefab": true,
+            "tagstr": "PlayerBullet",
+            "prefabname": "PlayerBullet.prefab",
+            "issync": true
+        },
+        "transform": {
+            "position": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        "collider": {
+            "checkcollision": true,
+            "size": {
+                "x": 0.07000000029802322,
+                "y": 0.25999999046325684
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.2199999988079071
+            },
+            "drawDebug": true,
+            "radius": 0.5,
+            "shapetype": 0
+        },
+        "rigidbody": {
+            "linearVelocity": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "linearAcceleration": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "angularVelocity": 0.0,
+            "angularAcceleration": 0.0,
+            "mass": 1.0,
+            "inverseMass": 1.0,
+            "linearDamping": 0.9900000095367432,
+            "angularDamping": 0.9900000095367432,
+            "force": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "torque": 0.0,
+            "kinematic": false,
+            "static": false
+        },
+        "sprite": {
+            "imagefile": "ani_gunBulletEffect_strip10.png",
+            "layer": 14,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0
+        },
+        "animation": {
+            "frameNumber": 0,
+            "framesPerSecond": 10,
+            "frameTimer": 0.0,
+            "isAnimating": false,
+            "stripCount": 10
+        },
+        "script": {
+            "scripts": [
+                "PlayerBullet"
+            ]
+        }
+    }
+]
