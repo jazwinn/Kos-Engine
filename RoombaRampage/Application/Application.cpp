@@ -151,7 +151,6 @@ namespace Application {
                 // --------------------------------------------------------------*/
                 double currentFrameTime = glfwGetTime();
                 help->m_deltaTime = static_cast<float>(currentFrameTime - lastFrameTime);
-                //help->m_deltaTime = static_cast<float>(currentFrameTime - lastFrameTime) * help->m_timeScale;
                 lastFrameTime = currentFrameTime;
                 accumulatedTime += (help->m_deltaTime * help->m_timeScale);
                 Helper::Helpers::GetInstance()->currentNumberOfSteps = 0;
@@ -159,6 +158,7 @@ namespace Application {
                     accumulatedTime -= (fixedDeltaTime * help->m_timeScale);
                     ++help->currentNumberOfSteps;
                 }
+                
                 /*--------------------------------------------------------------
                     UPDATE INPUT
                 --------------------------------------------------------------*/

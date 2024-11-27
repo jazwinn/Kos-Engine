@@ -409,7 +409,7 @@ namespace script {
 	}
 
 	void InternalCall::m_InternalCallResetTimeScale() {
-		Helper::Helpers::GetInstance()->m_timeScale = 0.0f;
+		Helper::Helpers::GetInstance()->m_timeScale = 1.0f;
 	}
 
 
