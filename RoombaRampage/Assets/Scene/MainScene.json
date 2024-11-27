@@ -1,0 +1,457 @@
+[
+    {
+        "name": {
+            "namestr": "gamescript",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "script": {
+            "scripts": [
+                "GameController"
+            ]
+        }
+    },
+    {
+        "name": {
+            "namestr": "Player",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Player"
+        },
+        "transform": {
+            "position": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "collider": {
+            "checkcollision": true,
+            "size": {
+                "x": 1.0,
+                "y": 1.0
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true,
+            "radius": 0.25,
+            "shapetype": 1
+        },
+        "player": {
+            "control": true
+        },
+        "rigidbody": {
+            "linearVelocity": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "linearAcceleration": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "angularVelocity": 0.0,
+            "angularAcceleration": 0.0,
+            "mass": 1.0,
+            "inverseMass": 1.0,
+            "linearDamping": 0.9900000095367432,
+            "angularDamping": 0.9900000095367432,
+            "force": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "torque": 0.0,
+            "kinematic": false,
+            "static": false
+        },
+        "sprite": {
+            "imagefile": "img_roombert.png",
+            "layer": 12,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0
+        },
+        "script": {
+            "scripts": [
+                "PlayerController"
+            ]
+        },
+        "children": [
+            {
+                "name": {
+                    "namestr": "GunLeft",
+                    "layer": 0,
+                    "isprefab": false,
+                    "tagstr": "LeftGunPos"
+                },
+                "transform": {
+                    "position": {
+                        "x": -0.08912339806556702,
+                        "y": 0.4773908853530884
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "sprite": {
+                    "imagefile": "ani_gunLeftAnim_strip8.png",
+                    "layer": 11,
+                    "color": {
+                        "r": 1.0,
+                        "g": 1.0,
+                        "b": 1.0
+                    },
+                    "alpha": 1.0
+                },
+                "animation": {
+                    "frameNumber": 0,
+                    "framesPerSecond": 10,
+                    "frameTimer": 0.0,
+                    "isAnimating": false,
+                    "stripCount": 8
+                },
+                "script": {
+                    "scripts": [
+                        "PlayerGun"
+                    ]
+                },
+                "audio": [
+                    {
+                        "name": "aud_cleaver",
+                        "volume": 1.0,
+                        "loop": false,
+                        "playOnStart": false
+                    },
+                    {
+                        "name": "aud_gunshot01",
+                        "volume": 1.0,
+                        "loop": false,
+                        "playOnStart": false
+                    }
+                ]
+            },
+            {
+                "name": {
+                    "namestr": "GunRight",
+                    "layer": 0,
+                    "isprefab": false,
+                    "tagstr": "RightGunPos"
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.0887681245803833,
+                        "y": 0.4766121506690979
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "sprite": {
+                    "imagefile": "ani_gunRightAnim_strip8.png",
+                    "layer": 13,
+                    "color": {
+                        "r": 1.0,
+                        "g": 1.0,
+                        "b": 1.0
+                    },
+                    "alpha": 1.0
+                },
+                "animation": {
+                    "frameNumber": 0,
+                    "framesPerSecond": 10,
+                    "frameTimer": 0.0,
+                    "isAnimating": false,
+                    "stripCount": 8
+                },
+                "script": {
+                    "scripts": [
+                        "PlayerGun"
+                    ]
+                },
+                "audio": [
+                    {
+                        "name": "aud_cleaver",
+                        "volume": 1.0,
+                        "loop": false,
+                        "playOnStart": false
+                    },
+                    {
+                        "name": "aud_gunshot01",
+                        "volume": 1.0,
+                        "loop": false,
+                        "playOnStart": false
+                    }
+                ]
+            },
+            {
+                "name": {
+                    "namestr": "GunBack",
+                    "layer": 0,
+                    "isprefab": false,
+                    "tagstr": "BackGunPos"
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.0,
+                        "y": 0.00029307417571544647
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "sprite": {
+                    "imagefile": "ani_gunTailAnim_strip8.png",
+                    "layer": 14,
+                    "color": {
+                        "r": 1.0,
+                        "g": 1.0,
+                        "b": 1.0
+                    },
+                    "alpha": 1.0
+                },
+                "animation": {
+                    "frameNumber": 0,
+                    "framesPerSecond": 10,
+                    "frameTimer": 0.0,
+                    "isAnimating": false,
+                    "stripCount": 8
+                },
+                "script": {
+                    "scripts": [
+                        "PlayerGun"
+                    ]
+                },
+                "audio": [
+                    {
+                        "name": "aud_gunshot01",
+                        "volume": 1.0,
+                        "loop": false,
+                        "playOnStart": false
+                    }
+                ]
+            },
+            {
+                "name": {
+                    "namestr": "MeleeKillZoneSpawn",
+                    "layer": 0,
+                    "isprefab": false,
+                    "tagstr": "MeleeKillZoneSpawn"
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.0,
+                        "y": 0.3095792531967163
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "collider": {
+                    "checkcollision": false,
+                    "size": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "offset": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "drawDebug": true,
+                    "radius": 0.5,
+                    "shapetype": 1
+                }
+            }
+        ]
+    },
+    {
+        "name": {
+            "namestr": "Wall",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Wall"
+        },
+        "transform": {
+            "position": {
+                "x": 0.0,
+                "y": 1.3500432968139648
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "collider": {
+            "checkcollision": true,
+            "size": {
+                "x": 1.4199999570846558,
+                "y": 0.1599999964237213
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true,
+            "radius": 0.5,
+            "shapetype": 0
+        },
+        "sprite": {
+            "imagefile": "ani_doorsRed_strip13.png",
+            "layer": 5,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0
+        },
+        "animation": {
+            "frameNumber": 0,
+            "framesPerSecond": 0,
+            "frameTimer": 0.0,
+            "isAnimating": false,
+            "stripCount": 13
+        }
+    },
+    {
+        "name": {
+            "namestr": "Enemy",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Enemy"
+        },
+        "transform": {
+            "position": {
+                "x": -2.3568737506866455,
+                "y": 1.272263526916504
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "collider": {
+            "checkcollision": true,
+            "size": {
+                "x": 0.7200000286102295,
+                "y": 0.25999999046325684
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.07999999821186066
+            },
+            "drawDebug": true,
+            "radius": 0.5,
+            "shapetype": 0
+        },
+        "rigidbody": {
+            "linearVelocity": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "linearAcceleration": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "angularVelocity": 0.0,
+            "angularAcceleration": 0.0,
+            "mass": 1.0,
+            "inverseMass": 1.0,
+            "linearDamping": 0.9599999785423279,
+            "angularDamping": 0.9900000095367432,
+            "force": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "torque": 0.0,
+            "kinematic": false,
+            "static": false
+        },
+        "sprite": {
+            "imagefile": "ani_scientistWalk_strip14.png",
+            "layer": 0,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0
+        },
+        "animation": {
+            "frameNumber": 0,
+            "framesPerSecond": 0,
+            "frameTimer": 0.0,
+            "isAnimating": false,
+            "stripCount": 14
+        },
+        "script": {
+            "scripts": [
+                "EnemyController"
+            ]
+        }
+    },
+    {
+        "name": {
+            "namestr": "ca,era",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "camera": {
+            "planes": {
+                "left": 0.0,
+                "right": 0.0,
+                "top": 0.0,
+                "bottom": 0.0
+            },
+            "aspectRatio": 0.0
+        },
+        "script": {
+            "scripts": [
+                "CameraFollowPlayerScript"
+            ]
+        }
+    }
+]

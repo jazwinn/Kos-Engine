@@ -3,15 +3,8 @@
 \file      InternalCall.h
 \author    Chiu Jun Jie, junjie.c , 2301524
 \par       junjie.c@digipen.edu
-\date      Nov 11, 2024
+\date      Nov 27, 2024
 \brief     This header file implements the functions that allow C# scripts to interact with ECS components.
-		   - m_InternalGetTransformComponent: Retrieves transform data of an entity.
-		   - m_InternalSetTransformComponent: Sets transform data of an entity.
-		   - m_InternalGetVelocity: Retrieves the velocity of an entity.
-		   - m_InternalSetVelocity: Sets the velocity of an entity.
-		   - m_InternalCallIsKeyPressed: Checks if a key is currently pressed.
-		   - m_InternalCallGetDeltaTime: Retrieves the fixed delta time.
-		   - m_RegisterInternalCalls: Registers internal calls for Mono scripting.
 
 Reproduction or disclosure of this file or its contents without the
 prior written consent of DigiPen Institute of Technology is prohibited.
@@ -175,7 +168,7 @@ namespace script {
 		return true;
 	}
 
-	bool InternalCall::m_InternalSetTextComponent(ecs::EntityID entity, MonoString* text, MonoString* fileName, int fontLayer, float fontSize, const vector3::Vec3& color)
+	bool InternalCall::m_InternalSetTextComponent(ecs::EntityID entity, MonoString* text, MonoString* fileName, int* fontLayer, float* fontSize, const vector3::Vec3* color)
 	{
 		auto* textComponent = static_cast<ecs::TextComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(entity));
 
@@ -187,9 +180,9 @@ namespace script {
 		std::string ctFileName = nativeFile;
 		textComponent->m_fileName = ctFileName;
 
-		textComponent->m_fontLayer = fontLayer;
-		textComponent->m_fontSize = fontSize;
-		textComponent->m_color = color;
+		textComponent->m_fontLayer = *fontLayer;
+		textComponent->m_fontSize = *fontSize;
+		textComponent->m_color = *color;
 
 		mono_free(nativeText);
 		mono_free(nativeFile);
