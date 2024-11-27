@@ -24,14 +24,15 @@ public class PlayerController : ScriptBase
     private float startingRoombaRotate;
 
     private Vector2 movement;
-    private bool iscolliding;
+    private ColliderComponent EntityCollider;
+    public CollisionFlag collisionFlag;
 
     //private int test;
 
     public override void Start()
     {
         InternalCall.m_InternalGetTransformComponent(EntityID, out startingRoombaPos, out startingRoombaScale, out startingRoombaRotate);
-
+        EntityCollider = new ColliderComponent();
         speed = 5;
     }
 
@@ -39,10 +40,13 @@ public class PlayerController : ScriptBase
     {
         #region Shooting
 
-        int[] collidedEntities = InternalCall.m_InternalCallGetCollidedEntities(EntityID);
+        //reset entiycollider
+        collisionFlag = CollisionFlag.NONE;
 
         if (InternalCall.m_InternalCallIsCollided(EntityID) != 0.0f)
         {
+            int[] collidedEntities = InternalCall.m_InternalCallGetCollidedEntities(EntityID);
+
             foreach (int collidedEntitiesID in collidedEntities)
             {
                 if (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID) == "Wall")
@@ -51,7 +55,10 @@ public class PlayerController : ScriptBase
                     movement.X = 0;
                     movement.Y = 0;
                     InternalCall.m_InternalSetVelocity(EntityID, movement);
-                    iscolliding = true;
+
+                    EntityCollider = GetComponent.GetColliderComponent(EntityID);
+                    collisionFlag = (CollisionFlag)EntityCollider.m_blockedFlag;
+                    Console.WriteLine($"blockflag is : { EntityCollider.m_blockedFlag}");
 
                 }
             }
@@ -76,23 +83,25 @@ public class PlayerController : ScriptBase
         movement.X = 0;
         movement.Y = 0;
 
-        if (InternalCall.m_InternalCallIsKeyPressed(keyCode.W))
+        if (InternalCall.m_InternalCallIsKeyPressed(keyCode.W) && !collisionFlag.HasFlag(CollisionFlag.UP))
         {
-            movement.Y = speed;
-        }
-        if (InternalCall.m_InternalCallIsKeyPressed(keyCode.S))
-        {
-            movement.Y = -speed;
-        }
-        if (InternalCall.m_InternalCallIsKeyPressed(keyCode.A))
-        {
-            movement.X = -speed;
-        }
-        if (InternalCall.m_InternalCallIsKeyPressed(keyCode.D))
-        {
-            movement.X = speed;
+            movement.Y = speed; // Move up if not blocked
         }
 
+        if (InternalCall.m_InternalCallIsKeyPressed(keyCode.S) && !collisionFlag.HasFlag(CollisionFlag.DOWN))
+        {
+            movement.Y = -speed; // Move down if not blocked
+        }
+
+        if (InternalCall.m_InternalCallIsKeyPressed(keyCode.A) && !collisionFlag.HasFlag(CollisionFlag.LEFT))
+        {
+            movement.X = -speed; // Move left if not blocked
+        }
+
+        if (InternalCall.m_InternalCallIsKeyPressed(keyCode.D) && !collisionFlag.HasFlag(CollisionFlag.RIGHT))
+        {
+            movement.X = speed; // Move right if not blocked
+        }
 
         InternalCall.m_InternalSetVelocity(EntityID, movement);
 

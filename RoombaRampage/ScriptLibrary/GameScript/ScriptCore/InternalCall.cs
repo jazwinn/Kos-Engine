@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Reflection.Emit;
+using System.Data.SqlClient;
 
 public static class InternalCall
 {
@@ -24,10 +25,10 @@ public static class InternalCall
     public extern static bool m_InternalSetTranslate(uint entity, in Vector2 pos);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static bool m_InternalGetColliderComponent(uint entity, out Vector2 size, out Vector2 offset, out bool drawDebug, out float radius, out bool isCollided);
+    public extern static bool m_InternalGetColliderComponent(uint entity, out Vector2 size, out Vector2 offset, out bool drawDebug, out float radius, out int bockflag ,out float isCollided, out bool collisionCheck);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static bool m_InternalSetColliderComponent(uint entity, in Vector2 size, in Vector2 offset, in bool drawDebug, in float radius, in bool isCollided);
+    public extern static bool m_InternalSetColliderComponent(uint entity, in Vector2 size, in Vector2 offset, in bool drawDebug, in float radius, in int bockflag, in float isCollided, in bool collisionCheck);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static bool m_InternalGetPlayerComponent(uint entity, out bool control);
@@ -72,11 +73,11 @@ public static class InternalCall
     public extern static bool m_InternalSetButtonComponent(uint entity, in Vector2 position, in Vector2 scale, bool isClick);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static bool m_InternalGetScriptNames(uint entityID, out IntPtr scriptArray);
+    public extern static string[] m_InternalGetScriptNames(uint entityID);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static bool m_InternalAddScriptInstance(uint entity, string scriptName, object instance);
-    
+    public extern static bool m_InternalAddScriptInstance(uint entityID, string scriptName, object instance);
+
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static bool m_InternalGetVelocity(uint entity, out Vector2 Velocity);
 
@@ -142,6 +143,15 @@ public static class InternalCall
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static int[] m_InternalCallGetChildrenID(uint id, out bool have_children);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static void m_InternalCallPlayAudio(uint id, string monoString);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static void m_InternalCallStopAudio(uint id, string monoString);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static void m_InternalCallStopAllAudio();
 }
 
 public static class GetComponent
@@ -161,6 +171,13 @@ public static class GetComponent
 
         return temp;
     }
+
+    public static ColliderComponent GetColliderComponent(uint id)
+    {
+        ColliderComponent temp = new ColliderComponent();
+        InternalCall.m_InternalGetColliderComponent(id, out temp.m_Size, out temp.m_Offset, out temp.m_drawDebug, out temp.m_radius, out temp.m_blockedFlag, out temp.m_isCollided, out temp.m_collisionCheck);
+        return temp;
+    }
 }
 
 
@@ -174,5 +191,10 @@ public static class SetComponent
     public static void SetTransformComponent(uint id, TransformComponent transform)
     {
         InternalCall.m_InternalSetTransformComponent(id, in transform.m_position, in transform.m_scale, in transform.m_rotation);
+    }
+
+    public static void SetCollisionComponent(uint id, ColliderComponent transform)
+    {
+        InternalCall.m_InternalSetColliderComponent(id, in transform.m_Size, in transform.m_Offset, in transform.m_drawDebug, in transform.m_radius, in transform.m_blockedFlag, in transform.m_isCollided, in transform.m_collisionCheck);
     }
 }

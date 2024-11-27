@@ -21,6 +21,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Debugging/Logging.h"
 #include "../Asset Manager/SceneManager.h"
 #include "Hierachy.h"
+#include "../Application/Helper.h"
 
 //ECS Varaible
 
@@ -98,6 +99,7 @@ namespace ecs{
 		if (ecs->m_state != ecs->m_nextState) {
 			if (ecs->m_nextState == START) {
 				//if next state is start, run the logic start script
+			    Helper::Helpers::GetInstance()->currentNumberOfSteps = 0;
 				std::shared_ptr<LogicSystem> sys = std::dynamic_pointer_cast<LogicSystem>(ecs->m_ECS_SystemMap.find(TYPELOGICSYSTEM)->second);
 				sys->m_StartLogic(); //TODO? place scene?
 

@@ -58,8 +58,11 @@ namespace script {
 
 	bool InternalCall::m_InternalGetTranslate(ecs::EntityID entity, vector2::Vec2* trans)
 	{
-		auto* transform = static_cast<ecs::TransformComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(entity));
-		*trans = { transform->m_position.m_x, transform->m_position.m_y };
+		auto* transform = static_cast<ecs::TransformComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(entity)); 
+		vector2::Vec2 translate, rotate; 
+		float scale; 
+		mat3x3::Mat3Decompose(transform->m_transformation, translate, rotate, scale); 
+		*trans = translate;
 
 		return true;
 	}
@@ -73,7 +76,7 @@ namespace script {
 	}
 
 	//Collider Component
-	bool InternalCall::m_InternalGetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, bool* isCollided)
+	bool InternalCall::m_InternalGetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, int* m_blockedFlag, float* isCollided, bool* collisionCheck)
 	{
 		auto* collider = static_cast<ecs::ColliderComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(entity));
 
@@ -84,11 +87,13 @@ namespace script {
 		*drawDebug = collider->m_drawDebug;
 		*radius = collider->m_radius;
 		*isCollided = collider->m_isCollided;
+		*m_blockedFlag = collider->m_blockedFlag;
+		*collisionCheck = collider->m_CollisionCheck;
 
 		return true;
 	}
 
-	bool InternalCall::m_InternalSetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool drawDebug, float radius, bool isCollided)
+	bool InternalCall::m_InternalSetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, int* m_blockedFlag, float* isCollided, bool* collisionCheck)
 	{
 		auto* collider = static_cast<ecs::ColliderComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(entity));
 
@@ -96,9 +101,11 @@ namespace script {
 
 		collider->m_Size = *size;
 		collider->m_OffSet = *offset;
-		collider->m_drawDebug = drawDebug;
-		collider->m_radius = radius;
-		collider->m_isCollided = isCollided;
+		collider->m_drawDebug = *drawDebug;
+		collider->m_radius = *radius;
+		collider->m_isCollided = *isCollided;
+		collider->m_blockedFlag = *m_blockedFlag;
+		collider->m_CollisionCheck = *collisionCheck;
 
 		return true;
 	}
@@ -316,23 +323,57 @@ namespace script {
 	}
 
 	//Script Components
-	bool InternalCall::m_InternalGetScriptNames(ecs::EntityID entity, std::vector<std::string>& scripts)
+	MonoArray* InternalCall::m_InternalGetScriptNames(ecs::EntityID entity)
 	{
-		auto* scriptComponent = static_cast<ecs::ScriptComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPESCRIPTCOMPONENT]->m_GetEntityComponent(entity));
+		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+		ecs::ScriptComponent* scriptComponent = static_cast<ecs::ScriptComponent*>(
+			ecs->m_ECS_CombinedComponentPool[ecs::TYPESCRIPTCOMPONENT]->m_GetEntityComponent(entity)
+			);
 
-		if (scriptComponent == nullptr) return false;
+		if (!scriptComponent) return nullptr;
+		
 
-		scripts = scriptComponent->m_scripts;
-		return true;
+		assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
+		MonoDomain* domain = assetManager->m_scriptManager.m_GetDomain();
+
+		const auto& scripts = scriptComponent->m_scripts;
+		MonoArray* scriptArray = mono_array_new(domain, mono_get_string_class(), scripts.size());
+
+
+		for (size_t i = 0; i < scripts.size(); ++i)
+		{
+			MonoString* monoString = mono_string_new(assetManager->m_scriptManager.m_GetDomain(), scripts[i].c_str());
+			mono_array_set(scriptArray, MonoString*, i, monoString);
+		}
+
+		return scriptArray;
 	}
 
-	bool InternalCall::m_InternalAddScriptInstance(ecs::EntityID entity, const std::string& scriptName, MonoObject* instance)
+	bool InternalCall::m_InternalAddScriptInstance(ecs::EntityID entity, MonoString* monoScriptName, MonoObject* instance)
 	{
-		auto* scriptComponent = static_cast<ecs::ScriptComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPESCRIPTCOMPONENT]->m_GetEntityComponent(entity));
+		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+		auto* scriptComponent = static_cast<ecs::ScriptComponent*>(
+			ecs->m_ECS_CombinedComponentPool[ecs::TYPESCRIPTCOMPONENT]->m_GetEntityComponent(entity)
+			);
 
-		if (scriptComponent == nullptr) return false;
+		if (!scriptComponent)
+		{
+			LOGGING_WARN("Failed to add script instance: No ScriptComponent found for entity: " + std::to_string(entity));
+			return false;
+		}
 
-		scriptComponent->m_scriptInstances[scriptName] = instance;
+		char* nativeScriptName = mono_string_to_utf8(monoScriptName);
+		std::string scriptName = nativeScriptName;
+		mono_free(nativeScriptName);
+
+		auto& scriptInstances = scriptComponent->m_scriptInstances;
+		if (scriptInstances.find(scriptName) != scriptInstances.end())
+		{
+			LOGGING_WARN("Script instance '" + scriptName + "' already exists for entity: " + std::to_string(entity) + ". Overwriting.");
+		}
+
+		scriptInstances[scriptName] = instance;
+		LOGGING_WARN("Script instance '" + scriptName + "' successfully added/updated for entity: " + std::to_string(entity));
 		return true;
 	}
 
@@ -371,7 +412,7 @@ namespace script {
 	}
 
 	void InternalCall::m_InternalCallResetTimeScale() {
-		Helper::Helpers::GetInstance()->m_timeScale = 0.0f;
+		Helper::Helpers::GetInstance()->m_timeScale = 1.0f;
 	}
 
 
@@ -437,6 +478,11 @@ namespace script {
 	{
 		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
 		ecs::ColliderComponent* cc = static_cast<ecs::ColliderComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(entity));
+		if (!cc)
+		{
+			return nullptr;
+		}
+		
 		if (cc->m_isCollided) {
 			assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
 			MonoArray* Array = mono_array_new(assetmanager->m_scriptManager.m_GetDomain(), mono_get_int32_class(), cc->m_collidedWith.size());
@@ -455,11 +501,14 @@ namespace script {
 		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
 		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
 		ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(entity));
-
+		if (!nc)
+		{
+			LOGGING_WARN("NameComponent not found for entity: " + std::to_string(entity));
+			return nullptr;
+		}
 
 		return mono_string_new(assetmanager->m_scriptManager.m_GetDomain(), nc->m_entityTag.c_str());
 
-		return nullptr;
 	}
 
 	void InternalCall::m_InternalCallSetSceneActive(MonoString* monoString)
@@ -588,6 +637,46 @@ namespace script {
 		return nullptr;
 	}
 
+	void InternalCall::m_InternalCallPlayAudio(ecs::EntityID id, MonoString* monoString)
+	{
+		char* nativeString = mono_string_to_utf8(monoString);
+
+		//check if audio component is present
+		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+		ecs::AudioComponent* aud = static_cast<ecs::AudioComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEAUDIOCOMPONENT]->m_GetEntityComponent(id));
+
+		if (aud == nullptr) return;
+
+		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+		std::filesystem::path filepath = nativeString;
+		const auto& it = std::find_if(aud->m_AudioFiles.begin(), aud->m_AudioFiles.end(), [filepath](const auto& audio) {return audio.m_Name == filepath.filename().stem().string(); });
+		
+		if (it != aud->m_AudioFiles.end()) {
+			assetmanager->m_audioManager.m_PlayAudioForEntity(std::to_string(id), filepath.filename().stem().string(), it->m_Volume);
+		}
+		
+
+		mono_free(nativeString);
+	}
+
+	void InternalCall::m_InternalCallStopAudio(ecs::EntityID id, MonoString* monoString)
+	{
+		char* nativeString = mono_string_to_utf8(monoString);
+		std::filesystem::path filepath = nativeString;
+
+		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+		assetmanager->m_audioManager.m_StopAudioForEntity(std::to_string(id), filepath.filename().stem().string());
+
+		mono_free(nativeString);
+	}
+
+	void InternalCall::m_InternalCallStopAllAudio()
+	{
+		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+		assetmanager->m_audioManager.m_StopAllSounds();
+
+	}
+
 	void InternalCall::m_InternalCallDeleteEntity(ecs::EntityID id)
 	{
 		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
@@ -693,5 +782,12 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_InternalCallResetTimeScale);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallCloseWindow);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallGetChildrenID);
+
+
+		MONO_ADD_INTERNAL_CALL(m_InternalCallPlayAudio);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallStopAudio);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallStopAllAudio);
+
+
 	}
 }

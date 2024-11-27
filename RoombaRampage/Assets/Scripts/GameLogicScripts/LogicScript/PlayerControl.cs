@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Versioning;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
@@ -77,7 +76,7 @@ public class PlayerControl : ScriptBase
         }
         if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.G))
         {
-            int new_entity = InternalCall.m_InternalCallAddPrefab("blackTile", 0.0f, 0.0f, 45.0f); //do not call prefabs that share the same script as the current
+            int new_entity = InternalCall.m_InternalCallAddPrefab("Blacktile", 0.0f, 0.0f, 45.0f); //do not call prefabs that share the same script as the current
             queue.Enqueue(new_entity);
         }
         if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.H))
@@ -127,9 +126,36 @@ public class PlayerControl : ScriptBase
             intframespersecond = 1;
             InternalCall.m_InternalCallCloseWindow();
         }
-        
 
-       Vector2 worldpos;
+        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.J))
+        {
+            InternalCall.m_InternalCallPlayAudio(EntityID, "TestLoop.wav");
+        }
+        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.K))
+        {
+            InternalCall.m_InternalCallStopAudio(EntityID, "TestLoop.wav");
+        }
+
+        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.E))
+        {
+            
+            var collisionComponent = GetComponent.GetColliderComponent(EntityID);
+            collisionComponent.m_collisionCheck = collisionComponent.m_collisionCheck? false : true;
+            SetComponent.SetCollisionComponent(EntityID, collisionComponent);
+        }
+
+        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.R))
+        {
+
+            InternalCall.m_InternalCallSetTimeScale(2.0f);
+        }
+        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.T))
+        {
+
+            InternalCall.m_InternalCallResetTimeScale();
+        }
+
+        Vector2 worldpos;
        InternalCall.m_InternalGetWorldMousePosition(out worldpos);
 
        //Console.WriteLine($"x is : {worldpos.X} , y is : {worldpos.Y}");

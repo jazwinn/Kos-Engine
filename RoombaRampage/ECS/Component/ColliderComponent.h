@@ -38,19 +38,23 @@ namespace ecs {
 
 		bool m_drawDebug{true};
 
-		//layer::LAYERS m_CollideLayer{layer::DEFAULT};
-
-		// Current no implementation
 		physicspipe::EntityType m_type = physicspipe::EntityType::RECTANGLE;
 
 		float m_radius{0.5f};
 
+		bool m_CollisionCheck{ true };
+
+
+		// no need to serialize or reflect
 		float m_isCollided{ false };
+
 		std::vector<EntityID> m_collidedWith{};
-		int m_blockedFlag = -1;
+
+		int m_blockedFlag = 0;
+
 		mat3x3::Mat3x3 m_collider_Transformation{};
 		 
-		REFLECTABLE(ColliderComponent, m_Size, m_OffSet, m_drawDebug, m_radius, m_type)
+		REFLECTABLE(ColliderComponent, m_CollisionCheck, m_Size, m_OffSet, m_drawDebug, m_radius, m_type)
 	};
 
 }

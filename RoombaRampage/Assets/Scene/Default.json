@@ -81,7 +81,7 @@
         },
         "audio": [
             {
-                "name": "cleaver01",
+                "name": "gunshot01",
                 "volume": 1.0,
                 "loop": false,
                 "playOnStart": false
@@ -226,5 +226,25 @@
                 }
             }
         ]
+    },
+    {
+        "name": {
+            "namestr": "hi",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "audio": []
     }
 ]
