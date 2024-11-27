@@ -26,6 +26,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Dependencies/rapidjson/document.h"
 #include "../Dependencies/rapidjson/writer.h"
 #include "../Dependencies/rapidjson/stringbuffer.h"
+#include "../Physics/PhysicsLayer.h"
 
 namespace Serialization {
 	class Serialize {
@@ -105,6 +106,10 @@ namespace Serialization {
 		*/
 		/******************************************************************/
 		static void m_JsonFileValidation(const std::string& filePath);
+
+		static void SavePhysicsLayerMatrix();
+		static void LoadPhysicsLayerMatrix();
+
 	};
 }
 #endif JSONHANDLER_H
