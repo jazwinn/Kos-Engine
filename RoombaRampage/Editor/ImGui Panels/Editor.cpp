@@ -194,6 +194,24 @@ namespace gui {
 			m_UpdateOnPrefabMode();
 			
 			Helper::Helpers* help = Helper::Helpers::GetInstance();
+			ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+
+			//check if "m_activeScene", if not find first active scene
+			const auto& scene = ecs->m_ECS_SceneMap.find(m_activeScene);
+			if (scene == ecs->m_ECS_SceneMap.end()) {
+				for (auto& _scene : ecs->m_ECS_SceneMap) {
+					if (!_scene.second.m_isPrefab) {
+						m_activeScene = _scene.first;
+						_scene.second.m_isActive = true;
+					}
+				}
+			}
+
+			//check if selected entityid is loaded
+			if (ecs->m_ECS_EntityMap.find(m_clickedEntityId) == ecs->m_ECS_EntityMap.end()) {
+				m_clickedEntityId = -1;
+			}
+
 
 			ImVec2 windowSize = ImGui::GetIO().DisplaySize;
 			// only render when window is not minimize

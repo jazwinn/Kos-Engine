@@ -58,9 +58,9 @@ namespace script {
 
 		static bool m_InternalSetTranslate(ecs::EntityID entity, vector2::Vec2* trans);
 
-		static bool m_InternalGetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, int* m_blockedFlag, bool* isCollided);
+		static bool m_InternalGetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, int* m_blockedFlag, float* isCollided, bool* collisionCheck);
 
-		static bool m_InternalSetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool drawDebug, float radius, bool isCollided);
+		static bool m_InternalSetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, int* m_blockedFlag, float* isCollided, bool* collisionCheck);
 
 		static bool m_InternalGetPlayerComponent(ecs::EntityID entity, bool* control);
 
@@ -176,6 +176,12 @@ namespace script {
 		static void m_InternalCallCloseWindow();
 
 		static MonoArray* m_InternalCallGetChildrenID(ecs::EntityID id, bool* have_children);
+
+		static void m_InternalCallPlayAudio(ecs::EntityID id, MonoString* monoString);
+
+		static void m_InternalCallStopAudio(ecs::EntityID id, MonoString* monoString);
+
+		static void m_InternalCallStopAllAudio();
 
 	public:
 
