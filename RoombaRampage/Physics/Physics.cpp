@@ -637,62 +637,62 @@ namespace physicspipe {
 				isEntity1Blocked = (vector2::Vec2::m_funcVec2DDotProduct(deltaPosition, smallestAxis) > 0);
 			}
 		}
-		vector2::Vec2 smallestAxisNormalized = smallestAxis;
-		vector2::Vec2::m_funcVec2Normalize(smallestAxisNormalized, smallestAxisNormalized);
-		vector2::Vec2 localAxis = obj1.TransformToLocalSpace(smallestAxisNormalized);
-		if (std::abs(localAxis.m_x) > std::abs(localAxis.m_y)) {
-			if (localAxis.m_x > 0) {
-				const_cast<Rectangle&>(obj1).AddCollisionFlag(LEFT);
-				//const_cast<Rectangle&>(obj2).AddCollisionFlag(LEFT);
-			}
-			else {
-				const_cast<Rectangle&>(obj1).AddCollisionFlag(RIGHT);
-				//const_cast<Rectangle&>(obj2).AddCollisionFlag(RIGHT);
-			}
+		//vector2::Vec2 smallestAxisNormalized = smallestAxis;
+		//vector2::Vec2::m_funcVec2Normalize(smallestAxisNormalized, smallestAxisNormalized);
+		//vector2::Vec2 localAxis = obj1.TransformToLocalSpace(smallestAxisNormalized);
+		//if (std::abs(localAxis.m_x) > std::abs(localAxis.m_y)) {
+		//	if (localAxis.m_x > 0) {
+		//		const_cast<Rectangle&>(obj1).AddCollisionFlag(LEFT);
+		//		//const_cast<Rectangle&>(obj2).AddCollisionFlag(LEFT);
+		//	}
+		//	else {
+		//		const_cast<Rectangle&>(obj1).AddCollisionFlag(RIGHT);
+		//		//const_cast<Rectangle&>(obj2).AddCollisionFlag(RIGHT);
+		//	}
 
-		}
-		else {
-			if (localAxis.m_y > 0) {
-				const_cast<Rectangle&>(obj1).AddCollisionFlag(UP);
-				//const_cast<Rectangle&>(obj2).AddCollisionFlag(DOWN);
-			}
-			else {
-				const_cast<Rectangle&>(obj1).AddCollisionFlag(DOWN);
-				//const_cast<Rectangle&>(obj2).AddCollisionFlag(UP);
-			}
-				
-		}
+		//}
+		//else {
+		//	if (localAxis.m_y > 0) {
+		//		const_cast<Rectangle&>(obj1).AddCollisionFlag(UP);
+		//		//const_cast<Rectangle&>(obj2).AddCollisionFlag(DOWN);
+		//	}
+		//	else {
+		//		const_cast<Rectangle&>(obj1).AddCollisionFlag(DOWN);
+		//		//const_cast<Rectangle&>(obj2).AddCollisionFlag(UP);
+		//	}
+		//		
+		//}
 
 
 
 		// Add blocked directions based on the smallest axis
-		//if (std::abs(smallestAxis.m_x) > std::abs(smallestAxis.m_y)) {
-		//	// Horizontal collision
-		//	if (smallestAxis.m_x > 0) {
-		//		if (isEntity1Blocked) {
-		//			const_cast<Rectangle&>(obj1).AddCollisionFlag(RIGHT);
-		//			const_cast<Rectangle&>(obj2).AddCollisionFlag(LEFT);
+		if (std::abs(smallestAxis.m_x) > std::abs(smallestAxis.m_y)) {
+			// Horizontal collision
+			if (smallestAxis.m_x > 0) {
+				if (isEntity1Blocked) {
+					const_cast<Rectangle&>(obj1).AddCollisionFlag(RIGHT);
+					const_cast<Rectangle&>(obj2).AddCollisionFlag(LEFT);
 
-		//		}
-		//		else {
-		//			const_cast<Rectangle&>(obj1).AddCollisionFlag(LEFT);
-		//			const_cast<Rectangle&>(obj2).AddCollisionFlag(RIGHT);
-		//		}
-		//	}
-		//}
-		//else {
-		//	// Vertical collision
-		//	if (smallestAxis.m_y > 0) {
-		//		if (isEntity1Blocked) {
-		//			const_cast<Rectangle&>(obj1).AddCollisionFlag(UP);
-		//			const_cast<Rectangle&>(obj2).AddCollisionFlag(DOWN);
-		//		}
-		//		else {
-		//			const_cast<Rectangle&>(obj1).AddCollisionFlag(DOWN);
-		//			const_cast<Rectangle&>(obj2).AddCollisionFlag(UP);
-		//		}
-		//	}
-		//}
+				}
+				else {
+					const_cast<Rectangle&>(obj1).AddCollisionFlag(LEFT);
+					const_cast<Rectangle&>(obj2).AddCollisionFlag(RIGHT);
+				}
+			}
+		}
+		else {
+			// Vertical collision
+			if (smallestAxis.m_y > 0) {
+				if (isEntity1Blocked) {
+					const_cast<Rectangle&>(obj1).AddCollisionFlag(UP);
+					const_cast<Rectangle&>(obj2).AddCollisionFlag(DOWN);
+				}
+				else {
+					const_cast<Rectangle&>(obj1).AddCollisionFlag(DOWN);
+					const_cast<Rectangle&>(obj2).AddCollisionFlag(UP);
+				}
+			}
+		}
 
 
 
