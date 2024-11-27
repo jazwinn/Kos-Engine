@@ -80,6 +80,10 @@ namespace ecs {
 
 		//TODO instead of retrieving every loop, just get the address of the vector in the physics pipeline
 		physicspipe::Physics* PhysicsPipeline = physicspipe::Physics::getInstance();
+
+		//gets collided
+		PhysicsPipeline->m_Update();
+		
 		std::vector <std::shared_ptr<physicspipe::PhysicsData>> vecCollisionEntity = PhysicsPipeline->m_RetrievePhysicsData();
 		std::vector <std::pair<std::shared_ptr<physicspipe::PhysicsData>, std::shared_ptr<physicspipe::PhysicsData>>> vecCollisionEntityPair = PhysicsPipeline->m_RetrievePhysicsDataPair();
 		std::unordered_set<ecs::EntityID> ids;
@@ -111,8 +115,8 @@ namespace ecs {
 				ColComp->m_collidedWith.push_back(iterator->second->m_ID);
 				ColComp->m_isCollided = true;
 				ColComp->m_blockedFlag = iterator->first->m_collisionFlags;
-				//std::cout << iterator->first->m_collisionFlags << std::endl;
-				//std::cout << iterator->second->m_collisionFlags << std::endl;
+				std::cout << "Entity 1 " << iterator->first->m_collisionFlags << std::endl;
+				std::cout << "Entity 2 " << iterator->second->m_collisionFlags << std::endl;
 				//std::cout << iterator->first->m_position.m_x << " " << iterator->first->m_position.m_y << std::endl;
 				//for (size_t i = 0; i < iterator->first->m_blockedDirections.size(); ++i) {
 				//	std::cout << iterator->first->m_blockedDirections[i] << " ";
