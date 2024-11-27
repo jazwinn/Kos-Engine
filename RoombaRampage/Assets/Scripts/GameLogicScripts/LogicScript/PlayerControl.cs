@@ -76,7 +76,7 @@ public class PlayerControl : ScriptBase
         }
         if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.G))
         {
-            int new_entity = InternalCall.m_InternalCallAddPrefab("blackTile", 0.0f, 0.0f, 45.0f); //do not call prefabs that share the same script as the current
+            int new_entity = InternalCall.m_InternalCallAddPrefab("Blacktile", 0.0f, 0.0f, 45.0f); //do not call prefabs that share the same script as the current
             queue.Enqueue(new_entity);
         }
         if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.H))

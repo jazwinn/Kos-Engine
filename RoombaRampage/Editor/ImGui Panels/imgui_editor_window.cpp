@@ -286,7 +286,7 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
             std::filesystem::path* filename = static_cast<std::filesystem::path*>(payload->Data);
 
             vector3::Vec3 translate = calculateworld();
-            
+
 
             if (filename->filename().extension().string() == ".png" || filename->filename().extension().string() == ".jpg") {
                 assetmanager::AssetManager* assets = assetmanager::AssetManager::m_funcGetInstance();
