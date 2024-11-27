@@ -18,7 +18,7 @@ namespace gui {
 	void MoveFolder(const std::filesystem::path& newDirectory) {
 		if (ImGui::BeginDragDropTarget())
 		{
-			assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+			//assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
 			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("file"))
 			{
 

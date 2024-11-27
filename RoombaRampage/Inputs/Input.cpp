@@ -30,6 +30,7 @@ namespace Input {
 	std::string InputSystem::m_keyString;
 	GLFWwindow* Input::InputSystem::m_windowInput;
 	std::vector<std::string> InputSystem::m_droppedFiles;
+	double Input::InputSystem::m_currTime = 0.0;
 
 
 	void InputSystem::KeyCallBack([[maybe_unused]] GLFWwindow* window, [[maybe_unused]] int key, [[maybe_unused]] int scancode, int action, [[maybe_unused]] int mods) {
@@ -90,6 +91,7 @@ namespace Input {
 	}
 
 	void InputSystem::m_inputUpdate() {
+		Input::InputSystem::m_currTime += Helper::Helpers::GetInstance()->m_deltaTime;
 		for (auto& currKey : m_wasTriggered) {
 			int state;
 			if (currKey.first == keys::LMB || currKey.first == keys::RMB || currKey.first == keys::MMB) {
@@ -103,7 +105,7 @@ namespace Input {
 				m_wasPressed[currKey.first] = true;
 				m_wasTriggered[currKey.first] = true;
 			}
-			else if (m_wasPressed[currKey.first]) {
+			else if (m_wasPressed[currKey.first] && (m_currTime >= 1.f/60.f)) {
 				m_wasTriggered[currKey.first] = false;
 			}
 			if (state == GLFW_RELEASE) {

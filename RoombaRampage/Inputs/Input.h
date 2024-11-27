@@ -20,6 +20,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 #include <glfw3.h>
 #include "Keycodes.h"
+#include "../Application/Helper.h"
 
 namespace Input {
 
@@ -55,7 +56,7 @@ namespace Input {
 
 		void m_inputUpdate();
 
-
+		static double m_currTime;
 		
 		static vector2::Vec2 MousePosition;
 
