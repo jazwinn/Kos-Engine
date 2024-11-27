@@ -17,14 +17,18 @@ public class UIBulletCounter : ScriptBase
     }
     #endregion
 
-    TextComponent tc;
+    private string startText;
+    private string startFileName;
+    private int startFontLayer;
+    private float startFontSize;
+    private Vector3 startColor;
 
     public override void Start()
     {
-        tc = GetComponent.GetTextComponent(EntityID);
+        //InternalCall.m_InternalGetTextComponent(EntityID, out startText, out startFileName, out startFontLayer, out startFontSize, out startColor);
 
-        tc.m_text = "bitch";
-        SetComponent.SetTextComponent(EntityID, tc);
+        //startText = PlayerGun.ammoCount.ToString();
+        //InternalCall.m_InternalSetTextComponent(EntityID, in startText, in startFileName, in startFontLayer, in startFontSize, in startColor);
     }
 
     public override void Update()

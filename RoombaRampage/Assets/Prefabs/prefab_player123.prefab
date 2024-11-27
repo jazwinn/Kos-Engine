@@ -20,6 +20,7 @@
             }
         },
         "collider": {
+            "checkcollision": true,
             "size": {
                 "x": 1.0,
                 "y": 1.0
@@ -29,7 +30,8 @@
                 "y": 0.0
             },
             "drawDebug": true,
-            "radius": 0.5
+            "radius": 0.25,
+            "shapetype": 1
         },
         "player": {
             "control": true
@@ -59,8 +61,8 @@
             "static": false
         },
         "sprite": {
-            "imagefile": "Roomba.png",
-            "layer": 4,
+            "imagefile": "img_roombert.png",
+            "layer": 12,
             "color": {
                 "r": 1.0,
                 "g": 1.0,
@@ -70,7 +72,7 @@
         },
         "script": {
             "scripts": [
-                "PlayerControl"
+                "PlayerController"
             ]
         },
         "children": [
@@ -85,8 +87,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 0.9639365673065186,
-                        "y": 1.8605352640151978
+                        "x": -0.08912339806556702,
+                        "y": 0.4773908853530884
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -95,15 +97,41 @@
                     }
                 },
                 "sprite": {
-                    "imagefile": "gunright_02.png",
-                    "layer": 5,
+                    "imagefile": "ani_gunLeftAnim_strip8.png",
+                    "layer": 11,
                     "color": {
                         "r": 1.0,
                         "g": 1.0,
                         "b": 1.0
                     },
                     "alpha": 1.0
-                }
+                },
+                "animation": {
+                    "frameNumber": 0,
+                    "framesPerSecond": 10,
+                    "frameTimer": 0.0,
+                    "isAnimating": false,
+                    "stripCount": 8
+                },
+                "script": {
+                    "scripts": [
+                        "PlayerGun"
+                    ]
+                },
+                "audio": [
+                    {
+                        "name": "aud_cleaver",
+                        "volume": 1.0,
+                        "loop": false,
+                        "playOnStart": false
+                    },
+                    {
+                        "name": "aud_gunshot01",
+                        "volume": 1.0,
+                        "loop": false,
+                        "playOnStart": false
+                    }
+                ]
             },
             {
                 "name": {
@@ -116,8 +144,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": -1.0585962533950806,
-                        "y": 1.7504246234893799
+                        "x": 0.0887681245803833,
+                        "y": 0.4766121506690979
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -126,14 +154,126 @@
                     }
                 },
                 "sprite": {
-                    "imagefile": "gunleft_02.png",
-                    "layer": 6,
+                    "imagefile": "ani_gunRightAnim_strip8.png",
+                    "layer": 13,
                     "color": {
                         "r": 1.0,
                         "g": 1.0,
                         "b": 1.0
                     },
                     "alpha": 1.0
+                },
+                "animation": {
+                    "frameNumber": 0,
+                    "framesPerSecond": 10,
+                    "frameTimer": 0.0,
+                    "isAnimating": false,
+                    "stripCount": 8
+                },
+                "script": {
+                    "scripts": [
+                        "PlayerGun"
+                    ]
+                },
+                "audio": [
+                    {
+                        "name": "aud_cleaver",
+                        "volume": 1.0,
+                        "loop": false,
+                        "playOnStart": false
+                    },
+                    {
+                        "name": "aud_gunshot01",
+                        "volume": 1.0,
+                        "loop": false,
+                        "playOnStart": false
+                    }
+                ]
+            },
+            {
+                "name": {
+                    "namestr": "GunBack",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "Player.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.0,
+                        "y": 0.00029307417571544647
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "sprite": {
+                    "imagefile": "ani_gunTailAnim_strip8.png",
+                    "layer": 14,
+                    "color": {
+                        "r": 1.0,
+                        "g": 1.0,
+                        "b": 1.0
+                    },
+                    "alpha": 1.0
+                },
+                "animation": {
+                    "frameNumber": 0,
+                    "framesPerSecond": 10,
+                    "frameTimer": 0.0,
+                    "isAnimating": false,
+                    "stripCount": 8
+                },
+                "script": {
+                    "scripts": [
+                        "PlayerGun"
+                    ]
+                },
+                "audio": [
+                    {
+                        "name": "aud_gunshot01",
+                        "volume": 1.0,
+                        "loop": false,
+                        "playOnStart": false
+                    }
+                ]
+            },
+            {
+                "name": {
+                    "namestr": "CleaverLeft",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "Player.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.0,
+                        "y": 0.3095792531967163
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "collider": {
+                    "checkcollision": false,
+                    "size": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "offset": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "drawDebug": true,
+                    "radius": 0.5,
+                    "shapetype": 1
                 }
             }
         ]
