@@ -1151,12 +1151,26 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                                 if (ImGui::BeginCombo("Sounds", it->m_Name.c_str())) {
                                     for (const auto& sound : assetManager->m_audioManager.getSoundMap()) {
-                                        if (ImGui::Selectable(sound.first.c_str())) {
-                                            it->m_Name = sound.first.c_str();
+                                        if (ImGui::Selectable(sound.first.c_str(), sound.first == it->m_Name)) {
+                                            if (sound.first != it->m_Name) {
+                                                auto& audioManager = assetManager->m_audioManager;
+
+                                                if (audioManager.m_IsPlayingForEntity(entityID, it->m_Name)) {
+                                                    audioManager.m_StopAudioForEntity(entityID, it->m_Name);
+                                                }
+
+                                                if (audioManager.getSoundMap().find(sound.first) == audioManager.getSoundMap().end()) {
+                                                    LOGGING_WARN("Selected sound not found in the audio manager.");
+                                                    continue;
+                                                }
+
+                                                it->m_Name = sound.first;
+                                            }
                                         }
                                     }
                                     ImGui::EndCombo();
                                 }
+
 
                                 if (ImGui::BeginDragDropTarget()) {
                                     if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("file")) {
@@ -1179,6 +1193,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                                 ImGui::SliderFloat("Volume", &it->m_Volume, 0.0f, 1.0f);
                                 assetManager->m_audioManager.m_SetVolumeForEntity(entityID, it->m_Name, it->m_Volume);
+
 
                                 bool wasLooping = it->m_Loop;
 

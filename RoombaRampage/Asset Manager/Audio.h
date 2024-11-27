@@ -88,6 +88,7 @@ namespace fmodaudio {
         void m_SetLoopingForEntity(ecs::EntityID entityId, const std::string& name, bool loop);
         void m_SetPlayOnStartForEntity(ecs::EntityID entityId, const std::string& audioName, bool playOnStart);
         bool m_IsPlayingForEntity(ecs::EntityID entityId, const std::string& name);
+        void m_SetPanForEntity(ecs::EntityID entityId, const std::string& name, float pan);
         //For all Audio Components
         void m_PauseAllSounds();
         void m_UnpauseAllSounds();

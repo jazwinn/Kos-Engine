@@ -371,6 +371,22 @@ namespace fmodaudio {
         }
     }
 
+    void AudioManager::m_SetPanForEntity(unsigned int entityId, const std::string& name, float pan) {
+        auto it = m_soundMap.find(name);
+        if (it != m_soundMap.end()) {
+            FModAudio* sound = it->second.get();
+            if (!sound->m_SetPan(std::to_string(entityId), pan)) {
+                // TODO: Handle error (e.g., logging or notification)
+                // std::cerr << "Failed to set pan for entity " << entityId << " on sound " << name << std::endl;
+            }
+        }
+        else {
+            // TODO: Handle error (e.g., logging or notification)
+            // std::cerr << "Sound not found: " << name << std::endl;
+        }
+    }
+
+
 
     void AudioManager::m_PauseAllSounds() {
         for (auto& soundPair : m_soundMap) {
