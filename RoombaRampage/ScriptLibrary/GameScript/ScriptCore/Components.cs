@@ -7,11 +7,18 @@ using System.Threading.Tasks;
 
 public struct Vector2
 {
+    public Vector2(float x, float y)
+    {
+        X = x;
+        Y = y;
+    }
+
     public float X, Y;
 }
 
 public struct Vector3
 {
+
     public float R, G, B;
 }
 
