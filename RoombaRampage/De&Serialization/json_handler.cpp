@@ -919,7 +919,7 @@ namespace Serialization {
 		}
 
 		file.close();
-		LOGGING_INFO("Collision matrix saved to PhysicsLayerMatrix.txt");
+		//LOGGING_INFO("Collision matrix saved to PhysicsLayerMatrix.txt");
 	}
 
 	void Serialization::Serialize::LoadPhysicsLayerMatrix() {
