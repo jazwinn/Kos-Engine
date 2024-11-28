@@ -567,15 +567,15 @@ namespace script {
 			transCom->m_position = { *x, *y };
 			transCom->m_rotation = *rotation;
 
+			mono_free(nativeString);
 			return (int)id;
 		}
 		else {
 			LOGGING_ERROR("Prefab not loaded");
+
+			mono_free(nativeString);
 			return -1;
 		}
-
-
-		mono_free(nativeString);
 	}
 
 	void InternalCall::m_InternalGetWorldMousePosition(vector2::Vec2* mousecord) {
