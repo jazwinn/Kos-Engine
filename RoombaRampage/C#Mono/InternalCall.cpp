@@ -507,7 +507,7 @@ namespace script {
 	void InternalCall::m_InternalCallSetSceneActive(MonoString* monoString)
 	{
 		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
-		scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();
+		//scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();
 
 		char* nativeString = mono_string_to_utf8(monoString);
 
@@ -556,7 +556,7 @@ namespace script {
 	{
 		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
 
-		scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();	
+		//scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();	
 
 		char* nativeString = mono_string_to_utf8(prefab);
 		std::string prefabfile = std::string{ nativeString } + ".prefab";

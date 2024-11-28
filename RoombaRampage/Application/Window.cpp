@@ -48,7 +48,7 @@ namespace Application {
     {
         if (!focused) {
             // If the window loses focus, set it to windowed mode
-            glfwSetWindowMonitor(window, nullptr, 100, 100, AppWindow::m_windowWidth, AppWindow::m_windowHeight, 0);  // Change to windowed mode with a standard resolution
+            glfwSetWindowMonitor(window, nullptr, 100, 100, static_cast<int>(AppWindow::m_windowWidth), static_cast<int>(AppWindow::m_windowHeight), 0);  // Change to windowed mode with a standard resolution
             AppWindow::m_fullScreen = false;
         }
         else if (!AppWindow::m_fullScreen) {
@@ -59,7 +59,7 @@ namespace Application {
 
     }
 
-    static void iconifyCallback(GLFWwindow* window, int iconified)
+    static void iconifyCallback([[maybe_unused]]GLFWwindow* window, int iconified)
     {
         auto& audioManager = assetmanager::AssetManager::m_funcGetInstance()->m_audioManager;
         ecs::ECS* ecs = ecs::ECS::m_GetInstance();
@@ -136,7 +136,7 @@ namespace Application {
         if (Input::InputSystem::m_isKeyPressed(keys::LeftAlt) && Input::InputSystem::m_isKeyTriggered(keys::ENTER)) {
             if (m_enabledFullScreen) {
                 glfwSetWindowFocusCallback(m_window, NULL);
-                glfwSetWindowMonitor(m_window, nullptr, 100, 100, AppWindow::m_windowWidth, AppWindow::m_windowHeight, 0);
+                glfwSetWindowMonitor(m_window, nullptr, 100, 100, static_cast<int>(AppWindow::m_windowWidth), static_cast<int>(AppWindow::m_windowHeight), 0);
                 m_enabledFullScreen = false;
             }
             else {

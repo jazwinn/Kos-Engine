@@ -56,16 +56,16 @@ namespace Serialization {
 
 		std::string line;
 		
-		char* str[256];
+		//char* str[256];
 
 		while (std::getline(file, line)) { // Read line by line
-			std::stringstream str{ line };
+			std::stringstream str2{ line };
 			std::string temp;
-			str >> temp;
-			if (temp == "WindowHeight:") str >> help->m_windowHeight;
-			if (temp == "WindowWidth:") str >> help->m_windowWidth;
-			if (temp == "FpsCap:") str >> help->m_fpsCap;
-			if (temp == "StartScene:") str >> help->m_startScene;
+			str2 >> temp;
+			if (temp == "WindowHeight:") str2 >> help->m_windowHeight;
+			if (temp == "WindowWidth:") str2 >> help->m_windowWidth;
+			if (temp == "FpsCap:") str2 >> help->m_fpsCap;
+			if (temp == "StartScene:") str2 >> help->m_startScene;
 		}
 
 
@@ -452,8 +452,8 @@ namespace Serialization {
 					rapidjson::Value tileRow(rapidjson::kArrayType);
 
 					// Add each integer in the row to the `tileRow` array
-					for (int tile : row) {
-						tileRow.PushBack(tile, allocator);  // Add integer to the row array
+					for (int tile2 : row) {
+						tileRow.PushBack(tile2, allocator);  // Add integer to the row array
 					}
 
 					// Add the `tileRow` array to the main `tileArray`

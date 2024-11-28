@@ -71,7 +71,7 @@ namespace ecs {
 
 	void CollisionResponseSystem::m_Update(const std::string& scene) {
 
-		ECS* ecs = ECS::m_GetInstance();
+		//ECS* ecs = ECS::m_GetInstance();
 
 		if (m_vecRigidBodyComponentPtr.size() != m_vecTransformComponentPtr.size()) {
 			LOGGING_ERROR("Error: Vecotrs container size does not Match");
@@ -110,7 +110,7 @@ namespace ecs {
 			if (rigidComp->m_scene != scene) continue;	
 
 			const EntityID check_ID = ColComp->m_Entity;
-			const auto& iterator = std::find_if(vecCollisionEntityPair.begin(), vecCollisionEntityPair.end(), [check_ID](const auto pair) { return (check_ID == pair.first->m_ID); });
+			const auto& iterator = std::find_if(vecCollisionEntityPair.begin(), vecCollisionEntityPair.end(), [check_ID](const auto pair) { return (static_cast<int>(check_ID) == pair.first->m_ID); });
 			if (iterator != vecCollisionEntityPair.end()) {
 				ColComp->m_collidedWith.push_back(iterator->second->m_ID);
 				ColComp->m_isCollided = true;
