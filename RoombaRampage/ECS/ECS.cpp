@@ -125,7 +125,7 @@ namespace ecs{
 
 
 			if (ecs->m_state != RUNNING) {
-				if (System.first == TYPECOLLISIONRESPONSESYSTEM || System.first == TYPECOLLISIONSYSTEM ||
+				if (System.first == TYPECOLLISIONRESPONSESYSTEM ||// System.first == TYPECOLLISIONSYSTEM ||
 					System.first == TYPELOGICSYSTEM || System.first == TYPEPHYSICSSYSTEM || 
 					System.first == TYPEANIMATIONSYSTEM) {
 					//skip physics and logic if not running
@@ -353,8 +353,41 @@ namespace ecs{
 			return false;
 		}
 
-		Hierachy::m_RemoveParent(ID);
+		//Hierachy::m_RemoveParent(ID);
+
+		if (Hierachy::m_GetParent(ID).has_value()) {
+			EntityID parent = Hierachy::m_GetParent(ID).value();
+			// if parent id is deleted, no need to remove its child
+			if (ecs->m_ECS_EntityMap.find(parent) != ecs->m_ECS_EntityMap.end()) {
+				TransformComponent* parentTransform = (TransformComponent*)ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(parent);
+				size_t pos{};
+				for (EntityID& id : parentTransform->m_childID) {
+					if (ID == id) {
+						parentTransform->m_childID.erase(parentTransform->m_childID.begin() + pos);
+						break;
+					}
+					pos++;
+				}
+			}
+		}
+
+
+
+		// refector
+		m_DeregisterSystem(ID);
+
 		
+
+		// remove entity from scene
+		const auto& result = scenes::SceneManager::GetSceneByEntityID(ID);
+		auto& entityList = ecs->m_ECS_SceneMap.find(result.value())->second.m_sceneIDs;
+		auto it = std::find(entityList.begin(), entityList.end(), ID);
+		ecs->m_ECS_SceneMap.find(result.value())->second.m_sceneIDs.erase(it);
+
+		//store delete entity
+		m_deletedentity.push_back(std::make_pair(ID, ecs->m_ECS_EntityMap.find(ID)->second));
+		ecs->m_ECS_EntityMap.erase(ID);
+
 		//get child
 		if (Hierachy::m_GetChild(ID).has_value()) {
 			std::vector<EntityID> childs = Hierachy::m_GetChild(ID).value();
@@ -364,19 +397,58 @@ namespace ecs{
 		}
 
 
-		// refector
-		m_DeregisterSystem(ID);
-
-		ecs->m_ECS_EntityMap.erase(ID);
-
-		// remove entity from scene
-		const auto& result = scenes::SceneManager::GetSceneByEntityID(ID);
-		auto& entityList = ecs->m_ECS_SceneMap.find(result.value())->second.m_sceneIDs;
-		auto it = std::find(entityList.begin(), entityList.end(), ID);
-		ecs->m_ECS_SceneMap.find(result.value())->second.m_sceneIDs.erase(it);
-
-
 		return true;
+	}
+
+	bool ECS::m_RestoreEntity(EntityID id)
+	{
+		ECS* ecs = ECS::m_GetInstance();
+
+		const auto& it = std::find_if(m_deletedentity.begin(), m_deletedentity.end(), [id](const auto& pair) {return pair.first == id;});
+		if (it == m_deletedentity.end()) return false; //return if entiy id has not been deleted
+
+		//get entity scene
+		auto* tc = static_cast<TransformComponent*>(m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id));
+		const auto& scene = tc->m_scene;
+
+		//see if scene still exist in the engine
+		const auto& sceneit = ecs->m_ECS_SceneMap.find(scene);
+		if (sceneit == ecs->m_ECS_SceneMap.end()) return false;// scene no longer loaded
+		sceneit->second.m_sceneIDs.push_back(id);
+
+
+		// if id has parent, assign it back to the parent
+		if (Hierachy::m_GetParent(id).has_value()) {
+			Hierachy::m_SetParent(Hierachy::m_GetParent(id).value(), id);
+
+		}
+
+		//add entity back to entitymap
+		ecs->m_ECS_EntityMap[id] = it->second;
+
+
+
+
+		m_RegisterSystems(id);
+
+
+		
+
+
+		//restore all child
+		if (Hierachy::m_GetChild(id).has_value()) {
+			std::vector<EntityID> childs = Hierachy::m_GetChild(id).value();
+			for (auto& x : childs) {
+				m_RestoreEntity(x);
+			}
+		}
+
+
+
+		//remove entity from vector
+		m_deletedentity.erase(it);
+
+		return false;
 	}
 
 	

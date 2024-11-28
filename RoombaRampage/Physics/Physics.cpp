@@ -151,7 +151,7 @@ namespace physicspipe {
 	std::vector<std::shared_ptr<PhysicsData>> Physics::m_RetrievePhysicsData() {
 		std::vector<std::shared_ptr	<PhysicsData>> TempCollidedEntities = m_collidedEntities;
 
-		this->m_ClearEntites();
+		//this->m_ClearEntites();
 		return TempCollidedEntities;
 	}
 
@@ -704,7 +704,7 @@ namespace physicspipe {
 
 	std::vector <std::pair<std::shared_ptr<PhysicsData>, std::shared_ptr<PhysicsData>>> Physics::m_RetrievePhysicsDataPair() {
 		std::vector <std::pair<std::shared_ptr<PhysicsData>, std::shared_ptr<PhysicsData>>> TempCollidedEntities = m_collidedEntitiesPair;
-		this->m_clearPair();
+		//this->m_clearPair();
 		return TempCollidedEntities;
 	}
 

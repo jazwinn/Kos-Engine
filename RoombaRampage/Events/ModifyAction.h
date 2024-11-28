@@ -107,48 +107,50 @@ namespace actions {
 
 		void m_redoAction() override {
 			if (m_hasBeenUndo) {
-				m_newEntityID = ecs::ECS::m_GetInstance()->m_CreateEntity(*m_scene);
-				static_cast<ecs::NameComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(m_newEntityID))->m_entityName = std::string(m_entName);
-				if (m_comps.test(ecs::TYPECOLLIDERCOMPONENT)) {
-					ecs::ECS::m_GetInstance()->m_AddComponent(ecs::TYPECOLLIDERCOMPONENT, m_newEntityID);
-				}
-				if (m_comps.test(ecs::TYPESPRITECOMPONENT)) {
-					ecs::ECS::m_GetInstance()->m_AddComponent(ecs::TYPESPRITECOMPONENT, m_newEntityID);
-				}
-				if (m_comps.test(ecs::TYPEPLAYERCOMPONENT)) {
-					ecs::ECS::m_GetInstance()->m_AddComponent(ecs::TYPEPLAYERCOMPONENT, m_newEntityID);
-				}
-				if (m_comps.test(ecs::TYPERIGIDBODYCOMPONENT)) {
-					ecs::ECS::m_GetInstance()->m_AddComponent(ecs::TYPERIGIDBODYCOMPONENT, m_newEntityID);
-				}
-				if (m_comps.test(ecs::TYPETEXTCOMPONENT)) {
-					ecs::ECS::m_GetInstance()->m_AddComponent(ecs::TYPETEXTCOMPONENT, m_newEntityID);
-				}
-				if (m_comps.test(ecs::TYPEANIMATIONCOMPONENT)) {
-					ecs::ECS::m_GetInstance()->m_AddComponent(ecs::TYPEANIMATIONCOMPONENT, m_newEntityID);
-				}
-				if (m_comps.test(ecs::TYPECAMERACOMPONENT)) {
-					ecs::ECS::m_GetInstance()->m_AddComponent(ecs::TYPECAMERACOMPONENT, m_newEntityID);
-				}
-				if (m_comps.test(ecs::TYPEBUTTONCOMPONENT)) {
-					ecs::ECS::m_GetInstance()->m_AddComponent(ecs::TYPEBUTTONCOMPONENT, m_newEntityID);
-				}
-				if (m_comps.test(ecs::TYPESCRIPTCOMPONENT)) {
-					ecs::ECS::m_GetInstance()->m_AddComponent(ecs::TYPESCRIPTCOMPONENT, m_newEntityID);
-				}
-				if (m_comps.test(ecs::TYPETILEMAPCOMPONENT)) {
-					ecs::ECS::m_GetInstance()->m_AddComponent(ecs::TYPETILEMAPCOMPONENT, m_newEntityID);
-				}
-				if (m_comps.test(ecs::TYPEAUDIOCOMPONENT)) {
-					ecs::ECS::m_GetInstance()->m_AddComponent(ecs::TYPEAUDIOCOMPONENT, m_newEntityID);
-				}
-				ecs::TransformComponent* tComp = static_cast<ecs::TransformComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(m_newEntityID));
-				tComp->m_position = m_oldPos;
-				tComp->m_rotation = m_oldRot;
-				tComp->m_scale = m_oldScale;
-				tComp->m_transformation = m_oldTrans;
-				m_hasBeenUndo = false;
-				m_hasBeenRedo = true;
+				ecs::ECS::m_GetInstance()->m_RestoreEntity(m_entityID);
+
+				//m_newEntityID = ecs::ECS::m_GetInstance()->m_CreateEntity(*m_scene);
+				//static_cast<ecs::NameComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(m_newEntityID))->m_entityName = std::string(m_entName);
+				//if (m_comps.test(ecs::TYPECOLLIDERCOMPONENT)) {
+				//	ecs::ECS::m_GetInstance()->m_AddComponent(ecs::TYPECOLLIDERCOMPONENT, m_newEntityID);
+				//}
+				//if (m_comps.test(ecs::TYPESPRITECOMPONENT)) {
+				//	ecs::ECS::m_GetInstance()->m_AddComponent(ecs::TYPESPRITECOMPONENT, m_newEntityID);
+				//}
+				//if (m_comps.test(ecs::TYPEPLAYERCOMPONENT)) {
+				//	ecs::ECS::m_GetInstance()->m_AddComponent(ecs::TYPEPLAYERCOMPONENT, m_newEntityID);
+				//}
+				//if (m_comps.test(ecs::TYPERIGIDBODYCOMPONENT)) {
+				//	ecs::ECS::m_GetInstance()->m_AddComponent(ecs::TYPERIGIDBODYCOMPONENT, m_newEntityID);
+				//}
+				//if (m_comps.test(ecs::TYPETEXTCOMPONENT)) {
+				//	ecs::ECS::m_GetInstance()->m_AddComponent(ecs::TYPETEXTCOMPONENT, m_newEntityID);
+				//}
+				//if (m_comps.test(ecs::TYPEANIMATIONCOMPONENT)) {
+				//	ecs::ECS::m_GetInstance()->m_AddComponent(ecs::TYPEANIMATIONCOMPONENT, m_newEntityID);
+				//}
+				//if (m_comps.test(ecs::TYPECAMERACOMPONENT)) {
+				//	ecs::ECS::m_GetInstance()->m_AddComponent(ecs::TYPECAMERACOMPONENT, m_newEntityID);
+				//}
+				//if (m_comps.test(ecs::TYPEBUTTONCOMPONENT)) {
+				//	ecs::ECS::m_GetInstance()->m_AddComponent(ecs::TYPEBUTTONCOMPONENT, m_newEntityID);
+				//}
+				//if (m_comps.test(ecs::TYPESCRIPTCOMPONENT)) {
+				//	ecs::ECS::m_GetInstance()->m_AddComponent(ecs::TYPESCRIPTCOMPONENT, m_newEntityID);
+				//}
+				//if (m_comps.test(ecs::TYPETILEMAPCOMPONENT)) {
+				//	ecs::ECS::m_GetInstance()->m_AddComponent(ecs::TYPETILEMAPCOMPONENT, m_newEntityID);
+				//}
+				//if (m_comps.test(ecs::TYPEAUDIOCOMPONENT)) {
+				//	ecs::ECS::m_GetInstance()->m_AddComponent(ecs::TYPEAUDIOCOMPONENT, m_newEntityID);
+				//}
+				//ecs::TransformComponent* tComp = static_cast<ecs::TransformComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(m_newEntityID));
+				//tComp->m_position = m_oldPos;
+				//tComp->m_rotation = m_oldRot;
+				//tComp->m_scale = m_oldScale;
+				//tComp->m_transformation = m_oldTrans;
+				//m_hasBeenUndo = false;
+				//m_hasBeenRedo = true;
 			}
 		}
 	};
@@ -171,7 +173,10 @@ namespace actions {
 		void m_undoAction() override {
 			if (!m_hasBeenUndo) {
 				m_hasBeenUndo = true;
-				m_newEntityID = ecs::ECS::m_GetInstance()->m_CreateEntity(*m_scene);
+
+				ecs::ECS::m_GetInstance()->m_RestoreEntity(m_entityID);
+
+			/*	m_newEntityID = ecs::ECS::m_GetInstance()->m_CreateEntity(*m_scene);
 				static_cast<ecs::NameComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(m_newEntityID))->m_entityName = std::string(m_entName);
 				if (m_comps.test(ecs::TYPECOLLIDERCOMPONENT)) {
 					ecs::ECS::m_GetInstance()->m_AddComponent(ecs::TYPECOLLIDERCOMPONENT, m_newEntityID);
@@ -210,7 +215,7 @@ namespace actions {
 				tComp->m_position = m_oldPos;
 				tComp->m_rotation = m_oldRot;
 				tComp->m_scale = m_oldScale;
-				tComp->m_transformation = m_oldTrans;
+				tComp->m_transformation = m_oldTrans;*/
 			}
 		}
 
@@ -246,7 +251,9 @@ namespace actions {
 
 		void m_undoAction() override {
 			if (!m_hasBeenUndo) {
-				m_newEntityID = ecs::ECS::m_GetInstance()->m_CreateEntity(*m_scene);
+
+				ecs::ECS::m_GetInstance()->m_RestoreEntity(m_entityID);
+				/*m_newEntityID = ecs::ECS::m_GetInstance()->m_CreateEntity(*m_scene);
 				static_cast<ecs::NameComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(m_newEntityID))->m_entityName = std::string(m_entName);
 				ecs::Hierachy::m_SetParent(m_parentID, m_newEntityID);
 				m_hasBeenUndo = true;
@@ -287,7 +294,7 @@ namespace actions {
 				tComp->m_position = m_oldPos;
 				tComp->m_rotation = m_oldRot;
 				tComp->m_scale = m_oldScale;
-				tComp->m_transformation = m_oldTrans;
+				tComp->m_transformation = m_oldTrans;*/
 			}
 
 		}
@@ -347,49 +354,50 @@ namespace actions {
 
 		void m_redoAction() override {
 			if (m_hasBeenUndo) {
-				m_newEntityID = ecs::ECS::m_GetInstance()->m_CreateEntity(*m_scene);
-				static_cast<ecs::NameComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(m_newEntityID))->m_entityName = std::string(m_entName);
-				ecs::Hierachy::m_SetParent(m_parentID, m_newEntityID);
-				if (m_comps.test(ecs::TYPECOLLIDERCOMPONENT)) {
-					ecs::ECS::m_GetInstance()->m_AddComponent(ecs::TYPECOLLIDERCOMPONENT, m_newEntityID);
-				}
-				if (m_comps.test(ecs::TYPESPRITECOMPONENT)) {
-					ecs::ECS::m_GetInstance()->m_AddComponent(ecs::TYPESPRITECOMPONENT, m_newEntityID);
-				}
-				if (m_comps.test(ecs::TYPEPLAYERCOMPONENT)) {
-					ecs::ECS::m_GetInstance()->m_AddComponent(ecs::TYPEPLAYERCOMPONENT, m_newEntityID);
-				}
-				if (m_comps.test(ecs::TYPERIGIDBODYCOMPONENT)) {
-					ecs::ECS::m_GetInstance()->m_AddComponent(ecs::TYPERIGIDBODYCOMPONENT, m_newEntityID);
-				}
-				if (m_comps.test(ecs::TYPETEXTCOMPONENT)) {
-					ecs::ECS::m_GetInstance()->m_AddComponent(ecs::TYPETEXTCOMPONENT, m_newEntityID);
-				}
-				if (m_comps.test(ecs::TYPEANIMATIONCOMPONENT)) {
-					ecs::ECS::m_GetInstance()->m_AddComponent(ecs::TYPEANIMATIONCOMPONENT, m_newEntityID);
-				}
-				if (m_comps.test(ecs::TYPECAMERACOMPONENT)) {
-					ecs::ECS::m_GetInstance()->m_AddComponent(ecs::TYPECAMERACOMPONENT, m_newEntityID);
-				}
-				if (m_comps.test(ecs::TYPEBUTTONCOMPONENT)) {
-					ecs::ECS::m_GetInstance()->m_AddComponent(ecs::TYPEBUTTONCOMPONENT, m_newEntityID);
-				}
-				if (m_comps.test(ecs::TYPESCRIPTCOMPONENT)) {
-					ecs::ECS::m_GetInstance()->m_AddComponent(ecs::TYPESCRIPTCOMPONENT, m_newEntityID);
-				}
-				if (m_comps.test(ecs::TYPETILEMAPCOMPONENT)) {
-					ecs::ECS::m_GetInstance()->m_AddComponent(ecs::TYPETILEMAPCOMPONENT, m_newEntityID);
-				}
-				if (m_comps.test(ecs::TYPEAUDIOCOMPONENT)) {
-					ecs::ECS::m_GetInstance()->m_AddComponent(ecs::TYPEAUDIOCOMPONENT, m_newEntityID);
-				}
-				ecs::TransformComponent* tComp = static_cast<ecs::TransformComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(m_newEntityID));
-				tComp->m_position = m_oldPos;
-				tComp->m_rotation = m_oldRot;
-				tComp->m_scale = m_oldScale;
-				tComp->m_transformation = m_oldTrans;
-				m_hasBeenUndo = false;
-				m_hasBeenRedo = true;
+				ecs::ECS::m_GetInstance()->m_RestoreEntity(m_entityID);
+				//m_newEntityID = ecs::ECS::m_GetInstance()->m_CreateEntity(*m_scene);
+				//static_cast<ecs::NameComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(m_newEntityID))->m_entityName = std::string(m_entName);
+				//ecs::Hierachy::m_SetParent(m_parentID, m_newEntityID);
+				//if (m_comps.test(ecs::TYPECOLLIDERCOMPONENT)) {
+				//	ecs::ECS::m_GetInstance()->m_AddComponent(ecs::TYPECOLLIDERCOMPONENT, m_newEntityID);
+				//}
+				//if (m_comps.test(ecs::TYPESPRITECOMPONENT)) {
+				//	ecs::ECS::m_GetInstance()->m_AddComponent(ecs::TYPESPRITECOMPONENT, m_newEntityID);
+				//}
+				//if (m_comps.test(ecs::TYPEPLAYERCOMPONENT)) {
+				//	ecs::ECS::m_GetInstance()->m_AddComponent(ecs::TYPEPLAYERCOMPONENT, m_newEntityID);
+				//}
+				//if (m_comps.test(ecs::TYPERIGIDBODYCOMPONENT)) {
+				//	ecs::ECS::m_GetInstance()->m_AddComponent(ecs::TYPERIGIDBODYCOMPONENT, m_newEntityID);
+				//}
+				//if (m_comps.test(ecs::TYPETEXTCOMPONENT)) {
+				//	ecs::ECS::m_GetInstance()->m_AddComponent(ecs::TYPETEXTCOMPONENT, m_newEntityID);
+				//}
+				//if (m_comps.test(ecs::TYPEANIMATIONCOMPONENT)) {
+				//	ecs::ECS::m_GetInstance()->m_AddComponent(ecs::TYPEANIMATIONCOMPONENT, m_newEntityID);
+				//}
+				//if (m_comps.test(ecs::TYPECAMERACOMPONENT)) {
+				//	ecs::ECS::m_GetInstance()->m_AddComponent(ecs::TYPECAMERACOMPONENT, m_newEntityID);
+				//}
+				//if (m_comps.test(ecs::TYPEBUTTONCOMPONENT)) {
+				//	ecs::ECS::m_GetInstance()->m_AddComponent(ecs::TYPEBUTTONCOMPONENT, m_newEntityID);
+				//}
+				//if (m_comps.test(ecs::TYPESCRIPTCOMPONENT)) {
+				//	ecs::ECS::m_GetInstance()->m_AddComponent(ecs::TYPESCRIPTCOMPONENT, m_newEntityID);
+				//}
+				//if (m_comps.test(ecs::TYPETILEMAPCOMPONENT)) {
+				//	ecs::ECS::m_GetInstance()->m_AddComponent(ecs::TYPETILEMAPCOMPONENT, m_newEntityID);
+				//}
+				//if (m_comps.test(ecs::TYPEAUDIOCOMPONENT)) {
+				//	ecs::ECS::m_GetInstance()->m_AddComponent(ecs::TYPEAUDIOCOMPONENT, m_newEntityID);
+				//}
+				//ecs::TransformComponent* tComp = static_cast<ecs::TransformComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(m_newEntityID));
+				//tComp->m_position = m_oldPos;
+				//tComp->m_rotation = m_oldRot;
+				//tComp->m_scale = m_oldScale;
+				//tComp->m_transformation = m_oldTrans;
+				//m_hasBeenUndo = false;
+				//m_hasBeenRedo = true;
 			}
 		}
 	};
