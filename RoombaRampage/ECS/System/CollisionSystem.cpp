@@ -131,6 +131,7 @@ namespace ecs {
 			vector2::Vec2 pos{}, scale{};
 			float rot{};
 
+			//If Entity Has A Parent
 			if (TransComp->m_haveParent) {
 				EntityID parentID = ecs::Hierachy::m_GetParent(TransComp->m_Entity).value();
 				TransformComponent* parentComp{ nullptr };
@@ -200,6 +201,7 @@ namespace ecs {
 					LOGGING_ERROR("NO ENTITY TYPE");
 				}
 			}
+			//If Entity Doesnt Have A Parent
 			else {
 				if (ColComp->m_type == physicspipe::EntityType::CIRCLE) {
 
