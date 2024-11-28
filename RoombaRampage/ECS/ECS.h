@@ -103,6 +103,8 @@ namespace ecs {
 		/******************************************************************/
 		bool m_DeleteEntity(EntityID);
 
+		bool m_RestoreEntity(EntityID);
+
 
 		template <typename T>
 		void m_AddComponentToECS(ComponentType);
@@ -174,6 +176,8 @@ namespace ecs {
 
 		//modify from set next state
 		GAMESTATE m_state{STOP};
+
+		std::vector<std::pair<ecs::EntityID, std::bitset<TOTALTYPECOMPONENT>>> m_deletedentity;
 
 	};
 

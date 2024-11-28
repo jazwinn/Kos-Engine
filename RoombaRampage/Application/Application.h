@@ -16,8 +16,6 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #ifndef APP_H
 #define APP_H
 
-
-
 #include "../Debugging/Logging.h"
 #include "../ECS/ECS.h"
 #include "../Inputs/Input.h"
@@ -26,11 +24,14 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 #include "../Debugging/Logging.h"
 #include "../C#Mono/mono_handler.h"
-#include "../Editor/ImGui Panels/Editor.h"
-#include "imgui.h"
-#include "imgui_impl_glfw.h"
-#include "imgui_impl_opengl3.h"
 #include "../Events/EventHandler.h"
+
+#ifdef IMGUIENABLED
+	#include "../Editor/ImGui Panels/Editor.h"
+	#include "imgui.h"
+	#include "imgui_impl_glfw.h"
+	#include "imgui_impl_opengl3.h"
+#endif
 /******************************************************************/
 /*!
 \class     Application
