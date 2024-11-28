@@ -83,15 +83,20 @@ public class CollisionResponse : ScriptBase
             float startingPlayerRotate;
             InternalCall.m_InternalGetTransformComponent(EntityID, out startingPlayerPos, out startingPlayerScale, out startingPlayerRotate);
 
-           
 
+            int steps = InternalCall.m_InternalCallGetSteps();
             float delta = InternalCall.m_InternalCallGetDeltaTime();
+            if (steps > 1)
+            {
+                delta *= steps;
+                //Console.WriteLine(steps);
+            }
             float cxStart = startingPlayerPos.X;
             float cyStart = startingPlayerPos.Y;
             float cxEnd = cxStart + playerVelocity.X * delta;
             float cyEnd = cyStart + playerVelocity.Y * delta;
 
-            Console.WriteLine(delta);
+           // Console.WriteLine(delta);
 
             if (!(cxEnd > exMin && cxEnd < exMax && cyEnd < eyMax && cyEnd > eyMin))
             {

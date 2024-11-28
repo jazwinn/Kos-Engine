@@ -676,6 +676,17 @@ namespace script {
 		return Helper::Helpers::GetInstance()->m_windowMinimise;
 	}
 
+	float InternalCall::m_getAccumulatedDeltaTime()
+	{
+
+		return Helper::Helpers::GetInstance()->m_accumulatedTime;
+	}
+
+	int InternalCall::m_InternalCallGetSteps()
+	{
+		return Helper::Helpers::GetInstance()->currentNumberOfSteps;
+	}
+
 	void InternalCall::m_InternalCallDeleteEntity(ecs::EntityID id)
 	{
 		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
@@ -788,5 +799,9 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_InternalCallStopAllAudio);
 
 		MONO_ADD_INTERNAL_CALL(m_InternalCallIsWindowMinimise);
+		MONO_ADD_INTERNAL_CALL(m_getAccumulatedDeltaTime);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallGetSteps);
+
+
 	}
 }
