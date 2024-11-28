@@ -82,8 +82,8 @@ namespace layer {
 		}
 
 		// add id to new layer
-		m_layerMap[newlayer].second.push_back(id);
-		m_layerMap[oldlayer].second.erase(std::find(m_layerMap[oldlayer].second.begin(), m_layerMap[oldlayer].second.end(), id));
+		//m_layerMap[newlayer].second.push_back(id);
+		//m_layerMap[oldlayer].second.erase(std::find(m_layerMap[oldlayer].second.begin(), m_layerMap[oldlayer].second.end(), id));
 
 		//assign ecs layer
 		ecs::NameComponent* nc = (ecs::NameComponent*)(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id));
