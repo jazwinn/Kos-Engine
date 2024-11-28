@@ -1123,14 +1123,14 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                     if (ac) {
                         int fileIndex = 0;
-                        for (auto it2 = ac->m_AudioFiles.begin(); it2 != ac->m_AudioFiles.end();) {
+                        for (auto it = ac->m_AudioFiles.begin(); it != ac->m_AudioFiles.end();) {
                             ImGui::PushID(fileIndex);
 
                             bool removeFile = false;
                             
 
                             ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_DefaultOpen;
-                            std::string headerName = "Audio File " + std::to_string(fileIndex + 1) + ": " + it2->m_Name;
+                            std::string headerName = "Audio File " + std::to_string(fileIndex + 1) + ": " + it->m_Name;
                             bool nodeOpen = ImGui::TreeNodeEx(headerName.c_str(), flags);
 
                             if (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right)) {
@@ -1146,10 +1146,10 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                             if (nodeOpen) {
                                 char buffer[256];
-                                strncpy(buffer, it2->m_FilePath.c_str(), sizeof(buffer));
+                                strncpy(buffer, it->m_FilePath.c_str(), sizeof(buffer));
 
 
-                                if (ImGui::BeginCombo("Sounds", it2->m_Name.c_str())) {
+                                if (ImGui::BeginCombo("Sounds", it->m_Name.c_str())) {
                                     for (const auto& sound : assetManager->m_audioManager.getSoundMap()) {
                                         if (ImGui::Selectable(sound.first.c_str(), sound.first == it->m_Name)) {
                                             if (sound.first != it->m_Name) {
@@ -1195,10 +1195,10 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                                 assetManager->m_audioManager.m_SetVolumeForEntity(entityID, it->m_Name, it->m_Volume);
 
 
-                                bool wasLooping = it2->m_Loop;
+                                bool wasLooping = it->m_Loop;
 
                                 if (ImGui::Button("Play Sound")) {
-                                    std::string key = it2->m_Name;
+                                    std::string key = it->m_Name;
                                     auto& audioManager = assetManager->m_audioManager;
                                     if (!audioManager.m_IsPlayingForEntity(entityID, key)) {
                                         audioManager.m_PlayAudioForEntity(entityID, key, it->m_Volume);
@@ -1209,12 +1209,12 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                                     }
                                 }
     
-                                if (ImGui::Checkbox("Play On Start", &it2->m_PlayOnStart)) {
+                                if (ImGui::Checkbox("Play On Start", &it->m_PlayOnStart)) {
                                     auto& audioManager = assetManager->m_audioManager;
 
-                                    if (it2->m_PlayOnStart) {
+                                    if (it->m_PlayOnStart) {
                                         for (auto& audioFile : ac->m_AudioFiles) {
-                                            if (&audioFile != &(*it2)) {
+                                            if (&audioFile != &(*it)) {
                                                 audioFile.m_PlayOnStart = false;
                                             }
                                         }
@@ -1229,7 +1229,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                                     audioManager.m_SetPlayOnStartForEntity(entityID, it->m_Name, it->m_PlayOnStart);
                                 }
 
-                                if (ImGui::Checkbox("Loop", &it2->m_Loop)) {
+                                if (ImGui::Checkbox("Loop", &it->m_Loop)) {
                                     auto& audioManager = assetManager->m_audioManager;
 
                                     audioManager.m_SetLoopingForEntity(entityID, it->m_Name, it->m_Loop);
@@ -1244,9 +1244,9 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
 
                                 bool isPaused = false;
-                                auto& audioManager2 = assetManager->m_audioManager;
-                                if (audioManager2.getSoundMap().find(it2->m_Name) != audioManager2.getSoundMap().end()) {
-                                    auto& sound = audioManager2.getSoundMap()[it2->m_Name];
+                                auto& audioManager = assetManager->m_audioManager;
+                                if (audioManager.getSoundMap().find(it->m_Name) != audioManager.getSoundMap().end()) {
+                                    auto& sound = audioManager.getSoundMap()[it->m_Name];
 
                                     if (sound->m_GetChannelForEntity(entityID)) {
                                         sound->m_GetChannelForEntity(entityID)->getPaused(&isPaused);
@@ -1276,13 +1276,13 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             ImGui::PopID();
 
                             if (removeFile) {
-                                std::string key = it2->m_Name;
+                                std::string key = it->m_Name;
                                 auto& audioManager = assetManager->m_audioManager;
                                 audioManager.m_StopAudioForEntity(entityID, key);
                                 it = ac->m_AudioFiles.erase(it);
                             }
                             else {
-                                ++it2;
+                                ++it;
                                 ++fileIndex;
                             }
                         }
