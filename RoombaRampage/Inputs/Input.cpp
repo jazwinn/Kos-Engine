@@ -127,13 +127,8 @@ namespace Input {
 		else {
 			state = glfwGetKey(m_windowInput, givenKey);
 		}
-		if (m_wasTriggered[givenKey] && state == GLFW_PRESS) {
-			if ((m_currTime >= 1.f / 60.f)) {
-				m_wasTriggered[givenKey] = false;
-			}
-			m_wasPressed[givenKey] = true;
-		}
-		return m_wasPressed[givenKey];
+
+		return state == GLFW_PRESS ? true : false;
 	}
 	bool InputSystem::m_isKeyReleased(const keyCode givenKey) {
 		int state;
@@ -143,7 +138,7 @@ namespace Input {
 		else {
 			state = glfwGetKey(m_windowInput, givenKey);
 		}
-		return state == 0 ? true : false;
+		return state == GLFW_RELEASE ? true : false;
 	}
 
 	vector2::Vec2 InputSystem::m_getMousePosition() {
