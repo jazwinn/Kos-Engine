@@ -98,13 +98,12 @@
 - Deploy: 						Disabled
 
 
-
 *** Compiling C# into DLL ***
 * C# Script *
 - Create your C# file (ExampleScript.cs) with the methods you want to call in C++
+- Once you press build, it will automatically create a dll file.
 
-* Compile the C# into DLL *
-- Download the 64-bit version (no GTK required). (https://www.mono-project.com/download/stable/#download-win)
-- View > Terminal (Open VS terminal)
-- cd "G:\Documents\RoombaOS_ForkCloneRemote\RoombaRampage\C#Mono" (Example to point to your C# file)
-- csc /target:library ExampleScript.cs (This will compile your C# script into DLL)
+*** Game Cheat Code ***
+ Ctrl + P - Set all enemy speed to 1
+ Ctrl + L - Kill all enemies
+
