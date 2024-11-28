@@ -58,8 +58,6 @@ namespace gui {
 		REGISTER_ACTION_LISTENER(events::Actions::REMOVECOMP, ImGuiHandler::m_OnAction, this)
 		REGISTER_ACTION_LISTENER(events::Actions::ADDENT, ImGuiHandler::m_OnAction, this)
 		REGISTER_ACTION_LISTENER(events::Actions::DELENT, ImGuiHandler::m_OnAction, this)
-		REGISTER_ACTION_LISTENER(events::Actions::ADDCHILD, ImGuiHandler::m_OnAction, this)
-		REGISTER_ACTION_LISTENER(events::Actions::REMOVECHILD, ImGuiHandler::m_OnAction, this)
 	} //CTORdoing 
 
 	ImGuiHandler::~ImGuiHandler() {} //Destructor
@@ -283,7 +281,7 @@ namespace gui {
 	}
 
 
-	void ImGuiHandler::m_OnButtonPress(const events::BaseEvent<events::ButtonEvents>& givenEvent) {
+	void ImGuiHandler::m_OnButtonPress([[maybe_unused]]const events::BaseEvent<events::ButtonEvents>& givenEvent) {
 		assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
 
 		if (!assetManager) {
@@ -291,7 +289,7 @@ namespace gui {
 			return;
 		}
 
-		auto& soundMap = assetManager->m_audioManager.getSoundMap();
+		//auto& soundMap = assetManager->m_audioManager.getSoundMap();
 
 		/*auto playSound = [&](const std::string& fileName) {
 			auto it = soundMap.find(fileName);
@@ -313,7 +311,7 @@ namespace gui {
 			}
 			};*/
 
-		int button = givenEvent.m_ToType<events::ButtonPressEvent>().m_GetButton();
+		//int button = givenEvent.m_ToType<events::ButtonPressEvent>().m_GetButton();
 
 		/*if (button == 1) {
 			playSound("mindstorm.wav");
@@ -368,19 +366,11 @@ namespace gui {
 			actions::ActionManager::m_GetManagerInstance()->m_push(newAct);
 		}
 		else if (givenEvent.m_GetEventType() == events::Actions::ADDENT) {
-			auto* newAct = new actions::AddEntityAction(givenEvent.m_ToType<events::AddEntity>().m_GetID(), givenEvent.m_ToType<events::AddEntity>().m_GetSignature(), givenEvent.m_ToType<events::AddEntity>().m_GetScene(), givenEvent.m_ToType<events::AddEntity>().m_GetName());
+			auto* newAct = new actions::AddEntityAction(givenEvent.m_ToType<events::AddEntity>().m_GetID());
 			actions::ActionManager::m_GetManagerInstance()->m_push(newAct);
 		}
 		else if (givenEvent.m_GetEventType() == events::Actions::DELENT) {
-			auto* newAct = new actions::RemoveEntityAction(givenEvent.m_ToType<events::RemoveEntity>().m_GetID(), givenEvent.m_ToType<events::RemoveEntity>().m_GetSignature(), givenEvent.m_ToType<events::RemoveEntity>().m_GetScene(), givenEvent.m_ToType<events::RemoveEntity>().m_GetName());
-			actions::ActionManager::m_GetManagerInstance()->m_push(newAct);
-		}
-		else if (givenEvent.m_GetEventType() == events::Actions::ADDCHILD) {
-			auto* newAct = new actions::AddEntityWithParentAction(givenEvent.m_ToType<events::AddChild>().m_GetID(), givenEvent.m_ToType<events::AddChild>().m_GetParentID(), givenEvent.m_ToType<events::AddChild>().m_GetScene(), givenEvent.m_ToType<events::AddChild>().m_GetName(), givenEvent.m_ToType<events::AddChild>().m_GetSignature());
-			actions::ActionManager::m_GetManagerInstance()->m_push(newAct);
-		}
-		else if (givenEvent.m_GetEventType() == events::Actions::REMOVECHILD) {
-			auto* newAct = new actions::RemoveEntityWithParentAction(givenEvent.m_ToType<events::RemoveChild>().m_GetID(), givenEvent.m_ToType<events::RemoveChild>().m_GetParentID(), givenEvent.m_ToType<events::RemoveChild>().m_GetScene(), givenEvent.m_ToType<events::RemoveChild>().m_GetName(), givenEvent.m_ToType<events::RemoveChild>().m_GetSignature());
+			auto* newAct = new actions::RemoveEntityAction(givenEvent.m_ToType<events::RemoveEntity>().m_GetID());
 			actions::ActionManager::m_GetManagerInstance()->m_push(newAct);
 		}
 		else if (givenEvent.m_GetEventType() == events::Actions::UNDO) {

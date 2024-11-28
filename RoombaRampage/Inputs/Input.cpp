@@ -128,7 +128,9 @@ namespace Input {
 			state = glfwGetKey(m_windowInput, givenKey);
 		}
 		if (m_wasTriggered[givenKey] && state == GLFW_PRESS) {
-			m_wasTriggered[givenKey] = false;
+			if ((m_currTime >= 1.f / 60.f)) {
+				m_wasTriggered[givenKey] = false;
+			}
 			m_wasPressed[givenKey] = true;
 		}
 		return m_wasPressed[givenKey];

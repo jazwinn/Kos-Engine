@@ -32,16 +32,16 @@ namespace Tilemap
 		if ((tileCoordinates.m_x) > originCoordinates.m_x + tilemap->m_rowLength) // If selected tile is longer than current tileset
 		{
 			LOGGING_INFO("Extending row length by %d", static_cast<int>(ceil(tileCoordinates.m_x - originCoordinates.m_x)));
-			resizeTiles(tilemap, ceil(tileCoordinates.m_x - originCoordinates.m_x), tilemap->m_columnLength);
+			resizeTiles(tilemap, static_cast<int>(ceil(tileCoordinates.m_x - originCoordinates.m_x)), tilemap->m_columnLength);
 		}
 		if (tileCoordinates.m_x < floor(originCoordinates.m_x))
 		{
-			resizeTiles(tilemap, tilemap->m_rowLength + ceil(originCoordinates.m_x - tileCoordinates.m_x), tilemap->m_columnLength); // Change Row Length
+			resizeTiles(tilemap, tilemap->m_rowLength + static_cast<int>(ceil(originCoordinates.m_x - tileCoordinates.m_x)), tilemap->m_columnLength); // Change Row Length
 
 			for (std::vector<int>& row : tilemap->m_tilePictureIndex)
 			{
 				std::rotate(row.rbegin(),
-					row.rbegin() + (ceil(originCoordinates.m_x - tileCoordinates.m_x)),
+					row.rbegin() + static_cast<int>(ceil(originCoordinates.m_x - tileCoordinates.m_x)),
 					row.rend()); // Rotate Indexes
 			}
 			
@@ -49,19 +49,19 @@ namespace Tilemap
 		}
 		if (tileCoordinates.m_y < (originCoordinates.m_y + 1 - tilemap->m_columnLength)) // If selected tile is longer than current tileset
 		{
-			resizeTiles(tilemap, tilemap->m_rowLength , ceil(originCoordinates.m_y + 1 - tileCoordinates.m_y));
+			resizeTiles(tilemap, tilemap->m_rowLength , static_cast<int>(ceil(originCoordinates.m_y + 1 - tileCoordinates.m_y)));
 		}
 		if (tileCoordinates.m_y > floor(originCoordinates.m_y + 1))
 		{
-			resizeTiles(tilemap, tilemap->m_rowLength, tilemap->m_columnLength + ceil(tileCoordinates.m_y - (originCoordinates.m_y + 1))); //Change Column Length
+			resizeTiles(tilemap, tilemap->m_rowLength, tilemap->m_columnLength + static_cast<int>(ceil(tileCoordinates.m_y - (originCoordinates.m_y + 1)))); //Change Column Length
 			std::rotate(tilemap->m_tilePictureIndex.rbegin(),
-						tilemap->m_tilePictureIndex.rbegin() + (ceil(tileCoordinates.m_y - (originCoordinates.m_y + 1))),
+						tilemap->m_tilePictureIndex.rbegin() + static_cast<int>(ceil(tileCoordinates.m_y - (originCoordinates.m_y + 1))),
 						tilemap->m_tilePictureIndex.rend()); // Rotate Indexes
 			originCoordinates.m_y = floor(tileCoordinates.m_y); //Set to center of tile
 		}
 
-		int indexX = floor(tileCoordinates.m_x - originCoordinates.m_x);
-		int indexY = floor(originCoordinates.m_y - tileCoordinates.m_y) + 1.f;
+		int indexX = static_cast<int>(floor(tileCoordinates.m_x - originCoordinates.m_x));
+		int indexY = static_cast<int>(floor(originCoordinates.m_y - tileCoordinates.m_y) + 1.f);
 
 		if (indexX >= tilemap->m_tilePictureIndex[0].size() || indexY >= tilemap->m_tilePictureIndex.size())
 		{

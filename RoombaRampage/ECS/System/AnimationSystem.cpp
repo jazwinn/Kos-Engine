@@ -79,7 +79,7 @@ namespace ecs {
 	void AnimationSystem::m_Update(const std::string& scene) {
 
 		ECS* ecs = ECS::m_GetInstance();
-		graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
+		// graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
 
 		if (m_vecAnimationComponentPtr.size() != m_vecTransformComponentPtr.size() && m_vecAnimationComponentPtr.size() != m_vecSpriteComponentPtr.size()) {
 			//std::cout << "Error: Vecotrs container size does not Match" << std::endl;
@@ -105,7 +105,7 @@ namespace ecs {
 				float frameTime = 1.f / m_vecAnimationComponentPtr[n]->m_framesPerSecond;
 				const auto& image = assetmanager->m_imageManager.m_imageMap.find(SpriteComp->m_imageFile);
 				if (image == assetmanager->m_imageManager.m_imageMap.end()) continue;
-				int ids = image->second.m_imageID;
+				//int ids = image->second.m_imageID;
 				//float spriteTotalTime = frameTime * pipe->m_imageData[ids].m_stripCount;
 				//std::cout << m_vecAnimationComponentPtr[n]->m_stripCount << std::endl;
 				float spriteTotalTime = frameTime * m_vecAnimationComponentPtr[n]->m_stripCount;

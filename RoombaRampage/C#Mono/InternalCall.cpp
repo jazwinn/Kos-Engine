@@ -507,7 +507,7 @@ namespace script {
 	void InternalCall::m_InternalCallSetSceneActive(MonoString* monoString)
 	{
 		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
-		scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();
+		//scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();
 
 		char* nativeString = mono_string_to_utf8(monoString);
 
@@ -556,7 +556,7 @@ namespace script {
 	{
 		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
 
-		scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();	
+		//scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();	
 
 		char* nativeString = mono_string_to_utf8(prefab);
 		std::string prefabfile = std::string{ nativeString } + ".prefab";
@@ -645,7 +645,7 @@ namespace script {
 		const auto& it = std::find_if(aud->m_AudioFiles.begin(), aud->m_AudioFiles.end(), [filepath](const auto& audio) {return audio.m_Name == filepath.filename().stem().string(); });
 		
 		if (it != aud->m_AudioFiles.end()) {
-			assetmanager->m_audioManager.m_PlayAudioForEntity(std::to_string(id), filepath.filename().stem().string(), it->m_Volume);
+			assetmanager->m_audioManager.m_PlayAudioForEntity(id, filepath.filename().stem().string(), it->m_Volume);
 		}
 		
 
@@ -658,7 +658,7 @@ namespace script {
 		std::filesystem::path filepath = nativeString;
 
 		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
-		assetmanager->m_audioManager.m_StopAudioForEntity(std::to_string(id), filepath.filename().stem().string());
+		assetmanager->m_audioManager.m_StopAudioForEntity(id, filepath.filename().stem().string());
 
 		mono_free(nativeString);
 	}

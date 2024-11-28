@@ -49,12 +49,12 @@ namespace gui
 
 		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
 		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
-		graphicpipe::GraphicsPipe* gp = graphicpipe::GraphicsPipe::m_funcGetInstance();
+		//graphicpipe::GraphicsPipe* gp = graphicpipe::GraphicsPipe::m_funcGetInstance();
 
 
 
 		auto* tmc = static_cast<ecs::TilemapComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETILEMAPCOMPONENT]->m_GetEntityComponent(m_clickedEntityId));
-		auto* transform = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(m_clickedEntityId));
+		//auto* transform = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(m_clickedEntityId));
 
 
 
@@ -82,14 +82,14 @@ namespace gui
 
 				int xIndex = i % tmc->m_pictureRowLength;
 
-				int yIndex = floor(i / tmc->m_pictureRowLength);
+				int yIndex = static_cast<int>(floor(i / tmc->m_pictureRowLength));
 
 				float uvX0 = xIndex * xWidth;               // Left UV coordinate
 				float uvX1 = (xIndex + 1) * xWidth;         // Right UV coordinate
 				float uvY0 = 1.f - (yIndex + 1) * yWidth;  // Top UV coordinate (flipped vertically)
 				float uvY1 = 1.f - yIndex * yWidth;        // Bottom UV coordinate
 
-				if (image->second.m_isTilable && isTileEmpty(data, uvX0 * image->second.m_width, uvY1 * image->second.m_height, xWidth * image->second.m_width, yWidth * image->second.m_height, image->second.m_width, image->second.m_height,  image->second.m_channels)) continue;
+				if (image->second.m_isTilable && isTileEmpty(data, static_cast<int>(uvX0 * image->second.m_width), static_cast<int>(uvY1 * image->second.m_height), static_cast<int>(xWidth * image->second.m_width), static_cast<int>(yWidth * image->second.m_height), image->second.m_width, image->second.m_height,  image->second.m_channels)) continue;
 
 				ImGui::ImageButton(std::to_string(i).c_str(), (ImTextureID)(uintptr_t)assetmanager->m_imageManager.m_imageMap.find(tmc->m_tilemapFile)->second.textureID,
 					{ thumbnail ,thumbnail }, { uvX0, uvY1 },{ uvX1, uvY0 }, { 1,1,1,1 });
