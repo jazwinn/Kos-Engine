@@ -182,6 +182,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Actions\ActionManager.cpp" />
     <ClCompile Include="Application\Application.cpp" />
     <ClCompile Include="Application\Helper.cpp" />
     <ClCompile Include="Asset Manager\AssetManager.cpp">
@@ -334,6 +335,9 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClCompile Include="ECS\System\RenderSystem.cpp" />
     <ClCompile Include="ECS\System\RenderTextSystem.cpp" />
     <ClCompile Include="Editor\ImGui Panels\ScriptVariable.cpp" />
+    <ClInclude Include="Actions\Action.h" />
+    <ClInclude Include="Actions\ActionManager.h" />
+    <ClInclude Include="Actions\ModifyAction.h" />
     <ClInclude Include="ECS\Component\AudioComponent.h" />
     <ClInclude Include="ECS\Component\TilemapComponent.h" />
     <ClInclude Include="ECS\System\AudioSystem.h" />
@@ -341,11 +345,11 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="Editor\ImGui Panels\ScriptVariable.h" />
     <ClCompile Include="Editor\TilemapCalculations.cpp" />
     <ClCompile Include="Editor\WindowFile.cpp" />
-    <ClCompile Include="Events\ActionManager.cpp" />
-    <ClCompile Include="Events\DragFloat.cpp" />
-    <ClCompile Include="Events\EventHandler.cpp" />
-    <ClCompile Include="Events\Listeners.cpp" />
-    <ClCompile Include="Events\MessageSystem.cpp" />
+    <ClCompile Include="Events\Event.cpp" />
+    <ClCompile Include="Events\EventsDragFloat.cpp" />
+    <ClCompile Include="Events\EventsEventHandler.cpp" />
+    <ClCompile Include="Events\EventsListeners.cpp" />
+    <ClCompile Include="Events\MessagingMessageSystem.cpp" />
     <ClCompile Include="Graphics\GraphicsBuffers.cpp" />
     <ClCompile Include="Graphics\GraphicsCamera.cpp" />
     <ClCompile Include="Graphics\GraphicsDraw.cpp" />
@@ -432,19 +436,17 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="ECS\System\SystemType.h" />
     <ClInclude Include="Editor\TilemapCalculations.h" />
     <ClInclude Include="Editor\WindowFile.h" />
-    <ClInclude Include="Events\Action.h" />
-    <ClInclude Include="Events\ActionEvent.h" />
-    <ClInclude Include="Events\ActionManager.h" />
-    <ClInclude Include="Events\BaseEvent.h" />
-    <ClInclude Include="Events\BaseMessage.h" />
-    <ClInclude Include="Events\ButtonEvent.h" />
-    <ClInclude Include="Events\DragFloat.h" />
-    <ClInclude Include="Events\EventHandler.h" />
-    <ClInclude Include="Events\KeyEvent.h" />
-    <ClInclude Include="Events\Listeners.h" />
+    <ClInclude Include="Events\EventsAction.h" />
+    <ClInclude Include="Events\EventsBaseEvent.h" />
+    <ClInclude Include="Events\EventsBaseMessage.h" />
+    <ClInclude Include="Events\EventsButtonEvent.h" />
+    <ClInclude Include="Events\EventsDragFloat.h" />
+    <ClInclude Include="Events\EventsEventHandler.h" />
+    <ClInclude Include="Events\EventsKeyEvent.h" />
+    <ClInclude Include="Events\EventsListeners.h" />
+    <ClInclude Include="Events\EventsMouseEvent.h" />
     <ClInclude Include="Events\MessageSystem.h" />
-    <ClInclude Include="Events\ModifyAction.h" />
-    <ClInclude Include="Events\MouseEvent.h" />
+    <ClInclude Include="Events\MessagingMessageSystem.h" />
     <ClInclude Include="Graphics\GraphicsCamera.h" />
     <ClInclude Include="Graphics\GraphicsPipe.h" />
     <ClInclude Include="Inputs\Input.h" />

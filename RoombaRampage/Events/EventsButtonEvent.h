@@ -12,9 +12,14 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 /********************************************************************/
 
 #pragma once
-#include "BaseEvent.h"
+#include "EventsBaseEvent.h"
 
 namespace events {
+	/******************************************************************/
+	/*!
+		\brief     This is a derived class from BaseEvent to hold what button is being pressed
+	*/
+	/******************************************************************/
 	class ButtonPressEvent : public BaseEvent<ButtonEvents> {
 	private:
 		int m_button;
@@ -23,6 +28,11 @@ namespace events {
 		int m_GetButton() { return m_button; }
 	};
 
+	/******************************************************************/
+	/*!
+		\brief     This is a derived class from BaseEvent to hold what audio file is being played
+	*/
+	/******************************************************************/
 	class AudioFromImgui : public BaseEvent<ButtonEvents> {
 	private:
 		std::string m_file;

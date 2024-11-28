@@ -11,10 +11,14 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 */
 /********************************************************************/
 #pragma once
-#include "BaseEvent.h"
+#include "EventsBaseEvent.h"
 
 namespace events {
-	
+	/******************************************************************/
+	/*!
+		\brief     This is a derived class from BaseEvent to hold what mouse button is pressed
+	*/
+	/******************************************************************/
 	class MousePressedEvent : public BaseEvent<MouseEvents> {
 	private:
 		int m_mouseButton;
@@ -22,6 +26,11 @@ namespace events {
 		MousePressedEvent(int givenButton) : BaseEvent<MouseEvents>(MouseEvents::EVENTMOUSEPRESS), m_mouseButton(givenButton) {};
 	};
 
+	/******************************************************************/
+	/*!
+		\brief     This is a derived class from BaseEvent to hold what mouse button is released
+	*/
+	/******************************************************************/
 	class MouseReleasedEvent : public BaseEvent<MouseEvents> {
 	private:
 		int m_mouseButton;

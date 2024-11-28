@@ -29,7 +29,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "ImGuizmo.h"
 #include "../ECS/ECS.h"
 #include "../Asset Manager/Audio.h"
-#include "../Events/EventHandler.h"
+#include "../Events/EventsEventHandler.h"
 
 
 
