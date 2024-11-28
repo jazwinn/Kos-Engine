@@ -547,6 +547,8 @@ namespace script {
 
 		static bool m_InternalCallIsWindowMinimise();
 
+		static float m_getAccumulatedDeltaTime();
+
 	public:
 		/******************************************************************/
 		/*!
