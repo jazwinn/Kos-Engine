@@ -170,6 +170,9 @@ namespace gui {
 
                         scene.second.m_isActive = saveState->second;
                     }
+
+
+                    assetmanager::AssetManager::m_funcGetInstance()->m_audioManager.m_StopAllSounds();
                 }
 
             }
