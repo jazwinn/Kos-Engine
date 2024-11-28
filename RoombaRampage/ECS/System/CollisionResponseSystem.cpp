@@ -101,8 +101,10 @@ namespace ecs {
 
 		for (int n{}; n < m_vecRigidBodyComponentPtr.size(); n++)
 		{
+
 			RigidBodyComponent* rigidComp = m_vecRigidBodyComponentPtr[n];
 			ColliderComponent* ColComp = m_vecColliderComponentPtr[n];
+			TransformComponent* transformComp = m_vecTransformComponentPtr[n];
 
 			ColComp->m_collidedWith.clear();
 			ColComp->m_blockedFlag = -1;
@@ -115,8 +117,109 @@ namespace ecs {
 				ColComp->m_collidedWith.push_back(iterator->second->m_ID);
 				ColComp->m_isCollided = true;
 				ColComp->m_blockedFlag = iterator->first->m_collisionFlags;
+
+				//ECS* ecs = ECS::m_GetInstance();
+				//const auto& nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(iterator->first->m_ID));
+				//const auto& tc = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(iterator->first->m_ID));
+				//const auto& nc2 = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(iterator->second->m_ID));
+
+				//if (iterator->first->type == physicspipe::EntityType::CIRCLE && nc->m_entityTag == "Player" && nc2->m_entityTag == "Wall")
+				//{
+				//	/*float xDist = iterator->first->m_position.m_x - iterator->second->m_position.m_x;
+				//	float yDist = iterator->first->m_position.m_y - iterator->second->m_position.m_y;*/
+
+				//	auto SweptCircleAABBCollision = [](float cxStart, float cyStart, float cxEnd, float cyEnd,
+				//		float radius,
+				//		float xMin, float yMin, float xMax, float yMax,
+				//		float& tImpact) {
+				//			// Expand AABB by radius
+				//			float exMin = xMin - radius;
+				//			float exMax = xMax + radius;
+				//			float eyMin = yMin - radius;
+				//			float eyMax = yMax + radius;
+
+				//			// Calculate direction of movement
+				//			float dx = cxEnd - cxStart;
+				//			float dy = cyEnd - cyStart;
+
+				//			// Time intervals for each axis
+				//			float tMin = 0.0f, tMax = 1.0f;
+
+				//			// Check each axis
+				//			if (dx != 0.0f) {
+				//				float t1 = (exMin - cxStart) / dx;
+				//				float t2 = (exMax - cxStart) / dx;
+				//				if (t1 > t2) std::swap(t1, t2);
+				//				tMin = std::max(tMin, t1);
+				//				tMax = std::min(tMax, t2);
+				//			}
+
+				//			if (dy != 0.0f) {
+				//				float t1 = (eyMin - cyStart) / dy;
+				//				float t2 = (eyMax - cyStart) / dy;
+				//				if (t1 > t2) std::swap(t1, t2);
+				//				tMin = std::max(tMin, t1);
+				//				tMax = std::min(tMax, t2);
+				//			}
+
+				//			// Check if there is a valid intersection
+				//			if (tMin <= tMax) {
+				//				tImpact = tMin; // Time of impact
+				//				return true;
+				//			}
+
+				//			return false; // No collision
+				//		};
+
+				//	
+
+				//	float xMin = iterator->second->m_position.m_x - iterator->second->m_scale.m_x / 2.f;
+				//	float xMax = iterator->second->m_position.m_x + iterator->second->m_scale.m_x / 2.f;
+
+				//	float yMin = iterator->second->m_position.m_y - iterator->second->m_scale.m_y / 2.f;
+				//	float yMax = iterator->second->m_position.m_y + iterator->second->m_scale.m_y / 2.f;
+
+				//	float radius = iterator->first->m_scale.m_x/2.f;
+				//	
+				//	float nearestX = std::max(xMin, std::min(iterator->first->m_position.m_x, xMax));
+				//	float nearestY = std::max(yMin, std::min(iterator->first->m_position.m_y, yMax));
+
+				//	float distanceFromEdge = std::sqrt((iterator->first->m_position.m_x - nearestX) * (iterator->first->m_position.m_x - nearestX) + (iterator->first->m_position.m_y - nearestY) * (iterator->first->m_position.m_y - nearestY));
+
+				//	std::cout << "Old" << iterator->first->m_position.m_x << std::endl;
+
+				//	std::cout << "New" << tc->m_position.m_x << std::endl;
+
+				//	float t;
+				//	//if (distanceFromEdge < radius) {
+				//	//	float penetration = radius - distanceFromEdge;
+
+				//	//	// Normalize the resolution direction
+				//	//	float resolutionDirX = (iterator->first->m_position.m_x - nearestX) / distanceFromEdge;
+				//	//	float resolutionDirY = (iterator->first->m_position.m_y - nearestY) / distanceFromEdge;
+
+				//	//	std::cout << penetration << std::endl; std::cout << penetration << std::endl;
+
+				//	//	// Adjust circle position
+				//	//	iterator->first->m_position.m_x += penetration * resolutionDirX;
+				//	//	iterator->first->m_position.m_y += penetration * resolutionDirY;
+				//	//	tc->m_position = iterator->first->m_position;
+				//	//}
+
+				//	if (SweptCircleAABBCollision(iterator->first->m_position.m_x, iterator->first->m_position.m_y, tc->m_position.m_x, tc->m_position.m_y
+				//		, radius, xMin, yMin, xMax, yMax, t))
+				//	{
+				//		std::cout << "T value" << t << std::endl;
+				//		tc->m_position.m_x = iterator->first->m_position.m_x + t * (tc->m_position.m_x - iterator->first->m_position.m_x);
+				//		tc->m_position.m_y = iterator->first->m_position.m_y + t * (tc->m_position.m_y - iterator->first->m_position.m_y);
+				//	}
+				//	
+				//}
+
 				//std::cout << "Entity 1 " << iterator->first->m_collisionFlags << std::endl;
 				//std::cout << "Entity 2 " << iterator->second->m_collisionFlags << std::endl;
+				// 
+				// 
 				//std::cout << iterator->first->m_position.m_x << " " << iterator->first->m_position.m_y << std::endl;
 				//for (size_t i = 0; i < iterator->first->m_blockedDirections.size(); ++i) {
 				//	std::cout << iterator->first->m_blockedDirections[i] << " ";

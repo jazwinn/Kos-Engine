@@ -65,7 +65,7 @@ namespace ecs {
 			LOGGING_ERROR("Error: Vectors container size does not Match");
 			return;
 		}
-
+		for (int i = 0; i < help->currentNumberOfSteps; ++i) {
 		// Loop through all vectors pointing to components
 		for (int n = 0; n < m_vecRigidBodyComponentPtr.size(); n++) {
 			RigidBodyComponent* rigidBody = m_vecRigidBodyComponentPtr[n];
@@ -79,27 +79,28 @@ namespace ecs {
 				// If kinematic or static, skip physics calculations
 				return;
 			}
-			for (int i = 0; i < help->currentNumberOfSteps; ++i) {
+			
+			
 				// Integrate linear motion
 				vector2::Vec2 acceleration = rigidBody->m_Acceleration + rigidBody->m_Force * rigidBody->m_InverseMass;
-				rigidBody->m_Velocity += acceleration * ecs->m_DeltaTime;
+				rigidBody->m_Velocity += acceleration * help->m_fixedDeltaTime;
 				rigidBody->m_Velocity *= rigidBody->m_LinearDamping; // Apply linear damping
 
 				// Integrate angular motion
 				float angularAcceleration = rigidBody->m_Torque * rigidBody->m_InverseMass;
-				rigidBody->m_AngularVelocity += angularAcceleration * ecs->m_DeltaTime;
+				rigidBody->m_AngularVelocity += angularAcceleration * help->m_fixedDeltaTime;
 				rigidBody->m_AngularVelocity *= rigidBody->m_AngularDamping;
 
-				transform->m_position += rigidBody->m_Velocity * ecs->m_DeltaTime;
-				transform->m_rotation += rigidBody->m_AngularVelocity * ecs->m_DeltaTime;
+				transform->m_position += rigidBody->m_Velocity * help->m_fixedDeltaTime;
+				transform->m_rotation += rigidBody->m_AngularVelocity * help->m_fixedDeltaTime;
 
 				rigidBody->m_Force = vector2::Vec2{ 0.0f, 0.0f };
 				rigidBody->m_Torque = 0.0f;
 
 
 				if (!rigidBody->m_IsStatic && !rigidBody->m_IsKinematic) {
-					transform->m_position += rigidBody->m_Velocity * ecs->m_DeltaTime;
-					transform->m_rotation += rigidBody->m_AngularVelocity * ecs->m_DeltaTime;
+					transform->m_position += rigidBody->m_Velocity * help->m_fixedDeltaTime;
+					transform->m_rotation += rigidBody->m_AngularVelocity * help->m_fixedDeltaTime;
 				}
 
 

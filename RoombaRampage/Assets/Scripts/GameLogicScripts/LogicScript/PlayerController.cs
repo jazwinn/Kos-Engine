@@ -54,7 +54,7 @@ public class PlayerController : ScriptBase
         if (GameController.gameIsPaused) { return; }
 
 
-        Console.WriteLine(InternalCall.m_InternalCallIsWindowMinimise());
+        //Console.WriteLine(InternalCall.m_InternalCallIsWindowMinimise());
 
         if (isDead) { return; }
 
