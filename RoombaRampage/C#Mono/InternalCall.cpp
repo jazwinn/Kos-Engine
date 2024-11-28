@@ -165,6 +165,7 @@ namespace script {
 		*fontSize = textComponent->m_fontSize;
 		*color = textComponent->m_color;
 
+
 		return true;
 	}
 
