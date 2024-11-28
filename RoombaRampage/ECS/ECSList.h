@@ -23,7 +23,7 @@ namespace ecs {
 	using compSignature = std::bitset<TOTALTYPECOMPONENT>;
 
 	// Max number of entities allowed to be created
-	static EntityID MaxEntity = 3000;
+	static EntityID MaxEntity = 6000;
 
 	enum GAMESTATE {
 		START,

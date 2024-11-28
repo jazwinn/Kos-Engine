@@ -309,8 +309,6 @@ namespace prefab {
                         ecs->m_DeleteEntity(id);
                     }
 
-
-
                 }
             }
 
