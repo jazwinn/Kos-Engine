@@ -55,8 +55,6 @@ namespace Input {
 		static vector2::Vec2 m_getMousePosition();
 
 		void m_inputUpdate();
-
-		static float m_currTime;
 		
 		static vector2::Vec2 MousePosition;
 
