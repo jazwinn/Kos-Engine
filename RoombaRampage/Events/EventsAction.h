@@ -11,10 +11,10 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 */
 /********************************************************************/
 #pragma once
-#include "BaseEvent.h"
+#include "EventsBaseEvent.h"
 #include "../Math/vector2.h"
 #include "../Math/Mat3x3.h"
-#include "ModifyAction.h"
+#include "../Actions/ModifyAction.h"
 
 namespace events {
 	class TransformComponentChanged : public BaseEvent<Actions> {

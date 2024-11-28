@@ -12,10 +12,10 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 */
 /********************************************************************/
 #pragma once
-#include "MouseEvent.h"
-#include "KeyEvent.h"
-#include "ButtonEvent.h"
-#include "ActionEvent.h"
+#include "EventsMouseEvent.h"
+#include "EventsKeyEvent.h"
+#include "EventsButtonEvent.h"
+#include "EventsAction.h"
 #include <stack>
 #include <memory>
 
