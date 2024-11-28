@@ -80,7 +80,7 @@ namespace gui {
                 //Add the string into the vector
                 // add string to name component
                 static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(newEntityID))->m_entityName = std::string(m_charBuffer);
-                events::AddEntity addEvent(newEntityID, &m_activeScene, std::string(m_charBuffer), ecs->m_ECS_EntityMap[newEntityID]);
+                events::AddEntity addEvent(newEntityID);
                 DISPATCH_ACTION_EVENT(addEvent);
 
                 m_charBuffer[0] = '\0';
@@ -408,14 +408,10 @@ namespace gui {
             }
             else {
                 if (ImGui::MenuItem("Delete Entity")) {
-                    if (ecs::Hierachy::m_GetParent(id).has_value()) {
-                        events::RemoveChild removeEvent(id, ecs::Hierachy::m_GetParent(id), &m_activeScene, static_cast<ecs::NameComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id))->m_entityName, ecs->m_ECS_EntityMap[id]);
-                        DISPATCH_ACTION_EVENT(removeEvent);
-                    }
-                    else {
-                        events::RemoveEntity removeEvent(id,&m_activeScene, static_cast<ecs::NameComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id))->m_entityName, ecs->m_ECS_EntityMap[id]);
-                        DISPATCH_ACTION_EVENT(removeEvent);
-                    }
+
+                    events::RemoveEntity removeEvent(id);
+                    DISPATCH_ACTION_EVENT(removeEvent);
+                    
                     ecs->m_DeleteEntity(id);
                     m_clickedEntityId = -1;
                     ImGui::EndPopup();
@@ -476,7 +472,7 @@ namespace gui {
                 else {
                     ecs::Hierachy::m_SetParent(id, childId);
                     LOGGING_INFO("Set Parent: %d, Child: %d", id, childId);
-                    events::AddChild addevent(childId, id, &m_activeScene, static_cast<ecs::NameComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(childId))->m_entityName, ecs->m_ECS_EntityMap[childId]);
+                    events::AddEntity addevent(childId);
                     DISPATCH_ACTION_EVENT(addevent);
 
                     // update child's scene

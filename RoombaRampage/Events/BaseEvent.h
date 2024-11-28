@@ -33,8 +33,6 @@ namespace events {
 		ADDIMAGE,
 		ADDENT,
 		DELENT,
-		ADDCHILD,
-		REMOVECHILD,
 		UNDO,
 		REDO
 	};

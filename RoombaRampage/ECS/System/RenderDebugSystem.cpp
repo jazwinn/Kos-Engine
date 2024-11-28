@@ -80,7 +80,7 @@ namespace ecs {
 		graphicpipe::GraphicsPipe * graphicsPipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
 		for (int n{}; n < m_vecTransformComponentPtr.size(); n++) {
 
-			TransformComponent* transform = m_vecTransformComponentPtr[n];
+			//TransformComponent* transform = m_vecTransformComponentPtr[n];
 			ColliderComponent* collider = m_vecColliderComponentPtr[n];
 			//skip component not of the scene
 			if (collider->m_scene != scene) continue;

@@ -63,61 +63,18 @@ namespace events {
 	class AddEntity : public BaseEvent<Actions> {
 	private:
 		ecs::EntityID m_entityID;
-		std::string* m_scene;
-		std::string m_entityName;
-		ecs::compSignature m_sig;
 	public:
-		AddEntity(ecs::EntityID inID, std::string* inScene, std::string inName, ecs::compSignature inSig) : BaseEvent<Actions>(Actions::ADDENT), m_entityID(inID), m_scene(inScene), m_entityName(inName), m_sig(inSig) {}
-		std::string* m_GetScene() { return m_scene; }
+		AddEntity(ecs::EntityID inID) : BaseEvent<Actions>(Actions::ADDENT), m_entityID(inID) {}
 		ecs::EntityID m_GetID() { return m_entityID; }
-		std::string m_GetName() { return m_entityName; }
-		ecs::compSignature m_GetSignature() { return m_sig; }
+
 	};
 
 	class RemoveEntity : public BaseEvent<Actions> {
 	private:
 		ecs::EntityID m_entityID;
-		std::string* m_scene;
-		std::string m_entityName;
-		ecs::compSignature m_sig;
 	public:
-		RemoveEntity(ecs::EntityID inID, std::string* inScene, std::string inName, ecs::compSignature inSig) : BaseEvent<Actions>(Actions::DELENT), m_entityID(inID), m_scene(inScene), m_entityName(inName), m_sig(inSig) {}
-		std::string* m_GetScene() { return m_scene; }
+		RemoveEntity(ecs::EntityID inID) : BaseEvent<Actions>(Actions::DELENT), m_entityID(inID) {}
 		ecs::EntityID m_GetID() { return m_entityID; }
-		std::string m_GetName() { return m_entityName; }
-		ecs::compSignature m_GetSignature() { return m_sig; }
-	};
-
-	class AddChild : public BaseEvent<Actions> {
-	private:
-		ecs::EntityID m_entityID;
-		std::optional<ecs::EntityID> m_parentID;
-		std::string* m_scene;
-		std::string m_entityName;
-		ecs::compSignature m_sig;
-	public:
-		AddChild(ecs::EntityID inID, std::optional<ecs::EntityID> inParent,std::string* inScene, std::string inName, ecs::compSignature inSig) : BaseEvent<Actions>(Actions::ADDCHILD), m_entityID(inID), m_parentID(inParent), m_scene(inScene), m_entityName(inName), m_sig(inSig) {}
-		std::string* m_GetScene() { return m_scene; }
-		ecs::EntityID m_GetID() { return m_entityID; }
-		std::string m_GetName() { return m_entityName; }
-		ecs::EntityID m_GetParentID() { return m_parentID.value(); }
-		ecs::compSignature m_GetSignature() { return m_sig; }
-	};
-
-	class RemoveChild : public BaseEvent<Actions> {
-	private:
-		ecs::EntityID m_entityID;
-		std::optional<ecs::EntityID> m_parentID;
-		std::string* m_scene;
-		std::string m_entityName;
-		ecs::compSignature m_sig;
-	public:
-		RemoveChild(ecs::EntityID inID, std::optional<ecs::EntityID> inParent, std::string* inScene, std::string inName, ecs::compSignature inSig) : BaseEvent<Actions>(Actions::REMOVECHILD), m_entityID(inID), m_parentID(inParent), m_scene(inScene), m_entityName(inName), m_sig(inSig) {}
-		std::string* m_GetScene() { return m_scene; }
-		ecs::EntityID m_GetID() { return m_entityID; }
-		std::string m_GetName() { return m_entityName; }
-		ecs::EntityID m_GetParentID() { return m_parentID.value(); }
-		ecs::compSignature m_GetSignature() { return m_sig; }
 	};
 
 	class UndoLatest : public BaseEvent<Actions> {
