@@ -108,9 +108,6 @@ namespace ecs {
 			if (ColComp->m_scene != scene) continue;
 			
 
-			//skip those if collision track that is false
-
-			if (ColComp->m_CollisionCheck == false) continue;
 
 			//if movement component is present, do dynamic collision
 			vector2::Vec2 velocity{};
@@ -166,6 +163,10 @@ namespace ecs {
 					
 					mat3x3::Mat3Decompose(ColComp->m_collider_Transformation, pos, scale, rot);
 
+
+					//dont pass data if collision check is false
+
+					if (ColComp->m_CollisionCheck == false) continue;
 					PhysicsPipeline->m_SendPhysicsData(ColComp->m_radius, pos, scale, velocity, id, NameComp->m_Layer);
 				}
 				else if (ColComp->m_type == physicspipe::EntityType::RECTANGLE) {
@@ -192,7 +193,9 @@ namespace ecs {
 
 
 					ColComp->m_collider_Transformation = debugTransformation;
-					
+
+					//dont pass data if collision check is false
+					if (ColComp->m_CollisionCheck == false) continue;
 					mat3x3::Mat3Decompose(ColComp->m_collider_Transformation, pos, scale, rot);
 					PhysicsPipeline->m_SendPhysicsData(scale.m_y, scale.m_x, rot, pos, scale, velocity, id, NameComp->m_Layer);
 				}
@@ -215,8 +218,10 @@ namespace ecs {
 					debugTransformation = debugTransformation * mat3x3::Mat3Transform(ColComp->m_OffSet, vector2::Vec2{ ColComp->m_radius * 2.f, ColComp->m_radius * 2.f }, 0);
 					ColComp->m_collider_Transformation = debugTransformation;
 
-					mat3x3::Mat3Decompose(ColComp->m_collider_Transformation, pos, scale, rot);
 
+					//dont pass data if collision check is false
+					if (ColComp->m_CollisionCheck == false) continue;
+					mat3x3::Mat3Decompose(ColComp->m_collider_Transformation, pos, scale, rot);
 					PhysicsPipeline->m_SendPhysicsData(ColComp->m_radius, pos, scale, velocity, id, NameComp->m_Layer);
 				}
 				else if (ColComp->m_type == physicspipe::EntityType::RECTANGLE) {
@@ -232,6 +237,10 @@ namespace ecs {
 
 
 					ColComp->m_collider_Transformation = debugTransformation;
+
+					//dont pass data if collision check is false
+					if (ColComp->m_CollisionCheck == false) continue;
+
 					mat3x3::Mat3Decompose(ColComp->m_collider_Transformation, pos, scale, rot);
 					PhysicsPipeline->m_SendPhysicsData(scale.m_y, scale.m_x, rot, pos, scale, velocity, id, NameComp->m_Layer);
 
