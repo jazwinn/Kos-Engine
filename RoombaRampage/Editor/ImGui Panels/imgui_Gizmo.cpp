@@ -174,7 +174,7 @@ namespace gui {
         }
         else if (ecs::Hierachy::m_GetParent(m_clickedEntityId).has_value() && ImGuizmo::Manipulate(cameraView, projection, mCurrentGizmoOperation, ImGuizmo::LOCAL, model, delta, useSnap ? &snap[0] : NULL))
         {
-            mat3x3::Mat3x3 transformation = transcom->m_localChildTransformation;
+            //mat3x3::Mat3x3 transformation = transcom->m_localChildTransformation;
             mat3x3::Mat3x3 original = transcom->m_transformation;
 
             ecs::EntityID  id = ecs::Hierachy::m_GetParent(m_clickedEntityId).value();
@@ -190,8 +190,8 @@ namespace gui {
 
             vector2::Vec2 tran = { delta[12] , delta[13] };
 
-            delta[12] = translation.m_x * std::cos(parentCom->m_rotation * PI/180.f) - translation.m_y * std::sin(parentCom->m_rotation * PI / 180.f); // Model new coordinates - original coordinates
-            delta[13] = translation.m_x * std::sin(parentCom->m_rotation * PI / 180.f) + translation.m_y * std::cos(parentCom->m_rotation * PI / 180.f);
+            delta[12] = static_cast<float>(translation.m_x * std::cos(parentCom->m_rotation * PI/180.f) - translation.m_y * std::sin(parentCom->m_rotation * PI / 180.f)); // Model new coordinates - original coordinates
+            delta[13] = static_cast<float>(translation.m_x * std::sin(parentCom->m_rotation * PI / 180.f) + translation.m_y * std::cos(parentCom->m_rotation * PI / 180.f));
 
             //std::cout << "Rotated Delta translate: " << delta[12] << " , " << delta[13] << std::endl;
             if (parentCom->m_scale.m_x != 0 || parentCom->m_scale.m_y != 0)

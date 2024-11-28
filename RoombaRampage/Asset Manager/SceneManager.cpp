@@ -290,8 +290,8 @@ namespace scenes {
         //if id has children, call recurse
         const auto& child = ecs::Hierachy::m_GetChild(id);
         if (child.has_value()) {
-            for (auto id : child.value()) {
-                m_AssignEntityNewSceneName(scene , id);
+            for (auto id2 : child.value()) {
+                m_AssignEntityNewSceneName(scene , id2);
             }
             
         }

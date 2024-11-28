@@ -37,7 +37,7 @@ namespace ecs {
     }
 
     void AudioSystem::m_Update(const std::string& scene) {
-        ECS* ecs = ECS::m_GetInstance();
+        //ECS* ecs = ECS::m_GetInstance();
         assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
 
         if (m_vecAudioComponentPtr.empty()) {
