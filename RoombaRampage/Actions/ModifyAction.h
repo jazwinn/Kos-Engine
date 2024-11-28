@@ -155,4 +155,74 @@ namespace actions {
 		}
 	};
 
+	class MoveEntityChildToChildAction : public Action {
+	private:
+		ecs::EntityID m_entityID;
+		ecs::EntityID m_prevParent;
+		ecs::EntityID m_newParent;
+		bool m_hasBeenUndo;
+	public:
+		MoveEntityChildToChildAction(ecs::EntityID inID, ecs::EntityID inOld, ecs::EntityID inNew) : m_entityID(inID), m_prevParent(inOld), m_newParent(inNew), m_hasBeenUndo(false) {};
+
+		void m_UndoAction() override {
+			if (!m_hasBeenUndo) {
+				m_hasBeenUndo = true;
+				ecs::Hierachy::m_SetParent(m_prevParent, m_entityID);
+			}
+		}
+
+		void m_RedoAction() override {
+			if (m_hasBeenUndo) {
+				m_hasBeenUndo = false;
+				ecs::Hierachy::m_SetParent(m_newParent, m_entityID);
+			}
+		}
+	};
+
+	class MoveEntityChildToParentAction : public Action {
+	private:
+		ecs::EntityID m_entityID;
+		ecs::EntityID m_prevParent;
+		bool m_hasBeenUndo;
+	public:
+		MoveEntityChildToParentAction(ecs::EntityID inID, ecs::EntityID inOld) : m_entityID(inID), m_prevParent(inOld), m_hasBeenUndo(false) {};
+
+		void m_UndoAction() override {
+			if (!m_hasBeenUndo) {
+				m_hasBeenUndo = true;
+				ecs::Hierachy::m_SetParent(m_prevParent, m_entityID);
+			}
+		}
+
+		void m_RedoAction() override {
+			if (m_hasBeenUndo) {
+				m_hasBeenUndo = false;
+				ecs::Hierachy::m_RemoveParent(m_entityID);
+			}
+		}
+	};
+
+	class MoveEntityParentToChildAction : public Action {
+	private:
+		ecs::EntityID m_entityID;
+		ecs::EntityID m_newParent;
+		bool m_hasBeenUndo;
+	public:
+		MoveEntityParentToChildAction(ecs::EntityID inID,  ecs::EntityID inNew) : m_entityID(inID), m_newParent(inNew), m_hasBeenUndo(false) {};
+
+		void m_UndoAction() override {
+			if (!m_hasBeenUndo) {
+				m_hasBeenUndo = true;
+				ecs::Hierachy::m_RemoveParent(m_entityID);
+			}
+		}
+
+		void m_RedoAction() override {
+			if (m_hasBeenUndo) {
+				m_hasBeenUndo = false;
+				ecs::Hierachy::m_SetParent(m_newParent, m_entityID);
+			}
+		}
+	};
+
 }

@@ -33,6 +33,9 @@ namespace events {
 		ADDIMAGE,
 		ADDENT,
 		DELENT,
+		MOVECTC,
+		MOVEPTC,
+		MOVECTP,
 		UNDO,
 		REDO
 	};
