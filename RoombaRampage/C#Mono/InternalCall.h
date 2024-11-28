@@ -549,6 +549,8 @@ namespace script {
 
 		static float m_getAccumulatedDeltaTime();
 
+		static int m_InternalCallGetSteps();
+
 	public:
 		/******************************************************************/
 		/*!
