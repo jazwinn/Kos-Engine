@@ -466,6 +466,11 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
             if (it != tag_Names.end()) {
                 item = static_cast<int>(std::distance(tag_Names.begin(), it));
             }
+            else {
+                tag_Names.push_back(nc->m_entityTag.c_str());
+                const auto& it2 = std::find(tag_Names.begin(), tag_Names.end(), nc->m_entityTag);
+                item = static_cast<int>(std::distance(tag_Names.begin(), it2));
+            }
             
             if (ImGui::Combo("Tag", &item, tag_Names.data(), static_cast<int>(tag_Names.size()))) {
                 nc->m_entityTag = m_tags[item];
