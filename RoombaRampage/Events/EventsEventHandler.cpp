@@ -11,11 +11,16 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 */
 /********************************************************************/
 #include "../Config/pch.h"
-#include "EventHandler.h"
+#include "EventsEventHandler.h"
 
 namespace events {
 	std::unique_ptr<EventHandler> EventHandler::m_instance = nullptr;
 
+	/******************************************************************/
+	/*!
+		\brief     This is a function to get the instance of EventHandler
+	*/
+	/******************************************************************/
 	EventHandler* EventHandler::m_GetDispatchInstance() {
 		if (!m_instance) {
 			m_instance = std::make_unique<EventHandler>();

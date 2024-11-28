@@ -165,6 +165,7 @@ namespace script {
 		*fontSize = textComponent->m_fontSize;
 		*color = textComponent->m_color;
 
+
 		return true;
 	}
 
@@ -567,15 +568,15 @@ namespace script {
 			transCom->m_position = { *x, *y };
 			transCom->m_rotation = *rotation;
 
+			mono_free(nativeString);
 			return (int)id;
 		}
 		else {
 			LOGGING_ERROR("Prefab not loaded");
+
+			mono_free(nativeString);
 			return -1;
 		}
-
-
-		mono_free(nativeString);
 	}
 
 	void InternalCall::m_InternalGetWorldMousePosition(vector2::Vec2* mousecord) {
@@ -668,6 +669,11 @@ namespace script {
 		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
 		assetmanager->m_audioManager.m_StopAllSounds();
 
+	}
+
+	bool InternalCall::m_InternalCallIsWindowMinimise()
+	{
+		return Helper::Helpers::GetInstance()->m_windowMinimise;
 	}
 
 	void InternalCall::m_InternalCallDeleteEntity(ecs::EntityID id)
@@ -781,6 +787,6 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_InternalCallStopAudio);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallStopAllAudio);
 
-
+		MONO_ADD_INTERNAL_CALL(m_InternalCallIsWindowMinimise);
 	}
 }

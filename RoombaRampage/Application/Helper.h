@@ -43,6 +43,8 @@ namespace Helper {
 
 		float m_windowHeight;
 
+		bool m_windowMinimise{ false };
+
 		bool m_closeWindow{ false };
 
 		float m_deltaTime;

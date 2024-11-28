@@ -11,10 +11,10 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 */
 /********************************************************************/
 #pragma once
-#include "BaseEvent.h"
+#include "EventsBaseEvent.h"
 #include "../Math/vector2.h"
 #include "../Math/Mat3x3.h"
-#include "ModifyAction.h"
+#include "../Actions/ModifyAction.h"
 
 namespace events {
 	class TransformComponentChanged : public BaseEvent<Actions> {
@@ -76,6 +76,40 @@ namespace events {
 		RemoveEntity(ecs::EntityID inID) : BaseEvent<Actions>(Actions::DELENT), m_entityID(inID) {}
 		ecs::EntityID m_GetID() { return m_entityID; }
 	};
+
+	class MoveEntityChildToChild : public BaseEvent<Actions> {
+	private:
+		ecs::EntityID m_entityID;
+		ecs::EntityID m_prevParent;
+		ecs::EntityID m_newParent;
+	public:
+		MoveEntityChildToChild(ecs::EntityID inID, ecs::EntityID inOld, ecs::EntityID inNew) : BaseEvent<Actions>(Actions::MOVECTC), m_entityID(inID),m_prevParent(inOld), m_newParent(inNew) {}
+		ecs::EntityID m_GetID() { return m_entityID; }
+		ecs::EntityID m_GetOldParentID() { return m_prevParent; }
+		ecs::EntityID m_GetNewParentID() { return m_newParent; }
+	};
+
+	class MoveEntityChildToParent : public BaseEvent<Actions> {
+	private:
+		ecs::EntityID m_entityID;
+		ecs::EntityID m_prevParent;
+	public:
+		MoveEntityChildToParent(ecs::EntityID inID, ecs::EntityID inOld) : BaseEvent<Actions>(Actions::MOVECTP), m_entityID(inID), m_prevParent(inOld){}
+		ecs::EntityID m_GetID() { return m_entityID; }
+		ecs::EntityID m_GetOldParentID() { return m_prevParent; }
+	};
+
+	class MoveEntityParentToChild : public BaseEvent<Actions> {
+	private:
+		ecs::EntityID m_entityID;
+		ecs::EntityID m_newParent;
+	public:
+		MoveEntityParentToChild(ecs::EntityID inID,  ecs::EntityID inNew) : BaseEvent<Actions>(Actions::MOVEPTC), m_entityID(inID),  m_newParent(inNew) {}
+		ecs::EntityID m_GetID() { return m_entityID; }
+		ecs::EntityID m_GetNewParentID() { return m_newParent; }
+	};
+
+
 
 	class UndoLatest : public BaseEvent<Actions> {
 	public:

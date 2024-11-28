@@ -242,7 +242,15 @@ namespace prefab {
 
             //skip transform component and name componetn
             if ((ecs::ComponentType)n == ecs::TYPENAMECOMPONENT)continue;
-            if ((isPrefabChild == false) && (ecs::ComponentType)n == ecs::TYPETRANSFORMCOMPONENT)continue;
+            if ((isPrefabChild == false) && (ecs::ComponentType)n == ecs::TYPETRANSFORMCOMPONENT) {// sync only layers and tagname
+                ecs::NameComponent* prefabNc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(sceneprefabID));
+                ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(entityid));
+
+                nc->m_Layer = prefabNc->m_Layer;
+                nc->m_entityTag = prefabNc->m_entityTag;
+
+                continue;
+            }
 
             if (scenePrefabSignature.test((ecs::ComponentType)n)) {
 
@@ -300,8 +308,6 @@ namespace prefab {
                     for (const auto& id : entitych.value()) {
                         ecs->m_DeleteEntity(id);
                     }
-
-
 
                 }
             }

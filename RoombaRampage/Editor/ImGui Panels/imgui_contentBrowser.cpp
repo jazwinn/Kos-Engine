@@ -62,7 +62,10 @@ namespace gui {
 
 				if (isSelected) {
 
-					currentDirectory = assetDirectory/directoryPath.path().filename();
+					if (std::filesystem::is_directory(directoryPath)) {
+						currentDirectory = assetDirectory / directoryPath.path().filename();
+					}
+
 
 
 				}

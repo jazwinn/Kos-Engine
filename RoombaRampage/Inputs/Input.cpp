@@ -30,7 +30,6 @@ namespace Input {
 	std::string InputSystem::m_keyString;
 	GLFWwindow* Input::InputSystem::m_windowInput;
 	std::vector<std::string> InputSystem::m_droppedFiles;
-	float Input::InputSystem::m_currTime = 0.0;
 
 
 	void InputSystem::KeyCallBack([[maybe_unused]] GLFWwindow* window, [[maybe_unused]] int key, [[maybe_unused]] int scancode, int action, [[maybe_unused]] int mods) {
@@ -91,7 +90,6 @@ namespace Input {
 	}
 
 	void InputSystem::m_inputUpdate() {
-		Input::InputSystem::m_currTime += Helper::Helpers::GetInstance()->m_deltaTime;
 		for (auto& currKey : m_wasTriggered) {
 			int state;
 			if (currKey.first == keys::LMB || currKey.first == keys::RMB || currKey.first == keys::MMB) {
@@ -105,9 +103,8 @@ namespace Input {
 				m_wasPressed[currKey.first] = true;
 				m_wasTriggered[currKey.first] = true;
 			}
-			else if (m_wasPressed[currKey.first] && (m_currTime >= 1.f/60.f)) {
+			else if (m_wasPressed[currKey.first]) {
 				m_wasTriggered[currKey.first] = false;
-				m_currTime = 0.f;
 			}
 			if (state == GLFW_RELEASE) {
 				m_wasPressed[currKey.first] = false;
@@ -127,13 +124,8 @@ namespace Input {
 		else {
 			state = glfwGetKey(m_windowInput, givenKey);
 		}
-		if (m_wasTriggered[givenKey] && state == GLFW_PRESS) {
-			if ((m_currTime >= 1.f / 60.f)) {
-				m_wasTriggered[givenKey] = false;
-			}
-			m_wasPressed[givenKey] = true;
-		}
-		return m_wasPressed[givenKey];
+
+		return state == GLFW_PRESS ? true : false;
 	}
 	bool InputSystem::m_isKeyReleased(const keyCode givenKey) {
 		int state;
@@ -143,7 +135,7 @@ namespace Input {
 		else {
 			state = glfwGetKey(m_windowInput, givenKey);
 		}
-		return state == 0 ? true : false;
+		return state == GLFW_RELEASE ? true : false;
 	}
 
 	vector2::Vec2 InputSystem::m_getMousePosition() {

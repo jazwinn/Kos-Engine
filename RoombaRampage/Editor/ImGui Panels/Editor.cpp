@@ -36,12 +36,12 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Editor/EditorCamera.h"
 #include "../Graphics/GraphicsPipe.h"
 #include "../Inputs/Input.h"
-#include "../Events/EventHandler.h"
+#include "../Events/EventsEventHandler.h"
 #include "../Application/Helper.h"
 #include "../Debugging/Performance.h"
 #include "../Asset Manager/Prefab.h"
-#include "../Events/ActionManager.h"
-#include "../Events/ModifyAction.h"
+#include "../Actions/ActionManager.h"
+#include "../Actions/ModifyAction.h"
 #include "../Inputs/Input.h"
 #include "../Editor/WindowFile.h"
 
@@ -58,6 +58,9 @@ namespace gui {
 		REGISTER_ACTION_LISTENER(events::Actions::REMOVECOMP, ImGuiHandler::m_OnAction, this)
 		REGISTER_ACTION_LISTENER(events::Actions::ADDENT, ImGuiHandler::m_OnAction, this)
 		REGISTER_ACTION_LISTENER(events::Actions::DELENT, ImGuiHandler::m_OnAction, this)
+		REGISTER_ACTION_LISTENER(events::Actions::MOVECTC, ImGuiHandler::m_OnAction, this)
+		REGISTER_ACTION_LISTENER(events::Actions::MOVECTP, ImGuiHandler::m_OnAction, this)
+		REGISTER_ACTION_LISTENER(events::Actions::MOVEPTC, ImGuiHandler::m_OnAction, this)
 	} //CTORdoing 
 
 	ImGuiHandler::~ImGuiHandler() {} //Destructor
@@ -356,28 +359,40 @@ namespace gui {
 															  givenEvent.m_ToType<events::TransformComponentChanged>().m_GetOldPos(), givenEvent.m_ToType<events::TransformComponentChanged>().m_GetOldRot(),
 															  givenEvent.m_ToType<events::TransformComponentChanged>().m_GetOldScale(), givenEvent.m_ToType<events::TransformComponentChanged>().m_GetOldTrans());
 			//ModifyTransformAction(ecs::EntityID inID, ecs::TransformComponent* inComp, vector2::Vec2 inOldPos, float inOldRot, vector2::Vec2 inOldScale, mat3x3::Mat3x3 inOldTrans)
-			actions::ActionManager::m_GetManagerInstance()->m_doAction(newAct);
+			actions::ActionManager::m_GetManagerInstance()->m_DoAction(newAct);
 		}else if (givenEvent.m_GetEventType() == events::Actions::ADDCOMP) {
 			auto* newAct = new actions::AddComponentAction(givenEvent.m_ToType<events::AddComponent>().m_GetID(), givenEvent.m_ToType<events::AddComponent>().m_GetComponentType());
-			actions::ActionManager::m_GetManagerInstance()->m_push(newAct);
+			actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
 		}
 		else if (givenEvent.m_GetEventType() == events::Actions::REMOVECOMP) {
 			auto* newAct = new actions::RemoveComponentAction(givenEvent.m_ToType<events::RemoveComponent>().m_GetID(), givenEvent.m_ToType<events::RemoveComponent>().m_GetComponentType());
-			actions::ActionManager::m_GetManagerInstance()->m_push(newAct);
+			actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
 		}
 		else if (givenEvent.m_GetEventType() == events::Actions::ADDENT) {
 			auto* newAct = new actions::AddEntityAction(givenEvent.m_ToType<events::AddEntity>().m_GetID());
-			actions::ActionManager::m_GetManagerInstance()->m_push(newAct);
+			actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
 		}
 		else if (givenEvent.m_GetEventType() == events::Actions::DELENT) {
 			auto* newAct = new actions::RemoveEntityAction(givenEvent.m_ToType<events::RemoveEntity>().m_GetID());
-			actions::ActionManager::m_GetManagerInstance()->m_push(newAct);
+			actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
+		}
+		else if (givenEvent.m_GetEventType() == events::Actions::MOVECTC) {
+			auto* newAct = new actions::MoveEntityChildToChildAction(givenEvent.m_ToType<events::MoveEntityChildToChild>().m_GetID(), givenEvent.m_ToType<events::MoveEntityChildToChild>().m_GetOldParentID(), givenEvent.m_ToType<events::MoveEntityChildToChild>().m_GetNewParentID());
+			actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
+		}
+		else if (givenEvent.m_GetEventType() == events::Actions::MOVECTP) {
+			auto* newAct = new actions::MoveEntityChildToParentAction(givenEvent.m_ToType<events::MoveEntityChildToParent>().m_GetID(), givenEvent.m_ToType<events::MoveEntityChildToChild>().m_GetOldParentID());
+			actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
+		}
+		else if (givenEvent.m_GetEventType() == events::Actions::MOVEPTC) {
+			auto* newAct = new actions::MoveEntityParentToChildAction(givenEvent.m_ToType<events::MoveEntityParentToChild>().m_GetID(), givenEvent.m_ToType<events::MoveEntityParentToChild>().m_GetNewParentID());
+			actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
 		}
 		else if (givenEvent.m_GetEventType() == events::Actions::UNDO) {
-			actions::ActionManager::m_GetManagerInstance()->m_undo();
+			actions::ActionManager::m_GetManagerInstance()->m_Undo();
 		}
 		else if (givenEvent.m_GetEventType() == events::Actions::REDO) {
-			actions::ActionManager::m_GetManagerInstance()->m_redo();
+			actions::ActionManager::m_GetManagerInstance()->m_Redo();
 
 		}
 		

@@ -221,6 +221,8 @@ namespace gui {
                     //if entity is a child, break from parent
                     const auto& parent = ecs::Hierachy::m_GetParent(Id);
                     if (parent.has_value()) {
+                        events::MoveEntityChildToParent moveEvent(Id, parent.value());
+                        DISPATCH_ACTION_EVENT(moveEvent);
                         ecs::Hierachy::m_RemoveParent(Id);
                     }
 
@@ -427,6 +429,8 @@ namespace gui {
                 if (m_prefabSceneMode && (!ecs::Hierachy::m_GetParent(id).has_value())) {
                    ecs::Hierachy::m_SetParent(id, newid);
                 }
+                events::AddEntity addEvent(newid);
+                DISPATCH_ACTION_EVENT(addEvent);
 
 
 
@@ -470,11 +474,17 @@ namespace gui {
                     LOGGING_WARN("Unable to drag prefabs of same type into each other, pls go to prefab editor");
                 }
                 else {
+                    const auto& parent2 = ecs::Hierachy::m_GetParent(childId);
+                    if (parent2.has_value()) {
+                        events::MoveEntityChildToChild moveEvent(childId, parent2.value(), id);
+                        DISPATCH_ACTION_EVENT(moveEvent);
+                    }
+                    else {
+                        events::MoveEntityParentToChild moveEvent(childId, id);
+                        DISPATCH_ACTION_EVENT(moveEvent);
+                    }
                     ecs::Hierachy::m_SetParent(id, childId);
                     LOGGING_INFO("Set Parent: %d, Child: %d", id, childId);
-                    events::AddEntity addevent(childId);
-                    DISPATCH_ACTION_EVENT(addevent);
-
                     // update child's scene
                     ecs::Hierachy::m_UpdateChildScene(id);
 

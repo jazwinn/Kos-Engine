@@ -24,7 +24,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 #include "../Debugging/Logging.h"
 #include "../C#Mono/mono_handler.h"
-#include "../Events/EventHandler.h"
+#include "../Events/EventsEventHandler.h"
 
 #ifdef IMGUIENABLED
 	#include "../Editor/ImGui Panels/Editor.h"

@@ -12,7 +12,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 */
 /********************************************************************/
 #pragma once
-#include "BaseMessage.h"
+#include "EventsBaseMessage.h"
 
 namespace messaging {
 	class MessageSystem {

@@ -76,9 +76,6 @@ namespace ecs {
 		float mouseX = Input::InputSystem::MousePosition.m_x; //Screen Coordinates
 		float mouseY = Input::InputSystem::MousePosition.m_y; //Screen Coordinates
 		float minX, maxX, minY, maxY;
-		if (Input::InputSystem::m_isKeyTriggered(keys::LMB)) {
-			
-		}
 
 		if ((Input::InputSystem::m_isKeyTriggered(keys::LMB) || Input::InputSystem::m_isKeyPressed(keys::LMB)) && m_vecButtonComponentPtr.size()) {
 			for (int i = 0; i < m_vecButtonComponentPtr.size(); ++i) {
