@@ -30,7 +30,6 @@ namespace Input {
 	std::string InputSystem::m_keyString;
 	GLFWwindow* Input::InputSystem::m_windowInput;
 	std::vector<std::string> InputSystem::m_droppedFiles;
-	float Input::InputSystem::m_currTime = 0.0;
 
 
 	void InputSystem::KeyCallBack([[maybe_unused]] GLFWwindow* window, [[maybe_unused]] int key, [[maybe_unused]] int scancode, int action, [[maybe_unused]] int mods) {
