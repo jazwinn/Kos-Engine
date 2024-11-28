@@ -156,6 +156,9 @@ public static class InternalCall
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static float m_getAccumulatedDeltaTime();
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static int m_InternalCallGetSteps();
 }
 
 public static class GetComponent
