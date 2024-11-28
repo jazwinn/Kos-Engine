@@ -58,6 +58,9 @@ namespace gui {
 		REGISTER_ACTION_LISTENER(events::Actions::REMOVECOMP, ImGuiHandler::m_OnAction, this)
 		REGISTER_ACTION_LISTENER(events::Actions::ADDENT, ImGuiHandler::m_OnAction, this)
 		REGISTER_ACTION_LISTENER(events::Actions::DELENT, ImGuiHandler::m_OnAction, this)
+		REGISTER_ACTION_LISTENER(events::Actions::MOVECTC, ImGuiHandler::m_OnAction, this)
+		REGISTER_ACTION_LISTENER(events::Actions::MOVECTP, ImGuiHandler::m_OnAction, this)
+		REGISTER_ACTION_LISTENER(events::Actions::MOVEPTC, ImGuiHandler::m_OnAction, this)
 	} //CTORdoing 
 
 	ImGuiHandler::~ImGuiHandler() {} //Destructor
@@ -371,6 +374,18 @@ namespace gui {
 		}
 		else if (givenEvent.m_GetEventType() == events::Actions::DELENT) {
 			auto* newAct = new actions::RemoveEntityAction(givenEvent.m_ToType<events::RemoveEntity>().m_GetID());
+			actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
+		}
+		else if (givenEvent.m_GetEventType() == events::Actions::MOVECTC) {
+			auto* newAct = new actions::MoveEntityChildToChildAction(givenEvent.m_ToType<events::MoveEntityChildToChild>().m_GetID(), givenEvent.m_ToType<events::MoveEntityChildToChild>().m_GetOldParentID(), givenEvent.m_ToType<events::MoveEntityChildToChild>().m_GetNewParentID());
+			actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
+		}
+		else if (givenEvent.m_GetEventType() == events::Actions::MOVECTP) {
+			auto* newAct = new actions::MoveEntityChildToParentAction(givenEvent.m_ToType<events::MoveEntityChildToParent>().m_GetID(), givenEvent.m_ToType<events::MoveEntityChildToChild>().m_GetOldParentID());
+			actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
+		}
+		else if (givenEvent.m_GetEventType() == events::Actions::MOVEPTC) {
+			auto* newAct = new actions::MoveEntityParentToChildAction(givenEvent.m_ToType<events::MoveEntityParentToChild>().m_GetID(), givenEvent.m_ToType<events::MoveEntityParentToChild>().m_GetNewParentID());
 			actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
 		}
 		else if (givenEvent.m_GetEventType() == events::Actions::UNDO) {

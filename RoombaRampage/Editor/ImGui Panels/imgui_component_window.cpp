@@ -342,6 +342,8 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
             if (ImGui::BeginPopupContextItem()) {
                 if (Type != ecs::TYPETRANSFORMCOMPONENT && ImGui::MenuItem("Delete Component")) {
                     ecs::ECS::m_GetInstance()->m_RemoveComponent(Type, ID);
+                    events::RemoveComponent removeTemp(ID,Type);
+                    DISPATCH_ACTION_EVENT(removeTemp);
                 }
                 if (ImGui::MenuItem("Reset Component")) {
                     if (Type == ecs::TYPETRANSFORMCOMPONENT) {
