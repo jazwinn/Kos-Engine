@@ -65,8 +65,6 @@ namespace ecs {
 			LOGGING_ERROR("Error: Vectors container size does not Match");
 			return;
 		}
-		if (!help->currentNumberOfSteps)
-		std::cout << help->currentNumberOfSteps << std::endl;
 		for (int i = 0; i < help->currentNumberOfSteps; ++i) {
 		// Loop through all vectors pointing to components
 		for (int n = 0; n < m_vecRigidBodyComponentPtr.size(); n++) {
