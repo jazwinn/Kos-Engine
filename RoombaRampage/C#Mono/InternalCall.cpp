@@ -671,6 +671,11 @@ namespace script {
 
 	}
 
+	bool InternalCall::m_InternalCallIsWindowMinimise()
+	{
+		return Helper::Helpers::GetInstance()->m_windowMinimise;
+	}
+
 	void InternalCall::m_InternalCallDeleteEntity(ecs::EntityID id)
 	{
 		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
@@ -782,6 +787,6 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_InternalCallStopAudio);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallStopAllAudio);
 
-
+		MONO_ADD_INTERNAL_CALL(m_InternalCallIsWindowMinimise);
 	}
 }
