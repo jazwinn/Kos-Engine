@@ -91,7 +91,6 @@ namespace Input {
 	}
 
 	void InputSystem::m_inputUpdate() {
-		Input::InputSystem::m_currTime += Helper::Helpers::GetInstance()->m_deltaTime;
 		for (auto& currKey : m_wasTriggered) {
 			int state;
 			if (currKey.first == keys::LMB || currKey.first == keys::RMB || currKey.first == keys::MMB) {
@@ -105,9 +104,8 @@ namespace Input {
 				m_wasPressed[currKey.first] = true;
 				m_wasTriggered[currKey.first] = true;
 			}
-			else if (m_wasPressed[currKey.first] && (m_currTime >= 1.f/60.f)) {
+			else if (m_wasPressed[currKey.first]) {
 				m_wasTriggered[currKey.first] = false;
-				m_currTime = 0.f;
 			}
 			if (state == GLFW_RELEASE) {
 				m_wasPressed[currKey.first] = false;
