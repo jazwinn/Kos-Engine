@@ -153,6 +153,9 @@ public static class InternalCall
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static bool m_InternalCallIsWindowMinimise();
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static float m_getAccumulatedDeltaTime();
 }
 
 public static class GetComponent

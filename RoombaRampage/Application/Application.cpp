@@ -133,7 +133,7 @@ namespace Application {
         const double fixedDeltaTime = 1.0 / 60.0;
         help->m_fixedDeltaTime = static_cast<float>(fixedDeltaTime);
         ecs->m_DeltaTime = static_cast<float>(fixedDeltaTime);
-        double accumulatedTime = 0.0;
+        help->m_accumulatedTime = 0.0;
 
         
 
@@ -152,10 +152,10 @@ namespace Application {
                 double currentFrameTime = glfwGetTime();
                 help->m_deltaTime = static_cast<float>(currentFrameTime - lastFrameTime);
                 lastFrameTime = currentFrameTime;
-                accumulatedTime += (help->m_deltaTime * help->m_timeScale);
+                help->m_accumulatedTime += (help->m_deltaTime * help->m_timeScale);
                 Helper::Helpers::GetInstance()->currentNumberOfSteps = 0;
-                while (accumulatedTime >= (fixedDeltaTime  )) {
-                    accumulatedTime -= (fixedDeltaTime);
+                while (help->m_accumulatedTime >= (fixedDeltaTime  )) {
+                    help->m_accumulatedTime -= (fixedDeltaTime);
                     ++help->currentNumberOfSteps;
                 }
                 

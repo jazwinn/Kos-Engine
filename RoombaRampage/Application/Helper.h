@@ -57,6 +57,8 @@ namespace Helper {
 
 		float m_fixedDeltaTime;
 
+		float m_accumulatedTime = 0.f;
+
 		vector3::Vec3 m_colour;
 
 		float m_timeScale = 1.0f; //default to 1x
