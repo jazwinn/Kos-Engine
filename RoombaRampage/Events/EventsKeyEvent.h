@@ -12,7 +12,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 /********************************************************************/
 
 #pragma once
-#include "BaseEvent.h"
+#include "EventsBaseEvent.h"
 
 namespace events {
 	class KeyPressedEvent : public BaseEvent<KeyEvents> {

@@ -21,10 +21,10 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../../De&Serialization/json_handler.h"
 #include "../Debugging/Logging.h"
 #include "../Asset Manager/AssetManager.h"
-#include "../Events/BaseMessage.h"
-#include "../Events/MessageSystem.h"
-#include "../Events/Listeners.h"
-#include "../Events/EventHandler.h"
+#include "../Events/EventsBaseMessage.h"
+#include "../Events/MessagingMessageSystem.h"
+#include "../Events/EventsListeners.h"
+#include "../Events/EventsEventHandler.h"
 
 
 

@@ -1,8 +1,32 @@
+/********************************************************************/
+/*!
+\file      ModifyAction.h
+\author    Elijah Teo, teo.e , 2301530
+\par       teo.e@digipen.edu
+\date      Nov 12, 2024
+\brief     This header file declares and defines all the derived classes that inherit from Action class
+		   -ModifyTransformAction
+		   -AddComponentAction
+		   -RemoveComponentAction
+		   -AddEntityAction
+		   -RemoveEntityAction
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/********************************************************************/
 #pragma once
 #include "Action.h"
 #include "../ECS/Hierachy.h"
 
 namespace actions {
+	
+	/******************************************************************/
+	/*!
+		\brief     This is a class to hold transform component data for later undo or redo
+	*/
+	/******************************************************************/
 	class ModifyTransformAction : public Action{
 	private:
 		ecs::EntityID m_entityID;
@@ -16,7 +40,7 @@ namespace actions {
 			m_entityID(inID), m_changedComp(inComp), m_oldPos(inOldPos), m_newPos(inComp->m_position), m_oldRot(inOldRot), m_newRot(inComp->m_rotation), 
 			m_oldScale(inOldScale), m_newScale(inComp->m_scale), m_oldTrans(inOldTrans), m_newTrans(inComp->m_transformation){}
 
-		void m_undoAction() override {
+		void m_UndoAction() override {
 			m_changedComp->m_position = m_oldPos;
 			m_changedComp->m_rotation = m_oldRot;
 			m_changedComp->m_scale = m_oldScale;
@@ -24,7 +48,7 @@ namespace actions {
 
 		}
 
-		void m_redoAction() override {
+		void m_RedoAction() override {
 			m_changedComp->m_position = m_newPos;
 			m_changedComp->m_rotation = m_newRot;
 			m_changedComp->m_scale = m_newScale;
@@ -34,6 +58,11 @@ namespace actions {
 
 	};
 
+	/******************************************************************/
+	/*!
+		\brief     This is a class to hold which component has been added to which entity
+	*/
+	/******************************************************************/
 	class AddComponentAction : public Action {
 	private:
 		ecs::EntityID m_entityID;
@@ -42,15 +71,20 @@ namespace actions {
 
 		AddComponentAction(ecs::EntityID inID, ecs::ComponentType inType) : m_entityID(inID), m_type(inType) {};
 
-		void m_undoAction() override {
+		void m_UndoAction() override {
 			ecs::ECS::m_GetInstance()->m_RemoveComponent(m_type, m_entityID);
 		}
 
-		void m_redoAction() override {
+		void m_RedoAction() override {
 			ecs::ECS::m_GetInstance()->m_AddComponent(m_type, m_entityID);
 		}
 	};
 
+	/******************************************************************/
+	/*!
+		\brief     This is a class to hold which component has been removed from which entity
+	*/
+	/******************************************************************/
 	class RemoveComponentAction : public Action {
 	private:
 		ecs::EntityID m_entityID;
@@ -58,15 +92,20 @@ namespace actions {
 	public:
 		RemoveComponentAction(ecs::EntityID inID, ecs::ComponentType inType) : m_entityID(inID), m_type(inType) {};
 
-		void m_undoAction() override {
+		void m_UndoAction() override {
 			ecs::ECS::m_GetInstance()->m_AddComponent(m_type, m_entityID);
 		}
 
-		void m_redoAction() override {
+		void m_RedoAction() override {
 			ecs::ECS::m_GetInstance()->m_RemoveComponent(m_type, m_entityID);
 		}
 	};
 
+	/******************************************************************/
+	/*!
+		\brief     This is a class to hold which entity has been added
+	*/
+	/******************************************************************/
 	class AddEntityAction : public Action {
 	private:
 		ecs::EntityID m_entityID;
@@ -74,14 +113,14 @@ namespace actions {
 	public:
 		AddEntityAction(ecs::EntityID inID) : m_entityID(inID), m_hasBeenUndo(false) {};
 
-		void m_undoAction() override {
+		void m_UndoAction() override {
 			if (!m_hasBeenUndo) {
 				ecs::ECS::m_GetInstance()->m_DeleteEntity(m_entityID);
 				m_hasBeenUndo = true;
 			}
 		}
 
-		void m_redoAction() override {
+		void m_RedoAction() override {
 			if (m_hasBeenUndo) {
 				ecs::ECS::m_GetInstance()->m_RestoreEntity(m_entityID);
 				m_hasBeenUndo = false;
@@ -89,6 +128,11 @@ namespace actions {
 		}
 	};
 
+	/******************************************************************/
+	/*!
+		\brief     This is a class to hold which entity has been deleted
+	*/
+	/******************************************************************/
 	class RemoveEntityAction : public Action {
 	private:
 		ecs::EntityID m_entityID;
@@ -96,14 +140,14 @@ namespace actions {
 	public:
 		RemoveEntityAction(ecs::EntityID inID) : m_entityID(inID), m_hasBeenUndo(false) {};
 
-		void m_undoAction() override {
+		void m_UndoAction() override {
 			if (!m_hasBeenUndo) {
 				m_hasBeenUndo = true;
 				ecs::ECS::m_GetInstance()->m_RestoreEntity(m_entityID);
 			}
 		}
 
-		void m_redoAction() override {
+		void m_RedoAction() override {
 			if (m_hasBeenUndo) {
 				m_hasBeenUndo = false;
 				ecs::ECS::m_GetInstance()->m_DeleteEntity(m_entityID);
