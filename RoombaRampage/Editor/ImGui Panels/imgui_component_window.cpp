@@ -464,7 +464,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
             int item{};
             const auto& it = std::find(tag_Names.begin(), tag_Names.end(), nc->m_entityTag);
             if (it != tag_Names.end()) {
-                item = std::distance(tag_Names.begin(), it);
+                item = static_cast<int>(std::distance(tag_Names.begin(), it));
             }
             
             if (ImGui::Combo("Tag", &item, tag_Names.data(), static_cast<int>(tag_Names.size()))) {
@@ -566,7 +566,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                                 if (!ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEANIMATIONCOMPONENT))
                                 {
                                     assetmanager::AssetManager* assets = assetmanager::AssetManager::m_funcGetInstance();
-                                    graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
+                                    //graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
                                     if (assets->m_imageManager.m_imageMap[sc->m_imageFile].m_stripCount > 1)
                                     {
                                        
@@ -636,11 +636,11 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                     if (ImGui::TreeNode("Image Layers"))
                     {
                         //int count = 0;
-                        for (auto it = layerMap.begin(); it != layerMap.end(); ++it) 
+                        for (auto it2 = layerMap.begin(); it2 != layerMap.end(); ++it2) 
                         {
-                            ecs::NameComponent* namec = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(it->second.first));
-                            std::string entityIDS = std::to_string(it->second.first);
-                            if (it->second.second)
+                            ecs::NameComponent* namec = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(it2->second.first));
+                            std::string entityIDS = std::to_string(it2->second.first);
+                            if (it2->second.second)
                             {
                                 entityIDS += " (Sprite)";
                             }
@@ -650,7 +650,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             }
 
                             std::string selectable = namec->m_entityName + "_ID" + entityIDS;
-                            if (it->second.first == static_cast<unsigned>(m_clickedEntityId))
+                            if (it2->second.first == static_cast<unsigned>(m_clickedEntityId))
                             {
                                 ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.3f, 0.8f, 0.f, 1.0f));
                                 selectable += "(Active)";
@@ -668,36 +668,36 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                             if (ImGui::IsItemActive() && !ImGui::IsItemHovered())
                             {
-                                decltype(it) n_next = (ImGui::GetMouseDragDelta(0).y < 0.f ? std::prev(it) : std::next(it));
+                                decltype(it2) n_next = (ImGui::GetMouseDragDelta(0).y < 0.f ? std::prev(it2) : std::next(it2));
                                 if (n_next != layerMap.end())
                                 {
-                                    if (n_next->second.second && it->second.second)
+                                    if (n_next->second.second && it2->second.second)
                                     {
-                                        ecs::SpriteComponent* sprite1 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(it->second.first));
+                                        ecs::SpriteComponent* sprite1 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(it2->second.first));
                                         ecs::SpriteComponent* sprite2 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(n_next->second.first));
                                         int layer = sprite1->m_layer;
                                         sprite1->m_layer = sprite2->m_layer;
                                         sprite2->m_layer = layer;
                                     }
-                                    else if (!n_next->second.second && !it->second.second)
+                                    else if (!n_next->second.second && !it2->second.second)
                                     {
-                                        ecs::TextComponent* text1 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(it->second.first));
+                                        ecs::TextComponent* text1 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(it2->second.first));
                                         ecs::TextComponent* text2 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(n_next->second.first));
                                         int layer = text1->m_fontLayer;
                                         text1->m_fontLayer = text2->m_fontLayer;
                                         text2->m_fontLayer = layer;
                                     }
-                                    else if (n_next->second.second && !it->second.second)
+                                    else if (n_next->second.second && !it2->second.second)
                                     {
                                         ecs::SpriteComponent* sprite1 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(n_next->second.first));
-                                        ecs::TextComponent* text1 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(it->second.first));
+                                        ecs::TextComponent* text1 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(it2->second.first));
                                         int layer = text1->m_fontLayer;
                                         text1->m_fontLayer = sprite1->m_layer;
                                         sprite1->m_layer = layer;
                                     }
                                     else
                                     {
-                                        ecs::SpriteComponent* sprite1 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(it->second.first));
+                                        ecs::SpriteComponent* sprite1 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(it2->second.first));
                                         ecs::TextComponent* text1 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(n_next->second.first));
                                         int layer = text1->m_fontLayer;
                                         text1->m_fontLayer = sprite1->m_layer;
@@ -824,11 +824,11 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                     if (ImGui::TreeNode("Font Layers"))
                     {
                         //int count = 0;
-                        for (auto it = layerMap.begin(); it != layerMap.end(); ++it)
+                        for (auto it2 = layerMap.begin(); it2 != layerMap.end(); ++it2)
                         {
-                            ecs::NameComponent* namec = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(it->second.first));
-                            std::string entityIDS = std::to_string(it->second.first);
-                            if (it->second.second)
+                            ecs::NameComponent* namec = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(it2->second.first));
+                            std::string entityIDS = std::to_string(it2->second.first);
+                            if (it2->second.second)
                             {
                                 entityIDS += " (Sprite)";
                             }
@@ -838,7 +838,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             }
 
                             std::string selectable = namec->m_entityName + "_ID" + entityIDS;
-                            if (it->second.first == static_cast<unsigned>(m_clickedEntityId))
+                            if (it2->second.first == static_cast<unsigned>(m_clickedEntityId))
                             {
                                 ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.f, 0.3f, 0.8f, 1.0f));
                                 selectable += "(Active)";
@@ -856,36 +856,36 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                             if (ImGui::IsItemActive() && !ImGui::IsItemHovered())
                             {
-                                decltype(it) n_next = (ImGui::GetMouseDragDelta(0).y < 0.f ? std::prev(it) : std::next(it));
+                                decltype(it2) n_next = (ImGui::GetMouseDragDelta(0).y < 0.f ? std::prev(it2) : std::next(it2));
                                 if (n_next != layerMap.end())
                                 {
-                                    if (n_next->second.second && it->second.second)
+                                    if (n_next->second.second && it2->second.second)
                                     {
-                                        ecs::SpriteComponent* sprite1 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(it->second.first));
+                                        ecs::SpriteComponent* sprite1 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(it2->second.first));
                                         ecs::SpriteComponent* sprite2 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(n_next->second.first));
                                         int layer = sprite1->m_layer;
                                         sprite1->m_layer = sprite2->m_layer;
                                         sprite2->m_layer = layer;
                                     }
-                                    else if (!n_next->second.second && !it->second.second)
+                                    else if (!n_next->second.second && !it2->second.second)
                                     {
-                                        ecs::TextComponent* text1 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(it->second.first));
+                                        ecs::TextComponent* text1 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(it2->second.first));
                                         ecs::TextComponent* text2 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(n_next->second.first));
                                         int layer = text1->m_fontLayer;
                                         text1->m_fontLayer = text2->m_fontLayer;
                                         text2->m_fontLayer = layer;
                                     }
-                                    else if (n_next->second.second && !it->second.second)
+                                    else if (n_next->second.second && !it2->second.second)
                                     {
                                         ecs::SpriteComponent* sprite1 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(n_next->second.first));
-                                        ecs::TextComponent* text1 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(it->second.first));
+                                        ecs::TextComponent* text1 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(it2->second.first));
                                         int layer = text1->m_fontLayer;
                                         text1->m_fontLayer = sprite1->m_layer;
                                         sprite1->m_layer = layer;
                                     }
                                     else
                                     {
-                                        ecs::SpriteComponent* sprite1 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(it->second.first));
+                                        ecs::SpriteComponent* sprite1 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(it2->second.first));
                                         ecs::TextComponent* text1 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(n_next->second.first));
                                         int layer = text1->m_fontLayer;
                                         text1->m_fontLayer = sprite1->m_layer;
@@ -1044,7 +1044,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                     assetmanager::AssetManager* Asset = assetmanager::AssetManager::m_funcGetInstance();
                     auto* tmc = static_cast<ecs::TilemapComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETILEMAPCOMPONENT]->m_GetEntityComponent(entityID));
-                    auto* transform = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(entityID));
+                    //auto* transform = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(entityID));
 
 
 
@@ -1119,18 +1119,18 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                 if (open) {
                     auto* ac = static_cast<ecs::AudioComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEAUDIOCOMPONENT]->m_GetEntityComponent(entityID));
-                    assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
+                    //assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
 
                     if (ac) {
                         int fileIndex = 0;
-                        for (auto it = ac->m_AudioFiles.begin(); it != ac->m_AudioFiles.end();) {
+                        for (auto it2 = ac->m_AudioFiles.begin(); it2 != ac->m_AudioFiles.end();) {
                             ImGui::PushID(fileIndex);
 
                             bool removeFile = false;
                             
 
                             ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_DefaultOpen;
-                            std::string headerName = "Audio File " + std::to_string(fileIndex + 1) + ": " + it->m_Name;
+                            std::string headerName = "Audio File " + std::to_string(fileIndex + 1) + ": " + it2->m_Name;
                             bool nodeOpen = ImGui::TreeNodeEx(headerName.c_str(), flags);
 
                             if (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right)) {
@@ -1146,10 +1146,10 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                             if (nodeOpen) {
                                 char buffer[256];
-                                strncpy(buffer, it->m_FilePath.c_str(), sizeof(buffer));
+                                strncpy(buffer, it2->m_FilePath.c_str(), sizeof(buffer));
 
 
-                                if (ImGui::BeginCombo("Sounds", it->m_Name.c_str())) {
+                                if (ImGui::BeginCombo("Sounds", it2->m_Name.c_str())) {
                                     for (const auto& sound : assetManager->m_audioManager.getSoundMap()) {
                                         if (ImGui::Selectable(sound.first.c_str(), sound.first == it->m_Name)) {
                                             if (sound.first != it->m_Name) {
@@ -1195,10 +1195,10 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                                 assetManager->m_audioManager.m_SetVolumeForEntity(entityID, it->m_Name, it->m_Volume);
 
 
-                                bool wasLooping = it->m_Loop;
+                                bool wasLooping = it2->m_Loop;
 
                                 if (ImGui::Button("Play Sound")) {
-                                    std::string key = it->m_Name;
+                                    std::string key = it2->m_Name;
                                     auto& audioManager = assetManager->m_audioManager;
                                     if (!audioManager.m_IsPlayingForEntity(entityID, key)) {
                                         audioManager.m_PlayAudioForEntity(entityID, key, it->m_Volume);
@@ -1209,12 +1209,12 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                                     }
                                 }
     
-                                if (ImGui::Checkbox("Play On Start", &it->m_PlayOnStart)) {
+                                if (ImGui::Checkbox("Play On Start", &it2->m_PlayOnStart)) {
                                     auto& audioManager = assetManager->m_audioManager;
 
-                                    if (it->m_PlayOnStart) {
+                                    if (it2->m_PlayOnStart) {
                                         for (auto& audioFile : ac->m_AudioFiles) {
-                                            if (&audioFile != &(*it)) {
+                                            if (&audioFile != &(*it2)) {
                                                 audioFile.m_PlayOnStart = false;
                                             }
                                         }
@@ -1229,7 +1229,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                                     audioManager.m_SetPlayOnStartForEntity(entityID, it->m_Name, it->m_PlayOnStart);
                                 }
 
-                                if (ImGui::Checkbox("Loop", &it->m_Loop)) {
+                                if (ImGui::Checkbox("Loop", &it2->m_Loop)) {
                                     auto& audioManager = assetManager->m_audioManager;
 
                                     audioManager.m_SetLoopingForEntity(entityID, it->m_Name, it->m_Loop);
@@ -1244,9 +1244,9 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
 
                                 bool isPaused = false;
-                                auto& audioManager = assetManager->m_audioManager;
-                                if (audioManager.getSoundMap().find(it->m_Name) != audioManager.getSoundMap().end()) {
-                                    auto& sound = audioManager.getSoundMap()[it->m_Name];
+                                auto& audioManager2 = assetManager->m_audioManager;
+                                if (audioManager2.getSoundMap().find(it2->m_Name) != audioManager2.getSoundMap().end()) {
+                                    auto& sound = audioManager2.getSoundMap()[it2->m_Name];
 
                                     if (sound->m_GetChannelForEntity(entityID)) {
                                         sound->m_GetChannelForEntity(entityID)->getPaused(&isPaused);
@@ -1276,13 +1276,13 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             ImGui::PopID();
 
                             if (removeFile) {
-                                std::string key = it->m_Name;
+                                std::string key = it2->m_Name;
                                 auto& audioManager = assetManager->m_audioManager;
                                 audioManager.m_StopAudioForEntity(entityID, key);
                                 it = ac->m_AudioFiles.erase(it);
                             }
                             else {
-                                ++it;
+                                ++it2;
                                 ++fileIndex;
                             }
                         }
@@ -1327,7 +1327,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                                 if (!ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEANIMATIONCOMPONENT))
                                 {
                                     assetmanager::AssetManager* assets = assetmanager::AssetManager::m_funcGetInstance();
-                                    graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
+                                    //graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
                                     if (assets->m_imageManager.m_imageMap[com->m_imageFile].m_stripCount > 1)
                                     {
                                         ecs::AnimationComponent* ani = static_cast<ecs::AnimationComponent*>(ecs->m_AddComponent(ecs::TYPEANIMATIONCOMPONENT, entityID));
@@ -1347,7 +1347,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                                 if (!ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEANIMATIONCOMPONENT))
                                 {
                                     assetmanager::AssetManager* assets = assetmanager::AssetManager::m_funcGetInstance();
-                                    graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
+                                    //graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
                                     if (assets->m_imageManager.m_imageMap[sc->m_imageFile].m_stripCount > 1)
                                     {
                                         ecs::AnimationComponent* ani = static_cast<ecs::AnimationComponent*>(ecs->m_AddComponent(ecs::TYPEANIMATIONCOMPONENT, entityID));

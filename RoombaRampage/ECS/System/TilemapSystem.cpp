@@ -69,7 +69,7 @@ namespace ecs {
 			//skip component not of the scene
 			if (tile->m_scene != scene) continue;
 
-			ECS* ecs = ECS::m_GetInstance();
+			//ECS* ecs = ECS::m_GetInstance();
 
 			if (assetmanager->m_imageManager.m_imageMap.find(tile->m_tilemapFile) == assetmanager->m_imageManager.m_imageMap.end()) continue;
 
@@ -81,7 +81,7 @@ namespace ecs {
 			transform->m_transformation.m_e21 = floor(transform->m_transformation.m_e21) + 0.5f;
 
 			//float imageWidth = assetmanager->m_imageManager.m_imageMap.find(tile->m_tilemapFile)->second.m_width / 2.f;
-			float imageHeight = assetmanager->m_imageManager.m_imageMap.find(tile->m_tilemapFile)->second.m_height;
+			float imageHeight = static_cast<float>(assetmanager->m_imageManager.m_imageMap.find(tile->m_tilemapFile)->second.m_height);
 
 			transform->m_scale = vector2::Vec2{ pipe->m_unitHeight / imageHeight , pipe->m_unitHeight / imageHeight };
 

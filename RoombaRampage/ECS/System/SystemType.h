@@ -4,7 +4,7 @@ namespace ecs {
 
 	enum TypeSystem {
 
-
+		TYPEBUTTONSYSTEM,
 
 		TYPELOGICSYSTEM,
 		TYPETRANSFORMSYSTEM,
@@ -13,7 +13,7 @@ namespace ecs {
 		TYPECOLLISIONRESPONSESYSTEM,
 
 
-		TYPEBUTTONSYSTEM,
+
 		TYPEAUDIOSYSTEM,
 
 		//render system called the last

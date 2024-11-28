@@ -179,7 +179,7 @@ namespace graphicpipe {
 
 		if (m_gameMode)
 		{
-			Helper::Helpers* help = Helper::Helpers::GetInstance();
+			//Helper::Helpers* help = Helper::Helpers::GetInstance();
 			/*if (GraphicsCamera::m_cameras.size() > 0 && m_gameMode)
 			{
 				GraphicsCamera::setCurrCamera(0);

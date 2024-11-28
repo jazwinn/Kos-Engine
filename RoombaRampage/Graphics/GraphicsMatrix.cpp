@@ -87,7 +87,7 @@ namespace graphicpipe
 				m_tilemapData[n].m_transformation[0][1] = m_tilemapData[n].m_transformation[0][1] * widthRatio / imageAspectRatio;
 				m_tilemapData[n].m_transformation[1][1] = m_tilemapData[n].m_transformation[1][1] * heightRatio;
 				m_tilemapData[n].m_transformation[1][0] = m_tilemapData[n].m_transformation[1][0] * heightRatio;
-				int moveCount = 0;
+				//int moveCount = 0;
 				m_tileIndexes.push_back({});
 				for (int i = 0; i < m_tilemapIndexArrays[n].size(); ++i)
 				{
