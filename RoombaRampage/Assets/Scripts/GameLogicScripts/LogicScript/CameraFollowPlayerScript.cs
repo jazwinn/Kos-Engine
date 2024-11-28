@@ -17,6 +17,10 @@ public class CameraFollowPlayerScript : ScriptBase
     private Vector2 startCamScale;
     private float startCamRotate;
 
+    private float deltatime;
+
+    private static Vector2 previousplayerpos;
+
     public override void GetEntityID(uint id)
     {
         EntityID = id;
@@ -45,6 +49,23 @@ public class CameraFollowPlayerScript : ScriptBase
     {
         if (playerID < 0) return;
         InternalCall.m_InternalGetTransformComponent((uint)playerID, out pos, out playerScale, out playerRotate);
-        InternalCall.m_InternalSetTransformComponent(EntityID, pos, startCamScale, startCamRotate);
+        InternalCall.m_InternalGetTransformComponent(EntityID, out startCamPos, out startCamScale, out startCamRotate);
+        deltatime = InternalCall.m_InternalCallGetDeltaTime();
+
+        Vector2 targetpos = Mix(previousplayerpos, pos, deltatime);
+        Vector2 cameraCoord = Mix(startCamPos, targetpos, deltatime * 5.0f);
+        InternalCall.m_InternalSetTransformComponent(EntityID, cameraCoord, startCamScale, startCamRotate);
+
+        previousplayerpos = pos;
+    }
+
+    public Vector2 Mix(Vector2 lhs, Vector2 rhs, float time)
+    {
+        float oneMinusTime = 1 - time;
+
+        float x = (lhs.X * oneMinusTime) + (rhs.X * time);
+        float y = (lhs.Y * oneMinusTime) + (rhs.Y * time);
+
+        return new Vector2(x, y);
     }
 }
