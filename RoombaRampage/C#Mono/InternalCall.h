@@ -545,6 +545,8 @@ namespace script {
 		/******************************************************************/
 		static void m_InternalCallStopAllAudio();
 
+		static bool m_InternalCallIsWindowMinimise();
+
 	public:
 		/******************************************************************/
 		/*!

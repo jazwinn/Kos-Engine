@@ -150,6 +150,9 @@ public static class InternalCall
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static void m_InternalCallStopAllAudio();
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static bool m_InternalCallIsWindowMinimise();
 }
 
 public static class GetComponent
