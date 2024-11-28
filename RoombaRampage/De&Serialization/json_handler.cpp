@@ -325,8 +325,8 @@ namespace Serialization {
 				text.AddMember("fontsize", tc->m_fontSize, allocator);
 				text.AddMember("color", rapidjson::Value().SetObject()
 					.AddMember("r", tc->m_color.m_x, allocator)
-					.AddMember("b", tc->m_color.m_y, allocator)
-					.AddMember("g", tc->m_color.m_z, allocator), allocator);
+					.AddMember("g", tc->m_color.m_y, allocator)
+					.AddMember("b", tc->m_color.m_z, allocator), allocator);
 
 				text.AddMember("layer", tc->m_fontLayer, allocator);
 

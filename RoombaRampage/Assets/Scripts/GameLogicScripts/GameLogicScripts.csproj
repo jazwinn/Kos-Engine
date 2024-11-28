@@ -41,6 +41,15 @@
     <IntermediateOutputPath>..\..\..\x64\scriptobj</IntermediateOutputPath>
     <BaseIntermediateOutputPath>..\..\..\x64\scriptobj</BaseIntermediateOutputPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Game|AnyCPU'">
+    <OutputPath>bin\Game\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
   <Target Name="Build" />
   <Target Name="CoreCompile" />
   <ItemGroup>
