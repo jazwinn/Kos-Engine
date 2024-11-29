@@ -28,7 +28,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 constexpr int layerCount = layer::MAXLAYER;
 layer::LayerStack layers;
-physicslayer::PhysicsLayer* physicsLayer = physicslayer::PhysicsLayer::getInstance(); // Get the PhysicsLayer instance
+physicslayer::PhysicsLayer* physicsLayer = physicslayer::PhysicsLayer::m_GetInstance(); // Get the PhysicsLayer instance
 
 void DrawVerticalLabel(const std::string& text, float x, float y)
 {
@@ -84,7 +84,7 @@ void gui::ImGuiHandler::m_DrawLayerWindow() {
             ImGui::PushID(row * layerCount + col);  // Unique ID for each checkbox
 
             // Get the current value from the collision matrix in PhysicsLayer
-            bool isChecked = physicsLayer->getCollide(row, col);
+            bool isChecked = physicsLayer->m_GetCollide(row, col);
             if (isChecked) {
                 ImGui::PushStyleColor(ImGuiCol_FrameBg, IM_COL32(0, 255, 0, 100)); // Green background for checked
                 ImGui::PushStyleColor(ImGuiCol_CheckMark, IM_COL32(0, 255, 0, 255)); // Green checkmark color
@@ -97,7 +97,7 @@ void gui::ImGuiHandler::m_DrawLayerWindow() {
             if (ImGui::Checkbox("##hidden", &isChecked))
             {
                 // Update the PhysicsLayer collision matrix when the checkbox is toggled
-                physicsLayer->setCollision(row, col, isChecked);
+                physicsLayer->m_SetCollision(row, col, isChecked);
             }
             ImGui::PopStyleColor(2);
             ImGui::PopID();
@@ -105,7 +105,7 @@ void gui::ImGuiHandler::m_DrawLayerWindow() {
 
     }
     if (ImGui::Button("Print")) {
-        physicsLayer->printCollisionMatrix();
+        physicsLayer->m_PrintCollisionMatrix();
     }
 	ImGui::End();
 }

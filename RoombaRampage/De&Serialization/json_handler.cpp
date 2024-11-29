@@ -74,7 +74,7 @@ namespace Serialization {
 			LOGGING_ERROR("Error Reading Config file (Width or Height <= 0)");
 		}
 
-		LoadPhysicsLayerMatrix();
+		m_LoadPhysicsLayerMatrix();
 
 	}
 
@@ -903,14 +903,14 @@ namespace Serialization {
 			}
 		}
 	}
-	void Serialization::Serialize::SavePhysicsLayerMatrix() {
+	void Serialization::Serialize::m_SavePhysicsLayerMatrix() {
 		std::ofstream file("./Physics/PhysicsLayerMatrix.txt");
 		if (!file.is_open()) {
 			LOGGING_ERROR("Could not open PhysicsLayerMatrix.txt for writing.");
 			return;
 		}
-		auto size = physicslayer::PhysicsLayer::getSize();
-		auto matrix = physicslayer::PhysicsLayer::getInstance()->getMat();
+		auto size = physicslayer::PhysicsLayer::m_GetSize();
+		auto matrix = physicslayer::PhysicsLayer::m_GetInstance()->m_GetMat();
 		for (int i = 0; i < size; ++i) {
 			for (int j = 0; j < size; ++j) {
 				file << matrix[i][j] << " ";
@@ -922,7 +922,7 @@ namespace Serialization {
 		//LOGGING_INFO("Collision matrix saved to PhysicsLayerMatrix.txt");
 	}
 
-	void Serialization::Serialize::LoadPhysicsLayerMatrix() {
+	void Serialization::Serialize::m_LoadPhysicsLayerMatrix() {
 		std::ifstream file("./Physics/PhysicsLayerMatrix.txt");
 		if (!file.is_open()) {
 			LOGGING_ERROR("Could not open PhysicsLayerMatrix.txt for reading.");
@@ -931,14 +931,14 @@ namespace Serialization {
 
 		std::string line;
 		int row = 0;
-		auto size = physicslayer::PhysicsLayer::getSize();
-		physicslayer::PhysicsLayer* layer = physicslayer::PhysicsLayer::getInstance();
+		auto size = physicslayer::PhysicsLayer::m_GetSize();
+		physicslayer::PhysicsLayer* layer = physicslayer::PhysicsLayer::m_GetInstance();
 		while (std::getline(file, line) && row < size) {
 			std::istringstream iss(line);
 			int col = 0;
 			int value;
 			while (iss >> value && col < size) {
-				layer->setCollision(row, col, value == 1);
+				layer->m_SetCollision(row, col, value == 1);
 				++col;
 			}
 			++row;

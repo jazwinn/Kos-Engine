@@ -115,7 +115,7 @@ namespace Serialization {
 				 allowing it to be persisted and reloaded later.
 		*/
 		/******************************************************************/
-		static void SavePhysicsLayerMatrix();
+		static void m_SavePhysicsLayerMatrix();
 
 		/******************************************************************/
 		/*!
@@ -125,7 +125,7 @@ namespace Serialization {
 				 between physics layers, ensuring consistent physics behavior across sessions.
 		*/
 		/******************************************************************/
-		static void LoadPhysicsLayerMatrix();
+		static void m_LoadPhysicsLayerMatrix();
 
 
 	};

@@ -205,7 +205,7 @@ namespace graphicpipe
 				assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
 				float originX{ textData.m_x };
 				float originY{ textData.m_y };
-				float height = static_cast<float>(GraphicsCamera::m_windowHeight);
+				//float height = static_cast<float>(GraphicsCamera::m_windowHeight);
 
 				// Step 1: Calculate total width and height of the text
 				float totalWidth = 0.0f;

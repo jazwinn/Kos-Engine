@@ -352,13 +352,17 @@ namespace gui {
 		}*/
 	}
 
-
+	/******************************************************************/
+	/*!
+	\fn        ImGuiHandler::m_OnAction(const events::BaseEvent<events::Actions>& givenEvent)
+	\brief     This is the function that handles what to do when events happen in the editor
+	*/
+	/******************************************************************/
 	void ImGuiHandler::m_OnAction(const events::BaseEvent<events::Actions>& givenEvent) {
 		if (givenEvent.m_GetEventType() == events::Actions::TRANSFORMCOMP) {
 			auto* newAct = new actions::ModifyTransformAction(givenEvent.m_ToType<events::TransformComponentChanged>().m_GetID(), givenEvent.m_ToType<events::TransformComponentChanged>().m_GetComp(),
 															  givenEvent.m_ToType<events::TransformComponentChanged>().m_GetOldPos(), givenEvent.m_ToType<events::TransformComponentChanged>().m_GetOldRot(),
 															  givenEvent.m_ToType<events::TransformComponentChanged>().m_GetOldScale(), givenEvent.m_ToType<events::TransformComponentChanged>().m_GetOldTrans());
-			//ModifyTransformAction(ecs::EntityID inID, ecs::TransformComponent* inComp, vector2::Vec2 inOldPos, float inOldRot, vector2::Vec2 inOldScale, mat3x3::Mat3x3 inOldTrans)
 			actions::ActionManager::m_GetManagerInstance()->m_DoAction(newAct);
 		}else if (givenEvent.m_GetEventType() == events::Actions::ADDCOMP) {
 			auto* newAct = new actions::AddComponentAction(givenEvent.m_ToType<events::AddComponent>().m_GetID(), givenEvent.m_ToType<events::AddComponent>().m_GetComponentType());

@@ -40,13 +40,13 @@ namespace graphicpipe
         static float m_aspectRatio;                      ///< Aspect ratio of the window.
    
 
-        static void calculateAspectRatio();
-        static void calculateCurrView();
-        static void setCurrCamera(unsigned int index);
-        static void multiplyOrthoMatrix();
-        static void multiplyViewMatrix();
+        static void m_CalculateAspectRatio();
+        static void m_CalculateCurrView();
+        static void m_SetCurrCamera(unsigned int index);
+        static void m_MultiplyOrthoMatrix();
+        static void m_MultiplyViewMatrix();
 
-        static GraphicsCamera* m_funcGetInstance();
+        static GraphicsCamera* m_FuncGetInstance();
 
         static glm::mat3 m_currCameraMatrix;                ///< Current camera matrix
         static glm::mat3 m_currViewMatrix;

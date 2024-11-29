@@ -79,7 +79,7 @@ namespace ecs {
 		}
 
 		//TODO instead of retrieving every loop, just get the address of the vector in the physics pipeline
-		physicspipe::Physics* PhysicsPipeline = physicspipe::Physics::getInstance();
+		physicspipe::Physics* PhysicsPipeline = physicspipe::Physics::m_GetInstance();
 
 		//gets collided
 		PhysicsPipeline->m_Update();
@@ -104,7 +104,7 @@ namespace ecs {
 
 			RigidBodyComponent* rigidComp = m_vecRigidBodyComponentPtr[n];
 			ColliderComponent* ColComp = m_vecColliderComponentPtr[n];
-			TransformComponent* transformComp = m_vecTransformComponentPtr[n];
+			//TransformComponent* transformComp = m_vecTransformComponentPtr[n];
 
 			ColComp->m_collidedWith.clear();
 			ColComp->m_blockedFlag = -1;

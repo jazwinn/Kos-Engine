@@ -19,8 +19,8 @@
 		   - `setCurrCamera()`: Sets the current camera matrix.
 		   - `calculateAspectRatio()`: Calculates the aspect ratio based on the window size.
 		   - `calculateCurrView()`: Calculates the current view matrix by inverting the camera matrix.
-		   - `multiplyOrthoMatrix()`: Applies an orthographic projection matrix and updates the pipeline matrices.
-		   - `multiplyViewMatrix()`: Applies the current view matrix to the model matrices in the graphics pipeline.
+		   - `m_MultiplyOrthoMatrix()`: Applies an orthographic projection matrix and updates the pipeline matrices.
+		   - `m_MultiplyViewMatrix()`: Applies the current view matrix to the model matrices in the graphics pipeline.
 
 		   Dependencies:
 		   - GraphicsPipe.h for pipeline matrix management.
@@ -54,7 +54,7 @@ namespace graphicpipe
 	float GraphicsCamera::m_currCameraTranslateX{};
 	float GraphicsCamera::m_currCameraTranslateY{};
 
-	GraphicsCamera* GraphicsCamera::m_funcGetInstance()
+	GraphicsCamera* GraphicsCamera::m_FuncGetInstance()
 	{
 		if (!m_instancePtr)
 		{
@@ -63,24 +63,24 @@ namespace graphicpipe
 		return m_instancePtr.get();
 	}
 
-	void GraphicsCamera::setCurrCamera(unsigned int index)
+	void GraphicsCamera::m_SetCurrCamera(unsigned int index)
 	{
 		m_currCameraMatrix = m_cameras[index];
 	}
 
-	void GraphicsCamera::calculateAspectRatio()
+	void GraphicsCamera::m_CalculateAspectRatio()
 	{
 		m_windowWidth = static_cast<int>(Helper::Helpers::GetInstance()->m_windowWidth);
 		m_windowHeight = static_cast<int>(Helper::Helpers::GetInstance()->m_windowHeight);
 		m_aspectRatio = static_cast<float>(static_cast<float>(m_windowHeight) / static_cast<float>(m_windowWidth));
 	}
 
-	void GraphicsCamera::calculateCurrView()
+	void GraphicsCamera::m_CalculateCurrView()
 	{
 		m_currViewMatrix = glm::inverse(m_currCameraMatrix);
 	}
 
-	void GraphicsCamera::multiplyOrthoMatrix()
+	void GraphicsCamera::m_MultiplyOrthoMatrix()
 	{
 		GraphicsPipe* pipe = GraphicsPipe::m_funcGetInstance();
 		float left = -1.f * (1.f/ m_aspectRatio);
@@ -110,7 +110,7 @@ namespace graphicpipe
 		//m_cameras.clear();
 	}
 
-	void GraphicsCamera::multiplyViewMatrix()
+	void GraphicsCamera::m_MultiplyViewMatrix()
 	{
 		GraphicsPipe* pipe = GraphicsPipe::m_funcGetInstance();
 		if (!(pipe->m_modelToNDCMatrix.empty()))

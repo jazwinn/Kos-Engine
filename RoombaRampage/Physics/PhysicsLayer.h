@@ -39,7 +39,7 @@ namespace physicslayer {
     \return    A pointer to the single instance of the `PhysicsLayer` class.
     */
     /******************************************************************/
-    static PhysicsLayer* getInstance() {
+    static PhysicsLayer* m_GetInstance() {
         if (!instance) {
             instance = std::make_unique<PhysicsLayer>();
         }
@@ -68,7 +68,7 @@ namespace physicslayer {
     \param[in] value  The collision status to set (true for collision enabled, false otherwise).
     */
     /******************************************************************/
-	void setCollision(int layer1, int layer2, bool value);
+	void m_SetCollision(int layer1, int layer2, bool value);
     /******************************************************************/
     /*!
     \fn        void PhysicsLayer::printCollisionMatrix() const
@@ -76,7 +76,7 @@ namespace physicslayer {
                which layers are set to collide with each other.
     */
     /******************************************************************/
-	void printCollisionMatrix() const;
+	void m_PrintCollisionMatrix() const;
     /******************************************************************/
     /*!
     \fn        bool PhysicsLayer::getCollide(int layer1, int layer2)
@@ -87,7 +87,7 @@ namespace physicslayer {
     \return    True if a collision is set between the two layers, false otherwise.
     */
     /******************************************************************/
-    bool getCollide(int layer1, int layer2);
+    bool m_GetCollide(int layer1, int layer2);
     /******************************************************************/
     /*!
     \fn        std::vector<std::vector<bool>> PhysicsLayer::getMatrix() const
@@ -95,10 +95,10 @@ namespace physicslayer {
     \return    A 2D vector of booleans representing the collision matrix.
     */
     /******************************************************************/
-    std::vector<std::vector<bool>> getMatrix() const;
-    std::bitset<size>* getMat();
-    const std::bitset<size>* getMat() const;
-    static const int getSize()  {
+    std::vector<std::vector<bool>> m_GetMatrix() const;
+    std::bitset<size>* m_GetMat();
+    const std::bitset<size>* m_GetMat() const;
+    static const int m_GetSize()  {
         return size;
     }
 
