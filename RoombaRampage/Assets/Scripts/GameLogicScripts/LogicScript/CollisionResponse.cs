@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
@@ -102,7 +103,44 @@ public class CollisionResponse : ScriptBase
             {
                 continue;
             }
-            else if ((cxStart > exMin && cxStart < exMax && cyStart < eyMax && cyStart > eyMin))
+            else if ((cxStart > xMin + colRadius && cxStart < xMax - colRadius && cyStart < eyMax - colRadius && cyStart > eyMin + colRadius)) //Completely Inside
+            {
+                // Circle's position (cxStart, cyStart) and radius
+                float circleRadius = colRadius;
+
+                // Calculate distances from the circle to each edge of the AABB
+                float distLeft = cxStart - exMin;
+                float distRight = exMax - cxStart;
+                float distTop = eyMax - cyStart;
+                float distBottom = cyStart - eyMin;
+
+                // Determine the closest edge
+                float minDist = Math.Min(Math.Min(distLeft, distRight), Math.Min(distTop, distBottom));
+
+                // Push the circle outside the closest edge
+                if (minDist == distLeft)
+                {
+                    cxStart = exMin - circleRadius; // Push left
+                }
+                else if (minDist == distRight)
+                {
+                    cxStart = exMax + circleRadius; // Push right
+                }
+                else if (minDist == distTop)
+                {
+                    cyStart = eyMax + circleRadius; // Push up
+                }
+                else if (minDist == distBottom)
+                {
+                    cyStart = eyMin - circleRadius; // Push down
+                }
+
+                // Update the entity's position
+                Vector2 newPos = new Vector2(cxStart, cyStart);
+                InternalCall.m_InternalSetTranslate(EntityID, in newPos);
+                continue;
+            }
+            else if ((cxStart > exMin && cxStart < exMax && cyStart < eyMax && cyStart > eyMin)) // Slightly Outside
             {
                 // Circle's position (cxStart, cyStart) and radius
                 float circleRadius = colRadius;
@@ -152,10 +190,12 @@ public class CollisionResponse : ScriptBase
                 }
                 continue;
             }
+            
+        
 
-            //Console.WriteLine($"Start Pos: ({cxStart}, {cyStart}), End Pos: ({cxEnd}, {cyEnd})");
+                //Console.WriteLine($"Start Pos: ({cxStart}, {cyStart}), End Pos: ({cxEnd}, {cyEnd})");
 
-            //Console.WriteLine($"Velocity: ({playerVelocity.X}, {playerVelocity.Y}), Delta: {delta}");
+                //Console.WriteLine($"Velocity: ({playerVelocity.X}, {playerVelocity.Y}), Delta: {delta}");
 
 
             float dx = cxEnd - cxStart;

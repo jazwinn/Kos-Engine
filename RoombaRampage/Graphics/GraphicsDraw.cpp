@@ -200,45 +200,52 @@ namespace graphicpipe
 
 				glActiveTexture(GL_TEXTURE0);
 				glBindVertexArray(m_textMesh.m_vaoId);
+				float origin{ textData.m_x };
 
-				// Iterate through all characters
 				assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
-				float origin{textData.m_x};
+				float originX{ textData.m_x };
+				float originY{ textData.m_y };
 				float height = static_cast<float>(GraphicsCamera::m_windowHeight);
-				for (const char& c : textData.m_text) 
+
+				// Step 1: Calculate total width and height of the text
+				float totalWidth = 0.0f;
+				float maxAscent = 0.0f;
+				float maxDescent = 0.0f;
+
+				for (const char& c : textData.m_text)
 				{
 					text::CharacterData ch = assetmanager->m_fontManager.m_fonts[textData.m_fileName][c];
-					if (!height)
-					{
-						break;
-					}
+					totalWidth += ((ch.m_advance >> 6) * textData.m_scale) / GraphicsCamera::m_windowHeight;
+					maxAscent = std::max(maxAscent, (ch.m_bearing.y * textData.m_scale) / GraphicsCamera::m_windowHeight);
+					maxDescent = std::max(maxDescent, ((ch.m_size.y - ch.m_bearing.y) * textData.m_scale) / GraphicsCamera::m_windowHeight);
+				}
+				float totalHeight = maxAscent + maxDescent;
+
+				// Adjust starting position to center the text
+				textData.m_x = originX - totalWidth / 2.0f;  // Horizontal centering
+				textData.m_y = originY + maxAscent / 2.0f - totalHeight / 2.0f;  // Vertical centering
+
+				// Step 2: Render the text
+				for (const char& c : textData.m_text)
+				{
+					text::CharacterData ch = assetmanager->m_fontManager.m_fonts[textData.m_fileName][c];
+
 					// Calculate position and size for each character quad
 					float xpos = (textData.m_x + ch.m_bearing.x / GraphicsCamera::m_windowHeight * textData.m_scale);
-					float ypos = (textData.m_y - (ch.m_size.y - ch.m_bearing.y )/GraphicsCamera::m_windowHeight * textData.m_scale);
+					float ypos = (textData.m_y - (ch.m_size.y - ch.m_bearing.y) / GraphicsCamera::m_windowHeight * textData.m_scale);
 					float w = ch.m_size.x * textData.m_scale / GraphicsCamera::m_windowHeight;
 					float h = ch.m_size.y * textData.m_scale / GraphicsCamera::m_windowHeight;
 
-					if (c == 'p' || c == 'j' || c == 'q' || c == 'y' || c == 'g')
-					{
-						ypos = textData.m_y - (((ch.m_size.y - assetmanager->m_fontManager.m_fonts[textData.m_fileName]['e'].m_size.y) - (ch.m_bearing.y - assetmanager->m_fontManager.m_fonts[textData.m_fileName]['e'].m_bearing.y))  * textData.m_scale) / GraphicsCamera::m_windowHeight;
-					}
-
-					if (c == 'Q' || c == 'J')
-					{
-						ypos = textData.m_y - (((ch.m_size.y - assetmanager->m_fontManager.m_fonts[textData.m_fileName]['e'].m_size.y) - (ch.m_bearing.y - assetmanager->m_fontManager.m_fonts[textData.m_fileName]['e'].m_bearing.y)) * textData.m_scale) / GraphicsCamera::m_windowHeight;
-					}
-		
-
 					// Update VBO for each character with texture coordinates from the atlas
-					float vertices[6][4] = 
+					float vertices[6][4] =
 					{
-					{ xpos,     ypos + h,   ch.m_topLeftTexCoords.x, ch.m_topLeftTexCoords.y },
-					{ xpos,     ypos,       ch.m_topLeftTexCoords.x, ch.m_bottomRightTexCoords.y },
-					{ xpos + w, ypos,       ch.m_bottomRightTexCoords.x, ch.m_bottomRightTexCoords.y },
+						{ xpos,     ypos + h,   ch.m_topLeftTexCoords.x, ch.m_topLeftTexCoords.y },
+						{ xpos,     ypos,       ch.m_topLeftTexCoords.x, ch.m_bottomRightTexCoords.y },
+						{ xpos + w, ypos,       ch.m_bottomRightTexCoords.x, ch.m_bottomRightTexCoords.y },
 
-					{ xpos,     ypos + h,   ch.m_topLeftTexCoords.x, ch.m_topLeftTexCoords.y },
-					{ xpos + w, ypos,       ch.m_bottomRightTexCoords.x, ch.m_bottomRightTexCoords.y },
-					{ xpos + w, ypos + h,   ch.m_bottomRightTexCoords.x, ch.m_topLeftTexCoords.y }
+						{ xpos,     ypos + h,   ch.m_topLeftTexCoords.x, ch.m_topLeftTexCoords.y },
+						{ xpos + w, ypos,       ch.m_bottomRightTexCoords.x, ch.m_bottomRightTexCoords.y },
+						{ xpos + w, ypos + h,   ch.m_bottomRightTexCoords.x, ch.m_topLeftTexCoords.y }
 					};
 
 					// Bind the texture atlas (once for all characters)
@@ -253,8 +260,7 @@ namespace graphicpipe
 					glDrawArrays(GL_TRIANGLES, 0, 6);
 
 					// Advance cursor for next glyph
-					textData.m_x += ((ch.m_advance >> 6) * textData.m_scale) / GraphicsCamera::m_windowHeight ;
-					
+					textData.m_x += ((ch.m_advance >> 6) * textData.m_scale) / GraphicsCamera::m_windowHeight;
 				}
 				textData.m_x = origin;
 
