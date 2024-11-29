@@ -103,11 +103,28 @@ namespace ecs {
 		/******************************************************************/
 		bool m_DeleteEntity(EntityID);
 
+		/******************************************************************/
+		/*!
+		\fn      bool ECS::m_RestoreEntity(EntityID)
+		\brief   Restores a previously deleted entity.
+		\param   EntityID - The ID of the entity to be restored.
+		\return  True if the entity was successfully restored, false otherwise.
+		*/
+		/******************************************************************/
 		bool m_RestoreEntity(EntityID);
 
 
+		/******************************************************************/
+		/*!
+		\fn      template <typename T> void ECS::m_AddComponentToECS(ComponentType type)
+		\brief   Adds a component type to the ECS component pool.
+		\param   type - The type of component to add to the ECS.
+		\details Allocates memory for a new component type and adds it to the ECS, making it available for assignment to entities.
+		*/
+		/******************************************************************/
 		template <typename T>
 		void m_AddComponentToECS(ComponentType);
+
 
 		/******************************************************************/
 		/*!
@@ -119,9 +136,16 @@ namespace ecs {
 		/******************************************************************/
 		void* m_AddComponent(ComponentType, EntityID);
 
-
+		/******************************************************************/
+		/*!
+		\fn      bool ECS::m_RemoveComponent(ComponentType Type, EntityID ID)
+		\brief   Removes a component from an entity.
+		\param   Type - The type of component to remove.
+		\param   ID - The ID of the entity from which the component will be removed.
+		\return  True if the component was successfully removed, false otherwise.
+		*/
+		/******************************************************************/
 		bool m_RemoveComponent(ComponentType Type, EntityID ID);
-
 
 		/******************************************************************/
 		/*!
@@ -140,53 +164,86 @@ namespace ecs {
 		/******************************************************************/
 		void m_DeregisterSystem(EntityID);
 
-		//create getters
-		std::unordered_map<ComponentType, std::shared_ptr<IComponentPool>> m_ECS_CombinedComponentPool{};
+		/******************************************************************/
+		/*!
+		\var     std::unordered_map<ComponentType, std::shared_ptr<IComponentPool>> m_ECS_CombinedComponentPool
+		\brief   Stores pools for each component type.
+		\details Used to manage memory allocation and retrieval for components of different types.
+		*/
+		/******************************************************************/
+		std::unordered_map<ComponentType, std::shared_ptr<IComponentPool>> m_ECS_CombinedComponentPool;
 
-		std::map<TypeSystem, std::shared_ptr<ISystem>> m_ECS_SystemMap{};
+		/******************************************************************/
+		/*!
+		\var     std::map<TypeSystem, std::shared_ptr<ISystem>> m_ECS_SystemMap
+		\brief   Stores pointers to each registered system.
+		\details Used to manage and update all systems within the ECS framework.
+		*/
+		/******************************************************************/
+		std::map<TypeSystem, std::shared_ptr<ISystem>> m_ECS_SystemMap;
 
-		std::unordered_map<EntityID, std::bitset<TOTALTYPECOMPONENT>> m_ECS_EntityMap{};
+		/******************************************************************/
+		/*!
+		\var     std::unordered_map<EntityID, std::bitset<TOTALTYPECOMPONENT>> m_ECS_EntityMap
+		\brief   Maps entity IDs to their component bitsets.
+		\details Used to track which components each entity has, facilitating system registration.
+		*/
+		/******************************************************************/
+		std::unordered_map<EntityID, std::bitset<TOTALTYPECOMPONENT>> m_ECS_EntityMap;
 
-		struct SceneID{
-			bool m_isActive{true};
+		struct SceneID {
+			bool m_isActive{ true };
 			bool m_isPrefab{ false };
 			ecs::EntityID m_prefabID = 0;
 			std::vector<EntityID> m_sceneIDs;
 
 		};
 
-		std::unordered_map<std::string, SceneID> m_ECS_SceneMap{};// store scene file name e.g. scene.json 
+		/******************************************************************/
+		/*!
+		\var     std::unordered_map<std::string, SceneID> m_ECS_SceneMap
+		\brief   Stores scene data, including entity IDs and scene properties.
+		\details Used to manage entities and their states within each scene.
+		*/
+		/******************************************************************/
+		std::unordered_map<std::string, SceneID> m_ECS_SceneMap{};
 
 		//store type conversion
 		//using ActionFunction = std::function<void(void*, void (*)(void*))>;
 		//std::unordered_map<ComponentType, ActionFunction> m_callFunctionToComponent_Map;// TODO in future, std::any doesnt work
 
-		//layering system
+		/******************************************************************/
+		/*!
+		\var     layer::LayerStack m_layersStack
+		\brief   Manages different layers within the ECS.
+		\details Used to organize and manage layers that entities can belong to.
+		*/
+		/******************************************************************/
 		layer::LayerStack m_layersStack;
 
 		EntityID m_EntityCount{};
 
 		float m_DeltaTime{};
 
-		GAMESTATE m_nextState{STOP};
+		GAMESTATE m_nextState{ STOP };
 		GAMESTATE m_getState() { return m_state; };
 
 	private:
 		static std::unique_ptr<ECS> m_InstancePtr;
 
 		//modify from set next state
-		GAMESTATE m_state{STOP};
+		GAMESTATE m_state{ STOP };
 
+		/******************************************************************/
+		/*!
+		\var     std::vector<std::pair<ecs::EntityID, std::bitset<TOTALTYPECOMPONENT>>> m_deletedentity
+		\brief   Stores deleted entities and their associated component bitsets.
+		\details Allows for restoration of deleted entities if needed.
+		*/
+		/******************************************************************/
 		std::vector<std::pair<ecs::EntityID, std::bitset<TOTALTYPECOMPONENT>>> m_deletedentity;
 
 	};
-
-	
-
-
 }
-
-
-
 
 #endif  ECS_H

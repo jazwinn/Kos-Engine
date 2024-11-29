@@ -102,6 +102,7 @@ namespace ecs {
 														debugTransformation.m_e20, debugTransformation.m_e21, debugTransformation.m_e22} ,
 													2.0f, graphicpipe::GraphicsPipe::SQUARE_LINES });
 
+			
 
 		}
 	}

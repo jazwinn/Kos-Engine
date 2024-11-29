@@ -545,10 +545,31 @@ namespace script {
 		/******************************************************************/
 		static void m_InternalCallStopAllAudio();
 
+		/******************************************************************/
+		/*!
+		\fn      static bool m_InternalCallIsWindowMinimise()
+		\brief   Checks if the application window is minimized.
+		\return  True if the window is minimized; otherwise, false.
+		*/
+		/******************************************************************/
 		static bool m_InternalCallIsWindowMinimise();
 
+		/******************************************************************/
+		/*!
+		\fn      static float m_getAccumulatedDeltaTime()
+		\brief   Retrieves the accumulated delta time for the application.
+		\return  The accumulated delta time as a float.
+		*/
+		/******************************************************************/
 		static float m_getAccumulatedDeltaTime();
 
+		/******************************************************************/
+		/*!
+		\fn      static int m_InternalCallGetSteps()
+		\brief   Retrieves the number of steps taken by the application.
+		\return  The number of steps as an integer.
+		*/
+		/******************************************************************/
 		static int m_InternalCallGetSteps();
 
 	public:

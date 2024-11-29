@@ -112,11 +112,44 @@ namespace performancetracker{
 		/******************************************************************/
 		static void m_UpdateSystemTime(ecs::TypeSystem, float);
 	private:
+
+		/******************************************************************/
+		/*!
+		\fn      static std::string Performance::m_typeToString(ecs::TypeSystem)
+		\brief   Converts a system type to its string representation.
+		\param   type - The system type to be converted.
+		\return  The string representation of the system type.
+		*/
+		/******************************************************************/
 		static std::string m_typeToString(ecs::TypeSystem);
+
+		/******************************************************************/
+		/*!
+		\var     static float Performance::m_engineTime
+		\brief   Total time spent across all engine systems.
+		\details Tracks the accumulated time for all systems in the engine.
+		*/
+		/******************************************************************/
 		static float m_engineTime;
+
+		/******************************************************************/
+		/*!
+		\var     static int Performance::m_totalSystem
+		\brief   Number of systems currently being tracked.
+		\details Used to determine the total count of different systems tracked by the performance tracker.
+		*/
+		/******************************************************************/
 		static int m_totalSystem;
-		static std::unordered_map<ecs::TypeSystem, std::pair<std::string,float>> m_systemTimeList;
-		
+
+		/******************************************************************/
+		/*!
+		\var     static std::unordered_map<ecs::TypeSystem, std::pair<std::string, float>> Performance::m_systemTimeList
+		\brief   Maps system types to their respective names and tracked times.
+		\details Tracks the name and time spent on each system, providing detailed performance data.
+		*/
+		/******************************************************************/
+		static std::unordered_map<ecs::TypeSystem, std::pair<std::string, float>> m_systemTimeList;
+
 
 	};
 }
