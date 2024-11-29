@@ -92,9 +92,9 @@ namespace ecs {
 			vector2::Vec2 translate{};
 			vector2::Vec2 scale{};
 			float rotate{};
-			mat3x3::Mat3Decompose(transform->m_transformation, translate, scale, rotate);
 
-			graphicsPipe->m_textData.push_back(graphicpipe::TextData{ text->m_text,  transform->m_transformation.m_e20 ,transform->m_transformation.m_e21, -rotate, text->m_fontSize, text->m_fontLayer , {red, green, blue}, text->m_fileName});
+			mat3x3::Mat3Decompose(transform->m_transformation, translate, scale, rotate);
+			graphicsPipe->m_textData.push_back(graphicpipe::TextData{ text->m_text,  transform->m_transformation.m_e20 ,transform->m_transformation.m_e21, -rotate, text->m_fontSize * scale.m_x, text->m_fontLayer , {red, green, blue}, text->m_fileName});
 		
 
 		}
