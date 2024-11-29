@@ -43,7 +43,7 @@ namespace Application {
 
     GLFWmonitor* AppWindow::m_monitor;
 
-    static void windowedFocusCallback(GLFWwindow* window, int focused)
+    static void windowedFocusCallback([[maybe_unused]] GLFWwindow* window, int focused)
     {
 
         auto& audioManager = assetmanager::AssetManager::m_funcGetInstance()->m_audioManager;
