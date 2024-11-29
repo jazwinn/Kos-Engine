@@ -395,7 +395,6 @@ namespace physicspipe {
 		void m_projectOntoCircle(vector2::Vec2 center, float radius, vector2::Vec2 axis, float& min, float& max);
 
 		int m_findClosestPointOnPolygon(vector2::Vec2 circle_pos, std::vector<vector2::Vec2> vertices);
-
 };
 }
 #endif

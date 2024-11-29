@@ -245,7 +245,6 @@ namespace ecs {
 
 					mat3x3::Mat3Decompose(ColComp->m_collider_Transformation, pos, scale, rot);
 					PhysicsPipeline->m_SendPhysicsData(scale.m_y, scale.m_x, rot, pos, scale, velocity, id, NameComp->m_Layer);
-
 				}
 				else {
 					LOGGING_ERROR("NO ENTITY TYPE");

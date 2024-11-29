@@ -219,6 +219,8 @@ namespace ecs {
 				//std::cout << "Entity 2 " << iterator->second->m_collisionFlags << std::endl;
 				// 
 				// 
+				/*std::cout << "Entity  " << iterator->first->m_ID << " " << iterator->first->m_collisionFlags << std::endl;
+				std::cout << "Entity  " << iterator->second->m_ID << " " << iterator->second->m_collisionFlags << std::endl;*/
 				//std::cout << iterator->first->m_position.m_x << " " << iterator->first->m_position.m_y << std::endl;
 				//for (size_t i = 0; i < iterator->first->m_blockedDirections.size(); ++i) {
 				//	std::cout << iterator->first->m_blockedDirections[i] << " ";
