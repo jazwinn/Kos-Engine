@@ -1,6 +1,6 @@
 /********************************************************************/
 /*!
-\file      Prefab.cpp
+\file      imgui_Gizmo.cpp
 \author    Ng Jaz winn, jazwinn.ng , 2301502
 \par       jazwinn.ng@digipen.edu
 \brief     This file contains the implementation of the `ImGuiHandler` class's
@@ -154,15 +154,13 @@ namespace gui {
           0.f,0.f,1.f,1.f
         };
 
-        //Focus mode for objects
-
         ImGuizmo::SetGizmoSizeClipSpace(EditorCamera::m_editorCamera.m_zoom.m_x / 8.f);
         //DRAW GIZMO
                 //to render in full screen also
         if (!ImGui::IsWindowAppearing()){
             ImGuizmo::SetRect(renderPosX, renderPosY, renderWidth, renderHeight);
         }
-        //TODO be able to swap between WORLD and LOCAL
+        //Parent Gizmo
         if (!ecs::Hierachy::m_GetParent(m_clickedEntityId).has_value() && ImGuizmo::Manipulate(cameraView, projection, mCurrentGizmoOperation, ImGuizmo::WORLD, model, 0, useSnap ? &snap[0] : NULL))
         {
             ImGuizmo::DecomposeMatrixToComponents(model, matrixTranslation, matrixRotation, matrixScale);
@@ -172,6 +170,7 @@ namespace gui {
             transcom->m_scale.m_x = matrixScale[0];
             transcom->m_scale.m_y = matrixScale[1];
         }
+        //Child Gizmo
         else if (ecs::Hierachy::m_GetParent(m_clickedEntityId).has_value() && ImGuizmo::Manipulate(cameraView, projection, mCurrentGizmoOperation, ImGuizmo::LOCAL, model, delta, useSnap ? &snap[0] : NULL))
         {
             //mat3x3::Mat3x3 transformation = transcom->m_localChildTransformation;
