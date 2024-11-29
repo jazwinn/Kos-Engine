@@ -36,7 +36,7 @@ public class PlayerBullet : ScriptBase
 
     public override void Start()
     {
-        speed = 10;
+        speed = 8;
 
         InternalCall.m_InternalGetTransformComponent(EntityID, out startingBulletPos, out startingBulletScale, out startingBulletRotate);
 

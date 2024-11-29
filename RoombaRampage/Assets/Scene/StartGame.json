@@ -1,0 +1,227 @@
+[
+    {
+        "name": {
+            "namestr": "background",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "sprite": {
+            "imagefile": "img_backgroundUniverse.png",
+            "layer": 0,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0
+        }
+    },
+    {
+        "name": {
+            "namestr": "gameTitle",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": 0.0,
+                "y": 0.5015936493873596
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "sprite": {
+            "imagefile": "img_gameLogo.png",
+            "layer": 2,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0
+        }
+    },
+    {
+        "name": {
+            "namestr": "startButton",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": 0.0,
+                "y": -0.14977489411830902
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "sprite": {
+            "imagefile": "img_startButtonInactive.png",
+            "layer": 3,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0
+        },
+        "button": {
+            "force": {
+                "x": 1536.0,
+                "y": 782.920166015625
+            },
+            "scale": {
+                "x": 1.2599999904632568,
+                "y": 0.3199999928474426
+            }
+        },
+        "script": {
+            "scripts": [
+                "StartGameButton"
+            ]
+        },
+        "audio": [
+            {
+                "name": "aud_buttonClick01",
+                "volume": 0.7879999876022339,
+                "loop": false,
+                "playOnStart": false
+            }
+        ]
+    },
+    {
+        "name": {
+            "namestr": "quitButton",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": 0.0,
+                "y": -0.6117285490036011
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "sprite": {
+            "imagefile": "img_quitButtonInactive.png",
+            "layer": 4,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0
+        },
+        "button": {
+            "force": {
+                "x": 1536.0,
+                "y": 454.1939392089844
+            },
+            "scale": {
+                "x": 1.2599999904632568,
+                "y": 0.3199999928474426
+            }
+        },
+        "script": {
+            "scripts": [
+                "ExitGameButton"
+            ]
+        }
+    },
+    {
+        "name": {
+            "namestr": "Camera",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "scale": {
+                "x": 1.25,
+                "y": 1.25
+            }
+        },
+        "camera": {
+            "planes": {
+                "left": 0.0,
+                "right": 0.0,
+                "top": 0.0,
+                "bottom": 0.0
+            },
+            "aspectRatio": 0.0
+        }
+    },
+    {
+        "name": {
+            "namestr": "img_greyGoose",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": 0.7942367792129517,
+                "y": 0.7773745656013489
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 0.11812502145767212,
+                "y": 0.11812502145767212
+            }
+        },
+        "collider": {
+            "checkcollision": true,
+            "size": {
+                "x": 6.400000095367432,
+                "y": 6.400000095367432
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true,
+            "radius": 0.5,
+            "shapetype": 0
+        },
+        "sprite": {
+            "imagefile": "img_greyGoose.png",
+            "layer": 1,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0
+        }
+    }
+]

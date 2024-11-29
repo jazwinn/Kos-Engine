@@ -1,12 +1,10 @@
 [
     {
         "name": {
-            "namestr": "PlayerBullet",
-            "layer": 3,
-            "isprefab": true,
-            "tagstr": "PlayerBullet",
-            "prefabname": "PlayerBullet.prefab",
-            "issync": true
+            "namestr": "Enemy",
+            "layer": 2,
+            "isprefab": false,
+            "tagstr": "Enemy"
         },
         "transform": {
             "position": {
@@ -15,19 +13,19 @@
             },
             "rotation": -0.0,
             "scale": {
-                "x": 1.75,
-                "y": 1.75
+                "x": 3.0,
+                "y": 3.0
             }
         },
         "collider": {
             "checkcollision": true,
             "size": {
-                "x": 0.07000000029802322,
+                "x": 0.7200000286102295,
                 "y": 0.25999999046325684
             },
             "offset": {
                 "x": 0.0,
-                "y": 0.03999999910593033
+                "y": 0.07999999821186066
             },
             "drawDebug": true,
             "radius": 0.5,
@@ -36,7 +34,7 @@
         "rigidbody": {
             "linearVelocity": {
                 "x": 0.0,
-                "y": 1.0
+                "y": 0.0
             },
             "linearAcceleration": {
                 "x": 0.0,
@@ -47,7 +45,7 @@
             "angularAcceleration": 0.0,
             "mass": 1.0,
             "inverseMass": 1.0,
-            "linearDamping": 0.9900000095367432,
+            "linearDamping": 0.9599999785423279,
             "angularDamping": 0.9900000095367432,
             "force": {
                 "x": 0.0,
@@ -58,8 +56,8 @@
             "static": false
         },
         "sprite": {
-            "imagefile": "ani_gunBulletEffect_strip10.png",
-            "layer": 14,
+            "imagefile": "ani_scientistWalk_strip14.png",
+            "layer": 20,
             "color": {
                 "r": 1.0,
                 "g": 1.0,
@@ -69,15 +67,23 @@
         },
         "animation": {
             "frameNumber": 0,
-            "framesPerSecond": 10,
+            "framesPerSecond": 0,
             "frameTimer": 0.0,
             "isAnimating": false,
-            "stripCount": 10
+            "stripCount": 14
         },
         "script": {
             "scripts": [
-                "PlayerBullet"
+                "EnemyController"
             ]
-        }
+        },
+        "audio": [
+            {
+                "name": "aud_humanDeath01",
+                "volume": 0.23399999737739563,
+                "loop": false,
+                "playOnStart": false
+            }
+        ]
     }
 ]
