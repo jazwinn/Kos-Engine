@@ -79,7 +79,7 @@ namespace ecs {
 		}
 
 		//TODO instead of retrieving every loop, just get the address of the vector in the physics pipeline
-		physicspipe::Physics* PhysicsPipeline = physicspipe::Physics::getInstance();
+		physicspipe::Physics* PhysicsPipeline = physicspipe::Physics::m_GetInstance();
 
 		//gets collided
 		PhysicsPipeline->m_Update();

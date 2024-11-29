@@ -132,16 +132,16 @@ namespace graphicpipe {
 	void GraphicsPipe::m_funcUpdate()
 	{
 		m_funcCalculateModelToWorldMatrix();
-		GraphicsCamera::calculateAspectRatio();
+		GraphicsCamera::m_CalculateAspectRatio();
 		
 		if (GraphicsCamera::m_cameras.size() > 0 && m_gameMode)
 		{
-			GraphicsCamera::setCurrCamera(0);
+			GraphicsCamera::m_SetCurrCamera(0);
 			
-			GraphicsCamera::calculateCurrView();
+			GraphicsCamera::m_CalculateCurrView();
 		}
-		GraphicsCamera::multiplyViewMatrix();
-		GraphicsCamera::multiplyOrthoMatrix();
+		GraphicsCamera::m_MultiplyViewMatrix();
+		GraphicsCamera::m_MultiplyOrthoMatrix();
 
 		if (!m_gameMode)
 		{
@@ -183,10 +183,10 @@ namespace graphicpipe {
 			/*if (GraphicsCamera::m_cameras.size() > 0 && m_gameMode)
 			{
 				GraphicsCamera::setCurrCamera(0);
-				GraphicsCamera::calculateCurrView();
+				GraphicsCamera::m_CalculateCurrView();
 			}
 			GraphicsCamera::setCurrCamera(0);
-			GraphicsCamera::calculateCurrView();*/
+			GraphicsCamera::m_CalculateCurrView();*/
 			glClearColor(0.86f, 0.86f, 0.86f, 1.f);
 			glEnable(GL_DEPTH_TEST);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

@@ -69,8 +69,8 @@ namespace physicspipe {
 		virtual ~PhysicsData() = default;
 
 		//Get entity type
-		virtual EntityType GetEntity() const = 0;
-		virtual float GetBoundingRadius() const = 0;
+		virtual EntityType m_GetEntity() const = 0;
+		virtual float m_GetBoundingRadius() const = 0;
 		//Operator for equality check
 		bool operator==(const PhysicsData& other) const {
 			return (m_ID == other.m_ID);
@@ -89,17 +89,17 @@ namespace physicspipe {
 		//	}
 		//}
 
-		void ClearCollisionFlags() {
+		void m_ClearCollisionFlags() {
 			m_collisionFlags = NONE;
 		}
 
 		// Add a collision flag
-		void AddCollisionFlag(CollisionFlag flag) {
+		void m_AddCollisionFlag(CollisionFlag flag) {
 			m_collisionFlags |= flag;
 		}
 
 		// Check if a specific flag is set
-		bool HasCollisionFlag(CollisionFlag flag) const {
+		bool m_HasCollisionFlag(CollisionFlag flag) const {
 			return m_collisionFlags & flag;
 		}
 	};
@@ -137,11 +137,18 @@ namespace physicspipe {
 		Circle(float radius, vector2::Vec2 shape_position, vector2::Vec2 shape_scale, vector2::Vec2 shape_velocity, int entity_ID, int layer_ID);
 
 		// Overriding GetEntity for Circle
-		EntityType GetEntity() const override {
+		EntityType m_GetEntity() const override {
 			return EntityType::CIRCLE;
 		}
 
-		float GetBoundingRadius() const;
+		/******************************************************************/
+		/*!
+		\fn        float Rectangle::m_GetBoundingRadius() const
+		\brief     Calculates and returns the value of the radius since the bounding area was a circle
+		\return    The radius of the bounding circle
+		*/
+		/******************************************************************/
+		float m_GetBoundingRadius() const;
 	};
 
 	/******************************************************************/
@@ -177,7 +184,7 @@ namespace physicspipe {
 			vector2::Vec2 shape_velocity, int entity_ID, int layer_ID);
 
 		// Overriding GetEntity for Rectangle
-		EntityType GetEntity() const override {
+		EntityType m_GetEntity() const override {
 			return EntityType::RECTANGLE;
 		}
 
@@ -190,7 +197,7 @@ namespace physicspipe {
 		\return    A vector of `Vec2` points representing the rotated vertices of the rectangle.
 		*/
 		/******************************************************************/
-		std::vector<vector2::Vec2> m_getRotatedVertices() const;
+		std::vector<vector2::Vec2> m_GetRotatedVertices() const;
 		/******************************************************************/
 		/*!
 		\fn        std::vector<vector2::Vec2> Rectangle::m_getEdges() const
@@ -199,9 +206,26 @@ namespace physicspipe {
 		\return    A vector of `Vec2` points representing the edges of the rectangle.
 		*/
 		/******************************************************************/
-		std::vector<vector2::Vec2> m_getEdges() const;
-		float GetBoundingRadius() const;
-		vector2::Vec2 TransformToLocalSpace(const vector2::Vec2& globalVector) const;
+		std::vector<vector2::Vec2> m_GetEdges() const;
+
+		/******************************************************************/
+		/*!
+		\fn        float Rectangle::m_GetBoundingRadius() const
+		\brief     Calculates and returns the value of the radius if the bounding area was a circle
+		\return    The radius of the bounding circle
+		*/
+		/******************************************************************/
+		float m_GetBoundingRadius() const;
+
+		/******************************************************************/
+		/*!
+		\fn        vector2::Vec2 Rectangle::m_TransformToLocalSpace() const
+		\brief     Calculates and returns a vector 2 of a world vector to a local vector
+		\param[in] globalVector A vector in world space
+		\return    The vector after transformation
+		*/
+		/******************************************************************/
+		vector2::Vec2 m_TransformToLocalSpace(const vector2::Vec2& globalVector) const;
 	};
 
 	struct LineSegment
@@ -242,12 +266,28 @@ namespace physicspipe {
 		*/
 		/******************************************************************/
 		void m_CalculateBoundingBox();
-		void logCollision(int entityID);
-		bool hasCollided(int entityID) const;
+
+		/******************************************************************/
+		/*!
+		\fn        void Physics::m_LogCollision()
+		\param[in] entityID  Id of the entity to add to vector
+		\brief     Add an entity to the vector or m_collided entites
+		*/
+		/******************************************************************/
+		void m_LogCollision(int entityID);
+
+		/******************************************************************/
+		/*!
+		\fn        void Physics::m_HasCollided()
+		\param[in] entityID  Id of the entity to check
+		\brief     returns true if an given entity has collided
+		*/
+		/******************************************************************/
+		bool m_HasCollided(int entityID) const;
 
 	public:
 		//SINGLETON
-		static Physics* getInstance() {
+		static Physics* m_GetInstance() {
 			if (!m_instance) {
 				m_instance = std::make_unique<Physics>();
 			}
@@ -281,7 +321,15 @@ namespace physicspipe {
 		/******************************************************************/
 		void m_SendPhysicsData(float radius, vector2::Vec2 position, vector2::Vec2 scale, vector2::Vec2 velocity, int ID, layer::LAYERS layerID);
 
-		void m_CollisionCheck(float);
+
+		/******************************************************************/
+		/*!
+		\fn        void Physics::m_CollisionCheck()
+		\brief     Function that iterates through all entities with physics and checks for collisions
+		\param[in] dt the delta time
+		*/
+		/******************************************************************/
+		void m_CollisionCheck(float dt);
 		/******************************************************************/
 		/*!
 		\fn        std::vector<std::shared_ptr<PhysicsData>> Physics::m_RetrievePhysicsData()
@@ -291,6 +339,14 @@ namespace physicspipe {
 		*/
 		/******************************************************************/
 		std::vector<std::shared_ptr<PhysicsData>> m_RetrievePhysicsData();
+
+		/******************************************************************/
+		/*!
+		\fn        std::vector<std::pair<std::shared_ptr<PhysicsData>, std::shared_ptr<PhysicsData>>> Physics::m_RetrievePhysicsDataPair()
+		\brief     Retrieves the pair of colided entities pair
+		\return    A vector of std pair of 2 shared pointers to collided physics entities.
+		*/
+		/******************************************************************/
 		std::vector < std::pair<std::shared_ptr<PhysicsData>, std::shared_ptr<PhysicsData>>> m_RetrievePhysicsDataPair();
 
 		/******************************************************************/
@@ -335,14 +391,14 @@ namespace physicspipe {
 		bool m_CollisionIntersection_CircleCircle(const Circle&, const Circle&);
 		/******************************************************************/
 		/*!
-		\fn        bool Physics::m_static_CollisionCheck(const AABB aabb1, const AABB aabb2)
+		\fn        bool Physics::m_Static_CollisionCheck(const AABB aabb1, const AABB aabb2)
 		\brief     Performs a static collision check between two axis-aligned bounding boxes (AABB).
 		\param[in] aabb1  The first AABB for comparison.
 		\param[in] aabb2  The second AABB for comparison.
 		\return    True if a collision is detected, false otherwise.
 		*/
 		/******************************************************************/
-		bool m_static_CollisionCheck(const AABB, const AABB);
+		bool m_Static_CollisionCheck(const AABB, const AABB);
 
 
 		void m_Init();
@@ -368,7 +424,7 @@ namespace physicspipe {
 		bool m_CheckCollision(const std::shared_ptr<PhysicsData>& entity1, const std::shared_ptr<PhysicsData>& entity2);
 		/******************************************************************/
 		/*!
-		\fn        void Physics::m_projectOntoAxis(const std::vector<vector2::Vec2>& vertices, const vector2::Vec2& axis, float& min, float& max) const
+		\fn        void Physics::m_ProjectOntoAxis(const std::vector<vector2::Vec2>& vertices, const vector2::Vec2& axis, float& min, float& max) const
 		\brief     Projects the vertices of a shape onto a specified axis and
 				   calculates the minimum and maximum scalar values along that axis.
 		\param[in] vertices A vector of vertices representing the shape to project.
@@ -377,7 +433,7 @@ namespace physicspipe {
 		\param[out] max     The maximum scalar value on the axis after projection.
 		*/
 		/******************************************************************/
-		void m_projectOntoAxis(const std::vector<vector2::Vec2>& vertices, const vector2::Vec2& axis, float& min, float& max) const;
+		void m_ProjectOntoAxis(const std::vector<vector2::Vec2>& vertices, const vector2::Vec2& axis, float& min, float& max) const;
 		/******************************************************************/
 		/*!
 		\fn        bool Physics::m_CollisionIntersection_RectRect_SAT(const Rectangle& obj1, const Rectangle& obj2)
@@ -388,13 +444,59 @@ namespace physicspipe {
 		*/
 		/******************************************************************/
 		bool m_CollisionIntersection_RectRect_SAT(const Rectangle& obj1, const Rectangle& obj2);
-		bool m_withinBoundingRadius(const std::shared_ptr<PhysicsData>& entity1, const std::shared_ptr<PhysicsData>& entity2);
-		void m_addCollidedEntity(const std::shared_ptr<PhysicsData>& entity); 
-		void m_clearPair();
 
-		void m_projectOntoCircle(vector2::Vec2 center, float radius, vector2::Vec2 axis, float& min, float& max);
+		/******************************************************************/
+		/*!
+		\fn        bool Physics::m_WithinBoundingRadius(const Rectangle& obj1, const Rectangle& obj2)
+		\brief     Checks for collision between two circle entities
+		\param[in] obj1 The first circle entity.
+		\param[in] obj2 The second circle entity.
+		\return    True if a entities are within each others bounding box
+		*/
+		/******************************************************************/
+		bool m_WithinBoundingRadius(const std::shared_ptr<PhysicsData>& entity1, const std::shared_ptr<PhysicsData>& entity2);
 
-		int m_findClosestPointOnPolygon(vector2::Vec2 circle_pos, std::vector<vector2::Vec2> vertices);
+		/******************************************************************/
+		/*!
+		\fn        bool Physics::m_AddCollidedEntity(const std::shared_ptr<PhysicsData>& entity)
+		\brief     Pushes back a shared pointer to the m_collidedEntities vector
+		\param[in] entity The pointer to the entity to add to collided entity vector
+		*/
+		/******************************************************************/
+		void m_AddCollidedEntity(const std::shared_ptr<PhysicsData>& entity); 
+
+		/******************************************************************/
+		/*!
+		\fn        void m_ClearPair()
+		\brief     Clears the variable m_collidedEntitiesPair
+		*/
+		/******************************************************************/
+		void m_ClearPair();
+
+		/******************************************************************/
+		/*!
+		\fn        void Physics::m_ProjectOntoCircle(vector2::Vec2 center, float radius, vector2::Vec2 axis, float& min, float& max)
+		\brief     Projects an axis onto a circle
+		\param[in] center center of the circle to project onto
+		\param[in] radius radius of the circle to project onto
+		\param[in] axis to be projected
+		\param[in] min Min value found after projection
+		\param[in] max max value found after projection
+		*/
+		/******************************************************************/
+		void m_ProjectOntoCircle(vector2::Vec2 center, float radius, vector2::Vec2 axis, float& min, float& max);
+
+		/******************************************************************/
+		/*!
+		\fn        int Physics::m_FindClosestPointOnPolygon(vector2::Vec2 circle_pos, std::vector<vector2::Vec2> vertices)
+		\brief     Finds the closest point of a circle to the vertices provided
+		\param[in] circle_pos Position of the circle
+		\param[in] vertices The vertices we are checking the distance to
+		\return    returns the distance
+		*/
+		/******************************************************************/
+		int m_FindClosestPointOnPolygon(vector2::Vec2 circle_pos, std::vector<vector2::Vec2> vertices);
+
 };
 }
 #endif

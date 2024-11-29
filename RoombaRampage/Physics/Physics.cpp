@@ -27,7 +27,7 @@ namespace physicspipe {
 	std::map<layer::LAYERS, std::vector<std::shared_ptr<PhysicsData>>> Physics::m_layerToEntities;
 	std::vector <std::pair<std::shared_ptr<PhysicsData>, std::shared_ptr<PhysicsData>>> Physics::m_collidedEntitiesPair;
 	std::unique_ptr<Physics> Physics::m_instance = nullptr;
-	physicslayer::PhysicsLayer* physicsLayer = physicslayer::PhysicsLayer::getInstance(); // Get the PhysicsLayer instance
+	physicslayer::PhysicsLayer* physicsLayer = physicslayer::PhysicsLayer::m_GetInstance(); // Get the PhysicsLayer instance
 	std::vector<int> Physics::m_checker{};
 
 	Circle::Circle(float radius, vector2::Vec2 shape_position, vector2::Vec2 shape_scale, vector2::Vec2 shape_velocity, int entity_ID, int layer_ID)
@@ -54,7 +54,7 @@ namespace physicspipe {
 		m_layerID = layer_ID;
 	}
 
-	bool Physics::m_static_CollisionCheck(const AABB aabb1, const AABB aabb2) {
+	bool Physics::m_Static_CollisionCheck(const AABB aabb1, const AABB aabb2) {
 		//std::cout << "BOUNDING BOX1 MIN X " << aabb1.m_min.m_x << " Y " << aabb1.m_min.m_y << std::endl;
 		//std::cout << "BOUNDING BOX1 MAX X " << aabb1.m_max.m_x << " Y " << aabb1.m_max.m_y << std::endl;
 		//std::cout << "BOUNDING BOX2 MIN X " << aabb2.m_min.m_x << " Y " << aabb2.m_min.m_y << std::endl;
@@ -91,7 +91,7 @@ namespace physicspipe {
 					/*************************************
 						CHECK RECT V RECT
 					*************************************/
-					if ((m_physicsEntities[i]->GetEntity() == EntityType::RECTANGLE) && (m_physicsEntities[j]->GetEntity() == EntityType::RECTANGLE)) {
+					if ((m_physicsEntities[i]->m_GetEntity() == EntityType::RECTANGLE) && (m_physicsEntities[j]->m_GetEntity() == EntityType::RECTANGLE)) {
 						if (m_CollisionIntersection_RectRect_AABB(*dynamic_cast<Rectangle*>(m_physicsEntities[i].get()), *dynamic_cast<Rectangle*>(m_physicsEntities[j].get()), dt)) {
 							//checking whether if entity is alr added inside
 							if (std::find(m_collidedEntities.begin(), m_collidedEntities.end(), m_physicsEntities[i]) == m_collidedEntities.end()) {
@@ -104,7 +104,7 @@ namespace physicspipe {
 					/*************************************
 						CHECK CIRCLE V RECT
 					*************************************/
-					else if ((m_physicsEntities[i]->GetEntity() == EntityType::CIRCLE) && (m_physicsEntities[j]->GetEntity() == EntityType::RECTANGLE)) {
+					else if ((m_physicsEntities[i]->m_GetEntity() == EntityType::CIRCLE) && (m_physicsEntities[j]->m_GetEntity() == EntityType::RECTANGLE)) {
 						if (m_CollisionIntersection_CircleRect_AABB(*dynamic_cast<Circle*>(m_physicsEntities[i].get()), *dynamic_cast<Rectangle*>(m_physicsEntities[j].get()))) {
 							if (std::find(m_collidedEntities.begin(), m_collidedEntities.end(), m_physicsEntities[i]) == m_collidedEntities.end()) {
 								//std::cout << "Collided" << std::endl;
@@ -117,7 +117,7 @@ namespace physicspipe {
 					/*************************************
 						CHECK RECT V CIRCLE
 					*************************************/
-					else if (m_physicsEntities[j]->GetEntity() == EntityType::CIRCLE && m_physicsEntities[i]->GetEntity() == EntityType::RECTANGLE) {
+					else if (m_physicsEntities[j]->m_GetEntity() == EntityType::CIRCLE && m_physicsEntities[i]->m_GetEntity() == EntityType::RECTANGLE) {
 						if (m_CollisionIntersection_CircleRect_AABB(*dynamic_cast<Circle*>(m_physicsEntities[j].get()), *dynamic_cast<Rectangle*>(m_physicsEntities[i].get()))) {
 							if (std::find(m_collidedEntities.begin(), m_collidedEntities.end(), m_physicsEntities[i]) == m_collidedEntities.end()) {
 								//std::cout << "Collided" << std::endl;
@@ -129,7 +129,7 @@ namespace physicspipe {
 					/*************************************
 						CHECK CIRCLE V CIRCLE
 					*************************************/
-					else if (m_physicsEntities[i]->GetEntity() == EntityType::CIRCLE && m_physicsEntities[j]->GetEntity() == EntityType::CIRCLE) {
+					else if (m_physicsEntities[i]->m_GetEntity() == EntityType::CIRCLE && m_physicsEntities[j]->m_GetEntity() == EntityType::CIRCLE) {
 						if (m_CollisionIntersection_CircleCircle(*dynamic_cast<Circle*>(m_physicsEntities[i].get()), *dynamic_cast<Circle*>(m_physicsEntities[j].get()))) {
 							if (std::find(m_collidedEntities.begin(), m_collidedEntities.end(), m_physicsEntities[i]) == m_collidedEntities.end()) {
 								//std::cout << "Collided" << std::endl;
@@ -167,7 +167,7 @@ namespace physicspipe {
 		//std::cout << "********************************************************************************" << std::endl;
 		//std::cout << "UPDATING BOUNDING BOX" << std::endl;
 		for (size_t i = 0; i < m_physicsEntities.size(); ++i) {
-			if (m_physicsEntities[i]->GetEntity() == EntityType::RECTANGLE) {
+			if (m_physicsEntities[i]->m_GetEntity() == EntityType::RECTANGLE) {
 				AABB boundingBox;
 				float width = dynamic_cast<Rectangle*>(m_physicsEntities[i].get())->m_width;
 				float height = dynamic_cast<Rectangle*>(m_physicsEntities[i].get())->m_height;
@@ -207,7 +207,7 @@ namespace physicspipe {
 
 
 		//static collision
-		if (m_static_CollisionCheck(aabb1, aabb2)) return true;
+		if (m_Static_CollisionCheck(aabb1, aabb2)) return true;
 		//dynamic collision
 		if (rel_Velocity.m_x < 0) {
 			if (aabb2.m_min.m_x > aabb1.m_max.m_x) return 0;
@@ -282,23 +282,23 @@ namespace physicspipe {
 		if (std::abs(collisionNormal.m_x) > std::abs(collisionNormal.m_y)) {
 			// Horizontal collision
 			if (collisionNormal.m_x > 0) {
-				const_cast<Circle&>(circle1).AddCollisionFlag(RIGHT);
-				const_cast<Circle&>(circle2).AddCollisionFlag(LEFT);
+				const_cast<Circle&>(circle1).m_AddCollisionFlag(RIGHT);
+				const_cast<Circle&>(circle2).m_AddCollisionFlag(LEFT);
 			}
 			else {
-				const_cast<Circle&>(circle1).AddCollisionFlag(LEFT);
-				const_cast<Circle&>(circle2).AddCollisionFlag(RIGHT);
+				const_cast<Circle&>(circle1).m_AddCollisionFlag(LEFT);
+				const_cast<Circle&>(circle2).m_AddCollisionFlag(RIGHT);
 			}
 		}
 		else {
 			// Vertical collision
 			if (collisionNormal.m_y > 0) {
-				const_cast<Circle&>(circle1).AddCollisionFlag(DOWN);
-				const_cast<Circle&>(circle2).AddCollisionFlag(UP);
+				const_cast<Circle&>(circle1).m_AddCollisionFlag(DOWN);
+				const_cast<Circle&>(circle2).m_AddCollisionFlag(UP);
 			}
 			else {
-				const_cast<Circle&>(circle1).AddCollisionFlag(UP);
-				const_cast<Circle&>(circle2).AddCollisionFlag(DOWN);
+				const_cast<Circle&>(circle1).m_AddCollisionFlag(UP);
+				const_cast<Circle&>(circle2).m_AddCollisionFlag(DOWN);
 			}
 		}
 
@@ -315,7 +315,7 @@ namespace physicspipe {
 	}
 
 
-	int Physics::m_findClosestPointOnPolygon(vector2::Vec2 circle_pos, std::vector<vector2::Vec2> vertices) {
+	int Physics::m_FindClosestPointOnPolygon(vector2::Vec2 circle_pos, std::vector<vector2::Vec2> vertices) {
 		int result = -1;
 		float minDistance = std::numeric_limits<float>::max();
 		for (int i = 0; i < static_cast<int>(vertices.size()); ++i) {
@@ -328,7 +328,7 @@ namespace physicspipe {
 		}
 		return result;
 	}
-	void Physics::m_projectOntoCircle(vector2::Vec2 center, float radius, vector2::Vec2 axis, float& min, float& max) {
+	void Physics::m_ProjectOntoCircle(vector2::Vec2 center, float radius, vector2::Vec2 axis, float& min, float& max) {
 		vector2::Vec2 dVector = axis;
 		vector2::Vec2::m_funcVec2Normalize(dVector, dVector);
 		vector2::Vec2 dVectorAndRadius = dVector * radius;
@@ -346,15 +346,15 @@ namespace physicspipe {
 
 	bool Physics::m_CollisionIntersection_CircleRect_SAT(const Circle& circle, const Rectangle& rect) {
 		//need the vertices of the rectangle
-		std::vector<vector2::Vec2> rect_Vertices = rect.m_getRotatedVertices();
-		std::vector<vector2::Vec2> rect_Edges = rect.m_getEdges();
+		std::vector<vector2::Vec2> rect_Vertices = rect.m_GetRotatedVertices();
+		std::vector<vector2::Vec2> rect_Edges = rect.m_GetEdges();
 		float minA{}, maxA{}, minB{}, maxB{};
 		float minOverlap = std::numeric_limits<float>::max();
 		vector2::Vec2 collisionNormal;
 		for (const auto& edge : rect_Edges) {
 			vector2::Vec2 axis = { -edge.m_y, edge.m_x };
-			m_projectOntoAxis(rect_Vertices, axis, minA, maxA);
-			m_projectOntoCircle(circle.m_position, circle.m_radius, axis, minB, maxB);
+			m_ProjectOntoAxis(rect_Vertices, axis, minA, maxA);
+			m_ProjectOntoCircle(circle.m_position, circle.m_radius, axis, minB, maxB);
 
 			if (minA >= maxB || minB >= maxA)
 			{
@@ -367,13 +367,13 @@ namespace physicspipe {
 			}
 		}
 
-		int closePointIndex = m_findClosestPointOnPolygon(circle.m_position, rect_Vertices);
+		int closePointIndex = m_FindClosestPointOnPolygon(circle.m_position, rect_Vertices);
 		vector2::Vec2 closePoint = rect_Vertices[closePointIndex];
 
 		vector2::Vec2 axis = closePoint - circle.m_position;
 		vector2::Vec2::m_funcVec2Normalize(axis, axis);
-		m_projectOntoAxis(rect_Vertices, axis, minA, maxA);
-		m_projectOntoCircle(circle.m_position, circle.m_radius, axis, minB, maxB);
+		m_ProjectOntoAxis(rect_Vertices, axis, minA, maxA);
+		m_ProjectOntoCircle(circle.m_position, circle.m_radius, axis, minB, maxB);
 
 		if (minA >= maxB || minB >= maxA) return false;
 		float overlap = std::min(maxA, maxB) - std::max(minA, minB);
@@ -389,14 +389,14 @@ namespace physicspipe {
 			if (collisionNormal.m_x > 0) {
 				//const_cast<Circle&>(circle).AddBlockedDirection("left");
 				//const_cast<Rectangle&>(rect).AddBlockedDirection("right");
-				const_cast<Circle&>(circle).AddCollisionFlag(LEFT);
-				const_cast<Rectangle&>(rect).AddCollisionFlag(RIGHT);
+				const_cast<Circle&>(circle).m_AddCollisionFlag(LEFT);
+				const_cast<Rectangle&>(rect).m_AddCollisionFlag(RIGHT);
 			}
 			else {
 				//const_cast<Circle&>(circle).AddBlockedDirection("right");
 				//const_cast<Rectangle&>(rect).AddBlockedDirection("left");
-				const_cast<Circle&>(circle).AddCollisionFlag(RIGHT);
-				const_cast<Rectangle&>(rect).AddCollisionFlag(LEFT);
+				const_cast<Circle&>(circle).m_AddCollisionFlag(RIGHT);
+				const_cast<Rectangle&>(rect).m_AddCollisionFlag(LEFT);
 				//const_cast<Circle&>(circle).AddBlockedDirection("left");
 				//const_cast<Rectangle&>(rect).AddBlockedDirection("right");
 			}
@@ -406,16 +406,16 @@ namespace physicspipe {
 			if (collisionNormal.m_y > 0) {
 				//const_cast<Circle&>(circle).AddBlockedDirection("up");
 				//const_cast<Rectangle&>(rect).AddBlockedDirection("down");
-				const_cast<Circle&>(circle).AddCollisionFlag(UP);
-				const_cast<Rectangle&>(rect).AddCollisionFlag(DOWN);
+				const_cast<Circle&>(circle).m_AddCollisionFlag(UP);
+				const_cast<Rectangle&>(rect).m_AddCollisionFlag(DOWN);
 				//const_cast<Circle&>(circle).AddBlockedDirection("down");
 				//const_cast<Rectangle&>(rect).AddBlockedDirection("up");
 			}
 			else {
 				//const_cast<Circle&>(circle).AddBlockedDirection("down");
 				//const_cast<Rectangle&>(rect).AddBlockedDirection("up");
-				const_cast<Circle&>(circle).AddCollisionFlag(DOWN);
-				const_cast<Rectangle&>(rect).AddCollisionFlag(UP);
+				const_cast<Circle&>(circle).m_AddCollisionFlag(DOWN);
+				const_cast<Rectangle&>(rect).m_AddCollisionFlag(UP);
 				//const_cast<Circle&>(circle).AddBlockedDirection("up");
 				//const_cast<Rectangle&>(rect).AddBlockedDirection("down");
 			}
@@ -454,32 +454,32 @@ namespace physicspipe {
 		m_CollisionCheckUpdate();
 	}
 
-	void Physics::logCollision(int entityID) {
+	void Physics::m_LogCollision(int entityID) {
 		collidedEntities.set(entityID); // Mark entity as collided
 	}
 
-	bool Physics::hasCollided(int entityID) const {
+	bool Physics::m_HasCollided(int entityID) const {
 		return collidedEntities.test(entityID); // Check if it has collided already
 	}
 
-	float Circle::GetBoundingRadius() const {
+	float Circle::m_GetBoundingRadius() const {
 		return m_radius;
 	}
-	float Rectangle::GetBoundingRadius() const {
+	float Rectangle::m_GetBoundingRadius() const {
 		return 0.5f * std::sqrt(m_width * m_width + m_height * m_height);
 	}
 
 
 
-	bool Physics::m_withinBoundingRadius(const std::shared_ptr<PhysicsData>& entity1, const std::shared_ptr<PhysicsData>& entity2) {
+	bool Physics::m_WithinBoundingRadius(const std::shared_ptr<PhysicsData>& entity1, const std::shared_ptr<PhysicsData>& entity2) {
 		float dx = entity1->m_position.m_x - entity2->m_position.m_x;
 		float dy = entity1->m_position.m_y - entity2->m_position.m_y;
 		float distanceSquared = dx * dx + dy * dy;
-		float combinedRadius = entity1->GetBoundingRadius() + entity2->GetBoundingRadius();
+		float combinedRadius = entity1->m_GetBoundingRadius() + entity2->m_GetBoundingRadius();
 		return distanceSquared <= combinedRadius * combinedRadius;
 	}
 
-	void Physics::m_addCollidedEntity(const std::shared_ptr<PhysicsData>& entity) {
+	void Physics::m_AddCollidedEntity(const std::shared_ptr<PhysicsData>& entity) {
 		if (std::find(m_collidedEntities.begin(), m_collidedEntities.end(), entity) == m_collidedEntities.end()) {
 			m_collidedEntities.push_back(entity);
 		}
@@ -490,7 +490,7 @@ namespace physicspipe {
 
 		// Reset blocked directions for all entities
 		for (auto& entity : m_physicsEntities) {
-			entity->ClearCollisionFlags();
+			entity->m_ClearCollisionFlags();
 		}
 
 		m_CalculateBoundingBox();
@@ -502,11 +502,11 @@ namespace physicspipe {
 
 				if (m_physicsEntities[i]->m_ID == m_physicsEntities[j]->m_ID) continue;
 				// Check if these layers should collide
-				if (physicsLayer->getCollide(layer1, layer2) && m_withinBoundingRadius(m_physicsEntities[i], m_physicsEntities[j])) {
+				if (physicsLayer->m_GetCollide(layer1, layer2) && m_WithinBoundingRadius(m_physicsEntities[i], m_physicsEntities[j])) {
 					if (m_CheckCollision(m_physicsEntities[i], m_physicsEntities[j])) {
 						pair.emplace(m_physicsEntities[i], m_physicsEntities[j]);
-						m_addCollidedEntity(m_physicsEntities[i]);
-						m_addCollidedEntity(m_physicsEntities[j]);
+						m_AddCollidedEntity(m_physicsEntities[i]);
+						m_AddCollidedEntity(m_physicsEntities[j]);
 					}
 				}
 			}
@@ -518,23 +518,23 @@ namespace physicspipe {
 
 	bool Physics::m_CheckCollision(const std::shared_ptr<PhysicsData>& entity1, const std::shared_ptr<PhysicsData>& entity2) {
 		// Check for collision based on the types of entities.
-		if (entity1->GetEntity() == EntityType::RECTANGLE && entity2->GetEntity() == EntityType::RECTANGLE) {
+		if (entity1->m_GetEntity() == EntityType::RECTANGLE && entity2->m_GetEntity() == EntityType::RECTANGLE) {
 			return m_CollisionIntersection_RectRect_SAT(*static_cast<Rectangle*>(entity1.get()), *static_cast<Rectangle*>(entity2.get()));
 		}
-		else if (entity1->GetEntity() == EntityType::CIRCLE && entity2->GetEntity() == EntityType::CIRCLE) {
+		else if (entity1->m_GetEntity() == EntityType::CIRCLE && entity2->m_GetEntity() == EntityType::CIRCLE) {
 			return m_CollisionIntersection_CircleCircle(*static_cast<Circle*>(entity1.get()), *static_cast<Circle*>(entity2.get()));
 		}
-		else if (entity1->GetEntity() == EntityType::CIRCLE && entity2->GetEntity() == EntityType::RECTANGLE) {
+		else if (entity1->m_GetEntity() == EntityType::CIRCLE && entity2->m_GetEntity() == EntityType::RECTANGLE) {
 			return m_CollisionIntersection_CircleRect_SAT(*static_cast<Circle*>(entity1.get()), *static_cast<Rectangle*>(entity2.get()));
 		}
-		else if (entity1->GetEntity() == EntityType::RECTANGLE && entity2->GetEntity() == EntityType::CIRCLE) {
+		else if (entity1->m_GetEntity() == EntityType::RECTANGLE && entity2->m_GetEntity() == EntityType::CIRCLE) {
 			return m_CollisionIntersection_CircleRect_SAT(*static_cast<Circle*>(entity2.get()), *static_cast<Rectangle*>(entity1.get()));
 		}
 
 		return false;  // If no valid collision type, return false.
 	}
 
-	std::vector<vector2::Vec2> Rectangle::m_getRotatedVertices() const {
+	std::vector<vector2::Vec2> Rectangle::m_GetRotatedVertices() const {
 		std::vector<vector2::Vec2> vertices(4);
 		float hw{}, hh{};
 		
@@ -562,8 +562,8 @@ namespace physicspipe {
 		return vertices;
 	}
 
-	std::vector<vector2::Vec2> Rectangle::m_getEdges() const {
-		std::vector<vector2::Vec2> vertices = m_getRotatedVertices();
+	std::vector<vector2::Vec2> Rectangle::m_GetEdges() const {
+		std::vector<vector2::Vec2> vertices = m_GetRotatedVertices();
 		std::vector<vector2::Vec2> edges(4);
 		for (size_t i = 0; i < 4; ++i) {
 			vector2::Vec2 p1 = vertices[i];
@@ -573,7 +573,7 @@ namespace physicspipe {
 		return edges;
 	}
 
-	void Physics::m_projectOntoAxis(const std::vector<vector2::Vec2>& vertices, const vector2::Vec2& axis, float& min, float& max) const {
+	void Physics::m_ProjectOntoAxis(const std::vector<vector2::Vec2>& vertices, const vector2::Vec2& axis, float& min, float& max) const {
 		//min = max = (vertices[0].m_x * axis.m_x + vertices[0].m_y * axis.m_y);
 		min = max = vector2::Vec2::m_funcVec2DDotProduct(vertices[0], axis);
 		for (const auto& vertex : vertices) {
@@ -584,7 +584,7 @@ namespace physicspipe {
 		}
 	}
 
-	vector2::Vec2 Rectangle::TransformToLocalSpace(const vector2::Vec2& globalVector) const
+	vector2::Vec2 Rectangle::m_TransformToLocalSpace(const vector2::Vec2& globalVector) const
 	{
 		float cosTheta = mathlibrary::mathlib::funcCos(-mathlibrary::mathlib::funcDegreeToRadian(m_rotAngle));
 		float sinTheta = mathlibrary::mathlib::funcSin(-mathlibrary::mathlib::funcDegreeToRadian(m_rotAngle));
@@ -597,10 +597,10 @@ namespace physicspipe {
 	bool Physics::m_CollisionIntersection_RectRect_SAT(const Rectangle& obj1, const Rectangle& obj2) {
 
 		// Get rotated vertices and edges
-		std::vector<vector2::Vec2> verticesA = obj1.m_getRotatedVertices();
-		std::vector<vector2::Vec2> verticesB = obj2.m_getRotatedVertices();
-		std::vector<vector2::Vec2> edgesA = obj1.m_getEdges();
-		std::vector<vector2::Vec2> edgesB = obj2.m_getEdges();
+		std::vector<vector2::Vec2> verticesA = obj1.m_GetRotatedVertices();
+		std::vector<vector2::Vec2> verticesB = obj2.m_GetRotatedVertices();
+		std::vector<vector2::Vec2> edgesA = obj1.m_GetEdges();
+		std::vector<vector2::Vec2> edgesB = obj2.m_GetEdges();
 
 		// List of all the axes (normals of edges)
 		std::vector<vector2::Vec2> axes;
@@ -618,8 +618,8 @@ namespace physicspipe {
 		for (const auto& axis : axes) {
 			float minA, maxA, minB, maxB;
 			//using dot product to determine
-			m_projectOntoAxis(verticesA, axis, minA, maxA);
-			m_projectOntoAxis(verticesB, axis, minB, maxB);
+			m_ProjectOntoAxis(verticesA, axis, minA, maxA);
+			m_ProjectOntoAxis(verticesB, axis, minB, maxB);
 
 			// If there's a gap, no collision
 			if (maxA < minB || maxB < minA) {
@@ -723,7 +723,7 @@ namespace physicspipe {
 		return TempCollidedEntities;
 	}
 
-	void Physics::m_clearPair() {
+	void Physics::m_ClearPair() {
 		m_collidedEntitiesPair.clear();
 	}
 }

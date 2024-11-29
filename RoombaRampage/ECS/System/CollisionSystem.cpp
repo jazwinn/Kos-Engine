@@ -92,9 +92,9 @@ namespace ecs {
 		}
 
 		//create physics;
-		physicspipe::Physics* PhysicsPipeline = physicspipe::Physics::getInstance();
+		physicspipe::Physics* PhysicsPipeline = physicspipe::Physics::m_GetInstance();
 		PhysicsPipeline->m_ClearEntites();
-		PhysicsPipeline->m_clearPair();
+		PhysicsPipeline->m_ClearPair();
 
 		for (int n{}; n < m_vecTransformComponentPtr.size(); n++) {
 			//std::cout << "Entity: " << n << "Movement System is getting Updated";

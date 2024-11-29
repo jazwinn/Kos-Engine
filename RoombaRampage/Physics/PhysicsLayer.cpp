@@ -1,3 +1,23 @@
+/******************************************************************/
+/*!
+\file      PhysicsLayer.cpp
+\author    Rayner Tan, raynerweichen.tan , 2301449
+\par       raynerweichen.tan@digipen.edu
+\date      Sept 28, 2024
+\brief     This file implements the physics pipeline, including
+           entity creation, bounding box calculations, and
+           collision detection for various entity types such as
+           circles and rectangles.
+
+The file provides functionality to send, retrieve, and check
+physics data for entities, using collision algorithms for
+circle-circle, circle-rectangle, and rectangle-rectangle interactions.
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/******************************************************************/
 #include "../Config/pch.h"
 #include "PhysicsLayer.h"
 #include "../De&Serialization/json_handler.h"
@@ -13,7 +33,7 @@ namespace physicslayer {
         }
     }
 
-    void PhysicsLayer::printCollisionMatrix() const {
+    void PhysicsLayer::m_PrintCollisionMatrix() const {
         for (int i = 0; i < size; ++i) {
             std::ostringstream rowStream;
             for (int j = 0; j < size; ++j) {
@@ -23,7 +43,7 @@ namespace physicslayer {
         }
     }
 
-    void PhysicsLayer::setCollision(int row, int col, bool value) {
+    void PhysicsLayer::m_SetCollision(int row, int col, bool value) {
         //if (row >= 0 && row < size && col >= 0 && col < size) {
         //    collisionMatrix[row][col] = value;
         //    collisionMatrix[col][row] = value;
@@ -32,7 +52,7 @@ namespace physicslayer {
         layerCollisions[col].set(row, value); // Ensure symmetric relationship
         Serialization::Serialize::m_SavePhysicsLayerMatrix(); // Save changes to file
     }
-    bool PhysicsLayer::getCollide(int layer1, int layer2) {
+    bool PhysicsLayer::m_GetCollide(int layer1, int layer2) {
         //if (layer1 < 0 || layer1 >= size || layer2 < 0 || layer2 >= size) {
         //    std::cerr << "Error: getCollide out of range access. Layers: " << layer1 << ", " << layer2 << std::endl;
         //    return false; // Return a default value or handle the error as needed.
@@ -81,13 +101,13 @@ namespace physicslayer {
     //    file.close();
     //    LOGGING_INFO("Collision matrix saved to PhysicsLayerMatrix.txt");
     //}
-    std::vector<std::vector<bool>> PhysicsLayer::getMatrix() const {
+    std::vector<std::vector<bool>> PhysicsLayer::m_GetMatrix() const {
         return collisionMatrix;
     }
-     std::bitset<size>* PhysicsLayer::getMat() {
+     std::bitset<size>* PhysicsLayer::m_GetMat() {
         return layerCollisions;
     }
-     const std::bitset<size>* PhysicsLayer::getMat() const {
+     const std::bitset<size>* PhysicsLayer::m_GetMat() const {
          return layerCollisions;
      }
 }
