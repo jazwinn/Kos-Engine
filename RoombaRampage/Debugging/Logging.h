@@ -113,14 +113,35 @@ namespace logging {
 
     class Logger {
     public:
-        //Default
+
+        /******************************************************************/
+        /*!
+        \fn      Logger::Logger()
+        \brief   Default constructor for the Logger class.
+        \details Initializes default values without opening a log file.
+        */
+        /******************************************************************/
         Logger() = default;
 
-        // Constructor: Opens the log file in append mode
+        /******************************************************************/
+        /*!
+        \fn      Logger::Logger(const std::string& filename)
+        \brief   Constructor that opens the log file in append mode.
+        \param   filename - The name of the log file to open.
+        \details Opens the specified log file for appending log messages.
+        */
+        /******************************************************************/
         Logger(const std::string& filename);
 
-        // Destructor: Closes the log file
+        /******************************************************************/
+        /*!
+        \fn      Logger::~Logger()
+        \brief   Destructor that closes the log file.
+        \details Ensures that the log file is properly closed when the Logger is destroyed.
+        */
+        /******************************************************************/
         ~Logger();
+
 
         /******************************************************************/
         /*!
@@ -141,33 +162,115 @@ namespace logging {
         /******************************************************************/
         static Logger& m_GetInstance();
 
-        // Logs a message with a given log level
-        void  m_Log(LogLevel level, const std::string& message);
+        /******************************************************************/
+        /*!
+        \fn      void Logger::m_Log(LogLevel level, const std::string& message)
+        \brief   Logs a message at the specified log level.
+        \param   level - The severity level of the log (e.g., INFO, WARN, ERROR).
+        \param   message - The message to be logged.
+        \details Outputs the provided message to both the console and the log file, with a specified log level.
+        */
+        /******************************************************************/
+        void m_Log(LogLevel level, const std::string& message);
 
+        /******************************************************************/
+        /*!
+        \fn      void Logger::m_Info(const std::string_view message, Args&&... args)
+        \brief   Logs an informational message.
+        \param   message - The message format string.
+        \param   args - Additional arguments for formatting the message.
+        \details Logs an informational message, used for general operational information.
+        */
+        /******************************************************************/
         template <typename... Args>
-        void  m_Info(const std::string_view message, Args&&... args);
+        void m_Info(const std::string_view message, Args&&... args);
 
+        /******************************************************************/
+        /*!
+        \fn      void Logger::m_Warn(const std::string_view message, Args&&... args)
+        \brief   Logs a warning message.
+        \param   message - The message format string.
+        \param   args - Additional arguments for formatting the message.
+        \details Logs a warning, used to indicate a potential issue that should be noted.
+        */
+        /******************************************************************/
         template <typename... Args>
-        void  m_Warn(const std::string_view message, Args&&... args);
+        void m_Warn(const std::string_view message, Args&&... args);
 
+        /******************************************************************/
+        /*!
+        \fn      void Logger::m_Error(std::source_location location, const std::string_view message, Args&&... args)
+        \brief   Logs an error message with source location.
+        \param   location - Source location data (e.g., file, line, function).
+        \param   message - The message format string.
+        \param   args - Additional arguments for formatting the message.
+        \details Logs an error with source location details, useful for diagnosing issues.
+        */
+        /******************************************************************/
         template <typename... Args>
-        void  m_Error(std::source_location location, const std::string_view message, Args&&... args);
+        void m_Error(std::source_location location, const std::string_view message, Args&&... args);
 
+        /******************************************************************/
+        /*!
+        \fn      void Logger::m_Error(const std::string_view message, Args&&... args)
+        \brief   Logs an error message without source location.
+        \param   message - The message format string.
+        \param   args - Additional arguments for formatting the message.
+        \details Logs an error message without specifying source location.
+        */
+        /******************************************************************/
         template <typename... Args>
-        void  m_Error(const std::string_view message, Args&&... args);
+        void m_Error(const std::string_view message, Args&&... args);
 
+        /******************************************************************/
+        /*!
+        \fn      void Logger::m_Crash(const std::string_view message, Args&&... args)
+        \brief   Logs a crash message.
+        \param   message - The message format string.
+        \param   args - Additional arguments for formatting the message.
+        \details Logs a critical error that results in a program crash.
+        */
+        /******************************************************************/
         template <typename... Args>
-        void  m_Crash(const std::string_view message, Args&&... args);
+        void m_Crash(const std::string_view message, Args&&... args);
 
+        /******************************************************************/
+        /*!
+        \fn      void Logger::m_Assert(std::source_location location, const std::string_view message, Args&&... args)
+        \brief   Logs an assertion failure.
+        \param   location - Source location data (e.g., file, line, function).
+        \param   message - The message format string.
+        \param   args - Additional arguments for formatting the message.
+        \details Logs an assertion failure, used for debugging critical issues that violate expected logic.
+        */
+        /******************************************************************/
         template <typename... Args>
-        void  m_Assert(std::source_location location, const std::string_view message, Args&&... args);
+        void m_Assert(std::source_location location, const std::string_view message, Args&&... args);
 
+        /******************************************************************/
+        /*!
+        \fn      void Logger::m_Debug(const std::string_view message, Args&&... args)
+        \brief   Logs a debug message.
+        \param   message - The message format string.
+        \param   args - Additional arguments for formatting the message.
+        \details Logs a message for debugging purposes, often containing detailed internal state information.
+        */
+        /******************************************************************/
         template <typename... Args>
-        void  m_Debug(const std::string_view message, Args&&... args);
+        void m_Debug(const std::string_view message, Args&&... args);
 
-
+        /******************************************************************/
+        /*!
+        \fn      void Logger::m_Popup(const std::string_view message, Args&&... args)
+        \brief   Logs a message and shows it in a popup window.
+        \param   message - The message format string.
+        \param   args - Additional arguments for formatting the message.
+        \details Logs a message and displays it as a popup window, useful for notifying the user directly.
+        */
+        /******************************************************************/
         template <typename... Args>
-        void  m_Popup(const std::string_view message, Args&&... args);
+        void m_Popup(const std::string_view message, Args&&... args);
+
 
         //template <typename... Args>
         //void  m_Popup(const std::string_view message, Args&&... args);
@@ -187,7 +290,15 @@ namespace logging {
         /******************************************************************/
         std::vector<std::string>  m_GetLogList();
 
+        /******************************************************************/
+        /*!
+        \fn      void Logger::m_TestingLog()
+        \brief   Logs a test message to verify the logger functionality.
+        \details This function is used to log a test message, ensuring that the logger is working correctly.
+        */
+        /******************************************************************/
         void m_TestingLog();
+
         /******************************************************************/
         /*!
         \fn        void Logger::m_Setup_Abort_Handler()
@@ -207,18 +318,71 @@ namespace logging {
         static void  m_Abort_Handler(int);
 
     private:
-        std::ofstream  m_logFile; // File stream for the log file
-        
-        backward::Printer  m_printer;// For printing crashes into the logfile
-        backward::StackTrace  m_st;
+        /******************************************************************/
+        /*!
+        \var     std::ofstream m_logFile
+        \brief   File stream for the log file.
+        \details This stream is used to write log messages to an external log file.
+        */
+        /******************************************************************/
+        std::ofstream m_logFile;
 
+        /******************************************************************/
+        /*!
+        \var     backward::Printer m_printer
+        \brief   Printer for logging crash stack traces.
+        \details Used to print stack traces into the log file during crashes, providing debug information.
+        */
+        /******************************************************************/
+        backward::Printer m_printer;
+
+        /******************************************************************/
+        /*!
+        \var     backward::StackTrace m_st
+        \brief   Stack trace object for capturing program state during crashes.
+        \details This object captures the call stack, which can be used to debug crashes by logging the stack trace.
+        */
+        /******************************************************************/
+        backward::StackTrace m_st;
+
+        /******************************************************************/
+        /*!
+        \var     bool m_bInitialized
+        \brief   Indicates whether the logger has been initialized.
+        \details This flag is used to ensure that the logger is properly set up before use.
+        */
+        /******************************************************************/
         bool m_bInitialized{ false };
 
-        // Converts log level to a string for output
+        /******************************************************************/
+        /*!
+        \fn      std::string Logger::m_LevelToString(LogLevel level)
+        \brief   Converts the log level to a string representation.
+        \param   level - The log level to convert.
+        \return  A string representing the log level (e.g., "INFO", "ERROR").
+        */
+        /******************************************************************/
         std::string m_LevelToString(LogLevel level);
-        // add color to the text
+
+        /******************************************************************/
+        /*!
+        \fn      std::string Logger::m_ColorToString(LogLevel level)
+        \brief   Converts the log level to a corresponding color code.
+        \param   level - The log level to convert.
+        \return  A string containing the ANSI color code for the log level.
+        */
+        /******************************************************************/
         std::string m_ColorToString(LogLevel level);
-        std::vector<std::string>  m_log_list;
+
+        /******************************************************************/
+        /*!
+        \var     std::vector<std::string> m_log_list
+        \brief   List of all logged messages.
+        \details This vector stores all logged messages, providing an in-memory list of log entries.
+        */
+        /******************************************************************/
+        std::vector<std::string> m_log_list;
+
     };
 
 

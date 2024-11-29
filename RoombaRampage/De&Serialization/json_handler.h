@@ -107,8 +107,26 @@ namespace Serialization {
 		/******************************************************************/
 		static void m_JsonFileValidation(const std::string& filePath);
 
+		/******************************************************************/
+		/*!
+		\fn      static void SavePhysicsLayerMatrix()
+		\brief   Saves the current physics layer matrix to a JSON file.
+		\details This function serializes the matrix that determines interactions between physics layers,
+				 allowing it to be persisted and reloaded later.
+		*/
+		/******************************************************************/
 		static void SavePhysicsLayerMatrix();
+
+		/******************************************************************/
+		/*!
+		\fn      static void LoadPhysicsLayerMatrix()
+		\brief   Loads the physics layer matrix from a JSON file.
+		\details This function reads a JSON file to restore the matrix that determines interactions
+				 between physics layers, ensuring consistent physics behavior across sessions.
+		*/
+		/******************************************************************/
 		static void LoadPhysicsLayerMatrix();
+
 
 	};
 }

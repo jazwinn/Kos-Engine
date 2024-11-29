@@ -131,8 +131,16 @@ namespace scenes {
 		/******************************************************************/
 		void m_SwapScenes(std::string oldscene, std::string newscene , ecs::EntityID id);
 
+		/******************************************************************/
+		/*!
+		\fn      void m_AssignEntityNewSceneName(const std::string& scene, ecs::EntityID id)
+		\brief   Assigns a new scene name to a specific entity.
+		\param   scene - Name of the new scene to assign.
+		\param   id - Entity ID to assign to the new scene.
+		*/
+		/******************************************************************/
 		void m_AssignEntityNewSceneName(const std::string& scene, ecs::EntityID id);
-		
+
 		/******************************************************************/
 		/*!
 			\fn        static std::optional<std::string> GetSceneByEntityID(ecs::EntityID entityID)
@@ -147,14 +155,41 @@ namespace scenes {
 
 
 
+		/******************************************************************/
+		/*!
+		\var     std::unordered_map<std::string, std::filesystem::path> m_unloadScenePath
+		\brief   Stores the paths of scenes that have been unloaded, mapped by scene name.
+		*/
+		/******************************************************************/
 		std::unordered_map<std::string, std::filesystem::path> m_unloadScenePath;
+
+		/******************************************************************/
+		/*!
+		\var     std::unordered_map<std::string, std::filesystem::path> m_loadScenePath
+		\brief   Stores the paths of scenes that have been loaded, mapped by scene name.
+		*/
+		/******************************************************************/
 		std::unordered_map<std::string, std::filesystem::path> m_loadScenePath;
 
+		/******************************************************************/
+		/*!
+		\var     std::vector<std::filesystem::path> m_recentFiles
+		\brief   Stores the paths of recently used scene files.
+		*/
+		/******************************************************************/
 		std::vector<std::filesystem::path> m_recentFiles;
+
 
 		//std::string m_AddScene(std::string filepath);
 
 	private:
+
+		/******************************************************************/
+		/*!
+		\var     static std::unique_ptr<SceneManager> m_InstancePtr
+		\brief   Unique pointer to the singleton instance of SceneManager.
+		*/
+		/******************************************************************/
 		static std::unique_ptr<SceneManager> m_InstancePtr;
 
 	};

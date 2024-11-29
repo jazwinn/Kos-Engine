@@ -44,61 +44,376 @@ namespace fmodaudio {
     /******************************************************************/
     class FModAudio {
     public:
+
+        /******************************************************************/
+        /*!
+        \fn      FModAudio()
+        \brief   Constructor that initializes default values for the FModAudio class.
+        */
+        /******************************************************************/
         FModAudio();
+
+        /******************************************************************/
+        /*!
+        \fn      ~FModAudio()
+        \brief   Destructor that releases FMOD resources.
+        */
+        /******************************************************************/
         ~FModAudio();
 
+        /******************************************************************/
+        /*!
+        \fn      bool m_Init()
+        \brief   Initializes the FMOD system to manage sound playback.
+        \return  True if the system is successfully initialized, false otherwise.
+        */
+        /******************************************************************/
         bool m_Init();
+
+        /******************************************************************/
+        /*!
+        \fn      void m_Shutdown()
+        \brief   Shuts down the FMOD system and releases all allocated resources.
+        */
+        /******************************************************************/
         void m_Shutdown();
 
+        /******************************************************************/
+        /*!
+        \fn      bool m_CreateSound(const char* soundFile)
+        \brief   Creates a sound object from the given sound file.
+        \param   soundFile - Path to the audio file to load.
+        \return  True if the sound is successfully created, false otherwise.
+        */
+        /******************************************************************/
         bool m_CreateSound(const char* soundFile);
+
+        /******************************************************************/
+        /*!
+        \fn      bool m_PlaySound(const std::string& entityId)
+        \brief   Plays a sound associated with the specified entity ID.
+        \param   entityId - The ID of the entity that should play the sound.
+        \return  True if the sound is successfully played, false otherwise.
+        */
+        /******************************************************************/
         bool m_PlaySound(const std::string& entityId);
-        void m_StopSound(const std::string& entityId); 
+
+        /******************************************************************/
+        /*!
+        \fn      void m_StopSound(const std::string& entityId)
+        \brief   Stops the sound associated with the specified entity ID.
+        \param   entityId - The ID of the entity for which to stop the sound.
+        */
+        /******************************************************************/
+        void m_StopSound(const std::string& entityId);
+
+        /******************************************************************/
+        /*!
+        \fn      void m_StopAllSounds()
+        \brief   Stops all currently playing sounds.
+        */
+        /******************************************************************/
         void m_StopAllSounds();
+
+        /******************************************************************/
+        /*!
+        \fn      void m_PauseAllSounds()
+        \brief   Pauses all currently playing sounds.
+        */
+        /******************************************************************/
         void m_PauseAllSounds();
+
+        /******************************************************************/
+        /*!
+        \fn      bool m_UnpauseAllSounds()
+        \brief   Unpauses all paused sounds.
+        \return  True if sounds are successfully unpaused, false otherwise.
+        */
+        /******************************************************************/
         bool m_UnpauseAllSounds();
-        bool m_PauseSound(const std::string& entityId); 
+
+        /******************************************************************/
+        /*!
+        \fn      bool m_PauseSound(const std::string& entityId)
+        \brief   Pauses the sound associated with the specified entity ID.
+        \param   entityId - The ID of the entity for which to pause the sound.
+        \return  True if the sound is successfully paused, false otherwise.
+        */
+        /******************************************************************/
+        bool m_PauseSound(const std::string& entityId);
+
+        /******************************************************************/
+        /*!
+        \fn      bool m_UnpauseSound(const std::string& entityId)
+        \brief   Unpauses the sound associated with the specified entity ID.
+        \param   entityId - The ID of the entity for which to unpause the sound.
+        \return  True if the sound is successfully unpaused, false otherwise.
+        */
+        /******************************************************************/
         bool m_UnpauseSound(const std::string& entityId);
-        bool m_FadeSound(const std::string& entityId, float targetVolume, float fadeDuration); 
-        bool m_SetLooping(const std::string& entityId, bool loop);  
-        bool m_SetVolume(const std::string& entityId, float volume); 
+
+        /******************************************************************/
+        /*!
+        \fn      bool m_FadeSound(const std::string& entityId, float targetVolume, float fadeDuration)
+        \brief   Gradually changes the volume of a sound to the target volume.
+        \param   entityId - The ID of the entity for which to fade the sound.
+        \param   targetVolume - The desired volume level.
+        \param   fadeDuration - Duration over which the fade should occur.
+        \return  True if the fade is successfully applied, false otherwise.
+        */
+        /******************************************************************/
+        bool m_FadeSound(const std::string& entityId, float targetVolume, float fadeDuration);
+
+        /******************************************************************/
+        /*!
+        \fn      bool m_SetLooping(const std::string& entityId, bool loop)
+        \brief   Sets whether a sound should loop continuously.
+        \param   entityId - The ID of the entity for which to set looping.
+        \param   loop - True to enable looping, false to disable.
+        \return  True if looping is set successfully, false otherwise.
+        */
+        /******************************************************************/
+        bool m_SetLooping(const std::string& entityId, bool loop);
+
+        /******************************************************************/
+        /*!
+        \fn      bool m_SetVolume(const std::string& entityId, float volume)
+        \brief   Sets the volume for a specific sound.
+        \param   entityId - The ID of the entity for which to set the volume.
+        \param   volume - Desired volume level (0.0 to 1.0).
+        \return  True if volume is set successfully, false otherwise.
+        */
+        /******************************************************************/
+        bool m_SetVolume(const std::string& entityId, float volume);
+
+        /******************************************************************/
+        /*!
+        \fn      bool m_SetPan(const std::string& entityId, float pan)
+        \brief   Sets the pan (stereo balance) for a specific sound.
+        \param   entityId - The ID of the entity for which to set the pan.
+        \param   pan - Stereo balance value (-1.0 for left, 1.0 for right).
+        \return  True if pan is set successfully, false otherwise.
+        */
+        /******************************************************************/
         bool m_SetPan(const std::string& entityId, float pan);  
-        bool m_IsPlaying(const std::string& entityId);  
+
+        /******************************************************************/
+        /*!
+        \fn      bool m_IsPlaying(const std::string& entityId)
+        \brief   Checks if the sound associated with the given entity ID is currently playing.
+        \param   entityId - The ID of the entity for which to check the sound.
+        \return  True if the sound is playing, false otherwise.
+        */
+        /******************************************************************/
+        bool m_IsPlaying(const std::string& entityId);
+
+        /******************************************************************/
+        /*!
+        \fn      FMOD::Channel* m_GetChannelForEntity(ecs::EntityID entityId)
+        \brief   Retrieves the FMOD channel associated with the given entity ID.
+        \param   entityId - The ID of the entity.
+        \return  Pointer to the FMOD channel associated with the entity.
+        */
+        /******************************************************************/
         FMOD::Channel* m_GetChannelForEntity(ecs::EntityID entityId);
 
     private:
-        FMOD::System* m_system;    /*!< FMOD system object to manage sound playback. */
-        FMOD::Sound* m_sound;      /*!< FMOD sound object to represent the loaded audio. */
-        std::unordered_map<std::string, FMOD::Channel*> m_entityChannels;  /*!< Map of entity ID to its playing FMOD channel. */
+        /******************************************************************/
+        /*!
+        \var     FMOD::System* m_system
+        \brief   FMOD system object to manage sound playback.
+        */
+        /******************************************************************/
+        FMOD::System* m_system;
+
+        /******************************************************************/
+        /*!
+        \var     FMOD::Sound* m_sound
+        \brief   FMOD sound object to represent the loaded audio.
+        */
+        /******************************************************************/
+        FMOD::Sound* m_sound;
+
+        /******************************************************************/
+        /*!
+        \var     std::unordered_map<std::string, FMOD::Channel*> m_entityChannels
+        \brief   Map of entity ID to its playing FMOD channel.
+        */
+        /******************************************************************/
+        std::unordered_map<std::string, FMOD::Channel*> m_entityChannels;
     };
 
 
 
     class AudioManager {
     public:
+
+        /******************************************************************/
+        /*!
+        \fn      AudioManager()
+        \brief   Constructor that initializes the audio manager.
+        */
+        /******************************************************************/
         AudioManager();
+
+        /******************************************************************/
+        /*!
+        \fn      ~AudioManager()
+        \brief   Destructor that cleans up audio resources.
+        */
+        /******************************************************************/
         ~AudioManager();
-        //For Audio
+
+        /******************************************************************/
+        /*!
+        \fn      void m_LoadAudio(const std::string& name, const std::string& path)
+        \brief   Loads an audio file into the sound map.
+        \param   name - Identifier for the audio asset.
+        \param   path - Path to the audio file.
+        */
+        /******************************************************************/
         void m_LoadAudio(const std::string& name, const std::string& path);
-        //For Entities
+
+        /******************************************************************/
+        /*!
+        \fn      void m_PlayAudioForEntity(ecs::EntityID entityId, const std::string& name, float volume)
+        \brief   Plays audio for the specified entity with the given volume.
+        \param   entityId - ID of the entity to play audio for.
+        \param   name - Name of the audio asset.
+        \param   volume - Volume level to play the audio at.
+        */
+        /******************************************************************/
         void m_PlayAudioForEntity(ecs::EntityID entityId, const std::string& name, float volume);
+        
+        /******************************************************************/
+        /*!
+        \fn      void m_StopAudioForEntity(ecs::EntityID entityId, const std::string& name)
+        \brief   Stops the audio associated with the given entity.
+        \param   entityId - ID of the entity.
+        \param   name - Name of the audio asset.
+        */
+        /******************************************************************/
         void m_StopAudioForEntity(ecs::EntityID entityId, const std::string& name);
+
+        /******************************************************************/
+        /*!
+        \fn      void m_PauseAudioForEntity(ecs::EntityID entityId, const std::string& name)
+        \brief   Pauses the audio associated with the given entity.
+        \param   entityId - ID of the entity.
+        \param   name - Name of the audio asset.
+        */
+        /******************************************************************/
         void m_PauseAudioForEntity(ecs::EntityID entityId, const std::string& name);
+
+        /******************************************************************/
+        /*!
+        \fn      void m_UnpauseAudioForEntity(ecs::EntityID entityId, const std::string& name)
+        \brief   Unpauses the audio associated with the given entity.
+        \param   entityId - ID of the entity.
+        \param   name - Name of the audio asset.
+        */
+        /******************************************************************/
         void m_UnpauseAudioForEntity(ecs::EntityID entityId, const std::string& name);
+
+        /******************************************************************/
+        /*!
+        \fn      void m_SetVolumeForEntity(ecs::EntityID entityId, const std::string& name, float volume)
+        \brief   Sets the volume for the given entity's audio.
+        \param   entityId - ID of the entity.
+        \param   name - Name of the audio asset.
+        \param   volume - Desired volume level (0.0 to 1.0).
+        */
+        /******************************************************************/
         void m_SetVolumeForEntity(ecs::EntityID entityId, const std::string& name, float volume);
+
+        /******************************************************************/
+        /*!
+        \fn      void m_SetLoopingForEntity(ecs::EntityID entityId, const std::string& name, bool loop)
+        \brief   Sets looping for the audio associated with the given entity.
+        \param   entityId - ID of the entity.
+        \param   name - Name of the audio asset.
+        \param   loop - True to enable looping, false to disable.
+        */
+        /******************************************************************/
         void m_SetLoopingForEntity(ecs::EntityID entityId, const std::string& name, bool loop);
+
+        /******************************************************************/
+        /*!
+        \fn      void m_SetPlayOnStartForEntity(ecs::EntityID entityId, const std::string& audioName, bool playOnStart)
+        \brief   Sets whether audio should play on start for the given entity.
+        \param   entityId - ID of the entity.
+        \param   audioName - Name of the audio asset.
+        \param   playOnStart - True to play on start, false otherwise.
+        */
+        /******************************************************************/
         void m_SetPlayOnStartForEntity(ecs::EntityID entityId, const std::string& audioName, bool playOnStart);
+
+        /******************************************************************/
+        /*!
+        \fn      bool m_IsPlayingForEntity(ecs::EntityID entityId, const std::string& name)
+        \brief   Checks if the specified entity's audio is playing.
+        \param   entityId - ID of the entity.
+        \param   name - Name of the audio asset.
+        \return  True if the audio is playing, false otherwise.
+        */
+        /******************************************************************/
         bool m_IsPlayingForEntity(ecs::EntityID entityId, const std::string& name);
-        void m_SetPanForEntity(ecs::EntityID entityId, const std::string& name, float pan);
-        //For all Audio Components
+
+        /******************************************************************/
+        /*!
+        \fn      void m_SetPanForEntity(ecs::EntityID entityId, const std::string& name, float pan)
+        \brief   Sets the pan for the specified entity's audio.
+        \param   entityId - ID of the entity.
+        \param   name - Name of the audio asset.
+        \param   pan - Stereo balance (-1.0 for left, 1.0 for right).
+        */
+        /******************************************************************/
+        void m_SetPanForEntity(unsigned int entityId, const std::string& name, float pan);
+        
+        /******************************************************************/
+        /*!
+        \fn      void m_PauseAllSounds()
+        \brief   Pauses all audio components managed by the audio manager.
+        */
+        /******************************************************************/
         void m_PauseAllSounds();
+
+        /******************************************************************/
+        /*!
+        \fn      void m_UnpauseAllSounds()
+        \brief   Unpauses all audio components managed by the audio manager.
+        */
+        /******************************************************************/
         void m_UnpauseAllSounds();
+
+        /******************************************************************/
+        /*!
+        \fn      void m_StopAllSounds()
+        \brief   Stops all audio components managed by the audio manager.
+        */
+        /******************************************************************/
         void m_StopAllSounds();
 
+        /******************************************************************/
+        /*!
+        \fn      std::unordered_map<std::string, std::unique_ptr<fmodaudio::FModAudio>>& getSoundMap()
+        \brief   Retrieves the map of sound names to their respective FModAudio objects.
+        \return  Reference to the unordered map containing sound names and FModAudio objects.
+        */
+        /******************************************************************/
         std::unordered_map<std::string, std::unique_ptr<FModAudio>>& getSoundMap() {
             return m_soundMap;
         }
 
     private:
+
+
+        /******************************************************************/
+        /*!
+        \var     std::unordered_map<std::string, std::unique_ptr<FModAudio>> m_soundMap
+        \brief   Map of sound names to their respective FModAudio objects.
+        */
+        /******************************************************************/
         std::unordered_map<std::string, std::unique_ptr<FModAudio>> m_soundMap;
     };
 
