@@ -155,7 +155,7 @@ namespace Application {
                 help->m_accumulatedTime += (help->m_deltaTime * help->m_timeScale);
                 Helper::Helpers::GetInstance()->currentNumberOfSteps = 0;
                 while (help->m_accumulatedTime >= (fixedDeltaTime  )) {
-                    help->m_accumulatedTime -= (fixedDeltaTime);
+                    help->m_accumulatedTime -= static_cast<float>(fixedDeltaTime);
                     ++help->currentNumberOfSteps;
                 }
                 

@@ -80,8 +80,29 @@ namespace text {
         */
         /******************************************************************/
         static void LoadFont(std::string file);
+
+        /******************************************************************/
+        /*!
+        \typedef using FontMap = std::map<char, text::CharacterData>
+        \brief   Defines a map type for storing character data by character.
+        */
+        /******************************************************************/
         using FontMap = std::map<char, text::CharacterData>;
+
+        /******************************************************************/
+        /*!
+        \var     FontMap m_characters
+        \brief   Stores character data for a font, indexed by character.
+        */
+        /******************************************************************/
         FontMap m_characters{};
+
+        /******************************************************************/
+        /*!
+        \var     std::map<std::string, FontMap> m_fonts
+        \brief   Stores multiple fonts, each represented by a FontMap and indexed by font name.
+        */
+        /******************************************************************/
         std::map<std::string, FontMap> m_fonts;
     };
 
