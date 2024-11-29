@@ -54,7 +54,23 @@ namespace script {
 	class ScriptHandler {
 	public:
 		// Initialize Mono and load C#
+
+		/******************************************************************/
+		/*!
+		\fn      ScriptHandler::ScriptHandler()
+		\brief   Constructor that initializes the Mono runtime and loads C# scripts.
+		\details Sets up the environment for managing C# scripting within the ECS framework.
+		*/
+		/******************************************************************/
 		ScriptHandler();
+
+		/******************************************************************/
+		/*!
+		\fn      ScriptHandler::~ScriptHandler()
+		\brief   Destructor that cleans up and unloads the Mono runtime.
+		\details Releases any resources held by the Mono runtime, ensuring proper cleanup.
+		*/
+		/******************************************************************/
 		~ScriptHandler();
 
 		/******************************************************************/
@@ -101,6 +117,14 @@ namespace script {
 		/******************************************************************/
 		void m_CompileCSharpFile(const std::filesystem::path& filePath);
 
+		/******************************************************************/
+		/*!
+		\fn      void m_CompileAllCSharptoSingleDLL()
+		\brief   Compiles all C# scripts into a single DLL file for Mono execution.
+		\details This function aggregates and compiles multiple C# script files into a single DLL,
+				 simplifying the process of loading and managing C# assemblies within the application.
+		*/
+		/******************************************************************/
 		void m_CompileAllCSharptoSingleDLL();
 
 		/******************************************************************/
@@ -177,17 +201,51 @@ namespace script {
 		/******************************************************************/
 		void m_ReloadAllDLL();
 
-		/*************************************/
-		std::vector<std::pair<std::string, std::filesystem::path>> m_CSScripts; // stall all scripts in the asset folder
+		/******************************************************************/
+		/*!
+		\var     std::vector<std::pair<std::string, std::filesystem::path>> m_CSScripts
+		\brief   Stores all C# scripts in the asset folder.
+		\details This vector contains pairs of script names and their corresponding file paths.
+		*/
+		/******************************************************************/
+		std::vector<std::pair<std::string, std::filesystem::path>> m_CSScripts;
 
-		// key is filename, second is script mono data
+		/******************************************************************/
+		/*!
+		\var     std::unordered_map<std::string, ScriptMonoInfo> m_loadedDLLMap
+		\brief   Maps script filenames to their corresponding Mono script metadata.
+		\details This map stores the metadata (e.g., script path, Mono image, assembly) for each loaded DLL.
+		*/
+		/******************************************************************/
 		std::unordered_map<std::string, ScriptMonoInfo> m_loadedDLLMap;
 
-		std::unordered_map <std::string, std::unordered_map<std::string, MonoMethod*>> m_methodMap;
+		/******************************************************************/
+		/*!
+		\var     std::unordered_map<std::string, std::unordered_map<std::string, MonoMethod*>> m_methodMap
+		\brief   Maps script names to their methods.
+		\details This nested map stores the methods for each script, allowing quick access to loaded Mono methods.
+		*/
+		/******************************************************************/
+		std::unordered_map<std::string, std::unordered_map<std::string, MonoMethod*>> m_methodMap;
 
+		/******************************************************************/
+		/*!
+		\fn      MonoDomain* m_GetDomain()
+		\brief   Retrieves the current application Mono domain.
+		\return  Pointer to the current application Mono domain.
+		*/
+		/******************************************************************/
 		MonoDomain* m_GetDomain() { return m_AppDomain; };
 
+		/******************************************************************/
+		/*!
+		\var     std::string m_outputdll
+		\brief   Stores the output DLL file name for compiled C# scripts.
+		\details Used to reference the compiled DLL generated from the C# scripts.
+		*/
+		/******************************************************************/
 		std::string m_outputdll;
+
 
 	private:
 		//root domain
