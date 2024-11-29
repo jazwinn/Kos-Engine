@@ -67,15 +67,16 @@
     <Compile Include="LogicScript\CollisionResponse.cs" />
     <Compile Include="LogicScript\EnemyBloodPool.cs" />
     <Compile Include="LogicScript\EnemyController.cs" />
+    <Compile Include="LogicScript\ExitGameButton.cs" />
     <Compile Include="LogicScript\GameController.cs" />
-    <Compile Include="LogicScript\MovingObjectScript.cs" />
+    <Compile Include="LogicScript\LevelDoorLocker.cs" />
+    <Compile Include="LogicScript\LevelEndPoint.cs" />
+    <Compile Include="LogicScript\LevelEnemySpawner.cs" />
     <Compile Include="LogicScript\PlayerBullet.cs" />
-    <Compile Include="LogicScript\PlayerControl.cs" />
     <Compile Include="LogicScript\PlayerController.cs" />
     <Compile Include="LogicScript\PlayerGun.cs" />
-    <Compile Include="LogicScript\PlayerMelee.cs" />
     <Compile Include="LogicScript\PlayerMeleeKillZone.cs" />
-    <Compile Include="LogicScript\UIBulletCounter.cs" />
+    <Compile Include="LogicScript\StartGameButton.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

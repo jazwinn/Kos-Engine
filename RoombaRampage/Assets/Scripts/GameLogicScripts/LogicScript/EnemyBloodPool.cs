@@ -24,6 +24,7 @@ public class EnemyBloodPool : ScriptBase
     public override void Start()
     {
         isAnimating = true;
+        InternalCall.m_InternalGetAnimationComponent(EntityID, out startFrameNumber, out startFramesPerSecond, out startFrameTimer, out isAnimating, out stripCount);
     }
 
     public override void Update()
