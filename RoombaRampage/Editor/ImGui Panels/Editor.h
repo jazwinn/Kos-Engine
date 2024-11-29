@@ -38,9 +38,24 @@ namespace gui {
     class ImGuiHandler
     {
     public:
-        //CTOR & Destructor
+        /******************************************************************/
+        /*!
+        \fn      gui::ImGuiHandler::ImGuiHandler()
+        \brief   Default constructor for the ImGuiHandler class.
+        \details Sets up initial values for ImGui operations and prepares the context for UI rendering.
+        */
+        /******************************************************************/
         ImGuiHandler();
+
+        /******************************************************************/
+        /*!
+        \fn      gui::ImGuiHandler::~ImGuiHandler()
+        \brief   Destructor for the ImGuiHandler class.
+        \details Cleans up and releases any resources used by ImGui, ensuring a proper shutdown.
+        */
+        /******************************************************************/
         ~ImGuiHandler();
+
 
         /******************************************************************/
         /*!
@@ -76,7 +91,15 @@ namespace gui {
         /******************************************************************/
         void m_update();
 
+        /******************************************************************/
+        /*!
+        \fn      void gui::ImGuiHandler::m_render()
+        \brief   Renders the ImGui UI elements.
+        \details Draws all registered ImGui widgets and panels to the screen, handling the rendering logic.
+        */
+        /******************************************************************/
         void m_render();
+
 
         /******************************************************************/
         /*!
@@ -91,7 +114,7 @@ namespace gui {
     private:
 
         /******************************************************************/
-        /*!         
+        /*!
             \fn        gui::ImGuiHandler::m_DrawMainMenuBar()
             \brief     Renders the main menu bar and handles user input for file operations.
             \details   This function creates a main menu bar with options like "File" and "Window."
@@ -165,7 +188,16 @@ namespace gui {
         /******************************************************************/
         unsigned int m_DrawHierachyWindow();
 
-        bool m_DrawEntityNode(ecs::EntityID);
+        /******************************************************************/
+        /*!
+        \fn      bool gui::ImGuiHandler::m_DrawEntityNode(ecs::EntityID entity)
+        \brief   Draws the ImGui UI node for a specific entity.
+        \param   entity - The ID of the entity to be drawn in the UI.
+        \return  True if the entity node was successfully drawn, false otherwise.
+        \details Renders a collapsible node representing an entity, allowing interaction with its properties.
+        */
+        /******************************************************************/
+        bool m_DrawEntityNode(ecs::EntityID entity);
 
         /******************************************************************/
         /*!
@@ -202,24 +234,94 @@ namespace gui {
         /******************************************************************/
         void m_DrawPlayPauseBar();
 
+        /******************************************************************/
+        /*!
+        \fn      void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsigned int windowHeight)
+        \brief   Draws the render screen window within the ImGui interface.
+        \param   windowWidth - The width of the window to be rendered.
+        \param   windowHeight - The height of the window to be rendered.
+        \details Displays the main rendering screen with the specified dimensions, allowing visualization of the game scene.
+        */
+        /******************************************************************/
         void m_DrawRenderScreenWindow(unsigned int windowWidth, unsigned int windowHeight);
 
+        /******************************************************************/
+        /*!
+        \fn      void gui::ImGuiHandler::m_DrawGizmo(float renderPosX, float renderPosY, float renderWidth, float renderHeight)
+        \brief   Draws the Gizmo controls for transforming objects.
+        \param   renderPosX - The X position for rendering the gizmo.
+        \param   renderPosY - The Y position for rendering the gizmo.
+        \param   renderWidth - The width of the render area for the gizmo.
+        \param   renderHeight - The height of the render area for the gizmo.
+        \details Provides interactive controls to manipulate objects within the rendered scene.
+        */
+        /******************************************************************/
         void m_DrawGizmo(float renderPosX, float renderPosY, float renderWidth, float renderHeight);
 
+        /******************************************************************/
+        /*!
+        \fn      void gui::ImGuiHandler::m_DrawLayerWindow()
+        \brief   Draws the layer management window within the ImGui interface.
+        \details Displays a UI window that allows the user to add, remove, and manage layers within the scene.
+        */
+        /******************************************************************/
         void m_DrawLayerWindow();
 
+        /******************************************************************/
+        /*!
+        \fn      void gui::ImGuiHandler::m_DrawGameSceneWindow()
+        \brief   Draws the game scene window within the ImGui interface.
+        \details Displays the current game scene, including entities and their properties, allowing the user to interact with the scene.
+        */
+        /******************************************************************/
         void m_DrawGameSceneWindow();
-        
+
+        /******************************************************************/
+        /*!
+        \fn      void gui::ImGuiHandler::m_DrawContentBrowser()
+        \brief   Draws the content browser window within the ImGui interface.
+        \details Displays the content browser, which allows the user to navigate and manage project assets.
+        */
+        /******************************************************************/
         void m_DrawContentBrowser();
 
+        /******************************************************************/
+        /*!
+        \fn      void gui::ImGuiHandler::m_DrawTilePicker()
+        \brief   Draws the tile picker UI for selecting tiles.
+        \details Displays a UI panel for selecting tiles, used in tile-based level design.
+        */
+        /******************************************************************/
         void m_DrawTilePicker();
 
+        /******************************************************************/
+        /*!
+        \fn      void gui::ImGuiHandler::m_OnButtonPress(const events::BaseEvent<events::ButtonEvents>& givenEvent)
+        \brief   Handles button press events within the ImGui interface.
+        \param   givenEvent - The event data representing the button press.
+        \details Processes button interactions, triggering appropriate responses in the UI or game logic.
+        */
+        /******************************************************************/
         void m_OnButtonPress(const events::BaseEvent<events::ButtonEvents>& givenEvent);
 
+        /******************************************************************/
+        /*!
+        \fn      void gui::ImGuiHandler::m_OnAction(const events::BaseEvent<events::Actions>& givenEvent)
+        \brief   Handles action events within the ImGui interface.
+        \param   givenEvent - The event data representing the action.
+        \details Processes specific user actions, executing commands or modifying the game state accordingly.
+        */
+        /******************************************************************/
         void m_OnAction(const events::BaseEvent<events::Actions>& givenEvent);
 
+        /******************************************************************/
+        /*!
+        \fn      void gui::ImGuiHandler::m_UpdateOnPrefabMode()
+        \brief   Updates the ImGui interface for prefab editing mode.
+        \details Adjusts the UI elements and properties to enable editing of prefabs within the scene.
+        */
+        /******************************************************************/
         void m_UpdateOnPrefabMode();
-        
 
         int m_clickedEntityId{ -1 };
 
