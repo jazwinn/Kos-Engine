@@ -8,13 +8,13 @@
         },
         "transform": {
             "position": {
-                "x": 0.0,
-                "y": 0.0
+                "x": -0.002715297043323517,
+                "y": -0.002715297043323517
             },
-            "rotation": -0.0,
+            "rotation": -135.0,
             "scale": {
-                "x": 3.0,
-                "y": 3.0
+                "x": 2.342973232269287,
+                "y": 2.999999761581421
             }
         },
         "collider": {
@@ -33,8 +33,8 @@
         },
         "rigidbody": {
             "linearVelocity": {
-                "x": 0.0,
-                "y": 0.0
+                "x": -2.0364673137664795,
+                "y": -2.0364673137664795
             },
             "linearAcceleration": {
                 "x": 0.0,
@@ -66,10 +66,10 @@
             "alpha": 1.0
         },
         "animation": {
-            "frameNumber": 0,
-            "framesPerSecond": 0,
-            "frameTimer": 0.0,
-            "isAnimating": false,
+            "frameNumber": 7,
+            "framesPerSecond": 10,
+            "frameTimer": 0.76666659116745,
+            "isAnimating": true,
             "stripCount": 14
         },
         "script": {
