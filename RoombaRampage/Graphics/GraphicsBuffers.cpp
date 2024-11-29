@@ -49,10 +49,9 @@ namespace graphicpipe
 		glBindVertexArray(0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-		
-
 		glBindVertexArray(m_squareMesh.m_vaoId);
 
+		//Container Buffer Setup
 		glGenBuffers(1, &m_tileIndexBuffer);
 		glBindBuffer(GL_ARRAY_BUFFER, m_tileIndexBuffer);
 		glBufferData(GL_ARRAY_BUFFER, m_tileIndexes.size() * sizeof(int), &m_tileIndexes[0][0], GL_DYNAMIC_DRAW);
@@ -80,13 +79,7 @@ namespace graphicpipe
 		glEnableVertexAttribArray(4);
 		glVertexAttribIPointer(4, 2, GL_INT, sizeof(glm::ivec2), (void*)0);
 		glVertexAttribDivisor(4, 1);
-		/*glGenBuffers(1, &m_frameNumberBuffer);
-		glBindBuffer(GL_ARRAY_BUFFER, m_frameNumberBuffer);
-		glBufferData(GL_ARRAY_BUFFER, m_frameNumbers.size() * sizeof(int), &m_frameNumbers[0], GL_DYNAMIC_DRAW);
-		glEnableVertexAttribArray(3);
-		glVertexAttribIPointer(3, 1, GL_INT, sizeof(int), (void*)0);
-		glVertexAttribDivisor(3, 1);*/
-		//glBindVertexArray(0);
+
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 
@@ -98,7 +91,9 @@ namespace graphicpipe
 		glBufferData(GL_ARRAY_BUFFER, m_colors.size() * sizeof(glm::vec4), &m_colors[0], GL_DYNAMIC_DRAW);
 
 		glEnableVertexAttribArray(11);
+		
 
+		//Check for errors
 		glVertexAttribPointer(11, 4, GL_FLOAT, GL_FALSE, sizeof(glm::vec4), (void*)0);
 		GLenum err = glGetError();
 		if (err != GL_NO_ERROR) {

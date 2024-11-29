@@ -2,7 +2,8 @@
 /*!
 \file      imgui_Gizmo.cpp
 \author    Ng Jaz winn, jazwinn.ng , 2301502
-\par       jazwinn.ng@digipen.edu
+\co-author Sean Tiu, 2303398
+\par       jazwinn.ng@digipen.edu, s.tiu@digipen.edu
 \brief     This file contains the implementation of the `ImGuiHandler` class's
            function for rendering and manipulating transformation gizmos in the editor.
            - m_DrawGizmo: Renders a transformation gizmo for an entity, allowing translation,
@@ -173,7 +174,6 @@ namespace gui {
         //Child Gizmo
         else if (ecs::Hierachy::m_GetParent(m_clickedEntityId).has_value() && ImGuizmo::Manipulate(cameraView, projection, mCurrentGizmoOperation, ImGuizmo::LOCAL, model, delta, useSnap ? &snap[0] : NULL))
         {
-            //mat3x3::Mat3x3 transformation = transcom->m_localChildTransformation;
             mat3x3::Mat3x3 original = transcom->m_transformation;
 
             ecs::EntityID  id = ecs::Hierachy::m_GetParent(m_clickedEntityId).value();
@@ -181,6 +181,7 @@ namespace gui {
             
             ImGuizmo::DecomposeMatrixToComponents(model, matrixTranslation, matrixRotation, matrixScale);
 
+            // Affine Transformation
             float scaleXChange = ((matrixScale[0] - originalMatrixScale[0])) / parentCom->m_scale.m_x;
             float scaleYChange = (matrixScale[1] - originalMatrixScale[1]) / parentCom->m_scale.m_y;
             float change = (-matrixRotation[2] - -originalMatrixRotation[2]);
@@ -192,7 +193,6 @@ namespace gui {
             delta[12] = static_cast<float>(translation.m_x * std::cos(parentCom->m_rotation * PI/180.f) - translation.m_y * std::sin(parentCom->m_rotation * PI / 180.f)); // Model new coordinates - original coordinates
             delta[13] = static_cast<float>(translation.m_x * std::sin(parentCom->m_rotation * PI / 180.f) + translation.m_y * std::cos(parentCom->m_rotation * PI / 180.f));
 
-            //std::cout << "Rotated Delta translate: " << delta[12] << " , " << delta[13] << std::endl;
             if (parentCom->m_scale.m_x != 0 || parentCom->m_scale.m_y != 0)
             {
                 transcom->m_position.m_x += delta[12] / parentCom->m_scale.m_x;

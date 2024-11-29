@@ -324,6 +324,7 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
                         spriteCom->m_imageFile = filename->filename().string();
                         colCom->m_Size.m_x = static_cast<float>(static_cast<float>(assets->m_imageManager.m_imageMap[spriteCom->m_imageFile].m_width) / static_cast<float>(pipe->m_unitWidth) / assets->m_imageManager.m_imageMap[spriteCom->m_imageFile].m_stripCount);
                         colCom->m_Size.m_y = static_cast<float>(assets->m_imageManager.m_imageMap[spriteCom->m_imageFile].m_height) / static_cast<float>(pipe->m_unitHeight);
+                        
                         //If Sprite Was Flagged as Animation Sprite
                         if (!ecs->m_ECS_EntityMap[id].test(ecs::TYPEANIMATIONCOMPONENT) && assets->m_imageManager.m_imageMap[spriteCom->m_imageFile].m_stripCount != 1)
                         {
