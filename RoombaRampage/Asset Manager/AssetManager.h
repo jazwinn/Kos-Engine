@@ -80,6 +80,13 @@ namespace assetmanager {
         /******************************************************************/
         void m_funcLoadAssets(std::string );
 
+        /******************************************************************/
+        /*!
+        \fn      void m_LoadAsset(std::filesystem::path filepath)
+        \brief   Loads an asset from the specified file path.
+        \param   filepath - Path to the asset file to load.
+        */
+        /******************************************************************/
         void m_LoadAsset(std::filesystem::path);
 
         /******************************************************************/
@@ -118,14 +125,47 @@ namespace assetmanager {
         /******************************************************************/
         void m_LoadPrefab(std::string file);
 
+        /******************************************************************/
+        /*!
+        \fn      void m_RenameAsset(std::filesystem::path old, std::filesystem::path _new)
+        \brief   Renames an existing asset file from the old path to the new path.
+        \param   old - Path to the existing asset file.
+        \param   _new - New path for the asset file.
+        */
+        /******************************************************************/
         void m_RenameAsset(std::filesystem::path old, std::filesystem::path _new);
 
-        void m_LoadScript(std::filesystem::path filepath);
+        /******************************************************************/
+        /*!
+        \fn      void m_LoadScript(std::filesystem::path filepath)
+        \brief   Loads a script file and adds it to the script manager.
+        \param   filepath - Path to the script file to load.
+        */
+        /******************************************************************/
 
+        void m_LoadScript(std::filesystem::path filepath);
+        /******************************************************************/
+        /*!
+        \var     fmodaudio::AudioManager m_audioManager
+        \brief   Manages the loading and playback of audio assets.
+        */
+        /******************************************************************/
         fmodaudio::AudioManager m_audioManager;
-        
+
+        /******************************************************************/
+        /*!
+        \var     image::ImageManager m_imageManager
+        \brief   Manages the loading and storage of image assets.
+        */
+        /******************************************************************/
         image::ImageManager m_imageManager;
 
+        /******************************************************************/
+        /*!
+        \var     script::ScriptHandler m_scriptManager
+        \brief   Handles the loading and management of scripts.
+        */
+        /******************************************************************/
         script::ScriptHandler m_scriptManager;
 
         /******************************************************************/
