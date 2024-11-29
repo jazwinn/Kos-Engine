@@ -58,7 +58,7 @@ namespace ecs {
 	}
 
 	void PhysicsSystem::m_Update(const std::string& scene) {
-		ECS* ecs = ECS::m_GetInstance();
+		//ECS* ecs = ECS::m_GetInstance();
 		//physicspipe::Physics* PhysicsPipeline = physicspipe::Physics::getInstance();
 		Helper::Helpers* help = Helper::Helpers::GetInstance();
 		if (m_vecRigidBodyComponentPtr.size() != m_vecTransformComponentPtr.size()) {
