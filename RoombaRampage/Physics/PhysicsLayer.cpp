@@ -30,7 +30,7 @@ namespace physicslayer {
         //}
         layerCollisions[row].set(col, value);
         layerCollisions[col].set(row, value); // Ensure symmetric relationship
-        Serialization::Serialize::SavePhysicsLayerMatrix(); // Save changes to file
+        Serialization::Serialize::m_SavePhysicsLayerMatrix(); // Save changes to file
     }
     bool PhysicsLayer::getCollide(int layer1, int layer2) {
         //if (layer1 < 0 || layer1 >= size || layer2 < 0 || layer2 >= size) {

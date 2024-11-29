@@ -77,7 +77,6 @@
     <Compile Include="LogicScript\PlayerGun.cs" />
     <Compile Include="LogicScript\PlayerMeleeKillZone.cs" />
     <Compile Include="LogicScript\StartGameButton.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\ScriptLibrary\GameScript\GameScript.csproj">

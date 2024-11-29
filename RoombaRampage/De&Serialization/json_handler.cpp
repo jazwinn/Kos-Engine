@@ -3,7 +3,7 @@
 \file      json_handler.cpp
 \author    Chiu Jun Jie, junjie.c , 2301524
 \par       junjie.c@digipen.edu
-\date      Nov 11, 2024
+\date      Nov 29, 2024
 \brief     This file handles JSON-related operations for component serialization and deserialization in the ECS framework.
 			- m_LoadConfig: Loads configuration settings such as window dimensions and FPS cap from a config file.
 			- m_JsonFileValidation: Validates if the JSON file exists and creates a new one if it doesn't.
@@ -11,6 +11,9 @@
 			- m_SaveComponentsJson: Saves component data from the ECS to a JSON file.
 			- m_SaveEntity: Serializes individual entity data to a JSON structure.
 			- m_LoadEntity: Deserializes individual entity data from a JSON structure.
+			- m_LoadEntity: Deserializes individual entity data from a JSON structure.
+			- m_SavePhysicsLayerMatrix: Saves the current physics layer matrix to a JSON file.
+			- m_LoadPhysicsLayerMatrix: Loads the physics layer matrix from a JSON file.
 
 Copyright (C) 2024 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the
@@ -74,7 +77,7 @@ namespace Serialization {
 			LOGGING_ERROR("Error Reading Config file (Width or Height <= 0)");
 		}
 
-		LoadPhysicsLayerMatrix();
+		m_LoadPhysicsLayerMatrix();
 
 	}
 
@@ -903,7 +906,7 @@ namespace Serialization {
 			}
 		}
 	}
-	void Serialization::Serialize::SavePhysicsLayerMatrix() {
+	void Serialization::Serialize::m_SavePhysicsLayerMatrix() {
 		std::ofstream file("./Physics/PhysicsLayerMatrix.txt");
 		if (!file.is_open()) {
 			LOGGING_ERROR("Could not open PhysicsLayerMatrix.txt for writing.");
@@ -922,7 +925,7 @@ namespace Serialization {
 		//LOGGING_INFO("Collision matrix saved to PhysicsLayerMatrix.txt");
 	}
 
-	void Serialization::Serialize::LoadPhysicsLayerMatrix() {
+	void Serialization::Serialize::m_LoadPhysicsLayerMatrix() {
 		std::ifstream file("./Physics/PhysicsLayerMatrix.txt");
 		if (!file.is_open()) {
 			LOGGING_ERROR("Could not open PhysicsLayerMatrix.txt for reading.");
