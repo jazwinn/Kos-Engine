@@ -13,6 +13,7 @@
 		   - Binding and updating buffer data, including matrices, texture orders,
 			 and colors, for instanced drawing.
 		   - Text rendering, including character positioning, scaling, and color.
+		   - Tilemap rendering for rendering multiple tiles as 1 object.
 		   - Utility functions for setting polygon modes and drawing grid overlays.
 
 Copyright (C) 2024 DigiPen Institute of Technology.
@@ -171,7 +172,7 @@ namespace graphicpipe
 	void GraphicsPipe::m_funcDrawText()
 	{
 
-		if (!m_textData.empty()) {
+		if (!m_textData.empty() && GraphicsCamera::m_windowHeight > 0 && GraphicsCamera::m_windowWidth > 0) {
 			for (auto& textData : m_textData) {
 				// Activate corresponding render state
 				glUseProgram(m_textShaderProgram);
@@ -205,7 +206,6 @@ namespace graphicpipe
 				assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
 				float originX{ textData.m_x };
 				float originY{ textData.m_y };
-				float height = static_cast<float>(GraphicsCamera::m_windowHeight);
 
 				// Step 1: Calculate total width and height of the text
 				float totalWidth = 0.0f;
@@ -279,7 +279,7 @@ namespace graphicpipe
 		glUniformMatrix3fv(glGetUniformLocation(m_gridShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currOrthoMatrix));
 		glUniform3f(glGetUniformLocation(m_gridShaderProgram, "debugColor"), 0.f, 0.f, 0.f);
 		glBindVertexArray(m_lineMesh.m_vaoId);
-		glDrawArrays(GL_LINES, 0, 1000 * 8 + 12); // Number of vertices
+		glDrawArrays(GL_LINES, 0, 1000 * 8 + 12); // Number of vertices of the grid
 		glBindVertexArray(0);
 			
 	}
@@ -319,8 +319,6 @@ namespace graphicpipe
 	void GraphicsPipe::m_funcDrawTilemap()
 	{
 		glUseProgram(m_tilemapShaderProgram);
-
-		
 
 		for (int i{}; i < m_transformedTilemaps.size() && !m_tileIndexes.empty(); ++i)
 		{

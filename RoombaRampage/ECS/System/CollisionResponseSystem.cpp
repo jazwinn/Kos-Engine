@@ -104,7 +104,6 @@ namespace ecs {
 
 			RigidBodyComponent* rigidComp = m_vecRigidBodyComponentPtr[n];
 			ColliderComponent* ColComp = m_vecColliderComponentPtr[n];
-			TransformComponent* transformComp = m_vecTransformComponentPtr[n];
 
 			ColComp->m_collidedWith.clear();
 			ColComp->m_blockedFlag = -1;

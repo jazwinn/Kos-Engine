@@ -67,15 +67,19 @@ void EditorCamera::calculateLevelEditorView()
 
 void EditorCamera::calculateLevelEditorOrtho()
 {
-    float left = -1.f * (1.f/graphicpipe::GraphicsCamera::m_aspectRatio);
-    float right = 1.f * (1.f/graphicpipe::GraphicsCamera::m_aspectRatio);
-    float bottom = -1.f;
-    float top = 1.f;
-    m_editorOrthoMatrix.m_e00 = (2.0f / (right - left));
-    m_editorOrthoMatrix.m_e11 = 2.0f / (top - bottom);
-    m_editorOrthoMatrix.m_e20 = -(right + left) / (right - left);
-    m_editorOrthoMatrix.m_e21 = -(top + bottom) / (top - bottom);
-    m_editorOrthoMatrix.m_e22 = 1;
+    if (graphicpipe::GraphicsCamera::m_aspectRatio > 0)
+    {
+        float left = -1.f * (1.f / graphicpipe::GraphicsCamera::m_aspectRatio);
+        float right = 1.f * (1.f / graphicpipe::GraphicsCamera::m_aspectRatio);
+        float bottom = -1.f;
+        float top = 1.f;
+        m_editorOrthoMatrix.m_e00 = (2.0f / (right - left));
+        m_editorOrthoMatrix.m_e11 = 2.0f / (top - bottom);
+        m_editorOrthoMatrix.m_e20 = -(right + left) / (right - left);
+        m_editorOrthoMatrix.m_e21 = -(top + bottom) / (top - bottom);
+        m_editorOrthoMatrix.m_e22 = 1;
+    }
+    
 }
 
 vector2::Vec2 EditorCamera::calculateWorldCoordinatesFromMouse(int mouseX, int mouseY)
@@ -89,7 +93,10 @@ vector2::Vec2 EditorCamera::calculateWorldCoordinatesFromMouse(int mouseX, int m
     vector3::Vec3 translate = { cordX , -cordY, 0.f };
     translate.m_x *= EditorCamera::m_editorCameraMatrix.m_e00;
     translate.m_y *= EditorCamera::m_editorCameraMatrix.m_e11;
-    translate.m_x *= 1.f / graphicpipe::GraphicsCamera::m_aspectRatio;
+    if (graphicpipe::GraphicsCamera::m_aspectRatio != 0)
+    {
+        translate.m_x *= 1.f / graphicpipe::GraphicsCamera::m_aspectRatio;
+    }
     translate.m_x += EditorCamera::m_editorCameraMatrix.m_e20;
     translate.m_y += EditorCamera::m_editorCameraMatrix.m_e21;
 

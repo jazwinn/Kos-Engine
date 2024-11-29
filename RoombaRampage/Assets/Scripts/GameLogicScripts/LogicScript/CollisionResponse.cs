@@ -19,7 +19,6 @@ public class CollisionResponse : ScriptBase
     private Vector2 startingPlayerScale;
     private float startingPlayerRotate;
 
-    private Vector2 resultantPlayerPos;
     private Vector2 playerVelocity;
     private Vector2 playerAcceleration;
     private float playerRotationalForce;
@@ -31,13 +30,7 @@ public class CollisionResponse : ScriptBase
     private int colFlag;
     private float isCollided;
     private bool colCheck;
-
-    private float xMin;
-    private float xMax;
-    private float yMin;
-    private float yMax;
-
-    private float radius;   
+ 
 
     public override void Start()
     {

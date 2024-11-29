@@ -40,62 +40,39 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 namespace graphicpipe {
 
-    struct TilemapData
-    {
-        glm::mat3 m_transformation{};
-        unsigned int m_textureID{};
-        glm::ivec2 m_tilemapDimensions{};
-        glm::ivec2 m_tilemapPictureSize{};
-        int m_tileIndex{};
-        int m_layer{};
-        glm::vec4 m_color{};
+    struct TilemapData {
+        glm::mat3 m_transformation{};               ///< Transformation matrix for the tilemap.
+        unsigned int m_textureID{};                 ///< Texture ID for the tilemap.
+        glm::ivec2 m_tilemapDimensions{};           ///< Dimensions of the tilemap (in tiles).
+        glm::ivec2 m_tilemapPictureSize{};          ///< Dimensions of the tilemap image (pixels).
+        int m_tileIndex{};                          ///< Index for the tile to render.
+        int m_layer{};                              ///< Layer for rendering order.
+        glm::vec4 m_color{};                        ///< Tint color for the tilemap.
     };
 
-    /**
-     * @struct GraphicsData
-     * @brief Stores the data required for rendering a graphical object.
-     */
-    struct GraphicsData
-    {
-        //float m_rotate{};                ///< Rotation of the object in degrees.
-        //glm::vec2 m_scale{};             ///< Scale factors for the object (x, y).
-        //glm::vec2 m_worldCoordinates{};  ///< World coordinates of the object.
-        glm::mat3 m_transformation{};
-        unsigned int m_textureID{};      ///< ID of the texture used for rendering.
-        int m_stripCount{};            
-        int m_frameNumber{};               ///< Frame Number for handling animations.
-        int m_layer{};                   ///< Layer for drawing order.
-        glm::vec4 m_color{};
+    struct GraphicsData {
+        glm::mat3 m_transformation{};               ///< Transformation matrix for the object.
+        unsigned int m_textureID{};                 ///< Texture ID for rendering.
+        int m_stripCount{};                         ///< Number of strips for sprite animations.
+        int m_frameNumber{};                        ///< Current animation frame number.
+        int m_layer{};                              ///< Layer for rendering order.
+        glm::vec4 m_color{};                        ///< Tint color for the object.
     };
 
-    /**
-     * @struct DebugDrawData
-     * @brief Stores the data required for rendering debug information.
-     */
-    struct DebugDrawData
-    {
-       /* float m_rotate{};                ///< Rotation of the debug shape in degrees.
-        glm::vec2 m_scale{};             ///< Scale factors for the debug shape (x, y).
-        glm::vec3 m_worldCoordinates{};  ///< World coordinates of the debug shape.*/
-        glm::mat3 m_transformation{};
-        float m_isCollided{};             ///< Collision flag for detecting collisions.
-        int m_shapeType{};               ///< Type of debug shape (e.g., square, circle).
+    struct DebugDrawData {
+        glm::mat3 m_transformation{};               ///< Transformation matrix for the debug shape.
+        float m_isCollided{};                       ///< Flag indicating collision status.
+        int m_shapeType{};                          ///< Shape type (e.g., square, circle).
     };
 
-    /**
-     * @struct TextData
-     * @brief Stores data required for rendering text.
-     */
-    struct TextData
-    {
-        std::string m_text;              ///< The text string to be rendered.
-        float m_x;                       ///< X position of the text on screen.
-        float m_y;                       ///< Y position of the text on screen.
-        float m_rotate;
-        float m_scale;                   ///< Scale of the text.
-        int m_layer;
-        glm::vec3 m_color;               ///< Color of the text (RGB).
-        std::string m_fileName;
+    struct TextData {
+        std::string m_text;                         ///< The text string to render.
+        float m_x, m_y;                             ///< Position on the screen.
+        float m_rotate{};                           ///< Rotation angle in degrees.
+        float m_scale{};                            ///< Scale factor for text size.
+        int m_layer{};                              ///< Layer for rendering order.
+        glm::vec3 m_color{};                        ///< Text color (RGB).
+        std::string m_fileName;                     ///< Font file used for rendering.
     };
 
     /**
@@ -135,10 +112,19 @@ namespace graphicpipe {
         void m_funcSetupVao(Mesh& shape);
 
         /**
-         * @brief Sets up the Vertex Array Object (VAO) for rendering to a framebuffer.
+         * @brief Sets up the Vertex Array Object (VAO) for rendering a grid.
+         *
+         * Configures the vertex attributes and buffers for rendering grid lines.
          */
         void m_funcSetupGridVao();
 
+        /**
+         * @brief Generates vertices for a grid and configures spacing.
+         *
+         * @param vertices A vector to store the generated grid vertices.
+         * @param gridSize The number of cells in the grid (per side).
+         * @param spacing The spacing between grid lines.
+         */
         void m_funcSetupGrid(std::vector<glm::vec3>& vertices, int gridSize, float spacing);
 
         /**
@@ -146,6 +132,11 @@ namespace graphicpipe {
          */
         void m_funcSetupSquareLinesVao();
 
+        /**
+         * @brief Sets up the Vertex Array Object (VAO) for rendering circle outlines.
+         *
+         * Configures vertex attributes and buffers for drawing circle wireframes.
+         */
         void m_funcSetupCircleLinesVao();
 
         /**
@@ -176,8 +167,8 @@ namespace graphicpipe {
         unsigned int m_frameBufferShaderProgram{};  ///< Shader program for framebuffer rendering.
         unsigned int m_debugShaderProgram{};        ///< Shader program for debug rendering.
         unsigned int m_textShaderProgram{};         ///< Shader program for text rendering.
-        unsigned int m_gridShaderProgram{};
-        unsigned int m_tilemapShaderProgram{};
+        unsigned int m_gridShaderProgram{};         ///< Shader program for rendering grid lines.
+        unsigned int m_tilemapShaderProgram{};      ///< Shader program for rendering tilemaps.
 
         // Buffers
         unsigned int m_modelMatrixArrayBuffer{};    ///< Array buffer for model matrices.
@@ -186,15 +177,15 @@ namespace graphicpipe {
         unsigned int m_debugCollisionCheckBuffer{}; ///< Buffer for collision detection in debug drawing.
         unsigned int m_frameBufferObject{};         ///< Framebuffer object for offscreen rendering.
         unsigned int m_depthBufferObject{};         ///< Depth Buffer object for storing frame buffer data.
-        unsigned int m_gamePreviewFrameBufferObject{};        
-        unsigned int m_gamePreviewDepthBufferObject{};      
+        unsigned int m_gamePreviewFrameBufferObject{};   ///< Framebuffer object for the game preview window.
+        unsigned int m_gamePreviewDepthBufferObject{};   ///< Depth buffer for the game preview framebuffer.
         unsigned int m_textBuffer{};                ///< Buffer for text rendering.
         unsigned int m_stripCountBuffer{};          ///< Buffer for sprite strip counts (animation).
         unsigned int m_frameNumberBuffer{};         ///< Buffer for managing animation frame numbers.
-        unsigned int m_layerBuffer{};
-        unsigned int m_gridBuffer{};
-        unsigned int m_colorBuffer{};
-        unsigned int m_tileIndexBuffer{};
+        unsigned int m_layerBuffer{};               ///< Buffer for rendering layer data.
+        unsigned int m_gridBuffer{};                ///< Buffer for grid vertex data.
+        unsigned int m_colorBuffer{};               ///< Buffer for vertex color data.
+        unsigned int m_tileIndexBuffer{};           ///< Buffer for tilemap indices.
 
         glm::mat3 m_testMatrix{};                   ///< Test matrix for rendering.
 
@@ -271,6 +262,18 @@ namespace graphicpipe {
          */
         void m_funcDrawWindow();
 
+
+        /**
+        * @brief Sets up the framebuffer for the game preview window.
+        *
+        * This function initializes and configures a framebuffer object (FBO) specifically
+        * for rendering the game preview. It allocates textures for color and depth
+        * attachments, binds them to the framebuffer, and ensures the framebuffer is
+        * complete for rendering. The framebuffer allows offscreen rendering of the game
+        * scene to a texture, which can be displayed in the game preview window.
+        *
+        * @note This function must be called after the OpenGL context is initialized.
+        */
         void m_funcDrawGamePreviewWindow();
 
         /**
@@ -287,10 +290,27 @@ namespace graphicpipe {
          */
         void m_funcDrawDebug();
 
+        /**
+         * @brief Draws a grid on the screen.
+         *
+         * Uses the grid shader and VAO to render a grid for debugging or visualization.
+         */
         void m_funcDrawGrid();
 
+        /**
+         * @brief Draws a line segment between two points.
+         *
+         * @param p0 The starting point of the line (in 3D space).
+         * @param p1 The ending point of the line (in 3D space).
+         */
         void m_funcDrawLine(glm::vec3 p0, glm::vec3 p1);
 
+
+        /**
+         * @brief Draws a tilemap to the screen.
+         *
+         * Uses the tilemap shader and VAO to render tiles based on the current tilemap data.
+         */
         void m_funcDrawTilemap();
 
         /**
@@ -306,20 +326,43 @@ namespace graphicpipe {
          * Renders all text elements stored in the text data structures to the screen.
          */
         void m_funcDrawText();
-
-        void m_drawWorldGrid();
-
         /**
         * @brief Sets up the framebuffer for offscreen rendering.
+        *
+        * Allocates and configures a framebuffer object for rendering scenes offscreen.
         */
         void m_funcSetupFrameBuffer();
 
+        /**
+         * @brief Sets up the framebuffer for the game preview window.
+         *
+         * Allocates and configures a framebuffer object for rendering the game preview.
+         */
         void m_funcSetupGamePreviewFrameBuffer();
 
+        /**
+         * @brief Calculates the model-to-world transformation matrix.
+         *
+         * Applies object transformations such as translation, rotation, and scaling
+         * to generate the model matrix for rendering.
+         */
         void m_funcCalculateModelToWorldMatrix();
 
+
+        /**
+        * @brief Renders the game scene to the game preview framebuffer.
+        *
+        * Prepares the scene by rendering objects, debug visuals, and text into the
+        * game preview framebuffer.
+        */
         void m_funcRenderGameScene();
 
+
+        /**
+        * @brief Clears internal containers storing graphics data.
+        *
+        * Empties all vectors holding data for rendering models, text, and debug information.
+        */
         void m_funcClearContainers();
 
         //Boolean Values

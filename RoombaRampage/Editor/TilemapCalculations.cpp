@@ -1,3 +1,24 @@
+/******************************************************************/
+/*!
+\file      TilemapCalculations.cpp
+\author    Sean Tiu
+\par       s.tiu@digipen.edu
+\date      29th Nov, 2024
+\brief     Implementation of tilemap calculations and utilities,
+		   providing functions for resizing tiles, setting individual
+		   tiles, and debugging tile indices.
+
+\details   This file includes:
+		   - Logic to dynamically resize tilemaps based on input dimensions.
+		   - Functions to update specific tiles and adjust tilemap bounds.
+		   - Debugging utilities to output tilemap indices for troubleshooting.
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/******************************************************************/
+
 #include "../Config/pch.h"
 #include "TilemapCalculations.h"
 #include <algorithm>
