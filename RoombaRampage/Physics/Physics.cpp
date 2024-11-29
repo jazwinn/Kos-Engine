@@ -595,6 +595,7 @@ namespace physicspipe {
 	}
 
 	bool Physics::m_CollisionIntersection_RectRect_SAT(const Rectangle& obj1, const Rectangle& obj2) {
+
 		// Get rotated vertices and edges
 		std::vector<vector2::Vec2> verticesA = obj1.m_GetRotatedVertices();
 		std::vector<vector2::Vec2> verticesB = obj2.m_GetRotatedVertices();
@@ -610,9 +611,9 @@ namespace physicspipe {
 			axes.push_back({ -edge.m_y, edge.m_x });
 		}
 
-		float minOverlap = std::numeric_limits<float>::max();
+		//float minOverlap = std::numeric_limits<float>::max();
 		vector2::Vec2 smallestAxis{};
-		bool isEntity1Blocked = false;
+		//bool isEntity1Blocked = false;
 		// Check for overlap on all axes
 		for (const auto& axis : axes) {
 			float minA, maxA, minB, maxB;
@@ -626,17 +627,31 @@ namespace physicspipe {
 			}
 
 			//calculate Overlap
-			float overlap = std::min(maxA, maxB) - std::max(minA, minB);
-			// Track the smallest overlap axis for primary collision direction
-			if (overlap < minOverlap) {
-				minOverlap = overlap;
-				smallestAxis = axis;
+			//float overlap = std::min(maxA, maxB) - std::max(minA, minB);
+			//// Track the smallest overlap axis for primary collision direction
+			//if (overlap < minOverlap) {
+			//	minOverlap = overlap;
+			//	smallestAxis = axis;
 
-				// Determine if the blocking is for obj1 or obj2
-				vector2::Vec2 deltaPosition = obj2.m_position - obj1.m_position;
-				isEntity1Blocked = (vector2::Vec2::m_funcVec2DDotProduct(deltaPosition, smallestAxis) > 0);
-			}
+			//	// Determine if the blocking is for obj1 or obj2
+			//	vector2::Vec2 deltaPosition = obj2.m_position - obj1.m_position;
+			//	isEntity1Blocked = (vector2::Vec2::m_funcVec2DDotProduct(deltaPosition, smallestAxis) > 0);
+			//}
 		}
+
+		//for (size_t i = 0; i < axes.size(); ++i) {
+		//	float minA, maxA, minB, maxB;
+		//	//using dot product to determine
+		//	m_projectOntoAxis(verticesA, axes[i], minA, maxA);
+		//	m_projectOntoAxis(verticesB, axes[i], minB, maxB);
+
+		//	// If there's a gap, no collision
+		//	if (maxA < minB || maxB < minA) {
+		//		return false;
+		//	}
+
+		//}
+
 		//vector2::Vec2 smallestAxisNormalized = smallestAxis;
 		//vector2::Vec2::m_funcVec2Normalize(smallestAxisNormalized, smallestAxisNormalized);
 		//vector2::Vec2 localAxis = obj1.TransformToLocalSpace(smallestAxisNormalized);
@@ -666,33 +681,33 @@ namespace physicspipe {
 
 
 		// Add blocked directions based on the smallest axis
-		if (std::abs(smallestAxis.m_x) > std::abs(smallestAxis.m_y)) {
-			// Horizontal collision
-			if (smallestAxis.m_x > 0) {
-				if (isEntity1Blocked) {
-					const_cast<Rectangle&>(obj1).m_AddCollisionFlag(RIGHT);
-					const_cast<Rectangle&>(obj2).m_AddCollisionFlag(LEFT);
+		//if (std::abs(smallestAxis.m_x) > std::abs(smallestAxis.m_y)) {
+		//	// Horizontal collision
+		//	if (smallestAxis.m_x > 0) {
+		//		if (isEntity1Blocked) {
+		//			const_cast<Rectangle&>(obj1).AddCollisionFlag(RIGHT);
+		//			const_cast<Rectangle&>(obj2).AddCollisionFlag(LEFT);
 
-				}
-				else {
-					const_cast<Rectangle&>(obj1).m_AddCollisionFlag(LEFT);
-					const_cast<Rectangle&>(obj2).m_AddCollisionFlag(RIGHT);
-				}
-			}
-		}
-		else {
-			// Vertical collision
-			if (smallestAxis.m_y > 0) {
-				if (isEntity1Blocked) {
-					const_cast<Rectangle&>(obj1).m_AddCollisionFlag(UP);
-					const_cast<Rectangle&>(obj2).m_AddCollisionFlag(DOWN);
-				}
-				else {
-					const_cast<Rectangle&>(obj1).m_AddCollisionFlag(DOWN);
-					const_cast<Rectangle&>(obj2).m_AddCollisionFlag(UP);
-				}
-			}
-		}
+		//		}
+		//		else {
+		//			const_cast<Rectangle&>(obj1).AddCollisionFlag(LEFT);
+		//			const_cast<Rectangle&>(obj2).AddCollisionFlag(RIGHT);
+		//		}
+		//	}
+		//}
+		//else {
+		//	// Vertical collision
+		//	if (smallestAxis.m_y > 0) {
+		//		if (isEntity1Blocked) {
+		//			const_cast<Rectangle&>(obj1).AddCollisionFlag(UP);
+		//			const_cast<Rectangle&>(obj2).AddCollisionFlag(DOWN);
+		//		}
+		//		else {
+		//			const_cast<Rectangle&>(obj1).AddCollisionFlag(DOWN);
+		//			const_cast<Rectangle&>(obj2).AddCollisionFlag(UP);
+		//		}
+		//	}
+		//}
 
 
 

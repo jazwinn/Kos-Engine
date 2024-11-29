@@ -1,3 +1,37 @@
+/******************************************************************/
+/*!
+\file      imgui_tile_picker.cpp
+\author    Sean Tiu
+\par       s.tiu@digipen.edu
+\date      29th Nov, 2024
+\brief     Contains functions for handling the tile picker UI in the editor.
+
+\details   This file includes:
+		   - `isTileEmpty`: A helper function to determine if a specific
+			 tile in the tilemap is empty, based on transparency or custom conditions.
+		   - `ImGuiHandler::m_DrawTilePicker`: Renders the tile picker UI for
+			 selecting tiles from the tilemap texture.
+
+Functions:
+	- bool isTileEmpty(const unsigned char* data, int x, int y, int tileWidth, int tileHeight, int imgWidth, int imgHeight, int channels):
+		- Checks whether a specified tile in the tilemap texture is empty, considering transparency or other conditions.
+		- Parameters:
+			- `data`: Pointer to the image data.
+			- `x`, `y`: The top-left corner of the tile in the image.
+			- `tileWidth`, `tileHeight`: Dimensions of the tile.
+			- `imgWidth`, `imgHeight`: The dimensions of the entire image.
+			- `channels`: The number of channels (e.g., RGBA).
+		- Returns: `true` if the tile is considered empty, `false` otherwise.
+
+	- void ImGuiHandler::m_DrawTilePicker():
+		- Displays the tile picker interface within an ImGui window.
+		- It allows the user to select tiles from the tilemap texture and updates the `TilemapComponent` with the selected tile index.
+		- Handles the rendering of tiles in a grid and supports empty tile filtering based on transparency.
+		- Parameters: None.
+		- Returns: None.
+*/
+/******************************************************************/
+
 #include "../Config/pch.h"
 #include "imgui.h"
 #include "imgui_impl_glfw.h"

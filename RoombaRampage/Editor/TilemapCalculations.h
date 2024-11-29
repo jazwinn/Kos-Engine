@@ -1,3 +1,24 @@
+/******************************************************************/
+/*!
+\file      TilemapCalculations.h
+\author    Sean Tiu
+\par       s.tiu@digipen.edu
+\date      29th Nov, 2024
+\brief     Header file for tilemap calculations and utilities, providing
+		   functions for resizing tiles, setting individual tiles, and
+		   debugging tile indices.
+
+\details   This file includes:
+		   - Functionality to dynamically resize tilemaps.
+		   - Tools to modify and debug specific tiles within the map.
+		   - Integration with ECS components for tilemap management.
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/******************************************************************/
+
 #ifndef TILEMAPCALC_H
 #define TILEMAPCALC_H
 

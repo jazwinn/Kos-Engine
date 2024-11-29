@@ -3,7 +3,7 @@
 \file      json_handler.h
 \author    Chiu Jun Jie, junjie.c , 2301524
 \par       junjie.c@digipen.edu
-\date      Nov 11, 2024
+\date      Nov 29, 2024
 \brief     This header file declares functions that handle JSON-related operations for component serialization and
 		   deserialization in the ECS framework.
 		   - m_LoadConfig: Loads configuration settings such as window dimensions and FPS cap from a config file.
@@ -12,6 +12,8 @@
 		   - m_SaveComponentsJson: Saves component data from the ECS to a JSON file.
 		   - m_SaveEntity: Serializes individual entity data to a JSON structure.
 		   - m_LoadEntity: Deserializes individual entity data from a JSON structure.
+		   - m_SavePhysicsLayerMatrix: Saves the current physics layer matrix to a JSON file.
+		   - m_LoadPhysicsLayerMatrix: Loads the physics layer matrix from a JSON file.
 
 Copyright (C) 2024 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the
@@ -109,7 +111,7 @@ namespace Serialization {
 
 		/******************************************************************/
 		/*!
-		\fn      static void SavePhysicsLayerMatrix()
+		\fn      static void m_SavePhysicsLayerMatrix()
 		\brief   Saves the current physics layer matrix to a JSON file.
 		\details This function serializes the matrix that determines interactions between physics layers,
 				 allowing it to be persisted and reloaded later.
@@ -119,7 +121,7 @@ namespace Serialization {
 
 		/******************************************************************/
 		/*!
-		\fn      static void LoadPhysicsLayerMatrix()
+		\fn      static void m_LoadPhysicsLayerMatrix()
 		\brief   Loads the physics layer matrix from a JSON file.
 		\details This function reads a JSON file to restore the matrix that determines interactions
 				 between physics layers, ensuring consistent physics behavior across sessions.
