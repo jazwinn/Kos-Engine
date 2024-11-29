@@ -3,7 +3,7 @@
 \file      InternalCall.h
 \author    Chiu Jun Jie, junjie.c , 2301524
 \par       junjie.c@digipen.edu
-\date      Nov 27, 2024
+\date      Nov 27 , 2024
 \brief     This header file implements the functions that allow C# scripts to interact with ECS components.
 
 Reproduction or disclosure of this file or its contents without the
