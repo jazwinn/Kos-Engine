@@ -172,7 +172,7 @@ namespace graphicpipe
 	void GraphicsPipe::m_funcDrawText()
 	{
 
-		if (!m_textData.empty()) {
+		if (!m_textData.empty() && GraphicsCamera::m_windowHeight > 0 && GraphicsCamera::m_windowWidth > 0) {
 			for (auto& textData : m_textData) {
 				// Activate corresponding render state
 				glUseProgram(m_textShaderProgram);
