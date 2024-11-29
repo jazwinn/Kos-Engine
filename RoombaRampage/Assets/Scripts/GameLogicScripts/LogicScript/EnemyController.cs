@@ -47,11 +47,13 @@ public class EnemyController : ScriptBase
 
     public static bool playerIsDead;
 
+    public static bool forceDeath;
+
     private Vector2 movement;
 
     private string enemyDeathTexture;
 
-    //private int test;
+    public static int totalEnemiesKilled;
 
     public override void Start()
     {
@@ -63,10 +65,8 @@ public class EnemyController : ScriptBase
 
         playerID = InternalCall.m_InternalCallGetTagID("Player");
 
-        playerIsDead = false;
         isDead = false;
         isChasing = true;
-        enemySpeed = 1;
     }
 
     public override void Update()
@@ -147,12 +147,16 @@ public class EnemyController : ScriptBase
                     case "MeleeKillZoneSpawn":
                     case "PlayerBullet":
 
+                        InternalCall.m_InternalCallPlayAudio(EntityID, "aud_humanDeath01");
+
+                        totalEnemiesKilled++;
+
                         var collisionComponent = GetComponent.GetColliderComponent(EntityID);
                         collisionComponent.m_collisionCheck = !collisionComponent.m_collisionCheck;
                         SetComponent.SetCollisionComponent(EntityID, collisionComponent);
 
                         InternalCall.m_InternalSetAnimationComponent(EntityID, 0, 0, 0, false, 1);
-                        InternalCall.m_InternalSetSpriteComponent(EntityID, enemyDeathTexture, 10, startingColor, startingAlpha);
+                        InternalCall.m_InternalSetSpriteComponent(EntityID, enemyDeathTexture, 9, startingColor, startingAlpha);
 
                         Vector2 direction;
 
@@ -208,7 +212,55 @@ public class EnemyController : ScriptBase
         }
         #endregion
 
-        
+        #region Cheat Code
+
+        if (forceDeath)
+        {
+            totalEnemiesKilled++;
+
+            InternalCall.m_InternalCallPlayAudio(EntityID, "aud_humanDeath01");
+            var collisionComponent = GetComponent.GetColliderComponent(EntityID);
+            collisionComponent.m_collisionCheck = !collisionComponent.m_collisionCheck;
+            SetComponent.SetCollisionComponent(EntityID, collisionComponent);
+
+            InternalCall.m_InternalSetAnimationComponent(EntityID, 0, 0, 0, false, 1);
+            InternalCall.m_InternalSetSpriteComponent(EntityID, enemyDeathTexture, 10, startingColor, startingAlpha);
+
+            Vector2 direction;
+
+            direction.X = (enemyPos.X - playerPos.X);
+            direction.Y = (enemyPos.Y - playerPos.Y);
+
+            float rotationFloat = (float)(Math.Atan2(direction.X, direction.Y) * (180 / Math.PI));
+
+            InternalCall.m_InternalSetTransformComponent(EntityID, enemyPos, startingEnemyScale, rotationFloat);
+
+            //Convert into radians
+            float rotationInRadians = (float)((rotationFloat) * Math.PI / 180.0);
+
+            //Get forward vector X
+            float forwardX = (float)(Math.Sin(rotationInRadians));
+
+            //Get forward vector Y
+            float forwardY = (float)(Math.Cos(rotationInRadians));
+
+            movement.X = 0 + forwardX * 0.4f;
+            movement.Y = 0 + forwardY * 0.4f;
+
+            InternalCall.m_InternalSetVelocity(EntityID, movement);
+
+            isDead = true;
+
+            Vector2 pos;
+            Vector2 scale;
+            float rotation;
+
+            InternalCall.m_InternalGetTransformComponent(EntityID, out pos, out scale, out rotation);
+
+            InternalCall.m_InternalCallAddPrefab("prefab_enemyBloodPool", pos.X, pos.Y, rotation);
+        }
+
+        #endregion
 
     }
 }

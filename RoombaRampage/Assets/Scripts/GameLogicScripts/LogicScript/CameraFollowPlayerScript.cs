@@ -17,9 +17,9 @@ public class CameraFollowPlayerScript : ScriptBase
     private Vector2 startCamScale;
     private float startCamRotate;
 
-    private float deltatime;
+    //private float deltatime;
 
-    private static Vector2 previousplayerpos;
+    //private static Vector2 previousplayerpos;
 
     public override void GetEntityID(uint id)
     {
@@ -32,17 +32,17 @@ public class CameraFollowPlayerScript : ScriptBase
 
         playerID = InternalCall.m_InternalCallGetTagID("Player");
 
-        if (playerID < 0)
-        {
-            Console.WriteLine("Player Component not present in entity");
-        }
+        //if (playerID < 0)
+        //{
+        //    Console.WriteLine("Player Component not present in entity");
+        //}
 
-        int[] collidedEntities = InternalCall.m_InternalCallGetTagIDs("Default");
-        foreach (var tagid in collidedEntities)
-        {
+        //int[] collidedEntities = InternalCall.m_InternalCallGetTagIDs("Default");
+        //foreach (var tagid in collidedEntities)
+        //{
 
-            Console.WriteLine($"Default tag is {tagid}");
-        }
+        //    //Console.WriteLine($"Default tag is {tagid}");
+        //}
     }
 
     public override void Update()
@@ -50,22 +50,23 @@ public class CameraFollowPlayerScript : ScriptBase
         if (playerID < 0) return;
         InternalCall.m_InternalGetTransformComponent((uint)playerID, out pos, out playerScale, out playerRotate);
         InternalCall.m_InternalGetTransformComponent(EntityID, out startCamPos, out startCamScale, out startCamRotate);
-        deltatime = InternalCall.m_InternalCallGetDeltaTime();
+        //deltatime = InternalCall.m_InternalCallGetDeltaTime();
 
-        Vector2 targetpos = Mix(previousplayerpos, pos, deltatime);
-        Vector2 cameraCoord = Mix(startCamPos, targetpos, deltatime * 5.0f);
-        InternalCall.m_InternalSetTransformComponent(EntityID, cameraCoord, startCamScale, startCamRotate);
+        //Vector2 targetpos = Mix(previousplayerpos, pos, deltatime);
+        //Vector2 cameraCoord = Mix(startCamPos, targetpos, deltatime * 5.0f);
+        InternalCall.m_InternalSetTransformComponent(EntityID, pos, startCamScale, startCamRotate);
 
-        previousplayerpos = pos;
+        //previousplayerpos = pos;
     }
 
-    public Vector2 Mix(Vector2 lhs, Vector2 rhs, float time)
-    {
-        float oneMinusTime = 1 - time;
+    //public Vector2 Mix(Vector2 lhs, Vector2 rhs, float time)
+    //{
+    //    float oneMinusTime = 1 - time;
 
-        float x = (lhs.X * oneMinusTime) + (rhs.X * time);
-        float y = (lhs.Y * oneMinusTime) + (rhs.Y * time);
+    //    float x = (lhs.X * oneMinusTime) + (rhs.X * time);
+    //    float y = (lhs.Y * oneMinusTime) + (rhs.Y * time);
 
-        return new Vector2(x, y);
-    }
+    //    return new Vector2(x, y);
+    //}
+
 }
