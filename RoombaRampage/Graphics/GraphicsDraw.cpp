@@ -215,9 +215,9 @@ namespace graphicpipe
 				for (const char& c : textData.m_text)
 				{
 					text::CharacterData ch = assetmanager->m_fontManager.m_fonts[textData.m_fileName][c];
-					totalWidth += ((ch.m_advance >> 6) * textData.m_scale) / GraphicsCamera::m_windowHeight;
-					maxAscent = std::max(maxAscent, (ch.m_bearing.y * textData.m_scale) / GraphicsCamera::m_windowHeight);
-					maxDescent = std::max(maxDescent, ((ch.m_size.y - ch.m_bearing.y) * textData.m_scale) / GraphicsCamera::m_windowHeight);
+					totalWidth += ((ch.m_advance >> 6) * textData.m_scale * textData.m_xyScale.x) / GraphicsCamera::m_windowHeight;
+					maxAscent = std::max(maxAscent, (ch.m_bearing.y * textData.m_scale * textData.m_xyScale.y) / GraphicsCamera::m_windowHeight);
+					maxDescent = std::max(maxDescent, ((ch.m_size.y - ch.m_bearing.y) * textData.m_scale * textData.m_xyScale.y) / GraphicsCamera::m_windowHeight);
 				}
 				float totalHeight = maxAscent + maxDescent;
 
@@ -231,10 +231,10 @@ namespace graphicpipe
 					text::CharacterData ch = assetmanager->m_fontManager.m_fonts[textData.m_fileName][c];
 
 					// Calculate position and size for each character quad
-					float xpos = (textData.m_x + ch.m_bearing.x / GraphicsCamera::m_windowHeight * textData.m_scale);
-					float ypos = (textData.m_y - (ch.m_size.y - ch.m_bearing.y) / GraphicsCamera::m_windowHeight * textData.m_scale);
-					float w = ch.m_size.x * textData.m_scale / GraphicsCamera::m_windowHeight;
-					float h = ch.m_size.y * textData.m_scale / GraphicsCamera::m_windowHeight;
+					float xpos = (textData.m_x + ch.m_bearing.x / GraphicsCamera::m_windowHeight * (textData.m_scale * textData.m_xyScale.x));
+					float ypos = (textData.m_y - (ch.m_size.y - ch.m_bearing.y) / GraphicsCamera::m_windowHeight * (textData.m_scale * textData.m_xyScale.y));
+					float w = ch.m_size.x * textData.m_scale * textData.m_xyScale.x / GraphicsCamera::m_windowHeight;
+					float h = ch.m_size.y * textData.m_scale * textData.m_xyScale.y / GraphicsCamera::m_windowHeight;
 
 					// Update VBO for each character with texture coordinates from the atlas
 					float vertices[6][4] =
@@ -260,7 +260,7 @@ namespace graphicpipe
 					glDrawArrays(GL_TRIANGLES, 0, 6);
 
 					// Advance cursor for next glyph
-					textData.m_x += ((ch.m_advance >> 6) * textData.m_scale) / GraphicsCamera::m_windowHeight;
+					textData.m_x += ((ch.m_advance >> 6) * textData.m_scale * textData.m_xyScale.x) / GraphicsCamera::m_windowHeight;
 				}
 				textData.m_x = origin;
 

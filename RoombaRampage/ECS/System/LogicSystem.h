@@ -2,9 +2,9 @@
 /******************************************************************/
 /*!
 \file      LogicSystem.h
-\author    
-\par       c.boey@digipen.edu
-\date      Sept 28, 2024
+\author    Ng Jaz Winn
+\par       jazwinn.ng@digipen.edu
+\date      Nov 30, 2024
 \brief     
 
 Copyright (C) 2024 DigiPen Institute of Technology.
