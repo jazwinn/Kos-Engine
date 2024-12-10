@@ -32,7 +32,7 @@ namespace ecs {
 
 		std::vector<std::string> m_scripts;
 
-		std::unordered_map<std::string,MonoObject*> m_scriptInstances;
+		std::map<std::string,MonoObject*> m_scriptInstances;
 
 
 		REFLECTABLE(ScriptComponent, m_scripts)

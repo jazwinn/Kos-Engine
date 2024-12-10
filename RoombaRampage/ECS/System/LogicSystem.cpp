@@ -140,11 +140,15 @@ namespace ecs {
 			}
 
 
-
 			for (auto& script : scriptComp->m_scriptInstances) {
+				try {
+					// run the scripts update fuction
+					assetManager->m_scriptManager.m_InvokeMethod(script.first, "Update", script.second, nullptr);
+				}
+				catch (...) {
+					break;
+				}
 
-			// run the scripts update fuction
-				assetManager->m_scriptManager.m_InvokeMethod(script.first, "Update", script.second , nullptr);
 
 			}
 		}

@@ -395,7 +395,7 @@ namespace gui {
         if (ImGui::IsItemClicked())
         {
             m_clickedEntityId = id;
-            //std::cout << "EntityID: " << id << std::endl;
+            std::cout << "EntityID: " << id << std::endl;
             
         }
        
