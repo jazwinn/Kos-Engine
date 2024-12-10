@@ -1,9 +1,9 @@
 /********************************************************************/
 /*!
 \file      imgui_hierarchy_window.cpp
-\author    Chiu Jun Jie, junjie.c , 2301524
-\par       junjie.c@digipen.edu
-\date      Oct 02, 2024
+\author    Ng Jaz Winn, jazwinn.ng, 2301502
+\par       jazwinn.ng@digipen.edu
+\date      Nov 30, 2024
 \brief     This file contains the implementation of the ImGui Hierarchy Window for rendering and managing game objects.
            - Displays and updates a list of game objects (entities) in the ECS framework.
            - Provides functionality for adding, deleting, and duplicating game objects.
@@ -395,7 +395,7 @@ namespace gui {
         if (ImGui::IsItemClicked())
         {
             m_clickedEntityId = id;
-            //std::cout << "EntityID: " << id << std::endl;
+            std::cout << "EntityID: " << id << std::endl;
             
         }
        

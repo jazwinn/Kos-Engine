@@ -1,3 +1,17 @@
+/******************************************************************/
+/*!
+\file      imgui_contentBrowser.cpp
+\author    Ng Jaz Winn, jazwinn.ng, 2301502
+\par       jazwinn.ng@digipen.edu
+\date      Nov 30, 2024
+\brief     
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/******************************************************************/
+
 #include "../Config/pch.h"
 #include "Editor.h"
 

@@ -551,6 +551,8 @@ namespace script {
 		}
 
 		mono_free(nativeString);
+
+		throw 1;//stop the loop in the logic system
 	}
 
 	int InternalCall::m_InternalCallAddPrefab(MonoString* prefab, const float* x, const float* y, const float* rotation)

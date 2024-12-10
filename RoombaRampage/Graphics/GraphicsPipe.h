@@ -70,6 +70,7 @@ namespace graphicpipe {
         float m_x, m_y;                             ///< Position on the screen.
         float m_rotate{};                           ///< Rotation angle in degrees.
         float m_scale{};                            ///< Scale factor for text size.
+        glm::vec2 m_xyScale{};
         int m_layer{};                              ///< Layer for rendering order.
         glm::vec3 m_color{};                        ///< Text color (RGB).
         std::string m_fileName;                     ///< Font file used for rendering.

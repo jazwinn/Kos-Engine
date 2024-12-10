@@ -257,9 +257,9 @@ namespace ecs{
 		ECS* ecs = ECS::m_GetInstance();
 
 		//TODO change to sth other than assert
-		if (ecs->m_EntityCount >= (MaxEntity - 1)) {// -1 so as to keep all the last component pool as default to reset
-			LOGGING_ASSERT_WITH_MSG("Max Entity Count has been reached");
-		}
+		//if (ecs->m_EntityCount >= (MaxEntity - 1)) {// -1 so as to keep all the last component pool as default to reset
+		//	LOGGING_ASSERT_WITH_MSG("Max Entity Count has been reached");
+		//}
 		//assert(ecs->m_EntityCount < MaxEntity, "Max Entity Count has been reached");
 
 		EntityID ID = ecs->m_EntityCount;
@@ -269,6 +269,7 @@ namespace ecs{
 
 
 		ecs->m_EntityCount++;
+
 
 		//assign entity to default layer
 		ecs->m_layersStack.m_layerMap[layer::DEFAULT].second.push_back(ID);
@@ -376,7 +377,7 @@ namespace ecs{
 		// refector
 		m_DeregisterSystem(ID);
 
-		
+
 
 		// remove entity from scene
 		const auto& result = scenes::SceneManager::GetSceneByEntityID(ID);
@@ -384,9 +385,9 @@ namespace ecs{
 		auto it = std::find(entityList.begin(), entityList.end(), ID);
 		ecs->m_ECS_SceneMap.find(result.value())->second.m_sceneIDs.erase(it);
 
-		//store delete entity
-		m_deletedentity.push_back(std::make_pair(ID, ecs->m_ECS_EntityMap.find(ID)->second));
-		ecs->m_ECS_EntityMap.erase(ID);
+
+
+
 
 		//get child
 		if (Hierachy::m_GetChild(ID).has_value()) {
@@ -396,6 +397,16 @@ namespace ecs{
 			}
 		}
 
+		// reset all components
+		for (size_t n{}; n < TOTALTYPECOMPONENT; n++) {
+			if (ecs->m_ECS_EntityMap.find(ID)->second.test(n)) {
+				ecs->m_ECS_CombinedComponentPool[(ComponentType)n]->m_DeleteEntityComponent(ID);
+			}
+		}
+
+		//store delete entity
+		m_deletedentity.push_back(std::make_pair(ID, ecs->m_ECS_EntityMap.find(ID)->second));
+		ecs->m_ECS_EntityMap.erase(ID);
 
 		return true;
 	}

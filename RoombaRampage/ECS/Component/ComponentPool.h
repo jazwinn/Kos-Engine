@@ -142,6 +142,9 @@ namespace ecs {
 			if (Component.m_IsLive == false) {
 				Component.m_IsLive = true;
 				Component.m_Entity = ID;
+
+				// reset component data if reused
+				m_ResetComponent(ID);
 				
 				return &Component;
 			}
@@ -210,7 +213,10 @@ namespace ecs {
 		//TODO delete component from system vector
 		for (auto& Component : m_Pool) {
 			if (Component.m_Entity == ID && Component.m_IsLive) {
-				//Component.m_IsLive = false;
+
+				// set component to false
+				Component.m_IsLive = false;
+				return true;
 			}
 		}
 
