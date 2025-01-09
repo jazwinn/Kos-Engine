@@ -22,6 +22,17 @@ namespace ecs {
 		int m_pictureColumnLength{ 1 };
 		std::vector<std::vector<int>> m_tilePictureIndex;
 
+		//Changes for the Pathfinding System
+		std::vector<std::vector<bool>> m_walkable; // Indicates whether a tile can be walked on
+		std::vector<std::vector<float>> m_movementCost; // Movement cost for each tile
+
+		//This one to check with Jaz/Sean where to put
+		void Initialize(int rows, int columns, const std::vector<std::vector<bool>>& walkable, const std::vector<std::vector<float>>& movementCost) {
+			m_rowLength = rows;
+			m_columnLength = columns;
+			m_walkable = walkable;
+			m_movementCost = movementCost;
+		}
 
 		REFLECTABLE(TilemapComponent, m_tileIndex,m_tileLayer, m_rowLength, m_columnLength, m_pictureRowLength, m_pictureColumnLength);
 	};
