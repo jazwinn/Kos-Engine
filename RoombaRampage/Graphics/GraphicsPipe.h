@@ -128,6 +128,8 @@ namespace graphicpipe {
          */
         void m_funcSetupGrid(std::vector<glm::vec3>& vertices, int gridSize, float spacing);
 
+        void m_funcSetupFrameBufferVao();
+
         /**
          * @brief Sets up the Vertex Array Object (VAO) for rendering square outlines.
          */
@@ -291,6 +293,8 @@ namespace graphicpipe {
          */
         void m_funcDrawDebug();
 
+        void m_funcDrawGameFrameBuffer();
+
         /**
          * @brief Draws a grid on the screen.
          *
@@ -402,6 +406,7 @@ namespace graphicpipe {
         std::vector<TilemapData> m_transformedTilemaps{};
         std::vector<std::vector<std::vector<int>>> m_tilemapIndexArrays{};
 
+        unsigned int m_screenTextureVAO{};
         unsigned int m_screenTexture{}; ///< Texture for rendering the screen.
         unsigned int m_gamePreviewTexture{};
 

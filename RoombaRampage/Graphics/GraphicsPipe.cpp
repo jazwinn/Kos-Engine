@@ -64,6 +64,7 @@ namespace graphicpipe {
 
 		// Set up VAOs for different shapes and text rendering.
 		m_funcSetupVao(m_squareMesh);
+		m_funcSetupFrameBufferVao();
 		m_funcSetupCircleLinesVao();
 		m_funcSetupSquareLinesVao();
 		m_funcSetupGridVao();
@@ -187,12 +188,16 @@ namespace graphicpipe {
 			}
 			GraphicsCamera::setCurrCamera(0);
 			GraphicsCamera::m_CalculateCurrView();*/
-			glClearColor(0.86f, 0.86f, 0.86f, 1.f);
+			
+			/*glClearColor(0.86f, 0.86f, 0.86f, 1.f);
 			glEnable(GL_DEPTH_TEST);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 			m_funcDraw();
 			m_funcDrawTilemap();
-			m_funcDrawText();
+			m_funcDrawText();*/
+			//std::cout << "Hello" << std::endl;
+			m_funcDrawGameFrameBuffer();
+
 		}
 
 		m_funcClearContainers();

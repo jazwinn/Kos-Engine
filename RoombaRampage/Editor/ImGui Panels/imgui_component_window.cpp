@@ -1048,7 +1048,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                 CreateContext(ecs::TYPETILEMAPCOMPONENT, entityID);
 
-                if (open) {
+                if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPETILEMAPCOMPONENT)) {
 
                     assetmanager::AssetManager* Asset = assetmanager::AssetManager::m_funcGetInstance();
                     auto* tmc = static_cast<ecs::TilemapComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETILEMAPCOMPONENT]->m_GetEntityComponent(entityID));
