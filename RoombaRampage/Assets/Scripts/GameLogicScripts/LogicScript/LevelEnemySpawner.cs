@@ -51,9 +51,11 @@ public class LevelEnemySpawner : ScriptBase
             {
                 if (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID) == "Player")
                 {
-                    var collisionComponent = GetComponent.GetColliderComponent(EntityID);
+                    //var collisionComponent = GetComponent.GetColliderComponent(EntityID);
+                    var collisionComponent = Component.Get<ColliderComponent>(EntityID);
                     collisionComponent.m_collisionCheck = !collisionComponent.m_collisionCheck;
-                    SetComponent.SetCollisionComponent(EntityID, collisionComponent);
+                    //SetComponent.SetCollisionComponent(EntityID, collisionComponent);
+                    Component.Set<ColliderComponent>(EntityID, collisionComponent);
                     startSpawning = true;
 
                     foreach (int id in InternalCall.m_InternalCallGetTagIDs("Door"))
