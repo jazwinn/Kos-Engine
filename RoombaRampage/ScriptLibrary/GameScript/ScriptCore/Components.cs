@@ -95,6 +95,7 @@ public class AnimationComponent
     public int m_framesPerSecond;
     public float m_frameTimer;
     public bool m_isAnimating;
+    public int m_stripCount;
 }
 
 public class CameraComponent
