@@ -47,6 +47,8 @@ namespace Helper {
 
 		bool m_closeWindow{ false };
 
+		float m_gameRunTime;
+
 		float m_deltaTime;
 
 		float m_fpsCap;

@@ -90,6 +90,7 @@ namespace ecs{
 	void ECS::m_Update(float DT) {
 
 		ECS* ecs = ECS::m_GetInstance();
+		Helper::Helpers* help = Helper::Helpers::GetInstance();
 		//update deltatime
 		ecs->m_DeltaTime = DT;
 
@@ -98,9 +99,12 @@ namespace ecs{
 		//check for gamestate
 		if (ecs->m_state != ecs->m_nextState) {
 			if (ecs->m_nextState == START) {
+				//reset game time
+				help->m_gameRunTime = 0.f;
+
 				//if next state is start, run the logic start script
-			    Helper::Helpers::GetInstance()->currentNumberOfSteps = 0;
-				Helper::Helpers::GetInstance()->m_timeScale = 1;
+				help->currentNumberOfSteps = 0;
+				help->m_timeScale = 1;
 				std::shared_ptr<LogicSystem> sys = std::dynamic_pointer_cast<LogicSystem>(ecs->m_ECS_SystemMap.find(TYPELOGICSYSTEM)->second);
 				sys->m_StartLogic(); //TODO? place scene?
 
@@ -114,6 +118,9 @@ namespace ecs{
 				
 		}
 
+		if (ecs->m_state == RUNNING) {
+			help->m_gameRunTime += help->m_deltaTime;
+		}
 
 
 
@@ -131,7 +138,7 @@ namespace ecs{
 					//skip physics and logic if not running
 					continue;
 				}
-			}	
+			}
 
 			//iterate through all the scenes, check if true or false
 			std::vector<decltype(ecs->m_ECS_SceneMap)::key_type> keys;
