@@ -689,6 +689,11 @@ namespace script {
 		return Helper::Helpers::GetInstance()->currentNumberOfSteps;
 	}
 
+	float InternalCall::m_InternalCallGetGameTime()
+	{
+		return Helper::Helpers::GetInstance()->m_gameRunTime;
+	}
+
 	void InternalCall::m_InternalCallDeleteEntity(ecs::EntityID id)
 	{
 		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
@@ -803,7 +808,7 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_InternalCallIsWindowMinimise);
 		MONO_ADD_INTERNAL_CALL(m_getAccumulatedDeltaTime);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallGetSteps);
-
+		MONO_ADD_INTERNAL_CALL(m_InternalCallGetGameTime);
 
 	}
 }

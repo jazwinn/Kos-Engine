@@ -159,6 +159,9 @@ public static class InternalCall
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static int m_InternalCallGetSteps();
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static float m_InternalCallGetGameTime();
 }
 public static class Component
 {
