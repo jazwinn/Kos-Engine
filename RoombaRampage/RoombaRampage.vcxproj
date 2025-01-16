@@ -582,6 +582,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="Math\Vector2.h" />
     <ClInclude Include="Math\Vector3.h" />
     <ClInclude Include="Physics\Physics.h" />
+    <ClInclude Include="Physics\PhysicsCollisionResponse.h" />
     <ClInclude Include="Physics\PhysicsLayer.h" />
   </ItemGroup>
   <ItemGroup>

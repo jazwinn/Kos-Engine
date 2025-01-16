@@ -496,7 +496,7 @@ namespace physicspipe {
 		m_CalculateBoundingBox();
 		std::set<std::pair<std::shared_ptr<PhysicsData>, std::shared_ptr<PhysicsData>>> pair;
 		for (size_t i = 0; i < m_physicsEntities.size(); ++i) {
-			for (size_t j = 0; j < m_physicsEntities.size(); ++j) {
+			for (size_t j = i+1; j < m_physicsEntities.size(); ++j) {
 				int layer1 = m_physicsEntities[i]->m_layerID;
 				int layer2 = m_physicsEntities[j]->m_layerID;
 
@@ -507,6 +507,7 @@ namespace physicspipe {
 						pair.emplace(m_physicsEntities[i], m_physicsEntities[j]);
 						m_AddCollidedEntity(m_physicsEntities[i]);
 						m_AddCollidedEntity(m_physicsEntities[j]);
+
 					}
 				}
 			}
