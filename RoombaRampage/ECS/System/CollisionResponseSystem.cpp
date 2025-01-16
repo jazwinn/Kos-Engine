@@ -117,8 +117,8 @@ namespace ecs {
 								const auto& colComp2 = static_cast<ecs::ColliderComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(elem));
 								//ColComp->m_collisionState.find(elem)->second = physicspipe::CollisionState::EXIT;
 								//colComp2->m_collisionState.find(check_ID)->second = physicspipe::CollisionState::EXIT;
-								ColComp->m_OnCollisionExit(elem);
-								colComp2->m_OnCollisionExit(check_ID);
+								//ColComp->m_OnCollisionExit(elem);
+								//colComp2->m_OnCollisionExit(check_ID);
 								ColComp->m_collisionState.erase(elem);
 								colComp2->m_collisionState.erase(check_ID);
 								outOfVecInMap.erase(elem);
@@ -182,22 +182,22 @@ namespace ecs {
 				if (colComp->m_collisionState.find(collidedID) == ColComp->m_collisionState.end()) {
 					colComp->m_collisionState.emplace(collidedID, physicspipe::CollisionState::ENTERED);
 					colComp2->m_collisionState.emplace(check_ID, physicspipe::CollisionState::ENTERED);
-					colComp->m_OnCollisionEnter(collidedID);
-					colComp2->m_OnCollisionEnter(check_ID);
+					//colComp->m_OnCollisionEnter(collidedID);
+					//colComp2->m_OnCollisionEnter(check_ID);
 					colComp->m_keys.emplace(collidedID);
 					colComp2->m_keys.emplace(check_ID);
 				}
 				else if (colComp->m_collisionState.find(collidedID)->second == physicspipe::CollisionState::ENTERED) {
 					colComp->m_collisionState.find(collidedID)->second = physicspipe::CollisionState::CONTINUOUS;
 					colComp2->m_collisionState.find(check_ID)->second = physicspipe::CollisionState::CONTINUOUS;
-					colComp->m_OnCollisionStay(collidedID);
-					colComp2->m_OnCollisionStay(check_ID);
+					//colComp->m_OnCollisionStay(collidedID);
+					//colComp2->m_OnCollisionStay(check_ID);
 					colComp->m_keys.emplace(collidedID);
 					colComp2->m_keys.emplace(check_ID);
 				}
 				else if (colComp->m_collisionState.find(collidedID)->second == physicspipe::CollisionState::CONTINUOUS) {
-					colComp->m_OnCollisionStay(collidedID);
-					colComp2->m_OnCollisionStay(check_ID);
+					//colComp->m_OnCollisionStay(collidedID);
+					//colComp2->m_OnCollisionStay(check_ID);
 				}
 			}
 			//for (int i = 0; i < ColComp->m_collisionState.size(); i++) {
