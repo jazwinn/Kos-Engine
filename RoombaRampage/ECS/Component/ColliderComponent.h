@@ -59,11 +59,11 @@ namespace ecs {
 
 		mat3x3::Mat3x3 m_collider_Transformation{};
 
-		void m_OnCollisionEnter(EntityID [[maybe_unused]] colPartner) { colPartner += 1; } //the += 1 is just to remove warnings
+		//void m_OnCollisionEnter(EntityID [[maybe_unused]] colPartner) { colPartner += 1; } //the += 1 is just to remove warnings
 
-		void m_OnCollisionStay(EntityID [[maybe_unused]]colPartner) { colPartner += 1; }
+		//void m_OnCollisionStay(EntityID [[maybe_unused]]colPartner) { colPartner += 1; }
 
-		void m_OnCollisionExit(EntityID [[maybe_unused]]colPartner) { colPartner += 1; }
+		//void m_OnCollisionExit(EntityID [[maybe_unused]]colPartner) { colPartner += 1; }
 		 
 		REFLECTABLE(ColliderComponent, m_CollisionCheck, m_Size, m_OffSet, m_drawDebug, m_radius, m_type)
 	};
