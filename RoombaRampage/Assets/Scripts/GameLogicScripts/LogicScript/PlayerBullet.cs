@@ -11,7 +11,7 @@ public class PlayerBullet : ScriptBase
     #region Entity ID
     private uint EntityID;
 
-    public override void GetEntityID(uint id)
+    public override void Awake(uint id)
     {
         EntityID = id;
     }

@@ -231,7 +231,7 @@ namespace script {
                 for (auto& script : m_CSScripts) {
                     m_LoadMethod(filename, script.first, "Start", 0);
                     m_LoadMethod(filename, script.first, "Update", 0);
-                    m_LoadMethod(filename, script.first, "GetEntityID", 1);
+                    m_LoadMethod(filename, script.first, "Awake", 1);
 
                 }
             }

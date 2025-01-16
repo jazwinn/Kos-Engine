@@ -694,6 +694,21 @@ namespace script {
 		return Helper::Helpers::GetInstance()->m_gameRunTime;
 	}
 
+	void InternalCall::m_EnableScript(ecs::EntityID id, MonoString* monoString)
+	{
+		//char* nativeString = mono_string_to_utf8(monoString);
+		//ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+		//ecs::ScriptComponent* script = static_cast<ecs::ScriptComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESCRIPTCOMPONENT]->m_GetEntityComponent(id));
+
+		//if (script == NULL) return;
+
+		//auto results = std::find(script->m_scriptInstances.begin(), script->m_scriptInstances.end(), std::string(nativeString));
+
+		//if (results == script->m_scriptInstances.end()) return;
+
+		//mono_free(nativeString);
+	}
+
 	void InternalCall::m_InternalCallDeleteEntity(ecs::EntityID id)
 	{
 		ecs::ECS* ecs = ecs::ECS::m_GetInstance();

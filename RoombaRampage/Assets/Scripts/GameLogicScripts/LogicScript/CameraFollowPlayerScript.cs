@@ -21,7 +21,7 @@ public class CameraFollowPlayerScript : ScriptBase
 
     //private static Vector2 previousplayerpos;
 
-    public override void GetEntityID(uint id)
+    public override void Awake(uint id)
     {
         EntityID = id;
     }

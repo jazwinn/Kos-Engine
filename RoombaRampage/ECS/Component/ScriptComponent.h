@@ -34,6 +34,12 @@ namespace ecs {
 
 		std::map<std::string,MonoObject*> m_scriptInstances;
 
+		bool m_isEnabled{ true };
+
+		// need not serialize after this line
+
+		bool m_isStart{ false };
+
 
 		REFLECTABLE(ScriptComponent, m_scripts)
 
