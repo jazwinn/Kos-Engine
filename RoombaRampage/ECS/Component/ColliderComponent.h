@@ -43,7 +43,7 @@ namespace ecs {
 
 		float m_radius{0.5f};
 
-		bool m_CollisionCheck{ true };
+		bool m_CollisionCheck{ true }; // to pass collision data into the physics pipeline
 
 
 		// no need to serialize or reflect
