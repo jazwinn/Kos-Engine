@@ -199,6 +199,7 @@ namespace graphicpipe
 		m_funcDrawGrid();
 		m_funcDrawDebug();
 		m_funcDrawTilemap();
+		m_funcDrawGridCollider();
 		m_funcDraw();
 		//m_funcDrawLine({ 1.f,1.f,0 }, { -1.f,-1.f,0 }); // Comment this out when done debugging;
 		m_funcDrawText();
@@ -379,6 +380,52 @@ namespace graphicpipe
 
 	}
 
+	void GraphicsPipe::m_funcDrawGridCollider()
+	{
+		
+		glUseProgram(m_gridDebugShaderProgram);
+
+		
+
+		for (int i{}; i < m_transformedTilemaps.size() && !m_gridColliderChecks.empty(); ++i)
+		{
+			if (m_gridColliderChecks[i].empty())
+			{
+				continue;
+			}
+
+			GLenum err = glGetError();
+			if (err != GL_NO_ERROR) {
+				//LOGGING_ERROR("First OpenGL Error: 0x%X", err);
+				std::cout << "First OpenGL Error: " << err << std::endl;
+			}
+
+			glBindBuffer(GL_ARRAY_BUFFER, m_gridColliderBuffer);
+			glNamedBufferData(m_gridColliderBuffer, m_gridColliderChecks[i].size() * sizeof(int), &m_gridColliderChecks[i][0], GL_DYNAMIC_DRAW);
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+			glUniform1i(glGetUniformLocation(m_gridDebugShaderProgram, "tilemapRows"), m_transformedTilemaps[i].m_tilemapDimensions.x);
+
+			GLenum err2 = glGetError();
+			if (err2 != GL_NO_ERROR) {
+				//LOGGING_ERROR("First OpenGL Error: 0x%X", err);
+				std::cout << "Second OpenGL Error: " << err2 << std::endl;
+			}
+
+			glUniform1i(glGetUniformLocation(m_gridDebugShaderProgram, "tilemapColumns"), m_transformedTilemaps[i].m_tilemapDimensions.y);
+
+			glUniformMatrix3fv(glGetUniformLocation(m_gridDebugShaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currViewMatrix));
+
+			glUniformMatrix3fv(glGetUniformLocation(m_gridDebugShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currOrthoMatrix));
+
+			glUniformMatrix3fv(glGetUniformLocation(m_gridDebugShaderProgram, "modelMatrix"), 1, GL_FALSE, glm::value_ptr(m_transformedTilemaps[i].m_transformation));
+
+			glBindVertexArray(m_squareLinesMesh.m_vaoId);
+			glDrawElementsInstanced(m_squareLinesMesh.m_primitiveType, m_squareLinesMesh.m_indexElementCount, GL_UNSIGNED_SHORT, NULL, static_cast<GLsizei>(m_transformedTilemaps[i].m_tilemapDimensions.x * m_transformedTilemaps[i].m_tilemapDimensions.y));
+			glBindVertexArray(0);
+		}
+	}
+
 	void GraphicsPipe::m_funcDrawTilemap()
 	{
 		glUseProgram(m_tilemapShaderProgram);
@@ -391,7 +438,10 @@ namespace graphicpipe
 			}
 			glBindBuffer(GL_ARRAY_BUFFER, m_tileIndexBuffer);
 			glNamedBufferData(m_tileIndexBuffer, m_tileIndexes[i].size() * sizeof(int), &m_tileIndexes[i][0], GL_DYNAMIC_DRAW);
-			glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+			//glBindBuffer(GL_ARRAY_BUFFER, m_gridColliderBuffer);
+			//glNamedBufferData(m_gridColliderBuffer, m_gridColliderChecks[i].size() * sizeof(int), &m_gridColliderChecks[i][0], GL_DYNAMIC_DRAW);
+			//glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 
 			glActiveTexture(GL_TEXTURE0 + m_textureIDs[m_transformedTilemaps[i].m_textureID]); // Activate each texture unit

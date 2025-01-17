@@ -72,12 +72,14 @@ namespace graphicpipe {
 		m_funcSetDrawMode(GL_FILL);
 
 		// Compile and set up shader programs for various rendering tasks.
+		m_gridDebugShaderProgram = m_funcSetupShader(gridDebugVertexShader, gridDebugFragmentShader);
 		m_genericShaderProgram = m_funcSetupShader(genericVertexShader, genericFragmentShader);
 		m_frameBufferShaderProgram = m_funcSetupShader(frameBufferVertexShader, frameBufferFragmentShader);
 		m_debugShaderProgram = m_funcSetupShader(debugVertexShader, debugFragmentShader);
 		m_textShaderProgram = m_funcSetupShader(textVertexShader, textFragmentShader);
 		m_gridShaderProgram = m_funcSetupShader(gridVertexShader, gridFragmentShader);
 		m_tilemapShaderProgram = m_funcSetupShader(tilemapVertexShader, tilemapFragmentShader);
+		
 
 		// Initialize model-to-NDC transformation matrix and other drawing data.
 		m_modelToNDCMatrix.push_back(m_testMatrix);
@@ -89,6 +91,7 @@ namespace graphicpipe {
 		m_colors.push_back({ 0.f, 0.f, 0.f, 0.f });
 		m_debugBoxToNDCMatrix.push_back(m_testMatrix);
 		m_debugBoxCollisionChecks.push_back(false);
+		m_gridColliderChecks.push_back({ 0 });
 
 		// Set up array buffer and framebuffers for offscreen rendering.
 		m_funcSetupArrayBuffer();
@@ -171,6 +174,8 @@ namespace graphicpipe {
 		m_transformedTilemaps.clear();
 		m_tileIndexes.clear();
 		m_tilemapIndexArrays.clear();
+		m_gridColliderArrays.clear();
+		m_gridColliderChecks.clear();
 		GraphicsCamera::m_cameras.clear();
 		
 	}

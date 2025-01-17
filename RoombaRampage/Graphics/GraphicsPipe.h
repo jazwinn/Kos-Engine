@@ -172,6 +172,7 @@ namespace graphicpipe {
         unsigned int m_textShaderProgram{};         ///< Shader program for text rendering.
         unsigned int m_gridShaderProgram{};         ///< Shader program for rendering grid lines.
         unsigned int m_tilemapShaderProgram{};      ///< Shader program for rendering tilemaps.
+        unsigned int m_gridDebugShaderProgram{};     ///< Shader program for rendering collidable grids.
 
         // Buffers
         unsigned int m_modelMatrixArrayBuffer{};    ///< Array buffer for model matrices.
@@ -189,6 +190,7 @@ namespace graphicpipe {
         unsigned int m_gridBuffer{};                ///< Buffer for grid vertex data.
         unsigned int m_colorBuffer{};               ///< Buffer for vertex color data.
         unsigned int m_tileIndexBuffer{};           ///< Buffer for tilemap indices.
+        unsigned int m_gridColliderBuffer{};
 
         glm::mat3 m_testMatrix{};                   ///< Test matrix for rendering.
 
@@ -310,6 +312,8 @@ namespace graphicpipe {
          */
         void m_funcDrawLine(glm::vec3 p0, glm::vec3 p1);
 
+        void m_funcDrawGridCollider();
+
 
         /**
          * @brief Draws a tilemap to the screen.
@@ -397,6 +401,7 @@ namespace graphicpipe {
         std::vector<int> m_textureOrder{}; ///< Order of texture bindings.
         std::vector<glm::vec4> m_colors{}; 
         std::vector<std::vector<int>> m_tileIndexes{};
+        std::vector<std::vector<int>> m_gridColliderChecks{};
 
         std::vector<unsigned int> m_textureIDs{}; ///< Array of texture IDs.
         std::vector<int> m_layers{};
@@ -405,6 +410,7 @@ namespace graphicpipe {
         std::vector<image::Image> m_imageData{}; ///< Image data for rendering.
         std::vector<TilemapData> m_transformedTilemaps{};
         std::vector<std::vector<std::vector<int>>> m_tilemapIndexArrays{};
+        std::vector<std::vector<std::vector<int>>> m_gridColliderArrays{};
 
         unsigned int m_screenTextureVAO{};
         unsigned int m_screenTexture{}; ///< Texture for rendering the screen.
@@ -471,6 +477,16 @@ namespace graphicpipe {
         const std::string tilemapFragmentShader =
         {
           #include "../Graphics/tilemapFragmentShader.frag"
+        };
+
+        const std::string gridDebugVertexShader =
+        {
+          #include "../Graphics/gridDebugVertexShader.vert"
+        };
+
+        const std::string gridDebugFragmentShader =
+        {
+          #include "../Graphics/gridDebugFragmentShader.frag"
         };
 
     };
