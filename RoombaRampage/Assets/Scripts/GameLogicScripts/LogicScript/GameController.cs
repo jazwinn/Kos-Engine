@@ -12,31 +12,10 @@ public class GameController : ScriptBase
     #region Entity ID
     private uint EntityID;
 
-    public override void GetEntityID(uint id)
+    public override void Awake(uint id)
     {
         EntityID = id;
-    }
-    #endregion
 
-    public static bool gameIsPaused;
-
-    public bool easyMode;
-
-    private int[] pauseMenuID;
-    private string pauseMenuText;
-    private string pauseMenuFontFileName;
-    private int pauseMenuFontLayer;
-    private float pauseMenuFontSize;
-    private Vector3 pauseMenuFontColor;
-    private int pauseMenuShowLayer = 100;
-    private int pauseMenuHideLayer = -1000;
-
-    public static bool isSceneActive;
-
-    private bool confirmQuit;
-
-    public override void Start()
-    {
         InternalCall.m_InternalCallPlayAudio(EntityID, "aud_testLoop");
 
         LevelDoorLocker.doorLocked = false;
@@ -59,12 +38,35 @@ public class GameController : ScriptBase
             InternalCall.m_InternalSetTextComponent((uint)pMenuID, pauseMenuText, pauseMenuFontFileName, pauseMenuHideLayer, pauseMenuFontSize, pauseMenuFontColor);
         }
 
-        foreach (int id in InternalCall.m_InternalCallGetTagIDs("UIQuitConfirmation"))
+        foreach (int ID in InternalCall.m_InternalCallGetTagIDs("UIQuitConfirmation"))
         {
-            TextComponent textComponent = GetComponent.GetTextComponent((uint)id);
+            TextComponent textComponent = GetComponent.GetTextComponent((uint)ID);
             textComponent.m_fontLayer = -1000;
-            SetComponent.SetTextComponent((uint)id, textComponent);
+            SetComponent.SetTextComponent((uint)ID, textComponent);
         }
+    }
+    #endregion
+
+    public static bool gameIsPaused;
+
+    public bool easyMode;
+
+    private int[] pauseMenuID;
+    private string pauseMenuText;
+    private string pauseMenuFontFileName;
+    private int pauseMenuFontLayer;
+    private float pauseMenuFontSize;
+    private Vector3 pauseMenuFontColor;
+    private int pauseMenuShowLayer = 100;
+    private int pauseMenuHideLayer = -1000;
+
+    public static bool isSceneActive;
+
+    private bool confirmQuit;
+
+    public override void Start()
+    {
+       
     }
 
     public override void Update()

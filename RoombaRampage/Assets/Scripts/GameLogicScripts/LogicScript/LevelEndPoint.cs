@@ -12,9 +12,11 @@ public class LevelEndPoint : ScriptBase
     #region Entity ID
     private uint EntityID;
 
-    public override void GetEntityID(uint id)
+    public override void Awake(uint id)
     {
         EntityID = id;
+
+        isWinnable = false;
     }
     #endregion
 
@@ -22,7 +24,7 @@ public class LevelEndPoint : ScriptBase
 
     public override void Start()
     {
-        isWinnable = false;
+
     }
 
     public override void Update()

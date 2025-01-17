@@ -574,6 +574,10 @@ namespace script {
 
 		static float m_InternalCallGetGameTime();
 
+		static void m_EnableScript(ecs::EntityID id, MonoString* monoString);
+
+		static void m_DisableScript(ecs::EntityID id, MonoString* monoString);
+
 	public:
 		/******************************************************************/
 		/*!
