@@ -22,7 +22,6 @@ namespace ecs {
 		int m_pictureColumnLength{ 1 };
 		std::vector<std::vector<int>> m_tilePictureIndex;
 
-
 		REFLECTABLE(TilemapComponent, m_tileIndex,m_tileLayer, m_rowLength, m_columnLength, m_pictureRowLength, m_pictureColumnLength);
 	};
 
