@@ -54,6 +54,8 @@ namespace Tilemap
 	/******************************************************************/
 	void setIndividualTile(vector2::Vec2& originCoordinates, const vector2::Vec2& tileCoordinates, ecs::TilemapComponent* tilemap);
 
+	void setCollidableTile(vector2::Vec2& originCoordinates, const vector2::Vec2& tileCoordinates, ecs::TilemapComponent* tilemap);
+
 	/******************************************************************/
 	/*!
 	\fn      void Tilemap::debugTileIndex(ecs::TilemapComponent* tilemap)
@@ -63,6 +65,8 @@ namespace Tilemap
 	*/
 	/******************************************************************/
 	void debugTileIndex(ecs::TilemapComponent* tilemap);
+
+	void debugGridChecks(ecs::TilemapComponent* tilemap);
 
 }
 
