@@ -176,6 +176,7 @@ namespace graphicpipe {
 		m_tilemapIndexArrays.clear();
 		m_gridColliderArrays.clear();
 		m_gridColliderChecks.clear();
+		m_colliderGridData.clear();
 		GraphicsCamera::m_cameras.clear();
 		
 	}
