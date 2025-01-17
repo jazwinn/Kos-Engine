@@ -30,10 +30,11 @@ namespace physicspipe {
 	physicslayer::PhysicsLayer* physicsLayer = physicslayer::PhysicsLayer::m_GetInstance(); // Get the PhysicsLayer instance
 	std::vector<int> Physics::m_checker{};
 
-	Circle::Circle(float radius, vector2::Vec2 shape_position, vector2::Vec2 shape_scale, vector2::Vec2 shape_velocity, int entity_ID, int layer_ID)
+	Circle::Circle(float radius, vector2::Vec2 shape_position, vector2::Vec2 prevposition, vector2::Vec2 shape_scale, vector2::Vec2 shape_velocity, int entity_ID, int layer_ID)
 		: m_radius(radius)   // Initialize radius
 	{
 		m_position = shape_position;
+		m_prevPosition = prevposition;
 		m_scale = shape_scale;
 		m_velocity = shape_velocity;
 		m_ID = entity_ID;
@@ -42,10 +43,12 @@ namespace physicspipe {
 	}
 
 
-	Rectangle::Rectangle(float rect_height, float rect_width, float rect_angle, vector2::Vec2 shape_position, vector2::Vec2 shape_scale, vector2::Vec2 shape_velocity, int entity_ID, int layer_ID)
+	Rectangle::Rectangle(float rect_height, float rect_width, float rect_angle, vector2::Vec2 shape_position, vector2::Vec2 prevposition, vector2::Vec2 shape_scale, vector2::Vec2 shape_velocity, int entity_ID, int layer_ID)
 		: m_height(rect_height), m_width(rect_width)  // Initialize height and width
 	{
 		m_position = shape_position;
+		m_prevPosition = prevposition;
+		m_scale = shape_scale;
 		m_scale = shape_scale;
 		m_velocity = shape_velocity;
 		m_ID = entity_ID;
@@ -70,13 +73,13 @@ namespace physicspipe {
 
 
 
-	void Physics::m_SendPhysicsData(float rect_height, float rect_width,float rect_angle, vector2::Vec2 position, vector2::Vec2 scale, vector2::Vec2 velocity, int ID, layer::LAYERS layerID) {
-		m_physicsEntities.push_back(std::make_shared<Rectangle>(rect_height, rect_width,rect_angle, position, scale, velocity, ID, static_cast<int>(layerID)));
+	void Physics::m_SendPhysicsData(float rect_height, float rect_width,float rect_angle, vector2::Vec2 position, vector2::Vec2 prevposition ,vector2::Vec2 scale, vector2::Vec2 velocity, int ID, layer::LAYERS layerID) {
+		m_physicsEntities.push_back(std::make_shared<Rectangle>(rect_height, rect_width,rect_angle, position, prevposition, scale, velocity, ID, static_cast<int>(layerID)));
 		//	m_layerToEntities[layerID].push_back(std::make_shared<Rectangle>(rect_height, rect_width, rect_angle, position, scale, velocity, ID));
 	}
 
-	void Physics::m_SendPhysicsData(float radius, vector2::Vec2 position, vector2::Vec2 scale, vector2::Vec2 velocity, int ID, layer::LAYERS layerID) {
-		m_physicsEntities.push_back(std::make_shared<Circle>(radius, position, scale, velocity, ID, static_cast<int>(layerID)));
+	void Physics::m_SendPhysicsData(float radius, vector2::Vec2 position, vector2::Vec2 prevposition, vector2::Vec2 scale, vector2::Vec2 velocity, int ID, layer::LAYERS layerID) {
+		m_physicsEntities.push_back(std::make_shared<Circle>(radius, position, prevposition, scale, velocity, ID, static_cast<int>(layerID)));
 		//	m_layerToEntities[layerID].push_back(std::make_shared<Circle>(radius, position, scale, velocity, ID));
 	}
 
