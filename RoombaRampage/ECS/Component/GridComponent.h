@@ -11,12 +11,12 @@ namespace ecs {
 
 	public:
 
-		int m_GridRow{ 1 };
-		int m_GridColumn{ 1 };
-		bool m_IsCollidable{ true };
+		int m_GridRowLength{ 1 };
+		int m_GridColumnLength{ 1 };
+		bool m_SetCollidable{ true };
 		std::vector<std::vector<int>> m_IsWall;
 
-		REFLECTABLE(GridComponent, m_GridRow, m_GridColumn, m_IsCollidable)
+		REFLECTABLE(GridComponent, m_GridRowLength, m_GridColumnLength, m_SetCollidable)
 	};
 }
 

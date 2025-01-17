@@ -89,7 +89,6 @@ namespace graphicpipe
 				m_tilemapData[n].m_transformation[1][0] = m_tilemapData[n].m_transformation[1][0] * heightRatio;
 				//int moveCount = 0;
 				m_tileIndexes.push_back({});
-				m_gridColliderChecks.push_back({});
 				for (int i = 0; i < m_tilemapIndexArrays[n].size(); ++i)
 				{
 					
@@ -99,13 +98,6 @@ namespace graphicpipe
 										    );
 					
 				}
-				for (int i = 0; i < m_gridColliderArrays[n].size(); ++i)
-				{
-					m_gridColliderChecks[n].insert(m_gridColliderChecks[n].end(),
-						std::make_move_iterator(m_gridColliderArrays[n][i].begin()),
-						std::make_move_iterator(m_gridColliderArrays[n][i].end())
-					);
-				}
 			}
 			/*for (int x : m_tileIndexes)
 			{
@@ -114,5 +106,21 @@ namespace graphicpipe
 			m_transformedTilemaps = std::move(m_tilemapData);
 			m_tilemapData.clear();
 		}
+		if (m_colliderGridData.size() > 0)
+		{
+			for (int n{}; n < m_colliderGridData.size(); n++)
+			{
+				m_gridColliderChecks.push_back({});
+				
+				for (int i = 0; i < m_gridColliderArrays[n].size(); ++i)
+				{
+					m_gridColliderChecks[n].insert(m_gridColliderChecks[n].end(),
+						std::make_move_iterator(m_gridColliderArrays[n][i].begin()),
+						std::make_move_iterator(m_gridColliderArrays[n][i].end())
+					);
+				}
+			}
+		}
+
 	}
 }

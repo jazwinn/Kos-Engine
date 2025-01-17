@@ -221,7 +221,8 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
     const char* ComponentNames[] =
     {
         "Add Components", "Collider Component", "Sprite Component", "Player Component", "Rigid Body Component", "Text Component", 
-        "Animation Component", "Camera Component" , "Button Component" , "Script Component", "Tilemap Component", "Audio Component"
+        "Animation Component", "Camera Component" , "Button Component" , "Script Component", "Tilemap Component", "Audio Component",
+        "Grid Component"
     };
     static int ComponentType = 0;
 
@@ -333,6 +334,14 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 ComponentType = 0;
                 if (!EntitySignature.test(ecs::TYPEAUDIOCOMPONENT)) {
                     events::AddComponent action(entityID, ecs::TYPEAUDIOCOMPONENT);
+                    DISPATCH_ACTION_EVENT(action);
+                }
+            }
+            if (ComponentType == 12) {
+                ecs->m_AddComponent(ecs::TYPEGRIDCOMPONENT, entityID);
+                ComponentType = 0;
+                if (!EntitySignature.test(ecs::TYPEGRIDCOMPONENT)) {
+                    events::AddComponent action(entityID, ecs::TYPEGRIDCOMPONENT);
                     DISPATCH_ACTION_EVENT(action);
                 }
             }
@@ -1042,6 +1051,8 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
             }
 
+           
+
             if (EntitySignature.test(ecs::TYPETILEMAPCOMPONENT)) {
 
                 open = ImGui::CollapsingHeader("Tilemap Component");
@@ -1109,16 +1120,16 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                     Tilemap::resizeTiles(tmc, tmc->m_rowLength, tmc->m_columnLength);
 
                     if (ImGui::Button("Pick Tile"))
-                    {
-                        m_tilePickerMode = true;
-                        m_collisionSetterMode = false;
-                    }
+                     {
+                         m_tilePickerMode = true;
+                         m_collisionSetterMode = false;
+                     }
 
-                    if (ImGui::Button("Set Colliders"))
+                    /*if (ImGui::Button("Set Colliders"))
                     {
                         m_tilePickerMode = false;
                         m_collisionSetterMode = true;
-                    }
+                    }*/
                     //Tilemap::debugTileIndex(tmc);
 
                     //std::cout << EditorCamera::calculateWorldCoordinatesFromMouse(ImGui::GetMousePos().x, ImGui::GetMousePos().y).m_y << std::endl;
@@ -1126,6 +1137,32 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 }
 
 
+            }
+
+            if (EntitySignature.test(ecs::TYPEGRIDCOMPONENT)) {
+
+                open = ImGui::CollapsingHeader("Grid Component");
+
+                CreateContext(ecs::TYPEGRIDCOMPONENT, entityID);
+
+                if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEGRIDCOMPONENT)) {
+
+                    auto* grid = static_cast<ecs::GridComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEGRIDCOMPONENT]->m_GetEntityComponent(entityID));
+                    auto* transform = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(entityID));
+
+              
+                    if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEGRIDCOMPONENT)) {
+                        auto* rbc = static_cast<ecs::GridComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEGRIDCOMPONENT]->m_GetEntityComponent(entityID));
+                        rbc->ApplyFunction(DrawComponents(rbc->Names()));
+                    }
+                    Tilemap::resizeCollidableGrid(grid, grid->m_GridRowLength, grid->m_GridColumnLength);
+
+                    if (ImGui::Button("Set Colliders"))
+                    {
+                        m_tilePickerMode = false;
+                        m_collisionSetterMode = true;
+                    }
+                }
             }
             if (EntitySignature.test(ecs::TYPEAUDIOCOMPONENT)) {
                 open = ImGui::CollapsingHeader("Audio Component");

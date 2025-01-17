@@ -40,6 +40,12 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 namespace graphicpipe {
 
+    struct ColliderGridData
+    {
+        glm::mat3 m_transformation{};
+        glm::ivec2 m_gridDimensions{};
+    };
+
     struct TilemapData {
         glm::mat3 m_transformation{};               ///< Transformation matrix for the tilemap.
         unsigned int m_textureID{};                 ///< Texture ID for the tilemap.
@@ -392,6 +398,7 @@ namespace graphicpipe {
         std::vector<glm::mat3> m_debugCircleToNDCMatrix{};
 
         // Data for rendering
+        std::vector<ColliderGridData> m_colliderGridData{};
         std::vector<TilemapData> m_tilemapData{};
         std::vector<GraphicsData> m_modelData{}; ///< Graphics data for rendering.
         std::vector<DebugDrawData> m_debugBoxData{}; ///< Data for rendering debug boxes.
@@ -402,6 +409,7 @@ namespace graphicpipe {
         std::vector<glm::vec4> m_colors{}; 
         std::vector<std::vector<int>> m_tileIndexes{};
         std::vector<std::vector<int>> m_gridColliderChecks{};
+
 
         std::vector<unsigned int> m_textureIDs{}; ///< Array of texture IDs.
         std::vector<int> m_layers{};

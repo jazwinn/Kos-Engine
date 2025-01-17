@@ -69,7 +69,19 @@ namespace ecs {
 			//skip component not of the scene
 			if (grid->m_scene != scene) continue;
 
+			transform->m_position.m_x = floor(transform->m_transformation.m_e20);
+			transform->m_position.m_y = floor(transform->m_transformation.m_e21);
+
+			transform->m_transformation.m_e20 = floor(transform->m_transformation.m_e20) + 0.5f;
+			transform->m_transformation.m_e21 = floor(transform->m_transformation.m_e21) + 0.5f;
+
 			//ECS* ecs = ECS::m_GetInstance();
+
+			graphicsPipe->m_colliderGridData.push_back({ glm::mat3{transform->m_transformation.m_e00,transform->m_transformation.m_e01,transform->m_transformation.m_e02,
+																transform->m_transformation.m_e10,transform->m_transformation.m_e11, transform->m_transformation.m_e12,
+															transform->m_transformation.m_e20, transform->m_transformation.m_e21, transform->m_transformation.m_e22},glm::ivec2{grid->m_GridRowLength,grid->m_GridColumnLength} });
+
+			graphicsPipe->m_gridColliderArrays.push_back(grid->m_IsWall);
 
 		}
 

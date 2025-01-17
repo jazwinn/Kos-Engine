@@ -217,14 +217,14 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
         
     }
 
-    if (m_collisionSetterMode && ImGui::IsMouseDown(ImGuiMouseButton_Left) && !ImGuizmo::IsUsing() && ImGui::IsWindowHovered() && ecs->m_ECS_EntityMap[m_clickedEntityId].test(ecs::TYPETILEMAPCOMPONENT))
+    if (m_collisionSetterMode && ImGui::IsMouseDown(ImGuiMouseButton_Left) && !ImGuizmo::IsUsing() && ImGui::IsWindowHovered() && ecs->m_ECS_EntityMap[m_clickedEntityId].test(ecs::TYPEGRIDCOMPONENT))
     {
-        auto* tmc = static_cast<ecs::TilemapComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETILEMAPCOMPONENT]->m_GetEntityComponent(m_clickedEntityId));
+        auto* grid = static_cast<ecs::GridComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEGRIDCOMPONENT]->m_GetEntityComponent(m_clickedEntityId));
         auto* transform = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(m_clickedEntityId));
-        if (!tmc->m_tilemapFile.empty()) {
-            Tilemap::setCollidableTile(transform->m_position, EditorCamera::calculateWorldCoordinatesFromMouse(static_cast<int>(ImGui::GetMousePos().x), static_cast<int>(ImGui::GetMousePos().y)), tmc);
-            Tilemap::debugGridChecks(tmc);
-        }
+      
+        Tilemap::setCollidableTile(transform->m_position, EditorCamera::calculateWorldCoordinatesFromMouse(static_cast<int>(ImGui::GetMousePos().x), static_cast<int>(ImGui::GetMousePos().y)), grid);
+        Tilemap::debugGridChecks(grid);
+        
 
     }
 

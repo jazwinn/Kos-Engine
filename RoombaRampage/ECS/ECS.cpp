@@ -59,7 +59,7 @@ namespace ecs{
 		m_AddComponentToECS<ButtonComponent>(TYPEBUTTONCOMPONENT);
 		m_AddComponentToECS<TilemapComponent>(TYPETILEMAPCOMPONENT);
 		m_AddComponentToECS<AudioComponent>(TYPEAUDIOCOMPONENT);
-		m_AddComponentToECS<AudioComponent>(TYPEGRIDCOMPONENT);
+		m_AddComponentToECS<GridComponent>(TYPEGRIDCOMPONENT);
 
 
 
