@@ -56,10 +56,7 @@
             "static": false
         },
         "script": {
-            "scripts": [
-                "PlayerController",
-                "CollisionResponse"
-            ]
+            "scripts": []
         }
     }
 ]

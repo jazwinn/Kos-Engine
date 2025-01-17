@@ -14,6 +14,23 @@ public class PlayerBullet : ScriptBase
     public override void Awake(uint id)
     {
         EntityID = id;
+
+        speed = 8;
+
+        InternalCall.m_InternalGetTransformComponent(EntityID, out startingBulletPos, out startingBulletScale, out startingBulletRotate);
+
+        InternalCall.m_InternalGetAnimationComponent(EntityID, out frameNumber, out framesPerSecond, out frameTimer, out isAnimating, out stripCount);
+
+        rotation = startingBulletRotate;
+
+        //Convert into radians
+        rotationInRadians = (float)((rotation) * Math.PI / 180.0);
+
+        //Get forward vector X
+        forwardX = (float)(Math.Sin(rotationInRadians));
+
+        //Get forward vector Y
+        forwardY = (float)(Math.Cos(rotationInRadians));
     }
     #endregion
 
@@ -36,22 +53,7 @@ public class PlayerBullet : ScriptBase
 
     public override void Start()
     {
-        speed = 8;
 
-        InternalCall.m_InternalGetTransformComponent(EntityID, out startingBulletPos, out startingBulletScale, out startingBulletRotate);
-
-        InternalCall.m_InternalGetAnimationComponent(EntityID, out frameNumber, out framesPerSecond, out frameTimer, out isAnimating, out stripCount);
-
-        rotation = startingBulletRotate;
-
-        //Convert into radians
-        rotationInRadians = (float)((rotation) * Math.PI / 180.0);
-
-        //Get forward vector X
-        forwardX = (float)(Math.Sin(rotationInRadians));
-
-        //Get forward vector Y
-        forwardY = (float)(Math.Cos(rotationInRadians));
 
     }
 

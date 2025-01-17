@@ -336,7 +336,7 @@ namespace script {
 
 		for (size_t i = 0; i < scripts.size(); ++i)
 		{
-			MonoString* monoString = mono_string_new(assetManager->m_scriptManager.m_GetDomain(), scripts[i].c_str());
+			MonoString* monoString = mono_string_new(assetManager->m_scriptManager.m_GetDomain(), scripts[i].first.c_str());
 			mono_array_set(scriptArray, MonoString*, i, monoString);
 		}
 
@@ -345,29 +345,29 @@ namespace script {
 
 	bool InternalCall::m_InternalAddScriptInstance(ecs::EntityID entity, MonoString* monoScriptName, MonoObject* instance)
 	{
-		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
-		auto* scriptComponent = static_cast<ecs::ScriptComponent*>(
-			ecs->m_ECS_CombinedComponentPool[ecs::TYPESCRIPTCOMPONENT]->m_GetEntityComponent(entity)
-			);
+		//ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+		//auto* scriptComponent = static_cast<ecs::ScriptComponent*>(
+		//	ecs->m_ECS_CombinedComponentPool[ecs::TYPESCRIPTCOMPONENT]->m_GetEntityComponent(entity)
+		//	);
 
-		if (!scriptComponent)
-		{
-			LOGGING_WARN("Failed to add script instance: No ScriptComponent found for entity: " + std::to_string(entity));
-			return false;
-		}
+		//if (!scriptComponent)
+		//{
+		//	LOGGING_WARN("Failed to add script instance: No ScriptComponent found for entity: " + std::to_string(entity));
+		//	return false;
+		//}
 
-		char* nativeScriptName = mono_string_to_utf8(monoScriptName);
-		std::string scriptName = nativeScriptName;
-		mono_free(nativeScriptName);
+		//char* nativeScriptName = mono_string_to_utf8(monoScriptName);
+		//std::string scriptName = nativeScriptName;
+		//mono_free(nativeScriptName);
 
-		auto& scriptInstances = scriptComponent->m_scriptInstances;
-		if (scriptInstances.find(scriptName) != scriptInstances.end())
-		{
-			LOGGING_WARN("Script instance '" + scriptName + "' already exists for entity: " + std::to_string(entity) + ". Overwriting.");
-		}
+		//auto& scriptInstances = scriptComponent->m_scriptInstances;
+		//if (scriptInstances.find(scriptName) != scriptInstances.end())
+		//{
+		//	LOGGING_WARN("Script instance '" + scriptName + "' already exists for entity: " + std::to_string(entity) + ". Overwriting.");
+		//}
 
-		scriptInstances[scriptName] = instance;
-		LOGGING_WARN("Script instance '" + scriptName + "' successfully added/updated for entity: " + std::to_string(entity));
+		//scriptInstances[scriptName] = instance;
+		//LOGGING_WARN("Script instance '" + scriptName + "' successfully added/updated for entity: " + std::to_string(entity));
 		return true;
 	}
 
@@ -696,17 +696,36 @@ namespace script {
 
 	void InternalCall::m_EnableScript(ecs::EntityID id, MonoString* monoString)
 	{
-		//char* nativeString = mono_string_to_utf8(monoString);
-		//ecs::ECS* ecs = ecs::ECS::m_GetInstance();
-		//ecs::ScriptComponent* script = static_cast<ecs::ScriptComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESCRIPTCOMPONENT]->m_GetEntityComponent(id));
+		char* nativeString = mono_string_to_utf8(monoString);
+		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+		ecs::ScriptComponent* script = static_cast<ecs::ScriptComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESCRIPTCOMPONENT]->m_GetEntityComponent(id));
 
-		//if (script == NULL) return;
+		if (script == NULL) return;
 
-		//auto results = std::find(script->m_scriptInstances.begin(), script->m_scriptInstances.end(), std::string(nativeString));
+		const auto& results = std::find_if(script->m_scripts.begin(), script->m_scripts.end(), [&](const auto& x) {return x.first == std::string(nativeString);});
 
-		//if (results == script->m_scriptInstances.end()) return;
+		if (results == script->m_scripts.end()) return;
 
-		//mono_free(nativeString);
+		results->second = true;
+
+		mono_free(nativeString);
+	}
+
+	void InternalCall::m_DisableScript(ecs::EntityID id, MonoString* monoString)
+	{
+		char* nativeString = mono_string_to_utf8(monoString);
+		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+		ecs::ScriptComponent* script = static_cast<ecs::ScriptComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESCRIPTCOMPONENT]->m_GetEntityComponent(id));
+
+		if (script == NULL) return;
+
+		const auto& results = std::find_if(script->m_scripts.begin(), script->m_scripts.end(), [&](const auto& x) {return x.first == std::string(nativeString);});
+
+		if (results == script->m_scripts.end()) return;
+
+		results->second = false;
+
+		mono_free(nativeString);
 	}
 
 	void InternalCall::m_InternalCallDeleteEntity(ecs::EntityID id)

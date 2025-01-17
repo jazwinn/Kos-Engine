@@ -36,7 +36,10 @@
         },
         "script": {
             "scripts": [
-                "EnemyBloodPool"
+                {
+                    "name": "EnemyBloodPool",
+                    "enabled": true
+                }
             ]
         }
     }

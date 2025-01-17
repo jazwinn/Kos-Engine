@@ -16,6 +16,8 @@ public class LevelDoorLocker : ScriptBase
     public override void Awake(uint id)
     {
         EntityID = id;
+
+        doorLocked = true;
     }
     #endregion
 
@@ -23,7 +25,7 @@ public class LevelDoorLocker : ScriptBase
 
     public override void Start()
     {
-        doorLocked = true;
+
     }
 
     public override void Update()

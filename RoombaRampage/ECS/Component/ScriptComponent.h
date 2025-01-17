@@ -30,18 +30,16 @@ namespace ecs {
 
 	public:
 
-		std::vector<std::string> m_scripts;
+		std::vector<std::pair<std::string, bool>> m_scripts; // bool is true if script is enabled 
 
-		std::map<std::string,MonoObject*> m_scriptInstances;
-
-		bool m_isEnabled{ true };
+	
 
 		// need not serialize after this line
 
-		bool m_isStart{ false };
+		std::map<std::string, std::pair<MonoObject*, bool>> m_scriptInstances; // bool here is to check to see if "start" function is called
 
 
-		REFLECTABLE(ScriptComponent, m_scripts)
+		//REFLECTABLE(ScriptComponent, m_scripts)
 
 	};
 

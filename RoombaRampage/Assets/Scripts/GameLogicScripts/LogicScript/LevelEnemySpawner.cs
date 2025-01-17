@@ -16,6 +16,13 @@ public class LevelEnemySpawner : ScriptBase
     public override void Awake(uint id)
     {
         EntityID = id;
+
+        spawnDelay = 2;
+        enemyPrefab = "prefab_enemy";
+        startSpawning = false;
+        isSpawning = false;
+        totalEnemiesToKill = 15;
+        maxEnemiesSpawned = 15;
     }
     #endregion
 
@@ -33,12 +40,7 @@ public class LevelEnemySpawner : ScriptBase
 
     public override void Start()
     {
-        spawnDelay = 2;
-        enemyPrefab = "prefab_enemy";
-        startSpawning = false;
-        isSpawning = false;
-        totalEnemiesToKill = 15;
-        maxEnemiesSpawned = 15;
+
     }
 
     public override void Update()

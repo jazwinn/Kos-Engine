@@ -15,6 +15,8 @@ public class PlayerMeleeKillZone : ScriptBase
     public override void Awake(uint id)
     {
         EntityID = id;
+
+        timer = 0;
     }
     #endregion
 
@@ -22,7 +24,7 @@ public class PlayerMeleeKillZone : ScriptBase
 
     public override void Start()
     {
-        timer = 0;
+
     }
 
     public override void Update()

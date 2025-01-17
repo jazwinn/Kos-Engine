@@ -15,6 +15,30 @@ public class PlayerGun : ScriptBase
     public override void Awake(uint id)
     {
         EntityID = id;
+
+        gunshotSound = "aud_gunshot01";
+        cleaverSound = "aud_cleaver";
+        leftCleaverTexture = "ani_cleaverLeftAnim_strip6.png";
+        rightCleaverTexture = "ani_cleaverRightAnim_strip6.png";
+        leftGunTexture = "ani_gunLeftAnim_strip8.png";
+        rightGunTexture = "ani_gunRightAnim_strip8.png";
+        bulletPrefab = "prefab_playerBullet";
+
+        meleeCount = 2;
+
+        ammoCount = 10;
+
+        bulletCounterID = (uint)InternalCall.m_InternalCallGetTagID("UIBulletCounter");
+
+        limbTag = InternalCall.m_InternalCallGetTag(EntityID);
+        InternalCall.m_InternalGetTranslate(EntityID, out limbPos);
+
+        InternalCall.m_InternalGetTransformComponent((uint)InternalCall.m_InternalCallGetTagID("Player"), out roombaPos, out roombaScale, out roombaRotate);
+        InternalCall.m_InternalGetAnimationComponent(EntityID, out startFrameNumber, out startFramesPerSecond, out startFrameTimer, out isAnimating, out stripCount);
+        InternalCall.m_InternalGetSpriteComponent(EntityID, out startImageFile, out startLayer, out startColor, out startAlpha);
+        InternalCall.m_InternalGetTextComponent(bulletCounterID, out startText, out startFileName, out startFontLayer, out startFontSize, out startFontColor);
+        UpdateBulletCounterUI();
+        UpdateMeleeCounterUI();
     }
     #endregion
 
@@ -59,29 +83,7 @@ public class PlayerGun : ScriptBase
 
     public override void Start()
     {
-        gunshotSound = "aud_gunshot01";
-        cleaverSound = "aud_cleaver";
-        leftCleaverTexture = "ani_cleaverLeftAnim_strip6.png";
-        rightCleaverTexture = "ani_cleaverRightAnim_strip6.png";
-        leftGunTexture = "ani_gunLeftAnim_strip8.png";
-        rightGunTexture = "ani_gunRightAnim_strip8.png";
-        bulletPrefab = "prefab_playerBullet";
-
-        meleeCount = 2;
-
-        ammoCount = 10;
-
-        bulletCounterID = (uint)InternalCall.m_InternalCallGetTagID("UIBulletCounter");
-
-        limbTag = InternalCall.m_InternalCallGetTag(EntityID);
-        InternalCall.m_InternalGetTranslate(EntityID, out limbPos);
-
-        InternalCall.m_InternalGetTransformComponent((uint)InternalCall.m_InternalCallGetTagID("Player"), out roombaPos, out roombaScale, out roombaRotate);
-        InternalCall.m_InternalGetAnimationComponent(EntityID, out startFrameNumber, out startFramesPerSecond, out startFrameTimer, out isAnimating, out stripCount);
-        InternalCall.m_InternalGetSpriteComponent(EntityID, out startImageFile, out startLayer, out startColor, out startAlpha);
-        InternalCall.m_InternalGetTextComponent(bulletCounterID, out startText, out startFileName, out startFontLayer, out startFontSize, out startFontColor);
-        UpdateBulletCounterUI();
-        UpdateMeleeCounterUI();
+        
 
     }
 

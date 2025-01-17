@@ -19,7 +19,10 @@
         },
         "script": {
             "scripts": [
-                "GameController"
+                {
+                    "name": "GameController",
+                    "enabled": true
+                }
             ]
         },
         "audio": [
@@ -60,7 +63,10 @@
         },
         "script": {
             "scripts": [
-                "CameraFollowPlayerScript"
+                {
+                    "name": "CameraFollowPlayerScript",
+                    "enabled": true
+                }
             ]
         },
         "children": [
@@ -7561,7 +7567,10 @@
         },
         "script": {
             "scripts": [
-                "LevelEndPoint"
+                {
+                    "name": "LevelEndPoint",
+                    "enabled": true
+                }
             ]
         }
     },
@@ -7623,7 +7632,10 @@
         },
         "script": {
             "scripts": [
-                "LevelEnemySpawner"
+                {
+                    "name": "LevelEnemySpawner",
+                    "enabled": true
+                }
             ]
         }
     },
@@ -7700,8 +7712,14 @@
         },
         "script": {
             "scripts": [
-                "PlayerController",
-                "CollisionResponse"
+                {
+                    "name": "PlayerController",
+                    "enabled": true
+                },
+                {
+                    "name": "CollisionResponse",
+                    "enabled": true
+                }
             ]
         },
         "audio": [
@@ -7752,7 +7770,10 @@
                 },
                 "script": {
                     "scripts": [
-                        "PlayerGun"
+                        {
+                            "name": "PlayerGun",
+                            "enabled": true
+                        }
                     ]
                 },
                 "audio": [
@@ -7815,7 +7836,10 @@
                 },
                 "script": {
                     "scripts": [
-                        "PlayerGun"
+                        {
+                            "name": "PlayerGun",
+                            "enabled": true
+                        }
                     ]
                 },
                 "audio": [
@@ -7878,7 +7902,10 @@
                 },
                 "script": {
                     "scripts": [
-                        "PlayerGun"
+                        {
+                            "name": "PlayerGun",
+                            "enabled": true
+                        }
                     ]
                 },
                 "audio": [

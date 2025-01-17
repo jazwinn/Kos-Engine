@@ -199,8 +199,9 @@ namespace script {
 
         // Invoke the method with the instance
         MonoObject* exception = nullptr;
-        
+
         mono_runtime_invoke(method, objInstance, args, &exception);
+
 
         if (exception) {
             MonoString* exceptionMessage = mono_object_to_string(exception, nullptr);
@@ -208,9 +209,6 @@ namespace script {
             LOGGING_ERROR("Exception in C# method invocation: {}", messageStr);
             mono_free((void*)messageStr);
         }
-        //else {
-        //    std::cout << "Method invoked successfully for script: " << scriptName << std::endl;
-        //}
     }
 
     void ScriptHandler::m_ReloadAllDLL()

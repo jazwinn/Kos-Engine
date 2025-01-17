@@ -111,21 +111,21 @@ namespace ecs {
 				}
 				if (!ColComp->m_keys.empty()) {
 					const EntityID check_ID = ColComp->m_Entity;
-					for (const auto& elem : ColComp->m_keys) {
-						if (ColComp->m_collisionState.find(elem) != ColComp->m_collisionState.end()) {
-							if (ColComp->m_collisionState.find(elem)->second == physicspipe::CollisionState::CONTINUOUS || ColComp->m_collisionState.find(elem)->second == physicspipe::CollisionState::ENTERED) {
-								const auto& colComp2 = static_cast<ecs::ColliderComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(elem));
-								//ColComp->m_collisionState.find(elem)->second = physicspipe::CollisionState::EXIT;
-								//colComp2->m_collisionState.find(check_ID)->second = physicspipe::CollisionState::EXIT;
-								//ColComp->m_OnCollisionExit(elem);
-								//colComp2->m_OnCollisionExit(check_ID);
-								ColComp->m_collisionState.erase(elem);
-								colComp2->m_collisionState.erase(check_ID);
-								outOfVecInMap.erase(elem);
-							}
-						}
-					}
-					ColComp->m_keys = outOfVecInMap;
+					//for (const auto& elem : ColComp->m_keys) {
+					//	if (ColComp->m_collisionState.find(elem) != ColComp->m_collisionState.end()) {
+					//		if (ColComp->m_collisionState.find(elem)->second == physicspipe::CollisionState::CONTINUOUS || ColComp->m_collisionState.find(elem)->second == physicspipe::CollisionState::ENTERED) {
+					//			const auto& colComp2 = static_cast<ecs::ColliderComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(elem));
+					//			//ColComp->m_collisionState.find(elem)->second = physicspipe::CollisionState::EXIT;
+					//			//colComp2->m_collisionState.find(check_ID)->second = physicspipe::CollisionState::EXIT;
+					//			//ColComp->m_OnCollisionExit(elem);
+					//			//colComp2->m_OnCollisionExit(check_ID);
+ 				//				ColComp->m_collisionState.erase(elem);
+					//			colComp2->m_collisionState.erase(check_ID);
+					//			outOfVecInMap.erase(elem);
+					//		}
+					//	}
+					//}
+					//ColComp->m_keys = outOfVecInMap;
 				}
 				
 			}
