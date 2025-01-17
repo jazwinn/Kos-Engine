@@ -25,6 +25,34 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Graphics/GraphicsPipe.h"
 namespace graphicpipe
 {
+	void GraphicsPipe::m_funcSetupFrameBufferVao()
+	{
+		float vertices[] =
+		{
+			//Coords		texCoords
+			1.0f,-1.0f,		1.0f,0.f,
+			- 1.0f,-1.0f,	0.f,0.f,
+			-1.0f,1.0f,		0.f,1.f,
+
+			1.0f,1.0f,		1.0f,1.0f,
+			1.0f,-1.0f,		1.0f,0.f,
+			-1.0f,1.0f,		0.0f,1.0f
+		};
+
+		unsigned int vbo;
+		glGenVertexArrays(1, &m_screenTextureVAO);
+		glGenBuffers(1, &vbo);
+		glBindVertexArray(m_screenTextureVAO);
+		glBindBuffer(GL_ARRAY_BUFFER, vbo);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), &vertices, GL_STATIC_DRAW);
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
+		glEnableVertexAttribArray(1);
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
+		glBindVertexArray(0);
+
+	}
+
 	void GraphicsPipe::m_funcSetupSquareLinesVao()
 	{
 		std::vector<glm::vec2> lvPosVtx;

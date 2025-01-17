@@ -33,7 +33,7 @@ namespace graphicpipe
 {
 	void GraphicsPipe::m_funcSetupArrayBuffer()
 	{
-		//Square Mesh Buffer Setup
+		///Square Mesh Buffer Setup
 		glBindVertexArray(m_squareMesh.m_vaoId);
 		glGenBuffers(1, &m_modelMatrixArrayBuffer);
 		glBindBuffer(GL_ARRAY_BUFFER, m_modelMatrixArrayBuffer);
@@ -51,7 +51,7 @@ namespace graphicpipe
 
 		glBindVertexArray(m_squareMesh.m_vaoId);
 
-		//Container Buffer Setup
+		///Container Buffer Setup
 		glGenBuffers(1, &m_tileIndexBuffer);
 		glBindBuffer(GL_ARRAY_BUFFER, m_tileIndexBuffer);
 		glBufferData(GL_ARRAY_BUFFER, m_tileIndexes.size() * sizeof(int), &m_tileIndexes[0][0], GL_DYNAMIC_DRAW);
@@ -103,7 +103,7 @@ namespace graphicpipe
 		glBindVertexArray(0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-		//Square Lines Mesh Buffer Setup
+		///Square Lines Mesh Buffer Setup
 		glBindVertexArray(m_squareLinesMesh.m_vaoId);
 		glGenBuffers(1, &m_debugMatrixArrayBuffer);
 		glBindBuffer(GL_ARRAY_BUFFER, m_debugMatrixArrayBuffer);
@@ -117,9 +117,17 @@ namespace graphicpipe
 		}
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
+		// Bool Check
+		glGenBuffers(1, &m_gridColliderBuffer);
+		glBindBuffer(GL_ARRAY_BUFFER, m_gridColliderBuffer);
+		glBufferData(GL_ARRAY_BUFFER, m_gridColliderChecks.size() * sizeof(int), &m_gridColliderChecks[0][0], GL_DYNAMIC_DRAW);
+		glEnableVertexAttribArray(14);
+		glVertexAttribIPointer(14, 1, GL_INT, sizeof(int), (void*)0);
+		glVertexAttribDivisor(14, 1);
+
 		glGenBuffers(1, &m_debugCollisionCheckBuffer);
 		glBindBuffer(GL_ARRAY_BUFFER, m_debugCollisionCheckBuffer);
-		glBufferData(GL_ARRAY_BUFFER, m_debugBoxCollisionChecks.size() * sizeof(int), &m_debugBoxCollisionChecks[0], GL_DYNAMIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, m_debugBoxCollisionChecks.size() * sizeof(int), &m_debugBoxCollisionChecks[0], GL_DYNAMIC_DRAW); //Size Of Int
 		glEnableVertexAttribArray(4);
 		glVertexAttribPointer(4, 1, GL_FLOAT, GL_FALSE, sizeof(float), (void*)0);
 		glVertexAttribDivisor(4, 1);
@@ -128,7 +136,7 @@ namespace graphicpipe
 
 		
 
-		//Circle Lines
+		///Circle Lines
 		glBindVertexArray(m_circleLinesMesh.m_vaoId);
 		glBindBuffer(GL_ARRAY_BUFFER, m_debugMatrixArrayBuffer);
 		glBufferData(GL_ARRAY_BUFFER, m_debugBoxToNDCMatrix.size() * sizeof(glm::mat3), &m_debugBoxToNDCMatrix[0], GL_DYNAMIC_DRAW);

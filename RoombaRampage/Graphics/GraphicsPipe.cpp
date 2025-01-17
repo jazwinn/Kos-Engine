@@ -64,6 +64,7 @@ namespace graphicpipe {
 
 		// Set up VAOs for different shapes and text rendering.
 		m_funcSetupVao(m_squareMesh);
+		m_funcSetupFrameBufferVao();
 		m_funcSetupCircleLinesVao();
 		m_funcSetupSquareLinesVao();
 		m_funcSetupGridVao();
@@ -71,12 +72,14 @@ namespace graphicpipe {
 		m_funcSetDrawMode(GL_FILL);
 
 		// Compile and set up shader programs for various rendering tasks.
+		m_gridDebugShaderProgram = m_funcSetupShader(gridDebugVertexShader, gridDebugFragmentShader);
 		m_genericShaderProgram = m_funcSetupShader(genericVertexShader, genericFragmentShader);
 		m_frameBufferShaderProgram = m_funcSetupShader(frameBufferVertexShader, frameBufferFragmentShader);
 		m_debugShaderProgram = m_funcSetupShader(debugVertexShader, debugFragmentShader);
 		m_textShaderProgram = m_funcSetupShader(textVertexShader, textFragmentShader);
 		m_gridShaderProgram = m_funcSetupShader(gridVertexShader, gridFragmentShader);
 		m_tilemapShaderProgram = m_funcSetupShader(tilemapVertexShader, tilemapFragmentShader);
+		
 
 		// Initialize model-to-NDC transformation matrix and other drawing data.
 		m_modelToNDCMatrix.push_back(m_testMatrix);
@@ -88,6 +91,7 @@ namespace graphicpipe {
 		m_colors.push_back({ 0.f, 0.f, 0.f, 0.f });
 		m_debugBoxToNDCMatrix.push_back(m_testMatrix);
 		m_debugBoxCollisionChecks.push_back(false);
+		m_gridColliderChecks.push_back({ 0 });
 
 		// Set up array buffer and framebuffers for offscreen rendering.
 		m_funcSetupArrayBuffer();
@@ -170,6 +174,8 @@ namespace graphicpipe {
 		m_transformedTilemaps.clear();
 		m_tileIndexes.clear();
 		m_tilemapIndexArrays.clear();
+		m_gridColliderArrays.clear();
+		m_gridColliderChecks.clear();
 		GraphicsCamera::m_cameras.clear();
 		
 	}
@@ -187,12 +193,16 @@ namespace graphicpipe {
 			}
 			GraphicsCamera::setCurrCamera(0);
 			GraphicsCamera::m_CalculateCurrView();*/
-			glClearColor(0.86f, 0.86f, 0.86f, 1.f);
+			
+			/*glClearColor(0.86f, 0.86f, 0.86f, 1.f);
 			glEnable(GL_DEPTH_TEST);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 			m_funcDraw();
 			m_funcDrawTilemap();
-			m_funcDrawText();
+			m_funcDrawText();*/
+			//std::cout << "Hello" << std::endl;
+			m_funcDrawGameFrameBuffer();
+
 		}
 
 		m_funcClearContainers();

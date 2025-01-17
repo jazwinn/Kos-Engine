@@ -330,6 +330,7 @@ namespace gui {
         /***********PREFAB*************/
         bool m_prefabSceneMode{ false };
         bool m_tilePickerMode{ false };
+        bool m_collisionSetterMode{ false };
         std::unordered_map<std::string, bool> m_savedSceneState;
         /******************************/
 

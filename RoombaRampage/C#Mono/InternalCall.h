@@ -572,6 +572,8 @@ namespace script {
 		/******************************************************************/
 		static int m_InternalCallGetSteps();
 
+		static float m_InternalCallGetGameTime();
+
 	public:
 		/******************************************************************/
 		/*!

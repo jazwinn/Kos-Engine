@@ -69,6 +69,9 @@ public class GameController : ScriptBase
 
     public override void Update()
     {
+
+        //Console.WriteLine(InternalCall.m_InternalCallGetGameTime());
+
         if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.R))
         {
             if (confirmQuit)

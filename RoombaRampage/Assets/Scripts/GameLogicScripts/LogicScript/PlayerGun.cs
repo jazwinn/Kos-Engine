@@ -373,7 +373,9 @@ public class PlayerGun : ScriptBase
             tempColor.G = 0;
             tempColor.B = 0;
 
-            SpriteComponent tempSpriteComponent = GetComponent.GetSpriteComponent((uint)InternalCall.m_InternalCallGetTagID("UIMeleeCounter"));
+            //SpriteComponent tempSpriteComponent = GetComponent.GetSpriteComponent((uint)InternalCall.m_InternalCallGetTagID("UIMeleeCounter"));
+            SpriteComponent tempSpriteComponent = Component.Get<SpriteComponent>((uint)InternalCall.m_InternalCallGetTagID("UIMeleeCounter"));
+
             tempSpriteComponent.m_color = tempColor;
             SetComponent.SetSpriteComponent((uint)InternalCall.m_InternalCallGetTagID("UIMeleeCounter"), tempSpriteComponent);
         }
