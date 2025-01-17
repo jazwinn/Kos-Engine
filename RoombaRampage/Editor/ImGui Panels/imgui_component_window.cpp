@@ -512,7 +512,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                 CreateContext(ecs::TYPETRANSFORMCOMPONENT, entityID);
 
-                if (open) {
+                if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPETRANSFORMCOMPONENT)) {
                     auto* rbc = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(entityID));
                     DrawComponents toDraw(rbc->Names());
                     static ecs::TransformComponent oldVal = *rbc;
@@ -558,8 +558,8 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                 CreateContext(ecs::TYPESPRITECOMPONENT, entityID);
 
-                if (open) {
-                   
+                if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPESPRITECOMPONENT)) {
+
                     assetmanager::AssetManager* Asset = assetmanager::AssetManager::m_funcGetInstance();
                     auto* sc = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(entityID));
 
@@ -633,7 +633,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                     }
 
 
-                    if (open) {
+                    if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPESPRITECOMPONENT)) {
                         auto* rbc = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(entityID));
                         rbc->ApplyFunction(DrawComponents(rbc->Names()));
                     }
@@ -730,7 +730,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                 CreateContext(ecs::TYPECOLLIDERCOMPONENT, entityID);
 
-                if (open) {
+                if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPECOLLIDERCOMPONENT)) {
                     auto* rbc = static_cast<ecs::ColliderComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(entityID));
                     rbc->ApplyFunction(DrawComponents(rbc->Names()));
                 }
@@ -743,20 +743,20 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                 CreateContext(ecs::TYPERIGIDBODYCOMPONENT, entityID);
 
-                if (open) {
+                if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPERIGIDBODYCOMPONENT)) {
                     auto* rbc = static_cast<ecs::RigidBodyComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPERIGIDBODYCOMPONENT]->m_GetEntityComponent(entityID));
                     rbc->ApplyFunction(DrawComponents(rbc->Names()));
                 }
 
 
             }
-            if (EntitySignature.test(ecs::TYPEPLAYERCOMPONENT)) {
+            if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEPLAYERCOMPONENT)) {
 
                 open = ImGui::CollapsingHeader("Player Component");
 
                 CreateContext(ecs::TYPEPLAYERCOMPONENT, entityID);
 
-                if (open) {
+                if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEPLAYERCOMPONENT)) {
                     auto* rbc = static_cast<ecs::PlayerComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEPLAYERCOMPONENT]->m_GetEntityComponent(entityID));
                     rbc->ApplyFunction(DrawComponents(rbc->Names()));
                 }
@@ -770,7 +770,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 CreateContext(ecs::TYPETEXTCOMPONENT, entityID);
 
 
-                if (open) {
+                if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPETEXTCOMPONENT)) {
 
                     assetmanager::AssetManager* Asset = assetmanager::AssetManager::m_funcGetInstance();
                     auto* tc = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(entityID));
@@ -909,7 +909,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                     }
                 }
 
-                if (open) {
+                if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPETEXTCOMPONENT)) {
                     auto* rbc = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(entityID));
                     rbc->ApplyFunction(DrawComponents(rbc->Names()));
                 }
@@ -921,7 +921,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                 CreateContext(ecs::TYPEANIMATIONCOMPONENT, entityID);
 
-                if (open) {
+                if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEANIMATIONCOMPONENT)) {
                     auto* rbc = static_cast<ecs::AnimationComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEANIMATIONCOMPONENT]->m_GetEntityComponent(entityID));
                     rbc->ApplyFunction(DrawComponents(rbc->Names()));
                 }
@@ -934,7 +934,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                 CreateContext(ecs::TYPECAMERACOMPONENT, entityID);
 
-                if (open) {
+                if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPECAMERACOMPONENT)) {
                     auto* rbc = static_cast<ecs::CameraComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPECAMERACOMPONENT]->m_GetEntityComponent(entityID));
                     rbc->ApplyFunction(DrawComponents(rbc->Names()));
                 }
@@ -947,7 +947,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                 CreateContext(ecs::TYPESCRIPTCOMPONENT, entityID);
 
-                if (open) {
+                if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPESCRIPTCOMPONENT)) {
                     auto* sc = static_cast<ecs::ScriptComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESCRIPTCOMPONENT]->m_GetEntityComponent(entityID));
 
                     for (const auto& scriptname : sc->m_scripts)
@@ -1034,7 +1034,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                 CreateContext(ecs::TYPEBUTTONCOMPONENT, entityID);
 
-                if (open) {
+                if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEBUTTONCOMPONENT)) {
                     auto* rbc = static_cast<ecs::ButtonComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEBUTTONCOMPONENT]->m_GetEntityComponent(entityID));
                     rbc->ApplyFunction(DrawComponents(rbc->Names()));
                 }
@@ -1102,7 +1102,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                     }
 
 
-                    if (open) {
+                    if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPETILEMAPCOMPONENT)) {
                         auto* rbc = static_cast<ecs::TilemapComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETILEMAPCOMPONENT]->m_GetEntityComponent(entityID));
                         rbc->ApplyFunction(DrawComponents(rbc->Names()));
                     }
@@ -1132,7 +1132,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                 CreateContext(ecs::TYPEAUDIOCOMPONENT, entityID);
 
-                if (open) {
+                if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEAUDIOCOMPONENT)) {
                     auto* ac = static_cast<ecs::AudioComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEAUDIOCOMPONENT]->m_GetEntityComponent(entityID));
                     //assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
 

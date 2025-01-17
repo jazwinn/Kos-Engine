@@ -159,6 +159,90 @@ public static class InternalCall
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static int m_InternalCallGetSteps();
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static float m_InternalCallGetGameTime();
+}
+public static class Component
+{
+    public static T Get<T>(uint id) where T : new()
+    {
+        T component = new T();
+
+        if (typeof(T) == typeof(SpriteComponent))
+        {
+            var spriteComponent = component as SpriteComponent;
+            InternalCall.m_InternalGetSpriteComponent(id, out spriteComponent.m_imageFile, out spriteComponent.m_layer, out spriteComponent.m_color, out spriteComponent.m_alpha);
+        }
+        else if (typeof(T) == typeof(TransformComponent))
+        {
+            var transformComponent = component as TransformComponent;
+            InternalCall.m_InternalGetTransformComponent(id, out transformComponent.m_position, out transformComponent.m_scale, out transformComponent.m_rotation);
+        }
+        else if (typeof(T) == typeof(ColliderComponent))
+        {
+            var colliderComponent = component as ColliderComponent;
+            InternalCall.m_InternalGetColliderComponent(id, out colliderComponent.m_Size, out colliderComponent.m_Offset, out colliderComponent.m_drawDebug, out colliderComponent.m_radius, out colliderComponent.m_blockedFlag, out colliderComponent.m_isCollided, out colliderComponent.m_collisionCheck);
+        }
+        else if (typeof(T) == typeof(TextComponent))
+        {
+            var textComponent = component as TextComponent;
+            InternalCall.m_InternalGetTextComponent(id, out textComponent.m_text, out textComponent.m_fileName, out textComponent.m_fontLayer, out textComponent.m_fontSize, out textComponent.m_color);
+        }
+        else if (typeof(T) == typeof(RigidBodyComponent))
+        {
+            var rigidComponent = component as RigidBodyComponent;
+            InternalCall.m_InternalGetRigidBodyComponent(id, out rigidComponent.m_Velocity, out rigidComponent.m_Acceleration, out rigidComponent.m_Rotation);
+        }
+        else if (typeof(T) == typeof(AnimationComponent))
+        {
+            var animationComponent = component as AnimationComponent;
+            InternalCall.m_InternalGetAnimationComponent(id, out animationComponent.m_frameNumber, out animationComponent.m_framesPerSecond, out animationComponent.m_frameTimer, out animationComponent.m_isAnimating, out animationComponent.m_stripCount);
+        }
+        else if (typeof(T) == typeof(ButtomComponent))
+        {
+            var buttonComponent = component as ButtomComponent;
+            InternalCall.m_InternalGetButtonComponent(id, out buttonComponent.m_Position, out buttonComponent.m_Scale, out buttonComponent.m_IsClick);
+        }
+        else
+        {
+            throw new NotSupportedException($"Component type {typeof(T).Name} is not supported.");
+        }
+
+        return component;
+    }
+
+    public static void Set<T>(uint id, T component)
+    {
+        if (component is SpriteComponent sprite)
+        {
+            InternalCall.m_InternalSetSpriteComponent(id, sprite.m_imageFile, in sprite.m_layer, in sprite.m_color, in sprite.m_alpha);
+        }
+        else if (component is TransformComponent transform)
+        {
+            InternalCall.m_InternalSetTransformComponent(id, in transform.m_position, in transform.m_scale, in transform.m_rotation);
+        }
+        else if (component is ColliderComponent collider)
+        {
+            InternalCall.m_InternalSetColliderComponent(id, in collider.m_Size, in collider.m_Offset, in collider.m_drawDebug, in collider.m_radius, in collider.m_blockedFlag, in collider.m_isCollided, in collider.m_collisionCheck);
+        }
+        else if (component is TextComponent text)
+        {
+            InternalCall.m_InternalSetTextComponent(id, text.m_text, text.m_fileName, in text.m_fontLayer, in text.m_fontSize, in text.m_color);
+        }
+        else if (component is RigidBodyComponent rigid)
+        {
+            InternalCall.m_InternalSetRigidBodyComponent(id, in rigid.m_Velocity, in rigid.m_Acceleration, in rigid.m_Rotation);
+        }
+        else if (component is AnimationComponent animation)
+        {
+            InternalCall.m_InternalSetAnimationComponent(id, in animation.m_frameNumber, in animation.m_framesPerSecond, in animation.m_frameTimer, in animation.m_isAnimating, in animation.m_stripCount);
+        }
+        else
+        {
+            throw new NotSupportedException($"Component type {typeof(T).Name} is not supported.");
+        }
+    }
 }
 
 public static class GetComponent
@@ -193,8 +277,6 @@ public static class GetComponent
         return temp;
     }
 }
-
-
 public static class SetComponent
 {
     public static void SetSpriteComponent(uint id, SpriteComponent sprite)
