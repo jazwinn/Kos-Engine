@@ -578,6 +578,8 @@ namespace script {
 
 		static void m_DisableScript(ecs::EntityID id, MonoString* monoString);
 
+		static MonoArray* m_RetrieveCollidableEntities(MonoString* scene);
+
 	public:
 		/******************************************************************/
 		/*!

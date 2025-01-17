@@ -162,6 +162,15 @@ public static class InternalCall
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static float m_InternalCallGetGameTime();
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static void m_EnableScript(uint id, string monostring);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static void m_DisableScript(uint id, string monostring);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static int[] m_RetrieveCollidableEntities(string monostring); // insert scene name
 }
 public static class Component
 {

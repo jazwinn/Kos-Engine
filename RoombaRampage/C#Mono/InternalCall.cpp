@@ -728,6 +728,39 @@ namespace script {
 		mono_free(nativeString);
 	}
 
+	MonoArray* InternalCall::m_RetrieveCollidableEntities(MonoString* scene)
+	{
+		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+
+		char* nativeString = mono_string_to_utf8(scene);
+
+		auto scenes = ecs->m_ECS_SceneMap.find(nativeString);
+
+		std::vector<ecs::EntityID> results;
+
+		if (scenes == ecs->m_ECS_SceneMap.end()) return nullptr;
+		for (auto ids : scenes->second.m_sceneIDs) {
+			auto* cc = static_cast<ecs::ColliderComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(ids));
+
+			if (cc != NULL) {
+				if (cc->m_CollisionCheck) {
+					results.push_back(ids);
+				}
+			}
+		}
+
+		if (results.size() < 0) nullptr;
+
+		MonoArray* Array = mono_array_new(assetmanager::AssetManager::m_funcGetInstance()->m_scriptManager.m_GetDomain(), mono_get_int32_class(), results.size());
+		for (size_t i = 0; i < results.size(); ++i) {
+			mono_array_set(Array, int, i, results[i]);
+
+		}
+
+
+		return Array;
+	}
+
 	void InternalCall::m_InternalCallDeleteEntity(ecs::EntityID id)
 	{
 		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
@@ -843,6 +876,11 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_getAccumulatedDeltaTime);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallGetSteps);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallGetGameTime);
+
+
+		MONO_ADD_INTERNAL_CALL(m_EnableScript);
+		MONO_ADD_INTERNAL_CALL(m_DisableScript);
+		MONO_ADD_INTERNAL_CALL(m_RetrieveCollidableEntities);
 
 	}
 }
