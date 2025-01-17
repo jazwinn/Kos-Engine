@@ -22,6 +22,8 @@ namespace ecs {
 		int m_pictureColumnLength{ 1 };
 		std::vector<std::vector<int>> m_tilePictureIndex;
 
+		bool m_setCollidable{ true };
+		std::vector<std::vector<int>> m_isWall;
 
 		REFLECTABLE(TilemapComponent, m_tileIndex,m_tileLayer, m_rowLength, m_columnLength, m_pictureRowLength, m_pictureColumnLength);
 	};

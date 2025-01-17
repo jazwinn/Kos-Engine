@@ -42,8 +42,14 @@ namespace Tilemap
 		if (tilemap->m_tilePictureIndex.size() != tilemap->m_columnLength)
 		{
 			tilemap->m_tilePictureIndex.resize(colLength);
+			tilemap->m_isWall.resize(colLength); /// Grid
+			
 		}
 		for (std::vector<int>& row : tilemap->m_tilePictureIndex)
+		{
+			row.resize(rowLength);
+		}
+		for (std::vector<int>& row : tilemap->m_isWall) ///Grid
 		{
 			row.resize(rowLength);
 		}
@@ -65,6 +71,12 @@ namespace Tilemap
 					row.rbegin() + static_cast<int>(ceil(originCoordinates.m_x - tileCoordinates.m_x)),
 					row.rend()); // Rotate Indexes
 			}
+			for (std::vector<int>& row : tilemap->m_isWall) ///Grid
+			{
+				std::rotate(row.rbegin(),
+					row.rbegin() + static_cast<int>(ceil(originCoordinates.m_x - tileCoordinates.m_x)),
+					row.rend()); // Rotate Indexes
+			}
 			
 			originCoordinates.m_x = floor(tileCoordinates.m_x); //Set to center of tile
 		}
@@ -78,6 +90,9 @@ namespace Tilemap
 			std::rotate(tilemap->m_tilePictureIndex.rbegin(),
 						tilemap->m_tilePictureIndex.rbegin() + static_cast<int>(ceil(tileCoordinates.m_y - (originCoordinates.m_y + 1))),
 						tilemap->m_tilePictureIndex.rend()); // Rotate Indexes
+			std::rotate(tilemap->m_isWall.rbegin(),
+				tilemap->m_isWall.rbegin() + static_cast<int>(ceil(tileCoordinates.m_y - (originCoordinates.m_y + 1))), ///Grid
+				tilemap->m_isWall.rend()); // Rotate Indexes
 			originCoordinates.m_y = floor(tileCoordinates.m_y); //Set to center of tile
 		}
 
@@ -93,6 +108,61 @@ namespace Tilemap
 		tilemap->m_tilePictureIndex[indexY][indexX] = tilemap->m_tileIndex;
 
 	}
+
+	void setCollidableTile(vector2::Vec2& originCoordinates, const vector2::Vec2& tileCoordinates, ecs::TilemapComponent* tilemap)
+	{
+		if ((tileCoordinates.m_x) > originCoordinates.m_x + tilemap->m_rowLength) // If selected tile is longer than current tileset
+		{
+			LOGGING_INFO("Extending row length by %d", static_cast<int>(ceil(tileCoordinates.m_x - originCoordinates.m_x)));
+			resizeTiles(tilemap, static_cast<int>(ceil(tileCoordinates.m_x - originCoordinates.m_x)), tilemap->m_columnLength);
+		}
+		if (tileCoordinates.m_x < floor(originCoordinates.m_x))
+		{
+			resizeTiles(tilemap, tilemap->m_rowLength + static_cast<int>(ceil(originCoordinates.m_x - tileCoordinates.m_x)), tilemap->m_columnLength); // Change Row Length
+
+			for (std::vector<int>& row : tilemap->m_tilePictureIndex)
+			{
+				std::rotate(row.rbegin(),
+					row.rbegin() + static_cast<int>(ceil(originCoordinates.m_x - tileCoordinates.m_x)),
+					row.rend()); // Rotate Indexes
+			}
+			for (std::vector<int>& row : tilemap->m_isWall) ///Grid
+			{
+				std::rotate(row.rbegin(),
+					row.rbegin() + static_cast<int>(ceil(originCoordinates.m_x - tileCoordinates.m_x)),
+					row.rend()); // Rotate Indexes
+			}
+
+			originCoordinates.m_x = floor(tileCoordinates.m_x); //Set to center of tile
+		}
+		if (tileCoordinates.m_y < (originCoordinates.m_y + 1 - tilemap->m_columnLength)) // If selected tile is longer than current tileset
+		{
+			resizeTiles(tilemap, tilemap->m_rowLength, static_cast<int>(ceil(originCoordinates.m_y + 1 - tileCoordinates.m_y)));
+		}
+		if (tileCoordinates.m_y > floor(originCoordinates.m_y + 1))
+		{
+			resizeTiles(tilemap, tilemap->m_rowLength, tilemap->m_columnLength + static_cast<int>(ceil(tileCoordinates.m_y - (originCoordinates.m_y + 1)))); //Change Column Length
+			std::rotate(tilemap->m_tilePictureIndex.rbegin(),
+				tilemap->m_tilePictureIndex.rbegin() + static_cast<int>(ceil(tileCoordinates.m_y - (originCoordinates.m_y + 1))),
+				tilemap->m_tilePictureIndex.rend()); // Rotate Indexes
+			std::rotate(tilemap->m_isWall.rbegin(),
+				tilemap->m_isWall.rbegin() + static_cast<int>(ceil(tileCoordinates.m_y - (originCoordinates.m_y + 1))), ///Grid
+				tilemap->m_isWall.rend()); // Rotate Indexes
+			originCoordinates.m_y = floor(tileCoordinates.m_y); //Set to center of tile
+		}
+
+		int indexX = static_cast<int>(floor(tileCoordinates.m_x - originCoordinates.m_x));
+		int indexY = static_cast<int>(floor(originCoordinates.m_y - tileCoordinates.m_y) + 1.f);
+
+		if (indexX >= tilemap->m_tilePictureIndex[0].size() || indexY >= tilemap->m_tilePictureIndex.size())
+		{
+			LOGGING_WARN("Clicked out of range: indexX=%d, indexY=%d", indexX, indexY);
+			return;
+		}
+
+		tilemap->m_isWall[indexY][indexX] = (int)tilemap->m_setCollidable;
+
+	}
 	void debugTileIndex(ecs::TilemapComponent* tilemap)
 	{
 		for (int i = 0; i < tilemap->m_tilePictureIndex.size(); ++i)
@@ -103,6 +173,21 @@ namespace Tilemap
 			for (int j = 0; j < tilemap->m_tilePictureIndex[i].size(); ++j)
 			{
 				rowStream << tilemap->m_tilePictureIndex[i][j] << ' ';
+			}
+			LOGGING_INFO("{}", rowStream.str().c_str());
+		}
+	}
+
+	void debugGridChecks(ecs::TilemapComponent* tilemap)
+	{
+		for (int i = 0; i < tilemap->m_isWall.size(); ++i)
+		{
+			std::ostringstream rowStream;
+
+			rowStream << "Row " << i << ": ";
+			for (int j = 0; j < tilemap->m_isWall[i].size(); ++j)
+			{
+				rowStream << tilemap->m_isWall[i][j] << ' ';
 			}
 			LOGGING_INFO("{}", rowStream.str().c_str());
 		}

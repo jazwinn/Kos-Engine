@@ -1111,6 +1111,13 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                     if (ImGui::Button("Pick Tile"))
                     {
                         m_tilePickerMode = true;
+                        m_collisionSetterMode = false;
+                    }
+
+                    if (ImGui::Button("Set Colliders"))
+                    {
+                        m_tilePickerMode = false;
+                        m_collisionSetterMode = true;
                     }
                     //Tilemap::debugTileIndex(tmc);
 

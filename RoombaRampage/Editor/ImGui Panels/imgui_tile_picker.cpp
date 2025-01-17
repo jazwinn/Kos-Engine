@@ -75,6 +75,7 @@ namespace gui
 		if (ImGui::Button("Back")) 
 		{
 			m_tilePickerMode = false;
+			m_collisionSetterMode = false;
 			return;
 		}
 		
