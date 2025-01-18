@@ -16,7 +16,7 @@ public class StartGameButton : ScriptBase
 
     private Queue<int> queue = new Queue<int>();
 
-    public override void GetEntityID(uint id)
+    public override void Awake(uint id)
     {
         EntityID = id;
        

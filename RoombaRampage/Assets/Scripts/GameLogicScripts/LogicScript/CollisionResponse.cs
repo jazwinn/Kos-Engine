@@ -10,9 +10,13 @@ public class CollisionResponse : ScriptBase
 {
     private uint EntityID;
 
-    public override void GetEntityID(uint id)
+    public override void Awake(uint id)
     {
         EntityID = id;
+
+        InternalCall.m_InternalGetTransformComponent(EntityID, out startingPlayerPos, out startingPlayerScale, out startingPlayerRotate);
+        InternalCall.m_InternalGetRigidBodyComponent(EntityID, out playerVelocity, out playerAcceleration, out playerRotationalForce);
+        InternalCall.m_InternalGetColliderComponent(EntityID, out colSize, out colOffset, out colDraw, out colRadius, out colFlag, out isCollided, out colCheck);
     }
 
     private Vector2 startingPlayerPos;
@@ -34,9 +38,7 @@ public class CollisionResponse : ScriptBase
 
     public override void Start()
     {
-        InternalCall.m_InternalGetTransformComponent(EntityID, out startingPlayerPos, out startingPlayerScale, out startingPlayerRotate);
-        InternalCall.m_InternalGetRigidBodyComponent(EntityID,out playerVelocity, out playerAcceleration,out playerRotationalForce);
-        InternalCall.m_InternalGetColliderComponent(EntityID,out colSize,out colOffset, out colDraw,out colRadius,out colFlag,out isCollided,out colCheck); 
+      
 
     }
 

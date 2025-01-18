@@ -72,8 +72,14 @@
         },
         "script": {
             "scripts": [
-                "PlayerController",
-                "CollisionResponse"
+                {
+                    "name": "PlayerController",
+                    "enabled": true
+                },
+                {
+                    "name": "CollisionResponse",
+                    "enabled": true
+                }
             ]
         },
         "audio": [
@@ -124,7 +130,10 @@
                 },
                 "script": {
                     "scripts": [
-                        "PlayerGun"
+                        {
+                            "name": "PlayerGun",
+                            "enabled": true
+                        }
                     ]
                 },
                 "audio": [
@@ -187,7 +196,10 @@
                 },
                 "script": {
                     "scripts": [
-                        "PlayerGun"
+                        {
+                            "name": "PlayerGun",
+                            "enabled": true
+                        }
                     ]
                 },
                 "audio": [
@@ -250,7 +262,10 @@
                 },
                 "script": {
                     "scripts": [
-                        "PlayerGun"
+                        {
+                            "name": "PlayerGun",
+                            "enabled": true
+                        }
                     ]
                 },
                 "audio": [

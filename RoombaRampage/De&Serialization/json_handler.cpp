@@ -406,14 +406,26 @@ namespace Serialization {
 			{
 				rapidjson::Value script(rapidjson::kObjectType);
 
-				//TENTATIVE
+				// Create an array to store script objects
 				rapidjson::Value scriptArray(rapidjson::kArrayType);
+
 				for (const auto& scriptName : sc->m_scripts) {
+					// Create an object for each script
+					rapidjson::Value scriptObject(rapidjson::kObjectType);
+
+					// Add the script name (string) to the object
 					rapidjson::Value scriptValue;
-					scriptValue.SetString(scriptName.c_str(), allocator);
-					scriptArray.PushBack(scriptValue, allocator);
+					scriptValue.SetString(scriptName.first.c_str(), allocator);
+					scriptObject.AddMember("name", scriptValue, allocator);
+
+					// Add the boolean value to the object
+					scriptObject.AddMember("enabled", scriptName.second, allocator);
+
+					// Add the object to the array
+					scriptArray.PushBack(scriptObject, allocator);
 				}
 
+				// Add the script array to the "script" object
 				script.AddMember("scripts", scriptArray, allocator);
 				entityData.AddMember("script", script, allocator);
 				hasComponents = true;
@@ -802,8 +814,22 @@ namespace Serialization {
 				if (script.HasMember("scripts") && script["scripts"].IsArray()) {
 					const rapidjson::Value& scriptArray = script["scripts"];
 					for (rapidjson::SizeType i = 0; i < scriptArray.Size(); i++) {
-						if (scriptArray[i].IsString()) {
-							sc->m_scripts.push_back(scriptArray[i].GetString());
+						if (scriptArray[i].IsObject()) { // Ensure the element is an object
+							const rapidjson::Value& scriptObject = scriptArray[i];
+
+							// Extract the script name
+							if (scriptObject.HasMember("name") && scriptObject["name"].IsString()) {
+								std::string scriptName = scriptObject["name"].GetString();
+
+								// Extract the enabled boolean
+								bool enabled = false; // Default value
+								if (scriptObject.HasMember("enabled") && scriptObject["enabled"].IsBool()) {
+									enabled = scriptObject["enabled"].GetBool();
+								}
+
+								// Add to the script list
+								sc->m_scripts.push_back(std::make_pair(scriptName, enabled));
+							}
 						}
 					}
 				}

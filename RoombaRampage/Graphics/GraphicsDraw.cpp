@@ -126,6 +126,69 @@ namespace graphicpipe
 		}
 	}
 
+	void GraphicsPipe::m_funcDrawGameFrameBuffer()
+	{
+		/*glBindFramebuffer(GL_FRAMEBUFFER, m_frameBufferObject);
+		glEnable(GL_DEPTH_TEST);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		m_funcDrawTilemap();
+		m_funcDraw();
+		m_funcDrawText();
+
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		glDisable(GL_DEPTH_TEST);
+		glClear(GL_COLOR_BUFFER_BIT);
+
+		glUseProgram(m_frameBufferShaderProgram);*/
+
+		/*m_funcDrawWindow();
+
+		glUseProgram(m_frameBufferShaderProgram);
+
+		glBindVertexArray(m_screenTextureVAO);
+		glBindTexture(GL_TEXTURE_2D, m_screenTexture);
+
+		glUniform1i(glGetUniformLocation(m_frameBufferShaderProgram, "screenTexture"), m_screenTexture);
+
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+
+		GLenum err = glGetError();
+		if (err != GL_NO_ERROR) {
+			LOGGING_ERROR("First OpenGL Error: 0x%X", err);
+		}*/
+
+		// Render game elements to the framebuffer
+		glBindFramebuffer(GL_FRAMEBUFFER, m_frameBufferObject);
+		glEnable(GL_DEPTH_TEST);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		m_funcDrawTilemap();
+		m_funcDraw();
+		m_funcDrawText();
+
+		// Switch back to the default framebuffer
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		glDisable(GL_DEPTH_TEST);
+		glClear(GL_COLOR_BUFFER_BIT);
+
+		// Use the framebuffer shader program
+		glUseProgram(m_frameBufferShaderProgram);
+
+		// Draw the framebuffer texture to the screen
+		glBindVertexArray(m_screenTextureVAO);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, m_screenTexture);
+
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+
+		// Check for OpenGL errors
+		GLenum err;
+		while ((err = glGetError()) != GL_NO_ERROR) {
+			LOGGING_ERROR("OpenGL Error: 0x%X", err);
+		}
+	}
+
 	void GraphicsPipe::m_funcDrawWindow()
 	{
 		
@@ -136,6 +199,7 @@ namespace graphicpipe
 		m_funcDrawGrid();
 		m_funcDrawDebug();
 		m_funcDrawTilemap();
+		m_funcDrawGridCollider();
 		m_funcDraw();
 		//m_funcDrawLine({ 1.f,1.f,0 }, { -1.f,-1.f,0 }); // Comment this out when done debugging;
 		m_funcDrawText();
@@ -316,6 +380,52 @@ namespace graphicpipe
 
 	}
 
+	void GraphicsPipe::m_funcDrawGridCollider()
+	{
+		
+		glUseProgram(m_gridDebugShaderProgram);
+
+		
+
+		for (int i{}; i < m_colliderGridData.size() && !m_gridColliderChecks.empty(); ++i)
+		{
+			if (m_gridColliderChecks[i].empty())
+			{
+				continue;
+			}
+
+			GLenum err = glGetError();
+			if (err != GL_NO_ERROR) {
+				//LOGGING_ERROR("First OpenGL Error: 0x%X", err);
+				std::cout << "First OpenGL Error: " << err << std::endl;
+			}
+
+			glBindBuffer(GL_ARRAY_BUFFER, m_gridColliderBuffer);
+			glNamedBufferData(m_gridColliderBuffer, m_gridColliderChecks[i].size() * sizeof(int), &m_gridColliderChecks[i][0], GL_DYNAMIC_DRAW);
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+			glUniform1i(glGetUniformLocation(m_gridDebugShaderProgram, "tilemapRows"), m_colliderGridData[i].m_gridDimensions.x);
+
+			GLenum err2 = glGetError();
+			if (err2 != GL_NO_ERROR) {
+				//LOGGING_ERROR("First OpenGL Error: 0x%X", err);
+				std::cout << "Second OpenGL Error: " << err2 << std::endl;
+			}
+
+			glUniform1i(glGetUniformLocation(m_gridDebugShaderProgram, "tilemapColumns"), m_colliderGridData[i].m_gridDimensions.y);
+
+			glUniformMatrix3fv(glGetUniformLocation(m_gridDebugShaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currViewMatrix));
+
+			glUniformMatrix3fv(glGetUniformLocation(m_gridDebugShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currOrthoMatrix));
+
+			glUniformMatrix3fv(glGetUniformLocation(m_gridDebugShaderProgram, "modelMatrix"), 1, GL_FALSE, glm::value_ptr(m_colliderGridData[i].m_transformation));
+
+			glBindVertexArray(m_squareLinesMesh.m_vaoId);
+			glDrawElementsInstanced(m_squareLinesMesh.m_primitiveType, m_squareLinesMesh.m_indexElementCount, GL_UNSIGNED_SHORT, NULL, static_cast<GLsizei>(m_colliderGridData[i].m_gridDimensions.x * m_colliderGridData[i].m_gridDimensions.y));
+			glBindVertexArray(0);
+		}
+	}
+
 	void GraphicsPipe::m_funcDrawTilemap()
 	{
 		glUseProgram(m_tilemapShaderProgram);
@@ -328,7 +438,10 @@ namespace graphicpipe
 			}
 			glBindBuffer(GL_ARRAY_BUFFER, m_tileIndexBuffer);
 			glNamedBufferData(m_tileIndexBuffer, m_tileIndexes[i].size() * sizeof(int), &m_tileIndexes[i][0], GL_DYNAMIC_DRAW);
-			glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+			//glBindBuffer(GL_ARRAY_BUFFER, m_gridColliderBuffer);
+			//glNamedBufferData(m_gridColliderBuffer, m_gridColliderChecks[i].size() * sizeof(int), &m_gridColliderChecks[i][0], GL_DYNAMIC_DRAW);
+			//glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 
 			glActiveTexture(GL_TEXTURE0 + m_textureIDs[m_transformedTilemaps[i].m_textureID]); // Activate each texture unit

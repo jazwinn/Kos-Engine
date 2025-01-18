@@ -27,8 +27,16 @@ uniform sampler2D screenTexture;
 
 void main()
 {
-    vec4 col = texture(screenTexture, texCoords).rgba;
-    fragColor = col;
+    vec2 pixelCoord = gl_FragCoord.xy;
+    vec4 col = texture(screenTexture, texCoords);
+   
+   int pixelY = int(pixelCoord.y);
+
+    //if (pixelY % 4 == 0)
+    //{
+        //col = col * 0.5f;
+    //}
+     fragColor = col;
 } 
 
 )"

@@ -11,9 +11,20 @@ public class EnemyController : ScriptBase
     #region Entity ID
     private uint EntityID;
 
-    public override void GetEntityID(uint id)
+    public override void Awake(uint id)
     {
         EntityID = id;
+
+        InternalCall.m_InternalGetTransformComponent(EntityID, out startingEnemyPos, out startingEnemyScale, out startingEnemyRotate);
+        InternalCall.m_InternalGetSpriteComponent(EntityID, out startingSprite, out startingLayer, out startingColor, out startingAlpha);
+        InternalCall.m_InternalGetAnimationComponent(EntityID, out frameNumber, out framesPerSecond, out frameTimer, out isAnimating, out stripCount);
+
+        enemyDeathTexture = "img_scientistDeath.png";
+
+        playerID = InternalCall.m_InternalCallGetTagID("Player");
+
+        isDead = false;
+        isChasing = true;
     }
     #endregion
 
@@ -57,16 +68,7 @@ public class EnemyController : ScriptBase
 
     public override void Start()
     {
-        InternalCall.m_InternalGetTransformComponent(EntityID, out startingEnemyPos, out startingEnemyScale, out startingEnemyRotate);
-        InternalCall.m_InternalGetSpriteComponent(EntityID, out startingSprite, out startingLayer, out startingColor, out startingAlpha);
-        InternalCall.m_InternalGetAnimationComponent(EntityID, out frameNumber, out framesPerSecond, out frameTimer, out isAnimating, out stripCount);
-
-        enemyDeathTexture = "img_scientistDeath.png";
-
-        playerID = InternalCall.m_InternalCallGetTagID("Player");
-
-        isDead = false;
-        isChasing = true;
+      
     }
 
     public override void Update()

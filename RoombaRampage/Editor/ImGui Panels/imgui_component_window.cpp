@@ -221,7 +221,8 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
     const char* ComponentNames[] =
     {
         "Add Components", "Collider Component", "Sprite Component", "Player Component", "Rigid Body Component", "Text Component", 
-        "Animation Component", "Camera Component" , "Button Component" , "Script Component", "Tilemap Component", "Audio Component"
+        "Animation Component", "Camera Component" , "Button Component" , "Script Component", "Tilemap Component", "Audio Component",
+        "Grid Component"
     };
     static int ComponentType = 0;
 
@@ -333,6 +334,14 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 ComponentType = 0;
                 if (!EntitySignature.test(ecs::TYPEAUDIOCOMPONENT)) {
                     events::AddComponent action(entityID, ecs::TYPEAUDIOCOMPONENT);
+                    DISPATCH_ACTION_EVENT(action);
+                }
+            }
+            if (ComponentType == 12) {
+                ecs->m_AddComponent(ecs::TYPEGRIDCOMPONENT, entityID);
+                ComponentType = 0;
+                if (!EntitySignature.test(ecs::TYPEGRIDCOMPONENT)) {
+                    events::AddComponent action(entityID, ecs::TYPEGRIDCOMPONENT);
                     DISPATCH_ACTION_EVENT(action);
                 }
             }
@@ -512,7 +521,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                 CreateContext(ecs::TYPETRANSFORMCOMPONENT, entityID);
 
-                if (open) {
+                if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPETRANSFORMCOMPONENT)) {
                     auto* rbc = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(entityID));
                     DrawComponents toDraw(rbc->Names());
                     static ecs::TransformComponent oldVal = *rbc;
@@ -558,8 +567,8 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                 CreateContext(ecs::TYPESPRITECOMPONENT, entityID);
 
-                if (open) {
-                   
+                if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPESPRITECOMPONENT)) {
+
                     assetmanager::AssetManager* Asset = assetmanager::AssetManager::m_funcGetInstance();
                     auto* sc = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(entityID));
 
@@ -633,7 +642,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                     }
 
 
-                    if (open) {
+                    if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPESPRITECOMPONENT)) {
                         auto* rbc = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(entityID));
                         rbc->ApplyFunction(DrawComponents(rbc->Names()));
                     }
@@ -730,7 +739,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                 CreateContext(ecs::TYPECOLLIDERCOMPONENT, entityID);
 
-                if (open) {
+                if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPECOLLIDERCOMPONENT)) {
                     auto* rbc = static_cast<ecs::ColliderComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(entityID));
                     rbc->ApplyFunction(DrawComponents(rbc->Names()));
                 }
@@ -743,20 +752,20 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                 CreateContext(ecs::TYPERIGIDBODYCOMPONENT, entityID);
 
-                if (open) {
+                if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPERIGIDBODYCOMPONENT)) {
                     auto* rbc = static_cast<ecs::RigidBodyComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPERIGIDBODYCOMPONENT]->m_GetEntityComponent(entityID));
                     rbc->ApplyFunction(DrawComponents(rbc->Names()));
                 }
 
 
             }
-            if (EntitySignature.test(ecs::TYPEPLAYERCOMPONENT)) {
+            if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEPLAYERCOMPONENT)) {
 
                 open = ImGui::CollapsingHeader("Player Component");
 
                 CreateContext(ecs::TYPEPLAYERCOMPONENT, entityID);
 
-                if (open) {
+                if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEPLAYERCOMPONENT)) {
                     auto* rbc = static_cast<ecs::PlayerComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEPLAYERCOMPONENT]->m_GetEntityComponent(entityID));
                     rbc->ApplyFunction(DrawComponents(rbc->Names()));
                 }
@@ -770,7 +779,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 CreateContext(ecs::TYPETEXTCOMPONENT, entityID);
 
 
-                if (open) {
+                if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPETEXTCOMPONENT)) {
 
                     assetmanager::AssetManager* Asset = assetmanager::AssetManager::m_funcGetInstance();
                     auto* tc = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(entityID));
@@ -909,7 +918,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                     }
                 }
 
-                if (open) {
+                if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPETEXTCOMPONENT)) {
                     auto* rbc = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(entityID));
                     rbc->ApplyFunction(DrawComponents(rbc->Names()));
                 }
@@ -921,7 +930,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                 CreateContext(ecs::TYPEANIMATIONCOMPONENT, entityID);
 
-                if (open) {
+                if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEANIMATIONCOMPONENT)) {
                     auto* rbc = static_cast<ecs::AnimationComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEANIMATIONCOMPONENT]->m_GetEntityComponent(entityID));
                     rbc->ApplyFunction(DrawComponents(rbc->Names()));
                 }
@@ -934,7 +943,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                 CreateContext(ecs::TYPECAMERACOMPONENT, entityID);
 
-                if (open) {
+                if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPECAMERACOMPONENT)) {
                     auto* rbc = static_cast<ecs::CameraComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPECAMERACOMPONENT]->m_GetEntityComponent(entityID));
                     rbc->ApplyFunction(DrawComponents(rbc->Names()));
                 }
@@ -947,27 +956,56 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                 CreateContext(ecs::TYPESCRIPTCOMPONENT, entityID);
 
-                if (open) {
+                if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPESCRIPTCOMPONENT)) {
                     auto* sc = static_cast<ecs::ScriptComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESCRIPTCOMPONENT]->m_GetEntityComponent(entityID));
 
                     for (const auto& scriptname : sc->m_scripts)
                     {
                         //print out varaibles
-                        scripteditor::ScriptEditor::DisplayScriptComponents(scriptname, entityID);
+                        scripteditor::ScriptEditor::DisplayScriptComponents(scriptname.first, entityID);
                     }
 
                     
                     if (ImGui::BeginListBox("Scripts"))
                     {
                         int n{};
-                        for (const auto& scriptname : sc->m_scripts)
+                        for (auto& scriptname : sc->m_scripts)
                         {
 
-
-                            ImGui::Selectable(scriptname.c_str());
+                            if (scriptname.second) {
+                                ImGui::Selectable(scriptname.first.c_str());
+                            }
+                            else {
+                                ImGui::Selectable(std::string(scriptname.first + " (Disabled)").c_str());
+                            }
+                            
                             if (ImGui::BeginPopupContextItem()) {
+
+                                if (scriptname.second) {
+                                    if (ImGui::MenuItem("Disable Script")) {
+                                        scriptname.second = false;
+
+                                        ImGui::EndPopup();
+
+
+                                        break;
+                                    }
+                                }
+                                else {
+                                    if (ImGui::MenuItem("Enable Script")) {
+                                        scriptname.second = true;
+
+                                        ImGui::EndPopup();
+
+
+                                        break;
+                                    }
+                                }
+
+
                                 if (ImGui::MenuItem("Delete Script")) {
-                                    sc->m_scripts.erase(std::find(sc->m_scripts.begin(), sc->m_scripts.end(), scriptname));
+                                   // sc->m_scripts.erase(std::find_if(sc->m_scripts.begin(), sc->m_scripts.end(), [&](const auto& x) {return x.first == scriptname.first;}));
+
                                     ImGui::EndPopup();
 
 
@@ -1004,8 +1042,8 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             const bool is_selected{};
                             if (ImGui::Selectable(scriptname.first.c_str(), is_selected)) {
                                 //TODO for now push back
-                                if (std::find(sc->m_scripts.begin(), sc->m_scripts.end(), scriptname.first) == sc->m_scripts.end()) {
-                                    sc->m_scripts.push_back(scriptname.first);
+                                if (std::find_if(sc->m_scripts.begin(), sc->m_scripts.end(), [&](const auto& x) {return x.first == scriptname.first;}) == sc->m_scripts.end()) {
+                                    sc->m_scripts.push_back(std::make_pair(scriptname.first, true));
                                 }
                                 else {
                                     LOGGING_WARN("Script is already inside Object");
@@ -1034,7 +1072,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                 CreateContext(ecs::TYPEBUTTONCOMPONENT, entityID);
 
-                if (open) {
+                if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEBUTTONCOMPONENT)) {
                     auto* rbc = static_cast<ecs::ButtonComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEBUTTONCOMPONENT]->m_GetEntityComponent(entityID));
                     rbc->ApplyFunction(DrawComponents(rbc->Names()));
                 }
@@ -1042,13 +1080,15 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
             }
 
+           
+
             if (EntitySignature.test(ecs::TYPETILEMAPCOMPONENT)) {
 
                 open = ImGui::CollapsingHeader("Tilemap Component");
 
                 CreateContext(ecs::TYPETILEMAPCOMPONENT, entityID);
 
-                if (open) {
+                if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPETILEMAPCOMPONENT)) {
 
                     assetmanager::AssetManager* Asset = assetmanager::AssetManager::m_funcGetInstance();
                     auto* tmc = static_cast<ecs::TilemapComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETILEMAPCOMPONENT]->m_GetEntityComponent(entityID));
@@ -1102,16 +1142,23 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                     }
 
 
-                    if (open) {
+                    if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPETILEMAPCOMPONENT)) {
                         auto* rbc = static_cast<ecs::TilemapComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETILEMAPCOMPONENT]->m_GetEntityComponent(entityID));
                         rbc->ApplyFunction(DrawComponents(rbc->Names()));
                     }
                     Tilemap::resizeTiles(tmc, tmc->m_rowLength, tmc->m_columnLength);
 
                     if (ImGui::Button("Pick Tile"))
+                     {
+                         m_tilePickerMode = true;
+                         m_collisionSetterMode = false;
+                     }
+
+                    /*if (ImGui::Button("Set Colliders"))
                     {
-                        m_tilePickerMode = true;
-                    }
+                        m_tilePickerMode = false;
+                        m_collisionSetterMode = true;
+                    }*/
                     //Tilemap::debugTileIndex(tmc);
 
                     //std::cout << EditorCamera::calculateWorldCoordinatesFromMouse(ImGui::GetMousePos().x, ImGui::GetMousePos().y).m_y << std::endl;
@@ -1120,12 +1167,38 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
 
             }
+
+            if (EntitySignature.test(ecs::TYPEGRIDCOMPONENT)) {
+
+                open = ImGui::CollapsingHeader("Grid Component");
+
+                CreateContext(ecs::TYPEGRIDCOMPONENT, entityID);
+
+                if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEGRIDCOMPONENT)) {
+
+                    auto* grid = static_cast<ecs::GridComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEGRIDCOMPONENT]->m_GetEntityComponent(entityID));
+                    auto* transform = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(entityID));
+
+              
+                    if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEGRIDCOMPONENT)) {
+                        auto* rbc = static_cast<ecs::GridComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEGRIDCOMPONENT]->m_GetEntityComponent(entityID));
+                        rbc->ApplyFunction(DrawComponents(rbc->Names()));
+                    }
+                    Tilemap::resizeCollidableGrid(grid, grid->m_GridRowLength, grid->m_GridColumnLength);
+
+                    if (ImGui::Button("Set Colliders"))
+                    {
+                        m_tilePickerMode = false;
+                        m_collisionSetterMode = true;
+                    }
+                }
+            }
             if (EntitySignature.test(ecs::TYPEAUDIOCOMPONENT)) {
                 open = ImGui::CollapsingHeader("Audio Component");
 
                 CreateContext(ecs::TYPEAUDIOCOMPONENT, entityID);
 
-                if (open) {
+                if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEAUDIOCOMPONENT)) {
                     auto* ac = static_cast<ecs::AudioComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEAUDIOCOMPONENT]->m_GetEntityComponent(entityID));
                     //assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
 
