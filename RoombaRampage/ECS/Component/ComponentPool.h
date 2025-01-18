@@ -36,6 +36,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "TilemapComponent.h"
 #include "AudioComponent.h"
 #include "GridComponent.h"
+#include "RaycastComponent.h"
 
 
 

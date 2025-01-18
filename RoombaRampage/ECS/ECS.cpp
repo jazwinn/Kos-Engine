@@ -60,6 +60,7 @@ namespace ecs{
 		m_AddComponentToECS<TilemapComponent>(TYPETILEMAPCOMPONENT);
 		m_AddComponentToECS<AudioComponent>(TYPEAUDIOCOMPONENT);
 		m_AddComponentToECS<GridComponent>(TYPEGRIDCOMPONENT);
+		m_AddComponentToECS<GridComponent>(TYPERAYCASTINGCOMPONENT);
 
 
 
@@ -79,7 +80,7 @@ namespace ecs{
 		ecs->m_ECS_SystemMap[TYPEANIMATIONSYSTEM] = std::make_shared<AnimationSystem>();
 		ecs->m_ECS_SystemMap[TYPETILEMAPSYSTEM] = std::make_shared<TilemapSystem>();
 		ecs->m_ECS_SystemMap[TYPEGRIDSYSTEM] = std::make_shared<GridSystem>();
-
+		ecs->m_ECS_SystemMap[TYPERAYCASTSYSTEM] = std::make_shared<RayCastSystem>();
 		
 
 		//Initialize all system Peformance
