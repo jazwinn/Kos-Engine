@@ -8,28 +8,14 @@
         },
         "transform": {
             "position": {
-                "x": -0.8100697994232178,
-                "y": 0.15102995932102203
+                "x": 3.9258313179016113,
+                "y": 1.9647302627563477
             },
-            "rotation": 0.0,
+            "rotation": -0.0,
             "scale": {
                 "x": 1.0,
                 "y": 1.0
             }
-        },
-        "collider": {
-            "checkcollision": true,
-            "size": {
-                "x": 0.47999998927116394,
-                "y": 0.5
-            },
-            "offset": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "drawDebug": true,
-            "radius": 0.5,
-            "shapetype": 0
         },
         "sprite": {
             "imagefile": "img_roombert.png",
@@ -40,6 +26,58 @@
                 "b": 1.0
             },
             "alpha": 1.0
+        },
+        "raycast": {
+            "raycasts": [
+                {
+                    "israycasting": true,
+                    "targetposition": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "Layer Vector": [
+                        {
+                            "layer": 5
+                        },
+                        {
+                            "layer": 6
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "name": {
+            "namestr": "wall",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": 1.5247899293899536,
+                "y": 0.5029720664024353
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "collider": {
+            "checkcollision": true,
+            "size": {
+                "x": 1.0,
+                "y": 1.0
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true,
+            "radius": 0.5,
+            "shapetype": 0
         }
     }
 ]

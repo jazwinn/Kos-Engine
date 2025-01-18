@@ -29,28 +29,27 @@ namespace ecs {
 
 		class Raycast {
 		public:
-			bool m_isRaycasting{};
-
-			float m_distance{}; // distance between target and entity pos
+			bool m_isRaycasting{true};
 
 			vector2::Vec2 m_targetPosition{};
 
-			//std::vector<layer::LAYERS> m_Layers;
+			std::vector<layer::LAYERS> m_Layers;
 
 			// need not reflect or serialize after this line
 
+			float m_distance{}; // distance between target and entity pos
+
 			bool m_isHit{};// true if collide with anything in between line
 
-			float m_hitposition{};
+			vector2::Vec2 m_hitposition{};
 
-			REFLECTABLE(Raycast, m_isRaycasting, m_targetPosition);
+			REFLECTABLE(Raycast, m_isRaycasting, m_targetPosition, m_Layers, m_distance, m_isHit, m_hitposition);
 		};
 		
 		std::vector<Raycast> m_raycast{};
 
-		std::vector<int> m_test;;
 
-		REFLECTABLE(RaycastComponent, m_raycast, m_test);
+		REFLECTABLE(RaycastComponent, m_raycast);
 
 	};
 

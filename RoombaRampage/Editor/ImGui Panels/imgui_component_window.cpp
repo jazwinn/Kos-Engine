@@ -58,6 +58,7 @@ struct DrawComponents {
 
     bool operator()(float& _args) {
         
+
         ImGui::AlignTextToFramePadding();
         ImGui::Text(m_Array[count].c_str());
         ImGui::SameLine(slider_start_pos_x);
@@ -203,6 +204,22 @@ struct DrawComponents {
         count++;
     }
 
+    void operator()(layer::LAYERS& _args) {
+        ImGui::AlignTextToFramePadding();
+        ImGui::Text(m_Array[count].c_str());
+        ImGui::SameLine(slider_start_pos_x);
+        ImGui::SetNextItemWidth(100.0f);
+        std::string title = "##slider_" + std::to_string(count) + "_" + m_Array[count];
+        ImGui::PushItemWidth(slidersize);
+        int toint = int(_args);
+        if (ImGui::DragInt(title.c_str(), &toint, 1.0f, 0, 8)) {
+            _args = (layer::LAYERS)toint;
+        }
+        ImGui::PopItemWidth();
+
+        count++;
+    }
+
     template <typename U>
     void operator()(std::vector<U>& _args) {
         if constexpr (std::is_class_v<U>) {
@@ -211,9 +228,12 @@ struct DrawComponents {
             }
         }
         else {
+            int _count{};
             for (U& x : _args) {
+                ImGui::PushID(_count++);
                 (*this)(x); // Handle non-class types
                 count--;// minus so no subsciprt error
+                ImGui::PopID();
             }
         }
         count++;
@@ -1416,7 +1436,40 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                 if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPERAYCASTINGCOMPONENT)) {
                     auto* rcc = static_cast<ecs::RaycastComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPERAYCASTINGCOMPONENT]->m_GetEntityComponent(entityID));
-                    rcc->ApplyFunction(DrawComponents(rcc->Names()));
+
+                    if (ImGui::Button("+ Add Ray")) {
+                        rcc->m_raycast.push_back(ecs::RaycastComponent::Raycast{});
+                        
+                    }
+                    ImGui::Separator();
+
+
+                    int _count{};
+                    for (auto it = rcc->m_raycast.begin(); it != rcc->m_raycast.end(); it++) {
+                        ImGui::PushID(_count);
+                        it->ApplyFunction(DrawComponents(it->Names()));
+
+                        if (ImGui::Button("+ Layer")) {
+                            it->m_Layers.push_back((layer::LAYERS)0);
+                        }
+
+                        ImGui::SameLine();
+                        if (ImGui::Button("- Layer")) {
+                            it->m_Layers.pop_back();
+                        }
+                        ImGui::SameLine();
+                        if (ImGui::Button(" Delete Ray")) {
+                            rcc->m_raycast.erase(it);
+                            ImGui::PopID();
+                            break;
+                        }
+
+                        ImGui::PopID();
+                        _count++;
+
+                        ImGui::Separator();
+
+                    }
                 }
 
 
