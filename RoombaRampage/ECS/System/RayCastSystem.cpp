@@ -59,7 +59,7 @@ namespace ecs {
 		m_SystemSignature.set(TYPETRANSFORMCOMPONENT);
 
 	}
-
+	static int x = 0;
 	void RayCastSystem::m_Update(const std::string& scene) {
 		if (m_vecTransformComponentPtr.size() != m_vecRaycastComponentPtr.size()) {
 			LOGGING_ERROR("Error: Vectors container size does not Match");
@@ -75,7 +75,20 @@ namespace ecs {
 
 			RaycastComponent* raycast = m_vecRaycastComponentPtr[n];
 
+			if (x < 4) {
+				raycast->m_raycast.push_back(ecs::RaycastComponent::Raycast{});
+				raycast->m_test.push_back(1);
+				x ++;
+			}
 
+
+			//calcuate distance between entity and target
+			for (auto& ray : raycast->m_raycast) {
+				//vector2::Vec2 direction = ray.m_targetPosition - transform->m_position;
+				ray.m_distance = abs(vector2::Vec2::m_funcVec2DDistance(ray.m_targetPosition, transform->m_position));
+
+			}
+			
 
 
 		}

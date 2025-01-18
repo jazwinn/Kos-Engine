@@ -60,7 +60,7 @@ namespace ecs{
 		m_AddComponentToECS<TilemapComponent>(TYPETILEMAPCOMPONENT);
 		m_AddComponentToECS<AudioComponent>(TYPEAUDIOCOMPONENT);
 		m_AddComponentToECS<GridComponent>(TYPEGRIDCOMPONENT);
-		m_AddComponentToECS<GridComponent>(TYPERAYCASTINGCOMPONENT);
+		m_AddComponentToECS<RaycastComponent>(TYPERAYCASTINGCOMPONENT);
 
 
 

@@ -78,16 +78,16 @@ struct DrawComponents {
     }
 
 
-    void operator()(const std::vector<std::string>& _args) {
-        for (auto& arg : _args) {
-            ImGui::Text(m_Array[count].c_str());
-            ImGui::SameLine(slider_start_pos_x);
-            std::string title = "##" + m_Array[count];
-           // ImGui::InputText(title.c_str(), arg.c_str());
-        }
+    //void operator()(const std::vector<std::string>& _args) {
+    //    for (auto& arg : _args) {
+    //        ImGui::Text(m_Array[count].c_str());
+    //        ImGui::SameLine(slider_start_pos_x);
+    //        std::string title = "##" + m_Array[count];
+    //       // ImGui::InputText(title.c_str(), arg.c_str());
+    //    }
 
-        count++;
-    }
+    //    count++;
+    //}
 
     void operator()(physicspipe::EntityType& _args)
     {
@@ -202,6 +202,22 @@ struct DrawComponents {
 
         count++;
     }
+
+    template <typename U>
+    void operator()(std::vector<U>& _args) {
+        if constexpr (std::is_class_v<U>) {
+            for (U& x : _args) {
+                x.ApplyFunction(DrawComponents(x.Names()));
+            }
+        }
+        else {
+            for (U& x : _args) {
+                (*this)(x); // Handle non-class types
+                count--;// minus so no subsciprt error
+            }
+        }
+        count++;
+    }
 };
 
 
@@ -222,7 +238,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
     {
         "Add Components", "Collider Component", "Sprite Component", "Player Component", "Rigid Body Component", "Text Component", 
         "Animation Component", "Camera Component" , "Button Component" , "Script Component", "Tilemap Component", "Audio Component",
-        "Grid Component"
+        "Grid Component", "RayCast Component"
     };
     static int ComponentType = 0;
 
@@ -342,6 +358,14 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 ComponentType = 0;
                 if (!EntitySignature.test(ecs::TYPEGRIDCOMPONENT)) {
                     events::AddComponent action(entityID, ecs::TYPEGRIDCOMPONENT);
+                    DISPATCH_ACTION_EVENT(action);
+                }
+            }
+            if (ComponentType == 13) {
+                ecs->m_AddComponent(ecs::TYPERAYCASTINGCOMPONENT, entityID);
+                ComponentType = 0;
+                if (!EntitySignature.test(ecs::TYPERAYCASTINGCOMPONENT)) {
+                    events::AddComponent action(entityID, ecs::TYPERAYCASTINGCOMPONENT);
                     DISPATCH_ACTION_EVENT(action);
                 }
             }
@@ -1384,7 +1408,19 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 }
             }
 
+            if (EntitySignature.test(ecs::TYPERAYCASTINGCOMPONENT)) {
 
+                open = ImGui::CollapsingHeader("Raycast Component");
+
+                CreateContext(ecs::TYPERAYCASTINGCOMPONENT, entityID);
+
+                if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPERAYCASTINGCOMPONENT)) {
+                    auto* rcc = static_cast<ecs::RaycastComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPERAYCASTINGCOMPONENT]->m_GetEntityComponent(entityID));
+                    rcc->ApplyFunction(DrawComponents(rcc->Names()));
+                }
+
+
+            }
             
 
             //draw invinsible box
