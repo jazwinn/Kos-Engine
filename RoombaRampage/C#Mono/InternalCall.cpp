@@ -761,6 +761,8 @@ namespace script {
 		return Array;
 	}
 
+
+
 	void InternalCall::m_InternalCallDeleteEntity(ecs::EntityID id)
 	{
 		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
@@ -800,6 +802,19 @@ namespace script {
 	{
 		return Input::InputSystem::m_isKeyTriggered(key);
 	}
+
+	void InternalCall::m_InternalCallGetRayCastComponent(ecs::EntityID id, ecs::RaycastComponent** rc)
+	{
+
+		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+		*rc = static_cast<ecs::RaycastComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPERAYCASTINGCOMPONENT]->m_GetEntityComponent(id));
+		if (*rc == NULL) {
+			return ;
+		}
+
+
+	}
+
 	void InternalCall::m_RegisterInternalCalls()
 	{
 		MONO_ADD_INTERNAL_CALL(m_InternalGetTransformComponent);
@@ -881,6 +896,7 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_EnableScript);
 		MONO_ADD_INTERNAL_CALL(m_DisableScript);
 		MONO_ADD_INTERNAL_CALL(m_RetrieveCollidableEntities);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallGetRayCastComponent);
 
 	}
 }

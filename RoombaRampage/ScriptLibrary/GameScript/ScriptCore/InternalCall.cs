@@ -171,6 +171,9 @@ public static class InternalCall
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static int[] m_RetrieveCollidableEntities(string monostring); // insert scene name
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static void m_InternalCallGetRayCastComponent(uint id, out IntPtr rc);
 }
 public static class Component
 {
