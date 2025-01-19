@@ -29,6 +29,9 @@ namespace ecs {
 
 		class Raycast {
 		public:
+
+			std::string m_rayID;
+
 			bool m_isRaycasting{true};
 
 			vector2::Vec2 m_targetPosition{};
@@ -39,11 +42,11 @@ namespace ecs {
 
 			float m_distance{}; // distance between target and entity pos
 
-			bool m_isHit{};// true if collide with anything in between line
+			bool m_targetReached{};// true if hits target, false if anything in between
 
 			vector2::Vec2 m_hitposition{};
 
-			REFLECTABLE(Raycast, m_isRaycasting, m_targetPosition, m_Layers, m_distance, m_isHit, m_hitposition);
+			REFLECTABLE(Raycast, m_rayID, m_isRaycasting, m_targetPosition, m_Layers, m_distance, m_targetReached, m_hitposition);
 		};
 		
 		std::vector<Raycast> m_raycast{};

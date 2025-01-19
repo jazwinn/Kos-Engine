@@ -8,8 +8,8 @@
         },
         "transform": {
             "position": {
-                "x": 3.9258313179016113,
-                "y": 1.9647302627563477
+                "x": 3.614326000213623,
+                "y": 1.5116326808929443
             },
             "rotation": -0.0,
             "scale": {
@@ -30,6 +30,7 @@
         "raycast": {
             "raycasts": [
                 {
+                    "raycastID": "ray1",
                     "israycasting": true,
                     "targetposition": {
                         "x": 0.0,
@@ -37,10 +38,7 @@
                     },
                     "Layer Vector": [
                         {
-                            "layer": 5
-                        },
-                        {
-                            "layer": 6
+                            "layer": 0
                         }
                     ]
                 }

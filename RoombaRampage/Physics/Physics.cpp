@@ -817,11 +817,11 @@ namespace physicspipe {
 
 				auto entityshape = std::dynamic_pointer_cast<Rectangle>(entity);
 				if (LineRectangleIntersect(p1, p2, entityshape->m_boundingBox.m_min, entityshape->m_boundingBox.m_max, hitPosition)) {
-					isHit = true;
+					isHit = false;
 					return;
 				}
 				else {
-					isHit = false;
+					isHit = true;
 				}
 			}
 

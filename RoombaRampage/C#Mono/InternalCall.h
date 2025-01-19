@@ -580,7 +580,9 @@ namespace script {
 
 		static MonoArray* m_RetrieveCollidableEntities(MonoString* scene);
 
-		static void m_InternalCallGetRayCastComponent(ecs::EntityID id, ecs::RaycastComponent** rc);
+		static bool m_InternalCallGetRayCast( ecs::EntityID id,  MonoString* monoString, bool* isRaycasting, vector2::Vec2* targetposition, float* m_distance, bool* targetReached, vector2::Vec2* hitposition);
+
+		static bool m_InternalCallSetRayCast(ecs::EntityID id, MonoString* monoString, bool* isRaycasting, vector2::Vec2* targetposition, float* m_distance, bool* targetReached, vector2::Vec2* hitposition);;
 
 	public:
 		/******************************************************************/

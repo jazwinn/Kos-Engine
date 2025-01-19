@@ -81,14 +81,14 @@ namespace ecs {
 			//calcuate distance between entity and target
 			for (auto& ray : raycast->m_raycast) {
 				if (!ray.m_isRaycasting) {
-					ray.m_isHit = false;
+					ray.m_targetReached = true;
 					ray.m_hitposition = { 0,0 };
 					continue;
 				}
 				//vector2::Vec2 direction = ray.m_targetPosition - transform->m_position;
 				ray.m_distance = abs(vector2::Vec2::m_funcVec2DDistance(ray.m_targetPosition, transform->m_position));
 
-				PhysicsPipeline->IsLineIntersecting(transform->m_position, ray.m_targetPosition, ray.m_Layers, ray.m_isHit, ray.m_hitposition);
+				PhysicsPipeline->IsLineIntersecting(transform->m_position, ray.m_targetPosition, ray.m_Layers, ray.m_targetReached, ray.m_hitposition);
 
 			}
 			

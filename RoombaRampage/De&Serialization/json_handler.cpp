@@ -520,6 +520,11 @@ namespace Serialization {
 				for (const auto& raycast : rc->m_raycast) {
 					// Create an object for each script
 					rapidjson::Value raycastObject(rapidjson::kObjectType);
+					
+					rapidjson::Value raycastID;
+					raycastID.SetString(raycast.m_rayID.c_str(), allocator);
+					raycastObject.AddMember("raycastID", raycastID, allocator);
+
 
 					// Add the boolean value to the object
 					raycastObject.AddMember("israycasting", raycast.m_isRaycasting, allocator);
@@ -976,6 +981,10 @@ namespace Serialization {
 
 						for (const auto& raycastObject : rayArray.GetArray()) {
 							ecs::RaycastComponent::Raycast raycast;
+
+							if (raycastObject.HasMember("raycastID") && raycastObject["raycastID"].IsString()) {
+								raycast.m_rayID = raycastObject["raycastID"].GetString();
+							}
 
 							// Read boolean value
 							if (raycastObject.HasMember("israycasting") && raycastObject["israycasting"].IsBool()) {

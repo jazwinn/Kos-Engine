@@ -761,6 +761,77 @@ namespace script {
 		return Array;
 	}
 
+	bool InternalCall::m_InternalCallGetRayCast( ecs::EntityID id, MonoString* monoString, bool* isRaycasting, vector2::Vec2* targetposition, float* m_distance, bool* targetReached, vector2::Vec2* hitposition)
+	{
+
+		char* nativeString = mono_string_to_utf8(monoString);
+		std::string string{ nativeString };
+		mono_free(nativeString);
+
+		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+		ecs::RaycastComponent* rc = static_cast<ecs::RaycastComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPERAYCASTINGCOMPONENT]->m_GetEntityComponent(id));
+
+		if (rc) {
+			
+			auto it = std::find_if(rc->m_raycast.begin(), rc->m_raycast.end(), [string](const auto& x) { return x.m_rayID == string; });
+			if (it != rc->m_raycast.end()) {
+
+				*isRaycasting = it->m_isRaycasting;
+				*targetposition = it->m_targetPosition;
+				*m_distance = it->m_distance;
+				*targetReached = it->m_targetReached;
+				*hitposition = it->m_hitposition;
+
+			}
+			else {
+				return false;
+			}
+			
+
+		}
+
+
+
+
+		
+		return true;
+	}
+
+	bool InternalCall::m_InternalCallSetRayCast(ecs::EntityID id, MonoString* monoString, bool* isRaycasting, vector2::Vec2* targetposition, float* m_distance, bool* targetReached, vector2::Vec2* hitposition)
+	{
+		char* nativeString = mono_string_to_utf8(monoString);
+		std::string string{ nativeString };
+		mono_free(nativeString);
+
+		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+		ecs::RaycastComponent* rc = static_cast<ecs::RaycastComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPERAYCASTINGCOMPONENT]->m_GetEntityComponent(id));
+
+		if (rc) {
+
+			auto it = std::find_if(rc->m_raycast.begin(), rc->m_raycast.end(), [string](const auto& x) { return x.m_rayID == string; });
+			if (it != rc->m_raycast.end()) {
+
+				it->m_isRaycasting = *isRaycasting;
+				it->m_targetPosition = *targetposition;
+				it->m_distance = *m_distance ;
+				it->m_targetReached = *targetReached;
+				it->m_hitposition = *hitposition;
+
+			}
+			else {
+				return false;
+			}
+
+
+		}
+
+
+
+
+
+		return true;
+	}
+
 
 
 	void InternalCall::m_InternalCallDeleteEntity(ecs::EntityID id)
@@ -803,17 +874,6 @@ namespace script {
 		return Input::InputSystem::m_isKeyTriggered(key);
 	}
 
-	void InternalCall::m_InternalCallGetRayCastComponent(ecs::EntityID id, ecs::RaycastComponent** rc)
-	{
-
-		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
-		*rc = static_cast<ecs::RaycastComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPERAYCASTINGCOMPONENT]->m_GetEntityComponent(id));
-		if (*rc == NULL) {
-			return ;
-		}
-
-
-	}
 
 	void InternalCall::m_RegisterInternalCalls()
 	{
@@ -896,7 +956,9 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_EnableScript);
 		MONO_ADD_INTERNAL_CALL(m_DisableScript);
 		MONO_ADD_INTERNAL_CALL(m_RetrieveCollidableEntities);
-		MONO_ADD_INTERNAL_CALL(m_InternalCallGetRayCastComponent);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallGetRayCast);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallSetRayCast);
 
+		
 	}
 }
