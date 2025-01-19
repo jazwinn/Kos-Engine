@@ -115,20 +115,13 @@ public class ButtomComponent
     public bool m_IsClick;
 }
 
-[StructLayout(LayoutKind.Sequential)]
-public class RaycastComponent
+public class Raycast
 {
-    public class Raycast
-    {
-        [MarshalAs(UnmanagedType.I1)]
-        public bool m_isRaycasting;
-        public Vector2 m_targetposition;
-        public List<int> m_layers;
-        public float m_distance;
-        [MarshalAs(UnmanagedType.I1)]
-        public bool m_isHit;
-        public Vector2 m_hitPosition;
-    }
-
-    public List<Raycast> m_raycasts;
+    [MarshalAs(UnmanagedType.I1)]
+    public bool m_isRaycasting;
+    public Vector2 m_targetposition;
+    public float m_distance;
+    [MarshalAs(UnmanagedType.I1)]
+    public bool m_targetReached;
+    public Vector2 m_hitPosition;
 }

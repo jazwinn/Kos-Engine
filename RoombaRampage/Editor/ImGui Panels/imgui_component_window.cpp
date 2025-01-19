@@ -1454,8 +1454,11 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         }
 
                         ImGui::SameLine();
-                        if (ImGui::Button("- Layer")) {
+                        if (it->m_Layers.size() > 0 && ImGui::Button("- Layer")) {
                             it->m_Layers.pop_back();
+                            ImGui::PopID();
+                            break;
+
                         }
                         ImGui::SameLine();
                         if (ImGui::Button(" Delete Ray")) {

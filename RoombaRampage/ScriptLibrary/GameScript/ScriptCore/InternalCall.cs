@@ -173,7 +173,27 @@ public static class InternalCall
     public extern static int[] m_RetrieveCollidableEntities(string monostring); // insert scene name
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static void m_InternalCallGetRayCastComponent(uint id, out IntPtr rc);
+    private extern static bool m_InternalCallGetRayCast(uint id, string monoString, out bool isRaycasting, out Vector2 targetposition, out float m_distance, out bool targetReached, out Vector2 hitposition);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    private extern static bool m_InternalCallSetRayCast(uint id, string monoString, in bool isRaycasting, in Vector2 targetposition, in float m_distance, in bool targetReached, in Vector2 hitposition);
+
+    public static Raycast m_GetRay(uint id, string monoString)
+    {
+        Raycast ray = new Raycast();
+
+        m_InternalCallGetRayCast(id, monoString, out ray.m_isRaycasting, out ray.m_targetposition, out ray.m_distance, out ray.m_targetReached, out ray.m_hitPosition);
+
+        return ray; 
+    }
+
+    public static void m_SetRay(uint id, string monoString, Raycast ray)
+    {
+
+        m_InternalCallSetRayCast(id, monoString, in ray.m_isRaycasting, in ray.m_targetposition, in ray.m_distance, in ray.m_targetReached, in ray.m_hitPosition);
+
+    }
+
 }
 public static class Component
 {
