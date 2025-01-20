@@ -100,6 +100,7 @@ namespace ecs {
 				ColComp->m_collidedWith.clear();
 				ColComp->m_triColWith.clear();
 				ColComp->m_blockedFlag = -1;
+				ColComp->m_contactPoints.clear();
 				//skip component not of the scene
 				if (rigidComp->m_scene != scene) continue;
 				
@@ -110,7 +111,7 @@ namespace ecs {
 					}
 				}
 				if (!ColComp->m_keys.empty()) {
-					const EntityID check_ID = ColComp->m_Entity;
+					//const EntityID check_ID = ColComp->m_Entity;
 					//for (const auto& elem : ColComp->m_keys) {
 					//	if (ColComp->m_collisionState.find(elem) != ColComp->m_collisionState.end()) {
 					//		if (ColComp->m_collisionState.find(elem)->second == physicspipe::CollisionState::CONTINUOUS || ColComp->m_collisionState.find(elem)->second == physicspipe::CollisionState::ENTERED) {
@@ -162,6 +163,9 @@ namespace ecs {
 				if (check_ID == tempID) {
 					const auto& colComp = static_cast<ecs::ColliderComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(tempID));
 					const auto& colComp2 = static_cast<ecs::ColliderComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(tempCollided));
+					colComp2->m_collidedWith.clear();
+					colComp2->m_triColWith.clear();
+					colComp2->m_blockedFlag = -1;
 					colComp->m_collidedWith.push_back(tempCollided);
 					colComp2->m_collidedWith.push_back(tempID);
 					colComp->m_triColWith.emplace_back(tempCollided);
@@ -352,7 +356,7 @@ namespace ecs {
 
 		//	cc_1->m_isCollided = true;
 		//}
-
+		physicspipe::m_FindContactPoints();
 	}
 
 
