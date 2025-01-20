@@ -1,11 +1,9 @@
-#include "../Graphics/GraphicsPipe.h"
-#include "../ECS/System/TilemapSystem.h"
+#include "../Config/pch.h"
+#include "../ECS/Component/GridComponent.h"
 #include <vector>
-#include <unordered_map>
 #include <queue>
-#include <set>
-#include "../ECS/Component/TilemapComponent.h"
-
+#include <unordered_map>
+#include <cmath>
 
 #ifndef ASTAR_H
 #define ASTAR_H
@@ -18,29 +16,33 @@ struct Node {
     Node* parent = nullptr;                         // Pointer to the parent node for path reconstruction
 
     Node(int x, int y) : x(x), y(y) {}
+
+    bool operator<(const Node& other) const {
+        return fCost() > other.fCost(); // Reverse comparison for min-heap
+    }
 };
 
 class AStarPathfinding {
 public:
-    std::vector<Node> FindPath(ecs::TilemapComponent* tilemap, int startX, int startY, int targetX, int targetY);
+    std::vector<Node> FindPath(ecs::GridComponent* grid, int startX, int startY, int targetX, int targetY);
 
 private:
     const std::vector<std::pair<int, int>> directions = {
-        {0, -1}, {-1, 0}, {0, 1}, {1, 0}
+        {0, -1}, {-1, 0}, {0, 1}, {1, 0} // Up, Left, Down, Right
     };
 
-    bool IsWalkable(ecs::TilemapComponent* tilemap, int x, int y);
+    bool IsWalkable(ecs::GridComponent* grid, int x, int y);
 
     float CalculateHeuristic(int x1, int y1, int x2, int y2);
 
     std::vector<Node> ReconstructPath(Node* endNode);
 
-    struct pair_hash {
+    struct PairHash {
         template <class T1, class T2>
         std::size_t operator()(const std::pair<T1, T2>& pair) const {
-            return std::hash<T1>()(pair.first) ^ std::hash<T2>()(pair.second);
+            return std::hash<T1>()(pair.first) ^ (std::hash<T2>()(pair.second) << 1);
         }
     };
 };
 
-#endif ASTAR_H
+#endif // ASTAR_H

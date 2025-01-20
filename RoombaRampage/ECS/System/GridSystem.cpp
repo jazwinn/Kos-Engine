@@ -1,11 +1,11 @@
-
 #include "../Config/pch.h"
 #include "../ECS.h"
-
 #include "GridSystem.h"
 #include "../ECS/Component/GridComponent.h"
 #include "../Graphics/GraphicsPipe.h"
 #include "../Asset Manager/AssetManager.h"
+
+#include "../Pathfinding/AStarPathfinding.h"
 
 namespace ecs {
 
@@ -58,6 +58,8 @@ namespace ecs {
 			return;
 		}
 
+		AStarPathfinding pathfinder;
+
 		//loops through all vecoters pointing to component
 		for (int n{}; n < m_vecGridComponentPtr.size(); n++) {
 
@@ -82,6 +84,25 @@ namespace ecs {
 															transform->m_transformation.m_e20, transform->m_transformation.m_e21, transform->m_transformation.m_e22},glm::ivec2{grid->m_GridRowLength,grid->m_GridColumnLength} });
 
 			graphicsPipe->m_gridColliderArrays.push_back(grid->m_IsWall);
+
+			//Pathfinding logic
+			int startX = static_cast<int>(transform->m_position.m_x);
+			int startY = static_cast<int>(transform->m_position.m_y);
+			int targetX = 5; // Example target position (should be set dynamically)
+			int targetY = 5; // Example target position (should be set dynamically)
+
+			// Find path
+			std::vector<Node> path = pathfinder.FindPath(grid, startX, startY, targetX, targetY);
+
+			if (!path.empty()) {
+				LOGGING_INFO("Path found:");
+				for (const auto& node : path) {
+					std::cout << "Step: (" << node.x << ", " << node.y << ")\n";
+				}
+			}
+			else {
+				LOGGING_INFO("No path found");
+			}
 
 		}
 
