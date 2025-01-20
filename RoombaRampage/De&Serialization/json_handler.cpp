@@ -480,6 +480,37 @@ namespace Serialization {
 			}
 		}
 
+		// Check if the entity has ButtonComponent and save it
+		if (signature.test(ecs::ComponentType::TYPEGRIDCOMPONENT))
+		{
+			ecs::GridComponent* gridc = static_cast<ecs::GridComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPEGRIDCOMPONENT]->m_GetEntityComponent(entityId));
+			if (gridc)
+			{
+				rapidjson::Value grid(rapidjson::kObjectType);
+
+				grid.AddMember("gridRowLength", gridc->m_GridRowLength, allocator);
+				grid.AddMember("gridColumnLength", gridc->m_GridColumnLength, allocator);
+				grid.AddMember("setCollidable", gridc->m_SetCollidable, allocator);
+
+				rapidjson::Value wallArray(rapidjson::kArrayType);
+
+				for (const std::vector<int>& row : gridc->m_IsWall)
+				{
+					rapidjson::Value wallRow(rapidjson::kArrayType);
+					for (int wall : row)
+					{
+						wallRow.PushBack(wall, allocator);  // Add integer to the row array
+					}
+					wallArray.PushBack(wallRow, allocator);
+				}
+
+				grid.AddMember("isWall", wallArray, allocator);
+				entityData.AddMember("grid", grid, allocator);
+
+				hasComponents = true;  // Mark as having a component
+			}
+		}
+
 		// Check if the entity has AudioComponent and save it
 		if (signature.test(ecs::ComponentType::TYPEAUDIOCOMPONENT)) {
 			ecs::AudioComponent* ac = static_cast<ecs::AudioComponent*>(
@@ -936,6 +967,52 @@ namespace Serialization {
 				}
 			}
 		}
+
+		// Load GridComponent if it exists
+		if (entityData.HasMember("grid") && entityData["grid"].IsObject())
+		{
+			ecs::GridComponent* gridc = static_cast<ecs::GridComponent*>(
+				ecs->m_AddComponent(ecs::TYPEGRIDCOMPONENT, newEntityId));
+
+			if (gridc)
+			{
+				const rapidjson::Value& grid = entityData["grid"];
+
+				if (grid.HasMember("gridRowLength"))
+				{
+					gridc->m_GridRowLength = grid["gridRowLength"].GetInt();
+				}
+				if (grid.HasMember("gridColumnLength"))
+				{
+					gridc->m_GridColumnLength = grid["gridColumnLength"].GetInt();
+				}
+				if (grid.HasMember("setCollidable"))
+				{
+					gridc->m_SetCollidable = grid["setCollidable"].GetBool();
+				}
+
+				if (grid.HasMember("isWall") && grid["isWall"].IsArray())
+				{
+					const rapidjson::Value& wallArray = grid["isWall"];
+					gridc->m_IsWall.resize(wallArray.Size());
+
+					for (rapidjson::SizeType i = 0; i < wallArray.Size(); ++i)
+					{
+						if (wallArray[i].IsArray())
+						{
+							gridc->m_IsWall[i].resize(wallArray[i].Size());
+							for (rapidjson::SizeType j = 0; j < wallArray[i].Size(); ++j)
+							{
+								gridc->m_IsWall[i][j] = wallArray[i][j].GetInt();
+							}
+						}
+					}
+				}
+			}
+		}
+
+
+
 
 		// Load AudioComponent if it exists
 		if (entityData.HasMember("audio") && entityData["audio"].IsArray()) {
