@@ -38,6 +38,8 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "GridComponent.h"
 #include "RaycastComponent.h"
 
+#include "PathfindingComponent.h"
+
 
 
 
