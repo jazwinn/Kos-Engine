@@ -171,6 +171,24 @@ public class PlayerController : ScriptBase
         }
 
         #endregion
+
+        //Raycast ray;
+
+        //ray = InternalCall.m_GetRay(EntityID, "test");
+
+        //Console.WriteLine(ray.m_distance);
+
+
+        //if (InternalCall.m_InternalCallIsKeyPressed(keyCode.W))
+        //{
+        //    ray.m_targetposition.X = 0;
+        //    ray.m_targetposition.Y = 0;
+
+        //    InternalCall.m_SetRay(EntityID, "test", ray);
+
+        //}
+
+
     }
 
     #region Normalize

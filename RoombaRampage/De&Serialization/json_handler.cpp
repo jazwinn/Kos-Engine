@@ -508,6 +508,54 @@ namespace Serialization {
 			}
 		}
 
+		if (signature.test(ecs::ComponentType::TYPERAYCASTINGCOMPONENT))
+		{
+			ecs::RaycastComponent* rc = static_cast<ecs::RaycastComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPERAYCASTINGCOMPONENT]->m_GetEntityComponent(entityId));
+			if (rc)
+			{
+				rapidjson::Value raycast(rapidjson::kObjectType);
+				// Create an array to store script objects
+				rapidjson::Value rayArray(rapidjson::kArrayType);
+
+				for (const auto& raycast : rc->m_raycast) {
+					// Create an object for each script
+					rapidjson::Value raycastObject(rapidjson::kObjectType);
+					
+					rapidjson::Value raycastID;
+					raycastID.SetString(raycast.m_rayID.c_str(), allocator);
+					raycastObject.AddMember("raycastID", raycastID, allocator);
+
+
+					// Add the boolean value to the object
+					raycastObject.AddMember("israycasting", raycast.m_isRaycasting, allocator);
+
+					raycastObject.AddMember("targetposition", rapidjson::Value().SetObject()
+						.AddMember("x", raycast.m_targetPosition.m_x, allocator)
+						.AddMember("y", raycast.m_targetPosition.m_y, allocator), allocator);
+
+					if (raycast.m_Layers.size() > 0) {
+						rapidjson::Value layerArray(rapidjson::kArrayType);
+
+						for (const auto layer : raycast.m_Layers) {
+							rapidjson::Value layerObject(rapidjson::kObjectType);
+
+							layerObject.AddMember("layer", (int)layer, allocator);
+
+							layerArray.PushBack(layerObject, allocator);
+						}
+
+						raycastObject.AddMember("Layer Vector", layerArray, allocator);
+					}
+					// Add the object to the array
+					rayArray.PushBack(raycastObject, allocator);
+				}
+
+				// Add the script array to the "script" object
+				raycast.AddMember("raycasts", rayArray, allocator);
+				entityData.AddMember("raycast", raycast, allocator);
+				hasComponents = true;
+			}
+		}
 
 		// Add children
 		std::optional<std::vector<ecs::EntityID>> childrenOptional = ecs::Hierachy::m_GetChild(entityId);
@@ -915,6 +963,61 @@ namespace Serialization {
 					}
 
 					ac->m_AudioFiles.push_back(audioFile);
+				}
+			}
+		}
+
+		if (entityData.HasMember("raycast") && entityData["raycast"].IsObject()) {
+			ecs::RaycastComponent* rc = static_cast<ecs::RaycastComponent*>(ecs->m_AddComponent(ecs::TYPERAYCASTINGCOMPONENT,newEntityId));
+			if (rc) {
+				// Assuming `entityData` is the JSON object containing the entity's data
+				if (entityData.HasMember("raycast") && entityData["raycast"].IsObject()) {
+					const rapidjson::Value& raycastData = entityData["raycast"];
+
+					if (raycastData.HasMember("raycasts") && raycastData["raycasts"].IsArray()) {
+						const rapidjson::Value& rayArray = raycastData["raycasts"];
+
+						rc->m_raycast.clear(); // Clear any existing data in `m_raycast`
+
+						for (const auto& raycastObject : rayArray.GetArray()) {
+							ecs::RaycastComponent::Raycast raycast;
+
+							if (raycastObject.HasMember("raycastID") && raycastObject["raycastID"].IsString()) {
+								raycast.m_rayID = raycastObject["raycastID"].GetString();
+							}
+
+							// Read boolean value
+							if (raycastObject.HasMember("israycasting") && raycastObject["israycasting"].IsBool()) {
+								raycast.m_isRaycasting = raycastObject["israycasting"].GetBool();
+							}
+
+							// Read target position
+							if (raycastObject.HasMember("targetposition") && raycastObject["targetposition"].IsObject()) {
+								const rapidjson::Value& targetPos = raycastObject["targetposition"];
+								if (targetPos.HasMember("x") && targetPos["x"].IsFloat()) {
+									raycast.m_targetPosition.m_x = targetPos["x"].GetFloat();
+								}
+								if (targetPos.HasMember("y") && targetPos["y"].IsFloat()) {
+									raycast.m_targetPosition.m_y = targetPos["y"].GetFloat();
+								}
+							}
+
+							// Read layers
+							if (raycastObject.HasMember("Layer Vector") && raycastObject["Layer Vector"].IsArray()) {
+								const rapidjson::Value& layerArray = raycastObject["Layer Vector"];
+								raycast.m_Layers.clear();
+
+								for (const auto& layerObject : layerArray.GetArray()) {
+									if (layerObject.HasMember("layer") && layerObject["layer"].IsInt()) {
+										raycast.m_Layers.push_back(static_cast<layer::LAYERS>(layerObject["layer"].GetInt()));
+									}
+								}
+							}
+
+							// Add the raycast object to the component's vector
+							rc->m_raycast.push_back(raycast);
+						}
+					}
 				}
 			}
 		}
