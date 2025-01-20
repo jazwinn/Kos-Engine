@@ -54,6 +54,7 @@ namespace ecs {
 		std::vector<EntityID> m_triColWith{};
 		std::unordered_map<EntityID, physicspipe::CollisionState> m_collisionState{};
 		std::unordered_set<EntityID> m_keys;
+		std::vector<physicspipe::CollisionResponseData> m_contactPoints{};
 
 		int m_blockedFlag = 0;
 
