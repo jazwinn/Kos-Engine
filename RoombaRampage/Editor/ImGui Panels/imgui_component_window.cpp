@@ -27,7 +27,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Editor/TilemapCalculations.h"
 #include "../Events/EventsDragFloat.h"
 #include "../Events/EventsEventHandler.h"
-
+#include "../Pathfinding/AStarPathfinding.h"
 #include "ScriptVariable.h"
 #include "../Editor/WindowFile.h"
 #pragma warning(push)
@@ -258,7 +258,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
     {
         "Add Components", "Collider Component", "Sprite Component", "Player Component", "Rigid Body Component", "Text Component", 
         "Animation Component", "Camera Component" , "Button Component" , "Script Component", "Tilemap Component", "Audio Component",
-        "Grid Component", "RayCast Component"
+        "Grid Component", "RayCast Component", "PathfindingComponent"
     };
     static int ComponentType = 0;
 
@@ -386,6 +386,14 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 ComponentType = 0;
                 if (!EntitySignature.test(ecs::TYPERAYCASTINGCOMPONENT)) {
                     events::AddComponent action(entityID, ecs::TYPERAYCASTINGCOMPONENT);
+                    DISPATCH_ACTION_EVENT(action);
+                }
+            }
+            if (ComponentType == 14) {
+                ecs->m_AddComponent(ecs::TYPEPATHFINDINGCOMPONENT, entityID);
+                ComponentType = 0;
+                if (!EntitySignature.test(ecs::TYPEPATHFINDINGCOMPONENT)) {
+                    events::AddComponent action(entityID, ecs::TYPEPATHFINDINGCOMPONENT);
                     DISPATCH_ACTION_EVENT(action);
                 }
             }
@@ -1222,8 +1230,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                     auto* grid = static_cast<ecs::GridComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEGRIDCOMPONENT]->m_GetEntityComponent(entityID));
                     auto* transform = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(entityID));
-
-              
+                    
                     if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEGRIDCOMPONENT)) {
                         auto* rbc = static_cast<ecs::GridComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEGRIDCOMPONENT]->m_GetEntityComponent(entityID));
                         rbc->ApplyFunction(DrawComponents(rbc->Names()));
@@ -1237,6 +1244,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                     }
                 }
             }
+
             if (EntitySignature.test(ecs::TYPEAUDIOCOMPONENT)) {
                 open = ImGui::CollapsingHeader("Audio Component");
 
@@ -1474,9 +1482,57 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                     }
                 }
-
-
             }
+
+            if (EntitySignature.test(ecs::TYPEPATHFINDINGCOMPONENT)) {
+                bool open = ImGui::CollapsingHeader("Pathfinding Component");
+
+                CreateContext(ecs::TYPEPATHFINDINGCOMPONENT, entityID);
+
+                if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEPATHFINDINGCOMPONENT)) {
+                    auto* pfc = static_cast<ecs::PathfindingComponent*>(
+                        ecs->m_ECS_CombinedComponentPool[ecs::TYPEPATHFINDINGCOMPONENT]->m_GetEntityComponent(entityID)
+                        );
+
+                    if (pfc) {
+                        if (ImGui::InputInt2("Start Position", pfc->m_StartPos.data())) {
+                            // Optionally validate start position
+                        }
+
+                        if (ImGui::InputInt2("Target Position", pfc->m_TargetPos.data())) {
+                            // Optionally validate target position
+                        }
+
+                        ImGui::InputText("Grid Key", &pfc->m_GridKey);
+
+                        //if (ImGui::Button("Recalculate Path")) {
+                        //    auto* grid = GetGridByKey(pfc->m_GridKey); // Assume a function to get GridComponent by key
+                        //    if (grid) {
+                        //        AStarPathfinding pathfinder;
+                        //        auto pathNodes = pathfinder.FindPath(grid, pfc->m_StartPos[0], pfc->m_StartPos[1],
+                        //            pfc->m_TargetPos[0], pfc->m_TargetPos[1]);
+                        //        pfc->m_Path.clear();
+                        //        for (const auto& node : pathNodes) {
+                        //            pfc->m_Path.emplace_back(node.x, node.y);
+                        //        }
+                        //    }
+                        //    else {
+                        //        LOGGING_WARN("Invalid Grid Key!");
+                        //    }
+                        //}
+
+                        /*if (!pfc->m_Path.empty()) {
+                            ImGui::Text("Calculated Path:");
+                            for (const auto& pos : pfc->m_Path) {
+                                ImGui::BulletText("(%d, %d)", pos.first, pos.second);
+                            }
+                        }*/
+                    }
+                }
+            }
+
+
+
             
 
             //draw invinsible box

@@ -1099,6 +1099,43 @@ namespace Serialization {
 			}
 		}
 
+		// Load PathfindingComponent if it exists
+		if (entityData.HasMember("pathfinding") && entityData["pathfinding"].IsObject()) {
+			ecs::PathfindingComponent* pc = static_cast<ecs::PathfindingComponent*>(
+				ecs->m_AddComponent(ecs::TYPEPATHFINDINGCOMPONENT, newEntityId)
+				);
+
+			if (pc) {
+				const rapidjson::Value& pathfindingObject = entityData["pathfinding"];
+
+				// Load start position
+				if (pathfindingObject.HasMember("startPos") && pathfindingObject["startPos"].IsArray()) {
+					const rapidjson::Value& startPosArray = pathfindingObject["startPos"];
+					for (rapidjson::SizeType i = 0; i < startPosArray.Size(); ++i) {
+						if (startPosArray[i].IsInt()) {
+							pc->m_StartPos.push_back(startPosArray[i].GetInt());
+						}
+					}
+				}
+
+				// Load target position
+				if (pathfindingObject.HasMember("targetPos") && pathfindingObject["targetPos"].IsArray()) {
+					const rapidjson::Value& targetPosArray = pathfindingObject["targetPos"];
+					for (rapidjson::SizeType i = 0; i < targetPosArray.Size(); ++i) {
+						if (targetPosArray[i].IsInt()) {
+							pc->m_TargetPos.push_back(targetPosArray[i].GetInt());
+						}
+					}
+				}
+
+				// Load grid key
+				if (pathfindingObject.HasMember("gridKey") && pathfindingObject["gridKey"].IsString()) {
+					pc->m_GridKey = pathfindingObject["gridKey"].GetString();
+				}
+			}
+		}
+
+
 		//Attach entity to parent
 		if (parentID.has_value()) {
 			ecs::Hierachy::m_SetParent(parentID.value(), newEntityId);

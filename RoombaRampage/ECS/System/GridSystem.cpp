@@ -1,11 +1,11 @@
-
 #include "../Config/pch.h"
 #include "../ECS.h"
-
 #include "GridSystem.h"
 #include "../ECS/Component/GridComponent.h"
 #include "../Graphics/GraphicsPipe.h"
 #include "../Asset Manager/AssetManager.h"
+
+#include "../Pathfinding/AStarPathfinding.h"
 
 namespace ecs {
 
@@ -58,6 +58,7 @@ namespace ecs {
 			return;
 		}
 
+
 		//loops through all vecoters pointing to component
 		for (int n{}; n < m_vecGridComponentPtr.size(); n++) {
 
@@ -68,6 +69,9 @@ namespace ecs {
 
 			//skip component not of the scene
 			if (grid->m_scene != scene) continue;
+
+			grid->m_Anchor.m_x = floor(transform->m_transformation.m_e20);
+			grid->m_Anchor.m_y = floor(transform->m_transformation.m_e21) + 1.0f;
 
 			transform->m_position.m_x = floor(transform->m_transformation.m_e20);
 			transform->m_position.m_y = floor(transform->m_transformation.m_e21);
@@ -82,6 +86,8 @@ namespace ecs {
 															transform->m_transformation.m_e20, transform->m_transformation.m_e21, transform->m_transformation.m_e22},glm::ivec2{grid->m_GridRowLength,grid->m_GridColumnLength} });
 
 			graphicsPipe->m_gridColliderArrays.push_back(grid->m_IsWall);
+
+			
 
 		}
 
