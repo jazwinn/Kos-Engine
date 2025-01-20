@@ -461,6 +461,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClCompile Include="ECS\System\RenderSystem.cpp" />
     <ClCompile Include="ECS\System\RenderTextSystem.cpp" />
     <ClCompile Include="Editor\ImGui Panels\ScriptVariable.cpp" />
+    <ClCompile Include="ECS\System\RayCastSystem.cpp" />
     <ClInclude Include="Actions\Action.h" />
     <ClInclude Include="Actions\ActionManager.h" />
     <ClInclude Include="Actions\ModifyAction.h" />
@@ -493,7 +494,10 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClCompile Include="Math\Vector3.cpp" />
     <ClCompile Include="Pathfinding\AStarPathfinding.cpp" />
     <ClCompile Include="Physics\Physics.cpp" />
+    <ClCompile Include="Physics\PhysicsCollisionResponse.cpp" />
     <ClCompile Include="Physics\PhysicsLayer.cpp" />
+    <ClInclude Include="ECS\Component\RaycastComponent.h" />
+    <ClInclude Include="ECS\System\RayCastSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Application.h" />

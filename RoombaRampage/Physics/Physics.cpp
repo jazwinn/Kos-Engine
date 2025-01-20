@@ -328,6 +328,7 @@ namespace physicspipe {
 		}
 		return result;
 	}
+
 	void Physics::m_ProjectOntoCircle(vector2::Vec2 center, float radius, vector2::Vec2 axis, float& min, float& max) {
 		vector2::Vec2 dVector = axis;
 		vector2::Vec2::m_funcVec2Normalize(dVector, dVector);
@@ -727,4 +728,110 @@ namespace physicspipe {
 	void Physics::m_ClearPair() {
 		m_collidedEntitiesPair.clear();
 	}
+
+
+
+	bool Physics::LineIntersect(const vector2::Vec2& p1, const vector2::Vec2& p2, const vector2::Vec2& q1, const vector2::Vec2& q2, vector2::Vec2& intersection)
+	{
+		// Line equations: p1 + t * (p2 - p1), q1 + u * (q2 - q1)
+		float a1 = p2.m_y - p1.m_y;
+		float b1 = p1.m_x - p2.m_x;
+		float c1 = a1 * p1.m_x + b1 * p1.m_y;
+
+		float a2 = q2.m_y - q1.m_y;
+		float b2 = q1.m_x - q2.m_x;
+		float c2 = a2 * q1.m_x + b2 * q1.m_y;
+
+		float determinant = a1 * b2 - a2 * b1;
+
+		if (determinant == 0) {
+			return false; // Lines are parallel
+		}
+
+		intersection.m_x = (b2 * c1 - b1 * c2) / determinant;
+		intersection.m_y = (a1 * c2 - a2 * c1) / determinant;
+
+		// Check if the intersection point lies on both line segments
+		if (intersection.m_x < std::min(p1.m_x, p2.m_x) || intersection.m_x > std::max(p1.m_x, p2.m_x) ||
+			intersection.m_y < std::min(p1.m_y, p2.m_y) || intersection.m_y > std::max(p1.m_y, p2.m_y)) {
+			return false;
+		}
+
+		if (intersection.m_x < std::min(q1.m_x, q2.m_x) || intersection.m_x > std::max(q1.m_x, q2.m_x) ||
+			intersection.m_y < std::min(q1.m_y, q2.m_y) || intersection.m_y > std::max(q1.m_y, q2.m_y)) {
+			return false;
+		}
+
+		return true;
+	}
+	float Distance(const vector2::Vec2& p1, const vector2::Vec2& p2) {
+		return std::sqrt((p2.m_x - p1.m_x) * (p2.m_x - p1.m_x) + (p2.m_y - p1.m_y) * (p2.m_y - p1.m_y));
+	}
+
+	bool Physics::LineRectangleIntersect(const vector2::Vec2& p1, const vector2::Vec2& p2, const vector2::Vec2& rectBottomLeft, const vector2::Vec2& rectTopRight, vector2::Vec2& intersectionpoint)
+	{
+		vector2::Vec2 rectTopLeft = { rectBottomLeft.m_x, rectTopRight.m_y };
+		vector2::Vec2 rectBottomRight = { rectTopRight.m_x, rectBottomLeft.m_y };
+
+		// Rectangle edges
+		vector2::Vec2 edges[4][2] = {
+			{rectBottomLeft, rectBottomRight},
+			{rectBottomRight, rectTopRight},
+			{rectTopRight, rectTopLeft},
+			{rectTopLeft, rectBottomLeft}
+		};
+
+		// Check the line against each rectangle edge
+		bool foundIntersection = false;
+		float minDistance = std::numeric_limits<float>::max();
+
+		// Iterate through each rectangle edge to find the nearest intersection point
+		for (int i = 0; i < 4; ++i) {
+			vector2::Vec2 intersection;
+			if (LineIntersect(p1, p2, edges[i][0], edges[i][1], intersection)) {
+				float dist = Distance(p1, intersection);
+				if (dist < minDistance) {
+					minDistance = dist;
+					intersectionpoint = intersection;
+					foundIntersection = true;
+				}
+			}
+		}
+
+		if (!foundIntersection) {
+			intersectionpoint = { 0,0 };
+		}
+		return foundIntersection;
+
+	}
+
+	void Physics::IsLineIntersecting(const vector2::Vec2& p1, const vector2::Vec2& p2, const std::vector<layer::LAYERS>& layer, bool& isHit, vector2::Vec2& hitPosition)
+	{
+
+		for (const auto& entity : m_physicsEntities) {
+
+			if (entity->type == EntityType::RECTANGLE) {
+
+				if (std::find(layer.begin(), layer.end(), (layer::LAYERS)entity->m_layerID) == layer.end())return; // return any entity that is not a part of the req layer
+
+
+				auto entityshape = std::dynamic_pointer_cast<Rectangle>(entity);
+				if (LineRectangleIntersect(p1, p2, entityshape->m_boundingBox.m_min, entityshape->m_boundingBox.m_max, hitPosition)) {
+					isHit = false;
+					return;
+				}
+				else {
+					isHit = true;
+				}
+			}
+
+
+
+		}
+
+
+
+	}
+
+
 }

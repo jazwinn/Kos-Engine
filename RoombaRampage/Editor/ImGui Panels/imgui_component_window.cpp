@@ -58,6 +58,7 @@ struct DrawComponents {
 
     bool operator()(float& _args) {
         
+
         ImGui::AlignTextToFramePadding();
         ImGui::Text(m_Array[count].c_str());
         ImGui::SameLine(slider_start_pos_x);
@@ -78,16 +79,16 @@ struct DrawComponents {
     }
 
 
-    void operator()(const std::vector<std::string>& _args) {
-        for (auto& arg : _args) {
-            ImGui::Text(m_Array[count].c_str());
-            ImGui::SameLine(slider_start_pos_x);
-            std::string title = "##" + m_Array[count];
-           // ImGui::InputText(title.c_str(), arg.c_str());
-        }
+    //void operator()(const std::vector<std::string>& _args) {
+    //    for (auto& arg : _args) {
+    //        ImGui::Text(m_Array[count].c_str());
+    //        ImGui::SameLine(slider_start_pos_x);
+    //        std::string title = "##" + m_Array[count];
+    //       // ImGui::InputText(title.c_str(), arg.c_str());
+    //    }
 
-        count++;
-    }
+    //    count++;
+    //}
 
     void operator()(physicspipe::EntityType& _args)
     {
@@ -202,6 +203,41 @@ struct DrawComponents {
 
         count++;
     }
+
+    void operator()(layer::LAYERS& _args) {
+        ImGui::AlignTextToFramePadding();
+        ImGui::Text(m_Array[count].c_str());
+        ImGui::SameLine(slider_start_pos_x);
+        ImGui::SetNextItemWidth(100.0f);
+        std::string title = "##slider_" + std::to_string(count) + "_" + m_Array[count];
+        ImGui::PushItemWidth(slidersize);
+        int toint = int(_args);
+        if (ImGui::DragInt(title.c_str(), &toint, 1.0f, 0, 8)) {
+            _args = (layer::LAYERS)toint;
+        }
+        ImGui::PopItemWidth();
+
+        count++;
+    }
+
+    template <typename U>
+    void operator()(std::vector<U>& _args) {
+        if constexpr (std::is_class_v<U>) {
+            for (U& x : _args) {
+                x.ApplyFunction(DrawComponents(x.Names()));
+            }
+        }
+        else {
+            int _count{};
+            for (U& x : _args) {
+                ImGui::PushID(_count++);
+                (*this)(x); // Handle non-class types
+                count--;// minus so no subsciprt error
+                ImGui::PopID();
+            }
+        }
+        count++;
+    }
 };
 
 
@@ -222,7 +258,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
     {
         "Add Components", "Collider Component", "Sprite Component", "Player Component", "Rigid Body Component", "Text Component", 
         "Animation Component", "Camera Component" , "Button Component" , "Script Component", "Tilemap Component", "Audio Component",
-        "Grid Component"
+        "Grid Component", "RayCast Component"
     };
     static int ComponentType = 0;
 
@@ -342,6 +378,14 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 ComponentType = 0;
                 if (!EntitySignature.test(ecs::TYPEGRIDCOMPONENT)) {
                     events::AddComponent action(entityID, ecs::TYPEGRIDCOMPONENT);
+                    DISPATCH_ACTION_EVENT(action);
+                }
+            }
+            if (ComponentType == 13) {
+                ecs->m_AddComponent(ecs::TYPERAYCASTINGCOMPONENT, entityID);
+                ComponentType = 0;
+                if (!EntitySignature.test(ecs::TYPERAYCASTINGCOMPONENT)) {
+                    events::AddComponent action(entityID, ecs::TYPERAYCASTINGCOMPONENT);
                     DISPATCH_ACTION_EVENT(action);
                 }
             }
@@ -1384,7 +1428,55 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 }
             }
 
+            if (EntitySignature.test(ecs::TYPERAYCASTINGCOMPONENT)) {
 
+                open = ImGui::CollapsingHeader("Raycast Component");
+
+                CreateContext(ecs::TYPERAYCASTINGCOMPONENT, entityID);
+
+                if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPERAYCASTINGCOMPONENT)) {
+                    auto* rcc = static_cast<ecs::RaycastComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPERAYCASTINGCOMPONENT]->m_GetEntityComponent(entityID));
+
+                    if (ImGui::Button("+ Add Ray")) {
+                        rcc->m_raycast.push_back(ecs::RaycastComponent::Raycast{});
+                        
+                    }
+                    ImGui::Separator();
+
+
+                    int _count{};
+                    for (auto it = rcc->m_raycast.begin(); it != rcc->m_raycast.end(); it++) {
+                        ImGui::PushID(_count);
+                        it->ApplyFunction(DrawComponents(it->Names()));
+
+                        if (ImGui::Button("+ Layer")) {
+                            it->m_Layers.push_back((layer::LAYERS)0);
+                        }
+
+                        ImGui::SameLine();
+                        if (it->m_Layers.size() > 0 && ImGui::Button("- Layer")) {
+                            it->m_Layers.pop_back();
+                            ImGui::PopID();
+                            break;
+
+                        }
+                        ImGui::SameLine();
+                        if (ImGui::Button(" Delete Ray")) {
+                            rcc->m_raycast.erase(it);
+                            ImGui::PopID();
+                            break;
+                        }
+
+                        ImGui::PopID();
+                        _count++;
+
+                        ImGui::Separator();
+
+                    }
+                }
+
+
+            }
             
 
             //draw invinsible box
