@@ -480,7 +480,7 @@ namespace Serialization {
 			}
 		}
 
-		// Check if the entity has ButtonComponent and save it
+		// Check if the entity has GridComponent and save it
 		if (signature.test(ecs::ComponentType::TYPEGRIDCOMPONENT))
 		{
 			ecs::GridComponent* gridc = static_cast<ecs::GridComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPEGRIDCOMPONENT]->m_GetEntityComponent(entityId));
@@ -503,9 +503,15 @@ namespace Serialization {
 					}
 					wallArray.PushBack(wallRow, allocator);
 				}
+				// Add grid key
+				rapidjson::Value gridKey;
+				gridKey.SetString(gridc->m_GridKey.c_str(), allocator);
+				grid.AddMember("gridKey", gridKey, allocator);
 
 				grid.AddMember("isWall", wallArray, allocator);
 				entityData.AddMember("grid", grid, allocator);
+
+				
 
 				hasComponents = true;  // Mark as having a component
 			}
@@ -587,6 +593,36 @@ namespace Serialization {
 				hasComponents = true;
 			}
 		}
+
+		// Check if the entity has PathFinding Component and save it
+		if (signature.test(ecs::ComponentType::TYPEPATHFINDINGCOMPONENT))
+		{
+			ecs::PathfindingComponent* pc = static_cast<ecs::PathfindingComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPEPATHFINDINGCOMPONENT]->m_GetEntityComponent(entityId));
+			if (pc)
+			{
+				rapidjson::Value pathfinding(rapidjson::kObjectType);
+
+				// Add start position
+				pathfinding.AddMember("startPosition", rapidjson::Value().SetObject()
+					.AddMember("x", pc->m_StartPos.m_x, allocator)
+					.AddMember("y", pc->m_StartPos.m_y, allocator), allocator);
+
+				// Add target position
+				pathfinding.AddMember("targetPosition", rapidjson::Value().SetObject()
+					.AddMember("x", pc->m_TargetPos.m_x, allocator)
+					.AddMember("y", pc->m_TargetPos.m_y, allocator), allocator);
+
+				// Add grid key
+				rapidjson::Value gridKey;
+				gridKey.SetString(pc->m_GridKey.c_str(), allocator);
+				pathfinding.AddMember("gridKey", gridKey, allocator);
+
+				// Add the pathfinding component data to the entity data
+				entityData.AddMember("pathfinding", pathfinding, allocator);
+				hasComponents = true;
+			}
+		}
+
 
 		// Add children
 		std::optional<std::vector<ecs::EntityID>> childrenOptional = ecs::Hierachy::m_GetChild(entityId);
@@ -1008,6 +1044,11 @@ namespace Serialization {
 						}
 					}
 				}
+
+				// Load grid key
+				if (grid.HasMember("gridKey") && grid["gridKey"].IsString()) {
+					gridc->m_GridKey = grid["gridKey"].GetString();
+				}
 			}
 		}
 
@@ -1109,17 +1150,25 @@ namespace Serialization {
 				const rapidjson::Value& pathfindingObject = entityData["pathfinding"];
 
 				// Load start position
-				if (pathfindingObject.HasMember("startPos") && pathfindingObject["startPos"].IsArray()) {
-					const rapidjson::Value& startPosArray = pathfindingObject["startPos"];
-					pc->m_StartPos.m_x = startPosArray[0].GetInt();
-					pc->m_StartPos.m_y = startPosArray[1].GetInt();
+				if (pathfindingObject.HasMember("startPosition") && pathfindingObject["startPosition"].IsObject()) {
+					const rapidjson::Value& startPosObject = pathfindingObject["startPosition"];
+					if (startPosObject.HasMember("x") && startPosObject["x"].IsFloat()) {
+						pc->m_StartPos.m_x = startPosObject["x"].GetFloat();
+					}
+					if (startPosObject.HasMember("y") && startPosObject["y"].IsFloat()) {
+						pc->m_StartPos.m_y = startPosObject["y"].GetFloat();
+					}
 				}
 
 				// Load target position
-				if (pathfindingObject.HasMember("targetPos") && pathfindingObject["targetPos"].IsArray()) {
-					const rapidjson::Value& targetPosArray = pathfindingObject["targetPos"];
-					pc->m_StartPos.m_x = targetPosArray[0].GetInt();
-					pc->m_StartPos.m_y = targetPosArray[1].GetInt();
+				if (pathfindingObject.HasMember("targetPosition") && pathfindingObject["targetPosition"].IsObject()) {
+					const rapidjson::Value& targetPosObject = pathfindingObject["targetPosition"];
+					if (targetPosObject.HasMember("x") && targetPosObject["x"].IsFloat()) {
+						pc->m_TargetPos.m_x = targetPosObject["x"].GetFloat();
+					}
+					if (targetPosObject.HasMember("y") && targetPosObject["y"].IsFloat()) {
+						pc->m_TargetPos.m_y = targetPosObject["y"].GetFloat();
+					}
 				}
 
 				// Load grid key
