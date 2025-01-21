@@ -86,19 +86,15 @@ namespace ecs {
                 return;
             }
 
-            if (pathfinding->m_StartPos.size() < 2 || pathfinding->m_TargetPos.size() < 2) {
-                LOGGING_WARN("Invalid start or target position in PathfindingComponent");
-                continue;
-            }
             
-            pathfinding->m_StartPos[0] = floor(transform->m_position.m_x) - grid->m_Anchor.m_x;
-            pathfinding->m_StartPos[1] = grid->m_Anchor.m_y - floor(transform->m_transformation.m_e21) - 1.0f;
+            pathfinding->m_StartPos.m_x = floor(transform->m_position.m_x) - grid->m_Anchor.m_x;
+            pathfinding->m_StartPos.m_y = grid->m_Anchor.m_y - floor(transform->m_transformation.m_e21) - 1.0f;
 
 
-            int startX = pathfinding->m_StartPos[0];
-            int startY = pathfinding->m_StartPos[1];
-            int targetX = pathfinding->m_TargetPos[0];
-            int targetY = pathfinding->m_TargetPos[1];
+            int startX = pathfinding->m_StartPos.m_x;
+            int startY = pathfinding->m_StartPos.m_y;
+            int targetX = pathfinding->m_TargetPos.m_x;
+            int targetY = pathfinding->m_TargetPos.m_y;
 
             auto path = pathfinder.FindPath(grid, startX, startY, targetX, targetY);
 
