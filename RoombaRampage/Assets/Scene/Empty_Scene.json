@@ -8,8 +8,8 @@
         },
         "transform": {
             "position": {
-                "x": 2.238504409790039,
-                "y": -0.40372756123542786
+                "x": 6.608763217926025,
+                "y": -3.344210386276245
             },
             "rotation": -0.0,
             "scale": {
@@ -43,6 +43,17 @@
                     ]
                 }
             ]
+        },
+        "pathfinding": {
+            "startPosition": {
+                "x": 5.0,
+                "y": 4.0
+            },
+            "targetPosition": {
+                "x": 10.0,
+                "y": 0.0
+            },
+            "gridKey": "hi"
         }
     },
     {
@@ -81,6 +92,7 @@
             "gridRowLength": 10,
             "gridColumnLength": 16,
             "setCollidable": true,
+            "gridKey": "hi",
             "isWall": [
                 [
                     0,
