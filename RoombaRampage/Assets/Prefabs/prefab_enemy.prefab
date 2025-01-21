@@ -74,7 +74,10 @@
         },
         "script": {
             "scripts": [
-                "EnemyController"
+                {
+                    "name": "EnemyController",
+                    "enabled": true
+                }
             ]
         },
         "audio": [

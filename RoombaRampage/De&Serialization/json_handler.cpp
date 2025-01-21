@@ -406,14 +406,26 @@ namespace Serialization {
 			{
 				rapidjson::Value script(rapidjson::kObjectType);
 
-				//TENTATIVE
+				// Create an array to store script objects
 				rapidjson::Value scriptArray(rapidjson::kArrayType);
+
 				for (const auto& scriptName : sc->m_scripts) {
+					// Create an object for each script
+					rapidjson::Value scriptObject(rapidjson::kObjectType);
+
+					// Add the script name (string) to the object
 					rapidjson::Value scriptValue;
-					scriptValue.SetString(scriptName.c_str(), allocator);
-					scriptArray.PushBack(scriptValue, allocator);
+					scriptValue.SetString(scriptName.first.c_str(), allocator);
+					scriptObject.AddMember("name", scriptValue, allocator);
+
+					// Add the boolean value to the object
+					scriptObject.AddMember("enabled", scriptName.second, allocator);
+
+					// Add the object to the array
+					scriptArray.PushBack(scriptObject, allocator);
 				}
 
+				// Add the script array to the "script" object
 				script.AddMember("scripts", scriptArray, allocator);
 				entityData.AddMember("script", script, allocator);
 				hasComponents = true;
@@ -468,6 +480,37 @@ namespace Serialization {
 			}
 		}
 
+		// Check if the entity has ButtonComponent and save it
+		if (signature.test(ecs::ComponentType::TYPEGRIDCOMPONENT))
+		{
+			ecs::GridComponent* gridc = static_cast<ecs::GridComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPEGRIDCOMPONENT]->m_GetEntityComponent(entityId));
+			if (gridc)
+			{
+				rapidjson::Value grid(rapidjson::kObjectType);
+
+				grid.AddMember("gridRowLength", gridc->m_GridRowLength, allocator);
+				grid.AddMember("gridColumnLength", gridc->m_GridColumnLength, allocator);
+				grid.AddMember("setCollidable", gridc->m_SetCollidable, allocator);
+
+				rapidjson::Value wallArray(rapidjson::kArrayType);
+
+				for (const std::vector<int>& row : gridc->m_IsWall)
+				{
+					rapidjson::Value wallRow(rapidjson::kArrayType);
+					for (int wall : row)
+					{
+						wallRow.PushBack(wall, allocator);  // Add integer to the row array
+					}
+					wallArray.PushBack(wallRow, allocator);
+				}
+
+				grid.AddMember("isWall", wallArray, allocator);
+				entityData.AddMember("grid", grid, allocator);
+
+				hasComponents = true;  // Mark as having a component
+			}
+		}
+
 		// Check if the entity has AudioComponent and save it
 		if (signature.test(ecs::ComponentType::TYPEAUDIOCOMPONENT)) {
 			ecs::AudioComponent* ac = static_cast<ecs::AudioComponent*>(
@@ -496,6 +539,54 @@ namespace Serialization {
 			}
 		}
 
+		if (signature.test(ecs::ComponentType::TYPERAYCASTINGCOMPONENT))
+		{
+			ecs::RaycastComponent* rc = static_cast<ecs::RaycastComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPERAYCASTINGCOMPONENT]->m_GetEntityComponent(entityId));
+			if (rc)
+			{
+				rapidjson::Value raycast(rapidjson::kObjectType);
+				// Create an array to store script objects
+				rapidjson::Value rayArray(rapidjson::kArrayType);
+
+				for (const auto& raycast : rc->m_raycast) {
+					// Create an object for each script
+					rapidjson::Value raycastObject(rapidjson::kObjectType);
+					
+					rapidjson::Value raycastID;
+					raycastID.SetString(raycast.m_rayID.c_str(), allocator);
+					raycastObject.AddMember("raycastID", raycastID, allocator);
+
+
+					// Add the boolean value to the object
+					raycastObject.AddMember("israycasting", raycast.m_isRaycasting, allocator);
+
+					raycastObject.AddMember("targetposition", rapidjson::Value().SetObject()
+						.AddMember("x", raycast.m_targetPosition.m_x, allocator)
+						.AddMember("y", raycast.m_targetPosition.m_y, allocator), allocator);
+
+					if (raycast.m_Layers.size() > 0) {
+						rapidjson::Value layerArray(rapidjson::kArrayType);
+
+						for (const auto layer : raycast.m_Layers) {
+							rapidjson::Value layerObject(rapidjson::kObjectType);
+
+							layerObject.AddMember("layer", (int)layer, allocator);
+
+							layerArray.PushBack(layerObject, allocator);
+						}
+
+						raycastObject.AddMember("Layer Vector", layerArray, allocator);
+					}
+					// Add the object to the array
+					rayArray.PushBack(raycastObject, allocator);
+				}
+
+				// Add the script array to the "script" object
+				raycast.AddMember("raycasts", rayArray, allocator);
+				entityData.AddMember("raycast", raycast, allocator);
+				hasComponents = true;
+			}
+		}
 
 		// Add children
 		std::optional<std::vector<ecs::EntityID>> childrenOptional = ecs::Hierachy::m_GetChild(entityId);
@@ -802,8 +893,22 @@ namespace Serialization {
 				if (script.HasMember("scripts") && script["scripts"].IsArray()) {
 					const rapidjson::Value& scriptArray = script["scripts"];
 					for (rapidjson::SizeType i = 0; i < scriptArray.Size(); i++) {
-						if (scriptArray[i].IsString()) {
-							sc->m_scripts.push_back(scriptArray[i].GetString());
+						if (scriptArray[i].IsObject()) { // Ensure the element is an object
+							const rapidjson::Value& scriptObject = scriptArray[i];
+
+							// Extract the script name
+							if (scriptObject.HasMember("name") && scriptObject["name"].IsString()) {
+								std::string scriptName = scriptObject["name"].GetString();
+
+								// Extract the enabled boolean
+								bool enabled = false; // Default value
+								if (scriptObject.HasMember("enabled") && scriptObject["enabled"].IsBool()) {
+									enabled = scriptObject["enabled"].GetBool();
+								}
+
+								// Add to the script list
+								sc->m_scripts.push_back(std::make_pair(scriptName, enabled));
+							}
 						}
 					}
 				}
@@ -863,6 +968,52 @@ namespace Serialization {
 			}
 		}
 
+		// Load GridComponent if it exists
+		if (entityData.HasMember("grid") && entityData["grid"].IsObject())
+		{
+			ecs::GridComponent* gridc = static_cast<ecs::GridComponent*>(
+				ecs->m_AddComponent(ecs::TYPEGRIDCOMPONENT, newEntityId));
+
+			if (gridc)
+			{
+				const rapidjson::Value& grid = entityData["grid"];
+
+				if (grid.HasMember("gridRowLength"))
+				{
+					gridc->m_GridRowLength = grid["gridRowLength"].GetInt();
+				}
+				if (grid.HasMember("gridColumnLength"))
+				{
+					gridc->m_GridColumnLength = grid["gridColumnLength"].GetInt();
+				}
+				if (grid.HasMember("setCollidable"))
+				{
+					gridc->m_SetCollidable = grid["setCollidable"].GetBool();
+				}
+
+				if (grid.HasMember("isWall") && grid["isWall"].IsArray())
+				{
+					const rapidjson::Value& wallArray = grid["isWall"];
+					gridc->m_IsWall.resize(wallArray.Size());
+
+					for (rapidjson::SizeType i = 0; i < wallArray.Size(); ++i)
+					{
+						if (wallArray[i].IsArray())
+						{
+							gridc->m_IsWall[i].resize(wallArray[i].Size());
+							for (rapidjson::SizeType j = 0; j < wallArray[i].Size(); ++j)
+							{
+								gridc->m_IsWall[i][j] = wallArray[i][j].GetInt();
+							}
+						}
+					}
+				}
+			}
+		}
+
+
+
+
 		// Load AudioComponent if it exists
 		if (entityData.HasMember("audio") && entityData["audio"].IsArray()) {
 			ecs::AudioComponent* ac = static_cast<ecs::AudioComponent*>(
@@ -892,6 +1043,98 @@ namespace Serialization {
 				}
 			}
 		}
+
+		if (entityData.HasMember("raycast") && entityData["raycast"].IsObject()) {
+			ecs::RaycastComponent* rc = static_cast<ecs::RaycastComponent*>(ecs->m_AddComponent(ecs::TYPERAYCASTINGCOMPONENT,newEntityId));
+			if (rc) {
+				// Assuming `entityData` is the JSON object containing the entity's data
+				if (entityData.HasMember("raycast") && entityData["raycast"].IsObject()) {
+					const rapidjson::Value& raycastData = entityData["raycast"];
+
+					if (raycastData.HasMember("raycasts") && raycastData["raycasts"].IsArray()) {
+						const rapidjson::Value& rayArray = raycastData["raycasts"];
+
+						rc->m_raycast.clear(); // Clear any existing data in `m_raycast`
+
+						for (const auto& raycastObject : rayArray.GetArray()) {
+							ecs::RaycastComponent::Raycast raycast;
+
+							if (raycastObject.HasMember("raycastID") && raycastObject["raycastID"].IsString()) {
+								raycast.m_rayID = raycastObject["raycastID"].GetString();
+							}
+
+							// Read boolean value
+							if (raycastObject.HasMember("israycasting") && raycastObject["israycasting"].IsBool()) {
+								raycast.m_isRaycasting = raycastObject["israycasting"].GetBool();
+							}
+
+							// Read target position
+							if (raycastObject.HasMember("targetposition") && raycastObject["targetposition"].IsObject()) {
+								const rapidjson::Value& targetPos = raycastObject["targetposition"];
+								if (targetPos.HasMember("x") && targetPos["x"].IsFloat()) {
+									raycast.m_targetPosition.m_x = targetPos["x"].GetFloat();
+								}
+								if (targetPos.HasMember("y") && targetPos["y"].IsFloat()) {
+									raycast.m_targetPosition.m_y = targetPos["y"].GetFloat();
+								}
+							}
+
+							// Read layers
+							if (raycastObject.HasMember("Layer Vector") && raycastObject["Layer Vector"].IsArray()) {
+								const rapidjson::Value& layerArray = raycastObject["Layer Vector"];
+								raycast.m_Layers.clear();
+
+								for (const auto& layerObject : layerArray.GetArray()) {
+									if (layerObject.HasMember("layer") && layerObject["layer"].IsInt()) {
+										raycast.m_Layers.push_back(static_cast<layer::LAYERS>(layerObject["layer"].GetInt()));
+									}
+								}
+							}
+
+							// Add the raycast object to the component's vector
+							rc->m_raycast.push_back(raycast);
+						}
+					}
+				}
+			}
+		}
+
+		// Load PathfindingComponent if it exists
+		if (entityData.HasMember("pathfinding") && entityData["pathfinding"].IsObject()) {
+			ecs::PathfindingComponent* pc = static_cast<ecs::PathfindingComponent*>(
+				ecs->m_AddComponent(ecs::TYPEPATHFINDINGCOMPONENT, newEntityId)
+				);
+
+			if (pc) {
+				const rapidjson::Value& pathfindingObject = entityData["pathfinding"];
+
+				// Load start position
+				if (pathfindingObject.HasMember("startPos") && pathfindingObject["startPos"].IsArray()) {
+					const rapidjson::Value& startPosArray = pathfindingObject["startPos"];
+					for (rapidjson::SizeType i = 0; i < startPosArray.Size(); ++i) {
+						if (startPosArray[i].IsInt()) {
+							pc->m_StartPos.push_back(startPosArray[i].GetInt());
+						}
+					}
+				}
+
+				// Load target position
+				if (pathfindingObject.HasMember("targetPos") && pathfindingObject["targetPos"].IsArray()) {
+					const rapidjson::Value& targetPosArray = pathfindingObject["targetPos"];
+					for (rapidjson::SizeType i = 0; i < targetPosArray.Size(); ++i) {
+						if (targetPosArray[i].IsInt()) {
+							pc->m_TargetPos.push_back(targetPosArray[i].GetInt());
+						}
+					}
+				}
+
+				// Load grid key
+				if (pathfindingObject.HasMember("gridKey") && pathfindingObject["gridKey"].IsString()) {
+					pc->m_GridKey = pathfindingObject["gridKey"].GetString();
+				}
+			}
+		}
+
 
 		//Attach entity to parent
 		if (parentID.has_value()) {

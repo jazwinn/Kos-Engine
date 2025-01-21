@@ -16,6 +16,11 @@
 #include "../ECS/System/CameraSystem.h"
 #include "../ECS/System/ButtonSystem.h"
 #include "../ECS/System/TilemapSystem.h"
+#include "../ECS/System/GridSystem.h"
+#include "../ECS/System//RayCastSystem.h"
+#include "../ECS/System/PathfindingSystem.h"
+
+
 
 
 #endif SYSLIST_H

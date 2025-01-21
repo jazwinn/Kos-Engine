@@ -21,16 +21,18 @@ public class CameraFollowPlayerScript : ScriptBase
 
     //private static Vector2 previousplayerpos;
 
-    public override void GetEntityID(uint id)
+    public override void Awake(uint id)
     {
         EntityID = id;
+
+        InternalCall.m_InternalGetTransformComponent(EntityID, out startCamPos, out startCamScale, out startCamRotate);
+
+        playerID = InternalCall.m_InternalCallGetTagID("Player");
     }
 
     public override void Start()
     {
-        InternalCall.m_InternalGetTransformComponent(EntityID, out startCamPos, out startCamScale, out startCamRotate);
 
-        playerID = InternalCall.m_InternalCallGetTagID("Player");
 
         //if (playerID < 0)
         //{
