@@ -23,7 +23,7 @@ public static class InternalCall
     public extern static bool m_InternalSetTranslate(uint entity, in Vector2 pos);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static bool m_InternalGetColliderComponent(uint entity, out Vector2 size, out Vector2 offset, out bool drawDebug, out float radius, out int bockflag ,out float isCollided, out bool collisionCheck);
+    public extern static bool m_InternalGetColliderComponent(uint entity, out Vector2 size, out Vector2 offset, out bool drawDebug, out float radius, out int bockflag, out float isCollided, out bool collisionCheck);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static bool m_InternalSetColliderComponent(uint entity, in Vector2 size, in Vector2 offset, in bool drawDebug, in float radius, in int bockflag, in float isCollided, in bool collisionCheck);
@@ -41,7 +41,7 @@ public static class InternalCall
     public extern static bool m_InternalSetRigidBodyComponent(uint entity, in Vector2 velocity, in Vector2 acceleration, in float rotation);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static bool m_InternalGetTextComponent(uint entity,out string text,out string fileName, out int fontLayer,out float fontSize,out Vector3 color );
+    public extern static bool m_InternalGetTextComponent(uint entity, out string text, out string fileName, out int fontLayer, out float fontSize, out Vector3 color);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static bool m_InternalSetTextComponent(uint entity, string text, string fileName, in int fontLayer, in float fontSize, in Vector3 color);
@@ -184,7 +184,7 @@ public static class InternalCall
 
         m_InternalCallGetRayCast(id, monoString, out ray.m_isRaycasting, out ray.m_targetposition, out ray.m_distance, out ray.m_targetReached, out ray.m_hitPosition);
 
-        return ray; 
+        return ray;
     }
 
     public static void m_SetRay(uint id, string monoString, Raycast ray)
@@ -194,7 +194,12 @@ public static class InternalCall
 
     }
 
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static bool m_InternalCallGetPathfinding(uint id, out Vector2 m_startpos, out Vector2 m_startend, out string gridkey, out int[] nodeArray_x, out int[] nodeArray_y);
+
 }
+
+
 public static class Component
 {
     public static T Get<T>(uint id) where T : new()
@@ -235,6 +240,19 @@ public static class Component
         {
             var buttonComponent = component as ButtomComponent;
             InternalCall.m_InternalGetButtonComponent(id, out buttonComponent.m_Position, out buttonComponent.m_Scale, out buttonComponent.m_IsClick);
+        }
+        else if(typeof(T) == typeof(PathfindingComponent))
+        {
+            var pathfindingcomponent = component as PathfindingComponent;
+            int[] x, y;
+            InternalCall.m_InternalCallGetPathfinding(id, out pathfindingcomponent.m_startPosition, out pathfindingcomponent.m_targetPosition, out pathfindingcomponent.m_gridkey, out x, out y);
+            for (int n = 0; n < x.Length; n++)
+            {
+
+
+                pathfindingcomponent.m_node.Add(new Vector2(x[n], y[n]));
+            }
+            Console.WriteLine("4");
         }
         else
         {
