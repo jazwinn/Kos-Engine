@@ -172,11 +172,9 @@ public class PlayerController : ScriptBase
 
         #endregion
 
-        PathfindingComponent path;
+        //PathfindingComponent path;
 
-        path = Component.Get<PathfindingComponent>(EntityID);
-
-        Console.WriteLine(path.m_targetPosition.X);
+        //path = Component.Get<PathfindingComponent>(EntityID);
 
 
     }
