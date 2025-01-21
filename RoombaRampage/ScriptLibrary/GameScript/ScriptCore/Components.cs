@@ -115,6 +115,13 @@ public class ButtomComponent
     public bool m_IsClick;
 }
 
+//public class ButtomComponent
+//{
+//    public Vector2 m_Position;
+//    public Vector2 m_Scale;
+//    public bool m_IsClick;
+//}
+
 public class Raycast
 {
     [MarshalAs(UnmanagedType.I1)]
