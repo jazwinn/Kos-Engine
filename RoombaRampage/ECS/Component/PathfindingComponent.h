@@ -11,12 +11,12 @@ namespace ecs {
 
     class PathfindingComponent : public Component {
     public:
-        std::vector<int> m_StartPos{ 0, 0 };        // Start position as {x, y}
-        std::vector<int> m_TargetPos{ 0, 0 };       // Target position as {x, y}
+        vector2::Vec2 m_StartPos{ 0, 0 };        // Start position as {x, y}
+        vector2::Vec2 m_TargetPos{ 0, 0 };       // Target position as {x, y}
         std::string m_GridKey;                      // Identifier for the grid
         std::vector <Node> m_Path;                  // Calculated path
 
-        REFLECTABLE(PathfindingComponent, m_StartPos, m_TargetPos, m_GridKey, m_Path)
+        REFLECTABLE(PathfindingComponent, m_StartPos, m_TargetPos, m_GridKey)
     };
 }
 

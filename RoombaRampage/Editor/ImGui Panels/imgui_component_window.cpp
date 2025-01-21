@@ -1495,15 +1495,20 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         );
 
                     if (pfc) {
-                        if (ImGui::InputInt2("Start Position", pfc->m_StartPos.data())) {
-                            // Optionally validate start position
-                        }
 
-                        if (ImGui::InputInt2("Target Position", pfc->m_TargetPos.data())) {
-                            // Optionally validate target position
-                        }
 
-                        ImGui::InputText("Grid Key", &pfc->m_GridKey);
+                        pfc->ApplyFunction(DrawComponents(pfc->Names()));
+
+                        //int x[2] = { pfc->m_StartPos.m_x,  pfc->m_StartPos.m_y };
+                        //if (ImGui::InputInt2("Start Position", x)) {
+                        //    // Optionally validate start position
+                        //}
+                        //int x1[2] = { pfc->m_TargetPos.m_x,  pfc->m_TargetPos.m_y };
+                        //if (ImGui::InputInt2("Target Position", x1)) {
+                        //    // Optionally validate target position
+                        //}
+
+                        //ImGui::InputText("Grid Key", &pfc->m_GridKey);
 
                         //if (ImGui::Button("Recalculate Path")) {
                         //    auto* grid = GetGridByKey(pfc->m_GridKey); // Assume a function to get GridComponent by key

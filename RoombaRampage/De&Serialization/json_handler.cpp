@@ -1111,21 +1111,15 @@ namespace Serialization {
 				// Load start position
 				if (pathfindingObject.HasMember("startPos") && pathfindingObject["startPos"].IsArray()) {
 					const rapidjson::Value& startPosArray = pathfindingObject["startPos"];
-					for (rapidjson::SizeType i = 0; i < startPosArray.Size(); ++i) {
-						if (startPosArray[i].IsInt()) {
-							pc->m_StartPos.push_back(startPosArray[i].GetInt());
-						}
-					}
+					pc->m_StartPos.m_x = startPosArray[0].GetInt();
+					pc->m_StartPos.m_y = startPosArray[1].GetInt();
 				}
 
 				// Load target position
 				if (pathfindingObject.HasMember("targetPos") && pathfindingObject["targetPos"].IsArray()) {
 					const rapidjson::Value& targetPosArray = pathfindingObject["targetPos"];
-					for (rapidjson::SizeType i = 0; i < targetPosArray.Size(); ++i) {
-						if (targetPosArray[i].IsInt()) {
-							pc->m_TargetPos.push_back(targetPosArray[i].GetInt());
-						}
-					}
+					pc->m_StartPos.m_x = targetPosArray[0].GetInt();
+					pc->m_StartPos.m_y = targetPosArray[1].GetInt();
 				}
 
 				// Load grid key
