@@ -91,17 +91,24 @@ namespace ecs {
 				rigidBody->m_AngularVelocity += angularAcceleration * help->m_fixedDeltaTime;
 				rigidBody->m_AngularVelocity *= rigidBody->m_AngularDamping;
 
+				//store previous position
+				rigidBody->m_PrevPos = transform->m_position;
+
 				transform->m_position += rigidBody->m_Velocity * help->m_fixedDeltaTime;
 				transform->m_rotation += rigidBody->m_AngularVelocity * help->m_fixedDeltaTime;
 
 				rigidBody->m_Force = vector2::Vec2{ 0.0f, 0.0f };
 				rigidBody->m_Torque = 0.0f;
 
+				//current position
+				rigidBody->m_CurrentPos = transform->m_position;
 
 				if (!rigidBody->m_IsStatic && !rigidBody->m_IsKinematic) {
 					transform->m_position += rigidBody->m_Velocity * help->m_fixedDeltaTime;
 					transform->m_rotation += rigidBody->m_AngularVelocity * help->m_fixedDeltaTime;
 				}
+
+				rigidBody->m_DirectionVector = rigidBody->m_CurrentPos - rigidBody->m_PrevPos;
 
 
 				//update physics pipline
@@ -110,8 +117,6 @@ namespace ecs {
 				
 			}
 		}
-		//PhysicsPipeline->m_Update();
 	}
-
 }
 
