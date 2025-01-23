@@ -111,11 +111,14 @@ namespace ecs {
 
 			//if movement component is present, do dynamic collision
 			vector2::Vec2 velocity{};
+			vector2::Vec2 prevPos{};
 			if (ecs->m_ECS_EntityMap[id].test(TYPERIGIDBODYCOMPONENT)) {
 
 				RigidBodyComponent* rigidComp = static_cast<RigidBodyComponent*>(ecs->m_ECS_CombinedComponentPool[TYPERIGIDBODYCOMPONENT]->m_GetEntityComponent(id));
 
 				 velocity = rigidComp->m_Velocity;
+				 prevPos = rigidComp->m_PrevPos;
+
 			}
 
 			vector2::Vec2 position{ TransComp->m_transformation.m_e20,TransComp->m_transformation.m_e21 };
@@ -168,7 +171,7 @@ namespace ecs {
 					//dont pass data if collision check is false
 
 					if (ColComp->m_CollisionCheck == false) continue;
-					PhysicsPipeline->m_SendPhysicsData(ColComp->m_radius, pos, scale, velocity, id, NameComp->m_Layer);
+					PhysicsPipeline->m_SendPhysicsData(ColComp->m_radius, pos,prevPos, scale, velocity, id, NameComp->m_Layer);
 				}
 				else if (ColComp->m_type == physicspipe::EntityType::RECTANGLE) {
 					mat3x3::Mat3x3 child_Transform = mat3x3::Mat3Transform(TransComp->m_position, TransComp->m_scale, 0);
@@ -198,7 +201,7 @@ namespace ecs {
 					//dont pass data if collision check is false
 					if (ColComp->m_CollisionCheck == false) continue;
 					mat3x3::Mat3Decompose(ColComp->m_collider_Transformation, pos, scale, rot);
-					PhysicsPipeline->m_SendPhysicsData(scale.m_y, scale.m_x, rot, pos, scale, velocity, id, NameComp->m_Layer);
+					PhysicsPipeline->m_SendPhysicsData(scale.m_y, scale.m_x, rot, pos,  prevPos , scale, velocity, id, NameComp->m_Layer);
 				}
 				else {
 					LOGGING_ERROR("NO ENTITY TYPE");
@@ -224,7 +227,7 @@ namespace ecs {
 					//dont pass data if collision check is false
 					if (ColComp->m_CollisionCheck == false) continue;
 					mat3x3::Mat3Decompose(ColComp->m_collider_Transformation, pos, scale, rot);
-					PhysicsPipeline->m_SendPhysicsData(ColComp->m_radius, pos, scale, velocity, id, NameComp->m_Layer);
+					PhysicsPipeline->m_SendPhysicsData(ColComp->m_radius, pos,prevPos, scale, velocity, id, NameComp->m_Layer);
 				}
 				else if (ColComp->m_type == physicspipe::EntityType::RECTANGLE) {
 					mat3x3::Mat3x3 debugTransformation = mat3x3::Mat3Transform(vector2::Vec2{ TransComp->m_transformation.m_e20 , TransComp->m_transformation.m_e21 }, TransComp->m_scale, 0);
@@ -244,7 +247,7 @@ namespace ecs {
 					if (ColComp->m_CollisionCheck == false) continue;
 
 					mat3x3::Mat3Decompose(ColComp->m_collider_Transformation, pos, scale, rot);
-					PhysicsPipeline->m_SendPhysicsData(scale.m_y, scale.m_x, rot, pos, scale, velocity, id, NameComp->m_Layer);
+					PhysicsPipeline->m_SendPhysicsData(scale.m_y, scale.m_x, rot, pos,  prevPos , scale, velocity, id, NameComp->m_Layer);
 				}
 				else {
 					LOGGING_ERROR("NO ENTITY TYPE");
