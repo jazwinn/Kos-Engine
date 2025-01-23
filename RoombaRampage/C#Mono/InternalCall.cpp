@@ -832,6 +832,44 @@ namespace script {
 		return true;
 	}
 
+	bool InternalCall::m_InternalCallGetPathfinding(ecs::EntityID id, vector2::Vec2* m_startpos, vector2::Vec2* m_startend, MonoString** gridkey, MonoArray** nodeArray_x, MonoArray** nodeArray_y)
+	{
+		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+		ecs::PathfindingComponent* pfc = static_cast<ecs::PathfindingComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEPATHFINDINGCOMPONENT]->m_GetEntityComponent(id));
+
+		if (pfc) {
+
+			*m_startpos = pfc->m_StartPos;
+			*m_startend = pfc->m_TargetPos;
+
+
+			*gridkey = mono_string_new(mono_domain_get(), pfc->m_GridKey.c_str());
+
+			auto* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+
+
+			*nodeArray_x = mono_array_new(assetmanager::AssetManager::m_funcGetInstance()->m_scriptManager.m_GetDomain(), mono_get_int32_class(), pfc->m_Path.size());
+			*nodeArray_y = mono_array_new(assetmanager::AssetManager::m_funcGetInstance()->m_scriptManager.m_GetDomain(), mono_get_int32_class(), pfc->m_Path.size());
+
+			for (size_t i = 0; i < pfc->m_Path.size(); ++i) {
+				mono_array_set(*nodeArray_x, int, i, pfc->m_Path[i].x);
+				mono_array_set(*nodeArray_y, int, i, pfc->m_Path[i].y);
+
+			}
+
+
+
+
+
+			return true;
+		}
+
+
+
+
+		return false;
+	}
+
 
 
 	void InternalCall::m_InternalCallDeleteEntity(ecs::EntityID id)
@@ -959,6 +997,6 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_InternalCallGetRayCast);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallSetRayCast);
 
-		
+		MONO_ADD_INTERNAL_CALL(m_InternalCallGetPathfinding);
 	}
 }
