@@ -1,3 +1,20 @@
+/******************************************************************/
+/*!
+\file      AudioSystem.cpp
+\author    Clarence Boey
+\par
+\date      Nov 27, 2024
+\brief     This file contains the definition of the AudioSystem
+           class. It handles the logic behind the Audio played in
+           the engine and works with the Audio Manager interface.
+
+
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/********************************************************************/
 #include "../Config/pch.h"
 #include "AudioSystem.h"
 #include "../Asset Manager/AssetManager.h"

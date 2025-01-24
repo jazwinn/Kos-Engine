@@ -11,9 +11,25 @@ public class PlayerController : ScriptBase
     #region Entity ID
     private uint EntityID;
 
-    public override void GetEntityID(uint id)
+    public override void Awake(uint id)
     {
         EntityID = id;
+
+        //Dead Player Texture Allocation
+        playerDeathTexture = "img_roombertDeath.png";
+
+        //Get starting component values
+        InternalCall.m_InternalGetTransformComponent(EntityID, out startingRoombaPos, out startingRoombaScale, out startingRoombaRotate);
+        InternalCall.m_InternalGetSpriteComponent(EntityID, out startingSprite, out startingLayer, out startingColor, out startingAlpha);
+
+        //Ensures player isnt dead at the start of the game
+        isDead = false;
+
+        //Set speed of player
+        speed = 5;
+
+        //Set tolerance to prevent jittering, higher values = more rigid rotation, but no more jittering due to micro changes
+        angleTolerance = 3.5f;
     }
     #endregion
 
@@ -50,21 +66,7 @@ public class PlayerController : ScriptBase
 
     public override void Start()
     {
-        //Dead Player Texture Allocation
-        playerDeathTexture = "img_roombertDeath.png";
 
-        //Get starting component values
-        InternalCall.m_InternalGetTransformComponent(EntityID, out startingRoombaPos, out startingRoombaScale, out startingRoombaRotate);
-        InternalCall.m_InternalGetSpriteComponent(EntityID, out startingSprite, out startingLayer, out startingColor, out startingAlpha);
-
-        //Ensures player isnt dead at the start of the game
-        isDead = false;
-
-        //Set speed of player
-        speed = 5;
-
-        //Set tolerance to prevent jittering, higher values = more rigid rotation, but no more jittering due to micro changes
-        angleTolerance = 3.5f;
     }
 
     public override void Update()
@@ -169,6 +171,24 @@ public class PlayerController : ScriptBase
         }
 
         #endregion
+
+        //Raycast ray;
+
+        //ray = InternalCall.m_GetRay(EntityID, "test");
+
+        //Console.WriteLine(ray.m_distance);
+
+
+        //if (InternalCall.m_InternalCallIsKeyPressed(keyCode.W))
+        //{
+        //    ray.m_targetposition.X = 0;
+        //    ray.m_targetposition.Y = 0;
+
+        //    InternalCall.m_SetRay(EntityID, "test", ray);
+
+        //}
+
+
     }
 
     #region Normalize

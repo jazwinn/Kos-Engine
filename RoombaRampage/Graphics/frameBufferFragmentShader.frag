@@ -32,10 +32,10 @@ void main()
    
    int pixelY = int(pixelCoord.y);
 
-    if (pixelY % 4 == 0)
-    {
-        col = col * 0.5f;
-    }
+    //if (pixelY % 4 == 0)
+    //{
+        //col = col * 0.5f;
+    //}
      fragColor = col;
 } 
 

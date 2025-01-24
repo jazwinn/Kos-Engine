@@ -336,7 +336,7 @@ namespace script {
 
 		for (size_t i = 0; i < scripts.size(); ++i)
 		{
-			MonoString* monoString = mono_string_new(assetManager->m_scriptManager.m_GetDomain(), scripts[i].c_str());
+			MonoString* monoString = mono_string_new(assetManager->m_scriptManager.m_GetDomain(), scripts[i].first.c_str());
 			mono_array_set(scriptArray, MonoString*, i, monoString);
 		}
 
@@ -345,29 +345,29 @@ namespace script {
 
 	bool InternalCall::m_InternalAddScriptInstance(ecs::EntityID entity, MonoString* monoScriptName, MonoObject* instance)
 	{
-		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
-		auto* scriptComponent = static_cast<ecs::ScriptComponent*>(
-			ecs->m_ECS_CombinedComponentPool[ecs::TYPESCRIPTCOMPONENT]->m_GetEntityComponent(entity)
-			);
+		//ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+		//auto* scriptComponent = static_cast<ecs::ScriptComponent*>(
+		//	ecs->m_ECS_CombinedComponentPool[ecs::TYPESCRIPTCOMPONENT]->m_GetEntityComponent(entity)
+		//	);
 
-		if (!scriptComponent)
-		{
-			LOGGING_WARN("Failed to add script instance: No ScriptComponent found for entity: " + std::to_string(entity));
-			return false;
-		}
+		//if (!scriptComponent)
+		//{
+		//	LOGGING_WARN("Failed to add script instance: No ScriptComponent found for entity: " + std::to_string(entity));
+		//	return false;
+		//}
 
-		char* nativeScriptName = mono_string_to_utf8(monoScriptName);
-		std::string scriptName = nativeScriptName;
-		mono_free(nativeScriptName);
+		//char* nativeScriptName = mono_string_to_utf8(monoScriptName);
+		//std::string scriptName = nativeScriptName;
+		//mono_free(nativeScriptName);
 
-		auto& scriptInstances = scriptComponent->m_scriptInstances;
-		if (scriptInstances.find(scriptName) != scriptInstances.end())
-		{
-			LOGGING_WARN("Script instance '" + scriptName + "' already exists for entity: " + std::to_string(entity) + ". Overwriting.");
-		}
+		//auto& scriptInstances = scriptComponent->m_scriptInstances;
+		//if (scriptInstances.find(scriptName) != scriptInstances.end())
+		//{
+		//	LOGGING_WARN("Script instance '" + scriptName + "' already exists for entity: " + std::to_string(entity) + ". Overwriting.");
+		//}
 
-		scriptInstances[scriptName] = instance;
-		LOGGING_WARN("Script instance '" + scriptName + "' successfully added/updated for entity: " + std::to_string(entity));
+		//scriptInstances[scriptName] = instance;
+		//LOGGING_WARN("Script instance '" + scriptName + "' successfully added/updated for entity: " + std::to_string(entity));
 		return true;
 	}
 
@@ -694,6 +694,146 @@ namespace script {
 		return Helper::Helpers::GetInstance()->m_gameRunTime;
 	}
 
+	void InternalCall::m_EnableScript(ecs::EntityID id, MonoString* monoString)
+	{
+		char* nativeString = mono_string_to_utf8(monoString);
+		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+		ecs::ScriptComponent* script = static_cast<ecs::ScriptComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESCRIPTCOMPONENT]->m_GetEntityComponent(id));
+
+		if (script == NULL) return;
+
+		const auto& results = std::find_if(script->m_scripts.begin(), script->m_scripts.end(), [&](const auto& x) {return x.first == std::string(nativeString);});
+
+		if (results == script->m_scripts.end()) return;
+
+		results->second = true;
+
+		mono_free(nativeString);
+	}
+
+	void InternalCall::m_DisableScript(ecs::EntityID id, MonoString* monoString)
+	{
+		char* nativeString = mono_string_to_utf8(monoString);
+		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+		ecs::ScriptComponent* script = static_cast<ecs::ScriptComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESCRIPTCOMPONENT]->m_GetEntityComponent(id));
+
+		if (script == NULL) return;
+
+		const auto& results = std::find_if(script->m_scripts.begin(), script->m_scripts.end(), [&](const auto& x) {return x.first == std::string(nativeString);});
+
+		if (results == script->m_scripts.end()) return;
+
+		results->second = false;
+
+		mono_free(nativeString);
+	}
+
+	MonoArray* InternalCall::m_RetrieveCollidableEntities(MonoString* scene)
+	{
+		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+
+		char* nativeString = mono_string_to_utf8(scene);
+
+		auto scenes = ecs->m_ECS_SceneMap.find(nativeString);
+
+		std::vector<ecs::EntityID> results;
+
+		if (scenes == ecs->m_ECS_SceneMap.end()) return nullptr;
+		for (auto ids : scenes->second.m_sceneIDs) {
+			auto* cc = static_cast<ecs::ColliderComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(ids));
+
+			if (cc != NULL) {
+				if (cc->m_CollisionCheck) {
+					results.push_back(ids);
+				}
+			}
+		}
+
+		if (results.size() < 0) nullptr;
+
+		MonoArray* Array = mono_array_new(assetmanager::AssetManager::m_funcGetInstance()->m_scriptManager.m_GetDomain(), mono_get_int32_class(), results.size());
+		for (size_t i = 0; i < results.size(); ++i) {
+			mono_array_set(Array, int, i, results[i]);
+
+		}
+
+
+		return Array;
+	}
+
+	bool InternalCall::m_InternalCallGetRayCast( ecs::EntityID id, MonoString* monoString, bool* isRaycasting, vector2::Vec2* targetposition, float* m_distance, bool* targetReached, vector2::Vec2* hitposition)
+	{
+
+		char* nativeString = mono_string_to_utf8(monoString);
+		std::string string{ nativeString };
+		mono_free(nativeString);
+
+		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+		ecs::RaycastComponent* rc = static_cast<ecs::RaycastComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPERAYCASTINGCOMPONENT]->m_GetEntityComponent(id));
+
+		if (rc) {
+			
+			auto it = std::find_if(rc->m_raycast.begin(), rc->m_raycast.end(), [string](const auto& x) { return x.m_rayID == string; });
+			if (it != rc->m_raycast.end()) {
+
+				*isRaycasting = it->m_isRaycasting;
+				*targetposition = it->m_targetPosition;
+				*m_distance = it->m_distance;
+				*targetReached = it->m_targetReached;
+				*hitposition = it->m_hitposition;
+
+			}
+			else {
+				return false;
+			}
+			
+
+		}
+
+
+
+
+		
+		return true;
+	}
+
+	bool InternalCall::m_InternalCallSetRayCast(ecs::EntityID id, MonoString* monoString, bool* isRaycasting, vector2::Vec2* targetposition, float* m_distance, bool* targetReached, vector2::Vec2* hitposition)
+	{
+		char* nativeString = mono_string_to_utf8(monoString);
+		std::string string{ nativeString };
+		mono_free(nativeString);
+
+		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+		ecs::RaycastComponent* rc = static_cast<ecs::RaycastComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPERAYCASTINGCOMPONENT]->m_GetEntityComponent(id));
+
+		if (rc) {
+
+			auto it = std::find_if(rc->m_raycast.begin(), rc->m_raycast.end(), [string](const auto& x) { return x.m_rayID == string; });
+			if (it != rc->m_raycast.end()) {
+
+				it->m_isRaycasting = *isRaycasting;
+				it->m_targetPosition = *targetposition;
+				it->m_distance = *m_distance ;
+				it->m_targetReached = *targetReached;
+				it->m_hitposition = *hitposition;
+
+			}
+			else {
+				return false;
+			}
+
+
+		}
+
+
+
+
+
+		return true;
+	}
+
+
+
 	void InternalCall::m_InternalCallDeleteEntity(ecs::EntityID id)
 	{
 		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
@@ -733,6 +873,8 @@ namespace script {
 	{
 		return Input::InputSystem::m_isKeyTriggered(key);
 	}
+
+
 	void InternalCall::m_RegisterInternalCalls()
 	{
 		MONO_ADD_INTERNAL_CALL(m_InternalGetTransformComponent);
@@ -810,5 +952,13 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_InternalCallGetSteps);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallGetGameTime);
 
+
+		MONO_ADD_INTERNAL_CALL(m_EnableScript);
+		MONO_ADD_INTERNAL_CALL(m_DisableScript);
+		MONO_ADD_INTERNAL_CALL(m_RetrieveCollidableEntities);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallGetRayCast);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallSetRayCast);
+
+		
 	}
 }

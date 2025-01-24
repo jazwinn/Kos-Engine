@@ -40,11 +40,18 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 namespace graphicpipe {
 
-    struct LightingData {
+    struct LightingData
+    {
         glm::mat3 m_transformation{};
         glm::vec2 m_innerOuterRadius{};
         float m_intensity{};
         int m_lightType{};
+    };
+    
+    struct ColliderGridData
+    {
+        glm::mat3 m_transformation{};
+        glm::ivec2 m_gridDimensions{};
     };
 
     struct TilemapData {
@@ -403,6 +410,7 @@ namespace graphicpipe {
 
         // Data for rendering
         std::vector<LightingData> m_lightingData{};
+        std::vector<ColliderGridData> m_colliderGridData{};
         std::vector<TilemapData> m_tilemapData{};
         std::vector<GraphicsData> m_modelData{}; ///< Graphics data for rendering.
         std::vector<DebugDrawData> m_debugBoxData{}; ///< Data for rendering debug boxes.

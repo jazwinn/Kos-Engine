@@ -1,3 +1,20 @@
+/******************************************************************/
+/*!
+\file      AudioSystem.ch
+\author    Clarence Boey
+\par
+\date      Nov 27, 2024
+\brief     This file contains the declaration of the AudioSystem
+           class. It handles the logic behind the Audio played in
+           the engine and works with the Audio Manager interface.
+
+
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/********************************************************************/
 #ifndef AUDIOSYS_H
 #define AUDIOSYS_H
 

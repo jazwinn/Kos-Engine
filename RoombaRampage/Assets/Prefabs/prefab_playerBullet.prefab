@@ -76,7 +76,10 @@
         },
         "script": {
             "scripts": [
-                "PlayerBullet"
+                {
+                    "name": "PlayerBullet",
+                    "enabled": true
+                }
             ]
         }
     }

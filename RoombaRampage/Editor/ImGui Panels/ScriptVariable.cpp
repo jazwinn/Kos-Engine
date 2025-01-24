@@ -62,31 +62,31 @@ namespace scripteditor {
                 // Change the value based on type (example for int and float)
                 if (fieldTypeCode == MONO_TYPE_I4) { // Type code for int
                     int integer;
-                    mono_field_get_value(sc->m_scriptInstances.find(script)->second, fields, &integer);
+                    mono_field_get_value(sc->m_scriptInstances.find(script)->second.first, fields, &integer);
 
                     ImGui::AlignTextToFramePadding();
                     if (ImGui::DragInt(fieldName, &integer, 0.1f, static_cast<int>( - 1000.0f), static_cast<int>(1000.0f), "%.2f")) {
-                        mono_field_set_value(sc->m_scriptInstances.find(script)->second, fields, &integer);
+                        mono_field_set_value(sc->m_scriptInstances.find(script)->second.first, fields, &integer);
                     }
                 }
                 else if (fieldTypeCode == MONO_TYPE_R4) { // Type code for float
                     float _float;
-                    mono_field_get_value(sc->m_scriptInstances.find(script)->second, fields, &_float);
+                    mono_field_get_value(sc->m_scriptInstances.find(script)->second.first, fields, &_float);
 
                     ImGui::AlignTextToFramePadding();
                     if (ImGui::DragFloat(fieldName, &_float, 0.1f, -1000.0f, 1000.f, "%.2f")) {
-                        mono_field_set_value(sc->m_scriptInstances.find(script)->second, fields, &_float);
+                        mono_field_set_value(sc->m_scriptInstances.find(script)->second.first, fields, &_float);
                     }
 
 
                 }
                 else if (fieldTypeCode == MONO_TYPE_BOOLEAN) { // Type code for float
                     bool _bool;
-                    mono_field_get_value(sc->m_scriptInstances.find(script)->second, fields, &_bool);
+                    mono_field_get_value(sc->m_scriptInstances.find(script)->second.first, fields, &_bool);
 
                     ImGui::AlignTextToFramePadding();
                     if (ImGui::Checkbox(fieldName, &_bool)) {
-                        mono_field_set_value(sc->m_scriptInstances.find(script)->second, fields, &_bool);
+                        mono_field_set_value(sc->m_scriptInstances.find(script)->second.first, fields, &_bool);
                     }
 
 

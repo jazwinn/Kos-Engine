@@ -387,7 +387,7 @@ namespace graphicpipe
 
 		
 
-		for (int i{}; i < m_transformedTilemaps.size() && !m_gridColliderChecks.empty(); ++i)
+		for (int i{}; i < m_colliderGridData.size() && !m_gridColliderChecks.empty(); ++i)
 		{
 			if (m_gridColliderChecks[i].empty())
 			{
@@ -404,7 +404,7 @@ namespace graphicpipe
 			glNamedBufferData(m_gridColliderBuffer, m_gridColliderChecks[i].size() * sizeof(int), &m_gridColliderChecks[i][0], GL_DYNAMIC_DRAW);
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-			glUniform1i(glGetUniformLocation(m_gridDebugShaderProgram, "tilemapRows"), m_transformedTilemaps[i].m_tilemapDimensions.x);
+			glUniform1i(glGetUniformLocation(m_gridDebugShaderProgram, "tilemapRows"), m_colliderGridData[i].m_gridDimensions.x);
 
 			GLenum err2 = glGetError();
 			if (err2 != GL_NO_ERROR) {
@@ -412,16 +412,16 @@ namespace graphicpipe
 				std::cout << "Second OpenGL Error: " << err2 << std::endl;
 			}
 
-			glUniform1i(glGetUniformLocation(m_gridDebugShaderProgram, "tilemapColumns"), m_transformedTilemaps[i].m_tilemapDimensions.y);
+			glUniform1i(glGetUniformLocation(m_gridDebugShaderProgram, "tilemapColumns"), m_colliderGridData[i].m_gridDimensions.y);
 
 			glUniformMatrix3fv(glGetUniformLocation(m_gridDebugShaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currViewMatrix));
 
 			glUniformMatrix3fv(glGetUniformLocation(m_gridDebugShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currOrthoMatrix));
 
-			glUniformMatrix3fv(glGetUniformLocation(m_gridDebugShaderProgram, "modelMatrix"), 1, GL_FALSE, glm::value_ptr(m_transformedTilemaps[i].m_transformation));
+			glUniformMatrix3fv(glGetUniformLocation(m_gridDebugShaderProgram, "modelMatrix"), 1, GL_FALSE, glm::value_ptr(m_colliderGridData[i].m_transformation));
 
 			glBindVertexArray(m_squareLinesMesh.m_vaoId);
-			glDrawElementsInstanced(m_squareLinesMesh.m_primitiveType, m_squareLinesMesh.m_indexElementCount, GL_UNSIGNED_SHORT, NULL, static_cast<GLsizei>(m_transformedTilemaps[i].m_tilemapDimensions.x * m_transformedTilemaps[i].m_tilemapDimensions.y));
+			glDrawElementsInstanced(m_squareLinesMesh.m_primitiveType, m_squareLinesMesh.m_indexElementCount, GL_UNSIGNED_SHORT, NULL, static_cast<GLsizei>(m_colliderGridData[i].m_gridDimensions.x * m_colliderGridData[i].m_gridDimensions.y));
 			glBindVertexArray(0);
 		}
 	}

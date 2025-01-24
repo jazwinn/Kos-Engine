@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -112,4 +113,22 @@ public class ButtomComponent
     public Vector2 m_Position;
     public Vector2 m_Scale;
     public bool m_IsClick;
+}
+
+//public class ButtomComponent
+//{
+//    public Vector2 m_Position;
+//    public Vector2 m_Scale;
+//    public bool m_IsClick;
+//}
+
+public class Raycast
+{
+    [MarshalAs(UnmanagedType.I1)]
+    public bool m_isRaycasting;
+    public Vector2 m_targetposition;
+    public float m_distance;
+    [MarshalAs(UnmanagedType.I1)]
+    public bool m_targetReached;
+    public Vector2 m_hitPosition;
 }

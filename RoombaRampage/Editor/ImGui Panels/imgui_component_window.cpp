@@ -27,7 +27,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Editor/TilemapCalculations.h"
 #include "../Events/EventsDragFloat.h"
 #include "../Events/EventsEventHandler.h"
-
+#include "../Pathfinding/AStarPathfinding.h"
 #include "ScriptVariable.h"
 #include "../Editor/WindowFile.h"
 #pragma warning(push)
@@ -58,6 +58,7 @@ struct DrawComponents {
 
     bool operator()(float& _args) {
         
+
         ImGui::AlignTextToFramePadding();
         ImGui::Text(m_Array[count].c_str());
         ImGui::SameLine(slider_start_pos_x);
@@ -78,16 +79,16 @@ struct DrawComponents {
     }
 
 
-    void operator()(const std::vector<std::string>& _args) {
-        for (auto& arg : _args) {
-            ImGui::Text(m_Array[count].c_str());
-            ImGui::SameLine(slider_start_pos_x);
-            std::string title = "##" + m_Array[count];
-           // ImGui::InputText(title.c_str(), arg.c_str());
-        }
+    //void operator()(const std::vector<std::string>& _args) {
+    //    for (auto& arg : _args) {
+    //        ImGui::Text(m_Array[count].c_str());
+    //        ImGui::SameLine(slider_start_pos_x);
+    //        std::string title = "##" + m_Array[count];
+    //       // ImGui::InputText(title.c_str(), arg.c_str());
+    //    }
 
-        count++;
-    }
+    //    count++;
+    //}
 
     void operator()(physicspipe::EntityType& _args)
     {
@@ -223,6 +224,41 @@ struct DrawComponents {
 
         count++;
     }
+
+    void operator()(layer::LAYERS& _args) {
+        ImGui::AlignTextToFramePadding();
+        ImGui::Text(m_Array[count].c_str());
+        ImGui::SameLine(slider_start_pos_x);
+        ImGui::SetNextItemWidth(100.0f);
+        std::string title = "##slider_" + std::to_string(count) + "_" + m_Array[count];
+        ImGui::PushItemWidth(slidersize);
+        int toint = int(_args);
+        if (ImGui::DragInt(title.c_str(), &toint, 1.0f, 0, 8)) {
+            _args = (layer::LAYERS)toint;
+        }
+        ImGui::PopItemWidth();
+
+        count++;
+    }
+
+    template <typename U>
+    void operator()(std::vector<U>& _args) {
+        if constexpr (std::is_class_v<U>) {
+            for (U& x : _args) {
+                x.ApplyFunction(DrawComponents(x.Names()));
+            }
+        }
+        else {
+            int _count{};
+            for (U& x : _args) {
+                ImGui::PushID(_count++);
+                (*this)(x); // Handle non-class types
+                count--;// minus so no subsciprt error
+                ImGui::PopID();
+            }
+        }
+        count++;
+    }
 };
 
 
@@ -243,7 +279,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
     {
         "Add Components", "Collider Component", "Sprite Component", "Player Component", "Rigid Body Component", "Text Component", 
         "Animation Component", "Camera Component" , "Button Component" , "Script Component", "Tilemap Component", "Audio Component",
-        "Lighting Component"
+        "Grid Component", "RayCast Component", "PathfindingComponent", "Lighting Component"
     };
     static int ComponentType = 0;
 
@@ -359,13 +395,42 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 }
             }
             if (ComponentType == 12) {
-                ecs->m_AddComponent(ecs::TYPELIGHTINGCOMPONENT, entityID);
+                
+                ecs->m_AddComponent(ecs::TYPEGRIDCOMPONENT, entityID);
+                ComponentType = 0;
+                if (!EntitySignature.test(ecs::TYPEGRIDCOMPONENT)) {
+                    events::AddComponent action(entityID, ecs::TYPEGRIDCOMPONENT);
+                    DISPATCH_ACTION_EVENT(action);
+                }
+            }
+            if (ComponentType == 13) {
+                ecs->m_AddComponent(ecs::TYPERAYCASTINGCOMPONENT, entityID);
+                ComponentType = 0;
+                if (!EntitySignature.test(ecs::TYPERAYCASTINGCOMPONENT)) {
+                    events::AddComponent action(entityID, ecs::TYPERAYCASTINGCOMPONENT);
+                    DISPATCH_ACTION_EVENT(action);
+                }
+            }
+            if (ComponentType == 14) {
+                ecs->m_AddComponent(ecs::TYPEPATHFINDINGCOMPONENT, entityID);
+                ComponentType = 0;
+                if (!EntitySignature.test(ecs::TYPEPATHFINDINGCOMPONENT)) {
+                    events::AddComponent action(entityID, ecs::TYPEPATHFINDINGCOMPONENT);
+                    DISPATCH_ACTION_EVENT(action);
+                }
+            }
+            if (ComponentType == 15) {
+                 ecs->m_AddComponent(ecs::TYPELIGHTINGCOMPONENT, entityID);
                 ComponentType = 0;
                 if (!EntitySignature.test(ecs::TYPELIGHTINGCOMPONENT)) {
                     events::AddComponent action(entityID, ecs::TYPELIGHTINGCOMPONENT);
                     DISPATCH_ACTION_EVENT(action);
                 }
             }
+
+
+
+           
         }
 
         auto CreateContext = [](ecs::ComponentType Type, ecs::EntityID ID) {
@@ -983,21 +1048,50 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                     for (const auto& scriptname : sc->m_scripts)
                     {
                         //print out varaibles
-                        scripteditor::ScriptEditor::DisplayScriptComponents(scriptname, entityID);
+                        scripteditor::ScriptEditor::DisplayScriptComponents(scriptname.first, entityID);
                     }
 
                     
                     if (ImGui::BeginListBox("Scripts"))
                     {
                         int n{};
-                        for (const auto& scriptname : sc->m_scripts)
+                        for (auto& scriptname : sc->m_scripts)
                         {
 
-
-                            ImGui::Selectable(scriptname.c_str());
+                            if (scriptname.second) {
+                                ImGui::Selectable(scriptname.first.c_str());
+                            }
+                            else {
+                                ImGui::Selectable(std::string(scriptname.first + " (Disabled)").c_str());
+                            }
+                            
                             if (ImGui::BeginPopupContextItem()) {
+
+                                if (scriptname.second) {
+                                    if (ImGui::MenuItem("Disable Script")) {
+                                        scriptname.second = false;
+
+                                        ImGui::EndPopup();
+
+
+                                        break;
+                                    }
+                                }
+                                else {
+                                    if (ImGui::MenuItem("Enable Script")) {
+                                        scriptname.second = true;
+
+                                        ImGui::EndPopup();
+
+
+                                        break;
+                                    }
+                                }
+
+
                                 if (ImGui::MenuItem("Delete Script")) {
-                                    sc->m_scripts.erase(std::find(sc->m_scripts.begin(), sc->m_scripts.end(), scriptname));
+                                   // sc->m_scripts.erase(std::find_if(sc->m_scripts.begin(), sc->m_scripts.end(), [&](const auto& x) {return x.first == scriptname.first;}));
+
                                     ImGui::EndPopup();
 
 
@@ -1034,8 +1128,8 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             const bool is_selected{};
                             if (ImGui::Selectable(scriptname.first.c_str(), is_selected)) {
                                 //TODO for now push back
-                                if (std::find(sc->m_scripts.begin(), sc->m_scripts.end(), scriptname.first) == sc->m_scripts.end()) {
-                                    sc->m_scripts.push_back(scriptname.first);
+                                if (std::find_if(sc->m_scripts.begin(), sc->m_scripts.end(), [&](const auto& x) {return x.first == scriptname.first;}) == sc->m_scripts.end()) {
+                                    sc->m_scripts.push_back(std::make_pair(scriptname.first, true));
                                 }
                                 else {
                                     LOGGING_WARN("Script is already inside Object");
@@ -1071,6 +1165,8 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
 
             }
+
+           
 
             if (EntitySignature.test(ecs::TYPETILEMAPCOMPONENT)) {
 
@@ -1139,16 +1235,16 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                     Tilemap::resizeTiles(tmc, tmc->m_rowLength, tmc->m_columnLength);
 
                     if (ImGui::Button("Pick Tile"))
-                    {
-                        m_tilePickerMode = true;
-                        m_collisionSetterMode = false;
-                    }
+                     {
+                         m_tilePickerMode = true;
+                         m_collisionSetterMode = false;
+                     }
 
-                    if (ImGui::Button("Set Colliders"))
+                    /*if (ImGui::Button("Set Colliders"))
                     {
                         m_tilePickerMode = false;
                         m_collisionSetterMode = true;
-                    }
+                    }*/
                     //Tilemap::debugTileIndex(tmc);
 
                     //std::cout << EditorCamera::calculateWorldCoordinatesFromMouse(ImGui::GetMousePos().x, ImGui::GetMousePos().y).m_y << std::endl;
@@ -1157,6 +1253,32 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
 
             }
+
+            if (EntitySignature.test(ecs::TYPEGRIDCOMPONENT)) {
+
+                open = ImGui::CollapsingHeader("Grid Component");
+
+                CreateContext(ecs::TYPEGRIDCOMPONENT, entityID);
+
+                if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEGRIDCOMPONENT)) {
+
+                    auto* grid = static_cast<ecs::GridComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEGRIDCOMPONENT]->m_GetEntityComponent(entityID));
+                    auto* transform = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(entityID));
+                    
+                    if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEGRIDCOMPONENT)) {
+                        auto* rbc = static_cast<ecs::GridComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEGRIDCOMPONENT]->m_GetEntityComponent(entityID));
+                        rbc->ApplyFunction(DrawComponents(rbc->Names()));
+                    }
+                    Tilemap::resizeCollidableGrid(grid, grid->m_GridRowLength, grid->m_GridColumnLength);
+
+                    if (ImGui::Button("Set Colliders"))
+                    {
+                        m_tilePickerMode = false;
+                        m_collisionSetterMode = true;
+                    }
+                }
+            }
+
             if (EntitySignature.test(ecs::TYPEAUDIOCOMPONENT)) {
                 open = ImGui::CollapsingHeader("Audio Component");
 
@@ -1372,6 +1494,107 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 }
 
             }
+            if (EntitySignature.test(ecs::TYPERAYCASTINGCOMPONENT)) {
+
+                open = ImGui::CollapsingHeader("Raycast Component");
+
+                CreateContext(ecs::TYPERAYCASTINGCOMPONENT, entityID);
+
+                if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPERAYCASTINGCOMPONENT)) {
+                    auto* rcc = static_cast<ecs::RaycastComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPERAYCASTINGCOMPONENT]->m_GetEntityComponent(entityID));
+
+                    if (ImGui::Button("+ Add Ray")) {
+                        rcc->m_raycast.push_back(ecs::RaycastComponent::Raycast{});
+                        
+                    }
+                    ImGui::Separator();
+
+
+                    int _count{};
+                    for (auto it = rcc->m_raycast.begin(); it != rcc->m_raycast.end(); it++) {
+                        ImGui::PushID(_count);
+                        it->ApplyFunction(DrawComponents(it->Names()));
+
+                        if (ImGui::Button("+ Layer")) {
+                            it->m_Layers.push_back((layer::LAYERS)0);
+                        }
+
+                        ImGui::SameLine();
+                        if (it->m_Layers.size() > 0 && ImGui::Button("- Layer")) {
+                            it->m_Layers.pop_back();
+                            ImGui::PopID();
+                            break;
+
+                        }
+                        ImGui::SameLine();
+                        if (ImGui::Button(" Delete Ray")) {
+                            rcc->m_raycast.erase(it);
+                            ImGui::PopID();
+                            break;
+                        }
+
+                        ImGui::PopID();
+                        _count++;
+
+                        ImGui::Separator();
+
+                    }
+                }
+            }
+
+            if (EntitySignature.test(ecs::TYPEPATHFINDINGCOMPONENT)) {
+                bool open = ImGui::CollapsingHeader("Pathfinding Component");
+
+                CreateContext(ecs::TYPEPATHFINDINGCOMPONENT, entityID);
+
+                if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEPATHFINDINGCOMPONENT)) {
+                    auto* pfc = static_cast<ecs::PathfindingComponent*>(
+                        ecs->m_ECS_CombinedComponentPool[ecs::TYPEPATHFINDINGCOMPONENT]->m_GetEntityComponent(entityID)
+                        );
+
+                    if (pfc) {
+
+
+                        pfc->ApplyFunction(DrawComponents(pfc->Names()));
+
+                        //int x[2] = { pfc->m_StartPos.m_x,  pfc->m_StartPos.m_y };
+                        //if (ImGui::InputInt2("Start Position", x)) {
+                        //    // Optionally validate start position
+                        //}
+                        //int x1[2] = { pfc->m_TargetPos.m_x,  pfc->m_TargetPos.m_y };
+                        //if (ImGui::InputInt2("Target Position", x1)) {
+                        //    // Optionally validate target position
+                        //}
+
+                        //ImGui::InputText("Grid Key", &pfc->m_GridKey);
+
+                        //if (ImGui::Button("Recalculate Path")) {
+                        //    auto* grid = GetGridByKey(pfc->m_GridKey); // Assume a function to get GridComponent by key
+                        //    if (grid) {
+                        //        AStarPathfinding pathfinder;
+                        //        auto pathNodes = pathfinder.FindPath(grid, pfc->m_StartPos[0], pfc->m_StartPos[1],
+                        //            pfc->m_TargetPos[0], pfc->m_TargetPos[1]);
+                        //        pfc->m_Path.clear();
+                        //        for (const auto& node : pathNodes) {
+                        //            pfc->m_Path.emplace_back(node.x, node.y);
+                        //        }
+                        //    }
+                        //    else {
+                        //        LOGGING_WARN("Invalid Grid Key!");
+                        //    }
+                        //}
+
+                        /*if (!pfc->m_Path.empty()) {
+                            ImGui::Text("Calculated Path:");
+                            for (const auto& pos : pfc->m_Path) {
+                                ImGui::BulletText("(%d, %d)", pos.first, pos.second);
+                            }
+                        }*/
+                    }
+                }
+            }
+
+
 
             
 

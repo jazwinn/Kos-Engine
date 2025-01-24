@@ -92,6 +92,14 @@ namespace gui {
 		{
 			m_DrawTilePicker();
 		}
+		else if (m_collisionSetterMode && ecs->m_ECS_CombinedComponentPool[ecs::TYPEGRIDCOMPONENT]->m_HasComponent(m_clickedEntityId))
+		{
+			if (ImGui::Button("Back"))
+			{
+				m_tilePickerMode = false;
+				m_collisionSetterMode = false;
+			}
+		}
 		else
 		{
 			ImGui::BeginChild("ChildLa", ImVec2(0, ImGui::GetContentRegionAvail().y));

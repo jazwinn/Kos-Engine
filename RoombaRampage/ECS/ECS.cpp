@@ -60,6 +60,9 @@ namespace ecs{
 		m_AddComponentToECS<TilemapComponent>(TYPETILEMAPCOMPONENT);
 		m_AddComponentToECS<AudioComponent>(TYPEAUDIOCOMPONENT);
 		m_AddComponentToECS<LightingComponent>(TYPELIGHTINGCOMPONENT);
+		m_AddComponentToECS<GridComponent>(TYPEGRIDCOMPONENT);
+		m_AddComponentToECS<RaycastComponent>(TYPERAYCASTINGCOMPONENT);
+		m_AddComponentToECS<PathfindingComponent>(TYPEPATHFINDINGCOMPONENT);
 
 
 
@@ -81,6 +84,9 @@ namespace ecs{
 		ecs->m_ECS_SystemMap[TYPELIGHTINGSYSTEM] = std::make_shared<LightingSystem>();
 
 
+		ecs->m_ECS_SystemMap[TYPEGRIDSYSTEM] = std::make_shared<GridSystem>();
+		ecs->m_ECS_SystemMap[TYPERAYCASTSYSTEM] = std::make_shared<RayCastSystem>();
+		ecs->m_ECS_SystemMap[TYPEPATHFINDINGSYSTEM] = std::make_shared<PathfindingSystem>();
 
 		
 
