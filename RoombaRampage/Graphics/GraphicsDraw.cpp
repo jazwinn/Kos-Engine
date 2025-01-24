@@ -38,8 +38,8 @@ namespace graphicpipe
 			glBindBuffer(GL_ARRAY_BUFFER, m_textureOrderBuffer);
 			glNamedBufferData(m_textureOrderBuffer, m_textureOrder.size() * sizeof(int), &m_textureOrder[0], GL_DYNAMIC_DRAW);
 
-			glBindBuffer(GL_ARRAY_BUFFER, m_stripCountBuffer);
-			glNamedBufferData(m_stripCountBuffer, m_stripCounts.size() * sizeof(glm::ivec2), &m_stripCounts[0], GL_DYNAMIC_DRAW);
+			glBindBuffer(GL_ARRAY_BUFFER, m_vec2Buffer);
+			glNamedBufferData(m_vec2Buffer, m_stripCounts.size() * sizeof(glm::ivec2), &m_stripCounts[0], GL_DYNAMIC_DRAW);
 
 		/*	glBindBuffer(GL_ARRAY_BUFFER, m_frameNumberBuffer);
 			glNamedBufferData(m_frameNumberBuffer, m_frameNumbers.size() * sizeof(int), &m_frameNumbers[0], GL_DYNAMIC_DRAW);*/

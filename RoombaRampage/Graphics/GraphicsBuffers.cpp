@@ -73,8 +73,8 @@ namespace graphicpipe
 		glVertexAttribIPointer(5, 1, GL_INT, sizeof(int), (void*)0);
 		glVertexAttribDivisor(5, 1);
 
-		glGenBuffers(1, &m_stripCountBuffer);
-		glBindBuffer(GL_ARRAY_BUFFER, m_stripCountBuffer);
+		glGenBuffers(1, &m_vec2Buffer);
+		glBindBuffer(GL_ARRAY_BUFFER, m_vec2Buffer);
 		glBufferData(GL_ARRAY_BUFFER, m_stripCounts.size() * sizeof(glm::ivec2), &m_stripCounts[0], GL_DYNAMIC_DRAW);
 		glEnableVertexAttribArray(4);
 		glVertexAttribIPointer(4, 2, GL_INT, sizeof(glm::ivec2), (void*)0);

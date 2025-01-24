@@ -40,6 +40,13 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 namespace graphicpipe {
 
+    struct LightingData {
+        glm::mat3 m_transformation{};
+        glm::vec2 m_innerOuterRadius{};
+        float m_intensity{};
+        int m_lightType{};
+    };
+
     struct TilemapData {
         glm::mat3 m_transformation{};               ///< Transformation matrix for the tilemap.
         unsigned int m_textureID{};                 ///< Texture ID for the tilemap.
@@ -173,6 +180,8 @@ namespace graphicpipe {
         unsigned int m_gridShaderProgram{};         ///< Shader program for rendering grid lines.
         unsigned int m_tilemapShaderProgram{};      ///< Shader program for rendering tilemaps.
         unsigned int m_gridDebugShaderProgram{};     ///< Shader program for rendering collidable grids.
+        unsigned int m_lightingShaderProgram{};
+        unsigned int m_finalPassShaderProgram{};
 
         // Buffers
         unsigned int m_modelMatrixArrayBuffer{};    ///< Array buffer for model matrices.
@@ -184,7 +193,7 @@ namespace graphicpipe {
         unsigned int m_gamePreviewFrameBufferObject{};   ///< Framebuffer object for the game preview window.
         unsigned int m_gamePreviewDepthBufferObject{};   ///< Depth buffer for the game preview framebuffer.
         unsigned int m_textBuffer{};                ///< Buffer for text rendering.
-        unsigned int m_stripCountBuffer{};          ///< Buffer for sprite strip counts (animation).
+        unsigned int m_vec2Buffer{};          ///< Buffer for sprite strip counts (animation).
         unsigned int m_frameNumberBuffer{};         ///< Buffer for managing animation frame numbers.
         unsigned int m_layerBuffer{};               ///< Buffer for rendering layer data.
         unsigned int m_gridBuffer{};                ///< Buffer for grid vertex data.
@@ -207,6 +216,7 @@ namespace graphicpipe {
 
         int m_unitWidth{ 100 };         ///< The default width for the graphics unit.
         int m_unitHeight{ 100 };        ///< The default height for the graphics unit.
+        float m_globalLightIntensity{ 1.f };
 
         /**
          * @enum ShapeType
@@ -392,6 +402,7 @@ namespace graphicpipe {
         std::vector<glm::mat3> m_debugCircleToNDCMatrix{};
 
         // Data for rendering
+        std::vector<LightingData> m_lightingData{};
         std::vector<TilemapData> m_tilemapData{};
         std::vector<GraphicsData> m_modelData{}; ///< Graphics data for rendering.
         std::vector<DebugDrawData> m_debugBoxData{}; ///< Data for rendering debug boxes.
@@ -403,12 +414,14 @@ namespace graphicpipe {
         std::vector<std::vector<int>> m_tileIndexes{};
         std::vector<std::vector<int>> m_gridColliderChecks{};
 
+
         std::vector<unsigned int> m_textureIDs{}; ///< Array of texture IDs.
         std::vector<int> m_layers{};
         std::vector<glm::ivec2> m_stripCounts{}; ///< Sprite strip counts for animation.
         std::vector<int> m_frameNumbers{}; ///< Frame numbers for sprite animations.
         std::vector<image::Image> m_imageData{}; ///< Image data for rendering.
         std::vector<TilemapData> m_transformedTilemaps{};
+        std::vector<LightingData> m_transformedLights{};
         std::vector<std::vector<std::vector<int>>> m_tilemapIndexArrays{};
         std::vector<std::vector<std::vector<int>>> m_gridColliderArrays{};
 

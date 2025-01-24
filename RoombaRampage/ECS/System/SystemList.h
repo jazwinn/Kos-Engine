@@ -16,6 +16,7 @@
 #include "../ECS/System/CameraSystem.h"
 #include "../ECS/System/ButtonSystem.h"
 #include "../ECS/System/TilemapSystem.h"
+#include "../ECS/System/LightingSystem.h"
 
 
 #endif SYSLIST_H

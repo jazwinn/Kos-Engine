@@ -339,6 +339,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClCompile Include="ECS\System\AudioSystem.cpp" />
     <ClCompile Include="ECS\System\ButtonSystem.cpp" />
     <ClCompile Include="ECS\System\CameraSystem.cpp" />
+    <ClCompile Include="ECS\System\LightingSystem.cpp" />
     <ClCompile Include="ECS\System\PhysicsSystem.cpp" />
     <ClCompile Include="ECS\System\TilemapSystem.cpp" />
     <ClCompile Include="Editor\EditorCamera.cpp" />
@@ -464,8 +465,10 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="Actions\ActionManager.h" />
     <ClInclude Include="Actions\ModifyAction.h" />
     <ClInclude Include="ECS\Component\AudioComponent.h" />
+    <ClInclude Include="ECS\Component\LightingComponent.h" />
     <ClInclude Include="ECS\Component\TilemapComponent.h" />
     <ClInclude Include="ECS\System\AudioSystem.h" />
+    <ClInclude Include="ECS\System\LightingSystem.h" />
     <ClInclude Include="ECS\System\TilemapSystem.h" />
     <ClInclude Include="Editor\ImGui Panels\ScriptVariable.h" />
     <ClCompile Include="Editor\TilemapCalculations.cpp" />
@@ -573,6 +576,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="Events\MessageSystem.h" />
     <ClInclude Include="Events\MessagingMessageSystem.h" />
     <ClInclude Include="Graphics\GraphicsCamera.h" />
+    <ClInclude Include="Graphics\GraphicsLighting.h" />
     <ClInclude Include="Graphics\GraphicsPipe.h" />
     <ClInclude Include="Inputs\Input.h" />
     <ClInclude Include="Inputs\Keycodes.h" />
@@ -597,6 +601,8 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <None Include="Graphics\gridDebugVertexShader.vert" />
     <None Include="Graphics\gridFragmentShader.frag" />
     <None Include="Graphics\gridVertexShader.vert" />
+    <None Include="Graphics\lightingFragmentShader.frag" />
+    <None Include="Graphics\lightingVertexShader.vert" />
     <None Include="Graphics\textFragmentShader.frag" />
     <None Include="Graphics\textVertexShader.vert" />
     <None Include="Graphics\tilemapFragmentShader.frag" />
