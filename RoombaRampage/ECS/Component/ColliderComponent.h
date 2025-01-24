@@ -56,7 +56,10 @@ namespace ecs {
 		std::unordered_set<EntityID> m_keys;
 		std::vector<physicspipe::CollisionResponseData> m_contactPoints{};
 
-		int m_blockedFlag = 0;
+		//1 is top, 2 is right, 4 is bottom, 8 is left
+		//3 is top right, 6 is bottom right, 9 is bottom left, 12 is top left;
+		unsigned long m_blockedFlag = 0;
+		std::bitset<4>m_bits{};
 
 		mat3x3::Mat3x3 m_collider_Transformation{};
 

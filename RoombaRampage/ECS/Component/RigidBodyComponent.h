@@ -75,6 +75,8 @@ namespace ecs {
         //Direction Vector
         vector2::Vec2 m_DirectionVector{};
 
+        vector2::Vec2 m_PrevDirVec{0.f,1.f};
+
         REFLECTABLE(RigidBodyComponent, m_Velocity, m_Acceleration, m_Rotation, m_AngularVelocity, m_AngularAcceleration, m_Mass, m_InverseMass, m_LinearDamping, m_AngularDamping, m_Force, m_Torque, m_IsKinematic, m_IsStatic)
     };
 }
