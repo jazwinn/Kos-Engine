@@ -2,6 +2,7 @@
 #include "Physics.h"
 #include "../ECS/ECS.h"
 #include "PhysicsCollisionResponse.h"
+#include "../Math/mathlib.h"
 
 namespace physicspipe {
 
@@ -111,12 +112,17 @@ namespace physicspipe {
 	}
 
 	bool m_AlmostEqualCP(float lhs, float rhs) {
-		const float minDist = 0.01f;
+		const float minDist = 0.05f;
 		return abs(lhs - rhs) < minDist;
 	}
 
 	bool m_AlmostEqualCP(vector2::Vec2 lhs, vector2::Vec2 rhs) {
 		return m_AlmostEqualCP(lhs.m_x, rhs.m_x) && m_AlmostEqualCP(lhs.m_y, rhs.m_y);
+	}
+
+	bool m_AlmostEqualAng(float lhs, float rhs) {
+		const float minDist = 0.0005f;
+		return abs(lhs - rhs) < minDist;
 	}
 
 	std::tuple<int, vector2::Vec2, vector2::Vec2> m_FindSquareSquareContact(const std::vector<vector2::Vec2>& verticesA, const std::vector<vector2::Vec2>& verticesB) {
@@ -183,31 +189,51 @@ namespace physicspipe {
 			ecs::EntityID second = entB.get()->m_ID;
 			const auto& colComp = static_cast<ecs::ColliderComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(first));
 			const auto& colComp2 = static_cast<ecs::ColliderComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(second));
+			const auto& rigComp = static_cast<ecs::RigidBodyComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPERIGIDBODYCOMPONENT]->m_GetEntityComponent(first));
+			const auto& rigComp2 = static_cast<ecs::RigidBodyComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPERIGIDBODYCOMPONENT]->m_GetEntityComponent(second));
 			//const auto& transComp = static_cast<ecs::TransformComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(ColComp->m_Entity));
 			if (colComp->m_type == EntityType::CIRCLE && colComp2->m_type == EntityType::CIRCLE) {
-				//m_FindCircleCircleFlags(colComp, colComp2, colComp->m_contactPoints[i].m_contactPointEnt.first);
+				vector2::Vec2 dirA = rigComp->m_PrevDirVec;
+				vector2::Vec2 dirB = rigComp2->m_PrevDirVec;
+				vector2::Vec2::m_funcVec2Normalize(dirA,dirA);
+				vector2::Vec2::m_funcVec2Normalize(dirB, dirB);
+				std::pair<int,int> flags = m_FindCircleCircleFlags(colComp->m_contactPoints,first, second,entA.get()->m_position, static_cast<physicspipe::Circle*>(entA.get())->m_radius,
+										entB.get()->m_position, static_cast<physicspipe::Circle*>(entB.get())->m_radius,dirA,dirB);
+				colComp->m_blockedFlag += flags.first;
+				colComp2->m_blockedFlag += flags.second;
 			}
 			else if (colComp->m_type == EntityType::CIRCLE && colComp2->m_type == EntityType::RECTANGLE) {
-				//m_FindCircleSquareFlags(colComp, colComp2);
+				vector2::Vec2 dirA = rigComp->m_PrevDirVec;
+				vector2::Vec2::m_funcVec2Normalize(dirA, dirA);
+				std::pair<int, int> flags = m_FindCircleSquareFlags(colComp->m_contactPoints,first,second,entA.get()->m_position,static_cast<physicspipe::Circle*>(entA.get())->m_radius, dirA,
+																	entB.get()->m_position, static_cast<physicspipe::Rectangle*>(entB.get())->m_GetRotatedVertices(), static_cast<physicspipe::Rectangle*>(entB.get())->m_GetEdges());
+				colComp->m_blockedFlag += flags.first;
+				colComp2->m_blockedFlag += flags.second;
 			}
 			else if (colComp->m_type == EntityType::RECTANGLE && colComp2->m_type == EntityType::CIRCLE) {
 				//m_FindCircleSquareFlags(colComp2, colComp);
+				vector2::Vec2 dirB = rigComp2->m_PrevDirVec;
+				vector2::Vec2::m_funcVec2Normalize(dirB, dirB);
+				std::pair<int, int> flags = m_FindCircleSquareFlags(colComp2->m_contactPoints, second, first, entB.get()->m_position, static_cast<physicspipe::Circle*>(entB.get())->m_radius, dirB,
+					entA.get()->m_position, static_cast<physicspipe::Rectangle*>(entA.get())->m_GetRotatedVertices(), static_cast<physicspipe::Rectangle*>(entA.get())->m_GetEdges());
+				colComp2->m_blockedFlag += flags.first;
+				colComp->m_blockedFlag += flags.second;
 			}
 			else {
 				std::pair<int,int> collFlags = m_FindSquareSquareFlags(colComp->m_contactPoints,first, second, entA.get()->m_position, static_cast<physicspipe::Rectangle*>(entA.get())->m_GetRotatedVertices(), static_cast<physicspipe::Rectangle*>(entA.get())->m_GetEdges(),
 					entB.get()->m_position, static_cast<physicspipe::Rectangle*>(entB.get())->m_GetRotatedVertices(), static_cast<physicspipe::Rectangle*>(entB.get())->m_GetEdges());
-				colComp->m_blockedFlag = collFlags.first;
-				colComp2->m_blockedFlag = collFlags.second;
+				colComp->m_blockedFlag += collFlags.first;
+				colComp2->m_blockedFlag += collFlags.second;
 			}
 			//const auto& colComp2 = static_cast<ecs::TransformComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(second));
 		}
 	}
 
 	std::pair<int, int> m_FindSquareSquareFlags(const std::vector<physicspipe::CollisionResponseData>& contactPoints, ecs::EntityID entA, ecs::EntityID entB, const vector2::Vec2& centerA, const std::vector<vector2::Vec2>& verticesA, const std::vector<vector2::Vec2>& edgesA, const vector2::Vec2& centerB, const std::vector<vector2::Vec2>& verticesB, const std::vector<vector2::Vec2>& edgesB) {
-		vector2::Vec2 topNormA{ -edgesA[0].m_x, edgesA[0].m_y };
-		vector2::Vec2 rightNormA{ -edgesA[1].m_x, edgesA[1].m_y };
-		vector2::Vec2 bottomNormA{ -edgesA[2].m_x, edgesA[2].m_y };
-		vector2::Vec2 leftNormA{ -edgesA[3].m_x, edgesA[3].m_y };
+		vector2::Vec2 topNormA{ -edgesA[0].m_y, edgesA[0].m_x };
+		vector2::Vec2 rightNormA{ -edgesA[1].m_y, edgesA[1].m_x };
+		vector2::Vec2 bottomNormA{ -edgesA[2].m_y, edgesA[2].m_x };
+		vector2::Vec2 leftNormA{ -edgesA[3].m_y, edgesA[3].m_x };
 		vector2::Vec2::m_funcVec2Normalize(topNormA, topNormA);
 		vector2::Vec2::m_funcVec2Normalize(rightNormA, rightNormA);
 		vector2::Vec2::m_funcVec2Normalize(bottomNormA, bottomNormA);
@@ -218,10 +244,10 @@ namespace physicspipe {
 		normalsA.push_back(bottomNormA);
 		normalsA.push_back(leftNormA);
 
-		vector2::Vec2 topNormB{ -edgesB[0].m_x, edgesB[0].m_y };
-		vector2::Vec2 rightNormB{ -edgesB[1].m_x, edgesB[1].m_y };
-		vector2::Vec2 bottomNormB{ -edgesB[2].m_x, edgesB[2].m_y };
-		vector2::Vec2 leftNormB{ -edgesB[3].m_x, edgesB[3].m_y };
+		vector2::Vec2 topNormB{ -edgesB[0].m_y, edgesB[0].m_x };
+		vector2::Vec2 rightNormB{ -edgesB[1].m_y, edgesB[1].m_x };
+		vector2::Vec2 bottomNormB{ -edgesB[2].m_y, edgesB[2].m_x };
+		vector2::Vec2 leftNormB{ -edgesB[3].m_y, edgesB[3].m_x };
 		vector2::Vec2::m_funcVec2Normalize(topNormB, topNormB);
 		vector2::Vec2::m_funcVec2Normalize(rightNormB, rightNormB);
 		vector2::Vec2::m_funcVec2Normalize(bottomNormB, bottomNormB);
@@ -253,18 +279,21 @@ namespace physicspipe {
 		}
 
 		float min = std::numeric_limits<float>::max();
+		float max = -9999.f;
 		for (int i = 0; i < verticesA.size(); i++) {
 			if (numOfContacts == 2) {
+				vector2::Vec2 midpoint = contactPoint1 + contactPoint2;
+				midpoint /= 2;
 				vector2::Vec2 centerToVert = verticesA[i] - centerA;
-				vector2::Vec2 centerToCP = contactPoint1 - centerA;
-				vector2::Vec2 centerToCP2 = contactPoint2 - centerA;
+				vector2::Vec2 centerToCP = midpoint - centerA;
+				//vector2::Vec2 centerToCP2 = contactPoint2 - centerA;
 				float dotVertA = vector2::Vec2::m_funcVec2DDotProduct(normalsA[i], centerToVert);
 				float dotCPA = vector2::Vec2::m_funcVec2DDotProduct(normalsA[i], centerToCP);
-				float dotCPA2 = vector2::Vec2::m_funcVec2DDotProduct(normalsA[i], centerToCP2);
+				//float dotCPA2 = vector2::Vec2::m_funcVec2DDotProduct(normalsA[i], centerToCP2);
 				float eq = dotCPA - dotVertA;
-				float eq2 = dotCPA2 - dotVertA;
-				if ((m_AlmostEqual(eq,0.f) || m_AlmostEqual(eq2, 0.f)) && (eq2 < min || eq < min)) {
-					min = std::min(eq, eq2);
+				//float eq2 = dotCPA2 - dotVertA;
+				if (m_AlmostEqualCP(eq,0.f) && eq < min) {
+					min = std::min(eq, min);
 					if (i == 0) {
 						ret.first = 1;
 						//break;
@@ -302,21 +331,66 @@ namespace physicspipe {
 						break;
 					}
 				}
+				else {
+					vector2::Vec2 centerToVert = verticesA[i] - centerA;
+					vector2::Vec2 centerToCP = contactPoint1 - centerA;
+					float dotVertA = vector2::Vec2::m_funcVec2DDotProduct(normalsA[i], centerToVert);
+					float dotCPA = vector2::Vec2::m_funcVec2DDotProduct(normalsA[i], centerToCP);
+					float eq = dotCPA - dotVertA;
+					if (m_AlmostEqualCP(eq, 0.f)) {
+						max = std::max(dotCPA, max);
+						min = std::min(eq, min);
+						if (i == 0) {
+							ret.first = 1;
+							//break;
+						}
+						if (i == 1) {
+							ret.first = 2;
+							//break;
+						}
+						if (i == 2) {
+							ret.first = 4;
+							//break;
+						}
+						if (i == 3) {
+							ret.first = 8;
+							//break;
+						}
+					}else if(dotCPA <= 0.f && max < dotCPA && eq < min) {
+						max = std::max(dotCPA, max);
+						if (i == 0) {
+							ret.first = 1;
+							//break;
+						}
+						if (i == 1) {
+							ret.first = 2;
+							//break;
+						}
+						if (i == 2) {
+							ret.first = 4;
+							//break;
+						}
+						if (i == 3) {
+							ret.first = 8;
+							//break;
+						}
+					}
+				}
 			}
 		}
 		min = std::numeric_limits<float>::max();
+		max = -9999.f;
 		for (int i = 0; i < verticesB.size(); i++) {
 			if (numOfContacts == 2) {
+				vector2::Vec2 midpoint = contactPoint1 + contactPoint2;
+				midpoint /= 2;
 				vector2::Vec2 centerToVert = verticesB[i] - centerB;
-				vector2::Vec2 centerToCP = contactPoint1 - centerB;
-				vector2::Vec2 centerToCP2 = contactPoint2 - centerB;
+				vector2::Vec2 centerToCP = midpoint - centerB;
 				float dotVertB = vector2::Vec2::m_funcVec2DDotProduct(normalsB[i], centerToVert);
 				float dotCPB = vector2::Vec2::m_funcVec2DDotProduct(normalsB[i], centerToCP);
-				float dotCPB2 = vector2::Vec2::m_funcVec2DDotProduct(normalsB[i], centerToCP2);
 				float eq = dotCPB - dotVertB;
-				float eq2 = dotCPB2 - dotVertB;
-				if ((m_AlmostEqual(eq,0.f) || m_AlmostEqual(eq2, 0.f) ) && (eq2 < min || eq < min)) {
-					min = std::min(eq, eq2);
+				if (m_AlmostEqualCP(eq,0.f) && eq < min) {
+					min = std::min(eq, min);
 					if (i == 0) {
 						ret.second = 1;
 						//break;
@@ -354,8 +428,344 @@ namespace physicspipe {
 						break;
 					}
 				}
+				else {
+					vector2::Vec2 centerToVert = verticesB[i] - centerB;
+					vector2::Vec2 centerToCP = contactPoint1 - centerB;
+					float dotVertB = vector2::Vec2::m_funcVec2DDotProduct(normalsB[i], centerToVert);
+					float dotCPB = vector2::Vec2::m_funcVec2DDotProduct(normalsB[i], centerToCP);
+					float eq = dotCPB - dotVertB;
+					if (m_AlmostEqual(eq, 0.f)) {
+						max = std::max(dotCPB, max);
+						min = std::min(eq, min);
+						if (i == 0) {
+							ret.second = 1;
+							//break;
+						}
+						if (i == 1) {
+							ret.second = 2;
+							//break;
+						}
+						if (i == 2) {
+							ret.second = 4;
+							//break;
+						}
+						if (i == 3) {
+							ret.second = 8;
+							//break;
+						}
+					}
+					else if (dotCPB <= 0.f && max < dotCPB && eq < min) {
+						max = std::max(dotCPB, max);
+						if (i == 0) {
+							ret.second = 1;
+							//break;
+						}
+						if (i == 1) {
+							ret.second = 2;
+							//break;
+						}
+						if (i == 2) {
+							ret.second = 4;
+							//break;
+						}
+						if (i == 3) {
+							ret.second = 8;
+							//break;
+						}
+					}
+				}
 			}
 		}
+
+		return ret;
+	}
+
+
+
+	std::pair<int, int> m_FindCircleCircleFlags(const std::vector<physicspipe::CollisionResponseData>& contactPoints, ecs::EntityID entA, ecs::EntityID entB, const vector2::Vec2& centerA, const float& radA, const vector2::Vec2& centerB, const float& radB, const vector2::Vec2& dirVecA, const vector2::Vec2& dirVecB) {
+		vector2::Vec2 contactPoint1;
+		std::pair<int, int> ret{};
+		for (int i = 0; i < contactPoints.size(); i++) {
+			if (contactPoints[i].m_contactPointEnt.second == entB) {
+				if (contactPoints[i].m_numOfContacts == 1) {
+					contactPoint1 = contactPoints[i].m_contactPointEnt.first;
+					break;
+				}
+			}
+		}
+
+		vector2::Vec2 centerAToCP = contactPoint1 - centerA;
+		vector2::Vec2 centerBToCP = contactPoint1 - centerB;
+		vector2::Vec2::m_funcVec2Normalize(centerAToCP, centerAToCP);
+		vector2::Vec2::m_funcVec2Normalize(centerBToCP, centerBToCP);
+		vector2::Vec2 dirA = dirVecA;
+		vector2::Vec2 dirB = dirVecB;
+		float dotProdDirACP = vector2::Vec2::m_funcVec2DDotProduct(centerAToCP, dirA);
+		float dotProdDirBCP = vector2::Vec2::m_funcVec2DDotProduct(centerBToCP, dirB);
+		float crossProdDirACP = vector2::Vec2::m_funcVec2CrossProduct(centerAToCP, dirA);
+		float crossProdDirBCP = vector2::Vec2::m_funcVec2CrossProduct(centerBToCP, dirB);
+		float angBetDirACP = mathlibrary::mathlib::funcRadianToDegree(atan2f(crossProdDirACP,dotProdDirACP));
+		float angBetDirBCP = mathlibrary::mathlib::funcRadianToDegree(atan2f(crossProdDirBCP, dotProdDirBCP));
+		if (angBetDirACP < 0.f) {
+			angBetDirACP += 360.f;
+		}
+		if (angBetDirBCP < 0.f) {
+			angBetDirBCP += 360.f;
+		}
+		if (angBetDirACP >= 315.f ||( angBetDirACP >= 0.f && angBetDirACP <= 45.f)) {
+			if (m_AlmostEqualAng(angBetDirACP, 315.f)) {
+				ret.first = 9;
+			}
+			else if (m_AlmostEqualAng(angBetDirACP, 45.f)) {
+				ret.first = 3;
+			}
+			else {
+				ret.first = 1;
+			}
+
+		} else if (angBetDirACP >= 45.f && angBetDirACP <= 135.f) {
+			if (m_AlmostEqualAng(angBetDirACP, 45.f)) {
+				ret.first = 3;
+			}
+			else if (m_AlmostEqualAng(angBetDirACP, 135.f)) {
+				ret.first = 6;
+			}
+			else {
+				ret.first = 2;
+			}
+
+		}
+		else if (angBetDirACP >= 135.f && angBetDirACP <= 225.f) {
+			if (m_AlmostEqualAng(angBetDirACP, 135.f)) {
+				ret.first = 6;
+			}
+			else if (m_AlmostEqualAng(angBetDirACP, 225.f)) {
+				ret.first = 12;
+			}
+			else {
+				ret.first = 4;
+			}
+
+		}
+		else if (angBetDirACP >= 225.f && angBetDirACP <= 315.f) {
+			if (m_AlmostEqualAng(angBetDirACP, 225.f)) {
+				ret.first = 12;
+			}
+			else if (m_AlmostEqualAng(angBetDirACP, 315.f)) {
+				ret.first = 9;
+			}
+			else {
+				ret.first = 8;
+			}
+
+		}
+
+		if (angBetDirBCP >= 315.f || (angBetDirBCP >= 0.f && angBetDirBCP <= 45.f)) {
+			if (m_AlmostEqualAng(angBetDirBCP, 315.f)) {
+				ret.second = 9;
+			}
+			else if (m_AlmostEqualAng(angBetDirBCP, 45.f)) {
+				ret.second = 3;
+			}
+			else {
+				ret.second = 1;
+			}
+
+		}
+		else if (angBetDirBCP >= 45.f && angBetDirBCP <= 135.f) {
+			if (m_AlmostEqualAng(angBetDirBCP, 45.f)) {
+				ret.second = 3;
+			}
+			else if (m_AlmostEqualAng(angBetDirBCP, 135.f)) {
+				ret.second = 6;
+			}
+			else {
+				ret.second = 2;
+			}
+
+		}
+		else if (angBetDirBCP >= 135.f && angBetDirBCP <= 225.f) {
+			if (m_AlmostEqualAng(angBetDirBCP, 135.f)) {
+				ret.second = 6;
+			}
+			else if (m_AlmostEqualAng(angBetDirBCP, 225.f)) {
+				ret.second = 12;
+			}
+			else {
+				ret.second = 4;
+			}
+
+		}
+		else if (angBetDirBCP >= 225.f && angBetDirBCP <= 315.f) {
+			if (m_AlmostEqualAng(angBetDirBCP, 225.f)) {
+				ret.second = 12;
+			}
+			else if (m_AlmostEqualAng(angBetDirBCP, 315.f)) {
+				ret.second = 9;
+			}
+			else {
+				ret.second = 8;
+			}
+
+		}
+		return ret;
+
+	}
+
+	std::pair<int, int> m_FindCircleSquareFlags(const std::vector<physicspipe::CollisionResponseData>& contactPoints, ecs::EntityID entA, ecs::EntityID entB, const vector2::Vec2& centerA, const float& radA, const vector2::Vec2& dirVecA, const vector2::Vec2& centerB, const std::vector<vector2::Vec2>& verticesB, const std::vector<vector2::Vec2>& edgesB) {
+		vector2::Vec2 contactPoint1;
+		vector2::Vec2 topNormB{ -edgesB[0].m_y, edgesB[0].m_x };
+		vector2::Vec2 rightNormB{ -edgesB[1].m_y, edgesB[1].m_x };
+		vector2::Vec2 bottomNormB{ -edgesB[2].m_y, edgesB[2].m_x };
+		vector2::Vec2 leftNormB{ -edgesB[3].m_y, edgesB[3].m_x };
+		vector2::Vec2::m_funcVec2Normalize(topNormB, topNormB);
+		vector2::Vec2::m_funcVec2Normalize(rightNormB, rightNormB);
+		vector2::Vec2::m_funcVec2Normalize(bottomNormB, bottomNormB);
+		vector2::Vec2::m_funcVec2Normalize(leftNormB, leftNormB);
+		std::vector<vector2::Vec2> normalsB;
+		normalsB.push_back(topNormB);
+		normalsB.push_back(rightNormB);
+		normalsB.push_back(bottomNormB);
+		normalsB.push_back(leftNormB);
+		std::pair<int, int> ret{};
+		for (int i = 0; i < contactPoints.size(); i++) {
+			if (contactPoints[i].m_contactPointEnt.second == entB) {
+				if (contactPoints[i].m_numOfContacts == 1) {
+					contactPoint1 = contactPoints[i].m_contactPointEnt.first;
+					break;
+				}
+			}
+		}
+
+		vector2::Vec2 centerAToCP = contactPoint1 - centerA;
+		vector2::Vec2::m_funcVec2Normalize(centerAToCP, centerAToCP);
+		vector2::Vec2 dirA = dirVecA;
+		float dotProdDirACP = vector2::Vec2::m_funcVec2DDotProduct(centerAToCP, dirA);
+		float crossProdDirACP = vector2::Vec2::m_funcVec2CrossProduct(centerAToCP, dirA);
+		float angBetDirACP = mathlibrary::mathlib::funcRadianToDegree(atan2f(crossProdDirACP, dotProdDirACP));
+		if (angBetDirACP < 0.f) {
+			angBetDirACP += 360.f;
+		}
+
+		if (angBetDirACP >= 315.f || (angBetDirACP >= 0.f && angBetDirACP <= 45.f)) {
+			if (m_AlmostEqualAng(angBetDirACP, 315.f)) {
+				ret.first = 9;
+			}
+			else if (m_AlmostEqualAng(angBetDirACP, 45.f)) {
+				ret.first = 3;
+			}
+			else {
+				ret.first = 1;
+			}
+
+		}
+		else if (angBetDirACP >= 45.f && angBetDirACP <= 135.f) {
+			if (m_AlmostEqualAng(angBetDirACP, 45.f)) {
+				ret.first = 3;
+			}
+			else if (m_AlmostEqualAng(angBetDirACP, 135.f)) {
+				ret.first = 6;
+			}
+			else {
+				ret.first = 2;
+			}
+
+		}
+		else if (angBetDirACP >= 135.f && angBetDirACP <= 225.f) {
+			if (m_AlmostEqualAng(angBetDirACP, 135.f)) {
+				ret.first = 6;
+			}
+			else if (m_AlmostEqualAng(angBetDirACP, 225.f)) {
+				ret.first = 12;
+			}
+			else {
+				ret.first = 4;
+			}
+
+		}
+		else if (angBetDirACP >= 225.f && angBetDirACP <= 315.f) {
+			if (m_AlmostEqualAng(angBetDirACP, 225.f)) {
+				ret.first = 12;
+			}
+			else if (m_AlmostEqualAng(angBetDirACP, 315.f)) {
+				ret.first = 9;
+			}
+			else {
+				ret.first = 8;
+			}
+
+		}
+
+		float min = std::numeric_limits<float>::max();
+		float max = -9999.f;
+		for (int i = 0; i < verticesB.size(); i++) {
+			if (m_AlmostEqualCP(contactPoint1, verticesB[i])) {
+				if (i == 0) {
+					ret.second = 9;
+					break;
+				}
+				if (i == 1) {
+					ret.second = 3;
+					break;
+				}
+				if (i == 2) {
+					ret.second = 6;
+					break;
+				}
+				if (i == 3) {
+					ret.second = 12;
+					break;
+				}
+			}
+			else {
+				vector2::Vec2 centerToVert = verticesB[i] - centerB;
+				vector2::Vec2 centerToCP = contactPoint1 - centerB;
+				float dotVertB = vector2::Vec2::m_funcVec2DDotProduct(normalsB[i], centerToVert);
+				float dotCPB = vector2::Vec2::m_funcVec2DDotProduct(normalsB[i], centerToCP);
+				float eq = dotCPB - dotVertB;
+				if (m_AlmostEqual(eq, 0.f)) {
+					max = std::max(dotCPB, max);
+					min = std::min(eq, min);
+					if (i == 0) {
+						ret.second = 1;
+						//break;
+					}
+					if (i == 1) {
+						ret.second = 2;
+						//break;
+					}
+					if (i == 2) {
+						ret.second = 4;
+						//break;
+					}
+					if (i == 3) {
+						ret.second = 8;
+						//break;
+					}
+				}
+				else if (dotCPB <= 0.f && max < dotCPB && eq < min) {
+					max = std::max(dotCPB, max);
+					if (i == 0) {
+						ret.second = 1;
+						//break;
+					}
+					if (i == 1) {
+						ret.second = 2;
+						//break;
+					}
+					if (i == 2) {
+						ret.second = 4;
+						//break;
+					}
+					if (i == 3) {
+						ret.second = 8;
+						//break;
+					}
+				}
+			}
+			
+		}
+
 
 		return ret;
 	}

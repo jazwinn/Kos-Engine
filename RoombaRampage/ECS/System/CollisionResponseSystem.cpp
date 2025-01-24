@@ -99,7 +99,7 @@ namespace ecs {
 				RigidBodyComponent* rigidComp = m_vecRigidBodyComponentPtr[n];
 				ColComp->m_collidedWith.clear();
 				ColComp->m_triColWith.clear();
-				ColComp->m_blockedFlag = -1;
+				ColComp->m_blockedFlag = 0;
 				ColComp->m_contactPoints.clear();
 				//skip component not of the scene
 				if (rigidComp->m_scene != scene) continue;
@@ -151,7 +151,7 @@ namespace ecs {
 
 			ColComp->m_collidedWith.clear();
 			ColComp->m_triColWith.clear();
-			ColComp->m_blockedFlag = -1;
+			ColComp->m_blockedFlag = 0;
 			//skip component not of the scene
 			if (rigidComp->m_scene != scene) continue;	
 
@@ -165,15 +165,15 @@ namespace ecs {
 					const auto& colComp2 = static_cast<ecs::ColliderComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(tempCollided));
 					colComp2->m_collidedWith.clear();
 					colComp2->m_triColWith.clear();
-					colComp2->m_blockedFlag = -1;
+					colComp2->m_blockedFlag = 0;
 					colComp->m_collidedWith.push_back(tempCollided);
 					colComp2->m_collidedWith.push_back(tempID);
 					colComp->m_triColWith.emplace_back(tempCollided);
 					colComp2->m_triColWith.emplace_back(tempID);
 					colComp->m_isCollided = true;
 					colComp2->m_isCollided = true;
-					colComp->m_blockedFlag = vecCollisionEntityPair[i].first->m_collisionFlags;
-					colComp2->m_blockedFlag = vecCollisionEntityPair[i].second->m_collisionFlags;
+					/*colComp->m_blockedFlag = vecCollisionEntityPair[i].first->m_collisionFlags;
+					colComp2->m_blockedFlag = vecCollisionEntityPair[i].second->m_collisionFlags;*/
 				}
 			}
 
@@ -367,7 +367,9 @@ namespace ecs {
 				std::cout << "I am ent " << ColComp->m_Entity << std::endl;
 				std::cout << "ent col " << ColComp->m_contactPoints[i].m_numOfContacts <<  " " << ColComp->m_contactPoints[i].m_contactPointEnt.second << std::endl;
 				std::cout << "at points " << ColComp->m_contactPoints[i].m_contactPointEnt.first.m_x << " " << ColComp->m_contactPoints[i].m_contactPointEnt.first.m_y << std::endl;
-				std::cout << "coll flag " << ColComp->m_blockedFlag << std::endl;
+				if (ColComp->m_blockedFlag > 0) {
+					std::cout << "coll flag " << ColComp->m_blockedFlag << std::endl;
+				}
 			}
 		}
 

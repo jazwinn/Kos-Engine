@@ -25,9 +25,9 @@ namespace physicspipe {
 
 	void m_FindCollisionFlags();
 
-	//void m_FindCircleCircleFlags(ecs::ColliderComponent* ColCompA, ecs::ColliderComponent* ColCompB, const vector2::Vec2& contactPoint, const vector2::Vec2& entAPos);
+	std::pair<int, int> m_FindCircleCircleFlags(const std::vector<physicspipe::CollisionResponseData>& contactPoints, ecs::EntityID entA, ecs::EntityID entB, const vector2::Vec2& centerA, const float& radA, const vector2::Vec2& centerB, const float& radB, const vector2::Vec2& dirVecA, const vector2::Vec2& dirVecB);
 
-	//void m_FindCircleSquareFlags(ecs::ColliderComponent* ColCompA, ecs::ColliderComponent* ColCompB);
+	std::pair<int, int> m_FindCircleSquareFlags(const std::vector<physicspipe::CollisionResponseData>& contactPoints, ecs::EntityID entA, ecs::EntityID entB, const vector2::Vec2& centerA, const float& radA, const vector2::Vec2& dirVecA,const vector2::Vec2& centerB, const std::vector<vector2::Vec2>& verticesB, const std::vector<vector2::Vec2>& edgesB);
 
 	std::pair<int,int> m_FindSquareSquareFlags(const std::vector<physicspipe::CollisionResponseData>& contactPoints, ecs::EntityID entA, ecs::EntityID entB,const vector2::Vec2& centerA, const std::vector<vector2::Vec2>& verticesA, const std::vector<vector2::Vec2>& edgesA, const vector2::Vec2& centerB, const std::vector<vector2::Vec2>& verticesB, const std::vector<vector2::Vec2>& edgesB);
 

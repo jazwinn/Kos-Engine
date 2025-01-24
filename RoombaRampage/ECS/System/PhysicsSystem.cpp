@@ -108,8 +108,12 @@ namespace ecs {
 					transform->m_rotation += rigidBody->m_AngularVelocity * help->m_fixedDeltaTime;
 				}
 
+				
 				rigidBody->m_DirectionVector = rigidBody->m_CurrentPos - rigidBody->m_PrevPos;
-
+				if (rigidBody->m_DirectionVector.m_x != 0.f && rigidBody->m_DirectionVector.m_y != 0.f) {
+					rigidBody->m_PrevDirVec = rigidBody->m_DirectionVector;
+				}
+				
 
 				//update physics pipline
 			
