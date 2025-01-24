@@ -66,18 +66,18 @@ namespace graphicpipe
 		glVertexAttribIPointer(10, 1, GL_INT, sizeof(int), (void*)0);
 		glVertexAttribDivisor(10, 1);
 
-		glGenBuffers(1, &m_textureOrderBuffer);
-		glBindBuffer(GL_ARRAY_BUFFER, m_textureOrderBuffer);
-		glBufferData(GL_ARRAY_BUFFER, m_textureOrder.size() * sizeof(int), &m_textureOrder[0], GL_DYNAMIC_DRAW);
+		glGenBuffers(1, &m_vec3Buffer);
+		glBindBuffer(GL_ARRAY_BUFFER, m_vec3Buffer);
+		glBufferData(GL_ARRAY_BUFFER, m_vec3Array.size() * sizeof(glm::vec3), &m_vec3Array[0], GL_DYNAMIC_DRAW);
 		glEnableVertexAttribArray(5);
-		glVertexAttribIPointer(5, 1, GL_INT, sizeof(int), (void*)0);
+		glVertexAttribIPointer(5, 3, GL_INT, sizeof(glm::vec3), (void*)0);
 		glVertexAttribDivisor(5, 1);
 
-		glGenBuffers(1, &m_vec2Buffer);
-		glBindBuffer(GL_ARRAY_BUFFER, m_vec2Buffer);
-		glBufferData(GL_ARRAY_BUFFER, m_stripCounts.size() * sizeof(glm::ivec2), &m_stripCounts[0], GL_DYNAMIC_DRAW);
+		glGenBuffers(1, &m_iVec3Buffer);
+		glBindBuffer(GL_ARRAY_BUFFER, m_iVec3Buffer);
+		glBufferData(GL_ARRAY_BUFFER, m_iVec3Array.size() * sizeof(glm::ivec3), &m_iVec3Array[0], GL_DYNAMIC_DRAW); // Strip, FrameNumber, Texture Order
 		glEnableVertexAttribArray(4);
-		glVertexAttribIPointer(4, 2, GL_INT, sizeof(glm::ivec2), (void*)0);
+		glVertexAttribIPointer(4, 3, GL_INT, sizeof(glm::ivec3), (void*)0);
 		glVertexAttribDivisor(4, 1);
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);

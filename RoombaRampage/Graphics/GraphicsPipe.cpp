@@ -59,7 +59,8 @@ namespace graphicpipe {
 		m_debugBoxToNDCMatrix.reserve(ecs::MaxEntity);
 		m_debugBoxCollisionChecks.reserve(ecs::MaxEntity);
 		m_frameNumbers.reserve(ecs::MaxEntity);
-		m_stripCounts.reserve(ecs::MaxEntity);
+		m_iVec3Array.reserve(ecs::MaxEntity);
+		m_vec3Array.reserve(ecs::MaxEntity);
 		m_layers.reserve(ecs::MaxEntity);
 
 		// Set up VAOs for different shapes and text rendering.
@@ -83,9 +84,10 @@ namespace graphicpipe {
 
 		// Initialize model-to-NDC transformation matrix and other drawing data.
 		m_modelToNDCMatrix.push_back(m_testMatrix);
-		m_textureOrder.push_back(0);
+		//m_vec3Array.push_back(0);
 		m_frameNumbers.push_back(0);
-		m_stripCounts.push_back({ 0,0 });
+		m_iVec3Array.push_back({ 0,0,0 });
+		m_vec3Array.push_back({ 0,0,0 });
 		m_layers.push_back(0);
 		m_tileIndexes.push_back({0});
 		m_colors.push_back({ 0.f, 0.f, 0.f, 0.f });
@@ -102,9 +104,9 @@ namespace graphicpipe {
 		m_debugBoxToNDCMatrix.clear();
 		m_debugBoxCollisionChecks.clear();
 		m_modelToNDCMatrix.clear();
-		m_textureOrder.clear();
+		m_vec3Array.clear();
 		m_frameNumbers.clear();
-		m_stripCounts.clear();
+		m_iVec3Array.clear();
 		m_layers.clear();
 		m_colors.clear();
 		m_tileIndexes.clear();
@@ -157,9 +159,9 @@ namespace graphicpipe {
 	void GraphicsPipe::m_funcClearContainers()
 	{
 		m_modelToNDCMatrix.clear();
-		m_textureOrder.clear();
+		m_vec3Array.clear();
 		m_frameNumbers.clear();
-		m_stripCounts.clear();
+		m_iVec3Array.clear();
 		m_layers.clear();
 		m_modelMatrix.clear();
 		m_modelData.clear();

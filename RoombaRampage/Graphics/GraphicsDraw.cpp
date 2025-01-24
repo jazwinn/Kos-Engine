@@ -35,14 +35,13 @@ namespace graphicpipe
 		{
 			glBindBuffer(GL_ARRAY_BUFFER, m_modelMatrixArrayBuffer);
 			glNamedBufferData(m_modelMatrixArrayBuffer, m_modelToNDCMatrix.size() * sizeof(glm::mat3), &m_modelToNDCMatrix[0], GL_DYNAMIC_DRAW);
-			glBindBuffer(GL_ARRAY_BUFFER, m_textureOrderBuffer);
-			glNamedBufferData(m_textureOrderBuffer, m_textureOrder.size() * sizeof(int), &m_textureOrder[0], GL_DYNAMIC_DRAW);
 
-			glBindBuffer(GL_ARRAY_BUFFER, m_vec2Buffer);
-			glNamedBufferData(m_vec2Buffer, m_stripCounts.size() * sizeof(glm::ivec2), &m_stripCounts[0], GL_DYNAMIC_DRAW);
+			//glBindBuffer(GL_ARRAY_BUFFER, m_vec3Buffer);
+			//glNamedBufferData(m_vec3Buffer, m_vec3Array.size() * sizeof(glm::vec3), &m_vec3Array[0], GL_DYNAMIC_DRAW); //For Tuple of 3 Floats, Light Intensity, Inner/Outer Radius
 
-		/*	glBindBuffer(GL_ARRAY_BUFFER, m_frameNumberBuffer);
-			glNamedBufferData(m_frameNumberBuffer, m_frameNumbers.size() * sizeof(int), &m_frameNumbers[0], GL_DYNAMIC_DRAW);*/
+			glBindBuffer(GL_ARRAY_BUFFER, m_iVec3Buffer);
+			glNamedBufferData(m_iVec3Buffer, m_iVec3Array.size() * sizeof(glm::ivec3), &m_iVec3Array[0], GL_DYNAMIC_DRAW); //Strip Count, FrameNumber, Texture Order
+
 			glBindBuffer(GL_ARRAY_BUFFER, m_layerBuffer);
 			glNamedBufferData(m_layerBuffer, m_layers.size() * sizeof(int), &m_layers[0], GL_DYNAMIC_DRAW);
 

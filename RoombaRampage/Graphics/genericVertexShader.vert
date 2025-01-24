@@ -25,8 +25,8 @@ layout (location=0) in vec2 vertexPosition;
 layout (location=2) in vec2 vertexTexCoords;
 
 //layout (location=3) in int aFrameNumber;
-layout (location=4) in ivec2 aStripCount;
-layout (location=5) in int atextureID;
+layout (location=4) in ivec3 aStripCount;
+//layout (location=5) in int atextureID;
 layout (location=10) in int aLayer;
 layout (location=11) in vec4 aColor;
 
@@ -49,7 +49,7 @@ void main()
 	texCoords = vec2(vertexTexCoords.x * frameWidth + frameOffset, vertexTexCoords.y);
 	
 	color = aColor;
-	textureID = atextureID;
+	textureID = aStripCount.z;
 }
 
 )"

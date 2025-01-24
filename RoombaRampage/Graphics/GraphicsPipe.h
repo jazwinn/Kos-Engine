@@ -193,15 +193,14 @@ namespace graphicpipe {
         // Buffers
         unsigned int m_modelMatrixArrayBuffer{};    ///< Array buffer for model matrices.
         unsigned int m_debugMatrixArrayBuffer{};    ///< Array buffer for debug matrices.
-        unsigned int m_textureOrderBuffer{};        ///< Buffer for texture ordering.
+        unsigned int m_vec3Buffer{};
+        unsigned int m_iVec3Buffer{};        ///< Buffer for texture ordering.
         unsigned int m_debugCollisionCheckBuffer{}; ///< Buffer for collision detection in debug drawing.
         unsigned int m_frameBufferObject{};         ///< Framebuffer object for offscreen rendering.
         unsigned int m_depthBufferObject{};         ///< Depth Buffer object for storing frame buffer data.
         unsigned int m_gamePreviewFrameBufferObject{};   ///< Framebuffer object for the game preview window.
         unsigned int m_gamePreviewDepthBufferObject{};   ///< Depth buffer for the game preview framebuffer.
         unsigned int m_textBuffer{};                ///< Buffer for text rendering.
-        unsigned int m_vec2Buffer{};          ///< Buffer for sprite strip counts (animation).
-        unsigned int m_frameNumberBuffer{};         ///< Buffer for managing animation frame numbers.
         unsigned int m_layerBuffer{};               ///< Buffer for rendering layer data.
         unsigned int m_gridBuffer{};                ///< Buffer for grid vertex data.
         unsigned int m_colorBuffer{};               ///< Buffer for vertex color data.
@@ -417,7 +416,7 @@ namespace graphicpipe {
         std::vector<TextData> m_textData{}; ///< Data for rendering text.
         std::vector<float> m_debugBoxCollisionChecks{}; ///< Collision check data for debug rendering.
         std::vector<float> m_debugCircleCollisionChecks{}; ///< Collision check data for debug rendering.
-        std::vector<int> m_textureOrder{}; ///< Order of texture bindings.
+        
         std::vector<glm::vec4> m_colors{}; 
         std::vector<std::vector<int>> m_tileIndexes{};
         std::vector<std::vector<int>> m_gridColliderChecks{};
@@ -425,7 +424,8 @@ namespace graphicpipe {
 
         std::vector<unsigned int> m_textureIDs{}; ///< Array of texture IDs.
         std::vector<int> m_layers{};
-        std::vector<glm::ivec2> m_stripCounts{}; ///< Sprite strip counts for animation.
+        std::vector<glm::vec3> m_vec3Array{}; ///< 
+        std::vector<glm::ivec3> m_iVec3Array{}; ///< Sprite strip counts for animation.
         std::vector<int> m_frameNumbers{}; ///< Frame numbers for sprite animations.
         std::vector<image::Image> m_imageData{}; ///< Image data for rendering.
         std::vector<TilemapData> m_transformedTilemaps{};
