@@ -15,7 +15,7 @@ namespace ecs {
 		int m_GridRowLength{ 1 };
 		int m_GridColumnLength{ 1 };
 		bool m_SetCollidable{ true };
-		std::string m_GridKey;                     
+		int m_GridKey;                     
 		std::vector<std::vector<int>> m_IsWall;
 
 		REFLECTABLE(GridComponent,m_Anchor, m_GridRowLength, m_GridColumnLength, m_SetCollidable, m_GridKey)

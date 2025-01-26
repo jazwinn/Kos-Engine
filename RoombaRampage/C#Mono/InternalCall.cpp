@@ -837,7 +837,7 @@ namespace script {
 		return true;
 	}
 
-	bool InternalCall::m_InternalCallGetPathfinding(ecs::EntityID id, vector2::Vec2* m_startpos, vector2::Vec2* m_startend, MonoString** gridkey, MonoArray** nodeArray_x, MonoArray** nodeArray_y)
+	bool InternalCall::m_InternalCallGetPathfinding(ecs::EntityID id, vector2::Vec2* m_startpos, vector2::Vec2* m_startend, int* gridkey, MonoArray** nodeArray_x, MonoArray** nodeArray_y)
 	{
 		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
 		ecs::PathfindingComponent* pfc = static_cast<ecs::PathfindingComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEPATHFINDINGCOMPONENT]->m_GetEntityComponent(id));
@@ -848,7 +848,7 @@ namespace script {
 			*m_startend = pfc->m_TargetPos;
 
 
-			*gridkey = mono_string_new(mono_domain_get(), pfc->m_GridKey.c_str());
+			*gridkey = pfc->m_GridKey;
 
 			auto* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
 
