@@ -35,6 +35,7 @@ namespace ecs {
 			m_vecTransformComponentPtr.push_back((TransformComponent*)ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(ID));
 			m_vecColliderComponentPtr.push_back((ColliderComponent*)ecs->m_ECS_CombinedComponentPool[TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(ID));
 			m_vecRigidBodyComponentPtr.push_back((RigidBodyComponent*)ecs->m_ECS_CombinedComponentPool[TYPERIGIDBODYCOMPONENT]->m_GetEntityComponent(ID));
+			m_vecNameComponentPtr.push_back((NameComponent*)ecs->m_ECS_CombinedComponentPool[TYPENAMECOMPONENT]->m_GetEntityComponent(ID));
 		}
 	}
 
@@ -54,11 +55,13 @@ namespace ecs {
 		std::swap(m_vecColliderComponentPtr[IndexID],  m_vecColliderComponentPtr[IndexLast]);
 		std::swap(m_vecRigidBodyComponentPtr[IndexID], m_vecRigidBodyComponentPtr[IndexLast]);
 		std::swap(m_vecTransformComponentPtr[IndexID], m_vecTransformComponentPtr[IndexLast]);
+		std::swap(m_vecNameComponentPtr[IndexID], m_vecNameComponentPtr[IndexLast]);
 
 		//popback the vector;
 		m_vecColliderComponentPtr.pop_back();
 		m_vecRigidBodyComponentPtr.pop_back();
 		m_vecTransformComponentPtr.pop_back();
+		m_vecNameComponentPtr.pop_back();
 	}
 
 	void CollisionResponseSystem::m_Init() {
@@ -72,7 +75,7 @@ namespace ecs {
 
 	void CollisionResponseSystem::m_Update(const std::string& scene) {
 
-		//ECS* ecs = ECS::m_GetInstance();
+		ECS* ecs = ECS::m_GetInstance();
 
 		if (m_vecRigidBodyComponentPtr.size() != m_vecTransformComponentPtr.size()) {
 			LOGGING_ERROR("Error: Vecotrs container size does not Match");
@@ -97,12 +100,13 @@ namespace ecs {
 			for (int n{}; n < m_vecRigidBodyComponentPtr.size(); n++) {
 				ColliderComponent* ColComp = m_vecColliderComponentPtr[n];
 				RigidBodyComponent* rigidComp = m_vecRigidBodyComponentPtr[n];
+				NameComponent* NameComp = m_vecNameComponentPtr[n];
 				ColComp->m_collidedWith.clear();
 				ColComp->m_triColWith.clear();
 				ColComp->m_blockedFlag = 0;
 				ColComp->m_contactPoints.clear();
 				//skip component not of the scene
-				if (rigidComp->m_scene != scene) continue;
+				if ((ColComp->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer)) continue;
 				
 				std::unordered_set<ecs::EntityID> outOfVecInMap = ColComp->m_keys;
 				for (int i = 0; i < ColComp->m_triColWith.size(); i++) {

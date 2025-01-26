@@ -33,6 +33,7 @@ namespace ecs {
 			== m_vecTransformComponentPtr.end()) {
 			m_vecTransformComponentPtr.push_back((TransformComponent*)ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(ID));
 			m_vecSpriteComponentPtr.push_back((SpriteComponent*)ecs->m_ECS_CombinedComponentPool[TYPESPRITECOMPONENT]->m_GetEntityComponent(ID));
+			m_vecNameComponentPtr.push_back((NameComponent*)ecs->m_ECS_CombinedComponentPool[TYPENAMECOMPONENT]->m_GetEntityComponent(ID));
 		}
 
 	}
@@ -52,10 +53,12 @@ namespace ecs {
 		size_t IndexLast = m_vecSpriteComponentPtr.size() - 1;
 		std::swap(m_vecSpriteComponentPtr[IndexID], m_vecSpriteComponentPtr[IndexLast]);
 		std::swap(m_vecTransformComponentPtr[IndexID], m_vecTransformComponentPtr[IndexLast]);
+		std::swap(m_vecNameComponentPtr[IndexID], m_vecNameComponentPtr[IndexLast]);
 
 		//popback the vector;
 		m_vecSpriteComponentPtr.pop_back();
 		m_vecTransformComponentPtr.pop_back();
+		m_vecNameComponentPtr.pop_back();
 	}
 
 	void RenderSystem::m_Init()
@@ -66,7 +69,7 @@ namespace ecs {
 
 	void RenderSystem::m_Update(const std::string& scene)
 	{
-		//ECS* ecs = ECS::GetInstance();
+		ECS* ecs = ECS::m_GetInstance();
 		graphicpipe::GraphicsPipe* graphicsPipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
 		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
 
@@ -80,9 +83,9 @@ namespace ecs {
 
 			TransformComponent* transform = m_vecTransformComponentPtr[n];
 			SpriteComponent* sprite = m_vecSpriteComponentPtr[n];
-
+			NameComponent* NameComp = m_vecNameComponentPtr[n];
 			//skip component not of the scene
-			if (sprite->m_scene != scene) continue;
+			if ((sprite->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer)) continue;
 
 			ECS* ecs = ECS::m_GetInstance();
 

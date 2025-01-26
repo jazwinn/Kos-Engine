@@ -1,72 +1,15 @@
 [
     {
         "name": {
-            "namestr": "img_roombert",
+            "namestr": "ani_scientistWalk_strip14",
             "layer": 0,
             "isprefab": false,
             "tagstr": "Default"
         },
         "transform": {
             "position": {
-                "x": 6.608763217926025,
-                "y": -3.344210386276245
-            },
-            "rotation": -0.0,
-            "scale": {
-                "x": 1.0,
-                "y": 1.0
-            }
-        },
-        "sprite": {
-            "imagefile": "img_roombert.png",
-            "layer": 0,
-            "color": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
-            },
-            "alpha": 1.0
-        },
-        "raycast": {
-            "raycasts": [
-                {
-                    "raycastID": "ray1",
-                    "israycasting": true,
-                    "targetposition": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "Layer Vector": [
-                        {
-                            "layer": 0
-                        }
-                    ]
-                }
-            ]
-        },
-        "pathfinding": {
-            "startPosition": {
-                "x": 5.0,
-                "y": 4.0
-            },
-            "targetPosition": {
-                "x": 10.0,
-                "y": 0.0
-            },
-            "gridKey": "hi"
-        }
-    },
-    {
-        "name": {
-            "namestr": "wall",
-            "layer": 0,
-            "isprefab": false,
-            "tagstr": "Default"
-        },
-        "transform": {
-            "position": {
-                "x": 1.0,
-                "y": 0.0
+                "x": 0.7276896834373474,
+                "y": 0.64531010389328
             },
             "rotation": -0.0,
             "scale": {
@@ -77,8 +20,8 @@
         "collider": {
             "checkcollision": true,
             "size": {
-                "x": 1.0,
-                "y": 1.0
+                "x": 1.2799999713897705,
+                "y": 1.2799999713897705
             },
             "offset": {
                 "x": 0.0,
@@ -88,205 +31,22 @@
             "radius": 0.5,
             "shapetype": 0
         },
-        "grid": {
-            "gridRowLength": 10,
-            "gridColumnLength": 16,
-            "setCollidable": true,
-            "gridKey": "hi",
-            "isWall": [
-                [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ]
-            ]
+        "sprite": {
+            "imagefile": "ani_scientistWalk_strip14.png",
+            "layer": 0,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0
+        },
+        "animation": {
+            "frameNumber": 2,
+            "framesPerSecond": 1,
+            "frameTimer": 0.6000000238418579,
+            "isAnimating": true,
+            "stripCount": 14
         }
     }
 ]

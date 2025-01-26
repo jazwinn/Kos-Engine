@@ -35,6 +35,7 @@ namespace ecs {
 			== m_vecButtonComponentPtr.end()) {
 			m_vecTransformComponentPtr.push_back((TransformComponent*)ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(ID));
 			m_vecButtonComponentPtr.push_back((ButtonComponent*)ecs->m_ECS_CombinedComponentPool[TYPEBUTTONCOMPONENT]->m_GetEntityComponent(ID));
+			m_vecNameComponentPtr.push_back((NameComponent*)ecs->m_ECS_CombinedComponentPool[TYPENAMECOMPONENT]->m_GetEntityComponent(ID));
 		}
 	}
 
@@ -53,10 +54,11 @@ namespace ecs {
 
 		std::swap(m_vecButtonComponentPtr[IndexID], m_vecButtonComponentPtr[IndexLast]);
 		std::swap(m_vecTransformComponentPtr[IndexID], m_vecTransformComponentPtr[IndexLast]);
-
+		std::swap(m_vecNameComponentPtr[IndexID], m_vecNameComponentPtr[IndexLast]);
 		//popback the vector;
 		m_vecButtonComponentPtr.pop_back();
 		m_vecTransformComponentPtr.pop_back();
+		m_vecNameComponentPtr.pop_back();
 	}
 
 	void ButtonSystem::m_Init() {
@@ -76,11 +78,16 @@ namespace ecs {
 		float mouseX = Input::InputSystem::MousePosition.m_x; //Screen Coordinates
 		float mouseY = Input::InputSystem::MousePosition.m_y; //Screen Coordinates
 		float minX, maxX, minY, maxY;
+		ECS* ecs = ECS::m_GetInstance();
 
 		if ((Input::InputSystem::m_isKeyTriggered(keys::LMB) || Input::InputSystem::m_isKeyPressed(keys::LMB)) && m_vecButtonComponentPtr.size()) {
 			for (int i = 0; i < m_vecButtonComponentPtr.size(); ++i) {
 				TransformComponent* transform = m_vecTransformComponentPtr[i];
 				ButtonComponent* button = m_vecButtonComponentPtr[i];
+				NameComponent* NameComp = m_vecNameComponentPtr[i];
+
+
+				if ((transform->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer)) continue;
 
 				//reset button
 				if (button->m_IsClick)

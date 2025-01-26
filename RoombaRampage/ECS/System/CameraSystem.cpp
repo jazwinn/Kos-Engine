@@ -34,6 +34,7 @@ namespace ecs {
 			== m_vecCameraComponentPtr.end()) {
 			m_vecTransformComponentPtr.push_back((TransformComponent*)ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(ID));
 			m_vecCameraComponentPtr.push_back((CameraComponent*)ecs->m_ECS_CombinedComponentPool[TYPECAMERACOMPONENT]->m_GetEntityComponent(ID));
+			m_vecNameComponentPtr.push_back((NameComponent*)ecs->m_ECS_CombinedComponentPool[TYPENAMECOMPONENT]->m_GetEntityComponent(ID));
 		}
 	}
 
@@ -52,10 +53,12 @@ namespace ecs {
 
 		std::swap(m_vecCameraComponentPtr[IndexID], m_vecCameraComponentPtr[IndexLast]);
 		std::swap(m_vecTransformComponentPtr[IndexID], m_vecTransformComponentPtr[IndexLast]);
+		std::swap(m_vecNameComponentPtr[IndexID], m_vecNameComponentPtr[IndexLast]);
 
 		//popback the vector;
 		m_vecCameraComponentPtr.pop_back();
 		m_vecTransformComponentPtr.pop_back();
+		m_vecNameComponentPtr.pop_back();
 	}
 
 	void CameraSystem::m_Init() {
@@ -67,7 +70,7 @@ namespace ecs {
 
 	void CameraSystem::m_Update(const std::string& scene) {
 
-		//ECS* ecs = ECS::m_GetInstance();
+		ECS* ecs = ECS::m_GetInstance();
 
 		if (m_vecTransformComponentPtr.size() != m_vecCameraComponentPtr.size()) {
 			LOGGING_ERROR("Error: Vecotrs container size does not Match");
@@ -79,8 +82,9 @@ namespace ecs {
 		for (int n{}; n < m_vecTransformComponentPtr.size(); n++) {
 
 			TransformComponent* transform = m_vecTransformComponentPtr[n];
+			NameComponent* NameComp = m_vecNameComponentPtr[n];
 			//skip component not of the scene
-			if (transform->m_scene != scene) continue;
+			if ((transform->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer)) continue;
 
 			//CameraComponent* cam = m_vecCameraComponentPtr[n];
 

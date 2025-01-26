@@ -197,6 +197,12 @@ public static class InternalCall
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static bool m_InternalCallGetPathfinding(uint id, out Vector2 m_startpos, out Vector2 m_startend, out string gridkey, out int[] nodeArray_x, out int[] nodeArray_y);
 
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static void m_EnableLayer(uint layer);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static void m_DisableLayer(uint layer);
+
 }
 
 

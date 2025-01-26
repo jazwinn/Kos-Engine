@@ -86,6 +86,8 @@ namespace ecs {
 		*/
 		/******************************************************************/
 		std::vector<ButtonComponent*> m_vecButtonComponentPtr;
+
+		std::vector<NameComponent*> m_vecNameComponentPtr;
 	};
 }
 

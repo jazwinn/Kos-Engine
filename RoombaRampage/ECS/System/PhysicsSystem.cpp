@@ -27,6 +27,7 @@ namespace ecs {
 			== m_vecTransformComponentPtr.end()) {
 			m_vecTransformComponentPtr.push_back((TransformComponent*)ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(ID));
 			m_vecRigidBodyComponentPtr.push_back((RigidBodyComponent*)ecs->m_ECS_CombinedComponentPool[TYPERIGIDBODYCOMPONENT]->m_GetEntityComponent(ID));
+			m_vecNameComponentPtr.push_back((NameComponent*)ecs->m_ECS_CombinedComponentPool[TYPENAMECOMPONENT]->m_GetEntityComponent(ID));
 		}
 
 	}
@@ -45,10 +46,11 @@ namespace ecs {
 		size_t IndexLast = m_vecRigidBodyComponentPtr.size() - 1;
 		std::swap(m_vecRigidBodyComponentPtr[IndexID], m_vecRigidBodyComponentPtr[IndexLast]);
 		std::swap(m_vecTransformComponentPtr[IndexID], m_vecTransformComponentPtr[IndexLast]);
-
+		std::swap(m_vecNameComponentPtr[IndexID], m_vecNameComponentPtr[IndexLast]);
 		//popback the vector;
 		m_vecRigidBodyComponentPtr.pop_back();
 		m_vecTransformComponentPtr.pop_back();
+		m_vecNameComponentPtr.pop_back();
 	}
 
 	void PhysicsSystem::m_Init() {
@@ -58,7 +60,7 @@ namespace ecs {
 	}
 
 	void PhysicsSystem::m_Update(const std::string& scene) {
-		//ECS* ecs = ECS::m_GetInstance();
+		ECS* ecs = ECS::m_GetInstance();
 		//physicspipe::Physics* PhysicsPipeline = physicspipe::Physics::getInstance();
 		Helper::Helpers* help = Helper::Helpers::GetInstance();
 		if (m_vecRigidBodyComponentPtr.size() != m_vecTransformComponentPtr.size()) {
@@ -70,9 +72,10 @@ namespace ecs {
 		for (int n = 0; n < m_vecRigidBodyComponentPtr.size(); n++) {
 			RigidBodyComponent* rigidBody = m_vecRigidBodyComponentPtr[n];
 			TransformComponent* transform = m_vecTransformComponentPtr[n];
+			NameComponent* NameComp = m_vecNameComponentPtr[n];
 
 			//skip component not of the scene
-			if (rigidBody->m_scene != scene) continue;
+			if ((rigidBody->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer)) continue;
 
 
 			if (rigidBody->m_IsKinematic || rigidBody->m_IsStatic) {

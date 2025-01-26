@@ -32,6 +32,7 @@ namespace ecs {
 			== m_vecTextComponentPtr.end()) {
 			m_vecTransformComponentPtr.push_back((TransformComponent*)ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(ID));
 			m_vecTextComponentPtr.push_back((TextComponent*)ecs->m_ECS_CombinedComponentPool[TYPETEXTCOMPONENT]->m_GetEntityComponent(ID));
+			m_vecNameComponentPtr.push_back((NameComponent*)ecs->m_ECS_CombinedComponentPool[TYPENAMECOMPONENT]->m_GetEntityComponent(ID));
 		}
 
 	}
@@ -52,10 +53,12 @@ namespace ecs {
 		size_t IndexLast = m_vecTextComponentPtr.size() - 1;
 		std::swap(m_vecTextComponentPtr[IndexID], m_vecTextComponentPtr[IndexLast]);
 		std::swap(m_vecTransformComponentPtr[IndexID], m_vecTransformComponentPtr[IndexLast]);
+		std::swap(m_vecNameComponentPtr[IndexID], m_vecNameComponentPtr[IndexLast]);
 
 		//popback the vector;
 		m_vecTextComponentPtr.pop_back();
 		m_vecTransformComponentPtr.pop_back();
+		m_vecNameComponentPtr.pop_back();
 	}
 
 	void RenderTextSystem::m_Init()
@@ -66,7 +69,7 @@ namespace ecs {
 
 	void RenderTextSystem::m_Update(const std::string& scene)
 	{
-		//ECS* ecs = ECS::GetInstance();
+		ECS* ecs = ECS::m_GetInstance();
 		graphicpipe::GraphicsPipe* graphicsPipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
 		//Helper::Helpers* help =  Helper::Helpers::GetInstance();
 		if (m_vecTextComponentPtr.size() != m_vecTransformComponentPtr.size()) {
@@ -81,9 +84,10 @@ namespace ecs {
 
 			TransformComponent* transform = m_vecTransformComponentPtr[n];
 			TextComponent* text = m_vecTextComponentPtr[n];
+			NameComponent* NameComp = m_vecNameComponentPtr[n];
 
 			//skip component not of the scene
-			if (text->m_scene != scene) continue;
+			if ((NameComp->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer)) continue;
 
 			float red = text->m_color.m_x;
 			float green = text->m_color.m_y;

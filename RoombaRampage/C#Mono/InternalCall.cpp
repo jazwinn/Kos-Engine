@@ -870,6 +870,18 @@ namespace script {
 		return false;
 	}
 
+	void InternalCall::m_EnableLayer(unsigned int layer)
+	{
+		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+		ecs->m_layersStack.m_EnableLayer((layer::LAYERS)layer);
+	}
+
+	void InternalCall::m_DisableLayer(unsigned int layer)
+	{
+		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+		ecs->m_layersStack.m_DisableLayer((layer::LAYERS)layer);
+	}
+
 
 
 	void InternalCall::m_InternalCallDeleteEntity(ecs::EntityID id)
@@ -998,5 +1010,8 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_InternalCallSetRayCast);
 
 		MONO_ADD_INTERNAL_CALL(m_InternalCallGetPathfinding);
+
+		MONO_ADD_INTERNAL_CALL(m_EnableLayer);
+		MONO_ADD_INTERNAL_CALL(m_DisableLayer);
 	}
 }

@@ -29,6 +29,7 @@ namespace ecs {
             [ID](const auto& obj) { return obj->m_Entity == ID; }) == m_vecAudioComponentPtr.end()) {
             m_vecTransformComponentPtr.push_back((TransformComponent*)ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(ID));
             m_vecAudioComponentPtr.push_back((AudioComponent*)ecs->m_ECS_CombinedComponentPool[TYPEAUDIOCOMPONENT]->m_GetEntityComponent(ID));
+            m_vecNameComponentPtr.push_back((NameComponent*)ecs->m_ECS_CombinedComponentPool[TYPENAMECOMPONENT]->m_GetEntityComponent(ID));
         }
     }
 
@@ -44,9 +45,11 @@ namespace ecs {
         size_t IndexLast = m_vecAudioComponentPtr.size() - 1;
         std::swap(m_vecAudioComponentPtr[IndexID], m_vecAudioComponentPtr[IndexLast]);
         std::swap(m_vecTransformComponentPtr[IndexID], m_vecTransformComponentPtr[IndexLast]);
+        std::swap(m_vecNameComponentPtr[IndexID], m_vecNameComponentPtr[IndexLast]);
 
         m_vecAudioComponentPtr.pop_back();
         m_vecTransformComponentPtr.pop_back();
+        m_vecNameComponentPtr.pop_back();
     }
 
     void AudioSystem::m_Init() {
@@ -56,6 +59,7 @@ namespace ecs {
     void AudioSystem::m_Update(const std::string& scene) {
         //ECS* ecs = ECS::m_GetInstance();
         assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
+        ECS* ecs = ECS::m_GetInstance();
 
         if (m_vecAudioComponentPtr.empty()) {
             return;
@@ -64,9 +68,10 @@ namespace ecs {
         int n{ 0 };
         for (auto& audioCompPtr : m_vecAudioComponentPtr) {
             TransformComponent* transform = m_vecTransformComponentPtr[n];
+            NameComponent* NameComp = m_vecNameComponentPtr[n];
             n++;
 
-            if (transform->m_scene != scene) continue;
+            if ((transform->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer)) continue;
 
             for (auto& audioFile : audioCompPtr->m_AudioFiles) {
                 auto it = assetManager->m_audioManager.getSoundMap().find(audioFile.m_Name);
