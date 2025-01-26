@@ -48,6 +48,40 @@ void DrawVerticalLabel(const std::string& text, float x, float y)
 
 void gui::ImGuiHandler::m_DrawLayerWindow() {
     ImGui::Begin("Layer Panel", nullptr, ImGuiWindowFlags_HorizontalScrollbar);
+
+    ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+    // draw combo box to enable/disable layer
+
+    static bool flag = false;
+    for (size_t n{}; n < ecs->m_layersStack.m_layerMap.size(); n++) {
+
+        ImGui::Text(ecs->m_layersStack.m_layerMap[(layer::LAYERS)n].first.c_str());
+        ImGui::SameLine();
+        std::string title = "##2" +  ecs->m_layersStack.m_layerMap[(layer::LAYERS)n].first;
+        
+        if (ecs->m_layersStack.m_layerBitSet.test((layer::LAYERS)n)) {
+            flag = true;
+        }
+        else flag = false;
+
+        if (ImGui::Checkbox(title.c_str(), &flag)) {
+            if (flag == true) {
+                ecs->m_layersStack.m_EnableLayer((layer::LAYERS)n);
+            }
+            else {
+                ecs->m_layersStack.m_DisableLayer((layer::LAYERS)n);
+            }
+        }
+    }
+
+
+    ImGui::NewLine();
+
+
+    ImGui::Separator();
+
+
+
   
     const float cellWidth = 25.0f; // Adjust width as needed
     const float labelWidth = 60.0f; // Width for the row labels

@@ -78,7 +78,7 @@ namespace ecs {
 		/******************************************************************/
 		std::vector<TilemapComponent*> m_vecTilemapComponentPtr;
 
-
+		std::vector<NameComponent*> m_vecNameComponentPtr;
 	};
 
 }

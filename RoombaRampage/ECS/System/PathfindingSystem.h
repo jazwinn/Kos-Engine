@@ -35,7 +35,7 @@ namespace ecs {
 
 		std::vector<PathfindingComponent*> m_vecPathfindingComponentPtr;
 
-
+		std::vector<NameComponent*> m_vecNameComponentPtr;
 	};
 
 }

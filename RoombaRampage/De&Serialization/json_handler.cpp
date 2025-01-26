@@ -1173,7 +1173,7 @@ namespace Serialization {
 
 				// Load grid key
 				if (pathfindingObject.HasMember("gridKey") && pathfindingObject["gridKey"].IsString()) {
-					pc->m_GridKey = pathfindingObject["gridKey"].GetString();
+					//pc->m_GridKey = pathfindingObject["gridKey"].GetString();
 				}
 			}
 		}
@@ -1193,9 +1193,9 @@ namespace Serialization {
 		}
 	}
 	void Serialization::Serialize::m_SavePhysicsLayerMatrix() {
-		std::ofstream file("./Physics/PhysicsLayerMatrix.txt");
+		std::ofstream file("./ECS/LayerConfig.txt");
 		if (!file.is_open()) {
-			LOGGING_ERROR("Could not open PhysicsLayerMatrix.txt for writing.");
+			LOGGING_ERROR("Could not open LayerConfig.txt for writing.");
 			return;
 		}
 		auto size = physicslayer::PhysicsLayer::m_GetSize();
@@ -1207,14 +1207,16 @@ namespace Serialization {
 			file << "\n";
 		}
 
+		file << "LayerBitset: " << ecs::ECS::m_GetInstance()->m_layersStack.m_layerBitSet << std::endl;
+
 		file.close();
 		//LOGGING_INFO("Collision matrix saved to PhysicsLayerMatrix.txt");
 	}
 
 	void Serialization::Serialize::m_LoadPhysicsLayerMatrix() {
-		std::ifstream file("./Physics/PhysicsLayerMatrix.txt");
+		std::ifstream file("./ECS/LayerConfig.txt");
 		if (!file.is_open()) {
-			LOGGING_ERROR("Could not open PhysicsLayerMatrix.txt for reading.");
+			LOGGING_ERROR("Could not open LayerConfig.txt for reading.");
 			return;
 		}
 
@@ -1222,7 +1224,7 @@ namespace Serialization {
 		int row = 0;
 		auto size = physicslayer::PhysicsLayer::m_GetSize();
 		physicslayer::PhysicsLayer* layer = physicslayer::PhysicsLayer::m_GetInstance();
-		while (std::getline(file, line) && row < size) {
+		while ( row < size && std::getline(file, line)) {
 			std::istringstream iss(line);
 			int col = 0;
 			int value;
@@ -1233,8 +1235,19 @@ namespace Serialization {
 			++row;
 		}
 
+		std::getline(file, line);
+		std::istringstream iss(line);
+		std::string temp;
+		iss >> temp;
+		if (temp == "LayerBitset:") {
+			std::string _bitset;
+			iss >> _bitset;
+			ecs::ECS::m_GetInstance()->m_layersStack.m_layerBitSet = std::bitset<layer::MAXLAYER>(_bitset);
+		}
+
+
 		file.close();
-		LOGGING_INFO("Collision matrix loaded from PhysicsLayerMatrix.txt");
+		LOGGING_INFO("Collision matrix loaded from LayerConfig.txt");
 	}
 }
 

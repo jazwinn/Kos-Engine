@@ -56,7 +56,7 @@ namespace layer{
 					   creating an organized starting point for layer management.
 		*/
 		/******************************************************************/
-		LayerStack();
+		LayerStack();// set all bits to true
 
 		/******************************************************************/
 		/*!
@@ -82,6 +82,9 @@ namespace layer{
 		/******************************************************************/
 		bool m_SwapEntityLayer(LAYERS newlayer, LAYERS oldlayer, ecs::EntityID);
 
+		void m_DisableLayer(LAYERS layer);
+		void m_EnableLayer(LAYERS layer);
+
 		/******************************************************************/
 		/*!
 			\fn        std::vector<ecs::EntityID> m_RetrieveEntityID(LAYERS layer)
@@ -100,6 +103,9 @@ namespace layer{
 
 	public:
 		layermap m_layerMap;
+
+		// layers that are activated
+		std::bitset<MAXLAYER> m_layerBitSet;
 	};
 }
 #endif LAYERS_H

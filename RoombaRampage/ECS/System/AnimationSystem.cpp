@@ -41,7 +41,7 @@ namespace ecs {
 			m_vecTransformComponentPtr.push_back((TransformComponent*)ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(ID));
 			m_vecAnimationComponentPtr.push_back((AnimationComponent*)ecs->m_ECS_CombinedComponentPool[TYPEANIMATIONCOMPONENT]->m_GetEntityComponent(ID));
 			m_vecSpriteComponentPtr.push_back((SpriteComponent*)ecs->m_ECS_CombinedComponentPool[TYPESPRITECOMPONENT]->m_GetEntityComponent(ID));
-
+			m_vecNameComponentPtr.push_back((NameComponent*)ecs->m_ECS_CombinedComponentPool[TYPENAMECOMPONENT]->m_GetEntityComponent(ID));
 		}
 	}
 
@@ -61,12 +61,13 @@ namespace ecs {
 		std::swap(m_vecAnimationComponentPtr[IndexID], m_vecAnimationComponentPtr[IndexLast]);
 		std::swap(m_vecTransformComponentPtr[IndexID], m_vecTransformComponentPtr[IndexLast]);
 		std::swap(m_vecSpriteComponentPtr[IndexID], m_vecSpriteComponentPtr[IndexLast]);
+		std::swap(m_vecNameComponentPtr[IndexID], m_vecNameComponentPtr[IndexLast]);
 
 		//popback the vector;
 		m_vecAnimationComponentPtr.pop_back();
 		m_vecTransformComponentPtr.pop_back();
 		m_vecSpriteComponentPtr.pop_back();
-
+		m_vecNameComponentPtr.pop_back();
 	}
 
 	void AnimationSystem::m_Init() {
@@ -94,9 +95,10 @@ namespace ecs {
 
 			AnimationComponent* AniComp = m_vecAnimationComponentPtr[n];
 			SpriteComponent* SpriteComp = m_vecSpriteComponentPtr[n];
+			NameComponent* NameComp = m_vecNameComponentPtr[n];
 
 			//skip component not of the scene
-			if (AniComp->m_scene != scene) continue;
+			if ((AniComp->m_scene != scene) && !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer) ) continue;
 
 			if (m_vecAnimationComponentPtr[n]->m_isAnimating && m_vecAnimationComponentPtr[n]->m_framesPerSecond)
 			{

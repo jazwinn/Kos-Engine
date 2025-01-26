@@ -81,7 +81,7 @@ namespace ecs {
 		*/
 		/******************************************************************/
 		std::vector<RigidBodyComponent*> m_vecRigidBodyComponentPtr;
-
+		std::vector<NameComponent*> m_vecNameComponentPtr;
 	};
 
 }

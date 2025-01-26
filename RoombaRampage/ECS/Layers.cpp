@@ -39,6 +39,8 @@ namespace layer {
 
 	LayerStack::LayerStack()
 	{
+		m_layerBitSet.set();// assign all bits to true
+
 		//set max layers
 		m_layerMap[DEFAULT].first = "Default";
 		m_layerMap[LAYER1].first = "Layer 1";
@@ -90,6 +92,17 @@ namespace layer {
 		nc->m_Layer = newlayer;
 
 		return true;
+	}
+
+	void LayerStack::m_DisableLayer(LAYERS layer)
+	{
+		m_layerBitSet.reset(layer);
+
+	}
+
+	void LayerStack::m_EnableLayer(LAYERS layer)
+	{
+		m_layerBitSet.set(layer);
 	}
 
 	std::vector<ecs::EntityID> LayerStack::m_RetrieveEntityID(LAYERS layer)

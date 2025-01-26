@@ -19,6 +19,7 @@ namespace ecs {
             m_vecPathfindingComponentPtr.push_back(
                 static_cast<PathfindingComponent*>(ecs->m_ECS_CombinedComponentPool[TYPEPATHFINDINGCOMPONENT]->m_GetEntityComponent(ID))
             );
+            m_vecNameComponentPtr.push_back((NameComponent*)ecs->m_ECS_CombinedComponentPool[TYPENAMECOMPONENT]->m_GetEntityComponent(ID));
         }
     }
 
@@ -36,9 +37,11 @@ namespace ecs {
 
         std::swap(m_vecPathfindingComponentPtr[IndexID], m_vecPathfindingComponentPtr[IndexLast]);
         std::swap(m_vecTransformComponentPtr[IndexID], m_vecTransformComponentPtr[IndexLast]);
-
+        std::swap(m_vecNameComponentPtr[IndexID], m_vecNameComponentPtr[IndexLast]);
+        
         m_vecPathfindingComponentPtr.pop_back();
         m_vecTransformComponentPtr.pop_back();
+        m_vecNameComponentPtr.pop_back();
     }
 
     void PathfindingSystem::m_Init() {
@@ -58,10 +61,11 @@ namespace ecs {
         for (size_t n = 0; n < m_vecPathfindingComponentPtr.size(); ++n) {
             TransformComponent* transform = m_vecTransformComponentPtr[n];
             PathfindingComponent* pathfinding = m_vecPathfindingComponentPtr[n];
+            NameComponent* NameComp = m_vecNameComponentPtr[n];
             GridComponent* grid = NULL;
 
             // Skip components not of the scene
-            if (pathfinding->m_scene != scene) continue;
+            if ((pathfinding->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer)) continue;
 
             const auto& ids = ecs->m_ECS_SceneMap.find(pathfinding->m_scene);
             if (ids != ecs->m_ECS_SceneMap.end()) {

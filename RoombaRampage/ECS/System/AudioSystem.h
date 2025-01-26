@@ -83,6 +83,8 @@ namespace ecs {
         */
         /******************************************************************/
         std::vector<TransformComponent*> m_vecTransformComponentPtr;
+
+        std::vector<NameComponent*> m_vecNameComponentPtr;
     };
 }
 

@@ -36,6 +36,7 @@ namespace ecs {
 			== m_vecTransformComponentPtr.end()) {
 			m_vecTransformComponentPtr.push_back((TransformComponent*)ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(ID));
 			m_vecColliderComponentPtr.push_back((ColliderComponent*)ecs->m_ECS_CombinedComponentPool[TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(ID));
+			m_vecNameComponentPtr.push_back((NameComponent*)ecs->m_ECS_CombinedComponentPool[TYPENAMECOMPONENT]->m_GetEntityComponent(ID));
 		}
 	}
 
@@ -54,10 +55,12 @@ namespace ecs {
 
 		std::swap(m_vecColliderComponentPtr[IndexID], m_vecColliderComponentPtr[IndexLast]);
 		std::swap(m_vecTransformComponentPtr[IndexID], m_vecTransformComponentPtr[IndexLast]);
+		std::swap(m_vecNameComponentPtr[IndexID], m_vecNameComponentPtr[IndexLast]);
 
 		//popback the vector;
 		m_vecColliderComponentPtr.pop_back();
 		m_vecTransformComponentPtr.pop_back();
+		m_vecNameComponentPtr.pop_back();
 	}
 
 	void DebugDrawingSystem::m_Init() {
@@ -69,7 +72,7 @@ namespace ecs {
 
 	void DebugDrawingSystem::m_Update(const std::string& scene) {
 
-		//ECS* ecs = ECS::m_GetInstance();
+		ECS* ecs = ECS::m_GetInstance();
 
 		if (m_vecTransformComponentPtr.size() != m_vecColliderComponentPtr.size()) {
 			LOGGING_ERROR("Error: Vecotrs container size does not Match");
@@ -82,8 +85,9 @@ namespace ecs {
 
 			//TransformComponent* transform = m_vecTransformComponentPtr[n];
 			ColliderComponent* collider = m_vecColliderComponentPtr[n];
+			NameComponent* NameComp = m_vecNameComponentPtr[n];
 			//skip component not of the scene
-			if (collider->m_scene != scene) continue;
+			if ((collider->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer)) continue;
 
 
 			mat3x3::Mat3x3 translateMatrix;

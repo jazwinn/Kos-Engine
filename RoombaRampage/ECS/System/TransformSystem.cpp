@@ -34,6 +34,7 @@ namespace ecs {
 		if (std::find_if(m_vecTransformComponentPtr.begin(), m_vecTransformComponentPtr.end(), [ID](const auto& obj) { return obj->m_Entity == ID; })
 			== m_vecTransformComponentPtr.end()) {
 			m_vecTransformComponentPtr.push_back((TransformComponent*)ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(ID));
+			m_vecNameComponentPtr.push_back((NameComponent*)ecs->m_ECS_CombinedComponentPool[TYPENAMECOMPONENT]->m_GetEntityComponent(ID));
 		}
 	}
 
@@ -51,9 +52,10 @@ namespace ecs {
 		size_t IndexLast = m_vecTransformComponentPtr.size() - 1;
 
 		std::swap(m_vecTransformComponentPtr[IndexID], m_vecTransformComponentPtr[IndexLast]);
-
+		std::swap(m_vecNameComponentPtr[IndexID], m_vecNameComponentPtr[IndexLast]);
 		//popback the vector;
 		m_vecTransformComponentPtr.pop_back();
+		m_vecNameComponentPtr.pop_back();
 	}
 
 	void TransformSystem::m_Init() {
@@ -66,15 +68,16 @@ namespace ecs {
 
 	void TransformSystem::m_Update(const std::string& scene) {
 
-		//ECS* ecs = ECS::m_GetInstance();
+		ECS* ecs = ECS::m_GetInstance();
 
 
 		for (int n{}; n < m_vecTransformComponentPtr.size(); n++)
 		{
 			TransformComponent* transformComp = m_vecTransformComponentPtr[n];
+			NameComponent* NameComp = m_vecNameComponentPtr[n];
 
 			//skip component not of the scene
-			if (transformComp->m_scene != scene) continue;
+			if ((transformComp->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer)) continue;
 
 			transformComp->m_transformation = mat3x3::Mat3Transform(transformComp->m_position, transformComp->m_scale, transformComp->m_rotation);
 			vector2::Vec2 pos{}, scale_s{};
