@@ -195,7 +195,7 @@ public static class InternalCall
     }
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static bool m_InternalCallGetPathfinding(uint id, out Vector2 m_startpos, out Vector2 m_startend, out string gridkey, out int[] nodeArray_x, out int[] nodeArray_y);
+    public extern static bool m_InternalCallGetPathfinding(uint id, out Vector2 m_startpos, out Vector2 m_startend, out int gridkey, out int[] nodeArray_x, out int[] nodeArray_y);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static void m_EnableLayer(uint layer);
@@ -257,7 +257,6 @@ public static class Component
             InternalCall.m_InternalCallGetPathfinding(id, out pathfindingcomponent.m_startPosition, out pathfindingcomponent.m_targetPosition, out pathfindingcomponent.m_gridkey, out x, out y);
             for (int n = 0; n < x.Length; n++)
             {
-
 
                 pathfindingcomponent.m_node.Add(new Vector2(x[n], y[n]));
             }
