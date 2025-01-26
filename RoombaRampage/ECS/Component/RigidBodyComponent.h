@@ -69,8 +69,6 @@ namespace ecs {
         //Previous Position 
         vector2::Vec2 m_PrevPos{};
 
-        //Current Position
-        vector2::Vec2 m_CurrentPos{};
 
         //Direction Vector
         vector2::Vec2 m_DirectionVector{};

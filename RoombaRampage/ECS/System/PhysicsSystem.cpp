@@ -103,8 +103,7 @@ namespace ecs {
 				rigidBody->m_Force = vector2::Vec2{ 0.0f, 0.0f };
 				rigidBody->m_Torque = 0.0f;
 
-				//current position
-				rigidBody->m_CurrentPos = transform->m_position;
+				
 
 				if (!rigidBody->m_IsStatic && !rigidBody->m_IsKinematic) {
 					transform->m_position += rigidBody->m_Velocity * help->m_fixedDeltaTime;
@@ -112,7 +111,7 @@ namespace ecs {
 				}
 
 				
-				rigidBody->m_DirectionVector = rigidBody->m_CurrentPos - rigidBody->m_PrevPos;
+				rigidBody->m_DirectionVector = transform->m_position - rigidBody->m_PrevPos;
 				if (rigidBody->m_DirectionVector.m_x != 0.f && rigidBody->m_DirectionVector.m_y != 0.f) {
 					rigidBody->m_PrevDirVec = rigidBody->m_DirectionVector;
 				}

@@ -84,7 +84,7 @@ namespace script {
 			\return    True if the collider is found and retrieved; otherwise, false.
 		*/
 		/******************************************************************/
-		static bool m_InternalGetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, int* m_blockedFlag, float* isCollided, bool* collisionCheck);
+		static bool m_InternalGetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, unsigned int* m_blockedFlag, float* isCollided, bool* collisionCheck);
 
 		/******************************************************************/
 		/*!
@@ -101,7 +101,7 @@ namespace script {
 			\return    True if the collider is found and updated; otherwise, false.
 		*/
 		/******************************************************************/
-		static bool m_InternalSetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, int* m_blockedFlag, float* isCollided, bool* collisionCheck);
+		static bool m_InternalSetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, unsigned int* m_blockedFlag, float* isCollided, bool* collisionCheck);
 
 		/******************************************************************/
 		/*!
@@ -136,7 +136,7 @@ namespace script {
 			\return    True if the rigid body component is found and retrieved; otherwise, false.
 		*/
 		/******************************************************************/
-		static bool m_InternalGetRigidBodyComponent(ecs::EntityID entity, vector2::Vec2* velocity, vector2::Vec2* acceleration, float* rotation);
+		static bool m_InternalGetRigidBodyComponent(ecs::EntityID entity, vector2::Vec2* velocity, vector2::Vec2* acceleration, float* rotation, vector2::Vec2* previouspos, vector2::Vec2* directionvector);
 
 		/******************************************************************/
 		/*!
@@ -149,7 +149,7 @@ namespace script {
 			\return    True if the rigid body component is found and updated; otherwise, false.
 		*/
 		/******************************************************************/
-		static bool m_InternalSetRigidBodyComponent(ecs::EntityID entity, vector2::Vec2* velocity, vector2::Vec2* acceleration, float* rotation);
+		static bool m_InternalSetRigidBodyComponent(ecs::EntityID entity, vector2::Vec2* velocity, vector2::Vec2* acceleration, float* rotation, vector2::Vec2* previouspos, vector2::Vec2* directionvector);
 
 		/******************************************************************/
 		/*!
@@ -585,6 +585,8 @@ namespace script {
 		static bool m_InternalCallSetRayCast(ecs::EntityID id, MonoString* monoString, bool* isRaycasting, vector2::Vec2* targetposition, float* m_distance, bool* targetReached, vector2::Vec2* hitposition);;
 
 		static bool m_InternalCallGetPathfinding(ecs::EntityID id, vector2::Vec2* m_startpos, vector2::Vec2* m_startend, MonoString** gridkey, MonoArray** nodeArray_x, MonoArray** nodeArray_y);
+
+		static void m_InternalCallSetTargetPathfinding(ecs::EntityID id, vector2::Vec2* m_targetgridposition);
 
 		static void m_EnableLayer(unsigned int layer);
 

@@ -23,10 +23,10 @@ public static class InternalCall
     public extern static bool m_InternalSetTranslate(uint entity, in Vector2 pos);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static bool m_InternalGetColliderComponent(uint entity, out Vector2 size, out Vector2 offset, out bool drawDebug, out float radius, out int bockflag, out float isCollided, out bool collisionCheck);
+    public extern static bool m_InternalGetColliderComponent(uint entity, out Vector2 size, out Vector2 offset, out bool drawDebug, out float radius, out uint bockflag, out float isCollided, out bool collisionCheck);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static bool m_InternalSetColliderComponent(uint entity, in Vector2 size, in Vector2 offset, in bool drawDebug, in float radius, in int bockflag, in float isCollided, in bool collisionCheck);
+    public extern static bool m_InternalSetColliderComponent(uint entity, in Vector2 size, in Vector2 offset, in bool drawDebug, in float radius, in uint bockflag, in float isCollided, in bool collisionCheck);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static bool m_InternalGetPlayerComponent(uint entity, out bool control);
@@ -35,10 +35,10 @@ public static class InternalCall
     public extern static bool m_InternalSetPlayerComponent(uint entity, in bool control);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static bool m_InternalGetRigidBodyComponent(uint entity, out Vector2 velocity, out Vector2 acceleration, out float rotation);
+    public extern static bool m_InternalGetRigidBodyComponent(uint entity, out Vector2 velocity, out Vector2 acceleration, out float rotation, out Vector2 previouspos, out Vector2 direction);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static bool m_InternalSetRigidBodyComponent(uint entity, in Vector2 velocity, in Vector2 acceleration, in float rotation);
+    public extern static bool m_InternalSetRigidBodyComponent(uint entity, in Vector2 velocity, in Vector2 acceleration, in float rotation, in Vector2 previouspos, in Vector2 direction);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static bool m_InternalGetTextComponent(uint entity, out string text, out string fileName, out int fontLayer, out float fontSize, out Vector3 color);
@@ -203,6 +203,9 @@ public static class InternalCall
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static void m_DisableLayer(uint layer);
 
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static void m_InternalCallSetTargetPathfinding(uint id, in Vector2 m_targetgridposition);
+
 }
 
 
@@ -235,7 +238,7 @@ public static class Component
         else if (typeof(T) == typeof(RigidBodyComponent))
         {
             var rigidComponent = component as RigidBodyComponent;
-            InternalCall.m_InternalGetRigidBodyComponent(id, out rigidComponent.m_Velocity, out rigidComponent.m_Acceleration, out rigidComponent.m_Rotation);
+            InternalCall.m_InternalGetRigidBodyComponent(id, out rigidComponent.m_Velocity, out rigidComponent.m_Acceleration, out rigidComponent.m_Rotation, out rigidComponent.m_prevPos, out rigidComponent.m_direction);
         }
         else if (typeof(T) == typeof(AnimationComponent))
         {
@@ -288,7 +291,7 @@ public static class Component
         }
         else if (component is RigidBodyComponent rigid)
         {
-            InternalCall.m_InternalSetRigidBodyComponent(id, in rigid.m_Velocity, in rigid.m_Acceleration, in rigid.m_Rotation);
+            InternalCall.m_InternalSetRigidBodyComponent(id, in rigid.m_Velocity, in rigid.m_Acceleration, in rigid.m_Rotation, in rigid.m_prevPos, in rigid.m_direction);
         }
         else if (component is AnimationComponent animation)
         {
