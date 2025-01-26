@@ -191,6 +191,7 @@ namespace physicspipe {
 			const auto& colComp2 = static_cast<ecs::ColliderComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(second));
 			const auto& rigComp = static_cast<ecs::RigidBodyComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPERIGIDBODYCOMPONENT]->m_GetEntityComponent(first));
 			const auto& rigComp2 = static_cast<ecs::RigidBodyComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPERIGIDBODYCOMPONENT]->m_GetEntityComponent(second));
+			if (rigComp == NULL || rigComp2 == NULL) continue;
 			//const auto& transComp = static_cast<ecs::TransformComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(ColComp->m_Entity));
 			if (colComp->m_type == EntityType::CIRCLE && colComp2->m_type == EntityType::CIRCLE) {
 				vector2::Vec2 dirA = rigComp->m_PrevDirVec;
