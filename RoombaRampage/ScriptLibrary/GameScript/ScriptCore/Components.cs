@@ -121,7 +121,6 @@ public class PathfindingComponent
     public Vector2 m_targetPosition;
     public string m_gridkey;
     public List<Vector2> m_node;
-
 }
 
 public class Raycast

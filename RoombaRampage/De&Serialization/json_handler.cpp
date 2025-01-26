@@ -503,10 +503,8 @@ namespace Serialization {
 					}
 					wallArray.PushBack(wallRow, allocator);
 				}
-				// Add grid key
-				rapidjson::Value gridKey;
-				gridKey.SetString(gridc->m_GridKey.c_str(), allocator);
-				grid.AddMember("gridKey", gridKey, allocator);
+				
+				grid.AddMember("gridKey", gridc->m_GridKey, allocator);
 
 				grid.AddMember("isWall", wallArray, allocator);
 				entityData.AddMember("grid", grid, allocator);
@@ -612,10 +610,8 @@ namespace Serialization {
 					.AddMember("x", pc->m_TargetPos.m_x, allocator)
 					.AddMember("y", pc->m_TargetPos.m_y, allocator), allocator);
 
-				// Add grid key
-				rapidjson::Value gridKey;
-				gridKey.SetString(pc->m_GridKey.c_str(), allocator);
-				pathfinding.AddMember("gridKey", gridKey, allocator);
+				
+				pathfinding.AddMember("gridKey", pc->m_GridKey, allocator);
 
 				// Add the pathfinding component data to the entity data
 				entityData.AddMember("pathfinding", pathfinding, allocator);
@@ -1046,8 +1042,8 @@ namespace Serialization {
 				}
 
 				// Load grid key
-				if (grid.HasMember("gridKey") && grid["gridKey"].IsString()) {
-					gridc->m_GridKey = grid["gridKey"].GetString();
+				if (grid.HasMember("gridKey") && grid["gridKey"].IsInt()) {
+					gridc->m_GridKey = grid["gridKey"].GetInt();
 				}
 			}
 		}
@@ -1172,8 +1168,8 @@ namespace Serialization {
 				}
 
 				// Load grid key
-				if (pathfindingObject.HasMember("gridKey") && pathfindingObject["gridKey"].IsString()) {
-					//pc->m_GridKey = pathfindingObject["gridKey"].GetString();
+				if (pathfindingObject.HasMember("gridKey") && pathfindingObject["gridKey"].IsInt()) {
+					pc->m_GridKey = pathfindingObject["gridKey"].GetInt();
 				}
 			}
 		}

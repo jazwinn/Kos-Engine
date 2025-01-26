@@ -31,7 +31,7 @@ public class EnemyController : ScriptBase
     public static float enemySpeed;
 
     public bool isDead;
-
+a
     private int playerID;
     private Vector2 playerScale;
     private float playerRotate;
