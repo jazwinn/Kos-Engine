@@ -54,6 +54,9 @@ public class RigidBodyComponent
     public float m_Torque;
     public bool m_IsKinematic;
     public bool m_IsStatic;
+    public Vector2 m_prevPos;
+    public Vector2 m_direction;
+
 }
 
 public class ColliderComponent
@@ -64,7 +67,7 @@ public class ColliderComponent
     public bool m_collisionCheck;
     public float m_radius;
     public float m_isCollided;
-    public int m_blockedFlag;
+    public uint m_blockedFlag;
 }
 
 public class PlayerComponent
@@ -119,7 +122,7 @@ public class PathfindingComponent
 {
     public Vector2 m_startPosition;
     public Vector2 m_targetPosition;
-    public string m_gridkey;
+    public int m_gridkey;
     public List<Vector2> m_node;
 }
 

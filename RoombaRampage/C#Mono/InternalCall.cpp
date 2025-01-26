@@ -69,7 +69,7 @@ namespace script {
 	}
 
 	//Collider Component
-	bool InternalCall::m_InternalGetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, int* m_blockedFlag, float* isCollided, bool* collisionCheck)
+	bool InternalCall::m_InternalGetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, unsigned int* m_blockedFlag, float* isCollided, bool* collisionCheck)
 	{
 		auto* collider = static_cast<ecs::ColliderComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(entity));
 
@@ -86,7 +86,7 @@ namespace script {
 		return true;
 	}
 
-	bool InternalCall::m_InternalSetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, int* m_blockedFlag, float* isCollided, bool* collisionCheck)
+	bool InternalCall::m_InternalSetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, unsigned int* m_blockedFlag, float* isCollided, bool* collisionCheck)
 	{
 		auto* collider = static_cast<ecs::ColliderComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(entity));
 
@@ -99,6 +99,7 @@ namespace script {
 		collider->m_isCollided = *isCollided;
 		collider->m_blockedFlag = *m_blockedFlag;
 		collider->m_CollisionCheck = *collisionCheck;
+
 
 		return true;
 	}
@@ -125,7 +126,7 @@ namespace script {
 	}
 
 	//RigidBody Component
-	bool InternalCall::m_InternalGetRigidBodyComponent(ecs::EntityID entity, vector2::Vec2* velocity, vector2::Vec2* acceleration, float* rotation)
+	bool InternalCall::m_InternalGetRigidBodyComponent(ecs::EntityID entity, vector2::Vec2* velocity, vector2::Vec2* acceleration, float* rotation, vector2::Vec2* previouspos, vector2::Vec2* directionvector)
 	{
 		auto* rbComponent = static_cast<ecs::RigidBodyComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPERIGIDBODYCOMPONENT]->m_GetEntityComponent(entity));
 
@@ -134,11 +135,13 @@ namespace script {
 		*velocity = rbComponent->m_Velocity;
 		*acceleration = rbComponent->m_Acceleration;
 		*rotation = rbComponent->m_Rotation;
+		*previouspos = rbComponent->m_PrevPos;
+		*directionvector = rbComponent->m_DirectionVector;
 
 		return true;
 	}
 
-	bool InternalCall::m_InternalSetRigidBodyComponent(ecs::EntityID entity, vector2::Vec2* velocity, vector2::Vec2* acceleration, float* rotation)
+	bool InternalCall::m_InternalSetRigidBodyComponent(ecs::EntityID entity, vector2::Vec2* velocity, vector2::Vec2* acceleration, float* rotation, vector2::Vec2* previouspos, vector2::Vec2* directionvector)
 	{
 		auto* rbComponent = static_cast<ecs::RigidBodyComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPERIGIDBODYCOMPONENT]->m_GetEntityComponent(entity));
 
@@ -147,6 +150,8 @@ namespace script {
 		rbComponent->m_Velocity = *velocity;
 		rbComponent->m_Acceleration = *acceleration;
 		rbComponent->m_Rotation = *rotation;
+		rbComponent->m_PrevPos = *previouspos;
+		rbComponent->m_DirectionVector = *directionvector;
 
 		return true;
 	}
@@ -870,6 +875,22 @@ namespace script {
 		return false;
 	}
 
+	void InternalCall::m_InternalCallSetTargetPathfinding(ecs::EntityID id, vector2::Vec2* m_targetgridposition)
+	{
+
+		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+		ecs::PathfindingComponent* pfc = static_cast<ecs::PathfindingComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEPATHFINDINGCOMPONENT]->m_GetEntityComponent(id));
+
+		if (pfc) {
+
+			pfc->m_TargetPos = *m_targetgridposition;
+
+
+		}
+
+		return;
+	}
+
 	void InternalCall::m_EnableLayer(unsigned int layer)
 	{
 		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
@@ -1013,5 +1034,7 @@ namespace script {
 
 		MONO_ADD_INTERNAL_CALL(m_EnableLayer);
 		MONO_ADD_INTERNAL_CALL(m_DisableLayer);
+
+		MONO_ADD_INTERNAL_CALL(m_InternalCallSetTargetPathfinding);
 	}
 }

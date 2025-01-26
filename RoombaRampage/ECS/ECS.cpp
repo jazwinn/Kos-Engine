@@ -141,7 +141,7 @@ namespace ecs{
 			if (ecs->m_state != RUNNING) {
 				if (System.first == TYPECOLLISIONRESPONSESYSTEM ||// System.first == TYPECOLLISIONSYSTEM ||
 					System.first == TYPELOGICSYSTEM || System.first == TYPEPHYSICSSYSTEM || 
-					System.first == TYPEANIMATIONSYSTEM) {
+					System.first == TYPEANIMATIONSYSTEM || System.first == TYPEPATHFINDINGSYSTEM) {
 					//skip physics and logic if not running
 					continue;
 				}

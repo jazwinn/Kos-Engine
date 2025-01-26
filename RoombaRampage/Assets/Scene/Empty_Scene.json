@@ -47,6 +47,50 @@
             "frameTimer": 0.6000000238418579,
             "isAnimating": true,
             "stripCount": 14
+        },
+        "pathfinding": {
+            "startPosition": {
+                "x": 1.0,
+                "y": 0.0
+            },
+            "targetPosition": {
+                "x": 1.0,
+                "y": 0.0
+            },
+            "gridKey": ""
+        }
+    },
+    {
+        "name": {
+            "namestr": "wall",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": -1.8679512739181519,
+                "y": 1.079909086227417
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "collider": {
+            "checkcollision": true,
+            "size": {
+                "x": 1.0,
+                "y": 1.0
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true,
+            "radius": 0.5,
+            "shapetype": 0
         }
     }
 ]
