@@ -810,12 +810,14 @@ namespace physicspipe {
 
 	void Physics::IsLineIntersecting(const vector2::Vec2& p1, const vector2::Vec2& p2, const std::vector<layer::LAYERS>& layer, bool& isHit, vector2::Vec2& hitPosition)
 	{
+		int count{};
+		for (const auto entity : m_physicsEntities) {
 
-		for (const auto& entity : m_physicsEntities) {
+			std::cout << count++ << std::endl;
 
 			if (entity->type == EntityType::RECTANGLE) {
 
-				if (std::find(layer.begin(), layer.end(), (layer::LAYERS)entity->m_layerID) == layer.end())return; // return any entity that is not a part of the req layer
+				if (std::find(layer.begin(), layer.end(), (layer::LAYERS)entity->m_layerID) == layer.end())continue; // return any entity that is not a part of the req layer
 
 
 				auto entityshape = std::dynamic_pointer_cast<Rectangle>(entity);
