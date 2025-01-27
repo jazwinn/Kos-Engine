@@ -304,18 +304,22 @@ namespace physicspipe {
 				if (m_AlmostEqualCP(eq,0.f) && eq < min) {
 					min = std::min(eq, min);
 					if (i == 0) {
+						ret.first.reset();
 						ret.first.set(0);
 						//break;
 					}
 					if (i == 1) {
+						ret.first.reset();
 						ret.first.set(1);
 						//break;
 					}
 					if (i == 2) {
+						ret.first.reset();
 						ret.first.set(2);
 						//break;
 					}
 					if (i == 3) {
+						ret.first.reset();
 						ret.first.set(3);
 						//break;
 					}
@@ -354,15 +358,19 @@ namespace physicspipe {
 						max = std::max(dotCPA, max);
 						min = std::min(eq, min);
 						if (i == 0) {
+							ret.first.reset();
 							ret.first.set(0);							//break;
 						}
 						if (i == 1) {
+							ret.first.reset();
 							ret.first.set(1);							//break;
 						}
 						if (i == 2) {
+							ret.first.reset();
 							ret.first.set(2);							//break;
 						}
 						if (i == 3) {
+							ret.first.reset();
 							ret.first.set(3);							//break;
 						}
 					}else if(dotCPA <= 0.f && max < dotCPA && eq < min) {
@@ -405,16 +413,20 @@ namespace physicspipe {
 				if (m_AlmostEqualCP(eq,0.f) && eq < min) {
 					min = std::min(eq, min);
 					if (i == 0) {
+						ret.second.reset();
 						ret.second.set(0);
 						//break;
 					}
 					if (i == 1) {
+						ret.second.reset();
 						ret.second.set(1);						//break;
 					}
 					if (i == 2) {
+						ret.second.reset();
 						ret.second.set(2);						//break;
 					}
 					if (i == 3) {
+						ret.second.reset();
 						ret.second.set(3);						//break;
 					}
 				}
@@ -452,32 +464,40 @@ namespace physicspipe {
 						max = std::max(dotCPB, max);
 						min = std::min(eq, min);
 						if (i == 0) {
+							ret.second.reset();
 							ret.second.set(0);
 							//break;
 						}
 						if (i == 1) {
+							ret.second.reset();
 							ret.second.set(1);						//break;
 						}
 						if (i == 2) {
+							ret.second.reset();
 							ret.second.set(2);						//break;
 						}
 						if (i == 3) {
+							ret.second.reset();
 							ret.second.set(3);						//break;
 						}
 					}
 					else if (dotCPB <= 0.f && max < dotCPB && eq < min) {
 						max = std::max(dotCPB, max);
 						if (i == 0) {
+							ret.second.reset();
 							ret.second.set(0);
 							//break;
 						}
 						if (i == 1) {
+							ret.second.reset();
 							ret.second.set(1);						//break;
 						}
 						if (i == 2) {
+							ret.second.reset();
 							ret.second.set(2);						//break;
 						}
 						if (i == 3) {
+							ret.second.reset();
 							ret.second.set(3);						//break;
 						}
 					}
@@ -764,32 +784,40 @@ namespace physicspipe {
 					max = std::max(dotCPB, max);
 					min = std::min(eq, min);
 					if (i == 0) {
+						ret.second.reset();
 						ret.second.set(0);
 						//break;
 					}
 					if (i == 1) {
+						ret.second.reset();
 						ret.second.set(1);						//break;
 					}
 					if (i == 2) {
+						ret.second.reset();
 						ret.second.set(2);						//break;
 					}
 					if (i == 3) {
+						ret.second.reset();
 						ret.second.set(3);						//break;
 					}
 				}
 				else if (dotCPB <= 0.f && max < dotCPB && eq < min) {
 					max = std::max(dotCPB, max);
 					if (i == 0) {
+						ret.second.reset();
 						ret.second.set(0);
 						//break;
 					}
 					if (i == 1) {
+						ret.second.reset();
 						ret.second.set(1);						//break;
 					}
 					if (i == 2) {
+						ret.second.reset();
 						ret.second.set(2);						//break;
 					}
 					if (i == 3) {
+						ret.second.reset();
 						ret.second.set(3);						//break;
 					}
 				}
