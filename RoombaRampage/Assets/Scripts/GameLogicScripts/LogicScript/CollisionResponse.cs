@@ -34,19 +34,853 @@ public class CollisionResponse : ScriptBase
     private int colFlag;
     private float isCollided;
     private bool colCheck;
- 
+
+
 
     public override void Start()
     {
-      
+
 
     }
 
     public override void Update()
     {
-        #region Collision
 
-       
+
+        /*
+         *  EntityID -> the game object
+         *  WIth collision flag we know where it cant move 
+         *  Rigidbody velocity to get the other direction 
+         *  to find the distance to move
+         *  time * velocity + position (snap back)
+         *  set velocity to wtv 
+         * 
+         */
+        Vector2 entity_Position, entity_Velocity, entity_Acceleration;
+        uint entity_CollisionFlag;
+
+        int steps = InternalCall.m_InternalCallGetSteps();
+        float delta = InternalCall.m_InternalCallGetDeltaTime();
+        if (steps > 1)
+        {
+            delta *= steps;
+        }
+
+        Vector2 entity_ColliderSize, entity_ColliderOffset, entity_DirectionVector;
+        float entity_isCollided, entity_Radius, entity_Rotation;
+        bool entity_drawDebug, entity_collisionCheck;
+
+        InternalCall.m_InternalGetColliderComponent((uint)EntityID, out entity_ColliderSize, out entity_ColliderOffset, out entity_drawDebug, out entity_Radius,
+        out entity_CollisionFlag, out entity_isCollided, out entity_collisionCheck);
+
+        InternalCall.m_InternalGetTransformComponent(EntityID, out startingPlayerPos, out startingPlayerScale, out startingPlayerRotate);
+
+        InternalCall.m_InternalGetRigidBodyComponent(EntityID, out entity_Velocity, out entity_Acceleration, out entity_Rotation, out entity_Position, out entity_DirectionVector);
+
+        ////I think need contact point..... sigh
+        ///*
+        // *
+        // * 
+        // * 
+        // * 
+        // * 
+        // */
+
+
+
+
+        //Console.WriteLine($"Velocity Pos: ({entity_Velocity.X}, {entity_Velocity.Y}))");
+        //Console.WriteLine($"Flag: ({entity_CollisionFlag})");
+        int direction = 0;
+        if (entity_DirectionVector.Y > 0)
+        {
+            direction += 1;
+        }
+        if (entity_DirectionVector.X > 0)
+        {
+            direction += 2;
+        }
+        if (entity_DirectionVector.X < 0)
+        {
+            direction += 8;
+        }
+        if (entity_DirectionVector.Y < 0)
+        {
+            direction += 4;
+        }
+
+        Vector2 new_Position;
+        Vector2 entity_Snapback;
+        Vector2 new_Velocity;
+        new_Velocity.X = entity_Velocity.X + (delta * entity_Acceleration.X);
+        new_Velocity.Y = entity_Velocity.Y + (delta * entity_Acceleration.Y);
+        entity_Snapback.X = -(delta * new_Velocity.X);
+        entity_Snapback.Y = -(delta * new_Velocity.Y);
+        new_Position.X = entity_Position.X + entity_Snapback.X;
+        new_Position.Y = entity_Position.Y + entity_Snapback.Y;
+        Console.WriteLine($" NEW POS {new_Position.X} {new_Position.Y}");
+
+        switch (entity_CollisionFlag)
+        {
+            case 0:
+                break;
+            case 1: //TOP
+                if (direction == 1)
+                {
+                    Console.WriteLine("LMAO");
+                    Console.WriteLine($" OLD {entity_Velocity.X} {entity_Velocity.Y}");
+                    if (entity_Velocity.Y > 0)
+                    {
+                        Console.WriteLine("William best");
+                        Vector2 newVelo;
+                        //Vector2 testing;
+                        Console.WriteLine($" OLD {entity_Velocity.X} {entity_Velocity.Y}");
+                        newVelo.X = entity_Velocity.X;
+                        newVelo.Y = 0;
+                        InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                        //InternalCall.m_InternalGetVelocity(EntityID, out testing);
+                        //Console.WriteLine($" NEW {testing.X} {testing.Y}");
+                        InternalCall.m_InternalSetTranslate(EntityID, new_Position);
+
+                    }
+                }
+                else if (direction == 4)
+                {
+                    if (entity_Velocity.Y < 0)
+                    {
+                        Vector2 newVelo;
+                        newVelo.X = entity_Velocity.X;
+                        newVelo.Y = 0;
+                        InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                    }
+                }
+                else if (direction == 2)
+                {
+                    if (entity_Velocity.X > 0)
+                    {
+                        Vector2 newVelo;
+                        newVelo.X = 0;
+                        newVelo.Y = entity_Velocity.Y;
+                        InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                    }
+                }
+                else if (direction == 8)
+                {
+                    if (entity_Velocity.X < 0)
+                    {
+                        Vector2 newVelo;
+                        newVelo.X = 0;
+                        newVelo.Y = entity_Velocity.Y;
+                        InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                    }
+                }
+                else if (direction == 9)
+                {
+                    Vector2 newVelo = entity_Velocity;
+                    if (entity_Velocity.X < 0)
+                    {
+                        newVelo.X = 0;
+                    }
+                    if (entity_Velocity.Y > 0)
+                    {
+                        newVelo.Y = 0;
+                    }
+                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                }
+                else if (direction == 3)
+                {
+                    Vector2 newVelo = entity_Velocity;
+                    if (entity_Velocity.X > 0)
+                    {
+                        newVelo.X = 0;
+                    }
+                    if (entity_Velocity.Y > 0)
+                    {
+                        newVelo.Y = 0;
+                    }
+                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                }
+                else if (direction == 6)
+                {
+                    Vector2 newVelo = entity_Velocity;
+                    if (entity_Velocity.X > 0)
+                    {
+                        newVelo.X = 0;
+                    }
+                    if (entity_Velocity.Y < 0)
+                    {
+                        newVelo.Y = 0;
+                    }
+                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                }
+                else if (direction == 12)
+                {
+                    Vector2 newVelo = entity_Velocity;
+                    if (entity_Velocity.X < 0)
+                    {
+                        newVelo.X = 0;
+                    }
+                    if (entity_Velocity.Y < 0)
+                    {
+                        newVelo.Y = 0;
+                    }
+                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                }
+                break;
+            case 2: //RIGHT
+                if (direction == 1)
+                {
+                    if (entity_Velocity.X > 0)
+                    {
+                        Vector2 newVelo;
+                        newVelo.X = 0;
+                        newVelo.Y = entity_Velocity.Y;
+                        InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                    }
+                }
+                else if (direction == 4)
+                {
+                    if (entity_Velocity.X < 0)
+                    {
+                        Vector2 newVelo;
+                        newVelo.X = 0;
+                        newVelo.Y = entity_Velocity.Y;
+                        InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                    }
+                }
+                else if (direction == 2)
+                {
+                    if (entity_Velocity.Y < 0)
+                    {
+                        Vector2 newVelo;
+                        newVelo.X = entity_Velocity.X;
+                        newVelo.Y = 0;
+                        InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                    }
+                }
+                else if (direction == 8)
+                {
+                    if (entity_Velocity.Y > 0)
+                    {
+                        Vector2 newVelo;
+                        newVelo.X = entity_Velocity.X;
+                        newVelo.Y = 0;
+                        InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                    }
+                }
+                else if (direction == 9)
+                {
+                    Vector2 newVelo = entity_Velocity;
+                    if (entity_Velocity.X > 0)
+                    {
+                        newVelo.X = 0;
+                    }
+                    if (entity_Velocity.Y > 0)
+                    {
+                        newVelo.Y = 0;
+                    }
+                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                }
+                else if (direction == 3)
+                {
+                    Vector2 newVelo = entity_Velocity;
+                    if (entity_Velocity.X > 0)
+                    {
+                        newVelo.X = 0;
+                    }
+                    if (entity_Velocity.Y < 0)
+                    {
+                        newVelo.Y = 0;
+                    }
+                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                }
+                else if (direction == 6)
+                {
+                    Vector2 newVelo = entity_Velocity;
+                    if (entity_Velocity.X < 0)
+                    {
+                        newVelo.X = 0;
+                    }
+                    if (entity_Velocity.Y < 0)
+                    {
+                        newVelo.Y = 0;
+                    }
+                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                }
+                else if (direction == 12)
+                {
+                    Vector2 newVelo = entity_Velocity;
+                    if (entity_Velocity.X < 0)
+                    {
+                        newVelo.X = 0;
+                    }
+                    if (entity_Velocity.Y > 0)
+                    {
+                        newVelo.Y = 0;
+                    }
+                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                }
+                break;
+            case 4: // BOTTOM
+                if (direction == 1)
+                {
+                    if (entity_Velocity.Y < 0)
+                    {
+                        Vector2 newVelo;
+                        newVelo.X = entity_Velocity.X;
+                        newVelo.Y = 0;
+                        InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                    }
+                }
+                else if (direction == 4)
+                {
+                    if (entity_Velocity.Y > 0)
+                    {
+                        Vector2 newVelo;
+                        newVelo.X = entity_Velocity.X;
+                        newVelo.Y = 0;
+                        InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                    }
+                }
+                else if (direction == 2)
+                {
+                    if (entity_Velocity.X < 0)
+                    {
+                        Vector2 newVelo;
+                        newVelo.X = 0;
+                        newVelo.Y = entity_Velocity.Y;
+                        InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                    }
+                }
+                else if (direction == 8)
+                {
+                    if (entity_Velocity.X > 0)
+                    {
+                        Vector2 newVelo;
+                        newVelo.X = 0;
+                        newVelo.Y = entity_Velocity.Y;
+                        InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                    }
+                }
+                else if (direction == 9)
+                {
+                    Vector2 newVelo = entity_Velocity;
+                    if (entity_Velocity.X > 0)
+                    {
+                        newVelo.X = 0;
+                    }
+                    if (entity_Velocity.Y < 0)
+                    {
+                        newVelo.Y = 0;
+                    }
+                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                }
+                else if (direction == 3)
+                {
+                    Vector2 newVelo = entity_Velocity;
+                    if (entity_Velocity.X < 0)
+                    {
+                        newVelo.X = 0;
+                    }
+                    if (entity_Velocity.Y < 0)
+                    {
+                        newVelo.Y = 0;
+                    }
+                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                }
+                else if (direction == 6)
+                {
+                    Vector2 newVelo = entity_Velocity;
+                    if (entity_Velocity.X < 0)
+                    {
+                        newVelo.X = 0;
+                    }
+                    if (entity_Velocity.Y > 0)
+                    {
+                        newVelo.Y = 0;
+                    }
+                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                }
+                else if (direction == 12)
+                {
+                    Vector2 newVelo = entity_Velocity;
+                    if (entity_Velocity.X > 0)
+                    {
+                        newVelo.X = 0;
+                    }
+                    if (entity_Velocity.Y > 0)
+                    {
+                        newVelo.Y = 0;
+                    }
+                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                }
+                break;
+            case 8: //LEFT
+                if (direction == 1)
+                {
+                    if (entity_Velocity.X < 0)
+                    {
+                        Vector2 newVelo;
+                        newVelo.X = 0;
+                        newVelo.Y = entity_Velocity.Y;
+                        InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                    }
+                }
+                else if (direction == 4)
+                {
+                    if (entity_Velocity.X > 0)
+                    {
+                        Vector2 newVelo;
+                        newVelo.X = 0;
+                        newVelo.Y = entity_Velocity.Y;
+                        InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                    }
+                }
+                else if (direction == 2)
+                {
+                    if (entity_Velocity.Y > 0)
+                    {
+                        Vector2 newVelo;
+                        newVelo.X = entity_Velocity.X;
+                        newVelo.Y = 0;
+                        InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                    }
+                }
+                else if (direction == 8)
+                {
+                    if (entity_Velocity.Y < 0)
+                    {
+                        Vector2 newVelo;
+                        newVelo.X = entity_Velocity.X;
+                        newVelo.Y = 0;
+                        InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                    }
+                }
+                else if (direction == 9)
+                {
+                    Vector2 newVelo = entity_Velocity;
+                    if (entity_Velocity.X < 0)
+                    {
+                        newVelo.X = 0;
+                    }
+                    if (entity_Velocity.Y < 0)
+                    {
+                        newVelo.Y = 0;
+                    }
+                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                }
+                else if (direction == 3)
+                {
+                    Vector2 newVelo = entity_Velocity;
+                    if (entity_Velocity.X < 0)
+                    {
+                        newVelo.X = 0;
+                    }
+                    if (entity_Velocity.Y > 0)
+                    {
+                        newVelo.Y = 0;
+                    }
+                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                }
+                else if (direction == 6)
+                {
+                    Vector2 newVelo = entity_Velocity;
+                    if (entity_Velocity.X > 0)
+                    {
+                        newVelo.X = 0;
+                    }
+                    if (entity_Velocity.Y > 0)
+                    {
+                        newVelo.Y = 0;
+                    }
+                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                }
+                else if (direction == 12)
+                {
+                    Vector2 newVelo = entity_Velocity;
+                    if (entity_Velocity.X > 0)
+                    {
+                        newVelo.X = 0;
+                    }
+                    if (entity_Velocity.Y < 0)
+                    {
+                        newVelo.Y = 0;
+                    }
+                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                }
+                break;
+            case 3: //top right
+                if (direction == 1)
+                {
+                    Vector2 newVelo = entity_Velocity;
+                    if (entity_Velocity.X > 0)
+                    {
+                        newVelo.X = 0;
+                    }
+                    if (entity_Velocity.Y > 0)
+                    {
+                        newVelo.Y = 0;
+                    }
+                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                }
+                else if (direction == 4)
+                {
+                    Vector2 newVelo = entity_Velocity;
+                    if (entity_Velocity.X < 0)
+                    {
+                        newVelo.X = 0;
+                    }
+                    if (entity_Velocity.Y < 0)
+                    {
+                        newVelo.Y = 0;
+                    }
+                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                }
+                else if (direction == 2)
+                {
+                    Vector2 newVelo = entity_Velocity;
+                    if (entity_Velocity.X > 0)
+                    {
+                        newVelo.X = 0;
+                    }
+                    if (entity_Velocity.Y < 0)
+                    {
+                        newVelo.Y = 0;
+                    }
+                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                }
+                else if (direction == 8)
+                {
+                    Vector2 newVelo = entity_Velocity;
+                    if (entity_Velocity.X < 0)
+                    {
+                        newVelo.X = 0;
+                    }
+                    if (entity_Velocity.Y > 0)
+                    {
+                        newVelo.Y = 0;
+                    }
+                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                }
+                else if (direction == 9)
+                {
+                    Vector2 newVelo = entity_Velocity;
+                    if (entity_Velocity.Y > 0)
+                    {
+                        newVelo.Y = 0;
+                    }
+                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                }
+                else if (direction == 3)
+                {
+                    Vector2 newVelo = entity_Velocity;
+                    if (entity_Velocity.X > 0)
+                    {
+                        newVelo.X = 0;
+                    }
+                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                }
+                else if (direction == 6)
+                {
+                    Vector2 newVelo = entity_Velocity;
+                    if (entity_Velocity.Y < 0)
+                    {
+                        newVelo.Y = 0;
+                    }
+                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                }
+                else if (direction == 12)
+                {
+                    Vector2 newVelo = entity_Velocity;
+                    if (entity_Velocity.X < 0)
+                    {
+                        newVelo.X = 0;
+                    }
+                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                }
+                break;
+            case 6: //bottom right
+                if (direction == 1)
+                {
+                    Vector2 newVelo = entity_Velocity;
+                    if (entity_Velocity.X > 0)
+                    {
+                        newVelo.X = 0;
+                    }
+                    if (entity_Velocity.Y < 0)
+                    {
+                        newVelo.Y = 0;
+                    }
+                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                }
+                else if (direction == 4)
+                {
+                    Vector2 newVelo = entity_Velocity;
+                    if (entity_Velocity.X < 0)
+                    {
+                        newVelo.X = 0;
+                    }
+                    if (entity_Velocity.Y > 0)
+                    {
+                        newVelo.Y = 0;
+                    }
+                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                }
+                else if (direction == 2)
+                {
+                    Vector2 newVelo = entity_Velocity;
+                    if (entity_Velocity.X < 0)
+                    {
+                        newVelo.X = 0;
+                    }
+                    if (entity_Velocity.Y < 0)
+                    {
+                        newVelo.Y = 0;
+                    }
+                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                }
+                else if (direction == 8)
+                {
+                    Vector2 newVelo = entity_Velocity;
+                    if (entity_Velocity.X > 0)
+                    {
+                        newVelo.X = 0;
+                    }
+                    if (entity_Velocity.Y > 0)
+                    {
+                        newVelo.Y = 0;
+                    }
+                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                }
+                else if (direction == 9)
+                {
+                    Vector2 newVelo = entity_Velocity;
+                    if (entity_Velocity.X > 0)
+                    {
+                        newVelo.X = 0;
+                    }
+                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                }
+                else if (direction == 3)
+                {
+                    Vector2 newVelo = entity_Velocity;
+                    if (entity_Velocity.Y < 0)
+                    {
+                        newVelo.Y = 0;
+                    }
+                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                }
+                else if (direction == 6)
+                {
+                    Vector2 newVelo = entity_Velocity;
+                    if (entity_Velocity.X < 0)
+                    {
+                        newVelo.X = 0;
+                    }
+                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                }
+                else if (direction == 12)
+                {
+                    Vector2 newVelo = entity_Velocity;
+                    if (entity_Velocity.Y > 0)
+                    {
+                        newVelo.Y = 0;
+                    }
+                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                }
+                break;
+            case 12: // bottom left
+                if (direction == 1)
+                {
+                    Vector2 newVelo = entity_Velocity;
+                    if (entity_Velocity.X < 0)
+                    {
+                        newVelo.X = 0;
+                    }
+                    if (entity_Velocity.Y < 0)
+                    {
+                        newVelo.Y = 0;
+                    }
+                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                }
+                else if (direction == 4)
+                {
+                    Vector2 newVelo = entity_Velocity;
+                    if (entity_Velocity.X > 0)
+                    {
+                        newVelo.X = 0;
+                    }
+                    if (entity_Velocity.Y > 0)
+                    {
+                        newVelo.Y = 0;
+                    }
+                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                }
+                else if (direction == 2)
+                {
+                    Vector2 newVelo = entity_Velocity;
+                    if (entity_Velocity.X < 0)
+                    {
+                        newVelo.X = 0;
+                    }
+                    if (entity_Velocity.Y > 0)
+                    {
+                        newVelo.Y = 0;
+                    }
+                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                }
+                else if (direction == 8)
+                {
+                    Vector2 newVelo = entity_Velocity;
+                    if (entity_Velocity.X > 0)
+                    {
+                        newVelo.X = 0;
+                    }
+                    if (entity_Velocity.Y < 0)
+                    {
+                        newVelo.Y = 0;
+                    }
+                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                }
+                else if (direction == 9)
+                {
+                    Vector2 newVelo = entity_Velocity;
+                    if (entity_Velocity.Y < 0)
+                    {
+                        newVelo.Y = 0;
+                    }
+                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                }
+                else if (direction == 3)
+                {
+                    Vector2 newVelo = entity_Velocity;
+                    if (entity_Velocity.X < 0)
+                    {
+                        newVelo.X = 0;
+                    }
+                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                }
+                else if (direction == 6)
+                {
+                    Vector2 newVelo = entity_Velocity;
+                    if (entity_Velocity.Y > 0)
+                    {
+                        newVelo.Y = 0;
+                    }
+                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                }
+                else if (direction == 12)
+                {
+                    Vector2 newVelo = entity_Velocity;
+                    if (entity_Velocity.X > 0)
+                    {
+                        newVelo.X = 0;
+                    }
+                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                }
+                break;
+            case 9: // top left
+                if (direction == 1)
+                {
+                    Vector2 newVelo = entity_Velocity;
+                    if (entity_Velocity.X < 0)
+                    {
+                        newVelo.X = 0;
+                    }
+                    if (entity_Velocity.Y > 0)
+                    {
+                        newVelo.Y = 0;
+                    }
+                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                }
+                else if (direction == 4)
+                {
+                    Vector2 newVelo = entity_Velocity;
+                    if (entity_Velocity.X > 0)
+                    {
+                        newVelo.X = 0;
+                    }
+                    if (entity_Velocity.Y < 0)
+                    {
+                        newVelo.Y = 0;
+                    }
+                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                }
+                else if (direction == 2)
+                {
+                    Vector2 newVelo = entity_Velocity;
+                    if (entity_Velocity.X > 0)
+                    {
+                        newVelo.X = 0;
+                    }
+                    if (entity_Velocity.Y > 0)
+                    {
+                        newVelo.Y = 0;
+                    }
+                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                }
+                else if (direction == 8)
+                {
+                    Vector2 newVelo = entity_Velocity;
+                    if (entity_Velocity.X < 0)
+                    {
+                        newVelo.X = 0;
+                    }
+                    if (entity_Velocity.Y < 0)
+                    {
+                        newVelo.Y = 0;
+                    }
+                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                }
+                else if (direction == 9)
+                {
+                    Vector2 newVelo = entity_Velocity;
+                    if (entity_Velocity.X < 0)
+                    {
+                        newVelo.X = 0;
+                    }
+                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                }
+                else if (direction == 3)
+                {
+                    Vector2 newVelo = entity_Velocity;
+                    if (entity_Velocity.Y > 0)
+                    {
+                        newVelo.Y = 0;
+                    }
+                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                }
+                else if (direction == 6)
+                {
+                    Vector2 newVelo = entity_Velocity;
+                    if (entity_Velocity.X > 0)
+                    {
+                        newVelo.X = 0;
+                    }
+                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                }
+                else if (direction == 12)
+                {
+                    Vector2 newVelo = entity_Velocity;
+                    if (entity_Velocity.Y < 0)
+                    {
+                        newVelo.Y = 0;
+                    }
+                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                }
+                break;
+            default:
+                Console.WriteLine("GG.com never acc for smth");
+                Console.WriteLine(entity_CollisionFlag);
+                Console.WriteLine($"X  { entity_DirectionVector.X }  Y { entity_DirectionVector.Y}");
+                new_Position.X = new_Position.X - entity_DirectionVector.X;
+                new_Position.Y = new_Position.Y - entity_DirectionVector.Y; 
+                InternalCall.m_InternalSetTranslate(EntityID, new_Position);
+                break;
+
+        }
+        //Console.WriteLine("K");
+        #region saved code previous collision response
         //if (InternalCall.m_InternalCallGetTagIDs("Wall") != null)
         //{
         //    int[] wallEntities = InternalCall.m_InternalCallGetTagIDs("Wall");
@@ -55,7 +889,7 @@ public class CollisionResponse : ScriptBase
         //        Vector2 wallSize, wallOffset, wallPos, wallScale;
         //        float wallRadius, wallRotate, wallCollided;
         //        bool wallDraw, wallCheck;
-        //        int wallFlag;
+        //        uint wallFlag;
 
         //        InternalCall.m_InternalGetColliderComponent((uint)wallEntitiesID, out wallSize, out wallOffset, out wallDraw, out wallRadius, out wallFlag, out wallCollided, out wallCheck);
         //        InternalCall.m_InternalGetTransformComponent((uint)wallEntitiesID, out wallPos, out wallScale, out wallRotate);
@@ -248,10 +1082,7 @@ public class CollisionResponse : ScriptBase
         //        }
         //    }
         //}
-                
-        
-
         #endregion
-
     }
 }
+

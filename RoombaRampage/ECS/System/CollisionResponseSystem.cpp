@@ -105,6 +105,7 @@ namespace ecs {
 				ColComp->m_triColWith.clear();
 				ColComp->m_blockedFlag = 0;
 				ColComp->m_contactPoints.clear();
+				ColComp->m_bits.reset();
 				//skip component not of the scene
 				if ((ColComp->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer)) continue;
 				
