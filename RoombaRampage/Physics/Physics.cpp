@@ -732,10 +732,16 @@ namespace physicspipe {
 		m_collidedEntitiesPair.clear();
 	}
 
+	bool IsPointOnSegment(const vector2::Vec2& point, const vector2::Vec2& segStart, const vector2::Vec2& segEnd, float epsilon) {
+		return point.m_x >= std::min(segStart.m_x, segEnd.m_x) - epsilon &&
+			point.m_x <= std::max(segStart.m_x, segEnd.m_x) + epsilon &&
+			point.m_y >= std::min(segStart.m_y, segEnd.m_y) - epsilon &&
+			point.m_y <= std::max(segStart.m_y, segEnd.m_y) + epsilon;
+	}
 
+	bool Physics::LineIntersect(const vector2::Vec2& p1, const vector2::Vec2& p2, const vector2::Vec2& q1, const vector2::Vec2& q2, vector2::Vec2& intersection) {
+		const float epsilon = 1e-6f;
 
-	bool Physics::LineIntersect(const vector2::Vec2& p1, const vector2::Vec2& p2, const vector2::Vec2& q1, const vector2::Vec2& q2, vector2::Vec2& intersection)
-	{
 		// Line equations: p1 + t * (p2 - p1), q1 + u * (q2 - q1)
 		float a1 = p2.m_y - p1.m_y;
 		float b1 = p1.m_x - p2.m_x;
@@ -747,26 +753,33 @@ namespace physicspipe {
 
 		float determinant = a1 * b2 - a2 * b1;
 
-		if (determinant == 0) {
-			return false; // Lines are parallel
+		// Check for parallel lines
+		if (std::abs(determinant) < epsilon) {
+			// Check if lines are collinear
+			if (std::abs(c1 - c2) < epsilon) {
+				// Check for overlap
+				if (std::max(p1.m_x, p2.m_x) >= std::min(q1.m_x, q2.m_x) &&
+					std::max(q1.m_x, q2.m_x) >= std::min(p1.m_x, p2.m_x) &&
+					std::max(p1.m_y, p2.m_y) >= std::min(q1.m_y, q2.m_y) &&
+					std::max(q1.m_y, q2.m_y) >= std::min(p1.m_y, p2.m_y)) {
+					return true; // Overlapping lines
+				}
+			}
+			return false; // Parallel but not collinear
 		}
 
+		// Find intersection point
 		intersection.m_x = (b2 * c1 - b1 * c2) / determinant;
 		intersection.m_y = (a1 * c2 - a2 * c1) / determinant;
 
 		// Check if the intersection point lies on both line segments
-		if (intersection.m_x < std::min(p1.m_x, p2.m_x) || intersection.m_x > std::max(p1.m_x, p2.m_x) ||
-			intersection.m_y < std::min(p1.m_y, p2.m_y) || intersection.m_y > std::max(p1.m_y, p2.m_y)) {
-			return false;
-		}
-
-		if (intersection.m_x < std::min(q1.m_x, q2.m_x) || intersection.m_x > std::max(q1.m_x, q2.m_x) ||
-			intersection.m_y < std::min(q1.m_y, q2.m_y) || intersection.m_y > std::max(q1.m_y, q2.m_y)) {
+		if (!IsPointOnSegment(intersection, p1, p2, epsilon) || !IsPointOnSegment(intersection, q1, q2, epsilon)) {
 			return false;
 		}
 
 		return true;
 	}
+
 	float Distance(const vector2::Vec2& p1, const vector2::Vec2& p2) {
 		return std::sqrt((p2.m_x - p1.m_x) * (p2.m_x - p1.m_x) + (p2.m_y - p1.m_y) * (p2.m_y - p1.m_y));
 	}
