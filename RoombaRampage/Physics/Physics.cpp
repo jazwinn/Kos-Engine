@@ -350,13 +350,15 @@ namespace physicspipe {
 
 	bool Physics::m_CollisionIntersection_CircleRect_SAT(const Circle& circle, const Rectangle& rect) {
 		//need the vertices of the rectangle
+		vector2::Vec2 normal{};
+		float depth = FLT_MAX;
 		std::vector<vector2::Vec2> rect_Vertices = rect.m_GetRotatedVertices();
 		std::vector<vector2::Vec2> rect_Edges = rect.m_GetEdges();
 		float minA{}, maxA{}, minB{}, maxB{};
-		float minOverlap = std::numeric_limits<float>::max();
-		vector2::Vec2 collisionNormal;
+		float axisdepth;
 		for (const auto& edge : rect_Edges) {
 			vector2::Vec2 axis = { -edge.m_y, edge.m_x };
+			vector2::Vec2::m_funcVec2Normalize(axis, axis);
 			m_ProjectOntoAxis(rect_Vertices, axis, minA, maxA);
 			m_ProjectOntoCircle(circle.m_position, circle.m_radius, axis, minB, maxB);
 
@@ -364,10 +366,10 @@ namespace physicspipe {
 			{
 				return false;
 			}
-			float overlap = std::min(maxA, maxB) - std::max(minA, minB);
-			if (overlap < minOverlap) {
-				minOverlap = overlap;
-				collisionNormal = axis;
+			axisdepth = std::min(maxA, maxB) - std::max(minA, minB);
+			if (axisdepth < depth) {
+				depth = axisdepth;
+				normal = axis;
 			}
 		}
 
@@ -380,52 +382,18 @@ namespace physicspipe {
 		m_ProjectOntoCircle(circle.m_position, circle.m_radius, axis, minB, maxB);
 
 		if (minA >= maxB || minB >= maxA) return false;
-		float overlap = std::min(maxA, maxB) - std::max(minA, minB);
-		if (overlap < minOverlap) {
-			minOverlap = overlap;
-			collisionNormal = axis;
+		axisdepth = std::min(maxB - minA, maxA - minB);
+		if (axisdepth < depth) {
+			depth = axisdepth;
+			normal = axis;
 		}
 
-		// Step 4: Determine blocked directions for both circle and rectangle
-		vector2::Vec2 deltaPosition = circle.m_position - rect.m_position;
-		if (std::abs(collisionNormal.m_x) > std::abs(collisionNormal.m_y)) {
-			// Horizontal collision
-			if (collisionNormal.m_x > 0) {
-				//const_cast<Circle&>(circle).AddBlockedDirection("left");
-				//const_cast<Rectangle&>(rect).AddBlockedDirection("right");
-				const_cast<Circle&>(circle).m_AddCollisionFlag(LEFT);
-				const_cast<Rectangle&>(rect).m_AddCollisionFlag(RIGHT);
-			}
-			else {
-				//const_cast<Circle&>(circle).AddBlockedDirection("right");
-				//const_cast<Rectangle&>(rect).AddBlockedDirection("left");
-				const_cast<Circle&>(circle).m_AddCollisionFlag(RIGHT);
-				const_cast<Rectangle&>(rect).m_AddCollisionFlag(LEFT);
-				//const_cast<Circle&>(circle).AddBlockedDirection("left");
-				//const_cast<Rectangle&>(rect).AddBlockedDirection("right");
-			}
+		vector2::Vec2 direction = rect.m_position - circle.m_position;
+		if (vector2::Vec2::m_funcVec2DDotProduct(direction, normal) < 0.f)
+		{
+			normal = -normal;
 		}
-		else {
-			// Vertical collision
-			if (collisionNormal.m_y > 0) {
-				//const_cast<Circle&>(circle).AddBlockedDirection("up");
-				//const_cast<Rectangle&>(rect).AddBlockedDirection("down");
-				const_cast<Circle&>(circle).m_AddCollisionFlag(UP);
-				const_cast<Rectangle&>(rect).m_AddCollisionFlag(DOWN);
-				//const_cast<Circle&>(circle).AddBlockedDirection("down");
-				//const_cast<Rectangle&>(rect).AddBlockedDirection("up");
-			}
-			else {
-				//const_cast<Circle&>(circle).AddBlockedDirection("down");
-				//const_cast<Rectangle&>(rect).AddBlockedDirection("up");
-				const_cast<Circle&>(circle).m_AddCollisionFlag(DOWN);
-				const_cast<Rectangle&>(rect).m_AddCollisionFlag(UP);
-				//const_cast<Circle&>(circle).AddBlockedDirection("up");
-				//const_cast<Rectangle&>(rect).AddBlockedDirection("down");
-			}
-		}
-
-
+		
 		return true;
 
 	}
