@@ -70,9 +70,9 @@ public class ColliderComponent
     public uint m_blockedFlag;
 }
 
-public class PlayerComponent
+public class EnemyComponent
 {
-    public bool m_Control;
+    public int m_tag;
 }
 
 public class TextComponent
