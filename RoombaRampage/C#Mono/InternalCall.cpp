@@ -105,25 +105,26 @@ namespace script {
 	}
 
 	//Player Component
-	bool InternalCall::m_InternalGetPlayerComponent(ecs::EntityID entity, bool* control)
+	bool InternalCall::m_InternalGetEnemyComponent(ecs::EntityID entity, int* enemytag)
 	{
-		auto* player = static_cast<ecs::PlayerComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPEPLAYERCOMPONENT]->m_GetEntityComponent(entity));
+		auto* player = static_cast<ecs::EnemyComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPEENEMYCOMPONENT]->m_GetEntityComponent(entity));
 
 		if (player == nullptr) return false;
 
-		*control = player->m_Control;
+		*enemytag = player->m_enemyTag;
+
 		return true;
 	}
 
-	bool InternalCall::m_InternalSetPlayerComponent(ecs::EntityID entity, bool control)
-	{
-		auto* player = static_cast<ecs::PlayerComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPEPLAYERCOMPONENT]->m_GetEntityComponent(entity));
+	//bool InternalCall::m_InternalSetPlayerComponent(ecs::EntityID entity, bool control)
+	//{
+	//	auto* player = static_cast<ecs::PlayerComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPEPLAYERCOMPONENT]->m_GetEntityComponent(entity));
 
-		if (player == nullptr) return false;
+	//	if (player == nullptr) return false;
 
-		player->m_Control = control;
-		return true;
-	}
+	//	player->m_Control = control;
+	//	return true;
+	//}
 
 	//RigidBody Component
 	bool InternalCall::m_InternalGetRigidBodyComponent(ecs::EntityID entity, vector2::Vec2* velocity, vector2::Vec2* acceleration, float* rotation, vector2::Vec2* previouspos, vector2::Vec2* directionvector)
@@ -957,8 +958,8 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_InternalGetColliderComponent);
 		MONO_ADD_INTERNAL_CALL(m_InternalSetColliderComponent);
 
-		MONO_ADD_INTERNAL_CALL(m_InternalGetPlayerComponent);
-		MONO_ADD_INTERNAL_CALL(m_InternalSetPlayerComponent);
+		MONO_ADD_INTERNAL_CALL(m_InternalGetEnemyComponent);
+		//MONO_ADD_INTERNAL_CALL(m_InternalSetPlayerComponent);
 
 		MONO_ADD_INTERNAL_CALL(m_InternalGetRigidBodyComponent);
 		MONO_ADD_INTERNAL_CALL(m_InternalSetRigidBodyComponent);

@@ -29,10 +29,10 @@ public static class InternalCall
     public extern static bool m_InternalSetColliderComponent(uint entity, in Vector2 size, in Vector2 offset, in bool drawDebug, in float radius, in uint bockflag, in float isCollided, in bool collisionCheck);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static bool m_InternalGetPlayerComponent(uint entity, out bool control);
+    public extern static bool m_InternalGetEnemyComponent(uint entity, out int enemyTag);
 
-    [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static bool m_InternalSetPlayerComponent(uint entity, in bool control);
+    //[MethodImpl(MethodImplOptions.InternalCall)]
+    //public extern static bool m_InternalSetPlayerComponent(uint entity, in bool control);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static bool m_InternalGetRigidBodyComponent(uint entity, out Vector2 velocity, out Vector2 acceleration, out float rotation, out Vector2 previouspos, out Vector2 direction);
@@ -260,7 +260,11 @@ public static class Component
 
                 pathfindingcomponent.m_node.Add(new Vector2(x[n], y[n]));
             }
-            Console.WriteLine("4");
+        }
+        else if (typeof(T) == typeof(EnemyComponent))
+        {
+            var enemyComponent = component as EnemyComponent;
+            InternalCall.m_InternalGetEnemyComponent(id, out enemyComponent.m_tag);
         }
         else
         {

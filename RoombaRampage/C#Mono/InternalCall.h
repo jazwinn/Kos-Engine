@@ -112,7 +112,7 @@ namespace script {
 			\return    True if the player component is found and retrieved; otherwise, false.
 		*/
 		/******************************************************************/
-		static bool m_InternalGetPlayerComponent(ecs::EntityID entity, bool* control);
+		static bool m_InternalGetEnemyComponent(ecs::EntityID entity, int* enemytag);
 
 		/******************************************************************/
 		/*!
@@ -123,7 +123,7 @@ namespace script {
 			\return    True if the player component is found and updated; otherwise, false.
 		*/
 		/******************************************************************/
-		static bool m_InternalSetPlayerComponent(ecs::EntityID entity, bool control);
+		//static bool m_InternalSetPlayerComponent(ecs::EntityID entity, int* enemytag);
 
 		/******************************************************************/
 		/*!

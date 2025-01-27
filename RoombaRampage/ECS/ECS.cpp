@@ -51,7 +51,7 @@ namespace ecs{
 		m_AddComponentToECS<SpriteComponent>(TYPESPRITECOMPONENT);
 		m_AddComponentToECS<ColliderComponent>(TYPECOLLIDERCOMPONENT);
 		m_AddComponentToECS<RigidBodyComponent>(TYPERIGIDBODYCOMPONENT);
-		m_AddComponentToECS<PlayerComponent>(TYPEPLAYERCOMPONENT);
+		m_AddComponentToECS<EnemyComponent>(TYPEENEMYCOMPONENT);
 		m_AddComponentToECS<TextComponent>(TYPETEXTCOMPONENT);
 		m_AddComponentToECS<AnimationComponent>(TYPEANIMATIONCOMPONENT);
 		m_AddComponentToECS<CameraComponent>(TYPECAMERACOMPONENT);
