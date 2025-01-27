@@ -76,6 +76,34 @@ public class CollisionResponse : ScriptBase
         InternalCall.m_InternalGetTransformComponent(EntityID, out startingPlayerPos, out startingPlayerScale, out startingPlayerRotate);
 
         InternalCall.m_InternalGetRigidBodyComponent(EntityID, out entity_Velocity, out entity_Acceleration, out entity_Rotation, out entity_Position, out entity_DirectionVector);
+        
+        RigidBodyComponent entity_Rigid = Component.Get<RigidBodyComponent>(EntityID);
+        TransformComponent entity_Transform = Component.Get<TransformComponent>(EntityID);
+        ColliderComponent entity_Collider = Component.Get<ColliderComponent>(EntityID);
+
+        entity_Position = entity_Transform.m_position;
+        entity_Velocity = entity_Rigid.m_Velocity;
+        entity_Acceleration = entity_Rigid.m_Acceleration;
+        entity_CollisionFlag = entity_Collider.m_blockedFlag;
+        entity_DirectionVector = entity_Rigid.m_direction;
+
+
+        Vector2 new_Position;
+        Vector2 entity_Snapback;
+        Vector2 new_Velocity;
+
+        new_Velocity.X = entity_Velocity.X + (delta * entity_Acceleration.X);
+        new_Velocity.Y = entity_Velocity.Y + (delta * entity_Acceleration.Y);
+
+        //entity_Snapback.X = (delta * new_Velocity.X) + 0.001f;
+        //entity_Snapback.Y = (delta * new_Velocity.Y) + 0.001f;
+        //Console.WriteLine($"Position X  {entity_Position.X} T POS Y {entity_Position.Y}");
+        //Console.WriteLine($"Snapback X  {entity_Snapback.X} T POS Y {entity_Snapback.Y}");
+        //new_Position.X = entity_Position.X - entity_Snapback.X;
+        //new_Position.Y = entity_Position.Y - entity_Snapback.Y;
+        //Console.WriteLine($"New X  {new_Position.X} T POS Y {new_Position.Y}");
+
+        Vector2 newVelo = entity_Velocity;
 
         ////I think need contact point..... sigh
         ///*
@@ -108,18 +136,6 @@ public class CollisionResponse : ScriptBase
         {
             direction += 4;
         }
-
-        Vector2 new_Position;
-        Vector2 entity_Snapback;
-        Vector2 new_Velocity;
-        new_Velocity.X = entity_Velocity.X + (delta * entity_Acceleration.X);
-        new_Velocity.Y = entity_Velocity.Y + (delta * entity_Acceleration.Y);
-        entity_Snapback.X = -(delta * new_Velocity.X);
-        entity_Snapback.Y = -(delta * new_Velocity.Y);
-        new_Position.X = entity_Position.X + entity_Snapback.X;
-        new_Position.Y = entity_Position.Y + entity_Snapback.Y;
-        Console.WriteLine($" NEW POS {new_Position.X} {new_Position.Y}");
-
         switch (entity_CollisionFlag)
         {
             case 0:
@@ -127,69 +143,53 @@ public class CollisionResponse : ScriptBase
             case 1: //TOP
                 if (direction == 1)
                 {
-                    Console.WriteLine("LMAO");
-                    Console.WriteLine($" OLD {entity_Velocity.X} {entity_Velocity.Y}");
                     if (entity_Velocity.Y > 0)
                     {
-                        Console.WriteLine("William best");
-                        Vector2 newVelo;
+
                         //Vector2 testing;
-                        Console.WriteLine($" OLD {entity_Velocity.X} {entity_Velocity.Y}");
                         newVelo.X = entity_Velocity.X;
                         newVelo.Y = 0;
-                        InternalCall.m_InternalSetVelocity(EntityID, newVelo);
-                        //InternalCall.m_InternalGetVelocity(EntityID, out testing);
-                        //Console.WriteLine($" NEW {testing.X} {testing.Y}");
-                        InternalCall.m_InternalSetTranslate(EntityID, new_Position);
-
                     }
                 }
                 else if (direction == 4)
                 {
                     if (entity_Velocity.Y < 0)
                     {
-                        Vector2 newVelo;
                         newVelo.X = entity_Velocity.X;
-                        newVelo.Y = 0;
-                        InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                        newVelo.Y = 0;                 
                     }
                 }
                 else if (direction == 2)
                 {
                     if (entity_Velocity.X > 0)
                     {
-                        Vector2 newVelo;
                         newVelo.X = 0;
                         newVelo.Y = entity_Velocity.Y;
-                        InternalCall.m_InternalSetVelocity(EntityID, newVelo);
                     }
                 }
                 else if (direction == 8)
                 {
                     if (entity_Velocity.X < 0)
                     {
-                        Vector2 newVelo;
                         newVelo.X = 0;
                         newVelo.Y = entity_Velocity.Y;
-                        InternalCall.m_InternalSetVelocity(EntityID, newVelo);
                     }
                 }
                 else if (direction == 9)
                 {
-                    Vector2 newVelo = entity_Velocity;
                     if (entity_Velocity.X < 0)
                     {
                         newVelo.X = 0;
+             
                     }
                     if (entity_Velocity.Y > 0)
                     {
                         newVelo.Y = 0;
                     }
-                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+               
                 }
                 else if (direction == 3)
                 {
-                    Vector2 newVelo = entity_Velocity;
                     if (entity_Velocity.X > 0)
                     {
                         newVelo.X = 0;
@@ -198,11 +198,9 @@ public class CollisionResponse : ScriptBase
                     {
                         newVelo.Y = 0;
                     }
-                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
                 }
                 else if (direction == 6)
                 {
-                    Vector2 newVelo = entity_Velocity;
                     if (entity_Velocity.X > 0)
                     {
                         newVelo.X = 0;
@@ -211,11 +209,10 @@ public class CollisionResponse : ScriptBase
                     {
                         newVelo.Y = 0;
                     }
-                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+
                 }
                 else if (direction == 12)
                 {
-                    Vector2 newVelo = entity_Velocity;
                     if (entity_Velocity.X < 0)
                     {
                         newVelo.X = 0;
@@ -224,53 +221,57 @@ public class CollisionResponse : ScriptBase
                     {
                         newVelo.Y = 0;
                     }
-                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+
                 }
+
+                entity_Snapback.X = (delta * new_Velocity.X) + 0.001f;
+                entity_Snapback.Y = (delta * new_Velocity.Y) + 0.001f;
+                new_Position.X = entity_Position.X;
+                new_Position.Y = entity_Position.Y - entity_Snapback.Y;
+                entity_Transform.m_position = new_Position;
+                entity_Rigid.m_Velocity = newVelo;
+
+                Component.Set<RigidBodyComponent>(EntityID, entity_Rigid);
+                Component.Set<TransformComponent>(EntityID, entity_Transform);
                 break;
             case 2: //RIGHT
                 if (direction == 1)
                 {
                     if (entity_Velocity.X > 0)
                     {
-                        Vector2 newVelo;
                         newVelo.X = 0;
                         newVelo.Y = entity_Velocity.Y;
-                        InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+
                     }
                 }
                 else if (direction == 4)
                 {
                     if (entity_Velocity.X < 0)
                     {
-                        Vector2 newVelo;
                         newVelo.X = 0;
                         newVelo.Y = entity_Velocity.Y;
-                        InternalCall.m_InternalSetVelocity(EntityID, newVelo);
                     }
                 }
                 else if (direction == 2)
                 {
                     if (entity_Velocity.Y < 0)
                     {
-                        Vector2 newVelo;
                         newVelo.X = entity_Velocity.X;
                         newVelo.Y = 0;
-                        InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+ 
                     }
                 }
                 else if (direction == 8)
                 {
                     if (entity_Velocity.Y > 0)
                     {
-                        Vector2 newVelo;
                         newVelo.X = entity_Velocity.X;
                         newVelo.Y = 0;
-                        InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+
                     }
                 }
                 else if (direction == 9)
                 {
-                    Vector2 newVelo = entity_Velocity;
                     if (entity_Velocity.X > 0)
                     {
                         newVelo.X = 0;
@@ -279,11 +280,10 @@ public class CollisionResponse : ScriptBase
                     {
                         newVelo.Y = 0;
                     }
-                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+
                 }
                 else if (direction == 3)
                 {
-                    Vector2 newVelo = entity_Velocity;
                     if (entity_Velocity.X > 0)
                     {
                         newVelo.X = 0;
@@ -292,11 +292,10 @@ public class CollisionResponse : ScriptBase
                     {
                         newVelo.Y = 0;
                     }
-                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+
                 }
                 else if (direction == 6)
                 {
-                    Vector2 newVelo = entity_Velocity;
                     if (entity_Velocity.X < 0)
                     {
                         newVelo.X = 0;
@@ -305,11 +304,10 @@ public class CollisionResponse : ScriptBase
                     {
                         newVelo.Y = 0;
                     }
-                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+
                 }
                 else if (direction == 12)
                 {
-                    Vector2 newVelo = entity_Velocity;
                     if (entity_Velocity.X < 0)
                     {
                         newVelo.X = 0;
@@ -318,53 +316,55 @@ public class CollisionResponse : ScriptBase
                     {
                         newVelo.Y = 0;
                     }
-                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+
                 }
+                entity_Snapback.X = (delta * new_Velocity.X) + 0.001f;
+                entity_Snapback.Y = (delta * new_Velocity.Y) + 0.001f;
+                new_Position.X = entity_Position.X - entity_Snapback.X;
+                new_Position.Y = entity_Position.Y ;
+                entity_Transform.m_position = new_Position;
+                entity_Rigid.m_Velocity = newVelo;
+
+                Component.Set<RigidBodyComponent>(EntityID, entity_Rigid);
+                Component.Set<TransformComponent>(EntityID, entity_Transform);
                 break;
             case 4: // BOTTOM
                 if (direction == 1)
                 {
                     if (entity_Velocity.Y < 0)
                     {
-                        Vector2 newVelo;
                         newVelo.X = entity_Velocity.X;
                         newVelo.Y = 0;
-                        InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+
                     }
                 }
                 else if (direction == 4)
                 {
                     if (entity_Velocity.Y > 0)
                     {
-                        Vector2 newVelo;
                         newVelo.X = entity_Velocity.X;
                         newVelo.Y = 0;
-                        InternalCall.m_InternalSetVelocity(EntityID, newVelo);
                     }
                 }
                 else if (direction == 2)
                 {
                     if (entity_Velocity.X < 0)
                     {
-                        Vector2 newVelo;
                         newVelo.X = 0;
                         newVelo.Y = entity_Velocity.Y;
-                        InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+
                     }
                 }
                 else if (direction == 8)
                 {
                     if (entity_Velocity.X > 0)
                     {
-                        Vector2 newVelo;
                         newVelo.X = 0;
                         newVelo.Y = entity_Velocity.Y;
-                        InternalCall.m_InternalSetVelocity(EntityID, newVelo);
                     }
                 }
                 else if (direction == 9)
                 {
-                    Vector2 newVelo = entity_Velocity;
                     if (entity_Velocity.X > 0)
                     {
                         newVelo.X = 0;
@@ -373,11 +373,11 @@ public class CollisionResponse : ScriptBase
                     {
                         newVelo.Y = 0;
                     }
-                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+
                 }
                 else if (direction == 3)
                 {
-                    Vector2 newVelo = entity_Velocity;
+
                     if (entity_Velocity.X < 0)
                     {
                         newVelo.X = 0;
@@ -386,11 +386,10 @@ public class CollisionResponse : ScriptBase
                     {
                         newVelo.Y = 0;
                     }
-                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+
                 }
                 else if (direction == 6)
                 {
-                    Vector2 newVelo = entity_Velocity;
                     if (entity_Velocity.X < 0)
                     {
                         newVelo.X = 0;
@@ -399,11 +398,10 @@ public class CollisionResponse : ScriptBase
                     {
                         newVelo.Y = 0;
                     }
-                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+
                 }
                 else if (direction == 12)
                 {
-                    Vector2 newVelo = entity_Velocity;
                     if (entity_Velocity.X > 0)
                     {
                         newVelo.X = 0;
@@ -412,53 +410,57 @@ public class CollisionResponse : ScriptBase
                     {
                         newVelo.Y = 0;
                     }
-                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+
                 }
+                entity_Snapback.X = (delta * new_Velocity.X) + 0.001f;
+                entity_Snapback.Y = (delta * new_Velocity.Y) + 0.001f;
+                new_Position.X = entity_Position.X ;
+                new_Position.Y = entity_Position.Y + entity_Snapback.Y;
+                entity_Transform.m_position = new_Position;
+                entity_Rigid.m_Velocity = newVelo;
+
+                Component.Set<RigidBodyComponent>(EntityID, entity_Rigid);
+                Component.Set<TransformComponent>(EntityID, entity_Transform);
                 break;
             case 8: //LEFT
                 if (direction == 1)
                 {
                     if (entity_Velocity.X < 0)
                     {
-                        Vector2 newVelo;
                         newVelo.X = 0;
                         newVelo.Y = entity_Velocity.Y;
-                        InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+ 
                     }
                 }
                 else if (direction == 4)
                 {
                     if (entity_Velocity.X > 0)
                     {
-                        Vector2 newVelo;
                         newVelo.X = 0;
                         newVelo.Y = entity_Velocity.Y;
-                        InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+
                     }
                 }
                 else if (direction == 2)
                 {
                     if (entity_Velocity.Y > 0)
                     {
-                        Vector2 newVelo;
                         newVelo.X = entity_Velocity.X;
                         newVelo.Y = 0;
-                        InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+
                     }
                 }
                 else if (direction == 8)
                 {
                     if (entity_Velocity.Y < 0)
                     {
-                        Vector2 newVelo;
                         newVelo.X = entity_Velocity.X;
                         newVelo.Y = 0;
-                        InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+
                     }
                 }
                 else if (direction == 9)
                 {
-                    Vector2 newVelo = entity_Velocity;
                     if (entity_Velocity.X < 0)
                     {
                         newVelo.X = 0;
@@ -467,11 +469,10 @@ public class CollisionResponse : ScriptBase
                     {
                         newVelo.Y = 0;
                     }
-                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+
                 }
                 else if (direction == 3)
                 {
-                    Vector2 newVelo = entity_Velocity;
                     if (entity_Velocity.X < 0)
                     {
                         newVelo.X = 0;
@@ -480,11 +481,11 @@ public class CollisionResponse : ScriptBase
                     {
                         newVelo.Y = 0;
                     }
-                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+
                 }
                 else if (direction == 6)
                 {
-                    Vector2 newVelo = entity_Velocity;
+
                     if (entity_Velocity.X > 0)
                     {
                         newVelo.X = 0;
@@ -493,11 +494,10 @@ public class CollisionResponse : ScriptBase
                     {
                         newVelo.Y = 0;
                     }
-                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+  
                 }
                 else if (direction == 12)
                 {
-                    Vector2 newVelo = entity_Velocity;
                     if (entity_Velocity.X > 0)
                     {
                         newVelo.X = 0;
@@ -506,13 +506,21 @@ public class CollisionResponse : ScriptBase
                     {
                         newVelo.Y = 0;
                     }
-                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+
                 }
+                entity_Snapback.X = (delta * new_Velocity.X) + 0.001f;
+                entity_Snapback.Y = (delta * new_Velocity.Y) + 0.001f;
+                new_Position.X = entity_Position.X + entity_Snapback.X;
+                new_Position.Y = entity_Position.Y;
+                entity_Transform.m_position = new_Position;
+                entity_Rigid.m_Velocity = newVelo;
+
+                Component.Set<RigidBodyComponent>(EntityID, entity_Rigid);
+                Component.Set<TransformComponent>(EntityID, entity_Transform);
                 break;
             case 3: //top right
                 if (direction == 1)
                 {
-                    Vector2 newVelo = entity_Velocity;
                     if (entity_Velocity.X > 0)
                     {
                         newVelo.X = 0;
@@ -521,11 +529,10 @@ public class CollisionResponse : ScriptBase
                     {
                         newVelo.Y = 0;
                     }
-                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+
                 }
                 else if (direction == 4)
                 {
-                    Vector2 newVelo = entity_Velocity;
                     if (entity_Velocity.X < 0)
                     {
                         newVelo.X = 0;
@@ -534,11 +541,10 @@ public class CollisionResponse : ScriptBase
                     {
                         newVelo.Y = 0;
                     }
-                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+
                 }
                 else if (direction == 2)
                 {
-                    Vector2 newVelo = entity_Velocity;
                     if (entity_Velocity.X > 0)
                     {
                         newVelo.X = 0;
@@ -547,11 +553,10 @@ public class CollisionResponse : ScriptBase
                     {
                         newVelo.Y = 0;
                     }
-                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+
                 }
                 else if (direction == 8)
                 {
-                    Vector2 newVelo = entity_Velocity;
                     if (entity_Velocity.X < 0)
                     {
                         newVelo.X = 0;
@@ -560,49 +565,52 @@ public class CollisionResponse : ScriptBase
                     {
                         newVelo.Y = 0;
                     }
-                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+
                 }
                 else if (direction == 9)
                 {
-                    Vector2 newVelo = entity_Velocity;
                     if (entity_Velocity.Y > 0)
                     {
                         newVelo.Y = 0;
                     }
-                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+
                 }
                 else if (direction == 3)
                 {
-                    Vector2 newVelo = entity_Velocity;
                     if (entity_Velocity.X > 0)
                     {
                         newVelo.X = 0;
                     }
-                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+
                 }
                 else if (direction == 6)
                 {
-                    Vector2 newVelo = entity_Velocity;
                     if (entity_Velocity.Y < 0)
                     {
                         newVelo.Y = 0;
                     }
-                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+ 
                 }
                 else if (direction == 12)
                 {
-                    Vector2 newVelo = entity_Velocity;
                     if (entity_Velocity.X < 0)
                     {
                         newVelo.X = 0;
                     }
-                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+
                 }
+                entity_Snapback.X = (delta * new_Velocity.X) + 0.001f;
+                entity_Snapback.Y = (delta * new_Velocity.Y) + 0.001f;
+                new_Position.X = entity_Position.X - entity_Snapback.X;
+                new_Position.Y = entity_Position.Y - entity_Snapback.Y;
+                entity_Transform.m_position = new_Position;
+                entity_Rigid.m_Velocity = newVelo;
+                Component.Set<RigidBodyComponent>(EntityID, entity_Rigid);
+                Component.Set<TransformComponent>(EntityID, entity_Transform);
                 break;
             case 6: //bottom right
                 if (direction == 1)
                 {
-                    Vector2 newVelo = entity_Velocity;
                     if (entity_Velocity.X > 0)
                     {
                         newVelo.X = 0;
@@ -611,11 +619,10 @@ public class CollisionResponse : ScriptBase
                     {
                         newVelo.Y = 0;
                     }
-                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+
                 }
                 else if (direction == 4)
                 {
-                    Vector2 newVelo = entity_Velocity;
                     if (entity_Velocity.X < 0)
                     {
                         newVelo.X = 0;
@@ -624,11 +631,10 @@ public class CollisionResponse : ScriptBase
                     {
                         newVelo.Y = 0;
                     }
-                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+
                 }
                 else if (direction == 2)
                 {
-                    Vector2 newVelo = entity_Velocity;
                     if (entity_Velocity.X < 0)
                     {
                         newVelo.X = 0;
@@ -637,11 +643,10 @@ public class CollisionResponse : ScriptBase
                     {
                         newVelo.Y = 0;
                     }
-                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+
                 }
                 else if (direction == 8)
                 {
-                    Vector2 newVelo = entity_Velocity;
                     if (entity_Velocity.X > 0)
                     {
                         newVelo.X = 0;
@@ -650,49 +655,53 @@ public class CollisionResponse : ScriptBase
                     {
                         newVelo.Y = 0;
                     }
-                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+  
                 }
                 else if (direction == 9)
                 {
-                    Vector2 newVelo = entity_Velocity;
                     if (entity_Velocity.X > 0)
                     {
                         newVelo.X = 0;
                     }
-                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                   
                 }
                 else if (direction == 3)
                 {
-                    Vector2 newVelo = entity_Velocity;
                     if (entity_Velocity.Y < 0)
                     {
                         newVelo.Y = 0;
                     }
-                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+                   
                 }
                 else if (direction == 6)
                 {
-                    Vector2 newVelo = entity_Velocity;
                     if (entity_Velocity.X < 0)
                     {
                         newVelo.X = 0;
                     }
-                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+
                 }
                 else if (direction == 12)
                 {
-                    Vector2 newVelo = entity_Velocity;
                     if (entity_Velocity.Y > 0)
                     {
                         newVelo.Y = 0;
                     }
-                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+
                 }
+                entity_Snapback.X = (delta * new_Velocity.X) + 0.001f;
+                entity_Snapback.Y = (delta * new_Velocity.Y) + 0.001f;
+                new_Position.X = entity_Position.X - entity_Snapback.X;
+                new_Position.Y = entity_Position.Y + entity_Snapback.Y;
+                entity_Transform.m_position = new_Position;
+                entity_Rigid.m_Velocity = newVelo;
+
+                Component.Set<RigidBodyComponent>(EntityID, entity_Rigid);
+                Component.Set<TransformComponent>(EntityID, entity_Transform);
                 break;
             case 12: // bottom left
                 if (direction == 1)
                 {
-                    Vector2 newVelo = entity_Velocity;
                     if (entity_Velocity.X < 0)
                     {
                         newVelo.X = 0;
@@ -701,11 +710,10 @@ public class CollisionResponse : ScriptBase
                     {
                         newVelo.Y = 0;
                     }
-                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+
                 }
                 else if (direction == 4)
                 {
-                    Vector2 newVelo = entity_Velocity;
                     if (entity_Velocity.X > 0)
                     {
                         newVelo.X = 0;
@@ -714,11 +722,10 @@ public class CollisionResponse : ScriptBase
                     {
                         newVelo.Y = 0;
                     }
-                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+
                 }
                 else if (direction == 2)
                 {
-                    Vector2 newVelo = entity_Velocity;
                     if (entity_Velocity.X < 0)
                     {
                         newVelo.X = 0;
@@ -727,11 +734,10 @@ public class CollisionResponse : ScriptBase
                     {
                         newVelo.Y = 0;
                     }
-                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+
                 }
                 else if (direction == 8)
                 {
-                    Vector2 newVelo = entity_Velocity;
                     if (entity_Velocity.X > 0)
                     {
                         newVelo.X = 0;
@@ -740,49 +746,53 @@ public class CollisionResponse : ScriptBase
                     {
                         newVelo.Y = 0;
                     }
-                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+
                 }
                 else if (direction == 9)
                 {
-                    Vector2 newVelo = entity_Velocity;
                     if (entity_Velocity.Y < 0)
                     {
                         newVelo.Y = 0;
                     }
-                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+
                 }
                 else if (direction == 3)
                 {
-                    Vector2 newVelo = entity_Velocity;
                     if (entity_Velocity.X < 0)
                     {
                         newVelo.X = 0;
                     }
-                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+
                 }
                 else if (direction == 6)
                 {
-                    Vector2 newVelo = entity_Velocity;
                     if (entity_Velocity.Y > 0)
                     {
                         newVelo.Y = 0;
                     }
-                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+
                 }
                 else if (direction == 12)
                 {
-                    Vector2 newVelo = entity_Velocity;
                     if (entity_Velocity.X > 0)
                     {
                         newVelo.X = 0;
                     }
-                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+
                 }
+                entity_Snapback.X = (delta * new_Velocity.X) + 0.001f;
+                entity_Snapback.Y = (delta * new_Velocity.Y) + 0.001f;
+                new_Position.X = entity_Position.X + entity_Snapback.X;
+                new_Position.Y = entity_Position.Y + entity_Snapback.Y;
+                entity_Transform.m_position = new_Position;
+                entity_Rigid.m_Velocity = newVelo;
+
+                Component.Set<RigidBodyComponent>(EntityID, entity_Rigid);
+                Component.Set<TransformComponent>(EntityID, entity_Transform);
                 break;
             case 9: // top left
                 if (direction == 1)
                 {
-                    Vector2 newVelo = entity_Velocity;
                     if (entity_Velocity.X < 0)
                     {
                         newVelo.X = 0;
@@ -791,11 +801,10 @@ public class CollisionResponse : ScriptBase
                     {
                         newVelo.Y = 0;
                     }
-                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+
                 }
                 else if (direction == 4)
                 {
-                    Vector2 newVelo = entity_Velocity;
                     if (entity_Velocity.X > 0)
                     {
                         newVelo.X = 0;
@@ -804,11 +813,10 @@ public class CollisionResponse : ScriptBase
                     {
                         newVelo.Y = 0;
                     }
-                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+
                 }
                 else if (direction == 2)
                 {
-                    Vector2 newVelo = entity_Velocity;
                     if (entity_Velocity.X > 0)
                     {
                         newVelo.X = 0;
@@ -817,11 +825,10 @@ public class CollisionResponse : ScriptBase
                     {
                         newVelo.Y = 0;
                     }
-                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+
                 }
                 else if (direction == 8)
                 {
-                    Vector2 newVelo = entity_Velocity;
                     if (entity_Velocity.X < 0)
                     {
                         newVelo.X = 0;
@@ -830,55 +837,74 @@ public class CollisionResponse : ScriptBase
                     {
                         newVelo.Y = 0;
                     }
-                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+         
                 }
                 else if (direction == 9)
                 {
-                    Vector2 newVelo = entity_Velocity;
                     if (entity_Velocity.X < 0)
                     {
                         newVelo.X = 0;
                     }
-                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+
                 }
                 else if (direction == 3)
                 {
-                    Vector2 newVelo = entity_Velocity;
                     if (entity_Velocity.Y > 0)
                     {
                         newVelo.Y = 0;
                     }
-                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+
                 }
                 else if (direction == 6)
                 {
-                    Vector2 newVelo = entity_Velocity;
                     if (entity_Velocity.X > 0)
                     {
                         newVelo.X = 0;
                     }
-                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+
                 }
                 else if (direction == 12)
                 {
-                    Vector2 newVelo = entity_Velocity;
                     if (entity_Velocity.Y < 0)
                     {
                         newVelo.Y = 0;
                     }
-                    InternalCall.m_InternalSetVelocity(EntityID, newVelo);
+
                 }
+                entity_Snapback.X = (delta * new_Velocity.X) + 0.001f;
+                entity_Snapback.Y = (delta * new_Velocity.Y) + 0.001f;
+                new_Position.X = entity_Position.X + entity_Snapback.X;
+                new_Position.Y = entity_Position.Y - entity_Snapback.Y;
+                entity_Transform.m_position = new_Position;
+                entity_Rigid.m_Velocity = newVelo;
+
+                Component.Set<RigidBodyComponent>(EntityID, entity_Rigid);
+                Component.Set<TransformComponent>(EntityID, entity_Transform);
                 break;
             default:
-                Console.WriteLine("GG.com never acc for smth");
-                Console.WriteLine(entity_CollisionFlag);
-                Console.WriteLine($"X  { entity_DirectionVector.X }  Y { entity_DirectionVector.Y}");
-                new_Position.X = new_Position.X - entity_DirectionVector.X;
-                new_Position.Y = new_Position.Y - entity_DirectionVector.Y; 
-                InternalCall.m_InternalSetTranslate(EntityID, new_Position);
-                break;
+                entity_Snapback.X = (delta * new_Velocity.X) + 0.001f;
+                entity_Snapback.Y = (delta * new_Velocity.Y) + 0.001f;
+                new_Position.X = entity_Position.X - entity_Snapback.X;
+                new_Position.Y = entity_Position.Y - entity_Snapback.Y;
+                entity_Transform.m_position = new_Position;
+                entity_Rigid.m_Velocity = newVelo;
 
+                entity_Transform.m_position = new_Position;
+                entity_Rigid.m_Velocity = newVelo;
+
+                Component.Set<RigidBodyComponent>(EntityID, entity_Rigid);
+                Component.Set<TransformComponent>(EntityID, entity_Transform);
+                break;
         }
+
+        //Setting the position + velocity
+        //Console.WriteLine($"T POS X  {entity_Transform.m_position.X} T POS Y {entity_Transform.m_position.Y}");
+        //Console.WriteLine($"N pOS X  {new_Position.X} T POS Y {new_Position.Y}");
+
+
+
+
+
         //Console.WriteLine("K");
         #region saved code previous collision response
         //if (InternalCall.m_InternalCallGetTagIDs("Wall") != null)

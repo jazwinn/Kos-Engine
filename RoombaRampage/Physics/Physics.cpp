@@ -601,125 +601,89 @@ namespace physicspipe {
 
 	bool Physics::m_CollisionIntersection_RectRect_SAT(const Rectangle& obj1, const Rectangle& obj2) {
 
-		// Get rotated vertices and edges
-		std::vector<vector2::Vec2> verticesA = obj1.m_GetRotatedVertices();
-		std::vector<vector2::Vec2> verticesB = obj2.m_GetRotatedVertices();
-		std::vector<vector2::Vec2> edgesA = obj1.m_GetEdges();
-		std::vector<vector2::Vec2> edgesB = obj2.m_GetEdges();
+		//// Get rotated vertices and edges
+		//std::vector<vector2::Vec2> verticesA = obj1.m_GetRotatedVertices();
+		//std::vector<vector2::Vec2> verticesB = obj2.m_GetRotatedVertices();
+		//std::vector<vector2::Vec2> edgesA = obj1.m_GetEdges();
+		//std::vector<vector2::Vec2> edgesB = obj2.m_GetEdges();
 
-		// List of all the axes (normals of edges)
-		std::vector<vector2::Vec2> axes;
-		for (const auto& edge : edgesA) {
-			axes.push_back({ -edge.m_y, edge.m_x }); // Perpendicular vector
-		}
-		for (const auto& edge : edgesB) {
-			axes.push_back({ -edge.m_y, edge.m_x });
-		}
+		//// List of all the axes (normals of edges)
+		//std::vector<vector2::Vec2> axes;
+		//for (const auto& edge : edgesA) {
+		//	axes.push_back({ -edge.m_y, edge.m_x }); // Perpendicular vector
+		//}
+		//for (const auto& edge : edgesB) {
+		//	axes.push_back({ -edge.m_y, edge.m_x });
+		//}
 
-		//float minOverlap = std::numeric_limits<float>::max();
-		vector2::Vec2 smallestAxis{};
-		//bool isEntity1Blocked = false;
-		// Check for overlap on all axes
-		for (const auto& axis : axes) {
-			float minA, maxA, minB, maxB;
-			//using dot product to determine
-			m_ProjectOntoAxis(verticesA, axis, minA, maxA);
-			m_ProjectOntoAxis(verticesB, axis, minB, maxB);
-
-			// If there's a gap, no collision
-			if (maxA < minB || maxB < minA) {
-				return false;
-			}
-
-			//calculate Overlap
-			//float overlap = std::min(maxA, maxB) - std::max(minA, minB);
-			//// Track the smallest overlap axis for primary collision direction
-			//if (overlap < minOverlap) {
-			//	minOverlap = overlap;
-			//	smallestAxis = axis;
-
-			//	// Determine if the blocking is for obj1 or obj2
-			//	vector2::Vec2 deltaPosition = obj2.m_position - obj1.m_position;
-			//	isEntity1Blocked = (vector2::Vec2::m_funcVec2DDotProduct(deltaPosition, smallestAxis) > 0);
-			//}
-		}
-
-		//for (size_t i = 0; i < axes.size(); ++i) {
+		////float minOverlap = std::numeric_limits<float>::max();
+		//vector2::Vec2 smallestAxis{};
+		////bool isEntity1Blocked = false;
+		//// Check for overlap on all axes
+		//for (const auto& axis : axes) {
 		//	float minA, maxA, minB, maxB;
 		//	//using dot product to determine
-		//	m_projectOntoAxis(verticesA, axes[i], minA, maxA);
-		//	m_projectOntoAxis(verticesB, axes[i], minB, maxB);
+		//	m_ProjectOntoAxis(verticesA, axis, minA, maxA);
+		//	m_ProjectOntoAxis(verticesB, axis, minB, maxB);
 
 		//	// If there's a gap, no collision
 		//	if (maxA < minB || maxB < minA) {
 		//		return false;
 		//	}
 
-		//}
-
-		//vector2::Vec2 smallestAxisNormalized = smallestAxis;
-		//vector2::Vec2::m_funcVec2Normalize(smallestAxisNormalized, smallestAxisNormalized);
-		//vector2::Vec2 localAxis = obj1.TransformToLocalSpace(smallestAxisNormalized);
-		//if (std::abs(localAxis.m_x) > std::abs(localAxis.m_y)) {
-		//	if (localAxis.m_x > 0) {
-		//		const_cast<Rectangle&>(obj1).AddCollisionFlag(LEFT);
-		//		//const_cast<Rectangle&>(obj2).AddCollisionFlag(LEFT);
-		//	}
-		//	else {
-		//		const_cast<Rectangle&>(obj1).AddCollisionFlag(RIGHT);
-		//		//const_cast<Rectangle&>(obj2).AddCollisionFlag(RIGHT);
-		//	}
+		//	float axisDepth = std::min(maxB - minA, maxA - minB);
 
 		//}
-		//else {
-		//	if (localAxis.m_y > 0) {
-		//		const_cast<Rectangle&>(obj1).AddCollisionFlag(UP);
-		//		//const_cast<Rectangle&>(obj2).AddCollisionFlag(DOWN);
-		//	}
-		//	else {
-		//		const_cast<Rectangle&>(obj1).AddCollisionFlag(DOWN);
-		//		//const_cast<Rectangle&>(obj2).AddCollisionFlag(UP);
-		//	}
-		//		
-		//}
+
+		//// No separating axis found, so there's a collision
+		//return true;
+
+		vector2::Vec2 normal{};
+		float depth{};
+		std::vector<vector2::Vec2> verticesA = obj1.m_GetRotatedVertices();
+		std::vector<vector2::Vec2> verticesB = obj2.m_GetRotatedVertices();
+		std::vector<vector2::Vec2> edgesA = obj1.m_GetEdges();
+		std::vector<vector2::Vec2> edgesB = obj2.m_GetEdges();
 
 
+		for (size_t i = 0; i < verticesA.size(); ++i) {
+			float minA{}, maxA{}, minB{}, maxB{};
+			vector2::Vec2 axis = { -edgesA[i].m_y, edgesA[i].m_x };
+			vector2::Vec2::m_funcVec2Normalize(axis, axis);
+			m_ProjectOntoAxis(verticesA, axis, minA, maxA);
+			m_ProjectOntoAxis(verticesB, axis, minB, maxB);
+			if (minA >= maxB || minB >= maxA) return false;
 
-		// Add blocked directions based on the smallest axis
-		//if (std::abs(smallestAxis.m_x) > std::abs(smallestAxis.m_y)) {
-		//	// Horizontal collision
-		//	if (smallestAxis.m_x > 0) {
-		//		if (isEntity1Blocked) {
-		//			const_cast<Rectangle&>(obj1).AddCollisionFlag(RIGHT);
-		//			const_cast<Rectangle&>(obj2).AddCollisionFlag(LEFT);
+			float axisDepth = std::min(maxB - minA, maxA - minB);
+			if (axisDepth < depth) {
+				depth = axisDepth;
+				normal = axis;
+			}
+		}
 
-		//		}
-		//		else {
-		//			const_cast<Rectangle&>(obj1).AddCollisionFlag(LEFT);
-		//			const_cast<Rectangle&>(obj2).AddCollisionFlag(RIGHT);
-		//		}
-		//	}
-		//}
-		//else {
-		//	// Vertical collision
-		//	if (smallestAxis.m_y > 0) {
-		//		if (isEntity1Blocked) {
-		//			const_cast<Rectangle&>(obj1).AddCollisionFlag(UP);
-		//			const_cast<Rectangle&>(obj2).AddCollisionFlag(DOWN);
-		//		}
-		//		else {
-		//			const_cast<Rectangle&>(obj1).AddCollisionFlag(DOWN);
-		//			const_cast<Rectangle&>(obj2).AddCollisionFlag(UP);
-		//		}
-		//	}
-		//}
+		for (size_t i = 0; i < verticesB.size(); ++i) {
+			float minA{}, maxA{}, minB{}, maxB{};
+			vector2::Vec2 axis = { -edgesB[i].m_y, edgesB[i].m_x };
+			vector2::Vec2::m_funcVec2Normalize(axis, axis);
+			m_ProjectOntoAxis(verticesA, axis, minA, maxA);
+			m_ProjectOntoAxis(verticesB, axis, minB, maxB);
+			if (minA >= maxB || minB >= maxA) return false;
 
+			float axisDepth = std::min(maxB - minA, maxA - minB);
+			if (axisDepth < depth) {
+				depth = axisDepth;
+				normal = axis;
+			}
+		}
 
-
-
-
-		// No separating axis found, so there's a collision
+		depth = depth / vector2::Vec2::m_funcVec2DLength(normal);
+		vector2::Vec2::m_funcVec2Normalize(normal, normal);
+		vector2::Vec2 direction = obj2.m_position - obj1.m_position;
+		if (vector2::Vec2::m_funcVec2DDotProduct(direction, normal) < 0.f) {
+			normal = -normal;
+		}
 		return true;
+
 	}
 
 	std::vector <std::pair<std::shared_ptr<PhysicsData>, std::shared_ptr<PhysicsData>>> Physics::m_RetrievePhysicsDataPair() {
