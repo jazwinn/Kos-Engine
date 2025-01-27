@@ -112,7 +112,7 @@ namespace ecs {
 
 				
 				rigidBody->m_DirectionVector = transform->m_position - rigidBody->m_PrevPos;
-				if (rigidBody->m_DirectionVector.m_x != 0.f && rigidBody->m_DirectionVector.m_y != 0.f) {
+				if (!(rigidBody->m_DirectionVector.m_x == 0.f && rigidBody->m_DirectionVector.m_y == 0.f)) {
 					rigidBody->m_PrevDirVec = rigidBody->m_DirectionVector;
 				}
 				

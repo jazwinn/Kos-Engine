@@ -104,6 +104,7 @@ namespace ecs {
 				ColComp->m_collidedWith.clear();
 				ColComp->m_triColWith.clear();
 				ColComp->m_blockedFlag = 0;
+				ColComp->m_bits.reset();
 				ColComp->m_contactPoints.clear();
 				//skip component not of the scene
 				if ((ColComp->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer)) continue;
@@ -156,6 +157,7 @@ namespace ecs {
 			ColComp->m_collidedWith.clear();
 			ColComp->m_triColWith.clear();
 			ColComp->m_blockedFlag = 0;
+			ColComp->m_bits.reset();
 			//skip component not of the scene
 			if (rigidComp->m_scene != scene) continue;	
 
@@ -362,20 +364,20 @@ namespace ecs {
 		//}
 		physicspipe::m_FindContactPoints();
 		physicspipe::m_FindCollisionFlags();
-		//for (int n{}; n < m_vecRigidBodyComponentPtr.size(); n++)
-		//{
-		//	ColliderComponent* ColComp = m_vecColliderComponentPtr[n];
-		//	/*std::cout << "I am ent " << ColComp->m_Entity << std::endl;
-		//	std::cout << "coll flag " << ColComp->m_blockedFlag << std::endl;*/
-		//	for (int i = 0; i < ColComp->m_contactPoints.size(); i++) {
-		//		std::cout << "I am ent " << ColComp->m_Entity << std::endl;
-		//		std::cout << "ent col " << ColComp->m_contactPoints[i].m_numOfContacts <<  " " << ColComp->m_contactPoints[i].m_contactPointEnt.second << std::endl;
-		//		std::cout << "at points " << ColComp->m_contactPoints[i].m_contactPointEnt.first.m_x << " " << ColComp->m_contactPoints[i].m_contactPointEnt.first.m_y << std::endl;
-		//		if (ColComp->m_blockedFlag > 0) {
-		//			std::cout << "coll flag " << ColComp->m_blockedFlag << std::endl;
-		//		}
-		//	}
-		//}
+		for (int n{}; n < m_vecRigidBodyComponentPtr.size(); n++)
+		{
+			ColliderComponent* ColComp = m_vecColliderComponentPtr[n];
+			/*std::cout << "I am ent " << ColComp->m_Entity << std::endl;
+			std::cout << "coll flag " << ColComp->m_blockedFlag << std::endl;*/
+			for (int i = 0; i < ColComp->m_contactPoints.size(); i++) {
+				std::cout << "I am ent " << ColComp->m_Entity << std::endl;
+				std::cout << "ent col " << ColComp->m_contactPoints[i].m_numOfContacts <<  " " << ColComp->m_contactPoints[i].m_contactPointEnt.second << std::endl;
+				std::cout << "at points " << ColComp->m_contactPoints[i].m_contactPointEnt.first.m_x << " " << ColComp->m_contactPoints[i].m_contactPointEnt.first.m_y << std::endl;
+				if (ColComp->m_blockedFlag > 0) {
+					std::cout << "coll flag " << ColComp->m_blockedFlag << std::endl;
+				}
+			}
+		}
 
 	}
 
