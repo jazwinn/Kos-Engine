@@ -141,20 +141,22 @@ namespace ecs {
 			}
 
 
-			for (auto& script : scriptComp->m_scriptInstances) {
+			for (auto& scriptname : scriptComp->m_scripts) {
+
+				auto script = scriptComp->m_scriptInstances.find(scriptname.first);
 				try {
 					// run the scripts update fuction
-					const auto& scriptIsEnabled = std::find_if(scriptComp->m_scripts.begin(), scriptComp->m_scripts.end(), [&](auto& x) {return x.first == script.first;});
+					const auto& scriptIsEnabled = std::find_if(scriptComp->m_scripts.begin(), scriptComp->m_scripts.end(), [&](auto& x) {return x.first == script->first;});
 					if (scriptIsEnabled == scriptComp->m_scripts.end()) continue;
 
 					if (scriptIsEnabled->second) {
 
-						if (script.second.second == false) {
-							assetManager->m_scriptManager.m_InvokeMethod(script.first, "Start", script.second.first, nullptr);
-							script.second.second = true;
+						if (script->second.second == false) {
+							assetManager->m_scriptManager.m_InvokeMethod(script->first, "Start", script->second.first, nullptr);
+							script->second.second = true;
 						}
 
-						assetManager->m_scriptManager.m_InvokeMethod(script.first, "Update", script.second.first, nullptr);
+						assetManager->m_scriptManager.m_InvokeMethod(script->first, "Update", script->second.first, nullptr);
 					}
 					
 				}
