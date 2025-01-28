@@ -112,7 +112,7 @@ namespace script {
 		if (player == nullptr) return false;
 
 		*enemytag = player->m_enemyTag;
-		*enemytype = player->m_enemyTag;
+		*enemytype = player->m_enemyTypeInt;
 		*enemybehaviour = player->m_enemyRoamBehaviourInt;
 
 		return true;
@@ -860,14 +860,14 @@ namespace script {
 			*nodeArray_x = mono_array_new(assetmanager::AssetManager::m_funcGetInstance()->m_scriptManager.m_GetDomain(), mono_get_int32_class(), pfc->m_Path.size());
 			*nodeArray_y = mono_array_new(assetmanager::AssetManager::m_funcGetInstance()->m_scriptManager.m_GetDomain(), mono_get_int32_class(), pfc->m_Path.size());
 
-			for (size_t i = 0; i < pfc->m_Path.size(); ++i) {
-				mono_array_set(*nodeArray_x, int, i, pfc->m_Path[i].x);
-				mono_array_set(*nodeArray_y, int, i, pfc->m_Path[i].y);
-
+			if (nodeArray_x != NULL && nodeArray_y != NULL) {
+				for (size_t i = 0; i < pfc->m_Path.size(); ++i) {
+					mono_array_set(*nodeArray_x, int, i, pfc->m_Path[i].x);
+					mono_array_set(*nodeArray_y, int, i, pfc->m_Path[i].y);
+				}
 			}
 
-
-
+			
 
 
 			return true;
