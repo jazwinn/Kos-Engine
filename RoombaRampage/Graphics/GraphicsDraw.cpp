@@ -504,10 +504,13 @@ namespace graphicpipe
 	{
 		if (!m_lightingTransforms.empty())
 		{
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE); //USE THIS BLENDING FOR LIGHTS
+
 			glUseProgram(m_lightingShaderProgram);
 
 			glBindBuffer(GL_ARRAY_BUFFER, m_modelMatrixArrayBuffer);
 			glNamedBufferData(m_modelMatrixArrayBuffer, m_lightingTransforms.size() * sizeof(glm::mat3), &m_lightingTransforms[0], GL_DYNAMIC_DRAW);
+
 
 			glBindBuffer(GL_ARRAY_BUFFER, m_vec3Buffer);
 			glNamedBufferData(m_vec3Buffer, m_lightingParams.size() * sizeof(glm::vec3), &m_lightingParams[0], GL_DYNAMIC_DRAW); // Light Intensity, Inner/Outer Radius
@@ -540,6 +543,8 @@ namespace graphicpipe
 				//LOGGING_ERROR("First OpenGL Error: 0x%X", err);
 				std::cout << "Second OpenGL Error: " << err2 << std::endl;
 			}
+
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		}
 	}
 

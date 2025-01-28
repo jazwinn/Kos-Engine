@@ -176,6 +176,7 @@ namespace graphicpipe {
 		m_debugBoxData.clear();
 		m_textData.clear();
 		m_colors.clear();
+		m_lightingData.clear();
 		m_lightingColors.clear();
 		m_lightingTransforms.clear();
 		m_lightingParams.clear();
