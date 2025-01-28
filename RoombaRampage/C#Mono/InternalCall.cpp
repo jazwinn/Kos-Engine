@@ -105,23 +105,29 @@ namespace script {
 	}
 
 	//Player Component
-	bool InternalCall::m_InternalGetPlayerComponent(ecs::EntityID entity, bool* control)
+	bool InternalCall::m_InternalGetEnemyComponent(ecs::EntityID entity, int* enemytag, int* enemytype, int* enemybehaviour)
 	{
-		auto* player = static_cast<ecs::PlayerComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPEPLAYERCOMPONENT]->m_GetEntityComponent(entity));
+		auto* player = static_cast<ecs::EnemyComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPEENEMYCOMPONENT]->m_GetEntityComponent(entity));
 
 		if (player == nullptr) return false;
 
-		*control = player->m_Control;
+		*enemytag = player->m_enemyTag;
+		*enemytype = player->m_enemyTag;
+		*enemybehaviour = player->m_enemyRoamBehaviourInt;
+
 		return true;
 	}
 
-	bool InternalCall::m_InternalSetPlayerComponent(ecs::EntityID entity, bool control)
+	bool InternalCall::m_InternalSetEnemyComponent(ecs::EntityID entity, int* enemytag, int* enemytype, int* enemybehaviour)
 	{
-		auto* player = static_cast<ecs::PlayerComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPEPLAYERCOMPONENT]->m_GetEntityComponent(entity));
+		auto* player = static_cast<ecs::EnemyComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPEENEMYCOMPONENT]->m_GetEntityComponent(entity));
 
 		if (player == nullptr) return false;
 
-		player->m_Control = control;
+		 player->m_enemyTag = *enemytag;
+		 player->m_enemyTag = *enemytype;
+		 player->m_enemyRoamBehaviourInt = *enemybehaviour;
+
 		return true;
 	}
 
@@ -617,7 +623,7 @@ namespace script {
 		Helper::Helpers::GetInstance()->m_closeWindow = true;
 	}
 
-	MonoArray* InternalCall::m_InternalCallGetChildrenID(ecs::EntityID id, bool* have_children)
+	MonoArray* InternalCall::m_InternalCallGetChildrenID(ecs::EntityID id)
 	{
 
 		const auto& childs = ecs::Hierachy::m_GetChild(id);
@@ -630,11 +636,9 @@ namespace script {
 
 			}
 
-			*have_children = true;
 			return Array;
 		}
 
-		*have_children = false;
 		return nullptr;
 	}
 
@@ -957,8 +961,8 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_InternalGetColliderComponent);
 		MONO_ADD_INTERNAL_CALL(m_InternalSetColliderComponent);
 
-		MONO_ADD_INTERNAL_CALL(m_InternalGetPlayerComponent);
-		MONO_ADD_INTERNAL_CALL(m_InternalSetPlayerComponent);
+		MONO_ADD_INTERNAL_CALL(m_InternalGetEnemyComponent);
+		MONO_ADD_INTERNAL_CALL(m_InternalSetEnemyComponent);
 
 		MONO_ADD_INTERNAL_CALL(m_InternalGetRigidBodyComponent);
 		MONO_ADD_INTERNAL_CALL(m_InternalSetRigidBodyComponent);

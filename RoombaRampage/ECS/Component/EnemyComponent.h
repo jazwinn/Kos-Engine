@@ -1,6 +1,6 @@
 /******************************************************************/
 /*!
-\file      PlayerComponent.h
+\file      EnemyComponent.h
 \author    Ng Jaz winn, jazwinn.ng , 2301502
 \par       jazwinn.ng@digipen.edu
 \date      Oct 02, 2024
@@ -13,8 +13,8 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 */
 /********************************************************************/
 
-#ifndef INPUTCOM_H
-#define INPUTCOM_H
+#ifndef ENEMYCOM_H
+#define ENEMYCOM_H
 
 #include "Component.h"
 
@@ -27,13 +27,15 @@ namespace ecs {
 	\brief     Contains data specific to a player
 	*/
 	/******************************************************************/
-	class PlayerComponent : public Component {
+	class EnemyComponent : public Component {
 
 	public:
 
-		bool m_Control{true};
+		int m_enemyTag{-1};
+		int m_enemyTypeInt{-1};
+		int m_enemyRoamBehaviourInt{-1};
 
-		REFLECTABLE(PlayerComponent, m_Control);
+		REFLECTABLE(EnemyComponent, m_enemyTag, m_enemyTypeInt, m_enemyRoamBehaviourInt);
 
 	};
 
@@ -42,4 +44,4 @@ namespace ecs {
 
 
 
-#endif INPUTCOM_H
+#endif ENEMYCOM_H

@@ -238,12 +238,14 @@ namespace Serialization {
 		}
 
 		// Check if the entity has PlayerComponent and save it
-		if (signature.test(ecs::ComponentType::TYPEPLAYERCOMPONENT)) {
-			ecs::PlayerComponent* pc = static_cast<ecs::PlayerComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPEPLAYERCOMPONENT]->m_GetEntityComponent(entityId));
+		if (signature.test(ecs::ComponentType::TYPEENEMYCOMPONENT)) {
+			ecs::EnemyComponent* pc = static_cast<ecs::EnemyComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPEENEMYCOMPONENT]->m_GetEntityComponent(entityId));
 			if (pc) {
 				rapidjson::Value player(rapidjson::kObjectType);
-				player.AddMember("control", pc->m_Control, allocator);
-				entityData.AddMember("player", player, allocator);
+				player.AddMember("enemytag", pc->m_enemyTag, allocator);
+				player.AddMember("enemytype", pc->m_enemyTypeInt, allocator);
+				player.AddMember("enemybehaviour", pc->m_enemyTypeInt, allocator);
+				entityData.AddMember("enemy", player, allocator);
 				hasComponents = true;  // Mark as having a component
 			}
 		}
@@ -720,13 +722,19 @@ namespace Serialization {
 		}
 
 		// Load Player Component if it exists
-		if (entityData.HasMember("player") && entityData["player"].IsObject()) {
-			ecs::PlayerComponent* pc = static_cast<ecs::PlayerComponent*>(ecs->m_AddComponent(ecs::TYPEPLAYERCOMPONENT, newEntityId));
+		if (entityData.HasMember("enemy") && entityData["enemy"].IsObject()) {
+			ecs::EnemyComponent* pc = static_cast<ecs::EnemyComponent*>(ecs->m_AddComponent(ecs::TYPEENEMYCOMPONENT, newEntityId));
 
 			if (pc) {
-				const rapidjson::Value& player = entityData["player"];
-				if (player.HasMember("control")) {
-					pc->m_Control = player["control"].GetBool();
+				const rapidjson::Value& player = entityData["enemy"];
+				if (player.HasMember("enemytag") && player["enemytag"].IsInt()) {
+					pc->m_enemyTag = player["enemytag"].GetInt();
+				}
+				if (player.HasMember("enemytype") && player["enemytype"].IsInt()) {
+					pc->m_enemyTypeInt = player["enemytype"].GetInt();
+				}
+				if (player.HasMember("enemybehaviour") && player["enemybehaviour"].IsInt()) {
+					pc->m_enemyRoamBehaviourInt = player["enemybehaviour"].GetInt();
 				}
 			}
 		}

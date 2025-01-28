@@ -112,7 +112,7 @@ namespace script {
 			\return    True if the player component is found and retrieved; otherwise, false.
 		*/
 		/******************************************************************/
-		static bool m_InternalGetPlayerComponent(ecs::EntityID entity, bool* control);
+		static bool m_InternalGetEnemyComponent(ecs::EntityID entity, int* enemytag, int* enemytype, int* enemybehaviour);
 
 		/******************************************************************/
 		/*!
@@ -123,7 +123,7 @@ namespace script {
 			\return    True if the player component is found and updated; otherwise, false.
 		*/
 		/******************************************************************/
-		static bool m_InternalSetPlayerComponent(ecs::EntityID entity, bool control);
+		static bool m_InternalSetEnemyComponent(ecs::EntityID entity, int* enemytag, int* enemytype, int* enemybehaviour);
 
 		/******************************************************************/
 		/*!
@@ -515,7 +515,7 @@ namespace script {
 			\return    A MonoArray containing the IDs of child entities if any; otherwise, null.
 		*/
 		/******************************************************************/
-		static MonoArray* m_InternalCallGetChildrenID(ecs::EntityID id, bool* have_children);
+		static MonoArray* m_InternalCallGetChildrenID(ecs::EntityID);
 
 		/******************************************************************/
 		/*!

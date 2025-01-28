@@ -29,10 +29,10 @@ public static class InternalCall
     public extern static bool m_InternalSetColliderComponent(uint entity, in Vector2 size, in Vector2 offset, in bool drawDebug, in float radius, in uint bockflag, in float isCollided, in bool collisionCheck);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static bool m_InternalGetPlayerComponent(uint entity, out bool control);
+    public extern static bool m_InternalGetEnemyComponent(uint entity, out int enemyTag, out int enemytype, out int enemybehaviour);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static bool m_InternalSetPlayerComponent(uint entity, in bool control);
+    public extern static bool m_InternalSetEnemyComponent(uint entity, in int enemyTag, in int enemytype, in int enemybehaviour);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static bool m_InternalGetRigidBodyComponent(uint entity, out Vector2 velocity, out Vector2 acceleration, out float rotation, out Vector2 previouspos, out Vector2 direction);
@@ -140,7 +140,7 @@ public static class InternalCall
     public extern static void m_InternalCallCloseWindow();
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static int[] m_InternalCallGetChildrenID(uint id, out bool have_children);
+    public extern static int[] m_InternalCallGetChildrenID(uint id);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static void m_InternalCallPlayAudio(uint id, string monoString);
@@ -260,7 +260,11 @@ public static class Component
 
                 pathfindingcomponent.m_node.Add(new Vector2(x[n], y[n]));
             }
-            Console.WriteLine("4");
+        }
+        else if (typeof(T) == typeof(EnemyComponent))
+        {
+            var enemyComponent = component as EnemyComponent;
+            InternalCall.m_InternalGetEnemyComponent(id, out enemyComponent.m_tag, out enemyComponent.m_enemyTypeInt, out enemyComponent.m_enemyRoamBehaviourInt);
         }
         else
         {
@@ -295,6 +299,10 @@ public static class Component
         else if (component is AnimationComponent animation)
         {
             InternalCall.m_InternalSetAnimationComponent(id, in animation.m_frameNumber, in animation.m_framesPerSecond, in animation.m_frameTimer, in animation.m_isAnimating, in animation.m_stripCount);
+        }
+        else if (component is EnemyComponent enemy)
+        {
+            InternalCall.m_InternalSetEnemyComponent(id, in enemy.m_tag, in enemy.m_enemyTypeInt, in enemy.m_enemyRoamBehaviourInt);
         }
         else
         {
