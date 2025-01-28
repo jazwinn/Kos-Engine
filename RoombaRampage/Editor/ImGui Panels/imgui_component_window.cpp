@@ -78,18 +78,6 @@ struct DrawComponents {
         return changed;
     }
 
-
-    //void operator()(const std::vector<std::string>& _args) {
-    //    for (auto& arg : _args) {
-    //        ImGui::Text(m_Array[count].c_str());
-    //        ImGui::SameLine(slider_start_pos_x);
-    //        std::string title = "##" + m_Array[count];
-    //       // ImGui::InputText(title.c_str(), arg.c_str());
-    //    }
-
-    //    count++;
-    //}
-
     void operator()(physicspipe::EntityType& _args)
     {
         const char* shapeName = (_args == physicspipe::EntityType::CIRCLE) ? "CIRCLE" : "RECTANGLE";
@@ -223,8 +211,11 @@ struct DrawComponents {
     template <typename U>
     void operator()(std::vector<U>& _args) {
         if constexpr (std::is_class_v<U>) {
+            int _count{};
             for (U& x : _args) {
-                x.ApplyFunction(DrawComponents(x.Names()));
+                ImGui::PushID(_count++);
+                x.ApplyFunction(DrawComponents<decltype(x.Names())>{x.Names()});
+                ImGui::PopID();
             }
         }
         else {
@@ -238,6 +229,16 @@ struct DrawComponents {
         }
         count++;
     }
+    
+    template <typename K>
+    void operator()(K& _args) {
+        if constexpr (std::is_class_v<K>) {
+            _args.ApplyFunction(DrawComponents<decltype(_args.Names())>{_args.Names()});
+            count++;
+        }
+        
+    }
+
 };
 
 
