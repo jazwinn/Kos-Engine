@@ -119,6 +119,16 @@ namespace graphicpipe
 				}
 			}
 		}
+		if (m_lightingData.size() > 0)
+		{
+			for (int n{}; n < m_lightingData.size(); n++)
+			{
+				m_lightingTransforms.push_back(m_lightingData[n].m_transformation);
+				m_lightingColors.push_back(m_lightingData[n].m_color);
+				m_lightingParams.push_back({ m_lightingData[n].m_intensity,m_lightingData[n].m_innerOuterRadius.x,m_lightingData[n].m_innerOuterRadius.y });
+				
+			}
+		}
 
 	}
 }

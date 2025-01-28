@@ -214,6 +214,7 @@ namespace Application {
             help->m_windowWidth = static_cast<float>(display_w);
             pipe->m_funcSetupFrameBuffer();
             pipe->m_funcSetupGamePreviewFrameBuffer();
+            pipe->m_funcSetupLightingFrameBuffer();
             glViewport(0, 0, display_w, display_h);
             
         }

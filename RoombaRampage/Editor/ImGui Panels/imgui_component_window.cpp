@@ -1484,7 +1484,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                     ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
                     ImGui::Text("Color");
                     ImGui::SameLine();
-                    if (ImGui::ColorEdit3("##MyColor2", (float*)&color, ImGuiColorEditFlags_DisplayRGB))
+                    if (ImGui::ColorEdit3("##MyColor4", (float*)&color, ImGuiColorEditFlags_DisplayRGB))
                     {
                         lc->m_colour.m_x = color.x;
                         lc->m_colour.m_y = color.y;

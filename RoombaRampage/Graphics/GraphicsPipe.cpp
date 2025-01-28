@@ -80,6 +80,7 @@ namespace graphicpipe {
 		m_textShaderProgram = m_funcSetupShader(textVertexShader, textFragmentShader);
 		m_gridShaderProgram = m_funcSetupShader(gridVertexShader, gridFragmentShader);
 		m_tilemapShaderProgram = m_funcSetupShader(tilemapVertexShader, tilemapFragmentShader);
+		m_lightingShaderProgram = m_funcSetupShader(lightingVertexShader, lightingFragmentShader);
 		
 
 		// Initialize model-to-NDC transformation matrix and other drawing data.
@@ -99,6 +100,7 @@ namespace graphicpipe {
 		m_funcSetupArrayBuffer();
 		m_funcSetupFrameBuffer();
 		m_funcSetupGamePreviewFrameBuffer();
+		m_funcSetupLightingFrameBuffer();
 
 		// Clear temporary data structures used during setup.
 		m_debugBoxToNDCMatrix.clear();
@@ -151,7 +153,9 @@ namespace graphicpipe {
 
 		if (!m_gameMode)
 		{
+			
 			m_funcDrawWindow();
+			//m_drawLightingTexture();
 		}
 		
 	}
@@ -172,6 +176,9 @@ namespace graphicpipe {
 		m_debugBoxData.clear();
 		m_textData.clear();
 		m_colors.clear();
+		m_lightingColors.clear();
+		m_lightingTransforms.clear();
+		m_lightingParams.clear();
 		m_tilemapData.clear();
 		m_transformedTilemaps.clear();
 		m_tileIndexes.clear();
@@ -185,7 +192,7 @@ namespace graphicpipe {
 
 	void GraphicsPipe::m_funcRenderGameScene()
 	{
-
+		
 		if (m_gameMode)
 		{
 			//Helper::Helpers* help = Helper::Helpers::GetInstance();
@@ -207,7 +214,7 @@ namespace graphicpipe {
 			m_funcDrawGameFrameBuffer();
 
 		}
-
+		
 		m_funcClearContainers();
 	}
 

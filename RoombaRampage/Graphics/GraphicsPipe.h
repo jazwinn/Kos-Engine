@@ -43,6 +43,7 @@ namespace graphicpipe {
     struct LightingData
     {
         glm::mat3 m_transformation{};
+        glm::vec4 m_color{};
         glm::vec2 m_innerOuterRadius{};
         float m_intensity{};
         int m_lightType{};
@@ -197,6 +198,10 @@ namespace graphicpipe {
         unsigned int m_iVec3Buffer{};        ///< Buffer for texture ordering.
         unsigned int m_debugCollisionCheckBuffer{}; ///< Buffer for collision detection in debug drawing.
         unsigned int m_frameBufferObject{};         ///< Framebuffer object for offscreen rendering.
+        unsigned int m_lightingFrameBufferObject{};
+        unsigned int m_lightingDepthBufferObject{};
+        unsigned int m_finalPassFrameBufferObject{};
+        unsigned int m_finalPassDepthBufferObject{};
         unsigned int m_depthBufferObject{};         ///< Depth Buffer object for storing frame buffer data.
         unsigned int m_gamePreviewFrameBufferObject{};   ///< Framebuffer object for the game preview window.
         unsigned int m_gamePreviewDepthBufferObject{};   ///< Depth buffer for the game preview framebuffer.
@@ -338,6 +343,10 @@ namespace graphicpipe {
          */
         void m_funcDrawTilemap();
 
+        void m_drawLightingTexture();
+
+        void m_funcRenderLighting();
+
         /**
          * @brief Sets the drawing mode for rendering.
          *
@@ -364,6 +373,8 @@ namespace graphicpipe {
          * Allocates and configures a framebuffer object for rendering the game preview.
          */
         void m_funcSetupGamePreviewFrameBuffer();
+
+        void m_funcSetupLightingFrameBuffer();
 
         /**
          * @brief Calculates the model-to-world transformation matrix.
@@ -418,6 +429,8 @@ namespace graphicpipe {
         std::vector<float> m_debugCircleCollisionChecks{}; ///< Collision check data for debug rendering.
         
         std::vector<glm::vec4> m_colors{}; 
+        std::vector<glm::vec4> m_lightingColors{};
+        std::vector<glm::vec3> m_lightingParams{};
         std::vector<std::vector<int>> m_tileIndexes{};
         std::vector<std::vector<int>> m_gridColliderChecks{};
 
@@ -429,13 +442,15 @@ namespace graphicpipe {
         std::vector<int> m_frameNumbers{}; ///< Frame numbers for sprite animations.
         std::vector<image::Image> m_imageData{}; ///< Image data for rendering.
         std::vector<TilemapData> m_transformedTilemaps{};
-        std::vector<LightingData> m_transformedLights{};
+        std::vector<glm::mat3> m_lightingTransforms{};
         std::vector<std::vector<std::vector<int>>> m_tilemapIndexArrays{};
         std::vector<std::vector<std::vector<int>>> m_gridColliderArrays{};
 
         unsigned int m_screenTextureVAO{};
         unsigned int m_screenTexture{}; ///< Texture for rendering the screen.
         unsigned int m_gamePreviewTexture{};
+        unsigned int m_lightingTexture{};
+        unsigned int m_finalPassTexture{};
 
         //Shaders
         const std::string debugVertexShader =
@@ -508,6 +523,16 @@ namespace graphicpipe {
         const std::string gridDebugFragmentShader =
         {
           #include "../Graphics/gridDebugFragmentShader.frag"
+        };
+
+        const std::string lightingVertexShader =
+        {
+          #include "../Graphics/lightingVertexShader.vert"
+        };
+
+        const std::string lightingFragmentShader =
+        {
+          #include "../Graphics/lightingFragmentShader.frag"
         };
 
     };

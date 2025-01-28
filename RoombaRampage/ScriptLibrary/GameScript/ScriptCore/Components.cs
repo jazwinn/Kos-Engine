@@ -115,12 +115,14 @@ public class ButtomComponent
     public bool m_IsClick;
 }
 
-//public class ButtomComponent
-//{
-//    public Vector2 m_Position;
-//    public Vector2 m_Scale;
-//    public bool m_IsClick;
-//}
+public class PathfindingComponent
+{
+    public Vector2 m_startPosition;
+    public Vector2 m_targetPosition;
+    public string m_gridkey;
+    public List<Vector2> m_node;
+
+}
 
 public class Raycast
 {

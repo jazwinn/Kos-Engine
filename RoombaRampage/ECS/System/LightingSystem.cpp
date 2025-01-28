@@ -60,16 +60,18 @@ namespace ecs {
 		//loops through all vecoters pointing to component
 		for (int n{}; n < m_vecLightingComponentPtr.size(); n++) 
 		{
-
 			TransformComponent* transform = m_vecTransformComponentPtr[n];
 			LightingComponent* light = m_vecLightingComponentPtr[n];
-
-			
-
 			//skip component not of the scene
+			if (light->m_scene != scene) continue;
+
 			
 
-			ECS* ecs = ECS::m_GetInstance();
+			graphicsPipe->m_lightingData.push_back({ { transform->m_transformation.m_e00,transform->m_transformation.m_e01,transform->m_transformation.m_e02,
+													   transform->m_transformation.m_e10,transform->m_transformation.m_e11, transform->m_transformation.m_e12,
+													   transform->m_transformation.m_e20, transform->m_transformation.m_e21, transform->m_transformation.m_e22 },
+													{  light->m_colour.m_x,light->m_colour.m_y,light->m_colour.m_z ,1.f }, { light->m_innerOuterRadius.m_x,light->m_innerOuterRadius.m_y },
+													   light->m_intensity, light->m_lightType });
 
 		}
 

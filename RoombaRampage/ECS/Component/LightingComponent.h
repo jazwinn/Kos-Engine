@@ -18,7 +18,7 @@ namespace ecs
 		vector2::Vec2 m_innerOuterRadius;
 		vector3::Vec3 m_colour;
 
-		REFLECTABLE(LightingComponent, m_innerOuterRadius, m_lightType);
+		REFLECTABLE(LightingComponent, m_innerOuterRadius, m_lightType, m_intensity);
 	};
 
 }
