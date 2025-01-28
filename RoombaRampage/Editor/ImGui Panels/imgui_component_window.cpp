@@ -1057,7 +1057,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
 
                                 if (ImGui::MenuItem("Delete Script")) {
-                                   // sc->m_scripts.erase(std::find_if(sc->m_scripts.begin(), sc->m_scripts.end(), [&](const auto& x) {return x.first == scriptname.first;}));
+                                    sc->m_scripts.erase(std::find_if(sc->m_scripts.begin(), sc->m_scripts.end(), [&](const auto& x) {return x.first == scriptname.first;}));
 
                                     ImGui::EndPopup();
 

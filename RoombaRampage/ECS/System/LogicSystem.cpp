@@ -91,7 +91,8 @@ namespace ecs {
 			//}
 
 			// retieve isntance for each object
-			//std::cout << _script << std::endl;
+			//
+			//  << _script << std::endl;
 			scriptComp->m_scriptInstances[_script.first] = std::make_pair(assetManager->m_scriptManager.m_CreateObjectInstance("LogicScript", _script.first), false);
 		}
 

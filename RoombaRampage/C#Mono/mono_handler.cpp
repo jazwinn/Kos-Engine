@@ -44,8 +44,12 @@ namespace script {
         // Set Mono path
         mono_set_dirs("Dependencies/mono/lib", "Dependencies/mono/etc");
 
+
+
         // need for internal call during run time
         m_rootDomain = mono_jit_init("MonoDomain");
+
+        mono_domain_set_config(m_rootDomain, ".", "config");
 
         mono_thread_set_main(mono_thread_current());
 
