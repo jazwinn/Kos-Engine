@@ -42,7 +42,7 @@ namespace ecs {
 
 		std::string m_entityTag = "Default";
 
-		REFLECTABLE(NameComponent, m_entityName, m_entityTag);
+		REFLECTABLE(NameComponent, m_entityName, m_Layer, m_entityTag, m_isPrefab, m_prefabName, m_entityTag);
 	};
 
 }
