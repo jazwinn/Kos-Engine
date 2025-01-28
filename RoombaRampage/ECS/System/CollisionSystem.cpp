@@ -42,6 +42,7 @@ namespace ecs {
 			m_vecTransformComponentPtr.push_back((TransformComponent*)ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(ID));
 			m_vecColliderComponentPtr.push_back((ColliderComponent*)ecs->m_ECS_CombinedComponentPool[TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(ID));
 			m_vecNameComponentPtr.push_back((NameComponent*)ecs->m_ECS_CombinedComponentPool[TYPENAMECOMPONENT]->m_GetEntityComponent(ID));
+			
 		}
 	}
 
@@ -105,7 +106,7 @@ namespace ecs {
 			EntityID id = ColComp->m_Entity;
 
 			//skip component not of the scene
-			if (ColComp->m_scene != scene) continue;
+			if ((ColComp->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer)) continue;
 			
 
 

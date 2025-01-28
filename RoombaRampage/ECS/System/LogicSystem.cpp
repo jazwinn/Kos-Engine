@@ -27,7 +27,7 @@ namespace ecs {
 		if (std::find_if(m_vecScriptComponentPtr.begin(), m_vecScriptComponentPtr.end(), [ID](const auto& obj) { return obj->m_Entity == ID; })
 			== m_vecScriptComponentPtr.end()) {
 			m_vecScriptComponentPtr.push_back((ScriptComponent*)ecs->m_ECS_CombinedComponentPool[TYPESCRIPTCOMPONENT]->m_GetEntityComponent(ID));
-			
+			m_vecNameComponentPtr.push_back((NameComponent*)ecs->m_ECS_CombinedComponentPool[TYPENAMECOMPONENT]->m_GetEntityComponent(ID));
 		}
 
 	}
@@ -45,10 +45,10 @@ namespace ecs {
 		//index to the last element
 		size_t IndexLast = m_vecScriptComponentPtr.size() - 1;
 		std::swap(m_vecScriptComponentPtr[IndexID], m_vecScriptComponentPtr[IndexLast]);
-
+		std::swap(m_vecNameComponentPtr[IndexID], m_vecNameComponentPtr[IndexLast]);
 		//popback the vector;
 		m_vecScriptComponentPtr.pop_back();
-
+		m_vecNameComponentPtr.pop_back();
 	}
 
 	void LogicSystem::m_Init() {
@@ -109,7 +109,7 @@ namespace ecs {
 
 	void LogicSystem::m_Update(const std::string& scene) {
 
-		//ECS* ecs = ECS::m_GetInstance();
+		ECS* ecs = ECS::m_GetInstance();
 		assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
 		//if (m_vecMovementComponentPtr.size() != m_vecTransformComponentPtr.size()) {
 		//	//std::cout << "Error: Vectors container size does not Match" << std::endl;
@@ -125,9 +125,9 @@ namespace ecs {
 			//std::cout << "Entity: " << n << "Movement System is getting Updated";
 
 			ScriptComponent* scriptComp = m_vecScriptComponentPtr[n];
-			
+			NameComponent* NameComp = m_vecNameComponentPtr[n];
 			//skip component not of the scene
-			if (scriptComp->m_scene != scene) continue;
+			if ((scriptComp->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer)) continue;
 
 
 			//check if scriptcomponent have instance
@@ -141,20 +141,22 @@ namespace ecs {
 			}
 
 
-			for (auto& script : scriptComp->m_scriptInstances) {
+			for (auto& scriptname : scriptComp->m_scripts) {
+
+				auto script = scriptComp->m_scriptInstances.find(scriptname.first);
 				try {
 					// run the scripts update fuction
-					const auto& scriptIsEnabled = std::find_if(scriptComp->m_scripts.begin(), scriptComp->m_scripts.end(), [&](auto& x) {return x.first == script.first;});
+					const auto& scriptIsEnabled = std::find_if(scriptComp->m_scripts.begin(), scriptComp->m_scripts.end(), [&](auto& x) {return x.first == script->first;});
 					if (scriptIsEnabled == scriptComp->m_scripts.end()) continue;
 
 					if (scriptIsEnabled->second) {
 
-						if (script.second.second == false) {
-							assetManager->m_scriptManager.m_InvokeMethod(script.first, "Start", script.second.first, nullptr);
-							script.second.second = true;
+						if (script->second.second == false) {
+							assetManager->m_scriptManager.m_InvokeMethod(script->first, "Start", script->second.first, nullptr);
+							script->second.second = true;
 						}
 
-						assetManager->m_scriptManager.m_InvokeMethod(script.first, "Update", script.second.first, nullptr);
+						assetManager->m_scriptManager.m_InvokeMethod(script->first, "Update", script->second.first, nullptr);
 					}
 					
 				}

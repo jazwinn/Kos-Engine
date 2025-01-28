@@ -27,7 +27,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "SpriteComponent.h"
 #include "ColliderComponent.h"
 #include "RigidBodyComponent.h"
-#include "PlayerComponent.h"
+#include "EnemyComponent.h"
 #include "TextComponent.h"
 #include "AnimationComponent.h"
 #include "CameraComponent.h"

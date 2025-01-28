@@ -277,7 +277,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
     //Add Component Window
     const char* ComponentNames[] =
     {
-        "Add Components", "Collider Component", "Sprite Component", "Player Component", "Rigid Body Component", "Text Component", 
+        "Add Components", "Collider Component", "Sprite Component", "Enemy Component", "Rigid Body Component", "Text Component", 
         "Animation Component", "Camera Component" , "Button Component" , "Script Component", "Tilemap Component", "Audio Component",
         "Grid Component", "RayCast Component", "PathfindingComponent", "Lighting Component"
     };
@@ -323,10 +323,10 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 }
             }
             if (ComponentType == 3) {
-                ecs->m_AddComponent(ecs::TYPEPLAYERCOMPONENT, entityID);
+                ecs->m_AddComponent(ecs::TYPEENEMYCOMPONENT, entityID);
                 ComponentType = 0;
-                if (!EntitySignature.test(ecs::TYPEPLAYERCOMPONENT)) {
-                    events::AddComponent action(entityID, ecs::TYPEPLAYERCOMPONENT);
+                if (!EntitySignature.test(ecs::TYPEENEMYCOMPONENT)) {
+                    events::AddComponent action(entityID, ecs::TYPEENEMYCOMPONENT);
                     DISPATCH_ACTION_EVENT(action);
                 }
             }
@@ -845,14 +845,14 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
 
             }
-            if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEPLAYERCOMPONENT)) {
+            if (EntitySignature.test(ecs::TYPEENEMYCOMPONENT)) {
 
-                open = ImGui::CollapsingHeader("Player Component");
+                open = ImGui::CollapsingHeader("Enemy Component");
 
-                CreateContext(ecs::TYPEPLAYERCOMPONENT, entityID);
+                CreateContext(ecs::TYPEENEMYCOMPONENT, entityID);
 
-                if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEPLAYERCOMPONENT)) {
-                    auto* rbc = static_cast<ecs::PlayerComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEPLAYERCOMPONENT]->m_GetEntityComponent(entityID));
+                if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEENEMYCOMPONENT)) {
+                    auto* rbc = static_cast<ecs::EnemyComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEENEMYCOMPONENT]->m_GetEntityComponent(entityID));
                     rbc->ApplyFunction(DrawComponents(rbc->Names()));
                 }
 

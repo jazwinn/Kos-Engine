@@ -51,7 +51,7 @@ namespace ecs{
 		m_AddComponentToECS<SpriteComponent>(TYPESPRITECOMPONENT);
 		m_AddComponentToECS<ColliderComponent>(TYPECOLLIDERCOMPONENT);
 		m_AddComponentToECS<RigidBodyComponent>(TYPERIGIDBODYCOMPONENT);
-		m_AddComponentToECS<PlayerComponent>(TYPEPLAYERCOMPONENT);
+		m_AddComponentToECS<EnemyComponent>(TYPEENEMYCOMPONENT);
 		m_AddComponentToECS<TextComponent>(TYPETEXTCOMPONENT);
 		m_AddComponentToECS<AnimationComponent>(TYPEANIMATIONCOMPONENT);
 		m_AddComponentToECS<CameraComponent>(TYPECAMERACOMPONENT);
@@ -145,7 +145,7 @@ namespace ecs{
 			if (ecs->m_state != RUNNING) {
 				if (System.first == TYPECOLLISIONRESPONSESYSTEM ||// System.first == TYPECOLLISIONSYSTEM ||
 					System.first == TYPELOGICSYSTEM || System.first == TYPEPHYSICSSYSTEM || 
-					System.first == TYPEANIMATIONSYSTEM) {
+					System.first == TYPEANIMATIONSYSTEM || System.first == TYPEPATHFINDINGSYSTEM) {
 					//skip physics and logic if not running
 					continue;
 				}

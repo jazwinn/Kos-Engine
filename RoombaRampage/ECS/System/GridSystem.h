@@ -79,7 +79,7 @@ namespace ecs {
 		/******************************************************************/
 		std::vector<GridComponent*> m_vecGridComponentPtr;
 
-
+		std::vector<NameComponent*> m_vecNameComponentPtr;
 	};
 
 }

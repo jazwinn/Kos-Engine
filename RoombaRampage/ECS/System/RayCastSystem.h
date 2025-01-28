@@ -16,6 +16,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "System.h"
 #include "../ECS/Component/TransformComponent.h"
 #include "../ECS/Component/RaycastComponent.h"
+#include "../ECS/Component/NameComponent.h"
 
 namespace ecs {
 
@@ -81,7 +82,7 @@ namespace ecs {
 		*/
 		/******************************************************************/
 		std::vector<RaycastComponent*> m_vecRaycastComponentPtr;
-
+		std::vector<NameComponent*> m_vecNameComponentPtr;
 	};
 
 }

@@ -54,18 +54,15 @@ namespace ecs {
 		std::vector<EntityID> m_triColWith{};
 		std::unordered_map<EntityID, physicspipe::CollisionState> m_collisionState{};
 		std::unordered_set<EntityID> m_keys;
-		std::vector<physicspipe::CollisionResponseData> m_contactPoints{};
+		std::vector<physicspipe::CollisionResponseData> m_contactPoints{}; 
 
-		int m_blockedFlag = 0;
+		//1 is top, 2 is right, 4 is bottom, 8 is left
+		//3 is top right, 6 is bottom right, 9 is bottom left, 12 is top left;
+		unsigned long m_blockedFlag = 0;
+		std::bitset<4>m_bits{};
 
 		mat3x3::Mat3x3 m_collider_Transformation{};
 
-		//void m_OnCollisionEnter(EntityID [[maybe_unused]] colPartner) { colPartner += 1; } //the += 1 is just to remove warnings
-
-		//void m_OnCollisionStay(EntityID [[maybe_unused]]colPartner) { colPartner += 1; }
-
-		//void m_OnCollisionExit(EntityID [[maybe_unused]]colPartner) { colPartner += 1; }
-		 
 		REFLECTABLE(ColliderComponent, m_CollisionCheck, m_Size, m_OffSet, m_drawDebug, m_radius, m_type)
 	};
 

@@ -69,7 +69,7 @@ namespace script {
 	}
 
 	//Collider Component
-	bool InternalCall::m_InternalGetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, int* m_blockedFlag, float* isCollided, bool* collisionCheck)
+	bool InternalCall::m_InternalGetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, unsigned int* m_blockedFlag, float* isCollided, bool* collisionCheck)
 	{
 		auto* collider = static_cast<ecs::ColliderComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(entity));
 
@@ -86,7 +86,7 @@ namespace script {
 		return true;
 	}
 
-	bool InternalCall::m_InternalSetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, int* m_blockedFlag, float* isCollided, bool* collisionCheck)
+	bool InternalCall::m_InternalSetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, unsigned int* m_blockedFlag, float* isCollided, bool* collisionCheck)
 	{
 		auto* collider = static_cast<ecs::ColliderComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(entity));
 
@@ -100,32 +100,39 @@ namespace script {
 		collider->m_blockedFlag = *m_blockedFlag;
 		collider->m_CollisionCheck = *collisionCheck;
 
+
 		return true;
 	}
 
 	//Player Component
-	bool InternalCall::m_InternalGetPlayerComponent(ecs::EntityID entity, bool* control)
+	bool InternalCall::m_InternalGetEnemyComponent(ecs::EntityID entity, int* enemytag, int* enemytype, int* enemybehaviour)
 	{
-		auto* player = static_cast<ecs::PlayerComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPEPLAYERCOMPONENT]->m_GetEntityComponent(entity));
+		auto* player = static_cast<ecs::EnemyComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPEENEMYCOMPONENT]->m_GetEntityComponent(entity));
 
 		if (player == nullptr) return false;
 
-		*control = player->m_Control;
+		*enemytag = player->m_enemyTag;
+		*enemytype = player->m_enemyTag;
+		*enemybehaviour = player->m_enemyRoamBehaviourInt;
+
 		return true;
 	}
 
-	bool InternalCall::m_InternalSetPlayerComponent(ecs::EntityID entity, bool control)
+	bool InternalCall::m_InternalSetEnemyComponent(ecs::EntityID entity, int* enemytag, int* enemytype, int* enemybehaviour)
 	{
-		auto* player = static_cast<ecs::PlayerComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPEPLAYERCOMPONENT]->m_GetEntityComponent(entity));
+		auto* player = static_cast<ecs::EnemyComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPEENEMYCOMPONENT]->m_GetEntityComponent(entity));
 
 		if (player == nullptr) return false;
 
-		player->m_Control = control;
+		 player->m_enemyTag = *enemytag;
+		 player->m_enemyTag = *enemytype;
+		 player->m_enemyRoamBehaviourInt = *enemybehaviour;
+
 		return true;
 	}
 
 	//RigidBody Component
-	bool InternalCall::m_InternalGetRigidBodyComponent(ecs::EntityID entity, vector2::Vec2* velocity, vector2::Vec2* acceleration, float* rotation)
+	bool InternalCall::m_InternalGetRigidBodyComponent(ecs::EntityID entity, vector2::Vec2* velocity, vector2::Vec2* acceleration, float* rotation, vector2::Vec2* previouspos, vector2::Vec2* directionvector)
 	{
 		auto* rbComponent = static_cast<ecs::RigidBodyComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPERIGIDBODYCOMPONENT]->m_GetEntityComponent(entity));
 
@@ -134,11 +141,13 @@ namespace script {
 		*velocity = rbComponent->m_Velocity;
 		*acceleration = rbComponent->m_Acceleration;
 		*rotation = rbComponent->m_Rotation;
+		*previouspos = rbComponent->m_PrevPos;
+		*directionvector = rbComponent->m_DirectionVector;
 
 		return true;
 	}
 
-	bool InternalCall::m_InternalSetRigidBodyComponent(ecs::EntityID entity, vector2::Vec2* velocity, vector2::Vec2* acceleration, float* rotation)
+	bool InternalCall::m_InternalSetRigidBodyComponent(ecs::EntityID entity, vector2::Vec2* velocity, vector2::Vec2* acceleration, float* rotation, vector2::Vec2* previouspos, vector2::Vec2* directionvector)
 	{
 		auto* rbComponent = static_cast<ecs::RigidBodyComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPERIGIDBODYCOMPONENT]->m_GetEntityComponent(entity));
 
@@ -147,6 +156,8 @@ namespace script {
 		rbComponent->m_Velocity = *velocity;
 		rbComponent->m_Acceleration = *acceleration;
 		rbComponent->m_Rotation = *rotation;
+		rbComponent->m_PrevPos = *previouspos;
+		rbComponent->m_DirectionVector = *directionvector;
 
 		return true;
 	}
@@ -612,7 +623,7 @@ namespace script {
 		Helper::Helpers::GetInstance()->m_closeWindow = true;
 	}
 
-	MonoArray* InternalCall::m_InternalCallGetChildrenID(ecs::EntityID id, bool* have_children)
+	MonoArray* InternalCall::m_InternalCallGetChildrenID(ecs::EntityID id)
 	{
 
 		const auto& childs = ecs::Hierachy::m_GetChild(id);
@@ -625,11 +636,9 @@ namespace script {
 
 			}
 
-			*have_children = true;
 			return Array;
 		}
 
-		*have_children = false;
 		return nullptr;
 	}
 
@@ -832,7 +841,7 @@ namespace script {
 		return true;
 	}
 
-	bool InternalCall::m_InternalCallGetPathfinding(ecs::EntityID id, vector2::Vec2* m_startpos, vector2::Vec2* m_startend, MonoString** gridkey, MonoArray** nodeArray_x, MonoArray** nodeArray_y)
+	bool InternalCall::m_InternalCallGetPathfinding(ecs::EntityID id, vector2::Vec2* m_startpos, vector2::Vec2* m_startend, int* gridkey, MonoArray** nodeArray_x, MonoArray** nodeArray_y)
 	{
 		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
 		ecs::PathfindingComponent* pfc = static_cast<ecs::PathfindingComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEPATHFINDINGCOMPONENT]->m_GetEntityComponent(id));
@@ -843,7 +852,7 @@ namespace script {
 			*m_startend = pfc->m_TargetPos;
 
 
-			*gridkey = mono_string_new(mono_domain_get(), pfc->m_GridKey.c_str());
+			*gridkey = pfc->m_GridKey;
 
 			auto* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
 
@@ -868,6 +877,34 @@ namespace script {
 
 
 		return false;
+	}
+
+	void InternalCall::m_InternalCallSetTargetPathfinding(ecs::EntityID id, vector2::Vec2* m_targetgridposition)
+	{
+
+		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+		ecs::PathfindingComponent* pfc = static_cast<ecs::PathfindingComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEPATHFINDINGCOMPONENT]->m_GetEntityComponent(id));
+
+		if (pfc) {
+
+			pfc->m_TargetPos = *m_targetgridposition;
+
+
+		}
+
+		return;
+	}
+
+	void InternalCall::m_EnableLayer(unsigned int layer)
+	{
+		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+		ecs->m_layersStack.m_EnableLayer((layer::LAYERS)layer);
+	}
+
+	void InternalCall::m_DisableLayer(unsigned int layer)
+	{
+		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+		ecs->m_layersStack.m_DisableLayer((layer::LAYERS)layer);
 	}
 
 
@@ -924,8 +961,8 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_InternalGetColliderComponent);
 		MONO_ADD_INTERNAL_CALL(m_InternalSetColliderComponent);
 
-		MONO_ADD_INTERNAL_CALL(m_InternalGetPlayerComponent);
-		MONO_ADD_INTERNAL_CALL(m_InternalSetPlayerComponent);
+		MONO_ADD_INTERNAL_CALL(m_InternalGetEnemyComponent);
+		MONO_ADD_INTERNAL_CALL(m_InternalSetEnemyComponent);
 
 		MONO_ADD_INTERNAL_CALL(m_InternalGetRigidBodyComponent);
 		MONO_ADD_INTERNAL_CALL(m_InternalSetRigidBodyComponent);
@@ -998,5 +1035,10 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_InternalCallSetRayCast);
 
 		MONO_ADD_INTERNAL_CALL(m_InternalCallGetPathfinding);
+
+		MONO_ADD_INTERNAL_CALL(m_EnableLayer);
+		MONO_ADD_INTERNAL_CALL(m_DisableLayer);
+
+		MONO_ADD_INTERNAL_CALL(m_InternalCallSetTargetPathfinding);
 	}
 }

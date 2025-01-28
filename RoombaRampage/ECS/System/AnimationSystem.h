@@ -97,7 +97,7 @@ namespace ecs {
 		/******************************************************************/
 		std::vector<SpriteComponent*> m_vecSpriteComponentPtr;
 
-		
+		std::vector<NameComponent*> m_vecNameComponentPtr;
 
 	};
 

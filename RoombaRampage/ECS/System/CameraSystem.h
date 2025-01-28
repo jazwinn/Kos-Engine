@@ -87,7 +87,7 @@ namespace ecs {
 		/******************************************************************/
 		std::vector<CameraComponent*> m_vecCameraComponentPtr;
 
-
+		std::vector<NameComponent*> m_vecNameComponentPtr;
 	};
 
 }

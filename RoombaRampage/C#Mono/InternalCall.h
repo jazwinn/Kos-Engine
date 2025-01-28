@@ -84,7 +84,7 @@ namespace script {
 			\return    True if the collider is found and retrieved; otherwise, false.
 		*/
 		/******************************************************************/
-		static bool m_InternalGetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, int* m_blockedFlag, float* isCollided, bool* collisionCheck);
+		static bool m_InternalGetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, unsigned int* m_blockedFlag, float* isCollided, bool* collisionCheck);
 
 		/******************************************************************/
 		/*!
@@ -101,7 +101,7 @@ namespace script {
 			\return    True if the collider is found and updated; otherwise, false.
 		*/
 		/******************************************************************/
-		static bool m_InternalSetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, int* m_blockedFlag, float* isCollided, bool* collisionCheck);
+		static bool m_InternalSetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, unsigned int* m_blockedFlag, float* isCollided, bool* collisionCheck);
 
 		/******************************************************************/
 		/*!
@@ -112,7 +112,7 @@ namespace script {
 			\return    True if the player component is found and retrieved; otherwise, false.
 		*/
 		/******************************************************************/
-		static bool m_InternalGetPlayerComponent(ecs::EntityID entity, bool* control);
+		static bool m_InternalGetEnemyComponent(ecs::EntityID entity, int* enemytag, int* enemytype, int* enemybehaviour);
 
 		/******************************************************************/
 		/*!
@@ -123,7 +123,7 @@ namespace script {
 			\return    True if the player component is found and updated; otherwise, false.
 		*/
 		/******************************************************************/
-		static bool m_InternalSetPlayerComponent(ecs::EntityID entity, bool control);
+		static bool m_InternalSetEnemyComponent(ecs::EntityID entity, int* enemytag, int* enemytype, int* enemybehaviour);
 
 		/******************************************************************/
 		/*!
@@ -136,7 +136,7 @@ namespace script {
 			\return    True if the rigid body component is found and retrieved; otherwise, false.
 		*/
 		/******************************************************************/
-		static bool m_InternalGetRigidBodyComponent(ecs::EntityID entity, vector2::Vec2* velocity, vector2::Vec2* acceleration, float* rotation);
+		static bool m_InternalGetRigidBodyComponent(ecs::EntityID entity, vector2::Vec2* velocity, vector2::Vec2* acceleration, float* rotation, vector2::Vec2* previouspos, vector2::Vec2* directionvector);
 
 		/******************************************************************/
 		/*!
@@ -149,7 +149,7 @@ namespace script {
 			\return    True if the rigid body component is found and updated; otherwise, false.
 		*/
 		/******************************************************************/
-		static bool m_InternalSetRigidBodyComponent(ecs::EntityID entity, vector2::Vec2* velocity, vector2::Vec2* acceleration, float* rotation);
+		static bool m_InternalSetRigidBodyComponent(ecs::EntityID entity, vector2::Vec2* velocity, vector2::Vec2* acceleration, float* rotation, vector2::Vec2* previouspos, vector2::Vec2* directionvector);
 
 		/******************************************************************/
 		/*!
@@ -515,7 +515,7 @@ namespace script {
 			\return    A MonoArray containing the IDs of child entities if any; otherwise, null.
 		*/
 		/******************************************************************/
-		static MonoArray* m_InternalCallGetChildrenID(ecs::EntityID id, bool* have_children);
+		static MonoArray* m_InternalCallGetChildrenID(ecs::EntityID);
 
 		/******************************************************************/
 		/*!
@@ -584,7 +584,14 @@ namespace script {
 
 		static bool m_InternalCallSetRayCast(ecs::EntityID id, MonoString* monoString, bool* isRaycasting, vector2::Vec2* targetposition, float* m_distance, bool* targetReached, vector2::Vec2* hitposition);;
 
-		static bool m_InternalCallGetPathfinding(ecs::EntityID id, vector2::Vec2* m_startpos, vector2::Vec2* m_startend, MonoString** gridkey, MonoArray** nodeArray_x, MonoArray** nodeArray_y);
+		static bool m_InternalCallGetPathfinding(ecs::EntityID id, vector2::Vec2* m_startpos, vector2::Vec2* m_startend, int* gridkey, MonoArray** nodeArray_x, MonoArray** nodeArray_y);
+
+		static void m_InternalCallSetTargetPathfinding(ecs::EntityID id, vector2::Vec2* m_targetgridposition);
+
+		static void m_EnableLayer(unsigned int layer);
+
+		static void m_DisableLayer(unsigned int layer);
+
 	public:
 		/******************************************************************/
 		/*!

@@ -238,12 +238,14 @@ namespace Serialization {
 		}
 
 		// Check if the entity has PlayerComponent and save it
-		if (signature.test(ecs::ComponentType::TYPEPLAYERCOMPONENT)) {
-			ecs::PlayerComponent* pc = static_cast<ecs::PlayerComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPEPLAYERCOMPONENT]->m_GetEntityComponent(entityId));
+		if (signature.test(ecs::ComponentType::TYPEENEMYCOMPONENT)) {
+			ecs::EnemyComponent* pc = static_cast<ecs::EnemyComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPEENEMYCOMPONENT]->m_GetEntityComponent(entityId));
 			if (pc) {
 				rapidjson::Value player(rapidjson::kObjectType);
-				player.AddMember("control", pc->m_Control, allocator);
-				entityData.AddMember("player", player, allocator);
+				player.AddMember("enemytag", pc->m_enemyTag, allocator);
+				player.AddMember("enemytype", pc->m_enemyTypeInt, allocator);
+				player.AddMember("enemybehaviour", pc->m_enemyTypeInt, allocator);
+				entityData.AddMember("enemy", player, allocator);
 				hasComponents = true;  // Mark as having a component
 			}
 		}
@@ -503,10 +505,8 @@ namespace Serialization {
 					}
 					wallArray.PushBack(wallRow, allocator);
 				}
-				// Add grid key
-				rapidjson::Value gridKey;
-				gridKey.SetString(gridc->m_GridKey.c_str(), allocator);
-				grid.AddMember("gridKey", gridKey, allocator);
+				
+				grid.AddMember("gridKey", gridc->m_GridKey, allocator);
 
 				grid.AddMember("isWall", wallArray, allocator);
 				entityData.AddMember("grid", grid, allocator);
@@ -612,10 +612,8 @@ namespace Serialization {
 					.AddMember("x", pc->m_TargetPos.m_x, allocator)
 					.AddMember("y", pc->m_TargetPos.m_y, allocator), allocator);
 
-				// Add grid key
-				rapidjson::Value gridKey;
-				gridKey.SetString(pc->m_GridKey.c_str(), allocator);
-				pathfinding.AddMember("gridKey", gridKey, allocator);
+				
+				pathfinding.AddMember("gridKey", pc->m_GridKey, allocator);
 
 				// Add the pathfinding component data to the entity data
 				entityData.AddMember("pathfinding", pathfinding, allocator);
@@ -724,13 +722,19 @@ namespace Serialization {
 		}
 
 		// Load Player Component if it exists
-		if (entityData.HasMember("player") && entityData["player"].IsObject()) {
-			ecs::PlayerComponent* pc = static_cast<ecs::PlayerComponent*>(ecs->m_AddComponent(ecs::TYPEPLAYERCOMPONENT, newEntityId));
+		if (entityData.HasMember("enemy") && entityData["enemy"].IsObject()) {
+			ecs::EnemyComponent* pc = static_cast<ecs::EnemyComponent*>(ecs->m_AddComponent(ecs::TYPEENEMYCOMPONENT, newEntityId));
 
 			if (pc) {
-				const rapidjson::Value& player = entityData["player"];
-				if (player.HasMember("control")) {
-					pc->m_Control = player["control"].GetBool();
+				const rapidjson::Value& player = entityData["enemy"];
+				if (player.HasMember("enemytag") && player["enemytag"].IsInt()) {
+					pc->m_enemyTag = player["enemytag"].GetInt();
+				}
+				if (player.HasMember("enemytype") && player["enemytype"].IsInt()) {
+					pc->m_enemyTypeInt = player["enemytype"].GetInt();
+				}
+				if (player.HasMember("enemybehaviour") && player["enemybehaviour"].IsInt()) {
+					pc->m_enemyRoamBehaviourInt = player["enemybehaviour"].GetInt();
 				}
 			}
 		}
@@ -1046,8 +1050,8 @@ namespace Serialization {
 				}
 
 				// Load grid key
-				if (grid.HasMember("gridKey") && grid["gridKey"].IsString()) {
-					gridc->m_GridKey = grid["gridKey"].GetString();
+				if (grid.HasMember("gridKey") && grid["gridKey"].IsInt()) {
+					gridc->m_GridKey = grid["gridKey"].GetInt();
 				}
 			}
 		}
@@ -1172,8 +1176,8 @@ namespace Serialization {
 				}
 
 				// Load grid key
-				if (pathfindingObject.HasMember("gridKey") && pathfindingObject["gridKey"].IsString()) {
-					pc->m_GridKey = pathfindingObject["gridKey"].GetString();
+				if (pathfindingObject.HasMember("gridKey") && pathfindingObject["gridKey"].IsInt()) {
+					pc->m_GridKey = pathfindingObject["gridKey"].GetInt();
 				}
 			}
 		}
@@ -1193,9 +1197,9 @@ namespace Serialization {
 		}
 	}
 	void Serialization::Serialize::m_SavePhysicsLayerMatrix() {
-		std::ofstream file("./Physics/PhysicsLayerMatrix.txt");
+		std::ofstream file("./ECS/LayerConfig.txt");
 		if (!file.is_open()) {
-			LOGGING_ERROR("Could not open PhysicsLayerMatrix.txt for writing.");
+			LOGGING_ERROR("Could not open LayerConfig.txt for writing.");
 			return;
 		}
 		auto size = physicslayer::PhysicsLayer::m_GetSize();
@@ -1207,14 +1211,16 @@ namespace Serialization {
 			file << "\n";
 		}
 
+		file << "LayerBitset: " << ecs::ECS::m_GetInstance()->m_layersStack.m_layerBitSet << std::endl;
+
 		file.close();
 		//LOGGING_INFO("Collision matrix saved to PhysicsLayerMatrix.txt");
 	}
 
 	void Serialization::Serialize::m_LoadPhysicsLayerMatrix() {
-		std::ifstream file("./Physics/PhysicsLayerMatrix.txt");
+		std::ifstream file("./ECS/LayerConfig.txt");
 		if (!file.is_open()) {
-			LOGGING_ERROR("Could not open PhysicsLayerMatrix.txt for reading.");
+			LOGGING_ERROR("Could not open LayerConfig.txt for reading.");
 			return;
 		}
 
@@ -1222,7 +1228,7 @@ namespace Serialization {
 		int row = 0;
 		auto size = physicslayer::PhysicsLayer::m_GetSize();
 		physicslayer::PhysicsLayer* layer = physicslayer::PhysicsLayer::m_GetInstance();
-		while (std::getline(file, line) && row < size) {
+		while ( row < size && std::getline(file, line)) {
 			std::istringstream iss(line);
 			int col = 0;
 			int value;
@@ -1233,8 +1239,19 @@ namespace Serialization {
 			++row;
 		}
 
+		std::getline(file, line);
+		std::istringstream iss(line);
+		std::string temp;
+		iss >> temp;
+		if (temp == "LayerBitset:") {
+			std::string _bitset;
+			iss >> _bitset;
+			ecs::ECS::m_GetInstance()->m_layersStack.m_layerBitSet = std::bitset<layer::MAXLAYER>(_bitset);
+		}
+
+
 		file.close();
-		LOGGING_INFO("Collision matrix loaded from PhysicsLayerMatrix.txt");
+		LOGGING_INFO("Collision matrix loaded from LayerConfig.txt");
 	}
 }
 

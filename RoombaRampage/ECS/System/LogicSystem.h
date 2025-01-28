@@ -87,7 +87,7 @@ namespace ecs {
         /******************************************************************/
         std::vector<ScriptComponent*> m_vecScriptComponentPtr;
 
-
+        std::vector<NameComponent*> m_vecNameComponentPtr;
         /******************************************************************/
         /*!
         \fn      void LogicSystem::CreateandStartScriptInstance(ecs::ScriptComponent* scriptComp)

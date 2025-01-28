@@ -90,7 +90,7 @@ namespace ecs {
 		/******************************************************************/
 		std::vector<TextComponent*> m_vecTextComponentPtr;
 
-
+		std::vector<NameComponent*> m_vecNameComponentPtr;
 	};
 
 }

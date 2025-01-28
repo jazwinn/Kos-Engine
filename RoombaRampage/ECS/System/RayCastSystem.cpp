@@ -31,6 +31,7 @@ namespace ecs {
 			== m_vecTransformComponentPtr.end()) {
 			m_vecTransformComponentPtr.push_back((TransformComponent*)ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(ID));
 			m_vecRaycastComponentPtr.push_back((RaycastComponent*)ecs->m_ECS_CombinedComponentPool[TYPERAYCASTINGCOMPONENT]->m_GetEntityComponent(ID));
+			m_vecNameComponentPtr.push_back((NameComponent*)ecs->m_ECS_CombinedComponentPool[TYPENAMECOMPONENT]->m_GetEntityComponent(ID));
 		}
 
 	}
@@ -49,10 +50,12 @@ namespace ecs {
 		size_t IndexLast = m_vecRaycastComponentPtr.size() - 1;
 		std::swap(m_vecRaycastComponentPtr[IndexID], m_vecRaycastComponentPtr[IndexLast]);
 		std::swap(m_vecTransformComponentPtr[IndexID], m_vecTransformComponentPtr[IndexLast]);
+		std::swap(m_vecNameComponentPtr[IndexID], m_vecNameComponentPtr[IndexLast]);
 
 		//popback the vector;
 		m_vecRaycastComponentPtr.pop_back();
 		m_vecTransformComponentPtr.pop_back();
+		m_vecNameComponentPtr.pop_back();
 	}
 
 	void RayCastSystem::m_Init() {
@@ -68,14 +71,16 @@ namespace ecs {
 		}
 
 		physicspipe::Physics* PhysicsPipeline = physicspipe::Physics::m_GetInstance();
+		ECS* ecs = ECS::m_GetInstance();
 
 		for (int n{}; n < m_vecTransformComponentPtr.size(); n++) {
 
 			TransformComponent* transform = m_vecTransformComponentPtr[n];
-			//skip component not of the scene
-			if (transform->m_scene != scene) continue;
-
 			RaycastComponent* raycast = m_vecRaycastComponentPtr[n];
+			NameComponent* NameComp = m_vecNameComponentPtr[n];
+			//skip component not of the scene
+			if ((raycast->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer)) continue;
+
 
 
 			//calcuate distance between entity and target

@@ -85,7 +85,7 @@ namespace ecs {
 		/******************************************************************/
 		std::vector<ColliderComponent*> m_vecColliderComponentPtr;
 
-
+		std::vector<NameComponent*> m_vecNameComponentPtr;
 	};
 
 }
