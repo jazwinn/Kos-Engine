@@ -260,6 +260,10 @@ public static class Component
             {
                 for (int n = 0; n < x.Length; n++)
                 {
+                    if(pathfindingcomponent.m_node == null)
+                    {
+                        pathfindingcomponent.m_node = new List<Vector2>();
+                    }
                     pathfindingcomponent.m_node.Add(new Vector2(x[n], y[n]));
                 }
             }
