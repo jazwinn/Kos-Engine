@@ -211,8 +211,11 @@ struct DrawComponents {
     template <typename U>
     void operator()(std::vector<U>& _args) {
         if constexpr (std::is_class_v<U>) {
+            int _count{};
             for (U& x : _args) {
+                ImGui::PushID(_count++);
                 x.ApplyFunction(DrawComponents<decltype(x.Names())>{x.Names()});
+                ImGui::PopID();
             }
         }
         else {
