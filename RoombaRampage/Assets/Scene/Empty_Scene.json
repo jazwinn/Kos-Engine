@@ -1,10 +1,8 @@
 [
     {
-        "name": {
-            "namestr": "ani_scientistWalk_strip14",
-            "layer": 0,
-            "isprefab": false,
-            "tagstr": "Default"
+        "NameComponent": {
+            "m_entityName": "ani_scientistWalk_strip14",
+            "m_entityTag": "Player"
         },
         "transform": {
             "position": {
@@ -57,15 +55,13 @@
                 "x": 1.0,
                 "y": 0.0
             },
-            "gridKey": ""
+            "gridKey": 0
         }
     },
     {
-        "name": {
-            "namestr": "wall",
-            "layer": 0,
-            "isprefab": false,
-            "tagstr": "Default"
+        "NameComponent": {
+            "m_entityName": "wall",
+            "m_entityTag": "Default"
         },
         "transform": {
             "position": {

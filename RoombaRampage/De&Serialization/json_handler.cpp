@@ -47,6 +47,214 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 namespace Serialization {
 
+	template <typename T>
+	struct SaveComponent {
+
+		T m_Array;
+		int count{};
+
+
+	
+		void operator()(float& _args, rapidjson::Value& value, rapidjson::Document::AllocatorType& allocator) {
+			value.AddMember(m_Array[count].c_str(), _args, allocator);
+			count++;
+		}
+
+		void operator()(physicspipe::EntityType& _args, rapidjson::Value& value, rapidjson::Document::AllocatorType& allocator)
+		{
+			value.AddMember(m_Array[count].c_str(), (int)_args, allocator);
+			count++;
+		}
+
+		void operator()(int& _args, rapidjson::Value& value, rapidjson::Document::AllocatorType& allocator) {
+			value.AddMember(m_Array[count].c_str(), _args, allocator);
+			count++;
+		}
+
+		void operator()(vector2::Vec2& _args, rapidjson::Value& value, rapidjson::Document::AllocatorType& allocator) {
+			value.AddMember(m_Array[count].c_str(), rapidjson::Value().SetObject()
+				.AddMember("x", _args.m_x, allocator)
+				.AddMember("y", _args.m_y, allocator), allocator);
+			count++;
+		}
+
+		void operator()(vector3::Vec3& _args, rapidjson::Value& value, rapidjson::Document::AllocatorType& allocator) {
+			value.AddMember(m_Array[count].c_str(), rapidjson::Value().SetObject()
+				.AddMember("x", _args.m_x, allocator)
+				.AddMember("y", _args.m_y, allocator)
+				.AddMember("Z", _args.m_z, allocator), allocator);
+			count++;
+		}
+
+
+		void operator()(bool& _args, rapidjson::Value& value, rapidjson::Document::AllocatorType& allocator) {
+			value.AddMember(m_Array[count].c_str(), _args, allocator);
+			count++;
+		}
+
+		void operator()(std::string& _args, rapidjson::Value& value, rapidjson::Document::AllocatorType& allocator) {
+			rapidjson::Value jsonString;
+			jsonString.SetString(_args.c_str(), allocator); // Set the string
+			value.AddMember(rapidjson::Value(m_Array[count].c_str(), allocator), jsonString, allocator); // Add the key-value pair
+			count++;
+		}
+
+		void operator()(layer::LAYERS& _args, rapidjson::Value& value, rapidjson::Document::AllocatorType& allocator) {
+			value.AddMember(m_Array[count].c_str(), (int)_args, allocator);
+			count++;
+		}
+
+		//template <typename U>
+		//void operator()(std::vector<U>& _args) {
+		//	if constexpr (std::is_class_v<U>) {
+		//		for (U& x : _args) {
+		//			x.ApplyFunction(DrawComponents<decltype(x.Names())>{x.Names()});
+		//		}
+		//	}
+		//	else {
+		//		int _count{};
+		//		for (U& x : _args) {
+		//			(*this)(x); // Handle non-class types
+		//			count--;// minus so no subsciprt error
+		//		}
+		//	}
+		//	count++;
+		//}
+
+		//template <typename K>
+		//void operator()(K& _args) {
+		//	if constexpr (std::is_class_v<K>) {
+		//		_args.ApplyFunction(DrawComponents<decltype(_args.Names())>{_args.Names()});
+		//		count++;
+		//	}
+
+		//}
+
+	};
+
+	template <typename T>
+	struct LoadComponent {
+
+		T m_Array;
+		int count{};
+
+
+
+		void operator()(float& _args, rapidjson::Value& value) {
+			
+			if (value.HasMember(m_Array[count].c_str()) && value[m_Array[count].c_str()].IsFloat()) {
+				_args = value[m_Array[count].c_str()].GetFloat();
+			}
+
+			count++;
+		}
+
+		void operator()(physicspipe::EntityType& _args, rapidjson::Value& value)
+		{
+			if (value.HasMember(m_Array[count].c_str()) && value[m_Array[count].c_str()].IsInt()) {
+				_args = value[m_Array[count].c_str()].GetInt();
+			}
+
+			count++;
+		}
+
+		void operator()(int& _args, rapidjson::Value& value) {
+			
+			if (value.HasMember(m_Array[count].c_str()) && value[m_Array[count].c_str()].IsInt()) {
+				_args = value[m_Array[count].c_str()].GetInt();
+			}
+
+			count++;
+		}
+
+		void operator()(vector2::Vec2& _args, rapidjson::Value& value) {
+			
+			if (value.HasMember(m_Array[count].c_str()) && value[m_Array[count].c_str()].IsObject()) {
+				const rapidjson::Value& vector = value[m_Array[count].c_str()];
+				if (vector.HasMember("x") && vector["x"].IsFloat()) {
+					_args.m_x = vector["x"].GetFloat();
+				}
+				if (vector.HasMember("y") && vector["y"].IsFloat()) {
+					_args.m_y = vector["y"].GetFloat();
+				}
+			}
+
+			count++;
+		}
+
+		void operator()(vector3::Vec3& _args, rapidjson::Value& value) {
+
+			if (value.HasMember(m_Array[count].c_str()) && value[m_Array[count].c_str()].IsObject()) {
+				const rapidjson::Value& vector = value[m_Array[count].c_str()];
+				if (vector.HasMember("x") && vector["x"].IsFloat()) {
+					_args.m_x = vector["x"].GetFloat();
+				}
+				if (vector.HasMember("y") && vector["y"].IsFloat()) {
+					_args.m_y = vector["y"].GetFloat();
+				}
+				if (vector.HasMember("z") && vector["z"].IsFloat()) {
+					_args.m_z = vector["z"].GetFloat();
+				}
+			}
+
+			count++;
+		}
+
+
+		void operator()(bool& _args, rapidjson::Value& value) {
+			
+			if (value.HasMember(m_Array[count].c_str()) && value[m_Array[count].c_str()].IsBool()) {
+				_args = value[m_Array[count].c_str()].GetBool();
+			}
+
+			count++;
+		}
+
+		void operator()(std::string& _args, rapidjson::Value& value) {
+			if (value.HasMember(m_Array[count].c_str()) && value[m_Array[count].c_str()].IsString()) {
+				_args = value[m_Array[count].c_str()].GetString();
+			}
+
+			count++;
+		}
+
+		void operator()(layer::LAYERS& _args, rapidjson::Value& value) {
+			
+			if (value.HasMember(m_Array[count].c_str()) && value[m_Array[count].c_str()].IsInt()) {
+				_args = value[m_Array[count].c_str()].GetInt();
+			}
+
+			count++;
+		}
+
+		//template <typename U>
+		//void operator()(std::vector<U>& _args) {
+		//	if constexpr (std::is_class_v<U>) {
+		//		for (U& x : _args) {
+		//			x.ApplyFunction(DrawComponents<decltype(x.Names())>{x.Names()});
+		//		}
+		//	}
+		//	else {
+		//		int _count{};
+		//		for (U& x : _args) {
+		//			(*this)(x); // Handle non-class types
+		//			count--;// minus so no subsciprt error
+		//		}
+		//	}
+		//	count++;
+		//}
+
+		//template <typename K>
+		//void operator()(K& _args) {
+		//	if constexpr (std::is_class_v<K>) {
+		//		_args.ApplyFunction(DrawComponents<decltype(_args.Names())>{_args.Names()});
+		//		count++;
+		//	}
+
+		//}
+
+	};
+
 	void Serialize::m_LoadConfig() {
 		std::ifstream file;
 		file.open("./Config/Config.txt");
@@ -191,8 +399,15 @@ namespace Serialization {
 				}
 				entityData.AddMember("name", name, allocator);
 				hasComponents = true;
+				//rapidjson::Value name(rapidjson::kObjectType);
 
+				//SaveComponent<decltype(nc->Names())> saver{ nc->Names() };  // Create SaveEntity with member names
 
+				//nc->ApplyFunction([&](auto& member) {
+				//	saver(member, name, allocator);  // Apply SaveEntity to each member
+				//	});
+
+				//entityData.AddMember(rapidjson::Value(nc->classname(), allocator), name, allocator);
 
 			}
 
@@ -646,9 +861,11 @@ namespace Serialization {
 		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
 		ecs::EntityID newEntityId = ecs->m_CreateEntity(sceneName);
 
-		if (entityData.HasMember("name") && entityData["name"].IsObject()) {
+		if (entityData.HasMember("NameComponent") && entityData["NameComponent"].IsObject()) {
 			ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(newEntityId));
-			const rapidjson::Value& name = entityData["name"];
+			const rapidjson::Value& name = entityData["NameComponent"];
+
+
 
 			if (name.HasMember("namestr") && name["namestr"].IsString()) {
 				nc->m_entityName = name["namestr"].GetString();  // Store the name

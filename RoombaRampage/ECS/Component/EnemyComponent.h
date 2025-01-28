@@ -27,6 +27,8 @@ namespace ecs {
 	\brief     Contains data specific to a player
 	*/
 	/******************************************************************/
+
+
 	class EnemyComponent : public Component {
 
 	public:
@@ -34,6 +36,7 @@ namespace ecs {
 		int m_enemyTag{-1};
 		int m_enemyTypeInt{-1};
 		int m_enemyRoamBehaviourInt{-1};
+
 
 		REFLECTABLE(EnemyComponent, m_enemyTag, m_enemyTypeInt, m_enemyRoamBehaviourInt);
 
