@@ -243,6 +243,8 @@ namespace Serialization {
 			if (pc) {
 				rapidjson::Value player(rapidjson::kObjectType);
 				player.AddMember("enemytag", pc->m_enemyTag, allocator);
+				player.AddMember("enemytype", pc->m_enemyTypeInt, allocator);
+				player.AddMember("enemybehaviour", pc->m_enemyTypeInt, allocator);
 				entityData.AddMember("enemy", player, allocator);
 				hasComponents = true;  // Mark as having a component
 			}
@@ -727,6 +729,12 @@ namespace Serialization {
 				const rapidjson::Value& player = entityData["enemy"];
 				if (player.HasMember("enemytag") && player["enemytag"].IsInt()) {
 					pc->m_enemyTag = player["enemytag"].GetInt();
+				}
+				if (player.HasMember("enemytype") && player["enemytype"].IsInt()) {
+					pc->m_enemyTypeInt = player["enemytype"].GetInt();
+				}
+				if (player.HasMember("enemybehaviour") && player["enemybehaviour"].IsInt()) {
+					pc->m_enemyRoamBehaviourInt = player["enemybehaviour"].GetInt();
 				}
 			}
 		}

@@ -32,8 +32,10 @@ namespace ecs {
 	public:
 
 		int m_enemyTag{-1};
+		int m_enemyTypeInt{-1};
+		int m_enemyRoamBehaviourInt{-1};
 
-		REFLECTABLE(EnemyComponent, m_enemyTag);
+		REFLECTABLE(EnemyComponent, m_enemyTag, m_enemyTypeInt, m_enemyRoamBehaviourInt);
 
 	};
 

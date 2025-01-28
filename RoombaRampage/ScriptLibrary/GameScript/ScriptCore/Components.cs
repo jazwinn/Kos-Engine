@@ -73,6 +73,8 @@ public class ColliderComponent
 public class EnemyComponent
 {
     public int m_tag;
+    public int m_enemyTypeInt;
+    public int m_enemyRoamBehaviourInt;
 }
 
 public class TextComponent
