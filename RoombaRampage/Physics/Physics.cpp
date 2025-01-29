@@ -532,7 +532,7 @@ namespace physicspipe {
 		m_CalculateBoundingBox();
 		std::set<std::pair<std::shared_ptr<PhysicsData>, std::shared_ptr<PhysicsData>>> pair;
 		for (size_t i = 0; i < m_physicsEntities.size(); ++i) {
-			for (size_t j = i+1; j < m_physicsEntities.size(); ++j) {
+			for (size_t j = i + 1; j < m_physicsEntities.size(); ++j) {
 				int layer1 = m_physicsEntities[i]->m_layerID;
 				int layer2 = m_physicsEntities[j]->m_layerID;
 
@@ -929,7 +929,10 @@ namespace physicspipe {
 
 	void Physics::IsLineIntersecting(const vector2::Vec2& p1, const vector2::Vec2& p2, const std::vector<layer::LAYERS>& layer, bool& isHit, vector2::Vec2& hitPosition)
 	{
+		//int count{};
 		for (const auto entity : m_physicsEntities) {
+
+			//std::cout << count++ << std::endl;
 
 			if (entity->type == EntityType::RECTANGLE) {
 
