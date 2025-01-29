@@ -137,10 +137,19 @@ namespace Serialization {
 		/******************************************************************/
 		static void m_LoadPhysicsLayerMatrix();
 
-		
+		static std::string m_EncodeBase64(const void* data, size_t);
 
+		struct VoidDeleter {
+			void operator()(void* ptr) const {
+				free(ptr);  // Free the memory allocated by malloc
+			}
+		};
+
+
+		static std::unique_ptr<void, VoidDeleter> DecodeBase64(const std::string& base64);
 
 	};
+
 
 	template <typename T>
 	struct SaveComponent {

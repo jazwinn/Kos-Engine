@@ -347,7 +347,7 @@ namespace script {
 
 		for (size_t i = 0; i < scripts.size(); ++i)
 		{
-			MonoString* monoString = mono_string_new(assetManager->m_scriptManager.m_GetDomain(), scripts[i].first.c_str());
+			MonoString* monoString = mono_string_new(assetManager->m_scriptManager.m_GetDomain(), std::get<0>(scripts[i]).c_str());
 			mono_array_set(scriptArray, MonoString*, i, monoString);
 		}
 
@@ -711,11 +711,11 @@ namespace script {
 
 		if (script == NULL) return;
 
-		const auto& results = std::find_if(script->m_scripts.begin(), script->m_scripts.end(), [&](const auto& x) {return x.first == std::string(nativeString);});
+		const auto& results = std::find_if(script->m_scripts.begin(), script->m_scripts.end(), [&](const auto& x) {return std::get<0>(x) == std::string(nativeString);});
 
 		if (results == script->m_scripts.end()) return;
 
-		results->second = true;
+		std::get<1>(*results) = true;
 
 		mono_free(nativeString);
 	}
@@ -728,11 +728,11 @@ namespace script {
 
 		if (script == NULL) return;
 
-		const auto& results = std::find_if(script->m_scripts.begin(), script->m_scripts.end(), [&](const auto& x) {return x.first == std::string(nativeString);});
+		const auto& results = std::find_if(script->m_scripts.begin(), script->m_scripts.end(), [&](const auto& x) {return std::get<0>(x) == std::string(nativeString);});
 
 		if (results == script->m_scripts.end()) return;
 
-		results->second = false;
+		std::get<1>(*results) = false;
 
 		mono_free(nativeString);
 	}
@@ -907,6 +907,13 @@ namespace script {
 		ecs->m_layersStack.m_DisableLayer((layer::LAYERS)layer);
 	}
 
+	float InternalCall::m_GetUnfixedDeltaTie()
+	{
+		
+		 float dt = Helper::Helpers::GetInstance()->m_deltaTime;
+		 return dt;
+	}
+
 
 
 	void InternalCall::m_InternalCallDeleteEntity(ecs::EntityID id)
@@ -989,6 +996,7 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_InternalSetVelocity);
 
 		MONO_ADD_INTERNAL_CALL(m_InternalCallGetDeltaTime);
+		MONO_ADD_INTERNAL_CALL(m_GetUnfixedDeltaTie);
 
 		MONO_ADD_INTERNAL_CALL(m_InternalCallGetTagID);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallGetTagIDs);
