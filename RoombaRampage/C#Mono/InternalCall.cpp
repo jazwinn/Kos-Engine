@@ -347,7 +347,7 @@ namespace script {
 
 		for (size_t i = 0; i < scripts.size(); ++i)
 		{
-			MonoString* monoString = mono_string_new(assetManager->m_scriptManager.m_GetDomain(), scripts[i].first.c_str());
+			MonoString* monoString = mono_string_new(assetManager->m_scriptManager.m_GetDomain(), std::get<0>(scripts[i]).c_str());
 			mono_array_set(scriptArray, MonoString*, i, monoString);
 		}
 
@@ -711,11 +711,11 @@ namespace script {
 
 		if (script == NULL) return;
 
-		const auto& results = std::find_if(script->m_scripts.begin(), script->m_scripts.end(), [&](const auto& x) {return x.first == std::string(nativeString);});
+		const auto& results = std::find_if(script->m_scripts.begin(), script->m_scripts.end(), [&](const auto& x) {return std::get<0>(x) == std::string(nativeString);});
 
 		if (results == script->m_scripts.end()) return;
 
-		results->second = true;
+		std::get<1>(*results) = true;
 
 		mono_free(nativeString);
 	}
@@ -728,11 +728,11 @@ namespace script {
 
 		if (script == NULL) return;
 
-		const auto& results = std::find_if(script->m_scripts.begin(), script->m_scripts.end(), [&](const auto& x) {return x.first == std::string(nativeString);});
+		const auto& results = std::find_if(script->m_scripts.begin(), script->m_scripts.end(), [&](const auto& x) {return std::get<0>(x) == std::string(nativeString);});
 
 		if (results == script->m_scripts.end()) return;
 
-		results->second = false;
+		std::get<1>(*results) = false;
 
 		mono_free(nativeString);
 	}

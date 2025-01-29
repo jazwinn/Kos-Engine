@@ -58,6 +58,7 @@ namespace script {
 
         m_LoadSecondaryDomain();
 
+        m_ReloadAllDLL();
        
     }
 
