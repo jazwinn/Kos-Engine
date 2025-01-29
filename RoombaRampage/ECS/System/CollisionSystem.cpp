@@ -171,7 +171,7 @@ namespace ecs {
 
 					//dont pass data if collision check is false
 
-					if (ColComp->m_CollisionCheck == false) continue;
+					//if (ColComp->m_CollisionCheck == false) continue;
 					PhysicsPipeline->m_SendPhysicsData(ColComp->m_radius, pos,prevPos, scale, velocity, id, NameComp->m_Layer);
 				}
 				else if (ColComp->m_type == physicspipe::EntityType::RECTANGLE) {
@@ -200,7 +200,7 @@ namespace ecs {
 					ColComp->m_collider_Transformation = debugTransformation;
 
 					//dont pass data if collision check is false
-					if (ColComp->m_CollisionCheck == false) continue;
+					//if (ColComp->m_CollisionCheck == false) continue;
 					mat3x3::Mat3Decompose(ColComp->m_collider_Transformation, pos, scale, rot);
 					PhysicsPipeline->m_SendPhysicsData(scale.m_y, scale.m_x, rot, pos,  prevPos , scale, velocity, id, NameComp->m_Layer);
 				}
@@ -226,7 +226,7 @@ namespace ecs {
 
 
 					//dont pass data if collision check is false
-					if (ColComp->m_CollisionCheck == false) continue;
+					//if (ColComp->m_CollisionCheck == false) continue;
 					mat3x3::Mat3Decompose(ColComp->m_collider_Transformation, pos, scale, rot);
 					PhysicsPipeline->m_SendPhysicsData(ColComp->m_radius, pos,prevPos, scale, velocity, id, NameComp->m_Layer);
 				}
@@ -245,7 +245,7 @@ namespace ecs {
 					ColComp->m_collider_Transformation = debugTransformation;
 
 					//dont pass data if collision check is false
-					if (ColComp->m_CollisionCheck == false) continue;
+					//if (ColComp->m_CollisionCheck == false) continue;
 
 					mat3x3::Mat3Decompose(ColComp->m_collider_Transformation, pos, scale, rot);
 					PhysicsPipeline->m_SendPhysicsData(scale.m_y, scale.m_x, rot, pos,  prevPos , scale, velocity, id, NameComp->m_Layer);

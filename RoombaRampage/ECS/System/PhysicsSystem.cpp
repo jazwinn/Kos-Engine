@@ -116,11 +116,6 @@ namespace ecs {
 					rigidBody->m_PrevDirVec = rigidBody->m_DirectionVector;
 				}
 				
-
-				//update physics pipline
-			
-				//TODO optimize,  causing longer load time
-				
 			}
 		}
 	}

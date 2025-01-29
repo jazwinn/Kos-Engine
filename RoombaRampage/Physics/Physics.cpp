@@ -369,7 +369,7 @@ namespace physicspipe {
 				ret_Val.first = flag;
 				ret_Val.second.first = {};
 				ret_Val.second.second = {};
-				return ret_Val;
+			
 			}
 			axisdepth = std::min(maxA, maxB) - std::max(minA, minB);
 			if (axisdepth < depth) {
@@ -391,7 +391,7 @@ namespace physicspipe {
 			ret_Val.first = flag;
 			ret_Val.second.first = {};
 			ret_Val.second.second = {};
-			return ret_Val;
+			
 		}
 		axisdepth = std::min(maxB - minA, maxA - minB);
 		if (axisdepth < depth) {
@@ -532,15 +532,16 @@ namespace physicspipe {
 		m_CalculateBoundingBox();
 		std::set<std::pair<std::shared_ptr<PhysicsData>, std::shared_ptr<PhysicsData>>> pair;
 		for (size_t i = 0; i < m_physicsEntities.size(); ++i) {
-			for (size_t j = i + 1; j < m_physicsEntities.size(); ++j) {
+			for (size_t j = i+1; j < m_physicsEntities.size(); ++j) {
 				int layer1 = m_physicsEntities[i]->m_layerID;
 				int layer2 = m_physicsEntities[j]->m_layerID;
 
 				if (m_physicsEntities[i]->m_ID == m_physicsEntities[j]->m_ID) continue;
 				// Check if these layers should collide
-				if (physicsLayer->m_GetCollide(layer1, layer2) && m_WithinBoundingRadius(m_physicsEntities[i], m_physicsEntities[j])) {
+				if (physicsLayer->m_GetCollide(layer1, layer2)){// && m_WithinBoundingRadius(m_physicsEntities[i], m_physicsEntities[j])) {
 					if (m_CheckCollision(m_physicsEntities[i], m_physicsEntities[j])) {
 						pair.emplace(m_physicsEntities[i], m_physicsEntities[j]);
+						pair.emplace(m_physicsEntities[j], m_physicsEntities[i]);
 						m_AddCollidedEntity(m_physicsEntities[i]);
 						m_AddCollidedEntity(m_physicsEntities[j]);
 
@@ -557,28 +558,55 @@ namespace physicspipe {
 		// Check for collision based on the types of entities.
 		if (entity1->m_GetEntity() == EntityType::RECTANGLE && entity2->m_GetEntity() == EntityType::RECTANGLE) {
 			//return m_CollisionIntersection_RectRect_SAT(*static_cast<Rectangle*>(entity1.get()), *static_cast<Rectangle*>(entity2.get()));
-			//std::pair<bool, std::pair<vector2::Vec2, float>> ret_Val = m_CollisionIntersection_RectRect_SAT_TEST(*static_cast<Rectangle*>(entity1.get()), *static_cast<Rectangle*>(entity2.get()));
-			//if (ret_Val.first) {
-			//	std::pair< std::shared_ptr<PhysicsData>, std::shared_ptr<PhysicsData>> obj_Pair;
-			//	obj_Pair.first = entity1;
-			//	obj_Pair.second = entity2;
-			//	std::pair< std::pair< std::shared_ptr<PhysicsData>, std::shared_ptr<PhysicsData>>, std::pair<vector2::Vec2, float>> store_Pairs;
-			//	store_Pairs.first = obj_Pair;
-			//	store_Pairs.second = ret_Val.second;
-			//	m_collidedEntitiesPairWithVector.push_back(store_Pairs);
+			std::pair<bool, std::pair<vector2::Vec2, float>> ret_Val = m_CollisionIntersection_RectRect_SAT_TEST(*static_cast<Rectangle*>(entity1.get()), *static_cast<Rectangle*>(entity2.get()));
+			if (ret_Val.first) {
+				std::pair< std::shared_ptr<PhysicsData>, std::shared_ptr<PhysicsData>> obj_Pair;
+				obj_Pair.first = entity1;
+				obj_Pair.second = entity2;
+				std::pair< std::pair< std::shared_ptr<PhysicsData>, std::shared_ptr<PhysicsData>>, std::pair<vector2::Vec2, float>> store_Pairs;
+				store_Pairs.first = obj_Pair;
+				store_Pairs.second.first = ret_Val.second.first;
+				store_Pairs.second.second = ret_Val.second.second;
+				m_collidedEntitiesPairWithVector.push_back(store_Pairs);
 
-			//}
-			//return ret_Val.first;
-			return m_CollisionIntersection_RectRect_SAT(*static_cast<Rectangle*>(entity1.get()), *static_cast<Rectangle*>(entity2.get()));
+			}
+			return ret_Val.first;
+			//return m_CollisionIntersection_RectRect_SAT(*static_cast<Rectangle*>(entity1.get()), *static_cast<Rectangle*>(entity2.get()));
 		}
 		else if (entity1->m_GetEntity() == EntityType::CIRCLE && entity2->m_GetEntity() == EntityType::CIRCLE) {
 			return m_CollisionIntersection_CircleCircle(*static_cast<Circle*>(entity1.get()), *static_cast<Circle*>(entity2.get()));
 		}
 		else if (entity1->m_GetEntity() == EntityType::CIRCLE && entity2->m_GetEntity() == EntityType::RECTANGLE) {
-			return m_CollisionIntersection_CircleRect_SAT(*static_cast<Circle*>(entity1.get()), *static_cast<Rectangle*>(entity2.get()));
+			//return m_CollisionIntersection_CircleRect_SAT(*static_cast<Circle*>(entity1.get()), *static_cast<Rectangle*>(entity2.get()));
+			std::pair<bool, std::pair<vector2::Vec2, float>> ret_Val = m_CollisionIntersection_CircleRect_SAT_TEST(*static_cast<Circle*>(entity1.get()), *static_cast<Rectangle*>(entity2.get()));
+			if (ret_Val.first) {
+				std::pair< std::shared_ptr<PhysicsData>, std::shared_ptr<PhysicsData>> obj_Pair;
+				obj_Pair.first = entity1;
+				obj_Pair.second = entity2;
+				std::pair< std::pair< std::shared_ptr<PhysicsData>, std::shared_ptr<PhysicsData>>, std::pair<vector2::Vec2, float>> store_Pairs;
+				store_Pairs.first = obj_Pair;
+				store_Pairs.second.first = ret_Val.second.first;
+				store_Pairs.second.second = ret_Val.second.second;
+				m_collidedEntitiesPairWithVector.push_back(store_Pairs);
+
+			}
+			return ret_Val.first;
 		}
 		else if (entity1->m_GetEntity() == EntityType::RECTANGLE && entity2->m_GetEntity() == EntityType::CIRCLE) {
-			return m_CollisionIntersection_CircleRect_SAT(*static_cast<Circle*>(entity2.get()), *static_cast<Rectangle*>(entity1.get()));
+			//return m_CollisionIntersection_CircleRect_SAT(*static_cast<Circle*>(entity2.get()), *static_cast<Rectangle*>(entity1.get()));
+			std::pair<bool, std::pair<vector2::Vec2, float>> ret_Val = m_CollisionIntersection_CircleRect_SAT_TEST(*static_cast<Circle*>(entity2.get()), *static_cast<Rectangle*>(entity1.get()));
+			if (ret_Val.first) {
+				std::pair< std::shared_ptr<PhysicsData>, std::shared_ptr<PhysicsData>> obj_Pair;
+				obj_Pair.first = entity1;
+				obj_Pair.second = entity2;
+				std::pair< std::pair< std::shared_ptr<PhysicsData>, std::shared_ptr<PhysicsData>>, std::pair<vector2::Vec2, float>> store_Pairs;
+				store_Pairs.first = obj_Pair;
+				store_Pairs.second.first = ret_Val.second.first;
+				store_Pairs.second.second = -ret_Val.second.second;
+				m_collidedEntitiesPairWithVector.push_back(store_Pairs);
+
+			}
+			return ret_Val.first;
 		}
 
 		return false;  // If no valid collision type, return false.
@@ -645,7 +673,7 @@ namespace physicspipe {
 	}
 	std::pair<bool, std::pair<vector2::Vec2, float>> Physics::m_CollisionIntersection_RectRect_SAT_TEST(const Rectangle& obj1, const Rectangle& obj2) {
 		vector2::Vec2 normal{};
-		float depth{};
+		float depth = std::numeric_limits<float>::max();
 		bool flag = true;
 		std::pair<bool, std::pair<vector2::Vec2, float>> ret_Val;
 		std::vector<vector2::Vec2> verticesA = obj1.m_GetRotatedVertices();
@@ -677,7 +705,6 @@ namespace physicspipe {
 		for (size_t i = 0; i < verticesB.size(); ++i) {
 			float minA{}, maxA{}, minB{}, maxB{};
 			vector2::Vec2 axis = { -edgesB[i].m_y, edgesB[i].m_x };
-			vector2::Vec2::m_funcVec2Normalize(axis, axis);
 			m_ProjectOntoAxis(verticesA, axis, minA, maxA);
 			m_ProjectOntoAxis(verticesB, axis, minB, maxB);
 			if (minA >= maxB || minB >= maxA) {

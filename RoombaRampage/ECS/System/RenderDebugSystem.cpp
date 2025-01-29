@@ -119,63 +119,63 @@ namespace ecs {
 				}
 
 				if (!parentComp) continue;
-				if (!parentCollider) continue;*/
+				if (!parentCollider) continue;
 				
-				//if ((collider->m_type == physicspipe::EntityType::RECTANGLE)) {
-				//	mat3x3::Mat3x3 child_Transform = mat3x3::Mat3Transform(transform->m_position, transform->m_scale, 0);
+				if ((collider->m_type == physicspipe::EntityType::RECTANGLE)) {
+					mat3x3::Mat3x3 child_Transform = mat3x3::Mat3Transform(transform->m_position, transform->m_scale, 0);
 
-				//	child_Transform.m_e20 += parentComp->m_position.m_x;
-				//	child_Transform.m_e21 += parentComp->m_position.m_y;
+					child_Transform.m_e20 += parentComp->m_position.m_x;
+					child_Transform.m_e21 += parentComp->m_position.m_y;
 
-				//	mat3x3::Mat3Scale(scaleMatrix, parentComp->m_scale.m_x, parentComp->m_scale.m_y);
-				//	mat3x3::Mat3RotDeg(rotateMatrix, parentComp->m_rotation);
-				//	mat3x3::Mat3Translate(translateToOriginMatrix, -parentComp->m_position.m_x, -parentComp->m_position.m_y);
-				//	mat3x3::Mat3Translate(translateBackMatrix, parentComp->m_position.m_x, (parentComp->m_position.m_y));
-				//	child_Transform = translateBackMatrix * rotateMatrix * scaleMatrix * translateToOriginMatrix * child_Transform;
+					mat3x3::Mat3Scale(scaleMatrix, parentComp->m_scale.m_x, parentComp->m_scale.m_y);
+					mat3x3::Mat3RotDeg(rotateMatrix, parentComp->m_rotation);
+					mat3x3::Mat3Translate(translateToOriginMatrix, -parentComp->m_position.m_x, -parentComp->m_position.m_y);
+					mat3x3::Mat3Translate(translateBackMatrix, parentComp->m_position.m_x, (parentComp->m_position.m_y));
+					child_Transform = translateBackMatrix * rotateMatrix * scaleMatrix * translateToOriginMatrix * child_Transform;
 
-				//	mat3x3::Mat3RotDeg(rotateMatrix, transform->m_rotation);
-				//	mat3x3::Mat3Translate(translateToOriginMatrix, -child_Transform.m_e20, -child_Transform.m_e21);
-				//	mat3x3::Mat3Translate(translateBackMatrix, child_Transform.m_e20, child_Transform.m_e21);
+					mat3x3::Mat3RotDeg(rotateMatrix, transform->m_rotation);
+					mat3x3::Mat3Translate(translateToOriginMatrix, -child_Transform.m_e20, -child_Transform.m_e21);
+					mat3x3::Mat3Translate(translateBackMatrix, child_Transform.m_e20, child_Transform.m_e21);
 
-				//	child_Transform = translateBackMatrix * rotateMatrix * translateToOriginMatrix * child_Transform;
+					child_Transform = translateBackMatrix * rotateMatrix * translateToOriginMatrix * child_Transform;
 
-				//	mat3x3::Mat3x3 final_Transform = child_Transform * mat3x3::Mat3Transform(collider->m_OffSet, vector2::Vec2{ collider->m_Size.m_x , collider->m_Size.m_y }, 0);
+					mat3x3::Mat3x3 final_Transform = child_Transform * mat3x3::Mat3Transform(collider->m_OffSet, vector2::Vec2{ collider->m_Size.m_x , collider->m_Size.m_y }, 0);
 
-				//	mat3x3::Mat3x3 debugTransformation = final_Transform;
-
-
-				//	collider->m_collider_Transformation = debugTransformation;
-				//}
-				//else if ((collider->m_type == physicspipe::EntityType::CIRCLE)) {
-				//	mat3x3::Mat3x3 debugTransformation = mat3x3::Mat3Transform(transform->m_position, vector2::Vec2{ 1.f, 1.f }, 0);
-
-				//	debugTransformation.m_e20 += parentComp->m_position.m_x;
-				//	debugTransformation.m_e21 += parentComp->m_position.m_y;
-
-				//	mat3x3::Mat3Scale(scaleMatrix, parentComp->m_scale.m_x, parentComp->m_scale.m_y);
-				//	mat3x3::Mat3RotDeg(rotateMatrix, parentComp->m_rotation);
-				//	mat3x3::Mat3Translate(translateToOriginMatrix, -parentComp->m_position.m_x, -parentComp->m_position.m_y);
-				//	mat3x3::Mat3Translate(translateBackMatrix, parentComp->m_position.m_x, (parentComp->m_position.m_y));
-				//	debugTransformation = translateBackMatrix * rotateMatrix * scaleMatrix * translateToOriginMatrix * debugTransformation;
+					mat3x3::Mat3x3 debugTransformation = final_Transform;
 
 
-				//	mat3x3::Mat3RotDeg(rotateMatrix, transform->m_rotation);
-				//	mat3x3::Mat3Translate(translateToOriginMatrix, -debugTransformation.m_e20, -debugTransformation.m_e21);
-				//	mat3x3::Mat3Translate(translateBackMatrix, debugTransformation.m_e20, debugTransformation.m_e21);
+					collider->m_collider_Transformation = debugTransformation;
+				}
+				else if ((collider->m_type == physicspipe::EntityType::CIRCLE)) {
+					mat3x3::Mat3x3 debugTransformation = mat3x3::Mat3Transform(transform->m_position, vector2::Vec2{ 1.f, 1.f }, 0);
 
-				//	debugTransformation = translateBackMatrix * rotateMatrix * translateToOriginMatrix * debugTransformation;
+					debugTransformation.m_e20 += parentComp->m_position.m_x;
+					debugTransformation.m_e21 += parentComp->m_position.m_y;
+
+					mat3x3::Mat3Scale(scaleMatrix, parentComp->m_scale.m_x, parentComp->m_scale.m_y);
+					mat3x3::Mat3RotDeg(rotateMatrix, parentComp->m_rotation);
+					mat3x3::Mat3Translate(translateToOriginMatrix, -parentComp->m_position.m_x, -parentComp->m_position.m_y);
+					mat3x3::Mat3Translate(translateBackMatrix, parentComp->m_position.m_x, (parentComp->m_position.m_y));
+					debugTransformation = translateBackMatrix * rotateMatrix * scaleMatrix * translateToOriginMatrix * debugTransformation;
 
 
-				//	debugTransformation = debugTransformation * mat3x3::Mat3Transform(collider->m_OffSet, vector2::Vec2{ collider->m_radius * 2.f / parentComp->m_scale.m_x, collider->m_radius * 2.f / parentComp->m_scale.m_y }, 0);
-				//	collider->m_collider_Transformation = debugTransformation;
-				//}
+					mat3x3::Mat3RotDeg(rotateMatrix, transform->m_rotation);
+					mat3x3::Mat3Translate(translateToOriginMatrix, -debugTransformation.m_e20, -debugTransformation.m_e21);
+					mat3x3::Mat3Translate(translateBackMatrix, debugTransformation.m_e20, debugTransformation.m_e21);
 
-				//if (collider->m_drawDebug) {
-				//	graphicsPipe->m_debugBoxData.push_back({ glm::mat3{collider->m_collider_Transformation.m_e00,collider->m_collider_Transformation.m_e01,collider->m_collider_Transformation.m_e02,
-				//													collider->m_collider_Transformation.m_e10,collider->m_collider_Transformation.m_e11, collider->m_collider_Transformation.m_e12,
-				//												collider->m_collider_Transformation.m_e20, collider->m_collider_Transformation.m_e21, collider->m_collider_Transformation.m_e22} ,
-				//											collider->m_isCollided, static_cast<graphicpipe::GraphicsPipe::ShapeType>(collider->m_type) });
-				//}
+					debugTransformation = translateBackMatrix * rotateMatrix * translateToOriginMatrix * debugTransformation;
+
+
+					debugTransformation = debugTransformation * mat3x3::Mat3Transform(collider->m_OffSet, vector2::Vec2{ collider->m_radius * 2.f / parentComp->m_scale.m_x, collider->m_radius * 2.f / parentComp->m_scale.m_y }, 0);
+					collider->m_collider_Transformation = debugTransformation;
+				}
+
+				if (collider->m_drawDebug) {
+					graphicsPipe->m_debugBoxData.push_back({ glm::mat3{collider->m_collider_Transformation.m_e00,collider->m_collider_Transformation.m_e01,collider->m_collider_Transformation.m_e02,
+																	collider->m_collider_Transformation.m_e10,collider->m_collider_Transformation.m_e11, collider->m_collider_Transformation.m_e12,
+																collider->m_collider_Transformation.m_e20, collider->m_collider_Transformation.m_e21, collider->m_collider_Transformation.m_e22} ,
+															collider->m_isCollided, static_cast<graphicpipe::GraphicsPipe::ShapeType>(collider->m_type) });
+				}
 
 				/*if (collider->m_drawDebug && (collider->m_type == physicspipe::EntityType::RECTANGLE))
 				{
@@ -236,45 +236,45 @@ namespace ecs {
 																	debugTransformation.m_e10,debugTransformation.m_e11, debugTransformation.m_e12,
 																debugTransformation.m_e20, debugTransformation.m_e21, debugTransformation.m_e22} ,
 															collider->m_isCollided, static_cast<graphicpipe::GraphicsPipe::ShapeType>(collider->m_type) });
-				}*/
-			//}
-			//else {
+				}
+			}
+			else {
 
-				//if (collider->m_type == physicspipe::EntityType::RECTANGLE) {
-				//	mat3x3::Mat3x3 debugTransformation = mat3x3::Mat3Transform(vector2::Vec2{ transform->m_transformation.m_e20 , transform->m_transformation.m_e21 }, transform->m_scale, 0);
+				if (collider->m_type == physicspipe::EntityType::RECTANGLE) {
+					mat3x3::Mat3x3 debugTransformation = mat3x3::Mat3Transform(vector2::Vec2{ transform->m_transformation.m_e20 , transform->m_transformation.m_e21 }, transform->m_scale, 0);
 
-				//	mat3x3::Mat3RotDeg(rotateMatrix, transform->m_rotation);
-				//	mat3x3::Mat3Translate(translateToOriginMatrix, -debugTransformation.m_e20, -debugTransformation.m_e21);
-				//	mat3x3::Mat3Translate(translateBackMatrix, debugTransformation.m_e20, debugTransformation.m_e21);
+					mat3x3::Mat3RotDeg(rotateMatrix, transform->m_rotation);
+					mat3x3::Mat3Translate(translateToOriginMatrix, -debugTransformation.m_e20, -debugTransformation.m_e21);
+					mat3x3::Mat3Translate(translateBackMatrix, debugTransformation.m_e20, debugTransformation.m_e21);
 
-				//	debugTransformation = translateBackMatrix * rotateMatrix * translateToOriginMatrix * debugTransformation;
+					debugTransformation = translateBackMatrix * rotateMatrix * translateToOriginMatrix * debugTransformation;
 
-				//	debugTransformation = debugTransformation * mat3x3::Mat3Transform(collider->m_OffSet, vector2::Vec2{ collider->m_Size.m_x , collider->m_Size.m_y }, 0);
-
-
-				//	collider->m_collider_Transformation = debugTransformation;
-				//}
-				//else if (collider->m_type == physicspipe::EntityType::CIRCLE) {
-				//	mat3x3::Mat3x3 debugTransformation = mat3x3::Mat3Transform(transform->m_position, vector2::Vec2{ 1.f, 1.f }, 0);
-
-				//	mat3x3::Mat3RotDeg(rotateMatrix, transform->m_rotation);
-				//	mat3x3::Mat3Translate(translateToOriginMatrix, -debugTransformation.m_e20, -debugTransformation.m_e21);
-				//	mat3x3::Mat3Translate(translateBackMatrix, debugTransformation.m_e20, debugTransformation.m_e21);
-
-				//	debugTransformation = translateBackMatrix * rotateMatrix * translateToOriginMatrix * debugTransformation;
+					debugTransformation = debugTransformation * mat3x3::Mat3Transform(collider->m_OffSet, vector2::Vec2{ collider->m_Size.m_x , collider->m_Size.m_y }, 0);
 
 
-				//	debugTransformation = debugTransformation * mat3x3::Mat3Transform(collider->m_OffSet, vector2::Vec2{ collider->m_radius * 2.f, collider->m_radius * 2.f }, 0);
-				//	collider->m_collider_Transformation = debugTransformation;
-				//}
+					collider->m_collider_Transformation = debugTransformation;
+				}
+				else if (collider->m_type == physicspipe::EntityType::CIRCLE) {
+					mat3x3::Mat3x3 debugTransformation = mat3x3::Mat3Transform(transform->m_position, vector2::Vec2{ 1.f, 1.f }, 0);
+
+					mat3x3::Mat3RotDeg(rotateMatrix, transform->m_rotation);
+					mat3x3::Mat3Translate(translateToOriginMatrix, -debugTransformation.m_e20, -debugTransformation.m_e21);
+					mat3x3::Mat3Translate(translateBackMatrix, debugTransformation.m_e20, debugTransformation.m_e21);
+
+					debugTransformation = translateBackMatrix * rotateMatrix * translateToOriginMatrix * debugTransformation;
 
 
-				//if (collider->m_drawDebug) {
-				//	graphicsPipe->m_debugBoxData.push_back({ glm::mat3{collider->m_collider_Transformation.m_e00,collider->m_collider_Transformation.m_e01,collider->m_collider_Transformation.m_e02,
-				//													collider->m_collider_Transformation.m_e10,collider->m_collider_Transformation.m_e11, collider->m_collider_Transformation.m_e12,
-				//												collider->m_collider_Transformation.m_e20, collider->m_collider_Transformation.m_e21, collider->m_collider_Transformation.m_e22} ,
-				//											collider->m_isCollided, static_cast<graphicpipe::GraphicsPipe::ShapeType>(collider->m_type) });
-				//}
+					debugTransformation = debugTransformation * mat3x3::Mat3Transform(collider->m_OffSet, vector2::Vec2{ collider->m_radius * 2.f, collider->m_radius * 2.f }, 0);
+					collider->m_collider_Transformation = debugTransformation;
+				}
+
+
+				if (collider->m_drawDebug) {
+					graphicsPipe->m_debugBoxData.push_back({ glm::mat3{collider->m_collider_Transformation.m_e00,collider->m_collider_Transformation.m_e01,collider->m_collider_Transformation.m_e02,
+																	collider->m_collider_Transformation.m_e10,collider->m_collider_Transformation.m_e11, collider->m_collider_Transformation.m_e12,
+																collider->m_collider_Transformation.m_e20, collider->m_collider_Transformation.m_e21, collider->m_collider_Transformation.m_e22} ,
+															collider->m_isCollided, static_cast<graphicpipe::GraphicsPipe::ShapeType>(collider->m_type) });
+				}
 
 				/*if (collider->m_drawDebug && (collider->m_type == physicspipe::EntityType::RECTANGLE))
 				{
@@ -314,8 +314,8 @@ namespace ecs {
 																	debugTransformation.m_e10,debugTransformation.m_e11, debugTransformation.m_e12,
 																debugTransformation.m_e20, debugTransformation.m_e21, debugTransformation.m_e22} ,
 															collider->m_isCollided, static_cast<graphicpipe::GraphicsPipe::ShapeType>(collider->m_type) });
-				}*/
-			//}
+				}
+			}*/
 
 			
 		}
