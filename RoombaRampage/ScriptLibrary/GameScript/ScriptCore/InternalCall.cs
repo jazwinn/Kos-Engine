@@ -206,6 +206,9 @@ public static class InternalCall
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static void m_InternalCallSetTargetPathfinding(uint id, in Vector2 m_targetgridposition);
 
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static float m_GetUnfixedDeltaTie();
+
 }
 
 
@@ -255,10 +258,17 @@ public static class Component
             var pathfindingcomponent = component as PathfindingComponent;
             int[] x, y;
             InternalCall.m_InternalCallGetPathfinding(id, out pathfindingcomponent.m_startPosition, out pathfindingcomponent.m_targetPosition, out pathfindingcomponent.m_gridkey, out x, out y);
-            for (int n = 0; n < x.Length; n++)
-            {
 
-                pathfindingcomponent.m_node.Add(new Vector2(x[n], y[n]));
+            if (x != null && y != null)
+            {
+                for (int n = 0; n < x.Length; n++)
+                {
+                    if (pathfindingcomponent.m_node == null)
+                    {
+                        pathfindingcomponent.m_node = new List<Vector2>();
+                    }
+                    pathfindingcomponent.m_node.Add(new Vector2(x[n], y[n]));
+                }
             }
         }
         else if (typeof(T) == typeof(EnemyComponent))

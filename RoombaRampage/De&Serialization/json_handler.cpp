@@ -27,23 +27,13 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 //SAVING
 
-//rapidjson::Value name(rapidjson::kObjectType);
-//SaveComponent<decltype(ec->Names())> saver{ ec->Names() };  // Create SaveEntity with member names
-//
-//ec->ApplyFunction([&](auto& member) {
-//	saver(member, name, allocator);  // Apply SaveEntity to each member
-//	});
-//
-//entityData.AddMember(rapidjson::Value(ec->classname(), allocator), name, allocator);
+//template <typename T>//T refers to component
+//void m_saveComponentreflect(T* component, rapidjson::Value& entityData, rapidjson::Document::AllocatorType& allocator);
 
 //LOADING
 
-//const rapidjson::Value& name = entityData["EnemyComponent"]; // <- change string to ecs::EnemyCoponent::classname().cstr()
-//LoadComponent<decltype(ecs::EnemyComponent::Names())> loader{ ecs::EnemyComponent::Names() };
-//
-//pc->ApplyFunction([&](auto& member) {
-//	loader(member, name);
-//	});
+//template <typename T>//T refers to component
+//void m_LoadComponentreflect(T* component, rapidjson::Value& entityData);
 
 
 /********************************************************************/
@@ -73,287 +63,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 namespace Serialization {
 
-	template <typename T>
-	struct SaveComponent {
-
-		T m_Array;
-		int count{};
-
-
 	
-		void operator()(float& _args, rapidjson::Value& value, rapidjson::Document::AllocatorType& allocator) {
-			rapidjson::Value key;
-			key.SetString(m_Array[count].c_str(), allocator);
-			value.AddMember(key, _args, allocator);
-			count++;
-		}
-
-
-		void operator()(int& _args, rapidjson::Value& value, rapidjson::Document::AllocatorType& allocator) {
-			rapidjson::Value key;
-			key.SetString(m_Array[count].c_str(), allocator);
-
-			value.AddMember(key, _args, allocator);
-			count++;
-		}
-
-		void operator()(vector2::Vec2& _args, rapidjson::Value& value, rapidjson::Document::AllocatorType& allocator) {
-			rapidjson::Value key;
-			key.SetString(m_Array[count].c_str(), allocator);
-
-			value.AddMember(key, rapidjson::Value().SetObject()
-				.AddMember("x", _args.m_x, allocator)
-				.AddMember("y", _args.m_y, allocator), allocator);
-			count++;
-		}
-
-		void operator()(vector3::Vec3& _args, rapidjson::Value& value, rapidjson::Document::AllocatorType& allocator) {
-			rapidjson::Value key;
-			key.SetString(m_Array[count].c_str(), allocator);
-
-			value.AddMember(key, rapidjson::Value().SetObject()
-				.AddMember("x", _args.m_x, allocator)
-				.AddMember("y", _args.m_y, allocator)
-				.AddMember("Z", _args.m_z, allocator), allocator);
-			count++;
-		}
-
-
-		void operator()(bool& _args, rapidjson::Value& value, rapidjson::Document::AllocatorType& allocator) {
-			rapidjson::Value key;
-			key.SetString(m_Array[count].c_str(), allocator);
-
-			value.AddMember(key, _args, allocator);
-			count++;
-		}
-
-		void operator()(std::string& _args, rapidjson::Value& value, rapidjson::Document::AllocatorType& allocator) {
-			rapidjson::Value jsonString;
-			jsonString.SetString(_args.c_str(), allocator); // Set the string
-			value.AddMember(rapidjson::Value(m_Array[count].c_str(), allocator), jsonString, allocator); // Add the key-value pair
-			count++;
-		}
-
-
-		template <typename EnumType, typename = std::enable_if_t<std::is_enum_v<EnumType>>>
-		void operator()(EnumType& _args, rapidjson::Value& value, rapidjson::Document::AllocatorType& allocator) {
-			// Create a rapidjson::Value key from the string
-			rapidjson::Value key;
-			key.SetString(m_Array[count].c_str(), allocator);
-
-			// Add the member using the key and integer value
-			value.AddMember(key, static_cast<int>(_args), allocator);
-
-			count++;
-		}
-
-		template <typename U>
-		void operator()(std::vector<U>& _args, rapidjson::Value& value, rapidjson::Document::AllocatorType& allocator) {
-			if constexpr (std::is_class_v<U>) {
-				rapidjson::Value Array(rapidjson::kArrayType);
-				for (U& x : _args) {
-					rapidjson::Value name(rapidjson::kObjectType);
-					SaveComponent<decltype(x.Names())> saver{ x.Names() };
-
-					x.ApplyFunction([&](auto& member) {
-						saver(member, name, allocator);  // Apply SaveEntity to each member
-						});
-
-					Array.PushBack(name, allocator);
-				}
-
-				rapidjson::Value key;
-				key.SetString(m_Array[count].c_str(), allocator);
-
-				value.AddMember(key, Array, allocator);
-			}
-			else {
-				rapidjson::Value Array(rapidjson::kArrayType);
-				for (U& x : _args) {
-
-					rapidjson::Value name(rapidjson::kObjectType);
-					(*this)(x, name, allocator); // Handle non-class types
-					Array.PushBack(name, allocator);
-					count--;// minus so no subsciprt error
-
-				}
-
-				rapidjson::Value key;
-				key.SetString(m_Array[count].c_str(), allocator);
-
-				value.AddMember(key, Array, allocator);
-			}
-			count++;
-		}
-
-		template <typename K>
-		void operator()(K& _args, rapidjson::Value& value, rapidjson::Document::AllocatorType& allocator) {
-			if constexpr (std::is_class_v<K>) {
-				rapidjson::Value name(rapidjson::kObjectType);
-				SaveComponent<decltype(_args.Names())> saver{ _args.Names() };
-
-				_args.ApplyFunction([&](auto& member) {
-					saver(member, name, allocator);  // Apply SaveEntity to each member
-					});
-
-				value.AddMember(rapidjson::Value(_args.classname(), allocator), name, allocator);
-				//_args.ApplyFunction(DrawComponents<decltype(_args.Names())>{_args.Names()});
-				count++;
-			}
-
-		}
-
-	};
-
-	template <typename T>
-	struct LoadComponent {
-
-		T m_Array;
-		int count{};
-
-
-
-		void operator()(float& _args, const rapidjson::Value& value) {
-			
-			if (value.HasMember(m_Array[count].c_str()) && value[m_Array[count].c_str()].IsFloat()) {
-				_args = value[m_Array[count].c_str()].GetFloat();
-			}
-
-			count++;
-		}
-
-
-		void operator()(int& _args, const rapidjson::Value& value) {
-			
-			if (value.HasMember(m_Array[count].c_str()) && value[m_Array[count].c_str()].IsInt()) {
-				_args = value[m_Array[count].c_str()].GetInt();
-			}
-
-			count++;
-		}
-
-		void operator()(vector2::Vec2& _args, const rapidjson::Value& value) {
-			
-			if (value.HasMember(m_Array[count].c_str()) && value[m_Array[count].c_str()].IsObject()) {
-				const rapidjson::Value& vector = value[m_Array[count].c_str()];
-				if (vector.HasMember("x") && vector["x"].IsFloat()) {
-					_args.m_x = vector["x"].GetFloat();
-				}
-				if (vector.HasMember("y") && vector["y"].IsFloat()) {
-					_args.m_y = vector["y"].GetFloat();
-				}
-			}
-
-			count++;
-		}
-
-		void operator()(vector3::Vec3& _args, const rapidjson::Value& value) {
-
-			if (value.HasMember(m_Array[count].c_str()) && value[m_Array[count].c_str()].IsObject()) {
-				const rapidjson::Value& vector = value[m_Array[count].c_str()];
-				if (vector.HasMember("x") && vector["x"].IsFloat()) {
-					_args.m_x = vector["x"].GetFloat();
-				}
-				if (vector.HasMember("y") && vector["y"].IsFloat()) {
-					_args.m_y = vector["y"].GetFloat();
-				}
-				if (vector.HasMember("z") && vector["z"].IsFloat()) {
-					_args.m_z = vector["z"].GetFloat();
-				}
-			}
-
-			count++;
-		}
-
-
-		void operator()(bool& _args, const rapidjson::Value& value) {
-			
-			if (value.HasMember(m_Array[count].c_str()) && value[m_Array[count].c_str()].IsBool()) {
-				_args = value[m_Array[count].c_str()].GetBool();
-			}
-
-			count++;
-		}
-
-		void operator()(std::string& _args, const rapidjson::Value& value) {
-			if (value.HasMember(m_Array[count].c_str()) && value[m_Array[count].c_str()].IsString()) {
-				_args = value[m_Array[count].c_str()].GetString();
-			}
-
-			count++;
-		}
-
-		template <typename EnumType, typename = std::enable_if_t<std::is_enum_v<EnumType>>>
-		void operator()(EnumType& _args, const rapidjson::Value& value) {
-			if (value.HasMember(m_Array[count].c_str()) && value[m_Array[count].c_str()].IsInt()) {
-				_args = static_cast<EnumType>(value[m_Array[count].c_str()].GetInt());
-			}
-			count++;
-		}
-
-		template <typename U>
-		void operator()(std::vector<U>& _args, const rapidjson::Value& value) {
-			if constexpr (std::is_class_v<U>) {
-				if (value.HasMember(m_Array[count].c_str()) && value[m_Array[count].c_str()].IsArray()) {
-
-					const rapidjson::Value& Array = value[m_Array[count].c_str()];
-
-					for (rapidjson::SizeType i = 0; i < Array.Size(); i++) {
-						const rapidjson::Value& Object = Array[i];
-
-						LoadComponent<decltype(U::Names())> loader{U::Names() };
-
-						U temp;
-
-						temp.ApplyFunction([&](auto& member) {
-							loader(member, Object);
-							});
-
-						_args.push_back(temp);
-					}
-				}
-
-			}
-			else {
-				const rapidjson::Value& Array = value[m_Array[count].c_str()];
-
-				for (rapidjson::SizeType i = 0; i < Array.Size(); i++) {
-					const rapidjson::Value& name = Array[i];
-
-					U temp;
-					(*this)(temp, name); // Handle non-class types
-					
-					_args.push_back(temp);
-					count--; //offset 
-				}
-			}
-			count++;
-		}
-
-		template <typename K>
-		void operator()(K& _args, const rapidjson::Value& value) {
-			if constexpr (std::is_class_v<K>) {
-				const rapidjson::Value& name = value[_args.classname()];
-				LoadComponent<decltype(_args.Names())> loader{ _args.Names() };
-
-				_args.ApplyFunction([&](auto& member) {
-					loader(member, name);
-					});
-
-				count++;
-			}
-
-		}
-		//template <typename K>
-		//void operator()(K& _args) {
-		//	if constexpr (std::is_class_v<K>) {
-		//		_args.ApplyFunction(DrawComponents<decltype(_args.Names())>{_args.Names()});
-		//		count++;
-		//	}
-
-		//}
-
-	};
 
 	void Serialize::m_LoadConfig() {
 		std::ifstream file;
@@ -520,6 +230,7 @@ namespace Serialization {
 					.AddMember("y", tc->m_scale.m_y, allocator), allocator);
 				entityData.AddMember("transform", transform, allocator);
 				hasComponents = true;
+
 			}
 		}
 
@@ -726,11 +437,28 @@ namespace Serialization {
 
 					// Add the script name (string) to the object
 					rapidjson::Value scriptValue;
-					scriptValue.SetString(scriptName.first.c_str(), allocator);
+					scriptValue.SetString(std::get<0>(scriptName).c_str(), allocator);
 					scriptObject.AddMember("name", scriptValue, allocator);
 
 					// Add the boolean value to the object
-					scriptObject.AddMember("enabled", scriptName.second, allocator);
+					scriptObject.AddMember("enabled", std::get<1>(scriptName), allocator);
+
+					rapidjson::Value variableMapValue(rapidjson::kArrayType);
+					for (const auto& x : std::get<2>(scriptName)) {
+						rapidjson::Value VariableString, base64string;
+
+						VariableString.SetString(x.first.c_str(), allocator);
+						base64string.SetString(x.second.c_str(), allocator);
+
+						rapidjson::Value publicVariable(rapidjson::kObjectType); // Create "publicvariable" object
+						publicVariable.AddMember("variable", VariableString, allocator);
+						publicVariable.AddMember("base64", base64string, allocator); // Fixed the name
+
+
+						variableMapValue.PushBack(publicVariable, allocator); // Push to array
+					}
+
+					scriptObject.AddMember("map", variableMapValue, allocator);
 
 					// Add the object to the array
 					scriptArray.PushBack(scriptObject, allocator);
@@ -739,7 +467,6 @@ namespace Serialization {
 				// Add the script array to the "script" object
 				script.AddMember("scripts", scriptArray, allocator);
 				entityData.AddMember("script", script, allocator);
-				hasComponents = true;
 			}
 		}
 
@@ -1001,6 +728,7 @@ namespace Serialization {
 				tc->m_scale.m_x = transform["scale"]["x"].GetFloat();
 				tc->m_scale.m_y = transform["scale"]["y"].GetFloat();
 			}
+	
 		}
 
 		// Load Collider Component if it exists
@@ -1265,8 +993,22 @@ namespace Serialization {
 									enabled = scriptObject["enabled"].GetBool();
 								}
 
+								std::unordered_map<std::string, std::string> variableMap;
+								if (scriptObject.HasMember("map") && scriptObject["map"].IsArray()) {
+									for (const auto& variable : scriptObject["map"].GetArray()) {
+										if (!variable.HasMember("variable") || !variable["variable"].IsString() ||
+											!variable.HasMember("base64") || !variable["base64"].IsString()) {
+											continue; // Skip invalid map entries
+										}
+
+										std::string key = variable["variable"].GetString();
+										std::string value = variable["base64"].GetString();
+										variableMap[key] = value;
+									}
+								}
+
 								// Add to the script list
-								sc->m_scripts.push_back(std::make_pair(scriptName, enabled));
+								sc->m_scripts.push_back(std::make_tuple(scriptName, enabled, variableMap));
 							}
 						}
 					}
@@ -1571,6 +1313,87 @@ namespace Serialization {
 
 		file.close();
 		LOGGING_INFO("Collision matrix loaded from LayerConfig.txt");
+	}
+	std::string Serialize::m_EncodeBase64(const void* data, size_t size)
+	{
+		static const char encodingTable[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+		if (!data || size == 0) {
+			return ""; // Return empty string if no data
+		}
+
+		const uint8_t* bytes = static_cast<const uint8_t*>(data);
+		std::string encoded;
+		encoded.reserve((size + 2) / 3 * 4); // Reserve space for performance
+
+		for (size_t i = 0; i < size; i += 3) {
+			uint32_t value = 0;
+			int count = 0;
+
+			// Read up to 3 bytes
+			for (int j = 0; j < 3; ++j) {
+				if (i + j < size) {
+					value |= (bytes[i + j] << (16 - j * 8));
+					count++;
+				}
+			}
+
+			// Encode into 4 Base64 characters
+			for (int j = 0; j < 4; ++j) {
+				if (j <= (count + 1)) {
+					encoded += encodingTable[(value >> (18 - j * 6)) & 0x3F];
+				}
+				else {
+					encoded += '='; // Padding
+				}
+			}
+		}
+
+		return encoded;
+	}
+
+	std::unique_ptr<void, Serialize::VoidDeleter> Serialize::DecodeBase64(const std::string& base64) {
+		static const int DECODING_TABLE[256] = {
+			-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 0-15
+			-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 16-31
+			-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 62, -1, -1, -1, 63, // 32-47  (+ and /)
+			52, 53, 54, 55, 56, 57, 58, 59, 60, 61, -1, -1, -1, -1, -1, -1, // 48-63  (0-9)
+			-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,           // 64-79  (A-O)
+			15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, -1, -1, -1, -1, -1, // 80-95  (P-Z)
+			-1, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, // 96-111 (a-o)
+			41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, -1, -1, -1, -1, -1  // 112-127 (p-z)
+		};
+
+		if (base64.empty()) return nullptr;
+
+		size_t inputLen = base64.length();
+		size_t padding = (base64[inputLen - 1] == '=') + (base64[inputLen - 2] == '=');
+		
+		size_t outSize = (inputLen * 3) / 4 - padding;
+
+		// Allocate memory using malloc (will be managed by unique_ptr)
+		auto buffer = std::unique_ptr<void, VoidDeleter>(malloc(outSize), VoidDeleter());
+		if (!buffer) return nullptr; // Memory allocation failed
+
+		uint8_t* output = static_cast<uint8_t*>(buffer.get());
+		uint32_t value = 0;
+		int bits = -8;
+		size_t index = 0;
+
+		for (char c : base64) {
+			if (c == '=') break;
+			int decoded = (c >= 0 && c <= 127) ? DECODING_TABLE[c] : -1;
+			if (decoded == -1) continue;
+
+			value = (value << 6) | decoded;
+			bits += 6;
+
+			if (bits >= 0) {
+				output[index++] = (value >> bits) & 0xFF;
+				bits -= 8;
+			}
+		}
+
+		return buffer;
 	}
 }
 

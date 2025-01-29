@@ -929,10 +929,7 @@ namespace physicspipe {
 
 	void Physics::IsLineIntersecting(const vector2::Vec2& p1, const vector2::Vec2& p2, const std::vector<layer::LAYERS>& layer, bool& isHit, vector2::Vec2& hitPosition)
 	{
-		int count{};
 		for (const auto entity : m_physicsEntities) {
-
-			std::cout << count++ << std::endl;
 
 			if (entity->type == EntityType::RECTANGLE) {
 

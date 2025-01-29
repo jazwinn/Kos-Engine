@@ -33,9 +33,6 @@
             "radius": 0.6499999761581421,
             "shapetype": 1
         },
-        "player": {
-            "control": true
-        },
         "rigidbody": {
             "linearVelocity": {
                 "x": 0.0,

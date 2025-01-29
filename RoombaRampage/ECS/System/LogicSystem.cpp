@@ -91,8 +91,12 @@ namespace ecs {
 			//}
 
 			// retieve isntance for each object
-			//std::cout << _script << std::endl;
-			scriptComp->m_scriptInstances[_script.first] = std::make_pair(assetManager->m_scriptManager.m_CreateObjectInstance("LogicScript", _script.first), false);
+			//
+			//  << _script << std::endl;
+			scriptComp->m_scriptInstances[std::get<0>(_script)] = std::make_pair(assetManager->m_scriptManager.m_CreateObjectInstance("LogicScript", std::get<0>(_script)), false);
+
+			//assign instance with script varaibles
+			assetManager->m_scriptManager.m_assignVaraiblestoScript(scriptComp, std::get<0>(_script));
 		}
 
 		// invoke start function
@@ -133,7 +137,7 @@ namespace ecs {
 			//check if scriptcomponent have instance
 			for (auto& scriptstring : scriptComp->m_scripts) {
 
-				if (std::find_if(scriptComp->m_scriptInstances.begin(), scriptComp->m_scriptInstances.end(), [&](auto& x){return x.first == scriptstring.first;}) == scriptComp->m_scriptInstances.end()) {
+				if (std::find_if(scriptComp->m_scriptInstances.begin(), scriptComp->m_scriptInstances.end(), [&](auto& x){return x.first == std::get<0>(scriptstring);}) == scriptComp->m_scriptInstances.end()) {
 					CreateandStartScriptInstance(scriptComp);
 					LOGGING_INFO("Script Instance Created");
 					break;
@@ -143,13 +147,13 @@ namespace ecs {
 
 			for (auto& scriptname : scriptComp->m_scripts) {
 
-				auto script = scriptComp->m_scriptInstances.find(scriptname.first);
+				auto script = scriptComp->m_scriptInstances.find(std::get<0>(scriptname));
 				try {
 					// run the scripts update fuction
-					const auto& scriptIsEnabled = std::find_if(scriptComp->m_scripts.begin(), scriptComp->m_scripts.end(), [&](auto& x) {return x.first == script->first;});
+					const auto& scriptIsEnabled = std::find_if(scriptComp->m_scripts.begin(), scriptComp->m_scripts.end(), [&](auto& x) {return std::get<0>(x) == script->first;});
 					if (scriptIsEnabled == scriptComp->m_scripts.end()) continue;
 
-					if (scriptIsEnabled->second) {
+					if (std::get<1>(*scriptIsEnabled)){
 
 						if (script->second.second == false) {
 							assetManager->m_scriptManager.m_InvokeMethod(script->first, "Start", script->second.first, nullptr);

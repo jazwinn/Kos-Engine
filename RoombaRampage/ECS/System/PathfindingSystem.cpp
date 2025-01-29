@@ -106,7 +106,7 @@ namespace ecs {
                 pathfinding->m_Path = path;
                 //LOGGING_INFO("Path found");
                 for (const auto& node : path) {
-                   std::cout << "Step: (" << node.x << ", " << node.y << ")\n";
+                   //std::cout << "Step: (" << node.x << ", " << node.y << ")\n";
 
                    /* if (!pathfinding->m_Path.empty())
                     {

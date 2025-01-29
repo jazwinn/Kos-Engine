@@ -36,10 +36,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include <mono/metadata/debug-helpers.h>
 
 #include "../ECS/ECS.h"
-#include <string>
-#include <vector>
-#include <map>
-#include <filesystem>
+
 
 namespace script {
 
@@ -200,6 +197,8 @@ namespace script {
 		*/
 		/******************************************************************/
 		void m_ReloadAllDLL();
+
+		void m_assignVaraiblestoScript(ecs::ScriptComponent* sc, const std::string& script);
 
 		/******************************************************************/
 		/*!
