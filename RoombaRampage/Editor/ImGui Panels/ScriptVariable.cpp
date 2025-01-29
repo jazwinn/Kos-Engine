@@ -59,6 +59,8 @@ namespace scripteditor {
 
 		MonoClass* scriptclass = mono_class_from_name(image, "", script.c_str());
 
+        if (scriptclass == NULL) return;
+
         void* iter = nullptr;
         MonoClassField* field;
         while ((field = mono_class_get_fields(scriptclass, &iter)) != nullptr) {
