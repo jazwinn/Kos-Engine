@@ -592,6 +592,8 @@ namespace script {
 
 		static void m_DisableLayer(unsigned int layer);
 
+		static float m_GetUnfixedDeltaTie();
+
 	public:
 		/******************************************************************/
 		/*!
