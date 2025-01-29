@@ -907,6 +907,13 @@ namespace script {
 		ecs->m_layersStack.m_DisableLayer((layer::LAYERS)layer);
 	}
 
+	float InternalCall::m_GetUnfixedDeltaTie()
+	{
+		
+		 float dt = Helper::Helpers::GetInstance()->m_deltaTime;
+		 return dt;
+	}
+
 
 
 	void InternalCall::m_InternalCallDeleteEntity(ecs::EntityID id)
@@ -989,6 +996,7 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_InternalSetVelocity);
 
 		MONO_ADD_INTERNAL_CALL(m_InternalCallGetDeltaTime);
+		MONO_ADD_INTERNAL_CALL(m_GetUnfixedDeltaTie);
 
 		MONO_ADD_INTERNAL_CALL(m_InternalCallGetTagID);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallGetTagIDs);

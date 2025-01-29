@@ -443,6 +443,23 @@ namespace Serialization {
 					// Add the boolean value to the object
 					scriptObject.AddMember("enabled", std::get<1>(scriptName), allocator);
 
+					rapidjson::Value variableMapValue(rapidjson::kArrayType);
+					for (const auto& x : std::get<2>(scriptName)) {
+						rapidjson::Value VariableString, base64string;
+
+						VariableString.SetString(x.first.c_str(), allocator);
+						base64string.SetString(x.second.c_str(), allocator);
+
+						rapidjson::Value publicVariable(rapidjson::kObjectType); // Create "publicvariable" object
+						publicVariable.AddMember("variable", VariableString, allocator);
+						publicVariable.AddMember("base64", base64string, allocator); // Fixed the name
+
+
+						variableMapValue.PushBack(publicVariable, allocator); // Push to array
+					}
+
+					scriptObject.AddMember("map", variableMapValue, allocator);
+
 					// Add the object to the array
 					scriptArray.PushBack(scriptObject, allocator);
 				}
@@ -450,7 +467,6 @@ namespace Serialization {
 				// Add the script array to the "script" object
 				script.AddMember("scripts", scriptArray, allocator);
 				entityData.AddMember("script", script, allocator);
-				hasComponents = true;
 			}
 		}
 
@@ -977,8 +993,22 @@ namespace Serialization {
 									enabled = scriptObject["enabled"].GetBool();
 								}
 
+								std::unordered_map<std::string, std::string> variableMap;
+								if (scriptObject.HasMember("map") && scriptObject["map"].IsArray()) {
+									for (const auto& variable : scriptObject["map"].GetArray()) {
+										if (!variable.HasMember("variable") || !variable["variable"].IsString() ||
+											!variable.HasMember("base64") || !variable["base64"].IsString()) {
+											continue; // Skip invalid map entries
+										}
+
+										std::string key = variable["variable"].GetString();
+										std::string value = variable["base64"].GetString();
+										variableMap[key] = value;
+									}
+								}
+
 								// Add to the script list
-								sc->m_scripts.push_back(std::make_tuple(scriptName, enabled, std::unordered_map<std::string, std::string>{}));
+								sc->m_scripts.push_back(std::make_tuple(scriptName, enabled, variableMap));
 							}
 						}
 					}

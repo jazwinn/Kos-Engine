@@ -94,6 +94,9 @@ namespace ecs {
 			//
 			//  << _script << std::endl;
 			scriptComp->m_scriptInstances[std::get<0>(_script)] = std::make_pair(assetManager->m_scriptManager.m_CreateObjectInstance("LogicScript", std::get<0>(_script)), false);
+
+			//assign instance with script varaibles
+			assetManager->m_scriptManager.m_assignVaraiblestoScript(scriptComp, std::get<0>(_script));
 		}
 
 		// invoke start function

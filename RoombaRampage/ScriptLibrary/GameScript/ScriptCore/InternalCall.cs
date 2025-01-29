@@ -206,6 +206,9 @@ public static class InternalCall
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static void m_InternalCallSetTargetPathfinding(uint id, in Vector2 m_targetgridposition);
 
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static float m_GetUnfixedDeltaTie();
+
 }
 
 

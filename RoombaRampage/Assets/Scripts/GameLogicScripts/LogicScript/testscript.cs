@@ -12,13 +12,13 @@ public class testscript : ScriptBase
 
     private uint EntityID;
 
-    public int test = 0;
+    public int test;
 
-    public float test2 = 0;
+    public float test2;
 
-    public bool test3 = true;
+    public bool test3;
 
-    public string test4 = "hello";
+    public string test4;
 
     public override void Awake(uint id)
     {

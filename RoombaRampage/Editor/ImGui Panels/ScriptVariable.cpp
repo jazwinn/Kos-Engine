@@ -74,7 +74,7 @@ namespace scripteditor {
 
                 // Change the value based on type (example for int and float)
                 if (fieldTypeCode == MONO_TYPE_I4) { // Type code for int
-                    int integer{3};
+                    int integer{0};
                     if (is_instanced) {
                         mono_field_get_value(sc->m_scriptInstances.find(script)->second.first, fields, &integer);
                     }
@@ -110,7 +110,7 @@ namespace scripteditor {
                     }
                 }
                 else if (fieldTypeCode == MONO_TYPE_R4) { // Type code for float
-                    float _float{ 4 };
+                    float _float{ 0 };
                     if (is_instanced) {
                         mono_field_get_value(sc->m_scriptInstances.find(script)->second.first, fields, &_float);
                     }
@@ -192,9 +192,13 @@ namespace scripteditor {
 
                     if (is_instanced) {
                         mono_field_get_value(sc->m_scriptInstances.find(script)->second.first, fields, &monoStr);
-                        const char* cStr = mono_string_to_utf8(monoStr);
-                        string = cStr;
-                        mono_free((void*)cStr); // Free memory allocated by mono_string_to_utf8
+
+                        if (monoStr != NULL) {
+                            const char* cStr = mono_string_to_utf8(monoStr);
+                            string = cStr;
+                            mono_free((void*)cStr); // Free memory allocated by mono_string_to_utf8
+                        }
+
 
                     }
                     else {
