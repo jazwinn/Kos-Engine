@@ -290,13 +290,13 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
         // float forwardY = (float)(Math.Cos(rotationInRadians)); //Get forward vector Y
 
-         movement.X = 0 ; //Pushes enemy back for "knockback effect"
-         movement.Y = 0 ; //Pushes enemy back for "knockback effect"
+        // movement.X = 0 + forwardX * enemyDeathKnockbackMultiplier; //Pushes enemy back for "knockback effect"
+        // movement.Y = 0 + forwardY * enemyDeathKnockbackMultiplier; //Pushes enemy back for "knockback effect"
 
-         InternalCall.m_InternalSetVelocity(EntityID, movement); //Sets velocity for rigidbody to move
+        InternalCall.m_InternalSetVelocity(EntityID, movement); //Sets velocity for rigidbody to move
 
-        // isDead = true; //Sets enemy to dead status
-         tempTransformComp = GetComponent.GetTransformComponent(EntityID); //Gets new transform component after moving
+        isDead = true; //Sets enemy to dead status
+        tempTransformComp = GetComponent.GetTransformComponent(EntityID); //Gets new transform component after moving
 
         
         yield return new CoroutineManager.WaitForSeconds(enemyBloodPoolSpawnDelay); //Waits for time before moving to next line;

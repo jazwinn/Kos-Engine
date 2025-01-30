@@ -239,7 +239,8 @@ namespace Serialization {
 			ecs::ColliderComponent* cc = static_cast<ecs::ColliderComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(entityId));
 			if (cc) {
 				rapidjson::Value collider(rapidjson::kObjectType);
-				collider.AddMember("checkcollision", cc->m_CollisionCheck, allocator);
+				collider.AddMember("checkcollision", cc->m_collisionCheck, allocator);
+				collider.AddMember("checkresponse", cc->m_collisionResponse, allocator);
 				collider.AddMember("size", rapidjson::Value().SetObject()
 					.AddMember("x", cc->m_Size.m_x, allocator)
 					.AddMember("y", cc->m_Size.m_y, allocator), allocator);
@@ -756,7 +757,10 @@ namespace Serialization {
 					cc->m_type = (physicspipe::EntityType)collider["shapetype"].GetInt();
 				}
 				if (collider.HasMember("checkcollision")) {
-					cc->m_CollisionCheck = collider["checkcollision"].GetBool();
+					cc->m_collisionCheck = collider["checkcollision"].GetBool();
+				}
+				if (collider.HasMember("checkresponse")) {
+					cc->m_collisionResponse = collider["checkresponse"].GetBool();
 				}
 			}
 		}

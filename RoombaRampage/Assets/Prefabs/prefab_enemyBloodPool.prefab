@@ -28,9 +28,9 @@
             "alpha": 1.0
         },
         "animation": {
-            "frameNumber": 2,
+            "frameNumber": 7,
             "framesPerSecond": 2,
-            "frameTimer": 1.0333330631256104,
+            "frameTimer": 3.9499969482421875,
             "isAnimating": true,
             "stripCount": 9
         },
@@ -38,7 +38,8 @@
             "scripts": [
                 {
                     "name": "EnemyBloodPool",
-                    "enabled": true
+                    "enabled": true,
+                    "map": []
                 }
             ]
         }

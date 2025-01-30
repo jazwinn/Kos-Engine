@@ -146,7 +146,7 @@ public class CoroutineManager : ScriptBase
     // Time source
     private float GetTime()
     {
-        return InternalCall.m_getAccumulatedDeltaTime(); // Replace with engine's time API
+        return InternalCall.m_InternalCallGetGameTime(); // Replace with engine's time API
     }
 
     // Debugging

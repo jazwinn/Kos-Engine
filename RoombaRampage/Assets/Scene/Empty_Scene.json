@@ -8,8 +8,8 @@
         },
         "transform": {
             "position": {
-                "x": 0.7276896834373474,
-                "y": 0.64531010389328
+                "x": 0.26086992025375366,
+                "y": 1.8535499572753906
             },
             "rotation": -0.0,
             "scale": {
@@ -19,6 +19,7 @@
         },
         "collider": {
             "checkcollision": true,
+            "checkresponse": true,
             "size": {
                 "x": 1.2799999713897705,
                 "y": 1.2799999713897705
@@ -30,6 +31,30 @@
             "drawDebug": true,
             "radius": 0.5,
             "shapetype": 0
+        },
+        "rigidbody": {
+            "linearVelocity": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "linearAcceleration": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "angularVelocity": 0.0,
+            "angularAcceleration": 0.0,
+            "mass": 1.0,
+            "inverseMass": 1.0,
+            "linearDamping": 0.9900000095367432,
+            "angularDamping": 0.9900000095367432,
+            "force": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "torque": 0.0,
+            "kinematic": false,
+            "static": false
         },
         "sprite": {
             "imagefile": "ani_scientistWalk_strip14.png",
@@ -80,6 +105,7 @@
         },
         "collider": {
             "checkcollision": true,
+            "checkresponse": true,
             "size": {
                 "x": 1.0,
                 "y": 1.0
