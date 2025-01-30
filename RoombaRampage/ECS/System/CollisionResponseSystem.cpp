@@ -112,89 +112,120 @@ namespace ecs {
 			if ((rigidComp->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer)) continue;
 
 			EntityID obj1_EntityID = rigidComp->m_Entity;
-			EntityID obj2_EntityID;
 
-			bool swap = false;
+			std::vector<EntityID> colidedwith;
 
+			while (true) {
 
-			auto valit = std::find_if(vecCollisionEntityPairWithVector.begin(), vecCollisionEntityPairWithVector.end(), [&](const auto& x) { return x.first.first.get()->m_ID == obj1_EntityID; });
+				EntityID obj2_EntityID;
 
-			if (valit == vecCollisionEntityPairWithVector.end()) {
-				valit = std::find_if(vecCollisionEntityPairWithVector.begin(), vecCollisionEntityPairWithVector.end(), [&](const auto& x) { return x.first.second.get()->m_ID == obj1_EntityID; });
-
-				if (valit != vecCollisionEntityPairWithVector.end()) {
-					obj2_EntityID = valit->first.first.get()->m_ID;
-					swap = true;
-				}
-				else {
-					continue;
-				}
-			}
-			else {
-				obj2_EntityID = valit->first.second.get()->m_ID;
-			}
+				bool swap = false;
 
 
-
-
-
-			//if (std::find(respondedids.begin(), respondedids.end(), obj2_EntityID) != respondedids.end()) continue;
-
-
-
-
-			TransformComponent* obj2_TC = (TransformComponent*)ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(obj2_EntityID);
-			ColliderComponent* obj2_CC = (ColliderComponent*)ecs->m_ECS_CombinedComponentPool[TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(obj2_EntityID);
-			RigidBodyComponent* obj2_RC = (RigidBodyComponent*)ecs->m_ECS_CombinedComponentPool[TYPERIGIDBODYCOMPONENT]->m_GetEntityComponent(obj2_EntityID);
-
-			obj2_CC->m_isCollided = 1.0f;
-			ColComp->m_isCollided = 1.f;
-
-			if (ColComp->m_CollisionCheck == false && obj2_CC->m_CollisionCheck == false)
-				continue;
-
-			if (ColComp->m_CollisionCheck && obj2_CC->m_CollisionCheck && rigidComp != NULL && obj2_RC != NULL) {
-				transform->m_position += (-valit->second.first * valit->second.second);
-				obj2_TC->m_position += (valit->second.first * valit->second.second);
-				rigidComp->m_Velocity = {};
-				obj2_RC->m_Velocity = {};
-				obj2_CC->m_isCollided = 1.0f;
-				ColComp->m_isCollided = 1.0f;
-			}
-
-
-			if (std::find_if(m_vecRigidBodyComponentPtr.begin(), m_vecRigidBodyComponentPtr.end(), [obj2_EntityID](const auto& obj) { return obj->m_Entity == obj2_EntityID; })
-				!= m_vecRigidBodyComponentPtr.end()) {
-				if (obj2_CC->m_CollisionCheck) {
-					vector2::Vec2 toMove{};
-					if (swap) {
-						toMove = -valit->second.first * valit->second.second; //DISTANCE TO SHIFT BACK
-					}
-					else{
-						toMove = valit->second.first * valit->second.second; //DISTANCE TO SHIFT BACK
-					}
+				auto valit = std::find_if(vecCollisionEntityPairWithVector.begin(), vecCollisionEntityPairWithVector.end(), [&](const auto& x) { 
 					
-					obj2_TC->m_position += toMove;
-				}
-				//obj2_RC->m_Velocity = -obj2_RC->m_Velocity;
-			}
+					if (x.first.first.get()->m_ID == obj1_EntityID) {
+						if (std::find(colidedwith.begin(), colidedwith.end(), x.first.second.get()->m_ID) == colidedwith.end()) return true;
+					}
+					return false;
+					
+					});
 
+				if (valit == vecCollisionEntityPairWithVector.end()) {
 
-			if (std::find_if(m_vecRigidBodyComponentPtr.begin(), m_vecRigidBodyComponentPtr.end(), [obj1_EntityID](const auto& obj) { return obj->m_Entity == obj1_EntityID; })
-				!= m_vecRigidBodyComponentPtr.end()) {
-				if (ColComp->m_CollisionCheck) {
-					vector2::Vec2 toMove{};
-					if (swap) {
-						toMove = valit->second.first * valit->second.second;
+					valit = std::find_if(vecCollisionEntityPairWithVector.begin(), vecCollisionEntityPairWithVector.end(), [&](const auto& x) {
+
+						if (x.first.second.get()->m_ID == obj1_EntityID) {
+							if (std::find(colidedwith.begin(), colidedwith.end(), x.first.first.get()->m_ID) == colidedwith.end()) return true;
+						}
+						return false;
+
+						});
+
+					if (valit != vecCollisionEntityPairWithVector.end()) {
+						obj2_EntityID = valit->first.first.get()->m_ID;
+						swap = true;
 					}
 					else {
-						toMove = -valit->second.first * valit->second.second;
+						break;
 					}
-					
-					transform->m_position += toMove;
 				}
-				//obj1_RC->m_Velocity = -obj1_RC->m_Velocity;
+				else {
+					obj2_EntityID = valit->first.second.get()->m_ID;
+				}
+
+
+				colidedwith.push_back(obj2_EntityID);
+
+
+				//if (std::find(respondedids.begin(), respondedids.end(), obj2_EntityID) != respondedids.end()) continue;
+
+
+
+
+				TransformComponent* obj2_TC = (TransformComponent*)ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(obj2_EntityID);
+				ColliderComponent* obj2_CC = (ColliderComponent*)ecs->m_ECS_CombinedComponentPool[TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(obj2_EntityID);
+				RigidBodyComponent* obj2_RC = (RigidBodyComponent*)ecs->m_ECS_CombinedComponentPool[TYPERIGIDBODYCOMPONENT]->m_GetEntityComponent(obj2_EntityID);
+
+				obj2_CC->m_isCollided = 1.0f;
+				ColComp->m_isCollided = 1.f;
+
+				if (ColComp->m_CollisionCheck == false && obj2_CC->m_CollisionCheck == false)
+					continue;
+
+				if (ColComp->m_CollisionCheck && obj2_CC->m_CollisionCheck && rigidComp != NULL && obj2_RC != NULL) {
+					if (swap) {
+						transform->m_position += (valit->second.first * valit->second.second);
+						obj2_TC->m_position += (-valit->second.first * valit->second.second);
+					}
+					else {
+						transform->m_position += (-valit->second.first * valit->second.second);
+						obj2_TC->m_position += (valit->second.first * valit->second.second);
+					}
+
+					rigidComp->m_Velocity = {};
+					obj2_RC->m_Velocity = {};
+					obj2_CC->m_isCollided = 1.0f;
+					ColComp->m_isCollided = 1.0f;
+				}
+
+
+				if (std::find_if(m_vecRigidBodyComponentPtr.begin(), m_vecRigidBodyComponentPtr.end(), [obj2_EntityID](const auto& obj) { return obj->m_Entity == obj2_EntityID; })
+					!= m_vecRigidBodyComponentPtr.end()) {
+					if (obj2_CC->m_CollisionCheck) {
+						vector2::Vec2 toMove{};
+						if (swap) {
+							toMove = -valit->second.first * valit->second.second; //DISTANCE TO SHIFT BACK
+						}
+						else {
+							toMove = valit->second.first * valit->second.second; //DISTANCE TO SHIFT BACK
+						}
+
+						obj2_TC->m_position += toMove;
+					}
+					//obj2_RC->m_Velocity = -obj2_RC->m_Velocity;
+				}
+
+
+				if (std::find_if(m_vecRigidBodyComponentPtr.begin(), m_vecRigidBodyComponentPtr.end(), [obj1_EntityID](const auto& obj) { return obj->m_Entity == obj1_EntityID; })
+					!= m_vecRigidBodyComponentPtr.end()) {
+					if (ColComp->m_CollisionCheck) {
+						vector2::Vec2 toMove{};
+						if (swap) {
+							toMove = valit->second.first * valit->second.second;
+						}
+						else {
+							toMove = -valit->second.first * valit->second.second;
+						}
+
+						transform->m_position += toMove;
+					}
+					//obj1_RC->m_Velocity = -obj1_RC->m_Velocity;
+				}
 			}
+
+
+			
 
 
 
