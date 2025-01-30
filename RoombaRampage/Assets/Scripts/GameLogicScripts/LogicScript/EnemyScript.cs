@@ -42,6 +42,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     private ColliderComponent collComp;
     private TransformComponent transformComp;
     private TransformComponent playerTransformComp;
+    private GridComponent gridComp;
     #endregion
 
     #region Sprite Variables
@@ -77,7 +78,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
     public override void Start() //Called once at the start of the game
     {
-
+        
         UpdateComponentValues();
         playerID = (uint)InternalCall.m_InternalCallGetTagID("Player"); //Get Player ID
 
@@ -128,13 +129,13 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         currentState = CheckEnemyType(); //Checks enemy type to start off new state
 
         childrenIDList = InternalCall.m_InternalCallGetChildrenID(EntityID); //Gets waypoints for enemy, will be null/empty if there are no children waypoints
-
+        World2GridCoordinates(1.5f,2.5f,1);
     }
 
     public override void Update() //Runs every frame
     {
         CheckForCollisions(); //Checks for collisions in the event an enemy touches the player
-    
+        
         currentState.DoActionUpdate(InternalCall.m_InternalCallGetDeltaTime()); //Update the current state's DoActionUpdate function, such as patrolling, chasing etc, with delta time
     }
 
@@ -338,7 +339,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
     #endregion
 
-    #region Component Handlers
+    #region Component Handlers  
     private void UpdateComponentValues()
     {
             spriteComp = Component.Get<SpriteComponent>(EntityID);
@@ -347,7 +348,8 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
             collComp = Component.Get<ColliderComponent>(EntityID);
             transformComp = Component.Get<TransformComponent>(EntityID);
             playerTransformComp = Component.Get<TransformComponent>(playerID);
-            //pathFindComp = Component.Get<PathfindingComponent>(EntityID);  
+            pathFindComp = Component.Get<PathfindingComponent>(EntityID);
+            gridComp = Component.Get<GridComponent>(EntityID);
     }
     #endregion
 
@@ -364,6 +366,27 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         return distance <= tolerance;
 
     }
+
+    public Vector2 Grid2WorldCoordinates(int gridx, int gridy, int gridkey)
+    {
+        int gridid = InternalCall.m_InternalGetEntityIdFromGridKey(gridkey);
+        GridComponent gridComponent = Component.Get<GridComponent>((uint)gridid);
+        float worldX = gridComponent.m_Anchor.X + (gridx * gridComponent.m_GridColumnLength) + 0.5f;
+        float worldY = gridComponent.m_Anchor.Y - (gridy * gridComponent.m_GridRowLength) - 0.5f;
+
+        return new Vector2(worldX, worldY); //This is the World Coordinates from the Grid Coordinates
+    }
+
+    public Vector2 World2GridCoordinates(float worldX, float worldY, int gridkey)
+    {
+        int gridid = InternalCall.m_InternalGetEntityIdFromGridKey(gridkey);
+        GridComponent gridComponent = Component.Get<GridComponent>((uint)gridid);
+        int gridX = (int)Math.Floor(worldX) - (int)gridComponent.m_Anchor.X;
+        int gridY = (int)gridComponent.m_Anchor.Y - (int)Math.Floor(worldY) - 1;
+
+        return new Vector2(gridX, gridY); //This is the Grid Coordinates from the World Coordinates
+    }
+
 
     #endregion
 

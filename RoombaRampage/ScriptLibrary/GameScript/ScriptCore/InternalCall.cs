@@ -178,6 +178,14 @@ public static class InternalCall
     [MethodImpl(MethodImplOptions.InternalCall)]
     private extern static bool m_InternalCallSetRayCast(uint id, string monoString, in bool isRaycasting, in Vector2 targetposition, in float m_distance, in bool targetReached, in Vector2 hitposition);
 
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static bool m_InternalGetGridComponent(uint id, out Vector2 anchor, out int gridRowLength, out int gridColumnLength, out bool setCollidable, out int gridKey);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static bool m_InternalSetGridComponent(uint id, in Vector2 anchor, in int gridRowLength, in int gridColumnLength, in bool setCollidable, in int gridKey);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static int m_InternalGetEntityIdFromGridKey(int gridkey);
     public static Raycast m_GetRay(uint id, string monoString)
     {
         Raycast ray = new Raycast();
@@ -276,6 +284,11 @@ public static class Component
             var enemyComponent = component as EnemyComponent;
             InternalCall.m_InternalGetEnemyComponent(id, out enemyComponent.m_tag, out enemyComponent.m_enemyTypeInt, out enemyComponent.m_enemyRoamBehaviourInt);
         }
+        else if (typeof(T) == typeof(GridComponent))
+        {
+            var gridComponent = component as GridComponent;
+            InternalCall.m_InternalGetGridComponent(id, out gridComponent.m_Anchor, out gridComponent.m_GridRowLength, out gridComponent.m_GridColumnLength, out gridComponent.m_SetCollidable, out gridComponent.m_GridKey);
+        }
         else
         {
             throw new NotSupportedException($"Component type {typeof(T).Name} is not supported.");
@@ -313,6 +326,10 @@ public static class Component
         else if (component is EnemyComponent enemy)
         {
             InternalCall.m_InternalSetEnemyComponent(id, in enemy.m_tag, in enemy.m_enemyTypeInt, in enemy.m_enemyRoamBehaviourInt);
+        }
+        else if (component is GridComponent grid)
+        {
+            InternalCall.m_InternalSetGridComponent(id, in grid.m_Anchor, in grid.m_GridRowLength, in grid.m_GridColumnLength, in grid.m_SetCollidable, in grid.m_GridKey);
         }
         else
         {
