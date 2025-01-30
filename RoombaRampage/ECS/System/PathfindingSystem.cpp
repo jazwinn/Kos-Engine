@@ -86,7 +86,7 @@ namespace ecs {
             }
             if (grid == NULL)
             {
-                LOGGING_WARN("Error: Grid not found");
+                //LOGGING_WARN("Error: Grid not found");
                 return;
             }
 
@@ -115,7 +115,7 @@ namespace ecs {
                 }
             }
             else {
-                LOGGING_INFO("No path found");
+                //LOGGING_INFO("No path found");
             }
         }
     }
