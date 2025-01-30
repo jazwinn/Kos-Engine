@@ -79,7 +79,6 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     {
 
         UpdateComponentValues();
-
         playerID = (uint)InternalCall.m_InternalCallGetTagID("Player"); //Get Player ID
 
         enemyScientistDeathTexture = "img_scientistDeath.png";
@@ -134,7 +133,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
     public override void Update() //Runs every frame
     {
-        CheckForCollisions(); //Checks for collisions in the event an enemy touches the player
+        //CheckForCollisions(); //Checks for collisions in the event an enemy touches the player
     
         currentState.DoActionUpdate(InternalCall.m_InternalCallGetDeltaTime()); //Update the current state's DoActionUpdate function, such as patrolling, chasing etc, with delta time
     }
@@ -258,6 +257,8 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
     private IEnumerator EnemyDeath() //Coroutine for enemy death
     {
+        currentState.PlayerDead();
+
         InternalCall.m_InternalCallPlayAudio(EntityID, "aud_humanDeath01"); //Plays enemy death sound
 
         collComp.m_collisionCheck = !collComp.m_collisionCheck; //Disables collision check
@@ -341,7 +342,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
             collComp = Component.Get<ColliderComponent>(EntityID);
             transformComp = Component.Get<TransformComponent>(EntityID);
             playerTransformComp = Component.Get<TransformComponent>(playerID);
-            pathFindComp = Component.Get<PathfindingComponent>(EntityID);  
+            //pathFindComp = Component.Get<PathfindingComponent>(EntityID);  
     }
     #endregion
 
@@ -365,7 +366,9 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
     public void RunFromPlayer()
     {
-        UpdateComponentValues();
+        //UpdateComponentValues();
+        transformComp = Component.Get<TransformComponent>(EntityID);
+        //playerTransformComp = Component.Get<TransformComponent>(playerID);
 
         Vector2 direction;
 
