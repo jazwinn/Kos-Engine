@@ -266,43 +266,53 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         InternalCall.m_InternalCallPlayAudio(EntityID, "aud_humanDeath01"); //Plays enemy death sound
 
         collComp.m_collisionCheck = !collComp.m_collisionCheck; //Disables collision check
-        collComp.m_collisionResponse = false;
+        //collComp.m_collisionResponse = false;
         SetComponent.SetCollisionComponent(EntityID, collComp); //Sets collider of enemy
 
         InternalCall.m_InternalSetAnimationComponent(EntityID, 0, 0, 0, false, 1); //Stops animation of enemy
         SetDeadEnemySprite(); //Sets dead sprite
 
-        Vector2 direction; //Creates temp Vector2
+        transformComp = Component.Get<TransformComponent>(EntityID);
+        //playerTransformComp = Component.Get<TransformComponent>(playerID);
 
-        TransformComponent tempTransformComp = GetComponent.GetTransformComponent(EntityID); //Gets Transform of Enemy
-        TransformComponent tempPlayerTransformComp = GetComponent.GetTransformComponent(EntityID); //Gets transform of Player
+        Vector2 direction;
 
-        direction.X = tempTransformComp.m_position.X - tempPlayerTransformComp.m_position.X; //Gets direction of travel for X
-        direction.Y = tempTransformComp.m_position.Y - tempPlayerTransformComp.m_position.Y; //Gets direction of travel for X
+        //Gets direction to look towards
+        direction.X = (transformComp.m_position.X - playerTransformComp.m_position.X); //Gets Vector.X towards player
+        direction.Y = (transformComp.m_position.Y - playerTransformComp.m_position.Y); //Gets Vector.Y towards player
 
-        float rotationFloat = (float)(Math.Atan2(direction.X, direction.Y) * (180 / Math.PI)); //Gets rotation values based on direction
+        float rotationFloat = (float)(Math.Atan2(direction.X, direction.Y) * (180 / Math.PI)); //Gets rotation towards player
 
-        // tempTransformComp.m_rotation = rotationFloat; //Sets rotation value in stored variable
-        // SetComponent.SetTransformComponent(EntityID, tempTransformComp); //Sets new transform component
+        transformComp.m_rotation = rotationFloat; //Sets rotation values
 
-        // float rotationInRadians = (float)((rotationFloat) * Math.PI / 180.0); //Convert into radians
+        SetComponent.SetTransformComponent(EntityID, transformComp); //Sets transform component
 
-        // float forwardX = (float)(Math.Sin(rotationInRadians)); //Get forward vector X
+        direction.X = (transformComp.m_position.X - playerTransformComp.m_position.X); //Gets Vector.X away from player
+        direction.Y = (transformComp.m_position.Y - playerTransformComp.m_position.Y); //Gets Vector.Y away from player
 
-        // float forwardY = (float)(Math.Cos(rotationInRadians)); //Get forward vector Y
+        rotationFloat = (float)(Math.Atan2(direction.X, direction.Y) * (180 / Math.PI)); //Gets rotation away player
 
-         movement.X = 0 ; //Pushes enemy back for "knockback effect"
-         movement.Y = 0 ; //Pushes enemy back for "knockback effect"
+        //Convert into radians
+        float rotationInRadians = (float)((rotationFloat) * Math.PI / 180.0);
+
+        //Get forward vector X
+        float forwardX = (float)(Math.Sin(rotationInRadians));
+
+        //Get forward vector Y
+        float forwardY = (float)(Math.Cos(rotationInRadians));
+
+         movement.X = 0 + forwardX * 0.4f ; //Pushes enemy back for "knockback effect"
+         movement.Y = 0 + forwardY * 0.4f; //Pushes enemy back for "knockback effect"
 
          InternalCall.m_InternalSetVelocity(EntityID, movement); //Sets velocity for rigidbody to move
 
         // isDead = true; //Sets enemy to dead status
-         tempTransformComp = GetComponent.GetTransformComponent(EntityID); //Gets new transform component after moving
+        transformComp = Component.Get<TransformComponent>(EntityID);
 
         
         yield return new CoroutineManager.WaitForSeconds(enemyBloodPoolSpawnDelay); //Waits for time before moving to next line;
 
-        InternalCall.m_InternalCallAddPrefab("prefab_enemyBloodPool", tempTransformComp.m_position.X, tempTransformComp.m_position.Y, tempTransformComp.m_rotation); //Spawns blood pool
+        InternalCall.m_InternalCallAddPrefab("prefab_enemyBloodPool", transformComp.m_position.X, transformComp.m_position.Y, transformComp.m_rotation); //Spawns blood pool
     }
     #endregion
 
