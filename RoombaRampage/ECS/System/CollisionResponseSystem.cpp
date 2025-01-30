@@ -96,14 +96,74 @@ namespace ecs {
 
 		for (int n{}; n < m_vecRigidBodyComponentPtr.size(); n++)
 		{
-
+			NameComponent* NameComp = m_vecNameComponentPtr[n];
 			RigidBodyComponent* rigidComp = m_vecRigidBodyComponentPtr[n];
 			ColliderComponent* ColComp = m_vecColliderComponentPtr[n];
+			TransformComponent* transform = m_vecTransformComponentPtr[n];
 
 			ColComp->m_collidedWith.clear();
 			ColComp->m_blockedFlag = -1;
 			//skip component not of the scene
-			if (rigidComp->m_scene != scene) continue;
+			if ((rigidComp->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer)) continue;
+
+			EntityID obj1_EntityID = rigidComp->m_Entity;
+
+			auto valit = std::find_if(vecCollisionEntityPairWithVector.begin(), vecCollisionEntityPairWithVector.end(), [&](const auto& x) { return x.first.first.get()->m_ID == obj1_EntityID; });
+
+			if (valit == vecCollisionEntityPairWithVector.end()) continue;
+
+
+			EntityID obj2_EntityID = valit->first.second.get()->m_ID;
+
+
+			TransformComponent* obj2_TC = (TransformComponent*)ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(obj2_EntityID);
+			ColliderComponent* obj2_CC = (ColliderComponent*)ecs->m_ECS_CombinedComponentPool[TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(obj2_EntityID);
+			RigidBodyComponent* obj2_RC = (RigidBodyComponent*)ecs->m_ECS_CombinedComponentPool[TYPERIGIDBODYCOMPONENT]->m_GetEntityComponent(obj2_EntityID);
+
+			obj2_CC->m_isCollided = 1.0f;
+			ColComp->m_isCollided = 1.f;
+
+			if (ColComp->m_CollisionCheck == false && obj2_CC->m_CollisionCheck == false)
+				continue;
+
+			if (ColComp->m_CollisionCheck && obj2_CC->m_CollisionCheck && rigidComp != NULL && obj2_RC != NULL) {
+				transform->m_position += (-valit->second.first * valit->second.second);
+				obj2_TC->m_position += (valit->second.first * valit->second.second);
+				rigidComp->m_Velocity = {};
+				obj2_RC->m_Velocity = {};
+				obj2_CC->m_isCollided = 1.0f;
+				ColComp->m_isCollided = 1.0f;
+			}
+
+
+			if (std::find_if(m_vecRigidBodyComponentPtr.begin(), m_vecRigidBodyComponentPtr.end(), [obj2_EntityID](const auto& obj) { return obj->m_Entity == obj2_EntityID; })
+				!= m_vecRigidBodyComponentPtr.end()) {
+				if (obj2_CC->m_CollisionCheck) {
+					vector2::Vec2 toMove = valit->second.first * valit->second.second; //DISTANCE TO SHIFT BACK
+					obj2_TC->m_position += toMove;
+				}
+				//obj2_RC->m_Velocity = -obj2_RC->m_Velocity;
+			}
+
+
+			if (std::find_if(m_vecRigidBodyComponentPtr.begin(), m_vecRigidBodyComponentPtr.end(), [obj1_EntityID](const auto& obj) { return obj->m_Entity == obj1_EntityID; })
+				!= m_vecRigidBodyComponentPtr.end()) {
+				if (ColComp->m_CollisionCheck) {
+					vector2::Vec2 toMove = -valit->second.first * valit->second.second;
+					transform->m_position += toMove;
+				}
+				//obj1_RC->m_Velocity = -obj1_RC->m_Velocity;
+			}
+
+
+
+
+
+
+
+
+
+
 
 			const EntityID check_ID = ColComp->m_Entity;
 			const auto& iterator = std::find_if(vecCollisionEntityPair.begin(), vecCollisionEntityPair.end(), [check_ID](const auto pair) { return (static_cast<int>(check_ID) == pair.first->m_ID); });
@@ -114,68 +174,68 @@ namespace ecs {
 			}
 
 		}
-		if (!vecCollisionEntityPairWithVector.empty()) {
-			for (int i{}; i < vecCollisionEntityPairWithVector.size(); ++i) {
-				std::pair < std::pair<std::shared_ptr<physicspipe::PhysicsData>, std::shared_ptr<physicspipe::PhysicsData>>, std::pair<vector2::Vec2, float>> val = vecCollisionEntityPairWithVector[i];
-				EntityID obj1_EntityID = val.first.first.get()->m_ID;
-				EntityID obj2_EntityID = val.first.second.get()->m_ID;
+		//if (!vecCollisionEntityPairWithVector.empty()) {
+		//	for (int i{}; i < vecCollisionEntityPairWithVector.size(); ++i) {
+		//		std::pair < std::pair<std::shared_ptr<physicspipe::PhysicsData>, std::shared_ptr<physicspipe::PhysicsData> >, std::pair<vector2::Vec2, float>> val = vecCollisionEntityPairWithVector[i];
+		//		EntityID obj1_EntityID = val.first.first.get()->m_ID;
+		//		EntityID obj2_EntityID = val.first.second.get()->m_ID;
 
-				//NameComponent* obj1_NC = (NameComponent*)ecs->m_ECS_CombinedComponentPool[TYPENAMECOMPONENT]->m_GetEntityComponent(obj1_EntityID);
-				//NameComponent* obj2_NC = (NameComponent*)ecs->m_ECS_CombinedComponentPool[TYPENAMECOMPONENT]->m_GetEntityComponent(obj2_EntityID);
-				TransformComponent* obj1_TC = (TransformComponent*)ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(obj1_EntityID);
-				TransformComponent* obj2_TC = (TransformComponent*)ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(obj2_EntityID);
-				ColliderComponent* obj1_CC = (ColliderComponent*)ecs->m_ECS_CombinedComponentPool[TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(obj1_EntityID);
-				ColliderComponent* obj2_CC = (ColliderComponent*)ecs->m_ECS_CombinedComponentPool[TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(obj2_EntityID);
-				RigidBodyComponent* obj1_RC = (RigidBodyComponent*)ecs->m_ECS_CombinedComponentPool[TYPERIGIDBODYCOMPONENT]->m_GetEntityComponent(obj1_EntityID);
-				RigidBodyComponent* obj2_RC = (RigidBodyComponent*)ecs->m_ECS_CombinedComponentPool[TYPERIGIDBODYCOMPONENT]->m_GetEntityComponent(obj2_EntityID);
+		//		//NameComponent* obj1_NC = (NameComponent*)ecs->m_ECS_CombinedComponentPool[TYPENAMECOMPONENT]->m_GetEntityComponent(obj1_EntityID);
+		//		//NameComponent* obj2_NC = (NameComponent*)ecs->m_ECS_CombinedComponentPool[TYPENAMECOMPONENT]->m_GetEntityComponent(obj2_EntityID);
+		//		TransformComponent* obj1_TC = (TransformComponent*)ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(obj1_EntityID);
+		//		TransformComponent* obj2_TC = (TransformComponent*)ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(obj2_EntityID);
+		//		ColliderComponent* obj1_CC = (ColliderComponent*)ecs->m_ECS_CombinedComponentPool[TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(obj1_EntityID);
+		//		ColliderComponent* obj2_CC = (ColliderComponent*)ecs->m_ECS_CombinedComponentPool[TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(obj2_EntityID);
+		//		RigidBodyComponent* obj1_RC = (RigidBodyComponent*)ecs->m_ECS_CombinedComponentPool[TYPERIGIDBODYCOMPONENT]->m_GetEntityComponent(obj1_EntityID);
+		//		RigidBodyComponent* obj2_RC = (RigidBodyComponent*)ecs->m_ECS_CombinedComponentPool[TYPERIGIDBODYCOMPONENT]->m_GetEntityComponent(obj2_EntityID);
 
-				//if (obj2_NC->m_entityTag != "Wall") {
-				//	obj2_CC->m_isCollided = 1.0f;
-				//}
-				//if (obj1_NC->m_entityTag != "Wall") {
-				//	obj1_CC->m_isCollided = 1.0f;
-				//}
+		//		//if (obj2_NC->m_entityTag != "Wall") {
+		//		//	obj2_CC->m_isCollided = 1.0f;
+		//		//}
+		//		//if (obj1_NC->m_entityTag != "Wall") {
+		//		//	obj1_CC->m_isCollided = 1.0f;
+		//		//}
 
-				obj2_CC->m_isCollided = 1.0f;
-				obj1_CC->m_isCollided = 1.0f;
+		//		obj2_CC->m_isCollided = 1.0f;
+		//		obj1_CC->m_isCollided = 1.0f;
 
 
-				if (obj1_CC->m_CollisionCheck == false && obj2_CC->m_CollisionCheck == false)
-					continue;
+		//		if (obj1_CC->m_CollisionCheck == false && obj2_CC->m_CollisionCheck == false)
+		//			continue;
 
-				if (obj1_CC->m_CollisionCheck && obj2_CC->m_CollisionCheck && obj1_RC != NULL && obj2_RC != NULL) {
-					obj1_TC->m_position += (-val.second.first * val.second.second);
-					obj2_TC->m_position += (val.second.first * val.second.second);
-					obj1_RC->m_Velocity = {};
-					obj2_RC->m_Velocity = {};
-					obj2_CC->m_isCollided = 1.0f;
-					obj1_CC->m_isCollided = 1.0f;
-				}
+		//		if (obj1_CC->m_CollisionCheck && obj2_CC->m_CollisionCheck && obj1_RC != NULL && obj2_RC != NULL) {
+		//			obj1_TC->m_position += (-val.second.first * val.second.second);
+		//			obj2_TC->m_position += (val.second.first * val.second.second);
+		//			obj1_RC->m_Velocity = {};
+		//			obj2_RC->m_Velocity = {};
+		//			obj2_CC->m_isCollided = 1.0f;
+		//			obj1_CC->m_isCollided = 1.0f;
+		//		}
 
-				
+		//		
 
-						if (std::find_if(m_vecRigidBodyComponentPtr.begin(), m_vecRigidBodyComponentPtr.end(), [obj2_EntityID](const auto& obj) { return obj->m_Entity == obj2_EntityID; })
-							!= m_vecRigidBodyComponentPtr.end()) {
-							if (obj2_CC->m_CollisionCheck) {
-								vector2::Vec2 toMove = val.second.first * val.second.second; //DISTANCE TO SHIFT BACK
-								obj2_TC->m_position += toMove;
-							}
-							//obj2_RC->m_Velocity = -obj2_RC->m_Velocity;
-						}
-					
+		//				if (std::find_if(m_vecRigidBodyComponentPtr.begin(), m_vecRigidBodyComponentPtr.end(), [obj2_EntityID](const auto& obj) { return obj->m_Entity == obj2_EntityID; })
+		//					!= m_vecRigidBodyComponentPtr.end()) {
+		//					if (obj2_CC->m_CollisionCheck) {
+		//						vector2::Vec2 toMove = val.second.first * val.second.second; //DISTANCE TO SHIFT BACK
+		//						obj2_TC->m_position += toMove;
+		//					}
+		//					//obj2_RC->m_Velocity = -obj2_RC->m_Velocity;
+		//				}
+		//			
 
-						if (std::find_if(m_vecRigidBodyComponentPtr.begin(), m_vecRigidBodyComponentPtr.end(), [obj1_EntityID](const auto& obj) { return obj->m_Entity == obj1_EntityID; })
-							!= m_vecRigidBodyComponentPtr.end()) {
-							if (obj1_CC->m_CollisionCheck) {
-								vector2::Vec2 toMove = -val.second.first * val.second.second;
-								obj1_TC->m_position += toMove;
-							}
-							//obj1_RC->m_Velocity = -obj1_RC->m_Velocity;
-						}
-					
-				
-			}
-		}
+		//				if (std::find_if(m_vecRigidBodyComponentPtr.begin(), m_vecRigidBodyComponentPtr.end(), [obj1_EntityID](const auto& obj) { return obj->m_Entity == obj1_EntityID; })
+		//					!= m_vecRigidBodyComponentPtr.end()) {
+		//					if (obj1_CC->m_CollisionCheck) {
+		//						vector2::Vec2 toMove = -val.second.first * val.second.second;
+		//						obj1_TC->m_position += toMove;
+		//					}
+		//					//obj1_RC->m_Velocity = -obj1_RC->m_Velocity;
+		//				}
+		//			
+		//		
+		//	}
+		//}
 
 	}
 }
