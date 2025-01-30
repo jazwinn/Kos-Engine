@@ -762,7 +762,7 @@ namespace Serialization {
 		}
 
 		// Load Player Component if it exists
-		if (entityData.HasMember("EnemyComponent") && entityData["EnemyComponent"].IsObject()) {
+		if (entityData.HasMember("enemy") && entityData["enemy"].IsObject()) {
 			ecs::EnemyComponent* pc = static_cast<ecs::EnemyComponent*>(ecs->m_AddComponent(ecs::TYPEENEMYCOMPONENT, newEntityId));
 
 			if (pc) {

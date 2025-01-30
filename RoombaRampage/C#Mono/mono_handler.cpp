@@ -212,10 +212,18 @@ namespace script {
 
 
         if (exception) {
-            MonoString* exceptionMessage = mono_object_to_string(exception, nullptr);
-            const char* messageStr = mono_string_to_utf8(exceptionMessage);
-            LOGGING_ERROR("Exception in C# method invocation: {}", messageStr);
-            mono_free((void*)messageStr);
+            MonoObject* exc = (MonoObject*)exception;
+            MonoClass* excClass = mono_object_get_class(exc);
+            MonoMethod* toStringMethod = mono_class_get_method_from_name(excClass, "ToString", 0);
+
+            if (toStringMethod) {
+                MonoString* excStr = (MonoString*)mono_runtime_invoke(toStringMethod, exc, nullptr, nullptr);
+                if (excStr) {
+                    const char* errorMessage = mono_string_to_utf8(excStr);
+                    printf("Mono Exception: %s\n", errorMessage);
+                    mono_free((void*)errorMessage);
+                }
+            }
         }
     }
 
