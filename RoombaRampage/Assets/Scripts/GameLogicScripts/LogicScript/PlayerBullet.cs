@@ -96,13 +96,12 @@ public class PlayerBullet : ScriptBase
 
         if (InternalCall.m_InternalCallIsCollided(EntityID) != 0.0f)
         {
-            Console.WriteLine("Colliding");
+
 
             int[] collidedEntities = InternalCall.m_InternalCallGetCollidedEntities(EntityID);
 
             foreach (int collidedEntitiesID in collidedEntities)
             {
-                Console.WriteLine("Colliding");
 
                 switch (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID))
                 {

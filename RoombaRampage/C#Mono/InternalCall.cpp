@@ -69,7 +69,7 @@ namespace script {
 	}
 
 	//Collider Component
-	bool InternalCall::m_InternalGetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, unsigned int* m_blockedFlag, float* isCollided, bool* collisionCheck)
+	bool InternalCall::m_InternalGetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, unsigned int* m_blockedFlag, float* isCollided, bool* collisionCheck, bool* collisionresponse)
 	{
 		auto* collider = static_cast<ecs::ColliderComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(entity));
 
@@ -81,12 +81,13 @@ namespace script {
 		*radius = collider->m_radius;
 		*isCollided = collider->m_isCollided;
 		*m_blockedFlag = collider->m_blockedFlag;
-		*collisionCheck = collider->m_CollisionCheck;
+		*collisionCheck = collider->m_collisionCheck;
+		*collisionresponse = collider->m_collisionResponse;
 
 		return true;
 	}
 
-	bool InternalCall::m_InternalSetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, unsigned int* m_blockedFlag, float* isCollided, bool* collisionCheck)
+	bool InternalCall::m_InternalSetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, unsigned int* m_blockedFlag, float* isCollided, bool* collisionCheck, bool* collisionresponse)
 	{
 		auto* collider = static_cast<ecs::ColliderComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(entity));
 
@@ -98,8 +99,8 @@ namespace script {
 		collider->m_radius = *radius;
 		collider->m_isCollided = *isCollided;
 		collider->m_blockedFlag = *m_blockedFlag;
-		collider->m_CollisionCheck = *collisionCheck;
-
+		collider->m_collisionResponse = *collisionresponse;
+		collider->m_collisionCheck = *collisionCheck;
 
 		return true;
 	}
@@ -752,7 +753,7 @@ namespace script {
 			auto* cc = static_cast<ecs::ColliderComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(ids));
 
 			if (cc != NULL) {
-				if (cc->m_CollisionCheck) {
+				if (cc->m_collisionResponse) {
 					results.push_back(ids);
 				}
 			}
