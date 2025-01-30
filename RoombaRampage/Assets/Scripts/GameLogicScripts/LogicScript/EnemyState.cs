@@ -120,6 +120,7 @@ public class EnemyStateChase : EnemyState
 
     public override void EnemyDead()
     {
+        enemyScript.SetCurrentState(new EnemyStateEnemyDead(enemyScript));
     }
 
 }
@@ -132,7 +133,7 @@ public class EnemyStateRun : EnemyState
 
     public override void DoActionUpdate(float dTime)
     {
-        enemyScript.RunAtPlayer();
+        enemyScript.RunFromPlayer();
     }
 
     public override void LostTarget()
@@ -145,6 +146,7 @@ public class EnemyStateRun : EnemyState
 
     public override void EnemyDead()
     {
+        enemyScript.SetCurrentState(new EnemyStateEnemyDead(enemyScript));
     }
 
 }
@@ -254,22 +256,22 @@ public class EnemyStateRun : EnemyState
 
 //}
 
-//public class EnemyStateEnemyDead : EnemyState
-//{
-//    public EnemyStateEnemyDead(EnemyScript enemyScript) : base(enemyScript)
-//    {
+public class EnemyStateEnemyDead : EnemyState
+{
+    public EnemyStateEnemyDead(EnemyScript enemyScript) : base(enemyScript)
+    {
 
-//    }
+    }
 
-//    public override void DoActionUpdate(float dTime)
-//    {
+    public override void DoActionUpdate(float dTime)
+    {
 
-//    }
+    }
 
-//    public override void LostTarget() { }
+    public override void LostTarget() { }
 
-//    public override void PlayerDead() { }
+    public override void PlayerDead() { }
 
-//    public override void EnemyDead() { }
+    public override void EnemyDead() { }
 
-//}
+}

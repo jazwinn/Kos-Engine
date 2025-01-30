@@ -94,6 +94,8 @@ namespace ecs {
 		std::vector < std::pair < std::pair<std::shared_ptr<physicspipe::PhysicsData>, std::shared_ptr<physicspipe::PhysicsData>>, std::pair<vector2::Vec2, float>>> vecCollisionEntityPairWithVector = PhysicsPipeline->m_RetrievePhysicsDataPairWithVector();
 		std::unordered_set<ecs::EntityID> ids;
 
+		std::vector<ecs::EntityID> respondedids;
+
 		for (int n{}; n < m_vecRigidBodyComponentPtr.size(); n++)
 		{
 			NameComponent* NameComp = m_vecNameComponentPtr[n];
@@ -101,19 +103,44 @@ namespace ecs {
 			ColliderComponent* ColComp = m_vecColliderComponentPtr[n];
 			TransformComponent* transform = m_vecTransformComponentPtr[n];
 
+
+			respondedids.push_back(NameComp->m_Entity);
+
 			ColComp->m_collidedWith.clear();
 			ColComp->m_blockedFlag = -1;
 			//skip component not of the scene
 			if ((rigidComp->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer)) continue;
 
 			EntityID obj1_EntityID = rigidComp->m_Entity;
+			EntityID obj2_EntityID;
+
+			bool swap = false;
+
 
 			auto valit = std::find_if(vecCollisionEntityPairWithVector.begin(), vecCollisionEntityPairWithVector.end(), [&](const auto& x) { return x.first.first.get()->m_ID == obj1_EntityID; });
 
-			if (valit == vecCollisionEntityPairWithVector.end()) continue;
+			if (valit == vecCollisionEntityPairWithVector.end()) {
+				valit = std::find_if(vecCollisionEntityPairWithVector.begin(), vecCollisionEntityPairWithVector.end(), [&](const auto& x) { return x.first.second.get()->m_ID == obj1_EntityID; });
+
+				if (valit != vecCollisionEntityPairWithVector.end()) {
+					obj2_EntityID = valit->first.first.get()->m_ID;
+					swap = true;
+				}
+				else {
+					continue;
+				}
+			}
+			else {
+				obj2_EntityID = valit->first.second.get()->m_ID;
+			}
 
 
-			EntityID obj2_EntityID = valit->first.second.get()->m_ID;
+
+
+
+			//if (std::find(respondedids.begin(), respondedids.end(), obj2_EntityID) != respondedids.end()) continue;
+
+
 
 
 			TransformComponent* obj2_TC = (TransformComponent*)ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(obj2_EntityID);
@@ -139,7 +166,14 @@ namespace ecs {
 			if (std::find_if(m_vecRigidBodyComponentPtr.begin(), m_vecRigidBodyComponentPtr.end(), [obj2_EntityID](const auto& obj) { return obj->m_Entity == obj2_EntityID; })
 				!= m_vecRigidBodyComponentPtr.end()) {
 				if (obj2_CC->m_CollisionCheck) {
-					vector2::Vec2 toMove = valit->second.first * valit->second.second; //DISTANCE TO SHIFT BACK
+					vector2::Vec2 toMove{};
+					if (swap) {
+						toMove = -valit->second.first * valit->second.second; //DISTANCE TO SHIFT BACK
+					}
+					else{
+						toMove = valit->second.first * valit->second.second; //DISTANCE TO SHIFT BACK
+					}
+					
 					obj2_TC->m_position += toMove;
 				}
 				//obj2_RC->m_Velocity = -obj2_RC->m_Velocity;
@@ -149,7 +183,14 @@ namespace ecs {
 			if (std::find_if(m_vecRigidBodyComponentPtr.begin(), m_vecRigidBodyComponentPtr.end(), [obj1_EntityID](const auto& obj) { return obj->m_Entity == obj1_EntityID; })
 				!= m_vecRigidBodyComponentPtr.end()) {
 				if (ColComp->m_CollisionCheck) {
-					vector2::Vec2 toMove = -valit->second.first * valit->second.second;
+					vector2::Vec2 toMove{};
+					if (swap) {
+						toMove = valit->second.first * valit->second.second;
+					}
+					else {
+						toMove = -valit->second.first * valit->second.second;
+					}
+					
 					transform->m_position += toMove;
 				}
 				//obj1_RC->m_Velocity = -obj1_RC->m_Velocity;
