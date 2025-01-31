@@ -226,7 +226,7 @@ public static class InternalCall
 
 public static class Component
 {
-    public static unsafe T Get<T>(uint id) where T : new()
+    public static T Get<T>(uint id) where T : new()
     {
         T component = new T();
 
