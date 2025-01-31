@@ -594,6 +594,8 @@ namespace script {
 
 		static float m_GetUnfixedDeltaTie();
 
+		static void m_GetNameComponent(ecs::EntityID id, void** outptr);
+
 	public:
 		/******************************************************************/
 		/*!

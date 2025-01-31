@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Reflection.Emit;
 using System.Data.SqlClient;
+using System.Runtime.InteropServices;
 
 public static class InternalCall
 {
@@ -209,12 +210,15 @@ public static class InternalCall
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static float m_GetUnfixedDeltaTie();
 
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public static extern void m_GetNameComponent(uint id, out IntPtr outPtr);
+
 }
 
 
 public static class Component
 {
-    public static T Get<T>(uint id) where T : new()
+    public static unsafe T Get<T>(uint id) where T : new()
     {
         T component = new T();
 
@@ -276,6 +280,17 @@ public static class Component
             var enemyComponent = component as EnemyComponent;
             InternalCall.m_InternalGetEnemyComponent(id, out enemyComponent.m_tag, out enemyComponent.m_enemyTypeInt, out enemyComponent.m_enemyRoamBehaviourInt);
         }
+        else if(typeof(T) == typeof(NameComponent))
+        {
+            IntPtr ptr;
+            InternalCall.m_GetNameComponent(id, out ptr); // Get pointer from C++
+
+            if (ptr == IntPtr.Zero)
+                return default; // Handle null case safely
+
+            // Marshal memory into an existing instance of NameComponent
+            component = (T)(object)Marshal.PtrToStructure<NameComponent>(ptr);
+        }
         else
         {
             throw new NotSupportedException($"Component type {typeof(T).Name} is not supported.");
@@ -320,6 +335,8 @@ public static class Component
         }
     }
 }
+
+
 
 public static class GetComponent
 {

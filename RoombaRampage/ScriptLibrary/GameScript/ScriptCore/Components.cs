@@ -32,6 +32,25 @@ public enum CollisionFlag
     DOWN = 1 << 3,
 
 }
+
+
+[StructLayout(LayoutKind.Sequential)]
+public struct NameComponent
+{
+    [MarshalAs(UnmanagedType.LPStr)]
+    public string m_entityName;
+
+    public uint m_Layer;
+    public bool m_isPrefab;
+    public bool m_syncPrefab;
+
+    [MarshalAs(UnmanagedType.LPStr)]
+    public string m_prefabName;
+
+    [MarshalAs(UnmanagedType.LPStr)]
+    public string m_entityTag;
+}
+
 public class TransformComponent
 {
     public Vector2 m_position;
