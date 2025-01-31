@@ -89,9 +89,9 @@ public class EnemyStatePatrol : EnemyState
 
     }
 
-    public override void LostTarget() { } //Do nothing, as enemies can't lose targets when ref Patrolling state
+    public override void LostTarget() { } //Do nothing, as enemies can't lose targets when in Patrolling state
 
-    public override void PlayerDead() { } //Do nothing, as enemies won't react when player dies ref Patrolling state
+    public override void PlayerDead() { } //Do nothing, as enemies won't react when player dies in Patrolling state
 
     public override void EnemyDead()
     {

@@ -15,9 +15,9 @@ public class EnemyController : ScriptBase
     {
         EntityID = id;
 
-        InternalCall.m_InternalGetTransformComponent(EntityID, ref startingEnemyPos, ref startingEnemyScale, ref startingEnemyRotate);
-        InternalCall.m_InternalGetSpriteComponent(EntityID, ref startingSprite, ref startingLayer, ref startingColor, ref startingAlpha);
-        InternalCall.m_InternalGetAnimationComponent(EntityID, ref frameNumber, ref framesPerSecond, ref frameTimer, ref isAnimating, ref stripCount);
+        InternalCall.m_InternalGetTransformComponent(EntityID, out startingEnemyPos, out startingEnemyScale, out startingEnemyRotate);
+        InternalCall.m_InternalGetSpriteComponent(EntityID, out startingSprite, out startingLayer, out startingColor, out startingAlpha);
+        InternalCall.m_InternalGetAnimationComponent(EntityID, out frameNumber, out framesPerSecond, out frameTimer, out isAnimating, out stripCount);
 
         enemyDeathTexture = "img_scientistDeath.png";
 
@@ -79,24 +79,22 @@ public class EnemyController : ScriptBase
 
         if (playerIsDead)
         {
-            int i = 10;
-            bool b = false;
-            InternalCall.m_InternalSetAnimationComponent(EntityID, ref frameNumber, ref i, ref frameTimer, ref b, ref stripCount);
+            InternalCall.m_InternalSetAnimationComponent(EntityID, frameNumber, 10, frameTimer, false, stripCount);
 
             return;
         }
 
-        Vector2 playerPos = new Vector2();
-        Vector2 enemyPos = new Vector2();
+        Vector2 playerPos;
+        Vector2 enemyPos;
 
-        InternalCall.m_InternalGetTransformComponent((uint)playerID, ref playerPos, ref playerScale, ref playerRotate);
-        InternalCall.m_InternalGetTransformComponent(EntityID, ref enemyPos, ref startingEnemyScale, ref startingEnemyRotate);
+        InternalCall.m_InternalGetTransformComponent((uint)playerID, out playerPos, out playerScale, out playerRotate);
+        InternalCall.m_InternalGetTransformComponent(EntityID, out enemyPos, out startingEnemyScale, out startingEnemyRotate);
 
 
         if (isChasing)
         {
             #region Enemy Movement
-            Vector2 direction = new Vector2();
+            Vector2 direction;
 
             //Gets direction to look towards
             direction.X = (playerPos.X - enemyPos.X);
@@ -104,7 +102,7 @@ public class EnemyController : ScriptBase
 
             float rotationFloat = (float)(Math.Atan2(direction.X, direction.Y) * (180 / Math.PI));
 
-            InternalCall.m_InternalSetTransformComponent(EntityID, ref enemyPos, ref startingEnemyScale, ref rotationFloat);
+            InternalCall.m_InternalSetTransformComponent(EntityID, enemyPos, startingEnemyScale, rotationFloat);
 
             //Convert into radians
             float rotationInRadians = (float)((rotationFloat) * Math.PI / 180.0);
@@ -115,23 +113,22 @@ public class EnemyController : ScriptBase
             //Get forward vector Y
             float forwardY = (float)(Math.Cos(rotationInRadians));
 
-            if (!InternalCall.m_InternalGetVelocity(EntityID, ref movement))
+            if (!InternalCall.m_InternalGetVelocity(EntityID, out movement))
             {
-                // return cause velocity -> rigidbody is not present ref entity
+                // return cause velocity -> rigidbody is not present in entity
                 return;
             }
 
             movement.X = 0 + forwardX * enemySpeed;
             movement.Y = 0 + forwardY * enemySpeed;
 
-            InternalCall.m_InternalSetVelocity(EntityID, ref movement);
+            InternalCall.m_InternalSetVelocity(EntityID, movement);
             #endregion
 
             #region Animate Walking
             if (!isAnimating)
             {
-                int i = 10;
-                InternalCall.m_InternalSetAnimationComponent(EntityID, ref frameNumber, ref i, ref frameTimer, ref isChasing, ref stripCount);
+                InternalCall.m_InternalSetAnimationComponent(EntityID, frameNumber, 10, frameTimer, isChasing, stripCount);
                 isAnimating = true;
             }
 
@@ -159,16 +156,8 @@ public class EnemyController : ScriptBase
                         collisionComponent.m_collisionCheck = !collisionComponent.m_collisionCheck;
                         SetComponent.SetCollisionComponent(EntityID, collisionComponent);
 
-                        AnimationComponent ac = new AnimationComponent();
-
-                        ac.m_frameNumber = 0;
-                        ac.m_frameTimer = 0;
-                        ac.m_isAnimating = false;
-                        ac.m_framesPerSecond = 0;
-                        ac.m_stripCount = 1;
-                        Component.Set<AnimationComponent>(EntityID, ac);
-                        int i = 9;
-                        InternalCall.m_InternalSetSpriteComponent(EntityID, enemyDeathTexture, ref i, ref startingColor, ref startingAlpha);
+                        InternalCall.m_InternalSetAnimationComponent(EntityID, 0, 0, 0, false, 1);
+                        InternalCall.m_InternalSetSpriteComponent(EntityID, enemyDeathTexture, 9, startingColor, startingAlpha);
 
                         Vector2 direction;
 
@@ -177,7 +166,7 @@ public class EnemyController : ScriptBase
 
                         float rotationFloat = (float)(Math.Atan2(direction.X, direction.Y) * (180 / Math.PI));
 
-                        InternalCall.m_InternalSetTransformComponent(EntityID, ref enemyPos, ref startingEnemyScale, ref rotationFloat);
+                        InternalCall.m_InternalSetTransformComponent(EntityID, enemyPos, startingEnemyScale, rotationFloat);
 
                         //Convert into radians
                         float rotationInRadians = (float)((rotationFloat) * Math.PI / 180.0);
@@ -191,31 +180,29 @@ public class EnemyController : ScriptBase
                         movement.X = 0 + forwardX * 0.4f;
                         movement.Y = 0 + forwardY * 0.4f;
 
-                        InternalCall.m_InternalSetVelocity(EntityID, ref movement);
+                        InternalCall.m_InternalSetVelocity(EntityID, movement);
 
                         isDead = true;
 
-                        Vector2 pos = new Vector2();
-                        Vector2 scale = new Vector2();
-                        float rotation = 0.0f;
+                        Vector2 pos;
+                        Vector2 scale;
+                        float rotation;
 
-                        InternalCall.m_InternalGetTransformComponent(EntityID, ref pos, ref scale, ref rotation);
+                        InternalCall.m_InternalGetTransformComponent(EntityID, out pos, out scale, out rotation);
 
-                        InternalCall.m_InternalCallAddPrefab("prefab_enemyBloodPool", ref pos.X, ref pos.Y, ref rotation);
+                        InternalCall.m_InternalCallAddPrefab("prefab_enemyBloodPool", pos.X, pos.Y, rotation);
 
                         break;
 
                     case "Player":
 
                         playerIsDead = true;
-                        bool d = !playerIsDead;
-                        int ix = 10;
-                        InternalCall.m_InternalSetAnimationComponent(EntityID, ref frameNumber, ref ix, ref frameTimer, ref d, ref stripCount);
+                        InternalCall.m_InternalSetAnimationComponent(EntityID, frameNumber, 10, frameTimer, !playerIsDead, stripCount);
 
                         movement.X = 0;
                         movement.Y = 0;
 
-                        InternalCall.m_InternalSetVelocity(EntityID, ref movement);
+                        InternalCall.m_InternalSetVelocity(EntityID, movement);
 
                         break;
 
@@ -237,16 +224,8 @@ public class EnemyController : ScriptBase
             collisionComponent.m_collisionCheck = !collisionComponent.m_collisionCheck;
             SetComponent.SetCollisionComponent(EntityID, collisionComponent);
 
-            AnimationComponent ac = new AnimationComponent();
-
-            ac.m_frameNumber = 0;
-            ac.m_frameTimer = 0;
-            ac.m_isAnimating = false;
-            ac.m_framesPerSecond = 0;
-            ac.m_stripCount = 1;
-            Component.Set<AnimationComponent>(EntityID, ac);
-            int i = 10;
-            InternalCall.m_InternalSetSpriteComponent(EntityID, enemyDeathTexture, ref i, ref startingColor, ref startingAlpha);
+            InternalCall.m_InternalSetAnimationComponent(EntityID, 0, 0, 0, false, 1);
+            InternalCall.m_InternalSetSpriteComponent(EntityID, enemyDeathTexture, 10, startingColor, startingAlpha);
 
             Vector2 direction;
 
@@ -255,7 +234,7 @@ public class EnemyController : ScriptBase
 
             float rotationFloat = (float)(Math.Atan2(direction.X, direction.Y) * (180 / Math.PI));
 
-            InternalCall.m_InternalSetTransformComponent(EntityID, ref enemyPos, ref startingEnemyScale, ref rotationFloat);
+            InternalCall.m_InternalSetTransformComponent(EntityID, enemyPos, startingEnemyScale, rotationFloat);
 
             //Convert into radians
             float rotationInRadians = (float)((rotationFloat) * Math.PI / 180.0);
@@ -269,17 +248,17 @@ public class EnemyController : ScriptBase
             movement.X = 0 + forwardX * 0.4f;
             movement.Y = 0 + forwardY * 0.4f;
 
-            InternalCall.m_InternalSetVelocity(EntityID, ref movement);
+            InternalCall.m_InternalSetVelocity(EntityID, movement);
 
             isDead = true;
 
-            Vector2 pos = new Vector2();
-            Vector2 scale = new Vector2();
-            float rotation = 0.0f;
+            Vector2 pos;
+            Vector2 scale;
+            float rotation;
 
-            InternalCall.m_InternalGetTransformComponent(EntityID, ref pos, ref scale, ref rotation);
+            InternalCall.m_InternalGetTransformComponent(EntityID, out pos, out scale, out rotation);
 
-            InternalCall.m_InternalCallAddPrefab("prefab_enemyBloodPool", ref pos.X, ref pos.Y, ref rotation);
+            InternalCall.m_InternalCallAddPrefab("prefab_enemyBloodPool", pos.X, pos.Y, rotation);
         }
 
         #endregion

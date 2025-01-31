@@ -25,20 +25,20 @@ public class CoroutineController : ScriptBase
         //if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.NUM0))
         //{
         //    CoroutineManager.Instance.StopAllCoroutines();
-        //    Console.WriteLine("Stopped all Coroutines.");
+        //    Console.WriteLine("Stopped all coroutines.");
         //}
 
-        //// Pause/Resume Coroutines for testing 
+        //// Pause/Resume coroutines for testing 
         //if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.NUM1))
         //{
         //    CoroutineManager.Instance.PauseAllCoroutines();
-        //    Console.WriteLine("Paused all Coroutines.");
+        //    Console.WriteLine("Paused all coroutines.");
         //}
 
         //if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.NUM2))
         //{
         //    CoroutineManager.Instance.ResumeAllCoroutines();
-        //    Console.WriteLine("Resumed all Coroutines.");
+        //    Console.WriteLine("Resumed all coroutines.");
         //}
     }
     
