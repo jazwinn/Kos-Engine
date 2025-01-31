@@ -139,3 +139,13 @@ public class Raycast
     public bool m_targetReached;
     public Vector2 m_hitPosition;
 }
+
+public class GridComponent
+{
+    public Vector2 m_Anchor;
+    public int m_GridRowLength;
+    public int m_GridColumnLength;
+    public bool m_SetCollidable;
+    public int m_GridKey;
+    public List<List<int>> m_IsWall;
+}
