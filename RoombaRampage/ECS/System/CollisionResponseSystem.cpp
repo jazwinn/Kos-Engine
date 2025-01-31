@@ -127,8 +127,8 @@ namespace ecs {
 
 				auto valit = std::find_if(vecCollisionEntityPairWithVector.begin(), vecCollisionEntityPairWithVector.end(), [&](const auto& x) { 
 					
-					if (x.first.first.get()->m_ID == obj1_EntityID) {
-						if (std::find(colidedwith.begin(), colidedwith.end(), x.first.second.get()->m_ID) == colidedwith.end()) return true;
+					if (static_cast<ecs::EntityID>(x.first.first.get()->m_ID) == obj1_EntityID) {
+						if (std::find(colidedwith.begin(), colidedwith.end(), static_cast<ecs::EntityID>(x.first.second.get()->m_ID)) == colidedwith.end()) return true;
 					}
 					return false;
 					
@@ -138,8 +138,8 @@ namespace ecs {
 
 					valit = std::find_if(vecCollisionEntityPairWithVector.begin(), vecCollisionEntityPairWithVector.end(), [&](const auto& x) {
 
-						if (x.first.second.get()->m_ID == obj1_EntityID) {
-							if (std::find(colidedwith.begin(), colidedwith.end(), x.first.first.get()->m_ID) == colidedwith.end()) return true;
+						if (static_cast<ecs::EntityID>(x.first.second.get()->m_ID) == obj1_EntityID) {
+							if (std::find(colidedwith.begin(), colidedwith.end(), static_cast<ecs::EntityID>(x.first.first.get()->m_ID)) == colidedwith.end()) return true;
 						}
 						return false;
 
@@ -160,7 +160,7 @@ namespace ecs {
 
 				colidedwith.push_back(obj2_EntityID);
 
-				if (std::find(ColComp->m_collidedWith.begin(), ColComp->m_collidedWith.end(), obj2_EntityID) == ColComp->m_collidedWith.end()) {
+				if (std::find(ColComp->m_collidedWith.begin(), ColComp->m_collidedWith.end(), static_cast<ecs::EntityID>(obj2_EntityID)) == ColComp->m_collidedWith.end()) {
 					ColComp->m_collidedWith.push_back(obj2_EntityID);
 				}
 				
