@@ -355,7 +355,7 @@ namespace script {
 		return scriptArray;
 	}
 
-	bool InternalCall::m_InternalAddScriptInstance(ecs::EntityID entity, MonoString* monoScriptName, MonoObject* instance)
+	bool InternalCall::m_InternalAddScriptInstance([[maybe_unused]] ecs::EntityID entity, [[maybe_unused]] MonoString* monoScriptName,[[maybe_unused]] MonoObject* instance)
 	{
 		//ecs::ECS* ecs = ecs::ECS::m_GetInstance();
 		//auto* scriptComponent = static_cast<ecs::ScriptComponent*>(
@@ -444,6 +444,24 @@ namespace script {
 		}
 
 
+		return -1;
+	}
+
+	int InternalCall::m_InternalGetEntityIdFromGridKey(int gridkey) {
+		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+		for (const auto& scene : ecs->m_ECS_SceneMap) {
+			if (scene.second.m_isPrefab == false && scene.second.m_isActive) {
+				for (const auto& id : scene.second.m_sceneIDs) {
+					ecs::GridComponent* gc = static_cast<ecs::GridComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEGRIDCOMPONENT]->m_GetEntityComponent(id));
+					if (gc != NULL)
+					{
+						if (gc->m_GridKey == gridkey) {
+							return gc->m_Entity;
+						}
+					}
+				}
+			}
+		}
 		return -1;
 	}
 
@@ -842,6 +860,33 @@ namespace script {
 		return true;
 	}
 
+	// Grid Component
+	bool InternalCall::m_InternalGetGridComponent(ecs::EntityID entity, vector2::Vec2* anchor, int* gridRowLength, int* gridColumnLength, bool* setCollidable, int* gridKey) {
+		auto* gridComponent = static_cast<ecs::GridComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPEGRIDCOMPONENT]->m_GetEntityComponent(entity));
+		if (!gridComponent) return false;
+
+		*anchor = gridComponent->m_Anchor;
+		*gridRowLength = gridComponent->m_GridRowLength;
+		*gridColumnLength = gridComponent->m_GridColumnLength;
+		*setCollidable = gridComponent->m_SetCollidable;
+		*gridKey = gridComponent->m_GridKey;
+
+		return true;
+	}
+
+	bool InternalCall::m_InternalSetGridComponent(ecs::EntityID entity, vector2::Vec2* anchor, int* gridRowLength, int* gridColumnLength, bool* setCollidable, int* gridKey) {
+		auto* gridComponent = static_cast<ecs::GridComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPEGRIDCOMPONENT]->m_GetEntityComponent(entity));
+		if (!gridComponent) return false;
+
+		gridComponent->m_Anchor = *anchor;
+		gridComponent->m_GridRowLength = *gridRowLength;
+		gridComponent->m_GridColumnLength = *gridColumnLength;
+		gridComponent->m_SetCollidable = *setCollidable;
+		gridComponent->m_GridKey = *gridKey;
+
+		return true;
+	}
+
 	bool InternalCall::m_InternalCallGetPathfinding(ecs::EntityID id, vector2::Vec2* m_startpos, vector2::Vec2* m_startend, int* gridkey, MonoArray** nodeArray_x, MonoArray** nodeArray_y)
 	{
 		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
@@ -855,7 +900,7 @@ namespace script {
 
 			*gridkey = pfc->m_GridKey;
 
-			auto* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+			//auto* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
 
 
 			*nodeArray_x = mono_array_new(assetmanager::AssetManager::m_funcGetInstance()->m_scriptManager.m_GetDomain(), mono_get_int32_class(), pfc->m_Path.size());
@@ -1043,7 +1088,8 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_getAccumulatedDeltaTime);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallGetSteps);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallGetGameTime);
-
+		MONO_ADD_INTERNAL_CALL(m_InternalGetGridComponent);
+		MONO_ADD_INTERNAL_CALL(m_InternalSetGridComponent);
 
 		MONO_ADD_INTERNAL_CALL(m_EnableScript);
 		MONO_ADD_INTERNAL_CALL(m_DisableScript);
@@ -1060,5 +1106,6 @@ namespace script {
 
 		MONO_ADD_INTERNAL_CALL(m_GetNameComponent);
 
+		MONO_ADD_INTERNAL_CALL(m_InternalGetEntityIdFromGridKey);
 	}
 }
