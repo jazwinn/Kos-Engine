@@ -134,7 +134,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
     public override void Update() //Runs every frame
     {
-        CheckForCollisions(); //Checks for collisions in the event an enemy touches the player
+        CheckForCollisions(); //Checks for collisions ref the event an enemy touches the player
         
         currentState.DoActionUpdate(InternalCall.m_InternalCallGetDeltaTime()); //Update the current state's DoActionUpdate function, such as patrolling, chasing etc, with delta time
     }
@@ -208,7 +208,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
                 {
                     case "MeleeKillZoneSpawn":
                     case "PlayerBullet":
-                        CoroutineManager.Instance.StartCoroutine(EnemyDeath(), "EnemyDeath"); //Runs coroutine to spawn blood pool
+                        CoroutineManager.Instance.StartCoroutine(EnemyDeath(), "EnemyDeath"); //Runs Coroutine to spawn blood pool
                         break;
 
                     case "Player":
@@ -219,7 +219,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
                         movement.X = 0;
                         movement.Y = 0;
 
-                        InternalCall.m_InternalSetVelocity(EntityID, movement);
+                        InternalCall.m_InternalSetVelocity(EntityID, ref movement);
 
                         break;
 
@@ -269,7 +269,14 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         //collComp.m_collisionResponse = false;
         SetComponent.SetCollisionComponent(EntityID, collComp); //Sets collider of enemy
 
-        InternalCall.m_InternalSetAnimationComponent(EntityID, 0, 0, 0, false, 1); //Stops animation of enemy
+        AnimationComponent ac = new AnimationComponent();
+
+        ac.m_frameNumber = 0;
+        ac.m_frameTimer = 0;
+        ac.m_isAnimating = false;
+        ac.m_framesPerSecond = 0;
+        ac.m_stripCount = 1;
+        Component.Set<AnimationComponent>(EntityID, ac);
         SetDeadEnemySprite(); //Sets dead sprite
 
         transformComp = Component.Get<TransformComponent>(EntityID);
@@ -304,7 +311,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
          movement.X = 0 + forwardX * 0.4f ; //Pushes enemy back for "knockback effect"
          movement.Y = 0 + forwardY * 0.4f; //Pushes enemy back for "knockback effect"
 
-         InternalCall.m_InternalSetVelocity(EntityID, movement); //Sets velocity for rigidbody to move
+         InternalCall.m_InternalSetVelocity(EntityID, ref movement); //Sets velocity for rigidbody to move
 
         // isDead = true; //Sets enemy to dead status
         transformComp = Component.Get<TransformComponent>(EntityID);
@@ -312,7 +319,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         
         yield return new CoroutineManager.WaitForSeconds(enemyBloodPoolSpawnDelay); //Waits for time before moving to next line;
 
-        InternalCall.m_InternalCallAddPrefab("prefab_enemyBloodPool", transformComp.m_position.X, transformComp.m_position.Y, transformComp.m_rotation); //Spawns blood pool
+        InternalCall.m_InternalCallAddPrefab("prefab_enemyBloodPool",ref  transformComp.m_position.X, ref transformComp.m_position.Y, ref transformComp.m_rotation); //Spawns blood pool
     }
     #endregion
 
@@ -436,16 +443,16 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         //Get forward vector Y
         float forwardY = (float)(Math.Cos(rotationInRadians));
 
-        if (!InternalCall.m_InternalGetVelocity(EntityID, out movement))
+        if (!InternalCall.m_InternalGetVelocity(EntityID, ref movement))
         {
-            // return cause velocity -> rigidbody is not present in entity
+            // return cause velocity -> rigidbody is not present ref entity
             return;
         }
 
         movement.X = 0 + forwardX * enemySpeed;
         movement.Y = 0 + forwardY * enemySpeed;
 
-        InternalCall.m_InternalSetVelocity(EntityID, movement);
+        InternalCall.m_InternalSetVelocity(EntityID, ref movement);
     }
 
     public void RunAtPlayer()
@@ -473,16 +480,16 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         //Get forward vector Y
         float forwardY = (float)(Math.Cos(rotationInRadians));
 
-        if (!InternalCall.m_InternalGetVelocity(EntityID, out movement))
+        if (!InternalCall.m_InternalGetVelocity(EntityID, ref movement))
         {
-            // return cause velocity -> rigidbody is not present in entity
+            // return cause velocity -> rigidbody is not present ref entity
             return;
         }
 
         movement.X = 0 + forwardX * enemySpeed;
         movement.Y = 0 + forwardY * enemySpeed;
 
-        InternalCall.m_InternalSetVelocity(EntityID, movement);
+        InternalCall.m_InternalSetVelocity(EntityID, ref movement);
     }
 
     #endregion

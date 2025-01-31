@@ -19,8 +19,8 @@ public class PlayerController : ScriptBase
         playerDeathTexture = "img_roombertDeath.png";
 
         //Get starting component values
-        InternalCall.m_InternalGetTransformComponent(EntityID, out startingRoombaPos, out startingRoombaScale, out startingRoombaRotate);
-        InternalCall.m_InternalGetSpriteComponent(EntityID, out startingSprite, out startingLayer, out startingColor, out startingAlpha);
+        InternalCall.m_InternalGetTransformComponent(EntityID, ref startingRoombaPos, ref startingRoombaScale, ref startingRoombaRotate);
+        InternalCall.m_InternalGetSpriteComponent(EntityID, ref startingSprite, ref startingLayer, ref startingColor, ref startingAlpha);
 
         //Ensures player isnt dead at the start of the game
         isDead = false;
@@ -79,9 +79,9 @@ public class PlayerController : ScriptBase
 
         #region Movement WASD
 
-        if (!InternalCall.m_InternalGetVelocity(EntityID, out movement))
+        if (!InternalCall.m_InternalGetVelocity(EntityID, ref movement))
         {
-            // return cause velocity -> rigidbody is not present in entity
+            // return cause velocity -> rigidbody is not present ref entity
             return;
         }
 
@@ -111,20 +111,20 @@ public class PlayerController : ScriptBase
         //Normalize to prevent diagonal movement from adding speed
         movement = NormalizeAndScale(movement.X, movement.Y, speed);
 
-        InternalCall.m_InternalSetVelocity(EntityID, movement);
+        InternalCall.m_InternalSetVelocity(EntityID, ref movement);
 
         #endregion
 
         #region Mouse Rotation
 
-        Vector2 mousePos;
-        Vector2 roombaPos;
+        Vector2 mousePos = new Vector2();
+        Vector2 roombaPos = new Vector2();
 
         //Get pos of mouse
-        InternalCall.m_InternalGetWorldMousePosition(out mousePos);
+        InternalCall.m_InternalGetWorldMousePosition(ref mousePos);
 
         //Get pos of player
-        InternalCall.m_InternalGetTransformComponent(EntityID, out roombaPos, out startingRoombaScale, out startingRoombaRotate);
+        InternalCall.m_InternalGetTransformComponent(EntityID, ref roombaPos, ref startingRoombaScale, ref startingRoombaRotate);
 
         Vector2 direction;
 
@@ -136,7 +136,7 @@ public class PlayerController : ScriptBase
 
         if ((rotationFloat > previousRotationFloat + angleTolerance) || (rotationFloat < previousRotationFloat - angleTolerance))
         {
-            InternalCall.m_InternalSetTransformComponent(EntityID, roombaPos, startingRoombaScale, rotationFloat);
+            InternalCall.m_InternalSetTransformComponent(EntityID,ref roombaPos, ref startingRoombaScale, ref rotationFloat);
             previousRotationFloat = rotationFloat;
         }
 
@@ -157,13 +157,21 @@ public class PlayerController : ScriptBase
                     collisionComponent.m_collisionCheck = !collisionComponent.m_collisionCheck;
                     SetComponent.SetCollisionComponent(EntityID, collisionComponent);
 
-                    InternalCall.m_InternalSetAnimationComponent(EntityID, 0, 0, 0, false, 1);
-                    InternalCall.m_InternalSetSpriteComponent(EntityID, playerDeathTexture, startingLayer, startingColor, startingAlpha);
+                    AnimationComponent ac = new AnimationComponent();
+
+                    ac.m_frameNumber = 0;
+                    ac.m_frameTimer = 0;
+                    ac.m_isAnimating = false;
+                    ac.m_framesPerSecond = 0;
+                    ac.m_stripCount = 1;
+                    Component.Set<AnimationComponent>(EntityID, ac);
+
+                    InternalCall.m_InternalSetSpriteComponent(EntityID, playerDeathTexture, ref startingLayer, ref startingColor, ref startingAlpha);
 
                     movement.X = 0;
                     movement.Y = 0;
 
-                    InternalCall.m_InternalSetVelocity(EntityID, movement);
+                    InternalCall.m_InternalSetVelocity(EntityID, ref movement);
 
                     isDead = true;
                 }

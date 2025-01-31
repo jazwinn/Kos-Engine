@@ -62,24 +62,25 @@ public class LevelEnemySpawner : ScriptBase
 
                     foreach (int id in InternalCall.m_InternalCallGetTagIDs("Door"))
                     {
-                        Vector2 tempPos;
-                        Vector2 tempScale;
-                        float tempRotate;
+                        Vector2 tempPos = new Vector2();
+                        Vector2 tempScale = new Vector2();
+                        float tempRotate = 0.0f;
 
-                        InternalCall.m_InternalGetTransformComponent((uint)id, out tempPos, out tempScale, out tempRotate);
+                        InternalCall.m_InternalGetTransformComponent((uint)id, ref tempPos, ref tempScale, ref tempRotate);
 
-                        InternalCall.m_InternalCallAddPrefab("prefab_wallDoor", tempPos.X, tempPos.Y, 0f);
+                        float f = 0.0f;
+                        InternalCall.m_InternalCallAddPrefab("prefab_wallDoor", ref tempPos.X, ref tempPos.Y, ref f);
                     }
 
                     foreach (int id in InternalCall.m_InternalCallGetTagIDs("DoorSpawnPos"))
                     {
-                        Vector2 tempPos;
-                        Vector2 tempScale;
-                        float tempRotate;
+                        Vector2 tempPos = new Vector2();
+                        Vector2 tempScale = new Vector2();
+                        float tempRotate =0.0f;
 
-                        InternalCall.m_InternalGetTransformComponent((uint)id, out tempPos, out tempScale, out tempRotate);
+                        InternalCall.m_InternalGetTransformComponent((uint)id, ref tempPos, ref tempScale, ref tempRotate);
 
-                        InternalCall.m_InternalCallAddPrefab("prefab_door", tempPos.X, tempPos.Y, tempRotate);
+                        InternalCall.m_InternalCallAddPrefab("prefab_door", ref tempPos.X, ref tempPos.Y, ref tempRotate);
                     }
 
 
@@ -127,13 +128,13 @@ public class LevelEnemySpawner : ScriptBase
             foreach (int spawnPointID in spawnPoints)
             {
 
-                Vector2 spawnPointTransform;
-                InternalCall.m_InternalGetTranslate((uint)spawnPointID, out spawnPointTransform);
+                Vector2 spawnPointTransform = new Vector2();
+                InternalCall.m_InternalGetTranslate((uint)spawnPointID, ref spawnPointTransform);
 
-                Vector2 playerPos;
-                InternalCall.m_InternalGetTranslate((uint)InternalCall.m_InternalCallGetTagID("Player"), out playerPos);
+                Vector2 playerPos = new Vector2();
+                InternalCall.m_InternalGetTranslate((uint)InternalCall.m_InternalCallGetTagID("Player"), ref playerPos);
 
-                Vector2 direction;
+                Vector2 direction = new Vector2();
 
                 direction.X = (spawnPointTransform.X - playerPos.X);
                 direction.Y = (spawnPointTransform.Y - playerPos.Y);
@@ -142,7 +143,7 @@ public class LevelEnemySpawner : ScriptBase
 
                 InternalCall.m_InternalCallPlayAudio((uint)spawnPointID, "aud_enemySpawn01");
 
-                InternalCall.m_InternalCallAddPrefab(enemyPrefab, spawnPointTransform.X, spawnPointTransform.Y, rotationFloat);
+                InternalCall.m_InternalCallAddPrefab(enemyPrefab, ref spawnPointTransform.X, ref spawnPointTransform.Y, ref rotationFloat);
                 totalEnemiesSpawned++;
                 // Delay before moving to the next spawn point
 

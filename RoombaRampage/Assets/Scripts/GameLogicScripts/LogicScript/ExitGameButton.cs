@@ -30,8 +30,9 @@ public class ExitGameButton : ScriptBase
     {
         if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.LMB))
         {
-            InternalCall.m_InternalGetButtonComponent(EntityID, out Vector2 position, out Vector2 scale, out bool isClick);
-            if (isClick == true)
+            ButtomComponent bc= Component.Get<ButtomComponent>(EntityID);
+
+            if (bc.m_IsClick == true)
             {
                 InternalCall.m_InternalCallCloseWindow();
             }
