@@ -393,6 +393,8 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         GridComponent gridComponent = Component.Get<GridComponent>((uint)gridid);
         int gridX = (int)Math.Floor(worldX) - (int)gridComponent.m_Anchor.X;
         int gridY = (int)gridComponent.m_Anchor.Y - (int)Math.Floor(worldY) - 1;
+        Console.WriteLine(gridX);
+        Console.WriteLine(gridY);
 
         return new Vector2(gridX, gridY); //This is the Grid Coordinates from the World Coordinates
     }
