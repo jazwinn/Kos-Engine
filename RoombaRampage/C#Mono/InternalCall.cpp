@@ -960,6 +960,14 @@ namespace script {
 		 return dt;
 	}
 
+	void InternalCall::m_GetNameComponent(ecs::EntityID id, void** outptr)
+	{
+
+		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+		ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id));
+		*outptr = static_cast<void*>(nc); // Assign pointer to output parameter
+
+	}
 
 
 	void InternalCall::m_InternalCallDeleteEntity(ecs::EntityID id)
@@ -1095,6 +1103,8 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_DisableLayer);
 
 		MONO_ADD_INTERNAL_CALL(m_InternalCallSetTargetPathfinding);
+
+		MONO_ADD_INTERNAL_CALL(m_GetNameComponent);
 
 		MONO_ADD_INTERNAL_CALL(m_InternalGetEntityIdFromGridKey);
 	}
