@@ -16,7 +16,7 @@ public class EnemyBloodPool : ScriptBase
         EntityID = id;
 
         isAnimating = true;
-        InternalCall.m_InternalGetAnimationComponent(EntityID, out startFrameNumber, out startFramesPerSecond, out startFrameTimer, out isAnimating, out stripCount);
+        InternalCall.m_InternalGetAnimationComponent(EntityID, ref startFrameNumber, ref startFramesPerSecond, ref startFrameTimer, ref isAnimating, ref stripCount);
     }
     #endregion
 
@@ -33,12 +33,12 @@ public class EnemyBloodPool : ScriptBase
     {
         if (isAnimating)
         {
-            InternalCall.m_InternalGetAnimationComponent(EntityID, out currentFrameNumber, out startFramesPerSecond, out currentFrameTimer, out isAnimating, out stripCount);
+            InternalCall.m_InternalGetAnimationComponent(EntityID, ref currentFrameNumber, ref startFramesPerSecond, ref currentFrameTimer, ref isAnimating, ref stripCount);
 
             if (currentFrameNumber == stripCount - 1)
             {
                 isAnimating = false;
-                InternalCall.m_InternalSetAnimationComponent(EntityID, currentFrameNumber, startFramesPerSecond, startFrameTimer, isAnimating, stripCount);
+                InternalCall.m_InternalSetAnimationComponent(EntityID, ref currentFrameNumber, ref startFramesPerSecond, ref startFrameTimer, ref isAnimating, ref stripCount);
             }
         }
     }

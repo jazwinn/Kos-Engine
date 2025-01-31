@@ -31,12 +31,12 @@ public class PlayerGun : ScriptBase
         bulletCounterID = (uint)InternalCall.m_InternalCallGetTagID("UIBulletCounter");
 
         limbTag = InternalCall.m_InternalCallGetTag(EntityID);
-        InternalCall.m_InternalGetTranslate(EntityID, out limbPos);
+        InternalCall.m_InternalGetTranslate(EntityID, ref limbPos);
 
-        InternalCall.m_InternalGetTransformComponent((uint)InternalCall.m_InternalCallGetTagID("Player"), out roombaPos, out roombaScale, out roombaRotate);
-        InternalCall.m_InternalGetAnimationComponent(EntityID, out startFrameNumber, out startFramesPerSecond, out startFrameTimer, out isAnimating, out stripCount);
-        InternalCall.m_InternalGetSpriteComponent(EntityID, out startImageFile, out startLayer, out startColor, out startAlpha);
-        InternalCall.m_InternalGetTextComponent(bulletCounterID, out startText, out startFileName, out startFontLayer, out startFontSize, out startFontColor);
+        InternalCall.m_InternalGetTransformComponent((uint)InternalCall.m_InternalCallGetTagID("Player"), ref roombaPos, ref roombaScale, ref roombaRotate);
+        InternalCall.m_InternalGetAnimationComponent(EntityID, ref startFrameNumber, ref startFramesPerSecond, ref startFrameTimer, ref isAnimating, ref stripCount);
+        InternalCall.m_InternalGetSpriteComponent(EntityID, ref startImageFile, ref startLayer, ref startColor, ref startAlpha);
+        InternalCall.m_InternalGetTextComponent(bulletCounterID, ref startText, ref startFileName, ref startFontLayer, ref startFontSize, ref startFontColor);
         UpdateBulletCounterUI();
         UpdateMeleeCounterUI();
     }
@@ -93,8 +93,13 @@ public class PlayerGun : ScriptBase
         {
             if (isAnimating == true)
             {
-                isAnimating = false;
-                InternalCall.m_InternalSetAnimationComponent(EntityID, startFrameNumber, startFramesPerSecond, startFrameTimer, isAnimating, stripCount);
+                AnimationComponent ac = Component.Get<AnimationComponent>(EntityID);
+                ac.m_frameNumber = startFrameNumber;
+                ac.m_framesPerSecond = startFramesPerSecond;
+                ac.m_frameTimer = startFrameTimer;
+                ac.m_isAnimating = false;
+                ac.m_stripCount = stripCount;
+                Component.Set<AnimationComponent>(EntityID, ac);
                 return;
             }
 
@@ -111,8 +116,9 @@ public class PlayerGun : ScriptBase
                 InternalCall.m_InternalCallPlayAudio(EntityID, "aud_weaponSwitch01");
                 stripCount = 6;
                 weaponEquipped = 1;
-                InternalCall.m_InternalSetSpriteComponent(EntityID, leftCleaverTexture, startLayer, startColor, startAlpha);
-                InternalCall.m_InternalSetAnimationComponent(EntityID, startFrameNumber, startFramesPerSecond, startFrameTimer, false, stripCount);
+                InternalCall.m_InternalSetSpriteComponent(EntityID, leftCleaverTexture, ref startLayer, ref startColor,ref startAlpha);
+                bool b = false;
+                InternalCall.m_InternalSetAnimationComponent(EntityID, ref startFrameNumber, ref startFramesPerSecond, ref startFrameTimer, ref b, ref stripCount);
 
             }
 
@@ -121,8 +127,9 @@ public class PlayerGun : ScriptBase
                 InternalCall.m_InternalCallPlayAudio(EntityID, "aud_weaponSwitch01");
                 stripCount = 8;
                 weaponEquipped = 0;
-                InternalCall.m_InternalSetSpriteComponent(EntityID, leftGunTexture, startLayer, startColor, startAlpha);
-                InternalCall.m_InternalSetAnimationComponent(EntityID, startFrameNumber, startFramesPerSecond, startFrameTimer, false, stripCount);
+                InternalCall.m_InternalSetSpriteComponent(EntityID, leftGunTexture, ref startLayer, ref startColor,ref startAlpha);
+                bool b = false;
+                InternalCall.m_InternalSetAnimationComponent(EntityID, ref startFrameNumber, ref startFramesPerSecond, ref startFrameTimer, ref b, ref stripCount);
             }
         }
 
@@ -134,8 +141,9 @@ public class PlayerGun : ScriptBase
                 InternalCall.m_InternalCallPlayAudio(EntityID, "aud_weaponSwitch01");
                 stripCount = 6;
                 weaponEquipped = 1;
-                InternalCall.m_InternalSetSpriteComponent(EntityID, rightCleaverTexture, startLayer, startColor, startAlpha);
-                InternalCall.m_InternalSetAnimationComponent(EntityID, startFrameNumber, startFramesPerSecond, startFrameTimer, false, stripCount);
+                InternalCall.m_InternalSetSpriteComponent(EntityID, rightCleaverTexture, ref startLayer, ref startColor, ref startAlpha);
+                bool b = false;
+                InternalCall.m_InternalSetAnimationComponent(EntityID, ref startFrameNumber, ref startFramesPerSecond, ref startFrameTimer, ref b, ref stripCount);
 
             }
 
@@ -144,8 +152,9 @@ public class PlayerGun : ScriptBase
                 InternalCall.m_InternalCallPlayAudio(EntityID, "aud_weaponSwitch01");
                 stripCount = 8;
                 weaponEquipped = 0;
-                InternalCall.m_InternalSetSpriteComponent(EntityID, rightGunTexture, startLayer, startColor, startAlpha);
-                InternalCall.m_InternalSetAnimationComponent(EntityID, startFrameNumber, startFramesPerSecond, startFrameTimer, false, stripCount);
+                InternalCall.m_InternalSetSpriteComponent(EntityID, rightGunTexture, ref startLayer, ref startColor, ref startAlpha);
+                bool b = false;
+                InternalCall.m_InternalSetAnimationComponent(EntityID, ref startFrameNumber, ref startFramesPerSecond, ref startFrameTimer, ref b, ref stripCount);
             }
         }
 
@@ -164,19 +173,19 @@ public class PlayerGun : ScriptBase
                 InternalCall.m_InternalCallPlayAudio(EntityID, gunshotSound);
 
                 //Get roomba rotation
-                InternalCall.m_InternalGetTransformComponent((uint)InternalCall.m_InternalCallGetTagID("Player"), out roombaPos, out roombaScale, out roombaRotate);
+                InternalCall.m_InternalGetTransformComponent((uint)InternalCall.m_InternalCallGetTagID("Player"), ref roombaPos, ref roombaScale, ref roombaRotate);
 
                 //Get limbPos
-                InternalCall.m_InternalGetTranslate(EntityID, out limbPos);
+                InternalCall.m_InternalGetTranslate(EntityID, ref limbPos);
 
                 //Set isAnimating true
                 isAnimating = true;
 
                 //Play animation by feeding isAnimating into component
-                InternalCall.m_InternalSetAnimationComponent(EntityID, startFrameNumber, startFramesPerSecond, startFrameTimer, isAnimating, stripCount);
+                InternalCall.m_InternalSetAnimationComponent(EntityID, ref startFrameNumber,ref startFramesPerSecond, ref startFrameTimer, ref isAnimating, ref stripCount);
 
                 //Spawn bullet at limb
-                InternalCall.m_InternalCallAddPrefab(bulletPrefab, limbPos.X, limbPos.Y, roombaRotate);
+                InternalCall.m_InternalCallAddPrefab(bulletPrefab, ref limbPos.X, ref limbPos.Y, ref roombaRotate);
             }
 
             
@@ -193,19 +202,19 @@ public class PlayerGun : ScriptBase
                 InternalCall.m_InternalCallPlayAudio(EntityID, gunshotSound);
 
                 //Get roomba rotation
-                InternalCall.m_InternalGetTransformComponent((uint)InternalCall.m_InternalCallGetTagID("Player"), out roombaPos, out roombaScale, out roombaRotate);
+                InternalCall.m_InternalGetTransformComponent((uint)InternalCall.m_InternalCallGetTagID("Player"), ref roombaPos, ref roombaScale, ref roombaRotate);
 
                 //Get limbPos
-                InternalCall.m_InternalGetTranslate(EntityID, out limbPos);
+                InternalCall.m_InternalGetTranslate(EntityID, ref limbPos);
 
                 //Set isAnimating true
                 isAnimating = true;
 
                 //Play animation by feeding isAnimating into component
-                InternalCall.m_InternalSetAnimationComponent(EntityID, startFrameNumber, startFramesPerSecond, startFrameTimer, isAnimating, stripCount);
+                InternalCall.m_InternalSetAnimationComponent(EntityID, ref startFrameNumber, ref startFramesPerSecond, ref startFrameTimer, ref isAnimating, ref stripCount);
 
                 //Spawn bullet at limb
-                InternalCall.m_InternalCallAddPrefab(bulletPrefab, limbPos.X, limbPos.Y, roombaRotate);
+                InternalCall.m_InternalCallAddPrefab(bulletPrefab, ref limbPos.X, ref limbPos.Y, ref roombaRotate);
             }
 
             
@@ -222,19 +231,19 @@ public class PlayerGun : ScriptBase
                 InternalCall.m_InternalCallPlayAudio(EntityID, gunshotSound);
 
                 //Get roomba rotation
-                InternalCall.m_InternalGetTransformComponent((uint)InternalCall.m_InternalCallGetTagID("Player"), out roombaPos, out roombaScale, out roombaRotate);
+                InternalCall.m_InternalGetTransformComponent((uint)InternalCall.m_InternalCallGetTagID("Player"), ref roombaPos, ref roombaScale, ref roombaRotate);
 
                 //Get limbPos
-                InternalCall.m_InternalGetTranslate(EntityID, out limbPos);
+                InternalCall.m_InternalGetTranslate(EntityID, ref limbPos);
 
                 //Set isAnimating true
                 isAnimating = true;
 
                 //Play animation by feeding isAnimating into component
-                InternalCall.m_InternalSetAnimationComponent(EntityID, startFrameNumber, startFramesPerSecond, startFrameTimer, isAnimating, stripCount);
+                InternalCall.m_InternalSetAnimationComponent(EntityID, ref startFrameNumber,ref startFramesPerSecond, ref startFrameTimer, ref isAnimating, ref stripCount);
 
                 //Spawn bullet at limb
-                InternalCall.m_InternalCallAddPrefab(bulletPrefab, limbPos.X, limbPos.Y, roombaRotate);
+                InternalCall.m_InternalCallAddPrefab(bulletPrefab, ref limbPos.X, ref limbPos.Y, ref roombaRotate);
             }
           
         }
@@ -265,12 +274,12 @@ public class PlayerGun : ScriptBase
 
         if (isAnimating)
         {
-            InternalCall.m_InternalGetAnimationComponent(EntityID, out currentFrameNumber, out startFramesPerSecond, out currentFrameTimer, out isAnimating, out stripCount);
+            InternalCall.m_InternalGetAnimationComponent(EntityID, ref currentFrameNumber, ref startFramesPerSecond, ref currentFrameTimer, ref isAnimating, ref stripCount);
 
             if (currentFrameNumber == stripCount - 1)
             {
                 isAnimating = false;
-                InternalCall.m_InternalSetAnimationComponent(EntityID, startFrameNumber, startFramesPerSecond, startFrameTimer, isAnimating, stripCount);
+                InternalCall.m_InternalSetAnimationComponent(EntityID, ref startFrameNumber, ref startFramesPerSecond, ref startFrameTimer, ref isAnimating, ref stripCount);
             }
         }
 
@@ -295,7 +304,7 @@ public class PlayerGun : ScriptBase
             isAnimating = true;
 
             //Animate
-            InternalCall.m_InternalSetAnimationComponent(EntityID, startFrameNumber, startFramesPerSecond, startFrameTimer, isAnimating, stripCount);
+            InternalCall.m_InternalSetAnimationComponent(EntityID, ref startFrameNumber, ref startFramesPerSecond, ref startFrameTimer, ref isAnimating, ref stripCount);
 
             //Start Coroutine to set to false for checking collision
             _ = ToggleCollisionAfterDelay(collisionComponent, (uint)InternalCall.m_InternalCallGetTagID("MeleeKillZoneSpawn"), 0.1f);
@@ -338,19 +347,19 @@ public class PlayerGun : ScriptBase
         {
             //Set Red AMMO
             Vector3 tempColor;
-            tempColor.R = 255.0f/255.0f;
+            tempColor.R = 255.0f / 255.0f;
             tempColor.G = 0;
             tempColor.B = 0;
 
-            string tempText;
-            string tempFile;
-            int tempLayer;
-            float tempSize;
-            Vector3 oldColor;
+            string tempText = "";
+            string tempFile = "";
+            int tempLayer = 0;
+            float tempSize = 0.0f;
+            Vector3 oldColor = new Vector3();
 
-            InternalCall.m_InternalSetTextComponent(bulletCounterID, startText, startFileName, in startFontLayer, in startFontSize, in tempColor);
-            InternalCall.m_InternalGetTextComponent((uint)InternalCall.m_InternalCallGetTagID("UIBulletHeader"), out tempText, out tempFile, out tempLayer, out tempSize, out oldColor);
-            InternalCall.m_InternalSetTextComponent((uint)InternalCall.m_InternalCallGetTagID("UIBulletHeader"), tempText, tempFile, in tempLayer, in tempSize, in tempColor);
+            InternalCall.m_InternalSetTextComponent(bulletCounterID, startText, startFileName, ref startFontLayer, ref startFontSize, ref tempColor);
+            InternalCall.m_InternalGetTextComponent((uint)InternalCall.m_InternalCallGetTagID("UIBulletHeader"), ref tempText, ref tempFile, ref tempLayer, ref tempSize, ref oldColor);
+            InternalCall.m_InternalSetTextComponent((uint)InternalCall.m_InternalCallGetTagID("UIBulletHeader"), tempText, tempFile, ref tempLayer, ref tempSize, ref tempColor);
         }
 
         else
@@ -360,7 +369,7 @@ public class PlayerGun : ScriptBase
             temp.R = 0;
             temp.G = 255.0f/255.0f;
             temp.B = 0;
-            InternalCall.m_InternalSetTextComponent(bulletCounterID, startText, startFileName, in startFontLayer, in startFontSize, in temp);
+            InternalCall.m_InternalSetTextComponent(bulletCounterID, startText, startFileName, ref startFontLayer, ref startFontSize, ref temp);
         }
         
     }

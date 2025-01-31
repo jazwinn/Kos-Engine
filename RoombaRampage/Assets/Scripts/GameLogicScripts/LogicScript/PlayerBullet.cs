@@ -17,9 +17,9 @@ public class PlayerBullet : ScriptBase
 
         speed = 8;
 
-        InternalCall.m_InternalGetTransformComponent(EntityID, out startingBulletPos, out startingBulletScale, out startingBulletRotate);
+        InternalCall.m_InternalGetTransformComponent(EntityID, ref startingBulletPos, ref startingBulletScale, ref startingBulletRotate);
 
-        InternalCall.m_InternalGetAnimationComponent(EntityID, out frameNumber, out framesPerSecond, out frameTimer, out isAnimating, out stripCount);
+        InternalCall.m_InternalGetAnimationComponent(EntityID, ref frameNumber, ref framesPerSecond, ref frameTimer, ref isAnimating, ref stripCount);
 
         rotation = startingBulletRotate;
 
@@ -59,29 +59,28 @@ public class PlayerBullet : ScriptBase
 
     public override void Update()
     {
-        #region Movement in forward direction
+        #region Movement ref forward direction
         
         if (!isAnimating)
         {
-            Vector2 movement;
+            Vector2 movement = new Vector2();
 
-            if (!InternalCall.m_InternalGetVelocity(EntityID, out movement))
+            if (!InternalCall.m_InternalGetVelocity(EntityID, ref movement))
             {
-                // return cause velocity -> rigidbody is not present in entity
+                // return cause velocity -> rigidbody is not present ref entity
                 return;
             }
-
             movement.X = 0 + forwardX * speed;
             movement.Y = 0 + forwardY * speed;
 
-            InternalCall.m_InternalSetVelocity(EntityID, movement);
+            InternalCall.m_InternalSetVelocity(EntityID, ref movement);
         }
 
         else
         {
             
 
-            InternalCall.m_InternalGetAnimationComponent(EntityID, out frameNumber, out framesPerSecond, out frameTimer, out isAnimating, out stripCount);
+            InternalCall.m_InternalGetAnimationComponent(EntityID, ref frameNumber, ref framesPerSecond, ref frameTimer, ref isAnimating, ref stripCount);
 
             if (frameNumber == stripCount - 1)
             {
@@ -108,15 +107,22 @@ public class PlayerBullet : ScriptBase
                     case "Wall": 
                         if (!isAnimating)
                         {
-                            isAnimating = true;
-                            InternalCall.m_InternalSetAnimationComponent(EntityID, in frameNumber, in framesPerSecond, in frameTimer, in isAnimating, in stripCount);
+                            //isAnimating = true;
+                            AnimationComponent ac = Component.Get<AnimationComponent>(EntityID);
+                            ac.m_frameNumber = frameNumber;
+                            ac.m_framesPerSecond = framesPerSecond;
+                            ac.m_frameTimer = frameTimer;
+                            ac.m_isAnimating = true;
+                            ac.m_stripCount = stripCount;
+                            Component.Set<AnimationComponent>(EntityID, ac);
+                            //InternalCall.m_InternalSetAnimationComponent(EntityID, ref frameNumber, ref framesPerSecond, ref frameTimer, ref isAnimating, ref stripCount);
 
                             Vector2 movement;
 
                             movement.X = 0;
                             movement.Y = 0;
 
-                            InternalCall.m_InternalSetVelocity(EntityID, movement);
+                            InternalCall.m_InternalSetVelocity(EntityID, ref movement);
                         }
 
                         break;
