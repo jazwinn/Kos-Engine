@@ -94,7 +94,7 @@ bool AStarPathfinding::IsWalkable(ecs::GridComponent* grid, int x, int y) {
 }
 
 float AStarPathfinding::CalculateHeuristic(int x1, int y1, int x2, int y2) {
-    return std::abs(x1 - x2) + std::abs(y1 - y2); // Manhattan distance
+    return static_cast<float>(std::abs(x1 - x2) + std::abs(y1 - y2)); // Manhattan distance
 }
 
 std::vector<Node> AStarPathfinding::ReconstructPath(Node* endNode) {

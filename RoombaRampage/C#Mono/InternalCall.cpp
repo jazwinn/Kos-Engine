@@ -355,7 +355,7 @@ namespace script {
 		return scriptArray;
 	}
 
-	bool InternalCall::m_InternalAddScriptInstance(ecs::EntityID entity, MonoString* monoScriptName, MonoObject* instance)
+	bool InternalCall::m_InternalAddScriptInstance([[maybe_unused]] ecs::EntityID entity, [[maybe_unused]] MonoString* monoScriptName,[[maybe_unused]] MonoObject* instance)
 	{
 		//ecs::ECS* ecs = ecs::ECS::m_GetInstance();
 		//auto* scriptComponent = static_cast<ecs::ScriptComponent*>(
@@ -899,7 +899,7 @@ namespace script {
 
 			*gridkey = pfc->m_GridKey;
 
-			auto* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+			//auto* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
 
 
 			*nodeArray_x = mono_array_new(assetmanager::AssetManager::m_funcGetInstance()->m_scriptManager.m_GetDomain(), mono_get_int32_class(), pfc->m_Path.size());
