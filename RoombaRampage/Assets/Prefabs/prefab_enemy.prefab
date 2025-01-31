@@ -19,6 +19,7 @@
         },
         "collider": {
             "checkcollision": true,
+            "checkresponse": true,
             "size": {
                 "x": 0.7200000286102295,
                 "y": 0.25999999046325684
@@ -66,9 +67,9 @@
             "alpha": 1.0
         },
         "animation": {
-            "frameNumber": 7,
+            "frameNumber": 2,
             "framesPerSecond": 10,
-            "frameTimer": 0.76666659116745,
+            "frameTimer": 0.2666666805744171,
             "isAnimating": true,
             "stripCount": 14
         },
@@ -76,7 +77,29 @@
             "scripts": [
                 {
                     "name": "EnemyController",
-                    "enabled": true
+                    "enabled": true,
+                    "map": [
+                        {
+                            "variable": "forceDeath",
+                            "base64": ""
+                        },
+                        {
+                            "variable": "playerIsDead",
+                            "base64": ""
+                        },
+                        {
+                            "variable": "enemySpeed",
+                            "base64": ""
+                        },
+                        {
+                            "variable": "isDead",
+                            "base64": ""
+                        },
+                        {
+                            "variable": "totalEnemiesKilled",
+                            "base64": ""
+                        }
+                    ]
                 }
             ]
         },

@@ -65,8 +65,13 @@
   <ItemGroup>
     <Compile Include="LogicScript\CameraFollowPlayerScript.cs" />
     <Compile Include="LogicScript\CollisionResponse.cs" />
+    <Compile Include="LogicScript\CoroutineController.cs" />
+    <Compile Include="LogicScript\CoroutineManager.cs" />
+    <Compile Include="LogicScript\CoroutineTester.cs" />
     <Compile Include="LogicScript\EnemyBloodPool.cs" />
     <Compile Include="LogicScript\EnemyController.cs" />
+    <Compile Include="LogicScript\EnemyScript.cs" />
+    <Compile Include="LogicScript\EnemyState.cs" />
     <Compile Include="LogicScript\ExitGameButton.cs" />
     <Compile Include="LogicScript\GameController.cs" />
     <Compile Include="LogicScript\LevelDoorLocker.cs" />

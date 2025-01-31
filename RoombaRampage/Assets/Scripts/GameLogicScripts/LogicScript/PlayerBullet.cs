@@ -96,10 +96,13 @@ public class PlayerBullet : ScriptBase
 
         if (InternalCall.m_InternalCallIsCollided(EntityID) != 0.0f)
         {
+
+
             int[] collidedEntities = InternalCall.m_InternalCallGetCollidedEntities(EntityID);
 
             foreach (int collidedEntitiesID in collidedEntities)
             {
+
                 switch (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID))
                 {
                     case "Wall": 

@@ -32,6 +32,9 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "mono_handler.h"
 #include "mono/metadata/mono-gc.h"
 #include "mono/metadata/threads.h"
+#include "../De&Serialization/json_handler.h"
+#include "../Asset Manager/AssetManager.h"
+
 #include "InternalCall.h"
 
 namespace script {
@@ -44,8 +47,12 @@ namespace script {
         // Set Mono path
         mono_set_dirs("Dependencies/mono/lib", "Dependencies/mono/etc");
 
+
+
         // need for internal call during run time
         m_rootDomain = mono_jit_init("MonoDomain");
+
+        mono_domain_set_config(m_rootDomain, ".", "config");
 
         mono_thread_set_main(mono_thread_current());
 
@@ -54,6 +61,7 @@ namespace script {
 
         m_LoadSecondaryDomain();
 
+        m_ReloadAllDLL();
        
     }
 
@@ -204,10 +212,18 @@ namespace script {
 
 
         if (exception) {
-            MonoString* exceptionMessage = mono_object_to_string(exception, nullptr);
-            const char* messageStr = mono_string_to_utf8(exceptionMessage);
-            LOGGING_ERROR("Exception in C# method invocation: {}", messageStr);
-            mono_free((void*)messageStr);
+            MonoObject* exc = (MonoObject*)exception;
+            MonoClass* excClass = mono_object_get_class(exc);
+            MonoMethod* toStringMethod = mono_class_get_method_from_name(excClass, "ToString", 0);
+
+            if (toStringMethod) {
+                MonoString* excStr = (MonoString*)mono_runtime_invoke(toStringMethod, exc, nullptr, nullptr);
+                if (excStr) {
+                    const char* errorMessage = mono_string_to_utf8(excStr);
+                    printf("Mono Exception: %s\n", errorMessage);
+                    mono_free((void*)errorMessage);
+                }
+            }
         }
     }
 
@@ -235,6 +251,8 @@ namespace script {
             }
         }
     }
+
+
 
     void ScriptHandler::m_CompileCSharpFile(const std::filesystem::path& filePath)
     {
@@ -352,4 +370,104 @@ namespace script {
             }
         }
     }
+
+
+    void ScriptHandler::m_assignVaraiblestoScript(ecs::ScriptComponent* sc, const std::string& script)
+    {
+        assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+        MonoImage* image = assetmanager->m_scriptManager.m_loadedDLLMap.find(assetmanager->m_scriptManager.m_outputdll)->second.m_image;
+        if (image == NULL) return;
+
+        MonoClass* scriptclass = mono_class_from_name(image, "", script.c_str());
+
+        void* iter = nullptr;
+        MonoClassField* field;
+        while ((field = mono_class_get_fields(scriptclass, &iter)) != nullptr) {
+            // Check if the field is public
+            if ((mono_field_get_flags(field) & 0x0006) == 0x0006) { //0x0006 representing public
+                const char* fieldName = mono_field_get_name(field);
+                MonoType* fieldType = mono_field_get_type(field);
+                int fieldTypeCode = mono_type_get_type(fieldType);
+
+                MonoClassField* fields = mono_class_get_field_from_name(scriptclass, fieldName);
+
+                //std::cout << "Found public field: " << fieldName << " (Type Code: " << fieldTypeCode << ")\n";
+
+                // Change the value based on type (example for int and float)
+                if (fieldTypeCode == MONO_TYPE_I4) { // Type code for int
+
+                    const auto& it = std::find_if(sc->m_scripts.begin(), sc->m_scripts.end(), [&](auto& x) {return std::get<0>(x) == script; });
+
+                    if (it != sc->m_scripts.end()) {
+                        auto variableit = std::get<2>(*it).find(fieldName); // use map to find fieldname
+                        if (variableit != std::get<2>(*it).end()) {// if field exist
+                            auto decodedData = Serialization::Serialize::DecodeBase64(variableit->second);
+                            if (decodedData) {
+                                int integer = *(static_cast<int*>(decodedData.get()));
+                                mono_field_set_value(sc->m_scriptInstances.find(script)->second.first, fields, &integer);
+                            }
+                        }
+
+                    }
+                    
+                
+                }
+                else if (fieldTypeCode == MONO_TYPE_R4) { // Type code for float
+                    const auto& it = std::find_if(sc->m_scripts.begin(), sc->m_scripts.end(), [&](auto& x) {return std::get<0>(x) == script; });
+
+                    if (it != sc->m_scripts.end()) {
+                        auto variableit = std::get<2>(*it).find(fieldName); // use map to find fieldname
+                        if (variableit != std::get<2>(*it).end()) {// if field exist
+                            auto decodedData = Serialization::Serialize::DecodeBase64(variableit->second);
+                            if (decodedData) {
+                                float _float = *(static_cast<float*>(decodedData.get()));
+                                mono_field_set_value(sc->m_scriptInstances.find(script)->second.first, fields, &_float);
+                            }
+                        }
+
+                    }
+                   
+
+                }
+                else if (fieldTypeCode == MONO_TYPE_BOOLEAN) { // Type code for float
+                    const auto& it = std::find_if(sc->m_scripts.begin(), sc->m_scripts.end(), [&](auto& x) {return std::get<0>(x) == script; });
+
+                    if (it != sc->m_scripts.end()) {
+                        auto variableit = std::get<2>(*it).find(fieldName); // use map to find fieldname
+                        if (variableit != std::get<2>(*it).end()) {// if field exist
+                            auto decodedData = Serialization::Serialize::DecodeBase64(variableit->second);
+                            if (decodedData) {
+                                bool _bool = *(static_cast<bool*>(decodedData.get()));
+                                mono_field_set_value(sc->m_scriptInstances.find(script)->second.first, fields, &_bool);
+                            }
+                        }
+
+                    }
+                   
+
+
+                }
+                else if (fieldTypeCode == MONO_TYPE_STRING) { // Type code for string
+
+
+                    const auto& it = std::find_if(sc->m_scripts.begin(), sc->m_scripts.end(), [&](auto& x) {return std::get<0>(x) == script; });
+
+                    if (it != sc->m_scripts.end()) {
+                        auto variableit = std::get<2>(*it).find(fieldName); // use map to find fieldname
+                        if (variableit != std::get<2>(*it).end()) {// if field exist
+                            MonoString* newMonoStr = mono_string_new(mono_domain_get(), variableit->second.c_str());
+                            mono_field_set_value(sc->m_scriptInstances.find(script)->second.first, fields, newMonoStr);
+                        }
+
+                    }
+
+                }
+            }
+        }
+
+
+
+    }
+
+
 }

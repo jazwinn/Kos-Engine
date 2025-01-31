@@ -23,10 +23,10 @@ public static class InternalCall
     public extern static bool m_InternalSetTranslate(uint entity, in Vector2 pos);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static bool m_InternalGetColliderComponent(uint entity, out Vector2 size, out Vector2 offset, out bool drawDebug, out float radius, out uint bockflag, out float isCollided, out bool collisionCheck);
+    public extern static bool m_InternalGetColliderComponent(uint entity, out Vector2 size, out Vector2 offset, out bool drawDebug, out float radius, out uint bockflag, out float isCollided, out bool collisionCheck, out bool collisionresponse);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static bool m_InternalSetColliderComponent(uint entity, in Vector2 size, in Vector2 offset, in bool drawDebug, in float radius, in uint bockflag, in float isCollided, in bool collisionCheck);
+    public extern static bool m_InternalSetColliderComponent(uint entity, in Vector2 size, in Vector2 offset, in bool drawDebug, in float radius, in uint bockflag, in float isCollided, in bool collisionCheck, in bool collisionresponse);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static bool m_InternalGetEnemyComponent(uint entity, out int enemyTag, out int enemytype, out int enemybehaviour);
@@ -206,6 +206,9 @@ public static class InternalCall
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static void m_InternalCallSetTargetPathfinding(uint id, in Vector2 m_targetgridposition);
 
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static float m_GetUnfixedDeltaTie();
+
 }
 
 
@@ -228,7 +231,7 @@ public static class Component
         else if (typeof(T) == typeof(ColliderComponent))
         {
             var colliderComponent = component as ColliderComponent;
-            InternalCall.m_InternalGetColliderComponent(id, out colliderComponent.m_Size, out colliderComponent.m_Offset, out colliderComponent.m_drawDebug, out colliderComponent.m_radius, out colliderComponent.m_blockedFlag, out colliderComponent.m_isCollided, out colliderComponent.m_collisionCheck);
+            InternalCall.m_InternalGetColliderComponent(id, out colliderComponent.m_Size, out colliderComponent.m_Offset, out colliderComponent.m_drawDebug, out colliderComponent.m_radius, out colliderComponent.m_blockedFlag, out colliderComponent.m_isCollided, out colliderComponent.m_collisionCheck, out colliderComponent.m_collisionResponse);
         }
         else if (typeof(T) == typeof(TextComponent))
         {
@@ -255,10 +258,17 @@ public static class Component
             var pathfindingcomponent = component as PathfindingComponent;
             int[] x, y;
             InternalCall.m_InternalCallGetPathfinding(id, out pathfindingcomponent.m_startPosition, out pathfindingcomponent.m_targetPosition, out pathfindingcomponent.m_gridkey, out x, out y);
-            for (int n = 0; n < x.Length; n++)
-            {
 
-                pathfindingcomponent.m_node.Add(new Vector2(x[n], y[n]));
+            if (x != null && y != null)
+            {
+                for (int n = 0; n < x.Length; n++)
+                {
+                    if (pathfindingcomponent.m_node == null)
+                    {
+                        pathfindingcomponent.m_node = new List<Vector2>();
+                    }
+                    pathfindingcomponent.m_node.Add(new Vector2(x[n], y[n]));
+                }
             }
         }
         else if (typeof(T) == typeof(EnemyComponent))
@@ -286,7 +296,7 @@ public static class Component
         }
         else if (component is ColliderComponent collider)
         {
-            InternalCall.m_InternalSetColliderComponent(id, in collider.m_Size, in collider.m_Offset, in collider.m_drawDebug, in collider.m_radius, in collider.m_blockedFlag, in collider.m_isCollided, in collider.m_collisionCheck);
+            InternalCall.m_InternalSetColliderComponent(id, in collider.m_Size, in collider.m_Offset, in collider.m_drawDebug, in collider.m_radius, in collider.m_blockedFlag, in collider.m_isCollided, in collider.m_collisionCheck, in collider.m_collisionResponse);
         }
         else if (component is TextComponent text)
         {
@@ -332,7 +342,7 @@ public static class GetComponent
     public static ColliderComponent GetColliderComponent(uint id)
     {
         ColliderComponent temp = new ColliderComponent();
-        InternalCall.m_InternalGetColliderComponent(id, out temp.m_Size, out temp.m_Offset, out temp.m_drawDebug, out temp.m_radius, out temp.m_blockedFlag, out temp.m_isCollided, out temp.m_collisionCheck);
+        InternalCall.m_InternalGetColliderComponent(id, out temp.m_Size, out temp.m_Offset, out temp.m_drawDebug, out temp.m_radius, out temp.m_blockedFlag, out temp.m_isCollided, out temp.m_collisionCheck, out temp.m_collisionResponse );
         return temp;
     }
 
@@ -357,7 +367,7 @@ public static class SetComponent
 
     public static void SetCollisionComponent(uint id, ColliderComponent transform)
     {
-        InternalCall.m_InternalSetColliderComponent(id, in transform.m_Size, in transform.m_Offset, in transform.m_drawDebug, in transform.m_radius, in transform.m_blockedFlag, in transform.m_isCollided, in transform.m_collisionCheck);
+        InternalCall.m_InternalSetColliderComponent(id, in transform.m_Size, in transform.m_Offset, in transform.m_drawDebug, in transform.m_radius, in transform.m_blockedFlag, in transform.m_isCollided, in transform.m_collisionCheck, in transform.m_collisionResponse);
     }
 
     public static void SetTextComponent(uint id, TextComponent text)

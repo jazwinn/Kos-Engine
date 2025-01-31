@@ -69,7 +69,7 @@ namespace script {
 	}
 
 	//Collider Component
-	bool InternalCall::m_InternalGetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, unsigned int* m_blockedFlag, float* isCollided, bool* collisionCheck)
+	bool InternalCall::m_InternalGetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, unsigned int* m_blockedFlag, float* isCollided, bool* collisionCheck, bool* collisionresponse)
 	{
 		auto* collider = static_cast<ecs::ColliderComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(entity));
 
@@ -81,12 +81,13 @@ namespace script {
 		*radius = collider->m_radius;
 		*isCollided = collider->m_isCollided;
 		*m_blockedFlag = collider->m_blockedFlag;
-		*collisionCheck = collider->m_CollisionCheck;
+		*collisionCheck = collider->m_collisionCheck;
+		*collisionresponse = collider->m_collisionResponse;
 
 		return true;
 	}
 
-	bool InternalCall::m_InternalSetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, unsigned int* m_blockedFlag, float* isCollided, bool* collisionCheck)
+	bool InternalCall::m_InternalSetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, unsigned int* m_blockedFlag, float* isCollided, bool* collisionCheck, bool* collisionresponse)
 	{
 		auto* collider = static_cast<ecs::ColliderComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(entity));
 
@@ -98,8 +99,8 @@ namespace script {
 		collider->m_radius = *radius;
 		collider->m_isCollided = *isCollided;
 		collider->m_blockedFlag = *m_blockedFlag;
-		collider->m_CollisionCheck = *collisionCheck;
-
+		collider->m_collisionResponse = *collisionresponse;
+		collider->m_collisionCheck = *collisionCheck;
 
 		return true;
 	}
@@ -112,7 +113,7 @@ namespace script {
 		if (player == nullptr) return false;
 
 		*enemytag = player->m_enemyTag;
-		*enemytype = player->m_enemyTag;
+		*enemytype = player->m_enemyTypeInt;
 		*enemybehaviour = player->m_enemyRoamBehaviourInt;
 
 		return true;
@@ -347,7 +348,7 @@ namespace script {
 
 		for (size_t i = 0; i < scripts.size(); ++i)
 		{
-			MonoString* monoString = mono_string_new(assetManager->m_scriptManager.m_GetDomain(), scripts[i].first.c_str());
+			MonoString* monoString = mono_string_new(assetManager->m_scriptManager.m_GetDomain(), std::get<0>(scripts[i]).c_str());
 			mono_array_set(scriptArray, MonoString*, i, monoString);
 		}
 
@@ -711,11 +712,11 @@ namespace script {
 
 		if (script == NULL) return;
 
-		const auto& results = std::find_if(script->m_scripts.begin(), script->m_scripts.end(), [&](const auto& x) {return x.first == std::string(nativeString);});
+		const auto& results = std::find_if(script->m_scripts.begin(), script->m_scripts.end(), [&](const auto& x) {return std::get<0>(x) == std::string(nativeString);});
 
 		if (results == script->m_scripts.end()) return;
 
-		results->second = true;
+		std::get<1>(*results) = true;
 
 		mono_free(nativeString);
 	}
@@ -728,11 +729,11 @@ namespace script {
 
 		if (script == NULL) return;
 
-		const auto& results = std::find_if(script->m_scripts.begin(), script->m_scripts.end(), [&](const auto& x) {return x.first == std::string(nativeString);});
+		const auto& results = std::find_if(script->m_scripts.begin(), script->m_scripts.end(), [&](const auto& x) {return std::get<0>(x) == std::string(nativeString);});
 
 		if (results == script->m_scripts.end()) return;
 
-		results->second = false;
+		std::get<1>(*results) = false;
 
 		mono_free(nativeString);
 	}
@@ -752,7 +753,7 @@ namespace script {
 			auto* cc = static_cast<ecs::ColliderComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(ids));
 
 			if (cc != NULL) {
-				if (cc->m_CollisionCheck) {
+				if (cc->m_collisionResponse) {
 					results.push_back(ids);
 				}
 			}
@@ -860,14 +861,14 @@ namespace script {
 			*nodeArray_x = mono_array_new(assetmanager::AssetManager::m_funcGetInstance()->m_scriptManager.m_GetDomain(), mono_get_int32_class(), pfc->m_Path.size());
 			*nodeArray_y = mono_array_new(assetmanager::AssetManager::m_funcGetInstance()->m_scriptManager.m_GetDomain(), mono_get_int32_class(), pfc->m_Path.size());
 
-			for (size_t i = 0; i < pfc->m_Path.size(); ++i) {
-				mono_array_set(*nodeArray_x, int, i, pfc->m_Path[i].x);
-				mono_array_set(*nodeArray_y, int, i, pfc->m_Path[i].y);
-
+			if (nodeArray_x != NULL && nodeArray_y != NULL) {
+				for (size_t i = 0; i < pfc->m_Path.size(); ++i) {
+					mono_array_set(*nodeArray_x, int, i, pfc->m_Path[i].x);
+					mono_array_set(*nodeArray_y, int, i, pfc->m_Path[i].y);
+				}
 			}
 
-
-
+			
 
 
 			return true;
@@ -905,6 +906,13 @@ namespace script {
 	{
 		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
 		ecs->m_layersStack.m_DisableLayer((layer::LAYERS)layer);
+	}
+
+	float InternalCall::m_GetUnfixedDeltaTie()
+	{
+		
+		 float dt = Helper::Helpers::GetInstance()->m_deltaTime;
+		 return dt;
 	}
 
 
@@ -989,6 +997,7 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_InternalSetVelocity);
 
 		MONO_ADD_INTERNAL_CALL(m_InternalCallGetDeltaTime);
+		MONO_ADD_INTERNAL_CALL(m_GetUnfixedDeltaTie);
 
 		MONO_ADD_INTERNAL_CALL(m_InternalCallGetTagID);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallGetTagIDs);

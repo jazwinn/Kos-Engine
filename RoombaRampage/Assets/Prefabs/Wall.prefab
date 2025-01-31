@@ -1,28 +1,28 @@
 [
     {
         "name": {
-            "namestr": "WallDoor",
-            "layer": 6,
+            "namestr": "Wall",
+            "layer": 7,
             "isprefab": false,
             "tagstr": "Wall"
         },
         "transform": {
             "position": {
-                "x": -31.36451530456543,
-                "y": -1.9814743995666504
+                "x": 0.8637322187423706,
+                "y": 0.0
             },
             "rotation": -0.0,
             "scale": {
-                "x": 1.3250013589859009,
-                "y": 2.2100000381469727
+                "x": 1.0,
+                "y": 1.0
             }
         },
         "collider": {
-            "checkcollision": false,
+            "checkcollision": true,
             "checkresponse": true,
             "size": {
-                "x": 11.600000381469727,
-                "y": 3.5
+                "x": 1.0,
+                "y": 2.0
             },
             "offset": {
                 "x": 0.0,
@@ -31,9 +31,6 @@
             "drawDebug": true,
             "radius": 0.5,
             "shapetype": 0
-        },
-        "script": {
-            "scripts": []
         }
     }
 ]

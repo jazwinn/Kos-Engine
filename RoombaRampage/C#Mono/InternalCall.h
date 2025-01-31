@@ -84,7 +84,7 @@ namespace script {
 			\return    True if the collider is found and retrieved; otherwise, false.
 		*/
 		/******************************************************************/
-		static bool m_InternalGetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, unsigned int* m_blockedFlag, float* isCollided, bool* collisionCheck);
+		static bool m_InternalGetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, unsigned int* m_blockedFlag, float* isCollided, bool* collisionCheck, bool* collisionresponse);
 
 		/******************************************************************/
 		/*!
@@ -101,7 +101,7 @@ namespace script {
 			\return    True if the collider is found and updated; otherwise, false.
 		*/
 		/******************************************************************/
-		static bool m_InternalSetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, unsigned int* m_blockedFlag, float* isCollided, bool* collisionCheck);
+		static bool m_InternalSetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, unsigned int* m_blockedFlag, float* isCollided, bool* collisionCheck, bool* collisionresponse);
 
 		/******************************************************************/
 		/*!
@@ -591,6 +591,8 @@ namespace script {
 		static void m_EnableLayer(unsigned int layer);
 
 		static void m_DisableLayer(unsigned int layer);
+
+		static float m_GetUnfixedDeltaTie();
 
 	public:
 		/******************************************************************/

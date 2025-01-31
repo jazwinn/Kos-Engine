@@ -64,6 +64,7 @@ public class ColliderComponent
     public Vector2 m_Size;
     public Vector2 m_Offset;
     public bool m_drawDebug;
+    public bool m_collisionResponse;
     public bool m_collisionCheck;
     public float m_radius;
     public float m_isCollided;

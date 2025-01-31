@@ -1015,7 +1015,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                     for (const auto& scriptname : sc->m_scripts)
                     {
                         //print out varaibles
-                        scripteditor::ScriptEditor::DisplayScriptComponents(scriptname.first, entityID);
+                        scripteditor::ScriptEditor::DisplayScriptComponents(std::get<0>(scriptname), entityID);
                     }
 
                     
@@ -1025,18 +1025,18 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         for (auto& scriptname : sc->m_scripts)
                         {
 
-                            if (scriptname.second) {
-                                ImGui::Selectable(scriptname.first.c_str());
+                            if (std::get<1>(scriptname)) {
+                                ImGui::Selectable(std::get<0>(scriptname).c_str());
                             }
                             else {
-                                ImGui::Selectable(std::string(scriptname.first + " (Disabled)").c_str());
+                                ImGui::Selectable(std::string(std::get<0>(scriptname) + " (Disabled)").c_str());
                             }
                             
                             if (ImGui::BeginPopupContextItem()) {
 
-                                if (scriptname.second) {
+                                if (std::get<1>(scriptname)) {
                                     if (ImGui::MenuItem("Disable Script")) {
-                                        scriptname.second = false;
+                                        std::get<1>(scriptname) = false;
 
                                         ImGui::EndPopup();
 
@@ -1046,7 +1046,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                                 }
                                 else {
                                     if (ImGui::MenuItem("Enable Script")) {
-                                        scriptname.second = true;
+                                        std::get<1>(scriptname) = true;
 
                                         ImGui::EndPopup();
 
@@ -1057,7 +1057,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
 
                                 if (ImGui::MenuItem("Delete Script")) {
-                                   // sc->m_scripts.erase(std::find_if(sc->m_scripts.begin(), sc->m_scripts.end(), [&](const auto& x) {return x.first == scriptname.first;}));
+                                    sc->m_scripts.erase(std::find_if(sc->m_scripts.begin(), sc->m_scripts.end(), [&](const auto& x) {return std::get<0>(x) == std::get<0>(scriptname);}));
 
                                     ImGui::EndPopup();
 
@@ -1095,8 +1095,8 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             const bool is_selected{};
                             if (ImGui::Selectable(scriptname.first.c_str(), is_selected)) {
                                 //TODO for now push back
-                                if (std::find_if(sc->m_scripts.begin(), sc->m_scripts.end(), [&](const auto& x) {return x.first == scriptname.first;}) == sc->m_scripts.end()) {
-                                    sc->m_scripts.push_back(std::make_pair(scriptname.first, true));
+                                if (std::find_if(sc->m_scripts.begin(), sc->m_scripts.end(), [&](const auto& x) {return std::get<0>(x) == scriptname.first; }) == sc->m_scripts.end()) {
+                                    sc->m_scripts.push_back(std::make_tuple(scriptname.first, true, std::unordered_map<std::string, std::string>{}));
                                 }
                                 else {
                                     LOGGING_WARN("Script is already inside Object");

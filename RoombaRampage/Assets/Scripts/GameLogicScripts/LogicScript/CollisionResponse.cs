@@ -19,21 +19,21 @@ public class CollisionResponse : ScriptBase
         //InternalCall.m_InternalGetColliderComponent(EntityID, out colSize, out colOffset, out colDraw, out colRadius, out colFlag, out isCollided, out colCheck);
     }
 
-    private Vector2 startingPlayerPos;
-    private Vector2 startingPlayerScale;
-    private float startingPlayerRotate;
+    //private Vector2 startingPlayerPos;
+    //private Vector2 startingPlayerScale;
+    //private float startingPlayerRotate;
 
-    private Vector2 playerVelocity;
-    private Vector2 playerAcceleration;
-    private float playerRotationalForce;
+    //private Vector2 playerVelocity;
+    //private Vector2 playerAcceleration;
+    //private float playerRotationalForce;
 
-    private Vector2 colSize;
-    private Vector2 colOffset;
-    private bool colDraw;
-    private float colRadius;
-    private int colFlag;
-    private float isCollided;
-    private bool colCheck;
+    //private Vector2 colSize;
+    //private Vector2 colOffset;
+    //private bool colDraw;
+    //private float colRadius;
+    //private int colFlag;
+    //private float isCollided;
+    //private bool colCheck;
 
 
 
@@ -56,846 +56,846 @@ public class CollisionResponse : ScriptBase
          *  set velocity to wtv 
          * 
          */
-        Vector2 entity_Position, entity_Velocity, entity_Acceleration;
-        uint entity_CollisionFlag;
+        //Vector2 entity_Position, entity_Velocity, entity_Acceleration;
+        //uint entity_CollisionFlag;
 
-        int steps = InternalCall.m_InternalCallGetSteps();
-        float delta = InternalCall.m_InternalCallGetDeltaTime();
-        if (steps > 1)
-        {
-            delta *= steps;
-        }
+        //int steps = InternalCall.m_InternalCallGetSteps();
+        //float delta = InternalCall.m_InternalCallGetDeltaTime();
+        //if (steps > 1)
+        //{
+        //    delta *= steps;
+        //}
 
-        Vector2 entity_ColliderSize, entity_ColliderOffset, entity_DirectionVector;
-        float entity_isCollided, entity_Radius, entity_Rotation;
-        bool entity_drawDebug, entity_collisionCheck;
+        //Vector2 entity_ColliderSize, entity_ColliderOffset, entity_DirectionVector;
+        //float entity_isCollided, entity_Radius, entity_Rotation;
+        //bool entity_drawDebug, entity_collisionCheck;
 
-        InternalCall.m_InternalGetColliderComponent((uint)EntityID, out entity_ColliderSize, out entity_ColliderOffset, out entity_drawDebug, out entity_Radius,
-        out entity_CollisionFlag, out entity_isCollided, out entity_collisionCheck);
+        //InternalCall.m_InternalGetColliderComponent((uint)EntityID, out entity_ColliderSize, out entity_ColliderOffset, out entity_drawDebug, out entity_Radius,
+        //out entity_CollisionFlag, out entity_isCollided, out entity_collisionCheck);
 
-        InternalCall.m_InternalGetTransformComponent(EntityID, out startingPlayerPos, out startingPlayerScale, out startingPlayerRotate);
+        //InternalCall.m_InternalGetTransformComponent(EntityID, out startingPlayerPos, out startingPlayerScale, out startingPlayerRotate);
 
-        InternalCall.m_InternalGetRigidBodyComponent(EntityID, out entity_Velocity, out entity_Acceleration, out entity_Rotation, out entity_Position, out entity_DirectionVector);
+        //InternalCall.m_InternalGetRigidBodyComponent(EntityID, out entity_Velocity, out entity_Acceleration, out entity_Rotation, out entity_Position, out entity_DirectionVector);
         
-        RigidBodyComponent entity_Rigid = Component.Get<RigidBodyComponent>(EntityID);
-        TransformComponent entity_Transform = Component.Get<TransformComponent>(EntityID);
-        ColliderComponent entity_Collider = Component.Get<ColliderComponent>(EntityID);
+        //RigidBodyComponent entity_Rigid = Component.Get<RigidBodyComponent>(EntityID);
+        //TransformComponent entity_Transform = Component.Get<TransformComponent>(EntityID);
+        //ColliderComponent entity_Collider = Component.Get<ColliderComponent>(EntityID);
 
-        entity_Position = entity_Transform.m_position;
-        entity_Velocity = entity_Rigid.m_Velocity;
-        entity_Acceleration = entity_Rigid.m_Acceleration;
-        entity_CollisionFlag = entity_Collider.m_blockedFlag;
-        entity_DirectionVector = entity_Rigid.m_direction;
-
-
-        Vector2 new_Position;
-        Vector2 entity_Snapback;
-        Vector2 new_Velocity;
-
-        new_Velocity.X = entity_Velocity.X + (delta * entity_Acceleration.X);
-        new_Velocity.Y = entity_Velocity.Y + (delta * entity_Acceleration.Y);
-
-        //entity_Snapback.X = (delta * new_Velocity.X) + 0.001f;
-        //entity_Snapback.Y = (delta * new_Velocity.Y) + 0.001f;
-        //Console.WriteLine($"Position X  {entity_Position.X} T POS Y {entity_Position.Y}");
-        //Console.WriteLine($"Snapback X  {entity_Snapback.X} T POS Y {entity_Snapback.Y}");
-        //new_Position.X = entity_Position.X - entity_Snapback.X;
-        //new_Position.Y = entity_Position.Y - entity_Snapback.Y;
-        //Console.WriteLine($"New X  {new_Position.X} T POS Y {new_Position.Y}");
-
-        Vector2 newVelo = entity_Velocity;
-
-        ////I think need contact point..... sigh
-        ///*
-        // *
-        // * 
-        // * 
-        // * 
-        // * 
-        // */
+        //entity_Position = entity_Transform.m_position;
+        //entity_Velocity = entity_Rigid.m_Velocity;
+        //entity_Acceleration = entity_Rigid.m_Acceleration;
+        //entity_CollisionFlag = entity_Collider.m_blockedFlag;
+        //entity_DirectionVector = entity_Rigid.m_direction;
 
 
+        //Vector2 new_Position;
+        //Vector2 entity_Snapback;
+        //Vector2 new_Velocity;
+
+        //new_Velocity.X = entity_Velocity.X + (delta * entity_Acceleration.X);
+        //new_Velocity.Y = entity_Velocity.Y + (delta * entity_Acceleration.Y);
+
+        ////entity_Snapback.X = (delta * new_Velocity.X) + 0.001f;
+        ////entity_Snapback.Y = (delta * new_Velocity.Y) + 0.001f;
+        ////Console.WriteLine($"Position X  {entity_Position.X} T POS Y {entity_Position.Y}");
+        ////Console.WriteLine($"Snapback X  {entity_Snapback.X} T POS Y {entity_Snapback.Y}");
+        ////new_Position.X = entity_Position.X - entity_Snapback.X;
+        ////new_Position.Y = entity_Position.Y - entity_Snapback.Y;
+        ////Console.WriteLine($"New X  {new_Position.X} T POS Y {new_Position.Y}");
+
+        //Vector2 newVelo = entity_Velocity;
+
+        //////I think need contact point..... sigh
+        /////*
+        //// *
+        //// * 
+        //// * 
+        //// * 
+        //// * 
+        //// */
 
 
-        //Console.WriteLine($"Velocity Pos: ({entity_Velocity.X}, {entity_Velocity.Y}))");
-        //Console.WriteLine($"Flag: ({entity_CollisionFlag})");
-        int direction = 0;
-        if (entity_DirectionVector.Y > 0)
-        {
-            direction += 1;
-        }
-        if (entity_DirectionVector.X > 0)
-        {
-            direction += 2;
-        }
-        if (entity_DirectionVector.X < 0)
-        {
-            direction += 8;
-        }
-        if (entity_DirectionVector.Y < 0)
-        {
-            direction += 4;
-        }
-        switch (entity_CollisionFlag)
-        {
-            case 0:
-                break;
-            case 1: //TOP
-                if (direction == 1)
-                {
-                    if (entity_Velocity.Y > 0)
-                    {
 
-                        //Vector2 testing;
-                        newVelo.X = entity_Velocity.X;
-                        newVelo.Y = 0;
-                    }
-                }
-                else if (direction == 4)
-                {
-                    if (entity_Velocity.Y < 0)
-                    {
-                        newVelo.X = entity_Velocity.X;
-                        newVelo.Y = 0;                 
-                    }
-                }
-                else if (direction == 2)
-                {
-                    if (entity_Velocity.X > 0)
-                    {
-                        newVelo.X = 0;
-                        newVelo.Y = entity_Velocity.Y;
-                    }
-                }
-                else if (direction == 8)
-                {
-                    if (entity_Velocity.X < 0)
-                    {
-                        newVelo.X = 0;
-                        newVelo.Y = entity_Velocity.Y;
-                    }
-                }
-                else if (direction == 9)
-                {
-                    if (entity_Velocity.X < 0)
-                    {
-                        newVelo.X = 0;
+
+        ////Console.WriteLine($"Velocity Pos: ({entity_Velocity.X}, {entity_Velocity.Y}))");
+        ////Console.WriteLine($"Flag: ({entity_CollisionFlag})");
+        //int direction = 0;
+        //if (entity_DirectionVector.Y > 0)
+        //{
+        //    direction += 1;
+        //}
+        //if (entity_DirectionVector.X > 0)
+        //{
+        //    direction += 2;
+        //}
+        //if (entity_DirectionVector.X < 0)
+        //{
+        //    direction += 8;
+        //}
+        //if (entity_DirectionVector.Y < 0)
+        //{
+        //    direction += 4;
+        //}
+        //switch (entity_CollisionFlag)
+        //{
+        //    case 0:
+        //        break;
+        //    case 1: //TOP
+        //        if (direction == 1)
+        //        {
+        //            if (entity_Velocity.Y > 0)
+        //            {
+
+        //                //Vector2 testing;
+        //                newVelo.X = entity_Velocity.X;
+        //                newVelo.Y = 0;
+        //            }
+        //        }
+        //        else if (direction == 4)
+        //        {
+        //            if (entity_Velocity.Y < 0)
+        //            {
+        //                newVelo.X = entity_Velocity.X;
+        //                newVelo.Y = 0;                 
+        //            }
+        //        }
+        //        else if (direction == 2)
+        //        {
+        //            if (entity_Velocity.X > 0)
+        //            {
+        //                newVelo.X = 0;
+        //                newVelo.Y = entity_Velocity.Y;
+        //            }
+        //        }
+        //        else if (direction == 8)
+        //        {
+        //            if (entity_Velocity.X < 0)
+        //            {
+        //                newVelo.X = 0;
+        //                newVelo.Y = entity_Velocity.Y;
+        //            }
+        //        }
+        //        else if (direction == 9)
+        //        {
+        //            if (entity_Velocity.X < 0)
+        //            {
+        //                newVelo.X = 0;
              
-                    }
-                    if (entity_Velocity.Y > 0)
-                    {
-                        newVelo.Y = 0;
-                    }
+        //            }
+        //            if (entity_Velocity.Y > 0)
+        //            {
+        //                newVelo.Y = 0;
+        //            }
                
-                }
-                else if (direction == 3)
-                {
-                    if (entity_Velocity.X > 0)
-                    {
-                        newVelo.X = 0;
-                    }
-                    if (entity_Velocity.Y > 0)
-                    {
-                        newVelo.Y = 0;
-                    }
-                }
-                else if (direction == 6)
-                {
-                    if (entity_Velocity.X > 0)
-                    {
-                        newVelo.X = 0;
-                    }
-                    if (entity_Velocity.Y < 0)
-                    {
-                        newVelo.Y = 0;
-                    }
+        //        }
+        //        else if (direction == 3)
+        //        {
+        //            if (entity_Velocity.X > 0)
+        //            {
+        //                newVelo.X = 0;
+        //            }
+        //            if (entity_Velocity.Y > 0)
+        //            {
+        //                newVelo.Y = 0;
+        //            }
+        //        }
+        //        else if (direction == 6)
+        //        {
+        //            if (entity_Velocity.X > 0)
+        //            {
+        //                newVelo.X = 0;
+        //            }
+        //            if (entity_Velocity.Y < 0)
+        //            {
+        //                newVelo.Y = 0;
+        //            }
 
-                }
-                else if (direction == 12)
-                {
-                    if (entity_Velocity.X < 0)
-                    {
-                        newVelo.X = 0;
-                    }
-                    if (entity_Velocity.Y < 0)
-                    {
-                        newVelo.Y = 0;
-                    }
+        //        }
+        //        else if (direction == 12)
+        //        {
+        //            if (entity_Velocity.X < 0)
+        //            {
+        //                newVelo.X = 0;
+        //            }
+        //            if (entity_Velocity.Y < 0)
+        //            {
+        //                newVelo.Y = 0;
+        //            }
 
-                }
+        //        }
 
-                entity_Snapback.X = (delta * new_Velocity.X) + 0.001f;
-                entity_Snapback.Y = (delta * new_Velocity.Y) + 0.001f;
-                new_Position.X = entity_Position.X;
-                new_Position.Y = entity_Position.Y - entity_Snapback.Y;
-                entity_Transform.m_position = new_Position;
-                entity_Rigid.m_Velocity = newVelo;
+        //        entity_Snapback.X = (delta * new_Velocity.X) + 0.001f;
+        //        entity_Snapback.Y = (delta * new_Velocity.Y) + 0.001f;
+        //        new_Position.X = entity_Position.X;
+        //        new_Position.Y = entity_Position.Y - entity_Snapback.Y;
+        //        entity_Transform.m_position = new_Position;
+        //        entity_Rigid.m_Velocity = newVelo;
 
-                Component.Set<RigidBodyComponent>(EntityID, entity_Rigid);
-                Component.Set<TransformComponent>(EntityID, entity_Transform);
-                break;
-            case 2: //RIGHT
-                if (direction == 1)
-                {
-                    if (entity_Velocity.X > 0)
-                    {
-                        newVelo.X = 0;
-                        newVelo.Y = entity_Velocity.Y;
+        //        Component.Set<RigidBodyComponent>(EntityID, entity_Rigid);
+        //        Component.Set<TransformComponent>(EntityID, entity_Transform);
+        //        break;
+        //    case 2: //RIGHT
+        //        if (direction == 1)
+        //        {
+        //            if (entity_Velocity.X > 0)
+        //            {
+        //                newVelo.X = 0;
+        //                newVelo.Y = entity_Velocity.Y;
 
-                    }
-                }
-                else if (direction == 4)
-                {
-                    if (entity_Velocity.X < 0)
-                    {
-                        newVelo.X = 0;
-                        newVelo.Y = entity_Velocity.Y;
-                    }
-                }
-                else if (direction == 2)
-                {
-                    if (entity_Velocity.Y < 0)
-                    {
-                        newVelo.X = entity_Velocity.X;
-                        newVelo.Y = 0;
+        //            }
+        //        }
+        //        else if (direction == 4)
+        //        {
+        //            if (entity_Velocity.X < 0)
+        //            {
+        //                newVelo.X = 0;
+        //                newVelo.Y = entity_Velocity.Y;
+        //            }
+        //        }
+        //        else if (direction == 2)
+        //        {
+        //            if (entity_Velocity.Y < 0)
+        //            {
+        //                newVelo.X = entity_Velocity.X;
+        //                newVelo.Y = 0;
  
-                    }
-                }
-                else if (direction == 8)
-                {
-                    if (entity_Velocity.Y > 0)
-                    {
-                        newVelo.X = entity_Velocity.X;
-                        newVelo.Y = 0;
+        //            }
+        //        }
+        //        else if (direction == 8)
+        //        {
+        //            if (entity_Velocity.Y > 0)
+        //            {
+        //                newVelo.X = entity_Velocity.X;
+        //                newVelo.Y = 0;
 
-                    }
-                }
-                else if (direction == 9)
-                {
-                    if (entity_Velocity.X > 0)
-                    {
-                        newVelo.X = 0;
-                    }
-                    if (entity_Velocity.Y > 0)
-                    {
-                        newVelo.Y = 0;
-                    }
+        //            }
+        //        }
+        //        else if (direction == 9)
+        //        {
+        //            if (entity_Velocity.X > 0)
+        //            {
+        //                newVelo.X = 0;
+        //            }
+        //            if (entity_Velocity.Y > 0)
+        //            {
+        //                newVelo.Y = 0;
+        //            }
 
-                }
-                else if (direction == 3)
-                {
-                    if (entity_Velocity.X > 0)
-                    {
-                        newVelo.X = 0;
-                    }
-                    if (entity_Velocity.Y < 0)
-                    {
-                        newVelo.Y = 0;
-                    }
+        //        }
+        //        else if (direction == 3)
+        //        {
+        //            if (entity_Velocity.X > 0)
+        //            {
+        //                newVelo.X = 0;
+        //            }
+        //            if (entity_Velocity.Y < 0)
+        //            {
+        //                newVelo.Y = 0;
+        //            }
 
-                }
-                else if (direction == 6)
-                {
-                    if (entity_Velocity.X < 0)
-                    {
-                        newVelo.X = 0;
-                    }
-                    if (entity_Velocity.Y < 0)
-                    {
-                        newVelo.Y = 0;
-                    }
+        //        }
+        //        else if (direction == 6)
+        //        {
+        //            if (entity_Velocity.X < 0)
+        //            {
+        //                newVelo.X = 0;
+        //            }
+        //            if (entity_Velocity.Y < 0)
+        //            {
+        //                newVelo.Y = 0;
+        //            }
 
-                }
-                else if (direction == 12)
-                {
-                    if (entity_Velocity.X < 0)
-                    {
-                        newVelo.X = 0;
-                    }
-                    if (entity_Velocity.Y > 0)
-                    {
-                        newVelo.Y = 0;
-                    }
+        //        }
+        //        else if (direction == 12)
+        //        {
+        //            if (entity_Velocity.X < 0)
+        //            {
+        //                newVelo.X = 0;
+        //            }
+        //            if (entity_Velocity.Y > 0)
+        //            {
+        //                newVelo.Y = 0;
+        //            }
 
-                }
-                entity_Snapback.X = (delta * new_Velocity.X) + 0.001f;
-                entity_Snapback.Y = (delta * new_Velocity.Y) + 0.001f;
-                new_Position.X = entity_Position.X - entity_Snapback.X;
-                new_Position.Y = entity_Position.Y ;
-                entity_Transform.m_position = new_Position;
-                entity_Rigid.m_Velocity = newVelo;
+        //        }
+        //        entity_Snapback.X = (delta * new_Velocity.X) + 0.001f;
+        //        entity_Snapback.Y = (delta * new_Velocity.Y) + 0.001f;
+        //        new_Position.X = entity_Position.X - entity_Snapback.X;
+        //        new_Position.Y = entity_Position.Y ;
+        //        entity_Transform.m_position = new_Position;
+        //        entity_Rigid.m_Velocity = newVelo;
 
-                Component.Set<RigidBodyComponent>(EntityID, entity_Rigid);
-                Component.Set<TransformComponent>(EntityID, entity_Transform);
-                break;
-            case 4: // BOTTOM
-                if (direction == 1)
-                {
-                    if (entity_Velocity.Y < 0)
-                    {
-                        newVelo.X = entity_Velocity.X;
-                        newVelo.Y = 0;
+        //        Component.Set<RigidBodyComponent>(EntityID, entity_Rigid);
+        //        Component.Set<TransformComponent>(EntityID, entity_Transform);
+        //        break;
+        //    case 4: // BOTTOM
+        //        if (direction == 1)
+        //        {
+        //            if (entity_Velocity.Y < 0)
+        //            {
+        //                newVelo.X = entity_Velocity.X;
+        //                newVelo.Y = 0;
 
-                    }
-                }
-                else if (direction == 4)
-                {
-                    if (entity_Velocity.Y > 0)
-                    {
-                        newVelo.X = entity_Velocity.X;
-                        newVelo.Y = 0;
-                    }
-                }
-                else if (direction == 2)
-                {
-                    if (entity_Velocity.X < 0)
-                    {
-                        newVelo.X = 0;
-                        newVelo.Y = entity_Velocity.Y;
+        //            }
+        //        }
+        //        else if (direction == 4)
+        //        {
+        //            if (entity_Velocity.Y > 0)
+        //            {
+        //                newVelo.X = entity_Velocity.X;
+        //                newVelo.Y = 0;
+        //            }
+        //        }
+        //        else if (direction == 2)
+        //        {
+        //            if (entity_Velocity.X < 0)
+        //            {
+        //                newVelo.X = 0;
+        //                newVelo.Y = entity_Velocity.Y;
 
-                    }
-                }
-                else if (direction == 8)
-                {
-                    if (entity_Velocity.X > 0)
-                    {
-                        newVelo.X = 0;
-                        newVelo.Y = entity_Velocity.Y;
-                    }
-                }
-                else if (direction == 9)
-                {
-                    if (entity_Velocity.X > 0)
-                    {
-                        newVelo.X = 0;
-                    }
-                    if (entity_Velocity.Y < 0)
-                    {
-                        newVelo.Y = 0;
-                    }
+        //            }
+        //        }
+        //        else if (direction == 8)
+        //        {
+        //            if (entity_Velocity.X > 0)
+        //            {
+        //                newVelo.X = 0;
+        //                newVelo.Y = entity_Velocity.Y;
+        //            }
+        //        }
+        //        else if (direction == 9)
+        //        {
+        //            if (entity_Velocity.X > 0)
+        //            {
+        //                newVelo.X = 0;
+        //            }
+        //            if (entity_Velocity.Y < 0)
+        //            {
+        //                newVelo.Y = 0;
+        //            }
 
-                }
-                else if (direction == 3)
-                {
+        //        }
+        //        else if (direction == 3)
+        //        {
 
-                    if (entity_Velocity.X < 0)
-                    {
-                        newVelo.X = 0;
-                    }
-                    if (entity_Velocity.Y < 0)
-                    {
-                        newVelo.Y = 0;
-                    }
+        //            if (entity_Velocity.X < 0)
+        //            {
+        //                newVelo.X = 0;
+        //            }
+        //            if (entity_Velocity.Y < 0)
+        //            {
+        //                newVelo.Y = 0;
+        //            }
 
-                }
-                else if (direction == 6)
-                {
-                    if (entity_Velocity.X < 0)
-                    {
-                        newVelo.X = 0;
-                    }
-                    if (entity_Velocity.Y > 0)
-                    {
-                        newVelo.Y = 0;
-                    }
+        //        }
+        //        else if (direction == 6)
+        //        {
+        //            if (entity_Velocity.X < 0)
+        //            {
+        //                newVelo.X = 0;
+        //            }
+        //            if (entity_Velocity.Y > 0)
+        //            {
+        //                newVelo.Y = 0;
+        //            }
 
-                }
-                else if (direction == 12)
-                {
-                    if (entity_Velocity.X > 0)
-                    {
-                        newVelo.X = 0;
-                    }
-                    if (entity_Velocity.Y > 0)
-                    {
-                        newVelo.Y = 0;
-                    }
+        //        }
+        //        else if (direction == 12)
+        //        {
+        //            if (entity_Velocity.X > 0)
+        //            {
+        //                newVelo.X = 0;
+        //            }
+        //            if (entity_Velocity.Y > 0)
+        //            {
+        //                newVelo.Y = 0;
+        //            }
 
-                }
-                entity_Snapback.X = (delta * new_Velocity.X) + 0.001f;
-                entity_Snapback.Y = (delta * new_Velocity.Y) + 0.001f;
-                new_Position.X = entity_Position.X ;
-                new_Position.Y = entity_Position.Y + entity_Snapback.Y;
-                entity_Transform.m_position = new_Position;
-                entity_Rigid.m_Velocity = newVelo;
+        //        }
+        //        entity_Snapback.X = (delta * new_Velocity.X) + 0.001f;
+        //        entity_Snapback.Y = (delta * new_Velocity.Y) + 0.001f;
+        //        new_Position.X = entity_Position.X ;
+        //        new_Position.Y = entity_Position.Y + entity_Snapback.Y;
+        //        entity_Transform.m_position = new_Position;
+        //        entity_Rigid.m_Velocity = newVelo;
 
-                Component.Set<RigidBodyComponent>(EntityID, entity_Rigid);
-                Component.Set<TransformComponent>(EntityID, entity_Transform);
-                break;
-            case 8: //LEFT
-                if (direction == 1)
-                {
-                    if (entity_Velocity.X < 0)
-                    {
-                        newVelo.X = 0;
-                        newVelo.Y = entity_Velocity.Y;
+        //        Component.Set<RigidBodyComponent>(EntityID, entity_Rigid);
+        //        Component.Set<TransformComponent>(EntityID, entity_Transform);
+        //        break;
+        //    case 8: //LEFT
+        //        if (direction == 1)
+        //        {
+        //            if (entity_Velocity.X < 0)
+        //            {
+        //                newVelo.X = 0;
+        //                newVelo.Y = entity_Velocity.Y;
  
-                    }
-                }
-                else if (direction == 4)
-                {
-                    if (entity_Velocity.X > 0)
-                    {
-                        newVelo.X = 0;
-                        newVelo.Y = entity_Velocity.Y;
+        //            }
+        //        }
+        //        else if (direction == 4)
+        //        {
+        //            if (entity_Velocity.X > 0)
+        //            {
+        //                newVelo.X = 0;
+        //                newVelo.Y = entity_Velocity.Y;
 
-                    }
-                }
-                else if (direction == 2)
-                {
-                    if (entity_Velocity.Y > 0)
-                    {
-                        newVelo.X = entity_Velocity.X;
-                        newVelo.Y = 0;
+        //            }
+        //        }
+        //        else if (direction == 2)
+        //        {
+        //            if (entity_Velocity.Y > 0)
+        //            {
+        //                newVelo.X = entity_Velocity.X;
+        //                newVelo.Y = 0;
 
-                    }
-                }
-                else if (direction == 8)
-                {
-                    if (entity_Velocity.Y < 0)
-                    {
-                        newVelo.X = entity_Velocity.X;
-                        newVelo.Y = 0;
+        //            }
+        //        }
+        //        else if (direction == 8)
+        //        {
+        //            if (entity_Velocity.Y < 0)
+        //            {
+        //                newVelo.X = entity_Velocity.X;
+        //                newVelo.Y = 0;
 
-                    }
-                }
-                else if (direction == 9)
-                {
-                    if (entity_Velocity.X < 0)
-                    {
-                        newVelo.X = 0;
-                    }
-                    if (entity_Velocity.Y < 0)
-                    {
-                        newVelo.Y = 0;
-                    }
+        //            }
+        //        }
+        //        else if (direction == 9)
+        //        {
+        //            if (entity_Velocity.X < 0)
+        //            {
+        //                newVelo.X = 0;
+        //            }
+        //            if (entity_Velocity.Y < 0)
+        //            {
+        //                newVelo.Y = 0;
+        //            }
 
-                }
-                else if (direction == 3)
-                {
-                    if (entity_Velocity.X < 0)
-                    {
-                        newVelo.X = 0;
-                    }
-                    if (entity_Velocity.Y > 0)
-                    {
-                        newVelo.Y = 0;
-                    }
+        //        }
+        //        else if (direction == 3)
+        //        {
+        //            if (entity_Velocity.X < 0)
+        //            {
+        //                newVelo.X = 0;
+        //            }
+        //            if (entity_Velocity.Y > 0)
+        //            {
+        //                newVelo.Y = 0;
+        //            }
 
-                }
-                else if (direction == 6)
-                {
+        //        }
+        //        else if (direction == 6)
+        //        {
 
-                    if (entity_Velocity.X > 0)
-                    {
-                        newVelo.X = 0;
-                    }
-                    if (entity_Velocity.Y > 0)
-                    {
-                        newVelo.Y = 0;
-                    }
+        //            if (entity_Velocity.X > 0)
+        //            {
+        //                newVelo.X = 0;
+        //            }
+        //            if (entity_Velocity.Y > 0)
+        //            {
+        //                newVelo.Y = 0;
+        //            }
   
-                }
-                else if (direction == 12)
-                {
-                    if (entity_Velocity.X > 0)
-                    {
-                        newVelo.X = 0;
-                    }
-                    if (entity_Velocity.Y < 0)
-                    {
-                        newVelo.Y = 0;
-                    }
+        //        }
+        //        else if (direction == 12)
+        //        {
+        //            if (entity_Velocity.X > 0)
+        //            {
+        //                newVelo.X = 0;
+        //            }
+        //            if (entity_Velocity.Y < 0)
+        //            {
+        //                newVelo.Y = 0;
+        //            }
 
-                }
-                entity_Snapback.X = (delta * new_Velocity.X) + 0.001f;
-                entity_Snapback.Y = (delta * new_Velocity.Y) + 0.001f;
-                new_Position.X = entity_Position.X + entity_Snapback.X;
-                new_Position.Y = entity_Position.Y;
-                entity_Transform.m_position = new_Position;
-                entity_Rigid.m_Velocity = newVelo;
+        //        }
+        //        entity_Snapback.X = (delta * new_Velocity.X) + 0.001f;
+        //        entity_Snapback.Y = (delta * new_Velocity.Y) + 0.001f;
+        //        new_Position.X = entity_Position.X + entity_Snapback.X;
+        //        new_Position.Y = entity_Position.Y;
+        //        entity_Transform.m_position = new_Position;
+        //        entity_Rigid.m_Velocity = newVelo;
 
-                Component.Set<RigidBodyComponent>(EntityID, entity_Rigid);
-                Component.Set<TransformComponent>(EntityID, entity_Transform);
-                break;
-            case 3: //top right
-                if (direction == 1)
-                {
-                    if (entity_Velocity.X > 0)
-                    {
-                        newVelo.X = 0;
-                    }
-                    if (entity_Velocity.Y > 0)
-                    {
-                        newVelo.Y = 0;
-                    }
+        //        Component.Set<RigidBodyComponent>(EntityID, entity_Rigid);
+        //        Component.Set<TransformComponent>(EntityID, entity_Transform);
+        //        break;
+        //    case 3: //top right
+        //        if (direction == 1)
+        //        {
+        //            if (entity_Velocity.X > 0)
+        //            {
+        //                newVelo.X = 0;
+        //            }
+        //            if (entity_Velocity.Y > 0)
+        //            {
+        //                newVelo.Y = 0;
+        //            }
 
-                }
-                else if (direction == 4)
-                {
-                    if (entity_Velocity.X < 0)
-                    {
-                        newVelo.X = 0;
-                    }
-                    if (entity_Velocity.Y < 0)
-                    {
-                        newVelo.Y = 0;
-                    }
+        //        }
+        //        else if (direction == 4)
+        //        {
+        //            if (entity_Velocity.X < 0)
+        //            {
+        //                newVelo.X = 0;
+        //            }
+        //            if (entity_Velocity.Y < 0)
+        //            {
+        //                newVelo.Y = 0;
+        //            }
 
-                }
-                else if (direction == 2)
-                {
-                    if (entity_Velocity.X > 0)
-                    {
-                        newVelo.X = 0;
-                    }
-                    if (entity_Velocity.Y < 0)
-                    {
-                        newVelo.Y = 0;
-                    }
+        //        }
+        //        else if (direction == 2)
+        //        {
+        //            if (entity_Velocity.X > 0)
+        //            {
+        //                newVelo.X = 0;
+        //            }
+        //            if (entity_Velocity.Y < 0)
+        //            {
+        //                newVelo.Y = 0;
+        //            }
 
-                }
-                else if (direction == 8)
-                {
-                    if (entity_Velocity.X < 0)
-                    {
-                        newVelo.X = 0;
-                    }
-                    if (entity_Velocity.Y > 0)
-                    {
-                        newVelo.Y = 0;
-                    }
+        //        }
+        //        else if (direction == 8)
+        //        {
+        //            if (entity_Velocity.X < 0)
+        //            {
+        //                newVelo.X = 0;
+        //            }
+        //            if (entity_Velocity.Y > 0)
+        //            {
+        //                newVelo.Y = 0;
+        //            }
 
-                }
-                else if (direction == 9)
-                {
-                    if (entity_Velocity.Y > 0)
-                    {
-                        newVelo.Y = 0;
-                    }
+        //        }
+        //        else if (direction == 9)
+        //        {
+        //            if (entity_Velocity.Y > 0)
+        //            {
+        //                newVelo.Y = 0;
+        //            }
 
-                }
-                else if (direction == 3)
-                {
-                    if (entity_Velocity.X > 0)
-                    {
-                        newVelo.X = 0;
-                    }
+        //        }
+        //        else if (direction == 3)
+        //        {
+        //            if (entity_Velocity.X > 0)
+        //            {
+        //                newVelo.X = 0;
+        //            }
 
-                }
-                else if (direction == 6)
-                {
-                    if (entity_Velocity.Y < 0)
-                    {
-                        newVelo.Y = 0;
-                    }
+        //        }
+        //        else if (direction == 6)
+        //        {
+        //            if (entity_Velocity.Y < 0)
+        //            {
+        //                newVelo.Y = 0;
+        //            }
  
-                }
-                else if (direction == 12)
-                {
-                    if (entity_Velocity.X < 0)
-                    {
-                        newVelo.X = 0;
-                    }
+        //        }
+        //        else if (direction == 12)
+        //        {
+        //            if (entity_Velocity.X < 0)
+        //            {
+        //                newVelo.X = 0;
+        //            }
 
-                }
-                entity_Snapback.X = (delta * new_Velocity.X) + 0.001f;
-                entity_Snapback.Y = (delta * new_Velocity.Y) + 0.001f;
-                new_Position.X = entity_Position.X - entity_Snapback.X;
-                new_Position.Y = entity_Position.Y - entity_Snapback.Y;
-                entity_Transform.m_position = new_Position;
-                entity_Rigid.m_Velocity = newVelo;
-                Component.Set<RigidBodyComponent>(EntityID, entity_Rigid);
-                Component.Set<TransformComponent>(EntityID, entity_Transform);
-                break;
-            case 6: //bottom right
-                if (direction == 1)
-                {
-                    if (entity_Velocity.X > 0)
-                    {
-                        newVelo.X = 0;
-                    }
-                    if (entity_Velocity.Y < 0)
-                    {
-                        newVelo.Y = 0;
-                    }
+        //        }
+        //        entity_Snapback.X = (delta * new_Velocity.X) + 0.001f;
+        //        entity_Snapback.Y = (delta * new_Velocity.Y) + 0.001f;
+        //        new_Position.X = entity_Position.X - entity_Snapback.X;
+        //        new_Position.Y = entity_Position.Y - entity_Snapback.Y;
+        //        entity_Transform.m_position = new_Position;
+        //        entity_Rigid.m_Velocity = newVelo;
+        //        Component.Set<RigidBodyComponent>(EntityID, entity_Rigid);
+        //        Component.Set<TransformComponent>(EntityID, entity_Transform);
+        //        break;
+        //    case 6: //bottom right
+        //        if (direction == 1)
+        //        {
+        //            if (entity_Velocity.X > 0)
+        //            {
+        //                newVelo.X = 0;
+        //            }
+        //            if (entity_Velocity.Y < 0)
+        //            {
+        //                newVelo.Y = 0;
+        //            }
 
-                }
-                else if (direction == 4)
-                {
-                    if (entity_Velocity.X < 0)
-                    {
-                        newVelo.X = 0;
-                    }
-                    if (entity_Velocity.Y > 0)
-                    {
-                        newVelo.Y = 0;
-                    }
+        //        }
+        //        else if (direction == 4)
+        //        {
+        //            if (entity_Velocity.X < 0)
+        //            {
+        //                newVelo.X = 0;
+        //            }
+        //            if (entity_Velocity.Y > 0)
+        //            {
+        //                newVelo.Y = 0;
+        //            }
 
-                }
-                else if (direction == 2)
-                {
-                    if (entity_Velocity.X < 0)
-                    {
-                        newVelo.X = 0;
-                    }
-                    if (entity_Velocity.Y < 0)
-                    {
-                        newVelo.Y = 0;
-                    }
+        //        }
+        //        else if (direction == 2)
+        //        {
+        //            if (entity_Velocity.X < 0)
+        //            {
+        //                newVelo.X = 0;
+        //            }
+        //            if (entity_Velocity.Y < 0)
+        //            {
+        //                newVelo.Y = 0;
+        //            }
 
-                }
-                else if (direction == 8)
-                {
-                    if (entity_Velocity.X > 0)
-                    {
-                        newVelo.X = 0;
-                    }
-                    if (entity_Velocity.Y > 0)
-                    {
-                        newVelo.Y = 0;
-                    }
+        //        }
+        //        else if (direction == 8)
+        //        {
+        //            if (entity_Velocity.X > 0)
+        //            {
+        //                newVelo.X = 0;
+        //            }
+        //            if (entity_Velocity.Y > 0)
+        //            {
+        //                newVelo.Y = 0;
+        //            }
   
-                }
-                else if (direction == 9)
-                {
-                    if (entity_Velocity.X > 0)
-                    {
-                        newVelo.X = 0;
-                    }
+        //        }
+        //        else if (direction == 9)
+        //        {
+        //            if (entity_Velocity.X > 0)
+        //            {
+        //                newVelo.X = 0;
+        //            }
                    
-                }
-                else if (direction == 3)
-                {
-                    if (entity_Velocity.Y < 0)
-                    {
-                        newVelo.Y = 0;
-                    }
+        //        }
+        //        else if (direction == 3)
+        //        {
+        //            if (entity_Velocity.Y < 0)
+        //            {
+        //                newVelo.Y = 0;
+        //            }
                    
-                }
-                else if (direction == 6)
-                {
-                    if (entity_Velocity.X < 0)
-                    {
-                        newVelo.X = 0;
-                    }
+        //        }
+        //        else if (direction == 6)
+        //        {
+        //            if (entity_Velocity.X < 0)
+        //            {
+        //                newVelo.X = 0;
+        //            }
 
-                }
-                else if (direction == 12)
-                {
-                    if (entity_Velocity.Y > 0)
-                    {
-                        newVelo.Y = 0;
-                    }
+        //        }
+        //        else if (direction == 12)
+        //        {
+        //            if (entity_Velocity.Y > 0)
+        //            {
+        //                newVelo.Y = 0;
+        //            }
 
-                }
-                entity_Snapback.X = (delta * new_Velocity.X) + 0.001f;
-                entity_Snapback.Y = (delta * new_Velocity.Y) + 0.001f;
-                new_Position.X = entity_Position.X - entity_Snapback.X;
-                new_Position.Y = entity_Position.Y + entity_Snapback.Y;
-                entity_Transform.m_position = new_Position;
-                entity_Rigid.m_Velocity = newVelo;
+        //        }
+        //        entity_Snapback.X = (delta * new_Velocity.X) + 0.001f;
+        //        entity_Snapback.Y = (delta * new_Velocity.Y) + 0.001f;
+        //        new_Position.X = entity_Position.X - entity_Snapback.X;
+        //        new_Position.Y = entity_Position.Y + entity_Snapback.Y;
+        //        entity_Transform.m_position = new_Position;
+        //        entity_Rigid.m_Velocity = newVelo;
 
-                Component.Set<RigidBodyComponent>(EntityID, entity_Rigid);
-                Component.Set<TransformComponent>(EntityID, entity_Transform);
-                break;
-            case 12: // bottom left
-                if (direction == 1)
-                {
-                    if (entity_Velocity.X < 0)
-                    {
-                        newVelo.X = 0;
-                    }
-                    if (entity_Velocity.Y < 0)
-                    {
-                        newVelo.Y = 0;
-                    }
+        //        Component.Set<RigidBodyComponent>(EntityID, entity_Rigid);
+        //        Component.Set<TransformComponent>(EntityID, entity_Transform);
+        //        break;
+        //    case 12: // bottom left
+        //        if (direction == 1)
+        //        {
+        //            if (entity_Velocity.X < 0)
+        //            {
+        //                newVelo.X = 0;
+        //            }
+        //            if (entity_Velocity.Y < 0)
+        //            {
+        //                newVelo.Y = 0;
+        //            }
 
-                }
-                else if (direction == 4)
-                {
-                    if (entity_Velocity.X > 0)
-                    {
-                        newVelo.X = 0;
-                    }
-                    if (entity_Velocity.Y > 0)
-                    {
-                        newVelo.Y = 0;
-                    }
+        //        }
+        //        else if (direction == 4)
+        //        {
+        //            if (entity_Velocity.X > 0)
+        //            {
+        //                newVelo.X = 0;
+        //            }
+        //            if (entity_Velocity.Y > 0)
+        //            {
+        //                newVelo.Y = 0;
+        //            }
 
-                }
-                else if (direction == 2)
-                {
-                    if (entity_Velocity.X < 0)
-                    {
-                        newVelo.X = 0;
-                    }
-                    if (entity_Velocity.Y > 0)
-                    {
-                        newVelo.Y = 0;
-                    }
+        //        }
+        //        else if (direction == 2)
+        //        {
+        //            if (entity_Velocity.X < 0)
+        //            {
+        //                newVelo.X = 0;
+        //            }
+        //            if (entity_Velocity.Y > 0)
+        //            {
+        //                newVelo.Y = 0;
+        //            }
 
-                }
-                else if (direction == 8)
-                {
-                    if (entity_Velocity.X > 0)
-                    {
-                        newVelo.X = 0;
-                    }
-                    if (entity_Velocity.Y < 0)
-                    {
-                        newVelo.Y = 0;
-                    }
+        //        }
+        //        else if (direction == 8)
+        //        {
+        //            if (entity_Velocity.X > 0)
+        //            {
+        //                newVelo.X = 0;
+        //            }
+        //            if (entity_Velocity.Y < 0)
+        //            {
+        //                newVelo.Y = 0;
+        //            }
 
-                }
-                else if (direction == 9)
-                {
-                    if (entity_Velocity.Y < 0)
-                    {
-                        newVelo.Y = 0;
-                    }
+        //        }
+        //        else if (direction == 9)
+        //        {
+        //            if (entity_Velocity.Y < 0)
+        //            {
+        //                newVelo.Y = 0;
+        //            }
 
-                }
-                else if (direction == 3)
-                {
-                    if (entity_Velocity.X < 0)
-                    {
-                        newVelo.X = 0;
-                    }
+        //        }
+        //        else if (direction == 3)
+        //        {
+        //            if (entity_Velocity.X < 0)
+        //            {
+        //                newVelo.X = 0;
+        //            }
 
-                }
-                else if (direction == 6)
-                {
-                    if (entity_Velocity.Y > 0)
-                    {
-                        newVelo.Y = 0;
-                    }
+        //        }
+        //        else if (direction == 6)
+        //        {
+        //            if (entity_Velocity.Y > 0)
+        //            {
+        //                newVelo.Y = 0;
+        //            }
 
-                }
-                else if (direction == 12)
-                {
-                    if (entity_Velocity.X > 0)
-                    {
-                        newVelo.X = 0;
-                    }
+        //        }
+        //        else if (direction == 12)
+        //        {
+        //            if (entity_Velocity.X > 0)
+        //            {
+        //                newVelo.X = 0;
+        //            }
 
-                }
-                entity_Snapback.X = (delta * new_Velocity.X) + 0.001f;
-                entity_Snapback.Y = (delta * new_Velocity.Y) + 0.001f;
-                new_Position.X = entity_Position.X + entity_Snapback.X;
-                new_Position.Y = entity_Position.Y + entity_Snapback.Y;
-                entity_Transform.m_position = new_Position;
-                entity_Rigid.m_Velocity = newVelo;
+        //        }
+        //        entity_Snapback.X = (delta * new_Velocity.X) + 0.001f;
+        //        entity_Snapback.Y = (delta * new_Velocity.Y) + 0.001f;
+        //        new_Position.X = entity_Position.X + entity_Snapback.X;
+        //        new_Position.Y = entity_Position.Y + entity_Snapback.Y;
+        //        entity_Transform.m_position = new_Position;
+        //        entity_Rigid.m_Velocity = newVelo;
 
-                Component.Set<RigidBodyComponent>(EntityID, entity_Rigid);
-                Component.Set<TransformComponent>(EntityID, entity_Transform);
-                break;
-            case 9: // top left
-                if (direction == 1)
-                {
-                    if (entity_Velocity.X < 0)
-                    {
-                        newVelo.X = 0;
-                    }
-                    if (entity_Velocity.Y > 0)
-                    {
-                        newVelo.Y = 0;
-                    }
+        //        Component.Set<RigidBodyComponent>(EntityID, entity_Rigid);
+        //        Component.Set<TransformComponent>(EntityID, entity_Transform);
+        //        break;
+        //    case 9: // top left
+        //        if (direction == 1)
+        //        {
+        //            if (entity_Velocity.X < 0)
+        //            {
+        //                newVelo.X = 0;
+        //            }
+        //            if (entity_Velocity.Y > 0)
+        //            {
+        //                newVelo.Y = 0;
+        //            }
 
-                }
-                else if (direction == 4)
-                {
-                    if (entity_Velocity.X > 0)
-                    {
-                        newVelo.X = 0;
-                    }
-                    if (entity_Velocity.Y < 0)
-                    {
-                        newVelo.Y = 0;
-                    }
+        //        }
+        //        else if (direction == 4)
+        //        {
+        //            if (entity_Velocity.X > 0)
+        //            {
+        //                newVelo.X = 0;
+        //            }
+        //            if (entity_Velocity.Y < 0)
+        //            {
+        //                newVelo.Y = 0;
+        //            }
 
-                }
-                else if (direction == 2)
-                {
-                    if (entity_Velocity.X > 0)
-                    {
-                        newVelo.X = 0;
-                    }
-                    if (entity_Velocity.Y > 0)
-                    {
-                        newVelo.Y = 0;
-                    }
+        //        }
+        //        else if (direction == 2)
+        //        {
+        //            if (entity_Velocity.X > 0)
+        //            {
+        //                newVelo.X = 0;
+        //            }
+        //            if (entity_Velocity.Y > 0)
+        //            {
+        //                newVelo.Y = 0;
+        //            }
 
-                }
-                else if (direction == 8)
-                {
-                    if (entity_Velocity.X < 0)
-                    {
-                        newVelo.X = 0;
-                    }
-                    if (entity_Velocity.Y < 0)
-                    {
-                        newVelo.Y = 0;
-                    }
+        //        }
+        //        else if (direction == 8)
+        //        {
+        //            if (entity_Velocity.X < 0)
+        //            {
+        //                newVelo.X = 0;
+        //            }
+        //            if (entity_Velocity.Y < 0)
+        //            {
+        //                newVelo.Y = 0;
+        //            }
          
-                }
-                else if (direction == 9)
-                {
-                    if (entity_Velocity.X < 0)
-                    {
-                        newVelo.X = 0;
-                    }
+        //        }
+        //        else if (direction == 9)
+        //        {
+        //            if (entity_Velocity.X < 0)
+        //            {
+        //                newVelo.X = 0;
+        //            }
 
-                }
-                else if (direction == 3)
-                {
-                    if (entity_Velocity.Y > 0)
-                    {
-                        newVelo.Y = 0;
-                    }
+        //        }
+        //        else if (direction == 3)
+        //        {
+        //            if (entity_Velocity.Y > 0)
+        //            {
+        //                newVelo.Y = 0;
+        //            }
 
-                }
-                else if (direction == 6)
-                {
-                    if (entity_Velocity.X > 0)
-                    {
-                        newVelo.X = 0;
-                    }
+        //        }
+        //        else if (direction == 6)
+        //        {
+        //            if (entity_Velocity.X > 0)
+        //            {
+        //                newVelo.X = 0;
+        //            }
 
-                }
-                else if (direction == 12)
-                {
-                    if (entity_Velocity.Y < 0)
-                    {
-                        newVelo.Y = 0;
-                    }
+        //        }
+        //        else if (direction == 12)
+        //        {
+        //            if (entity_Velocity.Y < 0)
+        //            {
+        //                newVelo.Y = 0;
+        //            }
 
-                }
-                entity_Snapback.X = (delta * new_Velocity.X) + 0.001f;
-                entity_Snapback.Y = (delta * new_Velocity.Y) + 0.001f;
-                new_Position.X = entity_Position.X + entity_Snapback.X;
-                new_Position.Y = entity_Position.Y - entity_Snapback.Y;
-                entity_Transform.m_position = new_Position;
-                entity_Rigid.m_Velocity = newVelo;
+        //        }
+        //        entity_Snapback.X = (delta * new_Velocity.X) + 0.001f;
+        //        entity_Snapback.Y = (delta * new_Velocity.Y) + 0.001f;
+        //        new_Position.X = entity_Position.X + entity_Snapback.X;
+        //        new_Position.Y = entity_Position.Y - entity_Snapback.Y;
+        //        entity_Transform.m_position = new_Position;
+        //        entity_Rigid.m_Velocity = newVelo;
 
-                Component.Set<RigidBodyComponent>(EntityID, entity_Rigid);
-                Component.Set<TransformComponent>(EntityID, entity_Transform);
-                break;
-            default:
-                entity_Snapback.X = (delta * new_Velocity.X) + 0.001f;
-                entity_Snapback.Y = (delta * new_Velocity.Y) + 0.001f;
-                new_Position.X = entity_Position.X - entity_Snapback.X;
-                new_Position.Y = entity_Position.Y - entity_Snapback.Y;
-                entity_Transform.m_position = new_Position;
-                entity_Rigid.m_Velocity = newVelo;
+        //        Component.Set<RigidBodyComponent>(EntityID, entity_Rigid);
+        //        Component.Set<TransformComponent>(EntityID, entity_Transform);
+        //        break;
+        //    default:
+        //        entity_Snapback.X = (delta * new_Velocity.X) + 0.001f;
+        //        entity_Snapback.Y = (delta * new_Velocity.Y) + 0.001f;
+        //        new_Position.X = entity_Position.X - entity_Snapback.X;
+        //        new_Position.Y = entity_Position.Y - entity_Snapback.Y;
+        //        entity_Transform.m_position = new_Position;
+        //        entity_Rigid.m_Velocity = newVelo;
 
-                entity_Transform.m_position = new_Position;
-                entity_Rigid.m_Velocity = newVelo;
+        //        entity_Transform.m_position = new_Position;
+        //        entity_Rigid.m_Velocity = newVelo;
 
-                Component.Set<RigidBodyComponent>(EntityID, entity_Rigid);
-                Component.Set<TransformComponent>(EntityID, entity_Transform);
-                break;
-        }
+        //        Component.Set<RigidBodyComponent>(EntityID, entity_Rigid);
+        //        Component.Set<TransformComponent>(EntityID, entity_Transform);
+        //        break;
+    //    }
 
         //Setting the position + velocity
         //Console.WriteLine($"T POS X  {entity_Transform.m_position.X} T POS Y {entity_Transform.m_position.Y}");

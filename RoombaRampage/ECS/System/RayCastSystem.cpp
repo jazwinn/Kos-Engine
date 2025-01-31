@@ -93,7 +93,7 @@ namespace ecs {
 				//vector2::Vec2 direction = ray.m_targetPosition - transform->m_position;
 				ray.m_distance = abs(vector2::Vec2::m_funcVec2DDistance(ray.m_targetPosition, transform->m_position));
 
-				PhysicsPipeline->IsLineIntersecting(transform->m_position, ray.m_targetPosition, ray.m_Layers, ray.m_targetReached, ray.m_hitposition);
+				PhysicsPipeline->IsLineIntersecting(raycast->m_Entity ,transform->m_position, ray.m_targetPosition, ray.m_Layers, ray.m_targetReached, ray.m_hitposition);
 
 			}
 			

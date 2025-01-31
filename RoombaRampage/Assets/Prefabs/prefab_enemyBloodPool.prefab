@@ -38,7 +38,8 @@
             "scripts": [
                 {
                     "name": "EnemyBloodPool",
-                    "enabled": true
+                    "enabled": true,
+                    "map": []
                 }
             ]
         }
