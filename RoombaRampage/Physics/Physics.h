@@ -247,6 +247,7 @@ namespace physicspipe {
 			   rectangle-rectangle collisions.
 	*/
 	/******************************************************************/
+
 	const int MAX_ENTITIES = 1024;
 	class Physics {
 	private:
@@ -258,6 +259,10 @@ namespace physicspipe {
 		static std::vector<int> m_checker;
 		static std::unique_ptr<Physics> m_instance;
 		std::bitset<MAX_ENTITIES> collidedEntities;
+		//first one is the main dude
+		//second one is what it is colliding with
+		//vector2 is what needs to be moved so that it will be pushed out
+		static std::vector < std::pair < std::pair<std::shared_ptr<PhysicsData>, std::shared_ptr<PhysicsData>>, std::pair<vector2::Vec2, float>>> m_collidedEntitiesPairWithVector;
 
 		/******************************************************************/
 		/*!
@@ -349,7 +354,7 @@ namespace physicspipe {
 		*/
 		/******************************************************************/
 		std::vector < std::pair<std::shared_ptr<PhysicsData>, std::shared_ptr<PhysicsData>>> m_RetrievePhysicsDataPair();
-
+		static std::vector < std::pair < std::pair<std::shared_ptr<PhysicsData>, std::shared_ptr<PhysicsData>>, std::pair<vector2::Vec2, float>>>  m_RetrievePhysicsDataPairWithVector();
 		/******************************************************************/
 		/*!
 		\fn        void Physics::m_ClearEntites()
@@ -380,6 +385,7 @@ namespace physicspipe {
 		/******************************************************************/
 		bool m_CollisionIntersection_CircleRect_AABB(const Circle&, const Rectangle&);
 		bool m_CollisionIntersection_CircleRect_SAT(const Circle&, const Rectangle&);
+		std::pair<bool, std::pair<vector2::Vec2, float>> m_CollisionIntersection_CircleRect_SAT_TEST(const Circle&, const Rectangle&);
 		/******************************************************************/
 		/*!
 		\fn        bool Physics::m_CollisionIntersection_CircleCircle(const Circle& circle1, const Circle& circle2)
@@ -445,7 +451,7 @@ namespace physicspipe {
 		*/
 		/******************************************************************/
 		bool m_CollisionIntersection_RectRect_SAT(const Rectangle& obj1, const Rectangle& obj2);
-
+		std::pair<bool, std::pair<vector2::Vec2, float>> m_CollisionIntersection_RectRect_SAT_TEST(const Rectangle& obj1, const Rectangle& obj2);
 		/******************************************************************/
 		/*!
 		\fn        bool Physics::m_WithinBoundingRadius(const Rectangle& obj1, const Rectangle& obj2)
@@ -501,7 +507,7 @@ namespace physicspipe {
 		bool LineIntersect(const vector2::Vec2& p1, const vector2::Vec2& p2, const vector2::Vec2& q1, const vector2::Vec2& q2, vector2::Vec2& intersection);
 		bool LineRectangleIntersect(const vector2::Vec2& p1, const vector2::Vec2& p2, const vector2::Vec2& rectBottomLeft, const vector2::Vec2& rectTopRight, vector2::Vec2& intersectionpoint);
 
-		void IsLineIntersecting(const vector2::Vec2& p1, const vector2::Vec2& p2, const std::vector<layer::LAYERS>& layer, bool& isHit, vector2::Vec2& hitPosition);
+		void IsLineIntersecting(const ecs::EntityID id, const vector2::Vec2& p1, const vector2::Vec2& p2, const std::vector<layer::LAYERS>& layer, bool& isHit, vector2::Vec2& hitPosition);
 };
 }
 #endif

@@ -21,7 +21,8 @@
             "scripts": [
                 {
                     "name": "GameController",
-                    "enabled": true
+                    "enabled": true,
+                    "map": []
                 }
             ]
         },
@@ -65,7 +66,8 @@
             "scripts": [
                 {
                     "name": "CameraFollowPlayerScript",
-                    "enabled": true
+                    "enabled": true,
+                    "map": []
                 }
             ]
         },
@@ -7569,7 +7571,8 @@
             "scripts": [
                 {
                     "name": "LevelEndPoint",
-                    "enabled": true
+                    "enabled": true,
+                    "map": []
                 }
             ]
         }
@@ -7634,7 +7637,8 @@
             "scripts": [
                 {
                     "name": "LevelEnemySpawner",
-                    "enabled": true
+                    "enabled": true,
+                    "map": []
                 }
             ]
         }
@@ -7672,9 +7676,6 @@
             "drawDebug": true,
             "radius": 0.6499999761581421,
             "shapetype": 1
-        },
-        "player": {
-            "control": true
         },
         "rigidbody": {
             "linearVelocity": {
@@ -7714,11 +7715,13 @@
             "scripts": [
                 {
                     "name": "PlayerController",
-                    "enabled": true
-                },
-                {
-                    "name": "CollisionResponse",
-                    "enabled": true
+                    "enabled": true,
+                    "map": [
+                        {
+                            "variable": "speed",
+                            "base64": ""
+                        }
+                    ]
                 }
             ]
         },
@@ -7772,7 +7775,8 @@
                     "scripts": [
                         {
                             "name": "PlayerGun",
-                            "enabled": true
+                            "enabled": true,
+                            "map": []
                         }
                     ]
                 },
@@ -7838,7 +7842,8 @@
                     "scripts": [
                         {
                             "name": "PlayerGun",
-                            "enabled": true
+                            "enabled": true,
+                            "map": []
                         }
                     ]
                 },
@@ -7904,7 +7909,8 @@
                     "scripts": [
                         {
                             "name": "PlayerGun",
-                            "enabled": true
+                            "enabled": true,
+                            "map": []
                         }
                     ]
                 },

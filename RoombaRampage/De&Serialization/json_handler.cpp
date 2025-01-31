@@ -1,7 +1,8 @@
 /******************************************************************/
 /*!
 \file      json_handler.cpp
-\author    Chiu Jun Jie, junjie.c , 2301524
+\author    Chiu Jun Jie, junjie.c , 2301524 ,
+\co-author Jaz Winn Ng, jazwinn.ng, 2301502
 \par       junjie.c@digipen.edu
 \date      Nov 29, 2024
 \brief     This file handles JSON-related operations for component serialization and deserialization in the ECS framework.
@@ -20,7 +21,22 @@ Reproduction or disclosure of this file or its contents without the
 prior written consent of DigiPen Institute of Technology is prohibited.
 */
 /********************************************************************/
+/********************************************************************/
 
+//REFLECTION
+
+//SAVING
+
+//template <typename T>//T refers to component
+//void m_saveComponentreflect(T* component, rapidjson::Value& entityData, rapidjson::Document::AllocatorType& allocator);
+
+//LOADING
+
+//template <typename T>//T refers to component
+//void m_LoadComponentreflect(T* component, rapidjson::Value& entityData);
+
+
+/********************************************************************/
 #include "../Config/pch.h"
 #include "../Dependencies/rapidjson/document.h"
 #include "../Dependencies/rapidjson/writer.h"
@@ -46,6 +62,8 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include <unordered_set>
 
 namespace Serialization {
+
+	
 
 	void Serialize::m_LoadConfig() {
 		std::ifstream file;
@@ -191,8 +209,7 @@ namespace Serialization {
 				}
 				entityData.AddMember("name", name, allocator);
 				hasComponents = true;
-
-
+				
 
 			}
 
@@ -213,6 +230,7 @@ namespace Serialization {
 					.AddMember("y", tc->m_scale.m_y, allocator), allocator);
 				entityData.AddMember("transform", transform, allocator);
 				hasComponents = true;
+
 			}
 		}
 
@@ -234,17 +252,19 @@ namespace Serialization {
 				collider.AddMember("shapetype", (int)cc->m_type, allocator);
 				entityData.AddMember("collider", collider, allocator);
 				hasComponents = true;  // Mark as having a component
+
+
 			}
 		}
 
 		// Check if the entity has PlayerComponent and save it
 		if (signature.test(ecs::ComponentType::TYPEENEMYCOMPONENT)) {
-			ecs::EnemyComponent* pc = static_cast<ecs::EnemyComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPEENEMYCOMPONENT]->m_GetEntityComponent(entityId));
-			if (pc) {
+			ecs::EnemyComponent* ec = static_cast<ecs::EnemyComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPEENEMYCOMPONENT]->m_GetEntityComponent(entityId));
+			if (ec) {
 				rapidjson::Value player(rapidjson::kObjectType);
-				player.AddMember("enemytag", pc->m_enemyTag, allocator);
-				player.AddMember("enemytype", pc->m_enemyTypeInt, allocator);
-				player.AddMember("enemybehaviour", pc->m_enemyTypeInt, allocator);
+				player.AddMember("enemytag", ec->m_enemyTag, allocator);
+				player.AddMember("enemytype", ec->m_enemyTypeInt, allocator);
+				player.AddMember("enemybehaviour", ec->m_enemyTypeInt, allocator);
 				entityData.AddMember("enemy", player, allocator);
 				hasComponents = true;  // Mark as having a component
 			}
@@ -417,11 +437,28 @@ namespace Serialization {
 
 					// Add the script name (string) to the object
 					rapidjson::Value scriptValue;
-					scriptValue.SetString(scriptName.first.c_str(), allocator);
+					scriptValue.SetString(std::get<0>(scriptName).c_str(), allocator);
 					scriptObject.AddMember("name", scriptValue, allocator);
 
 					// Add the boolean value to the object
-					scriptObject.AddMember("enabled", scriptName.second, allocator);
+					scriptObject.AddMember("enabled", std::get<1>(scriptName), allocator);
+
+					rapidjson::Value variableMapValue(rapidjson::kArrayType);
+					for (const auto& x : std::get<2>(scriptName)) {
+						rapidjson::Value VariableString, base64string;
+
+						VariableString.SetString(x.first.c_str(), allocator);
+						base64string.SetString(x.second.c_str(), allocator);
+
+						rapidjson::Value publicVariable(rapidjson::kObjectType); // Create "publicvariable" object
+						publicVariable.AddMember("variable", VariableString, allocator);
+						publicVariable.AddMember("base64", base64string, allocator); // Fixed the name
+
+
+						variableMapValue.PushBack(publicVariable, allocator); // Push to array
+					}
+
+					scriptObject.AddMember("map", variableMapValue, allocator);
 
 					// Add the object to the array
 					scriptArray.PushBack(scriptObject, allocator);
@@ -430,7 +467,6 @@ namespace Serialization {
 				// Add the script array to the "script" object
 				script.AddMember("scripts", scriptArray, allocator);
 				entityData.AddMember("script", script, allocator);
-				hasComponents = true;
 			}
 		}
 
@@ -650,6 +686,8 @@ namespace Serialization {
 			ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(newEntityId));
 			const rapidjson::Value& name = entityData["name"];
 
+
+
 			if (name.HasMember("namestr") && name["namestr"].IsString()) {
 				nc->m_entityName = name["namestr"].GetString();  // Store the name
 			}
@@ -671,6 +709,7 @@ namespace Serialization {
 					nc->m_syncPrefab = name["issync"].GetBool();
 				}
 			}
+
 		}
 
 		// Load TransformComponent if it exists
@@ -689,6 +728,7 @@ namespace Serialization {
 				tc->m_scale.m_x = transform["scale"]["x"].GetFloat();
 				tc->m_scale.m_y = transform["scale"]["y"].GetFloat();
 			}
+	
 		}
 
 		// Load Collider Component if it exists
@@ -736,6 +776,13 @@ namespace Serialization {
 				if (player.HasMember("enemybehaviour") && player["enemybehaviour"].IsInt()) {
 					pc->m_enemyRoamBehaviourInt = player["enemybehaviour"].GetInt();
 				}
+
+				//const rapidjson::Value& name = entityData["EnemyComponent"];
+				//LoadComponent<decltype(ecs::EnemyComponent::Names())> loader{ ecs::EnemyComponent::Names() };
+
+				//pc->ApplyFunction([&](auto& member) {
+				//	loader(member, name);
+				//	});
 			}
 		}
 
@@ -946,8 +993,22 @@ namespace Serialization {
 									enabled = scriptObject["enabled"].GetBool();
 								}
 
+								std::unordered_map<std::string, std::string> variableMap;
+								if (scriptObject.HasMember("map") && scriptObject["map"].IsArray()) {
+									for (const auto& variable : scriptObject["map"].GetArray()) {
+										if (!variable.HasMember("variable") || !variable["variable"].IsString() ||
+											!variable.HasMember("base64") || !variable["base64"].IsString()) {
+											continue; // Skip invalid map entries
+										}
+
+										std::string key = variable["variable"].GetString();
+										std::string value = variable["base64"].GetString();
+										variableMap[key] = value;
+									}
+								}
+
 								// Add to the script list
-								sc->m_scripts.push_back(std::make_pair(scriptName, enabled));
+								sc->m_scripts.push_back(std::make_tuple(scriptName, enabled, variableMap));
 							}
 						}
 					}
@@ -1253,56 +1314,86 @@ namespace Serialization {
 		file.close();
 		LOGGING_INFO("Collision matrix loaded from LayerConfig.txt");
 	}
+	std::string Serialize::m_EncodeBase64(const void* data, size_t size)
+	{
+		static const char encodingTable[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+		if (!data || size == 0) {
+			return ""; // Return empty string if no data
+		}
+
+		const uint8_t* bytes = static_cast<const uint8_t*>(data);
+		std::string encoded;
+		encoded.reserve((size + 2) / 3 * 4); // Reserve space for performance
+
+		for (size_t i = 0; i < size; i += 3) {
+			uint32_t value = 0;
+			int count = 0;
+
+			// Read up to 3 bytes
+			for (int j = 0; j < 3; ++j) {
+				if (i + j < size) {
+					value |= (bytes[i + j] << (16 - j * 8));
+					count++;
+				}
+			}
+
+			// Encode into 4 Base64 characters
+			for (int j = 0; j < 4; ++j) {
+				if (j <= (count + 1)) {
+					encoded += encodingTable[(value >> (18 - j * 6)) & 0x3F];
+				}
+				else {
+					encoded += '='; // Padding
+				}
+			}
+		}
+
+		return encoded;
+	}
+
+	std::unique_ptr<void, Serialize::VoidDeleter> Serialize::DecodeBase64(const std::string& base64) {
+		static const int DECODING_TABLE[256] = {
+			-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 0-15
+			-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 16-31
+			-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 62, -1, -1, -1, 63, // 32-47  (+ and /)
+			52, 53, 54, 55, 56, 57, 58, 59, 60, 61, -1, -1, -1, -1, -1, -1, // 48-63  (0-9)
+			-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,           // 64-79  (A-O)
+			15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, -1, -1, -1, -1, -1, // 80-95  (P-Z)
+			-1, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, // 96-111 (a-o)
+			41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, -1, -1, -1, -1, -1  // 112-127 (p-z)
+		};
+
+		if (base64.empty()) return nullptr;
+
+		size_t inputLen = base64.length();
+		size_t padding = (base64[inputLen - 1] == '=') + (base64[inputLen - 2] == '=');
+		
+		size_t outSize = (inputLen * 3) / 4 - padding;
+
+		// Allocate memory using malloc (will be managed by unique_ptr)
+		auto buffer = std::unique_ptr<void, VoidDeleter>(malloc(outSize), VoidDeleter());
+		if (!buffer) return nullptr; // Memory allocation failed
+
+		uint8_t* output = static_cast<uint8_t*>(buffer.get());
+		uint32_t value = 0;
+		int bits = -8;
+		size_t index = 0;
+
+		for (char c : base64) {
+			if (c == '=') break;
+			int decoded = (c >= 0 && c <= 127) ? DECODING_TABLE[c] : -1;
+			if (decoded == -1) continue;
+
+			value = (value << 6) | decoded;
+			bits += 6;
+
+			if (bits >= 0) {
+				output[index++] = (value >> bits) & 0xFF;
+				bits -= 8;
+			}
+		}
+
+		return buffer;
+	}
 }
 
-
-//template <typename T>
-//struct SaveComponent {
-//
-//	T m_Array;
-//	int count{};
-//	rapidjson::Value component; 
-//
-//	SaveComponent(T _array, std::string classname) :m_Array{_array}:component(rapidjson::kObjectType) {
-//		
-//
-//	}
-//
-//
-//	template <typename U, std::enable_if_t<std::is_floating_point_v<U>, int> = 0>
-//	void operator()(U& _args) {
-//
-//		count++;
-//	}
-//
-//
-//
-//	void operator()(int& _args) {
-//
-//		count++;
-//	}
-//
-//	void operator()(vector2::Vec2& _args) {
-//
-//
-//		count++;
-//	}
-//
-//	void operator()(vector3::Vec3& _args) {
-//
-//		count++;
-//	}
-//
-//
-//	void operator()(bool& _args) {
-//
-//
-//		count++;
-//	}
-//
-//	void operator()(std::string& _args) {
-//
-//
-//		count++;
-//	}
-//};

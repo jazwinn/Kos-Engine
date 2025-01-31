@@ -30,7 +30,18 @@ namespace ecs {
 
 	public:
 
-		std::vector<std::pair<std::string, bool>> m_scripts; // bool is true if script is enabled 
+		std::vector<std::tuple<std::string, bool, std::unordered_map<std::string, std::string> >> m_scripts; // bool is true if script is enabled
+
+		/*
+		Tupple
+
+		0 - std::String: Name of the script
+		1 - bool: true if script is enabled
+		2 - std::unordered_map<std::string, void*>: store script public data, key being varaible name, second being base64
+		
+		
+		
+		*/
 
 	
 

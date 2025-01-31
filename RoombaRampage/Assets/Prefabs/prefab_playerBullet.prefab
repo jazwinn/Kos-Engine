@@ -20,7 +20,7 @@
             }
         },
         "collider": {
-            "checkcollision": true,
+            "checkcollision": false,
             "size": {
                 "x": 0.07000000029802322,
                 "y": 0.25999999046325684
@@ -78,7 +78,8 @@
             "scripts": [
                 {
                     "name": "PlayerBullet",
-                    "enabled": true
+                    "enabled": true,
+                    "map": []
                 }
             ]
         }
