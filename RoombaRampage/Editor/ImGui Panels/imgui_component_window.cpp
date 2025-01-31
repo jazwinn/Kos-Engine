@@ -95,6 +95,27 @@ struct DrawComponents {
         }
         count++;
     }
+    void operator()(graphicpipe::LightType& _args)
+    {
+        const char* shapeName = (_args == graphicpipe::LightType::SPOT) ? "SPOT" : (_args == graphicpipe::LightType::RECTANGLE) ? "RECTANGLE" : "GLOBAL";
+        if (ImGui::BeginCombo("Shape Types", shapeName))
+        {
+            if (ImGui::Selectable("SPOT"))
+            {
+                _args = graphicpipe::LightType::SPOT;
+            }
+            if (ImGui::Selectable("RECTANGLE"))
+            {
+                _args = graphicpipe::LightType::RECTANGLE;
+            }
+            if (ImGui::Selectable("GLOBAL"))
+            {
+                _args = graphicpipe::LightType::GLOBAL;
+            }
+            ImGui::EndCombo();
+        }
+        count++;
+    }
 
     void operator()(int& _args) {
         
@@ -165,7 +186,7 @@ struct DrawComponents {
         ImGui::SetNextItemWidth(100.0f);
         title = "Z##" + m_Array[count];
         ImGui::PushItemWidth(slidersize);
-        ImGui::DragFloat(title.c_str(), &_args.m_y, 0.02f, -50.0f, 50.0f, "%.2f");
+        ImGui::DragFloat(title.c_str(), &_args.m_z, 0.02f, -50.0f, 50.0f, "%.2f");
 
         ImGui::PopItemWidth();
         ImGui::PopItemWidth();
@@ -259,7 +280,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
     {
         "Add Components", "Collider Component", "Sprite Component", "Enemy Component", "Rigid Body Component", "Text Component", 
         "Animation Component", "Camera Component" , "Button Component" , "Script Component", "Tilemap Component", "Audio Component",
-        "Grid Component", "RayCast Component", "PathfindingComponent"
+        "Grid Component", "RayCast Component", "PathfindingComponent", "Lighting Component"
     };
     static int ComponentType = 0;
 
@@ -375,6 +396,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 }
             }
             if (ComponentType == 12) {
+                
                 ecs->m_AddComponent(ecs::TYPEGRIDCOMPONENT, entityID);
                 ComponentType = 0;
                 if (!EntitySignature.test(ecs::TYPEGRIDCOMPONENT)) {
@@ -398,6 +420,18 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                     DISPATCH_ACTION_EVENT(action);
                 }
             }
+            if (ComponentType == 15) {
+                 ecs->m_AddComponent(ecs::TYPELIGHTINGCOMPONENT, entityID);
+                ComponentType = 0;
+                if (!EntitySignature.test(ecs::TYPELIGHTINGCOMPONENT)) {
+                    events::AddComponent action(entityID, ecs::TYPELIGHTINGCOMPONENT);
+                    DISPATCH_ACTION_EVENT(action);
+                }
+            }
+
+
+
+           
         }
 
         auto CreateContext = [](ecs::ComponentType Type, ecs::EntityID ID) {
@@ -1436,7 +1470,31 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                     }
                 }
             }
+             if (EntitySignature.test(ecs::TYPELIGHTINGCOMPONENT)) {
 
+                open = ImGui::CollapsingHeader("Lighting Component");
+
+                CreateContext(ecs::TYPELIGHTINGCOMPONENT, entityID);
+
+                if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPELIGHTINGCOMPONENT)) {
+                    auto* lc = static_cast<ecs::LightingComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPELIGHTINGCOMPONENT]->m_GetEntityComponent(entityID));
+                    lc->ApplyFunction(DrawComponents(lc->Names()));
+
+                    ImVec4 color = ImVec4(lc->m_colour.m_x, lc->m_colour.m_y, lc->m_colour.m_z, 1.f);
+
+                    ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
+                    ImGui::Text("Color");
+                    ImGui::SameLine();
+                    if (ImGui::ColorEdit3("##MyColor4", (float*)&color, ImGuiColorEditFlags_DisplayRGB))
+                    {
+                        lc->m_colour.m_x = color.x;
+                        lc->m_colour.m_y = color.y;
+                        lc->m_colour.m_z = color.z;
+                    }
+
+                }
+
+            }
             if (EntitySignature.test(ecs::TYPERAYCASTINGCOMPONENT)) {
 
                 open = ImGui::CollapsingHeader("Raycast Component");

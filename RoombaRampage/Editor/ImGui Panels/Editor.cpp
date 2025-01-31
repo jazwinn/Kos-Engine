@@ -226,6 +226,7 @@ namespace gui {
 				m_DrawLogsWindow();
 				//m_DrawTestWindow();
 				m_DrawLayerWindow();
+				m_DrawGlobalSettingsWindow();
 				m_DrawInputWindow();
 				m_DrawContentBrowser();
 				m_DrawRenderScreenWindow(static_cast<unsigned int>(Helper::Helpers::GetInstance()->m_windowWidth), static_cast<unsigned int>(Helper::Helpers::GetInstance()->m_windowHeight));
@@ -405,7 +406,7 @@ namespace gui {
 	void ImGuiHandler::m_UpdateOnPrefabMode()
 	{
 		Helper::Helpers* help = Helper::Helpers::GetInstance();
-		help->m_colour = { 0.86f, 0.86f, 0.86f };
+		//help->m_colour = { 0.86f, 0.86f, 0.86f };
 		//return if not on prefab mode
 		if (m_prefabSceneMode == false) return;
 

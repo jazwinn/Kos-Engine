@@ -192,7 +192,7 @@ namespace Serialization {
 			value.AddMember(key, rapidjson::Value().SetObject()
 				.AddMember("x", _args.m_x, allocator)
 				.AddMember("y", _args.m_y, allocator)
-				.AddMember("Z", _args.m_z, allocator), allocator);
+				.AddMember("z", _args.m_z, allocator), allocator);
 			count++;
 		}
 

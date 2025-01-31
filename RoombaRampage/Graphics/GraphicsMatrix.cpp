@@ -49,9 +49,7 @@ namespace graphicpipe
 				m_modelData[n].m_transformation[1][1] = m_modelData[n].m_transformation[1][1] * heightRatio;
 				m_modelData[n].m_transformation[1][0] = m_modelData[n].m_transformation[1][0] * heightRatio;
 				m_modelMatrix.push_back(m_modelData[n].m_transformation);
-				m_textureOrder.push_back(m_modelData[n].m_textureID);
-				m_stripCounts.push_back({ m_modelData[n].m_stripCount, m_modelData[n].m_frameNumber });
-				//m_frameNumbers.push_back(m_modelData[n].m_frameNumber);
+				m_iVec3Array.push_back({ m_modelData[n].m_stripCount, m_modelData[n].m_frameNumber, m_modelData[n].m_textureID});
 				m_layers.push_back(m_modelData[n].m_layer);
 				m_colors.push_back(m_modelData[n].m_color);
 			}
@@ -121,6 +119,18 @@ namespace graphicpipe
 				}
 			}
 		}
+		if (m_lightingData.size() > 0)
+		{
+			for (int n{}; n < m_lightingData.size(); n++)
+			{
+				m_lightingTransforms.push_back(m_lightingData[n].m_transformation);
+				m_lightingColors.push_back(m_lightingData[n].m_color);
+				m_lightingParams.push_back({ m_lightingData[n].m_intensity,m_lightingData[n].m_innerOuterRadius.x,m_lightingData[n].m_innerOuterRadius.y });
+				
+			}
+			m_lightingData.clear();
+		}
+		
 
 	}
 }
