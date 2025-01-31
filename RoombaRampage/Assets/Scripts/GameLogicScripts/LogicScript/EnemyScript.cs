@@ -42,7 +42,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     private ColliderComponent collComp;
     private TransformComponent transformComp;
     private TransformComponent playerTransformComp;
-    private GridComponent gridComp;
+    //private GridComponent gridComp;
     #endregion
 
     #region Sprite Variables
@@ -129,7 +129,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         currentState = CheckEnemyType(); //Checks enemy type to start off new state
 
         childrenIDList = InternalCall.m_InternalCallGetChildrenID(EntityID); //Gets waypoints for enemy, will be null/empty if there are no children waypoints
-        World2GridCoordinates(1.5f,2.5f,1);
+       // World2GridCoordinates(1.5f,2.5f,1);
     }
 
     public override void Update() //Runs every frame
@@ -359,7 +359,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
             transformComp = Component.Get<TransformComponent>(EntityID);
             playerTransformComp = Component.Get<TransformComponent>(playerID);
             pathFindComp = Component.Get<PathfindingComponent>(EntityID);
-            gridComp = Component.Get<GridComponent>(EntityID);
+            //gridComp = Component.Get<GridComponent>(EntityID);
     }
     #endregion
 
