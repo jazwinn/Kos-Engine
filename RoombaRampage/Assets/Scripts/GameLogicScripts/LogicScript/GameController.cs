@@ -21,8 +21,7 @@ public class GameController : ScriptBase
         LevelDoorLocker.doorLocked = false;
 
         isSceneActive = true;
-        float r = 1.0f;
-        InternalCall.m_InternalCallSetTimeScale(ref r);
+        InternalCall.m_InternalCallSetTimeScale(1);
         easyMode = false;
         gameIsPaused = false;
 
@@ -35,8 +34,8 @@ public class GameController : ScriptBase
 
         foreach (int pMenuID in pauseMenuID)
         {
-            InternalCall.m_InternalGetTextComponent((uint)pMenuID, ref pauseMenuText, ref pauseMenuFontFileName, ref pauseMenuFontLayer, ref pauseMenuFontSize, ref pauseMenuFontColor);
-            InternalCall.m_InternalSetTextComponent((uint)pMenuID, pauseMenuText, pauseMenuFontFileName, ref pauseMenuHideLayer, ref pauseMenuFontSize, ref pauseMenuFontColor);
+            InternalCall.m_InternalGetTextComponent((uint)pMenuID, out pauseMenuText, out pauseMenuFontFileName, out pauseMenuFontLayer, out pauseMenuFontSize, out pauseMenuFontColor);
+            InternalCall.m_InternalSetTextComponent((uint)pMenuID, pauseMenuText, pauseMenuFontFileName, pauseMenuHideLayer, pauseMenuFontSize, pauseMenuFontColor);
         }
 
         foreach (int ID in InternalCall.m_InternalCallGetTagIDs("UIQuitConfirmation"))
@@ -92,8 +91,8 @@ public class GameController : ScriptBase
             InternalCall.m_InternalCallStopAllAudio();
 
             isSceneActive = false;
-            float f = 1;
-            InternalCall.m_InternalCallSetTimeScale(ref f);
+
+            InternalCall.m_InternalCallSetTimeScale(1);
             InternalCall.m_UnloadAllScene();
             InternalCall.m_InternalCallLoadScene("MainGameplay");
         }
@@ -135,24 +134,23 @@ public class GameController : ScriptBase
 
             if (!gameIsPaused)
             {
-                float i = 0;
-                InternalCall.m_InternalCallSetTimeScale(ref i);
+
+                InternalCall.m_InternalCallSetTimeScale(0);
                 foreach (int pMenuID in pauseMenuID)
                 {
-                    InternalCall.m_InternalGetTextComponent((uint)pMenuID, ref pauseMenuText, ref pauseMenuFontFileName, ref pauseMenuFontLayer, ref pauseMenuFontSize, ref pauseMenuFontColor);
-                    InternalCall.m_InternalSetTextComponent((uint)pMenuID, pauseMenuText, pauseMenuFontFileName, ref pauseMenuShowLayer, ref pauseMenuFontSize, ref pauseMenuFontColor);
+                    InternalCall.m_InternalGetTextComponent((uint)pMenuID, out pauseMenuText, out pauseMenuFontFileName, out pauseMenuFontLayer, out pauseMenuFontSize, out pauseMenuFontColor);
+                    InternalCall.m_InternalSetTextComponent((uint)pMenuID, pauseMenuText, pauseMenuFontFileName, pauseMenuShowLayer, pauseMenuFontSize, pauseMenuFontColor);
                 }
                 gameIsPaused = true;
             }
 
             else
             {
-                float i = 1;
-                InternalCall.m_InternalCallSetTimeScale(ref i);
+                InternalCall.m_InternalCallSetTimeScale(1);
                 foreach (int pMenuID in pauseMenuID)
                 {
-                    InternalCall.m_InternalGetTextComponent((uint)pMenuID, ref pauseMenuText, ref pauseMenuFontFileName, ref pauseMenuFontLayer, ref pauseMenuFontSize, ref pauseMenuFontColor);
-                    InternalCall.m_InternalSetTextComponent((uint)pMenuID, pauseMenuText, pauseMenuFontFileName, ref pauseMenuHideLayer, ref pauseMenuFontSize, ref pauseMenuFontColor);
+                    InternalCall.m_InternalGetTextComponent((uint)pMenuID, out pauseMenuText, out pauseMenuFontFileName, out pauseMenuFontLayer, out pauseMenuFontSize, out pauseMenuFontColor);
+                    InternalCall.m_InternalSetTextComponent((uint)pMenuID, pauseMenuText, pauseMenuFontFileName, pauseMenuHideLayer, pauseMenuFontSize, pauseMenuFontColor);
                 }
                 gameIsPaused = false;
             }

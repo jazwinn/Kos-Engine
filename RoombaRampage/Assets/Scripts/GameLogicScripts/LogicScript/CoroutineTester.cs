@@ -16,7 +16,7 @@ public class CoroutineTester : ScriptBase
     {
         tempBool = false;
 
-        // Test basic Coroutine 
+        // Test basic coroutine 
         CoroutineManager.Instance.StartCoroutine(SimpleCoroutine(), "BasicTest");
 
         // Test WaitForCondition with delayed activation 

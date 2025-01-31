@@ -35,17 +35,17 @@ public class CoroutineManager : ScriptBase
 
     private CoroutineManager() { }
 
-    // Internal Coroutine representation
+    // Internal coroutine representation
     private class Coroutine
     {
-        public IEnumerator Rrefine { get; }
+        public IEnumerator Routine { get; }
         public float NextExecutionTime { get; set; }
         public bool Paused { get; set; }
         public string Tag { get; }
 
-        public Coroutine(IEnumerator rrefine, float startTime, string tag)
+        public Coroutine(IEnumerator routine, float startTime, string tag)
         {
-            Rrefine = rrefine;
+            Routine = routine;
             NextExecutionTime = startTime;
             Paused = false;
             Tag = tag;
@@ -54,89 +54,89 @@ public class CoroutineManager : ScriptBase
 
     private List<Coroutine> activeCoroutines = new List<Coroutine>();
 
-    // Starts a Coroutine
-    public void StartCoroutine(IEnumerator rrefine, string tag = null)
+    // Starts a coroutine
+    public void StartCoroutine(IEnumerator routine, string tag = null)
     {
-        activeCoroutines.Add(new Coroutine(rrefine, GetTime(), tag));
-        Log($"Starting Coroutine with tag: {tag ?? "None"}");
+        activeCoroutines.Add(new Coroutine(routine, GetTime(), tag));
+        Log($"Starting coroutine with tag: {tag ?? "None"}");
     }
 
-    // Stops a specific Coroutine
-    public void StopCoroutine(IEnumerator rrefine)
+    // Stops a specific coroutine
+    public void StopCoroutine(IEnumerator routine)
     {
-        activeCoroutines.RemoveAll(c => c.Rrefine == rrefine);
-        Log($"Stopping Coroutine: {rrefine}");
+        activeCoroutines.RemoveAll(c => c.Routine == routine);
+        Log($"Stopping coroutine: {routine}");
     }
 
-    // Stops all Coroutines
+    // Stops all coroutines
     public void StopAllCoroutines()
     {
         activeCoroutines.Clear();
-        Log("Stopping all Coroutines.");
+        Log("Stopping all coroutines.");
     }
 
-    // Stops Coroutines by tag
+    // Stops coroutines by tag
     public void StopCoroutinesByTag(string tag)
     {
         activeCoroutines.RemoveAll(c => c.Tag == tag);
-        Log($"Stopping Coroutines with tag: {tag}");
+        Log($"Stopping coroutines with tag: {tag}");
     }
 
-    // Pauses all Coroutines
+    // Pauses all coroutines
     public void PauseAllCoroutines()
     {
-        foreach (var Coroutine in activeCoroutines)
+        foreach (var coroutine in activeCoroutines)
         {
-            Coroutine.Paused = true;
+            coroutine.Paused = true;
         }
-        Log("Pausing all Coroutines.");
+        Log("Pausing all coroutines.");
     }
 
-    // Resumes all Coroutines
+    // Resumes all coroutines
     public void ResumeAllCoroutines()
     {
-        foreach (var Coroutine in activeCoroutines)
+        foreach (var coroutine in activeCoroutines)
         {
-            Coroutine.Paused = false;
+            coroutine.Paused = false;
         }
-        Log("Resuming all Coroutines.");
+        Log("Resuming all coroutines.");
     }
 
-    // Updates all active Coroutines
+    // Updates all active coroutines
     public override void Update()
     {
         float currentTime = GetTime();
         for (int i = activeCoroutines.Count - 1; i >= 0; i--)
         {
-            Coroutine Coroutine = activeCoroutines[i];
-            if (!Coroutine.Paused && currentTime >= Coroutine.NextExecutionTime)
+            Coroutine coroutine = activeCoroutines[i];
+            if (!coroutine.Paused && currentTime >= coroutine.NextExecutionTime)
             {
-                if (!Coroutine.Rrefine.MoveNext())
+                if (!coroutine.Routine.MoveNext())
                 {
-                    activeCoroutines.RemoveAt(i); // Remove finished Coroutine
+                    activeCoroutines.RemoveAt(i); // Remove finished coroutine
                     Log("Coroutine finished.");
                 }
                 else
                 {
                     // Handle yield instructions
-                    if (Coroutine.Rrefine.Current is WaitForSeconds wait)
+                    if (coroutine.Routine.Current is WaitForSeconds wait)
                     {
-                        Coroutine.NextExecutionTime = currentTime + wait.Seconds;
+                        coroutine.NextExecutionTime = currentTime + wait.Seconds;
                     }
-                    else if (Coroutine.Rrefine.Current is WaitForCondition condition)
+                    else if (coroutine.Routine.Current is WaitForCondition condition)
                     {
                         if (condition.Condition())
                         {
-                            Coroutine.NextExecutionTime = currentTime;
+                            coroutine.NextExecutionTime = currentTime;
                         }
                         else
                         {
-                            Coroutine.NextExecutionTime = currentTime + 0.1f; // Check again soon
+                            coroutine.NextExecutionTime = currentTime + 0.1f; // Check again soon
                         }
                     }
                     else
                     {
-                        Coroutine.NextExecutionTime = currentTime; // Immediate continuation
+                        coroutine.NextExecutionTime = currentTime; // Immediate continuation
                     }
                 }
             }

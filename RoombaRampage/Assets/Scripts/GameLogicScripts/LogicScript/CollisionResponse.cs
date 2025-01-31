@@ -14,9 +14,9 @@ public class CollisionResponse : ScriptBase
     {
         EntityID = id;
 
-        //InternalCall.m_InternalGetTransformComponent(EntityID, ref startingPlayerPos, ref startingPlayerScale, ref startingPlayerRotate);
-        //InternalCall.m_InternalGetRigidBodyComponent(EntityID, ref playerVelocity, ref playerAcceleration, ref playerRotationalForce);
-        //InternalCall.m_InternalGetColliderComponent(EntityID, ref colSize, ref colOffset, ref colDraw, ref colRadius, ref colFlag, ref isCollided, ref colCheck);
+        //InternalCall.m_InternalGetTransformComponent(EntityID, out startingPlayerPos, out startingPlayerScale, out startingPlayerRotate);
+        //InternalCall.m_InternalGetRigidBodyComponent(EntityID, out playerVelocity, out playerAcceleration, out playerRotationalForce);
+        //InternalCall.m_InternalGetColliderComponent(EntityID, out colSize, out colOffset, out colDraw, out colRadius, out colFlag, out isCollided, out colCheck);
     }
 
     private Vector2 startingPlayerPos;
@@ -50,15 +50,15 @@ public class CollisionResponse : ScriptBase
         //if (InternalCall.m_InternalCallGetTagIDs("Wall") != null)
         //{
         //    int[] wallEntities = InternalCall.m_InternalCallGetTagIDs("Wall");
-        //    foreach (int wallEntitiesID ref wallEntities)
+        //    foreach (int wallEntitiesID in wallEntities)
         //    {
         //        Vector2 wallSize, wallOffset, wallPos, wallScale;
         //        float wallRadius, wallRotate, wallCollided;
         //        bool wallDraw, wallCheck;
         //        int wallFlag;
 
-        //        InternalCall.m_InternalGetColliderComponent((uint)wallEntitiesID, ref wallSize, ref wallOffset, ref wallDraw, ref wallRadius, ref wallFlag, ref wallCollided, ref wallCheck);
-        //        InternalCall.m_InternalGetTransformComponent((uint)wallEntitiesID, ref wallPos, ref wallScale, ref wallRotate);
+        //        InternalCall.m_InternalGetColliderComponent((uint)wallEntitiesID, out wallSize, out wallOffset, out wallDraw, out wallRadius, out wallFlag, out wallCollided, out wallCheck);
+        //        InternalCall.m_InternalGetTransformComponent((uint)wallEntitiesID, out wallPos, out wallScale, out wallRotate);
 
         //        float xMin = wallPos.X + wallOffset.X - (wallSize.X * wallScale.X) / 2;
         //        float xMax = wallPos.X + wallOffset.X + (wallSize.X * wallScale.X) / 2;
@@ -76,10 +76,10 @@ public class CollisionResponse : ScriptBase
 
 
         //        Vector2 playerVelocity;
-        //        InternalCall.m_InternalGetVelocity(EntityID, ref playerVelocity);
+        //        InternalCall.m_InternalGetVelocity(EntityID, out playerVelocity);
         //        Vector2 startingPlayerPos, startingPlayerScale;
         //        float startingPlayerRotate;
-        //        InternalCall.m_InternalGetTransformComponent(EntityID, ref startingPlayerPos, ref startingPlayerScale, ref startingPlayerRotate);
+        //        InternalCall.m_InternalGetTransformComponent(EntityID, out startingPlayerPos, out startingPlayerScale, out startingPlayerRotate);
 
 
         //        int steps = InternalCall.m_InternalCallGetSteps();
@@ -114,7 +114,7 @@ public class CollisionResponse : ScriptBase
         //            // Determine the closest edge
         //            float minDist = Math.Min(Math.Min(distLeft, distRight), Math.Min(distTop, distBottom));
 
-        //            // Push the circle refside the closest edge
+        //            // Push the circle outside the closest edge
         //            if (minDist == distLeft)
         //            {
         //                cxStart = exMin - circleRadius; // Push left
@@ -134,7 +134,7 @@ public class CollisionResponse : ScriptBase
 
         //            // Update the entity's position
         //            Vector2 newPos = new Vector2(cxStart, cyStart);
-        //            InternalCall.m_InternalSetTranslate(EntityID, ref newPos);
+        //            InternalCall.m_InternalSetTranslate(EntityID, in newPos);
         //            continue;
         //        }
         //        else if ((cxStart > exMin && cxStart < exMax && cyStart < eyMax && cyStart > eyMin)) // Slightly Outside
@@ -159,10 +159,10 @@ public class CollisionResponse : ScriptBase
         //            // Calculate the distance from the circle's center to the closest point on the AABB
         //            float distance = (float)Math.Sqrt(offsetX * offsetX + offsetY * offsetY);
 
-        //            // If the circle is overlapping the AABB, move it refside
+        //            // If the circle is overlapping the AABB, move it outside
         //            if (distance < circleRadius)
         //            {
-        //                // Calculate the amount to push the circle refside of the AABB
+        //                // Calculate the amount to push the circle outside of the AABB
         //                float pushDistance = circleRadius - distance;
 
         //                // Normalize the offset to get the direction
@@ -173,7 +173,7 @@ public class CollisionResponse : ScriptBase
         //                float normalizedX = offsetX / distance;
         //                float normalizedY = offsetY / distance;
 
-        //                // Apply the push to the circle’s position (move it refside the AABB)
+        //                // Apply the push to the circle’s position (move it outside the AABB)
         //                cxStart += normalizedX * pushDistance * 1.01f;
         //                cyStart += normalizedY * pushDistance * 1.01f;
 
@@ -183,7 +183,7 @@ public class CollisionResponse : ScriptBase
         //                Vector2 newPos;
         //                newPos.X = cxStart;
         //                newPos.Y = cyStart;
-        //                InternalCall.m_InternalSetTranslate(EntityID, ref newPos);
+        //                InternalCall.m_InternalSetTranslate(EntityID, in newPos);
         //            }
         //            continue;
         //        }
@@ -233,7 +233,7 @@ public class CollisionResponse : ScriptBase
         //            newPos.X = newPosX;
         //            newPos.Y = newPosY;
 
-        //            InternalCall.m_InternalSetTranslate(EntityID, ref newPos);
+        //            InternalCall.m_InternalSetTranslate(EntityID, in newPos);
 
         //            Vector2 movement;
 
