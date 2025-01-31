@@ -1230,7 +1230,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEGRIDCOMPONENT)) {
 
                     auto* grid = static_cast<ecs::GridComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEGRIDCOMPONENT]->m_GetEntityComponent(entityID));
-                    auto* transform = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(entityID));
+                    //auto* transform = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(entityID)); //unused
                     
                     if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEGRIDCOMPONENT)) {
                         auto* rbc = static_cast<ecs::GridComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEGRIDCOMPONENT]->m_GetEntityComponent(entityID));
@@ -1454,24 +1454,24 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
 
                     int _count{};
-                    for (auto it = rcc->m_raycast.begin(); it != rcc->m_raycast.end(); it++) {
+                    for (auto it2 = rcc->m_raycast.begin(); it2 != rcc->m_raycast.end(); it2++) {
                         ImGui::PushID(_count);
-                        it->ApplyFunction(DrawComponents(it->Names()));
+                        it2->ApplyFunction(DrawComponents(it2->Names()));
 
                         if (ImGui::Button("+ Layer")) {
-                            it->m_Layers.push_back((layer::LAYERS)0);
+                            it2->m_Layers.push_back((layer::LAYERS)0);
                         }
 
                         ImGui::SameLine();
-                        if (it->m_Layers.size() > 0 && ImGui::Button("- Layer")) {
-                            it->m_Layers.pop_back();
+                        if (it2->m_Layers.size() > 0 && ImGui::Button("- Layer")) {
+                            it2->m_Layers.pop_back();
                             ImGui::PopID();
                             break;
 
                         }
                         ImGui::SameLine();
                         if (ImGui::Button(" Delete Ray")) {
-                            rcc->m_raycast.erase(it);
+                            rcc->m_raycast.erase(it2);
                             ImGui::PopID();
                             break;
                         }
@@ -1486,11 +1486,11 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
             }
 
             if (EntitySignature.test(ecs::TYPEPATHFINDINGCOMPONENT)) {
-                bool open = ImGui::CollapsingHeader("Pathfinding Component");
+                bool openPC = ImGui::CollapsingHeader("Pathfinding Component");
 
                 CreateContext(ecs::TYPEPATHFINDINGCOMPONENT, entityID);
 
-                if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEPATHFINDINGCOMPONENT)) {
+                if (openPC && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEPATHFINDINGCOMPONENT)) {
                     auto* pfc = static_cast<ecs::PathfindingComponent*>(
                         ecs->m_ECS_CombinedComponentPool[ecs::TYPEPATHFINDINGCOMPONENT]->m_GetEntityComponent(entityID)
                         );
