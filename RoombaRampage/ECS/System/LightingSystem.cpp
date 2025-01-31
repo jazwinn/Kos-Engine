@@ -50,7 +50,7 @@ namespace ecs {
 	{
 		//ECS* ecs = ECS::GetInstance();
 		graphicpipe::GraphicsPipe* graphicsPipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
-		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+		//assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
 
 		if (m_vecLightingComponentPtr.size() != m_vecTransformComponentPtr.size()) {
 			LOGGING_ERROR("Error: Vectors container size does not Match");

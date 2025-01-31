@@ -4,14 +4,14 @@
             "namestr": "FearlessEnemy",
             "layer": 2,
             "isprefab": true,
-            "tagstr": "Default",
+            "tagstr": "Enemy",
             "prefabname": "FearlessEnemy.prefab",
             "issync": true
         },
         "transform": {
             "position": {
-                "x": -22.694637298583984,
-                "y": -21.104204177856445
+                "x": 0.8181537389755249,
+                "y": -7.522530555725098
             },
             "rotation": -0.0,
             "scale": {
@@ -21,6 +21,7 @@
         },
         "collider": {
             "checkcollision": true,
+            "checkresponse": true,
             "size": {
                 "x": 0.7400000095367432,
                 "y": 0.23999999463558197
@@ -64,7 +65,7 @@
         },
         "sprite": {
             "imagefile": "ani_scientistWalk_strip14.png",
-            "layer": 23,
+            "layer": 28,
             "color": {
                 "r": 1.0,
                 "g": 1.0,
@@ -90,6 +91,11 @@
                             "base64": ""
                         }
                     ]
+                },
+                {
+                    "name": "PlayerMeleeKillZone",
+                    "enabled": false,
+                    "map": []
                 }
             ]
         },
@@ -117,17 +123,6 @@
                     ]
                 }
             ]
-        },
-        "pathfinding": {
-            "startPosition": {
-                "x": 2.0,
-                "y": 0.0
-            },
-            "targetPosition": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "gridKey": 0
         },
         "children": [
             {

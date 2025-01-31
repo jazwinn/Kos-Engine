@@ -69,7 +69,7 @@ namespace script {
 	}
 
 	//Collider Component
-	bool InternalCall::m_InternalGetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, unsigned int* m_blockedFlag, float* isCollided, bool* collisionCheck)
+	bool InternalCall::m_InternalGetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, unsigned int* m_blockedFlag, float* isCollided, bool* collisionCheck, bool* collisionresponse)
 	{
 		auto* collider = static_cast<ecs::ColliderComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(entity));
 
@@ -81,12 +81,13 @@ namespace script {
 		*radius = collider->m_radius;
 		*isCollided = collider->m_isCollided;
 		*m_blockedFlag = collider->m_blockedFlag;
-		*collisionCheck = collider->m_CollisionCheck;
+		*collisionCheck = collider->m_collisionCheck;
+		*collisionresponse = collider->m_collisionResponse;
 
 		return true;
 	}
 
-	bool InternalCall::m_InternalSetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, unsigned int* m_blockedFlag, float* isCollided, bool* collisionCheck)
+	bool InternalCall::m_InternalSetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, unsigned int* m_blockedFlag, float* isCollided, bool* collisionCheck, bool* collisionresponse)
 	{
 		auto* collider = static_cast<ecs::ColliderComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(entity));
 
@@ -98,8 +99,8 @@ namespace script {
 		collider->m_radius = *radius;
 		collider->m_isCollided = *isCollided;
 		collider->m_blockedFlag = *m_blockedFlag;
-		collider->m_CollisionCheck = *collisionCheck;
-
+		collider->m_collisionResponse = *collisionresponse;
+		collider->m_collisionCheck = *collisionCheck;
 
 		return true;
 	}
@@ -354,7 +355,7 @@ namespace script {
 		return scriptArray;
 	}
 
-	bool InternalCall::m_InternalAddScriptInstance(ecs::EntityID entity, MonoString* monoScriptName, MonoObject* instance)
+	bool InternalCall::m_InternalAddScriptInstance([[maybe_unused]] ecs::EntityID entity, [[maybe_unused]] MonoString* monoScriptName,[[maybe_unused]] MonoObject* instance)
 	{
 		//ecs::ECS* ecs = ecs::ECS::m_GetInstance();
 		//auto* scriptComponent = static_cast<ecs::ScriptComponent*>(
@@ -443,6 +444,24 @@ namespace script {
 		}
 
 
+		return -1;
+	}
+
+	int InternalCall::m_InternalGetEntityIdFromGridKey(int gridkey) {
+		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+		for (const auto& scene : ecs->m_ECS_SceneMap) {
+			if (scene.second.m_isPrefab == false && scene.second.m_isActive) {
+				for (const auto& id : scene.second.m_sceneIDs) {
+					ecs::GridComponent* gc = static_cast<ecs::GridComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEGRIDCOMPONENT]->m_GetEntityComponent(id));
+					if (gc != NULL)
+					{
+						if (gc->m_GridKey == gridkey) {
+							return gc->m_Entity;
+						}
+					}
+				}
+			}
+		}
 		return -1;
 	}
 
@@ -752,7 +771,7 @@ namespace script {
 			auto* cc = static_cast<ecs::ColliderComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(ids));
 
 			if (cc != NULL) {
-				if (cc->m_CollisionCheck) {
+				if (cc->m_collisionResponse) {
 					results.push_back(ids);
 				}
 			}
@@ -841,6 +860,33 @@ namespace script {
 		return true;
 	}
 
+	// Grid Component
+	bool InternalCall::m_InternalGetGridComponent(ecs::EntityID entity, vector2::Vec2* anchor, int* gridRowLength, int* gridColumnLength, bool* setCollidable, int* gridKey) {
+		auto* gridComponent = static_cast<ecs::GridComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPEGRIDCOMPONENT]->m_GetEntityComponent(entity));
+		if (!gridComponent) return false;
+
+		*anchor = gridComponent->m_Anchor;
+		*gridRowLength = gridComponent->m_GridRowLength;
+		*gridColumnLength = gridComponent->m_GridColumnLength;
+		*setCollidable = gridComponent->m_SetCollidable;
+		*gridKey = gridComponent->m_GridKey;
+
+		return true;
+	}
+
+	bool InternalCall::m_InternalSetGridComponent(ecs::EntityID entity, vector2::Vec2* anchor, int* gridRowLength, int* gridColumnLength, bool* setCollidable, int* gridKey) {
+		auto* gridComponent = static_cast<ecs::GridComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPEGRIDCOMPONENT]->m_GetEntityComponent(entity));
+		if (!gridComponent) return false;
+
+		gridComponent->m_Anchor = *anchor;
+		gridComponent->m_GridRowLength = *gridRowLength;
+		gridComponent->m_GridColumnLength = *gridColumnLength;
+		gridComponent->m_SetCollidable = *setCollidable;
+		gridComponent->m_GridKey = *gridKey;
+
+		return true;
+	}
+
 	bool InternalCall::m_InternalCallGetPathfinding(ecs::EntityID id, vector2::Vec2* m_startpos, vector2::Vec2* m_startend, int* gridkey, MonoArray** nodeArray_x, MonoArray** nodeArray_y)
 	{
 		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
@@ -854,7 +900,7 @@ namespace script {
 
 			*gridkey = pfc->m_GridKey;
 
-			auto* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+			//auto* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
 
 
 			*nodeArray_x = mono_array_new(assetmanager::AssetManager::m_funcGetInstance()->m_scriptManager.m_GetDomain(), mono_get_int32_class(), pfc->m_Path.size());
@@ -914,6 +960,14 @@ namespace script {
 		 return dt;
 	}
 
+	void InternalCall::m_GetNameComponent(ecs::EntityID id, void** outptr)
+	{
+
+		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+		ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id));
+		*outptr = static_cast<void*>(nc); // Assign pointer to output parameter
+
+	}
 
 
 	void InternalCall::m_InternalCallDeleteEntity(ecs::EntityID id)
@@ -1034,7 +1088,8 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_getAccumulatedDeltaTime);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallGetSteps);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallGetGameTime);
-
+		MONO_ADD_INTERNAL_CALL(m_InternalGetGridComponent);
+		MONO_ADD_INTERNAL_CALL(m_InternalSetGridComponent);
 
 		MONO_ADD_INTERNAL_CALL(m_EnableScript);
 		MONO_ADD_INTERNAL_CALL(m_DisableScript);
@@ -1048,5 +1103,9 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_DisableLayer);
 
 		MONO_ADD_INTERNAL_CALL(m_InternalCallSetTargetPathfinding);
+
+		MONO_ADD_INTERNAL_CALL(m_GetNameComponent);
+
+		MONO_ADD_INTERNAL_CALL(m_InternalGetEntityIdFromGridKey);
 	}
 }

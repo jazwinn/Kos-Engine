@@ -21,6 +21,7 @@
         },
         "collider": {
             "checkcollision": true,
+            "checkresponse": true,
             "size": {
                 "x": 0.7400000095367432,
                 "y": 0.23999999463558197

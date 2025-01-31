@@ -32,6 +32,25 @@ public enum CollisionFlag
     DOWN = 1 << 3,
 
 }
+
+
+[StructLayout(LayoutKind.Sequential)]
+public struct NameComponent
+{
+    [MarshalAs(UnmanagedType.LPStr)]
+    public string m_entityName;
+
+    public uint m_Layer;
+    public bool m_isPrefab;
+    public bool m_syncPrefab;
+
+    [MarshalAs(UnmanagedType.LPStr)]
+    public string m_prefabName;
+
+    [MarshalAs(UnmanagedType.LPStr)]
+    public string m_entityTag;
+}
+
 public class TransformComponent
 {
     public Vector2 m_position;
@@ -64,6 +83,7 @@ public class ColliderComponent
     public Vector2 m_Size;
     public Vector2 m_Offset;
     public bool m_drawDebug;
+    public bool m_collisionResponse;
     public bool m_collisionCheck;
     public float m_radius;
     public float m_isCollided;
@@ -137,4 +157,14 @@ public class Raycast
     [MarshalAs(UnmanagedType.I1)]
     public bool m_targetReached;
     public Vector2 m_hitPosition;
+}
+
+public class GridComponent
+{
+    public Vector2 m_Anchor;
+    public int m_GridRowLength;
+    public int m_GridColumnLength;
+    public bool m_SetCollidable;
+    public int m_GridKey;
+    public List<List<int>> m_IsWall;
 }

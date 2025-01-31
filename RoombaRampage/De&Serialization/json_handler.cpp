@@ -239,7 +239,8 @@ namespace Serialization {
 			ecs::ColliderComponent* cc = static_cast<ecs::ColliderComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(entityId));
 			if (cc) {
 				rapidjson::Value collider(rapidjson::kObjectType);
-				collider.AddMember("checkcollision", cc->m_CollisionCheck, allocator);
+				collider.AddMember("checkcollision", cc->m_collisionCheck, allocator);
+				collider.AddMember("checkresponse", cc->m_collisionResponse, allocator);
 				collider.AddMember("size", rapidjson::Value().SetObject()
 					.AddMember("x", cc->m_Size.m_x, allocator)
 					.AddMember("y", cc->m_Size.m_y, allocator), allocator);
@@ -590,26 +591,26 @@ namespace Serialization {
 				// Create an array to store script objects
 				rapidjson::Value rayArray(rapidjson::kArrayType);
 
-				for (const auto& raycast : rc->m_raycast) {
+				for (const auto& raycast2 : rc->m_raycast) {
 					// Create an object for each script
 					rapidjson::Value raycastObject(rapidjson::kObjectType);
 					
 					rapidjson::Value raycastID;
-					raycastID.SetString(raycast.m_rayID.c_str(), allocator);
+					raycastID.SetString(raycast2.m_rayID.c_str(), allocator);
 					raycastObject.AddMember("raycastID", raycastID, allocator);
 
 
 					// Add the boolean value to the object
-					raycastObject.AddMember("israycasting", raycast.m_isRaycasting, allocator);
+					raycastObject.AddMember("israycasting", raycast2.m_isRaycasting, allocator);
 
 					raycastObject.AddMember("targetposition", rapidjson::Value().SetObject()
-						.AddMember("x", raycast.m_targetPosition.m_x, allocator)
-						.AddMember("y", raycast.m_targetPosition.m_y, allocator), allocator);
+						.AddMember("x", raycast2.m_targetPosition.m_x, allocator)
+						.AddMember("y", raycast2.m_targetPosition.m_y, allocator), allocator);
 
-					if (raycast.m_Layers.size() > 0) {
+					if (raycast2.m_Layers.size() > 0) {
 						rapidjson::Value layerArray(rapidjson::kArrayType);
 
-						for (const auto layer : raycast.m_Layers) {
+						for (const auto layer : raycast2.m_Layers) {
 							rapidjson::Value layerObject(rapidjson::kObjectType);
 
 							layerObject.AddMember("layer", (int)layer, allocator);
@@ -763,7 +764,10 @@ namespace Serialization {
 					cc->m_type = (physicspipe::EntityType)collider["shapetype"].GetInt();
 				}
 				if (collider.HasMember("checkcollision")) {
-					cc->m_CollisionCheck = collider["checkcollision"].GetBool();
+					cc->m_collisionCheck = collider["checkcollision"].GetBool();
+				}
+				if (collider.HasMember("checkresponse")) {
+					cc->m_collisionResponse = collider["checkresponse"].GetBool();
 				}
 			}
 		}

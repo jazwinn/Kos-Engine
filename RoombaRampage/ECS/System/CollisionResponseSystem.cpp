@@ -111,6 +111,9 @@ namespace ecs {
 			//skip component not of the scene
 			if ((rigidComp->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer)) continue;
 
+
+			
+
 			EntityID obj1_EntityID = rigidComp->m_Entity;
 
 			std::vector<EntityID> colidedwith;
@@ -124,8 +127,8 @@ namespace ecs {
 
 				auto valit = std::find_if(vecCollisionEntityPairWithVector.begin(), vecCollisionEntityPairWithVector.end(), [&](const auto& x) { 
 					
-					if (x.first.first.get()->m_ID == obj1_EntityID) {
-						if (std::find(colidedwith.begin(), colidedwith.end(), x.first.second.get()->m_ID) == colidedwith.end()) return true;
+					if (static_cast<ecs::EntityID>(x.first.first.get()->m_ID) == obj1_EntityID) {
+						if (std::find(colidedwith.begin(), colidedwith.end(), static_cast<ecs::EntityID>(x.first.second.get()->m_ID)) == colidedwith.end()) return true;
 					}
 					return false;
 					
@@ -135,8 +138,8 @@ namespace ecs {
 
 					valit = std::find_if(vecCollisionEntityPairWithVector.begin(), vecCollisionEntityPairWithVector.end(), [&](const auto& x) {
 
-						if (x.first.second.get()->m_ID == obj1_EntityID) {
-							if (std::find(colidedwith.begin(), colidedwith.end(), x.first.first.get()->m_ID) == colidedwith.end()) return true;
+						if (static_cast<ecs::EntityID>(x.first.second.get()->m_ID) == obj1_EntityID) {
+							if (std::find(colidedwith.begin(), colidedwith.end(), static_cast<ecs::EntityID>(x.first.first.get()->m_ID)) == colidedwith.end()) return true;
 						}
 						return false;
 
@@ -157,6 +160,10 @@ namespace ecs {
 
 				colidedwith.push_back(obj2_EntityID);
 
+				if (std::find(ColComp->m_collidedWith.begin(), ColComp->m_collidedWith.end(), static_cast<ecs::EntityID>(obj2_EntityID)) == ColComp->m_collidedWith.end()) {
+					ColComp->m_collidedWith.push_back(obj2_EntityID);
+				}
+				
 
 				//if (std::find(respondedids.begin(), respondedids.end(), obj2_EntityID) != respondedids.end()) continue;
 
@@ -170,10 +177,10 @@ namespace ecs {
 				obj2_CC->m_isCollided = 1.0f;
 				ColComp->m_isCollided = 1.f;
 
-				if (ColComp->m_CollisionCheck == false && obj2_CC->m_CollisionCheck == false)
+				if (ColComp->m_collisionResponse == false && obj2_CC->m_collisionResponse == false)
 					continue;
 
-				if (ColComp->m_CollisionCheck && obj2_CC->m_CollisionCheck && rigidComp != NULL && obj2_RC != NULL) {
+				if (ColComp->m_collisionResponse && obj2_CC->m_collisionResponse && rigidComp != NULL && obj2_RC != NULL) {
 					if (swap) {
 						transform->m_position += (valit->second.first * valit->second.second);
 						obj2_TC->m_position += (-valit->second.first * valit->second.second);
@@ -192,7 +199,7 @@ namespace ecs {
 
 				if (std::find_if(m_vecRigidBodyComponentPtr.begin(), m_vecRigidBodyComponentPtr.end(), [obj2_EntityID](const auto& obj) { return obj->m_Entity == obj2_EntityID; })
 					!= m_vecRigidBodyComponentPtr.end()) {
-					if (obj2_CC->m_CollisionCheck) {
+					if (obj2_CC->m_collisionResponse) {
 						vector2::Vec2 toMove{};
 						if (swap) {
 							toMove = -valit->second.first * valit->second.second; //DISTANCE TO SHIFT BACK
@@ -209,7 +216,7 @@ namespace ecs {
 
 				if (std::find_if(m_vecRigidBodyComponentPtr.begin(), m_vecRigidBodyComponentPtr.end(), [obj1_EntityID](const auto& obj) { return obj->m_Entity == obj1_EntityID; })
 					!= m_vecRigidBodyComponentPtr.end()) {
-					if (ColComp->m_CollisionCheck) {
+					if (ColComp->m_collisionResponse) {
 						vector2::Vec2 toMove{};
 						if (swap) {
 							toMove = valit->second.first * valit->second.second;
@@ -237,13 +244,13 @@ namespace ecs {
 
 
 
-			const EntityID check_ID = ColComp->m_Entity;
-			const auto& iterator = std::find_if(vecCollisionEntityPair.begin(), vecCollisionEntityPair.end(), [check_ID](const auto pair) { return (static_cast<int>(check_ID) == pair.first->m_ID); });
-			if (iterator != vecCollisionEntityPair.end()) {
-				ColComp->m_collidedWith.push_back(iterator->second->m_ID);
-				ColComp->m_isCollided = true;
-				ColComp->m_blockedFlag = iterator->first->m_collisionFlags;
-			}
+			//const EntityID check_ID = ColComp->m_Entity;
+			//const auto& iterator = std::find_if(vecCollisionEntityPair.begin(), vecCollisionEntityPair.end(), [check_ID](const auto pair) { return (static_cast<int>(check_ID) == pair.first->m_ID); });
+			//if (iterator != vecCollisionEntityPair.end()) {
+			//	ColComp->m_collidedWith.push_back(iterator->second->m_ID);
+			//	ColComp->m_isCollided = true;
+			//	ColComp->m_blockedFlag = iterator->first->m_collisionFlags;
+			//}
 
 		}
 		//if (!vecCollisionEntityPairWithVector.empty()) {

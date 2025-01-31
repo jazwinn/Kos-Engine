@@ -54,7 +54,7 @@ namespace ecs {
 	{
 		ECS* ecs = ECS::m_GetInstance();
 		graphicpipe::GraphicsPipe* graphicsPipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
-		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+		//assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance(); //commented cuz unused
 
 		if (m_vecGridComponentPtr.size() != m_vecTransformComponentPtr.size()) {
 			LOGGING_ERROR("Error: Vectors container size does not match");
@@ -68,7 +68,7 @@ namespace ecs {
 			TransformComponent* transform = m_vecTransformComponentPtr[n];
 			GridComponent* grid = m_vecGridComponentPtr[n];
 			NameComponent* NameComp = m_vecNameComponentPtr[n];
-			graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
+			//graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance(); //unused
 
 
 			//skip component not of the scene

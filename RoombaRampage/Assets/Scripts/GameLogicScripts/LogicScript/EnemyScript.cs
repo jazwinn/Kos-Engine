@@ -42,6 +42,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     private ColliderComponent collComp;
     private TransformComponent transformComp;
     private TransformComponent playerTransformComp;
+    private GridComponent gridComp;
     #endregion
 
     #region Sprite Variables
@@ -77,7 +78,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
     public override void Start() //Called once at the start of the game
     {
-
+        
         UpdateComponentValues();
         playerID = (uint)InternalCall.m_InternalCallGetTagID("Player"); //Get Player ID
 
@@ -128,13 +129,13 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         currentState = CheckEnemyType(); //Checks enemy type to start off new state
 
         childrenIDList = InternalCall.m_InternalCallGetChildrenID(EntityID); //Gets waypoints for enemy, will be null/empty if there are no children waypoints
-
+        World2GridCoordinates(1.5f,2.5f,1);
     }
 
     public override void Update() //Runs every frame
     {
-        //CheckForCollisions(); //Checks for collisions in the event an enemy touches the player
-    
+        CheckForCollisions(); //Checks for collisions in the event an enemy touches the player
+        
         currentState.DoActionUpdate(InternalCall.m_InternalCallGetDeltaTime()); //Update the current state's DoActionUpdate function, such as patrolling, chasing etc, with delta time
     }
 
@@ -194,10 +195,13 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     #region Collisions
     private void CheckForCollisions()
     {
+        
         if (InternalCall.m_InternalCallIsCollided(EntityID) != 0.0f)
         {
+            
             int[] collidedEntities = InternalCall.m_InternalCallGetCollidedEntities(EntityID);
 
+            
             foreach (int collidedEntitiesID in collidedEntities)
             {
                 switch (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID))
@@ -257,46 +261,58 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
     private IEnumerator EnemyDeath() //Coroutine for enemy death
     {
-        currentState.PlayerDead();
+        currentState.EnemyDead();
 
         InternalCall.m_InternalCallPlayAudio(EntityID, "aud_humanDeath01"); //Plays enemy death sound
 
         collComp.m_collisionCheck = !collComp.m_collisionCheck; //Disables collision check
+        //collComp.m_collisionResponse = false;
         SetComponent.SetCollisionComponent(EntityID, collComp); //Sets collider of enemy
 
         InternalCall.m_InternalSetAnimationComponent(EntityID, 0, 0, 0, false, 1); //Stops animation of enemy
         SetDeadEnemySprite(); //Sets dead sprite
 
-        Vector2 direction; //Creates temp Vector2
+        transformComp = Component.Get<TransformComponent>(EntityID);
+        //playerTransformComp = Component.Get<TransformComponent>(playerID);
 
-        TransformComponent tempTransformComp = GetComponent.GetTransformComponent(EntityID); //Gets Transform of Enemy
-        TransformComponent tempPlayerTransformComp = GetComponent.GetTransformComponent(EntityID); //Gets transform of Player
+        Vector2 direction;
 
-        direction.X = tempTransformComp.m_position.X - tempPlayerTransformComp.m_position.X; //Gets direction of travel for X
-        direction.Y = tempTransformComp.m_position.Y - tempPlayerTransformComp.m_position.Y; //Gets direction of travel for X
+        //Gets direction to look towards
+        direction.X = (transformComp.m_position.X - playerTransformComp.m_position.X); //Gets Vector.X towards player
+        direction.Y = (transformComp.m_position.Y - playerTransformComp.m_position.Y); //Gets Vector.Y towards player
 
-        float rotationFloat = (float)(Math.Atan2(direction.X, direction.Y) * (180 / Math.PI)); //Gets rotation values based on direction
+        float rotationFloat = (float)(Math.Atan2(direction.X, direction.Y) * (180 / Math.PI)); //Gets rotation towards player
 
-        tempTransformComp.m_rotation = rotationFloat; //Sets rotation value in stored variable
-        SetComponent.SetTransformComponent(EntityID, tempTransformComp); //Sets new transform component
+        transformComp.m_rotation = rotationFloat; //Sets rotation values
 
-        float rotationInRadians = (float)((rotationFloat) * Math.PI / 180.0); //Convert into radians
+        SetComponent.SetTransformComponent(EntityID, transformComp); //Sets transform component
 
-        float forwardX = (float)(Math.Sin(rotationInRadians)); //Get forward vector X
+        direction.X = (transformComp.m_position.X - playerTransformComp.m_position.X); //Gets Vector.X away from player
+        direction.Y = (transformComp.m_position.Y - playerTransformComp.m_position.Y); //Gets Vector.Y away from player
 
-        float forwardY = (float)(Math.Cos(rotationInRadians)); //Get forward vector Y
+        rotationFloat = (float)(Math.Atan2(direction.X, direction.Y) * (180 / Math.PI)); //Gets rotation away player
 
-        movement.X = 0 + forwardX * enemyDeathKnockbackMultiplier; //Pushes enemy back for "knockback effect"
-        movement.Y = 0 + forwardY * enemyDeathKnockbackMultiplier; //Pushes enemy back for "knockback effect"
+        //Convert into radians
+        float rotationInRadians = (float)((rotationFloat) * Math.PI / 180.0);
 
-        InternalCall.m_InternalSetVelocity(EntityID, movement); //Sets velocity for rigidbody to move
+        //Get forward vector X
+        float forwardX = (float)(Math.Sin(rotationInRadians));
 
-        isDead = true; //Sets enemy to dead status
-        tempTransformComp = GetComponent.GetTransformComponent(EntityID); //Gets new transform component after moving
+        //Get forward vector Y
+        float forwardY = (float)(Math.Cos(rotationInRadians));
 
+         movement.X = 0 + forwardX * 0.4f ; //Pushes enemy back for "knockback effect"
+         movement.Y = 0 + forwardY * 0.4f; //Pushes enemy back for "knockback effect"
+
+         InternalCall.m_InternalSetVelocity(EntityID, movement); //Sets velocity for rigidbody to move
+
+        // isDead = true; //Sets enemy to dead status
+        transformComp = Component.Get<TransformComponent>(EntityID);
+
+        
         yield return new CoroutineManager.WaitForSeconds(enemyBloodPoolSpawnDelay); //Waits for time before moving to next line;
 
-        InternalCall.m_InternalCallAddPrefab("prefab_enemyBloodPool", tempTransformComp.m_position.X, tempTransformComp.m_position.Y, tempTransformComp.m_rotation); //Spawns blood pool
+        InternalCall.m_InternalCallAddPrefab("prefab_enemyBloodPool", transformComp.m_position.X, transformComp.m_position.Y, transformComp.m_rotation); //Spawns blood pool
     }
     #endregion
 
@@ -333,7 +349,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
     #endregion
 
-    #region Component Handlers
+    #region Component Handlers  
     private void UpdateComponentValues()
     {
             spriteComp = Component.Get<SpriteComponent>(EntityID);
@@ -342,7 +358,8 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
             collComp = Component.Get<ColliderComponent>(EntityID);
             transformComp = Component.Get<TransformComponent>(EntityID);
             playerTransformComp = Component.Get<TransformComponent>(playerID);
-            //pathFindComp = Component.Get<PathfindingComponent>(EntityID);  
+            pathFindComp = Component.Get<PathfindingComponent>(EntityID);
+            gridComp = Component.Get<GridComponent>(EntityID);
     }
     #endregion
 
@@ -359,6 +376,29 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         return distance <= tolerance;
 
     }
+
+    public Vector2 Grid2WorldCoordinates(int gridx, int gridy, int gridkey)
+    {
+        int gridid = InternalCall.m_InternalGetEntityIdFromGridKey(gridkey);
+        GridComponent gridComponent = Component.Get<GridComponent>((uint)gridid);
+        float worldX = gridComponent.m_Anchor.X + (gridx * gridComponent.m_GridColumnLength) + 0.5f;
+        float worldY = gridComponent.m_Anchor.Y - (gridy * gridComponent.m_GridRowLength) - 0.5f;
+
+        return new Vector2(worldX, worldY); //This is the World Coordinates from the Grid Coordinates
+    }
+
+    public Vector2 World2GridCoordinates(float worldX, float worldY, int gridkey)
+    {
+        int gridid = InternalCall.m_InternalGetEntityIdFromGridKey(gridkey);
+        GridComponent gridComponent = Component.Get<GridComponent>((uint)gridid);
+        int gridX = (int)Math.Floor(worldX) - (int)gridComponent.m_Anchor.X;
+        int gridY = (int)gridComponent.m_Anchor.Y - (int)Math.Floor(worldY) - 1;
+        Console.WriteLine(gridX);
+        Console.WriteLine(gridY);
+
+        return new Vector2(gridX, gridY); //This is the Grid Coordinates from the World Coordinates
+    }
+
 
     #endregion
 

@@ -768,7 +768,7 @@ namespace physicspipe {
 				return false;
 			}
 
-			float axisDepth = std::min(maxB - minA, maxA - minB);
+			//float axisDepth = std::min(maxB - minA, maxA - minB); //unused
 
 		}
 
@@ -942,7 +942,7 @@ namespace physicspipe {
 			if (entity->type == EntityType::RECTANGLE) {
 
 				if (std::find(layer.begin(), layer.end(), (layer::LAYERS)entity->m_layerID) == layer.end())continue; // return any entity that is not a part of the req layer
-				if (id == entity->m_ID) continue;
+				if (id == static_cast<ecs::EntityID>(entity->m_ID)) continue;
 
 				auto entityshape = std::dynamic_pointer_cast<Rectangle>(entity);
 				if (LineRectangleIntersect(p1, p2, entityshape->m_boundingBox.m_min, entityshape->m_boundingBox.m_max, hitPosition)) {

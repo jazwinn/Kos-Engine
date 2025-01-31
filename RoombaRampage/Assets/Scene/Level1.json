@@ -56348,6 +56348,7 @@
         },
         "collider": {
             "checkcollision": true,
+            "checkresponse": true,
             "size": {
                 "x": 1.0,
                 "y": 1.0
@@ -56399,12 +56400,12 @@
                 {
                     "name": "PlayerController",
                     "enabled": true,
-                    "map": [
-                        {
-                            "variable": "speed",
-                            "base64": ""
-                        }
-                    ]
+                    "map": []
+                },
+                {
+                    "name": "CollisionResponse",
+                    "enabled": true,
+                    "map": []
                 }
             ]
         },
@@ -56628,6 +56629,7 @@
                 },
                 "collider": {
                     "checkcollision": false,
+                    "checkresponse": true,
                     "size": {
                         "x": 1.0,
                         "y": 1.0
@@ -57300,6 +57302,7 @@
         },
         "collider": {
             "checkcollision": true,
+            "checkresponse": true,
             "size": {
                 "x": 16.0,
                 "y": 4.0
@@ -57335,6 +57338,7 @@
         },
         "collider": {
             "checkcollision": true,
+            "checkresponse": true,
             "size": {
                 "x": 16.0,
                 "y": 4.0
@@ -57370,6 +57374,7 @@
         },
         "collider": {
             "checkcollision": true,
+            "checkresponse": true,
             "size": {
                 "x": 28.0,
                 "y": 18.0
@@ -57405,6 +57410,7 @@
         },
         "collider": {
             "checkcollision": true,
+            "checkresponse": true,
             "size": {
                 "x": 36.0,
                 "y": 13.0
@@ -57440,6 +57446,7 @@
         },
         "collider": {
             "checkcollision": true,
+            "checkresponse": true,
             "size": {
                 "x": 22.0,
                 "y": 18.0
@@ -57475,6 +57482,7 @@
         },
         "collider": {
             "checkcollision": true,
+            "checkresponse": true,
             "size": {
                 "x": 22.0,
                 "y": 18.0
@@ -57510,6 +57518,7 @@
         },
         "collider": {
             "checkcollision": true,
+            "checkresponse": true,
             "size": {
                 "x": 22.0,
                 "y": 18.0
@@ -57545,6 +57554,7 @@
         },
         "collider": {
             "checkcollision": true,
+            "checkresponse": true,
             "size": {
                 "x": 22.0,
                 "y": 18.0
@@ -57580,6 +57590,7 @@
         },
         "collider": {
             "checkcollision": true,
+            "checkresponse": true,
             "size": {
                 "x": 24.0,
                 "y": 18.0
@@ -57615,6 +57626,7 @@
         },
         "collider": {
             "checkcollision": true,
+            "checkresponse": true,
             "size": {
                 "x": 13.0,
                 "y": 13.0
@@ -57650,6 +57662,7 @@
         },
         "collider": {
             "checkcollision": true,
+            "checkresponse": true,
             "size": {
                 "x": 13.0,
                 "y": 13.0
@@ -57685,6 +57698,7 @@
         },
         "collider": {
             "checkcollision": true,
+            "checkresponse": true,
             "size": {
                 "x": 26.0,
                 "y": 18.0
@@ -57720,6 +57734,7 @@
         },
         "collider": {
             "checkcollision": true,
+            "checkresponse": true,
             "size": {
                 "x": 26.0,
                 "y": 18.0
@@ -57755,6 +57770,7 @@
         },
         "collider": {
             "checkcollision": true,
+            "checkresponse": true,
             "size": {
                 "x": 33.0,
                 "y": 18.0
@@ -57790,6 +57806,7 @@
         },
         "collider": {
             "checkcollision": true,
+            "checkresponse": true,
             "size": {
                 "x": 26.0,
                 "y": 18.0
@@ -57825,6 +57842,7 @@
         },
         "collider": {
             "checkcollision": true,
+            "checkresponse": true,
             "size": {
                 "x": 33.0,
                 "y": 18.0
@@ -57860,6 +57878,7 @@
         },
         "collider": {
             "checkcollision": true,
+            "checkresponse": true,
             "size": {
                 "x": 34.0,
                 "y": 18.0
@@ -57895,6 +57914,7 @@
         },
         "collider": {
             "checkcollision": true,
+            "checkresponse": true,
             "size": {
                 "x": 34.0,
                 "y": 18.0
@@ -57930,6 +57950,7 @@
         },
         "collider": {
             "checkcollision": true,
+            "checkresponse": true,
             "size": {
                 "x": 34.0,
                 "y": 18.0
@@ -57965,6 +57986,7 @@
         },
         "collider": {
             "checkcollision": true,
+            "checkresponse": true,
             "size": {
                 "x": 34.0,
                 "y": 18.0
@@ -58000,6 +58022,7 @@
         },
         "collider": {
             "checkcollision": true,
+            "checkresponse": true,
             "size": {
                 "x": 2.0,
                 "y": 12.0
@@ -58035,6 +58058,7 @@
         },
         "collider": {
             "checkcollision": true,
+            "checkresponse": true,
             "size": {
                 "x": 11.0,
                 "y": 16.0
@@ -58070,6 +58094,7 @@
         },
         "collider": {
             "checkcollision": true,
+            "checkresponse": true,
             "size": {
                 "x": 2.0,
                 "y": 12.0
@@ -58105,6 +58130,7 @@
         },
         "collider": {
             "checkcollision": true,
+            "checkresponse": true,
             "size": {
                 "x": 2.0,
                 "y": 12.0
@@ -58140,6 +58166,7 @@
         },
         "collider": {
             "checkcollision": true,
+            "checkresponse": true,
             "size": {
                 "x": 20.0,
                 "y": 12.0
@@ -58175,6 +58202,7 @@
         },
         "collider": {
             "checkcollision": true,
+            "checkresponse": true,
             "size": {
                 "x": 4.0,
                 "y": 18.0
@@ -58210,6 +58238,7 @@
         },
         "collider": {
             "checkcollision": true,
+            "checkresponse": true,
             "size": {
                 "x": 7.0,
                 "y": 14.0
@@ -58245,6 +58274,7 @@
         },
         "collider": {
             "checkcollision": true,
+            "checkresponse": true,
             "size": {
                 "x": 5.0,
                 "y": 4.0
@@ -58280,6 +58310,7 @@
         },
         "collider": {
             "checkcollision": true,
+            "checkresponse": true,
             "size": {
                 "x": 12.0,
                 "y": 14.0
@@ -58315,6 +58346,7 @@
         },
         "collider": {
             "checkcollision": true,
+            "checkresponse": true,
             "size": {
                 "x": 12.0,
                 "y": 4.0
@@ -58350,6 +58382,7 @@
         },
         "collider": {
             "checkcollision": true,
+            "checkresponse": true,
             "size": {
                 "x": 5.0,
                 "y": 4.0
@@ -58385,6 +58418,7 @@
         },
         "collider": {
             "checkcollision": true,
+            "checkresponse": true,
             "size": {
                 "x": 12.0,
                 "y": 4.0
@@ -58420,6 +58454,7 @@
         },
         "collider": {
             "checkcollision": true,
+            "checkresponse": true,
             "size": {
                 "x": 9.0,
                 "y": 4.0
@@ -58455,6 +58490,7 @@
         },
         "collider": {
             "checkcollision": true,
+            "checkresponse": true,
             "size": {
                 "x": 12.0,
                 "y": 4.0
@@ -58490,6 +58526,7 @@
         },
         "collider": {
             "checkcollision": true,
+            "checkresponse": true,
             "size": {
                 "x": 12.0,
                 "y": 16.0
@@ -58525,6 +58562,7 @@
         },
         "collider": {
             "checkcollision": true,
+            "checkresponse": true,
             "size": {
                 "x": 12.0,
                 "y": 4.0
@@ -58549,8 +58587,8 @@
         },
         "transform": {
             "position": {
-                "x": -4.81612491607666,
-                "y": -3.8664464950561523
+                "x": -3.1792993545532227,
+                "y": -8.092129707336426
             },
             "rotation": -0.0,
             "scale": {
@@ -58560,6 +58598,7 @@
         },
         "collider": {
             "checkcollision": true,
+            "checkresponse": true,
             "size": {
                 "x": 0.7400000095367432,
                 "y": 0.23999999463558197
@@ -58703,6 +58742,7 @@
         },
         "collider": {
             "checkcollision": true,
+            "checkresponse": true,
             "size": {
                 "x": 0.7400000095367432,
                 "y": 0.23999999463558197
@@ -58846,6 +58886,7 @@
         },
         "collider": {
             "checkcollision": true,
+            "checkresponse": true,
             "size": {
                 "x": 0.7400000095367432,
                 "y": 0.23999999463558197
@@ -58978,303 +59019,18 @@
         },
         "transform": {
             "position": {
-                "x": 5.2005815505981445,
-                "y": -8.350013732910156
+                "x": 0.0936884880065918,
+                "y": -3.5792417526245117
             },
             "rotation": -0.0,
             "scale": {
-                "x": 3.0,
-                "y": 3.0
+                "x": 3.162299871444702,
+                "y": 3.162299871444702
             }
         },
         "collider": {
             "checkcollision": true,
-            "size": {
-                "x": 0.7400000095367432,
-                "y": 0.23999999463558197
-            },
-            "offset": {
-                "x": -0.009999999776482582,
-                "y": 0.05999999865889549
-            },
-            "drawDebug": true,
-            "radius": 0.5,
-            "shapetype": 0
-        },
-        "enemy": {
-            "enemytag": -1,
-            "enemytype": 0,
-            "enemybehaviour": 0
-        },
-        "rigidbody": {
-            "linearVelocity": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "linearAcceleration": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "rotation": 0.0,
-            "angularVelocity": 0.0,
-            "angularAcceleration": 0.0,
-            "mass": 1.0,
-            "inverseMass": 1.0,
-            "linearDamping": 0.9900000095367432,
-            "angularDamping": 0.9900000095367432,
-            "force": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "torque": 0.0,
-            "kinematic": false,
-            "static": false
-        },
-        "sprite": {
-            "imagefile": "ani_scientistWalk_strip14.png",
-            "layer": 22,
-            "color": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
-            },
-            "alpha": 1.0
-        },
-        "animation": {
-            "frameNumber": 0,
-            "framesPerSecond": 0,
-            "frameTimer": 0.0,
-            "isAnimating": true,
-            "stripCount": 14
-        },
-        "script": {
-            "scripts": [
-                {
-                    "name": "EnemyScript",
-                    "enabled": true,
-                    "map": [
-                        {
-                            "variable": "isDead",
-                            "base64": ""
-                        }
-                    ]
-                }
-            ]
-        },
-        "audio": [
-            {
-                "name": "aud_humanDeath01",
-                "volume": 0.4490000009536743,
-                "loop": false,
-                "playOnStart": false
-            }
-        ],
-        "raycast": {
-            "raycasts": [
-                {
-                    "raycastID": "RaycastToPlayer",
-                    "israycasting": true,
-                    "targetposition": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "Layer Vector": [
-                        {
-                            "layer": 7
-                        }
-                    ]
-                }
-            ]
-        },
-        "children": [
-            {
-                "name": {
-                    "namestr": "Waypoint 1",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "ScaredEnemy.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    }
-                }
-            }
-        ]
-    },
-    {
-        "name": {
-            "namestr": "ScaredEnemy",
-            "layer": 2,
-            "isprefab": true,
-            "tagstr": "Enemy",
-            "prefabname": "ScaredEnemy.prefab",
-            "issync": true
-        },
-        "transform": {
-            "position": {
-                "x": -4.73433780670166,
-                "y": -3.8159093856811523
-            },
-            "rotation": -0.0,
-            "scale": {
-                "x": 3.0,
-                "y": 3.0
-            }
-        },
-        "collider": {
-            "checkcollision": true,
-            "size": {
-                "x": 0.7400000095367432,
-                "y": 0.23999999463558197
-            },
-            "offset": {
-                "x": -0.009999999776482582,
-                "y": 0.05999999865889549
-            },
-            "drawDebug": true,
-            "radius": 0.5,
-            "shapetype": 0
-        },
-        "enemy": {
-            "enemytag": -1,
-            "enemytype": 0,
-            "enemybehaviour": 0
-        },
-        "rigidbody": {
-            "linearVelocity": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "linearAcceleration": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "rotation": 0.0,
-            "angularVelocity": 0.0,
-            "angularAcceleration": 0.0,
-            "mass": 1.0,
-            "inverseMass": 1.0,
-            "linearDamping": 0.9900000095367432,
-            "angularDamping": 0.9900000095367432,
-            "force": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "torque": 0.0,
-            "kinematic": false,
-            "static": false
-        },
-        "sprite": {
-            "imagefile": "ani_scientistWalk_strip14.png",
-            "layer": 22,
-            "color": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
-            },
-            "alpha": 1.0
-        },
-        "animation": {
-            "frameNumber": 0,
-            "framesPerSecond": 0,
-            "frameTimer": 0.0,
-            "isAnimating": true,
-            "stripCount": 14
-        },
-        "script": {
-            "scripts": [
-                {
-                    "name": "EnemyScript",
-                    "enabled": true,
-                    "map": [
-                        {
-                            "variable": "isDead",
-                            "base64": ""
-                        }
-                    ]
-                }
-            ]
-        },
-        "audio": [
-            {
-                "name": "aud_humanDeath01",
-                "volume": 0.4490000009536743,
-                "loop": false,
-                "playOnStart": false
-            }
-        ],
-        "raycast": {
-            "raycasts": [
-                {
-                    "raycastID": "RaycastToPlayer",
-                    "israycasting": true,
-                    "targetposition": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "Layer Vector": [
-                        {
-                            "layer": 7
-                        }
-                    ]
-                }
-            ]
-        },
-        "children": [
-            {
-                "name": {
-                    "namestr": "Waypoint 1",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "ScaredEnemy.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    }
-                }
-            }
-        ]
-    },
-    {
-        "name": {
-            "namestr": "ScaredEnemy",
-            "layer": 2,
-            "isprefab": true,
-            "tagstr": "Enemy",
-            "prefabname": "ScaredEnemy.prefab",
-            "issync": true
-        },
-        "transform": {
-            "position": {
-                "x": -4.986388206481934,
-                "y": -8.245532989501953
-            },
-            "rotation": -0.0,
-            "scale": {
-                "x": 3.0,
-                "y": 3.0
-            }
-        },
-        "collider": {
-            "checkcollision": true,
+            "checkresponse": true,
             "size": {
                 "x": 0.7400000095367432,
                 "y": 0.23999999463558197

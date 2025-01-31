@@ -22,7 +22,7 @@ public class EnemyBloodPool : ScriptBase
 
     private int currentFrameNumber, startFrameNumber, startFramesPerSecond, stripCount;
     private float currentFrameTimer, startFrameTimer;
-    private bool isAnimating;
+    private bool isAnimating = true;
 
     public override void Start()
     {
