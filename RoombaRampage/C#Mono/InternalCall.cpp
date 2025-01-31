@@ -462,6 +462,7 @@ namespace script {
 				}
 			}
 		}
+		return -1;
 	}
 
 	MonoArray* InternalCall::m_InternalCallGetTagIDs(MonoString* monostring)
