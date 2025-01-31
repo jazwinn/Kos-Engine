@@ -61,7 +61,7 @@ namespace Helper {
 
 		float m_accumulatedTime = 0.f;
 
-		vector3::Vec3 m_colour;
+		vector3::Vec3 m_colour{0.86f,0.86f,0.86f};
 
 		float m_timeScale = 1.0f; //default to 1x
 		

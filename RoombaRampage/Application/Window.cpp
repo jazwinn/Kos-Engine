@@ -199,14 +199,14 @@ namespace Application {
 
         Helper::Helpers *help = Helper::Helpers::GetInstance();
         glClear(GL_COLOR_BUFFER_BIT);
-
+        graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
         int display_w, display_h;
         glfwGetFramebufferSize(m_window, &display_w, &display_h);
         static GLint old_w{}, old_h{};
         // update viewport settings in vps only if window's dimension change
         if (display_w != old_w || display_h != old_h)
         {
-            graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
+            
             
             old_w = display_w;
             old_h = display_h;
@@ -218,7 +218,7 @@ namespace Application {
             glViewport(0, 0, display_w, display_h);
             
         }
-        glClearColor(static_cast<GLclampf>(help->m_colour.m_x), static_cast<GLclampf>(help->m_colour.m_y), static_cast<GLclampf>(help->m_colour.m_z), static_cast<GLclampf>(1));
+        glClearColor(static_cast<GLclampf>(help->m_colour.m_x * pipe->m_globalLightIntensity), static_cast<GLclampf>(help->m_colour.m_y * pipe->m_globalLightIntensity), static_cast<GLclampf>(help->m_colour.m_z * pipe->m_globalLightIntensity), static_cast<GLclampf>(1));
         glClear(GL_COLOR_BUFFER_BIT);
 
         if (help->m_closeWindow) {

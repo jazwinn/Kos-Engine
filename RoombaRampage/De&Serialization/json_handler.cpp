@@ -657,6 +657,13 @@ namespace Serialization {
 			}
 		}
 
+		if (signature.test(ecs::ComponentType::TYPELIGHTINGCOMPONENT)) {
+			ecs::LightingComponent *lc = static_cast<ecs::LightingComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPELIGHTINGCOMPONENT]->m_GetEntityComponent(entityId));
+			if (lc) {
+				m_saveComponentreflect(lc, entityData, allocator);
+			}
+		}
+
 
 		// Add children
 		std::optional<std::vector<ecs::EntityID>> childrenOptional = ecs::Hierachy::m_GetChild(entityId);
@@ -1240,6 +1247,18 @@ namespace Serialization {
 				if (pathfindingObject.HasMember("gridKey") && pathfindingObject["gridKey"].IsInt()) {
 					pc->m_GridKey = pathfindingObject["gridKey"].GetInt();
 				}
+			}
+		}
+
+
+
+		if (entityData.HasMember(ecs::LightingComponent::classname()) && entityData[ecs::LightingComponent::classname()].IsObject()) {
+			ecs::LightingComponent* lc = static_cast<ecs::LightingComponent*>(
+				ecs->m_AddComponent(ecs::TYPELIGHTINGCOMPONENT, newEntityId)
+				);
+
+			if (lc) {
+				m_LoadComponentreflect(lc, entityData);
 			}
 		}
 

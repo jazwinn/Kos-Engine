@@ -76,6 +76,7 @@ namespace graphicpipe
 			
 			}
 			
+			glUniform1f(glGetUniformLocation(m_genericShaderProgram, "globalBrightness"), m_globalLightIntensity);
 
 			glBindVertexArray(m_squareMesh.m_vaoId);
 			glDrawElementsInstanced(m_squareMesh.m_primitiveType, m_squareMesh.m_indexElementCount, GL_UNSIGNED_SHORT, NULL, static_cast<GLsizei>(m_modelToNDCMatrix.size()));
@@ -158,6 +159,8 @@ namespace graphicpipe
 		}*/
 
 		// Render game elements to the framebuffer
+
+
 		glBindFramebuffer(GL_FRAMEBUFFER, m_frameBufferObject);
 		glEnable(GL_DEPTH_TEST);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -165,6 +168,7 @@ namespace graphicpipe
 		m_funcDrawTilemap();
 		m_funcDraw();
 		m_funcDrawText();
+		m_funcRenderLighting();
 
 		// Switch back to the default framebuffer
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -178,6 +182,8 @@ namespace graphicpipe
 		glBindVertexArray(m_screenTextureVAO);
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, m_screenTexture);
+
+		glUniform1f(glGetUniformLocation(m_frameBufferShaderProgram, "globalBrightness"), m_globalLightIntensity);
 
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 
@@ -243,6 +249,7 @@ namespace graphicpipe
 		m_funcDraw();
 		
 		m_funcDrawText();
+		m_funcRenderLighting();
 		
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -405,8 +412,6 @@ namespace graphicpipe
 		
 		glUseProgram(m_gridDebugShaderProgram);
 
-		
-
 		for (int i{}; i < m_colliderGridData.size() && !m_gridColliderChecks.empty(); ++i)
 		{
 			if (m_gridColliderChecks[i].empty())
@@ -488,6 +493,8 @@ namespace graphicpipe
 			glUniformMatrix3fv(glGetUniformLocation(m_tilemapShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currOrthoMatrix));
 
 			glUniformMatrix3fv(glGetUniformLocation(m_tilemapShaderProgram, "modelMatrix"), 1, GL_FALSE, glm::value_ptr(m_transformedTilemaps[i].m_transformation));
+
+			glUniform1f(glGetUniformLocation(m_tilemapShaderProgram, "globalBrightness"), m_globalLightIntensity);
 
 			
 

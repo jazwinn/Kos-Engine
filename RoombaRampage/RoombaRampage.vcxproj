@@ -351,6 +351,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClCompile Include="Editor\ImGui Panels\imgui_game_scene_window.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_Gizmo.cpp" />
     <ClCompile Include="Editor\ImGui Panels\Editor.cpp" />
+    <ClCompile Include="Editor\ImGui Panels\imgui_global_settings_panel.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_hierarchy_window.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_layer_panel.cpp" />
     <ClCompile Include="Editor\ImGui Panels\imgui_logs_window.cpp" />

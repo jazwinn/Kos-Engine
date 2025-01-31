@@ -65,12 +65,15 @@ namespace ecs {
 			//skip component not of the scene
 			if (light->m_scene != scene) continue;
 
-			
+			//Clamp between 0.f and 1.f
+			light->m_innerOuterRadius.m_x = light->m_innerOuterRadius.m_x > 1.f ? 1.f : light->m_innerOuterRadius.m_x < 0.f ? 0.f : light->m_innerOuterRadius.m_x;
+
+			light->m_innerOuterRadius.m_y = light->m_innerOuterRadius.m_y > 1.f ? 1.f : light->m_innerOuterRadius.m_y < 0.f ? 0.f : light->m_innerOuterRadius.m_y;
 
 			graphicsPipe->m_lightingData.push_back({ { transform->m_transformation.m_e00,transform->m_transformation.m_e01,transform->m_transformation.m_e02,
 													   transform->m_transformation.m_e10,transform->m_transformation.m_e11, transform->m_transformation.m_e12,
 													   transform->m_transformation.m_e20, transform->m_transformation.m_e21, transform->m_transformation.m_e22 },
-													{  light->m_colour.m_x,light->m_colour.m_y,light->m_colour.m_z ,1.f }, { light->m_innerOuterRadius.m_x,light->m_innerOuterRadius.m_y },
+													{  light->m_colour.m_x,light->m_colour.m_y,light->m_colour.m_z ,1.f }, { light->m_innerOuterRadius.m_x ,light->m_innerOuterRadius.m_y },
 													   light->m_intensity, light->m_lightType });
 
 		}

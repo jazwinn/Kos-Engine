@@ -128,7 +128,9 @@ namespace graphicpipe
 				m_lightingParams.push_back({ m_lightingData[n].m_intensity,m_lightingData[n].m_innerOuterRadius.x,m_lightingData[n].m_innerOuterRadius.y });
 				
 			}
+			m_lightingData.clear();
 		}
+		
 
 	}
 }

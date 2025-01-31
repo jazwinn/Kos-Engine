@@ -21,11 +21,10 @@ uniform mat3 view;
 
 void main()
 {
-	
 	mat3 matrix = projection * view * modelMatrix;
 
 	gl_Position = vec4(vec2(matrix * vec3(vertexPosition, 1.f)),
-					   -0.999, 1.0);
+					   -0.999 - (gl_InstanceID * 0.000001) , 1.0);
 
 	lightDirection = vertexNDCCoords;
 
