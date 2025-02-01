@@ -29,7 +29,16 @@ public class testscript : ScriptBase
 
     public override void Start()
     {
-       
+        //TextComponent cc = Component.Get<TextComponent>(EntityID);
+        //Component.Set<TextComponent>(EntityID, cc);
+
+        //unsafe
+        //{
+        //    Console.WriteLine("testt");
+        //    int* ptr = null;
+        //    *ptr = 10;  // This will cause a crash due to dereferencing a null pointer
+           
+        //}
     }
 
     public override void Update()
@@ -37,4 +46,10 @@ public class testscript : ScriptBase
         Console.WriteLine(test);
        
     }
+
+    public void LateUpdate()
+    {
+
+    }
+
 }

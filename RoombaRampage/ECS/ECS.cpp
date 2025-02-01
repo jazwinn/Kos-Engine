@@ -426,6 +426,7 @@ namespace ecs{
 		m_deletedentity.push_back(std::make_pair(ID, ecs->m_ECS_EntityMap.find(ID)->second));
 		ecs->m_ECS_EntityMap.erase(ID);
 
+
 		return true;
 	}
 
