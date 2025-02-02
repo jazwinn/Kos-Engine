@@ -18,6 +18,8 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Graphics/GraphicsCamera.h"
 #include "../ECS/Hierachy.h"
 
+#include "../Pathfinding/AStarPathfinding.h"
+
 #define MONO_ADD_INTERNAL_CALL(METHOD_NAME) \
     mono_add_internal_call("InternalCall::" #METHOD_NAME, METHOD_NAME);
 
@@ -887,7 +889,7 @@ namespace script {
 		return true;
 	}
 
-	bool InternalCall::m_InternalCallGetPathfinding(ecs::EntityID id, vector2::Vec2* m_startpos, vector2::Vec2* m_startend, int* gridkey, MonoArray** nodeArray_x, MonoArray** nodeArray_y)
+	bool InternalCall::m_InternalCallGetPathfinding(ecs::EntityID id, vector2::Vec2* m_startpos, vector2::Vec2* m_startend, int* gridkey)
 	{
 		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
 		ecs::PathfindingComponent* pfc = static_cast<ecs::PathfindingComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEPATHFINDINGCOMPONENT]->m_GetEntityComponent(id));
@@ -903,7 +905,7 @@ namespace script {
 			//auto* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
 
 
-			*nodeArray_x = mono_array_new(assetmanager::AssetManager::m_funcGetInstance()->m_scriptManager.m_GetDomain(), mono_get_int32_class(), pfc->m_Path.size());
+			/**nodeArray_x = mono_array_new(assetmanager::AssetManager::m_funcGetInstance()->m_scriptManager.m_GetDomain(), mono_get_int32_class(), pfc->m_Path.size());
 			*nodeArray_y = mono_array_new(assetmanager::AssetManager::m_funcGetInstance()->m_scriptManager.m_GetDomain(), mono_get_int32_class(), pfc->m_Path.size());
 
 			if (nodeArray_x != NULL && nodeArray_y != NULL) {
@@ -911,7 +913,7 @@ namespace script {
 					mono_array_set(*nodeArray_x, int, i, pfc->m_Path[i].x);
 					mono_array_set(*nodeArray_y, int, i, pfc->m_Path[i].y);
 				}
-			}
+			}*/
 
 			
 
@@ -919,11 +921,37 @@ namespace script {
 			return true;
 		}
 
-
-
-
 		return false;
 	}
+
+	void InternalCall::m_InternalCallGetPath(int gridKey, int* startX, int* startY, int* targetX, int* targetY, MonoArray** nodeArray_x, MonoArray** nodeArray_y)
+	{
+		AStarPathfinding pathfinder;
+		int entityID = InternalCall::m_InternalGetEntityIdFromGridKey(gridKey);
+		auto* gridComponent = static_cast<ecs::GridComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPEGRIDCOMPONENT]->m_GetEntityComponent(entityID));
+		
+		if (gridComponent)
+		{
+			std::vector<Node> path = pathfinder.FindPath(gridComponent, *startX, *startY, *targetX, *targetY);
+			auto* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+
+			*nodeArray_x = mono_array_new(assetmanager->m_scriptManager.m_GetDomain(), mono_get_int32_class(), path.size());
+			*nodeArray_y = mono_array_new(assetmanager->m_scriptManager.m_GetDomain(), mono_get_int32_class(), path.size());
+			if (nodeArray_x != NULL && nodeArray_y != NULL) {
+				for (size_t i = 0; i < path.size(); ++i) {
+					mono_array_set(*nodeArray_x, int, i, path[i].x);
+					mono_array_set(*nodeArray_y, int, i, path[i].y);
+				}
+			}
+			return;
+		}
+		if (!gridComponent)
+		{
+			return;
+		}
+	}
+
+
 
 	void InternalCall::m_InternalCallSetTargetPathfinding(ecs::EntityID id, vector2::Vec2* m_targetgridposition)
 	{
@@ -1090,6 +1118,9 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_InternalCallSetRayCast);
 
 		MONO_ADD_INTERNAL_CALL(m_InternalCallGetPathfinding);
+
+		MONO_ADD_INTERNAL_CALL(m_InternalCallGetPath);
+
 
 		MONO_ADD_INTERNAL_CALL(m_EnableLayer);
 		MONO_ADD_INTERNAL_CALL(m_DisableLayer);

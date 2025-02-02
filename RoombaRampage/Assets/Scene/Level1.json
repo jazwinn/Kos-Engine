@@ -58696,6 +58696,17 @@
                 }
             ]
         },
+        "pathfinding": {
+            "startPosition": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "targetPosition": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "gridKey": 0
+        },
         "children": [
             {
                 "name": {
@@ -58786,7 +58797,7 @@
         },
         "sprite": {
             "imagefile": "ani_scientistWalk_strip14.png",
-            "layer": 22,
+            "layer": 23,
             "color": {
                 "r": 1.0,
                 "g": 1.0,
@@ -58839,6 +58850,17 @@
                     ]
                 }
             ]
+        },
+        "pathfinding": {
+            "startPosition": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "targetPosition": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "gridKey": 0
         },
         "children": [
             {
@@ -58930,7 +58952,7 @@
         },
         "sprite": {
             "imagefile": "ani_scientistWalk_strip14.png",
-            "layer": 22,
+            "layer": 24,
             "color": {
                 "r": 1.0,
                 "g": 1.0,
@@ -58983,6 +59005,17 @@
                     ]
                 }
             ]
+        },
+        "pathfinding": {
+            "startPosition": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "targetPosition": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "gridKey": 0
         },
         "children": [
             {
@@ -59074,7 +59107,7 @@
         },
         "sprite": {
             "imagefile": "ani_scientistWalk_strip14.png",
-            "layer": 22,
+            "layer": 25,
             "color": {
                 "r": 1.0,
                 "g": 1.0,
@@ -59127,6 +59160,17 @@
                     ]
                 }
             ]
+        },
+        "pathfinding": {
+            "startPosition": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "targetPosition": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "gridKey": 0
         },
         "children": [
             {

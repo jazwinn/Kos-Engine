@@ -8,8 +8,8 @@
         },
         "transform": {
             "position": {
-                "x": 6.249597072601318,
-                "y": 3.1924190521240234
+                "x": -3.431105375289917,
+                "y": 4.462368965148926
             },
             "rotation": -0.0,
             "scale": {
@@ -67,9 +67,9 @@
             "alpha": 1.0
         },
         "animation": {
-            "frameNumber": 11,
+            "frameNumber": 9,
             "framesPerSecond": 1,
-            "frameTimer": 11.816658020019531,
+            "frameTimer": 9.416694641113281,
             "isAnimating": true,
             "stripCount": 14
         },
@@ -89,7 +89,7 @@
         },
         "pathfinding": {
             "startPosition": {
-                "x": 5.0,
+                "x": 1.0,
                 "y": 0.0
             },
             "targetPosition": {
@@ -116,21 +116,6 @@
                 "x": 1.0,
                 "y": 1.0
             }
-        },
-        "collider": {
-            "checkcollision": true,
-            "checkresponse": true,
-            "size": {
-                "x": 1.0,
-                "y": 1.0
-            },
-            "offset": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "drawDebug": true,
-            "radius": 0.5,
-            "shapetype": 0
         },
         "grid": {
             "gridRowLength": 12,
