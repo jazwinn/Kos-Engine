@@ -600,7 +600,11 @@ namespace script {
 
 		static float m_GetUnfixedDeltaTie();
 
+		static void m_GetNameComponent(ecs::EntityID id, void** outptr);
+		
 		static int m_InternalGetEntityIdFromGridKey(int gridkey);
+
+		static void m_ChangeLayer(ecs::EntityID id, unsigned int layerid);
 
 	public:
 		/******************************************************************/

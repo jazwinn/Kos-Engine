@@ -30,7 +30,8 @@ namespace graphicpipe
 	{
 		//assetmanager::AssetManager* assets = assetmanager::AssetManager::m_funcGetInstance();
 		if (m_modelData.size() > 0)
-		{
+		{	
+			//Generic Model Data
 			for (int n{}; n < m_modelData.size(); n++)
 			{
 				float heightRatio = static_cast<float>(m_imageData[m_modelData[n].m_textureID].m_height) / m_unitHeight;
@@ -49,15 +50,14 @@ namespace graphicpipe
 				m_modelData[n].m_transformation[1][1] = m_modelData[n].m_transformation[1][1] * heightRatio;
 				m_modelData[n].m_transformation[1][0] = m_modelData[n].m_transformation[1][0] * heightRatio;
 				m_modelMatrix.push_back(m_modelData[n].m_transformation);
-				m_textureOrder.push_back(m_modelData[n].m_textureID);
-				m_stripCounts.push_back({ m_modelData[n].m_stripCount, m_modelData[n].m_frameNumber });
-				//m_frameNumbers.push_back(m_modelData[n].m_frameNumber);
+				m_iVec3Array.push_back({ m_modelData[n].m_stripCount, m_modelData[n].m_frameNumber, m_modelData[n].m_textureID});
 				m_layers.push_back(m_modelData[n].m_layer);
 				m_colors.push_back(m_modelData[n].m_color);
 			}
 			m_modelData.clear();
 		}
 
+		//Debug Model Data
 		if (m_debugBoxData.size() > 0)
 		{
 			for (int i{}; i < m_debugBoxData.size(); i++)
@@ -76,6 +76,7 @@ namespace graphicpipe
 			m_debugBoxData.clear();
 		}
 
+		//Tilemap Data
 		if (m_tilemapData.size() > 0)
 		{
 			for (int n{}; n < m_tilemapData.size(); n++)
@@ -87,7 +88,6 @@ namespace graphicpipe
 				m_tilemapData[n].m_transformation[0][1] = m_tilemapData[n].m_transformation[0][1] * widthRatio / imageAspectRatio;
 				m_tilemapData[n].m_transformation[1][1] = m_tilemapData[n].m_transformation[1][1] * heightRatio;
 				m_tilemapData[n].m_transformation[1][0] = m_tilemapData[n].m_transformation[1][0] * heightRatio;
-				//int moveCount = 0;
 				m_tileIndexes.push_back({});
 				for (int i = 0; i < m_tilemapIndexArrays[n].size(); ++i)
 				{
@@ -99,13 +99,11 @@ namespace graphicpipe
 					
 				}
 			}
-			/*for (int x : m_tileIndexes)
-			{
-				std::cout << x << ' ' << std::endl;
-			}*/
 			m_transformedTilemaps = std::move(m_tilemapData);
 			m_tilemapData.clear();
 		}
+
+		//Collider Grid Data
 		if (m_colliderGridData.size() > 0)
 		{
 			for (int n{}; n < m_colliderGridData.size(); n++)
@@ -121,6 +119,19 @@ namespace graphicpipe
 				}
 			}
 		}
+
+		//Lighting Data
+		if (m_lightingData.size() > 0)
+		{
+			for (int n{}; n < m_lightingData.size(); n++)
+			{
+				m_lightingTransforms.push_back(m_lightingData[n].m_transformation);
+				m_lightingColors.push_back(m_lightingData[n].m_color);
+				m_lightingParams.push_back({ m_lightingData[n].m_intensity,m_lightingData[n].m_innerOuterRadius.x,m_lightingData[n].m_innerOuterRadius.y });
+			}
+			m_lightingData.clear();
+		}
+		
 
 	}
 }

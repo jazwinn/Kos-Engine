@@ -35,14 +35,10 @@ namespace graphicpipe
 		{
 			glBindBuffer(GL_ARRAY_BUFFER, m_modelMatrixArrayBuffer);
 			glNamedBufferData(m_modelMatrixArrayBuffer, m_modelToNDCMatrix.size() * sizeof(glm::mat3), &m_modelToNDCMatrix[0], GL_DYNAMIC_DRAW);
-			glBindBuffer(GL_ARRAY_BUFFER, m_textureOrderBuffer);
-			glNamedBufferData(m_textureOrderBuffer, m_textureOrder.size() * sizeof(int), &m_textureOrder[0], GL_DYNAMIC_DRAW);
 
-			glBindBuffer(GL_ARRAY_BUFFER, m_stripCountBuffer);
-			glNamedBufferData(m_stripCountBuffer, m_stripCounts.size() * sizeof(glm::ivec2), &m_stripCounts[0], GL_DYNAMIC_DRAW);
+			glBindBuffer(GL_ARRAY_BUFFER, m_iVec3Buffer);
+			glNamedBufferData(m_iVec3Buffer, m_iVec3Array.size() * sizeof(glm::ivec3), &m_iVec3Array[0], GL_DYNAMIC_DRAW); //Strip Count, FrameNumber, Texture Order
 
-		/*	glBindBuffer(GL_ARRAY_BUFFER, m_frameNumberBuffer);
-			glNamedBufferData(m_frameNumberBuffer, m_frameNumbers.size() * sizeof(int), &m_frameNumbers[0], GL_DYNAMIC_DRAW);*/
 			glBindBuffer(GL_ARRAY_BUFFER, m_layerBuffer);
 			glNamedBufferData(m_layerBuffer, m_layers.size() * sizeof(int), &m_layers[0], GL_DYNAMIC_DRAW);
 
@@ -77,6 +73,7 @@ namespace graphicpipe
 			
 			}
 			
+			glUniform1f(glGetUniformLocation(m_genericShaderProgram, "globalBrightness"), m_globalLightIntensity);
 
 			glBindVertexArray(m_squareMesh.m_vaoId);
 			glDrawElementsInstanced(m_squareMesh.m_primitiveType, m_squareMesh.m_indexElementCount, GL_UNSIGNED_SHORT, NULL, static_cast<GLsizei>(m_modelToNDCMatrix.size()));
@@ -128,37 +125,6 @@ namespace graphicpipe
 
 	void GraphicsPipe::m_funcDrawGameFrameBuffer()
 	{
-		/*glBindFramebuffer(GL_FRAMEBUFFER, m_frameBufferObject);
-		glEnable(GL_DEPTH_TEST);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		m_funcDrawTilemap();
-		m_funcDraw();
-		m_funcDrawText();
-
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		glDisable(GL_DEPTH_TEST);
-		glClear(GL_COLOR_BUFFER_BIT);
-
-		glUseProgram(m_frameBufferShaderProgram);*/
-
-		/*m_funcDrawWindow();
-
-		glUseProgram(m_frameBufferShaderProgram);
-
-		glBindVertexArray(m_screenTextureVAO);
-		glBindTexture(GL_TEXTURE_2D, m_screenTexture);
-
-		glUniform1i(glGetUniformLocation(m_frameBufferShaderProgram, "screenTexture"), m_screenTexture);
-
-		glDrawArrays(GL_TRIANGLES, 0, 6);
-
-		GLenum err = glGetError();
-		if (err != GL_NO_ERROR) {
-			LOGGING_ERROR("First OpenGL Error: 0x%X", err);
-		}*/
-
-		// Render game elements to the framebuffer
 		glBindFramebuffer(GL_FRAMEBUFFER, m_frameBufferObject);
 		glEnable(GL_DEPTH_TEST);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -166,6 +132,7 @@ namespace graphicpipe
 		m_funcDrawTilemap();
 		m_funcDraw();
 		m_funcDrawText();
+		m_funcRenderLighting();
 
 		// Switch back to the default framebuffer
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -180,13 +147,15 @@ namespace graphicpipe
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, m_screenTexture);
 
+		glUniform1f(glGetUniformLocation(m_frameBufferShaderProgram, "globalBrightness"), m_globalLightIntensity);
+
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 
 		// Check for OpenGL errors
-		GLenum err;
-		while ((err = glGetError()) != GL_NO_ERROR) {
-			LOGGING_ERROR("OpenGL Error: 0x%X", err);
-		}
+		//GLenum err;
+		//while ((err = glGetError()) != GL_NO_ERROR) {
+		//	LOGGING_ERROR("OpenGL Error: 0x%X", err);
+		//}
 	}
 
 	void GraphicsPipe::m_funcDrawWindow()
@@ -196,6 +165,8 @@ namespace graphicpipe
 		glEnable(GL_DEPTH_TEST);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+
+		
 		m_funcDrawGrid();
 		m_funcDrawDebug();
 		m_funcDrawTilemap();
@@ -203,6 +174,7 @@ namespace graphicpipe
 		m_funcDraw();
 		//m_funcDrawLine({ 1.f,1.f,0 }, { -1.f,-1.f,0 }); // Comment this out when done debugging;
 		m_funcDrawText();
+		m_funcRenderLighting();
 		
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -211,6 +183,33 @@ namespace graphicpipe
 
 		glUseProgram(m_frameBufferShaderProgram);
 
+
+
+		GLenum err = glGetError();
+		if (err != GL_NO_ERROR) {
+			//LOGGING_ERROR("First OpenGL Error: 0x%X", err);
+			std::cout << "Draw Window OpenGL Error: " << err << std::endl;
+		}
+	}
+
+	void GraphicsPipe::m_drawLightingTexture()
+	{
+		glBindFramebuffer(GL_FRAMEBUFFER, m_lightingFrameBufferObject);
+		glEnable(GL_DEPTH_TEST);
+		glClear(GL_COLOR_BUFFER_BIT);
+
+		m_funcRenderLighting();
+
+		// Switch back to the default framebuffer
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		glDisable(GL_DEPTH_TEST);
+		glClear(GL_COLOR_BUFFER_BIT);
+
+		// Check for OpenGL errors
+		GLenum err;
+		while ((err = glGetError()) != GL_NO_ERROR) {
+			LOGGING_ERROR("#01 OpenGL Error: 0x%X", err);
+		}
 	}
 
 	void GraphicsPipe::m_funcDrawGamePreviewWindow()
@@ -223,6 +222,7 @@ namespace graphicpipe
 		m_funcDraw();
 		
 		m_funcDrawText();
+		m_funcRenderLighting();
 		
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -382,10 +382,8 @@ namespace graphicpipe
 
 	void GraphicsPipe::m_funcDrawGridCollider()
 	{
-		
-		glUseProgram(m_gridDebugShaderProgram);
 
-		
+		glUseProgram(m_gridDebugShaderProgram);
 
 		for (int i{}; i < m_colliderGridData.size() && !m_gridColliderChecks.empty(); ++i)
 		{
@@ -397,7 +395,7 @@ namespace graphicpipe
 			GLenum err = glGetError();
 			if (err != GL_NO_ERROR) {
 				//LOGGING_ERROR("First OpenGL Error: 0x%X", err);
-				std::cout << "First OpenGL Error: " << err << std::endl;
+				std::cout << "#02 OpenGL Error: " << err << std::endl;
 			}
 
 			glBindBuffer(GL_ARRAY_BUFFER, m_gridColliderBuffer);
@@ -409,7 +407,7 @@ namespace graphicpipe
 			GLenum err2 = glGetError();
 			if (err2 != GL_NO_ERROR) {
 				//LOGGING_ERROR("First OpenGL Error: 0x%X", err);
-				std::cout << "Second OpenGL Error: " << err2 << std::endl;
+				std::cout << "#03 OpenGL Error: " << err2 << std::endl;
 			}
 
 			glUniform1i(glGetUniformLocation(m_gridDebugShaderProgram, "tilemapColumns"), m_colliderGridData[i].m_gridDimensions.y);
@@ -447,8 +445,6 @@ namespace graphicpipe
 			glActiveTexture(GL_TEXTURE0 + m_textureIDs[m_transformedTilemaps[i].m_textureID]); // Activate each texture unit
 			glBindTexture(GL_TEXTURE_2D, m_textureIDs[m_transformedTilemaps[i].m_textureID]);  // Unbind the 2D texture from that unit
 			
-			
-
 			glUniform1i(glGetUniformLocation(m_tilemapShaderProgram, "textureID"), m_textureIDs[m_transformedTilemaps[i].m_textureID]);
 
 			glUniform1i(glGetUniformLocation(m_tilemapShaderProgram, "layer"), m_transformedTilemaps[i].m_layer);
@@ -471,13 +467,66 @@ namespace graphicpipe
 
 			glUniformMatrix3fv(glGetUniformLocation(m_tilemapShaderProgram, "modelMatrix"), 1, GL_FALSE, glm::value_ptr(m_transformedTilemaps[i].m_transformation));
 
+			glUniform1f(glGetUniformLocation(m_tilemapShaderProgram, "globalBrightness"), m_globalLightIntensity);
+
 			
 
 			glBindVertexArray(m_squareMesh.m_vaoId);
 			glDrawElementsInstanced(m_squareMesh.m_primitiveType, m_squareMesh.m_indexElementCount, GL_UNSIGNED_SHORT, NULL, static_cast<GLsizei>(m_transformedTilemaps[i].m_tilemapDimensions.x * m_transformedTilemaps[i].m_tilemapDimensions.y));
 			glBindVertexArray(0);
+			
 		}
 
+	}
+
+	
+
+	void GraphicsPipe::m_funcRenderLighting()
+	{
+		if (!m_lightingTransforms.empty())
+		{
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE); //USE THIS BLENDING FOR LIGHTS
+
+			glUseProgram(m_lightingShaderProgram);
+
+			glBindBuffer(GL_ARRAY_BUFFER, m_modelMatrixArrayBuffer);
+			glNamedBufferData(m_modelMatrixArrayBuffer, m_lightingTransforms.size() * sizeof(glm::mat3), &m_lightingTransforms[0], GL_DYNAMIC_DRAW);
+
+
+			glBindBuffer(GL_ARRAY_BUFFER, m_vec3Buffer);
+			glNamedBufferData(m_vec3Buffer, m_lightingParams.size() * sizeof(glm::vec3), &m_lightingParams[0], GL_DYNAMIC_DRAW); // Light Intensity, Inner/Outer Radius
+
+			glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer);
+			glNamedBufferData(m_colorBuffer, m_lightingColors.size() * sizeof(glm::vec4), &m_lightingColors[0], GL_DYNAMIC_DRAW);
+	
+
+			glUniformMatrix3fv(glGetUniformLocation(m_lightingShaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currViewMatrix));
+
+			glUniformMatrix3fv(glGetUniformLocation(m_lightingShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currOrthoMatrix));
+
+			GLenum err = glGetError();
+			if (err != GL_NO_ERROR) {
+				//LOGGING_ERROR("First OpenGL Error: 0x%X", err);
+				std::cout << "#04 OpenGL Error: " << err << std::endl;
+			}
+
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+			
+
+			glBindVertexArray(m_squareMesh.m_vaoId);
+			glDrawElementsInstanced(m_squareMesh.m_primitiveType, m_squareMesh.m_indexElementCount, GL_UNSIGNED_SHORT, NULL, static_cast<GLsizei>(m_lightingTransforms.size()));
+			glBindVertexArray(0);
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+			GLenum err2 = glGetError();
+			if (err2 != GL_NO_ERROR) {
+				//LOGGING_ERROR("First OpenGL Error: 0x%X", err);
+				std::cout << "#05 OpenGL Error : " << err2 << std::endl;
+			}
+
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		}
 	}
 
 	void GraphicsPipe::m_funcSetDrawMode(GLenum mode)

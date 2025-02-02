@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Reflection.Emit;
 using System.Data.SqlClient;
+using System.Runtime.InteropServices;
 
 public static class InternalCall
 {
@@ -219,6 +220,11 @@ public static class InternalCall
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static float m_GetUnfixedDeltaTie();
 
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public static extern void m_GetNameComponent(uint id, out IntPtr outPtr);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public static extern void m_ChangeLayer(uint id, uint layerid);
 }
 
 
@@ -274,10 +280,10 @@ public static class Component
             var enemyComponent = component as EnemyComponent;
             InternalCall.m_InternalGetEnemyComponent(id, out enemyComponent.m_tag, out enemyComponent.m_enemyTypeInt, out enemyComponent.m_enemyRoamBehaviourInt);
         }
-        else if (typeof(T) == typeof(GridComponent))
+        else if(typeof(T) == typeof(GridComponent))
         {
-            var gridComponent = component as GridComponent;
-            InternalCall.m_InternalGetGridComponent(id, out gridComponent.m_Anchor, out gridComponent.m_GridRowLength, out gridComponent.m_GridColumnLength, out gridComponent.m_SetCollidable, out gridComponent.m_GridKey);
+            var _component = component as GridComponent;
+            InternalCall.m_InternalGetGridComponent(id, out _component.m_Anchor, out _component.m_GridRowLength, out _component.m_GridColumnLength, out _component.m_SetCollidable, out _component.m_GridKey);
         }
         else
         {
@@ -327,6 +333,8 @@ public static class Component
         }
     }
 }
+
+
 
 public static class GetComponent
 {

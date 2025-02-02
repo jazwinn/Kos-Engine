@@ -142,10 +142,12 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
         //StartPatrol();
 
+       // World2GridCoordinates(1.5f,2.5f,1);
     }
 
     public override void Update() //Runs every frame
     {
+        if (isDead) return;
         CheckForCollisions(); //Checks for collisions in the event an enemy touches the player
         
         currentState.DoActionUpdate(InternalCall.m_InternalCallGetDeltaTime()); //Update the current state's DoActionUpdate function, such as patrolling, chasing etc, with delta time
@@ -273,12 +275,16 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
     private IEnumerator EnemyDeath() //Coroutine for enemy death
     {
+        isDead = true;
         currentState.EnemyDead();
 
         InternalCall.m_InternalCallPlayAudio(EntityID, "aud_humanDeath01"); //Plays enemy death sound
 
         collComp.m_collisionCheck = !collComp.m_collisionCheck; //Disables collision check
-        //collComp.m_collisionResponse = false;
+        collComp.m_collisionResponse = false;
+        //InternalCall.m_ChangeLayer(EntityID, 8);
+
+
         SetComponent.SetCollisionComponent(EntityID, collComp); //Sets collider of enemy
 
         InternalCall.m_InternalSetAnimationComponent(EntityID, 0, 0, 0, false, 1); //Stops animation of enemy
@@ -312,9 +318,9 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
         //Get forward vector Y
         float forwardY = (float)(Math.Cos(rotationInRadians));
-
-         movement.X = 0 + forwardX * 0.4f ; //Pushes enemy back for "knockback effect"
-         movement.Y = 0 + forwardY * 0.4f; //Pushes enemy back for "knockback effect"
+        //+ forwardX * 0.4f
+         movement.X = 0 ; //Pushes enemy back for "knockback effect"
+         movement.Y = 0 ; ; //Pushes enemy back for "knockback effect"
 
          InternalCall.m_InternalSetVelocity(EntityID, movement); //Sets velocity for rigidbody to move
 
