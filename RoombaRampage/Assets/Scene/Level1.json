@@ -56642,6 +56642,37 @@
                     "radius": 1.100000023841858,
                     "shapetype": 1
                 }
+            },
+            {
+                "name": {
+                    "namestr": "light",
+                    "layer": 0,
+                    "isprefab": false,
+                    "tagstr": "Default"
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.0,
+                        "y": 0.10000000149011612
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "LightingComponent": {
+                    "m_innerOuterRadius": {
+                        "x": 0.0,
+                        "y": 1.0
+                    },
+                    "m_intensity": 1.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    }
+                }
             }
         ]
     },
@@ -58786,7 +58817,7 @@
         },
         "sprite": {
             "imagefile": "ani_scientistWalk_strip14.png",
-            "layer": 22,
+            "layer": 23,
             "color": {
                 "r": 1.0,
                 "g": 1.0,
@@ -58930,7 +58961,7 @@
         },
         "sprite": {
             "imagefile": "ani_scientistWalk_strip14.png",
-            "layer": 22,
+            "layer": 24,
             "color": {
                 "r": 1.0,
                 "g": 1.0,
@@ -59074,7 +59105,7 @@
         },
         "sprite": {
             "imagefile": "ani_scientistWalk_strip14.png",
-            "layer": 22,
+            "layer": 25,
             "color": {
                 "r": 1.0,
                 "g": 1.0,
