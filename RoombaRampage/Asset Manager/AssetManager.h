@@ -174,7 +174,7 @@ namespace assetmanager {
         \brief   Map storing prefab assets by string identifier.
         */
         /******************************************************************/
-        std::unordered_map<std::string, prefab::Prefab> m_prefabs;
+        std::unordered_map<std::string, std::filesystem::path> m_prefabs; // store prefab directory
 
         /******************************************************************/
         /*!

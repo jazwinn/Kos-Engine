@@ -72,7 +72,8 @@ namespace assetmanager {
         }
         if (directoryPath.filename().extension().string() == ".prefab") {
 
-            scenes::SceneManager::m_GetInstance()->m_LoadScene(directoryPath);
+            //scenes::SceneManager::m_GetInstance()->m_LoadScene(directoryPath);
+            m_prefabs[directoryPath.filename().string()] = directoryPath;
         }
         if (directoryPath.filename().extension().string() == ".json") {
 
