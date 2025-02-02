@@ -168,6 +168,10 @@ namespace graphicpipe
 	void GraphicsPipe::m_funcSetupFrameBuffer()
 	{
 		Helper::Helpers* help = Helper::Helpers::GetInstance();
+		if (help->m_windowWidth <= 0 || help->m_windowHeight <= 0) //Skip if window is minimized
+		{
+			return;
+		}
 
 		if (m_screenTexture)
 		{
