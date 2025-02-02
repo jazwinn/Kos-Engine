@@ -95,28 +95,28 @@ namespace ecs {
             pathfinding->m_StartPos.m_y = grid->m_Anchor.m_y - floor(transform->m_transformation.m_e21) - 1.0f;
 
 
-            int startX = static_cast<int>(pathfinding->m_StartPos.m_x);
+            /*int startX = static_cast<int>(pathfinding->m_StartPos.m_x);
             int startY = static_cast<int>(pathfinding->m_StartPos.m_y);
             int targetX = static_cast<int>(pathfinding->m_TargetPos.m_x);
             int targetY = static_cast<int>(pathfinding->m_TargetPos.m_y);
 
-            auto path = pathfinder.FindPath(grid, startX, startY, targetX, targetY);
+            auto path = pathfinder.FindPath(grid, startX, startY, targetX, targetY);*/
 
-            if (!path.empty()) {
-                pathfinding->m_Path = path;
-                //LOGGING_INFO("Path found");
-                /*for (const auto& node : path) {*/
-                   //std::cout << "Step: (" << node.x << ", " << node.y << ")\n";
+            //if (!path.empty()) {
+            //    pathfinding->m_Path = path;
+            //    //LOGGING_INFO("Path found");
+            //    /*for (const auto& node : path) {*/
+            //       //std::cout << "Step: (" << node.x << ", " << node.y << ")\n";
 
-                   /* if (!pathfinding->m_Path.empty())
-                    {
-                        std::cout << "has path" << "\n";
-                    }*/
-               // }
-            }
-            else {
-                //LOGGING_INFO("No path found");
-            }
+            //       /* if (!pathfinding->m_Path.empty())
+            //        {
+            //            std::cout << "has path" << "\n";
+            //        }*/
+            //   // }
+            //}
+            //else {
+            //    //LOGGING_INFO("No path found");
+            //}
         }
     }
 
