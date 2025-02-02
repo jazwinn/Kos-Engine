@@ -151,6 +151,7 @@ namespace graphicpipe {
 		GraphicsCamera::m_MultiplyViewMatrix();
 		GraphicsCamera::m_MultiplyOrthoMatrix();
 
+
 		if (!m_gameMode)
 		{
 			

@@ -1,0 +1,153 @@
+[
+    {
+        "name": {
+            "namestr": "Camera",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        }
+    },
+    {
+        "name": {
+            "namestr": "Background",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": -1.708940029144287,
+                "y": -0.19935370981693268
+            },
+            "rotation": 0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "collider": {
+            "checkcollision": true,
+            "checkresponse": true,
+            "size": {
+                "x": 2.4000000953674316,
+                "y": 1.350000023841858
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true,
+            "radius": 0.5,
+            "shapetype": 0
+        },
+        "sprite": {
+            "imagefile": "img_backgroundMainMenu.png",
+            "layer": 0,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0
+        }
+    },
+    {
+        "name": {
+            "namestr": "Start Button",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": -2.700000047683716,
+                "y": 0.03464019298553467
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "collider": {
+            "checkcollision": true,
+            "checkresponse": true,
+            "size": {
+                "x": 0.18000000715255737,
+                "y": 0.20999999344348907
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true,
+            "radius": 0.5,
+            "shapetype": 0
+        },
+        "sprite": {
+            "imagefile": "img_startIcon.png",
+            "layer": 1,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0
+        }
+    },
+    {
+        "name": {
+            "namestr": "Quit Button",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": -2.700000047683716,
+                "y": 0.30000001192092896
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "collider": {
+            "checkcollision": true,
+            "checkresponse": true,
+            "size": {
+                "x": 0.20999999344348907,
+                "y": 0.20999999344348907
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true,
+            "radius": 0.5,
+            "shapetype": 0
+        },
+        "sprite": {
+            "imagefile": "img_quitIcon.png",
+            "layer": 2,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0
+        }
+    }
+]

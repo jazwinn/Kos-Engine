@@ -165,6 +165,8 @@ namespace graphicpipe
 		glEnable(GL_DEPTH_TEST);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+
+		
 		m_funcDrawGrid();
 		m_funcDrawDebug();
 		m_funcDrawTilemap();
@@ -181,6 +183,13 @@ namespace graphicpipe
 
 		glUseProgram(m_frameBufferShaderProgram);
 
+
+
+		GLenum err = glGetError();
+		if (err != GL_NO_ERROR) {
+			//LOGGING_ERROR("First OpenGL Error: 0x%X", err);
+			std::cout << "Draw Window OpenGL Error: " << err << std::endl;
+		}
 	}
 
 	void GraphicsPipe::m_drawLightingTexture()
@@ -199,7 +208,7 @@ namespace graphicpipe
 		// Check for OpenGL errors
 		GLenum err;
 		while ((err = glGetError()) != GL_NO_ERROR) {
-			LOGGING_ERROR("OpenGL Error: 0x%X", err);
+			LOGGING_ERROR("#01 OpenGL Error: 0x%X", err);
 		}
 	}
 
@@ -373,7 +382,7 @@ namespace graphicpipe
 
 	void GraphicsPipe::m_funcDrawGridCollider()
 	{
-		
+
 		glUseProgram(m_gridDebugShaderProgram);
 
 		for (int i{}; i < m_colliderGridData.size() && !m_gridColliderChecks.empty(); ++i)
@@ -386,7 +395,7 @@ namespace graphicpipe
 			GLenum err = glGetError();
 			if (err != GL_NO_ERROR) {
 				//LOGGING_ERROR("First OpenGL Error: 0x%X", err);
-				std::cout << "First OpenGL Error: " << err << std::endl;
+				std::cout << "#02 OpenGL Error: " << err << std::endl;
 			}
 
 			glBindBuffer(GL_ARRAY_BUFFER, m_gridColliderBuffer);
@@ -398,7 +407,7 @@ namespace graphicpipe
 			GLenum err2 = glGetError();
 			if (err2 != GL_NO_ERROR) {
 				//LOGGING_ERROR("First OpenGL Error: 0x%X", err);
-				std::cout << "Second OpenGL Error: " << err2 << std::endl;
+				std::cout << "#03 OpenGL Error: " << err2 << std::endl;
 			}
 
 			glUniform1i(glGetUniformLocation(m_gridDebugShaderProgram, "tilemapColumns"), m_colliderGridData[i].m_gridDimensions.y);
@@ -465,6 +474,7 @@ namespace graphicpipe
 			glBindVertexArray(m_squareMesh.m_vaoId);
 			glDrawElementsInstanced(m_squareMesh.m_primitiveType, m_squareMesh.m_indexElementCount, GL_UNSIGNED_SHORT, NULL, static_cast<GLsizei>(m_transformedTilemaps[i].m_tilemapDimensions.x * m_transformedTilemaps[i].m_tilemapDimensions.y));
 			glBindVertexArray(0);
+			
 		}
 
 	}
@@ -497,7 +507,7 @@ namespace graphicpipe
 			GLenum err = glGetError();
 			if (err != GL_NO_ERROR) {
 				//LOGGING_ERROR("First OpenGL Error: 0x%X", err);
-				std::cout << "First OpenGL Error: " << err << std::endl;
+				std::cout << "#04 OpenGL Error: " << err << std::endl;
 			}
 
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -512,7 +522,7 @@ namespace graphicpipe
 			GLenum err2 = glGetError();
 			if (err2 != GL_NO_ERROR) {
 				//LOGGING_ERROR("First OpenGL Error: 0x%X", err);
-				std::cout << "Second OpenGL Error: " << err2 << std::endl;
+				std::cout << "#05 OpenGL Error : " << err2 << std::endl;
 			}
 
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
