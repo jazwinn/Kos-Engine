@@ -170,8 +170,75 @@ namespace ecs {
 
 
 			}
+
+			for (auto& scriptname : scriptComp->m_scripts) {
+
+				auto script = scriptComp->m_scriptInstances.find(std::get<0>(scriptname));
+				try {
+					// run the scripts update fuction
+					const auto& scriptIsEnabled = std::find_if(scriptComp->m_scripts.begin(), scriptComp->m_scripts.end(), [&](auto& x) {return std::get<0>(x) == script->first; });
+					if (scriptIsEnabled == scriptComp->m_scripts.end()) continue;
+
+					if (std::get<1>(*scriptIsEnabled)) {
+						assetManager->m_scriptManager.m_InvokeMethod(script->first, "LateUpdate", script->second.first, nullptr);
+						
+					}
+
+				}
+				catch (...) {
+					break;
+				}
+
+
+			}
 		}
+
+		for (int n{}; n < m_vecScriptComponentPtr.size(); n++) {
+			//std::cout << "Entity: " << n << "Movement System is getting Updated";
+
+			ScriptComponent* scriptComp = m_vecScriptComponentPtr[n];
+			NameComponent* NameComp = m_vecNameComponentPtr[n];
+			//skip component not of the scene
+			if ((scriptComp->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer)) continue;
+
+
+			//check if scriptcomponent have instance
+			for (auto& scriptstring : scriptComp->m_scripts) {
+
+				if (std::find_if(scriptComp->m_scriptInstances.begin(), scriptComp->m_scriptInstances.end(), [&](auto& x) {return x.first == std::get<0>(scriptstring); }) == scriptComp->m_scriptInstances.end()) {
+					CreateandStartScriptInstance(scriptComp);
+					LOGGING_INFO("Script Instance Created");
+					break;
+				}
+			}
+
+
+
+			for (auto& scriptname : scriptComp->m_scripts) {
+
+				auto script = scriptComp->m_scriptInstances.find(std::get<0>(scriptname));
+				try {
+					// run the scripts update fuction
+					const auto& scriptIsEnabled = std::find_if(scriptComp->m_scripts.begin(), scriptComp->m_scripts.end(), [&](auto& x) {return std::get<0>(x) == script->first; });
+					if (scriptIsEnabled == scriptComp->m_scripts.end()) continue;
+
+					if (std::get<1>(*scriptIsEnabled)) {
+						assetManager->m_scriptManager.m_InvokeMethod(script->first, "LateUpdate", script->second.first, nullptr);
+
+					}
+
+				}
+				catch (...) {
+					break;
+				}
+
+
+			}
+		}
+
 	}
+
+
 
 }
 
