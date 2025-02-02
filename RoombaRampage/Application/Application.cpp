@@ -233,6 +233,7 @@ namespace Application {
 
 	int Application::m_Cleanup() {
         Serialization::Serialize::m_SavePhysicsLayerMatrix(); // Save changes to file
+        Serialization::Serialize::m_SaveGlobaalSettings();
         ecs::ECS::m_GetInstance()->m_Unload();
 #ifdef IMGUIENABLED
         Editor.m_Shutdown();

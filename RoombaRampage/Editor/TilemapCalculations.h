@@ -6,10 +6,11 @@
 \date      29th Nov, 2024
 \brief     Header file for tilemap calculations and utilities, providing
 		   functions for resizing tiles, setting individual tiles, and
-		   debugging tile indices.
+		   debugging tile indices as well as similar purposes for grids
+		   components.
 
 \details   This file includes:
-		   - Functionality to dynamically resize tilemaps.
+		   - Functionality to dynamically resize tilemaps and grids.
 		   - Tools to modify and debug specific tiles within the map.
 		   - Integration with ECS components for tilemap management.
 
@@ -42,6 +43,17 @@ namespace Tilemap
 	/******************************************************************/
 	void resizeTiles(ecs::TilemapComponent* tilemap, int rowLength, int colLength);
 
+
+	/******************************************************************/
+	/*!
+	\fn      void Tilemap::resizeCollidableGrid(ecs::GridComponent* grid, int rowLength, int colLength)
+	\brief   Resizes the collidable grid to the specified row and column lengths.
+	\param   grid - Pointer to the grid component to be resized.
+	\param   rowLength - The new number of rows in the grid.
+	\param   colLength - The new number of columns in the grid.
+	\details Adjusts the size of the collidable grid by modifying its rows and columns.
+	*/
+	/******************************************************************/
 	void resizeCollidableGrid(ecs::GridComponent* grid, int rowLength, int colLength);
 
 	/******************************************************************/
@@ -56,6 +68,18 @@ namespace Tilemap
 	/******************************************************************/
 	void setIndividualTile(vector2::Vec2& originCoordinates, const vector2::Vec2& tileCoordinates, ecs::TilemapComponent* tilemap);
 
+
+	/******************************************************************/
+	/*!
+	\fn      void Tilemap::setCollidableTile(vector2::Vec2& originCoordinates, const vector2::Vec2& tileCoordinates, ecs::GridComponent* grid)
+	\brief   Sets a collidable tile in the grid based on given coordinates.
+	\param   originCoordinates - Reference to the origin coordinates of the tile to be set.
+	\param   tileCoordinates - The coordinates of the tile within the grid.
+	\param   grid - Pointer to the grid component.
+	\details Updates the grid with a specific collidable tile based on the provided coordinates.
+			 This function modifies the grid at the specified tile's coordinates.
+	*/
+	/******************************************************************/
 	void setCollidableTile(vector2::Vec2& originCoordinates, const vector2::Vec2& tileCoordinates, ecs::GridComponent* grid);
 
 	/******************************************************************/
@@ -68,6 +92,15 @@ namespace Tilemap
 	/******************************************************************/
 	void debugTileIndex(ecs::TilemapComponent* tilemap);
 
+	/******************************************************************/
+	/*!
+	\fn      void Tilemap::debugGridChecks(ecs::GridComponent* grid)
+	\brief   Outputs debugging information for grid collision checks.
+	\param   grid - Pointer to the grid component to debug.
+	\details Prints information about the grid's collision checks, including any
+			 relevant data or states that can help in debugging the grid's behavior.
+	*/
+	/******************************************************************/
 	void debugGridChecks(ecs::GridComponent* grid);
 
 }

@@ -1,3 +1,26 @@
+/******************************************************************/
+/*!
+\file      lightingVertexShader.vert
+\author    Sean Tiu
+\par       s.tiu@digipen.edu
+\date      31st January 2025
+\brief     Vertex shader for transforming model vertices and passing lighting data to the fragment shader. 
+
+           This vertex shader applies a model-view-projection transformation to the vertex positions 
+           and passes various lighting-related attributes such as the light position, direction, and 
+           associated light parameters to the fragment shader for further processing. The light direction 
+           and position are derived from the model matrix, while the color and lighting parameters are 
+           passed as input attributes.
+
+           The shader is used for rendering objects with lighting, including their interaction with the light 
+           source, which is necessary for effects like lighting attenuation and intensity computations.
+
+Copyright (C) 2025 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/******************************************************************/
+
 R"( #version 460 core
 
 
@@ -13,7 +36,6 @@ layout (location=6) in mat3 modelMatrix;
 layout (location=0) out vec4 color; 
 layout (location=1) out vec2 lightPos;
 layout (location=2) out vec3 lightParams;
-//layout (location=4) out vec2 fragPos;
 layout (location=5) out vec2 lightDirection;
 
 uniform mat3 projection;
