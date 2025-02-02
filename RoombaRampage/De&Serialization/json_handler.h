@@ -137,6 +137,10 @@ namespace Serialization {
 		/******************************************************************/
 		static void m_LoadPhysicsLayerMatrix();
 
+		static void m_SaveGlobaalSettings();
+
+		static void m_LoadGlobalSettings();
+
 		static std::string m_EncodeBase64(const void* data, size_t);
 
 		struct VoidDeleter {
