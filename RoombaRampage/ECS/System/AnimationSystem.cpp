@@ -98,7 +98,7 @@ namespace ecs {
 
 			if (m_vecAnimationComponentPtr[n]->m_isAnimating && m_vecAnimationComponentPtr[n]->m_framesPerSecond)
 			{
-				for (int i = 0; i < helper->currentNumberOfSteps; ++i) //Fixed DT for Animations
+				for (int i = 0; i < helper->currentNumberOfSteps; ++i) //Fixed DT with Accumulation for Animations
 				{
 					m_vecAnimationComponentPtr[n]->m_frameTimer += helper->m_fixedDeltaTime;
 				}

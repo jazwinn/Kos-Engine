@@ -212,10 +212,13 @@ namespace Application {
             old_h = display_h;
             help->m_windowHeight = static_cast<float>(display_h);
             help->m_windowWidth = static_cast<float>(display_w);
-            pipe->m_funcSetupFrameBuffer();
-            pipe->m_funcSetupGamePreviewFrameBuffer();
-            pipe->m_funcSetupLightingFrameBuffer();
-            glViewport(0, 0, display_w, display_h);
+            if (help->m_windowHeight > 0 || help->m_windowWidth > 0)
+            {
+                pipe->m_funcSetupFrameBuffer();
+                pipe->m_funcSetupGamePreviewFrameBuffer();
+                pipe->m_funcSetupLightingFrameBuffer();
+                glViewport(0, 0, display_w, display_h);
+            }
             
         }
         glClearColor(static_cast<GLclampf>(help->m_colour.m_x * pipe->m_globalLightIntensity), static_cast<GLclampf>(help->m_colour.m_y * pipe->m_globalLightIntensity), static_cast<GLclampf>(help->m_colour.m_z * pipe->m_globalLightIntensity), static_cast<GLclampf>(1));
