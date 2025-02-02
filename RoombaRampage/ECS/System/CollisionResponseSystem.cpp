@@ -180,6 +180,10 @@ namespace ecs {
 				if (ColComp->m_collisionResponse == false && obj2_CC->m_collisionResponse == false)
 					continue;
 
+
+				if (ColComp->m_collisionResponse == false)
+					continue;
+
 				if (ColComp->m_collisionResponse && obj2_CC->m_collisionResponse && rigidComp != NULL && obj2_RC != NULL) {
 					if (swap) {
 						transform->m_position += (valit->second.first * valit->second.second);
