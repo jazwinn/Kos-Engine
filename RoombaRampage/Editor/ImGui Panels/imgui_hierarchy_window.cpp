@@ -104,8 +104,11 @@ namespace gui {
                 if (ImGui::Button("Back")){
                     //save "prefab"
                     scenemanager->m_SaveScene(m_activeScene);
+                    //delete prfab scene
+                    scenemanager->m_ClearScene(m_activeScene);
+
                     //set current prefab back to inactive
-                    ecs->m_ECS_SceneMap.find(m_activeScene)->second.m_isActive = false;
+                    //ecs->m_ECS_SceneMap.find(m_activeScene)->second.m_isActive = false;
                     
                     //set back scene's active state
                     for (auto& scene : ecs->m_ECS_SceneMap) {
@@ -127,7 +130,7 @@ namespace gui {
                 }
 
 
-
+                break;
             }
             
             //skip if prefab is not active 

@@ -234,6 +234,28 @@ namespace gui {
 							//skip if active scene is filename
 							if (m_activeScene == directoryPath.path().filename())continue;
 
+							if (m_prefabSceneMode) {
+								//save and delete scene of current entity
+
+								scenemanager->m_SaveScene(m_activeScene);
+								//delete prfab scene
+								scenemanager->m_ClearScene(m_activeScene);
+							}
+
+							//load prefab
+							auto it = assetmanager->m_prefabs.find(directoryPath.path().filename().string());
+
+							if (it == assetmanager->m_prefabs.end()) {
+								LOGGING_ERROR("Prefab not in folder");
+								continue;
+							}
+
+
+							scenes::SceneManager::m_GetInstance()->m_LoadScene(it->second);
+
+
+
+
 							const auto& prefabscene = ecs->m_ECS_SceneMap.find(directoryPath.path().filename().string());
 							if (prefabscene == ecs->m_ECS_SceneMap.end()) {
 								LOGGING_ERROR("Prefab not loaded");

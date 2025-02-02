@@ -58,6 +58,20 @@ namespace prefab {
             return -1;
         }
 
+        //load prefab scene
+        assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+        
+        auto it = assetmanager->m_prefabs.find(prefabscene);
+
+        if (it == assetmanager->m_prefabs.end()) {
+            LOGGING_ERROR("Prefab not in folder");
+            return -1;
+        }
+
+
+        scenes::SceneManager::m_GetInstance()->m_LoadScene(it->second);
+
+
 
 
         //check if prefabscene exist
@@ -102,6 +116,9 @@ namespace prefab {
             AssignPrefabToNameComponent(id, prefabscene);
         
         }
+
+        // delete prefab scene
+        scenes::SceneManager::m_GetInstance()->m_ClearScene(it->second.filename().string());
 
         return vecid[0];
     }
