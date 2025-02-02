@@ -36,9 +36,6 @@ namespace graphicpipe
 			glBindBuffer(GL_ARRAY_BUFFER, m_modelMatrixArrayBuffer);
 			glNamedBufferData(m_modelMatrixArrayBuffer, m_modelToNDCMatrix.size() * sizeof(glm::mat3), &m_modelToNDCMatrix[0], GL_DYNAMIC_DRAW);
 
-			//glBindBuffer(GL_ARRAY_BUFFER, m_vec3Buffer);
-			//glNamedBufferData(m_vec3Buffer, m_vec3Array.size() * sizeof(glm::vec3), &m_vec3Array[0], GL_DYNAMIC_DRAW); //For Tuple of 3 Floats, Light Intensity, Inner/Outer Radius
-
 			glBindBuffer(GL_ARRAY_BUFFER, m_iVec3Buffer);
 			glNamedBufferData(m_iVec3Buffer, m_iVec3Array.size() * sizeof(glm::ivec3), &m_iVec3Array[0], GL_DYNAMIC_DRAW); //Strip Count, FrameNumber, Texture Order
 
@@ -128,39 +125,6 @@ namespace graphicpipe
 
 	void GraphicsPipe::m_funcDrawGameFrameBuffer()
 	{
-		/*glBindFramebuffer(GL_FRAMEBUFFER, m_frameBufferObject);
-		glEnable(GL_DEPTH_TEST);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		m_funcDrawTilemap();
-		m_funcDraw();
-		m_funcDrawText();
-
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		glDisable(GL_DEPTH_TEST);
-		glClear(GL_COLOR_BUFFER_BIT);
-
-		glUseProgram(m_frameBufferShaderProgram);*/
-
-		/*m_funcDrawWindow();
-
-		glUseProgram(m_frameBufferShaderProgram);
-
-		glBindVertexArray(m_screenTextureVAO);
-		glBindTexture(GL_TEXTURE_2D, m_screenTexture);
-
-		glUniform1i(glGetUniformLocation(m_frameBufferShaderProgram, "screenTexture"), m_screenTexture);
-
-		glDrawArrays(GL_TRIANGLES, 0, 6);
-
-		GLenum err = glGetError();
-		if (err != GL_NO_ERROR) {
-			LOGGING_ERROR("First OpenGL Error: 0x%X", err);
-		}*/
-
-		// Render game elements to the framebuffer
-
-
 		glBindFramebuffer(GL_FRAMEBUFFER, m_frameBufferObject);
 		glEnable(GL_DEPTH_TEST);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -188,10 +152,10 @@ namespace graphicpipe
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 
 		// Check for OpenGL errors
-		GLenum err;
-		while ((err = glGetError()) != GL_NO_ERROR) {
-			LOGGING_ERROR("OpenGL Error: 0x%X", err);
-		}
+		//GLenum err;
+		//while ((err = glGetError()) != GL_NO_ERROR) {
+		//	LOGGING_ERROR("OpenGL Error: 0x%X", err);
+		//}
 	}
 
 	void GraphicsPipe::m_funcDrawWindow()

@@ -1,8 +1,8 @@
 /******************************************************************/
 /*!
 \file      AnimationSystem.cpp
-\author    
-\par       
+\author    Sean Tiu, s.tiu, 2303398
+\par       s.tiu@digipen.edu
 \date      Sept 29, 2024
 \brief     This file contains the definition of the CollisionSystem class,
 		   which is part of the Entity Component System (ECS) framework.
@@ -80,17 +80,13 @@ namespace ecs {
 	void AnimationSystem::m_Update(const std::string& scene) {
 
 		ECS* ecs = ECS::m_GetInstance();
-		// graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
 
 		if (m_vecAnimationComponentPtr.size() != m_vecTransformComponentPtr.size() && m_vecAnimationComponentPtr.size() != m_vecSpriteComponentPtr.size()) {
-			//std::cout << "Error: Vecotrs container size does not Match" << std::endl;
-			LOGGING_ERROR("Error: Vecotrs container size does not Match");
+			LOGGING_ERROR("Error: Vectors container size does not Match");
 			return;
 		}
-
-
-		//graphicpipe::GraphicsPipe* graphicsPipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
 		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+		Helper::Helpers* helper = Helper::Helpers::GetInstance();
 		for (int n{}; n < m_vecAnimationComponentPtr.size(); n++) {
 
 			AnimationComponent* AniComp = m_vecAnimationComponentPtr[n];
@@ -102,14 +98,13 @@ namespace ecs {
 
 			if (m_vecAnimationComponentPtr[n]->m_isAnimating && m_vecAnimationComponentPtr[n]->m_framesPerSecond)
 			{
-				m_vecAnimationComponentPtr[n]->m_frameTimer += ecs->m_DeltaTime;
-
+				for (int i = 0; i < helper->currentNumberOfSteps; ++i) //Fixed DT for Animations
+				{
+					m_vecAnimationComponentPtr[n]->m_frameTimer += helper->m_fixedDeltaTime;
+				}
 				float frameTime = 1.f / m_vecAnimationComponentPtr[n]->m_framesPerSecond;
 				const auto& image = assetmanager->m_imageManager.m_imageMap.find(SpriteComp->m_imageFile);
 				if (image == assetmanager->m_imageManager.m_imageMap.end()) continue;
-				//int ids = image->second.m_imageID;
-				//float spriteTotalTime = frameTime * pipe->m_imageData[ids].m_stripCount;
-				//std::cout << m_vecAnimationComponentPtr[n]->m_stripCount << std::endl;
 				float spriteTotalTime = frameTime * m_vecAnimationComponentPtr[n]->m_stripCount;
 				if (m_vecAnimationComponentPtr[n]->m_frameTimer > spriteTotalTime)
 				{
@@ -119,11 +114,6 @@ namespace ecs {
 				{
 					AniComp->m_frameNumber = static_cast<int>(AniComp->m_frameTimer / frameTime);
 				}
-				
-				//float totalFrameTime = m_frameTimer * m_imageData[m_modelData[n].m_textureID].m_stripCount;
-				//float frameTime = static_cast<float>(fmod(m_modelData[n].m_animationTimer, totalFrameTime));
-				//int frameNumber = static_cast<int>(frameTime / m_frameTime);
-				//std::cout << AniComp->m_frameNumber << std::endl;
 			}
 			else
 			{
