@@ -1054,7 +1054,7 @@ namespace script {
 
 
 
-		return false;
+		//return false;
 	}
 
 	void InternalCall::m_InternalCallGetPath(int gridKey, int* startX, int* startY, int* targetX, int* targetY, MonoArray** nodeArray_x, MonoArray** nodeArray_y)
