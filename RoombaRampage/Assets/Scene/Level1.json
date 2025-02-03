@@ -20,7 +20,7 @@
         "grid": {
             "gridRowLength": 100,
             "gridColumnLength": 80,
-            "setCollidable": true,
+            "setCollidable": false,
             "gridKey": 0,
             "isWall": [
                 [
@@ -58264,17 +58264,17 @@
             "isprefab": true,
             "tagstr": "Enemy",
             "prefabname": "ScaredEnemy.prefab",
-            "issync": true
+            "issync": false
         },
         "transform": {
             "position": {
-                "x": -3.1792993545532227,
-                "y": -8.092129707336426
+                "x": -15.499019622802734,
+                "y": -15.498368263244629
             },
             "rotation": -0.0,
             "scale": {
-                "x": 3.0,
-                "y": 3.0
+                "x": 1.0,
+                "y": 1.0
             }
         },
         "collider": {
@@ -58400,14 +58400,57 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 0.0,
-                        "y": 0.0
+                        "x": 0.010660171508789063,
+                        "y": -0.31934642791748047
                     },
                     "rotation": 0.0,
                     "scale": {
                         "x": 1.0,
                         "y": 1.0
                     }
+                },
+                "pathfinding": {
+                    "startPosition": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "targetPosition": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "gridKey": 0
+                }
+            },
+            {
+                "name": {
+                    "namestr": "Waypoint 2",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "ScaredEnemy.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": -0.003261566162109375,
+                        "y": -4.97871208190918
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "pathfinding": {
+                    "startPosition": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "targetPosition": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "gridKey": 0
                 }
             }
         ]
@@ -58478,7 +58521,7 @@
         },
         "sprite": {
             "imagefile": "ani_scientistWalk_strip14.png",
-            "layer": 22,
+            "layer": 23,
             "color": {
                 "r": 1.0,
                 "g": 1.0,
@@ -58633,7 +58676,7 @@
         },
         "sprite": {
             "imagefile": "ani_scientistWalk_strip14.png",
-            "layer": 22,
+            "layer": 24,
             "color": {
                 "r": 1.0,
                 "g": 1.0,
@@ -58788,7 +58831,7 @@
         },
         "sprite": {
             "imagefile": "ani_scientistWalk_strip14.png",
-            "layer": 22,
+            "layer": 25,
             "color": {
                 "r": 1.0,
                 "g": 1.0,
@@ -59192,6 +59235,268 @@
                     "drawDebug": true,
                     "radius": 1.100000023841858,
                     "shapetype": 1
+                }
+            }
+        ]
+    },
+    {
+        "name": {
+            "namestr": "ScaredEnemy",
+            "layer": 2,
+            "isprefab": true,
+            "tagstr": "Enemy",
+            "prefabname": "ScaredEnemy.prefab",
+            "issync": false
+        },
+        "transform": {
+            "position": {
+                "x": -23.531888961791992,
+                "y": -16.241802215576172
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "collider": {
+            "checkcollision": true,
+            "checkresponse": true,
+            "size": {
+                "x": 0.7400000095367432,
+                "y": 0.23999999463558197
+            },
+            "offset": {
+                "x": -0.009999999776482582,
+                "y": 0.05999999865889549
+            },
+            "drawDebug": true,
+            "radius": 0.5,
+            "shapetype": 0
+        },
+        "enemy": {
+            "enemytag": -1,
+            "enemytype": 0,
+            "enemybehaviour": 0
+        },
+        "rigidbody": {
+            "linearVelocity": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "linearAcceleration": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "angularVelocity": 0.0,
+            "angularAcceleration": 0.0,
+            "mass": 1.0,
+            "inverseMass": 1.0,
+            "linearDamping": 0.9900000095367432,
+            "angularDamping": 0.9900000095367432,
+            "force": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "torque": 0.0,
+            "kinematic": false,
+            "static": false
+        },
+        "sprite": {
+            "imagefile": "ani_scientistWalk_strip14.png",
+            "layer": 26,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0
+        },
+        "animation": {
+            "frameNumber": 0,
+            "framesPerSecond": 0,
+            "frameTimer": 0.0,
+            "isAnimating": true,
+            "stripCount": 14
+        },
+        "script": {
+            "scripts": [
+                {
+                    "name": "EnemyScript",
+                    "enabled": true,
+                    "map": [
+                        {
+                            "variable": "isDead",
+                            "base64": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        "audio": [
+            {
+                "name": "aud_humanDeath01",
+                "volume": 0.4490000009536743,
+                "loop": false,
+                "playOnStart": false
+            }
+        ],
+        "raycast": {
+            "raycasts": [
+                {
+                    "raycastID": "RaycastToPlayer",
+                    "israycasting": true,
+                    "targetposition": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "Layer Vector": [
+                        {
+                            "layer": 7
+                        }
+                    ]
+                }
+            ]
+        },
+        "pathfinding": {
+            "startPosition": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "targetPosition": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "gridKey": 0
+        },
+        "children": [
+            {
+                "name": {
+                    "namestr": "Waypoint 1",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "ScaredEnemy.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.024007797241210938,
+                        "y": -0.3733940124511719
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "pathfinding": {
+                    "startPosition": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "targetPosition": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "gridKey": 0
+                }
+            },
+            {
+                "name": {
+                    "namestr": "Waypoint 2",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "ScaredEnemy.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.07160377502441406,
+                        "y": -3.345073699951172
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "pathfinding": {
+                    "startPosition": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "targetPosition": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "gridKey": 0
+                }
+            },
+            {
+                "name": {
+                    "namestr": "Waypoint 3",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "ScaredEnemy.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 2.155071258544922,
+                        "y": -3.3195953369140625
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "pathfinding": {
+                    "startPosition": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "targetPosition": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "gridKey": 0
+                }
+            },
+            {
+                "name": {
+                    "namestr": "Waypoint 4",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "ScaredEnemy.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 2.1156177520751953,
+                        "y": -0.3363189697265625
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "pathfinding": {
+                    "startPosition": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "targetPosition": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "gridKey": 0
                 }
             }
         ]
