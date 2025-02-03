@@ -11,7 +11,7 @@ public class MainMenuScript : ScriptBase
 {
     private uint EntityID;
     private string commandPromptPrefab;
-    public bool animPlay = false;
+   // public bool animPlay = false;
     public override void Awake(uint id)
     {
         EntityID = id;
@@ -21,13 +21,14 @@ public class MainMenuScript : ScriptBase
         Console.WriteLine("Spawning command prompt...");
         InternalCall.m_InternalCallAddPrefab(commandPromptPrefab, 0, 0, 0); // Add proper coordinates and rotation if necessary
 
-        if (animPlay == false)
-        {
-            animPlay = true;
-            InternalCall.m_UnloadAllScene();
-            InternalCall.m_InternalCallLoadScene("MainGameplay");
-        }
+        //if (animPlay == false)
+        //{
+        //    animPlay = true;
+        //    InternalCall.m_UnloadAllScene();
+        //    InternalCall.m_InternalCallLoadScene("MainGameplay");
+        //}
 
+        InternalCall.m_InternalCallLoadScene("MainGameplay");
 
     }
 
