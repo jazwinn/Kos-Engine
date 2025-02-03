@@ -36,13 +36,13 @@
         },
         "transform": {
             "position": {
-                "x": 0.07978880405426025,
-                "y": -0.10106626898050308
+                "x": 0.0,
+                "y": 0.0
             },
             "rotation": -0.0,
             "scale": {
-                "x": 1.0,
-                "y": 1.0
+                "x": 0.7569000124931335,
+                "y": 0.7569000124931335
             }
         },
         "collider": {
@@ -69,6 +69,15 @@
                 "b": 1.0
             },
             "alpha": 1.0
+        },
+        "script": {
+            "scripts": [
+                {
+                    "name": "LevelSelection",
+                    "enabled": true,
+                    "map": []
+                }
+            ]
         }
     },
     {
@@ -275,14 +284,14 @@
             },
             {
                 "name": {
-                    "namestr": "Status Text",
+                    "namestr": "Execute Text",
                     "layer": 0,
                     "isprefab": false,
                     "tagstr": "Default"
                 },
                 "transform": {
                     "position": {
-                        "x": -0.25734588503837585,
+                        "x": -0.09626936912536621,
                         "y": -0.6767345666885376
                     },
                     "rotation": 0.0,
@@ -292,7 +301,7 @@
                     }
                 },
                 "text": {
-                    "text": "EXECUTE",
+                    "text": "EXECUTE: Y/N",
                     "text": null,
                     "filename": "fnt_silkscreenRegular.ttf",
                     "fontsize": 16.350000381469727,
@@ -378,8 +387,54 @@
                         "g": 0.0,
                         "b": 0.0
                     },
-                    "layer": 1
+                    "layer": 4
                 }
+            }
+        ]
+    },
+    {
+        "name": {
+            "namestr": "Level Select",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": -1.4472938776016235,
+                "y": -0.8314323425292969
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "button": {
+            "force": {
+                "x": 768.6771850585938,
+                "y": 544.5303344726563
+            },
+            "scale": {
+                "x": 0.550000011920929,
+                "y": 0.1899999976158142
+            }
+        },
+        "script": {
+            "scripts": [
+                {
+                    "name": "LevelOneButton",
+                    "enabled": true,
+                    "map": []
+                }
+            ]
+        },
+        "audio": [
+            {
+                "name": "aud_buttonClick01",
+                "volume": 1.0,
+                "loop": false,
+                "playOnStart": false
             }
         ]
     }

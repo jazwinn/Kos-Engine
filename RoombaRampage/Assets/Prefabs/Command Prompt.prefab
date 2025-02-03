@@ -28,11 +28,20 @@
             "alpha": 1.0
         },
         "animation": {
-            "frameNumber": 0,
-            "framesPerSecond": 4,
-            "frameTimer": 0.13333334028720856,
+            "frameNumber": 1,
+            "framesPerSecond": 1,
+            "frameTimer": 1.5833325386047363,
             "isAnimating": true,
             "stripCount": 5
+        },
+        "script": {
+            "scripts": [
+                {
+                    "name": "MainMenuTransition",
+                    "enabled": true,
+                    "map": []
+                }
+            ]
         }
     }
 ]
