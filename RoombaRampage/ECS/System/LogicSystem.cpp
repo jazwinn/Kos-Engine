@@ -93,7 +93,9 @@ namespace ecs {
 			// retieve isntance for each object
 			//
 			//  << _script << std::endl;
-			scriptComp->m_scriptInstances[std::get<0>(_script)] = std::make_pair(assetManager->m_scriptManager.m_CreateObjectInstance("LogicScript", std::get<0>(_script)), false);
+			auto instance = assetManager->m_scriptManager.m_CreateObjectInstance("LogicScript", std::get<0>(_script));
+			scriptComp->m_scriptInstances[std::get<0>(_script)] = std::make_pair(instance, false);
+			mono_gchandle_new(instance, true);
 
 			//assign instance with script varaibles
 			assetManager->m_scriptManager.m_assignVaraiblestoScript(scriptComp, std::get<0>(_script));
@@ -160,7 +162,13 @@ namespace ecs {
 							script->second.second = true;
 						}
 
-						assetManager->m_scriptManager.m_InvokeMethod(script->first, "Update", script->second.first, nullptr);
+
+						else if (script->second.first) {
+							assetManager->m_scriptManager.m_InvokeMethod(script->first, "Update", script->second.first, nullptr);
+						} 
+						if (mono_object_get_domain(script->second.first) == nullptr) {
+							std::cout << "Mono object is invalid!" << std::endl;
+						}
 					}
 					
 				}
