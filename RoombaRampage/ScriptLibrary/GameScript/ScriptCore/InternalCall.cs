@@ -202,9 +202,11 @@ public static class InternalCall
         m_InternalCallSetRayCast(id, monoString, in ray.m_isRaycasting, in ray.m_targetposition, in ray.m_distance, in ray.m_targetReached, in ray.m_hitPosition);
 
     }
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static bool m_InternalCallGetPath(int gridkey, in int startX, in int startY, in int targetX, in int targetY, out int[] pathX, out int[] pathY);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static bool m_InternalCallGetPathfinding(uint id, out Vector2 m_startpos, out Vector2 m_startend, out int gridkey, out int[] nodeArray_x, out int[] nodeArray_y);
+    public extern static bool m_InternalCallGetPathfinding(uint id, out Vector2 m_startpos, out Vector2 m_startend, out int gridkey);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static void m_EnableLayer(uint layer);
@@ -270,20 +272,8 @@ public static class Component
         else if(typeof(T) == typeof(PathfindingComponent))
         {
             var pathfindingcomponent = component as PathfindingComponent;
-            int[] x, y;
-            InternalCall.m_InternalCallGetPathfinding(id, out pathfindingcomponent.m_startPosition, out pathfindingcomponent.m_targetPosition, out pathfindingcomponent.m_gridkey, out x, out y);
+            InternalCall.m_InternalCallGetPathfinding(id, out pathfindingcomponent.m_startPosition, out pathfindingcomponent.m_targetPosition, out pathfindingcomponent.m_gridkey);
 
-            if (x != null && y != null)
-            {
-                for (int n = 0; n < x.Length; n++)
-                {
-                    if (pathfindingcomponent.m_node == null)
-                    {
-                        pathfindingcomponent.m_node = new List<Vector2>();
-                    }
-                    pathfindingcomponent.m_node.Add(new Vector2(x[n], y[n]));
-                }
-            }
         }
         else if (typeof(T) == typeof(EnemyComponent))
         {
