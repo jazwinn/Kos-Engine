@@ -318,6 +318,9 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
         //Get forward vector Y
         float forwardY = (float)(Math.Cos(rotationInRadians));
+
+        //RigidBodyComponent rc = Component.Get<RigidBodyComponent>(EntityID);
+
         //+ forwardX * 0.4f
          movement.X = 0 ; //Pushes enemy back for "knockback effect"
          movement.Y = 0 ; ; //Pushes enemy back for "knockback effect"
