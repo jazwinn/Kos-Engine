@@ -172,25 +172,32 @@ namespace ecs {
 
 				//TransformComponent* obj2_TC = (TransformComponent*)ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(obj2_EntityID);
 				ColliderComponent* obj2_CC = (ColliderComponent*)ecs->m_ECS_CombinedComponentPool[TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(obj2_EntityID);
-				RigidBodyComponent* obj2_RC = (RigidBodyComponent*)ecs->m_ECS_CombinedComponentPool[TYPERIGIDBODYCOMPONENT]->m_GetEntityComponent(obj2_EntityID);
+				//RigidBodyComponent* obj2_RC = (RigidBodyComponent*)ecs->m_ECS_CombinedComponentPool[TYPERIGIDBODYCOMPONENT]->m_GetEntityComponent(obj2_EntityID);
 
 				//obj2_CC->m_isCollided = 1.0f;
 				ColComp->m_isCollided = 1.f;
 
-				if (ColComp->m_collisionResponse == false && obj2_CC->m_collisionResponse == false)
+				/*if (ColComp->m_collisionResponse == false && obj2_CC->m_collisionResponse == false)
+					continue;*/
+
+
+				if (ColComp->m_collisionResponse == false)
 					continue;
 
-				if (ColComp->m_collisionResponse && obj2_CC->m_collisionResponse && rigidComp != NULL && obj2_RC != NULL) {
-					if (swap) {
-						transform->m_position += (valit->second.first * valit->second.second);
-						//obj2_TC->m_position += (-valit->second.first * valit->second.second);
-					}
-					else {
-						transform->m_position += (-valit->second.first * valit->second.second);
-						//obj2_TC->m_position += (valit->second.first * valit->second.second);
-					}
+				if (obj2_CC->m_collisionResponse == false)
+					continue;
 
-					rigidComp->m_Velocity = {};
+				if (ColComp->m_collisionResponse) {
+					//if (swap) {
+					//	transform->m_position += (valit->second.first * valit->second.second);
+					//	//obj2_TC->m_position += (-valit->second.first * valit->second.second);
+					//}
+					//else {
+					//	transform->m_position += (-valit->second.first * valit->second.second);
+					//	//obj2_TC->m_position += (valit->second.first * valit->second.second);
+					//}
+
+					rigidComp->m_Velocity = {0.f,0.f};
 					//obj2_RC->m_Velocity = {};
 					//obj2_CC->m_isCollided = 1.0f;
 					ColComp->m_isCollided = 1.0f;

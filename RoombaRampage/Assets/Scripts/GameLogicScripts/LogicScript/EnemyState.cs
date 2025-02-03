@@ -2,34 +2,17 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public abstract class EnemyState : ScriptBase
+public abstract class EnemyState
 {
     #region Default Functions
-    #region ID Variables
-    private uint EntityID; //Entity ID of the object, do not touch!
     #endregion
 
-    public override void Awake(uint id) //Called everytime instance is created
-    {
-        EntityID = id;
-    }
-
-    public override void Start()
-    {
-
-    }
-
-    public override void Update()
-    {
-
-    }
-    #endregion
-
-    public EnemyScript enemyScript; //References to EnemyScript
+    protected EnemyScript enemyScript; //References to EnemyScript
     public EnemyState(EnemyScript enemyScript)
     {
         this.enemyScript = enemyScript;
     }
+
     public abstract void DoActionUpdate(float dTime);
 
     public abstract void LostTarget();
@@ -52,7 +35,7 @@ public class EnemyStatePatrol : EnemyState
 
     public override void DoActionUpdate(float dTime)
     {
-        enemyScript.UpdateRayCastToPlayerPosition(); //Update Location of player
+       enemyScript.UpdateRayCastToPlayerPosition(); //Update Location of player
 
         if (enemyScript.CheckPlayerWithinSight()) //Checks if player is within sight
         {
@@ -60,6 +43,7 @@ public class EnemyStatePatrol : EnemyState
             {
                 case EnemyScript.EnemySelection.Helpless: //Start Helpless State
                     enemyScript.SetCurrentState(new EnemyStateRun(enemyScript));
+
                     break;
 
                 case EnemyScript.EnemySelection.Melee: //Start Melee State

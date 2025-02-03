@@ -86,7 +86,9 @@ public class PlayerBullet : ScriptBase
             if (frameNumber == stripCount - 1)
             {
                 InternalCall.m_InternalCallDeleteEntity(EntityID);
+
             }
+            return;
         }
 
         
@@ -117,13 +119,14 @@ public class PlayerBullet : ScriptBase
                             movement.Y = 0;
 
                             InternalCall.m_InternalSetVelocity(EntityID, movement);
-                        }
 
-                        break;
+                        }
+                        
+                        return;
 
                     case "Enemy":
                         InternalCall.m_InternalCallDeleteEntity(EntityID);
-                        break;
+                        return;
 
                     default:
                         break;

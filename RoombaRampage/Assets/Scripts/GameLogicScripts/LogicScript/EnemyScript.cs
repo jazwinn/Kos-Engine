@@ -55,7 +55,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     public bool isDead;
     private bool isChasing;
     private bool isPatrolling;
-    private Vector2 movement;
+    private Vector2 movement = new Vector2();
     private float enemyDeathKnockbackMultiplier;
     private float enemyBloodPoolSpawnDelay = 0.5f;
     private float enemySpeed = 1.0f;
@@ -74,16 +74,16 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     public override void Awake(uint id) //Called everytime instance is created
     {
         EntityID = id; //Sets ID for object, DO NOT TOUCH
-
+        
         //UpdateRayCastToPlayerPosition(); //Updates Raycast Position when spawned, for objecting pooling, etc.
     }
 
     public override void Start() //Called once at the start of the game
     {
         
-        UpdateComponentValues();
+        
         playerID = (uint)InternalCall.m_InternalCallGetTagID("Player"); //Get Player ID
-
+        UpdateComponentValues();
         enemyScientistDeathTexture = "img_scientistDeath.png";
         //enemyRobotDeathTexture = "img_robotDeath.png"; //Set to ranged enemy death texture
 
@@ -183,6 +183,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     #region Raycasting Functions
     public void UpdateRayCastToPlayerPosition() //Do before using Raycast
     {
+        
         Raycast rC = InternalCall.m_GetRay(EntityID, "RaycastToPlayer"); //Gets current ray
 
         UpdateComponentValues(); //Updates components to get latest values
@@ -233,7 +234,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
                         movement.X = 0;
                         movement.Y = 0;
 
-                        InternalCall.m_InternalSetVelocity(EntityID, movement);
+                        InternalCall.m_InternalSetVelocity(EntityID, in movement);
 
                         break;
 
@@ -318,18 +319,21 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
         //Get forward vector Y
         float forwardY = (float)(Math.Cos(rotationInRadians));
+
+        //RigidBodyComponent rc = Component.Get<RigidBodyComponent>(EntityID);
+
         //+ forwardX * 0.4f
          movement.X = 0 ; //Pushes enemy back for "knockback effect"
          movement.Y = 0 ; ; //Pushes enemy back for "knockback effect"
 
-         InternalCall.m_InternalSetVelocity(EntityID, movement); //Sets velocity for rigidbody to move
+         InternalCall.m_InternalSetVelocity(EntityID, in movement); //Sets velocity for rigidbody to move
 
         // isDead = true; //Sets enemy to dead status
         transformComp = Component.Get<TransformComponent>(EntityID);
 
+        yield return null;
+        //yield return new CoroutineManager.WaitForSeconds(enemyBloodPoolSpawnDelay); //Waits for time before moving to next line;
         
-        yield return new CoroutineManager.WaitForSeconds(enemyBloodPoolSpawnDelay); //Waits for time before moving to next line;
-
         InternalCall.m_InternalCallAddPrefab("prefab_enemyBloodPool", transformComp.m_position.X, transformComp.m_position.Y, transformComp.m_rotation); //Spawns blood pool
     }
     #endregion
@@ -397,7 +401,8 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     #region Component Handlers  
     private void UpdateComponentValues()
     {
-            spriteComp = Component.Get<SpriteComponent>(EntityID);
+
+        spriteComp = Component.Get<SpriteComponent>(EntityID);
             animComp = Component.Get<AnimationComponent>(EntityID);
             enemyComp = Component.Get<EnemyComponent>(EntityID);
             collComp = Component.Get<ColliderComponent>(EntityID);
@@ -502,7 +507,9 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         movement.X = 0 + forwardX * enemySpeed;
         movement.Y = 0 + forwardY * enemySpeed;
 
-        InternalCall.m_InternalSetVelocity(EntityID, movement);
+
+
+        InternalCall.m_InternalSetVelocity(EntityID, in movement); //BANE OF MY EXISTENCE
     }
 
     public void MoveToTarget(Vector2 targetPosition, float speed)
@@ -535,7 +542,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         movement.Y = forwardY * speed;
 
         // Apply updated velocity
-        InternalCall.m_InternalSetVelocity(EntityID, movement);
+        InternalCall.m_InternalSetVelocity(EntityID, in movement);
     }
 
     public void RunAtPlayer()

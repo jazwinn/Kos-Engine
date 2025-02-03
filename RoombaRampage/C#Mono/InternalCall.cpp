@@ -32,6 +32,7 @@ namespace script {
 
 	bool InternalCall::m_InternalGetTransformComponent(ecs::EntityID entity, vector2::Vec2* trans, vector2::Vec2* scale, float* rotate)
 	{
+
 		auto* transform = static_cast<ecs::TransformComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(entity));
 
 		if (transform) {
@@ -487,6 +488,7 @@ namespace script {
 		}
 		else {
 			ASSERTNOCOMPONENT(RigidBodyComponent, entity);
+			return false;
 		}
 		
 
@@ -1054,7 +1056,7 @@ namespace script {
 
 
 
-		return false;
+		//return false;
 	}
 
 	void InternalCall::m_InternalCallGetPath(int gridKey, int* startX, int* startY, int* targetX, int* targetY, MonoArray** nodeArray_x, MonoArray** nodeArray_y)
