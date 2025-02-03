@@ -335,7 +335,6 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     #endregion
 
     #region Patrolling Behaviour
-    #region Patrolling Behaviour
     public void StartPatrol()
     {
         if (childrenIDList.Length > 0)
@@ -393,7 +392,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
 
 
-    #endregion
+
 
     #region Component Handlers  
     private void UpdateComponentValues()
