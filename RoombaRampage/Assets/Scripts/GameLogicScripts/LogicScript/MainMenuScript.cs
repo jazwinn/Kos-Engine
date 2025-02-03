@@ -1,29 +1,28 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Versioning;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 
-public class StartGameButton : ScriptBase
+public class MainMenuScript : ScriptBase
 {
-    //public static string yolo;// see moving object script
-    //public float speed;
-    //private Queue<int> queue = new Queue<int>();
-
     private uint EntityID;
     private string commandPromptPrefab;
 
+   // public bool animPlay = false;
     public override void Awake(uint id)
     {
         EntityID = id;
+        
         commandPromptPrefab = "Command Prompt";
     }
 
+
     public override void Start()
     {
+        
     }
 
     public override void Update()
@@ -34,9 +33,8 @@ public class StartGameButton : ScriptBase
             if (isClick == true)
             {
                 isClick = false;
-                InternalCall.m_InternalCallPlayAudio(EntityID, "aud_buttonClick01");
                 InternalCall.m_InternalCallAddPrefab(commandPromptPrefab, 0, 0, 0);
             }
-        }   
+        }
     }
 }
