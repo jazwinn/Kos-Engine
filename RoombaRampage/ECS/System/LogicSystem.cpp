@@ -166,9 +166,7 @@ namespace ecs {
 						else if (script->second.first) {
 							assetManager->m_scriptManager.m_InvokeMethod(script->first, "Update", script->second.first, nullptr);
 						} 
-						if (mono_object_get_domain(script->second.first) == nullptr) {
-							std::cout << "Mono object is invalid!" << std::endl;
-						}
+
 					}
 					
 				}
