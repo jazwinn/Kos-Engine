@@ -157,7 +157,7 @@ public class PlayerController : ScriptBase
                     collisionComponent.m_collisionCheck = !collisionComponent.m_collisionCheck;
                     SetComponent.SetCollisionComponent(EntityID, collisionComponent);
 
-                    InternalCall.m_InternalSetAnimationComponent(EntityID, 0, 0, 0, false, 1);
+                    //InternalCall.m_InternalSetAnimationComponent(EntityID, 0, 0, 0, false, 1);
                     InternalCall.m_InternalSetSpriteComponent(EntityID, playerDeathTexture, startingLayer, startingColor, startingAlpha);
 
                     movement.X = 0;
@@ -166,6 +166,8 @@ public class PlayerController : ScriptBase
                     InternalCall.m_InternalSetVelocity(EntityID, movement);
 
                     isDead = true;
+
+                    break;
                 }
             }
         }
