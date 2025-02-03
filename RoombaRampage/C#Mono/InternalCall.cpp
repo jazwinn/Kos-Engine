@@ -706,31 +706,25 @@ namespace script {
 	int InternalCall::m_InternalCallAddPrefab(MonoString* prefab, const float* x, const float* y, const float* rotation)
 	{
 		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
-		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
 
-		
 		//scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();	
 
 		char* nativeString = mono_string_to_utf8(prefab);
 		std::string prefabfile = std::string{ nativeString } + ".prefab";
-		mono_free(nativeString);
 
-		auto it = assetmanager->m_prefabs.find(prefabfile);
-
-
-
-		if (it != assetmanager->m_prefabs.end()) {
+		if (ecs->m_ECS_SceneMap.find(prefabfile) != ecs->m_ECS_SceneMap.end()) {
 			ecs::EntityID id = prefab::Prefab::m_CreatePrefab(prefabfile);
 			ecs::TransformComponent* transCom = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id));
 			transCom->m_position = { *x, *y };
 			transCom->m_rotation = *rotation;
 
-			
+			mono_free(nativeString);
 			return (int)id;
 		}
 		else {
-			LOGGING_ERROR("Prefab not in folder");
+			LOGGING_ERROR("Prefab not loaded");
 
+			mono_free(nativeString);
 			return -1;
 		}
 	}
