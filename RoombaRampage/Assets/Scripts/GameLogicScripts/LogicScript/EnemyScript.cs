@@ -81,9 +81,9 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     public override void Start() //Called once at the start of the game
     {
         
-        UpdateComponentValues();
+        
         playerID = (uint)InternalCall.m_InternalCallGetTagID("Player"); //Get Player ID
-
+        UpdateComponentValues();
         enemyScientistDeathTexture = "img_scientistDeath.png";
         //enemyRobotDeathTexture = "img_robotDeath.png"; //Set to ranged enemy death texture
 

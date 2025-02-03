@@ -118,12 +118,12 @@ public class PlayerBullet : ScriptBase
 
                             InternalCall.m_InternalSetVelocity(EntityID, movement);
                         }
-
-                        break;
+                        InternalCall.m_InternalCallDeleteEntity(EntityID);
+                        return;
 
                     case "Enemy":
                         InternalCall.m_InternalCallDeleteEntity(EntityID);
-                        break;
+                        return;
 
                     default:
                         break;
