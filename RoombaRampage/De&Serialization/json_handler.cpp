@@ -269,7 +269,7 @@ namespace Serialization {
 				rapidjson::Value player(rapidjson::kObjectType);
 				player.AddMember("enemytag", ec->m_enemyTag, allocator);
 				player.AddMember("enemytype", ec->m_enemyTypeInt, allocator);
-				player.AddMember("enemybehaviour", ec->m_enemyTypeInt, allocator);
+				player.AddMember("enemybehaviour", ec->m_enemyRoamBehaviourInt, allocator);
 				entityData.AddMember("enemy", player, allocator);
 				hasComponents = true;  // Mark as having a component
 			}
