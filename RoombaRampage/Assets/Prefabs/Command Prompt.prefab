@@ -28,9 +28,9 @@
             "alpha": 1.0
         },
         "animation": {
-            "frameNumber": 3,
+            "frameNumber": 1,
             "framesPerSecond": 1,
-            "frameTimer": 3.3333308696746826,
+            "frameTimer": 1.2833328247070313,
             "isAnimating": true,
             "stripCount": 5
         },
