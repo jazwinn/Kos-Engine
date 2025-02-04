@@ -1,4 +1,4 @@
-/******************************************************************/
+﻿/******************************************************************/
 /*!
 \file      Window.cpp
 \author    Sean Tiu
@@ -13,7 +13,7 @@
            The `init` method sets up GLFW and OpenGL contexts for rendering,
            while the `Draw` method manages the rendering loop including
            ImGui interface rendering. The `CleanUp` method is responsible
-           for releasing resources used during the window�s operation.
+           for releasing resources used during the window’s operation.
 
            The application window makes use of GLFW for window and context
            management, and OpenGL for rendering. ImGui is integrated to
@@ -146,6 +146,11 @@ namespace Application {
         //Set Context Version
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
+
+#ifndef IMGUIENABLED
+        glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+#endif IMGUIENABLED
+
 
         /* Create a windowed mode window and its OpenGL context */
 

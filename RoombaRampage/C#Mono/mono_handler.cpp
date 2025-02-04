@@ -63,7 +63,11 @@ namespace script {
 
         m_LoadSecondaryDomain();
 
+#ifndef _GAME
         m_ReloadAllDLL();
+#endif _GAME
+
+        
 
        
     }
