@@ -223,7 +223,7 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
         auto* transform = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(m_clickedEntityId));
       
         Tilemap::setCollidableTile(transform->m_position, EditorCamera::calculateWorldCoordinatesFromMouse(static_cast<int>(ImGui::GetMousePos().x), static_cast<int>(ImGui::GetMousePos().y)), grid);
-        Tilemap::debugGridChecks(grid);
+        /*Tilemap::debugGridChecks(grid);*/
         
 
     }
