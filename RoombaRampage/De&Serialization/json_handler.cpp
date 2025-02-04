@@ -134,34 +134,14 @@ namespace Serialization {
 
 		std::string scenename = jsonFilePath.filename().string();
 		
-		// Load global settings
-		if (doc.HasMember("GlobalSettings") && doc["GlobalSettings"].IsObject()) {
-			const rapidjson::Value& globalSettings = doc["GlobalSettings"];
-			graphicpipe::GraphicsPipe* graphics = graphicpipe::GraphicsPipe::m_funcGetInstance();
-			Helper::Helpers* helper = Helper::Helpers::GetInstance();
-
-			if (globalSettings.HasMember("globalIllumination") && globalSettings["globalIllumination"].IsFloat()) {
-				graphics->m_globalLightIntensity = globalSettings["globalIllumination"].GetFloat();
-			}
-
-			if (globalSettings.HasMember("backgroundColor") && globalSettings["backgroundColor"].IsObject()) {
-				const rapidjson::Value& bgColor = globalSettings["backgroundColor"];
-				if (bgColor.HasMember("r") && bgColor["r"].IsFloat()) helper->m_colour.m_x = bgColor["r"].GetFloat();
-				if (bgColor.HasMember("g") && bgColor["g"].IsFloat()) helper->m_colour.m_y = bgColor["g"].GetFloat();
-				if (bgColor.HasMember("b") && bgColor["b"].IsFloat()) helper->m_colour.m_z = bgColor["b"].GetFloat();
-			}
-		}
-
 		/*******************INSERT INTO FUNCTION*****************************/
 
 		// Iterate through each component entry in the JSON array
-		if (doc.HasMember("Entities") && doc["Entities"].IsArray()) {
-			const rapidjson::Value& entitiesArray = doc["Entities"];
-			for (rapidjson::SizeType i = 0; i < entitiesArray.Size(); i++) {
-				const rapidjson::Value& entityData = entitiesArray[i];
-				m_LoadEntity(entityData, std::nullopt, scenename);
-			}
+		for (rapidjson::SizeType i = 0; i < doc.Size(); i++) {
+			const rapidjson::Value& entityData = doc[i];
+			m_LoadEntity(entityData, std::nullopt, scenename);
 		}
+
 
 		LOGGING_INFO("Load Json Successful");
 	}
@@ -174,31 +154,9 @@ namespace Serialization {
 
 		// Create JSON object to hold the updated values
 		rapidjson::Document doc;
-		doc.SetObject();  // Initialize as an empty
+		doc.SetArray();  // Initialize as an empty array
 
 		rapidjson::Document::AllocatorType& allocator = doc.GetAllocator();
-
-		//Save global illum setting
-		graphicpipe::GraphicsPipe* graphics = graphicpipe::GraphicsPipe::m_funcGetInstance();
-		if (!graphics) {
-			LOGGING_ERROR("GraphicsPipe instance is null.");
-			return;
-		}
-
-		Helper::Helpers* helper = Helper::Helpers::GetInstance();
-
-		rapidjson::Value globalSettings(rapidjson::kObjectType);
-		globalSettings.AddMember("globalIllumination", graphics->m_globalLightIntensity, allocator);
-
-		rapidjson::Value backgroundColor(rapidjson::kObjectType);
-		backgroundColor.AddMember("r", helper->m_colour.m_x, allocator);
-		backgroundColor.AddMember("g", helper->m_colour.m_y, allocator);
-		backgroundColor.AddMember("b", helper->m_colour.m_z, allocator);
-		globalSettings.AddMember("backgroundColor", backgroundColor, allocator);
-
-		doc.AddMember("GlobalSettings", globalSettings, allocator);
-
-		rapidjson::Value entityArray(rapidjson::kArrayType);
 
 		std::unordered_set<ecs::EntityID> savedEntities;  //track saved entities
 
@@ -206,10 +164,9 @@ namespace Serialization {
 		std::vector<ecs::EntityID> entities = ecs->m_ECS_SceneMap.find(scene.filename().string())->second.m_sceneIDs;
 		for (const auto& entityId : entities) {
 			if (!ecs::Hierachy::m_GetParent(entityId).has_value()) {
-				m_SaveEntity(entityId, entityArray, allocator, savedEntities);
+				m_SaveEntity(entityId, doc, allocator, savedEntities);
 			}
 		}
-		doc.AddMember("Entities", entityArray, allocator);
 
 		// Write the JSON back to file
 		rapidjson::StringBuffer writeBuffer;
