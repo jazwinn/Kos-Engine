@@ -1,9 +1,8 @@
 /******************************************************************/
 /*!
 \file      PhysicsCollisionResponse.cpp
-\author    Elijah Teo(teo.e, 2301530)[50%], Rayner Tan()[50%]
-\par       jazwinn.ng@digipen.edu
-\date      Oct 02, 2024
+\author    Elijah Teo(teo.e, 2301530)[50%], Rayner Tan(raynerweichen.tan, 2301449)[50%]
+\date      Jan 14, 2024
 \brief     This file contains the definitions of the functions used to find contact points between two collided entities
 		   and the functions used to find the directional collision flags
 
