@@ -386,6 +386,7 @@ namespace physicspipe {
 		bool m_CollisionIntersection_CircleRect_AABB(const Circle&, const Rectangle&);
 		bool m_CollisionIntersection_CircleRect_SAT(const Circle&, const Rectangle&);
 		std::pair<bool, std::pair<vector2::Vec2, float>> m_CollisionIntersection_CircleRect_SAT_TEST(const Circle&, const Rectangle&);
+		std::pair<bool, std::pair<vector2::Vec2, float>> m_CollisionIntersection_CircleCircle_SAT_TEST(const Circle&, const Circle&);
 		/******************************************************************/
 		/*!
 		\fn        bool Physics::m_CollisionIntersection_CircleCircle(const Circle& circle1, const Circle& circle2)

@@ -1,4 +1,18 @@
-﻿using System;
+﻿/******************************************************************/
+/*!
+\file      CollisionResponse.cs
+\author    Elijah Teo (teo.e, 2301530), Rayner Tan(raynerweichen.tan, 2301449)
+\date      Jan 21, 2025
+\brief     This file is the script used for previous iteration of the collision response
+
+
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/********************************************************************/
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -34,19 +48,1035 @@ public class CollisionResponse : ScriptBase
     private int colFlag;
     private float isCollided;
     private bool colCheck;
- 
+
+
 
     public override void Start()
     {
-      
+
 
     }
 
     public override void Update()
     {
-        #region Collision
 
-       
+
+        /*
+         *  EntityID -> the game object
+         *  WIth collision flag we know where it cant move 
+         *  Rigidbody velocity to get the other direction 
+         *  to find the distance to move
+         *  time * velocity + position (snap back)
+         *  set velocity to wtv 
+         * 
+         */
+        Vector2 entity_Position, entity_Velocity, entity_Acceleration;
+        uint entity_CollisionFlag;
+
+        int steps = InternalCall.m_InternalCallGetSteps();
+        float delta = InternalCall.m_InternalCallGetDeltaTime();
+        if (steps > 1)
+        {
+            delta *= steps;
+        }
+
+        Vector2 entity_ColliderSize, entity_ColliderOffset, entity_DirectionVector;
+        float entity_isCollided, entity_Radius, entity_Rotation;
+        bool entity_drawDebug, entity_collisionCheck;
+
+
+        RigidBodyComponent entity_Rigid = Component.Get<RigidBodyComponent>(EntityID);
+        TransformComponent entity_Transform = Component.Get<TransformComponent>(EntityID);
+        ColliderComponent entity_Collider = Component.Get<ColliderComponent>(EntityID);
+
+        entity_Position = entity_Transform.m_position;
+        entity_Velocity = entity_Rigid.m_Velocity;
+        entity_Acceleration = entity_Rigid.m_Acceleration;
+        entity_CollisionFlag = entity_Collider.m_blockedFlag;
+        entity_DirectionVector = entity_Rigid.m_direction;
+
+
+        Vector2 new_Position;
+        Vector2 entity_Snapback;
+        Vector2 new_Velocity;
+
+        new_Velocity.X = entity_Velocity.X + (delta * entity_Acceleration.X);
+        new_Velocity.Y = entity_Velocity.Y + (delta * entity_Acceleration.Y);
+        entity_Snapback.X = Math.Abs((delta * new_Velocity.X));
+        entity_Snapback.Y = Math.Abs((delta * new_Velocity.Y));
+        new_Position = entity_Position;
+
+        //entity_Snapback.X = (delta * new_Velocity.X) + 0.001f;
+        //entity_Snapback.Y = (delta * new_Velocity.Y) + 0.001f;
+        //Console.WriteLine($"Position X  {entity_Position.X} T POS Y {entity_Position.Y}");
+        //Console.WriteLine($"Snapback X  {entity_Snapback.X} T POS Y {entity_Snapback.Y}");
+        //new_Position.X = entity_Position.X - entity_Snapback.X;
+        //new_Position.Y = entity_Position.Y - entity_Snapback.Y;
+        //Console.WriteLine($"New X  {new_Position.X} T POS Y {new_Position.Y}");
+
+        Vector2 newVelo = entity_Velocity;
+
+        ////I think need contact point..... sigh
+        ///*
+        // *
+        // * 
+        // * 
+        // * 
+        // * 
+        // */
+
+
+
+
+        //Console.WriteLine($"Velocity Pos: ({entity_Velocity.X}, {entity_Velocity.Y}))");
+        //Console.WriteLine($"Flag: ({entity_CollisionFlag})");
+        int direction = 0;
+        if (entity_DirectionVector.Y > 0)
+        {
+            direction += 1;
+        }
+        if (entity_DirectionVector.X > 0)
+        {
+            direction += 2;
+        }
+        if (entity_DirectionVector.X < 0)
+        {
+            direction += 8;
+        }
+        if (entity_DirectionVector.Y < 0)
+        {
+            direction += 4;
+        }
+        switch (entity_CollisionFlag)
+        {
+            case 0:
+                break;
+            case 1: //TOP
+                if (direction == 1)
+                {
+                    if (entity_Velocity.Y > 0)
+                    {
+                    new_Position.X = entity_Position.X;
+                    new_Position.Y = entity_Position.Y - entity_Snapback.Y;
+                    //Vector2 testing;
+                    newVelo.X = entity_Velocity.X;
+                    newVelo.Y = 0;
+                    }
+                }
+                else if (direction == 4)
+                {
+                    if (entity_Velocity.Y < 0)
+                    {
+                        new_Position.X = entity_Position.X;
+                        new_Position.Y = entity_Position.Y + entity_Snapback.Y;
+                        newVelo.X = entity_Velocity.X;
+                        newVelo.Y = 0;
+                    }
+                }
+                else if (direction == 2)
+                {
+                    if (entity_Velocity.X > 0)
+                    {
+                        newVelo.X = 0;
+                        newVelo.Y = entity_Velocity.Y;
+                        new_Position.X = entity_Position.X - entity_Snapback.X;
+                        new_Position.Y = entity_Position.Y;
+                    }
+                }
+                else if (direction == 8)
+                {
+                    if (entity_Velocity.X < 0)
+                    {
+                        Console.WriteLine("");
+                        newVelo.X = 0;
+                        newVelo.Y = entity_Velocity.Y;
+                        new_Position.X = entity_Position.X + entity_Snapback.X;
+                        new_Position.Y = entity_Position.Y;
+                    }
+                }
+                else if (direction == 9)
+                {
+                    if (entity_Velocity.X < 0)
+                    {
+                        newVelo.X = 0;
+                    }
+                    if (entity_Velocity.Y > 0)
+                    {
+                        newVelo.Y = 0;
+                    }
+                    new_Position.Y = entity_Position.Y - entity_Snapback.Y;
+                    new_Position.X = entity_Position.X + entity_Snapback.X;
+
+                }
+                else if (direction == 3)
+                {
+                    if (entity_Velocity.X > 0)
+                    {
+                        newVelo.X = 0;
+
+                    }
+                    if (entity_Velocity.Y > 0)
+                    {
+                        newVelo.Y = 0;
+
+                    }
+                    new_Position.X = entity_Position.X - entity_Snapback.X;
+                    new_Position.Y = entity_Position.Y - entity_Snapback.Y;
+                }
+                else if (direction == 6)
+                {
+                    if (entity_Velocity.X > 0)
+                    {
+                        newVelo.X = 0;
+
+                    }
+                    if (entity_Velocity.Y < 0)
+                    {
+                        newVelo.Y = 0;
+
+                    }
+                    new_Position.X = entity_Position.X - entity_Snapback.X;
+                    new_Position.Y = entity_Position.Y + entity_Snapback.Y;
+
+                }
+                else if (direction == 12)
+                {
+                    if (entity_Velocity.X < 0)
+                    {
+                        newVelo.X = 0;
+
+                    }
+                    if (entity_Velocity.Y < 0)
+                    {
+                        newVelo.Y = 0;
+
+                    }
+                    new_Position.X = entity_Position.X + entity_Snapback.X;
+                    new_Position.Y = entity_Position.Y + entity_Snapback.Y;
+
+                }
+
+                //entity_Snapback.X = (delta * new_Velocity.X) + 0.001f;
+                //entity_Snapback.Y = (delta * new_Velocity.Y) + 0.001f;
+
+                entity_Transform.m_position = new_Position;
+                entity_Rigid.m_Velocity = newVelo;
+
+                Component.Set<RigidBodyComponent>(EntityID, entity_Rigid);
+                Component.Set<TransformComponent>(EntityID, entity_Transform);
+                break;
+            case 2: //RIGHT
+                if (direction == 1)
+                {
+                    if (entity_Velocity.X > 0)
+                    {
+                        newVelo.X = 0;
+                        newVelo.Y = entity_Velocity.Y;
+                        new_Position.X = entity_Position.X - entity_Snapback.X;
+                        new_Position.Y = entity_Position.Y;
+
+                    }
+                }
+                else if (direction == 4)
+                {
+                    if (entity_Velocity.X < 0)
+                    {
+                        newVelo.X = 0;
+                        newVelo.Y = entity_Velocity.Y;
+                        new_Position.X = entity_Position.X + entity_Snapback.X;
+                        new_Position.Y = entity_Position.Y;
+                    }
+                }
+                else if (direction == 2)
+                {
+                    if (entity_Velocity.Y < 0)
+                    {
+                        newVelo.X = entity_Velocity.X;
+                        newVelo.Y = 0;
+                        new_Position.X = entity_Position.X;
+                        new_Position.Y = entity_Position.Y + entity_Snapback.Y;
+                    }
+                }
+                else if (direction == 8)
+                {
+                    if (entity_Velocity.Y > 0)
+                    {
+                        newVelo.X = entity_Velocity.X;
+                        newVelo.Y = 0;
+                        new_Position.X = entity_Position.X;
+                        new_Position.Y = entity_Position.Y - entity_Snapback.Y;
+
+                    }
+                }
+                else if (direction == 9)
+                {
+                    if (entity_Velocity.X > 0)
+                    {
+                        newVelo.X = 0;
+
+                    }
+                    if (entity_Velocity.Y > 0)
+                    {
+                        newVelo.Y = 0;
+
+                    }
+                    new_Position.X = entity_Position.X - entity_Snapback.X;
+                    new_Position.Y = entity_Position.Y - entity_Snapback.Y;
+
+                }
+                else if (direction == 3)
+                {
+                    if (entity_Velocity.X > 0)
+                    {
+                        newVelo.X = 0;
+
+                    }
+                    if (entity_Velocity.Y < 0)
+                    {
+                        newVelo.Y = 0;
+
+                    }
+                    new_Position.X = entity_Position.X - entity_Snapback.X;
+                    new_Position.Y = entity_Position.Y + entity_Snapback.Y;
+
+                }
+                else if (direction == 6)
+                {
+                    if (entity_Velocity.X < 0)
+                    {
+                        newVelo.X = 0;
+
+                    }
+                    if (entity_Velocity.Y < 0)
+                    {
+                        newVelo.Y = 0;
+
+                    }
+                    new_Position.X = entity_Position.X + entity_Snapback.X;
+                    new_Position.Y = entity_Position.Y + entity_Snapback.Y;
+
+                }
+                else if (direction == 12)
+                {
+                    if (entity_Velocity.X < 0)
+                    {
+                        newVelo.X = 0;
+
+                    }
+                    if (entity_Velocity.Y > 0)
+                    {
+                        newVelo.Y = 0;
+
+                    }
+                    new_Position.X = entity_Position.X + entity_Snapback.X;
+                    new_Position.Y = entity_Position.Y - entity_Snapback.Y;
+
+                }
+                entity_Transform.m_position = new_Position;
+                entity_Rigid.m_Velocity = newVelo;
+
+                Component.Set<RigidBodyComponent>(EntityID, entity_Rigid);
+                Component.Set<TransformComponent>(EntityID, entity_Transform);
+                break;
+            case 4: // BOTTOM
+                if (direction == 1)
+                {
+                    if (entity_Velocity.Y < 0)
+                    {
+                        newVelo.X = entity_Velocity.X;
+                        newVelo.Y = 0;
+                        new_Position.X = entity_Position.X;
+                        new_Position.Y = entity_Position.Y + entity_Snapback.Y;
+
+                    }
+                }
+                else if (direction == 4)
+                {
+                    if (entity_Velocity.Y > 0)
+                    {
+                        newVelo.X = entity_Velocity.X;
+                        newVelo.Y = 0;
+                        new_Position.X = entity_Position.X;
+                        new_Position.Y = entity_Position.Y - entity_Snapback.Y;
+                    }
+
+                }
+                else if (direction == 2)
+                {
+                    if (entity_Velocity.X < 0)
+                    {
+                        newVelo.X = 0;
+                        newVelo.Y = entity_Velocity.Y;
+                        new_Position.X = entity_Position.X + entity_Snapback.X;
+                        new_Position.Y = entity_Position.Y;
+
+                    }
+
+                }
+                else if (direction == 8)
+                {
+                    if (entity_Velocity.X > 0)
+                    {
+                        newVelo.X = 0;
+                        newVelo.Y = entity_Velocity.Y;
+                        new_Position.X = entity_Position.X - entity_Snapback.X;
+                        new_Position.Y = entity_Position.Y;
+                    }
+
+                }
+                else if (direction == 9)
+                {
+                    if (entity_Velocity.X > 0)
+                    {
+                        newVelo.X = 0;
+
+                    }
+                    if (entity_Velocity.Y < 0)
+                    {
+                        newVelo.Y = 0;
+
+                    }
+                    new_Position.X = entity_Position.X - entity_Snapback.X;
+                    new_Position.Y = entity_Position.Y + entity_Snapback.Y;
+                }
+                else if (direction == 3)
+                {
+
+                    if (entity_Velocity.X < 0)
+                    {
+                        newVelo.X = 0;
+
+                    }
+                    if (entity_Velocity.Y < 0)
+                    {
+                        newVelo.Y = 0;
+
+                    }
+                    new_Position.X = entity_Position.X + entity_Snapback.X;
+                    new_Position.Y = entity_Position.Y + entity_Snapback.Y;
+
+                }
+                else if (direction == 6)
+                {
+                    if (entity_Velocity.X < 0)
+                    {
+                        newVelo.X = 0;
+
+                    }
+                    if (entity_Velocity.Y > 0)
+                    {
+                        newVelo.Y = 0;
+
+                    }
+                    new_Position.X = entity_Position.X - entity_Snapback.X;
+                    new_Position.Y = entity_Position.Y - entity_Snapback.Y;
+
+                }
+                else if (direction == 12)
+                {
+                    if (entity_Velocity.X > 0)
+                    {
+                        newVelo.X = 0;
+
+                    }
+                    if (entity_Velocity.Y > 0)
+                    {
+                        newVelo.Y = 0;
+
+                    }
+                    new_Position.X = entity_Position.X - entity_Snapback.X;
+                    new_Position.Y = entity_Position.Y - entity_Snapback.Y;
+
+                }
+                entity_Transform.m_position = new_Position;
+                entity_Rigid.m_Velocity = newVelo;
+
+                Component.Set<RigidBodyComponent>(EntityID, entity_Rigid);
+                Component.Set<TransformComponent>(EntityID, entity_Transform);
+                break;
+            case 8: //LEFT
+                if (direction == 1)
+                {
+                    if (entity_Velocity.X < 0)
+                    {
+                        newVelo.X = 0;
+                        newVelo.Y = entity_Velocity.Y;
+                        new_Position.X = entity_Position.X + entity_Snapback.X;
+                        new_Position.Y = entity_Position.Y;
+
+                    }
+                }
+                else if (direction == 4)
+                {
+                    if (entity_Velocity.X > 0)
+                    {
+                        newVelo.X = 0;
+                        newVelo.Y = entity_Velocity.Y;
+                        new_Position.X = entity_Position.X - entity_Snapback.X;
+                        new_Position.Y = entity_Position.Y;
+
+                    }
+                }
+                else if (direction == 2)
+                {
+                    if (entity_Velocity.Y > 0)
+                    {
+                        newVelo.X = entity_Velocity.X;
+                        newVelo.Y = 0;
+                        new_Position.X = entity_Position.X;
+                        new_Position.Y = entity_Position.Y - entity_Snapback.Y;
+                    }
+                }
+                else if (direction == 8)
+                {
+                    if (entity_Velocity.Y < 0)
+                    {
+                        newVelo.X = entity_Velocity.X;
+                        newVelo.Y = 0;
+                        new_Position.X = entity_Position.X;
+                        new_Position.Y = entity_Position.Y + entity_Snapback.Y;
+                    }
+                }
+                else if (direction == 9)
+                {
+                    if (entity_Velocity.X < 0)
+                    {
+                        newVelo.X = 0;
+
+                    }
+                    if (entity_Velocity.Y < 0)
+                    {
+                        newVelo.Y = 0;
+
+                    }
+                    new_Position.X = entity_Position.X + entity_Snapback.X;
+                    new_Position.Y = entity_Position.Y + entity_Snapback.Y;
+                }
+                else if (direction == 3)
+                {
+                    if (entity_Velocity.X < 0)
+                    {
+                        newVelo.X = 0;
+
+                    }
+                    if (entity_Velocity.Y > 0)
+                    {
+                        newVelo.Y = 0;
+
+                    }
+                    new_Position.X = entity_Position.X + entity_Snapback.X;
+                    new_Position.Y = entity_Position.Y - entity_Snapback.Y;
+                }
+                else if (direction == 6)
+                {
+
+                    if (entity_Velocity.X > 0)
+                    {
+                        newVelo.X = 0;
+
+                    }
+                    if (entity_Velocity.Y > 0)
+                    {
+                        newVelo.Y = 0;
+
+                    }
+                    new_Position.X = entity_Position.X - entity_Snapback.X;
+                    new_Position.Y = entity_Position.Y - entity_Snapback.Y;
+
+                }
+                else if (direction == 12)
+                {
+                    if (entity_Velocity.X > 0)
+                    {
+                        newVelo.X = 0;
+
+                    }
+                    if (entity_Velocity.Y < 0)
+                    {
+                        newVelo.Y = 0;
+
+                    }
+                    new_Position.Y = entity_Position.Y + entity_Snapback.Y;
+                    new_Position.X = entity_Position.X - entity_Snapback.X;
+
+                }
+
+                entity_Transform.m_position = new_Position;
+                entity_Rigid.m_Velocity = newVelo;
+
+                Component.Set<RigidBodyComponent>(EntityID, entity_Rigid);
+                Component.Set<TransformComponent>(EntityID, entity_Transform);
+                break;
+            case 3: //top right
+                if (direction == 1)
+                {
+                    if (entity_Velocity.X > 0)
+                    {
+                        newVelo.X = 0;
+
+                    }
+                    if (entity_Velocity.Y > 0)
+                    {
+                        newVelo.Y = 0;
+
+                    }
+                    new_Position.X = entity_Position.X - entity_Snapback.Y;
+                    new_Position.Y = entity_Position.Y - entity_Snapback.Y;
+                }
+                else if (direction == 4)
+                {
+                    if (entity_Velocity.X < 0)
+                    {
+                        newVelo.X = 0;
+
+                    }
+                    if (entity_Velocity.Y < 0)
+                    {
+                        newVelo.Y = 0;
+
+                    }
+                    new_Position.X = entity_Position.X + entity_Snapback.Y;
+                    new_Position.Y = entity_Position.Y + entity_Snapback.Y;
+
+                }
+                else if (direction == 2)
+                {
+                    if (entity_Velocity.X > 0)
+                    {
+                        newVelo.X = 0;
+
+                    }
+                    if (entity_Velocity.Y < 0)
+                    {
+                        newVelo.Y = 0;
+
+                    }
+                    new_Position.X = entity_Position.X - entity_Snapback.X;
+                    new_Position.Y = entity_Position.Y + entity_Snapback.X;
+                }
+                else if (direction == 8)
+                {
+                    if (entity_Velocity.X < 0)
+                    {
+                        newVelo.X = 0;
+
+                    }
+                    if (entity_Velocity.Y > 0)
+                    {
+                        newVelo.Y = 0;
+
+                    }
+                    new_Position.X = entity_Position.X + entity_Snapback.X;
+                    new_Position.Y = entity_Position.Y - entity_Snapback.X;
+
+                }
+                else if (direction == 9)
+                {
+                    if (entity_Velocity.Y > 0)
+                    {
+                        newVelo.Y = 0;
+                        new_Position.X = entity_Position.X;
+                        new_Position.Y = entity_Position.Y - entity_Snapback.Y;
+                    }
+
+                }
+                else if (direction == 3)
+                {
+                    if (entity_Velocity.X > 0)
+                    {
+                        newVelo.X = 0;
+                        new_Position.X = entity_Position.X - entity_Snapback.X;
+                        new_Position.Y = entity_Position.Y;
+                    }
+
+                }
+                else if (direction == 6)
+                {
+                    if (entity_Velocity.Y < 0)
+                    {
+                        newVelo.Y = 0;
+                        new_Position.X = entity_Position.X;
+                        new_Position.Y = entity_Position.Y + entity_Snapback.Y;
+                    }
+
+                }
+                else if (direction == 12)
+                {
+                    if (entity_Velocity.X < 0)
+                    {
+                        newVelo.X = 0;
+                        new_Position.X = entity_Position.X + entity_Snapback.X;
+                        new_Position.Y = entity_Position.Y;
+                    }
+
+                }
+                entity_Transform.m_position = new_Position;
+                entity_Rigid.m_Velocity = newVelo;
+                Component.Set<RigidBodyComponent>(EntityID, entity_Rigid);
+                Component.Set<TransformComponent>(EntityID, entity_Transform);
+                break;
+            case 6: //bottom right
+                if (direction == 1)
+                {
+                    if (entity_Velocity.X > 0)
+                    {
+                        newVelo.X = 0;
+
+                    }
+                    if (entity_Velocity.Y < 0)
+                    {
+                        newVelo.Y = 0;
+
+                    }
+                    new_Position.Y = entity_Position.Y + entity_Snapback.Y;
+                    new_Position.X = entity_Position.X - entity_Snapback.Y;
+
+                }
+                else if (direction == 4)
+                {
+                    if (entity_Velocity.X < 0)
+                    {
+                        newVelo.X = 0;
+
+                    }
+                    if (entity_Velocity.Y > 0)
+                    {
+                        newVelo.Y = 0;
+
+                    }
+                    new_Position.Y = entity_Position.Y - entity_Snapback.Y;
+                    new_Position.X = entity_Position.X + entity_Snapback.Y;
+
+                }
+                else if (direction == 2)
+                {
+                    if (entity_Velocity.X < 0)
+                    {
+                        newVelo.X = 0;
+
+                    }
+                    if (entity_Velocity.Y < 0)
+                    {
+                        newVelo.Y = 0;
+
+                    }
+                    new_Position.Y = entity_Position.Y + entity_Snapback.X;
+                    new_Position.X = entity_Position.X + entity_Snapback.X;
+                }
+                else if (direction == 8)
+                {
+                    if (entity_Velocity.X > 0)
+                    {
+                        newVelo.X = 0;
+
+                    }
+                    if (entity_Velocity.Y > 0)
+                    {
+                        newVelo.Y = 0;
+
+                    }
+                    new_Position.X = entity_Position.X - entity_Snapback.X;
+                    new_Position.Y = entity_Position.Y - entity_Snapback.X;
+
+                }
+                else if (direction == 9)
+                {
+                    if (entity_Velocity.X > 0)
+                    {
+                        newVelo.X = 0;
+                        new_Position.X = entity_Position.X - entity_Snapback.X;
+                        new_Position.Y = entity_Position.Y;
+                    }
+
+                }
+                else if (direction == 3)
+                {
+                    if (entity_Velocity.Y < 0)
+                    {
+                        newVelo.Y = 0;
+                        new_Position.X = entity_Position.X;
+                        new_Position.Y = entity_Position.Y + entity_Snapback.Y;
+                    }
+
+                }
+                else if (direction == 6)
+                {
+                    if (entity_Velocity.X < 0)
+                    {
+                        newVelo.X = 0;
+                        new_Position.X = entity_Position.X + entity_Snapback.X;
+                        new_Position.Y = entity_Position.Y;
+                    }
+
+                }
+                else if (direction == 12)
+                {
+                    if (entity_Velocity.Y > 0)
+                    {
+                        newVelo.Y = 0;
+                        new_Position.X = entity_Position.X;
+                        new_Position.Y = entity_Position.Y - entity_Snapback.Y;
+                    }
+
+                }
+                entity_Transform.m_position = new_Position;
+                entity_Rigid.m_Velocity = newVelo;
+
+                Component.Set<RigidBodyComponent>(EntityID, entity_Rigid);
+                Component.Set<TransformComponent>(EntityID, entity_Transform);
+                break;
+            case 12: // bottom left
+                if (direction == 1)
+                {
+                    if (entity_Velocity.X < 0)
+                    {
+                        newVelo.X = 0;
+
+                    }
+                    if (entity_Velocity.Y < 0)
+                    {
+                        newVelo.Y = 0;
+
+                    }
+                    new_Position.X = entity_Position.X + entity_Snapback.Y;
+                    new_Position.Y = entity_Position.Y + entity_Snapback.Y;
+
+                }
+                else if (direction == 4)
+                {
+                    if (entity_Velocity.X > 0)
+                    {
+                        newVelo.X = 0;
+
+                    }
+                    if (entity_Velocity.Y > 0)
+                    {
+                        newVelo.Y = 0;
+
+                    }
+                    new_Position.X = entity_Position.X - entity_Snapback.Y;
+                    new_Position.Y = entity_Position.Y - entity_Snapback.Y;
+
+                }
+                else if (direction == 2)
+                {
+                    if (entity_Velocity.X < 0)
+                    {
+                        newVelo.X = 0;
+
+                    }
+                    if (entity_Velocity.Y > 0)
+                    {
+                        newVelo.Y = 0;
+
+                    }
+                    new_Position.X = entity_Position.X + entity_Snapback.X;
+                    new_Position.Y = entity_Position.Y - entity_Snapback.X;
+
+                }
+                else if (direction == 8)
+                {
+                    if (entity_Velocity.X > 0)
+                    {
+                        newVelo.X = 0;
+
+                    }
+                    if (entity_Velocity.Y < 0)
+                    {
+                        newVelo.Y = 0;
+
+                    }
+                    new_Position.X = entity_Position.X - entity_Snapback.X;
+                    new_Position.Y = entity_Position.Y + entity_Snapback.X;
+
+                }
+                else if (direction == 9)
+                {
+                    if (entity_Velocity.Y < 0)
+                    {
+                        newVelo.Y = 0;
+                        new_Position.X = entity_Position.X;
+                        new_Position.Y = entity_Position.Y + entity_Snapback.Y;
+                    }
+
+                }
+                else if (direction == 3)
+                {
+                    if (entity_Velocity.X < 0)
+                    {
+                        newVelo.X = 0;
+                        new_Position.X = entity_Position.X + entity_Snapback.X;
+                        new_Position.Y = entity_Position.Y;
+                    }
+
+                }
+                else if (direction == 6)
+                {
+                    if (entity_Velocity.Y > 0)
+                    {
+                        newVelo.Y = 0;
+                        new_Position.X = entity_Position.X;
+                        new_Position.Y = entity_Position.Y - entity_Snapback.Y;
+                    }
+
+                }
+                else if (direction == 12)
+                {
+                    if (entity_Velocity.X > 0)
+                    {
+                        newVelo.X = 0;
+                        new_Position.X = entity_Position.X - entity_Snapback.X;
+                        new_Position.Y = entity_Position.Y;
+                    }
+
+                }
+
+                entity_Transform.m_position = new_Position;
+                entity_Rigid.m_Velocity = newVelo;
+
+                Component.Set<RigidBodyComponent>(EntityID, entity_Rigid);
+                Component.Set<TransformComponent>(EntityID, entity_Transform);
+                break;
+            case 9: // top left
+                if (direction == 1)
+                {
+                    if (entity_Velocity.X < 0)
+                    {
+                        newVelo.X = 0;
+
+                    }
+                    if (entity_Velocity.Y > 0)
+                    {
+                        newVelo.Y = 0;
+
+                    }
+                    new_Position.Y = entity_Position.Y - entity_Snapback.Y;
+                    new_Position.X = entity_Position.X + entity_Snapback.Y;
+
+                }
+                else if (direction == 4)
+                {
+                    if (entity_Velocity.X > 0)
+                    {
+                        newVelo.X = 0;
+
+                    }
+                    if (entity_Velocity.Y < 0)
+                    {
+                        newVelo.Y = 0;
+
+                    }
+                    new_Position.Y = entity_Position.Y + entity_Snapback.Y;
+                    new_Position.X = entity_Position.X - entity_Snapback.Y;
+
+                }
+                else if (direction == 2)
+                {
+                    if (entity_Velocity.X > 0)
+                    {
+                        newVelo.X = 0;
+
+                    }
+                    if (entity_Velocity.Y > 0)
+                    {
+                        newVelo.Y = 0;
+
+                    }
+                    new_Position.X = entity_Position.X - entity_Snapback.X;
+                    new_Position.Y = entity_Position.Y - entity_Snapback.X;
+                    Console.WriteLine("edge case");
+                    Console.WriteLine($"old Pos: {entity_Position.X} {entity_Position.Y}");
+                    Console.WriteLine($"new Pos: {new_Position.X} {new_Position.Y}");
+
+                }
+                else if (direction == 8)
+                {
+                    if (entity_Velocity.X < 0)
+                    {
+                        newVelo.X = 0;
+
+                    }
+                    if (entity_Velocity.Y < 0)
+                    {
+                        newVelo.Y = 0;
+
+                    }
+                    new_Position.X = entity_Position.X + entity_Snapback.X;
+                    new_Position.Y = entity_Position.Y + entity_Snapback.X;
+
+                }
+                else if (direction == 9)
+                {
+                    if (entity_Velocity.X < 0)
+                    {
+                        newVelo.X = 0;
+                        new_Position.X = entity_Position.X + entity_Snapback.X;
+                        new_Position.Y = entity_Position.Y;
+                    }
+
+                }
+                else if (direction == 3)
+                {
+                    if (entity_Velocity.Y > 0)
+                    {
+                        newVelo.Y = 0;
+                        new_Position.X = entity_Position.X;
+                        new_Position.Y = entity_Position.Y - entity_Snapback.Y;
+                    }
+
+                }
+                else if (direction == 6)
+                {
+                    if (entity_Velocity.X > 0)
+                    {
+                        newVelo.X = 0;
+                        new_Position.X = entity_Position.X - entity_Snapback.X;
+                        new_Position.Y = entity_Position.Y;
+                    }
+
+                }
+                else if (direction == 12)
+                {
+                    if (entity_Velocity.Y < 0)
+                    {
+                        newVelo.Y = 0;
+                        new_Position.X = entity_Position.X;
+                        new_Position.Y = entity_Position.Y + entity_Snapback.Y;
+                    }
+
+                }
+                entity_Transform.m_position = new_Position;
+                entity_Rigid.m_Velocity = newVelo;
+
+                Component.Set<RigidBodyComponent>(EntityID, entity_Rigid);
+                Component.Set<TransformComponent>(EntityID, entity_Transform);
+                break;
+            default:
+                entity_Snapback.X = (delta * new_Velocity.X) + 0.001f;
+                entity_Snapback.Y = (delta * new_Velocity.Y) + 0.001f;
+                new_Position.X = entity_Position.X - entity_Snapback.X;
+                new_Position.Y = entity_Position.Y - entity_Snapback.Y;
+                entity_Transform.m_position = new_Position;
+                entity_Rigid.m_Velocity = newVelo;
+
+                entity_Transform.m_position = new_Position;
+                entity_Rigid.m_Velocity = newVelo;
+
+                Component.Set<RigidBodyComponent>(EntityID, entity_Rigid);
+                Component.Set<TransformComponent>(EntityID, entity_Transform);
+                break;
+        }
+
+        //Setting the position + velocity
+        //Console.WriteLine($"T POS X  {entity_Transform.m_position.X} T POS Y {entity_Transform.m_position.Y}");
+        //Console.WriteLine($"N pOS X  {new_Position.X} T POS Y {new_Position.Y}");
+
+
+
+
+
+        //Console.WriteLine("K");
+        #region saved code previous collision response
         //if (InternalCall.m_InternalCallGetTagIDs("Wall") != null)
         //{
         //    int[] wallEntities = InternalCall.m_InternalCallGetTagIDs("Wall");
@@ -55,7 +1085,7 @@ public class CollisionResponse : ScriptBase
         //        Vector2 wallSize, wallOffset, wallPos, wallScale;
         //        float wallRadius, wallRotate, wallCollided;
         //        bool wallDraw, wallCheck;
-        //        int wallFlag;
+        //        uint wallFlag;
 
         //        InternalCall.m_InternalGetColliderComponent((uint)wallEntitiesID, out wallSize, out wallOffset, out wallDraw, out wallRadius, out wallFlag, out wallCollided, out wallCheck);
         //        InternalCall.m_InternalGetTransformComponent((uint)wallEntitiesID, out wallPos, out wallScale, out wallRotate);
@@ -248,10 +1278,7 @@ public class CollisionResponse : ScriptBase
         //        }
         //    }
         //}
-                
-        
-
         #endregion
-
     }
 }
+
