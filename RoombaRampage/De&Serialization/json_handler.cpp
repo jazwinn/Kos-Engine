@@ -134,11 +134,37 @@ namespace Serialization {
 
 		std::string scenename = jsonFilePath.filename().string();
 		
+
+		// Load Global Setting
+		bool foundGlobalSettings = false;
+		for (rapidjson::SizeType i = 0; i < doc.Size(); i++) {
+			const rapidjson::Value& entry = doc[i];
+			if (entry.HasMember("GlobalSettings")) {
+				foundGlobalSettings = true;
+				const rapidjson::Value& globalSettings = entry["GlobalSettings"];
+				if (globalSettings.HasMember("globalIllumination")) {
+					graphicpipe::GraphicsPipe::m_funcGetInstance()->m_globalLightIntensity = globalSettings["globalIllumination"].GetFloat();
+				}
+				if (globalSettings.HasMember("backgroundColor")) {
+					const rapidjson::Value& bgColor = globalSettings["backgroundColor"];
+					Helper::Helpers* helper = Helper::Helpers::GetInstance();
+					helper->m_colour.m_x = bgColor["r"].GetFloat();
+					helper->m_colour.m_y = bgColor["g"].GetFloat();
+					helper->m_colour.m_z = bgColor["b"].GetFloat();
+				}
+			}
+		}
+
 		/*******************INSERT INTO FUNCTION*****************************/
 
 		// Iterate through each component entry in the JSON array
 		for (rapidjson::SizeType i = 0; i < doc.Size(); i++) {
 			const rapidjson::Value& entityData = doc[i];
+
+			if (entityData.HasMember("GlobalSettings")) {
+				continue;
+			}
+
 			m_LoadEntity(entityData, std::nullopt, scenename);
 		}
 
@@ -160,10 +186,26 @@ namespace Serialization {
 
 		std::unordered_set<ecs::EntityID> savedEntities;  //track saved entities
 
+		rapidjson::Value globalSettings(rapidjson::kObjectType);
+		globalSettings.AddMember("globalIllumination",
+			graphicpipe::GraphicsPipe::m_funcGetInstance()->m_globalLightIntensity, allocator);
+
+		rapidjson::Value backgroundColor(rapidjson::kObjectType);
+		Helper::Helpers* helper = Helper::Helpers::GetInstance();
+		backgroundColor.AddMember("r", helper->m_colour.m_x, allocator);
+		backgroundColor.AddMember("g", helper->m_colour.m_y, allocator);
+		backgroundColor.AddMember("b", helper->m_colour.m_z, allocator);
+		globalSettings.AddMember("backgroundColor", backgroundColor, allocator);
+
+		rapidjson::Value settingsWrapper(rapidjson::kObjectType);
+		settingsWrapper.AddMember("GlobalSettings", globalSettings, allocator);
+		doc.PushBack(settingsWrapper, allocator);
+
 		//Start saving the entities
 		std::vector<ecs::EntityID> entities = ecs->m_ECS_SceneMap.find(scene.filename().string())->second.m_sceneIDs;
 		for (const auto& entityId : entities) {
 			if (!ecs::Hierachy::m_GetParent(entityId).has_value()) {
+				rapidjson::Value entityData(rapidjson::kObjectType);
 				m_SaveEntity(entityId, doc, allocator, savedEntities);
 			}
 		}
