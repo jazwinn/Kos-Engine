@@ -2,6 +2,7 @@
 /*!
 \file      CollisionResponseSystem.cpp
 \author    Ng Jaz winn, jazwinn.ng , 2301502
+\co-author Elijah Teo (teo.e, 2301530), Rayner Tan(raynerweichen.tan, 2301449)
 \par       jazwinn.ng@digipen.edu
 \date      Oct 02, 2024
 \brief     This file contains the defination for the collision
