@@ -1,10 +1,10 @@
-﻿using System;
+﻿// Final CoroutineManager.cs
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
 public class CoroutineManager : ScriptBase
 {
-
     #region Entity ID
     private uint EntityID;
 
@@ -16,7 +16,6 @@ public class CoroutineManager : ScriptBase
 
     public override void Start()
     {
-        
     }
 
     // Singleton instance
@@ -42,6 +41,7 @@ public class CoroutineManager : ScriptBase
         public float NextExecutionTime { get; set; }
         public bool Paused { get; set; }
         public string Tag { get; }
+        public float PausedTime { get; set; } //Stores time when paused
 
         public Coroutine(IEnumerator routine, float startTime, string tag)
         {
@@ -49,6 +49,7 @@ public class CoroutineManager : ScriptBase
             NextExecutionTime = startTime;
             Paused = false;
             Tag = tag;
+            PausedTime = 0;
         }
     }
 
@@ -85,9 +86,12 @@ public class CoroutineManager : ScriptBase
     // Pauses all coroutines
     public void PauseAllCoroutines()
     {
+        float currentTime = GetTime();
         foreach (var coroutine in activeCoroutines)
         {
             coroutine.Paused = true;
+            coroutine.PausedTime = coroutine.NextExecutionTime - currentTime; // Store remaining time
+            Log($"Paused coroutine with tag '{coroutine.Tag}', remaining time: {coroutine.PausedTime}");
         }
         Log("Pausing all coroutines.");
     }
@@ -95,9 +99,12 @@ public class CoroutineManager : ScriptBase
     // Resumes all coroutines
     public void ResumeAllCoroutines()
     {
+        float currentTime = GetTime();
         foreach (var coroutine in activeCoroutines)
         {
             coroutine.Paused = false;
+            coroutine.NextExecutionTime = currentTime + coroutine.PausedTime; // Restore timing
+            Log($"Resumed coroutine with tag '{coroutine.Tag}', next execution time: {coroutine.NextExecutionTime}");
         }
         Log("Resuming all coroutines.");
     }
@@ -111,33 +118,50 @@ public class CoroutineManager : ScriptBase
             Coroutine coroutine = activeCoroutines[i];
             if (!coroutine.Paused && currentTime >= coroutine.NextExecutionTime)
             {
-                if (!coroutine.Routine.MoveNext())
+                try
                 {
-                    activeCoroutines.RemoveAt(i); // Remove finished coroutine
-                    Log("Coroutine finished.");
-                }
-                else
-                {
-                    // Handle yield instructions
-                    if (coroutine.Routine.Current is WaitForSeconds wait)
-                    {
-                        coroutine.NextExecutionTime = currentTime + wait.Seconds;
-                    }
-                    else if (coroutine.Routine.Current is WaitForCondition condition)
+                    Log($"Processing coroutine with tag '{coroutine.Tag}'. CurrentTime: {currentTime}");
+
+                    if (coroutine.Routine.Current is WaitForCondition condition)
                     {
                         if (condition.Condition())
                         {
                             coroutine.NextExecutionTime = currentTime;
+                            Log($"Condition evaluated as TRUE for coroutine with tag '{coroutine.Tag}'.");
                         }
                         else
                         {
-                            coroutine.NextExecutionTime = currentTime + 0.1f; // Check again soon
+                            coroutine.NextExecutionTime = currentTime + 0.1f;
+                            Log($"Condition evaluated as FALSE for coroutine with tag '{coroutine.Tag}'. Retrying... NextExecutionTime: {coroutine.NextExecutionTime}");
+                            continue; // Skip MoveNext to prevent progression
                         }
+                    }
+
+                    if (!coroutine.Routine.MoveNext())
+                    {
+                        // Coroutine finished
+                        activeCoroutines.RemoveAt(i);
+                        Log($"Coroutine with tag '{coroutine.Tag}' finished.");
                     }
                     else
                     {
-                        coroutine.NextExecutionTime = currentTime; // Immediate continuation
+                        // Handle other yield instructions
+                        if (coroutine.Routine.Current is WaitForSeconds wait)
+                        {
+                            coroutine.NextExecutionTime = currentTime + wait.Seconds;
+                            Log($"Coroutine with tag '{coroutine.Tag}' waiting for {wait.Seconds} seconds.");
+                        }
+                        else
+                        {
+                            coroutine.NextExecutionTime = currentTime;
+                            Log($"Coroutine with tag '{coroutine.Tag}' proceeding without wait.");
+                        }
                     }
+                }
+                catch (Exception ex)
+                {
+                    Log($"Error in coroutine with tag '{coroutine.Tag}': {ex.Message}");
+                    activeCoroutines.RemoveAt(i);
                 }
             }
         }
@@ -146,7 +170,7 @@ public class CoroutineManager : ScriptBase
     // Time source
     private float GetTime()
     {
-        return InternalCall.m_InternalCallGetGameTime(); // Replace with engine's time API
+        return (float)InternalCall.m_InternalCallGetGameTime(); // Replace with engine's time API
     }
 
     // Debugging

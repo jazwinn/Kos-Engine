@@ -55,7 +55,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     //TO BE COMMENTED
     public bool isDead;
     private bool isChasing;
-    private bool isPatrolling;
+    public bool isPatrolling;
     private Vector2 movement = new Vector2();
     private float enemyDeathKnockbackMultiplier;
     private float enemyBloodPoolSpawnDelay = 0.5f;
@@ -153,7 +153,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
                (int)World2GridCoordinates(transformComp.m_position.X,transformComp.m_position.Y,pathFindComp.m_gridkey).X, (int)World2GridCoordinates(transformComp.m_position.X, transformComp.m_position.Y, pathFindComp.m_gridkey).Y,
                (int)pathFindComp.m_targetPosition.X, (int)pathFindComp.m_targetPosition.Y
             );
-            Console.WriteLine(Paths.Count);
+            
         }
         //List<Vector2> path = GetPath(0, 0, 0, 2, 2);
         //foreach (Vector2 point in path)
@@ -170,6 +170,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
     public override void Update() //Runs every frame
     {
+        Console.WriteLine(isPatrolling);
         if (isDead) return;
         CheckForCollisions(); //Checks for collisions in the event an enemy touches the player
         
@@ -364,10 +365,9 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     #region Patrolling Behaviour
     public void StartPatrol()
     {
-        Console.WriteLine(currentPatrolPath);
-        if (Vector2DistanceChecker(transformComp.m_position, Grid2WorldCoordinates((int)Paths[currentPatrolPath].X, (int)Paths[currentPatrolPath].Y, pathFindComp.m_gridkey), 0.3f))
+        //Console.WriteLine(currentPatrolPath);
+        if (Vector2DistanceChecker(transformComp.m_position, Grid2WorldCoordinates((int)Paths[currentPatrolPath].X, (int)Paths[currentPatrolPath].Y, pathFindComp.m_gridkey), 0.8f))
         {
-            
             SetToNextPath();
         }
         if (childrenIDList.Length > 0)
@@ -375,6 +375,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
             if (!isPatrolling)
             {
+
                 isPatrolling = true;
 
                 CoroutineManager.Instance.StartCoroutine(PatrolRoutine(), "Patrol");
@@ -395,23 +396,13 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
             yield break;
         }
 
-        while (true)
+        while (isPatrolling)
         {
             Vector2 targetWaypoint = waypoints[currentPatrolWaypoint];
             Vector2 gridTargetPos = World2GridCoordinates(targetWaypoint.X, targetWaypoint.Y, pathFindComp.m_gridkey);
             pathFindComp.m_targetPosition = gridTargetPos;
 
 
-            //if (Paths != null)
-            //{
-            //    Console.WriteLine("here");
-
-            //    Paths = GetPath(
-            //        pathFindComp.m_gridkey,
-            //        (int)pathFindComp.m_startPosition.X, (int)pathFindComp.m_startPosition.Y,
-            //        (int)pathFindComp.m_targetPosition.X, (int)pathFindComp.m_targetPosition.Y
-            //    );
-            //}
             if (Paths == null || Paths.Count == 0)
             {
                 Console.WriteLine("No valid path found!");
@@ -419,64 +410,21 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
                 continue;
             }
             
-            //Console.WriteLine(Paths[currentPatrolPath].X.ToString());
-            //Console.WriteLine(Paths[currentPatrolPath].Y.ToString());
-            //Console.WriteLine(Grid2WorldCoordinates((int)Paths[currentPatrolPath].X, (int)Paths[currentPatrolPath].Y, pathFindComp.m_gridkey).X);
-            //Console.WriteLine(Grid2WorldCoordinates((int)Paths[currentPatrolPath].X, (int)Paths[currentPatrolPath].Y, pathFindComp.m_gridkey).Y);
 
-            if (!Vector2DistanceChecker(transformComp.m_position, Grid2WorldCoordinates((int)Paths[currentPatrolPath].X, (int)Paths[currentPatrolPath].Y, pathFindComp.m_gridkey), 0.1f))
+            if (!Vector2DistanceChecker(transformComp.m_position, Grid2WorldCoordinates((int)Paths[currentPatrolPath].X, (int)Paths[currentPatrolPath].Y, pathFindComp.m_gridkey), 0.8f))
             {
-                Console.WriteLine($"moving {Paths[currentPatrolPath].X},{Paths[currentPatrolPath].Y}");
                 MoveToTarget(Paths[currentPatrolPath], patrolSpeed);
             }
-            //else if(Vector2DistanceChecker(transformComp.m_position, Grid2WorldCoordinates((int)Paths[currentPatrolPath].X, (int)Paths[currentPatrolPath].Y, pathFindComp.m_gridkey), 0.1f))
-            //{   
-            //    Vector2 stop = new Vector2(0,0);
-            //    InternalCall.m_InternalSetVelocity(EntityID, stop);
-            //    SetToNextPath();
-            //}
+            
 
-            //foreach (Vector2 pathPoint in paths)
-            //{
-            //    if (!Vector2DistanceChecker(transformComp.m_position, pathPoint, 0.1f))
-            //    {
-            //        MoveToTarget(pathPoint, patrolSpeed);
-            //    }
-
-
-            //    yield return new CoroutineManager.WaitForCondition(() =>
-            //        Vector2DistanceChecker(transformComp.m_position, pathPoint, 0.1f)
-            //    );
-            //}
-
-            //for (int i = 0; i < paths.Count();) { 
-            //    Vector2 pathPoint = paths[i];
-            //    if (!Vector2DistanceChecker(transformComp.m_position, pathPoint, 0.1f))
-            //    {
-            //        MoveToTarget(pathPoint, patrolSpeed);
-
-            //    }
-            //    else 
-            //    { 
-            //        i++;
-            //        yield return new CoroutineManager.WaitForCondition(() =>
-            //        Vector2DistanceChecker(transformComp.m_position, pathPoint, 0.1f));
-            //    }
-            //}
-
-            // After reaching the last path point, check if we've reached the waypoint
-            yield return new CoroutineManager.WaitForCondition(() =>
-                Vector2DistanceChecker(transformComp.m_position, targetWaypoint, 0.1f)
-            );
-
-            //if (Paths.Count == 0)
-            //{
-            //    SetToNextWaypoint();
-            //}
+            //yield return new CoroutineManager.WaitForCondition(() =>
+            //    Vector2DistanceChecker(transformComp.m_position, targetWaypoint, 0.8f)
+            //);
 
             // Wait at the waypoint for 3 seconds before moving to the next waypoint
             yield return new CoroutineManager.WaitForSeconds(0.1f);
         }
+
     }
 
 
@@ -649,7 +597,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         movement.X = 0 + forwardX * enemySpeed;
         movement.Y = 0 + forwardY * enemySpeed;
 
-
+        
 
         InternalCall.m_InternalSetVelocity(EntityID, in movement); //BANE OF MY EXISTENCE
     }
@@ -687,8 +635,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
             direction.X /= magnitude;
             direction.Y /= magnitude;
 
-            transformComp.m_rotation = (float)Math.Atan2(direction.Y, direction.X) * (360 / (float)Math.PI);
-            //Console.WriteLine(transformComp.m_rotation);
+            transformComp.m_rotation = (float)(Math.Atan2(direction.X, direction.Y) * (180 / Math.PI));
             SetComponent.SetTransformComponent(EntityID, transformComp);
 
             float dynamicSpeed = maxSpeed * (1 - Math.Min(squaredMagnitude / 100.0f, 1.0f)); // Easing in deceleration
