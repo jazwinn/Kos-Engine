@@ -67,9 +67,9 @@
             "alpha": 1.0
         },
         "animation": {
-            "frameNumber": 6,
+            "frameNumber": 5,
             "framesPerSecond": 10,
-            "frameTimer": 0.6000000834465027,
+            "frameTimer": 0.583333432674408,
             "isAnimating": true,
             "stripCount": 14
         },
