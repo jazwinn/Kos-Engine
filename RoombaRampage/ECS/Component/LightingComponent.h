@@ -13,8 +13,8 @@ namespace ecs
 
 	public:
 
-		graphicpipe::LightType m_lightType{ graphicpipe::LightType::SPOT };
-		float m_intensity{ 1.f };
+		graphicpipe::LightType m_lightType{ graphicpipe::LightType::GLOW };
+		float m_intensity{ 0.5f };
 		vector2::Vec2 m_innerOuterRadius{ 0.f,1.f };
 		vector3::Vec3 m_colour{ 1.f,1.f,1.f };
 
