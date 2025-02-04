@@ -90,6 +90,8 @@ namespace ecs {
 					ray.m_hitposition = { 0,0 };
 					continue;
 				}
+
+				ray.m_targetReached = true;
 				//vector2::Vec2 direction = ray.m_targetPosition - transform->m_position;
 				ray.m_distance = abs(vector2::Vec2::m_funcVec2DDistance(ray.m_targetPosition, transform->m_position));
 
