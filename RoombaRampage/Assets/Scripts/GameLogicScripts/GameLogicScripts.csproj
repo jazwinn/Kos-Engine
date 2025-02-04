@@ -23,6 +23,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <IntermediateOutputPath>C:\Users\ngjaz\AppData\Local\Temp\vsED98.tmp\Debug\</IntermediateOutputPath>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -32,6 +33,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <IntermediateOutputPath>C:\Users\ngjaz\AppData\Local\Temp\vsED98.tmp\Release\</IntermediateOutputPath>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
     <BuildProjectReferences>false</BuildProjectReferences>
@@ -49,6 +51,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <LangVersion>7.3</LangVersion>
     <ErrorReport>prompt</ErrorReport>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <Target Name="Build" />
   <Target Name="CoreCompile" />
@@ -65,8 +68,13 @@
   <ItemGroup>
     <Compile Include="LogicScript\CameraFollowPlayerScript.cs" />
     <Compile Include="LogicScript\CollisionResponse.cs" />
+    <Compile Include="LogicScript\CoroutineController.cs" />
+    <Compile Include="LogicScript\CoroutineManager.cs" />
+    <Compile Include="LogicScript\CoroutineTester.cs" />
     <Compile Include="LogicScript\EnemyBloodPool.cs" />
     <Compile Include="LogicScript\EnemyController.cs" />
+    <Compile Include="LogicScript\EnemyScript.cs" />
+    <Compile Include="LogicScript\EnemyState.cs" />
     <Compile Include="LogicScript\ExitGameButton.cs" />
     <Compile Include="LogicScript\GameController.cs" />
     <Compile Include="LogicScript\LevelDoorLocker.cs" />
@@ -77,6 +85,7 @@
     <Compile Include="LogicScript\PlayerGun.cs" />
     <Compile Include="LogicScript\PlayerMeleeKillZone.cs" />
     <Compile Include="LogicScript\StartGameButton.cs" />
+    <Compile Include="LogicScript\testscript.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\ScriptLibrary\GameScript\GameScript.csproj">

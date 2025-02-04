@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Reflection.Emit;
 using System.Data.SqlClient;
+using System.Runtime.InteropServices;
 
 public static class InternalCall
 {
@@ -23,10 +24,10 @@ public static class InternalCall
     public extern static bool m_InternalSetTranslate(uint entity, in Vector2 pos);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static bool m_InternalGetColliderComponent(uint entity, out Vector2 size, out Vector2 offset, out bool drawDebug, out float radius, out uint bockflag, out float isCollided, out bool collisionCheck);
+    public extern static bool m_InternalGetColliderComponent(uint entity, out Vector2 size, out Vector2 offset, out bool drawDebug, out float radius, out uint bockflag, out float isCollided, out bool collisionCheck, out bool collisionresponse);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static bool m_InternalSetColliderComponent(uint entity, in Vector2 size, in Vector2 offset, in bool drawDebug, in float radius, in uint bockflag, in float isCollided, in bool collisionCheck);
+    public extern static bool m_InternalSetColliderComponent(uint entity, in Vector2 size, in Vector2 offset, in bool drawDebug, in float radius, in uint bockflag, in float isCollided, in bool collisionCheck, in bool collisionresponse);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static bool m_InternalGetEnemyComponent(uint entity, out int enemyTag, out int enemytype, out int enemybehaviour);
@@ -178,6 +179,14 @@ public static class InternalCall
     [MethodImpl(MethodImplOptions.InternalCall)]
     private extern static bool m_InternalCallSetRayCast(uint id, string monoString, in bool isRaycasting, in Vector2 targetposition, in float m_distance, in bool targetReached, in Vector2 hitposition);
 
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static bool m_InternalGetGridComponent(uint id, out Vector2 anchor, out int gridRowLength, out int gridColumnLength, out bool setCollidable, out int gridKey);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static bool m_InternalSetGridComponent(uint id, in Vector2 anchor, in int gridRowLength, in int gridColumnLength, in bool setCollidable, in int gridKey);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static int m_InternalGetEntityIdFromGridKey(int gridkey);
     public static Raycast m_GetRay(uint id, string monoString)
     {
         Raycast ray = new Raycast();
@@ -193,9 +202,11 @@ public static class InternalCall
         m_InternalCallSetRayCast(id, monoString, in ray.m_isRaycasting, in ray.m_targetposition, in ray.m_distance, in ray.m_targetReached, in ray.m_hitPosition);
 
     }
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static bool m_InternalCallGetPath(int gridkey, in int startX, in int startY, in int targetX, in int targetY, out int[] pathX, out int[] pathY);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static bool m_InternalCallGetPathfinding(uint id, out Vector2 m_startpos, out Vector2 m_startend, out int gridkey, out int[] nodeArray_x, out int[] nodeArray_y);
+    public extern static bool m_InternalCallGetPathfinding(uint id, out Vector2 m_startpos, out Vector2 m_startend, out int gridkey);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static void m_EnableLayer(uint layer);
@@ -206,6 +217,14 @@ public static class InternalCall
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static void m_InternalCallSetTargetPathfinding(uint id, in Vector2 m_targetgridposition);
 
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static float m_GetUnfixedDeltaTie();
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public static extern void m_GetNameComponent(uint id, out IntPtr outPtr);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public static extern void m_ChangeLayer(uint id, uint layerid);
 }
 
 
@@ -228,7 +247,7 @@ public static class Component
         else if (typeof(T) == typeof(ColliderComponent))
         {
             var colliderComponent = component as ColliderComponent;
-            InternalCall.m_InternalGetColliderComponent(id, out colliderComponent.m_Size, out colliderComponent.m_Offset, out colliderComponent.m_drawDebug, out colliderComponent.m_radius, out colliderComponent.m_blockedFlag, out colliderComponent.m_isCollided, out colliderComponent.m_collisionCheck);
+            InternalCall.m_InternalGetColliderComponent(id, out colliderComponent.m_Size, out colliderComponent.m_Offset, out colliderComponent.m_drawDebug, out colliderComponent.m_radius, out colliderComponent.m_blockedFlag, out colliderComponent.m_isCollided, out colliderComponent.m_collisionCheck, out colliderComponent.m_collisionResponse);
         }
         else if (typeof(T) == typeof(TextComponent))
         {
@@ -253,18 +272,18 @@ public static class Component
         else if(typeof(T) == typeof(PathfindingComponent))
         {
             var pathfindingcomponent = component as PathfindingComponent;
-            int[] x, y;
-            InternalCall.m_InternalCallGetPathfinding(id, out pathfindingcomponent.m_startPosition, out pathfindingcomponent.m_targetPosition, out pathfindingcomponent.m_gridkey, out x, out y);
-            for (int n = 0; n < x.Length; n++)
-            {
+            InternalCall.m_InternalCallGetPathfinding(id, out pathfindingcomponent.m_startPosition, out pathfindingcomponent.m_targetPosition, out pathfindingcomponent.m_gridkey);
 
-                pathfindingcomponent.m_node.Add(new Vector2(x[n], y[n]));
-            }
         }
         else if (typeof(T) == typeof(EnemyComponent))
         {
             var enemyComponent = component as EnemyComponent;
             InternalCall.m_InternalGetEnemyComponent(id, out enemyComponent.m_tag, out enemyComponent.m_enemyTypeInt, out enemyComponent.m_enemyRoamBehaviourInt);
+        }
+        else if(typeof(T) == typeof(GridComponent))
+        {
+            var _component = component as GridComponent;
+            InternalCall.m_InternalGetGridComponent(id, out _component.m_Anchor, out _component.m_GridRowLength, out _component.m_GridColumnLength, out _component.m_SetCollidable, out _component.m_GridKey);
         }
         else
         {
@@ -286,7 +305,7 @@ public static class Component
         }
         else if (component is ColliderComponent collider)
         {
-            InternalCall.m_InternalSetColliderComponent(id, in collider.m_Size, in collider.m_Offset, in collider.m_drawDebug, in collider.m_radius, in collider.m_blockedFlag, in collider.m_isCollided, in collider.m_collisionCheck);
+            InternalCall.m_InternalSetColliderComponent(id, in collider.m_Size, in collider.m_Offset, in collider.m_drawDebug, in collider.m_radius, in collider.m_blockedFlag, in collider.m_isCollided, in collider.m_collisionCheck, in collider.m_collisionResponse);
         }
         else if (component is TextComponent text)
         {
@@ -304,12 +323,18 @@ public static class Component
         {
             InternalCall.m_InternalSetEnemyComponent(id, in enemy.m_tag, in enemy.m_enemyTypeInt, in enemy.m_enemyRoamBehaviourInt);
         }
+        else if (component is GridComponent grid)
+        {
+            InternalCall.m_InternalSetGridComponent(id, in grid.m_Anchor, in grid.m_GridRowLength, in grid.m_GridColumnLength, in grid.m_SetCollidable, in grid.m_GridKey);
+        }
         else
         {
             throw new NotSupportedException($"Component type {typeof(T).Name} is not supported.");
         }
     }
 }
+
+
 
 public static class GetComponent
 {
@@ -332,7 +357,7 @@ public static class GetComponent
     public static ColliderComponent GetColliderComponent(uint id)
     {
         ColliderComponent temp = new ColliderComponent();
-        InternalCall.m_InternalGetColliderComponent(id, out temp.m_Size, out temp.m_Offset, out temp.m_drawDebug, out temp.m_radius, out temp.m_blockedFlag, out temp.m_isCollided, out temp.m_collisionCheck);
+        InternalCall.m_InternalGetColliderComponent(id, out temp.m_Size, out temp.m_Offset, out temp.m_drawDebug, out temp.m_radius, out temp.m_blockedFlag, out temp.m_isCollided, out temp.m_collisionCheck, out temp.m_collisionResponse );
         return temp;
     }
 
@@ -357,7 +382,7 @@ public static class SetComponent
 
     public static void SetCollisionComponent(uint id, ColliderComponent transform)
     {
-        InternalCall.m_InternalSetColliderComponent(id, in transform.m_Size, in transform.m_Offset, in transform.m_drawDebug, in transform.m_radius, in transform.m_blockedFlag, in transform.m_isCollided, in transform.m_collisionCheck);
+        InternalCall.m_InternalSetColliderComponent(id, in transform.m_Size, in transform.m_Offset, in transform.m_drawDebug, in transform.m_radius, in transform.m_blockedFlag, in transform.m_isCollided, in transform.m_collisionCheck, in transform.m_collisionResponse);
     }
 
     public static void SetTextComponent(uint id, TextComponent text)

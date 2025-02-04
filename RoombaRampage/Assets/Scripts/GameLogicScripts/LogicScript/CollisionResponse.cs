@@ -71,7 +71,7 @@ public class CollisionResponse : ScriptBase
         bool entity_drawDebug, entity_collisionCheck;
 
         InternalCall.m_InternalGetColliderComponent((uint)EntityID, out entity_ColliderSize, out entity_ColliderOffset, out entity_drawDebug, out entity_Radius,
-        out entity_CollisionFlag, out entity_isCollided, out entity_collisionCheck);
+        out entity_CollisionFlag, out entity_isCollided, out entity_collisionCheck , out entity_collisionCheck);
 
         InternalCall.m_InternalGetTransformComponent(EntityID, out startingPlayerPos, out startingPlayerScale, out startingPlayerRotate);
 

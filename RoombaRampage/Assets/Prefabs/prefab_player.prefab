@@ -10,10 +10,10 @@
         },
         "transform": {
             "position": {
-                "x": 0.0021981894969940186,
-                "y": 0.18329228460788727
+                "x": 0.0,
+                "y": 0.3626401424407959
             },
-            "rotation": -0.0,
+            "rotation": -15.348065376281738,
             "scale": {
                 "x": 3.0,
                 "y": 3.0
@@ -21,6 +21,7 @@
         },
         "collider": {
             "checkcollision": true,
+            "checkresponse": true,
             "size": {
                 "x": 1.0,
                 "y": 1.0
@@ -32,9 +33,6 @@
             "drawDebug": true,
             "radius": 0.6499999761581421,
             "shapetype": 1
-        },
-        "player": {
-            "control": true
         },
         "rigidbody": {
             "linearVelocity": {
@@ -74,11 +72,13 @@
             "scripts": [
                 {
                     "name": "PlayerController",
-                    "enabled": true
+                    "enabled": true,
+                    "map": []
                 },
                 {
                     "name": "CollisionResponse",
-                    "enabled": true
+                    "enabled": true,
+                    "map": []
                 }
             ]
         },
@@ -132,7 +132,8 @@
                     "scripts": [
                         {
                             "name": "PlayerGun",
-                            "enabled": true
+                            "enabled": true,
+                            "map": []
                         }
                     ]
                 },
@@ -198,7 +199,8 @@
                     "scripts": [
                         {
                             "name": "PlayerGun",
-                            "enabled": true
+                            "enabled": true,
+                            "map": []
                         }
                     ]
                 },
@@ -264,7 +266,8 @@
                     "scripts": [
                         {
                             "name": "PlayerGun",
-                            "enabled": true
+                            "enabled": true,
+                            "map": []
                         }
                     ]
                 },
@@ -299,6 +302,7 @@
                 },
                 "collider": {
                     "checkcollision": false,
+                    "checkresponse": true,
                     "size": {
                         "x": 1.0,
                         "y": 1.0

@@ -43,7 +43,9 @@ namespace ecs {
 
 		float m_radius{0.5f};
 
-		bool m_CollisionCheck{ true }; // to pass collision data into the physics pipeline
+		bool m_collisionResponse{ true }; 
+
+		bool m_collisionCheck{ true }; // to pass collision data into the physics pipeline
 
 
 		// no need to serialize or reflect
@@ -63,7 +65,7 @@ namespace ecs {
 
 		mat3x3::Mat3x3 m_collider_Transformation{};
 
-		REFLECTABLE(ColliderComponent, m_CollisionCheck, m_Size, m_OffSet, m_drawDebug, m_radius, m_type)
+		REFLECTABLE(ColliderComponent, m_collisionResponse, m_collisionCheck,  m_Size, m_OffSet, m_drawDebug, m_radius, m_type)
 	};
 
 }

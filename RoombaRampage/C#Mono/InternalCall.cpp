@@ -18,20 +18,35 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Graphics/GraphicsCamera.h"
 #include "../ECS/Hierachy.h"
 
+#include "../Pathfinding/AStarPathfinding.h"
+#include <mono/jit/jit.h>
+#include <mono/metadata/exception.h>
+
 #define MONO_ADD_INTERNAL_CALL(METHOD_NAME) \
     mono_add_internal_call("InternalCall::" #METHOD_NAME, METHOD_NAME);
+
+#define ASSERTNOCOMPONENT(COMPONENTNAME, ID) \
+    LOGGING_WARN("Entity " + std::to_string(ID) + " does not have " + #COMPONENTNAME)
 
 namespace script {
 
 	bool InternalCall::m_InternalGetTransformComponent(ecs::EntityID entity, vector2::Vec2* trans, vector2::Vec2* scale, float* rotate)
 	{
+
 		auto* transform = static_cast<ecs::TransformComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(entity));
 
-		if (transform == nullptr) return false;
+		if (transform) {
+			*trans = { transform->m_position.m_x, transform->m_position.m_y };
+			*scale = { transform->m_scale.m_x, transform->m_scale.m_y };
+			*rotate = { transform->m_rotation };
 
-		*trans = { transform->m_position.m_x, transform->m_position.m_y };
-		*scale = { transform->m_scale.m_x, transform->m_scale.m_y };
-		*rotate = { transform->m_rotation };
+		}
+		else {
+			ASSERTNOCOMPONENT(TransformComponent, entity);
+
+		}
+
+
 
 		return true;
 	}
@@ -40,66 +55,91 @@ namespace script {
 	{
 		auto* transform = static_cast<ecs::TransformComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(entity));
 
-		if (transform == nullptr) return false;
+		if (transform) {
 
-		transform->m_position = *trans;
-		transform->m_scale = *scale;
-		transform->m_rotation = *rotate;
+			transform->m_position = *trans;
+			transform->m_scale = *scale;
+			transform->m_rotation = *rotate;
+		}
+		else {
+			ASSERTNOCOMPONENT(TransformComponent, entity);
 
+		}
 		return true;
 	}
 
 	bool InternalCall::m_InternalGetTranslate(ecs::EntityID entity, vector2::Vec2* trans)
 	{
-		auto* transform = static_cast<ecs::TransformComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(entity)); 
-		vector2::Vec2 translate, rotate; 
-		float scale; 
-		mat3x3::Mat3Decompose(transform->m_transformation, translate, rotate, scale); 
-		*trans = translate;
 
+		auto* transform = static_cast<ecs::TransformComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(entity)); 
+
+		if (transform) {
+			vector2::Vec2 translate, rotate; 
+			float scale; 
+			mat3x3::Mat3Decompose(transform->m_transformation, translate, rotate, scale); 
+			*trans = translate;
+		}
+		else {
+			ASSERTNOCOMPONENT(TransformComponent, entity);
+
+		}
 		return true;
 	}
 
 	bool InternalCall::m_InternalSetTranslate(ecs::EntityID entity, vector2::Vec2* trans)
 	{
 		auto* transform = static_cast<ecs::TransformComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(entity));
-		transform->m_position = *trans;
+		if (transform) {
+			transform->m_position = *trans;
+		}
+		else {
+			ASSERTNOCOMPONENT(TransformComponent, entity);
 
+		}
 		return true;
 	}
 
 	//Collider Component
-	bool InternalCall::m_InternalGetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, unsigned int* m_blockedFlag, float* isCollided, bool* collisionCheck)
+	bool InternalCall::m_InternalGetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, unsigned int* m_blockedFlag, float* isCollided, bool* collisionCheck, bool* collisionresponse)
 	{
 		auto* collider = static_cast<ecs::ColliderComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(entity));
 
-		if (collider == nullptr) return false;
-
-		*size = collider->m_Size;
-		*offset = collider->m_OffSet;
-		*drawDebug = collider->m_drawDebug;
-		*radius = collider->m_radius;
-		*isCollided = collider->m_isCollided;
-		*m_blockedFlag = collider->m_blockedFlag;
-		*collisionCheck = collider->m_CollisionCheck;
+		if (collider) {
+			*size = collider->m_Size;
+			*offset = collider->m_OffSet;
+			*drawDebug = collider->m_drawDebug;
+			*radius = collider->m_radius;
+			*isCollided = collider->m_isCollided;
+			*m_blockedFlag = collider->m_blockedFlag;
+			*collisionCheck = collider->m_collisionCheck;
+			*collisionresponse = collider->m_collisionResponse;
+		}
+		else {
+			ASSERTNOCOMPONENT(ColliderComponent, entity);
+		}
+		
 
 		return true;
 	}
 
-	bool InternalCall::m_InternalSetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, unsigned int* m_blockedFlag, float* isCollided, bool* collisionCheck)
+	bool InternalCall::m_InternalSetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, unsigned int* m_blockedFlag, float* isCollided, bool* collisionCheck, bool* collisionresponse)
 	{
 		auto* collider = static_cast<ecs::ColliderComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(entity));
 
-		if (collider == nullptr) return false;
+		if (collider) {
 
-		collider->m_Size = *size;
-		collider->m_OffSet = *offset;
-		collider->m_drawDebug = *drawDebug;
-		collider->m_radius = *radius;
-		collider->m_isCollided = *isCollided;
-		collider->m_blockedFlag = *m_blockedFlag;
-		collider->m_CollisionCheck = *collisionCheck;
-
+			collider->m_Size = *size;
+			collider->m_OffSet = *offset;
+			collider->m_drawDebug = *drawDebug;
+			collider->m_radius = *radius;
+			collider->m_isCollided = *isCollided;
+			collider->m_blockedFlag = *m_blockedFlag;
+			collider->m_collisionResponse = *collisionresponse;
+			collider->m_collisionCheck = *collisionCheck;
+		}
+		else {
+			ASSERTNOCOMPONENT(ColliderComponent, entity);
+		}
 
 		return true;
 	}
@@ -109,11 +149,15 @@ namespace script {
 	{
 		auto* player = static_cast<ecs::EnemyComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPEENEMYCOMPONENT]->m_GetEntityComponent(entity));
 
-		if (player == nullptr) return false;
-
-		*enemytag = player->m_enemyTag;
-		*enemytype = player->m_enemyTag;
-		*enemybehaviour = player->m_enemyRoamBehaviourInt;
+		if (player) {
+			*enemytag = player->m_enemyTag;
+			*enemytype = player->m_enemyTypeInt;
+			*enemybehaviour = player->m_enemyRoamBehaviourInt;
+		}
+		else {
+			ASSERTNOCOMPONENT(EnemyComponent, entity);
+		}
+		
 
 		return true;
 	}
@@ -122,11 +166,15 @@ namespace script {
 	{
 		auto* player = static_cast<ecs::EnemyComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPEENEMYCOMPONENT]->m_GetEntityComponent(entity));
 
-		if (player == nullptr) return false;
+		if (player) {
+			player->m_enemyTag = *enemytag;
+			player->m_enemyTag = *enemytype;
+			player->m_enemyRoamBehaviourInt = *enemybehaviour;
+		}
+		else {
+			ASSERTNOCOMPONENT(EnemyComponent, entity);
+		}
 
-		 player->m_enemyTag = *enemytag;
-		 player->m_enemyTag = *enemytype;
-		 player->m_enemyRoamBehaviourInt = *enemybehaviour;
 
 		return true;
 	}
@@ -136,13 +184,17 @@ namespace script {
 	{
 		auto* rbComponent = static_cast<ecs::RigidBodyComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPERIGIDBODYCOMPONENT]->m_GetEntityComponent(entity));
 
-		if (rbComponent == nullptr) return false;
+		if (rbComponent) {
+			*velocity = rbComponent->m_Velocity;
+			*acceleration = rbComponent->m_Acceleration;
+			*rotation = rbComponent->m_Rotation;
+			*previouspos = rbComponent->m_PrevPos;
+			*directionvector = rbComponent->m_DirectionVector;
+		}
+		else {
+			ASSERTNOCOMPONENT(RigidBodyComponent, entity);
+		}
 
-		*velocity = rbComponent->m_Velocity;
-		*acceleration = rbComponent->m_Acceleration;
-		*rotation = rbComponent->m_Rotation;
-		*previouspos = rbComponent->m_PrevPos;
-		*directionvector = rbComponent->m_DirectionVector;
 
 		return true;
 	}
@@ -151,13 +203,17 @@ namespace script {
 	{
 		auto* rbComponent = static_cast<ecs::RigidBodyComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPERIGIDBODYCOMPONENT]->m_GetEntityComponent(entity));
 
-		if (rbComponent == nullptr) return false;
-
-		rbComponent->m_Velocity = *velocity;
-		rbComponent->m_Acceleration = *acceleration;
-		rbComponent->m_Rotation = *rotation;
-		rbComponent->m_PrevPos = *previouspos;
-		rbComponent->m_DirectionVector = *directionvector;
+		if (rbComponent) {
+			rbComponent->m_Velocity = *velocity;
+			rbComponent->m_Acceleration = *acceleration;
+			rbComponent->m_Rotation = *rotation;
+			rbComponent->m_PrevPos = *previouspos;
+			rbComponent->m_DirectionVector = *directionvector;
+		}
+		else {
+			ASSERTNOCOMPONENT(RigidBodyComponent, entity);
+		}
+		
 
 		return true;
 	}
@@ -167,14 +223,18 @@ namespace script {
 	{
 		auto* textComponent = static_cast<ecs::TextComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(entity));
 
-		if (textComponent == nullptr) return false;
+		if (textComponent) {
+			*text = mono_string_new(mono_domain_get(), textComponent->m_text.c_str());
+			*fileName = mono_string_new(mono_domain_get(), textComponent->m_fileName.c_str());
 
-		*text = mono_string_new(mono_domain_get(), textComponent->m_text.c_str());
-		*fileName = mono_string_new(mono_domain_get(), textComponent->m_fileName.c_str());
+			*fontLayer = textComponent->m_fontLayer;
+			*fontSize = textComponent->m_fontSize;
+			*color = textComponent->m_color;
+		}
+		else {
+			ASSERTNOCOMPONENT(TextComponent, entity);
+		}
 
-		*fontLayer = textComponent->m_fontLayer;
-		*fontSize = textComponent->m_fontSize;
-		*color = textComponent->m_color;
 
 
 		return true;
@@ -184,20 +244,26 @@ namespace script {
 	{
 		auto* textComponent = static_cast<ecs::TextComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(entity));
 
-		char* nativeText = mono_string_to_utf8(text);
-		std::string ctText = nativeText;
-		textComponent->m_text = ctText;
+		if (textComponent) {
+			char* nativeText = mono_string_to_utf8(text);
+			std::string ctText = nativeText;
+			textComponent->m_text = ctText;
 
-		char* nativeFile = mono_string_to_utf8(fileName);
-		std::string ctFileName = nativeFile;
-		textComponent->m_fileName = ctFileName;
+			char* nativeFile = mono_string_to_utf8(fileName);
+			std::string ctFileName = nativeFile;
+			textComponent->m_fileName = ctFileName;
 
-		textComponent->m_fontLayer = *fontLayer;
-		textComponent->m_fontSize = *fontSize;
-		textComponent->m_color = *color;
+			textComponent->m_fontLayer = *fontLayer;
+			textComponent->m_fontSize = *fontSize;
+			textComponent->m_color = *color;
 
-		mono_free(nativeText);
-		mono_free(nativeFile);
+			mono_free(nativeText);
+			mono_free(nativeFile);
+		}
+		else {
+			ASSERTNOCOMPONENT(TextComponent, entity);
+		}
+
 		return true;
 	}
 
@@ -206,13 +272,17 @@ namespace script {
 	{
 		auto* animComponent = static_cast<ecs::AnimationComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPEANIMATIONCOMPONENT]->m_GetEntityComponent(entity));
 
-		if (animComponent == nullptr) return false;
+		if (animComponent) {
+			*frameNumber = animComponent->m_frameNumber;
+			*framesPerSecond = animComponent->m_framesPerSecond;
+			*frameTimer = animComponent->m_frameTimer;
+			*isAnimating = animComponent->m_isAnimating;
+			*stripcount = animComponent->m_stripCount;
+		}
+		else {
+			ASSERTNOCOMPONENT(AnimationComponent, entity);
+		}
 
-		*frameNumber = animComponent->m_frameNumber;
-		*framesPerSecond = animComponent->m_framesPerSecond;
-		*frameTimer = animComponent->m_frameTimer;
-		*isAnimating = animComponent->m_isAnimating;
-		*stripcount = animComponent->m_stripCount;
 
 		return true;
 	}
@@ -221,13 +291,17 @@ namespace script {
 	{
 		auto* animComponent = static_cast<ecs::AnimationComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPEANIMATIONCOMPONENT]->m_GetEntityComponent(entity));
 
-		if (animComponent == nullptr) return false;
+		if (animComponent) {
+			animComponent->m_frameNumber = *frameNumber;
+			animComponent->m_framesPerSecond = *framesPerSecond;
+			animComponent->m_frameTimer = *frameTimer;
+			animComponent->m_isAnimating = *isAnimating;
+			animComponent->m_stripCount = *stripcount;
+		}
+		else {
+			ASSERTNOCOMPONENT(AnimationComponent, entity);
+		}
 
-		animComponent->m_frameNumber = *frameNumber;
-		animComponent->m_framesPerSecond = *framesPerSecond;
-		animComponent->m_frameTimer = *frameTimer;
-		animComponent->m_isAnimating = *isAnimating;
-		animComponent->m_stripCount = *stripcount;
 
 		return true;
 	}
@@ -238,14 +312,18 @@ namespace script {
 	{
 		auto* spriteComponent = static_cast<ecs::SpriteComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(entity));
 
-		if (spriteComponent == nullptr) return false;
+		if (spriteComponent) {
+			*imageFile = mono_string_new(mono_domain_get(), spriteComponent->m_imageFile.c_str());
+			*layer = spriteComponent->m_layer;
+			*color = spriteComponent->m_color;
+			*alpha = spriteComponent->m_alpha;
+		}
+		else {
+			ASSERTNOCOMPONENT(SpriteComponent, entity);
+		}
 
 
 
-		*imageFile = mono_string_new(mono_domain_get(), spriteComponent->m_imageFile.c_str());
-		*layer = spriteComponent->m_layer;
-		*color = spriteComponent->m_color;
-		*alpha = spriteComponent->m_alpha;
 
 		return true;
 	}
@@ -254,17 +332,21 @@ namespace script {
 	{
 		auto* spriteComponent = static_cast<ecs::SpriteComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(entity));
 
-		if (spriteComponent == nullptr) return false;
+		if (spriteComponent) {
+			char* nativeString = mono_string_to_utf8(imageFile);
+			std::string imagefile = nativeString;
 
-		char* nativeString = mono_string_to_utf8(imageFile);
-		std::string imagefile = nativeString;
+			spriteComponent->m_imageFile = imagefile;
+			spriteComponent->m_layer = *layer;
+			spriteComponent->m_color = *color;
+			spriteComponent->m_alpha = *alpha;
 
-		spriteComponent->m_imageFile = imagefile;
-		spriteComponent->m_layer = *layer;
-		spriteComponent->m_color = *color;
-		spriteComponent->m_alpha = *alpha;
+			mono_free(nativeString);
+		}
+		else {
+			ASSERTNOCOMPONENT(SpriteComponent, entity);
+		}
 
-		mono_free(nativeString);
 
 		return true;
 	}
@@ -274,13 +356,17 @@ namespace script {
 	{
 		auto* cameraComponent = static_cast<ecs::CameraComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPECAMERACOMPONENT]->m_GetEntityComponent(entity));
 
-		if (cameraComponent == nullptr) return false;
+		if (cameraComponent) {
+			*left = cameraComponent->m_left;
+			*right = cameraComponent->m_right;
+			*top = cameraComponent->m_top;
+			*bottom = cameraComponent->m_bottom;
+			*aspectRatio = cameraComponent->m_aspectRatio;
+		}
+		else {
+			ASSERTNOCOMPONENT(CameraComponent, entity);
+		}
 
-		*left = cameraComponent->m_left;
-		*right = cameraComponent->m_right;
-		*top = cameraComponent->m_top;
-		*bottom = cameraComponent->m_bottom;
-		*aspectRatio = cameraComponent->m_aspectRatio;
 
 		return true;
 	}
@@ -289,13 +375,17 @@ namespace script {
 	{
 		auto* cameraComponent = static_cast<ecs::CameraComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPECAMERACOMPONENT]->m_GetEntityComponent(entity));
 
-		if (cameraComponent == nullptr) return false;
+		if (cameraComponent) {
+			cameraComponent->m_left = left;
+			cameraComponent->m_right = right;
+			cameraComponent->m_top = top;
+			cameraComponent->m_bottom = bottom;
+			cameraComponent->m_aspectRatio = aspectRatio;
+		}
+		else {
+			ASSERTNOCOMPONENT(CameraComponent, entity);
+		}
 
-		cameraComponent->m_left = left;
-		cameraComponent->m_right = right;
-		cameraComponent->m_top = top;
-		cameraComponent->m_bottom = bottom;
-		cameraComponent->m_aspectRatio = aspectRatio;
 
 		return true;
 	}
@@ -305,11 +395,15 @@ namespace script {
 	{
 		auto* buttonComponent = static_cast<ecs::ButtonComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPEBUTTONCOMPONENT]->m_GetEntityComponent(entity));
 
-		if (buttonComponent == nullptr) return false;
+		if (buttonComponent) {
+			*position = buttonComponent->m_Position;
+			*scale = buttonComponent->m_Scale;
+			*isClick = buttonComponent->m_IsClick;
+		}
+		else {
+			ASSERTNOCOMPONENT(ButtonComponent, entity);
+		}
 
-		*position = buttonComponent->m_Position;
-		*scale = buttonComponent->m_Scale;
-		*isClick = buttonComponent->m_IsClick;
 
 		return true;
 	}
@@ -318,11 +412,15 @@ namespace script {
 	{
 		auto* buttonComponent = static_cast<ecs::ButtonComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPEBUTTONCOMPONENT]->m_GetEntityComponent(entity));
 
-		if (buttonComponent == nullptr) return false;
+		if (buttonComponent) {
+			buttonComponent->m_Position = position;
+			buttonComponent->m_Scale = scale;
+			buttonComponent->m_IsClick = isClick;
+		}
+		else {
+			ASSERTNOCOMPONENT(ButtonComponent, entity);
+		}
 
-		buttonComponent->m_Position = position;
-		buttonComponent->m_Scale = scale;
-		buttonComponent->m_IsClick = isClick;
 
 		return true;
 	}
@@ -347,14 +445,14 @@ namespace script {
 
 		for (size_t i = 0; i < scripts.size(); ++i)
 		{
-			MonoString* monoString = mono_string_new(assetManager->m_scriptManager.m_GetDomain(), scripts[i].first.c_str());
+			MonoString* monoString = mono_string_new(assetManager->m_scriptManager.m_GetDomain(), std::get<0>(scripts[i]).c_str());
 			mono_array_set(scriptArray, MonoString*, i, monoString);
 		}
 
 		return scriptArray;
 	}
 
-	bool InternalCall::m_InternalAddScriptInstance(ecs::EntityID entity, MonoString* monoScriptName, MonoObject* instance)
+	bool InternalCall::m_InternalAddScriptInstance([[maybe_unused]] ecs::EntityID entity, [[maybe_unused]] MonoString* monoScriptName,[[maybe_unused]] MonoObject* instance)
 	{
 		//ecs::ECS* ecs = ecs::ECS::m_GetInstance();
 		//auto* scriptComponent = static_cast<ecs::ScriptComponent*>(
@@ -385,9 +483,14 @@ namespace script {
 	bool InternalCall::m_InternalGetVelocity(ecs::EntityID entity, vector2::Vec2* vec)
 	{
 		auto* rbcomp = static_cast<ecs::RigidBodyComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPERIGIDBODYCOMPONENT]->m_GetEntityComponent(entity));
-		if (rbcomp == nullptr) return false;
-
-		*vec = rbcomp->m_Velocity;
+		if (rbcomp) {
+			*vec = rbcomp->m_Velocity;
+		}
+		else {
+			ASSERTNOCOMPONENT(RigidBodyComponent, entity);
+			return false;
+		}
+		
 
 		return true;
 	}
@@ -395,9 +498,13 @@ namespace script {
 	bool InternalCall::m_InternalSetVelocity(ecs::EntityID entity, vector2::Vec2* vec)
 	{
 		auto* rbcomp = static_cast<ecs::RigidBodyComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPERIGIDBODYCOMPONENT]->m_GetEntityComponent(entity));
-		if (rbcomp == nullptr) return false;
+		if (rbcomp) {
+			rbcomp->m_Velocity = *vec;
+		}
+		else {
+			ASSERTNOCOMPONENT(RigidBodyComponent, entity);
+		}
 
-		rbcomp->m_Velocity = *vec;
 
 		return true;
 	}
@@ -433,6 +540,7 @@ namespace script {
 			if (scene.second.m_isPrefab == false && scene.second.m_isActive) {
 				for (const auto& id : scene.second.m_sceneIDs) {
 					ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id));
+					
 					if (nc->m_entityTag == tag) {
 						return id;
 
@@ -444,6 +552,34 @@ namespace script {
 
 
 		return -1;
+	}
+
+	int InternalCall::m_InternalGetEntityIdFromGridKey(int gridkey) {
+		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+		for (const auto& scene : ecs->m_ECS_SceneMap) {
+			if (scene.second.m_isPrefab == false && scene.second.m_isActive) {
+				for (const auto& id : scene.second.m_sceneIDs) {
+					ecs::GridComponent* gc = static_cast<ecs::GridComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEGRIDCOMPONENT]->m_GetEntityComponent(id));
+					if (gc != NULL)
+					{
+						if (gc->m_GridKey == gridkey) {
+							return gc->m_Entity;
+						}
+					}
+				}
+			}
+		}
+		return -1;
+	}
+
+	void InternalCall::m_ChangeLayer(ecs::EntityID id, unsigned int layerid)
+	{
+		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+		ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id));
+		if (nc) {
+			nc->m_Layer = (layer::LAYERS)layerid;
+		}
+
 	}
 
 	MonoArray* InternalCall::m_InternalCallGetTagIDs(MonoString* monostring)
@@ -483,20 +619,23 @@ namespace script {
 	{
 		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
 		ecs::ColliderComponent* cc = static_cast<ecs::ColliderComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(entity));
-		if (!cc)
+		if (cc)
 		{
-			return nullptr;
-		}
-		
-		if (cc->m_isCollided) {
-			assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
-			MonoArray* Array = mono_array_new(assetmanager->m_scriptManager.m_GetDomain(), mono_get_int32_class(), cc->m_collidedWith.size());
-			for (size_t i = 0; i < cc->m_collidedWith.size(); ++i) {
-				mono_array_set(Array, int, i, cc->m_collidedWith[i]);
+			if (cc->m_isCollided) {
+				assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+				MonoArray* Array = mono_array_new(assetmanager->m_scriptManager.m_GetDomain(), mono_get_int32_class(), cc->m_collidedWith.size());
+				for (size_t i = 0; i < cc->m_collidedWith.size(); ++i) {
+					mono_array_set(Array, int, i, cc->m_collidedWith[i]);
+				}
+
+				return Array;
 			}
 
-			return Array;
 		}
+		else {
+			ASSERTNOCOMPONENT(ColliderComponent, entity);
+		}
+		
 
 		return nullptr;
 	}
@@ -508,7 +647,7 @@ namespace script {
 		ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(entity));
 		if (!nc)
 		{
-			LOGGING_WARN("NameComponent not found for entity: " + std::to_string(entity));
+			ASSERTNOCOMPONENT(ColliderComponent, entity);
 			return nullptr;
 		}
 
@@ -711,11 +850,11 @@ namespace script {
 
 		if (script == NULL) return;
 
-		const auto& results = std::find_if(script->m_scripts.begin(), script->m_scripts.end(), [&](const auto& x) {return x.first == std::string(nativeString);});
+		const auto& results = std::find_if(script->m_scripts.begin(), script->m_scripts.end(), [&](const auto& x) {return std::get<0>(x) == std::string(nativeString);});
 
 		if (results == script->m_scripts.end()) return;
 
-		results->second = true;
+		std::get<1>(*results) = true;
 
 		mono_free(nativeString);
 	}
@@ -728,11 +867,11 @@ namespace script {
 
 		if (script == NULL) return;
 
-		const auto& results = std::find_if(script->m_scripts.begin(), script->m_scripts.end(), [&](const auto& x) {return x.first == std::string(nativeString);});
+		const auto& results = std::find_if(script->m_scripts.begin(), script->m_scripts.end(), [&](const auto& x) {return std::get<0>(x) == std::string(nativeString);});
 
 		if (results == script->m_scripts.end()) return;
 
-		results->second = false;
+		std::get<1>(*results) = false;
 
 		mono_free(nativeString);
 	}
@@ -752,7 +891,7 @@ namespace script {
 			auto* cc = static_cast<ecs::ColliderComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(ids));
 
 			if (cc != NULL) {
-				if (cc->m_CollisionCheck) {
+				if (cc->m_collisionResponse) {
 					results.push_back(ids);
 				}
 			}
@@ -798,7 +937,9 @@ namespace script {
 			
 
 		}
-
+		else {
+			ASSERTNOCOMPONENT(RaycastComponent, id);
+		}
 
 
 
@@ -828,6 +969,7 @@ namespace script {
 
 			}
 			else {
+				ASSERTNOCOMPONENT(RaycastComponent, id);
 				return false;
 			}
 
@@ -841,7 +983,42 @@ namespace script {
 		return true;
 	}
 
-	bool InternalCall::m_InternalCallGetPathfinding(ecs::EntityID id, vector2::Vec2* m_startpos, vector2::Vec2* m_startend, int* gridkey, MonoArray** nodeArray_x, MonoArray** nodeArray_y)
+	// Grid Component
+	bool InternalCall::m_InternalGetGridComponent(ecs::EntityID entity, vector2::Vec2* anchor, int* gridRowLength, int* gridColumnLength, bool* setCollidable, int* gridKey) {
+		auto* gridComponent = static_cast<ecs::GridComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPEGRIDCOMPONENT]->m_GetEntityComponent(entity));
+		if (gridComponent) {
+			*anchor = gridComponent->m_Anchor;
+			*gridRowLength = gridComponent->m_GridRowLength;
+			*gridColumnLength = gridComponent->m_GridColumnLength;
+			*setCollidable = gridComponent->m_SetCollidable;
+			*gridKey = gridComponent->m_GridKey;
+		}
+		else {
+			ASSERTNOCOMPONENT(GridComponent, entity);
+			return false;
+		}
+
+
+		return true;
+	}
+
+	bool InternalCall::m_InternalSetGridComponent(ecs::EntityID entity, vector2::Vec2* anchor, int* gridRowLength, int* gridColumnLength, bool* setCollidable, int* gridKey) {
+		auto* gridComponent = static_cast<ecs::GridComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPEGRIDCOMPONENT]->m_GetEntityComponent(entity));
+		if (gridComponent) {
+			gridComponent->m_Anchor = *anchor;
+			gridComponent->m_GridRowLength = *gridRowLength;
+			gridComponent->m_GridColumnLength = *gridColumnLength;
+			gridComponent->m_SetCollidable = *setCollidable;
+			gridComponent->m_GridKey = *gridKey;
+		}
+		else {
+			ASSERTNOCOMPONENT(GridComponent, entity);
+			return false;
+		}
+		return true;
+	}
+
+	bool InternalCall::m_InternalCallGetPathfinding(ecs::EntityID id, vector2::Vec2* m_startpos, vector2::Vec2* m_startend, int* gridkey)
 	{
 		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
 		ecs::PathfindingComponent* pfc = static_cast<ecs::PathfindingComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEPATHFINDINGCOMPONENT]->m_GetEntityComponent(id));
@@ -854,30 +1031,62 @@ namespace script {
 
 			*gridkey = pfc->m_GridKey;
 
-			auto* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+			//auto* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
 
 
-			*nodeArray_x = mono_array_new(assetmanager::AssetManager::m_funcGetInstance()->m_scriptManager.m_GetDomain(), mono_get_int32_class(), pfc->m_Path.size());
+			/**nodeArray_x = mono_array_new(assetmanager::AssetManager::m_funcGetInstance()->m_scriptManager.m_GetDomain(), mono_get_int32_class(), pfc->m_Path.size());
 			*nodeArray_y = mono_array_new(assetmanager::AssetManager::m_funcGetInstance()->m_scriptManager.m_GetDomain(), mono_get_int32_class(), pfc->m_Path.size());
 
-			for (size_t i = 0; i < pfc->m_Path.size(); ++i) {
-				mono_array_set(*nodeArray_x, int, i, pfc->m_Path[i].x);
-				mono_array_set(*nodeArray_y, int, i, pfc->m_Path[i].y);
+			if (nodeArray_x != NULL && nodeArray_y != NULL) {
+				for (size_t i = 0; i < pfc->m_Path.size(); ++i) {
+					mono_array_set(*nodeArray_x, int, i, pfc->m_Path[i].x);
+					mono_array_set(*nodeArray_y, int, i, pfc->m_Path[i].y);
+				}
+			}*/
 
-			}
-
-
-
+			
 
 
 			return true;
 		}
+		else {
+			ASSERTNOCOMPONENT(PathfindingComponent, id);
+			return false;
+		}
 
 
 
-
-		return false;
+		//return false;
 	}
+
+	void InternalCall::m_InternalCallGetPath(int gridKey, int* startX, int* startY, int* targetX, int* targetY, MonoArray** nodeArray_x, MonoArray** nodeArray_y)
+	{
+		AStarPathfinding pathfinder;
+		int entityID = InternalCall::m_InternalGetEntityIdFromGridKey(gridKey);
+		auto* gridComponent = static_cast<ecs::GridComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPEGRIDCOMPONENT]->m_GetEntityComponent(entityID));
+		
+		if (gridComponent)
+		{
+			std::vector<Node> path = pathfinder.FindPath(gridComponent, *startX, *startY, *targetX, *targetY);
+			auto* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+
+			*nodeArray_x = mono_array_new(assetmanager->m_scriptManager.m_GetDomain(), mono_get_int32_class(), path.size());
+			*nodeArray_y = mono_array_new(assetmanager->m_scriptManager.m_GetDomain(), mono_get_int32_class(), path.size());
+			if (nodeArray_x != NULL && nodeArray_y != NULL) {
+				for (size_t i = 0; i < path.size(); ++i) {
+					mono_array_set(*nodeArray_x, int, i, path[i].x);
+					mono_array_set(*nodeArray_y, int, i, path[i].y);
+				}
+			}
+			return;
+		}
+		if (!gridComponent)
+		{
+			return;
+		}
+	}
+
+
 
 	void InternalCall::m_InternalCallSetTargetPathfinding(ecs::EntityID id, vector2::Vec2* m_targetgridposition)
 	{
@@ -891,7 +1100,10 @@ namespace script {
 
 
 		}
-
+		else {
+			ASSERTNOCOMPONENT(PathfindingComponent, id);
+			return ;
+		}
 		return;
 	}
 
@@ -907,6 +1119,21 @@ namespace script {
 		ecs->m_layersStack.m_DisableLayer((layer::LAYERS)layer);
 	}
 
+	float InternalCall::m_GetUnfixedDeltaTie()
+	{
+		
+		 float dt = Helper::Helpers::GetInstance()->m_deltaTime;
+		 return dt;
+	}
+
+	void InternalCall::m_GetNameComponent(ecs::EntityID id, void** outptr)
+	{
+
+		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+		ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id));
+		*outptr = static_cast<void*>(nc); // Assign pointer to output parameter
+
+	}
 
 
 	void InternalCall::m_InternalCallDeleteEntity(ecs::EntityID id)
@@ -921,11 +1148,14 @@ namespace script {
 
 		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
 		ecs::ColliderComponent* cc = static_cast<ecs::ColliderComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(entity));
-		if (cc == NULL) {
+		if (cc) {
+			return cc->m_isCollided;
+		}
+		else {
+			ASSERTNOCOMPONENT(ColliderComponent, entity);
 			return false;
 		}
-
-		return cc->m_isCollided;
+		
 
 	}
 
@@ -989,6 +1219,7 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_InternalSetVelocity);
 
 		MONO_ADD_INTERNAL_CALL(m_InternalCallGetDeltaTime);
+		MONO_ADD_INTERNAL_CALL(m_GetUnfixedDeltaTie);
 
 		MONO_ADD_INTERNAL_CALL(m_InternalCallGetTagID);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallGetTagIDs);
@@ -1026,7 +1257,8 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_getAccumulatedDeltaTime);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallGetSteps);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallGetGameTime);
-
+		MONO_ADD_INTERNAL_CALL(m_InternalGetGridComponent);
+		MONO_ADD_INTERNAL_CALL(m_InternalSetGridComponent);
 
 		MONO_ADD_INTERNAL_CALL(m_EnableScript);
 		MONO_ADD_INTERNAL_CALL(m_DisableScript);
@@ -1036,9 +1268,18 @@ namespace script {
 
 		MONO_ADD_INTERNAL_CALL(m_InternalCallGetPathfinding);
 
+		MONO_ADD_INTERNAL_CALL(m_InternalCallGetPath);
+
+
 		MONO_ADD_INTERNAL_CALL(m_EnableLayer);
 		MONO_ADD_INTERNAL_CALL(m_DisableLayer);
 
 		MONO_ADD_INTERNAL_CALL(m_InternalCallSetTargetPathfinding);
+
+		MONO_ADD_INTERNAL_CALL(m_GetNameComponent);
+
+		MONO_ADD_INTERNAL_CALL(m_InternalGetEntityIdFromGridKey);
+
+		MONO_ADD_INTERNAL_CALL(m_ChangeLayer);
 	}
 }

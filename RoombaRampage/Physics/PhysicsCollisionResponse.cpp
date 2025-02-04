@@ -191,8 +191,7 @@ namespace physicspipe {
 			const auto& colComp2 = static_cast<ecs::ColliderComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(second));
 			const auto& rigComp = static_cast<ecs::RigidBodyComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPERIGIDBODYCOMPONENT]->m_GetEntityComponent(first));
 			const auto& rigComp2 = static_cast<ecs::RigidBodyComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPERIGIDBODYCOMPONENT]->m_GetEntityComponent(second));
-			const auto& nameComp = static_cast<ecs::NameComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(first));
-			const auto& nameComp2 = static_cast<ecs::NameComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(second));
+			//if (rigComp == NULL || rigComp2 == NULL) continue;
 			//const auto& transComp = static_cast<ecs::TransformComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(ColComp->m_Entity));
 			if (colComp->m_type == EntityType::CIRCLE && colComp2->m_type == EntityType::CIRCLE) {
 				if (rigComp == NULL || rigComp2 == NULL) continue;
@@ -208,18 +207,18 @@ namespace physicspipe {
 				colComp2->m_blockedFlag = colComp2->m_bits.to_ulong();
 			}
 			else if (colComp->m_type == EntityType::CIRCLE && colComp2->m_type == EntityType::RECTANGLE) {
-				if (nameComp2->m_entityTag == "Wall") {
-					vector2::Vec2 dirA = rigComp->m_PrevDirVec;
-					vector2::Vec2::m_funcVec2Normalize(dirA, dirA);
-					std::pair<std::bitset<4>, std::bitset<4>> flags = m_FindCircleSquareFlags(colComp->m_contactPoints, first, second, entA.get()->m_position, static_cast<physicspipe::Circle*>(entA.get())->m_radius, dirA,
-						entB.get()->m_position, static_cast<physicspipe::Rectangle*>(entB.get())->m_GetRotatedVertices(), static_cast<physicspipe::Rectangle*>(entB.get())->m_GetEdges());
-					colComp->m_bits |= flags.first;
-					colComp2->m_bits |= flags.second;
-					colComp->m_blockedFlag = colComp->m_bits.to_ulong();
-					colComp2->m_blockedFlag = colComp2->m_bits.to_ulong();
-				}
+				if (rigComp == NULL) continue;
+				vector2::Vec2 dirA = rigComp->m_PrevDirVec;
+				vector2::Vec2::m_funcVec2Normalize(dirA, dirA);
+				std::pair<std::bitset<4>, std::bitset<4>> flags = m_FindCircleSquareFlags(colComp->m_contactPoints,first,second,entA.get()->m_position,static_cast<physicspipe::Circle*>(entA.get())->m_radius, dirA,
+																	entB.get()->m_position, static_cast<physicspipe::Rectangle*>(entB.get())->m_GetRotatedVertices(), static_cast<physicspipe::Rectangle*>(entB.get())->m_GetEdges());
+				colComp->m_bits |= flags.first;
+				colComp2->m_bits |= flags.second;
+				colComp->m_blockedFlag = colComp->m_bits.to_ulong();
+				colComp2->m_blockedFlag = colComp2->m_bits.to_ulong();
 			}
 			else if (colComp->m_type == EntityType::RECTANGLE && colComp2->m_type == EntityType::CIRCLE) {
+				if (rigComp2 == NULL) continue;
 				//m_FindCircleSquareFlags(colComp2, colComp);
 				if (nameComp->m_entityTag == "Wall") {
 					vector2::Vec2 dirB = rigComp2->m_PrevDirVec;
@@ -244,7 +243,7 @@ namespace physicspipe {
 		}
 	}
 
-	std::pair<std::bitset<4>, std::bitset<4>> m_FindSquareSquareFlags(const std::vector<physicspipe::CollisionResponseData>& contactPoints, ecs::EntityID entA, ecs::EntityID entB, const vector2::Vec2& centerA, const std::vector<vector2::Vec2>& verticesA, const std::vector<vector2::Vec2>& edgesA, const vector2::Vec2& centerB, const std::vector<vector2::Vec2>& verticesB, const std::vector<vector2::Vec2>& edgesB) {
+	std::pair<std::bitset<4>, std::bitset<4>> m_FindSquareSquareFlags(const std::vector<physicspipe::CollisionResponseData>& contactPoints, [[maybe_unused]] ecs::EntityID entA, [[maybe_unused]] ecs::EntityID entB, const vector2::Vec2& centerA, const std::vector<vector2::Vec2>& verticesA, const std::vector<vector2::Vec2>& edgesA, const vector2::Vec2& centerB, const std::vector<vector2::Vec2>& verticesB, const std::vector<vector2::Vec2>& edgesB) {
 		vector2::Vec2 topNormA{ -edgesA[0].m_y, edgesA[0].m_x };
 		vector2::Vec2 rightNormA{ -edgesA[1].m_y, edgesA[1].m_x };
 		vector2::Vec2 bottomNormA{ -edgesA[2].m_y, edgesA[2].m_x };
@@ -274,7 +273,7 @@ namespace physicspipe {
 		normalsB.push_back(leftNormB);
 		vector2::Vec2 contactPoint1;
 		vector2::Vec2 contactPoint2{ 0,0 };
-		int numOfContacts;
+		int numOfContacts = 0;
 		std::pair<std::bitset<4>, std::bitset<4>> ret{};
 		for (int i = 0; i < contactPoints.size(); i++) {
 			if (contactPoints[i].m_contactPointEnt.second == entB) {
@@ -517,7 +516,7 @@ namespace physicspipe {
 
 
 
-	std::pair<std::bitset<4>, std::bitset<4>> m_FindCircleCircleFlags(const std::vector<physicspipe::CollisionResponseData>& contactPoints, ecs::EntityID entA, ecs::EntityID entB, const vector2::Vec2& centerA, const float& radA, const vector2::Vec2& centerB, const float& radB, const vector2::Vec2& dirVecA, const vector2::Vec2& dirVecB) {
+	std::pair<std::bitset<4>, std::bitset<4>> m_FindCircleCircleFlags(const std::vector<physicspipe::CollisionResponseData>& contactPoints, [[maybe_unused]] ecs::EntityID entA, [[maybe_unused]] ecs::EntityID entB, const vector2::Vec2& centerA, [[maybe_unused]] const float& radA, const vector2::Vec2& centerB, [[maybe_unused]] const float& radB, const vector2::Vec2& dirVecA, const vector2::Vec2& dirVecB) {
 		vector2::Vec2 contactPoint1;
 		std::pair<std::bitset<4>, std::bitset<4>> ret{};
 		for (int i = 0; i < contactPoints.size(); i++) {
@@ -664,7 +663,7 @@ namespace physicspipe {
 
 	}
 
-	std::pair<std::bitset<4>, std::bitset<4>> m_FindCircleSquareFlags(const std::vector<physicspipe::CollisionResponseData>& contactPoints, ecs::EntityID entA, ecs::EntityID entB, const vector2::Vec2& centerA, const float& radA, const vector2::Vec2& dirVecA, const vector2::Vec2& centerB, const std::vector<vector2::Vec2>& verticesB, const std::vector<vector2::Vec2>& edgesB) {
+	std::pair<std::bitset<4>, std::bitset<4>> m_FindCircleSquareFlags(const std::vector<physicspipe::CollisionResponseData>& contactPoints, [[maybe_unused]] ecs::EntityID entA, [[maybe_unused]] ecs::EntityID entB, const vector2::Vec2& centerA, [[maybe_unused]] const float& radA, const vector2::Vec2& dirVecA, const vector2::Vec2& centerB, const std::vector<vector2::Vec2>& verticesB, const std::vector<vector2::Vec2>& edgesB) {
 		vector2::Vec2 contactPoint1;
 		vector2::Vec2 topNormB{ -edgesB[0].m_y, edgesB[0].m_x };
 		vector2::Vec2 rightNormB{ -edgesB[1].m_y, edgesB[1].m_x };

@@ -87,7 +87,7 @@ namespace ecs {
 			//skip component not of the scene
 			if ((sprite->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer)) continue;
 
-			ECS* ecs = ECS::m_GetInstance();
+			//ECS* ecs = ECS::m_GetInstance();
 
 			if (assetmanager->m_imageManager.m_imageMap.find(sprite->m_imageFile) == assetmanager->m_imageManager.m_imageMap.end()) continue;
 

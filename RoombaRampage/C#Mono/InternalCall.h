@@ -84,7 +84,7 @@ namespace script {
 			\return    True if the collider is found and retrieved; otherwise, false.
 		*/
 		/******************************************************************/
-		static bool m_InternalGetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, unsigned int* m_blockedFlag, float* isCollided, bool* collisionCheck);
+		static bool m_InternalGetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, unsigned int* m_blockedFlag, float* isCollided, bool* collisionCheck, bool* collisionresponse);
 
 		/******************************************************************/
 		/*!
@@ -101,7 +101,7 @@ namespace script {
 			\return    True if the collider is found and updated; otherwise, false.
 		*/
 		/******************************************************************/
-		static bool m_InternalSetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, unsigned int* m_blockedFlag, float* isCollided, bool* collisionCheck);
+		static bool m_InternalSetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, unsigned int* m_blockedFlag, float* isCollided, bool* collisionCheck, bool* collisionresponse);
 
 		/******************************************************************/
 		/*!
@@ -584,13 +584,27 @@ namespace script {
 
 		static bool m_InternalCallSetRayCast(ecs::EntityID id, MonoString* monoString, bool* isRaycasting, vector2::Vec2* targetposition, float* m_distance, bool* targetReached, vector2::Vec2* hitposition);;
 
-		static bool m_InternalCallGetPathfinding(ecs::EntityID id, vector2::Vec2* m_startpos, vector2::Vec2* m_startend, int* gridkey, MonoArray** nodeArray_x, MonoArray** nodeArray_y);
+		static bool m_InternalGetGridComponent(ecs::EntityID entity, vector2::Vec2* anchor, int* gridRowLength, int* gridColumnLength, bool* setCollidable, int* gridKey);
+
+		static bool m_InternalSetGridComponent(ecs::EntityID entity, vector2::Vec2* anchor, int* gridRowLength, int* gridColumnLength, bool* setCollidable, int* gridKey);
+
+		static bool m_InternalCallGetPathfinding(ecs::EntityID id, vector2::Vec2* m_startpos, vector2::Vec2* m_startend, int* gridkey);
 
 		static void m_InternalCallSetTargetPathfinding(ecs::EntityID id, vector2::Vec2* m_targetgridposition);
+
+		static void m_InternalCallGetPath(int gridKey, int* startX, int* startY, int* targetX, int* targetY, MonoArray** nodeArray_x, MonoArray** nodeArray_y);
 
 		static void m_EnableLayer(unsigned int layer);
 
 		static void m_DisableLayer(unsigned int layer);
+
+		static float m_GetUnfixedDeltaTie();
+
+		static void m_GetNameComponent(ecs::EntityID id, void** outptr);
+		
+		static int m_InternalGetEntityIdFromGridKey(int gridkey);
+
+		static void m_ChangeLayer(ecs::EntityID id, unsigned int layerid);
 
 	public:
 		/******************************************************************/
