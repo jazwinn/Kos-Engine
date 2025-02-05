@@ -26,7 +26,9 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 //#include <fmod_errors.h>
 
 namespace fmodaudio {
-    FModAudio::FModAudio(FMOD::System* system) : m_system(system), m_sound(nullptr) {}
+    FModAudio::FModAudio(FMOD::System* system) : m_system(system), m_sound(nullptr) {
+        m_InitializeChannelPool();
+    }
 
     FModAudio::~FModAudio() {
         m_StopAllSounds();
@@ -39,7 +41,7 @@ namespace fmodaudio {
             return false;
         }
 
-        result = m_system->init(32, FMOD_INIT_NORMAL, nullptr);
+        result = m_system->init(64, FMOD_INIT_NORMAL, nullptr);
         if (result != FMOD_OK) {
             return false;
         }
@@ -66,17 +68,36 @@ namespace fmodaudio {
         if (!m_system || !m_sound) {
             return false;
         }
+        int playing = 0;
+        m_system->getChannelsPlaying(&playing, nullptr);
+        std::cout << "Currently playing: " << playing << " channels\n";
 
-        FMOD::Channel* newChannel = nullptr;
-        FMOD_RESULT result = m_system->playSound(m_sound, nullptr, false, &newChannel);
+        m_ReleaseUnusedChannels();
+
+        FMOD::Channel* channel = m_GetAvailableChannel(entityId);
+        if (channel) {
+            channel->stop();
+        }
+
+        FMOD_RESULT result = m_system->playSound(m_sound, nullptr, false, &channel);
         if (result != FMOD_OK) {
             return false;
         }
 
-        m_entityChannels[entityId] = newChannel;
+        for (auto& info : m_channelPool) {
+            if (!info.isActive || info.entityId == entityId) {
+                info.channel = channel;
+                info.entityId = entityId;
+                info.isActive = true;
+                info.lastUsed = std::chrono::steady_clock::now();
+                break;
+            }
+        }
 
-        if (newChannel) {
-            newChannel->setVolume(1.0f); 
+        m_entityChannels[entityId] = channel;
+
+        if (channel) {
+            channel->setVolume(1.0f);
         }
 
         return true;
@@ -249,6 +270,76 @@ namespace fmodaudio {
         return nullptr;
     }
 
+    void FModAudio::m_InitializeChannelPool() {
+        m_channelPool.resize(MAX_CHANNELS);
+        for (auto& info : m_channelPool) {
+            info.channel = nullptr;
+            info.isActive = false;
+            info.priority = 0.0f;
+        }
+    }
+
+    FMOD::Channel* FModAudio::m_GetAvailableChannel(const std::string& entityId) {
+        for (auto& info : m_channelPool) {
+            if (!info.isActive) {
+                info.entityId = entityId;
+                info.isActive = true;
+                info.lastUsed = std::chrono::steady_clock::now();
+                return info.channel;
+            }
+        }
+
+        int index = m_FindLeastImportantChannel();
+        if (index >= 0) {
+            auto& info = m_channelPool[index];
+            if (info.channel) {
+                info.channel->stop();
+            }
+            info.entityId = entityId;
+            info.lastUsed = std::chrono::steady_clock::now();
+            return info.channel;
+        }
+
+        return nullptr;
+    }
+
+    void FModAudio::m_ReleaseUnusedChannels() {
+        for (auto& info : m_channelPool) {
+            if (info.isActive && info.channel) {
+                bool isPlaying = false;
+                FMOD_RESULT result = info.channel->isPlaying(&isPlaying);
+                if (result == FMOD_OK && !isPlaying) {
+                    info.isActive = false;
+                    auto it = m_entityChannels.find(info.entityId);
+                    if (it != m_entityChannels.end()) {
+                        m_entityChannels.erase(it);
+                    }
+                }
+            }
+        }
+    }
+
+    int FModAudio::m_FindLeastImportantChannel() const {
+        int leastImportantIdx = -1;
+        auto oldestTime = std::chrono::steady_clock::now();
+
+        for (size_t i = 0; i < m_channelPool.size(); ++i) {
+            const auto& info = m_channelPool[i];
+            if (info.channel) {
+                bool isPlaying = false;
+                info.channel->isPlaying(&isPlaying);
+                if (!isPlaying || info.lastUsed < oldestTime) {
+                    leastImportantIdx = static_cast<int>(i);
+                    oldestTime = info.lastUsed;
+                }
+            }
+            else {
+                return static_cast<int>(i);
+            }
+        }
+        return leastImportantIdx;
+    }
+
     // AudioManager Implementation (UPDATED 28/11/2024)
     AudioManager::AudioManager() {
         FMOD::System_Create(&m_system);
@@ -335,7 +426,7 @@ namespace fmodaudio {
         auto it = m_soundMap.find(name);
         if (it != m_soundMap.end()) {
             auto& audio = it->second;
-            FMOD::Channel* channel = audio->m_GetChannelForEntity(entityId); 
+            FMOD::Channel* channel = audio->m_GetChannelForEntity(entityId);
             if (channel) {
                 // Set the loop count: -1 for infinite loop, 0 for no loop, or a specific number for limited loops
                 channel->setLoopCount(loop ? -1 : 0);

@@ -241,6 +241,24 @@ namespace fmodaudio {
         */
         /******************************************************************/
         std::unordered_map<std::string, FMOD::Channel*> m_entityChannels;
+
+        struct ChannelInfo {
+            FMOD::Channel* channel;
+            std::string entityId;
+            bool isActive;
+            float priority;
+            std::chrono::steady_clock::time_point lastUsed;
+
+            ChannelInfo() : channel(nullptr), isActive(false), priority(0.0f) {}
+        };
+
+        static const int MAX_CHANNELS = 64;
+        std::vector<ChannelInfo> m_channelPool;
+
+        void m_InitializeChannelPool();
+        FMOD::Channel* m_GetAvailableChannel(const std::string& entityId);
+        void m_ReleaseUnusedChannels();
+        int m_FindLeastImportantChannel() const;
     };
 
 
