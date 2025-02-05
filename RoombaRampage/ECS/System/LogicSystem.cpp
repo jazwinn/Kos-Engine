@@ -165,14 +165,15 @@ namespace ecs {
 
 						else if (script->second.first) {
 							assetManager->m_scriptManager.m_InvokeMethod(script->first, "Update", script->second.first, nullptr);
-							assetManager->m_scriptManager.m_InvokeMethod(script->first, "LateUpdate", script->second.first, nullptr);
+							
 						} 
 
 					}
 					
 				}
 				catch (...) {
-					//break;
+					return;
+
 				}
 
 
@@ -197,13 +198,13 @@ namespace ecs {
 					//if (scriptIsEnabled == scriptComp->m_scripts.end()) continue;
 
 					if (std::get<1>(*scriptIsEnabled)) {
-						
+						assetManager->m_scriptManager.m_InvokeMethod(script->first, "LateUpdate", script->second.first, nullptr);
 
 					}
 
 				}
 				catch (...) {
-					//break;
+					return;
 				}
 
 
