@@ -68,45 +68,116 @@ namespace fmodaudio {
         if (!m_system || !m_sound) {
             return false;
         }
-        int playing = 0;
-        m_system->getChannelsPlaying(&playing, nullptr);
-        std::cout << "Currently playing: " << playing << " channels\n";
+        m_PrintChannelStatus();
 
         m_ReleaseUnusedChannels();
 
-        FMOD::Channel* channel = m_GetAvailableChannel(entityId);
-        if (channel) {
-            channel->stop();
-        }
+        FMOD::Channel* channel = nullptr;
+        int channelIndex = -1;
 
-        FMOD_RESULT result = m_system->playSound(m_sound, nullptr, false, &channel);
-        if (result != FMOD_OK) {
-            return false;
-        }
-
-        for (auto& info : m_channelPool) {
-            if (!info.isActive || info.entityId == entityId) {
-                info.channel = channel;
-                info.entityId = entityId;
-                info.isActive = true;
-                info.lastUsed = std::chrono::steady_clock::now();
+        for (size_t i = 0; i < m_channelPool.size(); ++i) {
+            if (!m_channelPool[i].isActive || !m_channelPool[i].channel) {
+                channelIndex = static_cast<int>(i);
                 break;
             }
         }
 
-        m_entityChannels[entityId] = channel;
-
-        if (channel) {
-            channel->setVolume(1.0f);
+        if (channelIndex == -1) {
+            for (size_t i = 0; i < m_channelPool.size(); ++i) {
+                if (m_channelPool[i].channel) {
+                    bool isPlaying = false;
+                    m_channelPool[i].channel->isPlaying(&isPlaying);
+                    if (!isPlaying) {
+                        channelIndex = static_cast<int>(i);
+                        channel = m_channelPool[i].channel;
+                        break;
+                    }
+                }
+            }
         }
 
-        return true;
+        if (channelIndex == -1) {
+            channelIndex = m_FindLeastImportantChannel();
+            if (channelIndex >= 0) {
+                channel = m_channelPool[channelIndex].channel;
+                if (channel) {
+                    channel->stop();
+                }
+            }
+        }
+
+        if (channelIndex >= 0) {
+            FMOD_RESULT result;
+            if (channel) {
+                channel->stop();  
+                result = m_system->playSound(m_sound, nullptr, false, &channel);
+            }
+            else {
+                result = m_system->playSound(m_sound, nullptr, false, &channel);
+            }
+
+            if (result != FMOD_OK) {
+                return false;
+            }
+
+            auto& info = m_channelPool[channelIndex];
+            info.channel = channel;
+            info.entityId = entityId;
+            info.isActive = true;
+            info.lastUsed = std::chrono::steady_clock::now();
+
+            m_entityChannels[entityId] = channel;
+
+            if (channel) {
+                channel->setVolume(1.0f);
+            }
+
+            return true;
+        }
+
+        return false;
     }
+
+    int FModAudio::m_GetActiveChannelCount() const {
+        int count = 0;
+        for (const auto& info : m_channelPool) {
+            if (info.isActive && info.channel) {
+                bool isPlaying = false;
+                info.channel->isPlaying(&isPlaying);
+                if (isPlaying) count++;
+            }
+        }
+        return count;
+    }
+
+    void FModAudio::m_PrintChannelStatus() const {
+        std::cout << "Active Channels: " << m_GetActiveChannelCount() << "/" << MAX_CHANNELS << "\n";
+        for (size_t i = 0; i < m_channelPool.size(); ++i) {
+            const auto& info = m_channelPool[i];
+            if (info.isActive && info.channel) {
+                bool isPlaying = false;
+                info.channel->isPlaying(&isPlaying);
+                std::cout << "Channel " << i << ": " << (isPlaying ? "Playing" : "Stopped")
+                    << " EntityID: " << info.entityId << "\n";
+            }
+        }
+    }
+
+
 
     void FModAudio::m_StopSound(const std::string& entityId) {
         auto it = m_entityChannels.find(entityId);
         if (it != m_entityChannels.end()) {
             it->second->stop();
+
+            for (auto& info : m_channelPool) {
+                if (info.entityId == entityId) {
+                    info.isActive = false;
+                    info.channel = nullptr;
+                    break;
+                }
+            }
+
             m_entityChannels.erase(it);
         }
     }
@@ -305,15 +376,16 @@ namespace fmodaudio {
 
     void FModAudio::m_ReleaseUnusedChannels() {
         for (auto& info : m_channelPool) {
-            if (info.isActive && info.channel) {
+            if (info.channel) {
                 bool isPlaying = false;
                 FMOD_RESULT result = info.channel->isPlaying(&isPlaying);
                 if (result == FMOD_OK && !isPlaying) {
-                    info.isActive = false;
                     auto it = m_entityChannels.find(info.entityId);
                     if (it != m_entityChannels.end()) {
                         m_entityChannels.erase(it);
                     }
+                    info.isActive = false;
+                    info.channel = nullptr;
                 }
             }
         }
