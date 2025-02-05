@@ -296,7 +296,7 @@ namespace graphicpipe
 
 					// Calculate position and size for each character quad
 					float xpos = (textData.m_x + ch.m_bearing.x / GraphicsCamera::m_windowHeight * (textData.m_scale * textData.m_xyScale.x));
-					float ypos = (textData.m_y - (ch.m_size.y - ch.m_bearing.y) / GraphicsCamera::m_windowHeight * (textData.m_scale * textData.m_xyScale.y));
+					float ypos = (textData.m_y - ((float)ch.m_size.y - (float)ch.m_bearing.y) / (float)GraphicsCamera::m_windowHeight * (textData.m_scale * textData.m_xyScale.y));
 					float w = ch.m_size.x * textData.m_scale * textData.m_xyScale.x / GraphicsCamera::m_windowHeight;
 					float h = ch.m_size.y * textData.m_scale * textData.m_xyScale.y / GraphicsCamera::m_windowHeight;
 

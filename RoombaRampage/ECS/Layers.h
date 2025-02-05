@@ -37,6 +37,14 @@ namespace layer{
 		LAYER6,
 		LAYER7,
 		LAYER8,
+		LAYER9,
+		LAYER10,
+		LAYER11,
+		LAYER12,
+		LAYER13,
+		LAYER14,
+		LAYER15,
+		LAYER16,
 
 		MAXLAYER
 	};
