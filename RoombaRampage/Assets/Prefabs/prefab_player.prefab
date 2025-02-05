@@ -1,5 +1,15 @@
 [
     {
+        "GlobalSettings": {
+            "globalIllumination": 1.0,
+            "backgroundColor": {
+                "r": 0.8539819717407227,
+                "g": 0.8539819717407227,
+                "b": 0.8539819717407227
+            }
+        }
+    },
+    {
         "name": {
             "namestr": "Player",
             "layer": 1,
@@ -10,10 +20,10 @@
         },
         "transform": {
             "position": {
-                "x": 0.0,
-                "y": 0.3626401424407959
+                "x": -0.039426207542419434,
+                "y": 0.09803581237792969
             },
-            "rotation": -15.348065376281738,
+            "rotation": 0.0,
             "scale": {
                 "x": 3.0,
                 "y": 3.0
@@ -73,12 +83,12 @@
                 {
                     "name": "PlayerController",
                     "enabled": true,
-                    "map": []
-                },
-                {
-                    "name": "CollisionResponse",
-                    "enabled": true,
-                    "map": []
+                    "map": [
+                        {
+                            "variable": "speed",
+                            "base64": ""
+                        }
+                    ]
                 }
             ]
         },
@@ -96,14 +106,14 @@
                     "namestr": "GunLeft",
                     "layer": 0,
                     "isprefab": true,
-                    "tagstr": "LeftGunPos",
+                    "tagstr": "LeftLimbSprite",
                     "prefabname": "prefab_player.prefab",
                     "issync": true
                 },
                 "transform": {
                     "position": {
-                        "x": -0.08912339806556702,
-                        "y": 0.4773908853530884
+                        "x": -0.1494445502758026,
+                        "y": 0.32930514216423035
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -123,7 +133,7 @@
                 },
                 "animation": {
                     "frameNumber": 0,
-                    "framesPerSecond": 20,
+                    "framesPerSecond": 35,
                     "frameTimer": 0.0,
                     "isAnimating": false,
                     "stripCount": 8
@@ -133,7 +143,20 @@
                         {
                             "name": "PlayerGun",
                             "enabled": true,
-                            "map": []
+                            "map": [
+                                {
+                                    "variable": "limbTag",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "ammoCount",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "meleeCount",
+                                    "base64": ""
+                                }
+                            ]
                         }
                     ]
                 },
@@ -163,14 +186,14 @@
                     "namestr": "GunRight",
                     "layer": 0,
                     "isprefab": true,
-                    "tagstr": "RightGunPos",
+                    "tagstr": "RightLimbSprite",
                     "prefabname": "prefab_player.prefab",
                     "issync": true
                 },
                 "transform": {
                     "position": {
-                        "x": 0.0887681245803833,
-                        "y": 0.4766121506690979
+                        "x": 0.15000000596046448,
+                        "y": 0.33000001311302185
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -190,7 +213,7 @@
                 },
                 "animation": {
                     "frameNumber": 0,
-                    "framesPerSecond": 20,
+                    "framesPerSecond": 35,
                     "frameTimer": 0.0,
                     "isAnimating": false,
                     "stripCount": 8
@@ -200,7 +223,20 @@
                         {
                             "name": "PlayerGun",
                             "enabled": true,
-                            "map": []
+                            "map": [
+                                {
+                                    "variable": "limbTag",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "ammoCount",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "meleeCount",
+                                    "base64": ""
+                                }
+                            ]
                         }
                     ]
                 },
@@ -230,14 +266,14 @@
                     "namestr": "GunBack",
                     "layer": 0,
                     "isprefab": true,
-                    "tagstr": "BackGunPos",
+                    "tagstr": "BackLimbSprite",
                     "prefabname": "prefab_player.prefab",
                     "issync": true
                 },
                 "transform": {
                     "position": {
                         "x": 0.0,
-                        "y": 0.00029307417571544647
+                        "y": -0.047722700983285904
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -257,7 +293,7 @@
                 },
                 "animation": {
                     "frameNumber": 0,
-                    "framesPerSecond": 20,
+                    "framesPerSecond": 35,
                     "frameTimer": 0.0,
                     "isAnimating": false,
                     "stripCount": 8
@@ -267,7 +303,24 @@
                         {
                             "name": "PlayerGun",
                             "enabled": true,
-                            "map": []
+                            "map": [
+                                {
+                                    "variable": "limbTag",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "ammoCount",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "meleeCount",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "CheckWeaponsBool",
+                                    "base64": ""
+                                }
+                            ]
                         }
                     ]
                 },
@@ -292,7 +345,7 @@
                 "transform": {
                     "position": {
                         "x": 0.0,
-                        "y": 0.2285599559545517
+                        "y": 0.22081679105758667
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -312,8 +365,71 @@
                         "y": 0.07999999821186066
                     },
                     "drawDebug": true,
-                    "radius": 1.100000023841858,
+                    "radius": 2.299999952316284,
                     "shapetype": 1
+                }
+            },
+            {
+                "name": {
+                    "namestr": "BulletSpawnLeft",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "LeftLimbPos",
+                    "prefabname": "prefab_player.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": -0.07722800970077515,
+                        "y": 0.4880155026912689
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                }
+            },
+            {
+                "name": {
+                    "namestr": "BulletSpawnRight",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "RightLimbPos",
+                    "prefabname": "prefab_player.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.08051446080207825,
+                        "y": 0.4880155026912689
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                }
+            },
+            {
+                "name": {
+                    "namestr": "BulletSpawnBack",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "BackLimbPos",
+                    "prefabname": "prefab_player.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.0029742319602519274,
+                        "y": 0.024165907874703407
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
                 }
             }
         ]

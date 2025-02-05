@@ -1,0 +1,1038 @@
+[
+    {
+        "GlobalSettings": {
+            "globalIllumination": 1.0,
+            "backgroundColor": {
+                "r": 0.8539819717407227,
+                "g": 0.8539819717407227,
+                "b": 0.8539819717407227
+            }
+        }
+    },
+    {
+        "name": {
+            "namestr": "UI_LoadoutMenu",
+            "layer": 0,
+            "isprefab": true,
+            "tagstr": "Default",
+            "prefabname": "UI_LoadoutMenu.prefab",
+            "issync": true
+        },
+        "transform": {
+            "position": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "collider": {
+            "checkcollision": false,
+            "checkresponse": false,
+            "size": {
+                "x": 0.10000000149011612,
+                "y": 0.10000000149011612
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true,
+            "radius": 0.5,
+            "shapetype": 0
+        },
+        "script": {
+            "scripts": [
+                {
+                    "name": "PlayerLoadoutManager",
+                    "enabled": true,
+                    "map": [
+                        {
+                            "variable": "totalLeftRightLimbs",
+                            "base64": ""
+                        },
+                        {
+                            "variable": "totalBackLimbs",
+                            "base64": ""
+                        },
+                        {
+                            "variable": "rightLimbEquippedNo",
+                            "base64": ""
+                        },
+                        {
+                            "variable": "leftLimbEquippedNo",
+                            "base64": ""
+                        },
+                        {
+                            "variable": "backLimbEquippedNo",
+                            "base64": ""
+                        },
+                        {
+                            "variable": "isSortieing",
+                            "base64": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        "children": [
+            {
+                "name": {
+                    "namestr": "UI_LoadoutMenuBackground",
+                    "layer": 8,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "UI_LoadoutMenu.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 4.0,
+                        "y": 4.0
+                    }
+                },
+                "sprite": {
+                    "imagefile": "img_inventory.png",
+                    "layer": 300,
+                    "color": {
+                        "r": 1.0,
+                        "g": 1.0,
+                        "b": 1.0
+                    },
+                    "alpha": 1.0
+                }
+            },
+            {
+                "name": {
+                    "namestr": "UI_LoadoutMenu_LButton_Prev",
+                    "layer": 8,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "UI_LoadoutMenu.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": -6.620002746582031,
+                        "y": 1.9196752309799194
+                    },
+                    "rotation": -0.0,
+                    "scale": {
+                        "x": 4.0,
+                        "y": 4.0
+                    }
+                },
+                "collider": {
+                    "checkcollision": true,
+                    "checkresponse": false,
+                    "size": {
+                        "x": 0.10000000149011612,
+                        "y": 0.15000000596046448
+                    },
+                    "offset": {
+                        "x": -0.014999999664723873,
+                        "y": 0.0
+                    },
+                    "drawDebug": true,
+                    "radius": 0.5,
+                    "shapetype": 0
+                },
+                "rigidbody": {
+                    "linearVelocity": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "linearAcceleration": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "rotation": 0.0,
+                    "angularVelocity": 0.0,
+                    "angularAcceleration": 0.0,
+                    "mass": 1.0,
+                    "inverseMass": 1.0,
+                    "linearDamping": 0.9900000095367432,
+                    "angularDamping": 0.9900000095367432,
+                    "force": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "torque": 0.0,
+                    "kinematic": false,
+                    "static": false
+                },
+                "sprite": {
+                    "imagefile": "ani_inventoryLeftArrow_strip2.png",
+                    "layer": 311,
+                    "color": {
+                        "r": 1.0,
+                        "g": 1.0,
+                        "b": 1.0
+                    },
+                    "alpha": 1.0
+                },
+                "animation": {
+                    "frameNumber": 0,
+                    "framesPerSecond": 0,
+                    "frameTimer": 0.0,
+                    "isAnimating": false,
+                    "stripCount": 2
+                },
+                "script": {
+                    "scripts": [
+                        {
+                            "name": "PlayerLoadoutButtons",
+                            "enabled": true,
+                            "map": [
+                                {
+                                    "variable": "buttonFunctionNo",
+                                    "base64": "CgAAAMzMzMwA"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "name": {
+                    "namestr": "UI_LoadoutMenu_LButton_Next",
+                    "layer": 8,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "UI_LoadoutMenu.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": -4.180798530578613,
+                        "y": 1.9204864501953125
+                    },
+                    "rotation": -0.0,
+                    "scale": {
+                        "x": 4.0,
+                        "y": 4.0
+                    }
+                },
+                "collider": {
+                    "checkcollision": true,
+                    "checkresponse": false,
+                    "size": {
+                        "x": 0.10000000149011612,
+                        "y": 0.15000000596046448
+                    },
+                    "offset": {
+                        "x": 0.014999999664723873,
+                        "y": 0.0
+                    },
+                    "drawDebug": true,
+                    "radius": 0.5,
+                    "shapetype": 0
+                },
+                "rigidbody": {
+                    "linearVelocity": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "linearAcceleration": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "rotation": 0.0,
+                    "angularVelocity": 0.0,
+                    "angularAcceleration": 0.0,
+                    "mass": 1.0,
+                    "inverseMass": 1.0,
+                    "linearDamping": 0.9900000095367432,
+                    "angularDamping": 0.9900000095367432,
+                    "force": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "torque": 0.0,
+                    "kinematic": false,
+                    "static": false
+                },
+                "sprite": {
+                    "imagefile": "ani_inventoryRightArrow_strip2.png",
+                    "layer": 312,
+                    "color": {
+                        "r": 1.0,
+                        "g": 1.0,
+                        "b": 1.0
+                    },
+                    "alpha": 1.0
+                },
+                "animation": {
+                    "frameNumber": 0,
+                    "framesPerSecond": 0,
+                    "frameTimer": 0.0,
+                    "isAnimating": false,
+                    "stripCount": 2
+                },
+                "script": {
+                    "scripts": [
+                        {
+                            "name": "PlayerLoadoutButtons",
+                            "enabled": true,
+                            "map": [
+                                {
+                                    "variable": "buttonFunctionNo",
+                                    "base64": "CwAAAMzMzMwA"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "name": {
+                    "namestr": "UI_LoadoutMenu_RButton_Prev",
+                    "layer": 8,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "UI_LoadoutMenu.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 3.8610196113586426,
+                        "y": 1.9199999570846558
+                    },
+                    "rotation": -0.0,
+                    "scale": {
+                        "x": 4.0,
+                        "y": 4.0
+                    }
+                },
+                "collider": {
+                    "checkcollision": true,
+                    "checkresponse": false,
+                    "size": {
+                        "x": 0.10000000149011612,
+                        "y": 0.15000000596046448
+                    },
+                    "offset": {
+                        "x": -0.014999999664723873,
+                        "y": 0.0
+                    },
+                    "drawDebug": true,
+                    "radius": 0.5,
+                    "shapetype": 0
+                },
+                "rigidbody": {
+                    "linearVelocity": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "linearAcceleration": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "rotation": 0.0,
+                    "angularVelocity": 0.0,
+                    "angularAcceleration": 0.0,
+                    "mass": 1.0,
+                    "inverseMass": 1.0,
+                    "linearDamping": 0.9900000095367432,
+                    "angularDamping": 0.9900000095367432,
+                    "force": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "torque": 0.0,
+                    "kinematic": false,
+                    "static": false
+                },
+                "sprite": {
+                    "imagefile": "ani_inventoryLeftArrow_strip2.png",
+                    "layer": 313,
+                    "color": {
+                        "r": 1.0,
+                        "g": 1.0,
+                        "b": 1.0
+                    },
+                    "alpha": 1.0
+                },
+                "animation": {
+                    "frameNumber": 0,
+                    "framesPerSecond": 0,
+                    "frameTimer": 0.0,
+                    "isAnimating": false,
+                    "stripCount": 2
+                },
+                "script": {
+                    "scripts": [
+                        {
+                            "name": "PlayerLoadoutButtons",
+                            "enabled": true,
+                            "map": [
+                                {
+                                    "variable": "buttonFunctionNo",
+                                    "base64": "FAAAAMzMzMwA"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "name": {
+                    "namestr": "UI_LoadoutMenu_RButton_Next",
+                    "layer": 8,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "UI_LoadoutMenu.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 6.300156593322754,
+                        "y": 1.9199999570846558
+                    },
+                    "rotation": -0.0,
+                    "scale": {
+                        "x": 4.0,
+                        "y": 4.0
+                    }
+                },
+                "collider": {
+                    "checkcollision": true,
+                    "checkresponse": false,
+                    "size": {
+                        "x": 0.10000000149011612,
+                        "y": 0.15000000596046448
+                    },
+                    "offset": {
+                        "x": 0.014999999664723873,
+                        "y": 0.0
+                    },
+                    "drawDebug": true,
+                    "radius": 0.5,
+                    "shapetype": 0
+                },
+                "rigidbody": {
+                    "linearVelocity": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "linearAcceleration": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "rotation": 0.0,
+                    "angularVelocity": 0.0,
+                    "angularAcceleration": 0.0,
+                    "mass": 1.0,
+                    "inverseMass": 1.0,
+                    "linearDamping": 0.9900000095367432,
+                    "angularDamping": 0.9900000095367432,
+                    "force": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "torque": 0.0,
+                    "kinematic": false,
+                    "static": false
+                },
+                "sprite": {
+                    "imagefile": "ani_inventoryRightArrow_strip2.png",
+                    "layer": 314,
+                    "color": {
+                        "r": 1.0,
+                        "g": 1.0,
+                        "b": 1.0
+                    },
+                    "alpha": 1.0
+                },
+                "animation": {
+                    "frameNumber": 0,
+                    "framesPerSecond": 0,
+                    "frameTimer": 0.0,
+                    "isAnimating": false,
+                    "stripCount": 2
+                },
+                "script": {
+                    "scripts": [
+                        {
+                            "name": "PlayerLoadoutButtons",
+                            "enabled": true,
+                            "map": [
+                                {
+                                    "variable": "buttonFunctionNo",
+                                    "base64": "FQAAAMzMzMwA"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "name": {
+                    "namestr": "UI_LoadoutMenu_BButton_Prev",
+                    "layer": 8,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "UI_LoadoutMenu.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": -6.619999885559082,
+                        "y": -2.4005203247070313
+                    },
+                    "rotation": -0.0,
+                    "scale": {
+                        "x": 4.0,
+                        "y": 4.0
+                    }
+                },
+                "collider": {
+                    "checkcollision": true,
+                    "checkresponse": false,
+                    "size": {
+                        "x": 0.10000000149011612,
+                        "y": 0.15000000596046448
+                    },
+                    "offset": {
+                        "x": -0.014999999664723873,
+                        "y": 0.0
+                    },
+                    "drawDebug": true,
+                    "radius": 0.5,
+                    "shapetype": 0
+                },
+                "rigidbody": {
+                    "linearVelocity": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "linearAcceleration": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "rotation": 0.0,
+                    "angularVelocity": 0.0,
+                    "angularAcceleration": 0.0,
+                    "mass": 1.0,
+                    "inverseMass": 1.0,
+                    "linearDamping": 0.9900000095367432,
+                    "angularDamping": 0.9900000095367432,
+                    "force": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "torque": 0.0,
+                    "kinematic": false,
+                    "static": false
+                },
+                "sprite": {
+                    "imagefile": "ani_inventoryLeftArrow_strip2.png",
+                    "layer": 315,
+                    "color": {
+                        "r": 1.0,
+                        "g": 1.0,
+                        "b": 1.0
+                    },
+                    "alpha": 1.0
+                },
+                "animation": {
+                    "frameNumber": 0,
+                    "framesPerSecond": 0,
+                    "frameTimer": 0.0,
+                    "isAnimating": false,
+                    "stripCount": 2
+                },
+                "script": {
+                    "scripts": [
+                        {
+                            "name": "PlayerLoadoutButtons",
+                            "enabled": true,
+                            "map": [
+                                {
+                                    "variable": "buttonFunctionNo",
+                                    "base64": "HgAAAMzMzMwA"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "name": {
+                    "namestr": "UI_LoadoutMenu_BButton_Next",
+                    "layer": 8,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "UI_LoadoutMenu.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": -4.179999828338623,
+                        "y": -2.4000415802001953
+                    },
+                    "rotation": -0.0,
+                    "scale": {
+                        "x": 4.0,
+                        "y": 4.0
+                    }
+                },
+                "collider": {
+                    "checkcollision": true,
+                    "checkresponse": false,
+                    "size": {
+                        "x": 0.10000000149011612,
+                        "y": 0.15000000596046448
+                    },
+                    "offset": {
+                        "x": 0.014999999664723873,
+                        "y": 0.0
+                    },
+                    "drawDebug": true,
+                    "radius": 0.5,
+                    "shapetype": 0
+                },
+                "rigidbody": {
+                    "linearVelocity": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "linearAcceleration": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "rotation": 0.0,
+                    "angularVelocity": 0.0,
+                    "angularAcceleration": 0.0,
+                    "mass": 1.0,
+                    "inverseMass": 1.0,
+                    "linearDamping": 0.9900000095367432,
+                    "angularDamping": 0.9900000095367432,
+                    "force": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "torque": 0.0,
+                    "kinematic": false,
+                    "static": false
+                },
+                "sprite": {
+                    "imagefile": "ani_inventoryRightArrow_strip2.png",
+                    "layer": 316,
+                    "color": {
+                        "r": 1.0,
+                        "g": 1.0,
+                        "b": 1.0
+                    },
+                    "alpha": 1.0
+                },
+                "animation": {
+                    "frameNumber": 0,
+                    "framesPerSecond": 0,
+                    "frameTimer": 0.0,
+                    "isAnimating": false,
+                    "stripCount": 2
+                },
+                "script": {
+                    "scripts": [
+                        {
+                            "name": "PlayerLoadoutButtons",
+                            "enabled": true,
+                            "map": [
+                                {
+                                    "variable": "buttonFunctionNo",
+                                    "base64": "HwAAAMzMzMwA"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "name": {
+                    "namestr": "UI_LoadoutMenu_ExitButton",
+                    "layer": 8,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "UI_LoadoutMenu.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 7.299663066864014,
+                        "y": 3.599144458770752
+                    },
+                    "rotation": -0.0,
+                    "scale": {
+                        "x": 4.0,
+                        "y": 4.0
+                    }
+                },
+                "collider": {
+                    "checkcollision": true,
+                    "checkresponse": false,
+                    "size": {
+                        "x": 0.1599999964237213,
+                        "y": 0.15000000596046448
+                    },
+                    "offset": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "drawDebug": true,
+                    "radius": 0.5,
+                    "shapetype": 0
+                },
+                "rigidbody": {
+                    "linearVelocity": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "linearAcceleration": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "rotation": 0.0,
+                    "angularVelocity": 0.0,
+                    "angularAcceleration": 0.0,
+                    "mass": 1.0,
+                    "inverseMass": 1.0,
+                    "linearDamping": 0.9900000095367432,
+                    "angularDamping": 0.9900000095367432,
+                    "force": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "torque": 0.0,
+                    "kinematic": false,
+                    "static": false
+                },
+                "sprite": {
+                    "imagefile": "ani_inventoryCloseButton_strip2.png",
+                    "layer": 317,
+                    "color": {
+                        "r": 1.0,
+                        "g": 1.0,
+                        "b": 1.0
+                    },
+                    "alpha": 1.0
+                },
+                "animation": {
+                    "frameNumber": 0,
+                    "framesPerSecond": 0,
+                    "frameTimer": 0.0,
+                    "isAnimating": false,
+                    "stripCount": 2
+                },
+                "script": {
+                    "scripts": [
+                        {
+                            "name": "PlayerLoadoutButtons",
+                            "enabled": true,
+                            "map": [
+                                {
+                                    "variable": "buttonFunctionNo",
+                                    "base64": "/////8zMzMwA"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "name": {
+                    "namestr": "UI_LoadoutMenu_LText",
+                    "layer": 8,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "UI_LoadoutMenu.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": -5.333443641662598,
+                        "y": 1.8276896476745605
+                    },
+                    "rotation": -0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "text": {
+                    "text": "claymore",
+                    "text": null,
+                    "filename": "fnt_silkscreenRegular.ttf",
+                    "fontsize": 7.0,
+                    "color": {
+                        "r": 0.10588235408067703,
+                        "g": 0.8823529481887817,
+                        "b": 0.06666667014360428
+                    },
+                    "layer": 4
+                },
+                "script": {
+                    "scripts": [
+                        {
+                            "name": "PlayerLoadoutText",
+                            "enabled": true,
+                            "map": [
+                                {
+                                    "variable": "textID",
+                                    "base64": "CgAAAMzMzMwA"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "name": {
+                    "namestr": "UI_LoadoutMenu_RText",
+                    "layer": 8,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "UI_LoadoutMenu.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 5.134071350097656,
+                        "y": 1.8300000429153442
+                    },
+                    "rotation": -0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "text": {
+                    "text": "claymore",
+                    "text": null,
+                    "filename": "fnt_silkscreenRegular.ttf",
+                    "fontsize": 7.0,
+                    "color": {
+                        "r": 0.10588235408067703,
+                        "g": 0.8823529481887817,
+                        "b": 0.06666667014360428
+                    },
+                    "layer": 5
+                },
+                "script": {
+                    "scripts": [
+                        {
+                            "name": "PlayerLoadoutText",
+                            "enabled": true,
+                            "map": [
+                                {
+                                    "variable": "textID",
+                                    "base64": "FAAAAMzMzMwA"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "name": {
+                    "namestr": "UI_LoadoutMenu_BText",
+                    "layer": 8,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "UI_LoadoutMenu.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": -5.329999923706055,
+                        "y": -2.5054843425750732
+                    },
+                    "rotation": -0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "text": {
+                    "text": "claymore",
+                    "text": null,
+                    "filename": "fnt_silkscreenRegular.ttf",
+                    "fontsize": 7.0,
+                    "color": {
+                        "r": 0.10588235408067703,
+                        "g": 0.8823529481887817,
+                        "b": 0.06666667014360428
+                    },
+                    "layer": 6
+                },
+                "script": {
+                    "scripts": [
+                        {
+                            "name": "PlayerLoadoutText",
+                            "enabled": true,
+                            "map": [
+                                {
+                                    "variable": "textID",
+                                    "base64": "HgAAAMzMzMwA"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "name": {
+                    "namestr": "UI_LoadoutMenu_Roomba_Body",
+                    "layer": 8,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "UI_LoadoutMenu.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 3.0,
+                        "y": 3.0
+                    }
+                },
+                "sprite": {
+                    "imagefile": "img_roombert.png",
+                    "layer": 301,
+                    "color": {
+                        "r": 1.0,
+                        "g": 1.0,
+                        "b": 1.0
+                    },
+                    "alpha": 1.0
+                }
+            },
+            {
+                "name": {
+                    "namestr": "UI_LoadoutMenu_Roomba_LeftLimb",
+                    "layer": 8,
+                    "isprefab": true,
+                    "tagstr": "UILoadoutLeftLimb",
+                    "prefabname": "UI_LoadoutMenu.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": -0.45011359453201294,
+                        "y": 0.9897583723068237
+                    },
+                    "rotation": -0.0,
+                    "scale": {
+                        "x": 3.0,
+                        "y": 3.0
+                    }
+                },
+                "sprite": {
+                    "imagefile": "ani_inventoryLeftIconSwitch_strip3.png",
+                    "layer": 302,
+                    "color": {
+                        "r": 1.0,
+                        "g": 1.0,
+                        "b": 1.0
+                    },
+                    "alpha": 1.0
+                },
+                "animation": {
+                    "frameNumber": 0,
+                    "framesPerSecond": 0,
+                    "frameTimer": 0.0,
+                    "isAnimating": true,
+                    "stripCount": 3
+                }
+            },
+            {
+                "name": {
+                    "namestr": "UI_LoadoutMenu_Roomba_RightLimb",
+                    "layer": 8,
+                    "isprefab": true,
+                    "tagstr": "UILoadoutRightLimb",
+                    "prefabname": "UI_LoadoutMenu.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.44999998807907104,
+                        "y": 0.9900000095367432
+                    },
+                    "rotation": -0.0,
+                    "scale": {
+                        "x": 3.0,
+                        "y": 3.0
+                    }
+                },
+                "sprite": {
+                    "imagefile": "ani_inventoryRightIconSwitch_strip3.png",
+                    "layer": 304,
+                    "color": {
+                        "r": 1.0,
+                        "g": 1.0,
+                        "b": 1.0
+                    },
+                    "alpha": 1.0
+                },
+                "animation": {
+                    "frameNumber": 0,
+                    "framesPerSecond": 0,
+                    "frameTimer": 0.0,
+                    "isAnimating": true,
+                    "stripCount": 3
+                }
+            },
+            {
+                "name": {
+                    "namestr": "UI_LoadoutMenu_Roomba_BackLimb",
+                    "layer": 8,
+                    "isprefab": true,
+                    "tagstr": "UILoadoutBackLimb",
+                    "prefabname": "UI_LoadoutMenu.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.0,
+                        "y": -0.1465298980474472
+                    },
+                    "rotation": -0.0,
+                    "scale": {
+                        "x": 3.0,
+                        "y": 3.0
+                    }
+                },
+                "sprite": {
+                    "imagefile": "ani_inventoryTailIconSwitch_strip2.png",
+                    "layer": 303,
+                    "color": {
+                        "r": 1.0,
+                        "g": 1.0,
+                        "b": 1.0
+                    },
+                    "alpha": 1.0
+                },
+                "animation": {
+                    "frameNumber": 0,
+                    "framesPerSecond": 0,
+                    "frameTimer": 0.0,
+                    "isAnimating": true,
+                    "stripCount": 2
+                }
+            }
+        ]
+    }
+]

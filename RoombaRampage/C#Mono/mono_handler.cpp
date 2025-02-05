@@ -252,7 +252,7 @@ namespace script {
             }
         }
         catch (...) {
-            return;
+            throw 1;
         }
 
 

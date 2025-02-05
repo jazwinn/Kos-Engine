@@ -41,8 +41,8 @@
             },
             "rotation": -0.0,
             "scale": {
-                "x": 0.7569000124931335,
-                "y": 0.7569000124931335
+                "x": 1.0,
+                "y": 1.0
             }
         },
         "collider": {
@@ -61,7 +61,7 @@
             "shapetype": 0
         },
         "sprite": {
-            "imagefile": "img_backgroundUniverse.png",
+            "imagefile": "img_levelSelectBackground.png",
             "layer": 0,
             "color": {
                 "r": 1.0,
@@ -357,40 +357,38 @@
                 "b": 1.0
             },
             "alpha": 1.0
+        }
+    },
+    {
+        "name": {
+            "namestr": "Level1 Text",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Default"
         },
-        "children": [
-            {
-                "name": {
-                    "namestr": "Level1 Text",
-                    "layer": 0,
-                    "isprefab": false,
-                    "tagstr": "Default"
-                },
-                "transform": {
-                    "position": {
-                        "x": -2.8365626335144043,
-                        "y": -0.07761609554290771
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 0.06654079258441925,
-                        "y": 0.0715947076678276
-                    }
-                },
-                "text": {
-                    "text": "MEMORY1",
-                    "text": null,
-                    "filename": "fnt_silkscreenRegular.ttf",
-                    "fontsize": 61.20000076293945,
-                    "color": {
-                        "r": 0.0,
-                        "g": 0.0,
-                        "b": 0.0
-                    },
-                    "layer": 4
-                }
+        "transform": {
+            "position": {
+                "x": -1.445488691329956,
+                "y": -0.8524142503738403
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
             }
-        ]
+        },
+        "text": {
+            "text": "MEMORY1",
+            "text": null,
+            "filename": "fnt_silkscreenRegular.ttf",
+            "fontsize": 2.0,
+            "color": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0
+            },
+            "layer": 4
+        }
     },
     {
         "name": {
@@ -412,8 +410,8 @@
         },
         "button": {
             "force": {
-                "x": 768.6771850585938,
-                "y": 544.5303344726563
+                "x": 663.7802734375,
+                "y": 263.2314453125
             },
             "scale": {
                 "x": 0.550000011920929,

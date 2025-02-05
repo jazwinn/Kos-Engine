@@ -37,26 +37,13 @@ public class EnemyStatePatrol : EnemyState
     {
        enemyScript.UpdateRayCastToPlayerPosition(); //Update Location of player
 
-        switch (enemyScript.enemyRoamBehaviour)
-        {
-            case EnemyScript.EnemyRoamType.Static:
-                break;
-
-            case EnemyScript.EnemyRoamType.Patrolling:
-                enemyScript.StartPatrol();
-                break;
-
-            default:
-                break;
-        }
-
         if (enemyScript.CheckPlayerWithinSight()) //Checks if player is within sight
         {
             switch (enemyScript.enemyType)
             {
                 case EnemyScript.EnemySelection.Helpless: //Start Helpless State
                     enemyScript.SetCurrentState(new EnemyStateRun(enemyScript));
-                    enemyScript.isPatrolling = false;
+
                     break;
 
                 case EnemyScript.EnemySelection.Melee: //Start Melee State
@@ -70,6 +57,20 @@ public class EnemyStatePatrol : EnemyState
                     break;
             }
         }
+
+        switch (enemyScript.enemyRoamBehaviour)
+        {
+            case EnemyScript.EnemyRoamType.Static:
+                break;
+
+            case EnemyScript.EnemyRoamType.Patrolling:
+                enemyScript.StartPatrol();
+                break;
+
+            default:
+                break;
+        }
+
     }
 
     public override void LostTarget() { } //Do nothing, as enemies can't lose targets when in Patrolling state
@@ -110,10 +111,8 @@ public class EnemyStateChase : EnemyState
 
 public class EnemyStateRun : EnemyState
 {
-    
     public EnemyStateRun(EnemyScript enemyScript) : base(enemyScript)
     {
-
     }
 
     public override void DoActionUpdate(float dTime)

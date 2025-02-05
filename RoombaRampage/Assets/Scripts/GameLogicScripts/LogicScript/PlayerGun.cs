@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Policy;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
@@ -18,399 +20,673 @@ public class PlayerGun : ScriptBase
 
         gunshotSound = "aud_gunshot01";
         cleaverSound = "aud_cleaver";
+
         leftCleaverTexture = "ani_cleaverLeftAnim_strip6.png";
         rightCleaverTexture = "ani_cleaverRightAnim_strip6.png";
+
+        leftKatanaTexture = "ani_katanaLeftAnim_strip19.png";
+        rightKatanaTexture = "ani_katanaRightAnim_strip19.png";
+
+        leftBoosterTexture = "ani_boostersLeftAnim_strip8.png";
+        rightBoosterTexture = "ani_boostersRightAnim_strip8.png";
+        backBoosterTexture = "ani_boostersTailAnim_strip8.png";
+
         leftGunTexture = "ani_gunLeftAnim_strip8.png";
         rightGunTexture = "ani_gunRightAnim_strip8.png";
+        backGunTexture = "ani_gunTailAnim_strip8.png";
+
         bulletPrefab = "prefab_playerBullet";
 
-        meleeCount = 2;
+        leftLimbGunAmmo = 6;
+        rightLimbGunAmmo = 6;
+        backLimbGunAmmo = 6;
 
-        ammoCount = 10;
-
-        bulletCounterID = (uint)InternalCall.m_InternalCallGetTagID("UIBulletCounter");
+        leftLimbMeleeCount = 1;
+        rightLimbMeleeCount = 1;
 
         limbTag = InternalCall.m_InternalCallGetTag(EntityID);
+        leftLimbPosID = (uint)InternalCall.m_InternalCallGetTagID("LeftLimbPos");
+        rightLimbPosID = (uint)InternalCall.m_InternalCallGetTagID("RightLimbPos");
+        backLimbPosID = (uint)InternalCall.m_InternalCallGetTagID("BackLimbPos");
         InternalCall.m_InternalGetTranslate(EntityID, out limbPos);
 
-        InternalCall.m_InternalGetTransformComponent((uint)InternalCall.m_InternalCallGetTagID("Player"), out roombaPos, out roombaScale, out roombaRotate);
-        InternalCall.m_InternalGetAnimationComponent(EntityID, out startFrameNumber, out startFramesPerSecond, out startFrameTimer, out isAnimating, out stripCount);
-        InternalCall.m_InternalGetSpriteComponent(EntityID, out startImageFile, out startLayer, out startColor, out startAlpha);
-        InternalCall.m_InternalGetTextComponent(bulletCounterID, out startText, out startFileName, out startFontLayer, out startFontSize, out startFontColor);
-        UpdateBulletCounterUI();
-        UpdateMeleeCounterUI();
+        GetComponentValues();
+
     }
     #endregion
 
     public string limbTag;
+    private uint leftLimbPosID;
+    private uint rightLimbPosID;
+    private uint backLimbPosID;
     private Vector2 limbPos;
 
-    private Vector2 roombaPos;
-    private Vector2 roombaScale;
-    private float roombaRotate;
-
-    private int startFrameNumber, startFramesPerSecond, currentFrameNumber;
-    private float startFrameTimer, currentFrameTimer;
-    private bool isAnimating;
-    private int stripCount;
-
     private int weaponEquipped;
-
-    private string startImageFile;
-    private int startLayer;
-    private Vector3 startColor;
-    private float startAlpha;
-
-    public static int ammoCount;
-
-    public static int meleeCount;
 
     private string gunshotSound;
     private string cleaverSound;
 
     private string leftCleaverTexture;
     private string rightCleaverTexture;
+    private string leftKatanaTexture;
+    private string rightKatanaTexture;
+    private string leftBoosterTexture;
+    private string rightBoosterTexture;
+    private string backBoosterTexture;
     private string leftGunTexture;
     private string rightGunTexture;
+    private string backGunTexture;
     private string bulletPrefab;
 
-    //Bullet Counter UI Variables
-    private string startText, startFileName;
-    private int startFontLayer;
-    private float startFontSize;
-    private Vector3 startFontColor;
-    private uint bulletCounterID;
+    private SpriteComponent limbSpriteComp;
+    private AnimationComponent limbAnimComp;
+    private TransformComponent playerTransformComp;
+
+    private bool isAnimating;
+
+    public static int leftLimbGunAmmo;
+    public static int rightLimbGunAmmo;
+    public static int backLimbGunAmmo;
+
+    public static int leftLimbMeleeCount;
+    public static int rightLimbMeleeCount;
+
+    private uint uiLeftLimbCounterID;
+    private uint uiRightLimbCounterID;
+    private uint uiBackLimbCounterID;
+
+    private SpriteComponent uiLeftLimbCounterSC;
+    private SpriteComponent uiRightLimbCounterSC;
+    private SpriteComponent uiBackLimbCounterSC;
+
+    private AnimationComponent uiLeftLimbCounterAC;
+    private AnimationComponent uiRightLimbCounterAC;
+    private AnimationComponent uiBackLimbCounterAC;
+
+    private bool uiLeftLimbCounterAnimating;
+    private bool uiRightLimbCounterAnimating;
+    private bool uiBackLimbCounterAnimating;
 
     public override void Start()
     {
-        
+        CheckWeapons();
 
+        uiLeftLimbCounterID = (uint)InternalCall.m_InternalCallGetTagID("UIGameLeftLimbCounter");
+        uiRightLimbCounterID = (uint)InternalCall.m_InternalCallGetTagID("UIGameRightLimbCounter");
+        uiBackLimbCounterID = (uint)InternalCall.m_InternalCallGetTagID("UIGameBackLimbCounter");
+
+        uiLeftLimbCounterSC = Component.Get<SpriteComponent>(uiLeftLimbCounterID);
+        uiRightLimbCounterSC = Component.Get<SpriteComponent>(uiRightLimbCounterID);
+        uiBackLimbCounterSC = Component.Get<SpriteComponent>(uiBackLimbCounterID);
+
+        uiLeftLimbCounterAC = Component.Get<AnimationComponent>(uiLeftLimbCounterID);
+        uiRightLimbCounterAC = Component.Get<AnimationComponent>(uiRightLimbCounterID);
+        uiBackLimbCounterAC = Component.Get<AnimationComponent>(uiBackLimbCounterID);
     }
 
     public override void Update()
     {
-        if (GameController.gameIsPaused || EnemyController.playerIsDead)
+        if (GameControllerLevel1.gameIsPaused || PlayerController.isDead)
         {
+            if (PlayerController.isDead)
+            {
+                StopAnimation();
+                return;
+            }
+
             if (isAnimating == true)
             {
-                isAnimating = false;
-                InternalCall.m_InternalSetAnimationComponent(EntityID, startFrameNumber, startFramesPerSecond, startFrameTimer, isAnimating, stripCount);
+                CoroutineManager.Instance.StartCoroutine(PauseAnimation(), "PauseAnimation");
                 return;
             }
 
             return;
         }
 
-        #region Weapon Swap, 0 is gun 1 is melee
-
-        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.NUM1) && limbTag == "LeftGunPos")
+        if (PlayerLoadoutManager.isSortieing)
         {
-            //Swap Weapon Left
-            if (weaponEquipped == 0)
-            {
-                InternalCall.m_InternalCallPlayAudio(EntityID, "aud_weaponSwitch01");
-                stripCount = 6;
-                weaponEquipped = 1;
-                InternalCall.m_InternalSetSpriteComponent(EntityID, leftCleaverTexture, startLayer, startColor, startAlpha);
-                InternalCall.m_InternalSetAnimationComponent(EntityID, startFrameNumber, startFramesPerSecond, startFrameTimer, false, stripCount);
-
-            }
-
-            else if (weaponEquipped == 1)
-            {
-                InternalCall.m_InternalCallPlayAudio(EntityID, "aud_weaponSwitch01");
-                stripCount = 8;
-                weaponEquipped = 0;
-                InternalCall.m_InternalSetSpriteComponent(EntityID, leftGunTexture, startLayer, startColor, startAlpha);
-                InternalCall.m_InternalSetAnimationComponent(EntityID, startFrameNumber, startFramesPerSecond, startFrameTimer, false, stripCount);
-            }
+            CheckWeapons();
         }
 
-        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.NUM2) && limbTag == "RightGunPos")
+        switch (weaponEquipped)
         {
-            //Swap Weapon Right
-            if (weaponEquipped == 0)
-            {
-                InternalCall.m_InternalCallPlayAudio(EntityID, "aud_weaponSwitch01");
-                stripCount = 6;
-                weaponEquipped = 1;
-                InternalCall.m_InternalSetSpriteComponent(EntityID, rightCleaverTexture, startLayer, startColor, startAlpha);
-                InternalCall.m_InternalSetAnimationComponent(EntityID, startFrameNumber, startFramesPerSecond, startFrameTimer, false, stripCount);
-
-            }
-
-            else if (weaponEquipped == 1)
-            {
-                InternalCall.m_InternalCallPlayAudio(EntityID, "aud_weaponSwitch01");
-                stripCount = 8;
-                weaponEquipped = 0;
-                InternalCall.m_InternalSetSpriteComponent(EntityID, rightGunTexture, startLayer, startColor, startAlpha);
-                InternalCall.m_InternalSetAnimationComponent(EntityID, startFrameNumber, startFramesPerSecond, startFrameTimer, false, stripCount);
-            }
+            case 0:
+                CheckAmmo();
+                break;
+            case 1:
+                CheckMeleeCounter();
+                break;
+            default:
+                break;
         }
 
-        #endregion
-
-        #region Shooting
-
-        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.LMB) && limbTag == "LeftGunPos" && weaponEquipped == 0)
-        {
-            if (ammoCount != 0)
-            {
-                ammoCount--;
-
-                UpdateBulletCounterUI();
-
-                InternalCall.m_InternalCallPlayAudio(EntityID, gunshotSound);
-
-                //Get roomba rotation
-                InternalCall.m_InternalGetTransformComponent((uint)InternalCall.m_InternalCallGetTagID("Player"), out roombaPos, out roombaScale, out roombaRotate);
-
-                //Get limbPos
-                InternalCall.m_InternalGetTranslate(EntityID, out limbPos);
-
-                //Set isAnimating true
-                isAnimating = true;
-
-                //Play animation by feeding isAnimating into component
-                InternalCall.m_InternalSetAnimationComponent(EntityID, startFrameNumber, startFramesPerSecond, startFrameTimer, isAnimating, stripCount);
-
-                //Spawn bullet at limb
-                InternalCall.m_InternalCallAddPrefab(bulletPrefab, limbPos.X, limbPos.Y, roombaRotate);
-            }
-
-            
-        }
-
-        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.RMB) && limbTag == "RightGunPos" && weaponEquipped == 0)
-        {
-            if (ammoCount != 0)
-            {
-                ammoCount--;
-
-                UpdateBulletCounterUI();
-
-                InternalCall.m_InternalCallPlayAudio(EntityID, gunshotSound);
-
-                //Get roomba rotation
-                InternalCall.m_InternalGetTransformComponent((uint)InternalCall.m_InternalCallGetTagID("Player"), out roombaPos, out roombaScale, out roombaRotate);
-
-                //Get limbPos
-                InternalCall.m_InternalGetTranslate(EntityID, out limbPos);
-
-                //Set isAnimating true
-                isAnimating = true;
-
-                //Play animation by feeding isAnimating into component
-                InternalCall.m_InternalSetAnimationComponent(EntityID, startFrameNumber, startFramesPerSecond, startFrameTimer, isAnimating, stripCount);
-
-                //Spawn bullet at limb
-                InternalCall.m_InternalCallAddPrefab(bulletPrefab, limbPos.X, limbPos.Y, roombaRotate);
-            }
-
-            
-        }
-
-        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.MMB) && limbTag == "BackGunPos")
-        {
-            if (ammoCount != 0)
-            {
-                ammoCount--;
-
-                UpdateBulletCounterUI();
-
-                InternalCall.m_InternalCallPlayAudio(EntityID, gunshotSound);
-
-                //Get roomba rotation
-                InternalCall.m_InternalGetTransformComponent((uint)InternalCall.m_InternalCallGetTagID("Player"), out roombaPos, out roombaScale, out roombaRotate);
-
-                //Get limbPos
-                InternalCall.m_InternalGetTranslate(EntityID, out limbPos);
-
-                //Set isAnimating true
-                isAnimating = true;
-
-                //Play animation by feeding isAnimating into component
-                InternalCall.m_InternalSetAnimationComponent(EntityID, startFrameNumber, startFramesPerSecond, startFrameTimer, isAnimating, stripCount);
-
-                //Spawn bullet at limb
-                InternalCall.m_InternalCallAddPrefab(bulletPrefab, limbPos.X, limbPos.Y, roombaRotate);
-            }
-          
-        }
-
-        #endregion
-
-        #region Meleeing
-        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.LMB) && limbTag == "LeftGunPos" && weaponEquipped == 1)
-        {
-            if (meleeCount > 2)
-            {
-                meleeCount = 2;
-            }
-            AttemptMelee();
-        }
-
-        else if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.RMB) && limbTag == "RightGunPos" && weaponEquipped == 1)
-        {
-            if (meleeCount > 2)
-            {
-                meleeCount = 2;
-            }
-            AttemptMelee();   
-        }
-        #endregion
+        CheckInputs();
 
         #region Animation
 
         if (isAnimating)
         {
-            InternalCall.m_InternalGetAnimationComponent(EntityID, out currentFrameNumber, out startFramesPerSecond, out currentFrameTimer, out isAnimating, out stripCount);
-
-            if (currentFrameNumber == stripCount - 1)
+            GetComponentValues();
+            if (limbAnimComp.m_frameNumber == limbAnimComp.m_stripCount - 1)
             {
-                isAnimating = false;
-                InternalCall.m_InternalSetAnimationComponent(EntityID, startFrameNumber, startFramesPerSecond, startFrameTimer, isAnimating, stripCount);
+                StopAnimation();
+            }
+        }
+
+        if (uiLeftLimbCounterAnimating)
+        {
+            uiLeftLimbCounterAC = Component.Get<AnimationComponent>(uiLeftLimbCounterID);
+
+            if (uiLeftLimbCounterAC.m_frameNumber == uiLeftLimbCounterAC.m_stripCount - 1)
+            {
+                uiLeftLimbCounterAnimating = false;
+                uiLeftLimbCounterAC = Component.Get<AnimationComponent>(uiLeftLimbCounterID);
+                uiLeftLimbCounterAC.m_frameNumber = 6;
+                uiLeftLimbCounterAC.m_isAnimating = false;
+
+                Component.Set<AnimationComponent>(uiLeftLimbCounterID, uiLeftLimbCounterAC);
+            }
+        }
+
+        if (uiRightLimbCounterAnimating)
+        {
+            uiRightLimbCounterAC = Component.Get<AnimationComponent>(uiRightLimbCounterID);
+
+            if (uiRightLimbCounterAC.m_frameNumber == uiRightLimbCounterAC.m_stripCount - 1)
+            {
+                uiRightLimbCounterAnimating = false;
+                uiRightLimbCounterAC = Component.Get<AnimationComponent>(uiRightLimbCounterID);
+                uiRightLimbCounterAC.m_frameNumber = 6;
+                uiRightLimbCounterAC.m_isAnimating = false;
+
+                Component.Set<AnimationComponent>(uiRightLimbCounterID, uiRightLimbCounterAC);
             }
         }
 
         #endregion
 
-
     }
+    private void AttemptShootGun()
+    {
+        switch (limbTag)
+        {
+            case "LeftLimbSprite":
+                if (leftLimbGunAmmo != 0) { leftLimbGunAmmo--; }
+                else { return; }
+                break;
 
+            case "RightLimbSprite":
+                if (rightLimbGunAmmo != 0) { rightLimbGunAmmo--; }
+                else { return; }
+                break;
+
+            case "BackLimbSprite":
+                if (backLimbGunAmmo != 0) { backLimbGunAmmo--; }
+                else { return; }
+                break;
+
+            default:
+                return;
+        }
+
+        CoroutineManager.Instance.StartCoroutine(Shoot(), "Shooting");
+    }
     private void AttemptMelee()
     {
-        if (meleeCount > 0)
+        switch (limbTag)
         {
-            InternalCall.m_InternalCallPlayAudio(EntityID, cleaverSound);
+            case "LeftLimbSprite":
+                if (leftLimbMeleeCount != 0)
+                {
+                    leftLimbMeleeCount--;
+                    CoroutineManager.Instance.StartCoroutine(Melee(), "Melee");
+                }
+                else { return; }
+                break;
 
-            //Get collider component of MeleeKillZoneSpawn & set to true for checking collision
-            var collisionComponent = GetComponent.GetColliderComponent((uint)InternalCall.m_InternalCallGetTagID("MeleeKillZoneSpawn"));
-            collisionComponent.m_collisionCheck = true;
-            collisionComponent.m_drawDebug = true;
-            SetComponent.SetCollisionComponent((uint)InternalCall.m_InternalCallGetTagID("MeleeKillZoneSpawn"), collisionComponent);
+            case "RightLimbSprite":
+                if (rightLimbMeleeCount != 0)
+                {
+                    rightLimbMeleeCount--;
+                    CoroutineManager.Instance.StartCoroutine(Melee(), "Melee");
+                }
+                else { return; }
+                break;
 
-            //Set isAnimating true
-            isAnimating = true;
-
-            //Animate
-            InternalCall.m_InternalSetAnimationComponent(EntityID, startFrameNumber, startFramesPerSecond, startFrameTimer, isAnimating, stripCount);
-
-            //Start Coroutine to set to false for checking collision
-            _ = ToggleCollisionAfterDelay(collisionComponent, (uint)InternalCall.m_InternalCallGetTagID("MeleeKillZoneSpawn"), 0.1f);
-
-            meleeCount--;
-
-            UpdateMeleeCounterUI();
-
-            _ = ToggleMeleeCoolDownAfterDelay(1.25f);
+            default:
+                return;
         }
     }
     
     #region Coroutines
 
-    private async Task ToggleCollisionAfterDelay(ColliderComponent collisionComponent, uint entityID, float delaySeconds)
+    private IEnumerator Melee()
     {
-        await Task.Delay(TimeSpan.FromSeconds(delaySeconds));
+        CoroutineManager.Instance.StartCoroutine(StartMeleeCooldown(), "MeleeCooldown");
 
-        collisionComponent.m_drawDebug = false;
-        collisionComponent.m_collisionCheck = false;
-        SetComponent.SetCollisionComponent(entityID, collisionComponent);
-    }
-
-    private async Task ToggleMeleeCoolDownAfterDelay(float delaySeconds)
-    {
-        await Task.Delay(TimeSpan.FromSeconds(delaySeconds));
-        meleeCount++;
-        UpdateMeleeCounterUI();
-    }
-
-    #endregion
-
-    #region UI Updating
-
-    private void UpdateBulletCounterUI()
-    {
-        startText = ammoCount.ToString();
-
-        if (ammoCount <= 0)
+        if (isAnimating)
         {
-            //Set Red AMMO
-            Vector3 tempColor;
-            tempColor.R = 255.0f/255.0f;
-            tempColor.G = 0;
-            tempColor.B = 0;
+            StopAnimation();
+            yield return new CoroutineManager.WaitForSeconds(0.001f);
+            StartAnimation();
+        }
 
-            string tempText;
-            string tempFile;
-            int tempLayer;
-            float tempSize;
-            Vector3 oldColor;
+        else 
+        {
+            StartAnimation();
+        }
 
-            InternalCall.m_InternalSetTextComponent(bulletCounterID, startText, startFileName, in startFontLayer, in startFontSize, in tempColor);
-            InternalCall.m_InternalGetTextComponent((uint)InternalCall.m_InternalCallGetTagID("UIBulletHeader"), out tempText, out tempFile, out tempLayer, out tempSize, out oldColor);
-            InternalCall.m_InternalSetTextComponent((uint)InternalCall.m_InternalCallGetTagID("UIBulletHeader"), tempText, tempFile, in tempLayer, in tempSize, in tempColor);
+        switch (limbTag)
+        {
+            case "LeftLimbSprite":
+                uiLeftLimbCounterAnimating = true;
+
+                uiLeftLimbCounterAC = Component.Get<AnimationComponent>(uiLeftLimbCounterID);
+                uiLeftLimbCounterAC.m_frameNumber = 0;
+                uiLeftLimbCounterAC.m_isAnimating = true;
+
+                Component.Set<AnimationComponent>(uiLeftLimbCounterID, uiLeftLimbCounterAC);
+                break;
+
+            case "RightLimbSprite":
+                uiRightLimbCounterAnimating = true;
+
+                uiRightLimbCounterAC = Component.Get<AnimationComponent>(uiRightLimbCounterID);
+                uiRightLimbCounterAC.m_frameNumber = 0;
+                uiRightLimbCounterAC.m_isAnimating = true;
+
+                Component.Set<AnimationComponent>(uiRightLimbCounterID, uiRightLimbCounterAC);
+                break;
+
+            default:
+                break;
+        }
+
+
+        InternalCall.m_InternalCallPlayAudio(EntityID, cleaverSound);
+
+        uint killZoneID = (uint)InternalCall.m_InternalCallGetTagID("MeleeKillZoneSpawn");
+        ColliderComponent killZoneCollComp = Component.Get<ColliderComponent>(killZoneID);
+        killZoneCollComp.m_collisionCheck = true;
+        killZoneCollComp.m_drawDebug = true;
+        Component.Set<ColliderComponent>(killZoneID, killZoneCollComp);
+
+        yield return new CoroutineManager.WaitForSeconds(0.01f);
+
+        killZoneCollComp.m_drawDebug = false;
+        killZoneCollComp.m_collisionCheck = false;
+        Component.Set<ColliderComponent>(killZoneID, killZoneCollComp);
+
+    }
+
+    private IEnumerator StartMeleeCooldown()
+    {
+        yield return new CoroutineManager.WaitForSeconds(1f);
+
+        switch (limbTag)
+        {
+            case "LeftLimbSprite":
+                leftLimbMeleeCount++;
+                break;
+
+            case "RightLimbSprite":
+                rightLimbMeleeCount++;
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    private IEnumerator Shoot()
+    {
+        //Plays Audio
+        InternalCall.m_InternalCallPlayAudio(EntityID, gunshotSound);
+
+        //Update Component Values, mainly for roomba rotation
+        GetComponentValues();
+
+        if (isAnimating)
+        {
+            StopAnimation();
+            yield return new CoroutineManager.WaitForSeconds(0.001f);
+            StartAnimation();
         }
 
         else
         {
-            //Set Green AMMO
-            Vector3 temp;
-            temp.R = 0;
-            temp.G = 255.0f/255.0f;
-            temp.B = 0;
-            InternalCall.m_InternalSetTextComponent(bulletCounterID, startText, startFileName, in startFontLayer, in startFontSize, in temp);
+            StartAnimation();
         }
-        
+
+        switch (limbTag)
+        {
+            case "LeftLimbSprite":
+                //Get limbPos
+                InternalCall.m_InternalGetTranslate(leftLimbPosID, out limbPos);
+                break;
+
+            case "RightLimbSprite":
+                //Get limbPos
+                InternalCall.m_InternalGetTranslate(rightLimbPosID, out limbPos);
+                break;
+
+            case "BackLimbSprite":
+                //Get limbPos
+                InternalCall.m_InternalGetTranslate(backLimbPosID, out limbPos);
+                break;
+
+            default:
+                break;
+        }
+
+
+        //Spawn bullet at limb
+        InternalCall.m_InternalCallAddPrefab(bulletPrefab, limbPos.X, limbPos.Y, playerTransformComp.m_rotation);
+
+        //Shake Camera
+        CameraFollowPlayerScript.Shake(0.5f, 1f);
     }
 
-    private void UpdateMeleeCounterUI()
+    private IEnumerator PauseAnimation()
     {
-        if (meleeCount <= 0)
+        isAnimating = false;
+        GetComponentValues();
+        limbAnimComp.m_isAnimating = false;
+        int tempCurrentFrame = limbAnimComp.m_frameNumber;
+        Component.Set<AnimationComponent>(EntityID, limbAnimComp);
+
+        yield return new CoroutineManager.WaitForCondition(() =>
         {
-            //Set Red AMMO
-            Vector3 tempColor;
-            tempColor.R = 255.0f/255.0f;
-            tempColor.G = 0;
-            tempColor.B = 0;
+            return !GameControllerLevel1.gameIsPaused;
+        });
 
-            //SpriteComponent tempSpriteComponent = GetComponent.GetSpriteComponent((uint)InternalCall.m_InternalCallGetTagID("UIMeleeCounter"));
-            SpriteComponent tempSpriteComponent = Component.Get<SpriteComponent>((uint)InternalCall.m_InternalCallGetTagID("UIMeleeCounter"));
+        Console.WriteLine("Condition Met " + !GameControllerLevel1.gameIsPaused);
 
-            tempSpriteComponent.m_color = tempColor;
-            SetComponent.SetSpriteComponent((uint)InternalCall.m_InternalCallGetTagID("UIMeleeCounter"), tempSpriteComponent);
-        }
-
-        else if (meleeCount == 1)
-        {
-            //Set ORANGE AMMO
-            Vector3 tempColor;
-            tempColor.R = 255.0f/255.0f;
-            tempColor.G = 135.0f/255.0f;
-            tempColor.B = 0;
-
-            SpriteComponent tempSpriteComponent = GetComponent.GetSpriteComponent((uint)InternalCall.m_InternalCallGetTagID("UIMeleeCounter"));
-            tempSpriteComponent.m_color = tempColor;
-            SetComponent.SetSpriteComponent((uint)InternalCall.m_InternalCallGetTagID("UIMeleeCounter"), tempSpriteComponent);
-            
-        }
-
-        else if (meleeCount >= 2)
-        {
-            //Set GREEN AMMO
-            Vector3 tempColor;
-            tempColor.R = 0;
-            tempColor.G = 245.0f / 255.0f;
-            tempColor.B = 0;
-
-            SpriteComponent tempSpriteComponent = GetComponent.GetSpriteComponent((uint)InternalCall.m_InternalCallGetTagID("UIMeleeCounter"));
-            tempSpriteComponent.m_color = tempColor;
-            SetComponent.SetSpriteComponent((uint)InternalCall.m_InternalCallGetTagID("UIMeleeCounter"), tempSpriteComponent);
-
-        }
-
+        isAnimating = true;
+        limbAnimComp.m_isAnimating = true;
+        limbAnimComp.m_frameNumber = tempCurrentFrame;
+        Component.Set<AnimationComponent>(EntityID, limbAnimComp);
     }
 
     #endregion
+
+    private void CheckAmmo()
+    {
+        switch (limbTag)
+        {
+            case "LeftLimbSprite":
+                //Update UI
+                uiLeftLimbCounterAC = Component.Get<AnimationComponent>(uiLeftLimbCounterID);
+                uiLeftLimbCounterAC.m_frameNumber = leftLimbGunAmmo;
+                uiLeftLimbCounterAC.m_isAnimating = false;
+
+                Component.Set<AnimationComponent>(uiLeftLimbCounterID, uiLeftLimbCounterAC);
+
+                break;
+
+            case "RightLimbSprite":
+                //Update UI
+                uiRightLimbCounterAC = Component.Get<AnimationComponent>(uiRightLimbCounterID);
+                uiRightLimbCounterAC.m_frameNumber = rightLimbGunAmmo;
+                uiRightLimbCounterAC.m_isAnimating = false;
+
+                Component.Set<AnimationComponent>(uiRightLimbCounterID, uiRightLimbCounterAC);
+                break;
+
+            case "BackLimbSprite":
+                //Update UI
+                uiBackLimbCounterAC = Component.Get<AnimationComponent>(uiBackLimbCounterID);
+                uiBackLimbCounterAC.m_frameNumber = backLimbGunAmmo;
+                uiBackLimbCounterAC.m_isAnimating = false;
+
+                Component.Set<AnimationComponent>(uiBackLimbCounterID, uiBackLimbCounterAC);
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    private void CheckMeleeCounter()
+    {
+        switch (limbTag)
+        {
+            case "LeftLimbSprite":
+                //Update UI
+                if (leftLimbMeleeCount == 1)
+                {
+                    uiLeftLimbCounterAC = Component.Get<AnimationComponent>(uiLeftLimbCounterID);
+                    uiLeftLimbCounterAC.m_frameNumber = 6;
+                    uiLeftLimbCounterAC.m_isAnimating = false;
+
+                    Component.Set<AnimationComponent>(uiLeftLimbCounterID, uiLeftLimbCounterAC);
+                }
+
+                break;
+
+            case "RightLimbSprite":
+                //Update UI
+                if (rightLimbMeleeCount == 1)
+                {
+                    uiRightLimbCounterAC = Component.Get<AnimationComponent>(uiRightLimbCounterID);
+                    uiRightLimbCounterAC.m_frameNumber = 6;
+                    uiRightLimbCounterAC.m_isAnimating = false;
+
+                    Component.Set<AnimationComponent>(uiRightLimbCounterID, uiRightLimbCounterAC);
+                }
+
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    private string GetWeaponSprite(string weaponName)
+    {
+        string limbTag = InternalCall.m_InternalCallGetTag(EntityID);
+
+        switch (limbTag)
+        {
+            case "LeftLimbSprite":
+                return this.GetType().GetField("left" + weaponName + "Texture",
+                                               System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                                 ?.GetValue(this) as string;
+
+            case "RightLimbSprite":
+                return this.GetType().GetField("right" + weaponName + "Texture",
+                                               System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                                 ?.GetValue(this) as string;
+
+            case "BackLimbSprite":
+                return this.GetType().GetField("back" + weaponName + "Texture",
+                                               System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                                 ?.GetValue(this) as string;
+
+            default:
+                return null;
+        }
+    }
+
+    private int GetStripCount(string fileName)
+    {
+        // Find the last non-digit position before the number
+        string numberStr = "";
+
+        // Iterate through the string to find the last sequence of digits
+        for (int i = fileName.Length - 1; i >= 0; i--)
+        {
+            if (char.IsDigit(fileName[i]))
+            {
+                numberStr = fileName[i] + numberStr; // Prepend to keep the correct order
+            }
+            else if (numberStr.Length > 0)
+            {
+                break; // Stop when we encounter a non-digit after collecting digits
+            }
+        }
+
+        // Convert to integer
+        return int.TryParse(numberStr, out int result) ? result : -1;
+    }
+
+    private void GetComponentValues()
+    {
+        limbSpriteComp = GetComponent.GetSpriteComponent(EntityID);
+        limbAnimComp = Component.Get<AnimationComponent>(EntityID);
+        playerTransformComp = Component.Get<TransformComponent>((uint)InternalCall.m_InternalCallGetTagID("Player"));
+    }
+
+    private void SwitchWeapon(string weaponName)
+    {
+        string fileName = GetWeaponSprite(weaponName);
+
+        limbSpriteComp.m_imageFile = fileName;
+        SetComponent.SetSpriteComponent(EntityID, limbSpriteComp);
+
+        limbAnimComp.m_stripCount = GetStripCount(fileName);
+        Component.Set<AnimationComponent>(EntityID, limbAnimComp);
+    }
+
+    private void StartAnimation()
+    {
+        isAnimating = true;
+
+        GetComponentValues();
+        limbAnimComp.m_frameNumber = 0;
+        limbAnimComp.m_isAnimating = isAnimating;
+
+        Component.Set<AnimationComponent>(EntityID, limbAnimComp);
+    }
+
+    private void StopAnimation()
+    {
+        isAnimating = false;
+
+        GetComponentValues();
+        limbAnimComp.m_frameNumber = 0;
+        limbAnimComp.m_isAnimating = isAnimating;
+
+        Component.Set<AnimationComponent>(EntityID, limbAnimComp);
+    }
+
+    private void CheckWeapons()
+    {
+        switch (limbTag)
+        {
+            case "LeftLimbSprite":
+                weaponEquipped = PlayerLoadoutManager.leftLimbEquippedNo;
+                break;
+
+            case "RightLimbSprite":
+                weaponEquipped = PlayerLoadoutManager.rightLimbEquippedNo;
+                break;
+
+            case "BackLimbSprite":
+                weaponEquipped = PlayerLoadoutManager.backLimbEquippedNo;
+                break;
+
+            default:
+                break;
+        }
+
+        ChangeWeaponSprite();
+    }
+
+    private void ChangeWeaponSprite()
+    {
+        if (limbTag == "LeftLimbSprite" || limbTag == "RightLimbSprite")
+        {
+            switch (weaponEquipped)
+            {
+                case 0:
+                    SwitchWeapon("Gun");
+                    break;
+
+                case 1:
+                    SwitchWeapon("Katana");
+                    break;
+
+                case 2:
+                    SwitchWeapon("Booster");
+                    break;
+
+                default:
+                    break;
+            }
+        }
+        
+        else if (limbTag == "BackLimbSprite")
+        {
+            switch (weaponEquipped)
+            {
+                case 0:
+                    SwitchWeapon("Gun");
+                    break;
+
+                case 1:
+                    SwitchWeapon("Booster");
+                    break;
+
+                default:
+                    break;
+            }
+        }
+    }
+
+    private void CheckInputs()
+    {
+        #region Mouse Checks
+
+        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.LMB) && limbTag == "LeftLimbSprite" && PlayerLoadoutManager.isSortieing == false)
+        {
+            switch (weaponEquipped)
+            {
+                case 0:
+                    AttemptShootGun();
+                    break;
+
+                case 1:
+                    AttemptMelee();
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.RMB) && limbTag == "RightLimbSprite" && PlayerLoadoutManager.isSortieing == false)
+        {
+            switch (weaponEquipped)
+            {
+                case 0:
+                    AttemptShootGun();
+                    break;
+
+                case 1:
+                    AttemptMelee();
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        #endregion
+
+        #region Keyboard Checks
+        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.SPACE) && limbTag == "BackLimbSprite" && PlayerLoadoutManager.isSortieing == false)
+        {
+            switch (weaponEquipped)
+            {
+                case 0:
+                    AttemptShootGun();
+                    break;
+
+                default:
+                    break;
+            }
+        }
+        #endregion
+    }
 }

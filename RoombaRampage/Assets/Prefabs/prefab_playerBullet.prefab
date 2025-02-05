@@ -1,5 +1,15 @@
 [
     {
+        "GlobalSettings": {
+            "globalIllumination": 1.0,
+            "backgroundColor": {
+                "r": 0.8539819717407227,
+                "g": 0.8539819717407227,
+                "b": 0.8539819717407227
+            }
+        }
+    },
+    {
         "name": {
             "namestr": "PlayerBullet",
             "layer": 3,
@@ -70,7 +80,7 @@
         },
         "animation": {
             "frameNumber": 0,
-            "framesPerSecond": 10,
+            "framesPerSecond": 80,
             "frameTimer": 0.0,
             "isAnimating": false,
             "stripCount": 10
