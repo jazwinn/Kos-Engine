@@ -212,6 +212,11 @@ namespace graphicpipe
 		}
 	}
 
+	void GraphicsPipe::m_renderFinalPass()
+	{
+
+	}
+
 	void GraphicsPipe::m_funcDrawGamePreviewWindow()
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, m_gamePreviewFrameBufferObject);
