@@ -15,7 +15,11 @@ void main()
     vec4 lightColor = texture(lightTexture, texCoords);
 
     vec4 darkenedScene = sceneColor * globalBrightness;  
-    vec4 restoredBrightness = mix(darkenedScene, sceneColor, lightColor.r);
+    vec4 restoredBrightness = vec4 (0,0,0,1.f);
+    restoredBrightness.r = mix(darkenedScene.r, sceneColor.r, lightColor.r);
+     restoredBrightness.g = mix(darkenedScene.g, sceneColor.g, lightColor.g);
+      restoredBrightness.b = mix(darkenedScene.b, sceneColor.b, lightColor.b);
+       
 
     vec4 light = vec4(lightColor.rgb, 1.0);
 
