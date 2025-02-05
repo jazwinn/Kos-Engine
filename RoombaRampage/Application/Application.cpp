@@ -1,4 +1,4 @@
-/******************************************************************/
+﻿/******************************************************************/
 /*!
 \file      Application.cpp
 \author    Ng Jaz winn, jazwinn.ng , 2301502
@@ -114,7 +114,7 @@ namespace Application {
         LOGGING_INFO("IMGUIENABLED is undefined");
         pipe->m_gameMode = true;
         ecs->m_nextState = ecs::START;
-        assetmanager::AssetManager::m_funcGetInstance()->m_scriptManager.m_ReloadAllDLL();
+        assetmanager::AssetManager::m_funcGetInstance()->m_scriptManager.m_ReloadAllDLL(); // MUST HAVE
         
 #endif      
         
