@@ -120,6 +120,9 @@ public class PauseMenuButtons : ScriptBase
 
         GameControllerLevel1.gameIsPaused = false;
         GameControllerLevel1.runOnce = false;
+
+        //continue sound
+        InternalCall.m_InternalCallUnPauseAllAudio();
     }
 
     private void RestartGame()
