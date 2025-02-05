@@ -1,5 +1,15 @@
 [
     {
+        "GlobalSettings": {
+            "globalIllumination": 1.0,
+            "backgroundColor": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0
+            }
+        }
+    },
+    {
         "name": {
             "namestr": "ani_scientistWalk_strip14",
             "layer": 0,
@@ -87,6 +97,14 @@
                 }
             ]
         },
+        "audio": [
+            {
+                "name": "aud_buttonClick01 - Copy",
+                "volume": 1.0,
+                "loop": false,
+                "playOnStart": false
+            }
+        ],
         "pathfinding": {
             "startPosition": {
                 "x": 5.0,
