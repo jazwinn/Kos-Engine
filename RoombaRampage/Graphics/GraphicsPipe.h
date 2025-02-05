@@ -368,6 +368,8 @@ namespace graphicpipe {
          */
         void m_drawLightingTexture();
 
+        void m_renderFinalPass();
+
 
         /**
          * @brief Renders the lighting effects in the scene.
