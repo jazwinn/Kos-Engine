@@ -29,7 +29,7 @@ public class PlayerController : ScriptBase
         speed = 5;
 
         //Set tolerance to prevent jittering, higher values = more rigid rotation, but no more jittering due to micro changes
-        angleTolerance = 3.5f;
+        angleTolerance = 4f;
     }
     #endregion
 
@@ -59,7 +59,7 @@ public class PlayerController : ScriptBase
     private float startingAlpha;
 
     //Stop playing from doing anything if dead
-    private bool isDead;
+    public static bool isDead;
 
     //Dead player texture, swap once dead
     private string playerDeathTexture;
@@ -72,7 +72,7 @@ public class PlayerController : ScriptBase
     public override void Update()
     {
         //Checks if game is paused and prevents player from doing anything
-        if (GameController.gameIsPaused) { return; }
+        if (GameControllerLevel1.gameIsPaused) { return; }
 
         //Dead player, return to prevent actions
         if (isDead) { return; }
@@ -115,6 +115,36 @@ public class PlayerController : ScriptBase
 
         #endregion
 
+        #region Collision
+        if (InternalCall.m_InternalCallIsCollided(EntityID) != 0.0f)
+        {
+            collidedEntities = InternalCall.m_InternalCallGetCollidedEntities(EntityID);
+
+            foreach (int collidedEntitiesID in collidedEntities)
+            {
+                if (InternalCall.m_InternalCallGetTag((uint) collidedEntitiesID) == "Enemy")
+                {
+                    InternalCall.m_InternalCallPlayAudio(EntityID, "aud_playerDeath01");
+
+                    var collisionComponent = GetComponent.GetColliderComponent(EntityID);
+                    collisionComponent.m_collisionCheck = !collisionComponent.m_collisionCheck;
+                    SetComponent.SetCollisionComponent(EntityID, collisionComponent);
+
+                    InternalCall.m_InternalSetAnimationComponent(EntityID, 0, 0, 0, false, 1);
+                    InternalCall.m_InternalSetSpriteComponent(EntityID, playerDeathTexture, startingLayer, startingColor, startingAlpha);
+
+                    movement.X = 0;
+                    movement.Y = 0;
+
+                    InternalCall.m_InternalSetVelocity(EntityID, movement);
+
+                    isDead = true;
+                }
+            }
+        }
+
+        #endregion
+
         #region Mouse Rotation
 
         Vector2 mousePos;
@@ -142,46 +172,19 @@ public class PlayerController : ScriptBase
 
         #endregion
 
-        #region Collision
-        if (InternalCall.m_InternalCallIsCollided(EntityID) != 0.0f)
-        {
-            collidedEntities = InternalCall.m_InternalCallGetCollidedEntities(EntityID);
-
-            foreach (int collidedEntitiesID in collidedEntities)
-            {
-                if (InternalCall.m_InternalCallGetTag((uint) collidedEntitiesID) == "Enemy")
-                {
-                    InternalCall.m_InternalCallPlayAudio(EntityID, "aud_playerDeath01");
-
-                    var collisionComponent = GetComponent.GetColliderComponent(EntityID);
-                    collisionComponent.m_collisionCheck = !collisionComponent.m_collisionCheck;
-                    SetComponent.SetCollisionComponent(EntityID, collisionComponent);
-
-                    //InternalCall.m_InternalSetAnimationComponent(EntityID, 0, 0, 0, false, 1);
-                    InternalCall.m_InternalSetSpriteComponent(EntityID, playerDeathTexture, startingLayer, startingColor, startingAlpha);
-
-                    movement.X = 0;
-                    movement.Y = 0;
-
-                    InternalCall.m_InternalSetVelocity(EntityID, movement);
-
-                    isDead = true;
-
-                    break;
-                }
-            }
-        }
-
-        #endregion
-
-        //PathfindingComponent path;
-
-        //path = Component.Get<PathfindingComponent>(EntityID);
-
 
     }
 
-    #region Normalize
+    public void LateUpdate()
+    {
+        //Checks if game is paused and prevents player from doing anything
+        if (GameControllerLevel1.gameIsPaused) { return; }
+
+        if (isDead) { return; }
+
+    }
+
+    #region Vec2 Functions
     public Vector2 NormalizeAndScale(float x, float y, float speed)
     {
         // Calculate the magnitude of the vector
@@ -212,6 +215,26 @@ public class PlayerController : ScriptBase
         temp.Y = (float)scaledY;
 
         return temp;
+    }
+
+    public Vector2 MoveTowards(Vector2 current, Vector2 target, float maxDistance)
+    {
+        float dx = target.X - current.X;
+        float dy = target.Y - current.Y;
+        float distance = (float)Math.Sqrt(dx * dx + dy * dy);
+
+        // If the distance to the target is less than maxDistance, move directly to the target
+        if (distance <= maxDistance || distance == 0f)
+        {
+            return target;
+        }
+
+        // Otherwise, move a fraction towards the target
+        float ratio = maxDistance / distance;
+        return new Vector2(
+            current.X + dx * ratio,
+            current.Y + dy * ratio
+        );
     }
     #endregion
 }
