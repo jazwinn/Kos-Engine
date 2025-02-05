@@ -821,6 +821,47 @@ namespace script {
 
 	}
 
+	void InternalCall::m_InternalCallPauseAudio(ecs::EntityID id, MonoString* monoString)
+	{
+
+		char* nativeString = mono_string_to_utf8(monoString);
+		std::filesystem::path filepath = nativeString;
+
+		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+		assetmanager->m_audioManager.m_PauseAudioForEntity(id, filepath.filename().stem().string());
+
+		mono_free(nativeString);
+
+
+	}
+
+	void InternalCall::m_InternalCallUnPauseAudio(ecs::EntityID id, MonoString* monoString)
+	{
+
+		char* nativeString = mono_string_to_utf8(monoString);
+		std::filesystem::path filepath = nativeString;
+
+		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+		assetmanager->m_audioManager.m_UnpauseAudioForEntity(id, filepath.filename().stem().string());
+
+		mono_free(nativeString);
+
+
+	}
+
+	void InternalCall::m_InternalCallPauseAllAudio()
+	{
+		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+		assetmanager->m_audioManager.m_PauseAllSounds();
+
+	}
+
+	void InternalCall::m_InternalCallUnPauseAllAudio()
+	{
+		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+		assetmanager->m_audioManager.m_UnpauseAllSounds();
+	}
+
 	bool InternalCall::m_InternalCallIsWindowMinimise()
 	{
 		return Helper::Helpers::GetInstance()->m_windowMinimise;
@@ -1252,6 +1293,11 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_InternalCallPlayAudio);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallStopAudio);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallStopAllAudio);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallPauseAudio);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallUnPauseAudio);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallPauseAllAudio);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallUnPauseAllAudio);
+
 
 		MONO_ADD_INTERNAL_CALL(m_InternalCallIsWindowMinimise);
 		MONO_ADD_INTERNAL_CALL(m_getAccumulatedDeltaTime);

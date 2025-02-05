@@ -545,6 +545,14 @@ namespace script {
 		/******************************************************************/
 		static void m_InternalCallStopAllAudio();
 
+		static void m_InternalCallPauseAudio(ecs::EntityID id, MonoString* monoString);
+
+		static void m_InternalCallUnPauseAudio(ecs::EntityID id, MonoString* monoString);
+
+		static void m_InternalCallPauseAllAudio();
+
+		static void m_InternalCallUnPauseAllAudio();
+
 		/******************************************************************/
 		/*!
 		\fn      static bool m_InternalCallIsWindowMinimise()

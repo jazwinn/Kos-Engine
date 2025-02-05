@@ -49,6 +49,9 @@ public class GameControllerLevel1 : ScriptBase
 
             //Shows Pause Menu Layer
             InternalCall.m_EnableLayer(7);
+
+
+            InternalCall.m_InternalCallPauseAllAudio();
         }
 
         else if (gameIsPaused)
@@ -61,6 +64,8 @@ public class GameControllerLevel1 : ScriptBase
 
             //Hide Pause Menu Layer
             InternalCall.m_DisableLayer(7);
+
+            InternalCall.m_InternalCallUnPauseAllAudio();
 
             gameIsPaused = false;
             runOnce = false;
