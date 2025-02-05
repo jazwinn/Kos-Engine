@@ -259,6 +259,10 @@ namespace fmodaudio {
         FMOD::Channel* m_GetAvailableChannel(const std::string& entityId);
         void m_ReleaseUnusedChannels();
         int m_FindLeastImportantChannel() const;
+
+        //For Debugging
+        int m_GetActiveChannelCount() const;
+        void m_PrintChannelStatus() const;  // For debugging
     };
 
 

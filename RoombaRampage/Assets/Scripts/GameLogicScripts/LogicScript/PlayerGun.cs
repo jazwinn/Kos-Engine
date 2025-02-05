@@ -37,9 +37,9 @@ public class PlayerGun : ScriptBase
 
         bulletPrefab = "prefab_playerBullet";
 
-        leftLimbGunAmmo = 6;
-        rightLimbGunAmmo = 6;
-        backLimbGunAmmo = 6;
+        leftLimbGunAmmo = 100;
+        rightLimbGunAmmo = 100;
+        backLimbGunAmmo = 100;
 
         leftLimbMeleeCount = 1;
         rightLimbMeleeCount = 1;
