@@ -68,7 +68,7 @@ namespace fmodaudio {
         if (!m_system || !m_sound) {
             return false;
         }
-        m_PrintChannelStatus();
+        //m_PrintChannelStatus();
 
         m_ReleaseUnusedChannels();
 
