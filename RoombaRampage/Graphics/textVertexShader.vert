@@ -40,7 +40,7 @@ void main()
     pos = vec3(pos.x + point.x, pos.y + point.y, pos.z);
     pos = view * pos;      // Apply view
     pos = projection * pos; // Apply projection
-    gl_Position = vec4(pos.xy, -0.01 * layer, 1.0);
+    gl_Position = vec4(pos.xy,  -0.0001 * layer, 1.0);
     texCoords = vertex.zw;
 }  
 
