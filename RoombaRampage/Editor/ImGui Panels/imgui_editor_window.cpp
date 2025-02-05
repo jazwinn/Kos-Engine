@@ -99,8 +99,9 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
     }
 
 
+    pipe->m_renderFinalPassWithDebug();
     ImGui::GetWindowDrawList()->AddImage(
-        (void*)(long long unsigned int)pipe->m_screenTexture, pos,
+        (void*)(long long unsigned int)pipe->m_gamePreviewTexture, pos,
         ImVec2(pos.x + imageSize.x, pos.y + imageSize.y),
         ImVec2(0, 1), ImVec2(1, 0));
 

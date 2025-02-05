@@ -14,14 +14,20 @@ void main()
     vec4 sceneColor = texture(screenTexture, texCoords);
     vec4 lightColor = texture(lightTexture, texCoords);
 
-    // Apply global illumination darkening
-    vec4 darkenedScene = sceneColor * globalBrightness;
+    vec4 darkenedScene = sceneColor * globalBrightness;  
+    vec4 restoredBrightness = mix(darkenedScene, sceneColor, lightColor.r);
 
-    // Restore brightness where the lightTexture is strong
-    vec4 col = mix(darkenedScene, sceneColor, lightColor.r); // Use red channel of light texture
+    vec4 light = vec4(lightColor.rgb, 1.0);
 
-   
-   fragColor = col;
+    vec4 multipliedLighting = restoredBrightness * light;
+
+    float r = max(darkenedScene.r, multipliedLighting.r);
+     float g = max(darkenedScene.g, multipliedLighting.g);
+      float b = max(darkenedScene.b, multipliedLighting.b);
+      // float a = max(darkenedScene.a, multipliedLighting.a);
+
+    vec4 final = vec4(r,g,b,1.0);
+    fragColor = clamp(final, 0.0, 1.0);
 } 
 
 )"

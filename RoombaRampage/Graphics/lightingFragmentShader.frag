@@ -35,29 +35,23 @@ layout (location=0) out vec4 fragColor;
 
 void main() 
 {
-	 // Compute the distance from light source
     float distance = length(lightDirection);
 
-    // Initialize attenuation
     float attenuation = 0.0;
 
-    // Inner and outer radius from lightParams
     float innerRadius = lightParams.y;
     float outerRadius = lightParams.z;
 
-    // If inside inner radius, full brightness
     if (distance < innerRadius)
     {
         attenuation = 1.0;
     }
-    // If between inner and outer radius, apply smooth falloff
     else if (distance < outerRadius)
     {
         float t = (distance - innerRadius) / (outerRadius - innerRadius);
         attenuation = pow(clamp(1.0 - t, 0.0, 1.0), 4.0); // Quadratic falloff
     }
 
-    // Compute final lighting color
     vec3 lighting = color.rgb;
     fragColor = vec4(lighting, attenuation * lightParams.x);
 }

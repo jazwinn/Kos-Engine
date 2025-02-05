@@ -370,6 +370,8 @@ namespace graphicpipe {
 
         void m_renderFinalPass();
 
+        void m_renderFinalPassWithDebug();
+
 
         /**
          * @brief Renders the lighting effects in the scene.
@@ -378,6 +380,8 @@ namespace graphicpipe {
          * framebuffer, shaders, and associated buffers.
          */
         void m_funcRenderLighting();
+
+        void m_funcDrawFullScreenQuad(unsigned int texture);
 
         /**
          * @brief Sets the drawing mode for rendering.
