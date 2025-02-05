@@ -81,6 +81,7 @@ namespace graphicpipe {
 		m_gridShaderProgram = m_funcSetupShader(gridVertexShader, gridFragmentShader);
 		m_tilemapShaderProgram = m_funcSetupShader(tilemapVertexShader, tilemapFragmentShader);
 		m_lightingShaderProgram = m_funcSetupShader(lightingVertexShader, lightingFragmentShader);
+		m_finalPassShaderProgram = m_funcSetupShader(finalPassVertexShader, finalPassFragmentShader);
 		
 
 		// Initialize model-to-NDC transformation matrix and other drawing data.
@@ -101,6 +102,7 @@ namespace graphicpipe {
 		m_funcSetupFrameBuffer();
 		m_funcSetupGamePreviewFrameBuffer();
 		m_funcSetupLightingFrameBuffer();
+		m_funcSetupFinalPassBuffer();
 
 		// Clear temporary data structures used during setup.
 		m_debugBoxToNDCMatrix.clear();
@@ -213,7 +215,7 @@ namespace graphicpipe {
 			m_funcDrawTilemap();
 			m_funcDrawText();*/
 			//std::cout << "Hello" << std::endl;
-			m_funcDrawGameFrameBuffer();
+		    m_funcDrawGameFrameBuffer();
 			//m_renderFinalPass();
 
 		}

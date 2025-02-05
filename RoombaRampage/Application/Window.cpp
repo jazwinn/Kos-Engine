@@ -222,6 +222,7 @@ namespace Application {
                 pipe->m_funcSetupFrameBuffer();
                 pipe->m_funcSetupGamePreviewFrameBuffer();
                 pipe->m_funcSetupLightingFrameBuffer();
+                pipe->m_funcSetupFinalPassBuffer();
                 glViewport(0, 0, display_w, display_h);
             }
             

@@ -407,6 +407,8 @@ namespace graphicpipe {
         void m_funcSetupGamePreviewFrameBuffer();
 
 
+        void m_funcSetupFinalPassBuffer();
+
         /**
          * @brief Sets up the framebuffer for lighting rendering.
          *

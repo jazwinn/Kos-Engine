@@ -7,15 +7,18 @@ in vec2 texCoords;
 
 uniform sampler2D screenTexture;
 uniform sampler2D lightTexture;
-uniform float globalIllumination;
+uniform float globalBrightness;
 
 void main()
 {
     vec4 sceneColor = texture(screenTexture, texCoords);
-    vec3 lightColor = texture(lightTexture, texCoords);
+    vec4 lightColor = texture(lightTexture, texCoords);
 
-    vec3 col = sceneColor.rgb * (1.0 + lightColor * )
-  
+    // Apply global illumination darkening
+    vec4 darkenedScene = sceneColor * globalBrightness;
+
+    // Restore brightness where the lightTexture is strong
+    vec4 col = mix(darkenedScene, sceneColor, lightColor.r); // Use red channel of light texture
 
    
    fragColor = col;

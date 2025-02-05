@@ -139,11 +139,7 @@ namespace graphicpipe
 		glDisable(GL_DEPTH_TEST);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		
-
-		//m_drawLightingTexture();
-
-		// Draw the framebuffer texture to the screen
+		 //Draw the framebuffer texture to the screen
 
 		glUseProgram(m_frameBufferShaderProgram);
 		glBindVertexArray(m_screenTextureVAO);
@@ -157,7 +153,7 @@ namespace graphicpipe
 		GLenum err = glGetError();
 		if (err != GL_NO_ERROR) {
 			//LOGGING_ERROR("First OpenGL Error: 0x%X", err);
-			std::cout << "Lighting Test OpenGL Error: " << err << std::endl;
+			std::cout << "Screen Draw OpenGL Error: " << err << std::endl;
 		}
 	}
 
@@ -203,16 +199,9 @@ namespace graphicpipe
 
 		m_funcRenderLighting();
 
-		// Switch back to the default framebuffer
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		glDisable(GL_DEPTH_TEST);
 		glClear(GL_COLOR_BUFFER_BIT);
-
-		// Check for OpenGL errors
-		GLenum err;
-		while ((err = glGetError()) != GL_NO_ERROR) {
-			LOGGING_ERROR("#01 OpenGL Error: 0x%X", err);
-		}
 	}
 
 	void GraphicsPipe::m_renderFinalPass()
@@ -225,15 +214,23 @@ namespace graphicpipe
 
 		glUseProgram(m_finalPassShaderProgram);
 
-		glUniform1i(glGetUniformLocation(m_finalPassShaderProgram, "lightTexture"), 0);
-		glUniform1i(glGetUniformLocation(m_finalPassShaderProgram, "screenTexture"), 1);
-		glUniform1f(glGetUniformLocation(m_finalPassShaderProgram, "globalBrightness"), m_globalLightIntensity);
+		GLenum err = glGetError();
+		if (err != GL_NO_ERROR) {
+			//LOGGING_ERROR("First OpenGL Error: 0x%X", err);
+			std::cout << "First Final Pass OpenGL Error: " << err << std::endl;
+		}
+
+		
 
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, m_screenTexture);
 
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, m_lightingTexture);
+
+		glUniform1i(glGetUniformLocation(m_finalPassShaderProgram, "lightTexture"), 1);
+		glUniform1i(glGetUniformLocation(m_finalPassShaderProgram, "screenTexture"), 0);
+		glUniform1f(glGetUniformLocation(m_finalPassShaderProgram, "globalBrightness"), m_globalLightIntensity);
 
 		glBindVertexArray(m_screenTextureVAO);
 		glDrawArrays(GL_TRIANGLES, 0, 6);
@@ -242,23 +239,17 @@ namespace graphicpipe
 		glDisable(GL_DEPTH_TEST);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-
-
-
-
 		glUseProgram(m_frameBufferShaderProgram);
-		// Draw the framebuffer texture to the screen
 		glBindVertexArray(m_screenTextureVAO);
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, m_finalPassTexture);
-
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 
 
-		GLenum err = glGetError();
+		err = glGetError();
 		if (err != GL_NO_ERROR) {
 			//LOGGING_ERROR("First OpenGL Error: 0x%X", err);
-			std::cout << "Final Pass OpenGL Error: " << err << std::endl;
+			std::cout << "Second Final Pass OpenGL Error: " << err << std::endl;
 		}
 	}
 
@@ -270,7 +261,6 @@ namespace graphicpipe
 
 		m_funcDrawTilemap();
 		m_funcDraw();
-		
 		m_funcDrawText();
 		m_funcRenderLighting();
 		
@@ -543,7 +533,7 @@ namespace graphicpipe
 	{
 		if (!m_lightingTransforms.empty())
 		{
-			//glBlendFunc(GL_SRC_ALPHA, GL_ONE); //USE THIS BLENDING FOR LIGHTS
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE); //USE THIS BLENDING FOR LIGHTS
 
 			glUseProgram(m_lightingShaderProgram);
 
@@ -583,7 +573,7 @@ namespace graphicpipe
 				std::cout << "#05 OpenGL Error : " << err2 << std::endl;
 			}
 
-			//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		}
 	}
 
