@@ -51,7 +51,7 @@ namespace fmodaudio {
         \brief   Constructor that initializes default values for the FModAudio class.
         */
         /******************************************************************/
-        FModAudio();
+        FModAudio(FMOD::System* system);
 
         /******************************************************************/
         /*!
@@ -405,6 +405,10 @@ namespace fmodaudio {
             return m_soundMap;
         }
 
+        FMOD::System* GetSystem() {
+            return m_system; 
+        }
+
     private:
 
 
@@ -415,6 +419,8 @@ namespace fmodaudio {
         */
         /******************************************************************/
         std::unordered_map<std::string, std::unique_ptr<FModAudio>> m_soundMap;
+
+        FMOD::System* m_system;  // Single global FMOD system
     };
 
 }
