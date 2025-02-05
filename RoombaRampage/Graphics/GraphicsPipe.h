@@ -577,6 +577,16 @@ namespace graphicpipe {
           #include "../Graphics/lightingFragmentShader.frag"
         };
 
+        const std::string finalPassVertexShader =
+        {
+            #include "../Graphics/finalPassVertexShader.vert"
+        };
+
+        const std::string finalPassFragmentShader =
+        {
+            #include "../Graphics/finalPassFragmentShader.frag"
+        };
+
     };
 
 } // namespace graphicpipe

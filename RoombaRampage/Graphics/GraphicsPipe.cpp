@@ -214,6 +214,7 @@ namespace graphicpipe {
 			m_funcDrawText();*/
 			//std::cout << "Hello" << std::endl;
 			m_funcDrawGameFrameBuffer();
+			//m_renderFinalPass();
 
 		}
 		

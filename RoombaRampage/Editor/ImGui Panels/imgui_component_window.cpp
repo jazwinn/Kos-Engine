@@ -497,7 +497,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         if (ecs->m_ECS_EntityMap[id].test(ecs::TYPETEXTCOMPONENT))
                         {
                             ecs::TextComponent* text = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(id));
-                            const int maxLayer = 99;
+                            const int maxLayer = 999;
                             int layer = text->m_fontLayer;
                             if (layer >= maxLayer)
                             {

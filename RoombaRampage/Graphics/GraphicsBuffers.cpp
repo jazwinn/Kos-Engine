@@ -289,8 +289,8 @@ namespace graphicpipe
 		glGenTextures(1, &m_lightingTexture);
 		glBindTexture(GL_TEXTURE_2D, m_lightingTexture);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, static_cast<GLsizei>(help->m_windowWidth), static_cast<GLsizei>(help->m_windowHeight), 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glBindTexture(GL_TEXTURE_2D, 0);
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_lightingFrameBufferObject, 0);
 
