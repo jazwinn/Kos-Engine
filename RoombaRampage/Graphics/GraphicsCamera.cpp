@@ -42,7 +42,7 @@ namespace graphicpipe
 {
 	int GraphicsCamera::m_windowWidth{};
 	int GraphicsCamera::m_windowHeight{};
-	float GraphicsCamera::m_aspectRatio{};
+	float GraphicsCamera::m_aspectRatio{1.f};
 	std::unique_ptr<GraphicsCamera> GraphicsCamera::m_instancePtr = nullptr;
 	glm::mat3 GraphicsCamera::m_currCameraMatrix{1.f};
 	glm::mat3 GraphicsCamera::m_currViewMatrix{ 1.f };
