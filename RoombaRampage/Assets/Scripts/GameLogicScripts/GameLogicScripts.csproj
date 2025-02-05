@@ -81,6 +81,7 @@
     <Compile Include="LogicScript\LevelEndPoint.cs" />
     <Compile Include="LogicScript\LevelEnemySpawner.cs" />
     <Compile Include="LogicScript\LevelSelection.cs" />
+    <Compile Include="LogicScript\LevelSelectionTextBlink.cs" />
     <Compile Include="LogicScript\PauseMenuButtons.cs" />
     <Compile Include="LogicScript\PauseMenuCursor.cs" />
     <Compile Include="LogicScript\PauseMenuManager.cs" />

@@ -33,7 +33,7 @@ public class LevelOneButton : ScriptBase
                 isClick = false;
                 InternalCall.m_InternalCallPlayAudio(EntityID, "aud_buttonClick01");
                 LevelSelection.LevelSelected = true;
-                LevelSelection.SceneName = "MainGameplay";
+                LevelSelection.SceneName = "Level1";
             }
         }
     }

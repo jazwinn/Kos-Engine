@@ -18,11 +18,15 @@ public class GameControllerLevel1 : ScriptBase
 
     public override void Start()
     {
+
+        InternalCall.m_InternalCallPlayAudio(EntityID, "aud_mainLevelLoop");
+
         runOnce = false; 
         gameIsPaused = false;
 
         InternalCall.m_DisableLayer(8); //Disables Loadout Menu UI
         InternalCall.m_DisableLayer(7); //Disables Pause Menu UI
+        InternalCall.m_DisableLayer(6);
     }
 
     public override void Update()
@@ -64,6 +68,30 @@ public class GameControllerLevel1 : ScriptBase
 
     }
 
+    private void RestartGame()
+    {
+        if (LevelSelection.SceneName != null)
+        {
+            InternalCall.m_InternalCallStopAllAudio();
+            CoroutineManager.Instance.StopAllCoroutines();
+            InternalCall.m_InternalCallSetTimeScale(1);
+            InternalCall.m_UnloadAllScene();
+            InternalCall.m_InternalCallLoadScene(LevelSelection.SceneName);
+        }
+
+        else
+        {
+            Console.WriteLine("Level Selection Script Has No SceneName!");
+
+            InternalCall.m_InternalCallStopAllAudio();
+
+            CoroutineManager.Instance.StopAllCoroutines();
+            InternalCall.m_InternalCallSetTimeScale(1);
+            InternalCall.m_UnloadAllScene();
+            InternalCall.m_InternalCallLoadScene("Level1");
+        }
+    }
+
     private void Sortie()
     {
         if (!PlayerLoadoutManager.isSortieing)
@@ -85,11 +113,17 @@ public class GameControllerLevel1 : ScriptBase
 
     private void InputChecker()
     {
+        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.R) && PlayerController.isDead)
+        {
+            RestartGame();
+        }
+
         if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.ESC))
         {
             PauseGame();
         }
 
+        if (PlayerController.isDead) { return; }
 
         if (gameIsPaused) { return; } //Ensures nothing but pause menu can be activated when game is paused
 
@@ -97,6 +131,8 @@ public class GameControllerLevel1 : ScriptBase
         {
             Sortie();
         }
+
+
     }
     #endregion
 }

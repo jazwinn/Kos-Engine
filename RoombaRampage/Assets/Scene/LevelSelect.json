@@ -1,5 +1,15 @@
 [
     {
+        "GlobalSettings": {
+            "globalIllumination": 1.0,
+            "backgroundColor": {
+                "r": 0.8539819717407227,
+                "g": 0.8539819717407227,
+                "b": 0.8539819717407227
+            }
+        }
+    },
+    {
         "name": {
             "namestr": "Camera",
             "layer": 0,
@@ -75,10 +85,27 @@
                 {
                     "name": "LevelSelection",
                     "enabled": true,
-                    "map": []
+                    "map": [
+                        {
+                            "variable": "SceneName",
+                            "base64": ""
+                        },
+                        {
+                            "variable": "LevelSelected",
+                            "base64": ""
+                        }
+                    ]
                 }
             ]
-        }
+        },
+        "audio": [
+            {
+                "name": "aud_mainMenuLoop",
+                "volume": 0.20900000631809235,
+                "loop": true,
+                "playOnStart": false
+            }
+        ]
     },
     {
         "name": {
@@ -291,7 +318,7 @@
                 },
                 "transform": {
                     "position": {
-                        "x": -0.09626936912536621,
+                        "x": -0.31596264243125916,
                         "y": -0.6767345666885376
                     },
                     "rotation": 0.0,
@@ -301,7 +328,7 @@
                     }
                 },
                 "text": {
-                    "text": "EXECUTE: Y/N",
+                    "text": "EXECUTE:",
                     "text": null,
                     "filename": "fnt_silkscreenRegular.ttf",
                     "fontsize": 16.350000381469727,
@@ -311,6 +338,46 @@
                         "b": 0.06666667014360428
                     },
                     "layer": 8
+                }
+            },
+            {
+                "name": {
+                    "namestr": "Y/N Text",
+                    "layer": 0,
+                    "isprefab": false,
+                    "tagstr": "Default"
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.3036201000213623,
+                        "y": -0.6695619821548462
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 0.20868001878261566,
+                        "y": 0.20868001878261566
+                    }
+                },
+                "text": {
+                    "text": "Y/N |",
+                    "text": null,
+                    "filename": "fnt_silkscreenRegular.ttf",
+                    "fontsize": 16.350000381469727,
+                    "color": {
+                        "r": 0.10588235408067703,
+                        "g": 0.8823529481887817,
+                        "b": 0.06666667014360428
+                    },
+                    "layer": 9
+                },
+                "script": {
+                    "scripts": [
+                        {
+                            "name": "LevelSelectionTextBlink",
+                            "enabled": true,
+                            "map": []
+                        }
+                    ]
                 }
             }
         ]
@@ -410,8 +477,8 @@
         },
         "button": {
             "force": {
-                "x": 663.7802734375,
-                "y": 263.2314453125
+                "x": -5394.13134765625,
+                "y": -553.257568359375
             },
             "scale": {
                 "x": 0.550000011920929,
@@ -435,5 +502,64 @@
                 "playOnStart": false
             }
         ]
+    },
+    {
+        "name": {
+            "namestr": "Coroutine Handlers",
+            "layer": 0,
+            "isprefab": true,
+            "tagstr": "Default",
+            "prefabname": "Coroutine Handlers.prefab",
+            "issync": true
+        },
+        "transform": {
+            "position": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "script": {
+            "scripts": [
+                {
+                    "name": "CoroutineController",
+                    "enabled": true,
+                    "map": []
+                }
+            ]
+        }
+    },
+    {
+        "name": {
+            "namestr": "Map Photo",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": 0.5729163289070129,
+                "y": 0.05302870273590088
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 0.10440000146627426,
+                "y": 0.10440000146627426
+            }
+        },
+        "sprite": {
+            "imagefile": "img_level1Layout.png",
+            "layer": 10,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0
+        }
     }
 ]

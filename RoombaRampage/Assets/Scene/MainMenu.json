@@ -88,7 +88,15 @@
                     "map": []
                 }
             ]
-        }
+        },
+        "audio": [
+            {
+                "name": "aud_buttonClick01",
+                "volume": 0.5220000147819519,
+                "loop": false,
+                "playOnStart": false
+            }
+        ]
     },
     {
         "name": {
@@ -100,7 +108,7 @@
         "transform": {
             "position": {
                 "x": -2.1292552947998047,
-                "y": 0.6608850359916687
+                "y": 0.6126123666763306
             },
             "rotation": -0.0,
             "scale": {
@@ -135,8 +143,8 @@
         },
         "button": {
             "force": {
-                "x": 58.07586669921875,
-                "y": 810.9796752929688
+                "x": 116.2542724609375,
+                "y": 1019.966552734375
             },
             "scale": {
                 "x": 0.18000000715255737,
@@ -206,8 +214,8 @@
         },
         "button": {
             "force": {
-                "x": 61.497802734375,
-                "y": 938.7474365234375
+                "x": 120.6695556640625,
+                "y": 1211.258544921875
             },
             "scale": {
                 "x": 0.20999999344348907,
@@ -282,13 +290,75 @@
         },
         "sprite": {
             "imagefile": "img_gameLogo.png",
-            "layer": 3,
+            "layer": 4,
             "color": {
                 "r": 1.0,
                 "g": 1.0,
                 "b": 1.0
             },
             "alpha": 1.0
+        }
+    },
+    {
+        "name": {
+            "namestr": "Play Text",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": -2.1146252155303955,
+                "y": 0.4720878303050995
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "text": {
+            "text": "PLAY",
+            "text": null,
+            "filename": "fnt_silkscreenRegular.ttf",
+            "fontsize": 1.600000023841858,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "layer": 10
+        }
+    },
+    {
+        "name": {
+            "namestr": "Quit Text",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": -2.1146252155303955,
+                "y": 0.82192462682724
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "text": {
+            "text": "QUIT",
+            "text": null,
+            "filename": "fnt_silkscreenRegular.ttf",
+            "fontsize": 1.600000023841858,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "layer": 11
         }
     }
 ]

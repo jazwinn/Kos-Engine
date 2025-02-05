@@ -168,11 +168,11 @@ public class CoroutineManager : ScriptBase
     }
 
     // Time source
-    private float GetTime()
+    public float GetTime()
     {
         return (float)InternalCall.m_InternalCallGetGameTime(); // Replace with engine's time API
     }
-
+   
     // Debugging
     private bool EnableDebugLogging { get; set; } = true;
     private void Log(string message)
