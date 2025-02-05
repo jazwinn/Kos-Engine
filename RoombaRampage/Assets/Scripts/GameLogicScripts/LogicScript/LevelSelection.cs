@@ -19,17 +19,22 @@ public class LevelSelection : ScriptBase
 
     public override void Start()
     {
+        InternalCall.m_InternalCallPlayAudio(EntityID, "aud_mainMenuLoop");
     }
 
     public override void Update()
     {
         if(InternalCall.m_InternalCallIsKeyPressed(keyCode.Y) && LevelSelected == true)
         {
+            InternalCall.m_InternalCallStopAllAudio();
+
             InternalCall.m_UnloadAllScene();
             InternalCall.m_InternalCallLoadScene(SceneName);
         }
         else if (InternalCall.m_InternalCallIsKeyPressed(keyCode.N))
         {
+            InternalCall.m_InternalCallStopAllAudio();
+
             InternalCall.m_InternalCallCloseWindow();
         }
     }

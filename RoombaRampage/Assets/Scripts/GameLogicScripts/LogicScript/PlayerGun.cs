@@ -160,7 +160,10 @@ public class PlayerGun : ScriptBase
                 break;
         }
 
-        CheckInputs();
+        if (!GameControllerLevel1.gameIsPaused)
+        {
+            CheckInputs();
+        }
 
         #region Animation
 

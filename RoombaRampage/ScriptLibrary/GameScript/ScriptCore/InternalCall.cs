@@ -152,6 +152,20 @@ public static class InternalCall
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static void m_InternalCallStopAllAudio();
 
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static void m_InternalCallPauseAudio(uint id, string monoString);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static void m_InternalCallUnPauseAudio(uint id, string monoString);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static void m_InternalCallPauseAllAudio();
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static void m_InternalCallUnPauseAllAudio();
+
+
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static bool m_InternalCallIsWindowMinimise();
 
