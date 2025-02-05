@@ -3,9 +3,9 @@
         "GlobalSettings": {
             "globalIllumination": 1.0,
             "backgroundColor": {
-                "r": 0.8539819717407227,
-                "g": 0.8539819717407227,
-                "b": 0.8539819717407227
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0
             }
         }
     },
@@ -484,7 +484,7 @@
                         "g": 0.0,
                         "b": 0.0
                     },
-                    "layer": 35
+                    "layer": 421
                 }
             },
             {
@@ -517,7 +517,7 @@
                         "g": 0.0,
                         "b": 0.0
                     },
-                    "layer": 36
+                    "layer": 422
                 }
             },
             {
@@ -550,7 +550,7 @@
                         "g": 0.0,
                         "b": 0.0
                     },
-                    "layer": 37
+                    "layer": 423
                 }
             },
             {
@@ -583,292 +583,8 @@
                         "g": 0.0,
                         "b": 0.0
                     },
-                    "layer": 38
+                    "layer": 424
                 }
-            },
-            {
-                "name": {
-                    "namestr": "UI_PauseMenu_HowToPlay",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "UI_PauseMenu.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    }
-                },
-                "collider": {
-                    "checkcollision": false,
-                    "checkresponse": false,
-                    "size": {
-                        "x": 0.10000000149011612,
-                        "y": 0.10000000149011612
-                    },
-                    "offset": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "drawDebug": true,
-                    "radius": 0.5,
-                    "shapetype": 0
-                },
-                "children": [
-                    {
-                        "name": {
-                            "namestr": "UI_PauseMenu_HowToPlay_Menu",
-                            "layer": 6,
-                            "isprefab": true,
-                            "tagstr": "Default",
-                            "prefabname": "UI_PauseMenu.prefab",
-                            "issync": true
-                        },
-                        "transform": {
-                            "position": {
-                                "x": 0.0,
-                                "y": 0.0
-                            },
-                            "rotation": 0.0,
-                            "scale": {
-                                "x": 0.36000001430511475,
-                                "y": 0.36000001430511475
-                            }
-                        },
-                        "sprite": {
-                            "imagefile": "img_userManual.png",
-                            "layer": 500,
-                            "color": {
-                                "r": 1.0,
-                                "g": 1.0,
-                                "b": 1.0
-                            },
-                            "alpha": 1.0
-                        }
-                    },
-                    {
-                        "name": {
-                            "namestr": "UI_PauseMenu_HowToPlay_XButton",
-                            "layer": 6,
-                            "isprefab": true,
-                            "tagstr": "Default",
-                            "prefabname": "UI_PauseMenu.prefab",
-                            "issync": true
-                        },
-                        "transform": {
-                            "position": {
-                                "x": 6.017176628112793,
-                                "y": 5.757751941680908
-                            },
-                            "rotation": -0.0,
-                            "scale": {
-                                "x": 4.0,
-                                "y": 4.0
-                            }
-                        },
-                        "collider": {
-                            "checkcollision": true,
-                            "checkresponse": false,
-                            "size": {
-                                "x": 0.1899999976158142,
-                                "y": 0.1899999976158142
-                            },
-                            "offset": {
-                                "x": 0.0,
-                                "y": 0.0
-                            },
-                            "drawDebug": true,
-                            "radius": 0.5,
-                            "shapetype": 0
-                        },
-                        "rigidbody": {
-                            "linearVelocity": {
-                                "x": 0.0,
-                                "y": 0.0
-                            },
-                            "linearAcceleration": {
-                                "x": 0.0,
-                                "y": 0.0
-                            },
-                            "rotation": 0.0,
-                            "angularVelocity": 0.0,
-                            "angularAcceleration": 0.0,
-                            "mass": 1.0,
-                            "inverseMass": 1.0,
-                            "linearDamping": 0.9900000095367432,
-                            "angularDamping": 0.9900000095367432,
-                            "force": {
-                                "x": 0.0,
-                                "y": 0.0
-                            },
-                            "torque": 0.0,
-                            "kinematic": false,
-                            "static": false
-                        },
-                        "sprite": {
-                            "imagefile": "ani_inventoryCloseButton_strip2.png",
-                            "layer": 501,
-                            "color": {
-                                "r": 1.0,
-                                "g": 1.0,
-                                "b": 1.0
-                            },
-                            "alpha": 1.0
-                        },
-                        "animation": {
-                            "frameNumber": 0,
-                            "framesPerSecond": 0,
-                            "frameTimer": 0.0,
-                            "isAnimating": false,
-                            "stripCount": 2
-                        },
-                        "script": {
-                            "scripts": [
-                                {
-                                    "name": "PauseMenuButtons",
-                                    "enabled": true,
-                                    "map": [
-                                        {
-                                            "variable": "buttonFunctionNo",
-                                            "base64": "HwAAAMzMzMwA"
-                                        }
-                                    ]
-                                }
-                            ]
-                        }
-                    },
-                    {
-                        "name": {
-                            "namestr": "UI_PauseMenu_HowToPlay_BackButton",
-                            "layer": 6,
-                            "isprefab": true,
-                            "tagstr": "Default",
-                            "prefabname": "UI_PauseMenu.prefab",
-                            "issync": true
-                        },
-                        "transform": {
-                            "position": {
-                                "x": 0.0,
-                                "y": -5.0100507736206055
-                            },
-                            "rotation": -0.0,
-                            "scale": {
-                                "x": 3.0,
-                                "y": 3.0
-                            }
-                        },
-                        "collider": {
-                            "checkcollision": true,
-                            "checkresponse": false,
-                            "size": {
-                                "x": 1.4800000190734863,
-                                "y": 0.30000001192092896
-                            },
-                            "offset": {
-                                "x": 0.0,
-                                "y": 0.0
-                            },
-                            "drawDebug": true,
-                            "radius": 0.5,
-                            "shapetype": 0
-                        },
-                        "rigidbody": {
-                            "linearVelocity": {
-                                "x": 0.0,
-                                "y": 0.0
-                            },
-                            "linearAcceleration": {
-                                "x": 0.0,
-                                "y": 0.0
-                            },
-                            "rotation": 0.0,
-                            "angularVelocity": 0.0,
-                            "angularAcceleration": 0.0,
-                            "mass": 1.0,
-                            "inverseMass": 1.0,
-                            "linearDamping": 0.9900000095367432,
-                            "angularDamping": 0.9900000095367432,
-                            "force": {
-                                "x": 0.0,
-                                "y": 0.0
-                            },
-                            "torque": 0.0,
-                            "kinematic": false,
-                            "static": false
-                        },
-                        "sprite": {
-                            "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
-                            "layer": 502,
-                            "color": {
-                                "r": 1.0,
-                                "g": 1.0,
-                                "b": 1.0
-                            },
-                            "alpha": 1.0
-                        },
-                        "animation": {
-                            "frameNumber": 0,
-                            "framesPerSecond": 0,
-                            "frameTimer": 0.0,
-                            "isAnimating": false,
-                            "stripCount": 2
-                        },
-                        "script": {
-                            "scripts": [
-                                {
-                                    "name": "PauseMenuButtons",
-                                    "enabled": true,
-                                    "map": [
-                                        {
-                                            "variable": "buttonFunctionNo",
-                                            "base64": "HwAAAMzMzMwA"
-                                        }
-                                    ]
-                                }
-                            ]
-                        }
-                    },
-                    {
-                        "name": {
-                            "namestr": "UI_PauseMenu_HowToPlay_BackButtonText",
-                            "layer": 6,
-                            "isprefab": true,
-                            "tagstr": "Default",
-                            "prefabname": "UI_PauseMenu.prefab",
-                            "issync": true
-                        },
-                        "transform": {
-                            "position": {
-                                "x": 0.0,
-                                "y": -5.159358501434326
-                            },
-                            "rotation": -0.0,
-                            "scale": {
-                                "x": 3.0,
-                                "y": 3.0
-                            }
-                        },
-                        "text": {
-                            "text": "BACK",
-                            "text": null,
-                            "filename": "fnt_silkscreenRegular.ttf",
-                            "fontsize": 5.0,
-                            "color": {
-                                "r": 0.0,
-                                "g": 0.0,
-                                "b": 0.0
-                            },
-                            "layer": 40
-                        }
-                    }
-                ]
             }
         ]
     }

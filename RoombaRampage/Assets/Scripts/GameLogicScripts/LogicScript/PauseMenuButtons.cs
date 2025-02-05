@@ -109,17 +109,20 @@ public class PauseMenuButtons : ScriptBase
 
     private void ResumeGame()
     {
+        //Hide Pause Menu Layer
+        InternalCall.m_DisableLayer(7);
+
         //Resumes all coroutines
         CoroutineManager.Instance.ResumeAllCoroutines();
 
         //Sets delta timescale to 1
         InternalCall.m_InternalCallSetTimeScale(1f);
 
-        //Hide Pause Menu Layer
-        InternalCall.m_DisableLayer(7);
-
         GameControllerLevel1.gameIsPaused = false;
         GameControllerLevel1.runOnce = false;
+
+        //continue sound
+        InternalCall.m_InternalCallUnPauseAllAudio();
     }
 
     private void RestartGame()
@@ -148,12 +151,14 @@ public class PauseMenuButtons : ScriptBase
 
     private void HowToPlay()
     {
+        InternalCall.m_DisableLayer(7);
         InternalCall.m_EnableLayer(6);
     }
 
     private void HowToPlayBack()
     {
         InternalCall.m_DisableLayer(6);
+        InternalCall.m_EnableLayer(7);
     }
 
     private void QuitToMainMenu()

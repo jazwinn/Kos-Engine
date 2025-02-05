@@ -26,7 +26,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 //#include <fmod_errors.h>
 
 namespace fmodaudio {
-    FModAudio::FModAudio() : m_system(nullptr), m_sound(nullptr) {}
+    FModAudio::FModAudio(FMOD::System* system) : m_system(system), m_sound(nullptr) {}
 
     FModAudio::~FModAudio() {
         m_StopAllSounds();
@@ -43,7 +43,6 @@ namespace fmodaudio {
         if (result != FMOD_OK) {
             return false;
         }
-
         return true;
     }
 
@@ -252,9 +251,12 @@ namespace fmodaudio {
 
     // AudioManager Implementation (UPDATED 28/11/2024)
     AudioManager::AudioManager() {
+        FMOD::System_Create(&m_system);
+        m_system->init(64, FMOD_INIT_NORMAL, nullptr);
     }
 
     AudioManager::~AudioManager() {
+        m_system->release();
         for (auto& pair : m_soundMap) {
             FModAudio* sound = pair.second.get();
             if (sound) {
@@ -264,14 +266,15 @@ namespace fmodaudio {
     }
 
     void AudioManager::m_LoadAudio(const std::string& name, const std::string& path) {
-        auto sound = std::make_unique<FModAudio>();
-
-        if (sound->m_Init() && sound->m_CreateSound(path.c_str())) {
+        auto sound = std::make_unique<FModAudio>(m_system);
+        if (sound->m_CreateSound(path.c_str())) {
             m_soundMap[name] = std::move(sound);
         }
         else {
             //TODO Handle error (e.g., logging or notification)
-            //std::cerr << "Failed to load audio: " << path << std::endl;
+            /*std::cerr << "Failed to load audio: " << path << std::endl;
+            std::cerr << sound->m_Init() << std::endl;
+            std::cerr << sound->m_CreateSound(path.c_str()) << std::endl;*/
         }
     }
 

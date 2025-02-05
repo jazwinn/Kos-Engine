@@ -544,8 +544,15 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
             const char* layers[] = { ecs->m_layersStack.m_layerMap[layer::DEFAULT].first.c_str(), ecs->m_layersStack.m_layerMap[layer::LAYER1].first.c_str(),ecs->m_layersStack.m_layerMap[layer::LAYER2].first.c_str(),
                                   ecs->m_layersStack.m_layerMap[layer::LAYER3].first.c_str(), ecs->m_layersStack.m_layerMap[layer::LAYER4].first.c_str(), ecs->m_layersStack.m_layerMap[layer::LAYER5].first.c_str(),
                                   ecs->m_layersStack.m_layerMap[layer::LAYER6].first.c_str(), ecs->m_layersStack.m_layerMap[layer::LAYER7].first.c_str(), ecs->m_layersStack.m_layerMap[layer::LAYER8].first.c_str() };
+
+
+            std::vector<const char*> layers_vec;
+            for (const auto& _layer : ecs->m_layersStack.m_layerMap) {
+                layers_vec.push_back(_layer.second.first.c_str());
+            }
+
             int layer_current = nc->m_Layer;
-            if (ImGui::Combo("Layers", &layer_current, layers, IM_ARRAYSIZE(layers))) {
+            if (ImGui::Combo("Layers", &layer_current, layers_vec.data(), layers_vec.size())) {
                 ecs->m_layersStack.m_SwapEntityLayer((layer::LAYERS)layer_current, nc->m_Layer, entityID);
 
             }

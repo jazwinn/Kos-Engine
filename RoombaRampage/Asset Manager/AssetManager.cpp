@@ -243,15 +243,11 @@ namespace assetmanager {
             }
         }
         if (oldfilepath.extension().string() == ".wav") {
-            //check if old file name is present
             auto& soundmap = m_audioManager.getSoundMap();
             if (soundmap.find(oldfilepath.filename().stem().string()) != soundmap.end()) {
-                //check if new file name is non existent
                 if (soundmap.find(newfilepath.filename().stem().string()) == soundmap.end()) {
 
-                    //create new map of updated name
                     soundmap[newfilepath.filename().stem().string()] = std::move(soundmap.find(oldfilepath.filename().stem().string())->second);
-                    //delete old name map
                     soundmap.erase(oldfilepath.filename().stem().string());
                 }
                 else {
