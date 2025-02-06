@@ -59,28 +59,28 @@ public class CoroutineManager : ScriptBase
     public void StartCoroutine(IEnumerator routine, string tag = null)
     {
         activeCoroutines.Add(new Coroutine(routine, GetTime(), tag));
-        Log($"Starting coroutine with tag: {tag ?? "None"}");
+        //Log($"Starting coroutine with tag: {tag ?? "None"}");
     }
 
     // Stops a specific coroutine
     public void StopCoroutine(IEnumerator routine)
     {
         activeCoroutines.RemoveAll(c => c.Routine == routine);
-        Log($"Stopping coroutine: {routine}");
+        //Log($"Stopping coroutine: {routine}");
     }
 
     // Stops all coroutines
     public void StopAllCoroutines()
     {
         activeCoroutines.Clear();
-        Log("Stopping all coroutines.");
+        //Log("Stopping all coroutines.");
     }
 
     // Stops coroutines by tag
     public void StopCoroutinesByTag(string tag)
     {
         activeCoroutines.RemoveAll(c => c.Tag == tag);
-        Log($"Stopping coroutines with tag: {tag}");
+        //Log($"Stopping coroutines with tag: {tag}");
     }
 
     // Pauses all coroutines
@@ -91,9 +91,9 @@ public class CoroutineManager : ScriptBase
         {
             coroutine.Paused = true;
             coroutine.PausedTime = coroutine.NextExecutionTime - currentTime; // Store remaining time
-            Log($"Paused coroutine with tag '{coroutine.Tag}', remaining time: {coroutine.PausedTime}");
+            //Log($"Paused coroutine with tag '{coroutine.Tag}', remaining time: {coroutine.PausedTime}");
         }
-        Log("Pausing all coroutines.");
+        //Log("Pausing all coroutines.");
     }
 
     // Resumes all coroutines
@@ -104,9 +104,9 @@ public class CoroutineManager : ScriptBase
         {
             coroutine.Paused = false;
             coroutine.NextExecutionTime = currentTime + coroutine.PausedTime; // Restore timing
-            Log($"Resumed coroutine with tag '{coroutine.Tag}', next execution time: {coroutine.NextExecutionTime}");
+            //Log($"Resumed coroutine with tag '{coroutine.Tag}', next execution time: {coroutine.NextExecutionTime}");
         }
-        Log("Resuming all coroutines.");
+        //Log("Resuming all coroutines.");
     }
 
     // Updates all active coroutines
@@ -120,19 +120,19 @@ public class CoroutineManager : ScriptBase
             {
                 try
                 {
-                    Log($"Processing coroutine with tag '{coroutine.Tag}'. CurrentTime: {currentTime}");
+                    //Log($"Processing coroutine with tag '{coroutine.Tag}'. CurrentTime: {currentTime}");
 
                     if (coroutine.Routine.Current is WaitForCondition condition)
                     {
                         if (condition.Condition())
                         {
                             coroutine.NextExecutionTime = currentTime;
-                            Log($"Condition evaluated as TRUE for coroutine with tag '{coroutine.Tag}'.");
+                            //Log($"Condition evaluated as TRUE for coroutine with tag '{coroutine.Tag}'.");
                         }
                         else
                         {
                             coroutine.NextExecutionTime = currentTime + 0.1f;
-                            Log($"Condition evaluated as FALSE for coroutine with tag '{coroutine.Tag}'. Retrying... NextExecutionTime: {coroutine.NextExecutionTime}");
+                            //Log($"Condition evaluated as FALSE for coroutine with tag '{coroutine.Tag}'. Retrying... NextExecutionTime: {coroutine.NextExecutionTime}");
                             continue; // Skip MoveNext to prevent progression
                         }
                     }
@@ -141,7 +141,7 @@ public class CoroutineManager : ScriptBase
                     {
                         // Coroutine finished
                         activeCoroutines.RemoveAt(i);
-                        Log($"Coroutine with tag '{coroutine.Tag}' finished.");
+                        //Log($"Coroutine with tag '{coroutine.Tag}' finished.");
                     }
                     else
                     {
@@ -149,18 +149,18 @@ public class CoroutineManager : ScriptBase
                         if (coroutine.Routine.Current is WaitForSeconds wait)
                         {
                             coroutine.NextExecutionTime = currentTime + wait.Seconds;
-                            Log($"Coroutine with tag '{coroutine.Tag}' waiting for {wait.Seconds} seconds.");
+                            //Log($"Coroutine with tag '{coroutine.Tag}' waiting for {wait.Seconds} seconds.");
                         }
                         else
                         {
                             coroutine.NextExecutionTime = currentTime;
-                            Log($"Coroutine with tag '{coroutine.Tag}' proceeding without wait.");
+                            //Log($"Coroutine with tag '{coroutine.Tag}' proceeding without wait.");
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    Log($"Error in coroutine with tag '{coroutine.Tag}': {ex.Message}");
+                    //Log($"Error in coroutine with tag '{coroutine.Tag}': {ex.Message}");
                     activeCoroutines.RemoveAt(i);
                 }
             }
