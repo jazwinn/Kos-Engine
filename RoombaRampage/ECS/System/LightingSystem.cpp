@@ -1,3 +1,16 @@
+/******************************************************************/
+/*!
+\file      RenderSystem.cpp
+\author    Ng Jaz winn, jazwinn.ng , 2301502
+\par       jazwinn.ng@digipen.edu
+\date      Jan 30, 2024
+\brief     This file contains class for the Render System
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/********************************************************************/
 #include "../Config/pch.h"
 
 #include "../ECS.h"

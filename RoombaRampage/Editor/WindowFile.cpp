@@ -1,3 +1,17 @@
+/******************************************************************/
+/*!
+\file      WindowFile.cpp
+\author    Clarence Boey
+\par       c.boey@digipen.edu
+\date      Sept 30, 2024
+\brief     
+
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/******************************************************************/
 #include "../Config/pch.h"
 #include "WindowFile.h"
 

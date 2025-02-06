@@ -1,3 +1,18 @@
+/******************************************************************/
+/*!
+\file      PathfindingComponent.h
+\author    Clarence Boey
+\par
+\date      Jan 15, 2024
+\brief     
+
+
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/********************************************************************/
 #pragma once
 #ifndef PATHCOM_H
 #define PATHCOM_H
