@@ -552,7 +552,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
             }
 
             int layer_current = nc->m_Layer;
-            if (ImGui::Combo("Layers", &layer_current, layers_vec.data(), layers_vec.size())) {
+            if (ImGui::Combo("Layers", &layer_current, layers_vec.data(), static_cast<int>(layers_vec.size()))) {
                 ecs->m_layersStack.m_SwapEntityLayer((layer::LAYERS)layer_current, nc->m_Layer, entityID);
 
             }

@@ -71,6 +71,7 @@ namespace ecs {
 	{
 		ECS* ecs = ECS::m_GetInstance();
 		graphicpipe::GraphicsPipe* graphicsPipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
+		Helper::Helpers* helper = Helper::Helpers::GetInstance();
 		//Helper::Helpers* help =  Helper::Helpers::GetInstance();
 		if (m_vecTextComponentPtr.size() != m_vecTransformComponentPtr.size()) {
 			LOGGING_ERROR("Error: Vectors container size does not match");
@@ -98,7 +99,7 @@ namespace ecs {
 			float rotate{};
 
 			mat3x3::Mat3Decompose(transform->m_transformation, translate, scale, rotate);
-			graphicsPipe->m_textData.push_back(graphicpipe::TextData{ text->m_text, transform->m_transformation.m_e20, transform->m_transformation.m_e21, rotate, text->m_fontSize , {scale.m_x , scale.m_y}, text->m_fontLayer, { red, green, blue }, text->m_fileName});
+			graphicsPipe->m_textData.push_back(graphicpipe::TextData{ text->m_text, transform->m_transformation.m_e20, transform->m_transformation.m_e21, rotate, text->m_fontSize * (1080.f/ (float)helper->m_windowHeight) , {scale.m_x , scale.m_y}, text->m_fontLayer, {red, green, blue}, text->m_fileName});
 		
 
 		}

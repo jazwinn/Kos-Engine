@@ -25,7 +25,7 @@ layout (location=0) in vec2 vertexPosition;
 layout (location=2) in vec2 vertexTexCoords;
 
 
-layout (location=4) in ivec3 aSpriteData;
+layout (location=4) in ivec3 aSpriteData; // Strip Count, Frame Number, Texture ID
 
 layout (location=10) in int aLayer;
 layout (location=11) in vec4 aColor;
@@ -44,7 +44,7 @@ void main()
 
 	mat3 matrix = projection * view * modelMatrix;
 
-	float frameWidth = 1.0 / aSpriteData.x;
+	float frameWidth = 1.0 / aSpriteData.x; // Process Sprite Sheet
 
 	float frameOffset = frameWidth * aSpriteData.y;
 
