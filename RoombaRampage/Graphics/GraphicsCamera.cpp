@@ -93,10 +93,10 @@ namespace graphicpipe
 		m_currOrthoMatrix[2][1] = -(top + bottom) / (top - bottom);
 		m_currOrthoMatrix[2][2] = 1;
 
-		for (glm::mat3& matrix : pipe->m_modelToNDCMatrix)
+		/*for (glm::mat3& matrix : pipe->m_modelToNDCMatrix)
 		{
 			matrix = m_currOrthoMatrix * matrix;
-		}
+		}*/
 
 		for (glm::mat3& debugMatrix : pipe->m_debugBoxToNDCMatrix)
 		{
@@ -113,14 +113,14 @@ namespace graphicpipe
 	void GraphicsCamera::m_MultiplyViewMatrix()
 	{
 		GraphicsPipe* pipe = GraphicsPipe::m_funcGetInstance();
-		if (!(pipe->m_modelToNDCMatrix.empty()))
+		/*if (!(pipe->m_modelToNDCMatrix.empty()))
 		{
 			pipe->m_modelToNDCMatrix.clear();
 		}
 		for (const glm::mat3& matrix : pipe->m_modelMatrix)
 		{
 			pipe->m_modelToNDCMatrix.push_back(m_currViewMatrix * matrix);
-		}
+		}*/
 		for (glm::mat3& debugMatrix : pipe->m_debugBoxToNDCMatrix)
 		{
 			debugMatrix = m_currViewMatrix * debugMatrix;

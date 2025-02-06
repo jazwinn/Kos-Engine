@@ -36,14 +36,19 @@ layout (location=0) out vec4 color;
 layout (location=1) out vec2 texCoords;
 layout (location=2) flat out int textureID;
 
+uniform mat3 projection;
+uniform mat3 view;
+
 void main()
 {
+
+	mat3 matrix = projection * view * modelMatrix;
 
 	float frameWidth = 1.0 / aSpriteData.x;
 
 	float frameOffset = frameWidth * aSpriteData.y;
 
-	gl_Position = vec4(vec2(modelMatrix * vec3(vertexPosition, 1.f)),
+	gl_Position = vec4(vec2(matrix * vec3(vertexPosition, 1.f)),
 					   -0.0001 * aLayer, 1.0);
 
 	texCoords = vec2(vertexTexCoords.x * frameWidth + frameOffset, vertexTexCoords.y);

@@ -371,6 +371,7 @@ namespace Serialization {
 				colorValue.AddMember("b", sc->m_color.m_z, allocator);
 				sprite.AddMember("color", colorValue, allocator);
 				sprite.AddMember("alpha", sc->m_alpha, allocator);
+				sprite.AddMember("isLit", sc->m_isIlluminated, allocator);
 
 				entityData.AddMember("sprite", sprite, allocator);
 				hasComponents = true;  // Mark as having a component
@@ -922,6 +923,10 @@ namespace Serialization {
 				}
 				if (sprite.HasMember("alpha")) {
 					sc->m_alpha = sprite["alpha"].GetFloat();
+				}
+				if (sprite.HasMember("isLit"))
+				{
+					sc->m_isIlluminated = sprite["isLit"].GetBool();
 				}
 			}
 		}

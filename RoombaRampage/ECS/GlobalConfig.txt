@@ -1,2 +1,2 @@
 GlobalIllumination: 1
-BackgroundColor: 0 0 0
+BackgroundColor: 0.853982 0.853982 0.853982

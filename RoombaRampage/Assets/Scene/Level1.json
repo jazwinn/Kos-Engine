@@ -1,7 +1,7 @@
 [
     {
         "GlobalSettings": {
-            "globalIllumination": 1.0,
+            "globalIllumination": 0.6000000238418579,
             "backgroundColor": {
                 "r": 0.0,
                 "g": 0.0,
@@ -48344,7 +48344,8 @@
                 "g": 1.0,
                 "b": 1.0
             },
-            "alpha": 1.0
+            "alpha": 1.0,
+            "isLit": true
         },
         "animation": {
             "frameNumber": 0,
@@ -49790,11 +49791,11 @@
                 "x": 0.0,
                 "y": 1.0
             },
-            "m_intensity": 0.5,
+            "m_intensity": 1.7999999523162842,
             "m_colour": {
-                "x": 0.27829116582870483,
-                "y": 0.9115044474601746,
-                "z": 0.6761507987976074
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
             }
         }
     },
@@ -49865,7 +49866,8 @@
                 "g": 1.0,
                 "b": 1.0
             },
-            "alpha": 1.0
+            "alpha": 1.0,
+            "isLit": true
         },
         "script": {
             "scripts": [
@@ -49918,7 +49920,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": true
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -49998,7 +50001,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": true
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -50078,7 +50082,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": true
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -50277,7 +50282,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": false
                 }
             },
             {
@@ -50306,7 +50312,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": false
                 },
                 "animation": {
                     "frameNumber": 6,
@@ -50342,7 +50349,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": false
                 },
                 "animation": {
                     "frameNumber": 6,
@@ -50378,7 +50386,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": false
                 },
                 "animation": {
                     "frameNumber": 6,
@@ -50414,7 +50423,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": false
                 }
             },
             {
@@ -50443,7 +50453,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": false
                 }
             },
             {
@@ -50472,7 +50483,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": false
                 }
             }
         ]
@@ -50710,7 +50722,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": false
                 }
             },
             {
@@ -50780,7 +50793,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": false
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -50871,7 +50885,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": false
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -50962,7 +50977,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": false
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -51053,7 +51069,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": false
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -51144,7 +51161,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": false
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -51235,7 +51253,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": false
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -51326,7 +51345,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": false
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -51519,7 +51539,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": true
                 }
             },
             {
@@ -51550,7 +51571,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": false
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -51588,7 +51610,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": false
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -51626,7 +51649,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": false
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -51716,7 +51740,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": false
                 }
             },
             {
@@ -51786,7 +51811,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": false
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -51877,7 +51903,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": false
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -51968,7 +51995,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": false
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -52059,7 +52087,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": false
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -52290,7 +52319,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": false
                 }
             },
             {
@@ -52360,7 +52390,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": false
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -52451,7 +52482,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": false
                 },
                 "animation": {
                     "frameNumber": 0,
