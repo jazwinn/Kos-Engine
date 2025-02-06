@@ -1483,17 +1483,20 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                     auto* lc = static_cast<ecs::LightingComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPELIGHTINGCOMPONENT]->m_GetEntityComponent(entityID));
                     lc->ApplyFunction(DrawComponents(lc->Names()));
 
+
                     ImVec4 color = ImVec4(lc->m_colour.m_x, lc->m_colour.m_y, lc->m_colour.m_z, 1.f);
 
                     ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
-                    ImGui::Text("Color");
+
                     ImGui::SameLine();
-                    if (ImGui::ColorEdit3("##MyColor4", (float*)&color, ImGuiColorEditFlags_DisplayRGB))
+                    if (ImGui::ColorEdit4("MyColor##3", (float*)&color, ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel))
                     {
                         lc->m_colour.m_x = color.x;
                         lc->m_colour.m_y = color.y;
                         lc->m_colour.m_z = color.z;
                     }
+                    ImGui::SameLine();
+                    ImGui::Text("Color");
 
                 }
 
