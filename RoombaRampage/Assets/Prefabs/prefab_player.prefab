@@ -3,9 +3,9 @@
         "GlobalSettings": {
             "globalIllumination": 0.6000000238418579,
             "backgroundColor": {
-                "r": 0.8274336457252502,
-                "g": 0.7139360904693604,
-                "b": 0.7139360904693604
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0
             }
         }
     },
@@ -69,7 +69,7 @@
             "static": false
         },
         "sprite": {
-            "imagefile": "ani_roombertMove_strip6.png",
+            "imagefile": "img_roombert.png",
             "layer": 12,
             "color": {
                 "r": 1.0,
@@ -78,13 +78,6 @@
             },
             "alpha": 1.0,
             "isLit": true
-        },
-        "animation": {
-            "frameNumber": 0,
-            "framesPerSecond": 20,
-            "frameTimer": 0.0,
-            "isAnimating": false,
-            "stripCount": 6
         },
         "script": {
             "scripts": [
@@ -104,24 +97,6 @@
             {
                 "name": "aud_playerDeath01",
                 "volume": 0.9269999861717224,
-                "loop": false,
-                "playOnStart": false
-            },
-            {
-                "name": "aud_vacuumStart01",
-                "volume": 1.0,
-                "loop": false,
-                "playOnStart": false
-            },
-            {
-                "name": "aud_vacuumLoop01",
-                "volume": 0.3140000104904175,
-                "loop": true,
-                "playOnStart": false
-            },
-            {
-                "name": "aud_vacuumEnd01",
-                "volume": 1.0,
                 "loop": false,
                 "playOnStart": false
             }
@@ -196,19 +171,13 @@
                     },
                     {
                         "name": "aud_gunshot01",
-                        "volume": 0.6539999842643738,
+                        "volume": 1.0,
                         "loop": false,
                         "playOnStart": false
                     },
                     {
                         "name": "aud_weaponSwitch01",
                         "volume": 0.20900000631809235,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_katana01",
-                        "volume": 0.5199999809265137,
                         "loop": false,
                         "playOnStart": false
                     }
@@ -283,19 +252,13 @@
                     },
                     {
                         "name": "aud_gunshot01",
-                        "volume": 0.6589999794960022,
+                        "volume": 1.0,
                         "loop": false,
                         "playOnStart": false
                     },
                     {
                         "name": "aud_weaponSwitch01",
                         "volume": 0.2029999941587448,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_katana01",
-                        "volume": 0.48899999260902405,
                         "loop": false,
                         "playOnStart": false
                     }
@@ -368,19 +331,7 @@
                 "audio": [
                     {
                         "name": "aud_gunshot01",
-                        "volume": 0.6759999990463257,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_cleaver",
-                        "volume": 0.546999990940094,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_katana01",
-                        "volume": 0.4970000088214874,
+                        "volume": 1.0,
                         "loop": false,
                         "playOnStart": false
                     }
@@ -434,7 +385,7 @@
                 "transform": {
                     "position": {
                         "x": -0.07722800970077515,
-                        "y": 0.3199999928474426
+                        "y": 0.4880155026912689
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -455,7 +406,7 @@
                 "transform": {
                     "position": {
                         "x": 0.08051446080207825,
-                        "y": 0.3176966905593872
+                        "y": 0.4880155026912689
                     },
                     "rotation": 0.0,
                     "scale": {
