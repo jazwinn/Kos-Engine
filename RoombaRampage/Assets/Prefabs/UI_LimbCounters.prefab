@@ -1,7 +1,7 @@
 [
     {
         "GlobalSettings": {
-            "globalIllumination": 0.6000000238418579,
+            "globalIllumination": 1.0,
             "backgroundColor": {
                 "r": 0.8274336457252502,
                 "g": 0.7139360904693604,
@@ -64,7 +64,7 @@
                         "b": 1.0
                     },
                     "alpha": 1.0,
-                    "isLit": false
+                    "isLit": true
                 }
             },
             {
@@ -94,7 +94,7 @@
                         "b": 1.0
                     },
                     "alpha": 1.0,
-                    "isLit": false
+                    "isLit": true
                 },
                 "animation": {
                     "frameNumber": 6,
@@ -131,7 +131,7 @@
                         "b": 1.0
                     },
                     "alpha": 1.0,
-                    "isLit": false
+                    "isLit": true
                 },
                 "animation": {
                     "frameNumber": 6,
@@ -168,7 +168,7 @@
                         "b": 1.0
                     },
                     "alpha": 1.0,
-                    "isLit": false
+                    "isLit": true
                 },
                 "animation": {
                     "frameNumber": 6,
@@ -205,7 +205,7 @@
                         "b": 1.0
                     },
                     "alpha": 1.0,
-                    "isLit": false
+                    "isLit": true
                 }
             },
             {
@@ -235,7 +235,7 @@
                         "b": 1.0
                     },
                     "alpha": 1.0,
-                    "isLit": false
+                    "isLit": true
                 }
             },
             {
@@ -265,7 +265,7 @@
                         "b": 1.0
                     },
                     "alpha": 1.0,
-                    "isLit": false
+                    "isLit": true
                 }
             }
         ]

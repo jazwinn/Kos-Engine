@@ -108,7 +108,7 @@
                         "b": 1.0
                     },
                     "alpha": 1.0,
-                    "isLit": false
+                    "isLit": true
                 }
             },
             {
@@ -179,7 +179,7 @@
                         "b": 1.0
                     },
                     "alpha": 1.0,
-                    "isLit": false
+                    "isLit": true
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -271,7 +271,7 @@
                         "b": 1.0
                     },
                     "alpha": 1.0,
-                    "isLit": false
+                    "isLit": true
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -363,7 +363,7 @@
                         "b": 1.0
                     },
                     "alpha": 1.0,
-                    "isLit": false
+                    "isLit": true
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -455,7 +455,7 @@
                         "b": 1.0
                     },
                     "alpha": 1.0,
-                    "isLit": false
+                    "isLit": true
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -547,7 +547,7 @@
                         "b": 1.0
                     },
                     "alpha": 1.0,
-                    "isLit": false
+                    "isLit": true
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -639,7 +639,7 @@
                         "b": 1.0
                     },
                     "alpha": 1.0,
-                    "isLit": false
+                    "isLit": true
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -731,7 +731,7 @@
                         "b": 1.0
                     },
                     "alpha": 1.0,
-                    "isLit": false
+                    "isLit": true
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -925,7 +925,7 @@
                         "b": 1.0
                     },
                     "alpha": 1.0,
-                    "isLit": false
+                    "isLit": true
                 }
             },
             {
@@ -957,7 +957,7 @@
                         "b": 1.0
                     },
                     "alpha": 1.0,
-                    "isLit": false
+                    "isLit": true
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -996,7 +996,7 @@
                         "b": 1.0
                     },
                     "alpha": 1.0,
-                    "isLit": false
+                    "isLit": true
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -1035,7 +1035,7 @@
                         "b": 1.0
                     },
                     "alpha": 1.0,
-                    "isLit": false
+                    "isLit": true
                 },
                 "animation": {
                     "frameNumber": 0,

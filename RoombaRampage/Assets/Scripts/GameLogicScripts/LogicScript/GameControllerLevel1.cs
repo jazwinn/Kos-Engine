@@ -24,10 +24,9 @@ public class GameControllerLevel1 : ScriptBase
         runOnce = false; 
         gameIsPaused = false;
 
-        InternalCall.m_DisableLayer(9); //Disables Death Screen UI
         InternalCall.m_DisableLayer(8); //Disables Loadout Menu UI
         InternalCall.m_DisableLayer(7); //Disables Pause Menu UI
-        InternalCall.m_DisableLayer(6); //Disables 
+        InternalCall.m_DisableLayer(6);
     }
 
     public override void Update()

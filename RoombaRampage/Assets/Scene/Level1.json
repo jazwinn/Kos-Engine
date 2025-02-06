@@ -20,10 +20,10 @@
         },
         "transform": {
             "position": {
-                "x": -0.4845369756221771,
-                "y": -10.121654510498047
+                "x": -4.528764724731445,
+                "y": -8.563582420349121
             },
-            "rotation": -1.4248759746551514,
+            "rotation": 0.0,
             "scale": {
                 "x": 3.0000009536743164,
                 "y": 3.0000009536743164
@@ -51,8 +51,8 @@
         },
         "rigidbody": {
             "linearVelocity": {
-                "x": -0.042212627828121185,
-                "y": 1.6970646381378174
+                "x": 0.0,
+                "y": 0.0
             },
             "linearAcceleration": {
                 "x": 0.0,
@@ -81,13 +81,14 @@
                 "g": 1.0,
                 "b": 1.0
             },
-            "alpha": 1.0
+            "alpha": 1.0,
+            "isLit": true
         },
         "animation": {
-            "frameNumber": 4,
+            "frameNumber": 2,
             "framesPerSecond": 10,
-            "frameTimer": 0.40000012516975403,
-            "isAnimating": true,
+            "frameTimer": 0.25,
+            "isAnimating": false,
             "stripCount": 8
         },
         "script": {
@@ -201,8 +202,8 @@
         },
         "pathfinding": {
             "startPosition": {
-                "x": 41.0,
-                "y": 65.0
+                "x": 0.0,
+                "y": 0.0
             },
             "targetPosition": {
                 "x": 0.0,
@@ -222,8 +223,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": -0.42290234565734863,
-                        "y": 0.34261536598205566
+                        "x": 0.0,
+                        "y": 0.0
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -243,29 +244,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 1.888883352279663,
-                        "y": 9.278392791748047
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    }
-                }
-            },
-            {
-                "name": {
-                    "namestr": "Waypoint 2",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "ScaredEnemy.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": 19.47016716003418,
-                        "y": 3.511960506439209
+                        "x": 2.692307472229004,
+                        "y": 0.007251149974763393
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -290,7 +270,7 @@
                 "x": 0.0,
                 "y": -4.30968713760376
             },
-            "rotation": 0.0,
+            "rotation": -0.0,
             "scale": {
                 "x": 3.0000009536743164,
                 "y": 3.0000009536743164
@@ -348,7 +328,8 @@
                 "g": 1.0,
                 "b": 1.0
             },
-            "alpha": 1.0
+            "alpha": 1.0,
+            "isLit": true
         },
         "animation": {
             "frameNumber": 0,
@@ -468,8 +449,8 @@
         },
         "pathfinding": {
             "startPosition": {
-                "x": 42.0,
-                "y": 59.0
+                "x": 0.0,
+                "y": 0.0
             },
             "targetPosition": {
                 "x": 0.0,
@@ -492,7 +473,7 @@
                 "x": -4.905863285064697,
                 "y": -5.531227111816406
             },
-            "rotation": 0.0,
+            "rotation": 43.920623779296875,
             "scale": {
                 "x": 2.9999990463256836,
                 "y": 2.9999990463256836
@@ -550,7 +531,8 @@
                 "g": 1.0,
                 "b": 1.0
             },
-            "alpha": 1.0
+            "alpha": 1.0,
+            "isLit": true
         },
         "animation": {
             "frameNumber": 0,
@@ -670,8 +652,8 @@
         },
         "pathfinding": {
             "startPosition": {
-                "x": 37.0,
-                "y": 60.0
+                "x": 0.0,
+                "y": 0.0
             },
             "targetPosition": {
                 "x": 0.0,
@@ -694,7 +676,7 @@
                 "x": 4.117771625518799,
                 "y": -5.846463203430176
             },
-            "rotation": 0.0,
+            "rotation": 20.371305465698242,
             "scale": {
                 "x": 2.999999761581421,
                 "y": 2.999999761581421
@@ -752,7 +734,8 @@
                 "g": 1.0,
                 "b": 1.0
             },
-            "alpha": 1.0
+            "alpha": 1.0,
+            "isLit": true
         },
         "animation": {
             "frameNumber": 0,
@@ -872,8 +855,8 @@
         },
         "pathfinding": {
             "startPosition": {
-                "x": 46.0,
-                "y": 60.0
+                "x": 0.0,
+                "y": 0.0
             },
             "targetPosition": {
                 "x": 0.0,
@@ -896,7 +879,7 @@
                 "x": 4.945267200469971,
                 "y": -4.388495922088623
             },
-            "rotation": 0.0,
+            "rotation": -137.3751983642578,
             "scale": {
                 "x": 3.0000007152557373,
                 "y": 3.0000007152557373
@@ -954,7 +937,8 @@
                 "g": 1.0,
                 "b": 1.0
             },
-            "alpha": 1.0
+            "alpha": 1.0,
+            "isLit": true
         },
         "animation": {
             "frameNumber": 0,
@@ -1074,8 +1058,8 @@
         },
         "pathfinding": {
             "startPosition": {
-                "x": 46.0,
-                "y": 59.0
+                "x": 0.0,
+                "y": 0.0
             },
             "targetPosition": {
                 "x": 0.0,
@@ -1095,10 +1079,10 @@
         },
         "transform": {
             "position": {
-                "x": 26.499977111816406,
-                "y": -19.50091552734375
+                "x": 3.2404558658599854,
+                "y": -18.11986541748047
             },
-            "rotation": 43.70000076293945,
+            "rotation": -0.0,
             "scale": {
                 "x": 3.0000007152557373,
                 "y": 3.0000007152557373
@@ -1126,8 +1110,8 @@
         },
         "rigidbody": {
             "linearVelocity": {
-                "x": 0.00002997701994900126,
-                "y": -1.6834994554519653
+                "x": 0.0,
+                "y": 0.0
             },
             "linearAcceleration": {
                 "x": 0.0,
@@ -1156,13 +1140,14 @@
                 "g": 1.0,
                 "b": 1.0
             },
-            "alpha": 1.0
+            "alpha": 1.0,
+            "isLit": true
         },
         "animation": {
-            "frameNumber": 1,
+            "frameNumber": 0,
             "framesPerSecond": 15,
-            "frameTimer": 0.0833333358168602,
-            "isAnimating": true,
+            "frameTimer": 0.0,
+            "isAnimating": false,
             "stripCount": 8
         },
         "script": {
@@ -1276,8 +1261,8 @@
         },
         "pathfinding": {
             "startPosition": {
-                "x": 68.0,
-                "y": 74.0
+                "x": 0.0,
+                "y": 0.0
             },
             "targetPosition": {
                 "x": 0.0,
@@ -1297,8 +1282,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": -2.0576250553131104,
-                        "y": -0.31632015109062195
+                        "x": 0.0,
+                        "y": 0.0
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -1318,8 +1303,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 1.0678482055664063,
-                        "y": 4.144473075866699
+                        "x": 11.203680992126465,
+                        "y": 12.516178131103516
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -60608,8 +60593,8 @@
         },
         "transform": {
             "position": {
-                "x": 0.22410698235034943,
-                "y": -1.569396734237671
+                "x": 0.0,
+                "y": 0.0
             },
             "rotation": -0.0,
             "scale": {
@@ -62085,7 +62070,7 @@
                 "x": 0.0,
                 "y": 0.0
             },
-            "rotation": 171.2460174560547,
+            "rotation": 0.0,
             "scale": {
                 "x": 3.0,
                 "y": 3.0
@@ -62138,7 +62123,8 @@
                 "g": 1.0,
                 "b": 1.0
             },
-            "alpha": 1.0
+            "alpha": 1.0,
+            "isLit": true
         },
         "animation": {
             "frameNumber": 0,
@@ -62216,7 +62202,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": true
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -62302,7 +62289,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": true
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -62388,7 +62376,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": true
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -62554,8 +62543,8 @@
         },
         "transform": {
             "position": {
-                "x": 0.22410698235034943,
-                "y": -1.569396734237671
+                "x": 0.0,
+                "y": 0.0
             },
             "rotation": 0.0,
             "scale": {
@@ -62599,7 +62588,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": true
                 }
             },
             {
@@ -62621,14 +62611,15 @@
                     }
                 },
                 "sprite": {
-                    "imagefile": "ani_hudSegmentBar_strip7.png",
+                    "imagefile": "ani_hudFullBar_strip7.png",
                     "layer": 354,
                     "color": {
                         "r": 1.0,
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": true
                 },
                 "animation": {
                     "frameNumber": 6,
@@ -62657,17 +62648,18 @@
                     }
                 },
                 "sprite": {
-                    "imagefile": "ani_hudSegmentBar_strip7.png",
+                    "imagefile": "ani_hudFullBar_strip7.png",
                     "layer": 353,
                     "color": {
                         "r": 1.0,
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": true
                 },
                 "animation": {
-                    "frameNumber": 5,
+                    "frameNumber": 6,
                     "framesPerSecond": 6,
                     "frameTimer": 0.0,
                     "isAnimating": false,
@@ -62693,14 +62685,15 @@
                     }
                 },
                 "sprite": {
-                    "imagefile": "ani_hudSegmentBar_strip7.png",
+                    "imagefile": "ani_hudFullBar_strip7.png",
                     "layer": 355,
                     "color": {
                         "r": 1.0,
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": true
                 },
                 "animation": {
                     "frameNumber": 6,
@@ -62729,14 +62722,15 @@
                     }
                 },
                 "sprite": {
-                    "imagefile": "img_hudGunIcon.png",
+                    "imagefile": "img_hudKatanaIcon.png",
                     "layer": 356,
                     "color": {
                         "r": 1.0,
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": true
                 }
             },
             {
@@ -62758,14 +62752,15 @@
                     }
                 },
                 "sprite": {
-                    "imagefile": "img_hudGunIcon.png",
+                    "imagefile": "img_hudKatanaIcon.png",
                     "layer": 358,
                     "color": {
                         "r": 1.0,
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": true
                 }
             },
             {
@@ -62787,14 +62782,15 @@
                     }
                 },
                 "sprite": {
-                    "imagefile": "img_hudGunIcon.png",
+                    "imagefile": "img_hudKatanaIcon.png",
                     "layer": 357,
                     "color": {
                         "r": 1.0,
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": true
                 }
             }
         ]
@@ -62945,8 +62941,8 @@
         },
         "transform": {
             "position": {
-                "x": 0.22410698235034943,
-                "y": -1.569396734237671
+                "x": 0.0,
+                "y": 0.0
             },
             "rotation": 0.0,
             "scale": {
@@ -63032,7 +63028,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": true
                 }
             },
             {
@@ -63102,7 +63099,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": true
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -63193,7 +63191,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": true
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -63284,7 +63283,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": true
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -63375,7 +63375,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": true
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -63466,7 +63467,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": true
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -63557,7 +63559,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": true
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -63648,7 +63651,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": true
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -63841,7 +63845,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": true
                 }
             },
             {
@@ -63872,7 +63877,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": true
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -63910,7 +63916,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": true
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -63948,7 +63955,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": true
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -63971,8 +63979,8 @@
         },
         "transform": {
             "position": {
-                "x": 0.22410698235034943,
-                "y": -1.569396734237671
+                "x": 0.0,
+                "y": 0.0
             },
             "rotation": -0.0,
             "scale": {
@@ -64038,7 +64046,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": true
                 }
             },
             {
@@ -64108,7 +64117,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": true
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -64199,7 +64209,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": true
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -64290,7 +64301,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": true
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -64381,7 +64393,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": true
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -64550,8 +64563,8 @@
         },
         "transform": {
             "position": {
-                "x": 0.22410698235034943,
-                "y": -1.569396734237671
+                "x": 0.0,
+                "y": 0.0
             },
             "rotation": 0.0,
             "scale": {
@@ -64612,7 +64625,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": true
                 }
             },
             {
@@ -64682,7 +64696,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": true
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -64773,7 +64788,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": true
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -64860,7 +64876,8 @@
                 "g": 1.0,
                 "b": 1.0
             },
-            "alpha": 1.0
+            "alpha": 1.0,
+            "isLit": true
         },
         "script": {
             "scripts": [
@@ -64900,7 +64917,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": true
                 }
             }
         ]
@@ -64965,7 +64983,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": true
                 }
             },
             {
@@ -65071,7 +65090,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": true
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -65133,7 +65153,8 @@
                 "g": 1.0,
                 "b": 1.0
             },
-            "alpha": 1.0
+            "alpha": 1.0,
+            "isLit": true
         }
     },
     {
@@ -65150,7 +65171,7 @@
                 "x": -25.01907730102539,
                 "y": 36.98648452758789
             },
-            "rotation": 0.0,
+            "rotation": -0.0,
             "scale": {
                 "x": 1.0,
                 "y": 1.0
@@ -65203,7 +65224,8 @@
                 "g": 1.0,
                 "b": 1.0
             },
-            "alpha": 1.0
+            "alpha": 1.0,
+            "isLit": true
         },
         "script": {
             "scripts": [
