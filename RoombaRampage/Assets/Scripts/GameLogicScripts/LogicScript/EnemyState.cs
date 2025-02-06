@@ -95,6 +95,7 @@ public class EnemyStateChase : EnemyState
 
     public override void LostTarget()
     {
+        enemyScript.SetCurrentState(new EnemyStatePatrol(enemyScript));
     }
 
     public override void PlayerDead()

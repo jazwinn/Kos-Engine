@@ -671,7 +671,54 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     public void RunAtPlayer()
     {
         //Call MoveToTarget method with player's position
-        MoveToTarget(playerTransformComp.m_position, enemySpeed);
+        UpdateRayCastToPlayerPosition();
+        if (!CheckPlayerWithinSight())
+        {
+            currentState.LostTarget();
+        }
+
+        //UpdateComponentValues();
+        transformComp = Component.Get<TransformComponent>(EntityID);
+        playerTransformComp = Component.Get<TransformComponent>(playerID);
+
+        Vector2 direction;
+
+        //Gets direction to look towards
+        direction.X = (playerTransformComp.m_position.X - transformComp.m_position.X); //Gets Vector.X towards player
+        direction.Y = (playerTransformComp.m_position.Y - transformComp.m_position.Y); //Gets Vector.Y towards player
+
+        float rotationFloat = (float)(Math.Atan2(direction.X, direction.Y) * (180 / Math.PI)); //Gets rotation towards player
+
+        transformComp.m_rotation = rotationFloat; //Sets rotation values
+
+        SetComponent.SetTransformComponent(EntityID, transformComp); //Sets transform component
+
+        direction.X = (playerTransformComp.m_position.X - transformComp.m_position.X); //Gets Vector.X towards player
+        direction.Y = (playerTransformComp.m_position.Y - transformComp.m_position.Y); //Gets Vector.Y away from player
+
+        rotationFloat = (float)(Math.Atan2(direction.X, direction.Y) * (180 / Math.PI)); //Gets rotation away player
+
+        //Convert into radians
+        float rotationInRadians = (float)((rotationFloat) * Math.PI / 180.0);
+
+        //Get forward vector X
+        float forwardX = (float)(Math.Sin(rotationInRadians));
+
+        //Get forward vector Y
+        float forwardY = (float)(Math.Cos(rotationInRadians));
+
+        if (!InternalCall.m_InternalGetVelocity(EntityID, out movement))
+        {
+            // return cause velocity -> rigidbody is not present in entity
+            return;
+        }
+
+        movement.X = 0 + forwardX * enemySpeed;
+        movement.Y = 0 + forwardY * enemySpeed;
+
+
+
+        InternalCall.m_InternalSetVelocity(EntityID, in movement); //BANE OF MY EXISTENCE
     }
 
     //public void PatrolToWaypoint()
