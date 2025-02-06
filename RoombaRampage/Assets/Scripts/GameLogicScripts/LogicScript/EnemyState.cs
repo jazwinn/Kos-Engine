@@ -123,7 +123,6 @@ public class EnemyStateRun : EnemyState
 
     public override void LostTarget()
     {
-        enemyScript.SetCurrentState(new EnemyStatePatrol(enemyScript));
     }
 
     public override void PlayerDead()
@@ -146,61 +145,6 @@ public class EnemyStateEnemyDead : EnemyState
     public override void DoActionUpdate(float dTime)
     {
 
-    }
-
-    public override void LostTarget() { }
-
-    public override void PlayerDead() { }
-
-    public override void EnemyDead() { }
-
-}
-
-public class EnemyStatePanic : EnemyState
-{
-    public EnemyStatePanic(EnemyScript enemyScript) : base(enemyScript)
-    {
-
-    }
-
-    public override void DoActionUpdate(float dTime)
-    {
-        enemyScript.UpdateRayCastToPlayerPosition(); //Update Location of player
-
-        switch (enemyScript.enemyRoamBehaviour)
-        {
-            case EnemyScript.EnemyRoamType.Static:
-                break;
-
-            case EnemyScript.EnemyRoamType.Patrolling:
-                enemyScript.StartPatrol();
-                break;
-
-            default:
-                break;
-        }
-
-        if (enemyScript.CheckPlayerWithinSight()) //Checks if player is within sight
-        {
-            switch (enemyScript.enemyType)
-            {
-                case EnemyScript.EnemySelection.Helpless: //Start Helpless State
-                    enemyScript.SetCurrentState(new EnemyStateChase(enemyScript));
-                    enemyScript.isPatrolling = false;
-                    break;
-
-                case EnemyScript.EnemySelection.Melee: //Start Melee State
-                    enemyScript.SetCurrentState(new EnemyStateChase(enemyScript));
-                    enemyScript.isPatrolling = false;
-                    break;
-
-                case EnemyScript.EnemySelection.Ranged: //Start Ranged State
-                    break;
-
-                default:
-                    break;
-            }
-        }
     }
 
     public override void LostTarget() { }
