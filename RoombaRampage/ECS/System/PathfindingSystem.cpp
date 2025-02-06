@@ -86,13 +86,21 @@ namespace ecs {
             }
             if (grid == NULL)
             {
-                //LOGGING_WARN("Error: Grid not found");
+                LOGGING_WARN("Error: Grid not found");
                 return;
             }
 
-            
-            pathfinding->m_StartPos.m_x = floor(transform->m_position.m_x) - grid->m_Anchor.m_x;
-            pathfinding->m_StartPos.m_y = grid->m_Anchor.m_y - floor(transform->m_transformation.m_e21) - 1.0f;
+            if ((transform->m_position.m_x < grid->m_Anchor.m_x || transform->m_position.m_y > grid->m_Anchor.m_y) ||
+                (transform->m_position.m_x > (grid->m_Anchor.m_x + grid->m_GridRowLength) || transform->m_position.m_y < (grid->m_Anchor.m_y - grid->m_GridColumnLength)))
+            {
+                LOGGING_WARN("Error: Pathfinding Component -> Outside grid component");
+                return;
+            }
+            else
+            { 
+                pathfinding->m_StartPos.m_x = floor(transform->m_position.m_x) - grid->m_Anchor.m_x;
+                pathfinding->m_StartPos.m_y = grid->m_Anchor.m_y - floor(transform->m_transformation.m_e21) - 1.0f;
+            }
 
 
             /*int startX = static_cast<int>(pathfinding->m_StartPos.m_x);
