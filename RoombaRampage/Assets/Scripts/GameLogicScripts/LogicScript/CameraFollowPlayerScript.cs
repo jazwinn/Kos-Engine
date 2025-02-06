@@ -111,7 +111,6 @@ public class CameraFollowPlayerScript : ScriptBase
     void UpdateMousePosition()
     {
         InternalCall.m_InternalGetWorldMousePosition(out mousePos);
-        Console.WriteLine("test");
 
     }
 
