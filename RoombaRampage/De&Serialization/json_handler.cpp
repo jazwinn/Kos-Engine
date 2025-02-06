@@ -89,7 +89,7 @@ namespace Serialization {
 			if (temp == "WindowWidth:") str2 >> help->m_windowWidth;
 			if (temp == "FpsCap:") str2 >> help->m_fpsCap;
 			if (temp == "StartScene:") str2 >> help->m_startScene;
-			if (temp == "GlobalIllumination:") str2 >> graphics->m_globalLightIntensity;
+		
 		}
 
 
@@ -99,7 +99,6 @@ namespace Serialization {
 		}
 
 		m_LoadPhysicsLayerMatrix();
-		m_LoadGlobalSettings();
 
 	}
 
