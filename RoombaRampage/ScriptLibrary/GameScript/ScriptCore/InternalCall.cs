@@ -239,6 +239,9 @@ public static class InternalCall
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public static extern void m_ChangeLayer(uint id, uint layerid);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public static extern float m_getFPS();
 }
 
 
