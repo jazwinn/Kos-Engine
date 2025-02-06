@@ -128,7 +128,8 @@ public class PlayerBullet : ScriptBase
                     case "Enemy":
                         bulletHasHit = true;
                         InternalCall.m_InternalCallDeleteEntity(EntityID);
-                        break;
+
+                        return;
 
                     default:
                         break;
