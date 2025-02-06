@@ -7,6 +7,8 @@ namespace graphicpipe
 {
 	void GraphicsPipe::m_funcDrawGameFrameBuffer()
 	{
+		Helper::Helpers* help = Helper::Helpers::GetInstance();
+		glClearColor(help->m_colour.m_x, help->m_colour.m_y, help->m_colour.m_z, 1.f);
 		glBindFramebuffer(GL_FRAMEBUFFER, m_frameBufferObject);
 		glEnable(GL_DEPTH_TEST);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -22,7 +24,8 @@ namespace graphicpipe
 
 	void GraphicsPipe::m_funcDrawWindow()
 	{
-
+		Helper::Helpers* help = Helper::Helpers::GetInstance();
+		glClearColor(help->m_colour.m_x, help->m_colour.m_y, help->m_colour.m_z, 1.f);
 		glBindFramebuffer(GL_FRAMEBUFFER, m_frameBufferObject);
 		glEnable(GL_DEPTH_TEST);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -38,6 +41,7 @@ namespace graphicpipe
 
 	void GraphicsPipe::m_drawLightingTexture()
 	{
+		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		glBindFramebuffer(GL_FRAMEBUFFER, m_lightingFrameBufferObject);
 		glEnable(GL_DEPTH_TEST);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
