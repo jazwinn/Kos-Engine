@@ -71,6 +71,8 @@ namespace performancetracker {
 			return "Pathfinding System";
 		case ecs::TypeSystem::TYPERAYCASTSYSTEM:
 			return "Raycast System";
+		case ecs::TypeSystem::TYPELIGHTINGSYSTEM:
+			return "Lighting System";
 		case ecs::TypeSystem::TOTALTYPESYSTEM:
 			return "ImGui System";
 		default:
