@@ -53,6 +53,7 @@ namespace graphicpipe {
 
 		// Reserve memory for the maximum number of entities.
 		m_modelData.reserve(ecs::MaxEntity);
+		m_unlitModelData.reserve(ecs::MaxEntity);
 		m_debugBoxData.reserve(ecs::MaxEntity);
 		m_textData.reserve(ecs::MaxEntity);
 		m_modelToNDCMatrix.reserve(ecs::MaxEntity);
@@ -171,6 +172,11 @@ namespace graphicpipe {
 		m_iVec3Array.clear();
 		m_layers.clear();
 		m_modelMatrix.clear();
+		m_unlitModelMatrix.clear();
+		m_unlitModelParams.clear();
+		m_unlitLayers.clear();
+		m_unlitColors.clear();
+		m_unlitModelData.clear();
 		m_modelData.clear();
 		m_debugBoxToNDCMatrix.clear();
 		m_debugBoxCollisionChecks.clear();

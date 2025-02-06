@@ -1,7 +1,7 @@
 [
     {
         "GlobalSettings": {
-            "globalIllumination": 1.0,
+            "globalIllumination": 0.6000000238418579,
             "backgroundColor": {
                 "r": 0.8274336457252502,
                 "g": 0.7139360904693604,
@@ -63,7 +63,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": false
                 }
             },
             {
@@ -92,7 +93,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": false
                 },
                 "animation": {
                     "frameNumber": 6,
@@ -128,7 +130,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": false
                 },
                 "animation": {
                     "frameNumber": 6,
@@ -164,7 +167,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": false
                 },
                 "animation": {
                     "frameNumber": 6,
@@ -200,7 +204,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": false
                 }
             },
             {
@@ -229,7 +234,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": false
                 }
             },
             {
@@ -258,7 +264,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": false
                 }
             }
         ]

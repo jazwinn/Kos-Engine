@@ -92,12 +92,14 @@ namespace gui
         {
             pos.y += (renderWindowSize.y - imageSize.y) / 2;
         }
-
-
-       /* ImGui::GetWindowDrawList()->AddImage(
-            (void*)(long long unsigned int)pipe->m_gamePreviewTexture, pos,
+        pipe->m_gameMode = true; //Set to game camera
+        pipe->m_funcUpdate();
+        pipe->m_gameMode = false;
+        pipe->m_renderFinalPass();
+        ImGui::GetWindowDrawList()->AddImage(
+            (void*)(long long unsigned int)pipe->m_finalPassTexture, pos,
             ImVec2(pos.x + imageSize.x, pos.y + imageSize.y),
-            ImVec2(0, 1), ImVec2(1, 0));*/
+            ImVec2(0, 1), ImVec2(1, 0));
 
         EditorCamera::calculateLevelEditorCamera();
         EditorCamera::calculateLevelEditorView();

@@ -31,10 +31,10 @@ namespace graphicpipe
 {
 	void GraphicsPipe::m_funcDraw()
 	{
-		if (!m_modelToNDCMatrix.empty())
+		if (!m_modelMatrix.empty())
 		{
 			glBindBuffer(GL_ARRAY_BUFFER, m_modelMatrixArrayBuffer);
-			glNamedBufferData(m_modelMatrixArrayBuffer, m_modelToNDCMatrix.size() * sizeof(glm::mat3), &m_modelToNDCMatrix[0], GL_DYNAMIC_DRAW);
+			glNamedBufferData(m_modelMatrixArrayBuffer, m_modelMatrix.size() * sizeof(glm::mat3), &m_modelMatrix[0], GL_DYNAMIC_DRAW);
 
 			glBindBuffer(GL_ARRAY_BUFFER, m_iVec3Buffer);
 			glNamedBufferData(m_iVec3Buffer, m_iVec3Array.size() * sizeof(glm::ivec3), &m_iVec3Array[0], GL_DYNAMIC_DRAW); //Strip Count, FrameNumber, Texture Order
@@ -44,9 +44,6 @@ namespace graphicpipe
 
 			glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer);
 			glNamedBufferData(m_colorBuffer, m_colors.size() * sizeof(glm::vec4), &m_colors[0], GL_DYNAMIC_DRAW);
-			glBindBuffer(GL_ARRAY_BUFFER, m_layerBuffer);
-
-
 
 
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -72,16 +69,78 @@ namespace graphicpipe
 				glBindTexture(GL_TEXTURE_2D, m_textureIDs[i]);
 			
 			}
+
+			glUniformMatrix3fv(glGetUniformLocation(m_genericShaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currViewMatrix));
+			glUniformMatrix3fv(glGetUniformLocation(m_genericShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currOrthoMatrix));
 			
 			glUniform1f(glGetUniformLocation(m_genericShaderProgram, "globalBrightness"), m_globalLightIntensity);
 
 			glBindVertexArray(m_squareMesh.m_vaoId);
-			glDrawElementsInstanced(m_squareMesh.m_primitiveType, m_squareMesh.m_indexElementCount, GL_UNSIGNED_SHORT, NULL, static_cast<GLsizei>(m_modelToNDCMatrix.size()));
+			glDrawElementsInstanced(m_squareMesh.m_primitiveType, m_squareMesh.m_indexElementCount, GL_UNSIGNED_SHORT, NULL, static_cast<GLsizei>(m_modelMatrix.size()));
 			glBindVertexArray(0);
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 		
 		
+		}
+
+
+		
+	}
+
+	void GraphicsPipe::m_funcDrawUnlit()
+	{
+		if (!m_unlitModelMatrix.empty())
+		{
+			glBindBuffer(GL_ARRAY_BUFFER, m_modelMatrixArrayBuffer);
+			glNamedBufferData(m_modelMatrixArrayBuffer, m_unlitModelMatrix.size() * sizeof(glm::mat3), &m_unlitModelMatrix[0], GL_DYNAMIC_DRAW);
+
+			glBindBuffer(GL_ARRAY_BUFFER, m_iVec3Buffer);
+			glNamedBufferData(m_iVec3Buffer, m_unlitModelParams.size() * sizeof(glm::ivec3), &m_unlitModelParams[0], GL_DYNAMIC_DRAW); //Strip Count, FrameNumber, Texture Order
+
+			glBindBuffer(GL_ARRAY_BUFFER, m_layerBuffer);
+			glNamedBufferData(m_layerBuffer, m_unlitLayers.size() * sizeof(int), &m_unlitLayers[0], GL_DYNAMIC_DRAW);
+
+			glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer);
+			glNamedBufferData(m_colorBuffer, m_unlitColors.size() * sizeof(glm::vec4), &m_unlitColors[0], GL_DYNAMIC_DRAW);
+
+
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+			glUseProgram(m_genericShaderProgram);
+
+			GLint lvUniformVarLoc1 = glGetUniformLocation(m_genericShaderProgram, "textures");
+
+			if (lvUniformVarLoc1 >= 0)
+			{
+				glUniform1iv(lvUniformVarLoc1, static_cast<GLsizei>(m_textureIDs.size()), (GLint*)&m_textureIDs[0]);
+			}
+			else
+			{
+				LOGGING_ERROR("Uniform variable location: %d", lvUniformVarLoc1);
+				LOGGING_ERROR("Uniform variable 'textures' doesn't exist!");
+				std::exit(EXIT_FAILURE);
+			}
+
+			for (int i = 0; i < m_textureIDs.size(); ++i)
+			{
+				glActiveTexture(GL_TEXTURE0 + m_textureIDs[i]);
+				glBindTexture(GL_TEXTURE_2D, m_textureIDs[i]);
+
+			}
+
+			glUniformMatrix3fv(glGetUniformLocation(m_genericShaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currViewMatrix));
+			glUniformMatrix3fv(glGetUniformLocation(m_genericShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currOrthoMatrix));
+
+			glUniform1f(glGetUniformLocation(m_genericShaderProgram, "globalBrightness"), m_globalLightIntensity);
+
+			glBindVertexArray(m_squareMesh.m_vaoId);
+			glDrawElementsInstanced(m_squareMesh.m_primitiveType, m_squareMesh.m_indexElementCount, GL_UNSIGNED_SHORT, NULL, static_cast<GLsizei>(m_unlitModelMatrix.size()));
+			glBindVertexArray(0);
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+
+
 		}
 	}
 
