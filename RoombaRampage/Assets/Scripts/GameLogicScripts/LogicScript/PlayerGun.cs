@@ -18,8 +18,9 @@ public class PlayerGun : ScriptBase
     {
         EntityID = id;
 
-        gunshotSound = "aud_gunshot01";
-        cleaverSound = "aud_cleaver";
+        gunshotSound = "aud_gunshot01.wav";
+        cleaverSound = "aud_cleaver.wav";
+        katanaSound = "aud_katana01.wav";
 
         leftCleaverTexture = "ani_cleaverLeftAnim_strip6.png";
         rightCleaverTexture = "ani_cleaverRightAnim_strip6.png";
@@ -37,8 +38,8 @@ public class PlayerGun : ScriptBase
 
         bulletPrefab = "prefab_playerBullet";
 
-        leftLimbGunAmmo = 6;
-        rightLimbGunAmmo = 6;
+        leftLimbGunAmmo = 1000;
+        rightLimbGunAmmo = 1000;
         backLimbGunAmmo = 6;
 
         leftLimbMeleeCount = 1;
@@ -65,6 +66,7 @@ public class PlayerGun : ScriptBase
 
     private string gunshotSound;
     private string cleaverSound;
+    private string katanaSound;
 
     private string leftCleaverTexture;
     private string rightCleaverTexture;
@@ -304,9 +306,9 @@ public class PlayerGun : ScriptBase
             default:
                 break;
         }
-
-
         InternalCall.m_InternalCallPlayAudio(EntityID, cleaverSound);
+        yield return new CoroutineManager.WaitForSeconds(0.1f);
+        InternalCall.m_InternalCallPlayAudio(EntityID, katanaSound);
 
         uint killZoneID = (uint)InternalCall.m_InternalCallGetTagID("MeleeKillZoneSpawn");
         ColliderComponent killZoneCollComp = Component.Get<ColliderComponent>(killZoneID);
