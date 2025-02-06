@@ -272,6 +272,59 @@ namespace graphicpipe
 
 	}
 
+	void GraphicsPipe::m_funcSetUpUnlitScreenFrameBuffer()
+	{
+		Helper::Helpers* help = Helper::Helpers::GetInstance();
+		if (help->m_windowWidth <= 0 || help->m_windowHeight <= 0) //Skip if window is minimized
+		{
+			return;
+		}
+
+		if (m_unlitScreenTexture)
+		{
+			glDeleteTextures(1, &m_unlitScreenTexture);
+		}
+		if (m_finalPassDepthBufferObject)
+		{
+			glDeleteRenderbuffers(1, &m_unlitScreenDepthBufferObject);
+		}
+		if (m_unlitScreenFrameBufferObject)
+		{
+			glDeleteFramebuffers(1, &m_unlitScreenFrameBufferObject);
+		}
+		glGenFramebuffers(1, &m_unlitScreenFrameBufferObject);
+		glBindFramebuffer(GL_FRAMEBUFFER, m_unlitScreenFrameBufferObject);
+
+		glGenTextures(1, &m_unlitScreenTexture);
+		glBindTexture(GL_TEXTURE_2D, m_unlitScreenTexture);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, static_cast<GLsizei>(help->m_windowWidth), static_cast<GLsizei>(help->m_windowHeight), 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glBindTexture(GL_TEXTURE_2D, 0);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_unlitScreenTexture, 0);
+
+
+		glGenRenderbuffers(1, &m_unlitScreenDepthBufferObject);
+		glBindRenderbuffer(GL_RENDERBUFFER, m_unlitScreenDepthBufferObject);
+		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, static_cast<GLsizei>(help->m_windowWidth), static_cast<GLsizei>(help->m_windowHeight));
+		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_unlitScreenDepthBufferObject);
+
+#if DEBUG
+		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE)
+		{
+			LOGGING_INFO("Framebuffer successfully created");
+		}
+		else
+		{
+			LOGGING_INFO("Framebuffer has not been created");
+		}
+#endif
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+		glScissor(0, 0, static_cast<GLsizei>(help->m_windowWidth), static_cast<GLsizei>(help->m_windowHeight));
+
+	}
+
 	void GraphicsPipe::m_funcSetupGamePreviewFrameBuffer()
 	{
 		Helper::Helpers* help = Helper::Helpers::GetInstance();

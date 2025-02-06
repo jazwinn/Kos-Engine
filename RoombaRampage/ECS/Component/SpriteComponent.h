@@ -35,7 +35,8 @@ namespace ecs {
 		int m_layer{};
 		vector3::Vec3 m_color{ 1.f,1.f,1.f };
 		float m_alpha{ 1.f };
-		REFLECTABLE(SpriteComponent, m_layer);
+		bool m_isIlluminated{true};
+		REFLECTABLE(SpriteComponent, m_layer, m_isIlluminated );
 	};
 
 }

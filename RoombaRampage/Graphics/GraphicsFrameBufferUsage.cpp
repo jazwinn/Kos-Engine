@@ -1,6 +1,7 @@
 #include "../Config/pch.h"
 #include "../Graphics/GraphicsPipe.h"
 #include "../Graphics/GraphicsCamera.h"
+#include "../Application/Helper.h"
 
 namespace graphicpipe
 {
@@ -12,8 +13,6 @@ namespace graphicpipe
 
 		m_funcDrawTilemap();
 		m_funcDraw();
-		m_funcDrawText();
-		//m_funcRenderLighting();
 
 		// Switch back to the default framebuffer
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -27,14 +26,10 @@ namespace graphicpipe
 		glBindFramebuffer(GL_FRAMEBUFFER, m_frameBufferObject);
 		glEnable(GL_DEPTH_TEST);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		m_funcDrawGrid();
-		m_funcDrawDebug();
+
 		m_funcDrawTilemap();
-		m_funcDrawGridCollider();
 		m_funcDraw();
-		//m_funcDrawLine({ 1.f,1.f,0 }, { -1.f,-1.f,0 }); // Comment this out when done debugging;
-		m_funcDrawText();
-		//m_funcRenderLighting();
+
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		glDisable(GL_DEPTH_TEST);
 		glClear(GL_COLOR_BUFFER_BIT);
@@ -54,10 +49,50 @@ namespace graphicpipe
 		glClear(GL_COLOR_BUFFER_BIT);
 	}
 
+	void GraphicsPipe::m_funcDrawUnlitObjectTexture()
+	{
+		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+		glBindFramebuffer(GL_FRAMEBUFFER, m_unlitScreenFrameBufferObject);
+		glEnable(GL_DEPTH_TEST);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		m_funcDrawUnlit();
+		m_funcDrawText();
+
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		glDisable(GL_DEPTH_TEST);
+		glClear(GL_COLOR_BUFFER_BIT);
+
+		Helper::Helpers* help = Helper::Helpers::GetInstance();
+		glClearColor(help->m_colour.m_x, help->m_colour.m_y, help->m_colour.m_z, 1.f);
+
+	}
+
+	void GraphicsPipe::m_funcDrawDebugTexture()
+	{
+		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+		glBindFramebuffer(GL_FRAMEBUFFER, m_unlitScreenFrameBufferObject);
+		glEnable(GL_DEPTH_TEST);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		m_funcDrawUnlit();
+		m_funcDrawText();
+		m_funcDrawDebug();
+		m_funcDrawGrid();
+		m_funcDrawGridCollider();
+
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		glDisable(GL_DEPTH_TEST);
+		glClear(GL_COLOR_BUFFER_BIT);
+		Helper::Helpers* help = Helper::Helpers::GetInstance();
+		glClearColor(help->m_colour.m_x, help->m_colour.m_y, help->m_colour.m_z, 1.f);
+	}
+
 	void GraphicsPipe::m_renderFinalPass()
 	{
 		m_funcDrawGameFrameBuffer();
 		m_drawLightingTexture();
+		m_funcDrawUnlitObjectTexture();
 		glBindFramebuffer(GL_FRAMEBUFFER, m_finalPassFrameBufferObject);
 		glEnable(GL_DEPTH_TEST);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -71,6 +106,10 @@ namespace graphicpipe
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, m_lightingTexture);
 
+		glActiveTexture(GL_TEXTURE2);
+		glBindTexture(GL_TEXTURE_2D, m_unlitScreenTexture);
+
+		glUniform1i(glGetUniformLocation(m_finalPassShaderProgram, "unlitScreenTexture"), 2);
 		glUniform1i(glGetUniformLocation(m_finalPassShaderProgram, "lightTexture"), 1);
 		glUniform1i(glGetUniformLocation(m_finalPassShaderProgram, "screenTexture"), 0);
 		glUniform1f(glGetUniformLocation(m_finalPassShaderProgram, "globalBrightness"), m_globalLightIntensity);
@@ -101,6 +140,7 @@ namespace graphicpipe
 	{
 		m_funcDrawWindow();
 		m_drawLightingTexture();
+		m_funcDrawDebugTexture();
 		glBindFramebuffer(GL_FRAMEBUFFER, m_gamePreviewFrameBufferObject);
 		glEnable(GL_DEPTH_TEST);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -119,6 +159,10 @@ namespace graphicpipe
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, m_lightingTexture);
 
+		glActiveTexture(GL_TEXTURE2);
+		glBindTexture(GL_TEXTURE_2D, m_unlitScreenTexture);
+
+		glUniform1i(glGetUniformLocation(m_finalPassShaderProgram, "unlitScreenTexture"), 2);
 		glUniform1i(glGetUniformLocation(m_finalPassShaderProgram, "lightTexture"), 1);
 		glUniform1i(glGetUniformLocation(m_finalPassShaderProgram, "screenTexture"), 0);
 		glUniform1f(glGetUniformLocation(m_finalPassShaderProgram, "globalBrightness"), m_globalLightIntensity);

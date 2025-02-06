@@ -57,6 +57,34 @@ namespace graphicpipe
 			m_modelData.clear();
 		}
 
+		if (m_unlitModelData.size() > 0)
+		{
+			//Unlit Model Data
+			for (int n{}; n < m_unlitModelData.size(); n++)
+			{
+				float heightRatio = static_cast<float>(m_imageData[m_unlitModelData[n].m_textureID].m_height) / m_unitHeight;
+				float widthRatio = static_cast<float>(m_imageData[m_unlitModelData[n].m_textureID].m_width) / m_unitWidth;
+				float imageAspectRatio = static_cast<float>(m_imageData[m_unlitModelData[n].m_textureID].m_width) / static_cast<float>(m_imageData[m_unlitModelData[n].m_textureID].m_height);
+				if (m_unlitModelData[n].m_stripCount != 1)
+				{
+					m_unlitModelData[n].m_transformation[0][0] = m_unlitModelData[n].m_transformation[0][0] * widthRatio / imageAspectRatio;
+					m_unlitModelData[n].m_transformation[0][1] = m_unlitModelData[n].m_transformation[0][1] * widthRatio / imageAspectRatio;
+				}
+				else
+				{
+					m_unlitModelData[n].m_transformation[0][0] = m_unlitModelData[n].m_transformation[0][0] * widthRatio;
+					m_unlitModelData[n].m_transformation[0][1] = m_unlitModelData[n].m_transformation[0][1] * widthRatio;
+				}
+				m_unlitModelData[n].m_transformation[1][1] = m_unlitModelData[n].m_transformation[1][1] * heightRatio;
+				m_unlitModelData[n].m_transformation[1][0] = m_unlitModelData[n].m_transformation[1][0] * heightRatio;
+				m_unlitModelMatrix.push_back(m_unlitModelData[n].m_transformation);
+				m_unlitModelParams.push_back({ m_unlitModelData[n].m_stripCount, m_unlitModelData[n].m_frameNumber, m_unlitModelData[n].m_textureID });
+				m_unlitLayers.push_back(m_unlitModelData[n].m_layer);
+				m_unlitColors.push_back(m_unlitModelData[n].m_color);
+			}
+			m_unlitModelData.clear();
+		}
+
 		//Debug Model Data
 		if (m_debugBoxData.size() > 0)
 		{

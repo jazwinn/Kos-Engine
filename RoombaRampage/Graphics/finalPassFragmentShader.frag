@@ -7,12 +7,14 @@ in vec2 texCoords;
 
 uniform sampler2D screenTexture;
 uniform sampler2D lightTexture;
+uniform sampler2D unlitScreenTexture;
 uniform float globalBrightness;
 
 void main()
 {
     vec4 sceneColor = texture(screenTexture, texCoords);
     vec4 lightColor = texture(lightTexture, texCoords);
+    vec4 unlitSceneColor = texture(unlitScreenTexture, texCoords);
 
     vec4 darkenedScene = sceneColor * globalBrightness;  
     vec4 restoredBrightness = vec4 (0,0,0,1.f);
@@ -31,7 +33,13 @@ void main()
       // float a = max(darkenedScene.a, multipliedLighting.a);
 
     vec4 final = vec4(r,g,b,1.0);
-    fragColor = clamp(final, 0.0, 1.0);
+    vec4 litScene = clamp(final, 0.0, 1.0);
+    fragColor = litScene;
+
+    if(unlitSceneColor.r != 0 || unlitSceneColor.g != 0 || unlitSceneColor.b != 0 || unlitSceneColor.a != 0)
+    {
+        fragColor = unlitSceneColor;
+    }
 } 
 
 )"
