@@ -31,6 +31,8 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../ECS/ECS.h"
 #include "../Inputs/Input.h"
 
+#include <stb_image.h>
+
 namespace Application {
 
     float AppWindow::m_windowHeight;
@@ -42,6 +44,23 @@ namespace Application {
     const GLFWvidmode* AppWindow::m_mode;
 
     GLFWmonitor* AppWindow::m_monitor;
+
+    void SetWindowIcon(GLFWwindow* window) {
+        GLFWimage icon;
+
+        // Load image (ensure your path is correct)
+        icon.pixels = stbi_load("Config/icon.png", &icon.width, &icon.height, 0, 4);
+        if (!icon.pixels) {
+            printf("Failed to load icon!\n");
+            return;
+        }
+
+        // Set icon
+        glfwSetWindowIcon(window, 1, &icon);
+
+        // Free image data after setting the icon
+        stbi_image_free(icon.pixels);
+    }
 
     static void windowedFocusCallback([[maybe_unused]] GLFWwindow* window, int focused)
     {
@@ -152,6 +171,9 @@ namespace Application {
 #endif IMGUIENABLED
 
 
+
+
+
         /* Create a windowed mode window and its OpenGL context */
 
         m_monitor = glfwGetPrimaryMonitor();
@@ -186,6 +208,9 @@ namespace Application {
 
 
 	int AppWindow::Draw() {
+
+        //create icon
+        SetWindowIcon(m_window);
 
         if (Input::InputSystem::m_isKeyPressed(keys::LeftAlt) && Input::InputSystem::m_isKeyTriggered(keys::ENTER)) {
             if (m_enabledFullScreen) {
