@@ -56,8 +56,8 @@
             }
         },
         "collider": {
-            "checkcollision": false,
-            "checkresponse": false,
+            "checkcollision": true,
+            "checkresponse": true,
             "size": {
                 "x": 2.4000000953674316,
                 "y": 1.350000023841858
@@ -80,6 +80,15 @@
             },
             "alpha": 1.0
         },
+        "script": {
+            "scripts": [
+                {
+                    "name": "MainMenuScript",
+                    "enabled": true,
+                    "map": []
+                }
+            ]
+        },
         "audio": [
             {
                 "name": "aud_buttonClick01",
@@ -91,17 +100,17 @@
     },
     {
         "name": {
-            "namestr": "Quit Button",
+            "namestr": "Start Button",
             "layer": 0,
             "isprefab": false,
             "tagstr": "Default"
         },
         "transform": {
             "position": {
-                "x": -2.119999885559082,
-                "y": 1.0499999523162842
+                "x": -2.1292552947998047,
+                "y": 0.6126123666763306
             },
-            "rotation": 0.0,
+            "rotation": -0.0,
             "scale": {
                 "x": 0.75,
                 "y": 0.75
@@ -109,123 +118,10 @@
         },
         "collider": {
             "checkcollision": true,
-            "checkresponse": false,
+            "checkresponse": true,
             "size": {
-                "x": 0.23000000417232513,
-                "y": 0.25
-            },
-            "offset": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "drawDebug": true,
-            "radius": 0.5,
-            "shapetype": 0
-        },
-        "rigidbody": {
-            "linearVelocity": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "linearAcceleration": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "rotation": 0.0,
-            "angularVelocity": 0.0,
-            "angularAcceleration": 0.0,
-            "mass": 1.0,
-            "inverseMass": 1.0,
-            "linearDamping": 0.9900000095367432,
-            "angularDamping": 0.9900000095367432,
-            "force": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "torque": 0.0,
-            "kinematic": false,
-            "static": false
-        },
-        "sprite": {
-            "imagefile": "ani_quitIcon_strip2.png",
-            "layer": 2,
-            "color": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
-            },
-            "alpha": 1.0
-        },
-        "animation": {
-            "frameNumber": 0,
-            "framesPerSecond": 0,
-            "frameTimer": 0.0,
-            "isAnimating": false,
-            "stripCount": 2
-        },
-        "button": {
-            "force": {
-                "x": 45.9151611328125,
-                "y": 993.5999755859375
-            },
-            "scale": {
-                "x": 0.20999999344348907,
+                "x": 0.18000000715255737,
                 "y": 0.20999999344348907
-            }
-        },
-        "script": {
-            "scripts": [
-                {
-                    "name": "ExitGameButton",
-                    "enabled": true,
-                    "map": [
-                        {
-                            "variable": "yolo",
-                            "base64": ""
-                        },
-                        {
-                            "variable": "speed",
-                            "base64": ""
-                        }
-                    ]
-                },
-                {
-                    "name": "StartMenuButtons",
-                    "enabled": true,
-                    "map": [
-                        {
-                            "variable": "buttonFunctionNo",
-                            "base64": ""
-                        }
-                    ]
-                }
-            ]
-        }
-    },
-    {
-        "name": {
-            "namestr": "Play Button",
-            "layer": 0,
-            "isprefab": false,
-            "tagstr": "Default"
-        },
-        "transform": {
-            "position": {
-                "x": -2.119999885559082,
-                "y": 0.699999988079071
-            },
-            "rotation": 0.0,
-            "scale": {
-                "x": 0.75,
-                "y": 0.75
-            }
-        },
-        "collider": {
-            "checkcollision": true,
-            "checkresponse": false,
-            "size": {
-                "x": 0.2199999988079071,
-                "y": 0.25
             },
             "offset": {
                 "x": 0.0,
@@ -235,32 +131,8 @@
             "radius": 0.5,
             "shapetype": 0
         },
-        "rigidbody": {
-            "linearVelocity": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "linearAcceleration": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "rotation": 0.0,
-            "angularVelocity": 0.0,
-            "angularAcceleration": 0.0,
-            "mass": 1.0,
-            "inverseMass": 1.0,
-            "linearDamping": 0.9900000095367432,
-            "angularDamping": 0.9900000095367432,
-            "force": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "torque": 0.0,
-            "kinematic": false,
-            "static": false
-        },
         "sprite": {
-            "imagefile": "ani_startIcon_strip2.png",
+            "imagefile": "img_startIcon.png",
             "layer": 1,
             "color": {
                 "r": 1.0,
@@ -269,17 +141,10 @@
             },
             "alpha": 1.0
         },
-        "animation": {
-            "frameNumber": 0,
-            "framesPerSecond": 0,
-            "frameTimer": 0.0,
-            "isAnimating": false,
-            "stripCount": 2
-        },
         "button": {
             "force": {
-                "x": 45.9151611328125,
-                "y": 842.4000244140625
+                "x": 116.2542724609375,
+                "y": 1019.966552734375
             },
             "scale": {
                 "x": 0.18000000715255737,
@@ -292,16 +157,6 @@
                     "name": "MainMenuScript",
                     "enabled": true,
                     "map": []
-                },
-                {
-                    "name": "StartMenuButtons",
-                    "enabled": true,
-                    "map": [
-                        {
-                            "variable": "buttonFunctionNo",
-                            "base64": ""
-                        }
-                    ]
                 }
             ]
         },
@@ -316,17 +171,17 @@
     },
     {
         "name": {
-            "namestr": "How To Play Button",
+            "namestr": "Quit Button",
             "layer": 0,
             "isprefab": false,
             "tagstr": "Default"
         },
         "transform": {
             "position": {
-                "x": -2.119999885559082,
-                "y": 0.3499999940395355
+                "x": -2.1211767196655273,
+                "y": 0.9619401693344116
             },
-            "rotation": 0.0,
+            "rotation": -0.0,
             "scale": {
                 "x": 0.75,
                 "y": 0.75
@@ -334,7 +189,7 @@
         },
         "collider": {
             "checkcollision": true,
-            "checkresponse": false,
+            "checkresponse": true,
             "size": {
                 "x": 0.20999999344348907,
                 "y": 0.20999999344348907
@@ -347,33 +202,9 @@
             "radius": 0.5,
             "shapetype": 0
         },
-        "rigidbody": {
-            "linearVelocity": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "linearAcceleration": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "rotation": 0.0,
-            "angularVelocity": 0.0,
-            "angularAcceleration": 0.0,
-            "mass": 1.0,
-            "inverseMass": 1.0,
-            "linearDamping": 0.9900000095367432,
-            "angularDamping": 0.9900000095367432,
-            "force": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "torque": 0.0,
-            "kinematic": false,
-            "static": false
-        },
         "sprite": {
-            "imagefile": "ani_howToPlayIcon_strip2.png",
-            "layer": 5,
+            "imagefile": "img_quitIcon.png",
+            "layer": 2,
             "color": {
                 "r": 1.0,
                 "g": 1.0,
@@ -381,278 +212,34 @@
             },
             "alpha": 1.0
         },
-        "animation": {
-            "frameNumber": 0,
-            "framesPerSecond": 0,
-            "frameTimer": 0.0,
-            "isAnimating": false,
-            "stripCount": 2
+        "button": {
+            "force": {
+                "x": 120.6695556640625,
+                "y": 1211.258544921875
+            },
+            "scale": {
+                "x": 0.20999999344348907,
+                "y": 0.20999999344348907
+            }
         },
         "script": {
             "scripts": [
                 {
-                    "name": "StartMenuButtons",
+                    "name": "ExitGameButton",
                     "enabled": true,
                     "map": [
                         {
-                            "variable": "buttonFunctionNo",
-                            "base64": "CgAAAMzMzMwA"
+                            "variable": "speed",
+                            "base64": ""
                         },
                         {
-                            "variable": "isReading",
+                            "variable": "yolo",
                             "base64": ""
                         }
                     ]
                 }
             ]
         }
-    },
-    {
-        "name": {
-            "namestr": "Quit Text",
-            "layer": 0,
-            "isprefab": false,
-            "tagstr": "Default"
-        },
-        "transform": {
-            "position": {
-                "x": -2.1146252155303955,
-                "y": 0.9291677474975586
-            },
-            "rotation": -0.0,
-            "scale": {
-                "x": 1.0,
-                "y": 1.0
-            }
-        },
-        "text": {
-            "text": "QUIT",
-            "text": null,
-            "filename": "fnt_silkscreenRegular.ttf",
-            "fontsize": 1.600000023841858,
-            "color": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
-            },
-            "layer": 11
-        }
-    },
-    {
-        "name": {
-            "namestr": "Play Text",
-            "layer": 0,
-            "isprefab": false,
-            "tagstr": "Default"
-        },
-        "transform": {
-            "position": {
-                "x": -2.1084299087524414,
-                "y": 0.570757269859314
-            },
-            "rotation": -0.0,
-            "scale": {
-                "x": 1.0,
-                "y": 1.0
-            }
-        },
-        "text": {
-            "text": "PLAY",
-            "text": null,
-            "filename": "fnt_silkscreenRegular.ttf",
-            "fontsize": 1.600000023841858,
-            "color": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
-            },
-            "layer": 10
-        }
-    },
-    {
-        "name": {
-            "namestr": "How To Play Text",
-            "layer": 0,
-            "isprefab": false,
-            "tagstr": "Default"
-        },
-        "transform": {
-            "position": {
-                "x": -2.1109001636505127,
-                "y": 0.22523237764835358
-            },
-            "rotation": -0.0,
-            "scale": {
-                "x": 1.0,
-                "y": 1.0
-            }
-        },
-        "text": {
-            "text": "MANUAL",
-            "text": null,
-            "filename": "fnt_silkscreenRegular.ttf",
-            "fontsize": 1.600000023841858,
-            "color": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
-            },
-            "layer": 12
-        }
-    },
-    {
-        "name": {
-            "namestr": "How To Play Popup",
-            "layer": 0,
-            "isprefab": false,
-            "tagstr": "Default"
-        },
-        "transform": {
-            "position": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "rotation": 0.0,
-            "scale": {
-                "x": 1.0,
-                "y": 1.0
-            }
-        },
-        "collider": {
-            "checkcollision": false,
-            "checkresponse": false,
-            "size": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "offset": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "drawDebug": true,
-            "radius": 0.5,
-            "shapetype": 0
-        },
-        "children": [
-            {
-                "name": {
-                    "namestr": "How To Play Background",
-                    "layer": 9,
-                    "isprefab": false,
-                    "tagstr": "Default"
-                },
-                "transform": {
-                    "position": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 0.03999999910593033,
-                        "y": 0.03999999910593033
-                    }
-                },
-                "sprite": {
-                    "imagefile": "img_howToPlayText.png",
-                    "layer": 13,
-                    "color": {
-                        "r": 1.0,
-                        "g": 1.0,
-                        "b": 1.0
-                    },
-                    "alpha": 1.0
-                }
-            },
-            {
-                "name": {
-                    "namestr": "How To Play X",
-                    "layer": 9,
-                    "isprefab": false,
-                    "tagstr": "Default"
-                },
-                "transform": {
-                    "position": {
-                        "x": 0.655129611492157,
-                        "y": 0.635952353477478
-                    },
-                    "rotation": -0.0,
-                    "scale": {
-                        "x": 0.5,
-                        "y": 0.5
-                    }
-                },
-                "collider": {
-                    "checkcollision": true,
-                    "checkresponse": false,
-                    "size": {
-                        "x": 0.12999999523162842,
-                        "y": 0.12999999523162842
-                    },
-                    "offset": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "drawDebug": true,
-                    "radius": 0.5,
-                    "shapetype": 0
-                },
-                "rigidbody": {
-                    "linearVelocity": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "linearAcceleration": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "rotation": 0.0,
-                    "angularVelocity": 0.0,
-                    "angularAcceleration": 0.0,
-                    "mass": 1.0,
-                    "inverseMass": 1.0,
-                    "linearDamping": 0.9900000095367432,
-                    "angularDamping": 0.9900000095367432,
-                    "force": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "torque": 0.0,
-                    "kinematic": false,
-                    "static": false
-                },
-                "sprite": {
-                    "imagefile": "ani_howToPlayTextCloseButton_strip2.png",
-                    "layer": 20,
-                    "color": {
-                        "r": 1.0,
-                        "g": 1.0,
-                        "b": 1.0
-                    },
-                    "alpha": 1.0
-                },
-                "animation": {
-                    "frameNumber": 0,
-                    "framesPerSecond": 0,
-                    "frameTimer": 0.0,
-                    "isAnimating": false,
-                    "stripCount": 2
-                },
-                "script": {
-                    "scripts": [
-                        {
-                            "name": "StartMenuButtons",
-                            "enabled": true,
-                            "map": [
-                                {
-                                    "variable": "buttonFunctionNo",
-                                    "base64": "CwAAAMzMzMwA"
-                                }
-                            ]
-                        }
-                    ]
-                }
-            }
-        ]
     },
     {
         "name": {
@@ -714,45 +301,64 @@
     },
     {
         "name": {
-            "namestr": "UI_StartMenu_Cursor",
+            "namestr": "Play Text",
             "layer": 0,
             "isprefab": false,
             "tagstr": "Default"
         },
         "transform": {
             "position": {
-                "x": 8.563109397888184,
-                "y": -13.951149940490723
+                "x": -2.1146252155303955,
+                "y": 0.4720878303050995
             },
-            "rotation": 0.0,
+            "rotation": -0.0,
             "scale": {
                 "x": 1.0,
                 "y": 1.0
             }
         },
-        "collider": {
-            "checkcollision": true,
-            "checkresponse": false,
-            "size": {
+        "text": {
+            "text": "PLAY",
+            "text": null,
+            "filename": "fnt_silkscreenRegular.ttf",
+            "fontsize": 1.600000023841858,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "layer": 10
+        }
+    },
+    {
+        "name": {
+            "namestr": "Quit Text",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": -2.1146252155303955,
+                "y": 0.82192462682724
+            },
+            "rotation": -0.0,
+            "scale": {
                 "x": 1.0,
                 "y": 1.0
-            },
-            "offset": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "drawDebug": true,
-            "radius": 0.02500000037252903,
-            "shapetype": 1
+            }
         },
-        "script": {
-            "scripts": [
-                {
-                    "name": "StartMenuCursor",
-                    "enabled": true,
-                    "map": []
-                }
-            ]
+        "text": {
+            "text": "QUIT",
+            "text": null,
+            "filename": "fnt_silkscreenRegular.ttf",
+            "fontsize": 1.600000023841858,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "layer": 11
         }
     }
 ]
