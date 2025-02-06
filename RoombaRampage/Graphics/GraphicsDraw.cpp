@@ -123,115 +123,7 @@ namespace graphicpipe
 		}
 	}
 
-	void GraphicsPipe::m_funcDrawGameFrameBuffer()
-	{
-		glBindFramebuffer(GL_FRAMEBUFFER, m_frameBufferObject);
-		glEnable(GL_DEPTH_TEST);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		m_funcDrawTilemap();
-		m_funcDraw();
-		m_funcDrawText();
-		m_funcRenderLighting();
-
-		// Switch back to the default framebuffer
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		glDisable(GL_DEPTH_TEST);
-		glClear(GL_COLOR_BUFFER_BIT);
-
-		// Use the framebuffer shader program
-		glUseProgram(m_frameBufferShaderProgram);
-
-		// Draw the framebuffer texture to the screen
-		glBindVertexArray(m_screenTextureVAO);
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, m_screenTexture);
-
-		glUniform1f(glGetUniformLocation(m_frameBufferShaderProgram, "globalBrightness"), m_globalLightIntensity);
-
-		glDrawArrays(GL_TRIANGLES, 0, 6);
-
-		// Check for OpenGL errors
-		//GLenum err;
-		//while ((err = glGetError()) != GL_NO_ERROR) {
-		//	LOGGING_ERROR("OpenGL Error: 0x%X", err);
-		//}
-	}
-
-	void GraphicsPipe::m_funcDrawWindow()
-	{
-		
-		glBindFramebuffer(GL_FRAMEBUFFER, m_frameBufferObject);
-		glEnable(GL_DEPTH_TEST);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-
-		
-		m_funcDrawGrid();
-		m_funcDrawDebug();
-		m_funcDrawTilemap();
-		m_funcDrawGridCollider();
-		m_funcDraw();
-		//m_funcDrawLine({ 1.f,1.f,0 }, { -1.f,-1.f,0 }); // Comment this out when done debugging;
-		m_funcDrawText();
-		m_funcRenderLighting();
-		
-
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		glDisable(GL_DEPTH_TEST);
-		glClear(GL_COLOR_BUFFER_BIT);
-
-		glUseProgram(m_frameBufferShaderProgram);
-
-
-
-		GLenum err = glGetError();
-		if (err != GL_NO_ERROR) {
-			//LOGGING_ERROR("First OpenGL Error: 0x%X", err);
-			std::cout << "Draw Window OpenGL Error: " << err << std::endl;
-		}
-	}
-
-	void GraphicsPipe::m_drawLightingTexture()
-	{
-		glBindFramebuffer(GL_FRAMEBUFFER, m_lightingFrameBufferObject);
-		glEnable(GL_DEPTH_TEST);
-		glClear(GL_COLOR_BUFFER_BIT);
-
-		m_funcRenderLighting();
-
-		// Switch back to the default framebuffer
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		glDisable(GL_DEPTH_TEST);
-		glClear(GL_COLOR_BUFFER_BIT);
-
-		// Check for OpenGL errors
-		GLenum err;
-		while ((err = glGetError()) != GL_NO_ERROR) {
-			LOGGING_ERROR("#01 OpenGL Error: 0x%X", err);
-		}
-	}
-
-	void GraphicsPipe::m_funcDrawGamePreviewWindow()
-	{
-		glBindFramebuffer(GL_FRAMEBUFFER, m_gamePreviewFrameBufferObject);
-		glEnable(GL_DEPTH_TEST);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		m_funcDrawTilemap();
-		m_funcDraw();
-		
-		m_funcDrawText();
-		m_funcRenderLighting();
-		
-
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		glDisable(GL_DEPTH_TEST);
-		glClear(GL_COLOR_BUFFER_BIT);
-
-		glUseProgram(m_frameBufferShaderProgram);
-
-	}
+	
 
 	void GraphicsPipe::m_funcDrawText()
 	{
@@ -275,14 +167,22 @@ namespace graphicpipe
 				float totalWidth = 0.0f;
 				float maxAscent = 0.0f;
 				float maxDescent = 0.0f;
-
-				for (const char& c : textData.m_text)
+				for (int i = 0; i < textData.m_text.size(); ++i)
 				{
+					char c = textData.m_text[i];
 					text::CharacterData ch = assetmanager->m_fontManager.m_fonts[textData.m_fileName][c];
-					totalWidth += ((ch.m_advance >> 6) * textData.m_scale * textData.m_xyScale.x) / GraphicsCamera::m_windowHeight;
+					//float thing = ((ch.m_advance >> 6)); USE SIZE OF CHAR LATER
+					totalWidth += ((ch.m_advance >> 6) * textData.m_scale * textData.m_xyScale.x) / (float)GraphicsCamera::m_windowHeight;
 					maxAscent = std::max(maxAscent, (ch.m_bearing.y * textData.m_scale * textData.m_xyScale.y) / GraphicsCamera::m_windowHeight);
 					maxDescent = std::max(maxDescent, ((ch.m_size.y - ch.m_bearing.y) * textData.m_scale * textData.m_xyScale.y) / GraphicsCamera::m_windowHeight);
 				}
+				//if (textData.m_text.size())
+				//{
+				//	char c = textData.m_text[textData.m_text.size() - 1];
+				//	text::CharacterData ch = assetmanager->m_fontManager.m_fonts[textData.m_fileName][c];
+				//	//totalWidth -= (((ch.m_advance >> 6) * textData.m_scale * textData.m_xyScale.x) / (float)GraphicsCamera::m_windowHeight) /2.f;
+				//}
+				
 				float totalHeight = maxAscent + maxDescent;
 
 				// Adjust starting position to center the text
@@ -504,6 +404,8 @@ namespace graphicpipe
 
 			glUniformMatrix3fv(glGetUniformLocation(m_lightingShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currOrthoMatrix));
 
+			glUniform1f(glGetUniformLocation(m_lightingShaderProgram, "globalBrightness"), m_globalLightIntensity);
+
 			GLenum err = glGetError();
 			if (err != GL_NO_ERROR) {
 				//LOGGING_ERROR("First OpenGL Error: 0x%X", err);
@@ -527,6 +429,16 @@ namespace graphicpipe
 
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		}
+	}
+
+	void GraphicsPipe::m_funcDrawFullScreenQuad(unsigned int texture)
+	{
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		glUseProgram(m_frameBufferShaderProgram);
+		glBindVertexArray(m_screenTextureVAO);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, texture);
+		glDrawArrays(GL_TRIANGLES, 0, 6);
 	}
 
 	void GraphicsPipe::m_funcSetDrawMode(GLenum mode)

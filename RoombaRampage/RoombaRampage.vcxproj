@@ -490,6 +490,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClCompile Include="Graphics\GraphicsBuffers.cpp" />
     <ClCompile Include="Graphics\GraphicsCamera.cpp" />
     <ClCompile Include="Graphics\GraphicsDraw.cpp" />
+    <ClCompile Include="Graphics\GraphicsFrameBufferUsage.cpp" />
     <ClCompile Include="Graphics\GraphicsMatrix.cpp" />
     <ClCompile Include="Graphics\GraphicsPipe.cpp" />
     <ClCompile Include="Graphics\GraphicsShader.cpp" />
@@ -606,6 +607,8 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
   <ItemGroup>
     <None Include="Graphics\debugFragmentShader.frag" />
     <None Include="Graphics\debugVertexShader.vert" />
+    <None Include="Graphics\finalPassFragmentShader.frag" />
+    <None Include="Graphics\finalPassVertexShader.vert" />
     <None Include="Graphics\frameAccumulationFragmentShader.frag" />
     <None Include="Graphics\frameBufferFragmentShader.frag" />
     <None Include="Graphics\frameCompositionFragmentShader.frag" />

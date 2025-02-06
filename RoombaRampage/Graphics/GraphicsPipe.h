@@ -368,6 +368,10 @@ namespace graphicpipe {
          */
         void m_drawLightingTexture();
 
+        void m_renderFinalPass();
+
+        void m_renderFinalPassWithDebug();
+
 
         /**
          * @brief Renders the lighting effects in the scene.
@@ -376,6 +380,8 @@ namespace graphicpipe {
          * framebuffer, shaders, and associated buffers.
          */
         void m_funcRenderLighting();
+
+        void m_funcDrawFullScreenQuad(unsigned int texture);
 
         /**
          * @brief Sets the drawing mode for rendering.
@@ -404,6 +410,8 @@ namespace graphicpipe {
          */
         void m_funcSetupGamePreviewFrameBuffer();
 
+
+        void m_funcSetupFinalPassBuffer();
 
         /**
          * @brief Sets up the framebuffer for lighting rendering.
@@ -573,6 +581,16 @@ namespace graphicpipe {
         const std::string lightingFragmentShader =
         {
           #include "../Graphics/lightingFragmentShader.frag"
+        };
+
+        const std::string finalPassVertexShader =
+        {
+            #include "../Graphics/finalPassVertexShader.vert"
+        };
+
+        const std::string finalPassFragmentShader =
+        {
+            #include "../Graphics/finalPassFragmentShader.frag"
         };
 
     };

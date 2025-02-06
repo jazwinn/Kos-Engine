@@ -54,10 +54,10 @@ namespace gui
 	{
         graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
 
-        pipe->m_gameMode = true;
-        pipe->m_funcUpdate();
-        pipe->m_funcDrawGamePreviewWindow();
-        pipe->m_gameMode = false;
+        //pipe->m_gameMode = true;
+        //pipe->m_funcUpdate();
+        ////pipe->m_funcDrawGamePreviewWindow();
+        //pipe->m_gameMode = false;
         ImGui::Begin("Game Window");
 
 
@@ -94,10 +94,10 @@ namespace gui
         }
 
 
-        ImGui::GetWindowDrawList()->AddImage(
+       /* ImGui::GetWindowDrawList()->AddImage(
             (void*)(long long unsigned int)pipe->m_gamePreviewTexture, pos,
             ImVec2(pos.x + imageSize.x, pos.y + imageSize.y),
-            ImVec2(0, 1), ImVec2(1, 0));
+            ImVec2(0, 1), ImVec2(1, 0));*/
 
         EditorCamera::calculateLevelEditorCamera();
         EditorCamera::calculateLevelEditorView();

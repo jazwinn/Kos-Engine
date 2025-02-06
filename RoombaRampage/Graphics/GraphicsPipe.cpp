@@ -81,6 +81,7 @@ namespace graphicpipe {
 		m_gridShaderProgram = m_funcSetupShader(gridVertexShader, gridFragmentShader);
 		m_tilemapShaderProgram = m_funcSetupShader(tilemapVertexShader, tilemapFragmentShader);
 		m_lightingShaderProgram = m_funcSetupShader(lightingVertexShader, lightingFragmentShader);
+		m_finalPassShaderProgram = m_funcSetupShader(finalPassVertexShader, finalPassFragmentShader);
 		
 
 		// Initialize model-to-NDC transformation matrix and other drawing data.
@@ -101,6 +102,7 @@ namespace graphicpipe {
 		m_funcSetupFrameBuffer();
 		m_funcSetupGamePreviewFrameBuffer();
 		m_funcSetupLightingFrameBuffer();
+		m_funcSetupFinalPassBuffer();
 
 		// Clear temporary data structures used during setup.
 		m_debugBoxToNDCMatrix.clear();
@@ -197,24 +199,8 @@ namespace graphicpipe {
 		
 		if (m_gameMode)
 		{
-			//Helper::Helpers* help = Helper::Helpers::GetInstance();
-			/*if (GraphicsCamera::m_cameras.size() > 0 && m_gameMode)
-			{
-				GraphicsCamera::setCurrCamera(0);
-				GraphicsCamera::m_CalculateCurrView();
-			}
-			GraphicsCamera::setCurrCamera(0);
-			GraphicsCamera::m_CalculateCurrView();*/
-			
-			/*glClearColor(0.86f, 0.86f, 0.86f, 1.f);
-			glEnable(GL_DEPTH_TEST);
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-			m_funcDraw();
-			m_funcDrawTilemap();
-			m_funcDrawText();*/
-			//std::cout << "Hello" << std::endl;
-			m_funcDrawGameFrameBuffer();
-
+			m_renderFinalPass();
+			//m_funcDrawFullScreenQuad(m_finalPassTexture);
 		}
 		
 		m_funcClearContainers();

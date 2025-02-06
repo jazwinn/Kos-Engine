@@ -97,20 +97,16 @@ struct DrawComponents {
     }
     void operator()(graphicpipe::LightType& _args)
     {
-        const char* shapeName = (_args == graphicpipe::LightType::SPOT) ? "SPOT" : (_args == graphicpipe::LightType::RECTANGLE) ? "RECTANGLE" : "GLOBAL";
+        const char* shapeName = (_args == graphicpipe::LightType::GLOW) ? "GLOW" : "MULTIPLY";
         if (ImGui::BeginCombo("Shape Types", shapeName))
         {
-            if (ImGui::Selectable("SPOT"))
+            if (ImGui::Selectable("GLOW"))
             {
-                _args = graphicpipe::LightType::SPOT;
+                _args = graphicpipe::LightType::GLOW;
             }
-            if (ImGui::Selectable("RECTANGLE"))
+            if (ImGui::Selectable("MULTIPLY"))
             {
-                _args = graphicpipe::LightType::RECTANGLE;
-            }
-            if (ImGui::Selectable("GLOBAL"))
-            {
-                _args = graphicpipe::LightType::GLOBAL;
+                _args = graphicpipe::LightType::MULTIPLY;
             }
             ImGui::EndCombo();
         }
