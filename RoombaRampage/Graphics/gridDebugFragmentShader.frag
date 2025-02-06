@@ -4,7 +4,7 @@
 \author    Sean Tiu
 \par       s.tiu@digipen.edu
 \date      17th Jan, 2025
-\brief     
+\brief     A fragment shader used for debugging the grid system rendering.
 
 Copyright (C) 2024 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the

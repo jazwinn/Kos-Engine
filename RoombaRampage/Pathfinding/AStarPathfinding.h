@@ -4,7 +4,8 @@
 \author    Clarence Boey
 \par       c.boey@digipen.edu
 \date      Jan 14, 2025
-\brief     
+\brief     This file contains the declarations for the AStarPathingFinding class along with the Node struct
+           This file also contains the declarations for the member functions for both the class and the struct
 
 Copyright (C) 2024 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the
