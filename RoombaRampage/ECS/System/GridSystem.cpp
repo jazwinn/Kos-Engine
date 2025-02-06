@@ -77,8 +77,8 @@ namespace ecs {
 			grid->m_Anchor.m_x = floor(transform->m_transformation.m_e20);
 			grid->m_Anchor.m_y = floor(transform->m_transformation.m_e21) + 1.0f;
 
-			transform->m_position.m_x = floor(transform->m_transformation.m_e20);
-			transform->m_position.m_y = floor(transform->m_transformation.m_e21);
+			transform->m_position.m_x = floor(transform->m_position.m_x);
+			transform->m_position.m_y = floor(transform->m_position.m_y);
 
 			transform->m_transformation.m_e20 = floor(transform->m_transformation.m_e20) + 0.5f;
 			transform->m_transformation.m_e21 = floor(transform->m_transformation.m_e21) + 0.5f;

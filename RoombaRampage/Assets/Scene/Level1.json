@@ -1,7 +1,7 @@
 [
     {
         "GlobalSettings": {
-            "globalIllumination": 0.6000000238418579,
+            "globalIllumination": 1.0,
             "backgroundColor": {
                 "r": 0.0,
                 "g": 0.0,
@@ -48274,151 +48274,6 @@
     },
     {
         "name": {
-            "namestr": "ScaredEnemy",
-            "layer": 2,
-            "isprefab": true,
-            "tagstr": "Enemy",
-            "prefabname": "ScaredEnemy.prefab",
-            "issync": true
-        },
-        "transform": {
-            "position": {
-                "x": -4.284083366394043,
-                "y": -3.741776704788208
-            },
-            "rotation": -0.0,
-            "scale": {
-                "x": 3.0,
-                "y": 3.0
-            }
-        },
-        "collider": {
-            "checkcollision": true,
-            "checkresponse": true,
-            "size": {
-                "x": 0.7400000095367432,
-                "y": 0.23999999463558197
-            },
-            "offset": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "drawDebug": true,
-            "radius": 0.5,
-            "shapetype": 0
-        },
-        "enemy": {
-            "enemytag": -1,
-            "enemytype": 0,
-            "enemybehaviour": 0
-        },
-        "rigidbody": {
-            "linearVelocity": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "linearAcceleration": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "rotation": 0.0,
-            "angularVelocity": 0.0,
-            "angularAcceleration": 0.0,
-            "mass": 1.0,
-            "inverseMass": 1.0,
-            "linearDamping": 0.9900000095367432,
-            "angularDamping": 0.9900000095367432,
-            "force": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "torque": 0.0,
-            "kinematic": false,
-            "static": false
-        },
-        "sprite": {
-            "imagefile": "ani_scientistWalk_strip8.png",
-            "layer": 22,
-            "color": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
-            },
-            "alpha": 1.0,
-            "isLit": true
-        },
-        "animation": {
-            "frameNumber": 0,
-            "framesPerSecond": 0,
-            "frameTimer": 0.0,
-            "isAnimating": true,
-            "stripCount": 8
-        },
-        "script": {
-            "scripts": [
-                {
-                    "name": "EnemyScript",
-                    "enabled": true,
-                    "map": [
-                        {
-                            "variable": "isDead",
-                            "base64": ""
-                        }
-                    ]
-                }
-            ]
-        },
-        "audio": [
-            {
-                "name": "aud_humanDeath01",
-                "volume": 0.4490000009536743,
-                "loop": false,
-                "playOnStart": false
-            }
-        ],
-        "raycast": {
-            "raycasts": [
-                {
-                    "raycastID": "RaycastToPlayer",
-                    "israycasting": true,
-                    "targetposition": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "Layer Vector": [
-                        {
-                            "layer": 5
-                        }
-                    ]
-                }
-            ]
-        },
-        "children": [
-            {
-                "name": {
-                    "namestr": "Waypoint 1",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "ScaredEnemy.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    }
-                }
-            }
-        ]
-    },
-    {
-        "name": {
             "namestr": "WallParent",
             "layer": 0,
             "isprefab": false,
@@ -49791,11 +49646,11 @@
                 "x": 0.0,
                 "y": 1.0
             },
-            "m_intensity": 1.7999999523162842,
+            "m_intensity": 0.5,
             "m_colour": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
+                "x": 0.27829116582870483,
+                "y": 0.9115044474601746,
+                "z": 0.6761507987976074
             }
         }
     },
@@ -49866,8 +49721,7 @@
                 "g": 1.0,
                 "b": 1.0
             },
-            "alpha": 1.0,
-            "isLit": true
+            "alpha": 1.0
         },
         "script": {
             "scripts": [
@@ -49920,8 +49774,7 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0,
-                    "isLit": true
+                    "alpha": 1.0
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -50001,8 +49854,7 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0,
-                    "isLit": true
+                    "alpha": 1.0
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -50082,8 +49934,7 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0,
-                    "isLit": true
+                    "alpha": 1.0
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -50282,8 +50133,7 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0,
-                    "isLit": false
+                    "alpha": 1.0
                 }
             },
             {
@@ -50312,8 +50162,7 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0,
-                    "isLit": false
+                    "alpha": 1.0
                 },
                 "animation": {
                     "frameNumber": 6,
@@ -50349,8 +50198,7 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0,
-                    "isLit": false
+                    "alpha": 1.0
                 },
                 "animation": {
                     "frameNumber": 6,
@@ -50386,8 +50234,7 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0,
-                    "isLit": false
+                    "alpha": 1.0
                 },
                 "animation": {
                     "frameNumber": 6,
@@ -50423,8 +50270,7 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0,
-                    "isLit": false
+                    "alpha": 1.0
                 }
             },
             {
@@ -50453,8 +50299,7 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0,
-                    "isLit": false
+                    "alpha": 1.0
                 }
             },
             {
@@ -50483,8 +50328,7 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0,
-                    "isLit": false
+                    "alpha": 1.0
                 }
             }
         ]
@@ -50722,8 +50566,7 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0,
-                    "isLit": false
+                    "alpha": 1.0
                 }
             },
             {
@@ -50793,8 +50636,7 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0,
-                    "isLit": false
+                    "alpha": 1.0
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -50885,8 +50727,7 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0,
-                    "isLit": false
+                    "alpha": 1.0
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -50977,8 +50818,7 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0,
-                    "isLit": false
+                    "alpha": 1.0
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -51069,8 +50909,7 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0,
-                    "isLit": false
+                    "alpha": 1.0
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -51161,8 +51000,7 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0,
-                    "isLit": false
+                    "alpha": 1.0
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -51253,8 +51091,7 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0,
-                    "isLit": false
+                    "alpha": 1.0
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -51345,8 +51182,7 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0,
-                    "isLit": false
+                    "alpha": 1.0
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -51539,8 +51375,7 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0,
-                    "isLit": true
+                    "alpha": 1.0
                 }
             },
             {
@@ -51571,8 +51406,7 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0,
-                    "isLit": false
+                    "alpha": 1.0
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -51610,8 +51444,7 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0,
-                    "isLit": false
+                    "alpha": 1.0
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -51649,8 +51482,7 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0,
-                    "isLit": false
+                    "alpha": 1.0
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -51740,8 +51572,7 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0,
-                    "isLit": false
+                    "alpha": 1.0
                 }
             },
             {
@@ -51811,8 +51642,7 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0,
-                    "isLit": false
+                    "alpha": 1.0
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -51903,8 +51733,7 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0,
-                    "isLit": false
+                    "alpha": 1.0
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -51995,8 +51824,7 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0,
-                    "isLit": false
+                    "alpha": 1.0
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -52087,8 +51915,7 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0,
-                    "isLit": false
+                    "alpha": 1.0
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -52319,8 +52146,7 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0,
-                    "isLit": false
+                    "alpha": 1.0
                 }
             },
             {
@@ -52390,8 +52216,7 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0,
-                    "isLit": false
+                    "alpha": 1.0
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -52482,8 +52307,7 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0,
-                    "isLit": false
+                    "alpha": 1.0
                 },
                 "animation": {
                     "frameNumber": 0,

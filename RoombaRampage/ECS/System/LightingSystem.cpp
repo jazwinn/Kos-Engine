@@ -15,6 +15,7 @@ namespace ecs {
 			== m_vecTransformComponentPtr.end()) {
 			m_vecTransformComponentPtr.push_back((TransformComponent*)ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(ID));
 			m_vecLightingComponentPtr.push_back((LightingComponent*)ecs->m_ECS_CombinedComponentPool[TYPELIGHTINGCOMPONENT]->m_GetEntityComponent(ID));
+			m_vecNameComponentPtr.push_back((NameComponent*)ecs->m_ECS_CombinedComponentPool[TYPENAMECOMPONENT]->m_GetEntityComponent(ID));
 		}
 
 	}
@@ -34,10 +35,12 @@ namespace ecs {
 		size_t IndexLast = m_vecLightingComponentPtr.size() - 1;
 		std::swap(m_vecLightingComponentPtr[IndexID], m_vecLightingComponentPtr[IndexLast]);
 		std::swap(m_vecTransformComponentPtr[IndexID], m_vecTransformComponentPtr[IndexLast]);
+		std::swap(m_vecNameComponentPtr[IndexID], m_vecNameComponentPtr[IndexLast]);
 
 		//popback the vector;
 		m_vecLightingComponentPtr.pop_back();
 		m_vecTransformComponentPtr.pop_back();
+		m_vecNameComponentPtr.pop_back();
 	}
 
 	void LightingSystem::m_Init()
@@ -48,7 +51,7 @@ namespace ecs {
 
 	void LightingSystem::m_Update(const std::string& scene)
 	{
-		//ECS* ecs = ECS::GetInstance();
+		ECS* ecs = ECS::m_GetInstance();
 		graphicpipe::GraphicsPipe* graphicsPipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
 		//assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
 
@@ -62,8 +65,9 @@ namespace ecs {
 		{
 			TransformComponent* transform = m_vecTransformComponentPtr[n];
 			LightingComponent* light = m_vecLightingComponentPtr[n];
+			NameComponent* nc = m_vecNameComponentPtr[n];
 			//skip component not of the scene
-			if (light->m_scene != scene) continue;
+			if ((light->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(nc->m_Layer)) continue;
 
 			//Clamp between 0.f and 1.f
 			light->m_innerOuterRadius.m_x = light->m_innerOuterRadius.m_x > 1.f ? 1.f : light->m_innerOuterRadius.m_x < 0.f ? 0.f : light->m_innerOuterRadius.m_x;

@@ -75,7 +75,7 @@ namespace ecs {
 
 			CreateandStartScriptInstance(scriptComp);
 
-		}
+		} 
 	}
 
 
@@ -165,21 +165,22 @@ namespace ecs {
 
 						else if (script->second.first) {
 							assetManager->m_scriptManager.m_InvokeMethod(script->first, "Update", script->second.first, nullptr);
-							assetManager->m_scriptManager.m_InvokeMethod(script->first, "LateUpdate", script->second.first, nullptr);
+							
 						} 
 
 					}
 					
 				}
 				catch (...) {
-					//break;
+					return;
+
 				}
 
 
 			}
 		}
 
-		for (int n{}; n < m_vecScriptComponentPtr.size(); n++) {
+		for (int n{}; n < m_vecScriptComponentPtr.size(); n++) { 
 			//std::cout << "Entity: " << n << "Movement System is getting Updated";
 
 			ScriptComponent* scriptComp = m_vecScriptComponentPtr[n];
@@ -191,19 +192,20 @@ namespace ecs {
 			for (auto& scriptname : scriptComp->m_scripts) {
 
 				auto script = scriptComp->m_scriptInstances.find(std::get<0>(scriptname));
+				if (script == scriptComp->m_scriptInstances.end()) continue;
 				try {
 					// run the scripts update fuction
 					const auto& scriptIsEnabled = std::find_if(scriptComp->m_scripts.begin(), scriptComp->m_scripts.end(), [&](auto& x) {return std::get<0>(x) == script->first; });
-					//if (scriptIsEnabled == scriptComp->m_scripts.end()) continue;
+					if (scriptIsEnabled == scriptComp->m_scripts.end()) continue;
 
 					if (std::get<1>(*scriptIsEnabled)) {
-						
+						assetManager->m_scriptManager.m_InvokeMethod(script->first, "LateUpdate", script->second.first, nullptr);
 
 					}
 
 				}
 				catch (...) {
-					//break;
+					return;
 				}
 
 
