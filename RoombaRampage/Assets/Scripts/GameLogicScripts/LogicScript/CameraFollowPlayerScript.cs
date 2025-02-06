@@ -76,12 +76,20 @@ public class CameraFollowPlayerScript : ScriptBase
 
         else
         {
+            
             trackingPos = GetTrackingPos();
         }
         
 
         // Final camera position = tracked position + shake offset
         trackingPos = new Vector2(trackingPos.X + shakeOffset.X, trackingPos.Y + shakeOffset.Y);
+
+        if (float.IsNaN(trackingPos.X) || float.IsNaN(trackingPos.Y))
+        {
+            trackingPos = new Vector2(0, 0);
+            camTransformComp.m_position = new Vector2(0, 0);
+        }
+
         camTransformComp.m_position = MoveTowards(camTransformComp.m_position, trackingPos, trackSpeed * InternalCall.m_InternalCallGetDeltaTime());
         Component.Set<TransformComponent>(EntityID, camTransformComp);
     }
@@ -103,6 +111,8 @@ public class CameraFollowPlayerScript : ScriptBase
     void UpdateMousePosition()
     {
         InternalCall.m_InternalGetWorldMousePosition(out mousePos);
+        Console.WriteLine("test");
+
     }
 
     void UpdatePlayerPosition()
