@@ -1331,7 +1331,7 @@ namespace Serialization {
 		}
 	}
 	void Serialization::Serialize::m_SavePhysicsLayerMatrix() {
-		std::ofstream file("./ECS/LayerConfig.txt");
+		std::ofstream file("./Config/LayerConfig.txt");
 		if (!file.is_open()) {
 			LOGGING_ERROR("Could not open LayerConfig.txt for writing.");
 			return;
@@ -1352,7 +1352,7 @@ namespace Serialization {
 	}
 
 	void Serialization::Serialize::m_LoadPhysicsLayerMatrix() {
-		std::ifstream file("./ECS/LayerConfig.txt");
+		std::ifstream file("./Config/LayerConfig.txt");
 		if (!file.is_open()) {
 			LOGGING_ERROR("Could not open LayerConfig.txt for reading.");
 			return;
@@ -1390,7 +1390,7 @@ namespace Serialization {
 
 	void Serialization::Serialize::m_SaveGlobaalSettings()
 	{
-		std::ofstream file("./ECS/GlobalConfig.txt");
+		std::ofstream file("./Config/GlobalConfig.txt");
 		if (!file.is_open()) {
 			LOGGING_ERROR("Could not open GlobalConfig.txt for writing.");
 			return;
@@ -1404,7 +1404,7 @@ namespace Serialization {
 
 	void Serialization::Serialize::m_LoadGlobalSettings()
 	{
-		std::ifstream file("./ECS/GlobalConfig.txt");
+		std::ifstream file("./Config/GlobalConfig.txt");
 		if (!file.is_open()) {
 			LOGGING_ERROR("Could not open GlobalConfig.txt for reading.");
 			return;
