@@ -27,6 +27,7 @@ public class GameControllerLevel1 : ScriptBase
         InternalCall.m_DisableLayer(8); //Disables Loadout Menu UI
         InternalCall.m_DisableLayer(7); //Disables Pause Menu UI
         InternalCall.m_DisableLayer(6);
+        InternalCall.m_DisableLayer(9);
     }
 
     public override void Update()
@@ -64,6 +65,8 @@ public class GameControllerLevel1 : ScriptBase
 
             //Hide Pause Menu Layer
             InternalCall.m_DisableLayer(7);
+
+            InternalCall.m_DisableLayer(6);
 
             InternalCall.m_InternalCallUnPauseAllAudio();
 
