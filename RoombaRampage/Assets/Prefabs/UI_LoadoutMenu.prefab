@@ -1,11 +1,11 @@
 [
     {
         "GlobalSettings": {
-            "globalIllumination": 1.0,
+            "globalIllumination": 0.30000001192092896,
             "backgroundColor": {
-                "r": 0.8274336457252502,
-                "g": 0.7139360904693604,
-                "b": 0.7139360904693604
+                "r": 0.13716816902160645,
+                "g": 0.13716816902160645,
+                "b": 0.13716816902160645
             }
         }
     },
@@ -108,7 +108,7 @@
                         "b": 1.0
                     },
                     "alpha": 1.0,
-                    "isLit": true
+                    "isLit": false
                 }
             },
             {
@@ -179,7 +179,7 @@
                         "b": 1.0
                     },
                     "alpha": 1.0,
-                    "isLit": true
+                    "isLit": false
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -201,7 +201,21 @@
                             ]
                         }
                     ]
-                }
+                },
+                "audio": [
+                    {
+                        "name": "aud_buttonHover01",
+                        "volume": 0.44699999690055847,
+                        "loop": false,
+                        "playOnStart": false
+                    },
+                    {
+                        "name": "aud_buttonClick01",
+                        "volume": 1.0,
+                        "loop": false,
+                        "playOnStart": false
+                    }
+                ]
             },
             {
                 "name": {
@@ -271,7 +285,7 @@
                         "b": 1.0
                     },
                     "alpha": 1.0,
-                    "isLit": true
+                    "isLit": false
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -293,7 +307,21 @@
                             ]
                         }
                     ]
-                }
+                },
+                "audio": [
+                    {
+                        "name": "aud_buttonHover01",
+                        "volume": 0.40799999237060547,
+                        "loop": false,
+                        "playOnStart": false
+                    },
+                    {
+                        "name": "aud_buttonClick01",
+                        "volume": 1.0,
+                        "loop": false,
+                        "playOnStart": false
+                    }
+                ]
             },
             {
                 "name": {
@@ -363,7 +391,7 @@
                         "b": 1.0
                     },
                     "alpha": 1.0,
-                    "isLit": true
+                    "isLit": false
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -385,7 +413,21 @@
                             ]
                         }
                     ]
-                }
+                },
+                "audio": [
+                    {
+                        "name": "aud_buttonHover01",
+                        "volume": 0.43299999833106995,
+                        "loop": false,
+                        "playOnStart": false
+                    },
+                    {
+                        "name": "aud_buttonClick01",
+                        "volume": 1.0,
+                        "loop": false,
+                        "playOnStart": false
+                    }
+                ]
             },
             {
                 "name": {
@@ -455,7 +497,7 @@
                         "b": 1.0
                     },
                     "alpha": 1.0,
-                    "isLit": true
+                    "isLit": false
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -477,7 +519,21 @@
                             ]
                         }
                     ]
-                }
+                },
+                "audio": [
+                    {
+                        "name": "aud_buttonHover01",
+                        "volume": 0.4580000042915344,
+                        "loop": false,
+                        "playOnStart": false
+                    },
+                    {
+                        "name": "aud_buttonClick01",
+                        "volume": 1.0,
+                        "loop": false,
+                        "playOnStart": false
+                    }
+                ]
             },
             {
                 "name": {
@@ -547,7 +603,7 @@
                         "b": 1.0
                     },
                     "alpha": 1.0,
-                    "isLit": true
+                    "isLit": false
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -569,7 +625,21 @@
                             ]
                         }
                     ]
-                }
+                },
+                "audio": [
+                    {
+                        "name": "aud_buttonHover01",
+                        "volume": 0.3799999952316284,
+                        "loop": false,
+                        "playOnStart": false
+                    },
+                    {
+                        "name": "aud_buttonClick01",
+                        "volume": 1.0,
+                        "loop": false,
+                        "playOnStart": false
+                    }
+                ]
             },
             {
                 "name": {
@@ -639,7 +709,7 @@
                         "b": 1.0
                     },
                     "alpha": 1.0,
-                    "isLit": true
+                    "isLit": false
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -661,7 +731,21 @@
                             ]
                         }
                     ]
-                }
+                },
+                "audio": [
+                    {
+                        "name": "aud_buttonHover01",
+                        "volume": 0.382999986410141,
+                        "loop": false,
+                        "playOnStart": false
+                    },
+                    {
+                        "name": "aud_buttonClick01",
+                        "volume": 1.0,
+                        "loop": false,
+                        "playOnStart": false
+                    }
+                ]
             },
             {
                 "name": {
@@ -731,7 +815,7 @@
                         "b": 1.0
                     },
                     "alpha": 1.0,
-                    "isLit": true
+                    "isLit": false
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -753,7 +837,21 @@
                             ]
                         }
                     ]
-                }
+                },
+                "audio": [
+                    {
+                        "name": "aud_buttonHover01",
+                        "volume": 0.38499999046325684,
+                        "loop": false,
+                        "playOnStart": false
+                    },
+                    {
+                        "name": "aud_buttonClick01",
+                        "volume": 1.0,
+                        "loop": false,
+                        "playOnStart": false
+                    }
+                ]
             },
             {
                 "name": {
@@ -925,7 +1023,7 @@
                         "b": 1.0
                     },
                     "alpha": 1.0,
-                    "isLit": true
+                    "isLit": false
                 }
             },
             {
@@ -957,7 +1055,7 @@
                         "b": 1.0
                     },
                     "alpha": 1.0,
-                    "isLit": true
+                    "isLit": false
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -996,7 +1094,7 @@
                         "b": 1.0
                     },
                     "alpha": 1.0,
-                    "isLit": true
+                    "isLit": false
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -1035,7 +1133,7 @@
                         "b": 1.0
                     },
                     "alpha": 1.0,
-                    "isLit": true
+                    "isLit": false
                 },
                 "animation": {
                     "frameNumber": 0,

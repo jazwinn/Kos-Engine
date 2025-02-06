@@ -8,7 +8,6 @@ public class StartMenuButtons : ScriptBase
     public override void Awake(uint id)
     {
         EntityID = id;
-        InternalCall.m_DisableLayer(9);
     }
     #endregion
 
@@ -43,7 +42,12 @@ public class StartMenuButtons : ScriptBase
                 switch (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID))
                 {
                     default:
+                        if (isHovering)
+                        {
+                            break;
+                        }
                         isHovering = true;
+                        InternalCall.m_InternalCallPlayAudio(EntityID, "aud_buttonHover01");
                         break;
                 }
             }
@@ -74,6 +78,7 @@ public class StartMenuButtons : ScriptBase
     {
         if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.LMB) && isHovering == true)
         {
+            
             switch (buttonFunctionNo)
             {
                 case 10:
@@ -82,7 +87,6 @@ public class StartMenuButtons : ScriptBase
                         isReading = false;
                         InternalCall.m_DisableLayer(9);
                     }
-
                     else
                     {
                         isReading = true;
