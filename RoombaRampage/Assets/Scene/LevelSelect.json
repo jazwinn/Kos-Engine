@@ -179,8 +179,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 0.03497689589858055,
-                        "y": -0.0649573877453804
+                        "x": 0.016942989081144333,
+                        "y": -0.04382532835006714
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -287,8 +287,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": -0.02192285656929016,
-                        "y": 0.5268065333366394
+                        "x": -0.11243365705013275,
+                        "y": 0.6190914511680603
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -368,7 +368,7 @@
                         "g": 0.8823529481887817,
                         "b": 0.06666667014360428
                     },
-                    "layer": 9
+                    "layer": -1
                 },
                 "script": {
                     "scripts": [
@@ -391,8 +391,8 @@
         },
         "transform": {
             "position": {
-                "x": 0.0,
-                "y": -0.8288993239402771
+                "x": 0.024747073650360107,
+                "y": -0.8266900777816772
             },
             "rotation": -0.0,
             "scale": {
@@ -417,7 +417,7 @@
         },
         "sprite": {
             "imagefile": "img_levelFrame.png",
-            "layer": 3,
+            "layer": 4,
             "color": {
                 "r": 1.0,
                 "g": 1.0,
@@ -435,8 +435,8 @@
         },
         "transform": {
             "position": {
-                "x": -1.445488691329956,
-                "y": -0.8524142503738403
+                "x": -1.4140900373458862,
+                "y": -0.8505672812461853
             },
             "rotation": -0.0,
             "scale": {
@@ -454,31 +454,48 @@
                 "g": 0.0,
                 "b": 0.0
             },
-            "layer": 4
+            "layer": 20
         }
     },
     {
         "name": {
-            "namestr": "Level Select",
+            "namestr": "Level Select Button 1",
             "layer": 0,
             "isprefab": false,
             "tagstr": "Default"
         },
         "transform": {
             "position": {
-                "x": -1.4472938776016235,
-                "y": -0.8314323425292969
+                "x": -1.4279016256332397,
+                "y": -0.8258895874023438
             },
             "rotation": -0.0,
             "scale": {
-                "x": 1.0,
-                "y": 1.0
+                "x": 0.5,
+                "y": 0.5
             }
+        },
+        "sprite": {
+            "imagefile": "ani_levelFrameButtons_strip2.png",
+            "layer": 10,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0
+        },
+        "animation": {
+            "frameNumber": 1,
+            "framesPerSecond": 0,
+            "frameTimer": 0.0,
+            "isAnimating": true,
+            "stripCount": 2
         },
         "button": {
             "force": {
-                "x": -5394.13134765625,
-                "y": -553.257568359375
+                "x": 188.93310546875,
+                "y": 94.01962280273438
             },
             "scale": {
                 "x": 0.550000011920929,
@@ -493,6 +510,177 @@
                     "map": []
                 }
             ]
+        },
+        "audio": [
+            {
+                "name": "aud_buttonClick01",
+                "volume": 1.0,
+                "loop": false,
+                "playOnStart": false
+            }
+        ]
+    },
+    {
+        "name": {
+            "namestr": "Level Select Button 2",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": -0.8463101983070374,
+                "y": -0.8249669075012207
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        "sprite": {
+            "imagefile": "ani_levelFrameButtons_strip2.png",
+            "layer": 13,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0
+        },
+        "animation": {
+            "frameNumber": 1,
+            "framesPerSecond": 0,
+            "frameTimer": 0.0,
+            "isAnimating": true,
+            "stripCount": 2
+        },
+        "button": {
+            "force": {
+                "x": 502.99249267578125,
+                "y": 94.51788330078125
+            },
+            "scale": {
+                "x": 0.550000011920929,
+                "y": 0.1899999976158142
+            }
+        },
+        "script": {
+            "scripts": []
+        },
+        "audio": [
+            {
+                "name": "aud_buttonClick01",
+                "volume": 1.0,
+                "loop": false,
+                "playOnStart": false
+            }
+        ]
+    },
+    {
+        "name": {
+            "namestr": "Level Select Button 3",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": -0.26708510518074036,
+                "y": -0.8253907561302185
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        "sprite": {
+            "imagefile": "ani_levelFrameButtons_strip2.png",
+            "layer": 11,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0
+        },
+        "animation": {
+            "frameNumber": 1,
+            "framesPerSecond": 0,
+            "frameTimer": 0.0,
+            "isAnimating": true,
+            "stripCount": 2
+        },
+        "button": {
+            "force": {
+                "x": 815.7740478515625,
+                "y": 94.28900146484375
+            },
+            "scale": {
+                "x": 0.550000011920929,
+                "y": 0.1899999976158142
+            }
+        },
+        "script": {
+            "scripts": []
+        },
+        "audio": [
+            {
+                "name": "aud_buttonClick01",
+                "volume": 1.0,
+                "loop": false,
+                "playOnStart": false
+            }
+        ]
+    },
+    {
+        "name": {
+            "namestr": "Level Select Button 4",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": 0.31292879581451416,
+                "y": -0.8240443468093872
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        "sprite": {
+            "imagefile": "ani_levelFrameButtons_strip2.png",
+            "layer": 14,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0
+        },
+        "animation": {
+            "frameNumber": 1,
+            "framesPerSecond": 0,
+            "frameTimer": 0.0,
+            "isAnimating": true,
+            "stripCount": 2
+        },
+        "button": {
+            "force": {
+                "x": 1128.9815673828125,
+                "y": 95.01605224609375
+            },
+            "scale": {
+                "x": 0.550000011920929,
+                "y": 0.1899999976158142
+            }
+        },
+        "script": {
+            "scripts": []
         },
         "audio": [
             {
@@ -535,31 +723,207 @@
     },
     {
         "name": {
-            "namestr": "Map Photo",
-            "layer": 0,
+            "namestr": "Map Photo 1",
+            "layer": 11,
             "isprefab": false,
             "tagstr": "Default"
         },
         "transform": {
             "position": {
-                "x": 0.5729163289070129,
-                "y": 0.05302870273590088
+                "x": 0.6314664483070374,
+                "y": 0.02668103575706482
             },
             "rotation": -0.0,
             "scale": {
-                "x": 0.10440000146627426,
-                "y": 0.10440000146627426
+                "x": 0.5,
+                "y": 0.5
             }
         },
         "sprite": {
-            "imagefile": "img_level1Layout.png",
-            "layer": 10,
+            "imagefile": "img_uiLevelSelectFrame.png",
+            "layer": 12,
             "color": {
                 "r": 1.0,
                 "g": 1.0,
                 "b": 1.0
             },
             "alpha": 1.0
+        }
+    },
+    {
+        "name": {
+            "namestr": "Level Select Button 5",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": 0.8925473093986511,
+                "y": -0.8251413702964783
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        "sprite": {
+            "imagefile": "ani_levelFrameButtons_strip2.png",
+            "layer": 15,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0
+        },
+        "animation": {
+            "frameNumber": 1,
+            "framesPerSecond": 0,
+            "frameTimer": 0.0,
+            "isAnimating": true,
+            "stripCount": 2
+        },
+        "button": {
+            "force": {
+                "x": 1441.9754638671875,
+                "y": 94.42364501953125
+            },
+            "scale": {
+                "x": 0.550000011920929,
+                "y": 0.1899999976158142
+            }
+        },
+        "script": {
+            "scripts": []
+        },
+        "audio": [
+            {
+                "name": "aud_buttonClick01",
+                "volume": 1.0,
+                "loop": false,
+                "playOnStart": false
+            }
+        ]
+    },
+    {
+        "name": {
+            "namestr": "Level Select Button 6",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": 1.4733436107635498,
+                "y": -0.8252152800559998
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        "sprite": {
+            "imagefile": "ani_levelFrameButtons_strip2.png",
+            "layer": 16,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0
+        },
+        "animation": {
+            "frameNumber": 1,
+            "framesPerSecond": 0,
+            "frameTimer": 0.0,
+            "isAnimating": true,
+            "stripCount": 2
+        },
+        "button": {
+            "force": {
+                "x": 1755.6055908203125,
+                "y": 94.38375854492188
+            },
+            "scale": {
+                "x": 0.550000011920929,
+                "y": 0.1899999976158142
+            }
+        },
+        "script": {
+            "scripts": []
+        },
+        "audio": [
+            {
+                "name": "aud_buttonClick01",
+                "volume": 1.0,
+                "loop": false,
+                "playOnStart": false
+            }
+        ]
+    },
+    {
+        "name": {
+            "namestr": "Map Text 1",
+            "layer": 11,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": 0.6432318687438965,
+                "y": 0.560312032699585
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "text": {
+            "text": "SEQUENCE LAYOUT",
+            "text": null,
+            "filename": "fnt_silkscreenRegular.ttf",
+            "fontsize": 2.0,
+            "color": {
+                "r": 0.10588235408067703,
+                "g": 0.8823529481887817,
+                "b": 0.06666667014360428
+            },
+            "layer": 21
+        }
+    },
+    {
+        "name": {
+            "namestr": "Map Text Goal",
+            "layer": 11,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": -1.2613765001296997,
+                "y": -0.2642885446548462
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "text": {
+            "text": "GOAL: ESCAPE.",
+            "text": null,
+            "filename": "fnt_silkscreenRegular.ttf",
+            "fontsize": 1.75,
+            "color": {
+                "r": 0.10588235408067703,
+                "g": 0.8823529481887817,
+                "b": 0.06666667014360428
+            },
+            "layer": 22
         }
     }
 ]
