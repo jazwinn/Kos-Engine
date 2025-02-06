@@ -1,5 +1,5 @@
 /*!
-\file      imgui_text_panel.h
+\file      imgui_test_panel.h
 \author    Elijah Teo, teo.e , 2301530
 \par       teo.e@digipen.edu
 \date      Sept 28, 2024

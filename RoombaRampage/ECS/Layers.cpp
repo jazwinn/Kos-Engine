@@ -1,3 +1,27 @@
+/******************************************************************/
+/*!
+\file      ECS.cpp
+\author    Ng Jaz winn, jazwinn.ng , 2301502
+\par       jazwinn.ng@digipen.edu
+\date      8 Nov, 2024
+\brief     This header file defines the `LayerStack` class and associated
+		   enums for handling layer management in the ECS framework.
+		   - LayerStack: Manages named layers that contain entities.
+		   - m_ChangeLayerName: Renames a specified layer.
+		   - m_SwapEntityLayer: Moves an entity from one layer to another.
+		   - m_RetrieveEntityID: Retrieves all entity IDs within a specified layer.
+
+This file allows flexible layer-based organization of entities in the ECS system,
+providing functionality for managing multiple layers for scene composition.
+
+
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/********************************************************************/
+
 #include "../Config/pch.h"
 #include "Layers.h"
 #include "../Debugging/Logging.h"

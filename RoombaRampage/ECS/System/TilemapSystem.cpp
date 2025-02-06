@@ -1,4 +1,21 @@
+/******************************************************************/
+/*!
+\file      Image.cpp
+\author    Sean Tiu
+\par       s.tiu@digipen.edu
+\date      Nov 20, 2024
+\brief     
 
+\dependencies
+		 - STB image library for loading images.
+		 - RapidJSON for serialization/deserialization.
+		 - OpenGL for texture handling.
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/******************************************************************/
 #include "../Config/pch.h"
 #include "../ECS.h"
 
