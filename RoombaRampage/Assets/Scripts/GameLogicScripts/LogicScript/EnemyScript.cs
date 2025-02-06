@@ -509,9 +509,6 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
             InternalCall.m_InternalGetTranslate((uint)waypointID, out waypointPos);
 
-            Console.WriteLine(waypointTransform.m_position.X + " " + waypointTransform.m_position.Y);
-
-            Console.WriteLine(waypointPos.X + " " + waypointPos.Y);
             waypoints.Add(waypointPos);
 
         }
