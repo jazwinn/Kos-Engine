@@ -85,9 +85,8 @@ public class PlayerBullet : ScriptBase
 
             InternalCall.m_InternalGetAnimationComponent(EntityID, out frameNumber, out framesPerSecond, out frameTimer, out isAnimating, out stripCount);
 
-            if (frameNumber == stripCount - 1)
+            if (frameNumber == stripCount - 1 || bulletHasHit == true)
             {
-                bulletHasHit = true;
                 InternalCall.m_InternalCallDeleteEntity(EntityID);
             }
         }
@@ -108,6 +107,7 @@ public class PlayerBullet : ScriptBase
 
                 switch (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID))
                 {
+                    case "PropGlassWall":
                     case "Wall":
                        
                         if (!isAnimating)
@@ -126,9 +126,9 @@ public class PlayerBullet : ScriptBase
                         break;
 
                     case "Enemy":
-                        bulletHasHit = true;
                         InternalCall.m_InternalCallDeleteEntity(EntityID);
-                        break;
+                        bulletHasHit = true;
+                        return;
 
                     default:
                         break;
