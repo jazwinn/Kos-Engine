@@ -582,6 +582,11 @@ namespace script {
 
 	}
 
+	float InternalCall::m_getFPS()
+	{
+		return Helper::Helpers::GetInstance()->m_fps;
+	}
+
 	MonoArray* InternalCall::m_InternalCallGetTagIDs(MonoString* monostring)
 	{
 		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
@@ -1327,5 +1332,7 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_InternalGetEntityIdFromGridKey);
 
 		MONO_ADD_INTERNAL_CALL(m_ChangeLayer);
+
+		MONO_ADD_INTERNAL_CALL(m_getFPS);
 	}
 }

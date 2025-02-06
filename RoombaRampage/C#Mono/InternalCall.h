@@ -614,6 +614,8 @@ namespace script {
 
 		static void m_ChangeLayer(ecs::EntityID id, unsigned int layerid);
 
+		static float m_getFPS();
+
 	public:
 		/******************************************************************/
 		/*!
