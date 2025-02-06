@@ -75,7 +75,7 @@ namespace Serialization {
 			return;
 		}
 		Helper::Helpers* help = Helper::Helpers::GetInstance();
-		graphicpipe::GraphicsPipe* graphics = graphicpipe::GraphicsPipe::m_funcGetInstance();
+		//graphicpipe::GraphicsPipe* graphics = graphicpipe::GraphicsPipe::m_funcGetInstance();
 
 		std::string line;
 		

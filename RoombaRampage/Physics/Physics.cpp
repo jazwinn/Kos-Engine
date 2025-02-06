@@ -443,7 +443,7 @@ namespace physicspipe {
 
 		// Normal is the direction vector between centers
 		normal = ab;
-		vector2::Vec2::m_funcVec2Normalize(normal, normal);
+		//vector2::Vec2::m_funcVec2Normalize(normal, normal);
 
 		// Compute penetration depth
 		depth = combinedRadius - distance;
