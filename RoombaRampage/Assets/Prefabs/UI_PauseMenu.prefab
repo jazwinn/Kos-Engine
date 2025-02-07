@@ -1,11 +1,11 @@
 [
     {
         "GlobalSettings": {
-            "globalIllumination": 1.0,
+            "globalIllumination": 0.30000001192092896,
             "backgroundColor": {
-                "r": 0.8274336457252502,
-                "g": 0.7139360904693604,
-                "b": 0.7139360904693604
+                "r": 0.13716816902160645,
+                "g": 0.13716816902160645,
+                "b": 0.13716816902160645
             }
         }
     },
@@ -88,7 +88,7 @@
                         "b": 1.0
                     },
                     "alpha": 1.0,
-                    "isLit": true
+                    "isLit": false
                 }
             },
             {
@@ -159,7 +159,7 @@
                         "b": 1.0
                     },
                     "alpha": 1.0,
-                    "isLit": true
+                    "isLit": false
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -181,7 +181,21 @@
                             ]
                         }
                     ]
-                }
+                },
+                "audio": [
+                    {
+                        "name": "aud_buttonHover01",
+                        "volume": 0.4970000088214874,
+                        "loop": false,
+                        "playOnStart": false
+                    },
+                    {
+                        "name": "aud_buttonClick01",
+                        "volume": 1.0,
+                        "loop": false,
+                        "playOnStart": false
+                    }
+                ]
             },
             {
                 "name": {
@@ -251,7 +265,7 @@
                         "b": 1.0
                     },
                     "alpha": 1.0,
-                    "isLit": true
+                    "isLit": false
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -273,7 +287,21 @@
                             ]
                         }
                     ]
-                }
+                },
+                "audio": [
+                    {
+                        "name": "aud_buttonHover01",
+                        "volume": 0.49399998784065247,
+                        "loop": false,
+                        "playOnStart": false
+                    },
+                    {
+                        "name": "aud_buttonClick01",
+                        "volume": 1.0,
+                        "loop": false,
+                        "playOnStart": false
+                    }
+                ]
             },
             {
                 "name": {
@@ -343,7 +371,7 @@
                         "b": 1.0
                     },
                     "alpha": 1.0,
-                    "isLit": true
+                    "isLit": false
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -365,7 +393,21 @@
                             ]
                         }
                     ]
-                }
+                },
+                "audio": [
+                    {
+                        "name": "aud_buttonHover01",
+                        "volume": 0.4830000102519989,
+                        "loop": false,
+                        "playOnStart": false
+                    },
+                    {
+                        "name": "aud_buttonClick01",
+                        "volume": 1.0,
+                        "loop": false,
+                        "playOnStart": false
+                    }
+                ]
             },
             {
                 "name": {
@@ -435,7 +477,7 @@
                         "b": 1.0
                     },
                     "alpha": 1.0,
-                    "isLit": true
+                    "isLit": false
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -457,7 +499,21 @@
                             ]
                         }
                     ]
-                }
+                },
+                "audio": [
+                    {
+                        "name": "aud_buttonHover01",
+                        "volume": 0.5,
+                        "loop": false,
+                        "playOnStart": false
+                    },
+                    {
+                        "name": "aud_buttonClick01",
+                        "volume": 1.0,
+                        "loop": false,
+                        "playOnStart": false
+                    }
+                ]
             },
             {
                 "name": {
@@ -483,7 +539,7 @@
                     "text": "Resume",
                     "text": null,
                     "filename": "fnt_silkscreenRegular.ttf",
-                    "fontsize": 16.0,
+                    "fontsize": 12.0,
                     "color": {
                         "r": 0.0,
                         "g": 0.0,
@@ -516,7 +572,7 @@
                     "text": "Restart",
                     "text": null,
                     "filename": "fnt_silkscreenRegular.ttf",
-                    "fontsize": 16.0,
+                    "fontsize": 12.0,
                     "color": {
                         "r": 0.0,
                         "g": 0.0,
@@ -549,7 +605,7 @@
                     "text": "QUIT",
                     "text": null,
                     "filename": "fnt_silkscreenRegular.ttf",
-                    "fontsize": 16.0,
+                    "fontsize": 12.0,
                     "color": {
                         "r": 0.0,
                         "g": 0.0,
@@ -582,7 +638,7 @@
                     "text": "USER MANUAL",
                     "text": null,
                     "filename": "fnt_silkscreenRegular.ttf",
-                    "fontsize": 16.0,
+                    "fontsize": 12.0,
                     "color": {
                         "r": 0.0,
                         "g": 0.0,

@@ -27,6 +27,7 @@ public class LevelSelection : ScriptBase
         if(InternalCall.m_InternalCallIsKeyPressed(keyCode.Y) && LevelSelected == true)
         {
             InternalCall.m_InternalCallStopAllAudio();
+            CoroutineManager.Instance.StopAllCoroutines();
 
             InternalCall.m_UnloadAllScene();
             InternalCall.m_InternalCallLoadScene(SceneName);
@@ -34,8 +35,9 @@ public class LevelSelection : ScriptBase
         else if (InternalCall.m_InternalCallIsKeyPressed(keyCode.N))
         {
             InternalCall.m_InternalCallStopAllAudio();
-
-            InternalCall.m_InternalCallCloseWindow();
+            CoroutineManager.Instance.StopAllCoroutines();
+            InternalCall.m_UnloadAllScene();
+            InternalCall.m_InternalCallLoadScene("MainMenu");
         }
     }
 }

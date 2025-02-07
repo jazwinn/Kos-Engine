@@ -18,6 +18,8 @@ public class PlayerController : ScriptBase
         //Dead Player Texture Allocation
         playerDeathTexture = "img_roombertDeath.png";
 
+        animComp = Component.Get<AnimationComponent>(EntityID);
+
         //Get starting component values
         InternalCall.m_InternalGetTransformComponent(EntityID, out startingRoombaPos, out startingRoombaScale, out startingRoombaRotate);
         InternalCall.m_InternalGetSpriteComponent(EntityID, out startingSprite, out startingLayer, out startingColor, out startingAlpha);
@@ -63,6 +65,14 @@ public class PlayerController : ScriptBase
 
     //Dead player texture, swap once dead
     private string playerDeathTexture;
+
+    //Components
+    private AnimationComponent animComp;
+    private bool isAnimating;
+
+    private string movementStartAudio = "aud_vacuumStart01.wav";
+    private string movementLoopAudio = "aud_vacuumLoop01.wav";
+    private string movementStopAudio = "aud_vacuumEnd01.wav";
 
     public override void Start()
     {
@@ -124,6 +134,8 @@ public class PlayerController : ScriptBase
             {
                 if (InternalCall.m_InternalCallGetTag((uint) collidedEntitiesID) == "Enemy")
                 {
+                    CameraFollowPlayerScript.Shake(10f, 1f);
+
                     InternalCall.m_InternalCallPlayAudio(EntityID, "aud_playerDeath01");
 
                     var collisionComponent = GetComponent.GetColliderComponent(EntityID);
@@ -139,6 +151,8 @@ public class PlayerController : ScriptBase
                     InternalCall.m_InternalSetVelocity(EntityID, movement);
 
                     isDead = true;
+
+                    InternalCall.m_InternalCallSetTimeScale(0);
                 }
             }
         }
@@ -172,6 +186,7 @@ public class PlayerController : ScriptBase
 
         #endregion
 
+        CheckMovement();
 
     }
 
@@ -182,6 +197,35 @@ public class PlayerController : ScriptBase
 
         if (isDead) { return; }
 
+    }
+
+    private void CheckMovement()
+    {
+        Vector2 temp;
+        InternalCall.m_InternalGetVelocity(EntityID, out temp);
+
+        if (Magnitude(temp) != 0 && isAnimating == false)
+        {
+            InternalCall.m_InternalCallPlayAudio(EntityID, movementStartAudio);
+            InternalCall.m_InternalCallPlayAudio(EntityID, movementLoopAudio);
+            animComp = Component.Get<AnimationComponent>(EntityID);
+            animComp.m_isAnimating = true;
+            Component.Set<AnimationComponent>(EntityID, animComp);
+            isAnimating = true;
+
+            
+        }
+
+        else if (Magnitude(temp) == 0 && isAnimating == true)
+        {
+            InternalCall.m_InternalCallStopAudio(EntityID, movementLoopAudio);
+            InternalCall.m_InternalCallPlayAudio(EntityID, movementStopAudio);
+            animComp = Component.Get<AnimationComponent>(EntityID);
+            animComp.m_isAnimating = false;
+            animComp.m_frameNumber = 0;
+            Component.Set<AnimationComponent>(EntityID, animComp);
+            isAnimating = false;
+        }
     }
 
     #region Vec2 Functions
@@ -215,6 +259,11 @@ public class PlayerController : ScriptBase
         temp.Y = (float)scaledY;
 
         return temp;
+    }
+
+    public float Magnitude(Vector2 v2)
+    {
+        return (float)Math.Sqrt(v2.X * v2.X + v2.Y * v2.Y);
     }
 
     public Vector2 MoveTowards(Vector2 current, Vector2 target, float maxDistance)
