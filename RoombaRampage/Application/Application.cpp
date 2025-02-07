@@ -27,6 +27,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Asset Manager/AssetManager.h"
 #include "../Asset Manager/SceneManager.h"
 #include "../Events/EventsEventHandler.h"
+#include "../Actions/ActionManager.h"
 #include "../Inputs/Input.h"
 
 
@@ -128,6 +129,7 @@ namespace Application {
     int Application::Run() {
         Helper::Helpers *help = Helper::Helpers::GetInstance();
         ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+        actions::ActionManager::m_GetManagerInstance();
         //float FPSCapTime = 1.f / help->m_fpsCap;
         double lastFrameTime = glfwGetTime();
         const double fixedDeltaTime = 1.0 / 60.0;
