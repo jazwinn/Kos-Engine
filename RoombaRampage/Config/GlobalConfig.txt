@@ -1,0 +1,2 @@
+GlobalIllumination: 0
+BackgroundColor: 0.836283 0.836283 0.836283

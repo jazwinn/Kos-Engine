@@ -15,19 +15,22 @@ public class GameControllerLevel1 : ScriptBase
 
     public static bool runOnce; //Prevents PauseGame from running more than once
 
+    private bool isShowingFps;
+
 
     public override void Start()
     {
-
         InternalCall.m_InternalCallPlayAudio(EntityID, "aud_mainLevelLoop");
 
         runOnce = false; 
         gameIsPaused = false;
+        isShowingFps = false;
 
         InternalCall.m_DisableLayer(8); //Disables Loadout Menu UI
         InternalCall.m_DisableLayer(7); //Disables Pause Menu UI
-        InternalCall.m_DisableLayer(6);
-        InternalCall.m_DisableLayer(9);
+        InternalCall.m_DisableLayer(6); //Disable How To Play UI
+        InternalCall.m_DisableLayer(9); //Disable Death Screen UI
+
     }
 
     public override void Update()
@@ -76,10 +79,17 @@ public class GameControllerLevel1 : ScriptBase
 
     }
 
+
     private void RestartGame()
     {
         if (LevelSelection.SceneName != null)
         {
+            InternalCall.m_DisableLayer(8); //Disables Loadout Menu UI
+            InternalCall.m_DisableLayer(7); //Disables Pause Menu UI
+            InternalCall.m_DisableLayer(6); //Disable How To Play UI
+            InternalCall.m_DisableLayer(9); //Disable Death Screen UI
+            InternalCall.m_DisableLayer(15); //Disable FPS counter UI
+
             InternalCall.m_InternalCallStopAllAudio();
             CoroutineManager.Instance.StopAllCoroutines();
             InternalCall.m_InternalCallSetTimeScale(1);
@@ -126,12 +136,12 @@ public class GameControllerLevel1 : ScriptBase
             RestartGame();
         }
 
+        if (PlayerController.isDead) { return; }
+
         if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.ESC))
         {
             PauseGame();
         }
-
-        if (PlayerController.isDead) { return; }
 
         if (gameIsPaused) { return; } //Ensures nothing but pause menu can be activated when game is paused
 
@@ -139,7 +149,6 @@ public class GameControllerLevel1 : ScriptBase
         {
             Sortie();
         }
-
 
     }
     #endregion

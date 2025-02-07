@@ -84,8 +84,8 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     private Vector2 movement = new Vector2();
     private float enemyDeathKnockbackMultiplier;
     private float enemyBloodPoolSpawnDelay = 0.5f;
-    private float enemySpeed = 1.0f;
-    private float patrolSpeed = 1.8f;
+    private float enemySpeed = 1.8f;
+    private float patrolSpeed = 1.5f;
 
     #region Waypoint Variables
     private int initialPatrolWaypoint = 0;
@@ -180,17 +180,6 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
             );
 
         }
-        //List<Vector2> path = GetPath(0, 0, 0, 2, 2);
-        //foreach (Vector2 point in path)
-        //{
-        //    //Console.WriteLine($"Path Point: ({point.X}, {point.Y})");
-        //    Vector2 points = Grid2WorldCoordinates((int)point.X, (int)point.Y, 0);
-        //    Console.WriteLine($"Path Point: ({points.X}, {points.Y})");
-        //}
-
-        //StartPatrol();
-
-        // World2GridCoordinates(1.5f,2.5f,1);
     }
 
     public override void Update() //Runs every frame
@@ -409,7 +398,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         }
         else
         {
-            Console.WriteLine("Enemy Has No Waypoints!");
+            //Console.WriteLine("Enemy Has No Waypoints!");
         }
     }
 
@@ -417,7 +406,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     {
         if (waypoints == null || waypoints.Count == 0)
         {
-            Console.WriteLine("Waypoints list is empty!");
+            //Console.WriteLine("Waypoints list is empty!");
             yield break;
         }
 
@@ -432,13 +421,13 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
             {
                 enemyRoamBehaviour = EnemyRoamType.Static;
 
-                Console.WriteLine("No valid path found!");
+                //Console.WriteLine("No valid path found!");
                 yield return new CoroutineManager.WaitForSeconds(1.0f);
             }
 
             
 
-            // Wait at the waypoint for 3 seconds before moving to the next waypoint
+            //Wait at the waypoint for 3 seconds before moving to the next waypoint
             yield return new CoroutineManager.WaitForSeconds(5.0f);
         }
 
@@ -501,7 +490,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
             TransformComponent waypointTransform = GetComponent.GetTransformComponent((uint)waypointID);
             if (waypointTransform == null)
             {
-                Console.WriteLine($"Waypoint ID {waypointID} has no TransformComponent!");
+               // Console.WriteLine($"Waypoint ID {waypointID} has no TransformComponent!");
                 continue;
             }
 
@@ -755,7 +744,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
             bodyStabAud1, bodyStabAud2
         });
 
-        Console.WriteLine("Sizes are " + bodyDeathAudList.Count + " " + bodyFallAudList.Count + " "+ bodyStabAudList.Count);
+        //Console.WriteLine("Sizes are " + bodyDeathAudList.Count + " " + bodyFallAudList.Count + " "+ bodyStabAudList.Count);
     }
 
     private string ReturnRandomAudio(string name)

@@ -44,6 +44,11 @@ public class PauseMenuButtons : ScriptBase
                 switch (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID))
                 {
                     case "PauseMenuCursor":
+                        if (isHovering)
+                        {
+                            break;
+                        }
+                        InternalCall.m_InternalCallPlayAudio(EntityID, "aud_buttonHover01");
                         isHovering = true;
                         break;
 
@@ -82,22 +87,27 @@ public class PauseMenuButtons : ScriptBase
             {
                 case 10:
                     //Resume
+                    InternalCall.m_InternalCallPlayAudio(EntityID, "aud_buttonClick01");
                     ResumeGame();
                     break;
                 case 20:
                     //Restart
+                    InternalCall.m_InternalCallPlayAudio(EntityID, "aud_buttonClick01");
                     RestartGame();
                     break;
                 case 30:
                     //HowToplay
+                    InternalCall.m_InternalCallPlayAudio(EntityID, "aud_buttonClick01");
                     HowToPlay();
                     break;
                 case 31:
                     //HowToPlayBack
+                    InternalCall.m_InternalCallPlayAudio(EntityID, "aud_buttonClick01");
                     HowToPlayBack();
                     break;
                 case -1:
                     //Quit Game
+                    InternalCall.m_InternalCallPlayAudio(EntityID, "aud_buttonClick01");
                     QuitToMainMenu();
                     break;
 
@@ -129,6 +139,12 @@ public class PauseMenuButtons : ScriptBase
     {
         if (LevelSelection.SceneName != null)
         {
+            InternalCall.m_DisableLayer(8); //Disables Loadout Menu UI
+            InternalCall.m_DisableLayer(7); //Disables Pause Menu UI
+            InternalCall.m_DisableLayer(6); //Disable How To Play UI
+            InternalCall.m_DisableLayer(9); //Disable Death Screen UI
+            InternalCall.m_DisableLayer(15); //Disable FPS counter UI
+
             InternalCall.m_InternalCallStopAllAudio();
             CoroutineManager.Instance.StopAllCoroutines();
             InternalCall.m_InternalCallSetTimeScale(1);
@@ -163,6 +179,12 @@ public class PauseMenuButtons : ScriptBase
 
     private void QuitToMainMenu()
     {
+        InternalCall.m_DisableLayer(8); //Disables Loadout Menu UI
+        InternalCall.m_DisableLayer(7); //Disables Pause Menu UI
+        InternalCall.m_DisableLayer(6); //Disable How To Play UI
+        InternalCall.m_DisableLayer(9); //Disable Death Screen UI
+        InternalCall.m_DisableLayer(15); //Disable FPS counter UI
+
         InternalCall.m_InternalCallStopAllAudio();
         CoroutineManager.Instance.StopAllCoroutines();
         InternalCall.m_InternalCallSetTimeScale(1);

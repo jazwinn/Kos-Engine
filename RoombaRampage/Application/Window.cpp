@@ -93,10 +93,14 @@ namespace Application {
 
     static void fullScreenFocusCallback(GLFWwindow* window, int focused)
     {
-
+        static int oldWidth = static_cast<int>(AppWindow::m_windowWidth);
+        static int oldHeight = static_cast<int>(AppWindow::m_windowHeight);
         auto& audioManager = assetmanager::AssetManager::m_funcGetInstance()->m_audioManager;
         ecs::ECS* ecs = ecs::ECS::m_GetInstance();
         if (!focused) {
+            oldWidth = static_cast<int>(Helper::Helpers::GetInstance()->m_windowWidth);
+            oldHeight = static_cast<int>(Helper::Helpers::GetInstance()->m_windowHeight);
+
             // If the window loses focus, set it to windowed mode
             glfwSetWindowMonitor(window, nullptr, 100, 100, static_cast<int>(AppWindow::m_windowWidth), static_cast<int>(AppWindow::m_windowHeight), 0);  // Change to windowed mode with a standard resolution
             AppWindow::m_fullScreen = false;

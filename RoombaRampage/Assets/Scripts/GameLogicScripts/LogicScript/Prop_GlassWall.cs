@@ -62,6 +62,8 @@ public class Prop_GlassWall : ScriptBase
             {
                 if (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID) == "Player" && !isAnimating && !isBroken)
                 {
+                    InternalCall.m_InternalCallPlayAudio(EntityID, "aud_glassBreak01");
+
                     isAnimating = true;
 
                     InternalCall.m_InternalCallDeleteEntity(rCWallID);

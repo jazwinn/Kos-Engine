@@ -24,4 +24,4 @@ UIGameBackLimbCounter
 UIGameLeftLimbCounterIcon
 UIGameRightLimbCounterIcon
 UIGameBackLimbCounterIcon
-
+PropGlassWall
