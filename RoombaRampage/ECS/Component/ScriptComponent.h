@@ -49,6 +49,8 @@ namespace ecs {
 
 		std::map<std::string, std::pair<MonoObject*, bool>> m_scriptInstances; // bool here is to check to see if "start" function is called
 
+		std::vector<int> m_scriptHandler;
+
 
 		//REFLECTABLE(ScriptComponent, m_scripts)
 
