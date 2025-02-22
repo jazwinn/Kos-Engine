@@ -135,6 +135,9 @@ public static class InternalCall
     public extern static void m_InternalCallSetTimeScale(in float timescale);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static float m_InternalCallGetTimeScale();
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static void m_InternalCallResetTimeScale();
 
     [MethodImpl(MethodImplOptions.InternalCall)]
@@ -152,7 +155,6 @@ public static class InternalCall
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static void m_InternalCallStopAllAudio();
 
-
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static void m_InternalCallPauseAudio(uint id, string monoString);
 
@@ -164,7 +166,6 @@ public static class InternalCall
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static void m_InternalCallUnPauseAllAudio();
-
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static bool m_InternalCallIsWindowMinimise();
