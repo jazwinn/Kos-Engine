@@ -523,6 +523,11 @@ namespace script {
 		Helper::Helpers::GetInstance()->m_timeScale = x;
 	}
 
+	float InternalCall::m_InternalCallGetTimeScale()
+	{
+		return Helper::Helpers::GetInstance()->m_timeScale;
+	}
+
 	void InternalCall::m_InternalCallResetTimeScale() {
 		Helper::Helpers::GetInstance()->m_timeScale = 1.0f;
 	}
@@ -1290,6 +1295,7 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_InternalGetWorldMousePosition);
 
 		MONO_ADD_INTERNAL_CALL(m_InternalCallSetTimeScale);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallGetTimeScale);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallResetTimeScale);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallCloseWindow);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallGetChildrenID);
