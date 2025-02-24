@@ -132,7 +132,7 @@ public static class InternalCall
     public extern static void m_InternalGetWorldMousePosition(out Vector2 mousepos);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static void m_InternalCallSetTimeScale(in float timescale);
+    public extern static void m_InternalCallSetTimeScale(float timescale);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static float m_InternalCallGetTimeScale();
