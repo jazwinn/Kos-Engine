@@ -146,12 +146,17 @@ namespace graphicpipe
 
 	void GraphicsPipe::m_funcDrawDebug()
 	{
+
+
 		if (!m_debugBoxToNDCMatrix.empty())
 		{
 			glBindBuffer(GL_ARRAY_BUFFER, m_debugCollisionCheckBuffer);
 			glNamedBufferData(m_debugCollisionCheckBuffer, m_debugBoxCollisionChecks.size() * sizeof(float), &m_debugBoxCollisionChecks[0], GL_DYNAMIC_DRAW);
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
 			glUseProgram(m_debugShaderProgram);
+
+			glUniformMatrix3fv(glGetUniformLocation(m_debugShaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currViewMatrix));
+			glUniformMatrix3fv(glGetUniformLocation(m_debugShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currOrthoMatrix));
 
 			glBindBuffer(GL_ARRAY_BUFFER, m_debugMatrixArrayBuffer);
 			glNamedBufferData(m_debugMatrixArrayBuffer, m_debugBoxToNDCMatrix.size() * sizeof(glm::mat3), &m_debugBoxToNDCMatrix[0], GL_DYNAMIC_DRAW);
@@ -170,6 +175,9 @@ namespace graphicpipe
 			glNamedBufferData(m_debugCollisionCheckBuffer, m_debugCircleCollisionChecks.size() * sizeof(float), &m_debugCircleCollisionChecks[0], GL_DYNAMIC_DRAW);
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
 			glUseProgram(m_debugShaderProgram);
+
+			glUniformMatrix3fv(glGetUniformLocation(m_debugShaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currViewMatrix));
+			glUniformMatrix3fv(glGetUniformLocation(m_debugShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currOrthoMatrix));
 
 			glBindBuffer(GL_ARRAY_BUFFER, m_debugMatrixArrayBuffer);
 			glNamedBufferData(m_debugMatrixArrayBuffer, m_debugCircleToNDCMatrix.size() * sizeof(glm::mat3), &m_debugCircleToNDCMatrix[0], GL_DYNAMIC_DRAW);
