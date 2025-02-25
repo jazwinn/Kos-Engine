@@ -226,21 +226,21 @@ namespace graphicpipe
 				float totalWidth = 0.0f;
 				float maxAscent = 0.0f;
 				float maxDescent = 0.0f;
-				for (int i = 0; i < textData.m_text.size(); ++i)
+				for (int i = 0; i < textData.m_text.size(); ++i) // To calculate the total width of the text
 				{
 					char c = textData.m_text[i];
 					text::CharacterData ch = assetmanager->m_fontManager.m_fonts[textData.m_fileName][c];
-					//float thing = ((ch.m_advance >> 6)); USE SIZE OF CHAR LATER
-					totalWidth += ((ch.m_advance >> 6) * textData.m_scale * textData.m_xyScale.x) / (float)GraphicsCamera::m_windowHeight;
+					if (i == textData.m_text.size() - 1) // If it's the last letter, add only the letter size
+					{
+						totalWidth += ((ch.m_size.x * textData.m_scale * textData.m_xyScale.x) / GraphicsCamera::m_windowHeight);
+					}
+					else // Add the letter size and the space
+					{
+						totalWidth += ((ch.m_advance >> 6) * textData.m_scale * textData.m_xyScale.x) / (float)GraphicsCamera::m_windowHeight;
+					}
 					maxAscent = std::max(maxAscent, (ch.m_bearing.y * textData.m_scale * textData.m_xyScale.y) / GraphicsCamera::m_windowHeight);
 					maxDescent = std::max(maxDescent, ((ch.m_size.y - ch.m_bearing.y) * textData.m_scale * textData.m_xyScale.y) / GraphicsCamera::m_windowHeight);
 				}
-				//if (textData.m_text.size())
-				//{
-				//	char c = textData.m_text[textData.m_text.size() - 1];
-				//	text::CharacterData ch = assetmanager->m_fontManager.m_fonts[textData.m_fileName][c];
-				//	//totalWidth -= (((ch.m_advance >> 6) * textData.m_scale * textData.m_xyScale.x) / (float)GraphicsCamera::m_windowHeight) /2.f;
-				//}
 				
 				float totalHeight = maxAscent + maxDescent;
 
