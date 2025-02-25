@@ -84,7 +84,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     private Vector2 movement = new Vector2();
     private float enemyDeathKnockbackMultiplier;
     private float enemyBloodPoolSpawnDelay = 0.5f;
-    private float enemySpeed = 1.8f;
+    private float enemySpeed = 1.5f;
     private float patrolSpeed = 1.5f;
 
     #region Waypoint Variables
@@ -322,10 +322,10 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         
         collComp.m_collisionCheck = !collComp.m_collisionCheck; //Disables collision check
         collComp.m_collisionResponse = false;
-        //InternalCall.m_ChangeLayer(EntityID, 8);
+        InternalCall.m_ChangeLayer(EntityID, 12);
 
 
-        SetComponent.SetCollisionComponent(EntityID, collComp); //Sets collider of enemy
+       // SetComponent.SetCollisionComponent(EntityID, collComp); //Sets collider of enemy
 
         InternalCall.m_InternalSetAnimationComponent(EntityID, 0, 0, 0, false, 1); //Stops animation of enemy
         SetDeadEnemySprite(); //Sets dead sprite
@@ -359,10 +359,15 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         float forwardY = (float)(Math.Cos(rotationInRadians));
 
         //+ forwardX * 0.4f
-        movement.X = 0; //Pushes enemy back for "knockback effect"
-        movement.Y = 0; //Pushes enemy back for "knockback effect"
+        movement.X = 0.0f; //Pushes enemy back for "knockback effect"
+        movement.Y = 0.0f; //Pushes enemy back for "knockback effect"
 
         InternalCall.m_InternalSetVelocity(EntityID, in movement); //Sets velocity for rigidbody to move
+
+        RigidBodyComponent rb = Component.Get<RigidBodyComponent>(EntityID);
+        rb.m_Acceleration.X = 0;
+        rb.m_Acceleration.Y = 0;    
+        Component.Set<RigidBodyComponent>(EntityID, rb);
 
         transformComp = Component.Get<TransformComponent>(EntityID);
 
@@ -602,9 +607,11 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         movement.X = 0 + forwardX * enemySpeed;
         movement.Y = 0 + forwardY * enemySpeed;
 
+        RigidBodyComponent rb = Component.Get<RigidBodyComponent>(EntityID);
+        rb.m_Acceleration = movement;
+        Component.Set<RigidBodyComponent>(EntityID, rb);
 
-
-        InternalCall.m_InternalSetVelocity(EntityID, in movement); //BANE OF MY EXISTENCE
+        //InternalCall.m_InternalSetVelocity(EntityID, in movement); //BANE OF MY EXISTENCE
     }
 
     public void MoveToTarget(Vector2 targetPosition, float maxSpeed)
@@ -650,8 +657,12 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
             movement.Y = direction.Y * dynamicSpeed;
         }
 
+
+        RigidBodyComponent rb = Component.Get<RigidBodyComponent>(EntityID);
+        rb.m_Acceleration = movement;
+        Component.Set<RigidBodyComponent>(EntityID, rb);
         // Set velocity only once
-        InternalCall.m_InternalSetVelocity(EntityID, in movement);
+        // InternalCall.m_InternalSetVelocity(EntityID, in movement);
     }
 
     public void RunAtPlayer()
