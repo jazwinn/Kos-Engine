@@ -1,8 +1,8 @@
 /******************************************************************/
 /*!
 \file      CameraSystem.h
-\author    
-\par       
+\author    Sean Tiu
+\par       s.tiu@digipen.edu
 \date      Oct 02, 2024
 \brief     This file contains class for the DebugDrawingSystem
 

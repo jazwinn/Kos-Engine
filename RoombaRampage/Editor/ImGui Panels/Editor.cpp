@@ -373,14 +373,14 @@ namespace gui {
 			auto* newAct = new actions::RemoveComponentAction(givenEvent.m_ToType<events::RemoveComponent>().m_GetID(), givenEvent.m_ToType<events::RemoveComponent>().m_GetComponentType());
 			actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
 		}
-		else if (givenEvent.m_GetEventType() == events::Actions::ADDENT) {
-			auto* newAct = new actions::AddEntityAction(givenEvent.m_ToType<events::AddEntity>().m_GetID());
-			actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
-		}
-		else if (givenEvent.m_GetEventType() == events::Actions::DELENT) {
-			auto* newAct = new actions::RemoveEntityAction(givenEvent.m_ToType<events::RemoveEntity>().m_GetID());
-			actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
-		}
+		//else if (givenEvent.m_GetEventType() == events::Actions::ADDENT) {
+		//	auto* newAct = new actions::AddEntityAction(givenEvent.m_ToType<events::AddEntity>().m_GetID());
+		//	actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
+		//}
+		//else if (givenEvent.m_GetEventType() == events::Actions::DELENT) {
+		//	auto* newAct = new actions::RemoveEntityAction(givenEvent.m_ToType<events::RemoveEntity>().m_GetID());
+		//	actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
+		//}
 		else if (givenEvent.m_GetEventType() == events::Actions::MOVECTC) {
 			auto* newAct = new actions::MoveEntityChildToChildAction(givenEvent.m_ToType<events::MoveEntityChildToChild>().m_GetID(), givenEvent.m_ToType<events::MoveEntityChildToChild>().m_GetOldParentID(), givenEvent.m_ToType<events::MoveEntityChildToChild>().m_GetNewParentID());
 			actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);

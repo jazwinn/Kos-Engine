@@ -1,3 +1,16 @@
+/******************************************************************/
+/*!
+\file      AnimationSystem.cpp
+\author    Sean Tiu, s.tiu, 2303398
+\par       s.tiu@digipen.edu
+\date      Sept 29, 2024
+\brief     
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/******************************************************************/
 #ifndef TILEMAP_H
 #define TILEMAP_H
 

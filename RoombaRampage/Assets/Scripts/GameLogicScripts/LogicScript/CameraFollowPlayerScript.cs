@@ -68,7 +68,7 @@ public class CameraFollowPlayerScript : ScriptBase
             shakeOffset = new Vector2(0, 0);
         }
 
-        if (PlayerLoadoutManager.isSortieing || GameControllerLevel1.gameIsPaused)
+        if (PlayerLoadoutManager.isSortieing || GameControllerLevel1.gameIsPaused || PlayerController.isDead == true)
         {
             UpdatePlayerPosition();
             trackingPos = playerTransformComp.m_position;
@@ -76,28 +76,28 @@ public class CameraFollowPlayerScript : ScriptBase
 
         else
         {
+            
             trackingPos = GetTrackingPos();
         }
         
 
         // Final camera position = tracked position + shake offset
         trackingPos = new Vector2(trackingPos.X + shakeOffset.X, trackingPos.Y + shakeOffset.Y);
+
+        if (float.IsNaN(trackingPos.X) || float.IsNaN(trackingPos.Y))
+        {
+            trackingPos = new Vector2(0, 0);
+            camTransformComp.m_position = new Vector2(0, 0);
+        }
+
         camTransformComp.m_position = MoveTowards(camTransformComp.m_position, trackingPos, trackSpeed * InternalCall.m_InternalCallGetDeltaTime());
-        SetComponent.SetTransformComponent(EntityID, camTransformComp);
+        Component.Set<TransformComponent>(EntityID, camTransformComp);
     }
 
     public static void Shake(float intensity, float duration)
     {
         shakeIntensity = intensity;
         shakeDuration = duration;
-    }
-
-    void TrackPlayer()
-    {
-        UpdateCameraPosition();
-
-        camTransformComp.m_position = MoveTowards(camTransformComp.m_position, trackingPos, trackSpeed * InternalCall.m_InternalCallGetDeltaTime());
-        SetComponent.SetTransformComponent(EntityID, camTransformComp);
     }
 
     Vector2 GetTrackingPos()
@@ -111,6 +111,7 @@ public class CameraFollowPlayerScript : ScriptBase
     void UpdateMousePosition()
     {
         InternalCall.m_InternalGetWorldMousePosition(out mousePos);
+
     }
 
     void UpdatePlayerPosition()

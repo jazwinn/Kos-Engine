@@ -108,6 +108,7 @@ public class PlayerBullet : ScriptBase
 
                 switch (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID))
                 {
+                    case "PropGlassWall":
                     case "Wall":
                        
                         if (!isAnimating)

@@ -481,6 +481,8 @@ namespace script {
 		/******************************************************************/
 		static void m_InternalCallSetTimeScale(const float x);
 
+		static float m_InternalCallGetTimeScale();
+
 		/******************************************************************/
 		/*!
 			\fn        void InternalCall::m_InternalCallResetTimeScale()

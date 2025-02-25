@@ -44,7 +44,12 @@ public class PlayerLoadoutButtons : ScriptBase
                 switch (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID))
                 {
                     case "PlayerLoadoutCursor":
+                        if (isHovering)
+                        {
+                            break;
+                        }
                         isHovering = true;
+                        InternalCall.m_InternalCallPlayAudio(EntityID, "aud_buttonHover01");
                         break;
 
                     default:
@@ -81,30 +86,37 @@ public class PlayerLoadoutButtons : ScriptBase
             switch (buttonFunctionNo)
             {
                 case 10:
+                    InternalCall.m_InternalCallPlayAudio(EntityID, "aud_buttonClick01");
                     PlayerLoadoutManager.leftLimbEquippedNo--;
                     if (PlayerLoadoutManager.leftLimbEquippedNo < 0) { PlayerLoadoutManager.leftLimbEquippedNo = PlayerLoadoutManager.totalLeftRightLimbs - 1; }
                     break;
                 case 11:
+                    InternalCall.m_InternalCallPlayAudio(EntityID, "aud_buttonClick01");
                     PlayerLoadoutManager.leftLimbEquippedNo++;
                     if (PlayerLoadoutManager.leftLimbEquippedNo > PlayerLoadoutManager.totalLeftRightLimbs - 1) { PlayerLoadoutManager.leftLimbEquippedNo = 0; }
                     break;
                 case 20:
+                    InternalCall.m_InternalCallPlayAudio(EntityID, "aud_buttonClick01");
                     PlayerLoadoutManager.rightLimbEquippedNo--;
                     if (PlayerLoadoutManager.rightLimbEquippedNo < 0) { PlayerLoadoutManager.rightLimbEquippedNo = PlayerLoadoutManager.totalLeftRightLimbs - 1; }
                     break;
                 case 21:
+                    InternalCall.m_InternalCallPlayAudio(EntityID, "aud_buttonClick01");
                     PlayerLoadoutManager.rightLimbEquippedNo++;
                     if (PlayerLoadoutManager.rightLimbEquippedNo > PlayerLoadoutManager.totalLeftRightLimbs - 1) { PlayerLoadoutManager.rightLimbEquippedNo = 0; }
                     break;
                 case 30:
+                    InternalCall.m_InternalCallPlayAudio(EntityID, "aud_buttonClick01");
                     PlayerLoadoutManager.backLimbEquippedNo--;
                     if (PlayerLoadoutManager.backLimbEquippedNo < 0) { PlayerLoadoutManager.backLimbEquippedNo = PlayerLoadoutManager.totalBackLimbs - 1; }
                     break;
                 case 31:
+                    InternalCall.m_InternalCallPlayAudio(EntityID, "aud_buttonClick01");
                     PlayerLoadoutManager.backLimbEquippedNo++;
                     if (PlayerLoadoutManager.backLimbEquippedNo > PlayerLoadoutManager.totalBackLimbs - 1) { PlayerLoadoutManager.backLimbEquippedNo = 0; }
                     break;
                 case -1:
+                    InternalCall.m_InternalCallPlayAudio(EntityID, "aud_buttonClick01");
                     PlayerLoadoutManager.isSortieing = false;
                     InternalCall.m_InternalCallSetTimeScale(1f);
                     InternalCall.m_DisableLayer(8);

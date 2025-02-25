@@ -1,11 +1,11 @@
 [
     {
         "GlobalSettings": {
-            "globalIllumination": 1.0,
+            "globalIllumination": 0.30000001192092896,
             "backgroundColor": {
-                "r": 0.8274336457252502,
-                "g": 0.7139360904693604,
-                "b": 0.7139360904693604
+                "r": 0.13716816902160645,
+                "g": 0.13716816902160645,
+                "b": 0.13716816902160645
             }
         }
     },
@@ -83,7 +83,7 @@
                         "b": 1.0
                     },
                     "alpha": 1.0,
-                    "isLit": true
+                    "isLit": false
                 }
             },
             {
@@ -154,7 +154,7 @@
                         "b": 1.0
                     },
                     "alpha": 1.0,
-                    "isLit": true
+                    "isLit": false
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -176,7 +176,21 @@
                             ]
                         }
                     ]
-                }
+                },
+                "audio": [
+                    {
+                        "name": "aud_buttonHover01",
+                        "volume": 0.4909999966621399,
+                        "loop": false,
+                        "playOnStart": false
+                    },
+                    {
+                        "name": "aud_buttonClick01",
+                        "volume": 1.0,
+                        "loop": false,
+                        "playOnStart": false
+                    }
+                ]
             },
             {
                 "name": {
@@ -246,7 +260,7 @@
                         "b": 1.0
                     },
                     "alpha": 1.0,
-                    "isLit": true
+                    "isLit": false
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -268,7 +282,21 @@
                             ]
                         }
                     ]
-                }
+                },
+                "audio": [
+                    {
+                        "name": "aud_buttonHover01",
+                        "volume": 0.47200000286102295,
+                        "loop": false,
+                        "playOnStart": false
+                    },
+                    {
+                        "name": "aud_buttonClick01",
+                        "volume": 1.0,
+                        "loop": false,
+                        "playOnStart": false
+                    }
+                ]
             },
             {
                 "name": {
@@ -294,7 +322,7 @@
                     "text": "BACK",
                     "text": null,
                     "filename": "fnt_silkscreenRegular.ttf",
-                    "fontsize": 5.0,
+                    "fontsize": 3.0,
                     "color": {
                         "r": 0.0,
                         "g": 0.0,

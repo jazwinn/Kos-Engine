@@ -1,11 +1,11 @@
 [
     {
         "GlobalSettings": {
-            "globalIllumination": 1.0,
+            "globalIllumination": 0.30000001192092896,
             "backgroundColor": {
-                "r": 0.8274336457252502,
-                "g": 0.7139360904693604,
-                "b": 0.7139360904693604
+                "r": 0.13716816902160645,
+                "g": 0.13716816902160645,
+                "b": 0.13716816902160645
             }
         }
     },
@@ -23,7 +23,7 @@
                 "x": 0.0,
                 "y": 0.0
             },
-            "rotation": 0.0,
+            "rotation": -54.48418426513672,
             "scale": {
                 "x": 3.0,
                 "y": 3.0
@@ -77,7 +77,7 @@
                 "b": 1.0
             },
             "alpha": 1.0,
-            "isLit": false
+            "isLit": true
         },
         "animation": {
             "frameNumber": 0,
@@ -94,6 +94,10 @@
                     "map": [
                         {
                             "variable": "speed",
+                            "base64": ""
+                        },
+                        {
+                            "variable": "isDead",
                             "base64": ""
                         }
                     ]
@@ -211,6 +215,12 @@
                         "volume": 0.5199999809265137,
                         "loop": false,
                         "playOnStart": false
+                    },
+                    {
+                        "name": "aud_emptyGun01",
+                        "volume": 0.22100000083446503,
+                        "loop": false,
+                        "playOnStart": false
                     }
                 ]
             },
@@ -298,6 +308,12 @@
                         "volume": 0.48899999260902405,
                         "loop": false,
                         "playOnStart": false
+                    },
+                    {
+                        "name": "aud_emptyGun01",
+                        "volume": 0.23199999332427979,
+                        "loop": false,
+                        "playOnStart": false
                     }
                 ]
             },
@@ -381,6 +397,12 @@
                     {
                         "name": "aud_katana01",
                         "volume": 0.4970000088214874,
+                        "loop": false,
+                        "playOnStart": false
+                    },
+                    {
+                        "name": "aud_emptyGun01",
+                        "volume": 0.25699999928474426,
                         "loop": false,
                         "playOnStart": false
                     }
@@ -482,6 +504,72 @@
                     "scale": {
                         "x": 1.0,
                         "y": 1.0
+                    }
+                }
+            },
+            {
+                "name": {
+                    "namestr": "PlayerGlow",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "prefab_player.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 5.0,
+                        "y": 5.0
+                    }
+                },
+                "LightingComponent": {
+                    "m_innerOuterRadius": {
+                        "x": 0.0,
+                        "y": 1.0
+                    },
+                    "m_intensity": 0.550000011920929,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
+                }
+            },
+            {
+                "name": {
+                    "namestr": "PlayerEyeGlow",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "prefab_player.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.0,
+                        "y": 0.11136922240257263
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 0.9799999594688416,
+                        "y": 0.9799999594688416
+                    }
+                },
+                "LightingComponent": {
+                    "m_innerOuterRadius": {
+                        "x": 0.0,
+                        "y": 1.0
+                    },
+                    "m_intensity": 0.699999988079071,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 0.0,
+                        "z": 0.0
                     }
                 }
             }

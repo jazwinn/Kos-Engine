@@ -42,6 +42,14 @@ namespace ecs {
 			IndexID++;
 		}
 
+
+		//free script handler 
+		for (int x : m_vecScriptComponentPtr[IndexID]->m_scriptHandler) {
+			mono_gchandle_free(x);
+		}
+
+
+
 		//index to the last element
 		size_t IndexLast = m_vecScriptComponentPtr.size() - 1;
 		std::swap(m_vecScriptComponentPtr[IndexID], m_vecScriptComponentPtr[IndexLast]);
@@ -95,7 +103,9 @@ namespace ecs {
 			//  << _script << std::endl;
 			auto instance = assetManager->m_scriptManager.m_CreateObjectInstance("LogicScript", std::get<0>(_script));
 			scriptComp->m_scriptInstances[std::get<0>(_script)] = std::make_pair(instance, false);
-			mono_gchandle_new(instance, true);
+			scriptComp->m_scriptHandler.push_back(mono_gchandle_new(instance, true));
+
+			
 
 			//assign instance with script varaibles
 			assetManager->m_scriptManager.m_assignVaraiblestoScript(scriptComp, std::get<0>(_script));

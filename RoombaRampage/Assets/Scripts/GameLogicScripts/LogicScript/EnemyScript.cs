@@ -84,8 +84,8 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     private Vector2 movement = new Vector2();
     private float enemyDeathKnockbackMultiplier;
     private float enemyBloodPoolSpawnDelay = 0.5f;
-    private float enemySpeed = 1.0f;
-    private float patrolSpeed = 1.8f;
+    private float enemySpeed = 1.5f;
+    private float patrolSpeed = 1.5f;
 
     #region Waypoint Variables
     private int initialPatrolWaypoint = 0;
@@ -180,17 +180,6 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
             );
 
         }
-        //List<Vector2> path = GetPath(0, 0, 0, 2, 2);
-        //foreach (Vector2 point in path)
-        //{
-        //    //Console.WriteLine($"Path Point: ({point.X}, {point.Y})");
-        //    Vector2 points = Grid2WorldCoordinates((int)point.X, (int)point.Y, 0);
-        //    Console.WriteLine($"Path Point: ({points.X}, {points.Y})");
-        //}
-
-        //StartPatrol();
-
-        // World2GridCoordinates(1.5f,2.5f,1);
     }
 
     public override void Update() //Runs every frame
@@ -333,10 +322,10 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         
         collComp.m_collisionCheck = !collComp.m_collisionCheck; //Disables collision check
         collComp.m_collisionResponse = false;
-        //InternalCall.m_ChangeLayer(EntityID, 8);
+        InternalCall.m_ChangeLayer(EntityID, 12);
 
 
-        SetComponent.SetCollisionComponent(EntityID, collComp); //Sets collider of enemy
+       // SetComponent.SetCollisionComponent(EntityID, collComp); //Sets collider of enemy
 
         InternalCall.m_InternalSetAnimationComponent(EntityID, 0, 0, 0, false, 1); //Stops animation of enemy
         SetDeadEnemySprite(); //Sets dead sprite
@@ -370,10 +359,15 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         float forwardY = (float)(Math.Cos(rotationInRadians));
 
         //+ forwardX * 0.4f
-        movement.X = 0; //Pushes enemy back for "knockback effect"
-        movement.Y = 0; //Pushes enemy back for "knockback effect"
+        movement.X = 0.0f; //Pushes enemy back for "knockback effect"
+        movement.Y = 0.0f; //Pushes enemy back for "knockback effect"
 
         InternalCall.m_InternalSetVelocity(EntityID, in movement); //Sets velocity for rigidbody to move
+
+        RigidBodyComponent rb = Component.Get<RigidBodyComponent>(EntityID);
+        rb.m_Acceleration.X = 0;
+        rb.m_Acceleration.Y = 0;    
+        Component.Set<RigidBodyComponent>(EntityID, rb);
 
         transformComp = Component.Get<TransformComponent>(EntityID);
 
@@ -409,7 +403,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         }
         else
         {
-            Console.WriteLine("Enemy Has No Waypoints!");
+            //Console.WriteLine("Enemy Has No Waypoints!");
         }
     }
 
@@ -417,7 +411,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     {
         if (waypoints == null || waypoints.Count == 0)
         {
-            Console.WriteLine("Waypoints list is empty!");
+            //Console.WriteLine("Waypoints list is empty!");
             yield break;
         }
 
@@ -432,13 +426,13 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
             {
                 enemyRoamBehaviour = EnemyRoamType.Static;
 
-                Console.WriteLine("No valid path found!");
+                //Console.WriteLine("No valid path found!");
                 yield return new CoroutineManager.WaitForSeconds(1.0f);
             }
 
             
 
-            // Wait at the waypoint for 3 seconds before moving to the next waypoint
+            //Wait at the waypoint for 3 seconds before moving to the next waypoint
             yield return new CoroutineManager.WaitForSeconds(5.0f);
         }
 
@@ -501,7 +495,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
             TransformComponent waypointTransform = GetComponent.GetTransformComponent((uint)waypointID);
             if (waypointTransform == null)
             {
-                Console.WriteLine($"Waypoint ID {waypointID} has no TransformComponent!");
+               // Console.WriteLine($"Waypoint ID {waypointID} has no TransformComponent!");
                 continue;
             }
 
@@ -613,9 +607,11 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         movement.X = 0 + forwardX * enemySpeed;
         movement.Y = 0 + forwardY * enemySpeed;
 
+        RigidBodyComponent rb = Component.Get<RigidBodyComponent>(EntityID);
+        rb.m_Acceleration = movement;
+        Component.Set<RigidBodyComponent>(EntityID, rb);
 
-
-        InternalCall.m_InternalSetVelocity(EntityID, in movement); //BANE OF MY EXISTENCE
+        //InternalCall.m_InternalSetVelocity(EntityID, in movement); //BANE OF MY EXISTENCE
     }
 
     public void MoveToTarget(Vector2 targetPosition, float maxSpeed)
@@ -661,8 +657,12 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
             movement.Y = direction.Y * dynamicSpeed;
         }
 
+
+        RigidBodyComponent rb = Component.Get<RigidBodyComponent>(EntityID);
+        rb.m_Acceleration = movement;
+        Component.Set<RigidBodyComponent>(EntityID, rb);
         // Set velocity only once
-        InternalCall.m_InternalSetVelocity(EntityID, in movement);
+        // InternalCall.m_InternalSetVelocity(EntityID, in movement);
     }
 
     public void RunAtPlayer()
@@ -755,7 +755,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
             bodyStabAud1, bodyStabAud2
         });
 
-        Console.WriteLine("Sizes are " + bodyDeathAudList.Count + " " + bodyFallAudList.Count + " "+ bodyStabAudList.Count);
+        //Console.WriteLine("Sizes are " + bodyDeathAudList.Count + " " + bodyFallAudList.Count + " "+ bodyStabAudList.Count);
     }
 
     private string ReturnRandomAudio(string name)

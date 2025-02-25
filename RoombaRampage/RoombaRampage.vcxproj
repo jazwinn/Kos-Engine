@@ -32,7 +32,7 @@
     <ProjectGuid>{b73cfebb-7e35-4e92-84cd-7c0fbd9295b7}</ProjectGuid>
     <RootNamespace>RoombaRampage</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>Kos Engine</ProjectName>
+    <ProjectName>R00M13A-OS</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -177,7 +177,7 @@ xcopy /y /d "$(SolutionDir)FMOD_API\studio\lib\x64\*.dll" "$(OutDir)"</Command>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>../Config/pch.h</PrecompiledHeaderFile>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <TreatWarningAsError>false</TreatWarningAsError>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -470,6 +470,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="Actions\ActionManager.h" />
     <ClInclude Include="Actions\ModifyAction.h" />
     <ClInclude Include="ECS\Component\AudioComponent.h" />
+    <ClInclude Include="ECS\Component\EnemyComponent.h" />
     <ClInclude Include="ECS\Component\LightingComponent.h" />
     <ClInclude Include="ECS\System\LightingSystem.h" />
     <ClInclude Include="ECS\Component\GridComponent.h" />

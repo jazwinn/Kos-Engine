@@ -23,8 +23,8 @@
             },
             "rotation": -0.0,
             "scale": {
-                "x": 1.2524000406265259,
-                "y": 1.25
+                "x": 1.3275439739227295,
+                "y": 1.3249999284744263
             }
         },
         "camera": {
@@ -51,8 +51,8 @@
             },
             "rotation": -0.0,
             "scale": {
-                "x": 1.9500000476837158,
-                "y": 1.9500000476837158
+                "x": 2.3581349849700928,
+                "y": 2.3581349849700928
             }
         },
         "collider": {
@@ -78,7 +78,8 @@
                 "g": 1.0,
                 "b": 1.0
             },
-            "alpha": 1.0
+            "alpha": 1.0,
+            "isLit": false
         },
         "audio": [
             {
@@ -154,7 +155,8 @@
                 "g": 1.0,
                 "b": 1.0
             },
-            "alpha": 1.0
+            "alpha": 1.0,
+            "isLit": false
         },
         "animation": {
             "frameNumber": 0,
@@ -165,8 +167,8 @@
         },
         "button": {
             "force": {
-                "x": 121.312744140625,
-                "y": 1259.47998046875
+                "x": 9158.5537109375,
+                "y": -13343.1845703125
             },
             "scale": {
                 "x": 0.20999999344348907,
@@ -196,11 +198,23 @@
                         {
                             "variable": "buttonFunctionNo",
                             "base64": ""
+                        },
+                        {
+                            "variable": "isReading",
+                            "base64": ""
                         }
                     ]
                 }
             ]
-        }
+        },
+        "audio": [
+            {
+                "name": "aud_buttonHover01",
+                "volume": 0.3440000116825104,
+                "loop": false,
+                "playOnStart": false
+            }
+        ]
     },
     {
         "name": {
@@ -267,7 +281,8 @@
                 "g": 1.0,
                 "b": 1.0
             },
-            "alpha": 1.0
+            "alpha": 1.0,
+            "isLit": false
         },
         "animation": {
             "frameNumber": 0,
@@ -278,8 +293,8 @@
         },
         "button": {
             "force": {
-                "x": 121.312744140625,
-                "y": 1067.820068359375
+                "x": 9158.5537109375,
+                "y": -13476.4482421875
             },
             "scale": {
                 "x": 0.18000000715255737,
@@ -300,6 +315,10 @@
                         {
                             "variable": "buttonFunctionNo",
                             "base64": ""
+                        },
+                        {
+                            "variable": "isReading",
+                            "base64": ""
                         }
                     ]
                 }
@@ -309,6 +328,30 @@
             {
                 "name": "aud_buttonClick01",
                 "volume": 1.0,
+                "loop": false,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_startMenuAmbienceStart01",
+                "volume": 1.0,
+                "loop": false,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_startMenuAmbienceLoop01",
+                "volume": 1.0,
+                "loop": true,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_startMenuAmbienceQuitt01",
+                "volume": 1.0,
+                "loop": false,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_buttonHover01",
+                "volume": 0.37400001287460327,
                 "loop": false,
                 "playOnStart": false
             }
@@ -379,7 +422,8 @@
                 "g": 1.0,
                 "b": 1.0
             },
-            "alpha": 1.0
+            "alpha": 1.0,
+            "isLit": false
         },
         "animation": {
             "frameNumber": 0,
@@ -405,7 +449,15 @@
                     ]
                 }
             ]
-        }
+        },
+        "audio": [
+            {
+                "name": "aud_buttonHover01",
+                "volume": 0.39899998903274536,
+                "loop": false,
+                "playOnStart": false
+            }
+        ]
     },
     {
         "name": {
@@ -416,7 +468,7 @@
         },
         "transform": {
             "position": {
-                "x": -2.1146252155303955,
+                "x": -2.1131601333618164,
                 "y": 0.9291677474975586
             },
             "rotation": -0.0,
@@ -429,7 +481,7 @@
             "text": "QUIT",
             "text": null,
             "filename": "fnt_silkscreenRegular.ttf",
-            "fontsize": 1.600000023841858,
+            "fontsize": 1.2000000476837158,
             "color": {
                 "r": 1.0,
                 "g": 1.0,
@@ -460,7 +512,7 @@
             "text": "PLAY",
             "text": null,
             "filename": "fnt_silkscreenRegular.ttf",
-            "fontsize": 1.600000023841858,
+            "fontsize": 1.2000000476837158,
             "color": {
                 "r": 1.0,
                 "g": 1.0,
@@ -478,8 +530,8 @@
         },
         "transform": {
             "position": {
-                "x": -2.1109001636505127,
-                "y": 0.22523237764835358
+                "x": -2.109240770339966,
+                "y": 0.22467921674251556
             },
             "rotation": -0.0,
             "scale": {
@@ -491,7 +543,7 @@
             "text": "MANUAL",
             "text": null,
             "filename": "fnt_silkscreenRegular.ttf",
-            "fontsize": 1.600000023841858,
+            "fontsize": 1.2000000476837158,
             "color": {
                 "r": 1.0,
                 "g": 1.0,
@@ -560,7 +612,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": false
                 }
             },
             {
@@ -628,7 +681,8 @@
                         "g": 1.0,
                         "b": 1.0
                     },
-                    "alpha": 1.0
+                    "alpha": 1.0,
+                    "isLit": false
                 },
                 "animation": {
                     "frameNumber": 0,
@@ -646,11 +700,23 @@
                                 {
                                     "variable": "buttonFunctionNo",
                                     "base64": "CwAAAMzMzMwA"
+                                },
+                                {
+                                    "variable": "isReading",
+                                    "base64": ""
                                 }
                             ]
                         }
                     ]
-                }
+                },
+                "audio": [
+                    {
+                        "name": "aud_buttonHover01",
+                        "volume": 0.3490000069141388,
+                        "loop": false,
+                        "playOnStart": false
+                    }
+                ]
             }
         ]
     },
@@ -680,7 +746,8 @@
                 "g": 1.0,
                 "b": 1.0
             },
-            "alpha": 1.0
+            "alpha": 1.0,
+            "isLit": false
         }
     },
     {
@@ -709,7 +776,8 @@
                 "g": 1.0,
                 "b": 1.0
             },
-            "alpha": 1.0
+            "alpha": 1.0,
+            "isLit": false
         }
     },
     {
@@ -754,5 +822,100 @@
                 }
             ]
         }
+    },
+    {
+        "name": {
+            "namestr": "Coroutine Handlers",
+            "layer": 0,
+            "isprefab": true,
+            "tagstr": "Default",
+            "prefabname": "Coroutine Handlers.prefab",
+            "issync": true
+        },
+        "transform": {
+            "position": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "script": {
+            "scripts": [
+                {
+                    "name": "CoroutineController",
+                    "enabled": true,
+                    "map": []
+                }
+            ]
+        }
+    },
+    {
+        "name": {
+            "namestr": "UI_FPSParent",
+            "layer": 0,
+            "isprefab": true,
+            "tagstr": "Default",
+            "prefabname": "UI_FPSParent.prefab",
+            "issync": false
+        },
+        "transform": {
+            "position": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "script": {
+            "scripts": [
+                {
+                    "name": "UI_FPSCounter",
+                    "enabled": true,
+                    "map": []
+                }
+            ]
+        },
+        "children": [
+            {
+                "name": {
+                    "namestr": "UI_FPSCounter",
+                    "layer": 15,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "UI_FPSParent.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 1.773537039756775,
+                        "y": 1.0265717506408691
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "text": {
+                    "text": "FPS : 000",
+                    "text": null,
+                    "filename": "fnt_silkscreenRegular.ttf",
+                    "fontsize": 1.5,
+                    "color": {
+                        "r": 0.10588235408067703,
+                        "g": 0.8823529481887817,
+                        "b": 0.06666667014360428
+                    },
+                    "layer": 900
+                }
+            }
+        ]
     }
 ]

@@ -3,9 +3,9 @@
         "GlobalSettings": {
             "globalIllumination": 1.0,
             "backgroundColor": {
-                "r": 0.8539819717407227,
-                "g": 0.8539819717407227,
-                "b": 0.8539819717407227
+                "r": 0.13300000131130219,
+                "g": 0.23000000417232513,
+                "b": 0.3199999928474426
             }
         }
     },
@@ -78,7 +78,8 @@
                 "g": 1.0,
                 "b": 1.0
             },
-            "alpha": 1.0
+            "alpha": 1.0,
+            "isLit": false
         },
         "script": {
             "scripts": [
@@ -102,6 +103,12 @@
             {
                 "name": "aud_mainMenuLoop",
                 "volume": 0.20900000631809235,
+                "loop": true,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_startMenuAmbienceLoop01",
+                "volume": 1.0,
                 "loop": true,
                 "playOnStart": false
             }
@@ -167,7 +174,8 @@
                 "g": 1.0,
                 "b": 1.0
             },
-            "alpha": 1.0
+            "alpha": 1.0,
+            "isLit": false
         },
         "children": [
             {
@@ -192,7 +200,7 @@
                     "text": "BUILD: M4",
                     "text": null,
                     "filename": "fnt_silkscreenRegular.ttf",
-                    "fontsize": 100.0,
+                    "fontsize": 70.0,
                     "color": {
                         "r": 0.0,
                         "g": 0.0,
@@ -244,7 +252,8 @@
                 "g": 1.0,
                 "b": 1.0
             },
-            "alpha": 1.0
+            "alpha": 1.0,
+            "isLit": false
         },
         "children": [
             {
@@ -257,7 +266,7 @@
                 "transform": {
                     "position": {
                         "x": 0.0,
-                        "y": 0.8920429944992065
+                        "y": 0.8783578276634216
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -269,7 +278,7 @@
                     "text": "SEQUENCER",
                     "text": null,
                     "filename": "fnt_silkscreenRegular.ttf",
-                    "fontsize": 137.9499969482422,
+                    "fontsize": 120.0,
                     "color": {
                         "r": 0.10588235408067703,
                         "g": 0.8823529481887817,
@@ -287,7 +296,7 @@
                 },
                 "transform": {
                     "position": {
-                        "x": -0.11243365705013275,
+                        "x": 0.044476285576820374,
                         "y": 0.6190914511680603
                     },
                     "rotation": 0.0,
@@ -300,7 +309,7 @@
                     "text": "STATUS:active",
                     "text": null,
                     "filename": "fnt_silkscreenRegular.ttf",
-                    "fontsize": 16.350000381469727,
+                    "fontsize": 13.0,
                     "color": {
                         "r": 0.10588235408067703,
                         "g": 0.8823529481887817,
@@ -349,8 +358,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 0.3036201000213623,
-                        "y": -0.6695619821548462
+                        "x": 0.4906895160675049,
+                        "y": -0.6574162244796753
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -400,21 +409,6 @@
                 "y": 0.5
             }
         },
-        "collider": {
-            "checkcollision": true,
-            "checkresponse": true,
-            "size": {
-                "x": 7.039999961853027,
-                "y": 0.5
-            },
-            "offset": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "drawDebug": true,
-            "radius": 0.5,
-            "shapetype": 0
-        },
         "sprite": {
             "imagefile": "img_levelFrame.png",
             "layer": 4,
@@ -423,7 +417,8 @@
                 "g": 1.0,
                 "b": 1.0
             },
-            "alpha": 1.0
+            "alpha": 1.0,
+            "isLit": false
         }
     },
     {
@@ -448,7 +443,7 @@
             "text": "MEMORY1",
             "text": null,
             "filename": "fnt_silkscreenRegular.ttf",
-            "fontsize": 2.0,
+            "fontsize": 1.5,
             "color": {
                 "r": 0.0,
                 "g": 0.0,
@@ -483,19 +478,20 @@
                 "g": 1.0,
                 "b": 1.0
             },
-            "alpha": 1.0
+            "alpha": 1.0,
+            "isLit": false
         },
         "animation": {
             "frameNumber": 1,
             "framesPerSecond": 0,
             "frameTimer": 0.0,
-            "isAnimating": true,
+            "isAnimating": false,
             "stripCount": 2
         },
         "button": {
             "force": {
-                "x": 188.93310546875,
-                "y": 94.01962280273438
+                "x": 231.4287109375,
+                "y": 156.99734497070313
             },
             "scale": {
                 "x": 0.550000011920929,
@@ -546,19 +542,20 @@
                 "g": 1.0,
                 "b": 1.0
             },
-            "alpha": 1.0
+            "alpha": 1.0,
+            "isLit": false
         },
         "animation": {
             "frameNumber": 1,
             "framesPerSecond": 0,
             "frameTimer": 0.0,
-            "isAnimating": true,
+            "isAnimating": false,
             "stripCount": 2
         },
         "button": {
             "force": {
-                "x": 502.99249267578125,
-                "y": 94.51788330078125
+                "x": 524.8416748046875,
+                "y": 157.46282958984375
             },
             "scale": {
                 "x": 0.550000011920929,
@@ -603,19 +600,20 @@
                 "g": 1.0,
                 "b": 1.0
             },
-            "alpha": 1.0
+            "alpha": 1.0,
+            "isLit": false
         },
         "animation": {
             "frameNumber": 1,
             "framesPerSecond": 0,
             "frameTimer": 0.0,
-            "isAnimating": true,
+            "isAnimating": false,
             "stripCount": 2
         },
         "button": {
             "force": {
-                "x": 815.7740478515625,
-                "y": 94.28900146484375
+                "x": 817.0607299804688,
+                "y": 157.2490234375
             },
             "scale": {
                 "x": 0.550000011920929,
@@ -660,19 +658,20 @@
                 "g": 1.0,
                 "b": 1.0
             },
-            "alpha": 1.0
+            "alpha": 1.0,
+            "isLit": false
         },
         "animation": {
             "frameNumber": 1,
             "framesPerSecond": 0,
             "frameTimer": 0.0,
-            "isAnimating": true,
+            "isAnimating": false,
             "stripCount": 2
         },
         "button": {
             "force": {
-                "x": 1128.9815673828125,
-                "y": 95.01605224609375
+                "x": 1109.677734375,
+                "y": 157.92828369140625
             },
             "scale": {
                 "x": 0.550000011920929,
@@ -747,7 +746,8 @@
                 "g": 1.0,
                 "b": 1.0
             },
-            "alpha": 1.0
+            "alpha": 1.0,
+            "isLit": false
         }
     },
     {
@@ -776,19 +776,20 @@
                 "g": 1.0,
                 "b": 1.0
             },
-            "alpha": 1.0
+            "alpha": 1.0,
+            "isLit": false
         },
         "animation": {
             "frameNumber": 1,
             "framesPerSecond": 0,
             "frameTimer": 0.0,
-            "isAnimating": true,
+            "isAnimating": false,
             "stripCount": 2
         },
         "button": {
             "force": {
-                "x": 1441.9754638671875,
-                "y": 94.42364501953125
+                "x": 1402.0953369140625,
+                "y": 157.37481689453125
             },
             "scale": {
                 "x": 0.550000011920929,
@@ -833,19 +834,20 @@
                 "g": 1.0,
                 "b": 1.0
             },
-            "alpha": 1.0
+            "alpha": 1.0,
+            "isLit": false
         },
         "animation": {
             "frameNumber": 1,
             "framesPerSecond": 0,
             "frameTimer": 0.0,
-            "isAnimating": true,
+            "isAnimating": false,
             "stripCount": 2
         },
         "button": {
             "force": {
-                "x": 1755.6055908203125,
-                "y": 94.38375854492188
+                "x": 1695.107177734375,
+                "y": 157.3375244140625
             },
             "scale": {
                 "x": 0.550000011920929,
@@ -904,8 +906,8 @@
         },
         "transform": {
             "position": {
-                "x": -1.2613765001296997,
-                "y": -0.2642885446548462
+                "x": -1.2780033349990845,
+                "y": -0.2892287075519562
             },
             "rotation": -0.0,
             "scale": {
@@ -917,7 +919,7 @@
             "text": "GOAL: ESCAPE.",
             "text": null,
             "filename": "fnt_silkscreenRegular.ttf",
-            "fontsize": 1.75,
+            "fontsize": 1.5,
             "color": {
                 "r": 0.10588235408067703,
                 "g": 0.8823529481887817,
@@ -925,5 +927,75 @@
             },
             "layer": 22
         }
+    },
+    {
+        "name": {
+            "namestr": "UI_FPSParent",
+            "layer": 0,
+            "isprefab": true,
+            "tagstr": "Default",
+            "prefabname": "UI_FPSParent.prefab",
+            "issync": false
+        },
+        "transform": {
+            "position": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "script": {
+            "scripts": [
+                {
+                    "name": "UI_FPSCounter",
+                    "enabled": true,
+                    "map": [
+                        {
+                            "variable": "layerEnabled",
+                            "base64": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        "children": [
+            {
+                "name": {
+                    "namestr": "UI_FPSCounter",
+                    "layer": 15,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "UI_FPSParent.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 1.3890342712402344,
+                        "y": 0.8299999833106995
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "text": {
+                    "text": "FPS : 000",
+                    "text": null,
+                    "filename": "fnt_silkscreenRegular.ttf",
+                    "fontsize": 1.5,
+                    "color": {
+                        "r": 0.10588235408067703,
+                        "g": 0.8823529481887817,
+                        "b": 0.06666667014360428
+                    },
+                    "layer": 900
+                }
+            }
+        ]
     }
 ]
