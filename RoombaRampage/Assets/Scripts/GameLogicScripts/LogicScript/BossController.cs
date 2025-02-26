@@ -11,7 +11,7 @@ public class BossController : ScriptBase
     #region ID Variables
     private uint EntityID; //Entity ID of the object, do not touch!
 
-    private uint playerID; //Store player ID
+    //private uint playerID; //Store player ID
     #endregion
 
     #region Component Variable
@@ -30,6 +30,7 @@ public class BossController : ScriptBase
     private BossAttackPattern currentPattern;
     private long seed = DateTime.Now.Ticks; // seed for randomizer
 
+    private Vector2 bossPosition;
     #endregion
 
     #region Boss Attack Pattern
@@ -42,30 +43,35 @@ public class BossController : ScriptBase
     #endregion
 
 
+    private string alternatePrefab;
+    private string spreadPrefab;
+    private string dispersePrefab;
+
 
     public override void Awake(uint id)
     {
         EntityID = id; //Sets ID for object, DO NOT TOUCH
-
+        alternatePrefab = "prefab_bulletAlternate";
+        spreadPrefab = "prefab_bulletSpread";
+        dispersePrefab = "prefab_bulletDisperse";
     }
     public override void Start()
     {
-        playerID = (uint)InternalCall.m_InternalCallGetTagID("Player"); //Get Player ID
+        //EntityID = (uint)InternalCall.m_InternalCallGetTagID("Player"); //Get Player ID
         Console.WriteLine($"Selected Pattern: {currentPattern}");
-
-
-
     }
 
     public override void Update()
     {
-        AttackRandomizer();
+        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.W))
+        {
+            AttackRandomizer();
+        }
     }
 
     public void AttackRandomizer()
     {
         BossAttackPattern newPattern;
-
 
         do
         {
@@ -77,23 +83,30 @@ public class BossController : ScriptBase
         while (newPattern == currentPattern);
 
         currentPattern = newPattern;
+        ExecutePattern(currentPattern);
 
         Console.WriteLine($"Selected Pattern: {currentPattern}");
-
     }
 
     private void ExecutePattern(BossAttackPattern pattern)
     {
+        InternalCall.m_InternalGetTranslate(EntityID, out bossPosition);
         switch (pattern)
         {
             case BossAttackPattern.AlternatingBullet:
                 Console.WriteLine("Firing Alternating Bullets!");
+                InternalCall.m_InternalCallAddPrefab(alternatePrefab, bossPosition.X, bossPosition.Y, 0);
+
                 break;
             case BossAttackPattern.BulletSpread:
                 Console.WriteLine("Firing Bullet Spread!");
+                InternalCall.m_InternalCallAddPrefab(spreadPrefab, bossPosition.X, bossPosition.Y, 0);
+
                 break;
             case BossAttackPattern.BulletDisperse:
                 Console.WriteLine("Firing Bullet Disperse!");
+                InternalCall.m_InternalCallAddPrefab(dispersePrefab, bossPosition.X, bossPosition.Y, 0);
+
                 break;
         }
     }
