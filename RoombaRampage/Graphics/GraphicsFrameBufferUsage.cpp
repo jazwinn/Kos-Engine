@@ -108,7 +108,7 @@ namespace graphicpipe
 		glClear(GL_COLOR_BUFFER_BIT);
 		//Helper::Helpers* help = Helper::Helpers::GetInstance();
 		//glClearColor(help->m_colour.m_x, help->m_colour.m_y, help->m_colour.m_z, 1.f);
-		glClearColor(0, 0, 0, 1.f);
+		//glClearColor(0, 0, 0, 1.f);
 	}
 
 	void GraphicsPipe::m_renderFinalPass()
