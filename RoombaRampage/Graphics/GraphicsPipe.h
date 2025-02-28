@@ -102,7 +102,7 @@ namespace graphicpipe {
         GLint locProjection;
 
         GLuint unilayer;
-        float layer;
+        int layer;
     };
 
     /**
