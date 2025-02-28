@@ -567,6 +567,7 @@ namespace script {
 		/******************************************************************/
 		static void m_InternalCallUnPauseAudio(ecs::EntityID id, MonoString* monoString);
 
+
 		/******************************************************************/
 		/*!
 			\fn        void InternalCall::m_InternalCallPauseAllAudio()
@@ -582,6 +583,18 @@ namespace script {
 		*/
 		/******************************************************************/
 		static void m_InternalCallUnPauseAllAudio();
+
+		static void m_InternalCallSetGlobalBGMVolume(float volume);
+
+		static void m_InternalCallSetGlobalSFXVolume(float volume);
+
+		static float m_InternalCallGetGlobalBGMVolume();
+
+		static float m_InternalCallGetGlobalSFXVolume();
+
+		static bool m_InternalCallCheckIsBGM(ecs::EntityID id, MonoString* monoString);
+
+		static bool m_InternalCallCheckIsSFX(ecs::EntityID id, MonoString* monoString);
 
 		/******************************************************************/
 		/*!
