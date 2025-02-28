@@ -13,7 +13,7 @@
 
 namespace video {
 
-    Video::Video(std::string filepath, GLuint shaderProgram, std::bitset<VIDEO_FLAGS::TOTAL> flag ) : m_shaderProgram{ shaderProgram }
+    Video::Video(std::string filepath, GLuint shaderProgram, std::bitset<VIDEO_FLAGS::TOTAL> flag) : m_shaderProgram{ shaderProgram }, transformation(1)
 	{
 		//graphicpipe::GraphicsPipe* graphics = graphicpipe::GraphicsPipe::m_funcGetInstance();
 		mpeg = plm_create_with_filename(filepath.c_str());
@@ -63,10 +63,17 @@ namespace video {
             std::cerr << std::endl;
         }
 
-        glUseProgram(shaderProgram);
-        glUniform1i(glGetUniformLocation(shaderProgram, "yTexture"), 0); // Bind to texture unit 0
-        glUniform1i(glGetUniformLocation(shaderProgram, "uTexture"), 1); // Bind to texture unit 1
-        glUniform1i(glGetUniformLocation(shaderProgram, "vTexture"), 2); // Bind to texture unit 2
+        glUseProgram(m_shaderProgram);
+        glUniform1i(glGetUniformLocation(m_shaderProgram, "yTexture"), 0); // Bind to texture unit 0
+        glUniform1i(glGetUniformLocation(m_shaderProgram, "uTexture"), 1); // Bind to texture unit 1
+        glUniform1i(glGetUniformLocation(m_shaderProgram, "vTexture"), 2); // Bind to texture unit 2
+
+        
+
+        locTransformation = glGetUniformLocation(m_shaderProgram, "transformation");
+        locView = glGetUniformLocation(m_shaderProgram, "view");
+        locProjection = glGetUniformLocation(m_shaderProgram, "projection");
+
         glUseProgram(0);
 	}
 
@@ -88,25 +95,7 @@ namespace video {
         }
 	}
 
-    void Video::DrawVideo(GLuint shaderProgram, GLuint quadVAO)
-    {
-        glUseProgram(shaderProgram);
 
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, yTexture);
-
-        glActiveTexture(GL_TEXTURE1);
-        glBindTexture(GL_TEXTURE_2D, uTexture);
-
-        glActiveTexture(GL_TEXTURE2);
-        glBindTexture(GL_TEXTURE_2D, vTexture);
-
-        glUniformMatrix3fv(glGetUniformLocation(shaderProgram, "view"), 0, GL_FALSE, glm::value_ptr(graphicpipe::GraphicsCamera::m_currViewMatrix));
-        glUniformMatrix3fv(glGetUniformLocation(shaderProgram, "projection"), 0, GL_FALSE, glm::value_ptr(graphicpipe::GraphicsCamera::m_currOrthoMatrix));
-
-        glBindVertexArray(quadVAO);
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-    }
 
     void Video::UpdateTextures(plm_frame_t* frame)
     {
@@ -123,6 +112,14 @@ namespace video {
 
         glBindTexture(GL_TEXTURE_2D, vTexture);
         glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, frame->width / 2, frame->height / 2, GL_RED, GL_UNSIGNED_BYTE, frame->cr.data);
+
+        glUseProgram(m_shaderProgram);
+        glUniformMatrix3fv(locTransformation, 1, GL_FALSE, glm::value_ptr(transformation));
+
+        glUniformMatrix3fv(locView, 1, GL_FALSE, glm::value_ptr(graphicpipe::GraphicsCamera::m_currViewMatrix));
+        glUniformMatrix3fv(locProjection, 1, GL_FALSE, glm::value_ptr(graphicpipe::GraphicsCamera::m_currOrthoMatrix));
+
+        glUseProgram(0);
 
         GLenum err = glGetError();
         if (err != GL_NO_ERROR) {

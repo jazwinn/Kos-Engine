@@ -168,6 +168,8 @@ namespace assetmanager {
         /******************************************************************/
         script::ScriptHandler m_scriptManager;
 
+        video::VideoManager m_videoManager;
+
         /******************************************************************/
         /*!
         \var     std::unordered_map<std::string, prefab::Prefab> m_prefabs

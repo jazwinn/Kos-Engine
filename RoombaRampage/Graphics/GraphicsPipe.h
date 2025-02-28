@@ -91,6 +91,13 @@ namespace graphicpipe {
         std::string m_fileName;            ///< Font file used for rendering.
     };
 
+    struct VideoData {
+
+        GLuint yTexture;
+        GLuint uTexture;
+        GLuint vTexture;
+    };
+
     /**
      * @class GraphicsPipe
      * @brief Manages the rendering pipeline, shaders, and drawing functions.
@@ -197,8 +204,10 @@ namespace graphicpipe {
         unsigned int m_gridDebugShaderProgram{};    ///< Shader program for rendering collidable grids.
         unsigned int m_lightingShaderProgram{};     ///< Shader program for the lighting pass.
         unsigned int m_finalPassShaderProgram{};    ///< Shader program for the final post-processing pass.
-        unsigned int m_videoShaderProgram{};        ///< Shader program for video
 
+    public:
+        unsigned int m_videoShaderProgram{};        ///< Shader program for video
+    private:
         // Buffers
         unsigned int m_modelMatrixArrayBuffer{};    ///< Array buffer for model matrices.
         unsigned int m_debugMatrixArrayBuffer{};    ///< Array buffer for debug matrices.
@@ -495,7 +504,7 @@ namespace graphicpipe {
         std::vector<GraphicsData> m_unlitModelData{};
         std::vector<DebugDrawData> m_debugBoxData{}; ///< Data for rendering debug boxes.
         std::vector<TextData> m_textData{}; ///< Data for rendering text elements.
-        std::vector<std::unique_ptr<video::Video>> m_videoData{};
+        std::vector<VideoData> m_videoData{};
         std::vector<float> m_debugBoxCollisionChecks{}; ///< Collision check data for debug box rendering.
         std::vector<float> m_debugCircleCollisionChecks{}; ///< Collision check data for debug circle rendering.
 

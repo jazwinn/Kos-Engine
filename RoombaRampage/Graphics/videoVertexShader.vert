@@ -24,15 +24,21 @@ R"( #version 460 core
 
     out vec2 TexCoords;
 
+    uniform mat3 transformation;
     uniform mat3 projection;
     uniform mat3 view;
 
 void main()
 {
-    mat3 matrix = projection * view;
-    // gl_Position = vec4(vec3(matrix * aPos), 1.0);
+    
+    
+    mat3 model = transformation;
 
-    gl_Position = vec4(aPos, 1.0);
+    mat3 matrix = projection * view * model;
+
+   
+    gl_Position = vec4(vec2(matrix * vec3(aPos.xy, 1.f)),
+					   0.0, 1.0);
 
     TexCoords = aTexCoord;
 }

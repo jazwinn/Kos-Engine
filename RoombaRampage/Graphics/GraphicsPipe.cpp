@@ -121,11 +121,6 @@ namespace graphicpipe {
 		//glEnable(GL_SCISSOR_TEST);
 
 
-		std::bitset<video::VIDEO_FLAGS::TOTAL> videoFlags;
-		videoFlags.set(video::VIDEO_FLAGS::AUDIO);
-		videoFlags.set(video::VIDEO_FLAGS::LOOP);
-		m_videoData.push_back(std::make_unique<video::Video>("./Assets/Video/test.mpg", m_videoShaderProgram, videoFlags));
-
 	}
 
 	GraphicsPipe::~GraphicsPipe()
@@ -160,8 +155,6 @@ namespace graphicpipe {
 		}
 		GraphicsCamera::m_MultiplyViewMatrix();
 		GraphicsCamera::m_MultiplyOrthoMatrix();
-		
-		std::for_each(m_videoData.begin(), m_videoData.end(), [](auto& x) {x->DecodeAndUpdateVideo();});
 
 		if (!m_gameMode)
 		{
@@ -204,6 +197,7 @@ namespace graphicpipe {
 		m_gridColliderArrays.clear();
 		m_gridColliderChecks.clear();
 		m_colliderGridData.clear();
+		m_videoData.clear();
 		GraphicsCamera::m_cameras.clear();
 		
 	}

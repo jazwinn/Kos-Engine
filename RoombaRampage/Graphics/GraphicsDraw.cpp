@@ -85,7 +85,6 @@ namespace graphicpipe
 		}
 		
 		m_funcDrawVideos();
-		
 	}
 
 	void GraphicsPipe::m_funcDrawUnlit()
@@ -146,8 +145,27 @@ namespace graphicpipe
 
 	void GraphicsPipe::m_funcDrawVideos()
 	{
+		for (VideoData x : m_videoData) {
 
-		std::for_each(m_videoData.begin(), m_videoData.end(), [&](auto& x) {x->DrawVideo(m_videoShaderProgram, (GLuint)m_videoMesh.m_vaoId);});
+			glUseProgram(m_videoShaderProgram);
+
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, x.yTexture);
+
+			glActiveTexture(GL_TEXTURE1);
+			glBindTexture(GL_TEXTURE_2D, x.uTexture);
+
+			glActiveTexture(GL_TEXTURE2);
+			glBindTexture(GL_TEXTURE_2D, x.vTexture);
+
+
+
+			glBindVertexArray(m_videoMesh.m_vaoId);
+			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+
+		}
+		
 	}
 
 	void GraphicsPipe::m_funcDrawDebug()
