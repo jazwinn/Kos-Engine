@@ -383,6 +383,24 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
                 m_clickedEntityId = id;
             }
 
+            if (filename->filename().extension().string() == ".mpg" || filename->filename().extension().string() == ".mpeg") {
+
+                ecs::EntityID id = fileecs->m_CreateEntity(m_activeScene); //assign to top most scene
+                ecs::TransformComponent* transCom = static_cast<ecs::TransformComponent*>(fileecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id));
+                transCom->m_position = { translate.m_x, translate.m_y };
+                // Insert matrix
+                ecs::NameComponent* nameCom = static_cast<ecs::NameComponent*>(fileecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id));
+                nameCom->m_entityName = filename->filename().stem().string();
+                ecs::VideoComponent* vc = static_cast<ecs::VideoComponent*>(fileecs->m_AddComponent(ecs::TYPEVIDEOCOMPONENT, id));
+                vc->filename = filename->filename().string();
+                vc->play = true;
+                if (m_prefabSceneMode) {
+                    ecs::Hierachy::m_SetParent(ecs->m_ECS_SceneMap.find(m_activeScene)->second.m_prefabID, id);
+                }
+
+                m_clickedEntityId = id;
+            }
+
             if (!m_prefabSceneMode && filename->filename().extension().string() == ".prefab") {//dont allow adding of prefab in prefab 
 
                 //check to see if prefab is even loaded

@@ -1689,6 +1689,20 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             }
                         }
 
+                        if (filename->filename().extension().string() == ".mpg" || filename->filename().extension().string() == ".mpeg") {
+
+                            if (!EntitySignature.test(ecs::TYPEVIDEOCOMPONENT)) {// does not have sprite component, create one
+                                ecs::VideoComponent* vid = static_cast<ecs::VideoComponent*>(ecs->m_AddComponent(ecs::TYPEVIDEOCOMPONENT, entityID));
+                                vid->filename = filename->filename().string();
+                                vid->play = true;
+                            }
+                            else {
+                                auto* vc = static_cast<ecs::VideoComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEVIDEOCOMPONENT]->m_GetEntityComponent(entityID));
+                                vc->filename = filename->filename().string();
+                                vc->play = true;
+                            }
+                        }
+
                     }
                     ImGui::EndDragDropTarget();
                 }
