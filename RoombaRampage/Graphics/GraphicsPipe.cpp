@@ -205,6 +205,7 @@ namespace graphicpipe {
 		
 		if (m_gameMode)
 		{
+			glClearColor(0,0,0,1.f);
 			m_renderFinalPass();
 			//m_funcDrawFullScreenQuad(m_finalPassTexture);
 		}

@@ -236,28 +236,78 @@ namespace Application {
         graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
         int display_w, display_h;
         glfwGetFramebufferSize(m_window, &display_w, &display_h);
+        
+        constexpr float targetAspect = 16.0f / 9.0f; // Lock game to this display ratio
+
         static GLint old_w{}, old_h{};
-        // update viewport settings in vps only if window's dimension change
-        if (display_w != old_w || display_h != old_h)
+        static GLint curr_w{}, curr_h{};
+        static GLint oldOverall_W{}, oldOverall_H{};
+
+        if (curr_w != display_w || curr_h != display_h)
         {
-            
-            
-            old_w = display_w;
-            old_h = display_h;
-            help->m_windowHeight = static_cast<float>(display_h);
-            help->m_windowWidth = static_cast<float>(display_w);
-            if (help->m_windowHeight > 0 || help->m_windowWidth > 0)
-            {
-                pipe->m_funcSetupFrameBuffer();
-                pipe->m_funcSetupGamePreviewFrameBuffer();
-                pipe->m_funcSetupLightingFrameBuffer();
-                pipe->m_funcSetupFinalPassBuffer();
-                pipe->m_funcSetUpUnlitScreenFrameBuffer();
-                glViewport(0, 0, display_w, display_h);
-            }
-            
+            help->m_currWindowHeight = display_h;
+            help->m_currWindowWidth = display_w;
+            curr_w = display_w;
+            curr_h = display_h;
         }
-        glClearColor(static_cast<GLclampf>(help->m_colour.m_x * pipe->m_globalLightIntensity), static_cast<GLclampf>(help->m_colour.m_y * pipe->m_globalLightIntensity), static_cast<GLclampf>(help->m_colour.m_z * pipe->m_globalLightIntensity), static_cast<GLclampf>(1));
+        // update viewport settings in vps only if window's dimension change
+   
+        if (display_h != 0)
+        {
+            float currAspect = static_cast<float>(static_cast<float>(display_w) / static_cast<float>(display_h));
+            if (currAspect < targetAspect)
+            {
+                display_h = static_cast<int>(static_cast<float>(display_w) / targetAspect);
+            }
+            else if (currAspect > targetAspect)
+            {
+                display_w = static_cast<int>(static_cast<float>(display_h) * targetAspect);
+            }
+        }
+
+           
+
+            ///Do resolution handling here
+
+
+        help->m_windowHeight = static_cast<float>(display_h);
+        help->m_windowWidth = static_cast<float>(display_w);
+
+        if ((old_w != help->m_windowWidth || old_h != help->m_windowHeight || curr_w != oldOverall_W || curr_h != oldOverall_H) && (help->m_windowHeight > 0 || help->m_windowWidth > 0))
+        {
+            oldOverall_W = curr_w;
+            oldOverall_H = curr_h;
+            old_w = static_cast<int>(help->m_windowWidth);
+            old_h = static_cast<int>(help->m_windowHeight);
+            pipe->m_funcSetupFrameBuffer();
+            pipe->m_funcSetupGamePreviewFrameBuffer();
+            pipe->m_funcSetupLightingFrameBuffer();
+            pipe->m_funcSetupFinalPassBuffer();
+            pipe->m_funcSetUpUnlitScreenFrameBuffer();
+           
+            int xOffsett = (curr_w - old_w) / 2;
+            int yOffsett = (curr_h - old_h) / 2;
+
+            help->m_viewportOffsetX = xOffsett;
+            help->m_viewportOffsetY = yOffsett;
+
+            std::cout << "Overall Window Width" << curr_w << std::endl;
+            std::cout << "Height " << help->m_windowHeight << std::endl;
+            std::cout << "Width " << help->m_windowWidth << std::endl;
+            std::cout << "Y Offset: " << yOffsett << std::endl;
+            std::cout << "X Offset: " << xOffsett << std::endl;
+
+            glViewport(xOffsett, yOffsett, old_w, old_h);
+            //glScissor(0, 0, curr_w, curr_h);
+
+            //glViewport(0, 0, old_w, old_h);
+            //glScissor(0, 0, old_w, old_h);
+            glClearColor(0, 0, 0, 1.f);
+           
+        }
+            
+        glClearColor(0, 0, 0, 1.f);
+       // glClearColor(static_cast<GLclampf>(help->m_colour.m_x * pipe->m_globalLightIntensity), static_cast<GLclampf>(help->m_colour.m_y * pipe->m_globalLightIntensity), static_cast<GLclampf>(help->m_colour.m_z * pipe->m_globalLightIntensity), static_cast<GLclampf>(1));
         glClear(GL_COLOR_BUFFER_BIT);
 
         if (help->m_closeWindow) {

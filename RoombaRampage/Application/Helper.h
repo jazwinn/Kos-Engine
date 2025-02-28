@@ -39,6 +39,14 @@ namespace Helper {
 
 		std::string m_startScene;
 
+		int m_currWindowWidth;
+
+		int m_currWindowHeight;
+
+		int m_viewportOffsetX;
+
+		int m_viewportOffsetY;
+
 		float m_windowWidth;
 
 		float m_windowHeight;

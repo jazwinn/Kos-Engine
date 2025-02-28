@@ -146,12 +146,17 @@ namespace graphicpipe
 
 	void GraphicsPipe::m_funcDrawDebug()
 	{
+
+
 		if (!m_debugBoxToNDCMatrix.empty())
 		{
 			glBindBuffer(GL_ARRAY_BUFFER, m_debugCollisionCheckBuffer);
 			glNamedBufferData(m_debugCollisionCheckBuffer, m_debugBoxCollisionChecks.size() * sizeof(float), &m_debugBoxCollisionChecks[0], GL_DYNAMIC_DRAW);
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
 			glUseProgram(m_debugShaderProgram);
+
+			glUniformMatrix3fv(glGetUniformLocation(m_debugShaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currViewMatrix));
+			glUniformMatrix3fv(glGetUniformLocation(m_debugShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currOrthoMatrix));
 
 			glBindBuffer(GL_ARRAY_BUFFER, m_debugMatrixArrayBuffer);
 			glNamedBufferData(m_debugMatrixArrayBuffer, m_debugBoxToNDCMatrix.size() * sizeof(glm::mat3), &m_debugBoxToNDCMatrix[0], GL_DYNAMIC_DRAW);
@@ -170,6 +175,9 @@ namespace graphicpipe
 			glNamedBufferData(m_debugCollisionCheckBuffer, m_debugCircleCollisionChecks.size() * sizeof(float), &m_debugCircleCollisionChecks[0], GL_DYNAMIC_DRAW);
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
 			glUseProgram(m_debugShaderProgram);
+
+			glUniformMatrix3fv(glGetUniformLocation(m_debugShaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currViewMatrix));
+			glUniformMatrix3fv(glGetUniformLocation(m_debugShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currOrthoMatrix));
 
 			glBindBuffer(GL_ARRAY_BUFFER, m_debugMatrixArrayBuffer);
 			glNamedBufferData(m_debugMatrixArrayBuffer, m_debugCircleToNDCMatrix.size() * sizeof(glm::mat3), &m_debugCircleToNDCMatrix[0], GL_DYNAMIC_DRAW);
@@ -222,27 +230,33 @@ namespace graphicpipe
 				float originX{ textData.m_x };
 				float originY{ textData.m_y };
 
+				Helper::Helpers* help = Helper::Helpers::GetInstance();
+				//float scale = help->m_windowHeight / static_cast<float>(help->m_currWindowHeight);
+				//scale /= (help->m_windowWidth / 1920.f); ///Recalibrate if needed
+
 				// Step 1: Calculate total width and height of the text
 				float totalWidth = 0.0f;
 				float maxAscent = 0.0f;
 				float maxDescent = 0.0f;
-				for (int i = 0; i < textData.m_text.size(); ++i)
+				for (int i = 0; i < textData.m_text.size(); ++i) // To calculate the total width of the text
 				{
 					char c = textData.m_text[i];
 					text::CharacterData ch = assetmanager->m_fontManager.m_fonts[textData.m_fileName][c];
-					//float thing = ((ch.m_advance >> 6)); USE SIZE OF CHAR LATER
-					totalWidth += ((ch.m_advance >> 6) * textData.m_scale * textData.m_xyScale.x) / (float)GraphicsCamera::m_windowHeight;
-					maxAscent = std::max(maxAscent, (ch.m_bearing.y * textData.m_scale * textData.m_xyScale.y) / GraphicsCamera::m_windowHeight);
-					maxDescent = std::max(maxDescent, ((ch.m_size.y - ch.m_bearing.y) * textData.m_scale * textData.m_xyScale.y) / GraphicsCamera::m_windowHeight);
+					if (i == textData.m_text.size() - 1) // If it's the last letter, add only the letter size
+					{
+						totalWidth += ((ch.m_size.x * textData.m_scale * textData.m_xyScale.x) / ((static_cast<float>(help->m_currWindowHeight))));
+					}
+					else // Add the letter size and the space
+					{
+						totalWidth += ((ch.m_advance >> 6) * textData.m_scale * textData.m_xyScale.x) / ((static_cast<float>(help->m_currWindowHeight)));
+					}
+					maxAscent = std::max(maxAscent, (ch.m_bearing.y * textData.m_scale * textData.m_xyScale.y) / ((static_cast<float>(help->m_currWindowHeight))));
+					maxDescent = std::max(maxDescent, ((ch.m_size.y - ch.m_bearing.y) * textData.m_scale * textData.m_xyScale.y) / ((static_cast<float>(help->m_currWindowHeight))));
 				}
-				//if (textData.m_text.size())
-				//{
-				//	char c = textData.m_text[textData.m_text.size() - 1];
-				//	text::CharacterData ch = assetmanager->m_fontManager.m_fonts[textData.m_fileName][c];
-				//	//totalWidth -= (((ch.m_advance >> 6) * textData.m_scale * textData.m_xyScale.x) / (float)GraphicsCamera::m_windowHeight) /2.f;
-				//}
 				
 				float totalHeight = maxAscent + maxDescent;
+
+
 
 				// Adjust starting position to center the text
 				textData.m_x = originX - totalWidth / 2.0f;  // Horizontal centering
@@ -254,10 +268,10 @@ namespace graphicpipe
 					text::CharacterData ch = assetmanager->m_fontManager.m_fonts[textData.m_fileName][c];
 
 					// Calculate position and size for each character quad
-					float xpos = (textData.m_x + ch.m_bearing.x / GraphicsCamera::m_windowHeight * (textData.m_scale * textData.m_xyScale.x));
-					float ypos = (textData.m_y - ((float)ch.m_size.y - (float)ch.m_bearing.y) / (float)GraphicsCamera::m_windowHeight * (textData.m_scale * textData.m_xyScale.y));
-					float w = ch.m_size.x * textData.m_scale * textData.m_xyScale.x / GraphicsCamera::m_windowHeight;
-					float h = ch.m_size.y * textData.m_scale * textData.m_xyScale.y / GraphicsCamera::m_windowHeight;
+					float xpos = (textData.m_x + ch.m_bearing.x / ((static_cast<float>(help->m_currWindowHeight))) * (textData.m_scale * textData.m_xyScale.x));
+					float ypos = (textData.m_y - ((float)ch.m_size.y - (float)ch.m_bearing.y) / ((static_cast<float>(help->m_currWindowHeight))) * (textData.m_scale * textData.m_xyScale.y));
+					float w = ch.m_size.x * textData.m_scale * textData.m_xyScale.x / ((static_cast<float>(help->m_currWindowHeight)));
+					float h = ch.m_size.y * textData.m_scale * textData.m_xyScale.y / ((static_cast<float>(help->m_currWindowHeight)));
 
 					// Update VBO for each character with texture coordinates from the atlas
 					float vertices[6][4] =
@@ -283,7 +297,7 @@ namespace graphicpipe
 					glDrawArrays(GL_TRIANGLES, 0, 6);
 
 					// Advance cursor for next glyph
-					textData.m_x += ((ch.m_advance >> 6) * textData.m_scale * textData.m_xyScale.x) / GraphicsCamera::m_windowHeight;
+					textData.m_x += ((ch.m_advance >> 6) * textData.m_scale * textData.m_xyScale.x) / ((static_cast<float>(help->m_currWindowHeight)));
 				}
 				textData.m_x = origin;
 
