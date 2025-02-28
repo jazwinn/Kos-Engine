@@ -165,6 +165,8 @@ namespace graphicpipe
 		}
 	}
 
+
+
 	void GraphicsPipe::m_funcSetupFrameBuffer()
 	{
 		Helper::Helpers* help = Helper::Helpers::GetInstance();

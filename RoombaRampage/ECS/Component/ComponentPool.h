@@ -38,9 +38,8 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "LightingComponent.h"
 #include "GridComponent.h"
 #include "RaycastComponent.h"
-
 #include "PathfindingComponent.h"
-
+#include "VideoComponent.h"
 
 
 

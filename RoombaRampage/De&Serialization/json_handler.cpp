@@ -711,6 +711,12 @@ namespace Serialization {
 			}
 		}
 
+		if (signature.test(ecs::ComponentType::TYPEVIDEOCOMPONENT)) {
+			ecs::VideoComponent* vc = static_cast<ecs::VideoComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPEVIDEOCOMPONENT]->m_GetEntityComponent(entityId));
+			if (vc) {
+				m_saveComponentreflect(vc, entityData, allocator);
+			}
+		}
 
 		// Add children
 		std::optional<std::vector<ecs::EntityID>> childrenOptional = ecs::Hierachy::m_GetChild(entityId);
@@ -1313,6 +1319,16 @@ namespace Serialization {
 
 			if (lc) {
 				m_LoadComponentreflect(lc, entityData);
+			}
+		}
+
+		if (entityData.HasMember(ecs::VideoComponent::classname()) && entityData[ecs::VideoComponent::classname()].IsObject()) {
+			ecs::VideoComponent* vc = static_cast<ecs::VideoComponent*>(
+				ecs->m_AddComponent(ecs::TYPEVIDEOCOMPONENT, newEntityId)
+				);
+
+			if (vc) {
+				m_LoadComponentreflect(vc, entityData);
 			}
 		}
 

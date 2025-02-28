@@ -71,6 +71,7 @@ namespace graphicpipe {
 		m_funcSetupSquareLinesVao();
 		m_funcSetupGridVao();
 		m_funcSetupTextVao();
+		m_funcSetupVideoVAO();
 		m_funcSetDrawMode(GL_FILL);
 
 		// Compile and set up shader programs for various rendering tasks.
@@ -83,7 +84,7 @@ namespace graphicpipe {
 		m_tilemapShaderProgram = m_funcSetupShader(tilemapVertexShader, tilemapFragmentShader);
 		m_lightingShaderProgram = m_funcSetupShader(lightingVertexShader, lightingFragmentShader);
 		m_finalPassShaderProgram = m_funcSetupShader(finalPassVertexShader, finalPassFragmentShader);
-		
+		m_videoShaderProgram = m_funcSetupShader(videoVertexShader,videoFragmentShader);
 
 		// Initialize model-to-NDC transformation matrix and other drawing data.
 		m_modelToNDCMatrix.push_back(m_testMatrix);
@@ -117,7 +118,8 @@ namespace graphicpipe {
 		m_tileIndexes.clear();
 
 		// Enable scissor test for limiting rendering to a specific area.
-		glEnable(GL_SCISSOR_TEST);
+		//glEnable(GL_SCISSOR_TEST);
+
 
 	}
 
@@ -153,7 +155,6 @@ namespace graphicpipe {
 		}
 		GraphicsCamera::m_MultiplyViewMatrix();
 		GraphicsCamera::m_MultiplyOrthoMatrix();
-
 
 		if (!m_gameMode)
 		{
@@ -196,6 +197,7 @@ namespace graphicpipe {
 		m_gridColliderArrays.clear();
 		m_gridColliderChecks.clear();
 		m_colliderGridData.clear();
+		m_videoData.clear();
 		GraphicsCamera::m_cameras.clear();
 		
 	}

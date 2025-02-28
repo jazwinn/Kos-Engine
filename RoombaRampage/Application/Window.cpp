@@ -291,12 +291,6 @@ namespace Application {
             help->m_viewportOffsetX = xOffsett;
             help->m_viewportOffsetY = yOffsett;
 
-            std::cout << "Overall Window Width" << curr_w << std::endl;
-            std::cout << "Height " << help->m_windowHeight << std::endl;
-            std::cout << "Width " << help->m_windowWidth << std::endl;
-            std::cout << "Y Offset: " << yOffsett << std::endl;
-            std::cout << "X Offset: " << xOffsett << std::endl;
-
             glViewport(xOffsett, yOffsett, old_w, old_h);
             //glScissor(0, 0, curr_w, curr_h);
 

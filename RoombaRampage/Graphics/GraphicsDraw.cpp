@@ -83,9 +83,8 @@ namespace graphicpipe
 		
 		
 		}
-
-
 		
+		m_funcDrawVideos();
 	}
 
 	void GraphicsPipe::m_funcDrawUnlit()
@@ -142,6 +141,36 @@ namespace graphicpipe
 
 
 		}
+	}
+
+	void GraphicsPipe::m_funcDrawVideos()
+	{
+		for (VideoData x : m_videoData) {
+
+			glUseProgram(m_videoShaderProgram);
+
+			//set uniform
+			glUniformMatrix3fv(x.locTransformation, 1, GL_FALSE, glm::value_ptr(x.transformation));
+			glUniformMatrix3fv(x.locView, 1, GL_FALSE, glm::value_ptr(graphicpipe::GraphicsCamera::m_currViewMatrix));
+			glUniformMatrix3fv(x.locProjection, 1, GL_FALSE, glm::value_ptr(graphicpipe::GraphicsCamera::m_currOrthoMatrix));
+			glUniform1fv(x.unilayer, 1, &x.layer);
+			
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, x.yTexture);
+
+			glActiveTexture(GL_TEXTURE1);
+			glBindTexture(GL_TEXTURE_2D, x.uTexture);
+
+			glActiveTexture(GL_TEXTURE2);
+			glBindTexture(GL_TEXTURE_2D, x.vTexture);
+
+
+			glBindVertexArray(m_videoMesh.m_vaoId);
+			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+			//glDrawArraysInstanced(GL_TRIANGLES, 0, 6, 10);
+
+		}
+		
 	}
 
 	void GraphicsPipe::m_funcDrawDebug()

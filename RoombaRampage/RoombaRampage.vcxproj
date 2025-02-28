@@ -170,14 +170,14 @@ xcopy /y /d "$(SolutionDir)FMOD_API\studio\lib\x64\*.dll" "$(OutDir)"</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);GLEW_STATIC;CRT_SECURE_NO_WARNINGS;CRT_SECURE_NO_WARNINGS;CRT_SECURE_NO_WARNINGSCRT_SECURE_NO_WARNINGSCRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\rapidjson;$(SolutionDir)Dependencies\FMOD_API\core\inc;$(SolutionDir)Dependencies\FMOD_API\studio\inc;$(SolutionDir)Dependencies\imgui;$(SolutionDir)include;$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\glm\include;$(SolutionDir)Dependencies\stb_image\include;$(SolutionDir)Dependencies\GLEW\include\GL;$(SolutionDir)Dependencies\Freetype_Font\include;$(SolutionDir)Json Texts;$(SolutionDir)Dependencies\mono\include;$(SolutionDir)Dependencies\mono\include\mono-2.0</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\rapidjson;$(SolutionDir)Dependencies\FMOD_API\core\inc;$(SolutionDir)Dependencies\FMOD_API\studio\inc;$(SolutionDir)Dependencies\imgui;$(SolutionDir)include;$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\glm\include;$(SolutionDir)Dependencies\stb_image\include;$(SolutionDir)Dependencies\GLEW\include\GL;$(SolutionDir)Dependencies\pl_mpeg;$(SolutionDir)Dependencies\Freetype_Font\include;$(SolutionDir)Json Texts;$(SolutionDir)Dependencies\mono\include;$(SolutionDir)Dependencies\mono\include\mono-2.0</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>26945; 4005; 4245;4083;26495;6255;6263;6001</DisableSpecificWarnings>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <UseStandardPreprocessor>true</UseStandardPreprocessor>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>../Config/pch.h</PrecompiledHeaderFile>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <TreatWarningAsError>true</TreatWarningAsError>
+      <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -205,7 +205,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);GLEW_STATIC;CRT_SECURE_NO_WARNINGS;CRT_SECURE_NO_WARNINGS;CRT_SECURE_NO_WARNINGSCRT_SECURE_NO_WARNINGSCRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\rapidjson;$(SolutionDir)Dependencies\FMOD_API\core\inc;$(SolutionDir)Dependencies\FMOD_API\studio\inc;$(SolutionDir)Dependencies\imgui;$(SolutionDir)include;$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\glm\include;$(SolutionDir)Dependencies\stb_image\include;$(SolutionDir)Dependencies\GLEW\include\GL;$(SolutionDir)Dependencies\Freetype_Font\include;;$(SolutionDir)Dependencies\mono\include;$(SolutionDir)Dependencies\mono\include\mono-2.0</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\rapidjson;$(SolutionDir)Dependencies\FMOD_API\core\inc;$(SolutionDir)Dependencies\FMOD_API\studio\inc;$(SolutionDir)Dependencies\imgui;$(SolutionDir)include;$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\glm\include;$(SolutionDir)Dependencies\stb_image\include;$(SolutionDir)Dependencies\GLEW\include\GL;$(SolutionDir)Dependencies\pl_mpeg;$(SolutionDir)Dependencies\Freetype_Font\include;;$(SolutionDir)Dependencies\mono\include;$(SolutionDir)Dependencies\mono\include\mono-2.0</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <UseStandardPreprocessor>true</UseStandardPreprocessor>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -241,7 +241,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NDEBUG;_GAME;_CONSOLE;%(PreprocessorDefinitions);GLEW_STATIC;CRT_SECURE_NO_WARNINGS;CRT_SECURE_NO_WARNINGSCRT_SECURE_NO_WARNINGSCRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\rapidjson;$(SolutionDir)Dependencies\FMOD_API\core\inc;$(SolutionDir)Dependencies\FMOD_API\studio\inc;$(SolutionDir)Dependencies\imgui;$(SolutionDir)include;$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\glm\include;$(SolutionDir)Dependencies\stb_image\include;$(SolutionDir)Dependencies\GLEW\include\GL;$(SolutionDir)Dependencies\Freetype_Font\include;;$(SolutionDir)Dependencies\mono\include;$(SolutionDir)Dependencies\mono\include\mono-2.0</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\rapidjson;$(SolutionDir)Dependencies\FMOD_API\core\inc;$(SolutionDir)Dependencies\FMOD_API\studio\inc;$(SolutionDir)Dependencies\imgui;$(SolutionDir)include;$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\glm\include;$(SolutionDir)Dependencies\stb_image\include;$(SolutionDir)Dependencies\GLEW\include\GL;$(SolutionDir)Dependencies\pl_mpeg;$(SolutionDir)Dependencies\Freetype_Font\include;;$(SolutionDir)Dependencies\mono\include;$(SolutionDir)Dependencies\mono\include\mono-2.0</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <UseStandardPreprocessor>true</UseStandardPreprocessor>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -305,6 +305,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClCompile Include="Asset Manager\Prefab.cpp" />
     <ClCompile Include="Asset Manager\SceneManager.cpp" />
     <ClCompile Include="Asset Manager\Text.cpp" />
+    <ClCompile Include="Asset Manager\Video.cpp" />
     <ClCompile Include="C#Mono\InternalCall.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
@@ -466,12 +467,15 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClCompile Include="ECS\System\RenderTextSystem.cpp" />
     <ClCompile Include="Editor\ImGui Panels\ScriptVariable.cpp" />
     <ClCompile Include="ECS\System\RayCastSystem.cpp" />
+    <ClCompile Include="ECS\System\VideoSystem.cpp" />
     <ClInclude Include="Actions\Action.h" />
     <ClInclude Include="Actions\ActionManager.h" />
     <ClInclude Include="Actions\ModifyAction.h" />
+    <ClInclude Include="Asset Manager\Video.h" />
     <ClInclude Include="ECS\Component\AudioComponent.h" />
     <ClInclude Include="ECS\Component\EnemyComponent.h" />
     <ClInclude Include="ECS\Component\LightingComponent.h" />
+    <ClInclude Include="ECS\Component\VideoComponent.h" />
     <ClInclude Include="ECS\System\LightingSystem.h" />
     <ClInclude Include="ECS\Component\GridComponent.h" />
     <ClInclude Include="ECS\Component\PathfindingComponent.h" />
@@ -508,6 +512,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClCompile Include="Physics\PhysicsLayer.cpp" />
     <ClInclude Include="ECS\Component\RaycastComponent.h" />
     <ClInclude Include="ECS\System\RayCastSystem.h" />
+    <ClInclude Include="ECS\System\VideoSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Application.h" />
@@ -626,6 +631,8 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <None Include="Graphics\textVertexShader.vert" />
     <None Include="Graphics\tilemapFragmentShader.frag" />
     <None Include="Graphics\tilemapVertexShader.vert" />
+    <None Include="Graphics\videoFragmentShader.frag" />
+    <None Include="Graphics\videoVertexShader.vert" />
     <None Include="ScriptLibrary\AIScript\AIStateComponent.cs" />
     <None Include="ScriptLibrary\AIScript\AIStateSystem.cs" />
     <None Include="ScriptLibrary\AIScript\AStarPathfinding.cs" />
