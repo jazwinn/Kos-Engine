@@ -84,7 +84,7 @@ namespace graphicpipe
 		
 		}
 		
-		m_funcDrawVideos();
+		
 	}
 
 	void GraphicsPipe::m_funcDrawUnlit()

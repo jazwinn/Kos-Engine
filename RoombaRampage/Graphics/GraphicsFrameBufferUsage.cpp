@@ -78,6 +78,7 @@ namespace graphicpipe
 
 		m_funcDrawUnlit();
 		m_funcDrawText();
+		m_funcDrawVideos();
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		glDisable(GL_DEPTH_TEST);
@@ -99,6 +100,7 @@ namespace graphicpipe
 
 		m_funcDrawUnlit();
 		m_funcDrawText();
+		m_funcDrawVideos();
 		m_funcDrawDebug();
 		m_funcDrawGrid();
 		m_funcDrawGridCollider();
