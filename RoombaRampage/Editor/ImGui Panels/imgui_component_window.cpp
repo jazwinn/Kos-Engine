@@ -1415,15 +1415,14 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                                     auto& audioManager = assetManager->m_audioManager;
 
                                     audioManager.m_SetIsBGMForEntity(entityID, it2->m_Name, it2->m_IsBGM);
-                                    std::cout << it2->m_IsBGM << std::endl;
-
+                                    //std::cout << it2->m_IsBGM << std::endl;
                                 }
 
                                 if (ImGui::Checkbox("isSFX", &it2->m_IsSFX)) {
                                     auto& audioManager = assetManager->m_audioManager;
 
                                     audioManager.m_SetIsSFXForEntity(entityID, it2->m_Name, it2->m_IsSFX);
-                                    std::cout << it2->m_IsSFX << std::endl;
+                                    //std::cout << it2->m_IsSFX << std::endl;
                                 }
 
 

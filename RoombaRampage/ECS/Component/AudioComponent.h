@@ -37,9 +37,7 @@ namespace ecs {
     class AudioComponent : public Component {
     public:
         std::vector<AudioFile> m_AudioFiles;
-        float m_GlobalBGMVolume{ 0.5f };
-        float m_GlobalSFXVolume{ 0.5f };
-        REFLECTABLE(AudioComponent, m_AudioFiles, m_GlobalBGMVolume, m_GlobalSFXVolume)
+        REFLECTABLE(AudioComponent, m_AudioFiles)
     };
 }
 #endif AUDIOCOM_H

@@ -872,6 +872,55 @@ namespace script {
 		assetmanager->m_audioManager.m_UnpauseAllSounds();
 	}
 
+	void InternalCall::m_InternalCallSetGlobalBGMVolume(float volume)
+	{
+		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+		assetmanager->m_audioManager.m_SetGlobalBGMVolume(volume);
+	}
+
+	void InternalCall::m_InternalCallSetGlobalSFXVolume(float volume)
+	{
+		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+		assetmanager->m_audioManager.m_SetGlobalSFXVolume(volume);
+	}
+
+	float InternalCall::m_InternalCallGetGlobalBGMVolume() 
+	{
+		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+		return assetmanager->m_audioManager.m_GlobalBGMVolume;
+	}
+
+	float InternalCall::m_InternalCallGetGlobalSFXVolume()
+	{
+		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+		return assetmanager->m_audioManager.m_GlobalSFXVolume;
+	}
+
+	bool InternalCall::m_InternalCallCheckIsBGM(ecs::EntityID id, MonoString* monoString) {
+		char* nativeString = mono_string_to_utf8(monoString);
+		std::filesystem::path filepath = nativeString;
+
+		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+		bool result = assetmanager->m_audioManager.m_CheckIsBGMForEntity(id, filepath.filename().stem().string());
+
+		mono_free(nativeString);
+
+		return result;
+	}
+
+	bool InternalCall::m_InternalCallCheckIsSFX(ecs::EntityID id, MonoString* monoString) {
+		char* nativeString = mono_string_to_utf8(monoString);
+		std::filesystem::path filepath = nativeString;
+
+		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+		bool result = assetmanager->m_audioManager.m_CheckIsSFXForEntity(id, filepath.filename().stem().string());
+
+		mono_free(nativeString);
+
+		return result;
+
+	}
+
 	bool InternalCall::m_InternalCallIsWindowMinimise()
 	{
 		return Helper::Helpers::GetInstance()->m_windowMinimise;
@@ -1308,6 +1357,12 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_InternalCallUnPauseAudio);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallPauseAllAudio);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallUnPauseAllAudio);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallSetGlobalBGMVolume);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallSetGlobalSFXVolume);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallGetGlobalBGMVolume);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallGetGlobalSFXVolume);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallCheckIsBGM);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallCheckIsSFX);
 
 
 		MONO_ADD_INTERNAL_CALL(m_InternalCallIsWindowMinimise);

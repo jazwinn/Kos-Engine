@@ -366,6 +366,11 @@ namespace fmodaudio {
         void m_SetGlobalBGMVolume(float volume);
 
         void m_SetGlobalSFXVolume(float volume);
+
+        bool m_CheckIsBGMForEntity(ecs::EntityID entityId, const std::string& name);
+
+        bool m_CheckIsSFXForEntity(ecs::EntityID entityId, const std::string& name);
+
         /******************************************************************/
         /*!
         \fn      void m_SetPlayOnStartForEntity(ecs::EntityID entityId, const std::string& audioName, bool playOnStart)
