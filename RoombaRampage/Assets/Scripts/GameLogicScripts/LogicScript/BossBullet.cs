@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-public class BulletTest : ScriptBase
+public class BossBullet : ScriptBase
 {
     #region Entity ID
     private uint EntityID;
@@ -15,7 +15,7 @@ public class BulletTest : ScriptBase
     {
         EntityID = id;
 
-        speed = 8;
+        speed = 2;
 
         InternalCall.m_InternalGetTransformComponent(EntityID, out startingBulletPos, out startingBulletScale, out startingBulletRotate);
 
@@ -33,7 +33,8 @@ public class BulletTest : ScriptBase
         Console.WriteLine($"[Bullet Spawned] Position: X={startingBulletPos.X}, Y={startingBulletPos.Y}, Rotation={rotation}°");
         Console.WriteLine($"[Bullet Direction] ForwardX={forwardX}, ForwardY={forwardY}");
 
-        CoroutineManager.Instance.StartCoroutine(DeathTimer());
+        //if(EntityID !=)
+        //CoroutineManager.Instance.StartCoroutine(DeathTimer());
     }
     #endregion
 
@@ -51,6 +52,7 @@ public class BulletTest : ScriptBase
     public override void Start()
     {
         bulletHasHit = false;
+
     }
 
     public override void Update()
@@ -83,6 +85,7 @@ public class BulletTest : ScriptBase
                     case "PropGlassWall":
                     case "Wall":
                         bulletHasHit = true;
+
                         InternalCall.m_InternalCallDeleteEntity(EntityID);
                         return;
 

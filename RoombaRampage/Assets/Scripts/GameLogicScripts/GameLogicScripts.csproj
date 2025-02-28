@@ -67,7 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LogicScript\BossController.cs" />
-    <Compile Include="LogicScript\BulletTest.cs" />
+    <Compile Include="LogicScript\BossBullet.cs" />
     <Compile Include="LogicScript\CameraFollowPlayerScript.cs" />
     <Compile Include="LogicScript\CoroutineController.cs" />
     <Compile Include="LogicScript\CoroutineManager.cs" />

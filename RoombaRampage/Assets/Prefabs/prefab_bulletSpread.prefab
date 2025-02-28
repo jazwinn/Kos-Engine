@@ -12,16 +12,16 @@
     {
         "name": {
             "namestr": "prefab_bulletSpread",
-            "layer": 0,
+            "layer": 1,
             "isprefab": false,
-            "tagstr": "Default"
+            "tagstr": "EnemyBullet"
         },
         "transform": {
             "position": {
-                "x": 0.0,
+                "x": -0.01097637414932251,
                 "y": 0.0
             },
-            "rotation": 0.0,
+            "rotation": -0.0,
             "scale": {
                 "x": 1.0,
                 "y": 1.0
@@ -39,8 +39,32 @@
                 "y": 0.0
             },
             "drawDebug": true,
-            "radius": 0.20000000298023224,
+            "radius": 0.30000001192092896,
             "shapetype": 1
+        },
+        "rigidbody": {
+            "linearVelocity": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "linearAcceleration": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "angularVelocity": 0.0,
+            "angularAcceleration": 0.0,
+            "mass": 1.0,
+            "inverseMass": 1.0,
+            "linearDamping": 0.9900000095367432,
+            "angularDamping": 0.9900000095367432,
+            "force": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "torque": 0.0,
+            "kinematic": false,
+            "static": false
         },
         "sprite": {
             "imagefile": "img_BulletPlaceholder.png",
@@ -63,9 +87,14 @@
         "script": {
             "scripts": [
                 {
-                    "name": "BulletTest",
+                    "name": "BossBullet",
                     "enabled": true,
-                    "map": []
+                    "map": [
+                        {
+                            "variable": "speed",
+                            "base64": ""
+                        }
+                    ]
                 }
             ]
         }

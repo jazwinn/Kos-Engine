@@ -16,16 +16,16 @@ public class BossController : ScriptBase
 
     #region Component Variable
     private SpriteComponent spriteComp;
-    private AnimationComponent animComp;
-    private ColliderComponent collComp;
-    private TransformComponent transformComp;
-    private TransformComponent playerTransformComp;
+    //private AnimationComponent animComp;
+   // private ColliderComponent collComp;
+    //private TransformComponent transformComp;
+    //private TransformComponent playerTransformComp;
     #endregion
 
     #region Boss Variable
     public int forceFieldHealth = 3;
     public int playerHit = 0;
-    bool noForceField = false;
+    //bool noForceField = false;
 
     private BossAttackPattern currentPattern;
     private long seed = DateTime.Now.Ticks; // seed for randomizer
@@ -42,7 +42,8 @@ public class BossController : ScriptBase
     {
         AlternatingBullet,
         BulletSpread,
-        BulletDisperse
+        BulletDisperse,
+        BulletSpiral
     };
     #endregion
 
@@ -101,23 +102,22 @@ public class BossController : ScriptBase
         {
             case BossAttackPattern.AlternatingBullet:
                 Console.WriteLine("Firing Alternating Bullets!");
-                //InternalCall.m_InternalCallAddPrefab(alternatePrefab, bossPosition.X, bossPosition.Y, 0);
                 CoroutineManager.Instance.StartCoroutine(FireAlternatingWaves());
-
-                //SpawnBulletAlternate(bossPosition, 8, 0.2f);
 
                 break;
             case BossAttackPattern.BulletSpread:
                 Console.WriteLine("Firing Bullet Spread!");
-                //InternalCall.m_InternalCallAddPrefab(spreadPrefab, bossPosition.X, bossPosition.Y, 0);
-                SpawnBulletAlternate(bossPosition, 8, 0.2f);
+                SpawnBullets(bossPosition, 8, 0.2f, 180f, 360f);   
 
                 break;
             case BossAttackPattern.BulletDisperse:
                 Console.WriteLine("Firing Bullet Disperse!");
-                //InternalCall.m_InternalCallAddPrefab(dispersePrefab, bossPosition.X, bossPosition.Y, 0);
-                //SpawnBulletAlternate(bossPosition, 8, 0.2f);
                 SpawnBulletDisperse(bossPosition);
+
+                break;
+            case BossAttackPattern.BulletSpiral:
+                Console.WriteLine("Firing Bullet Spiral!");
+                CoroutineManager.Instance.StartCoroutine(FireSweepingCurvingBulletVolley(bossPosition,10,0.2f,0.1f));
 
                 break;
         }
@@ -135,23 +135,6 @@ public class BossController : ScriptBase
         canAttack = true;
     }
 
-    private void SpawnBulletAlternate(Vector2 position, int bulletCount, float radius)
-    {
-        for (int i = 0; i < bulletCount; i++)
-        {
-            float angle = 180f + ((180f / (bulletCount - 1)) * i); 
-            float radian = angle * (float)(Math.PI / 180f); 
-
-            float spawnX = position.X + (float)Math.Cos(radian) * radius;
-            float spawnY = position.Y + (float)Math.Sin(radian) * radius;
-
-
-            InternalCall.m_InternalCallAddPrefab(alternatePrefab, spawnX, spawnY, angle);
-        }
-    }
-
-    //  Attack 1: Alternating Bullet
-    private bool reverseWave = false;
 
     private IEnumerator FireAlternatingWaves()
     {
@@ -161,33 +144,26 @@ public class BossController : ScriptBase
 
         for (int i = 0; i < waveCount; i++)
         {
-            float waveAngleOffset = reverseWave ? positionOffset : -positionOffset; // Alternate offset direction
-
-            SpawnBulletSemiCircle(bossPosition, 8, 0.2f, reverseWave, waveAngleOffset);
-            reverseWave = !reverseWave; // Alternate direction
+            float waveAngleOffset = (i % 2 == 0) ? positionOffset : -positionOffset;
+            SpawnBullets(bossPosition, 8, 0.2f, 180f + waveAngleOffset, 360f + waveAngleOffset);
             yield return new CoroutineManager.WaitForSeconds(waveDelay);
         }
     }
 
-    private void SpawnBulletSemiCircle(Vector2 position, int bulletCount, float radius, bool reverse, float waveAngleOffset)
+    private void SpawnBullets(Vector2 position, int bulletCount, float radius, float startAngle, float endAngle)
     {
+        float angleStep = (endAngle - startAngle) / (bulletCount - 1);
+
         for (int i = 0; i < bulletCount; i++)
         {
-            float baseAngle = reverse ?
-                       360f - ((180f / (bulletCount - 1)) * i)  // Reverse wave (360° to 180°)
-                       : 180f + ((180f / (bulletCount - 1)) * i); // Normal wave (180° to 360°)
-
-            float shiftedAngle = baseAngle + waveAngleOffset; // Apply the wave offset
-            float radian = shiftedAngle * (float)(Math.PI / 180f); 
-
+            float angle = startAngle + (angleStep * i);
+            float radian = angle * (float)(Math.PI / 180f);
             float spawnX = position.X + (float)Math.Cos(radian) * radius;
             float spawnY = position.Y + (float)Math.Sin(radian) * radius;
 
-
-            InternalCall.m_InternalCallAddPrefab(alternatePrefab, spawnX, spawnY, shiftedAngle);
+            InternalCall.m_InternalCallAddPrefab(alternatePrefab, spawnX, spawnY, angle);
         }
     }
-
 
     private void SpawnBulletDisperse(Vector2 position)
     {
@@ -200,25 +176,84 @@ public class BossController : ScriptBase
 
     private IEnumerator ExplodeBigBullet(uint largeBullet)
     {
-        yield return new CoroutineManager.WaitForSeconds(1.5f); // Delay before first explosion
-
+        yield return new CoroutineManager.WaitForSeconds(1.5f);
 
         InternalCall.m_InternalGetTranslate(largeBullet, out Vector2 explosionPosition);
 
+        List<uint> mediumBullets = new List<uint>();
+
+        // First explosion (i = number of bullet)
         for (int i = 0; i < 6; i++)
         {
-            float angle = i * (360f / 6);
-            InternalCall.m_InternalCallAddPrefab(alternatePrefab, explosionPosition.X, explosionPosition.Y, angle);
+            float angle = i * (360f / 6); // Spread evenly
+            uint mediumBullet = (uint)InternalCall.m_InternalCallAddPrefab(alternatePrefab, explosionPosition.X, explosionPosition.Y, angle);
+            mediumBullets.Add(mediumBullet);
         }
 
-        // Delay for second explosion
-        yield return new CoroutineManager.WaitForSeconds(0.2f);
+       InternalCall.m_InternalCallDeleteEntity(largeBullet);
+
+        // Delay 
+        yield return new CoroutineManager.WaitForSeconds(1f);
 
         // Second explosion
-        for (int i = 0; i < 6; i++)
+        foreach (uint mediumBullet in mediumBullets)
         {
-            float angle = i * (360f / 6);
-            InternalCall.m_InternalCallAddPrefab(spreadPrefab, explosionPosition.X, explosionPosition.Y, angle);
+            InternalCall.m_InternalGetTranslate(mediumBullet, out Vector2 mediumBulletPosition);
+
+            for (int j = 0; j < 8; j++)
+            {
+                float spreadAngle = (j * 60f) - 30f; 
+                float radian = (float)(spreadAngle * (Math.PI / 180f));
+                float offsetX = (float)(mediumBulletPosition.X + Math.Cos(radian) * 0.3f);
+                float offsetY = (float)(mediumBulletPosition.Y + Math.Sin(radian) * 0.3f);
+
+                InternalCall.m_InternalCallAddPrefab(spreadPrefab, offsetX, offsetY, spreadAngle);
+            }
+
+            InternalCall.m_InternalCallDeleteEntity(mediumBullet);
+        }
+
+    }
+
+    private IEnumerator FireSweepingCurvingBulletVolley(Vector2 position, int bulletCount, float radius, float bulletInterval)
+    {
+
+        for (int direction = 0; direction < 2; direction++) // 0 = Left to Right, 1 = Right to Left
+        {
+            bool reverse = (direction == 1);
+
+            for (int i = 0; i < bulletCount; i++)
+            {
+                int index = reverse ? (bulletCount - 1 - i) : i;
+                float baseAngle = 180f + ((180f / (bulletCount - 1)) * index);
+                float radian = (float)(baseAngle * (Math.PI / 180f));
+
+                float spawnX = position.X + (float)Math.Cos(radian) * radius;
+                float spawnY = position.Y + (float)Math.Sin(radian) * radius;
+
+                uint bullet = (uint)InternalCall.m_InternalCallAddPrefab(alternatePrefab, spawnX, spawnY, baseAngle);
+                CoroutineManager.Instance.StartCoroutine(CurveBullet(bullet, baseAngle));
+
+                yield return new CoroutineManager.WaitForSeconds(bulletInterval);
+            }
+            yield return new CoroutineManager.WaitForSeconds(0.2f);
         }
     }
+
+    private IEnumerator CurveBullet(uint bulletID, float initialAngle)
+    {
+        float speed = 2.0f, acceleration = 0.05f, maxSpeed = 10.0f, curveStrength = 0.5f;
+
+        while (InternalCall.m_InternalGetTranslate(bulletID, out Vector2 bulletPos))
+        {
+            speed = Math.Min(speed + acceleration, maxSpeed);
+            initialAngle += curveStrength;
+            float radian = (float)(initialAngle * (Math.PI / 180f));
+
+            InternalCall.m_InternalSetVelocity(bulletID, new Vector2((float)Math.Cos(radian) * speed, (float)Math.Sin(radian) * speed));
+
+            yield return null;
+        }
+    }
+
 }
