@@ -39,6 +39,11 @@ namespace ecs {
 		m_vecTransformComponentPtr.pop_back();
 		m_vecNameComponentPtr.pop_back();
 		m_vecVideoComponentPtr.pop_back();
+
+		//clear video map if not yet cleared
+		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+		auto& videomap = assetmanager->m_videoManager.m_videoMap;
+		videomap.erase(ID);
 	}
 
 	void VideoSystem::m_Init() {
