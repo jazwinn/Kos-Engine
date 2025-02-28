@@ -118,7 +118,7 @@ namespace graphicpipe {
 		m_tileIndexes.clear();
 
 		// Enable scissor test for limiting rendering to a specific area.
-		glEnable(GL_SCISSOR_TEST);
+		//glEnable(GL_SCISSOR_TEST);
 
 
 		std::bitset<video::VIDEO_FLAGS::TOTAL> videoFlags;
