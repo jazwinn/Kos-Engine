@@ -27,6 +27,7 @@ R"( #version 460 core
     uniform mat3 transformation;
     uniform mat3 projection;
     uniform mat3 view;
+    uniform float layer;
 
 void main()
 {
@@ -38,7 +39,7 @@ void main()
 
    
     gl_Position = vec4(vec2(matrix * vec3(aPos.xy, 1.f)),
-					   0.0, 1.0);
+					   layer, 1.0);
 
     TexCoords = aTexCoord;
 }

@@ -13,10 +13,12 @@
 
 namespace video {
 
-    Video::Video(std::string filepath, GLuint shaderProgram, std::bitset<VIDEO_FLAGS::TOTAL> flag) : m_shaderProgram{ shaderProgram }, transformation(1)
+    Video::Video(std::string filepath, GLuint shaderProgram, std::bitset<VIDEO_FLAGS::TOTAL> flag) : m_shaderProgram{ shaderProgram }
 	{
 		//graphicpipe::GraphicsPipe* graphics = graphicpipe::GraphicsPipe::m_funcGetInstance();
 		mpeg = plm_create_with_filename(filepath.c_str());
+
+        videoframes = plm_get_framerate(mpeg);
 
         //check flags 
         if (flag.test(VIDEO_FLAGS::AUDIO)) {
@@ -26,6 +28,8 @@ namespace video {
             plm_set_loop(mpeg, true);
         }
 
+        elapsedTime = 0.f;
+        lastTime = std::chrono::high_resolution_clock::now();
 
         videoWidth = plm_get_width(mpeg);
         videoHieght = plm_get_height(mpeg);
@@ -73,6 +77,7 @@ namespace video {
         locTransformation = glGetUniformLocation(m_shaderProgram, "transformation");
         locView = glGetUniformLocation(m_shaderProgram, "view");
         locProjection = glGetUniformLocation(m_shaderProgram, "projection");
+        unilayer = glGetUniformLocation(m_shaderProgram, "layer");
 
         glUseProgram(0);
 	}
@@ -87,13 +92,37 @@ namespace video {
         plm_destroy(mpeg);
     }
 
-	void Video::DecodeAndUpdateVideo()
+	void Video::DecodeAndUpdateVideo(bool pause)
 	{
-        plm_frame_t* frame = plm_decode_video(mpeg);
-        if (frame) {
-            UpdateTextures(frame);
+        auto currentTime = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<float> deltaTime = currentTime - lastTime;
+        lastTime = currentTime;
+
+        if (pause) return;
+
+        elapsedTime += deltaTime.count(); // Accumulate delta time
+
+        int expectedFrame = static_cast<int>(elapsedTime / (1.f/videoframes));
+
+        while (videoFrameIndex <= expectedFrame) {
+            videoFrameIndex++;
+            plm_frame_t* frame = plm_decode_video(mpeg);
+            if (frame) {
+                UpdateTextures(frame);
+            }
         }
+
+
+
+        
 	}
+
+    bool Video::HasStopped()
+    {
+
+        return mpeg && plm_has_ended(mpeg);
+
+    }
 
 
 
@@ -113,13 +142,6 @@ namespace video {
         glBindTexture(GL_TEXTURE_2D, vTexture);
         glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, frame->width / 2, frame->height / 2, GL_RED, GL_UNSIGNED_BYTE, frame->cr.data);
 
-        glUseProgram(m_shaderProgram);
-        glUniformMatrix3fv(locTransformation, 1, GL_FALSE, glm::value_ptr(transformation));
-
-        glUniformMatrix3fv(locView, 1, GL_FALSE, glm::value_ptr(graphicpipe::GraphicsCamera::m_currViewMatrix));
-        glUniformMatrix3fv(locProjection, 1, GL_FALSE, glm::value_ptr(graphicpipe::GraphicsCamera::m_currOrthoMatrix));
-
-        glUseProgram(0);
 
         GLenum err = glGetError();
         if (err != GL_NO_ERROR) {

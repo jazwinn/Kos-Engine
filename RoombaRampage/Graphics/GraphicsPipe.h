@@ -93,9 +93,16 @@ namespace graphicpipe {
 
     struct VideoData {
 
+        glm::mat3 transformation;
         GLuint yTexture;
         GLuint uTexture;
         GLuint vTexture;
+        GLint locTransformation;
+        GLint locView;
+        GLint locProjection;
+
+        GLuint unilayer;
+        float layer;
     };
 
     /**

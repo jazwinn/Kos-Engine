@@ -9,19 +9,19 @@ namespace ecs {
 
 	public:
 
-		bool play;
+		bool play = false;
 
 		std::string filename;
 		
-		bool pause;
+		bool pause = false;
 
-		bool loop;
+		bool loop = true;
+
+		float layer = 0.0f;
 
 	public:
 
-		std::shared_ptr<video::Video> m_video = nullptr;
-
-		REFLECTABLE(VideoComponent, filename, pause, loop);
+		REFLECTABLE(VideoComponent, filename, pause, loop, layer);
 
 	};
 

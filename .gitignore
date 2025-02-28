@@ -395,8 +395,6 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
-#ignore prefabs
-*.prefab
 
 #exceptions
 !Json/

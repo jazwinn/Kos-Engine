@@ -37,6 +37,8 @@ namespace graphicpipe
 			1.0f,1.0f,		1.0f,1.0f,
 			1.0f,-1.0f,		1.0f,0.f,
 			-1.0f,1.0f,		0.0f,1.0f
+
+
 		};
 
 		unsigned int vbo;
@@ -175,7 +177,7 @@ namespace graphicpipe
 			-1.0f, -1.0f, 0.0f,  0.0f, 1.0f,  // Bottom-left
 			 1.0f, -1.0f, 0.0f,  1.0f, 1.0f,  // Bottom-right
 			 1.0f,  1.0f, 0.0f,  1.0f, 0.0f,  // Top-right
-			-1.0f,  1.0f, 0.0f,  0.0f, 0.0f   // Top-left
+			-1.0f,  1.0f, 0.0f,  0.0f, 0.0f,   // Top-left
 		};
 
 		GLuint indices[] = {

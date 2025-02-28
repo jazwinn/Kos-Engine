@@ -56,6 +56,8 @@ namespace ecs {
 		graphicpipe::GraphicsPipe* graphicsPipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
 		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
 
+		auto& videomap = assetmanager->m_videoManager.m_videoMap;
+
 
 		for (int n{}; n < m_vecTransformComponentPtr.size(); n++)
 		{
@@ -68,13 +70,13 @@ namespace ecs {
 
 			if (VideoComp->play == false) {
 
-				VideoComp->m_video.reset();
+				videomap.erase(VideoComp->m_Entity);
 
 				continue;
 			}
 
 
-			if (VideoComp->m_video == nullptr) {
+			if (videomap.find(VideoComp->m_Entity) == videomap.end()) {
 
 				auto it = assetmanager->m_videoManager.m_videopath.find(VideoComp->filename);
 
@@ -85,21 +87,29 @@ namespace ecs {
 				if (VideoComp->loop) {
 					videoFlags.set(video::VIDEO_FLAGS::LOOP);
 				}
-				VideoComp->m_video = std::make_shared<video::Video>(it->second.string(), graphicsPipe->m_videoShaderProgram, videoFlags);
+				videomap[VideoComp->m_Entity] = std::make_unique<video::Video>(it->second.string(), graphicsPipe->m_videoShaderProgram, videoFlags);
+
+				
 			}
 
 
-			VideoComp->m_video->SetTransformation(glm::mat3{ transform->m_transformation.m_e00,transform->m_transformation.m_e01,transform->m_transformation.m_e02,
-																transform->m_transformation.m_e10,transform->m_transformation.m_e11, transform->m_transformation.m_e12,
-															transform->m_transformation.m_e20, transform->m_transformation.m_e21, transform->m_transformation.m_e22 });
-
-
+			
+			assetmanager->m_videoManager.m_videoMap[VideoComp->m_Entity]->DecodeAndUpdateVideo(VideoComp->pause);
 			
 
-			VideoComp->m_video->DecodeAndUpdateVideo();
+			graphicsPipe->m_videoData.push_back(graphicpipe::VideoData(glm::mat3{ transform->m_transformation.m_e00,transform->m_transformation.m_e01,transform->m_transformation.m_e02,
+																		transform->m_transformation.m_e10,transform->m_transformation.m_e11, transform->m_transformation.m_e12,
+																		transform->m_transformation.m_e20, transform->m_transformation.m_e21, transform->m_transformation.m_e22 },
+																		videomap[VideoComp->m_Entity]->yTexture, videomap[VideoComp->m_Entity]->uTexture, videomap[VideoComp->m_Entity]->vTexture,
+																		videomap[VideoComp->m_Entity]->locTransformation, videomap[VideoComp->m_Entity]->locView, videomap[VideoComp->m_Entity]->locProjection,
+																		videomap[VideoComp->m_Entity]->unilayer, VideoComp->layer
+																		));
 
-			graphicsPipe->m_videoData.push_back(graphicpipe::VideoData(VideoComp->m_video->yTexture, VideoComp->m_video->uTexture, VideoComp->m_video->vTexture));
 
+			//check if video finish playing
+			if (videomap[VideoComp->m_Entity]->HasStopped()) {
+				VideoComp->play = false;
+			}
 		}
 
 	}
