@@ -231,8 +231,8 @@ namespace graphicpipe
 				float originY{ textData.m_y };
 
 				Helper::Helpers* help = Helper::Helpers::GetInstance();
-				float scale = help->m_windowHeight / static_cast<float>(help->m_currWindowHeight);
-				scale /= (help->m_windowWidth / 1920.f); ///Recalibrate if needed
+				//float scale = help->m_windowHeight / static_cast<float>(help->m_currWindowHeight);
+				//scale /= (help->m_windowWidth / 1920.f); ///Recalibrate if needed
 
 				// Step 1: Calculate total width and height of the text
 				float totalWidth = 0.0f;
@@ -244,14 +244,14 @@ namespace graphicpipe
 					text::CharacterData ch = assetmanager->m_fontManager.m_fonts[textData.m_fileName][c];
 					if (i == textData.m_text.size() - 1) // If it's the last letter, add only the letter size
 					{
-						totalWidth += ((ch.m_size.x * textData.m_scale * textData.m_xyScale.x) / ((static_cast<float>(help->m_currWindowHeight)) * scale));
+						totalWidth += ((ch.m_size.x * textData.m_scale * textData.m_xyScale.x) / ((static_cast<float>(help->m_currWindowHeight))));
 					}
 					else // Add the letter size and the space
 					{
-						totalWidth += ((ch.m_advance >> 6) * textData.m_scale * textData.m_xyScale.x) / ((static_cast<float>(help->m_currWindowHeight)) * scale);
+						totalWidth += ((ch.m_advance >> 6) * textData.m_scale * textData.m_xyScale.x) / ((static_cast<float>(help->m_currWindowHeight)));
 					}
-					maxAscent = std::max(maxAscent, (ch.m_bearing.y * textData.m_scale * textData.m_xyScale.y) / ((static_cast<float>(help->m_currWindowHeight)) * scale));
-					maxDescent = std::max(maxDescent, ((ch.m_size.y - ch.m_bearing.y) * textData.m_scale * textData.m_xyScale.y) / ((static_cast<float>(help->m_currWindowHeight)) * scale));
+					maxAscent = std::max(maxAscent, (ch.m_bearing.y * textData.m_scale * textData.m_xyScale.y) / ((static_cast<float>(help->m_currWindowHeight))));
+					maxDescent = std::max(maxDescent, ((ch.m_size.y - ch.m_bearing.y) * textData.m_scale * textData.m_xyScale.y) / ((static_cast<float>(help->m_currWindowHeight))));
 				}
 				
 				float totalHeight = maxAscent + maxDescent;
@@ -268,10 +268,10 @@ namespace graphicpipe
 					text::CharacterData ch = assetmanager->m_fontManager.m_fonts[textData.m_fileName][c];
 
 					// Calculate position and size for each character quad
-					float xpos = (textData.m_x + ch.m_bearing.x / ((static_cast<float>(help->m_currWindowHeight)) * scale) * (textData.m_scale * textData.m_xyScale.x));
-					float ypos = (textData.m_y - ((float)ch.m_size.y - (float)ch.m_bearing.y) / ((static_cast<float>(help->m_currWindowHeight)) * scale) * (textData.m_scale * textData.m_xyScale.y));
-					float w = ch.m_size.x * textData.m_scale * textData.m_xyScale.x / ((static_cast<float>(help->m_currWindowHeight)) * scale);
-					float h = ch.m_size.y * textData.m_scale * textData.m_xyScale.y / ((static_cast<float>(help->m_currWindowHeight)) * scale);
+					float xpos = (textData.m_x + ch.m_bearing.x / ((static_cast<float>(help->m_currWindowHeight))) * (textData.m_scale * textData.m_xyScale.x));
+					float ypos = (textData.m_y - ((float)ch.m_size.y - (float)ch.m_bearing.y) / ((static_cast<float>(help->m_currWindowHeight))) * (textData.m_scale * textData.m_xyScale.y));
+					float w = ch.m_size.x * textData.m_scale * textData.m_xyScale.x / ((static_cast<float>(help->m_currWindowHeight)));
+					float h = ch.m_size.y * textData.m_scale * textData.m_xyScale.y / ((static_cast<float>(help->m_currWindowHeight)));
 
 					// Update VBO for each character with texture coordinates from the atlas
 					float vertices[6][4] =
@@ -297,7 +297,7 @@ namespace graphicpipe
 					glDrawArrays(GL_TRIANGLES, 0, 6);
 
 					// Advance cursor for next glyph
-					textData.m_x += ((ch.m_advance >> 6) * textData.m_scale * textData.m_xyScale.x) / ((static_cast<float>(help->m_currWindowHeight)) * scale);
+					textData.m_x += ((ch.m_advance >> 6) * textData.m_scale * textData.m_xyScale.x) / ((static_cast<float>(help->m_currWindowHeight)));
 				}
 				textData.m_x = origin;
 
