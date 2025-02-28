@@ -40,6 +40,24 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 namespace graphicpipe {
 
+    struct ParticleData
+    {
+        int m_noOfParticles{};
+        float m_lifeSpan{};
+        glm::vec2 m_position{};
+        glm::vec2 m_velocity{};
+        glm::vec2 m_acceleration{};
+        glm::vec2 m_scale{};
+        glm::vec4 m_color{};
+        float m_rotation{}; //Cone Rotation
+        float m_coneAngle{ 360.f }; //
+        float m_randomFactor{};
+        unsigned int m_textureID{};
+        int m_stripCount{};
+        int m_frameNumber{};
+        int m_layer{};
+    };
+
     struct LightingData
     {
         glm::mat3 m_transformation{};      ///< Transformation matrix for the light source.
@@ -169,6 +187,8 @@ namespace graphicpipe {
          */
         void m_funcSetupArrayBuffer();
 
+        void m_funcSetupSSBO();
+
         /**
          * @brief Compiles and links a shader program from vertex and fragment shader sources.
          *
@@ -210,6 +230,7 @@ namespace graphicpipe {
         unsigned int m_gamePreviewDepthBufferObject{};   ///< Depth buffer for the game preview framebuffer.
         unsigned int m_unlitScreenFrameBufferObject{};
         unsigned int m_unlitScreenDepthBufferObject{};
+        unsigned int m_particleSSBO{};
         
         unsigned int m_textBuffer{};                ///< Buffer for text rendering.
         unsigned int m_layerBuffer{};               ///< Buffer for rendering layer data.
@@ -234,6 +255,7 @@ namespace graphicpipe {
         int m_unitWidth{ 100 };         ///< The default width for the graphics unit.
         int m_unitHeight{ 100 };        ///< The default height for the graphics unit.
         float m_globalLightIntensity{ 1.f }; ///< The global illumination value.
+        const int MAX_PARTICLES = 1000000;
 
         /**
          * @enum ShapeType
@@ -479,6 +501,7 @@ namespace graphicpipe {
         std::vector<glm::mat3> m_debugCircleToNDCMatrix{}; ///< Debug model-to-NDC matrices for circles.
 
         // Data for rendering
+        std::vector<ParticleData> m_particleData{}; ///< Particle Data for the Scene.
         std::vector<LightingData> m_lightingData{}; ///< Lighting data for the scene.
         std::vector<ColliderGridData> m_colliderGridData{}; ///< Collider grid data for collision checks.
         std::vector<TilemapData> m_tilemapData{}; ///< Data for tilemaps in the scene.

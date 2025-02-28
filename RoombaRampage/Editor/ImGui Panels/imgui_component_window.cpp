@@ -276,7 +276,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
     {
         "Add Components", "Collider Component", "Sprite Component", "Enemy Component", "Rigid Body Component", "Text Component", 
         "Animation Component", "Camera Component" , "Button Component" , "Script Component", "Tilemap Component", "Audio Component",
-        "Grid Component", "RayCast Component", "PathfindingComponent", "Lighting Component"
+        "Grid Component", "RayCast Component", "PathfindingComponent", "Lighting Component", "Particle Component"
     };
     static int ComponentType = 0;
 
@@ -421,6 +421,14 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 ComponentType = 0;
                 if (!EntitySignature.test(ecs::TYPELIGHTINGCOMPONENT)) {
                     events::AddComponent action(entityID, ecs::TYPELIGHTINGCOMPONENT);
+                    DISPATCH_ACTION_EVENT(action);
+                }
+            }
+            if (ComponentType == 16) {
+                ecs->m_AddComponent(ecs::TYPEPARTICLECOMPONENT, entityID);
+                ComponentType = 0;
+                if (!EntitySignature.test(ecs::TYPEPARTICLECOMPONENT)) {
+                    events::AddComponent action(entityID, ecs::TYPEPARTICLECOMPONENT);
                     DISPATCH_ACTION_EVENT(action);
                 }
             }
@@ -1499,6 +1507,34 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                     ImGui::Text("Color");
 
                 }
+
+            }
+
+             if (EntitySignature.test(ecs::TYPEPARTICLECOMPONENT)) {
+
+                 open = ImGui::CollapsingHeader("Particle Component");
+
+                 CreateContext(ecs::TYPEPARTICLECOMPONENT, entityID);
+
+                 if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEPARTICLECOMPONENT)) {
+                     auto* rbc = static_cast<ecs::ParticleComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEPARTICLECOMPONENT]->m_GetEntityComponent(entityID));
+                     rbc->ApplyFunction(DrawComponents(rbc->Names()));
+
+                     ImVec4 color = ImVec4(rbc->m_color.m_x, rbc->m_color.m_y, rbc->m_color.m_z, 1.f);
+
+                     ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
+
+                     ImGui::SameLine();
+                     if (ImGui::ColorEdit4("MyColor##4", (float*)&color, ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel))
+                     {
+                         rbc->m_color.m_x = color.x;
+                         rbc->m_color.m_y = color.y;
+                         rbc->m_color.m_z = color.z;
+                     }
+                     ImGui::SameLine();
+                     ImGui::Text("Color");
+                 }
+
 
             }
             if (EntitySignature.test(ecs::TYPERAYCASTINGCOMPONENT)) {

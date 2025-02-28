@@ -196,6 +196,7 @@ namespace graphicpipe {
 		m_gridColliderArrays.clear();
 		m_gridColliderChecks.clear();
 		m_colliderGridData.clear();
+		m_particleData.clear();
 		GraphicsCamera::m_cameras.clear();
 		
 	}

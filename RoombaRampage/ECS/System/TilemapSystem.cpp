@@ -104,7 +104,7 @@ namespace ecs {
 			//float imageWidth = assetmanager->m_imageManager.m_imageMap.find(tile->m_tilemapFile)->second.m_width / 2.f;
 			float imageHeight = static_cast<float>(assetmanager->m_imageManager.m_imageMap.find(tile->m_tilemapFile)->second.m_height);
 
-			transform->m_scale = vector2::Vec2{ pipe->m_unitHeight / imageHeight , pipe->m_unitHeight / imageHeight };
+			transform->m_scale = vector2::Vec2{ static_cast<float>(pipe->m_unitHeight) / imageHeight , static_cast<float>(pipe->m_unitHeight) / imageHeight };
 
 			unsigned int textureid = assetmanager->m_imageManager.m_imageMap.find(tile->m_tilemapFile)->second.m_imageID;
 			graphicsPipe->m_tilemapData.push_back({ glm::mat3{transform->m_transformation.m_e00,transform->m_transformation.m_e01,transform->m_transformation.m_e02,

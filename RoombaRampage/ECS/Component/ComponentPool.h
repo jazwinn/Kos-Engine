@@ -41,6 +41,8 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 #include "PathfindingComponent.h"
 
+#include "ParticleComponent.h"
+
 
 
 
