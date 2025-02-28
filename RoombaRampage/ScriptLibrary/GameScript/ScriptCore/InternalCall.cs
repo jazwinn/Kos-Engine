@@ -168,6 +168,24 @@ public static class InternalCall
     public extern static void m_InternalCallUnPauseAllAudio();
 
     [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static void m_InternalCallSetGlobalBGMVolume(float volume);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static void m_InternalCallSetGlobalSFXVolume(float volume);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static float m_InternalCallGetGlobalBGMVolume();
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static float m_InternalCallGetGlobalSFXVolume();
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static bool m_InternalCallCheckIsBGM(uint id, string monoString);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static bool m_InternalCallCheckIsSFX(uint id, string monoString);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static bool m_InternalCallIsWindowMinimise();
 
     [MethodImpl(MethodImplOptions.InternalCall)]

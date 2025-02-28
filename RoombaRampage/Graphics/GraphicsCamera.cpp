@@ -72,7 +72,11 @@ namespace graphicpipe
 	{
 		m_windowWidth = static_cast<int>(Helper::Helpers::GetInstance()->m_windowWidth);
 		m_windowHeight = static_cast<int>(Helper::Helpers::GetInstance()->m_windowHeight);
-		m_aspectRatio = static_cast<float>(static_cast<float>(m_windowHeight) / static_cast<float>(m_windowWidth));
+		if (m_windowWidth != 0)
+		{
+			m_aspectRatio = static_cast<float>(static_cast<float>(m_windowHeight) / static_cast<float>(m_windowWidth));
+
+		}
 	}
 
 	void GraphicsCamera::m_CalculateCurrView()
@@ -82,7 +86,7 @@ namespace graphicpipe
 
 	void GraphicsCamera::m_MultiplyOrthoMatrix()
 	{
-		GraphicsPipe* pipe = GraphicsPipe::m_funcGetInstance();
+		//GraphicsPipe* pipe = GraphicsPipe::m_funcGetInstance();
 		float left = -1.f * (1.f/ m_aspectRatio);
 		float right = 1.f * (1.f /m_aspectRatio);
 		float bottom = -1.f;
@@ -98,7 +102,7 @@ namespace graphicpipe
 			matrix = m_currOrthoMatrix * matrix;
 		}*/
 
-		for (glm::mat3& debugMatrix : pipe->m_debugBoxToNDCMatrix)
+		/*for (glm::mat3& debugMatrix : pipe->m_debugBoxToNDCMatrix)
 		{
 			debugMatrix = m_currOrthoMatrix * debugMatrix;
 		}
@@ -106,13 +110,13 @@ namespace graphicpipe
 		for (glm::mat3& debugMatrix : pipe->m_debugCircleToNDCMatrix)
 		{
 			debugMatrix = m_currOrthoMatrix * debugMatrix;
-		}
+		}*/
 		//m_cameras.clear();
 	}
 
 	void GraphicsCamera::m_MultiplyViewMatrix()
 	{
-		GraphicsPipe* pipe = GraphicsPipe::m_funcGetInstance();
+		//GraphicsPipe* pipe = GraphicsPipe::m_funcGetInstance();
 		/*if (!(pipe->m_modelToNDCMatrix.empty()))
 		{
 			pipe->m_modelToNDCMatrix.clear();
@@ -121,14 +125,14 @@ namespace graphicpipe
 		{
 			pipe->m_modelToNDCMatrix.push_back(m_currViewMatrix * matrix);
 		}*/
-		for (glm::mat3& debugMatrix : pipe->m_debugBoxToNDCMatrix)
+		/*for (glm::mat3& debugMatrix : pipe->m_debugBoxToNDCMatrix)
 		{
 			debugMatrix = m_currViewMatrix * debugMatrix;
 		}
 		for (glm::mat3& debugMatrix : pipe->m_debugCircleToNDCMatrix)
 		{
 			debugMatrix = m_currViewMatrix * debugMatrix;
-		}
+		}*/
 
 	
 	}

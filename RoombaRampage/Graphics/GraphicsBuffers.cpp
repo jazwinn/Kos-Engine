@@ -216,7 +216,8 @@ namespace graphicpipe
 #endif
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-		glScissor(0, 0, static_cast<GLsizei>(help->m_windowWidth), static_cast<GLsizei>(help->m_windowHeight));
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		//glScissor(0, 0, static_cast<GLsizei>(help->m_windowWidth), static_cast<GLsizei>(help->m_windowHeight));
 
 	}
 
@@ -270,7 +271,8 @@ namespace graphicpipe
 #endif
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-		glScissor(0, 0, static_cast<GLsizei>(help->m_windowWidth), static_cast<GLsizei>(help->m_windowHeight));
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		//glScissor(0, 0, static_cast<GLsizei>(help->m_windowWidth), static_cast<GLsizei>(help->m_windowHeight));
 
 	}
 
@@ -323,7 +325,8 @@ namespace graphicpipe
 #endif
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-		glScissor(0, 0, static_cast<GLsizei>(help->m_windowWidth), static_cast<GLsizei>(help->m_windowHeight));
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		//glScissor(0, 0, static_cast<GLsizei>(help->m_windowWidth), static_cast<GLsizei>(help->m_windowHeight));
 
 	}
 
@@ -372,7 +375,8 @@ namespace graphicpipe
 #endif
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-		glScissor(0, 0, static_cast<GLsizei>(help->m_windowWidth), static_cast<GLsizei>(help->m_windowHeight));
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		//glScissor(0, 0, static_cast<GLsizei>(help->m_windowWidth), static_cast<GLsizei>(help->m_windowHeight));
 
 	}
 
@@ -421,7 +425,8 @@ namespace graphicpipe
 #endif
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-		glScissor(0, 0, static_cast<GLsizei>(help->m_windowWidth), static_cast<GLsizei>(help->m_windowHeight));
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		//glScissor(0, 0, static_cast<GLsizei>(help->m_windowWidth), static_cast<GLsizei>(help->m_windowHeight));
 
 	}
 }
