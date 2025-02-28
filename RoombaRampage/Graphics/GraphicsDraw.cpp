@@ -153,7 +153,7 @@ namespace graphicpipe
 			glUniformMatrix3fv(x.locTransformation, 1, GL_FALSE, glm::value_ptr(x.transformation));
 			glUniformMatrix3fv(x.locView, 1, GL_FALSE, glm::value_ptr(graphicpipe::GraphicsCamera::m_currViewMatrix));
 			glUniformMatrix3fv(x.locProjection, 1, GL_FALSE, glm::value_ptr(graphicpipe::GraphicsCamera::m_currOrthoMatrix));
-			glUniform1fv(x.unilayer, 1, &x.layer);
+			glUniform1iv(x.unilayer, 1, &x.layer);
 			
 			glActiveTexture(GL_TEXTURE0);
 			glBindTexture(GL_TEXTURE_2D, x.yTexture);

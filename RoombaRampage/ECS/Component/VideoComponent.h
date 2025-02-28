@@ -17,7 +17,7 @@ namespace ecs {
 
 		bool loop = true;
 
-		float layer = 0.0f;
+		int layer = 0;
 
 	public:
 
