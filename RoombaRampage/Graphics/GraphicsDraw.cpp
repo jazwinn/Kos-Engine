@@ -83,8 +83,8 @@ namespace graphicpipe
 		
 		
 		}
-
-
+		
+		m_funcDrawVideos();
 		
 	}
 
@@ -142,6 +142,12 @@ namespace graphicpipe
 
 
 		}
+	}
+
+	void GraphicsPipe::m_funcDrawVideos()
+	{
+
+		std::for_each(m_videoData.begin(), m_videoData.end(), [&](auto& x) {x->DrawVideo(m_videoShaderProgram, (GLuint)m_videoMesh.m_vaoId);});
 	}
 
 	void GraphicsPipe::m_funcDrawDebug()

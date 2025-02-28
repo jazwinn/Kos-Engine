@@ -71,6 +71,7 @@ namespace graphicpipe {
 		m_funcSetupSquareLinesVao();
 		m_funcSetupGridVao();
 		m_funcSetupTextVao();
+		m_funcSetupVideoVAO();
 		m_funcSetDrawMode(GL_FILL);
 
 		// Compile and set up shader programs for various rendering tasks.
@@ -83,7 +84,7 @@ namespace graphicpipe {
 		m_tilemapShaderProgram = m_funcSetupShader(tilemapVertexShader, tilemapFragmentShader);
 		m_lightingShaderProgram = m_funcSetupShader(lightingVertexShader, lightingFragmentShader);
 		m_finalPassShaderProgram = m_funcSetupShader(finalPassVertexShader, finalPassFragmentShader);
-		
+		m_videoShaderProgram = m_funcSetupShader(videoVertexShader,videoFragmentShader);
 
 		// Initialize model-to-NDC transformation matrix and other drawing data.
 		m_modelToNDCMatrix.push_back(m_testMatrix);
@@ -119,6 +120,12 @@ namespace graphicpipe {
 		// Enable scissor test for limiting rendering to a specific area.
 		glEnable(GL_SCISSOR_TEST);
 
+
+		std::bitset<video::VIDEO_FLAGS::TOTAL> videoFlags;
+		videoFlags.set(video::VIDEO_FLAGS::AUDIO);
+		videoFlags.set(video::VIDEO_FLAGS::LOOP);
+		m_videoData.push_back(std::make_unique<video::Video>("./Assets/Video/test.mpg", m_videoShaderProgram, videoFlags));
+
 	}
 
 	GraphicsPipe::~GraphicsPipe()
@@ -153,7 +160,8 @@ namespace graphicpipe {
 		}
 		GraphicsCamera::m_MultiplyViewMatrix();
 		GraphicsCamera::m_MultiplyOrthoMatrix();
-
+		
+		std::for_each(m_videoData.begin(), m_videoData.end(), [](auto& x) {x->DecodeAndUpdateVideo();});
 
 		if (!m_gameMode)
 		{
