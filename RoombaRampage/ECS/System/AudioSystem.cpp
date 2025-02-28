@@ -88,6 +88,8 @@ namespace ecs {
                             audioFile.m_PlayOnStart = false;
                         }
                     }
+                    std::cout << audioFile.m_IsBGM << std::endl;
+                    std::cout << audioFile.m_IsSFX << std::endl;
                 }
                 else {
                     //std::cerr << "Audio file " << audioFile.m_Name << " not found in the sound map." << std::endl;

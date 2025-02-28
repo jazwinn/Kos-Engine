@@ -359,6 +359,13 @@ namespace fmodaudio {
         /******************************************************************/
         void m_SetLoopingForEntity(ecs::EntityID entityId, const std::string& name, bool loop);
 
+        void m_SetIsBGMForEntity(ecs::EntityID entityId, const std::string& name, bool isBGM);
+
+        void m_SetIsSFXForEntity(ecs::EntityID entityId, const std::string& name, bool isSFX);
+
+        void m_SetGlobalBGMVolume(float volume);
+
+        void m_SetGlobalSFXVolume(float volume);
         /******************************************************************/
         /*!
         \fn      void m_SetPlayOnStartForEntity(ecs::EntityID entityId, const std::string& audioName, bool playOnStart)
@@ -431,8 +438,11 @@ namespace fmodaudio {
             return m_system; 
         }
 
-    private:
+    public:
+        float m_GlobalBGMVolume{ 0.5f };
+        float m_GlobalSFXVolume{ 0.5f };
 
+    private:
 
         /******************************************************************/
         /*!

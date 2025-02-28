@@ -1411,7 +1411,20 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                                     }
                                 }
 
+                                if (ImGui::Checkbox("isBGM", &it2->m_IsBGM)) {
+                                    auto& audioManager = assetManager->m_audioManager;
 
+                                    audioManager.m_SetIsBGMForEntity(entityID, it2->m_Name, it2->m_IsBGM);
+                                    std::cout << it2->m_IsBGM << std::endl;
+
+                                }
+
+                                if (ImGui::Checkbox("isSFX", &it2->m_IsSFX)) {
+                                    auto& audioManager = assetManager->m_audioManager;
+
+                                    audioManager.m_SetIsSFXForEntity(entityID, it2->m_Name, it2->m_IsSFX);
+                                    std::cout << it2->m_IsSFX << std::endl;
+                                }
 
 
                                 bool isPaused = false;
