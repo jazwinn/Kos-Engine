@@ -1,0 +1,82 @@
+[
+    {
+        "GlobalSettings": {
+            "globalIllumination": 1.0,
+            "backgroundColor": {
+                "r": 0.8362832069396973,
+                "g": 0.8362832069396973,
+                "b": 0.8362832069396973
+            }
+        }
+    },
+    {
+        "name": {
+            "namestr": "Coroutine Manager",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "script": {
+            "scripts": [
+                {
+                    "name": "CoroutineManager",
+                    "enabled": true,
+                    "map": []
+                },
+                {
+                    "name": "CoroutineController",
+                    "enabled": true,
+                    "map": []
+                }
+            ]
+        }
+    },
+    {
+        "name": {
+            "namestr": "Boss",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "script": {
+            "scripts": [
+                {
+                    "name": "BossController",
+                    "enabled": true,
+                    "map": [
+                        {
+                            "variable": "forceFieldHealth",
+                            "base64": ""
+                        },
+                        {
+                            "variable": "playerHit",
+                            "base64": ""
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+]
