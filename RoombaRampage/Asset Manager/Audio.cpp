@@ -506,6 +506,92 @@ namespace fmodaudio {
         }
     }
 
+    void AudioManager::m_SetIsBGMForEntity(ecs::EntityID entityId, const std::string& name, bool isBGM) {
+        auto* ecs = ecs::ECS::m_GetInstance();
+        auto* entityComponent = ecs->m_ECS_CombinedComponentPool[ecs::TYPEAUDIOCOMPONENT]->m_GetEntityComponent(entityId);
+
+        if (entityComponent) {
+            ecs::AudioComponent* ac = static_cast<ecs::AudioComponent*>(entityComponent);
+
+            for (auto& audioFile : ac->m_AudioFiles) {
+                if (audioFile.m_Name == name) {
+                    audioFile.m_IsBGM = isBGM;
+                }
+                else if (isBGM) {
+                    audioFile.m_IsBGM = false;
+                }
+            }
+        }
+    }
+
+    void AudioManager::m_SetIsSFXForEntity(ecs::EntityID entityId, const std::string& name, bool isSFX) {
+        auto* ecs = ecs::ECS::m_GetInstance();
+        auto* entityComponent = ecs->m_ECS_CombinedComponentPool[ecs::TYPEAUDIOCOMPONENT]->m_GetEntityComponent(entityId);
+
+        if (entityComponent) {
+            ecs::AudioComponent* ac = static_cast<ecs::AudioComponent*>(entityComponent);
+
+            for (auto& audioFile : ac->m_AudioFiles) {
+                if (audioFile.m_Name == name) {
+                    audioFile.m_IsSFX = isSFX;
+                }
+                else if (isSFX) {
+                    audioFile.m_IsSFX = false;
+                }
+            }
+        }
+    }
+
+    bool AudioManager::m_CheckIsBGMForEntity(ecs::EntityID entityId, const std::string& name) {
+        auto* ecs = ecs::ECS::m_GetInstance();
+        auto* entityComponent = ecs->m_ECS_CombinedComponentPool[ecs::TYPEAUDIOCOMPONENT]->m_GetEntityComponent(entityId);
+
+        if (entityComponent) {
+            ecs::AudioComponent* ac = static_cast<ecs::AudioComponent*>(entityComponent);
+
+            for (auto& audioFile : ac->m_AudioFiles) {
+                if (audioFile.m_Name == name) {
+                    return audioFile.m_IsBGM;
+                }
+            }
+        }
+        else
+            LOGGING_WARN("Audio Component not found, unable to CheckIsBGM");
+            return false;
+    }
+
+    bool AudioManager::m_CheckIsSFXForEntity(ecs::EntityID entityId, const std::string& name) {
+        auto* ecs = ecs::ECS::m_GetInstance();
+        auto* entityComponent = ecs->m_ECS_CombinedComponentPool[ecs::TYPEAUDIOCOMPONENT]->m_GetEntityComponent(entityId);
+
+        if (entityComponent) {
+            ecs::AudioComponent* ac = static_cast<ecs::AudioComponent*>(entityComponent);
+
+            for (auto& audioFile : ac->m_AudioFiles) {
+                if (audioFile.m_Name == name) {
+                    return audioFile.m_IsSFX;
+                }
+            }
+        }
+        else
+            LOGGING_WARN("Audio Component not found, unable to CheckIsSFX");
+            return false;
+    }
+
+    void AudioManager::m_SetGlobalBGMVolume(float volume) {
+        if (0.0f <= volume && volume <= 1.0f)
+        {
+            m_GlobalBGMVolume = volume;
+        }
+    }
+
+    void AudioManager::m_SetGlobalSFXVolume(float volume) {
+        if (0.0f <= volume && volume <= 1.0f)
+        {
+            m_GlobalSFXVolume = volume;
+        }
+    }
+
     void AudioManager::m_SetPlayOnStartForEntity(ecs::EntityID entityId, const std::string& audioName, bool playOnStart) {
         auto* ecs = ecs::ECS::m_GetInstance();
         auto* entityComponent = ecs->m_ECS_CombinedComponentPool[ecs::TYPEAUDIOCOMPONENT]->m_GetEntityComponent(entityId);

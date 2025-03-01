@@ -120,6 +120,20 @@ namespace graphicpipe {
         std::string m_fileName;            ///< Font file used for rendering.
     };
 
+    struct VideoData {
+
+        glm::mat3 transformation;
+        GLuint yTexture;
+        GLuint uTexture;
+        GLuint vTexture;
+        GLint locTransformation;
+        GLint locView;
+        GLint locProjection;
+
+        GLuint unilayer;
+        int layer;
+    };
+
     /**
      * @class GraphicsPipe
      * @brief Manages the rendering pipeline, shaders, and drawing functions.
@@ -163,6 +177,8 @@ namespace graphicpipe {
          */
         void m_funcSetupGridVao();
 
+        void m_funcSetupVideoVAO();
+
         /**
          * @brief Generates vertices for a grid and configures spacing.
          *
@@ -198,7 +214,6 @@ namespace graphicpipe {
          */
         void m_funcSetupArrayBuffer();
 
-        void m_funcSetupSSBO();
 
         /**
          * @brief Compiles and links a shader program from vertex and fragment shader sources.
@@ -225,6 +240,10 @@ namespace graphicpipe {
         unsigned int m_gridDebugShaderProgram{};    ///< Shader program for rendering collidable grids.
         unsigned int m_lightingShaderProgram{};     ///< Shader program for the lighting pass.
         unsigned int m_finalPassShaderProgram{};    ///< Shader program for the final post-processing pass.
+
+    public:
+        unsigned int m_videoShaderProgram{};        ///< Shader program for video
+    private:
         // Buffers
         unsigned int m_modelMatrixArrayBuffer{};    ///< Array buffer for model matrices.
         unsigned int m_debugMatrixArrayBuffer{};    ///< Array buffer for debug matrices.
@@ -249,6 +268,7 @@ namespace graphicpipe {
         unsigned int m_colorBuffer{};               ///< Buffer for vertex color data.
         unsigned int m_tileIndexBuffer{};           ///< Buffer for tilemap indices.
         unsigned int m_gridColliderBuffer{};        ///< Buffer for grid-based collider data.
+        unsigned int m_videoBuffer{};
 
         glm::mat3 m_testMatrix{};                   ///< Test matrix for rendering.
 
@@ -349,6 +369,8 @@ namespace graphicpipe {
         void m_funcDraw();
 
         void m_funcDrawUnlit();
+
+        void m_funcDrawVideos();
 
         /**
          * @brief Draws debug elements.
@@ -506,6 +528,7 @@ namespace graphicpipe {
         Mesh m_circleLinesMesh;
         Mesh m_textMesh;                ///< Mesh for text rendering.
         Mesh m_lineMesh;
+        Mesh m_videoMesh;
 
         // Matrix Containers
         std::vector<glm::mat3> m_modelMatrix{}; ///< Model transformation matrices.
@@ -522,6 +545,7 @@ namespace graphicpipe {
         std::vector<GraphicsData> m_unlitModelData{};
         std::vector<DebugDrawData> m_debugBoxData{}; ///< Data for rendering debug boxes.
         std::vector<TextData> m_textData{}; ///< Data for rendering text elements.
+        std::vector<VideoData> m_videoData{};
         std::vector<float> m_debugBoxCollisionChecks{}; ///< Collision check data for debug box rendering.
         std::vector<float> m_debugCircleCollisionChecks{}; ///< Collision check data for debug circle rendering.
 
@@ -635,6 +659,16 @@ namespace graphicpipe {
         const std::string lightingFragmentShader =
         {
           #include "../Graphics/lightingFragmentShader.frag"
+        };
+
+        const std::string videoVertexShader =
+        {
+            #include "../Graphics/videoVertexShader.vert"
+        };
+
+        const std::string videoFragmentShader =
+        {
+            #include "../Graphics/videoFragmentShader.frag"
         };
 
         const std::string finalPassVertexShader =

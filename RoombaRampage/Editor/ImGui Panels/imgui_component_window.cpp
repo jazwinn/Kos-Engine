@@ -276,7 +276,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
     {
         "Add Components", "Collider Component", "Sprite Component", "Enemy Component", "Rigid Body Component", "Text Component", 
         "Animation Component", "Camera Component" , "Button Component" , "Script Component", "Tilemap Component", "Audio Component",
-        "Grid Component", "RayCast Component", "PathfindingComponent", "Lighting Component", "Particle Component"
+        "Grid Component", "RayCast Component", "PathfindingComponent", "Lighting Component", "Particle Component","Video Component"
     };
     static int ComponentType = 0;
 
@@ -432,7 +432,14 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                     DISPATCH_ACTION_EVENT(action);
                 }
             }
-
+            if (ComponentType == 17) {
+                ecs->m_AddComponent(ecs::TYPEVIDEOCOMPONENT, entityID);
+                ComponentType = 0;
+                if (!EntitySignature.test(ecs::TYPEVIDEOCOMPONENT)) {
+                    events::AddComponent action(entityID, ecs::TYPEVIDEOCOMPONENT);
+                    DISPATCH_ACTION_EVENT(action);
+                }
+            }
 
 
            
@@ -1419,7 +1426,19 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                                     }
                                 }
 
+                                if (ImGui::Checkbox("isBGM", &it2->m_IsBGM)) {
+                                    auto& audioManager = assetManager->m_audioManager;
 
+                                    audioManager.m_SetIsBGMForEntity(entityID, it2->m_Name, it2->m_IsBGM);
+                                    //std::cout << it2->m_IsBGM << std::endl;
+                                }
+
+                                if (ImGui::Checkbox("isSFX", &it2->m_IsSFX)) {
+                                    auto& audioManager = assetManager->m_audioManager;
+
+                                    audioManager.m_SetIsSFXForEntity(entityID, it2->m_Name, it2->m_IsSFX);
+                                    //std::cout << it2->m_IsSFX << std::endl;
+                                }
 
 
                                 bool isPaused = false;
@@ -1600,45 +1619,41 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                         pfc->ApplyFunction(DrawComponents(pfc->Names()));
 
-                        //int x[2] = { pfc->m_StartPos.m_x,  pfc->m_StartPos.m_y };
-                        //if (ImGui::InputInt2("Start Position", x)) {
-                        //    // Optionally validate start position
-                        //}
-                        //int x1[2] = { pfc->m_TargetPos.m_x,  pfc->m_TargetPos.m_y };
-                        //if (ImGui::InputInt2("Target Position", x1)) {
-                        //    // Optionally validate target position
-                        //}
-
-                        //ImGui::InputText("Grid Key", &pfc->m_GridKey);
-
-                        //if (ImGui::Button("Recalculate Path")) {
-                        //    auto* grid = GetGridByKey(pfc->m_GridKey); // Assume a function to get GridComponent by key
-                        //    if (grid) {
-                        //        AStarPathfinding pathfinder;
-                        //        auto pathNodes = pathfinder.FindPath(grid, pfc->m_StartPos[0], pfc->m_StartPos[1],
-                        //            pfc->m_TargetPos[0], pfc->m_TargetPos[1]);
-                        //        pfc->m_Path.clear();
-                        //        for (const auto& node : pathNodes) {
-                        //            pfc->m_Path.emplace_back(node.x, node.y);
-                        //        }
-                        //    }
-                        //    else {
-                        //        LOGGING_WARN("Invalid Grid Key!");
-                        //    }
-                        //}
-
-                        /*if (!pfc->m_Path.empty()) {
-                            ImGui::Text("Calculated Path:");
-                            for (const auto& pos : pfc->m_Path) {
-                                ImGui::BulletText("(%d, %d)", pos.first, pos.second);
-                            }
-                        }*/
+                       
                     }
                 }
             }
 
 
+            if (EntitySignature.test(ecs::TYPEVIDEOCOMPONENT)) {
+                bool openPC = ImGui::CollapsingHeader("Video Component");
 
+                CreateContext(ecs::TYPEVIDEOCOMPONENT, entityID);
+
+                if (openPC && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEVIDEOCOMPONENT)) {
+                    auto* vc = static_cast<ecs::VideoComponent*>(
+                        ecs->m_ECS_CombinedComponentPool[ecs::TYPEVIDEOCOMPONENT]->m_GetEntityComponent(entityID)
+                        );
+
+                    if (vc) {
+
+                        if (vc->play == false) {
+                            if (ImGui::Button("Play")) {
+                                vc->play = true;
+                            }
+                        }
+                        else {
+                            if (ImGui::Button("Stop")) {
+                                vc->play = false;
+                            }
+                        }
+
+                        vc->ApplyFunction(DrawComponents(vc->Names()));
+
+
+                    }
+                }
+            }
             
 
             //draw invinsible box
@@ -1707,6 +1722,20 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             else {
                                 auto* sc = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(entityID));
                                 sc->m_fileName = filename->filename().string();
+                            }
+                        }
+
+                        if (filename->filename().extension().string() == ".mpg" || filename->filename().extension().string() == ".mpeg") {
+
+                            if (!EntitySignature.test(ecs::TYPEVIDEOCOMPONENT)) {// does not have sprite component, create one
+                                ecs::VideoComponent* vid = static_cast<ecs::VideoComponent*>(ecs->m_AddComponent(ecs::TYPEVIDEOCOMPONENT, entityID));
+                                vid->filename = filename->filename().string();
+                                vid->play = true;
+                            }
+                            else {
+                                auto* vc = static_cast<ecs::VideoComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEVIDEOCOMPONENT]->m_GetEntityComponent(entityID));
+                                vc->filename = filename->filename().string();
+                                vc->play = true;
                             }
                         }
 
