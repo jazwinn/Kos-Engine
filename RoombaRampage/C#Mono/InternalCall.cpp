@@ -743,13 +743,15 @@ namespace script {
 
 	void InternalCall::m_InternalGetWorldMousePosition(vector2::Vec2* mousecord) {
 		//Get mouse pos
+
+		Helper::Helpers* helper = Helper::Helpers::GetInstance();
 		vector2::Vec2 mouse_Pos = Input::InputSystem::m_getMousePosition();
 		//window height width
 		float width = Helper::Helpers::GetInstance()->m_windowWidth;
 		float height = Helper::Helpers::GetInstance()->m_windowHeight;
 		//world coordinate
-		float world_Mouse_Pos_X = (mouse_Pos.m_x - (width / 2.f)) / (width / 2.f);
-		float world_Mouse_Pos_Y = (std::abs(mouse_Pos.m_y) - (height / 2.f)) / (height / 2.f);
+		float world_Mouse_Pos_X = ((mouse_Pos.m_x - helper->m_viewportOffsetX )- (width / 2.f)) / (width / 2.f);
+		float world_Mouse_Pos_Y = (std::abs((mouse_Pos.m_y - helper-> m_viewportOffsetY)) - (height / 2.f)) / (height / 2.f);
 		vector2::Vec2 world_Mouse_Pos{ world_Mouse_Pos_X, world_Mouse_Pos_Y };
 		//include the camera
 		//scale according to camera scale

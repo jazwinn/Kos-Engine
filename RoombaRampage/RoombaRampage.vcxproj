@@ -625,6 +625,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <None Include="Graphics\gridVertexShader.vert" />
     <None Include="Graphics\lightingFragmentShader.frag" />
     <None Include="Graphics\lightingVertexShader.vert" />
+    <None Include="Graphics\particleComputer.glsl" />
     <None Include="Graphics\textFragmentShader.frag" />
     <None Include="Graphics\textVertexShader.vert" />
     <None Include="Graphics\tilemapFragmentShader.frag" />

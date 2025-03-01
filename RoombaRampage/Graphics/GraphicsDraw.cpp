@@ -514,6 +514,17 @@ namespace graphicpipe
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 	}
 
+	void GraphicsPipe::m_funcDrawParticles()
+	{
+		if (!m_particleData.empty())
+		{
+			glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_particleSSBO);
+			glBufferData(GL_SHADER_STORAGE_BUFFER, m_particleData.size() * sizeof(ParticleData), m_particleData.data(), GL_DYNAMIC_DRAW);
+			glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, m_particleSSBO);
+			glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
+		}
+	}
+
 	void GraphicsPipe::m_funcSetDrawMode(GLenum mode)
 	{
 		glPolygonMode(GL_FRONT_AND_BACK, mode);

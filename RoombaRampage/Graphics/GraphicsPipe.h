@@ -58,6 +58,17 @@ namespace graphicpipe {
         int m_layer{};
     };
 
+    struct EmmiterData
+    {
+        int m_noOfParticles{};
+        glm::vec2 m_position{};
+        float m_coneRotation{};
+        float m_coneAngle{};
+        float randomFactor{};
+        float m_lifeSpan{};
+
+    };
+
     struct LightingData
     {
         glm::mat3 m_transformation{};      ///< Transformation matrix for the light source.
@@ -255,7 +266,7 @@ namespace graphicpipe {
         int m_unitWidth{ 100 };         ///< The default width for the graphics unit.
         int m_unitHeight{ 100 };        ///< The default height for the graphics unit.
         float m_globalLightIntensity{ 1.f }; ///< The global illumination value.
-        const int MAX_PARTICLES = 1000000;
+        const int MAX_PARTICLES = 10000;
 
         /**
          * @enum ShapeType
@@ -413,6 +424,8 @@ namespace graphicpipe {
         void m_funcRenderLighting();
 
         void m_funcDrawFullScreenQuad(unsigned int texture);
+
+        void m_funcDrawParticles();
 
         /**
          * @brief Sets the drawing mode for rendering.
