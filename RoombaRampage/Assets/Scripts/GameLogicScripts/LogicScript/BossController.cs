@@ -10,23 +10,22 @@ public class BossController : ScriptBase
 {
     #region ID Variables
     private uint EntityID; //Entity ID of the object, do not touch!
-
+    private uint forceFieldID; // ID for the force field prefab
     //private uint playerID; //Store player ID
     #endregion
 
     #region Component Variable
     private SpriteComponent spriteComp;
+    private ColliderComponent collComp;
+
     //private AnimationComponent animComp;
-   // private ColliderComponent collComp;
     //private TransformComponent transformComp;
     //private TransformComponent playerTransformComp;
     #endregion
 
     #region Boss Variable
-    public int forceFieldHealth = 3;
     public int playerHit = 0;
-    //bool noForceField = false;
-
+    //bool noForceField = false
     private BossAttackPattern currentPattern;
     private long seed = DateTime.Now.Ticks; // seed for randomizer
 
@@ -34,6 +33,10 @@ public class BossController : ScriptBase
     private bool canAttack = true;
     private float attackCooldown = 3.0f;
 
+    public int forceFieldHealth = 5; 
+    public int bossHealth = 3;
+    private bool isForceFieldActive = true;
+    private string forceFieldPrefab = "Boss_Forcefield"; 
 
     #endregion
 
@@ -59,6 +62,8 @@ public class BossController : ScriptBase
         alternatePrefab = "prefab_bulletAlternate";
         spreadPrefab = "prefab_bulletSpread";
         dispersePrefab = "prefab_bulletDisperse";
+
+        SpawnForceField();
     }
     public override void Start()
     {
@@ -68,12 +73,16 @@ public class BossController : ScriptBase
 
     public override void Update()
     {
-        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.W) && canAttack)
-        {
-            AttackRandomizer();
-            canAttack = false;
-            CoroutineManager.Instance.StartCoroutine(ResetAttackCooldown());
-        }
+        //if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.SPACE) && canAttack)
+        //{
+        //    AttackRandomizer();
+        //    canAttack = false;
+        //    CoroutineManager.Instance.StartCoroutine(ResetAttackCooldown());
+        //}
+
+        CheckCollision();
+
+
     }
 
     public void AttackRandomizer()
@@ -253,6 +262,61 @@ public class BossController : ScriptBase
             InternalCall.m_InternalSetVelocity(bulletID, new Vector2((float)Math.Cos(radian) * speed, (float)Math.Sin(radian) * speed));
 
             yield return null;
+        }
+    }
+
+    private void SpawnForceField()
+    {
+        InternalCall.m_InternalGetTranslate(EntityID, out Vector2 bossPosition);
+        forceFieldID = (uint)InternalCall.m_InternalCallAddPrefab(forceFieldPrefab, bossPosition.X, bossPosition.Y, 0);
+        isForceFieldActive = true;
+        forceFieldHealth = 5;
+    }
+
+    private void HandleDamage(int bulletID)
+    {
+        InternalCall.m_InternalCallDeleteEntity((uint)bulletID); // Destroy the bullet
+        InternalCall.m_InternalGetTranslate(EntityID, out Vector2 bossPosition);
+
+        if (isForceFieldActive)
+        {
+            forceFieldHealth--;
+
+            Console.WriteLine($"[Boss] Force Field Hit! Remaining: {forceFieldHealth}");
+
+            if (forceFieldHealth <= 0)
+            {
+                Console.WriteLine("[Boss] Force Field Down!");
+                isForceFieldActive = false;
+            }
+        }
+        else
+        {
+            bossHealth--;
+
+            Console.WriteLine($"[Boss] Health Remaining: {bossHealth}");
+
+            if (bossHealth <= 0)
+            {
+                Console.WriteLine("[Boss] Respawning Force Field!");
+                SpawnForceField();
+            }
+        }
+    }
+
+    private void CheckCollision()
+    {
+        if (InternalCall.m_InternalCallIsCollided(EntityID) != 0.0f)
+        {
+            int[] collidedEntities = InternalCall.m_InternalCallGetCollidedEntities(EntityID);
+
+            foreach (int collidedEntitiesID in collidedEntities)
+            {
+                if (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID) == "PlayerBullet")
+                {
+                    Console.WriteLine("STOP");
+                }
+            }
         }
     }
 
