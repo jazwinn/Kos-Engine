@@ -73,6 +73,8 @@ namespace performancetracker {
 			return "Raycast System";
 		case ecs::TypeSystem::TYPELIGHTINGSYSTEM:
 			return "Lighting System";
+		case ecs::TypeSystem::TYPEVIDEOSYSTEM:
+			return "Video System";
 		case ecs::TypeSystem::TOTALTYPESYSTEM:
 			return "ImGui System";
 		default:

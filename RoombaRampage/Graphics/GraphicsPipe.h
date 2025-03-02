@@ -40,6 +40,35 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 namespace graphicpipe {
 
+    struct ParticleData
+    {
+        int m_noOfParticles{};
+        float m_lifeSpan{};
+        glm::vec2 m_position{};
+        glm::vec2 m_velocity{};
+        glm::vec2 m_acceleration{};
+        glm::vec2 m_scale{};
+        glm::vec4 m_color{};
+        float m_rotation{}; //Cone Rotation
+        float m_coneAngle{ 360.f }; //
+        float m_randomFactor{};
+        unsigned int m_textureID{};
+        int m_stripCount{};
+        int m_frameNumber{};
+        int m_layer{};
+    };
+
+    struct EmmiterData
+    {
+        int m_noOfParticles{};
+        glm::vec2 m_position{};
+        float m_coneRotation{};
+        float m_coneAngle{};
+        float randomFactor{};
+        float m_lifeSpan{};
+
+    };
+
     struct LightingData
     {
         glm::mat3 m_transformation{};      ///< Transformation matrix for the light source.
@@ -91,6 +120,20 @@ namespace graphicpipe {
         std::string m_fileName;            ///< Font file used for rendering.
     };
 
+    struct VideoData {
+
+        glm::mat3 transformation;
+        GLuint yTexture;
+        GLuint uTexture;
+        GLuint vTexture;
+        GLint locTransformation;
+        GLint locView;
+        GLint locProjection;
+
+        GLuint unilayer;
+        int layer;
+    };
+
     /**
      * @class GraphicsPipe
      * @brief Manages the rendering pipeline, shaders, and drawing functions.
@@ -134,6 +177,8 @@ namespace graphicpipe {
          */
         void m_funcSetupGridVao();
 
+        void m_funcSetupVideoVAO();
+
         /**
          * @brief Generates vertices for a grid and configures spacing.
          *
@@ -169,6 +214,7 @@ namespace graphicpipe {
          */
         void m_funcSetupArrayBuffer();
 
+
         /**
          * @brief Compiles and links a shader program from vertex and fragment shader sources.
          *
@@ -194,6 +240,10 @@ namespace graphicpipe {
         unsigned int m_gridDebugShaderProgram{};    ///< Shader program for rendering collidable grids.
         unsigned int m_lightingShaderProgram{};     ///< Shader program for the lighting pass.
         unsigned int m_finalPassShaderProgram{};    ///< Shader program for the final post-processing pass.
+
+    public:
+        unsigned int m_videoShaderProgram{};        ///< Shader program for video
+    private:
         // Buffers
         unsigned int m_modelMatrixArrayBuffer{};    ///< Array buffer for model matrices.
         unsigned int m_debugMatrixArrayBuffer{};    ///< Array buffer for debug matrices.
@@ -210,6 +260,7 @@ namespace graphicpipe {
         unsigned int m_gamePreviewDepthBufferObject{};   ///< Depth buffer for the game preview framebuffer.
         unsigned int m_unlitScreenFrameBufferObject{};
         unsigned int m_unlitScreenDepthBufferObject{};
+        unsigned int m_particleSSBO{};
         
         unsigned int m_textBuffer{};                ///< Buffer for text rendering.
         unsigned int m_layerBuffer{};               ///< Buffer for rendering layer data.
@@ -217,6 +268,7 @@ namespace graphicpipe {
         unsigned int m_colorBuffer{};               ///< Buffer for vertex color data.
         unsigned int m_tileIndexBuffer{};           ///< Buffer for tilemap indices.
         unsigned int m_gridColliderBuffer{};        ///< Buffer for grid-based collider data.
+        unsigned int m_videoBuffer{};
 
         glm::mat3 m_testMatrix{};                   ///< Test matrix for rendering.
 
@@ -234,6 +286,7 @@ namespace graphicpipe {
         int m_unitWidth{ 100 };         ///< The default width for the graphics unit.
         int m_unitHeight{ 100 };        ///< The default height for the graphics unit.
         float m_globalLightIntensity{ 1.f }; ///< The global illumination value.
+        const int MAX_PARTICLES = 10000;
 
         /**
          * @enum ShapeType
@@ -317,6 +370,8 @@ namespace graphicpipe {
 
         void m_funcDrawUnlit();
 
+        void m_funcDrawVideos();
+
         /**
          * @brief Draws debug elements.
          *
@@ -391,6 +446,8 @@ namespace graphicpipe {
         void m_funcRenderLighting();
 
         void m_funcDrawFullScreenQuad(unsigned int texture);
+
+        void m_funcDrawParticles();
 
         /**
          * @brief Sets the drawing mode for rendering.
@@ -471,6 +528,7 @@ namespace graphicpipe {
         Mesh m_circleLinesMesh;
         Mesh m_textMesh;                ///< Mesh for text rendering.
         Mesh m_lineMesh;
+        Mesh m_videoMesh;
 
         // Matrix Containers
         std::vector<glm::mat3> m_modelMatrix{}; ///< Model transformation matrices.
@@ -479,6 +537,7 @@ namespace graphicpipe {
         std::vector<glm::mat3> m_debugCircleToNDCMatrix{}; ///< Debug model-to-NDC matrices for circles.
 
         // Data for rendering
+        std::vector<ParticleData> m_particleData{}; ///< Particle Data for the Scene.
         std::vector<LightingData> m_lightingData{}; ///< Lighting data for the scene.
         std::vector<ColliderGridData> m_colliderGridData{}; ///< Collider grid data for collision checks.
         std::vector<TilemapData> m_tilemapData{}; ///< Data for tilemaps in the scene.
@@ -486,6 +545,7 @@ namespace graphicpipe {
         std::vector<GraphicsData> m_unlitModelData{};
         std::vector<DebugDrawData> m_debugBoxData{}; ///< Data for rendering debug boxes.
         std::vector<TextData> m_textData{}; ///< Data for rendering text elements.
+        std::vector<VideoData> m_videoData{};
         std::vector<float> m_debugBoxCollisionChecks{}; ///< Collision check data for debug box rendering.
         std::vector<float> m_debugCircleCollisionChecks{}; ///< Collision check data for debug circle rendering.
 
@@ -599,6 +659,16 @@ namespace graphicpipe {
         const std::string lightingFragmentShader =
         {
           #include "../Graphics/lightingFragmentShader.frag"
+        };
+
+        const std::string videoVertexShader =
+        {
+            #include "../Graphics/videoVertexShader.vert"
+        };
+
+        const std::string videoFragmentShader =
+        {
+            #include "../Graphics/videoFragmentShader.frag"
         };
 
         const std::string finalPassVertexShader =

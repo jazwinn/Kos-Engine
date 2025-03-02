@@ -79,6 +79,11 @@ namespace assetmanager {
             scenes::SceneManager::m_GetInstance()->m_unloadScenePath.insert(std::pair{ directoryPath.filename().string(), directoryPath});
 
         }
+        if (directoryPath.filename().extension().string() == ".mpg" || directoryPath.filename().extension().string() == ".mpeg") {
+
+            m_videoManager.m_videopath[directoryPath.filename().string()] = directoryPath;
+
+        }
         if (directoryPath.filename().extension().string() == ".mp3") {
 
             LOGGING_POPUP("File Type: " + directoryPath.filename().extension().string() + " not supported");

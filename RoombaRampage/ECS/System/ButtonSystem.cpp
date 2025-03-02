@@ -100,7 +100,7 @@ namespace ecs {
 				float windowCordinateX = ((transform->m_transformation.m_e20 - graphicpipe::GraphicsCamera::m_currCameraMatrix[2][0] + graphicpipe::GraphicsCamera::m_currCameraScaleX * (1.f/graphicpipe::GraphicsCamera::m_aspectRatio)) / (graphicpipe::GraphicsCamera::m_currCameraScaleX * ((1.f / graphicpipe::GraphicsCamera::m_aspectRatio) * 2))) * help->m_windowWidth;
 				float windowCordinateY = ((transform->m_transformation.m_e21 - graphicpipe::GraphicsCamera::m_currCameraMatrix[2][1] + graphicpipe::GraphicsCamera::m_currCameraScaleY) / (graphicpipe::GraphicsCamera::m_currCameraScaleY * (1.f * 2)))* help->m_windowHeight;
 				
-				button->m_Position = { windowCordinateX, windowCordinateY };
+				button->m_Position = { windowCordinateX , windowCordinateY };
 
 				float translateX = windowCordinateX - (help->m_windowWidth/2);
 				float translateY = windowCordinateY - (help->m_windowHeight/2);
@@ -112,14 +112,15 @@ namespace ecs {
 				translateY = newTranslateY + help->m_windowHeight/2.f;
 
 				button->m_Position = { translateX , translateY };
+
 				//button->m_Scale = { 360,360 };
 				vector2::Vec2 pixelBox = { (graphicpipe::GraphicsCamera::m_windowHeight / 2 * button->m_Scale.m_x) / graphicpipe::GraphicsCamera::m_currCameraScaleX , (graphicpipe::GraphicsCamera::m_windowHeight / 2 * button->m_Scale.m_y) / graphicpipe::GraphicsCamera::m_currCameraScaleY };
 				//std::cout << "Scale " << graphicpipe::GraphicsCamera::m_currCameraScaleX << std::endl;
 
-				minX = button->m_Position.m_x - (pixelBox.m_x / 2.f);
-				maxX = button->m_Position.m_x + (pixelBox.m_x / 2.f);
-				minY = button->m_Position.m_y - (pixelBox.m_y / 2.f);
-				maxY = button->m_Position.m_y + (pixelBox.m_y / 2.f);
+				minX = button->m_Position.m_x - (pixelBox.m_x / 2.f) + help->m_viewportOffsetX;
+				maxX = button->m_Position.m_x + (pixelBox.m_x / 2.f) + help->m_viewportOffsetX;
+				minY = button->m_Position.m_y - (pixelBox.m_y / 2.f) + help->m_viewportOffsetY;
+				maxY = button->m_Position.m_y + (pixelBox.m_y / 2.f) + help->m_viewportOffsetY;
 				/*std::cout << "Mouse position ";
 				std::cout << mouseX << " " << mouseY << std::endl;
 				std::cout << "Window position ";

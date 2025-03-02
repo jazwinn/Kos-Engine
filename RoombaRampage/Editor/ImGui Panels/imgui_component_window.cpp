@@ -276,7 +276,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
     {
         "Add Components", "Collider Component", "Sprite Component", "Enemy Component", "Rigid Body Component", "Text Component", 
         "Animation Component", "Camera Component" , "Button Component" , "Script Component", "Tilemap Component", "Audio Component",
-        "Grid Component", "RayCast Component", "PathfindingComponent", "Lighting Component"
+        "Grid Component", "RayCast Component", "PathfindingComponent", "Lighting Component", "Particle Component","Video Component"
     };
     static int ComponentType = 0;
 
@@ -424,7 +424,22 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                     DISPATCH_ACTION_EVENT(action);
                 }
             }
-
+            if (ComponentType == 16) {
+                ecs->m_AddComponent(ecs::TYPEPARTICLECOMPONENT, entityID);
+                ComponentType = 0;
+                if (!EntitySignature.test(ecs::TYPEPARTICLECOMPONENT)) {
+                    events::AddComponent action(entityID, ecs::TYPEPARTICLECOMPONENT);
+                    DISPATCH_ACTION_EVENT(action);
+                }
+            }
+            if (ComponentType == 17) {
+                ecs->m_AddComponent(ecs::TYPEVIDEOCOMPONENT, entityID);
+                ComponentType = 0;
+                if (!EntitySignature.test(ecs::TYPEVIDEOCOMPONENT)) {
+                    events::AddComponent action(entityID, ecs::TYPEVIDEOCOMPONENT);
+                    DISPATCH_ACTION_EVENT(action);
+                }
+            }
 
 
            
@@ -1513,6 +1528,34 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 }
 
             }
+
+             if (EntitySignature.test(ecs::TYPEPARTICLECOMPONENT)) {
+
+                 open = ImGui::CollapsingHeader("Particle Component");
+
+                 CreateContext(ecs::TYPEPARTICLECOMPONENT, entityID);
+
+                 if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEPARTICLECOMPONENT)) {
+                     auto* rbc = static_cast<ecs::ParticleComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEPARTICLECOMPONENT]->m_GetEntityComponent(entityID));
+                     rbc->ApplyFunction(DrawComponents(rbc->Names()));
+
+                     ImVec4 color = ImVec4(rbc->m_color.m_x, rbc->m_color.m_y, rbc->m_color.m_z, 1.f);
+
+                     ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
+
+                     ImGui::SameLine();
+                     if (ImGui::ColorEdit4("MyColor##4", (float*)&color, ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel))
+                     {
+                         rbc->m_color.m_x = color.x;
+                         rbc->m_color.m_y = color.y;
+                         rbc->m_color.m_z = color.z;
+                     }
+                     ImGui::SameLine();
+                     ImGui::Text("Color");
+                 }
+
+
+            }
             if (EntitySignature.test(ecs::TYPERAYCASTINGCOMPONENT)) {
 
                 open = ImGui::CollapsingHeader("Raycast Component");
@@ -1576,45 +1619,41 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                         pfc->ApplyFunction(DrawComponents(pfc->Names()));
 
-                        //int x[2] = { pfc->m_StartPos.m_x,  pfc->m_StartPos.m_y };
-                        //if (ImGui::InputInt2("Start Position", x)) {
-                        //    // Optionally validate start position
-                        //}
-                        //int x1[2] = { pfc->m_TargetPos.m_x,  pfc->m_TargetPos.m_y };
-                        //if (ImGui::InputInt2("Target Position", x1)) {
-                        //    // Optionally validate target position
-                        //}
-
-                        //ImGui::InputText("Grid Key", &pfc->m_GridKey);
-
-                        //if (ImGui::Button("Recalculate Path")) {
-                        //    auto* grid = GetGridByKey(pfc->m_GridKey); // Assume a function to get GridComponent by key
-                        //    if (grid) {
-                        //        AStarPathfinding pathfinder;
-                        //        auto pathNodes = pathfinder.FindPath(grid, pfc->m_StartPos[0], pfc->m_StartPos[1],
-                        //            pfc->m_TargetPos[0], pfc->m_TargetPos[1]);
-                        //        pfc->m_Path.clear();
-                        //        for (const auto& node : pathNodes) {
-                        //            pfc->m_Path.emplace_back(node.x, node.y);
-                        //        }
-                        //    }
-                        //    else {
-                        //        LOGGING_WARN("Invalid Grid Key!");
-                        //    }
-                        //}
-
-                        /*if (!pfc->m_Path.empty()) {
-                            ImGui::Text("Calculated Path:");
-                            for (const auto& pos : pfc->m_Path) {
-                                ImGui::BulletText("(%d, %d)", pos.first, pos.second);
-                            }
-                        }*/
+                       
                     }
                 }
             }
 
 
+            if (EntitySignature.test(ecs::TYPEVIDEOCOMPONENT)) {
+                bool openPC = ImGui::CollapsingHeader("Video Component");
 
+                CreateContext(ecs::TYPEVIDEOCOMPONENT, entityID);
+
+                if (openPC && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEVIDEOCOMPONENT)) {
+                    auto* vc = static_cast<ecs::VideoComponent*>(
+                        ecs->m_ECS_CombinedComponentPool[ecs::TYPEVIDEOCOMPONENT]->m_GetEntityComponent(entityID)
+                        );
+
+                    if (vc) {
+
+                        if (vc->play == false) {
+                            if (ImGui::Button("Play")) {
+                                vc->play = true;
+                            }
+                        }
+                        else {
+                            if (ImGui::Button("Stop")) {
+                                vc->play = false;
+                            }
+                        }
+
+                        vc->ApplyFunction(DrawComponents(vc->Names()));
+
+
+                    }
+                }
+            }
             
 
             //draw invinsible box
@@ -1683,6 +1722,20 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             else {
                                 auto* sc = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(entityID));
                                 sc->m_fileName = filename->filename().string();
+                            }
+                        }
+
+                        if (filename->filename().extension().string() == ".mpg" || filename->filename().extension().string() == ".mpeg") {
+
+                            if (!EntitySignature.test(ecs::TYPEVIDEOCOMPONENT)) {// does not have sprite component, create one
+                                ecs::VideoComponent* vid = static_cast<ecs::VideoComponent*>(ecs->m_AddComponent(ecs::TYPEVIDEOCOMPONENT, entityID));
+                                vid->filename = filename->filename().string();
+                                vid->play = true;
+                            }
+                            else {
+                                auto* vc = static_cast<ecs::VideoComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEVIDEOCOMPONENT]->m_GetEntityComponent(entityID));
+                                vc->filename = filename->filename().string();
+                                vc->play = true;
                             }
                         }
 

@@ -83,8 +83,7 @@ namespace graphicpipe
 		
 		
 		}
-
-
+		
 		
 	}
 
@@ -142,6 +141,36 @@ namespace graphicpipe
 
 
 		}
+	}
+
+	void GraphicsPipe::m_funcDrawVideos()
+	{
+		for (VideoData x : m_videoData) {
+
+			glUseProgram(m_videoShaderProgram);
+
+			//set uniform
+			glUniformMatrix3fv(x.locTransformation, 1, GL_FALSE, glm::value_ptr(x.transformation));
+			glUniformMatrix3fv(x.locView, 1, GL_FALSE, glm::value_ptr(graphicpipe::GraphicsCamera::m_currViewMatrix));
+			glUniformMatrix3fv(x.locProjection, 1, GL_FALSE, glm::value_ptr(graphicpipe::GraphicsCamera::m_currOrthoMatrix));
+			glUniform1iv(x.unilayer, 1, &x.layer);
+			
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, x.yTexture);
+
+			glActiveTexture(GL_TEXTURE1);
+			glBindTexture(GL_TEXTURE_2D, x.uTexture);
+
+			glActiveTexture(GL_TEXTURE2);
+			glBindTexture(GL_TEXTURE_2D, x.vTexture);
+
+
+			glBindVertexArray(m_videoMesh.m_vaoId);
+			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+			//glDrawArraysInstanced(GL_TRIANGLES, 0, 6, 10);
+
+		}
+		
 	}
 
 	void GraphicsPipe::m_funcDrawDebug()
@@ -512,6 +541,17 @@ namespace graphicpipe
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, texture);
 		glDrawArrays(GL_TRIANGLES, 0, 6);
+	}
+
+	void GraphicsPipe::m_funcDrawParticles()
+	{
+		if (!m_particleData.empty())
+		{
+			glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_particleSSBO);
+			glBufferData(GL_SHADER_STORAGE_BUFFER, m_particleData.size() * sizeof(ParticleData), m_particleData.data(), GL_DYNAMIC_DRAW);
+			glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, m_particleSSBO);
+			glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
+		}
 	}
 
 	void GraphicsPipe::m_funcSetDrawMode(GLenum mode)
