@@ -2800,7 +2800,7 @@
     {
         "name": {
             "namestr": "Player",
-            "layer": 1,
+            "layer": 5,
             "isprefab": true,
             "tagstr": "Player",
             "prefabname": "prefab_player.prefab",
