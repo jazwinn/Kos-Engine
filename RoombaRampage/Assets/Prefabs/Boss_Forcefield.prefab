@@ -1,0 +1,44 @@
+[
+    {
+        "GlobalSettings": {
+            "globalIllumination": 1.059999942779541,
+            "backgroundColor": {
+                "r": 0.13300000131130219,
+                "g": 0.23000000417232513,
+                "b": 0.3199999928474426
+            }
+        }
+    },
+    {
+        "name": {
+            "namestr": "Boss_Forcefield",
+            "layer": 2,
+            "isprefab": true,
+            "tagstr": "Default",
+            "prefabname": "Boss_Forcefield.prefab",
+            "issync": true
+        },
+        "transform": {
+            "position": {
+                "x": 12.5,
+                "y": -0.5346207022666931
+            },
+            "rotation": -179.99989318847656,
+            "scale": {
+                "x": 0.05000000074505806,
+                "y": 0.03999999910593033
+            }
+        },
+        "sprite": {
+            "imagefile": "img_Forcefield.png",
+            "layer": 101,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0,
+            "isLit": true
+        }
+    }
+]
