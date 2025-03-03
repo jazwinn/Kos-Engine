@@ -86,6 +86,8 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     private float enemyBloodPoolSpawnDelay = 0.5f;
     private float enemySpeed = 1.5f;
     private float patrolSpeed = 1.5f;
+    private float enemyFOVangle = 80.0f;
+    private float enemyFOVdistance = 20.0f;
 
     #region Waypoint Variables
     private int initialPatrolWaypoint = 0;
@@ -170,7 +172,6 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
                 Vector2 gridTargetPos = World2GridCoordinates(targetWaypoint.X, targetWaypoint.Y, pathFindComp.m_gridkey);
 
                 pathFindComp.m_targetPosition = gridTargetPos;
-
             }
 
             Paths = GetPath(
@@ -731,6 +732,17 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     //    MoveToTarget(waypointPosition, patrolSpeed);
     //}
 
+    public void CheckWithinFOV()
+    {
+        transformComp = Component.Get<TransformComponent>(EntityID);
+        playerTransformComp = Component.Get<TransformComponent>(playerID);
+
+        float enemydirection = transformComp.m_rotation;
+        float enemyLeftBound = enemydirection - enemyFOVangle/2;
+        float enemyRightBound = enemydirection + enemyFOVangle/2;
+
+
+    }
 
     #endregion
 

@@ -343,6 +343,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClCompile Include="ECS\System\CameraSystem.cpp" />
     <ClCompile Include="ECS\System\LightingSystem.cpp" />
     <ClCompile Include="ECS\System\GridSystem.cpp" />
+    <ClCompile Include="ECS\System\ParticleSystem.cpp" />
     <ClCompile Include="ECS\System\PathfindingSystem.cpp" />
     <ClCompile Include="ECS\System\PhysicsSystem.cpp" />
     <ClCompile Include="ECS\System\TilemapSystem.cpp" />
@@ -475,6 +476,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="ECS\Component\AudioComponent.h" />
     <ClInclude Include="ECS\Component\EnemyComponent.h" />
     <ClInclude Include="ECS\Component\LightingComponent.h" />
+    <ClInclude Include="ECS\Component\ParticleComponent.h" />
     <ClInclude Include="ECS\Component\VideoComponent.h" />
     <ClInclude Include="ECS\System\LightingSystem.h" />
     <ClInclude Include="ECS\Component\GridComponent.h" />
@@ -482,6 +484,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="ECS\Component\TilemapComponent.h" />
     <ClInclude Include="ECS\System\AudioSystem.h" />
     <ClInclude Include="ECS\System\GridSystem.h" />
+    <ClInclude Include="ECS\System\ParticleSystem.h" />
     <ClInclude Include="ECS\System\PathfindingSystem.h" />
     <ClInclude Include="ECS\System\TilemapSystem.h" />
     <ClInclude Include="Editor\ImGui Panels\ScriptVariable.h" />
@@ -627,6 +630,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <None Include="Graphics\gridVertexShader.vert" />
     <None Include="Graphics\lightingFragmentShader.frag" />
     <None Include="Graphics\lightingVertexShader.vert" />
+    <None Include="Graphics\particleComputer.glsl" />
     <None Include="Graphics\textFragmentShader.frag" />
     <None Include="Graphics\textVertexShader.vert" />
     <None Include="Graphics\tilemapFragmentShader.frag" />
