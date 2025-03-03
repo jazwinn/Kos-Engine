@@ -3,9 +3,9 @@
         "GlobalSettings": {
             "globalIllumination": 1.059999942779541,
             "backgroundColor": {
-                "r": 0.13716816902160645,
-                "g": 0.13716816902160645,
-                "b": 0.13716816902160645
+                "r": 0.13300000131130219,
+                "g": 0.23000000417232513,
+                "b": 0.3199999928474426
             }
         }
     },
@@ -3368,7 +3368,7 @@
             "namestr": "Boss",
             "layer": 5,
             "isprefab": true,
-            "tagstr": "Enemy",
+            "tagstr": "Boss",
             "prefabname": "Boss.prefab",
             "issync": true
         },
@@ -3397,6 +3397,30 @@
             "drawDebug": true,
             "radius": 0.5,
             "shapetype": 0
+        },
+        "rigidbody": {
+            "linearVelocity": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "linearAcceleration": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "angularVelocity": 0.0,
+            "angularAcceleration": 0.0,
+            "mass": 1.0,
+            "inverseMass": 1.0,
+            "linearDamping": 0.9900000095367432,
+            "angularDamping": 0.9900000095367432,
+            "force": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "torque": 0.0,
+            "kinematic": false,
+            "static": false
         },
         "sprite": {
             "imagefile": "img_BulletPlaceholder.png",
@@ -4179,7 +4203,7 @@
             {
                 "name": {
                     "namestr": "Wall",
-                    "layer": 5,
+                    "layer": 1,
                     "isprefab": true,
                     "tagstr": "Wall",
                     "prefabname": "Wall.prefab",
@@ -4210,28 +4234,6 @@
                     "drawDebug": true,
                     "radius": 0.5,
                     "shapetype": 0
-                },
-                "script": {
-                    "scripts": [
-                        {
-                            "name": "BossController",
-                            "enabled": true,
-                            "map": [
-                                {
-                                    "variable": "playerHit",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "forceFieldHealth",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "bossHealth",
-                                    "base64": ""
-                                }
-                            ]
-                        }
-                    ]
                 }
             },
             {

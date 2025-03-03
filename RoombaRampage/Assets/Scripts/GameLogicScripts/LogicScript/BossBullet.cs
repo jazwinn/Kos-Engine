@@ -102,10 +102,5 @@ public class BossBullet : ScriptBase
         #endregion
     }
 
-    private IEnumerator DeathTimer()
-    {
-        yield return new CoroutineManager.WaitForSeconds(3.0f);
-        InternalCall.m_InternalCallDeleteEntity(EntityID);
-    }
 }
 

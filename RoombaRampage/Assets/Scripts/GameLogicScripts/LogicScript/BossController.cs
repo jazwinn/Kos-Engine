@@ -31,12 +31,14 @@ public class BossController : ScriptBase
 
     private Vector2 bossPosition;
     private bool canAttack = true;
-    private float attackCooldown = 3.0f;
+    private float attackCooldown = 10.0f;
 
-    public int forceFieldHealth = 5; 
+    public int forceFieldHealth = 3; 
     public int bossHealth = 3;
-    private bool isForceFieldActive = true;
-    private string forceFieldPrefab = "Boss_Forcefield"; 
+    public bool isForceFieldActive = true;
+    public string forceFieldPrefab = "Boss_Forcefield";
+
+    private string bossBulletPrefab;
 
     #endregion
 
@@ -50,39 +52,21 @@ public class BossController : ScriptBase
     };
     #endregion
 
-
-    private string alternatePrefab;
-    private string spreadPrefab;
-    private string dispersePrefab;
-
-
     public override void Awake(uint id)
     {
         EntityID = id; //Sets ID for object, DO NOT TOUCH
-        alternatePrefab = "prefab_bulletAlternate";
-        spreadPrefab = "prefab_bulletSpread";
-        dispersePrefab = "prefab_bulletDisperse";
-
+        bossBulletPrefab = "prefab_bossBullet";
         SpawnForceField();
     }
     public override void Start()
     {
-        //EntityID = (uint)InternalCall.m_InternalCallGetTagID("Player"); //Get Player ID
         Console.WriteLine($"Selected Pattern: {currentPattern}");
+        CoroutineManager.Instance.StartCoroutine(AttackLoop()); // Start attacks
     }
 
     public override void Update()
     {
-        //if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.SPACE) && canAttack)
-        //{
-        //    AttackRandomizer();
-        //    canAttack = false;
-        //    CoroutineManager.Instance.StartCoroutine(ResetAttackCooldown());
-        //}
-
         CheckCollision();
-
-
     }
 
     public void AttackRandomizer()
@@ -132,12 +116,22 @@ public class BossController : ScriptBase
         }
     }
 
+    private IEnumerator AttackLoop()
+    {
+        while (bossHealth > 0) // Keep attacking while boss is alive
+        {
+            AttackRandomizer(); // Pick and execute a random attack pattern
+            yield return new CoroutineManager.WaitForSeconds(attackCooldown); // Wait before attacking again
+        }
+    }
+
     private int GenerateRandom(int min, int max)
     {
         seed = (seed * 1664525 + 1013904223) & 0x7FFFFFFF; // Update seed
         return (int)(min + (seed % (max - min))); // Map to range
     }
 
+    #region Boss Attack Pattern
     private IEnumerator ResetAttackCooldown()
     {
         yield return new CoroutineManager.WaitForSeconds(attackCooldown);
@@ -170,7 +164,7 @@ public class BossController : ScriptBase
             float spawnX = position.X + (float)Math.Cos(radian) * radius;
             float spawnY = position.Y + (float)Math.Sin(radian) * radius;
 
-            InternalCall.m_InternalCallAddPrefab(alternatePrefab, spawnX, spawnY, angle);
+            InternalCall.m_InternalCallAddPrefab(bossBulletPrefab, spawnX, spawnY, angle);
         }
     }
 
@@ -178,7 +172,7 @@ public class BossController : ScriptBase
     {
         float bigBulletAngle = 270f;
 
-        uint largeBullet = (uint)InternalCall.m_InternalCallAddPrefab(dispersePrefab, position.X, position.Y, bigBulletAngle);
+        uint largeBullet = (uint)InternalCall.m_InternalCallAddPrefab(bossBulletPrefab, position.X, position.Y, bigBulletAngle);
 
         CoroutineManager.Instance.StartCoroutine(ExplodeBigBullet(largeBullet));
     }
@@ -195,7 +189,7 @@ public class BossController : ScriptBase
         for (int i = 0; i < 6; i++)
         {
             float angle = i * (360f / 6); // Spread evenly
-            uint mediumBullet = (uint)InternalCall.m_InternalCallAddPrefab(alternatePrefab, explosionPosition.X, explosionPosition.Y, angle);
+            uint mediumBullet = (uint)InternalCall.m_InternalCallAddPrefab(bossBulletPrefab, explosionPosition.X, explosionPosition.Y, angle);
             mediumBullets.Add(mediumBullet);
         }
 
@@ -216,7 +210,7 @@ public class BossController : ScriptBase
                 float offsetX = (float)(mediumBulletPosition.X + Math.Cos(radian) * 0.3f);
                 float offsetY = (float)(mediumBulletPosition.Y + Math.Sin(radian) * 0.3f);
 
-                InternalCall.m_InternalCallAddPrefab(spreadPrefab, offsetX, offsetY, spreadAngle);
+                InternalCall.m_InternalCallAddPrefab(bossBulletPrefab, offsetX, offsetY, spreadAngle);
             }
 
             InternalCall.m_InternalCallDeleteEntity(mediumBullet);
@@ -240,7 +234,7 @@ public class BossController : ScriptBase
                 float spawnX = position.X + (float)Math.Cos(radian) * radius;
                 float spawnY = position.Y + (float)Math.Sin(radian) * radius;
 
-                uint bullet = (uint)InternalCall.m_InternalCallAddPrefab(alternatePrefab, spawnX, spawnY, baseAngle);
+                uint bullet = (uint)InternalCall.m_InternalCallAddPrefab(bossBulletPrefab, spawnX, spawnY, baseAngle);
                 CoroutineManager.Instance.StartCoroutine(CurveBullet(bullet, baseAngle));
 
                 yield return new CoroutineManager.WaitForSeconds(bulletInterval);
@@ -264,60 +258,59 @@ public class BossController : ScriptBase
             yield return null;
         }
     }
+    #endregion
 
-    private void SpawnForceField()
+    public void SpawnForceField()
     {
         InternalCall.m_InternalGetTranslate(EntityID, out Vector2 bossPosition);
         forceFieldID = (uint)InternalCall.m_InternalCallAddPrefab(forceFieldPrefab, bossPosition.X, bossPosition.Y, 0);
         isForceFieldActive = true;
-        forceFieldHealth = 5;
-    }
-
-    private void HandleDamage(int bulletID)
-    {
-        InternalCall.m_InternalCallDeleteEntity((uint)bulletID); // Destroy the bullet
-        InternalCall.m_InternalGetTranslate(EntityID, out Vector2 bossPosition);
-
-        if (isForceFieldActive)
-        {
-            forceFieldHealth--;
-
-            Console.WriteLine($"[Boss] Force Field Hit! Remaining: {forceFieldHealth}");
-
-            if (forceFieldHealth <= 0)
-            {
-                Console.WriteLine("[Boss] Force Field Down!");
-                isForceFieldActive = false;
-            }
-        }
-        else
-        {
-            bossHealth--;
-
-            Console.WriteLine($"[Boss] Health Remaining: {bossHealth}");
-
-            if (bossHealth <= 0)
-            {
-                Console.WriteLine("[Boss] Respawning Force Field!");
-                SpawnForceField();
-            }
-        }
+        forceFieldHealth = 3;
     }
 
     private void CheckCollision()
     {
         if (InternalCall.m_InternalCallIsCollided(EntityID) != 0.0f)
         {
+
             int[] collidedEntities = InternalCall.m_InternalCallGetCollidedEntities(EntityID);
 
             foreach (int collidedEntitiesID in collidedEntities)
             {
                 if (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID) == "PlayerBullet")
                 {
-                    Console.WriteLine("STOP");
+                    if (isForceFieldActive)
+                    {
+                        forceFieldHealth--;
+
+                        Console.WriteLine($"[Boss] Force Field hit! Remaining Health: {forceFieldHealth}");
+
+                        if (forceFieldHealth <= 0)
+                        {
+                            Console.WriteLine("[Boss] Force Field Destroyed!");
+                            InternalCall.m_InternalCallDeleteEntity(forceFieldID);
+                            isForceFieldActive = false;
+                        }
+                    }
+                    else
+                    {
+                        bossHealth--;
+                        Console.WriteLine($"[Boss] Hit! Remaining Health: {bossHealth}");
+
+                        if (bossHealth <= 0)
+                        {
+                            Console.WriteLine("[Boss] Defeated!");
+                            InternalCall.m_InternalCallDeleteEntity(EntityID);
+                            return;
+                        }
+
+                        SpawnForceField();
+                    }
+                    
+
+                    InternalCall.m_InternalCallDeleteEntity((uint)collidedEntitiesID);
                 }
             }
         }
     }
-
 }

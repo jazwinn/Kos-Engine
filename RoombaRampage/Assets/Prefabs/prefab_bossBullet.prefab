@@ -11,42 +11,42 @@
     },
     {
         "name": {
-            "namestr": "Boss",
-            "layer": 5,
+            "namestr": "prefab_bossBullet",
+            "layer": 2,
             "isprefab": true,
-            "tagstr": "Boss",
-            "prefabname": "Boss.prefab",
+            "tagstr": "EnemyBullet",
+            "prefabname": "prefab_bossBullet.prefab",
             "issync": true
         },
         "transform": {
             "position": {
-                "x": 12.5,
-                "y": -0.1939995288848877
+                "x": 0.0,
+                "y": 0.0
             },
-            "rotation": -0.0,
+            "rotation": 0.0,
             "scale": {
-                "x": 3.0,
-                "y": 3.0
+                "x": 1.0,
+                "y": 1.0
             }
         },
         "collider": {
             "checkcollision": true,
             "checkresponse": false,
             "size": {
-                "x": 0.7400000095367432,
-                "y": 0.7400000095367432
+                "x": 1.0,
+                "y": 1.0
             },
             "offset": {
                 "x": 0.0,
                 "y": 0.0
             },
             "drawDebug": true,
-            "radius": 0.5,
-            "shapetype": 0
+            "radius": 0.20000000298023224,
+            "shapetype": 1
         },
         "rigidbody": {
             "linearVelocity": {
-                "x": 0.0,
+                "x": 1.9405981302261353,
                 "y": 0.0
             },
             "linearAcceleration": {
@@ -69,8 +69,8 @@
             "static": false
         },
         "sprite": {
-            "imagefile": "img_BulletPlaceholder.png",
-            "layer": 100,
+            "imagefile": "img_BulletPrefab1.png",
+            "layer": 5,
             "color": {
                 "r": 1.0,
                 "g": 1.0,
@@ -82,19 +82,11 @@
         "script": {
             "scripts": [
                 {
-                    "name": "BossController",
+                    "name": "BossBullet",
                     "enabled": true,
                     "map": [
                         {
-                            "variable": "forceFieldHealth",
-                            "base64": ""
-                        },
-                        {
-                            "variable": "playerHit",
-                            "base64": ""
-                        },
-                        {
-                            "variable": "bossHealth",
+                            "variable": "speed",
                             "base64": ""
                         }
                     ]
