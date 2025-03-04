@@ -10,8 +10,7 @@ public class BossController : ScriptBase
 {
     #region ID Variables
     private uint EntityID; //Entity ID of the object, do not touch!
-    private uint forceFieldID; // ID for the force field prefab
-    //private uint playerID; //Store player ID
+    private uint forceFieldID;
     #endregion
 
     #region Component Variable
@@ -24,8 +23,6 @@ public class BossController : ScriptBase
     #endregion
 
     #region Boss Variable
-    public int playerHit = 0;
-    //bool noForceField = false
     private BossAttackPattern currentPattern;
     private long seed = DateTime.Now.Ticks; // seed for randomizer
 
@@ -36,11 +33,20 @@ public class BossController : ScriptBase
     public int forceFieldHealth = 3; 
     public int bossHealth = 3;
     public bool isForceFieldActive = true;
-    public string forceFieldPrefab = "Boss_Forcefield";
+    private string forceFieldPrefab = "Boss_Forcefield";
 
     private string bossBulletPrefab;
-
     #endregion
+
+    #region Enemy Spawning
+    private uint[] enemySpawnPoints; // Store spawn point entity IDs
+    private string[] enemyPrefabs = { "EnemyType1", "EnemyType2", "EnemyType3" };
+    private List<uint> activeEnemies = new List<uint>();
+
+    private float enemySpawnCooldown = 10.0f;
+    private int maxEnemies = 5;
+    #endregion
+
 
     #region Boss Attack Pattern
     public enum BossAttackPattern // Attack pattern
@@ -57,11 +63,17 @@ public class BossController : ScriptBase
         EntityID = id; //Sets ID for object, DO NOT TOUCH
         bossBulletPrefab = "prefab_bossBullet";
         SpawnForceField();
+
+        int[] childIDs = InternalCall.m_InternalCallGetChildrenID(EntityID);
+        enemySpawnPoints = Array.ConvertAll(childIDs, item => (uint)item);
+
     }
     public override void Start()
     {
         Console.WriteLine($"Selected Pattern: {currentPattern}");
         CoroutineManager.Instance.StartCoroutine(AttackLoop()); // Start attacks
+        CoroutineManager.Instance.StartCoroutine(EnemySpawnLoop()); // Start enemy spawns
+
     }
 
     public override void Update()
@@ -69,6 +81,13 @@ public class BossController : ScriptBase
         CheckCollision();
     }
 
+    private int GenerateRandom(int min, int max)
+    {
+        seed = (seed * 1664525 + 1013904223) & 0x7FFFFFFF; // Update seed
+        return (int)(min + (seed % (max - min))); // Map to range
+    }
+
+    #region AttackPattern Execution
     public void AttackRandomizer()
     {
         BossAttackPattern newPattern;
@@ -118,18 +137,50 @@ public class BossController : ScriptBase
 
     private IEnumerator AttackLoop()
     {
-        while (bossHealth > 0) // Keep attacking while boss is alive
+        while (bossHealth > 0)
         {
-            AttackRandomizer(); // Pick and execute a random attack pattern
-            yield return new CoroutineManager.WaitForSeconds(attackCooldown); // Wait before attacking again
+            AttackRandomizer();
+            yield return new CoroutineManager.WaitForSeconds(attackCooldown);
+        }
+    }
+    #endregion
+
+    #region Enemy Spawner
+    private IEnumerator EnemySpawnLoop()
+    {
+        while (bossHealth > 0)
+        {
+            //Only stop spawning if enemie count reaches max enemies count
+            if (activeEnemies.Count < maxEnemies)
+            {
+                SpawnEnemy();
+            }
+
+            float randomDelay = GenerateRandom(2, 4);
+            yield return new CoroutineManager.WaitForSeconds(randomDelay);
         }
     }
 
-    private int GenerateRandom(int min, int max)
+    private void SpawnEnemy()
     {
-        seed = (seed * 1664525 + 1013904223) & 0x7FFFFFFF; // Update seed
-        return (int)(min + (seed % (max - min))); // Map to range
+        if (enemySpawnPoints.Length == 0) return; // No spawn points found
+
+        // Select a random spawn point
+        uint spawnPointID = enemySpawnPoints[GenerateRandom(0, enemySpawnPoints.Length)];
+
+        Vector2 spawnPosition;
+        InternalCall.m_InternalGetTranslate(spawnPointID, out spawnPosition);
+
+        // Select a random enemy type
+        string enemyType = enemyPrefabs[GenerateRandom(0, enemyPrefabs.Length)];
+
+        // Spawn the enemy
+        uint enemyID = (uint)InternalCall.m_InternalCallAddPrefab(enemyType, spawnPosition.X, spawnPosition.Y, 0);
+
+        Console.WriteLine($"[Boss] Spawned {enemyType} at {spawnPosition.X}, {spawnPosition.Y}");
+        activeEnemies.Add(enemyID);
     }
+#endregion
 
     #region Boss Attack Pattern
     private IEnumerator ResetAttackCooldown()
@@ -260,6 +311,7 @@ public class BossController : ScriptBase
     }
     #endregion
 
+    #region Boss Forcefield
     public void SpawnForceField()
     {
         InternalCall.m_InternalGetTranslate(EntityID, out Vector2 bossPosition);
@@ -307,10 +359,11 @@ public class BossController : ScriptBase
                         SpawnForceField();
                     }
                     
-
                     InternalCall.m_InternalCallDeleteEntity((uint)collidedEntitiesID);
                 }
             }
         }
     }
+    #endregion
+
 }

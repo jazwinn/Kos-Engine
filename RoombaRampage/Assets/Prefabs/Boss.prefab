@@ -100,6 +100,92 @@
                     ]
                 }
             ]
-        }
+        },
+        "children": [
+            {
+                "name": {
+                    "namestr": "Spawn 1",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "Boss.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": -3.548457145690918,
+                        "y": -0.9380902051925659
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                }
+            },
+            {
+                "name": {
+                    "namestr": "Spawn 2",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "Boss.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 3.513596296310425,
+                        "y": -0.7475741505622864
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                }
+            },
+            {
+                "name": {
+                    "namestr": "Spawn 3",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "Boss.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": -3.28932523727417,
+                        "y": -7.3262248039245605
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                }
+            },
+            {
+                "name": {
+                    "namestr": "Spawn4",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "Boss.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 3.43884015083313,
+                        "y": -6.915059566497803
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                }
+            }
+        ]
     }
 ]
