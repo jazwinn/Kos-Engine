@@ -36,15 +36,16 @@ namespace ecs
 		float m_coneRotation{}; //Cone Rotation
 		float m_coneAngle{360.f};
 		float m_randomFactor{};
-		unsigned int m_textureID{};
+		std::string m_imageFile{};
 		int m_stripCount{};
 		int m_frameNumber{};
 		int m_layer{};
+		float m_friction{};
 		
 
 		REFLECTABLE(ParticleComponent, m_willSpawn, m_noOfParticles, m_lifeSpan, m_velocity, m_acceleration,
 										m_color, m_coneRotation, m_coneAngle, m_randomFactor, m_stripCount, m_frameNumber, 
-										m_layer);
+										m_layer, m_friction);
 	};
 
 }

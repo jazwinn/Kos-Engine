@@ -14,7 +14,11 @@ R"( #version 430 core
     vec2 velocity;       
     vec2 acceleration;  
     vec2 scale;          
-    vec4 color;          
+    vec4 color;
+    float friction;
+    float padding;
+    float padding2;
+    float padding3;
 };
 
 layout(std430, binding = 0) buffer ParticleBuffer 
@@ -40,11 +44,20 @@ void main()
         return;
     }
 
+  vec2 frictionForce = -particles[id].velocity * particles[id].friction * deltaTime;
+
   float newAngle =  particles[id].initialEmissionAngle;
   vec2 newAccel = {  particles[id].acceleration.x * cos(newAngle) +  particles[id].acceleration.y * sin(newAngle),
                                                      -particles[id].acceleration.x * sin(newAngle) +  particles[id].acceleration.y * cos(newAngle) };
 
   particles[id].velocity +=  newAccel * deltaTime;
+  particles[id].velocity +=  frictionForce;
+
+
+  if (length(particles[id].velocity) < 0.01)  // Small threshold
+  {
+    particles[id].velocity = vec2(0.0);
+  }
   particles[id].position += particles[id].velocity * deltaTime;
 
 

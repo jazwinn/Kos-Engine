@@ -57,7 +57,7 @@ namespace graphicpipe {
         int m_stripCount{};
         int m_frameNumber{};
         int m_layer{};
-
+        float m_friction{};
     };
 
     struct ParticleData
@@ -76,6 +76,11 @@ namespace graphicpipe {
         glm::vec2 m_scale;
   
         glm::vec4 m_color;
+
+        float m_friction;
+        float padding{};
+        float padding2{};
+        float padding3{};
     };
 
     struct LightingData

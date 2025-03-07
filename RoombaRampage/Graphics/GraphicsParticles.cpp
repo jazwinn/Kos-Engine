@@ -80,6 +80,7 @@ namespace graphicpipe
                             particles[j].m_frameNumber = m_emitterData[i].m_frameNumber;
                             particles[j].m_layer = m_emitterData[i].m_layer;
                             particles[j].m_isActive = 2.f;
+                            particles[j].m_friction = m_emitterData[i].m_friction;
                             particlesProcessed++;
                             if (particlesProcessed > m_emitterData[i].m_noOfParticles)
                                 break;

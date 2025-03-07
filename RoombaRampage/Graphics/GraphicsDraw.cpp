@@ -554,6 +554,25 @@ namespace graphicpipe
 
 		glUniformMatrix3fv(glGetUniformLocation(m_particleShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currOrthoMatrix));
 
+		GLint lvUniformVarLoc1 = glGetUniformLocation(m_genericShaderProgram, "textures");
+
+		if (lvUniformVarLoc1 >= 0)
+		{
+			glUniform1iv(lvUniformVarLoc1, static_cast<GLsizei>(m_textureIDs.size()), (GLint*)&m_textureIDs[0]);
+		}
+		else
+		{
+			LOGGING_ERROR("Uniform variable location: %d", lvUniformVarLoc1);
+			LOGGING_ERROR("Uniform variable 'textures' doesn't exist!");
+			std::exit(EXIT_FAILURE);
+		}
+
+		for (int i = 0; i < m_textureIDs.size(); ++i)
+		{
+			glActiveTexture(GL_TEXTURE0 + m_textureIDs[i]);
+			glBindTexture(GL_TEXTURE_2D, m_textureIDs[i]);
+
+		}
 
 		glBindVertexArray(m_squareMesh.m_vaoId);
 		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, m_particleSSBO);

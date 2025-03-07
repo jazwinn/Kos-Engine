@@ -75,7 +75,7 @@ void main()
     gl_Position = vec4(vec2(matrix * vec3(vertexPosition, 1.f)),
 					   -0.0001 * particles[id].layer, 1.0);
 
-    float frameWidth = 1.0 / 1.0;
+    float frameWidth = 1.0 / particles[id].stripCount;
 
     float frameOffset = frameWidth * particles[id].frameNumber;
 

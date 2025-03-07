@@ -9,7 +9,7 @@ R"( #version 430 core
 
 	layout (location=0) out vec4 fragColor;
 
-	//uniform sampler2D textures[192]; // Subscript indicates max texture amount
+	uniform sampler2D textures[192]; // Subscript indicates max texture amount
 
 	void main()
 	{
@@ -18,12 +18,21 @@ R"( #version 430 core
 			discard;
 			return;
 		}
-		// vec4 texColor = texture(textures[textureID], texCoords) * vec4(color);
-
-		// if(texColor.a < 0.1)
-		// discard;
+	   
     
-		//fragColor = vec4(vec3(texColor.xyz),texColor.w);
-		fragColor = vec4(1.f,1.f,0.f,1.f);
+		
+		if (textureID != 0)
+		{
+			vec4 texColor = texture(textures[textureID], texCoords) * vec4(color);
+
+			if(texColor.a < 0.1)
+			discard;
+			fragColor = vec4(vec3(texColor.xyz),texColor.w);
+		}
+		else
+		{
+			fragColor = color;
+		}
+		
 	}
 )"
