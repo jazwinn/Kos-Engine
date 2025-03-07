@@ -209,12 +209,11 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
                 return new EnemyStatePatrol(this);
 
             case EnemySelection.Ranged: //Return ranged beginning state
-                break;
+                return new EnemyStateRangedPatrol(this); // New ranged patrol state
 
             default:
                 return null;
         }
-        return null;
     }
 
     #endregion
@@ -846,4 +845,139 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     }
 
     #endregion
+    // Add these methods to your EnemyScript.cs class
+
+    // Method to check if player is within FOV
+    public bool IsPlayerInFOV()
+    {
+        UpdateComponentValues();
+
+        // Get direction to player
+        Vector2 directionToPlayer = new Vector2(
+            playerTransformComp.m_position.X - transformComp.m_position.X,
+            playerTransformComp.m_position.Y - transformComp.m_position.Y
+        );
+
+        // Calculate distance to player
+        float distanceToPlayer = (float)Math.Sqrt(
+            directionToPlayer.X * directionToPlayer.X +
+            directionToPlayer.Y * directionToPlayer.Y
+        );
+
+        // Check if player is within FOV distance
+        if (distanceToPlayer > enemyFOVdistance)
+            return false;
+
+        // Calculate angle to player
+        float angleToPlayer = (float)(Math.Atan2(directionToPlayer.X, directionToPlayer.Y) * (180 / Math.PI));
+
+        // Get enemy's current facing angle
+        float enemyAngle = transformComp.m_rotation;
+
+        // Calculate angle difference (normalized to -180 to 180)
+        float angleDifference = angleToPlayer - enemyAngle;
+        while (angleDifference > 180) angleDifference -= 360;
+        while (angleDifference < -180) angleDifference += 360;
+        angleDifference = Math.Abs(angleDifference);
+
+        // Check if player is within FOV angle
+        return angleDifference <= enemyFOVangle / 2;
+    }
+
+    // Method to face the player
+    public void FaceTarget()
+    {
+        UpdateComponentValues();
+
+        // Calculate direction to player
+        Vector2 direction = new Vector2(
+            playerTransformComp.m_position.X - transformComp.m_position.X,
+            playerTransformComp.m_position.Y - transformComp.m_position.Y
+        );
+
+        // Calculate rotation to face player
+        float rotationFloat = (float)(Math.Atan2(direction.X, direction.Y) * (180 / Math.PI));
+
+        // Set rotation
+        transformComp.m_rotation = rotationFloat;
+        SetComponent.SetTransformComponent(EntityID, transformComp);
+    }
+
+    // Method to get player position
+    public Vector2 GetPlayerPosition()
+    {
+        UpdateComponentValues();
+        return playerTransformComp.m_position;
+    }
+
+    // Method to move to last known position
+    public void MoveToLastKnownPosition(Vector2 lastPosition)
+    {
+        UpdateComponentValues();
+
+        // If close enough to the position, stop
+        if (Vector2DistanceChecker(transformComp.m_position, lastPosition, 0.5f))
+        {
+            // Stop moving
+            movement.X = 0;
+            movement.Y = 0;
+            InternalCall.m_InternalSetVelocity(EntityID, in movement);
+            return;
+        }
+
+        // Calculate direction to last known position
+        Vector2 direction = new Vector2(
+            lastPosition.X - transformComp.m_position.X,
+            lastPosition.Y - transformComp.m_position.Y
+        );
+
+        // Normalize direction
+        float magnitude = (float)Math.Sqrt(direction.X * direction.X + direction.Y * direction.Y);
+        direction.X /= magnitude;
+        direction.Y /= magnitude;
+
+        // Face the direction
+        float rotationFloat = (float)(Math.Atan2(direction.X, direction.Y) * (180 / Math.PI));
+        transformComp.m_rotation = rotationFloat;
+        SetComponent.SetTransformComponent(EntityID, transformComp);
+
+        // Move in that direction
+        movement.X = direction.X * enemySpeed;
+        movement.Y = direction.Y * enemySpeed;
+
+        RigidBodyComponent rb = Component.Get<RigidBodyComponent>(EntityID);
+        rb.m_Acceleration = movement;
+        Component.Set<RigidBodyComponent>(EntityID, rb);
+    }
+
+    // Method to fire at player
+    public void FireAtPlayer()
+    {
+        UpdateComponentValues();
+
+        // Calculate firing position (slightly in front of the enemy)
+        float rotationInRadians = (float)(transformComp.m_rotation * Math.PI / 180.0);
+        float offsetX = (float)Math.Sin(rotationInRadians) * 1.0f;
+        float offsetY = (float)Math.Cos(rotationInRadians) * 1.0f;
+
+        Vector2 bulletSpawnPosition = new Vector2(
+            transformComp.m_position.X + offsetX,
+            transformComp.m_position.Y + offsetY
+        );
+
+        // Spawn bullet prefab
+        uint bulletID = (uint)InternalCall.m_InternalCallAddPrefab(
+            "prefab_enemyBullet",
+            bulletSpawnPosition.X,
+            bulletSpawnPosition.Y,
+            transformComp.m_rotation
+        );
+
+        // Play shooting sound
+        InternalCall.m_InternalCallPlayAudio(EntityID, "aud_enemyShoot.wav");
+
+        // Optional: Add muzzle flash effect
+        // InternalCall.m_InternalCallAddPrefab("prefab_muzzleFlash", bulletSpawnPosition.X, bulletSpawnPosition.Y, transformComp.m_rotation);
+    }
 }
+

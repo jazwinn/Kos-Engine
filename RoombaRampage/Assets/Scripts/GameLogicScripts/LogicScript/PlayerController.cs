@@ -154,6 +154,28 @@ public class PlayerController : ScriptBase
 
                     InternalCall.m_InternalCallSetTimeScale(0);
                 }
+                if (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID) == "EnemyBullet")
+                {
+                    CameraFollowPlayerScript.Shake(10f, 1f);
+
+                    InternalCall.m_InternalCallPlayAudio(EntityID, "aud_playerDeath01");
+
+                    var collisionComponent = GetComponent.GetColliderComponent(EntityID);
+                    collisionComponent.m_collisionCheck = !collisionComponent.m_collisionCheck;
+                    SetComponent.SetCollisionComponent(EntityID, collisionComponent);
+
+                    InternalCall.m_InternalSetAnimationComponent(EntityID, 0, 0, 0, false, 1);
+                    InternalCall.m_InternalSetSpriteComponent(EntityID, playerDeathTexture, startingLayer, startingColor, startingAlpha);
+
+                    movement.X = 0;
+                    movement.Y = 0;
+
+                    InternalCall.m_InternalSetVelocity(EntityID, movement);
+
+                    isDead = true;
+
+                    InternalCall.m_InternalCallSetTimeScale(0);
+                }
             }
         }
 
