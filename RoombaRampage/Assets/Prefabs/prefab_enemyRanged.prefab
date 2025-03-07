@@ -11,7 +11,7 @@
     },
     {
         "name": {
-            "namestr": "FearlessEnemyStatic",
+            "namestr": "prefab_enemyRanged",
             "layer": 2,
             "isprefab": true,
             "tagstr": "Enemy",
@@ -20,8 +20,8 @@
         },
         "transform": {
             "position": {
-                "x": 42.26792907714844,
-                "y": 4.780803203582764
+                "x": 0.9244608879089355,
+                "y": -9.390032768249512
             },
             "rotation": -114.10630798339844,
             "scale": {
@@ -47,7 +47,7 @@
         "enemy": {
             "enemytag": -1,
             "enemytype": 1,
-            "enemybehaviour": 0
+            "enemybehaviour": 1
         },
         "rigidbody": {
             "linearVelocity": {
@@ -74,8 +74,8 @@
             "static": false
         },
         "sprite": {
-            "imagefile": "ani_scientistWalk_strip8.png",
-            "layer": 63,
+            "imagefile": "img_BulletPrefab1.png",
+            "layer": 64,
             "color": {
                 "r": 1.0,
                 "g": 1.0,
@@ -89,7 +89,7 @@
             "framesPerSecond": 15,
             "frameTimer": 0.0,
             "isAnimating": false,
-            "stripCount": 8
+            "stripCount": 1
         },
         "script": {
             "scripts": [
@@ -210,6 +210,65 @@
                 "y": 0.0
             },
             "gridKey": 0
-        }
+        },
+        "children": [
+            {
+                "name": {
+                    "namestr": "waypoint 1",
+                    "layer": 0,
+                    "isprefab": false,
+                    "tagstr": "Default"
+                },
+                "transform": {
+                    "position": {
+                        "x": -1.7318414449691772,
+                        "y": 3.2076199054718018
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                }
+            },
+            {
+                "name": {
+                    "namestr": "waypoint 2",
+                    "layer": 0,
+                    "isprefab": false,
+                    "tagstr": "Default"
+                },
+                "transform": {
+                    "position": {
+                        "x": -0.4862020015716553,
+                        "y": -1.3430489301681519
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                }
+            },
+            {
+                "name": {
+                    "namestr": "waypoint 3",
+                    "layer": 0,
+                    "isprefab": false,
+                    "tagstr": "Default"
+                },
+                "transform": {
+                    "position": {
+                        "x": -4.773596286773682,
+                        "y": -5.950741291046143
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                }
+            }
+        ]
     }
 ]

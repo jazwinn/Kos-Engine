@@ -11,7 +11,7 @@
     },
     {
         "name": {
-            "namestr": "EnemyType2",
+            "namestr": "prefab_enemyBullet",
             "layer": 0,
             "isprefab": false,
             "tagstr": "Default"
@@ -27,9 +27,24 @@
                 "y": 1.0
             }
         },
+        "collider": {
+            "checkcollision": true,
+            "checkresponse": true,
+            "size": {
+                "x": 1.0,
+                "y": 1.0
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true,
+            "radius": 0.5,
+            "shapetype": 0
+        },
         "sprite": {
             "imagefile": "img_BulletPrefab1.png",
-            "layer": 102,
+            "layer": 0,
             "color": {
                 "r": 1.0,
                 "g": 1.0,
@@ -37,6 +52,15 @@
             },
             "alpha": 1.0,
             "isLit": true
+        },
+        "script": {
+            "scripts": [
+                {
+                    "name": "EnemyBulletScript",
+                    "enabled": true,
+                    "map": []
+                }
+            ]
         }
     }
 ]

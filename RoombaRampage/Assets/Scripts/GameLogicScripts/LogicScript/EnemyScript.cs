@@ -209,7 +209,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
                 return new EnemyStatePatrol(this);
 
             case EnemySelection.Ranged: //Return ranged beginning state
-                return new EnemyStateRangedPatrol(this); // New ranged patrol state
+                return new EnemyStatePatrol(this); // New ranged patrol state
 
             default:
                 return null;
@@ -387,6 +387,13 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         }
         else if (Vector2DistanceChecker(transformComp.m_position, Grid2WorldCoordinates((int)Paths[currentPatrolPath].X, (int)Paths[currentPatrolPath].Y, pathFindComp.m_gridkey), 0.8f))
         {
+            RigidBodyComponent rb = Component.Get<RigidBodyComponent>(EntityID);
+            //// Stop moving
+            //movement.X = 0;
+            //movement.Y = 0;
+            ////rb.m_Acceleration = movement;
+            //rb.m_Velocity = movement;
+            //Component.Set<RigidBodyComponent>(EntityID, rb);
             SetToNextPath();
         }
         if (childrenIDList.Length > 0)
@@ -659,7 +666,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
 
         RigidBodyComponent rb = Component.Get<RigidBodyComponent>(EntityID);
-        rb.m_Acceleration = movement;
+        rb.m_Velocity = movement;
         Component.Set<RigidBodyComponent>(EntityID, rb);
         // Set velocity only once
         // InternalCall.m_InternalSetVelocity(EntityID, in movement);
