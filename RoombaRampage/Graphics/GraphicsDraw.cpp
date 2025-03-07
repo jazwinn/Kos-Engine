@@ -545,13 +545,28 @@ namespace graphicpipe
 
 	void GraphicsPipe::m_funcDrawParticles()
 	{
-		if (!m_particleData.empty())
-		{
-			glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_particleSSBO);
-			glBufferData(GL_SHADER_STORAGE_BUFFER, m_particleData.size() * sizeof(ParticleData), m_particleData.data(), GL_DYNAMIC_DRAW);
-			glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, m_particleSSBO);
-			glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
+		glUseProgram(m_particleShaderProgram);
+		glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_particleSSBO);
+		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, m_particleSSBO);
+
+
+		glUniformMatrix3fv(glGetUniformLocation(m_particleShaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currViewMatrix));
+
+		glUniformMatrix3fv(glGetUniformLocation(m_particleShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currOrthoMatrix));
+
+
+		glBindVertexArray(m_squareMesh.m_vaoId);
+		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, m_particleSSBO);
+		glDrawElementsInstanced(m_squareMesh.m_primitiveType, m_squareMesh.m_indexElementCount, GL_UNSIGNED_SHORT, NULL, MAX_PARTICLES);
+		glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
+
+		GLenum err2 = glGetError();
+		if (err2 != GL_NO_ERROR) {
+			//LOGGING_ERROR("First OpenGL Error: 0x%X", err);
+			std::cout << "Particle OpenGL Error : " << err2 << std::endl;
 		}
+
+		
 	}
 
 	void GraphicsPipe::m_funcSetDrawMode(GLenum mode)

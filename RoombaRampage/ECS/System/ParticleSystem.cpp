@@ -88,10 +88,10 @@ namespace ecs {
 
 			if (particle->m_willSpawn)
 			{
-				graphicsPipe->m_particleData.push_back({ 100, 5.f, {transform->m_position.m_x, transform->m_position.m_y}, {1.f,1.f,}, {0.5f, 0.5f},
-				{transform->m_scale.m_x, transform->m_scale.m_y} , {1.f,1.f,1.f,1.f }, transform->m_rotation, 360.f, 0.f /*Change this later*/,
-				0, 0, 0, 0 });
-				particle->m_willSpawn = false;
+				graphicsPipe->m_emitterData.push_back({ particle->m_noOfParticles, particle->m_lifeSpan, {transform->m_position.m_x, transform->m_position.m_y}, {particle->m_velocity.m_x,particle->m_velocity.m_y}, {particle->m_acceleration.m_x,particle->m_acceleration.m_y},
+				{transform->m_scale.m_x, transform->m_scale.m_y} , {particle->m_color.m_x,particle->m_color.m_y,particle->m_color.m_z, 1.f }, transform->m_rotation, particle->m_coneRotation, particle->m_coneAngle /*Change this later*/,particle->m_randomFactor,
+				particle->m_textureID, particle->m_stripCount, particle->m_frameNumber, particle->m_layer});
+				//particle->m_willSpawn = false;
 			}
 			
 

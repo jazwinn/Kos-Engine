@@ -11,31 +11,6 @@
     },
     {
         "name": {
-            "namestr": "Trees in Sunlight - Free Stock Footage HD",
-            "layer": 0,
-            "isprefab": false,
-            "tagstr": "Default"
-        },
-        "transform": {
-            "position": {
-                "x": -4.272714614868164,
-                "y": 0.6401627659797668
-            },
-            "rotation": 0.0,
-            "scale": {
-                "x": 1.0,
-                "y": 1.0
-            }
-        },
-        "VideoComponent": {
-            "filename": "Trees in Sunlight - Free Stock Footage HD.mpg",
-            "pause": false,
-            "loop": true,
-            "layer": 0.0
-        }
-    },
-    {
-        "name": {
             "namestr": "test",
             "layer": 0,
             "isprefab": false,
@@ -43,20 +18,14 @@
         },
         "transform": {
             "position": {
-                "x": 2.605313777923584,
-                "y": -0.6103878021240234
+                "x": 5.6138997077941895,
+                "y": 3.7887022495269775
             },
-            "rotation": 0.0,
+            "rotation": -0.0,
             "scale": {
                 "x": 1.0,
                 "y": 1.0
             }
-        },
-        "VideoComponent": {
-            "filename": "test.mpg",
-            "pause": false,
-            "loop": true,
-            "layer": 0.0
         }
     }
 ]

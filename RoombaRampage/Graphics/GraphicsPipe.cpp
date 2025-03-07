@@ -85,6 +85,8 @@ namespace graphicpipe {
 		m_lightingShaderProgram = m_funcSetupShader(lightingVertexShader, lightingFragmentShader);
 		m_finalPassShaderProgram = m_funcSetupShader(finalPassVertexShader, finalPassFragmentShader);
 		m_videoShaderProgram = m_funcSetupShader(videoVertexShader,videoFragmentShader);
+		m_particleComputerShaderProgram = m_funcSetupComputerShader(particleComputerShader);
+		m_particleShaderProgram = m_funcSetupShader(particleVertexShader, particleFragmentShader);
 
 		// Initialize model-to-NDC transformation matrix and other drawing data.
 		m_modelToNDCMatrix.push_back(m_testMatrix);
@@ -105,6 +107,7 @@ namespace graphicpipe {
 		m_funcSetupGamePreviewFrameBuffer();
 		m_funcSetupLightingFrameBuffer();
 		m_funcSetupFinalPassBuffer();
+		m_funcSetupSSBO();
 
 		// Clear temporary data structures used during setup.
 		m_debugBoxToNDCMatrix.clear();
@@ -145,6 +148,8 @@ namespace graphicpipe {
 	void GraphicsPipe::m_funcUpdate()
 	{
 		m_funcCalculateModelToWorldMatrix();
+		m_spawnParticles();
+		m_updateParticles();
 		GraphicsCamera::m_CalculateAspectRatio();
 		
 		if (GraphicsCamera::m_cameras.size() > 0 && m_gameMode)
@@ -199,6 +204,7 @@ namespace graphicpipe {
 		m_colliderGridData.clear();
 		m_videoData.clear();
 		GraphicsCamera::m_cameras.clear();
+		m_emitterData.clear();
 		
 	}
 
