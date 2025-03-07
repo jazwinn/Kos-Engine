@@ -31,7 +31,7 @@
             "filename": "Trees in Sunlight - Free Stock Footage HD.mpg",
             "pause": false,
             "loop": true,
-            "layer": 0.0
+            "layer": 0
         }
     },
     {
@@ -56,7 +56,7 @@
             "filename": "test.mpg",
             "pause": false,
             "loop": true,
-            "layer": 0.0
+            "layer": 0
         }
     }
 ]
