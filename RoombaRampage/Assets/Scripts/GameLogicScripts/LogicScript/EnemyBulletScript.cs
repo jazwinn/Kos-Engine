@@ -59,10 +59,7 @@ public class EnemyBulletScript : ScriptBase
 
                 if (tag == "Player")
                 {
-                    // Hit the player, apply damage
-                    //InternalCall.m_InternalCallSendDamage((uint)collidedEntityID, 1);
-
-                    // Play hit effect
+                    // Play hit effect //AUDIOHERE
                     TransformComponent transformComp = Component.Get<TransformComponent>(EntityID);
                     InternalCall.m_InternalCallAddPrefab(
                         "prefab_bulletImpact",
@@ -77,7 +74,7 @@ public class EnemyBulletScript : ScriptBase
                 }
                 else if (tag == "Wall" || tag == "Obstacle")
                 {
-                    // Hit environment, play impact effect
+                    // Hit environment, play impact effect //AUDIOHERE
                     TransformComponent transformComp = Component.Get<TransformComponent>(EntityID);
                     InternalCall.m_InternalCallAddPrefab(
                         "prefab_bulletImpact",
