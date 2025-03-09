@@ -11,7 +11,7 @@
     },
     {
         "name": {
-            "namestr": "EnemyBloodPool",
+            "namestr": "EnemyType3",
             "layer": 0,
             "isprefab": false,
             "tagstr": "Default"
@@ -23,13 +23,13 @@
             },
             "rotation": 0.0,
             "scale": {
-                "x": 2.0,
-                "y": 2.0
+                "x": 1.0,
+                "y": 1.0
             }
         },
         "sprite": {
-            "imagefile": "ani_bloodPool_strip9.png",
-            "layer": 8,
+            "imagefile": "img_BulletPrefab1.png",
+            "layer": 103,
             "color": {
                 "r": 1.0,
                 "g": 1.0,
@@ -37,22 +37,6 @@
             },
             "alpha": 1.0,
             "isLit": true
-        },
-        "animation": {
-            "frameNumber": 5,
-            "framesPerSecond": 2,
-            "frameTimer": 2.9166646003723145,
-            "isAnimating": true,
-            "stripCount": 9
-        },
-        "script": {
-            "scripts": [
-                {
-                    "name": "EnemyBloodPool",
-                    "enabled": true,
-                    "map": []
-                }
-            ]
         }
     }
 ]

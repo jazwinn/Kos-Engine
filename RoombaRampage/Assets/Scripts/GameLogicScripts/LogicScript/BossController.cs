@@ -10,32 +10,43 @@ public class BossController : ScriptBase
 {
     #region ID Variables
     private uint EntityID; //Entity ID of the object, do not touch!
-
-    //private uint playerID; //Store player ID
+    private uint forceFieldID;
     #endregion
 
     #region Component Variable
     private SpriteComponent spriteComp;
+    private ColliderComponent collComp;
+
     //private AnimationComponent animComp;
-   // private ColliderComponent collComp;
     //private TransformComponent transformComp;
     //private TransformComponent playerTransformComp;
     #endregion
 
     #region Boss Variable
-    public int forceFieldHealth = 3;
-    public int playerHit = 0;
-    //bool noForceField = false;
-
     private BossAttackPattern currentPattern;
     private long seed = DateTime.Now.Ticks; // seed for randomizer
 
     private Vector2 bossPosition;
     private bool canAttack = true;
-    private float attackCooldown = 3.0f;
+    private float attackCooldown = 10.0f;
 
+    public int forceFieldHealth = 3; 
+    public int bossHealth = 3;
+    public bool isForceFieldActive = true;
+    private string forceFieldPrefab = "Boss_Forcefield";
 
+    private string bossBulletPrefab;
     #endregion
+
+    #region Enemy Spawning
+    private uint[] enemySpawnPoints; // Store spawn point entity IDs
+    private string[] enemyPrefabs = { "EnemyType1", "EnemyType2", "EnemyType3" };
+    private List<uint> activeEnemies = new List<uint>();
+
+    private float enemySpawnCooldown = 10.0f;
+    private int maxEnemies = 5;
+    #endregion
+
 
     #region Boss Attack Pattern
     public enum BossAttackPattern // Attack pattern
@@ -47,35 +58,36 @@ public class BossController : ScriptBase
     };
     #endregion
 
-
-    private string alternatePrefab;
-    private string spreadPrefab;
-    private string dispersePrefab;
-
-
     public override void Awake(uint id)
     {
         EntityID = id; //Sets ID for object, DO NOT TOUCH
-        alternatePrefab = "prefab_bulletAlternate";
-        spreadPrefab = "prefab_bulletSpread";
-        dispersePrefab = "prefab_bulletDisperse";
+        bossBulletPrefab = "prefab_bossBullet";
+        SpawnForceField();
+
+        int[] childIDs = InternalCall.m_InternalCallGetChildrenID(EntityID);
+        enemySpawnPoints = Array.ConvertAll(childIDs, item => (uint)item);
+
     }
     public override void Start()
     {
-        //EntityID = (uint)InternalCall.m_InternalCallGetTagID("Player"); //Get Player ID
         Console.WriteLine($"Selected Pattern: {currentPattern}");
+        CoroutineManager.Instance.StartCoroutine(AttackLoop()); // Start attacks
+        CoroutineManager.Instance.StartCoroutine(EnemySpawnLoop()); // Start enemy spawns
+
     }
 
     public override void Update()
     {
-        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.W) && canAttack)
-        {
-            AttackRandomizer();
-            canAttack = false;
-            CoroutineManager.Instance.StartCoroutine(ResetAttackCooldown());
-        }
+        CheckCollision();
     }
 
+    private int GenerateRandom(int min, int max)
+    {
+        seed = (seed * 1664525 + 1013904223) & 0x7FFFFFFF; // Update seed
+        return (int)(min + (seed % (max - min))); // Map to range
+    }
+
+    #region AttackPattern Execution
     public void AttackRandomizer()
     {
         BossAttackPattern newPattern;
@@ -123,12 +135,54 @@ public class BossController : ScriptBase
         }
     }
 
-    private int GenerateRandom(int min, int max)
+    private IEnumerator AttackLoop()
     {
-        seed = (seed * 1664525 + 1013904223) & 0x7FFFFFFF; // Update seed
-        return (int)(min + (seed % (max - min))); // Map to range
+        while (bossHealth > 0)
+        {
+            AttackRandomizer();
+            yield return new CoroutineManager.WaitForSeconds(attackCooldown);
+        }
+    }
+    #endregion
+
+    #region Enemy Spawner
+    private IEnumerator EnemySpawnLoop()
+    {
+        while (bossHealth > 0)
+        {
+            //Only stop spawning if enemie count reaches max enemies count
+            if (activeEnemies.Count < maxEnemies)
+            {
+                SpawnEnemy();
+            }
+
+            float randomDelay = GenerateRandom(2, 4);
+            yield return new CoroutineManager.WaitForSeconds(randomDelay);
+        }
     }
 
+    private void SpawnEnemy()
+    {
+        if (enemySpawnPoints.Length == 0) return; // No spawn points found
+
+        // Select a random spawn point
+        uint spawnPointID = enemySpawnPoints[GenerateRandom(0, enemySpawnPoints.Length)];
+
+        Vector2 spawnPosition;
+        InternalCall.m_InternalGetTranslate(spawnPointID, out spawnPosition);
+
+        // Select a random enemy type
+        string enemyType = enemyPrefabs[GenerateRandom(0, enemyPrefabs.Length)];
+
+        // Spawn the enemy
+        uint enemyID = (uint)InternalCall.m_InternalCallAddPrefab(enemyType, spawnPosition.X, spawnPosition.Y, 0);
+
+        Console.WriteLine($"[Boss] Spawned {enemyType} at {spawnPosition.X}, {spawnPosition.Y}");
+        activeEnemies.Add(enemyID);
+    }
+#endregion
+
+    #region Boss Attack Pattern
     private IEnumerator ResetAttackCooldown()
     {
         yield return new CoroutineManager.WaitForSeconds(attackCooldown);
@@ -161,7 +215,7 @@ public class BossController : ScriptBase
             float spawnX = position.X + (float)Math.Cos(radian) * radius;
             float spawnY = position.Y + (float)Math.Sin(radian) * radius;
 
-            InternalCall.m_InternalCallAddPrefab(alternatePrefab, spawnX, spawnY, angle);
+            InternalCall.m_InternalCallAddPrefab(bossBulletPrefab, spawnX, spawnY, angle);
         }
     }
 
@@ -169,7 +223,7 @@ public class BossController : ScriptBase
     {
         float bigBulletAngle = 270f;
 
-        uint largeBullet = (uint)InternalCall.m_InternalCallAddPrefab(dispersePrefab, position.X, position.Y, bigBulletAngle);
+        uint largeBullet = (uint)InternalCall.m_InternalCallAddPrefab(bossBulletPrefab, position.X, position.Y, bigBulletAngle);
 
         CoroutineManager.Instance.StartCoroutine(ExplodeBigBullet(largeBullet));
     }
@@ -186,7 +240,7 @@ public class BossController : ScriptBase
         for (int i = 0; i < 6; i++)
         {
             float angle = i * (360f / 6); // Spread evenly
-            uint mediumBullet = (uint)InternalCall.m_InternalCallAddPrefab(alternatePrefab, explosionPosition.X, explosionPosition.Y, angle);
+            uint mediumBullet = (uint)InternalCall.m_InternalCallAddPrefab(bossBulletPrefab, explosionPosition.X, explosionPosition.Y, angle);
             mediumBullets.Add(mediumBullet);
         }
 
@@ -207,7 +261,7 @@ public class BossController : ScriptBase
                 float offsetX = (float)(mediumBulletPosition.X + Math.Cos(radian) * 0.3f);
                 float offsetY = (float)(mediumBulletPosition.Y + Math.Sin(radian) * 0.3f);
 
-                InternalCall.m_InternalCallAddPrefab(spreadPrefab, offsetX, offsetY, spreadAngle);
+                InternalCall.m_InternalCallAddPrefab(bossBulletPrefab, offsetX, offsetY, spreadAngle);
             }
 
             InternalCall.m_InternalCallDeleteEntity(mediumBullet);
@@ -231,7 +285,7 @@ public class BossController : ScriptBase
                 float spawnX = position.X + (float)Math.Cos(radian) * radius;
                 float spawnY = position.Y + (float)Math.Sin(radian) * radius;
 
-                uint bullet = (uint)InternalCall.m_InternalCallAddPrefab(alternatePrefab, spawnX, spawnY, baseAngle);
+                uint bullet = (uint)InternalCall.m_InternalCallAddPrefab(bossBulletPrefab, spawnX, spawnY, baseAngle);
                 CoroutineManager.Instance.StartCoroutine(CurveBullet(bullet, baseAngle));
 
                 yield return new CoroutineManager.WaitForSeconds(bulletInterval);
@@ -255,5 +309,61 @@ public class BossController : ScriptBase
             yield return null;
         }
     }
+    #endregion
+
+    #region Boss Forcefield
+    public void SpawnForceField()
+    {
+        InternalCall.m_InternalGetTranslate(EntityID, out Vector2 bossPosition);
+        forceFieldID = (uint)InternalCall.m_InternalCallAddPrefab(forceFieldPrefab, bossPosition.X, bossPosition.Y, 0);
+        isForceFieldActive = true;
+        forceFieldHealth = 3;
+    }
+
+    private void CheckCollision()
+    {
+        if (InternalCall.m_InternalCallIsCollided(EntityID) != 0.0f)
+        {
+
+            int[] collidedEntities = InternalCall.m_InternalCallGetCollidedEntities(EntityID);
+
+            foreach (int collidedEntitiesID in collidedEntities)
+            {
+                if (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID) == "PlayerBullet")
+                {
+                    if (isForceFieldActive)
+                    {
+                        forceFieldHealth--;
+
+                        Console.WriteLine($"[Boss] Force Field hit! Remaining Health: {forceFieldHealth}");
+
+                        if (forceFieldHealth <= 0)
+                        {
+                            Console.WriteLine("[Boss] Force Field Destroyed!");
+                            InternalCall.m_InternalCallDeleteEntity(forceFieldID);
+                            isForceFieldActive = false;
+                        }
+                    }
+                    else
+                    {
+                        bossHealth--;
+                        Console.WriteLine($"[Boss] Hit! Remaining Health: {bossHealth}");
+
+                        if (bossHealth <= 0)
+                        {
+                            Console.WriteLine("[Boss] Defeated!");
+                            InternalCall.m_InternalCallDeleteEntity(EntityID);
+                            return;
+                        }
+
+                        SpawnForceField();
+                    }
+                    
+                    InternalCall.m_InternalCallDeleteEntity((uint)collidedEntitiesID);
+                }
+            }
+        }
+    }
+    #endregion
 
 }

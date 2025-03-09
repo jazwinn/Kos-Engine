@@ -22,6 +22,7 @@ public class PlayerGun : ScriptBase
         cleaverSound = "aud_cleaver.wav";
         katanaSound = "aud_katana01.wav";
         emptyGunSound = "aud_emptyGun01.wav";
+        cockingSound = "aud_tempcock.wav";
 
         leftCleaverTexture = "ani_cleaverLeftAnim_strip6.png";
         rightCleaverTexture = "ani_cleaverRightAnim_strip6.png";
@@ -37,14 +38,20 @@ public class PlayerGun : ScriptBase
         rightGunTexture = "ani_gunRightAnim_strip8.png";
         backGunTexture = "ani_gunTailAnim_strip8.png";
 
+        leftShotGunTexture = "ani_gunLeftAnim_strip8.png";
+        rightShotGunTexture = "ani_gunRightAnim_strip8.png";
+
         bulletPrefab = "prefab_playerBullet";
 
         leftLimbGunAmmo = 6;
         rightLimbGunAmmo = 6;
         backLimbGunAmmo = 6;
 
-        leftLimbMeleeCount = 1;
-        rightLimbMeleeCount = 1;
+        leftLimbShotGunAmmo = 6;
+        rightLimbShotGunAmmo = 6;
+
+        leftWeaponCount = 1;
+        rightWeaponCount = 1;
 
         limbTag = InternalCall.m_InternalCallGetTag(EntityID);
         leftLimbPosID = (uint)InternalCall.m_InternalCallGetTagID("LeftLimbPos");
@@ -69,6 +76,7 @@ public class PlayerGun : ScriptBase
     private string cleaverSound;
     private string katanaSound;
     private string emptyGunSound;
+    private string cockingSound;
 
     private string leftCleaverTexture;
     private string rightCleaverTexture;
@@ -81,6 +89,8 @@ public class PlayerGun : ScriptBase
     private string rightGunTexture;
     private string backGunTexture;
     private string bulletPrefab;
+    private string leftShotGunTexture;
+    private string rightShotGunTexture;
 
     private SpriteComponent limbSpriteComp;
     private AnimationComponent limbAnimComp;
@@ -92,8 +102,11 @@ public class PlayerGun : ScriptBase
     public static int rightLimbGunAmmo;
     public static int backLimbGunAmmo;
 
-    public static int leftLimbMeleeCount;
-    public static int rightLimbMeleeCount;
+    public static int leftLimbShotGunAmmo;
+    public static int rightLimbShotGunAmmo;
+
+    public static int leftWeaponCount;
+    public static int rightWeaponCount;
 
     private uint uiLeftLimbCounterID;
     private uint uiRightLimbCounterID;
@@ -159,6 +172,9 @@ public class PlayerGun : ScriptBase
                 break;
             case 1:
                 CheckMeleeCounter();
+                break;
+            case 3:
+                CheckAmmo();
                 break;
             default:
                 break;
@@ -250,23 +266,72 @@ public class PlayerGun : ScriptBase
 
         CoroutineManager.Instance.StartCoroutine(Shoot(), "Shooting");
     }
+
+    private void AttemptShootShotGun()
+    {
+        switch (limbTag)
+        {
+            case "LeftLimbSprite":
+                if (leftLimbShotGunAmmo != 0 && leftWeaponCount != 0) { 
+                    leftLimbShotGunAmmo--;
+                    leftWeaponCount--;
+                }
+                else
+                {   
+                    if(leftLimbShotGunAmmo <= 0)
+                    {
+                        InternalCall.m_InternalCallPlayAudio(EntityID, emptyGunSound);
+                        
+                    }
+                    
+                    return;
+                }
+                break;
+
+            case "RightLimbSprite":
+                if (rightLimbShotGunAmmo != 0 && rightWeaponCount != 0) { 
+                    rightLimbShotGunAmmo--; 
+                    rightWeaponCount--;
+                }
+                else
+                {
+                    if(rightLimbShotGunAmmo <= 0)
+                    {
+                        InternalCall.m_InternalCallPlayAudio(EntityID, emptyGunSound);
+                    }
+                    
+                    return;
+                }
+                break;
+
+            default:
+                return;
+        }
+
+        
+        CoroutineManager.Instance.StartCoroutine(Shoot(), "Shooting");
+
+        
+
+
+    }
     private void AttemptMelee()
     {
         switch (limbTag)
         {
             case "LeftLimbSprite":
-                if (leftLimbMeleeCount != 0)
+                if (leftWeaponCount != 0)
                 {
-                    leftLimbMeleeCount--;
+                    leftWeaponCount--;
                     CoroutineManager.Instance.StartCoroutine(Melee(), "Melee");
                 }
                 else { return; }
                 break;
 
             case "RightLimbSprite":
-                if (rightLimbMeleeCount != 0)
+                if (rightWeaponCount != 0)
                 {
-                    rightLimbMeleeCount--;
+                    rightWeaponCount--;
                     CoroutineManager.Instance.StartCoroutine(Melee(), "Melee");
                 }
                 else { return; }
@@ -281,7 +346,7 @@ public class PlayerGun : ScriptBase
 
     private IEnumerator Melee()
     {
-        CoroutineManager.Instance.StartCoroutine(StartMeleeCooldown(), "MeleeCooldown");
+        CoroutineManager.Instance.StartCoroutine(StartWeaponCooldown(1f), "MeleeCooldown");
 
         if (isAnimating)
         {
@@ -338,18 +403,18 @@ public class PlayerGun : ScriptBase
 
     }
 
-    private IEnumerator StartMeleeCooldown()
+    private IEnumerator StartWeaponCooldown(float duration)
     {
-        yield return new CoroutineManager.WaitForSeconds(1f);
+        yield return new CoroutineManager.WaitForSeconds(duration);
 
         switch (limbTag)
         {
             case "LeftLimbSprite":
-                leftLimbMeleeCount++;
+                leftWeaponCount++;
                 break;
 
             case "RightLimbSprite":
-                rightLimbMeleeCount++;
+                rightWeaponCount++;
                 break;
 
             default:
@@ -399,11 +464,42 @@ public class PlayerGun : ScriptBase
         }
 
 
-        //Spawn bullet at limb
-        InternalCall.m_InternalCallAddPrefab(bulletPrefab, limbPos.X, limbPos.Y, playerTransformComp.m_rotation);
+        if(weaponEquipped == 0)
+        {
+            //Spawn bullet at limb
+            InternalCall.m_InternalCallAddPrefab(bulletPrefab, limbPos.X, limbPos.Y, playerTransformComp.m_rotation);
 
-        //Shake Camera
-        CameraFollowPlayerScript.Shake(0.5f, 1f);
+            //Shake Camera
+            CameraFollowPlayerScript.Shake(0.5f, 1f);
+        }
+        if(weaponEquipped == 3)
+        {
+            CoroutineManager.Instance.StartCoroutine(StartWeaponCooldown(0.7f), "GunCooldown");
+
+            int numberofpallets = 40;
+            float spread = 360.0f; // in degree
+
+            double interval = Math.Floor(spread / (float)numberofpallets);
+
+            float startangle = playerTransformComp.m_rotation - spread / 2.0f;
+
+            for (int n = 0; n < numberofpallets; n++)
+            {
+                InternalCall.m_InternalCallAddPrefab(bulletPrefab, limbPos.X, limbPos.Y, startangle);
+                startangle += (float)interval;
+
+                CameraFollowPlayerScript.Shake(0.7f, 1f);
+
+            }
+
+            yield return new CoroutineManager.WaitForSeconds(0.5f);
+
+            InternalCall.m_InternalCallPlayAudio(EntityID, cockingSound);
+
+        }
+
+
+
     }
 
     private IEnumerator PauseAnimation()
@@ -431,12 +527,33 @@ public class PlayerGun : ScriptBase
 
     private void CheckAmmo()
     {
+        int leftWeaponAmmo = 0;
+        int rightWeaponAmmo = 0;
+        int backWeaponAmmo = 0;
+
+        switch (weaponEquipped)
+        {
+            case 0:
+                leftWeaponAmmo = leftLimbGunAmmo;
+                rightWeaponAmmo = rightLimbGunAmmo;
+                backWeaponAmmo = backLimbGunAmmo;
+                break;
+            case 3:
+                leftWeaponAmmo = leftLimbShotGunAmmo;
+                rightWeaponAmmo = rightLimbShotGunAmmo;
+                break;
+            default:
+                break;
+
+        }
+
+
         switch (limbTag)
         {
             case "LeftLimbSprite":
                 //Update UI
                 uiLeftLimbCounterAC = Component.Get<AnimationComponent>(uiLeftLimbCounterID);
-                uiLeftLimbCounterAC.m_frameNumber = leftLimbGunAmmo;
+                uiLeftLimbCounterAC.m_frameNumber = leftWeaponAmmo;
                 uiLeftLimbCounterAC.m_isAnimating = false;
 
                 Component.Set<AnimationComponent>(uiLeftLimbCounterID, uiLeftLimbCounterAC);
@@ -446,7 +563,7 @@ public class PlayerGun : ScriptBase
             case "RightLimbSprite":
                 //Update UI
                 uiRightLimbCounterAC = Component.Get<AnimationComponent>(uiRightLimbCounterID);
-                uiRightLimbCounterAC.m_frameNumber = rightLimbGunAmmo;
+                uiRightLimbCounterAC.m_frameNumber = rightWeaponAmmo;
                 uiRightLimbCounterAC.m_isAnimating = false;
 
                 Component.Set<AnimationComponent>(uiRightLimbCounterID, uiRightLimbCounterAC);
@@ -455,7 +572,7 @@ public class PlayerGun : ScriptBase
             case "BackLimbSprite":
                 //Update UI
                 uiBackLimbCounterAC = Component.Get<AnimationComponent>(uiBackLimbCounterID);
-                uiBackLimbCounterAC.m_frameNumber = backLimbGunAmmo;
+                uiBackLimbCounterAC.m_frameNumber = backWeaponAmmo;
                 uiBackLimbCounterAC.m_isAnimating = false;
 
                 Component.Set<AnimationComponent>(uiBackLimbCounterID, uiBackLimbCounterAC);
@@ -472,7 +589,7 @@ public class PlayerGun : ScriptBase
         {
             case "LeftLimbSprite":
                 //Update UI
-                if (leftLimbMeleeCount == 1)
+                if (leftWeaponCount == 1)
                 {
                     uiLeftLimbCounterAC = Component.Get<AnimationComponent>(uiLeftLimbCounterID);
                     uiLeftLimbCounterAC.m_frameNumber = 6;
@@ -485,7 +602,7 @@ public class PlayerGun : ScriptBase
 
             case "RightLimbSprite":
                 //Update UI
-                if (rightLimbMeleeCount == 1)
+                if (rightWeaponCount == 1)
                 {
                     uiRightLimbCounterAC = Component.Get<AnimationComponent>(uiRightLimbCounterID);
                     uiRightLimbCounterAC.m_frameNumber = 6;
@@ -630,6 +747,10 @@ public class PlayerGun : ScriptBase
                     SwitchWeapon("Booster");
                     break;
 
+                case 3:
+                    SwitchWeapon("ShotGun");
+                    break;
+
                 default:
                     break;
             }
@@ -668,6 +789,9 @@ public class PlayerGun : ScriptBase
                 case 1:
                     AttemptMelee();
                     break;
+                case 3:
+                    AttemptShootShotGun();
+                    break;
 
                 default:
                     break;
@@ -684,6 +808,9 @@ public class PlayerGun : ScriptBase
 
                 case 1:
                     AttemptMelee();
+                    break;
+                case 3:
+                    AttemptShootShotGun();
                     break;
 
                 default:

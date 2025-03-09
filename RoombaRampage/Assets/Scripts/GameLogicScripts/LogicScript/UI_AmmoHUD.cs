@@ -39,6 +39,7 @@ public class UI_AmmoHUD : ScriptBase
     private string gunIconTexture = "img_hudGunIcon.png";
     private string katanaIconTexture = "img_hudKatanaIcon.png";
     private string boosterIconTexture = "img_hudBoosterIcon.png";
+    private string shotgunIconTexture = "img_hudGunIcon.png";
 
     private string fullBarTexture = "ani_hudFullBar_strip7.png";
     private string segmentedBarTexture = "ani_hudSegmentBar_strip7.png";
@@ -124,6 +125,9 @@ public class UI_AmmoHUD : ScriptBase
             case 2:
                 return boosterIconTexture;
 
+            case 3:
+                return shotgunIconTexture;
+
             default:
                 return null;
         }
@@ -158,6 +162,9 @@ public class UI_AmmoHUD : ScriptBase
             case 2:
                 return fullBarTexture;
 
+            case 3:
+                return segmentedBarTexture;
+
             default:
                 return null;
         }
@@ -172,6 +179,9 @@ public class UI_AmmoHUD : ScriptBase
                 return segmentedBarTexture;
 
             case 1:
+                return fullBarTexture;
+
+            case 3:
                 return fullBarTexture;
 
             default:

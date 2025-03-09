@@ -62,6 +62,9 @@ public class PlayerLoadoutText : ScriptBase
             case 2:
                 return "Booster";
 
+            case 3:
+                return "Shotgun";
+
             default:
                 return null;
         }

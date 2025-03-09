@@ -12,7 +12,7 @@ public class PlayerLoadoutManager : ScriptBase
 
         isSortieing = false;
 
-        totalLeftRightLimbs = 2;
+        totalLeftRightLimbs = 4;
         totalBackLimbs = 1;
 
         uiLeftLimbSpriteID = (uint)InternalCall.m_InternalCallGetTagID("UILoadoutLeftLimb");
