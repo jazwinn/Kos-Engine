@@ -3,9 +3,9 @@
         "GlobalSettings": {
             "globalIllumination": 1.0,
             "backgroundColor": {
-                "r": 0.8362832069396973,
-                "g": 0.8362832069396973,
-                "b": 0.8362832069396973
+                "r": 0.13300000131130219,
+                "g": 0.23000000417232513,
+                "b": 0.3199999928474426
             }
         }
     },
@@ -78,6 +78,58 @@
             "pause": false,
             "loop": true,
             "layer": 0
+        }
+    },
+    {
+        "name": {
+            "namestr": "prefab_enemyBullet",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "rigidbody": {
+            "linearVelocity": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "linearAcceleration": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "angularVelocity": 0.0,
+            "angularAcceleration": 0.0,
+            "mass": 1.0,
+            "inverseMass": 1.0,
+            "linearDamping": 0.9900000095367432,
+            "angularDamping": 0.9900000095367432,
+            "force": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "torque": 0.0,
+            "kinematic": false,
+            "static": false
+        },
+        "script": {
+            "scripts": [
+                {
+                    "name": "EnemyBulletScript",
+                    "enabled": true,
+                    "map": []
+                }
+            ]
         }
     }
 ]
