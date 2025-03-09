@@ -21,6 +21,7 @@
         },
         "collider": {
             "checkcollision": true,
+            "checkresponse": true,
             "size": {
                 "x": 0.7400000095367432,
                 "y": 0.23999999463558197
@@ -117,6 +118,17 @@
                     ]
                 }
             ]
+        },
+        "pathfinding": {
+            "startPosition": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "targetPosition": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "gridKey": 0
         },
         "children": [
             {

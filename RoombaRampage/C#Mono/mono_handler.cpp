@@ -32,6 +32,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "mono_handler.h"
 #include "mono/metadata/mono-gc.h"
 #include "mono/metadata/threads.h"
+
 #include "../De&Serialization/json_handler.h"
 #include "../Asset Manager/AssetManager.h"
 
@@ -40,6 +41,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 namespace script {
 
     ScriptHandler::ScriptHandler() {
+
 
         //set output dll filename
         m_outputdll = "LogicScript";
@@ -62,6 +64,7 @@ namespace script {
         m_LoadSecondaryDomain();
 
         m_ReloadAllDLL();
+
        
     }
 
@@ -164,7 +167,7 @@ namespace script {
         // Find the method inside the class
         MonoMethod* method = mono_class_get_method_from_name(m_testClass, methodName.c_str(), paramCount);
         if (!method) {
-            LOGGING_ERROR("Failed to find method: {} in class: {}", methodName.c_str(), className.c_str());
+           // LOGGING_ERROR("Failed to find method: {} in class: {}", methodName.c_str(), className.c_str());
             return false;
         }
         
@@ -194,29 +197,60 @@ namespace script {
 
         return inst;
     }
+    //void InvokeMonoMethod(MonoMethod* method, MonoObject* objInstance, void** args, MonoObject** sexception) {
+    //    __try {
+    //        mono_runtime_invoke(method, objInstance, args, sexception);
+    //    }
+    //    __except (EXCEPTION_EXECUTE_HANDLER) {
+    //        printf("System exception caught: Access violation or other critical error.\n");
+    //    }
+    //}
 
     void ScriptHandler::m_InvokeMethod(const std::string& className, const std::string& func, MonoObject* objInstance, void** args) {
 
-        // Check if the method exists
-        MonoMethod* method = m_methodMap.find(className)->second.find(func)->second;
+        //// Check if the method exists
+        auto it = m_methodMap.find(className);
 
-        if (!method) {
-            LOGGING_ERROR("No method loaded to invoke for script {}", className.c_str());
+        if (it == m_methodMap.end()) {
+            //LOGGING_ERROR("No method loaded to invoke for script {}", className.c_str());
             return;
         }
 
+        MonoMethod* method = nullptr;
+
+        auto methodit = it->second.find(func);
+
+        if (methodit == it->second.end()) {
+           // LOGGING_ERROR("No method loaded to invoke for script {}", className.c_str());
+            return;
+        }
+
+        method = methodit->second;
+        
+        if (!method) {
+            //LOGGING_ERROR("No method loaded to invoke for script {}", className.c_str());
+            return;
+        }
+
+
         // Invoke the method with the instance
+
         MonoObject* exception = nullptr;
 
-        mono_runtime_invoke(method, objInstance, args, &exception);
+        try {
+            mono_runtime_invoke(method, objInstance, args, &exception);
 
-
-        if (exception) {
-            MonoString* exceptionMessage = mono_object_to_string(exception, nullptr);
-            const char* messageStr = mono_string_to_utf8(exceptionMessage);
-            LOGGING_ERROR("Exception in C# method invocation: {}", messageStr);
-            mono_free((void*)messageStr);
+            if (exception) {
+                LOGGING_WARN("Script Exception Occured");
+                mono_print_unhandled_exception(exception);
+            }
         }
+        catch (...) {
+            return;
+        }
+
+
+        
     }
 
     void ScriptHandler::m_ReloadAllDLL()
@@ -238,7 +272,8 @@ namespace script {
                     m_LoadMethod(filename, script.first, "Start", 0);
                     m_LoadMethod(filename, script.first, "Update", 0);
                     m_LoadMethod(filename, script.first, "Awake", 1);
-
+                    
+                    m_LoadMethod(filename, script.first, "LateUpdate",0);
                 }
             }
         }
@@ -296,7 +331,7 @@ namespace script {
         //IF COMPILE ERROR, MAKE SURE TO UNLOAD ASSEMBLY AND APPDOMAIN
         std::filesystem::path projectBasePath = std::filesystem::current_path();
 
-        std::string compilepath = "\"" + projectBasePath.string() + "\\C#Mono\\CompilerCSC\\bin\\csc\"";
+        std::string compilepath = "\"" + projectBasePath.string() + "\\C#Mono\\CompilerCSC\\bin\\csc\"" + " /unsafe";
 
         std::filesystem::path referenceDLL = projectBasePath / "ScriptLibrary" / "GameScript" / "ScriptCoreDLL" / "GameScript.dll";
 

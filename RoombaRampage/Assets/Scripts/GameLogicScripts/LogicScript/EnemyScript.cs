@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 
@@ -42,6 +43,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     private ColliderComponent collComp;
     private TransformComponent transformComp;
     private TransformComponent playerTransformComp;
+    //private GridComponent gridComp;
     #endregion
 
     #region Sprite Variables
@@ -57,6 +59,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     private float enemyDeathKnockbackMultiplier;
     private float enemyBloodPoolSpawnDelay = 0.5f;
     private float enemySpeed = 1.0f;
+    private float patrolSpeed = 1.0f;
 
     #region Waypoint Variables
     private int initialPatrolWaypoint = 0;
@@ -77,11 +80,10 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
     public override void Start() //Called once at the start of the game
     {
-
-        UpdateComponentValues();
-
+        
+        
         playerID = (uint)InternalCall.m_InternalCallGetTagID("Player"); //Get Player ID
-
+        UpdateComponentValues();
         enemyScientistDeathTexture = "img_scientistDeath.png";
         //enemyRobotDeathTexture = "img_robotDeath.png"; //Set to ranged enemy death texture
 
@@ -130,12 +132,24 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
         childrenIDList = InternalCall.m_InternalCallGetChildrenID(EntityID); //Gets waypoints for enemy, will be null/empty if there are no children waypoints
 
+        //List<Vector2> path = GetPath(0, 0, 0, 2, 2);
+        //foreach (Vector2 point in path)
+        //{
+        //    //Console.WriteLine($"Path Point: ({point.X}, {point.Y})");
+        //    Vector2 points = Grid2WorldCoordinates((int)point.X, (int)point.Y, 0);
+        //    Console.WriteLine($"Path Point: ({points.X}, {points.Y})");
+        //}
+
+        //StartPatrol();
+
+       // World2GridCoordinates(1.5f,2.5f,1);
     }
 
     public override void Update() //Runs every frame
     {
+        if (isDead) return;
         CheckForCollisions(); //Checks for collisions in the event an enemy touches the player
-    
+        
         currentState.DoActionUpdate(InternalCall.m_InternalCallGetDeltaTime()); //Update the current state's DoActionUpdate function, such as patrolling, chasing etc, with delta time
     }
 
@@ -195,10 +209,13 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     #region Collisions
     private void CheckForCollisions()
     {
+        
         if (InternalCall.m_InternalCallIsCollided(EntityID) != 0.0f)
         {
+            
             int[] collidedEntities = InternalCall.m_InternalCallGetCollidedEntities(EntityID);
 
+            
             foreach (int collidedEntitiesID in collidedEntities)
             {
                 switch (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID))
@@ -258,81 +275,130 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
     private IEnumerator EnemyDeath() //Coroutine for enemy death
     {
+        isDead = true;
+        currentState.EnemyDead();
+
         InternalCall.m_InternalCallPlayAudio(EntityID, "aud_humanDeath01"); //Plays enemy death sound
 
         collComp.m_collisionCheck = !collComp.m_collisionCheck; //Disables collision check
+        collComp.m_collisionResponse = false;
+        //InternalCall.m_ChangeLayer(EntityID, 8);
+
+
         SetComponent.SetCollisionComponent(EntityID, collComp); //Sets collider of enemy
 
         InternalCall.m_InternalSetAnimationComponent(EntityID, 0, 0, 0, false, 1); //Stops animation of enemy
         SetDeadEnemySprite(); //Sets dead sprite
 
-        Vector2 direction; //Creates temp Vector2
+        transformComp = Component.Get<TransformComponent>(EntityID);
+        //playerTransformComp = Component.Get<TransformComponent>(playerID);
 
-        TransformComponent tempTransformComp = GetComponent.GetTransformComponent(EntityID); //Gets Transform of Enemy
-        TransformComponent tempPlayerTransformComp = GetComponent.GetTransformComponent(EntityID); //Gets transform of Player
+        Vector2 direction;
 
-        direction.X = tempTransformComp.m_position.X - tempPlayerTransformComp.m_position.X; //Gets direction of travel for X
-        direction.Y = tempTransformComp.m_position.Y - tempPlayerTransformComp.m_position.Y; //Gets direction of travel for X
+        //Gets direction to look towards
+        direction.X = (transformComp.m_position.X - playerTransformComp.m_position.X); //Gets Vector.X towards player
+        direction.Y = (transformComp.m_position.Y - playerTransformComp.m_position.Y); //Gets Vector.Y towards player
 
-        float rotationFloat = (float)(Math.Atan2(direction.X, direction.Y) * (180 / Math.PI)); //Gets rotation values based on direction
+        float rotationFloat = (float)(Math.Atan2(direction.X, direction.Y) * (180 / Math.PI)); //Gets rotation towards player
 
-        tempTransformComp.m_rotation = rotationFloat; //Sets rotation value in stored variable
-        SetComponent.SetTransformComponent(EntityID, tempTransformComp); //Sets new transform component
+        transformComp.m_rotation = rotationFloat; //Sets rotation values
 
-        float rotationInRadians = (float)((rotationFloat) * Math.PI / 180.0); //Convert into radians
+        SetComponent.SetTransformComponent(EntityID, transformComp); //Sets transform component
 
-        float forwardX = (float)(Math.Sin(rotationInRadians)); //Get forward vector X
+        direction.X = (transformComp.m_position.X - playerTransformComp.m_position.X); //Gets Vector.X away from player
+        direction.Y = (transformComp.m_position.Y - playerTransformComp.m_position.Y); //Gets Vector.Y away from player
 
-        float forwardY = (float)(Math.Cos(rotationInRadians)); //Get forward vector Y
+        rotationFloat = (float)(Math.Atan2(direction.X, direction.Y) * (180 / Math.PI)); //Gets rotation away player
 
-        movement.X = 0 + forwardX * enemyDeathKnockbackMultiplier; //Pushes enemy back for "knockback effect"
-        movement.Y = 0 + forwardY * enemyDeathKnockbackMultiplier; //Pushes enemy back for "knockback effect"
+        //Convert into radians
+        float rotationInRadians = (float)((rotationFloat) * Math.PI / 180.0);
 
-        InternalCall.m_InternalSetVelocity(EntityID, movement); //Sets velocity for rigidbody to move
+        //Get forward vector X
+        float forwardX = (float)(Math.Sin(rotationInRadians));
 
-        isDead = true; //Sets enemy to dead status
-        tempTransformComp = GetComponent.GetTransformComponent(EntityID); //Gets new transform component after moving
+        //Get forward vector Y
+        float forwardY = (float)(Math.Cos(rotationInRadians));
 
+        //RigidBodyComponent rc = Component.Get<RigidBodyComponent>(EntityID);
+
+        //+ forwardX * 0.4f
+         movement.X = 0 ; //Pushes enemy back for "knockback effect"
+         movement.Y = 0 ; ; //Pushes enemy back for "knockback effect"
+
+         InternalCall.m_InternalSetVelocity(EntityID, movement); //Sets velocity for rigidbody to move
+
+        // isDead = true; //Sets enemy to dead status
+        transformComp = Component.Get<TransformComponent>(EntityID);
+
+        
         yield return new CoroutineManager.WaitForSeconds(enemyBloodPoolSpawnDelay); //Waits for time before moving to next line;
 
-        InternalCall.m_InternalCallAddPrefab("prefab_enemyBloodPool", tempTransformComp.m_position.X, tempTransformComp.m_position.Y, tempTransformComp.m_rotation); //Spawns blood pool
+        InternalCall.m_InternalCallAddPrefab("prefab_enemyBloodPool", transformComp.m_position.X, transformComp.m_position.Y, transformComp.m_rotation); //Spawns blood pool
     }
     #endregion
 
     #region Patrolling Behaviour
+    #region Patrolling Behaviour
     public void StartPatrol()
     {
-        if (childrenIDList.Length > 0) //Checks if there are waypoints
+        if (childrenIDList.Length > 0)
         {
-            if (isPatrolling)
+            if (!isPatrolling)
             {
                 SetToNextWaypoint();
 
-                pathFindComp.m_targetPosition = GetComponent.GetTransformComponent((uint)childrenIDList[currentPatrolWaypoint]).m_position; //Change to grid position
+           
+                Vector2 tempPos = new Vector2(
+                    transformComp.m_position.X + GetComponent.GetTransformComponent((uint)childrenIDList[currentPatrolWaypoint]).m_position.X,
+                    transformComp.m_position.Y + GetComponent.GetTransformComponent((uint)childrenIDList[currentPatrolWaypoint]).m_position.Y
+                );
+
+                Vector2 gridTargetPos = World2GridCoordinates(tempPos.X, tempPos.Y, pathFindComp.m_gridkey);
+                pathFindComp.m_targetPosition = gridTargetPos;
+
+                List<Vector2> paths = GetPath(
+                    pathFindComp.m_gridkey,
+                    (int)pathFindComp.m_startPosition.X, (int)pathFindComp.m_startPosition.Y,
+                    (int)pathFindComp.m_targetPosition.X, (int)pathFindComp.m_targetPosition.Y
+                );
+
+                if (paths.Count > 0)
+                {
+                    Vector2 travelling2point = paths[0];
+                    paths.RemoveAt(0);
+
+                    // You can now handle movement logic for travelling2point if necessary
+                    // Example: Move the object to travelling2point
+                }
+                else
+                {
+                    Console.WriteLine("No valid path found!");
+                    SetToNextWaypoint();
+                }
 
                 isPatrolling = true;
             }
         }
-
         else
         {
             Console.WriteLine("Enemy Has No Waypoints!");
-            return;
         }
     }
 
     public void SetToNextWaypoint()
     {
-        currentPatrolWaypoint += 1; //Go to next waypoint
-
-        if (currentPatrolWaypoint >= childrenIDList.Length) currentPatrolWaypoint = 0; //Cycle back to first waypoint
+        currentPatrolWaypoint += 1;
+        if (currentPatrolWaypoint >= childrenIDList.Length)
+            currentPatrolWaypoint = 0;
     }
+    #endregion
+
 
 
 
     #endregion
 
-    #region Component Handlers
+    #region Component Handlers  
     private void UpdateComponentValues()
     {
             spriteComp = Component.Get<SpriteComponent>(EntityID);
@@ -341,7 +407,8 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
             collComp = Component.Get<ColliderComponent>(EntityID);
             transformComp = Component.Get<TransformComponent>(EntityID);
             playerTransformComp = Component.Get<TransformComponent>(playerID);
-            pathFindComp = Component.Get<PathfindingComponent>(EntityID);  
+            pathFindComp = Component.Get<PathfindingComponent>(EntityID);
+            //gridComp = Component.Get<GridComponent>(EntityID);
     }
     #endregion
 
@@ -359,13 +426,50 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
     }
 
+    public Vector2 Grid2WorldCoordinates(int gridx, int gridy, int gridkey)
+    {
+        int gridid = InternalCall.m_InternalGetEntityIdFromGridKey(gridkey);
+        GridComponent gridComponent = Component.Get<GridComponent>((uint)gridid);
+        float worldX = gridComponent.m_Anchor.X + gridx + 0.5f;
+        float worldY = gridComponent.m_Anchor.Y - gridy - 0.5f;
+        return new Vector2(worldX, worldY); //This is the World Coordinates from the Grid Coordinates
+    }
+
+    public Vector2 World2GridCoordinates(float worldX, float worldY, int gridkey)
+    {
+        int gridid = InternalCall.m_InternalGetEntityIdFromGridKey(gridkey);
+        GridComponent gridComponent = Component.Get<GridComponent>((uint)gridid);
+        int gridX = (int)Math.Floor(worldX) - (int)gridComponent.m_Anchor.X;
+        int gridY = (int)gridComponent.m_Anchor.Y - (int)Math.Floor(worldY) - 1;
+
+        return new Vector2(gridX, gridY); //This is the Grid Coordinates from the World Coordinates
+    }
+    public List<Vector2> GetPath(int gridKey, int startX, int startY, int endX, int endY)
+    {
+        bool success = InternalCall.m_InternalCallGetPath(gridKey, startX, startY, endX, endY, out int[] pathx, out int[] pathy);
+
+        List<Vector2> path = new List<Vector2>();
+
+        if (success && pathx.Length == pathy.Length) // Ensure arrays are valid
+        {
+            for (int i = 0; i < pathx.Length; i++)
+            {
+                path.Add(new Vector2(pathx[i], pathy[i]));
+            }
+        }
+
+        return path;
+    }
+
     #endregion
 
     #region Enemy Behaviour
 
     public void RunFromPlayer()
     {
-        UpdateComponentValues();
+        //UpdateComponentValues();
+        transformComp = Component.Get<TransformComponent>(EntityID);
+        //playerTransformComp = Component.Get<TransformComponent>(playerID);
 
         Vector2 direction;
 
@@ -405,42 +509,56 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         InternalCall.m_InternalSetVelocity(EntityID, movement);
     }
 
-    public void RunAtPlayer()
+    public void MoveToTarget(Vector2 targetPosition, float speed)
     {
-        UpdateComponentValues();
-
+        // Get direction to target
         Vector2 direction;
+        direction.X = targetPosition.X - transformComp.m_position.X;
+        direction.Y = targetPosition.Y - transformComp.m_position.Y;
 
-        //Gets direction to look towards
-        direction.X = (playerTransformComp.m_position.X - transformComp.m_position.X); //Gets Vector.X towards player
-        direction.Y = (playerTransformComp.m_position.Y - transformComp.m_position.Y); //Gets Vector.Y towards player
+        // Calculate rotation based on the direction
+        float rotationFloat = (float)(Math.Atan2(direction.Y, direction.X) * (180 / Math.PI)); // Get angle in degrees
+        transformComp.m_rotation = rotationFloat; // Set entity's rotation
 
-        float rotationFloat = (float)(Math.Atan2(direction.X, direction.Y) * (180 / Math.PI)); //Gets rotation towards player
+        // Convert to radians for movement vector calculation
+        float rotationInRadians = (float)(rotationFloat * Math.PI / 180.0);
 
-        transformComp.m_rotation = rotationFloat; //Sets rotation values
+        // Calculate forward movement vector (normalized)
+        float forwardX = (float)(Math.Cos(rotationInRadians)); // X movement based on rotation
+        float forwardY = (float)(Math.Sin(rotationInRadians)); // Y movement based on rotation
 
-        SetComponent.SetTransformComponent(EntityID, transformComp); //Sets transform component
-
-        //Convert into radians
-        float rotationInRadians = (float)((rotationFloat) * Math.PI / 180.0);
-
-        //Get forward vector X
-        float forwardX = (float)(Math.Sin(rotationInRadians));
-
-        //Get forward vector Y
-        float forwardY = (float)(Math.Cos(rotationInRadians));
-
+        // Retrieve current velocity
         if (!InternalCall.m_InternalGetVelocity(EntityID, out movement))
         {
-            // return cause velocity -> rigidbody is not present in entity
+            // Return if no velocity data is found (no rigidbody or velocity component)
             return;
         }
 
-        movement.X = 0 + forwardX * enemySpeed;
-        movement.Y = 0 + forwardY * enemySpeed;
+        // Update velocity based on direction and speed
+        movement.X = forwardX * speed;
+        movement.Y = forwardY * speed;
 
+        // Apply updated velocity
         InternalCall.m_InternalSetVelocity(EntityID, movement);
     }
+
+    public void RunAtPlayer()
+    {
+        // Call MoveToTarget method with player's position
+        MoveToTarget(playerTransformComp.m_position, enemySpeed);
+    }
+
+    public void PatrolToWaypoint()
+    {
+        // Call MoveToTarget method with the next waypoint's position
+        Vector2 waypointPosition = new Vector2(
+            transformComp.m_position.X + GetComponent.GetTransformComponent((uint)childrenIDList[currentPatrolWaypoint]).m_position.X,
+            transformComp.m_position.Y + GetComponent.GetTransformComponent((uint)childrenIDList[currentPatrolWaypoint]).m_position.Y
+        );
+
+        MoveToTarget(waypointPosition, patrolSpeed);
+    }
+
 
     #endregion
 }

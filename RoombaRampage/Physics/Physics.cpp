@@ -769,7 +769,7 @@ namespace physicspipe {
 				return false;
 			}
 
-			float axisDepth = std::min(maxB - minA, maxA - minB);
+			//float axisDepth = std::min(maxB - minA, maxA - minB); //unused
 
 		}
 
@@ -848,7 +848,7 @@ namespace physicspipe {
 	bool Physics::LineIntersect(const vector2::Vec2& p1, const vector2::Vec2& p2, const vector2::Vec2& q1, const vector2::Vec2& q2, vector2::Vec2& intersection) {
 		const float epsilon = 1e-6f;
 
-		// Line equations: p1 + t * (p2 - p1), q1 + u * (q2 - q1)
+		// Line equations: Ax + By = C
 		float a1 = p2.m_y - p1.m_y;
 		float b1 = p1.m_x - p2.m_x;
 		float c1 = a1 * p1.m_x + b1 * p1.m_y;
@@ -859,16 +859,22 @@ namespace physicspipe {
 
 		float determinant = a1 * b2 - a2 * b1;
 
-		// Check for parallel lines
+		// Check if lines are parallel
 		if (std::abs(determinant) < epsilon) {
 			// Check if lines are collinear
-			if (std::abs(c1 - c2) < epsilon) {
-				// Check for overlap
+			if (std::abs(a1 * q1.m_x + b1 * q1.m_y - c1) < epsilon) {
+				// Check if collinear segments overlap
 				if (std::max(p1.m_x, p2.m_x) >= std::min(q1.m_x, q2.m_x) &&
 					std::max(q1.m_x, q2.m_x) >= std::min(p1.m_x, p2.m_x) &&
 					std::max(p1.m_y, p2.m_y) >= std::min(q1.m_y, q2.m_y) &&
 					std::max(q1.m_y, q2.m_y) >= std::min(p1.m_y, p2.m_y)) {
-					return true; // Overlapping lines
+
+					// Find the intersection point as the midpoint of overlapping range
+					intersection.m_x = (std::max(std::min(p1.m_x, p2.m_x), std::min(q1.m_x, q2.m_x)) +
+						std::min(std::max(p1.m_x, p2.m_x), std::max(q1.m_x, q2.m_x))) / 2.0f;
+					intersection.m_y = (std::max(std::min(p1.m_y, p2.m_y), std::min(q1.m_y, q2.m_y)) +
+						std::min(std::max(p1.m_y, p2.m_y), std::max(q1.m_y, q2.m_y))) / 2.0f;
+					return true;  // Overlapping collinear segments
 				}
 			}
 			return false; // Parallel but not collinear
@@ -921,13 +927,13 @@ namespace physicspipe {
 		}
 
 		if (!foundIntersection) {
-			intersectionpoint = { 0,0 };
+			intersectionpoint = { p2.m_x, p2.m_y }; // intersection point be target position
 		}
 		return foundIntersection;
 
 	}
 
-	void Physics::IsLineIntersecting(const vector2::Vec2& p1, const vector2::Vec2& p2, const std::vector<layer::LAYERS>& layer, bool& isHit, vector2::Vec2& hitPosition)
+	void Physics::IsLineIntersecting(const ecs::EntityID id, const vector2::Vec2& p1, const vector2::Vec2& p2, const std::vector<layer::LAYERS>& layer, bool& isHit, vector2::Vec2& hitPosition)
 	{
 		//int count{};
 		for (const auto entity : m_physicsEntities) {
@@ -937,7 +943,7 @@ namespace physicspipe {
 			if (entity->type == EntityType::RECTANGLE) {
 
 				if (std::find(layer.begin(), layer.end(), (layer::LAYERS)entity->m_layerID) == layer.end())continue; // return any entity that is not a part of the req layer
-
+				if (id == static_cast<ecs::EntityID>(entity->m_ID)) continue;
 
 				auto entityshape = std::dynamic_pointer_cast<Rectangle>(entity);
 				if (LineRectangleIntersect(p1, p2, entityshape->m_boundingBox.m_min, entityshape->m_boundingBox.m_max, hitPosition)) {

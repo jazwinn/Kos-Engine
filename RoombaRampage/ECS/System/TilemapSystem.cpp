@@ -78,8 +78,8 @@ namespace ecs {
 			if (assetmanager->m_imageManager.m_imageMap.find(tile->m_tilemapFile) == assetmanager->m_imageManager.m_imageMap.end()) continue;
 
 
-			transform->m_position.m_x = floor(transform->m_transformation.m_e20);
-			transform->m_position.m_y = floor(transform->m_transformation.m_e21);
+			transform->m_position.m_x = floor(transform->m_position.m_x);
+			transform->m_position.m_y = floor(transform->m_position.m_y);
 
 			transform->m_transformation.m_e20 = floor(transform->m_transformation.m_e20) + 0.5f;
 			transform->m_transformation.m_e21 = floor(transform->m_transformation.m_e21) + 0.5f;

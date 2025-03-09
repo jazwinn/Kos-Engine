@@ -24,7 +24,7 @@ public class PlayerMeleeKillZone : ScriptBase
 
     public override void Start()
     {
-
+        
     }
 
     public override void Update()

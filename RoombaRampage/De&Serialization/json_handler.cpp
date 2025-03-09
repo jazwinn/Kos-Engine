@@ -51,6 +51,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Application/Helper.h"
 #include "../Debugging/Logging.h"
 #include "../Asset Manager/Prefab.h"
+#include "../Graphics/GraphicsPipe.h"
 #include "json_handler.h"
 
 #include <cstdio>
@@ -74,6 +75,7 @@ namespace Serialization {
 			return;
 		}
 		Helper::Helpers* help = Helper::Helpers::GetInstance();
+		graphicpipe::GraphicsPipe* graphics = graphicpipe::GraphicsPipe::m_funcGetInstance();
 
 		std::string line;
 		
@@ -87,6 +89,7 @@ namespace Serialization {
 			if (temp == "WindowWidth:") str2 >> help->m_windowWidth;
 			if (temp == "FpsCap:") str2 >> help->m_fpsCap;
 			if (temp == "StartScene:") str2 >> help->m_startScene;
+			if (temp == "GlobalIllumination:") str2 >> graphics->m_globalLightIntensity;
 		}
 
 
@@ -96,6 +99,7 @@ namespace Serialization {
 		}
 
 		m_LoadPhysicsLayerMatrix();
+		m_LoadGlobalSettings();
 
 	}
 
@@ -239,7 +243,8 @@ namespace Serialization {
 			ecs::ColliderComponent* cc = static_cast<ecs::ColliderComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(entityId));
 			if (cc) {
 				rapidjson::Value collider(rapidjson::kObjectType);
-				collider.AddMember("checkcollision", cc->m_CollisionCheck, allocator);
+				collider.AddMember("checkcollision", cc->m_collisionCheck, allocator);
+				collider.AddMember("checkresponse", cc->m_collisionResponse, allocator);
 				collider.AddMember("size", rapidjson::Value().SetObject()
 					.AddMember("x", cc->m_Size.m_x, allocator)
 					.AddMember("y", cc->m_Size.m_y, allocator), allocator);
@@ -590,26 +595,26 @@ namespace Serialization {
 				// Create an array to store script objects
 				rapidjson::Value rayArray(rapidjson::kArrayType);
 
-				for (const auto& raycast : rc->m_raycast) {
+				for (const auto& raycast2 : rc->m_raycast) {
 					// Create an object for each script
 					rapidjson::Value raycastObject(rapidjson::kObjectType);
 					
 					rapidjson::Value raycastID;
-					raycastID.SetString(raycast.m_rayID.c_str(), allocator);
+					raycastID.SetString(raycast2.m_rayID.c_str(), allocator);
 					raycastObject.AddMember("raycastID", raycastID, allocator);
 
 
 					// Add the boolean value to the object
-					raycastObject.AddMember("israycasting", raycast.m_isRaycasting, allocator);
+					raycastObject.AddMember("israycasting", raycast2.m_isRaycasting, allocator);
 
 					raycastObject.AddMember("targetposition", rapidjson::Value().SetObject()
-						.AddMember("x", raycast.m_targetPosition.m_x, allocator)
-						.AddMember("y", raycast.m_targetPosition.m_y, allocator), allocator);
+						.AddMember("x", raycast2.m_targetPosition.m_x, allocator)
+						.AddMember("y", raycast2.m_targetPosition.m_y, allocator), allocator);
 
-					if (raycast.m_Layers.size() > 0) {
+					if (raycast2.m_Layers.size() > 0) {
 						rapidjson::Value layerArray(rapidjson::kArrayType);
 
-						for (const auto layer : raycast.m_Layers) {
+						for (const auto layer : raycast2.m_Layers) {
 							rapidjson::Value layerObject(rapidjson::kObjectType);
 
 							layerObject.AddMember("layer", (int)layer, allocator);
@@ -654,6 +659,13 @@ namespace Serialization {
 				// Add the pathfinding component data to the entity data
 				entityData.AddMember("pathfinding", pathfinding, allocator);
 				hasComponents = true;
+			}
+		}
+
+		if (signature.test(ecs::ComponentType::TYPELIGHTINGCOMPONENT)) {
+			ecs::LightingComponent *lc = static_cast<ecs::LightingComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPELIGHTINGCOMPONENT]->m_GetEntityComponent(entityId));
+			if (lc) {
+				m_saveComponentreflect(lc, entityData, allocator);
 			}
 		}
 
@@ -756,13 +768,16 @@ namespace Serialization {
 					cc->m_type = (physicspipe::EntityType)collider["shapetype"].GetInt();
 				}
 				if (collider.HasMember("checkcollision")) {
-					cc->m_CollisionCheck = collider["checkcollision"].GetBool();
+					cc->m_collisionCheck = collider["checkcollision"].GetBool();
+				}
+				if (collider.HasMember("checkresponse")) {
+					cc->m_collisionResponse = collider["checkresponse"].GetBool();
 				}
 			}
 		}
 
 		// Load Player Component if it exists
-		if (entityData.HasMember("EnemyComponent") && entityData["EnemyComponent"].IsObject()) {
+		if (entityData.HasMember("enemy") && entityData["enemy"].IsObject()) {
 			ecs::EnemyComponent* pc = static_cast<ecs::EnemyComponent*>(ecs->m_AddComponent(ecs::TYPEENEMYCOMPONENT, newEntityId));
 
 			if (pc) {
@@ -1244,6 +1259,18 @@ namespace Serialization {
 		}
 
 
+
+		if (entityData.HasMember(ecs::LightingComponent::classname()) && entityData[ecs::LightingComponent::classname()].IsObject()) {
+			ecs::LightingComponent* lc = static_cast<ecs::LightingComponent*>(
+				ecs->m_AddComponent(ecs::TYPELIGHTINGCOMPONENT, newEntityId)
+				);
+
+			if (lc) {
+				m_LoadComponentreflect(lc, entityData);
+			}
+		}
+
+
 		//Attach entity to parent
 		if (parentID.has_value()) {
 			ecs::Hierachy::m_SetParent(parentID.value(), newEntityId);
@@ -1313,6 +1340,55 @@ namespace Serialization {
 
 		file.close();
 		LOGGING_INFO("Collision matrix loaded from LayerConfig.txt");
+	}
+
+	void Serialization::Serialize::m_SaveGlobaalSettings()
+	{
+		std::ofstream file("./ECS/GlobalConfig.txt");
+		if (!file.is_open()) {
+			LOGGING_ERROR("Could not open GlobalConfig.txt for writing.");
+			return;
+		}
+		graphicpipe::GraphicsPipe* graphics = graphicpipe::GraphicsPipe::m_funcGetInstance();
+		Helper::Helpers* helper = Helper::Helpers::GetInstance();
+		file << "GlobalIllumination: " << graphics->m_globalLightIntensity << std::endl;
+		file << "BackgroundColor: " << helper->m_colour.m_x << ' ' << helper->m_colour.m_y << ' ' << helper->m_colour.m_z << std::endl;
+		file.close();
+	}
+
+	void Serialization::Serialize::m_LoadGlobalSettings()
+	{
+		std::ifstream file("./ECS/GlobalConfig.txt");
+		if (!file.is_open()) {
+			LOGGING_ERROR("Could not open GlobalConfig.txt for reading.");
+			return;
+		}
+
+		std::string line;
+		graphicpipe::GraphicsPipe* graphics = graphicpipe::GraphicsPipe::m_funcGetInstance();
+		Helper::Helpers* helper = Helper::Helpers::GetInstance();
+
+		while (std::getline(file, line))
+		{
+			std::istringstream iss(line);
+			std::string temp;
+			iss >> temp;
+			if (temp == "GlobalIllumination:") {
+				float light;
+				iss >> light;
+				graphics->m_globalLightIntensity = light;
+			}
+			if (temp == "BackgroundColor:") {
+				float r, g, b = 0;
+				iss >> r >> g >> b;
+				helper->m_colour = { r,g,b };
+			}
+		}
+		
+
+
+		file.close();
+		LOGGING_INFO("Global Settings loaded from GlobalConfig.txt");
 	}
 	std::string Serialize::m_EncodeBase64(const void* data, size_t size)
 	{
