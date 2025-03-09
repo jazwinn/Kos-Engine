@@ -51,7 +51,7 @@ namespace fmodaudio {
         \brief   Constructor that initializes default values for the FModAudio class.
         */
         /******************************************************************/
-        FModAudio();
+        FModAudio(FMOD::System* system);
 
         /******************************************************************/
         /*!
@@ -241,6 +241,28 @@ namespace fmodaudio {
         */
         /******************************************************************/
         std::unordered_map<std::string, FMOD::Channel*> m_entityChannels;
+
+        struct ChannelInfo {
+            FMOD::Channel* channel;
+            std::string entityId;
+            bool isActive;
+            float priority;
+            std::chrono::steady_clock::time_point lastUsed;
+
+            ChannelInfo() : channel(nullptr), isActive(false), priority(0.0f) {}
+        };
+
+        static const int MAX_CHANNELS = 64;
+        std::vector<ChannelInfo> m_channelPool;
+
+        void m_InitializeChannelPool();
+        FMOD::Channel* m_GetAvailableChannel(const std::string& entityId);
+        void m_ReleaseUnusedChannels();
+        int m_FindLeastImportantChannel() const;
+
+        //For Debugging
+        int m_GetActiveChannelCount() const;
+        void m_PrintChannelStatus() const;  // For debugging
     };
 
 
@@ -337,6 +359,18 @@ namespace fmodaudio {
         /******************************************************************/
         void m_SetLoopingForEntity(ecs::EntityID entityId, const std::string& name, bool loop);
 
+        void m_SetIsBGMForEntity(ecs::EntityID entityId, const std::string& name, bool isBGM);
+
+        void m_SetIsSFXForEntity(ecs::EntityID entityId, const std::string& name, bool isSFX);
+
+        void m_SetGlobalBGMVolume(float volume);
+
+        void m_SetGlobalSFXVolume(float volume);
+
+        bool m_CheckIsBGMForEntity(ecs::EntityID entityId, const std::string& name);
+
+        bool m_CheckIsSFXForEntity(ecs::EntityID entityId, const std::string& name);
+
         /******************************************************************/
         /*!
         \fn      void m_SetPlayOnStartForEntity(ecs::EntityID entityId, const std::string& audioName, bool playOnStart)
@@ -405,8 +439,15 @@ namespace fmodaudio {
             return m_soundMap;
         }
 
-    private:
+        FMOD::System* GetSystem() {
+            return m_system; 
+        }
 
+    public:
+        float m_GlobalBGMVolume{ 0.5f };
+        float m_GlobalSFXVolume{ 0.5f };
+
+    private:
 
         /******************************************************************/
         /*!
@@ -415,6 +456,8 @@ namespace fmodaudio {
         */
         /******************************************************************/
         std::unordered_map<std::string, std::unique_ptr<FModAudio>> m_soundMap;
+
+        FMOD::System* m_system;  // Single global FMOD system
     };
 
 }

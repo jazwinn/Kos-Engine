@@ -3,7 +3,7 @@
 \file      RenderSystem.h
 \author    Ng Jaz winn, jazwinn.ng , 2301502
 \par       jazwinn.ng@digipen.edu
-\date      Oct 02, 2024
+\date      Jan 30, 2025
 \brief     This file contains class for the Render System
 
 Copyright (C) 2024 DigiPen Institute of Technology.
@@ -94,7 +94,7 @@ namespace ecs {
        // std::vector<ColliderComponent*> m_vecColliderComponentPtr;
        // std::vector<NameComponent*>m_vecNameComponentPtr;
         std::vector<LightingComponent*> m_vecLightingComponentPtr;
-
+        std::vector<NameComponent*> m_vecNameComponentPtr;
 
     };
 

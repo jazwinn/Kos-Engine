@@ -1,3 +1,18 @@
+/******************************************************************/
+/*!
+\file      PhysicsCollisionResponse.cpp
+\author    Elijah Teo(teo.e, 2301530)[50%], Rayner Tan(raynerweichen.tan, 2301449)[50%]
+\date      Jan 14, 2024
+\brief     This file contains the definitions of the functions used to find contact points between two collided entities
+		   and the functions used to find the directional collision flags
+
+
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/********************************************************************/
 #include "../Config/pch.h"
 #include "Physics.h"
 #include "../ECS/ECS.h"
@@ -220,16 +235,16 @@ namespace physicspipe {
 			else if (colComp->m_type == EntityType::RECTANGLE && colComp2->m_type == EntityType::CIRCLE) {
 				if (rigComp2 == NULL) continue;
 				//m_FindCircleSquareFlags(colComp2, colComp);
-				if (nameComp->m_entityTag == "Wall") {
-					vector2::Vec2 dirB = rigComp2->m_PrevDirVec;
-					vector2::Vec2::m_funcVec2Normalize(dirB, dirB);
-					std::pair<std::bitset<4>, std::bitset<4>> flags = m_FindCircleSquareFlags(colComp2->m_contactPoints, second, first, entB.get()->m_position, static_cast<physicspipe::Circle*>(entB.get())->m_radius, dirB,
-						entA.get()->m_position, static_cast<physicspipe::Rectangle*>(entA.get())->m_GetRotatedVertices(), static_cast<physicspipe::Rectangle*>(entA.get())->m_GetEdges());
-					colComp2->m_bits |= flags.first;
-					colComp->m_bits |= flags.second;
-					colComp->m_blockedFlag = colComp->m_bits.to_ulong();
-					colComp2->m_blockedFlag = colComp2->m_bits.to_ulong();
-				}
+				//if (nameComp->m_entityTag == "Wall") {
+				//	vector2::Vec2 dirB = rigComp2->m_PrevDirVec;
+				//	vector2::Vec2::m_funcVec2Normalize(dirB, dirB);
+				//	std::pair<std::bitset<4>, std::bitset<4>> flags = m_FindCircleSquareFlags(colComp2->m_contactPoints, second, first, entB.get()->m_position, static_cast<physicspipe::Circle*>(entB.get())->m_radius, dirB,
+				//		entA.get()->m_position, static_cast<physicspipe::Rectangle*>(entA.get())->m_GetRotatedVertices(), static_cast<physicspipe::Rectangle*>(entA.get())->m_GetEdges());
+				//	colComp2->m_bits |= flags.first;
+				//	colComp->m_bits |= flags.second;
+				//	colComp->m_blockedFlag = colComp->m_bits.to_ulong();
+				//	colComp2->m_blockedFlag = colComp2->m_bits.to_ulong();
+				//}
 			}
 			else {
 				std::pair<std::bitset<4>, std::bitset<4>> collFlags = m_FindSquareSquareFlags(colComp->m_contactPoints, first, second, entA.get()->m_position, static_cast<physicspipe::Rectangle*>(entA.get())->m_GetRotatedVertices(), static_cast<physicspipe::Rectangle*>(entA.get())->m_GetEdges(),

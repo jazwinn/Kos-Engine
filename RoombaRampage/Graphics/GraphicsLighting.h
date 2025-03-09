@@ -11,9 +11,8 @@ namespace graphicpipe
 {
     enum LightType
     {
-        SPOT,
-        RECTANGLE,
-        GLOBAL
+        GLOW,
+        MULTIPLY
     };
 }
 

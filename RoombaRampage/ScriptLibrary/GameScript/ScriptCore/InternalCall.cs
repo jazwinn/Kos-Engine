@@ -132,7 +132,10 @@ public static class InternalCall
     public extern static void m_InternalGetWorldMousePosition(out Vector2 mousepos);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static void m_InternalCallSetTimeScale(in float timescale);
+    public extern static void m_InternalCallSetTimeScale(float timescale);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static float m_InternalCallGetTimeScale();
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static void m_InternalCallResetTimeScale();
@@ -151,6 +154,36 @@ public static class InternalCall
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static void m_InternalCallStopAllAudio();
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static void m_InternalCallPauseAudio(uint id, string monoString);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static void m_InternalCallUnPauseAudio(uint id, string monoString);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static void m_InternalCallPauseAllAudio();
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static void m_InternalCallUnPauseAllAudio();
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static void m_InternalCallSetGlobalBGMVolume(float volume);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static void m_InternalCallSetGlobalSFXVolume(float volume);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static float m_InternalCallGetGlobalBGMVolume();
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static float m_InternalCallGetGlobalSFXVolume();
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static bool m_InternalCallCheckIsBGM(uint id, string monoString);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static bool m_InternalCallCheckIsSFX(uint id, string monoString);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static bool m_InternalCallIsWindowMinimise();
@@ -225,6 +258,9 @@ public static class InternalCall
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public static extern void m_ChangeLayer(uint id, uint layerid);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public static extern float m_getFPS();
 }
 
 

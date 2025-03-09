@@ -63,7 +63,11 @@ namespace script {
 
         m_LoadSecondaryDomain();
 
+#ifndef _GAME
         m_ReloadAllDLL();
+#endif _GAME
+
+        
 
        
     }
@@ -72,6 +76,7 @@ namespace script {
     {
         m_AppDomain = mono_domain_create_appdomain((char*)"AppDomainRuntime", nullptr);
         mono_domain_set(m_AppDomain, true);
+
 
         //load gamescript assembly location
         m_AddScripts("ScriptLibrary/GameScript/ScriptCoreDLL/GameScript.dll");
@@ -208,6 +213,8 @@ namespace script {
 
     void ScriptHandler::m_InvokeMethod(const std::string& className, const std::string& func, MonoObject* objInstance, void** args) {
 
+        if (objInstance == nullptr) return;
+
         //// Check if the method exists
         auto it = m_methodMap.find(className);
 
@@ -241,12 +248,13 @@ namespace script {
             mono_runtime_invoke(method, objInstance, args, &exception);
 
             if (exception) {
+
                 LOGGING_WARN("Script Exception Occured");
                 mono_print_unhandled_exception(exception);
             }
         }
         catch (...) {
-            return;
+            throw 1;
         }
 
 

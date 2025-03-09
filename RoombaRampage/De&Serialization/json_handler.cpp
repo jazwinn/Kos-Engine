@@ -75,7 +75,7 @@ namespace Serialization {
 			return;
 		}
 		Helper::Helpers* help = Helper::Helpers::GetInstance();
-		graphicpipe::GraphicsPipe* graphics = graphicpipe::GraphicsPipe::m_funcGetInstance();
+		//graphicpipe::GraphicsPipe* graphics = graphicpipe::GraphicsPipe::m_funcGetInstance();
 
 		std::string line;
 		
@@ -89,7 +89,7 @@ namespace Serialization {
 			if (temp == "WindowWidth:") str2 >> help->m_windowWidth;
 			if (temp == "FpsCap:") str2 >> help->m_fpsCap;
 			if (temp == "StartScene:") str2 >> help->m_startScene;
-			if (temp == "GlobalIllumination:") str2 >> graphics->m_globalLightIntensity;
+		
 		}
 
 
@@ -99,7 +99,6 @@ namespace Serialization {
 		}
 
 		m_LoadPhysicsLayerMatrix();
-		m_LoadGlobalSettings();
 
 	}
 
@@ -134,11 +133,37 @@ namespace Serialization {
 
 		std::string scenename = jsonFilePath.filename().string();
 		
+
+		// Load Global Setting
+		bool foundGlobalSettings = false;
+		for (rapidjson::SizeType i = 0; i < doc.Size(); i++) {
+			const rapidjson::Value& entry = doc[i];
+			if (entry.HasMember("GlobalSettings")) {
+				foundGlobalSettings = true;
+				const rapidjson::Value& globalSettings = entry["GlobalSettings"];
+				if (globalSettings.HasMember("globalIllumination")) {
+					graphicpipe::GraphicsPipe::m_funcGetInstance()->m_globalLightIntensity = globalSettings["globalIllumination"].GetFloat();
+				}
+				if (globalSettings.HasMember("backgroundColor")) {
+					const rapidjson::Value& bgColor = globalSettings["backgroundColor"];
+					Helper::Helpers* helper = Helper::Helpers::GetInstance();
+					helper->m_colour.m_x = bgColor["r"].GetFloat();
+					helper->m_colour.m_y = bgColor["g"].GetFloat();
+					helper->m_colour.m_z = bgColor["b"].GetFloat();
+				}
+			}
+		}
+
 		/*******************INSERT INTO FUNCTION*****************************/
 
 		// Iterate through each component entry in the JSON array
 		for (rapidjson::SizeType i = 0; i < doc.Size(); i++) {
 			const rapidjson::Value& entityData = doc[i];
+
+			if (entityData.HasMember("GlobalSettings")) {
+				continue;
+			}
+
 			m_LoadEntity(entityData, std::nullopt, scenename);
 		}
 
@@ -160,10 +185,26 @@ namespace Serialization {
 
 		std::unordered_set<ecs::EntityID> savedEntities;  //track saved entities
 
+		rapidjson::Value globalSettings(rapidjson::kObjectType);
+		globalSettings.AddMember("globalIllumination",
+			graphicpipe::GraphicsPipe::m_funcGetInstance()->m_globalLightIntensity, allocator);
+
+		rapidjson::Value backgroundColor(rapidjson::kObjectType);
+		Helper::Helpers* helper = Helper::Helpers::GetInstance();
+		backgroundColor.AddMember("r", helper->m_colour.m_x, allocator);
+		backgroundColor.AddMember("g", helper->m_colour.m_y, allocator);
+		backgroundColor.AddMember("b", helper->m_colour.m_z, allocator);
+		globalSettings.AddMember("backgroundColor", backgroundColor, allocator);
+
+		rapidjson::Value settingsWrapper(rapidjson::kObjectType);
+		settingsWrapper.AddMember("GlobalSettings", globalSettings, allocator);
+		doc.PushBack(settingsWrapper, allocator);
+
 		//Start saving the entities
 		std::vector<ecs::EntityID> entities = ecs->m_ECS_SceneMap.find(scene.filename().string())->second.m_sceneIDs;
 		for (const auto& entityId : entities) {
 			if (!ecs::Hierachy::m_GetParent(entityId).has_value()) {
+				rapidjson::Value entityData(rapidjson::kObjectType);
 				m_SaveEntity(entityId, doc, allocator, savedEntities);
 			}
 		}
@@ -269,7 +310,7 @@ namespace Serialization {
 				rapidjson::Value player(rapidjson::kObjectType);
 				player.AddMember("enemytag", ec->m_enemyTag, allocator);
 				player.AddMember("enemytype", ec->m_enemyTypeInt, allocator);
-				player.AddMember("enemybehaviour", ec->m_enemyTypeInt, allocator);
+				player.AddMember("enemybehaviour", ec->m_enemyRoamBehaviourInt, allocator);
 				entityData.AddMember("enemy", player, allocator);
 				hasComponents = true;  // Mark as having a component
 			}
@@ -329,6 +370,7 @@ namespace Serialization {
 				colorValue.AddMember("b", sc->m_color.m_z, allocator);
 				sprite.AddMember("color", colorValue, allocator);
 				sprite.AddMember("alpha", sc->m_alpha, allocator);
+				sprite.AddMember("isLit", sc->m_isIlluminated, allocator);
 
 				entityData.AddMember("sprite", sprite, allocator);
 				hasComponents = true;  // Mark as having a component
@@ -669,6 +711,12 @@ namespace Serialization {
 			}
 		}
 
+		if (signature.test(ecs::ComponentType::TYPEVIDEOCOMPONENT)) {
+			ecs::VideoComponent* vc = static_cast<ecs::VideoComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPEVIDEOCOMPONENT]->m_GetEntityComponent(entityId));
+			if (vc) {
+				m_saveComponentreflect(vc, entityData, allocator);
+			}
+		}
 
 		// Add children
 		std::optional<std::vector<ecs::EntityID>> childrenOptional = ecs::Hierachy::m_GetChild(entityId);
@@ -880,6 +928,10 @@ namespace Serialization {
 				}
 				if (sprite.HasMember("alpha")) {
 					sc->m_alpha = sprite["alpha"].GetFloat();
+				}
+				if (sprite.HasMember("isLit"))
+				{
+					sc->m_isIlluminated = sprite["isLit"].GetBool();
 				}
 			}
 		}
@@ -1270,6 +1322,16 @@ namespace Serialization {
 			}
 		}
 
+		if (entityData.HasMember(ecs::VideoComponent::classname()) && entityData[ecs::VideoComponent::classname()].IsObject()) {
+			ecs::VideoComponent* vc = static_cast<ecs::VideoComponent*>(
+				ecs->m_AddComponent(ecs::TYPEVIDEOCOMPONENT, newEntityId)
+				);
+
+			if (vc) {
+				m_LoadComponentreflect(vc, entityData);
+			}
+		}
+
 
 		//Attach entity to parent
 		if (parentID.has_value()) {
@@ -1285,7 +1347,7 @@ namespace Serialization {
 		}
 	}
 	void Serialization::Serialize::m_SavePhysicsLayerMatrix() {
-		std::ofstream file("./ECS/LayerConfig.txt");
+		std::ofstream file("./Config/LayerConfig.txt");
 		if (!file.is_open()) {
 			LOGGING_ERROR("Could not open LayerConfig.txt for writing.");
 			return;
@@ -1306,7 +1368,7 @@ namespace Serialization {
 	}
 
 	void Serialization::Serialize::m_LoadPhysicsLayerMatrix() {
-		std::ifstream file("./ECS/LayerConfig.txt");
+		std::ifstream file("./Config/LayerConfig.txt");
 		if (!file.is_open()) {
 			LOGGING_ERROR("Could not open LayerConfig.txt for reading.");
 			return;
@@ -1344,7 +1406,7 @@ namespace Serialization {
 
 	void Serialization::Serialize::m_SaveGlobaalSettings()
 	{
-		std::ofstream file("./ECS/GlobalConfig.txt");
+		std::ofstream file("./Config/GlobalConfig.txt");
 		if (!file.is_open()) {
 			LOGGING_ERROR("Could not open GlobalConfig.txt for writing.");
 			return;
@@ -1358,7 +1420,7 @@ namespace Serialization {
 
 	void Serialization::Serialize::m_LoadGlobalSettings()
 	{
-		std::ifstream file("./ECS/GlobalConfig.txt");
+		std::ifstream file("./Config/GlobalConfig.txt");
 		if (!file.is_open()) {
 			LOGGING_ERROR("Could not open GlobalConfig.txt for reading.");
 			return;

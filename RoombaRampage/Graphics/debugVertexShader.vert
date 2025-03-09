@@ -27,11 +27,17 @@ layout (location=7) in mat3 modelMatrix;
 
 layout (location=0) out float collided;
 
+uniform mat3 projection;
+uniform mat3 view;
+
 void main()
 {
 
-	gl_Position = vec4(vec2(modelMatrix * vec3(vertexPosition, 1.f)),
-					  -1.0, 1.0);
+	mat3 matrix = projection * view * modelMatrix;
+
+	gl_Position = vec4(vec2(matrix * vec3(vertexPosition, 1.f)),
+					   -1.0, 1.0);
+
 	collided = isCollided;
 }
 

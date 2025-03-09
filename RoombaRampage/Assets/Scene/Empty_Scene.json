@@ -1,255 +1,62 @@
 [
     {
-        "name": {
-            "namestr": "ani_scientistWalk_strip14",
-            "layer": 0,
-            "isprefab": false,
-            "tagstr": "Default"
-        },
-        "transform": {
-            "position": {
-                "x": -3.431105375289917,
-                "y": 4.462368965148926
-            },
-            "rotation": -0.0,
-            "scale": {
-                "x": 1.0,
-                "y": 1.0
+        "GlobalSettings": {
+            "globalIllumination": 1.0,
+            "backgroundColor": {
+                "r": 0.8362832069396973,
+                "g": 0.8362832069396973,
+                "b": 0.8362832069396973
             }
-        },
-        "collider": {
-            "checkcollision": true,
-            "checkresponse": true,
-            "size": {
-                "x": 1.2799999713897705,
-                "y": 1.2799999713897705
-            },
-            "offset": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "drawDebug": true,
-            "radius": 0.5,
-            "shapetype": 0
-        },
-        "rigidbody": {
-            "linearVelocity": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "linearAcceleration": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "rotation": 0.0,
-            "angularVelocity": 0.0,
-            "angularAcceleration": 0.0,
-            "mass": 1.0,
-            "inverseMass": 1.0,
-            "linearDamping": 0.9900000095367432,
-            "angularDamping": 0.9900000095367432,
-            "force": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "torque": 0.0,
-            "kinematic": false,
-            "static": false
-        },
-        "sprite": {
-            "imagefile": "ani_scientistWalk_strip14.png",
-            "layer": 0,
-            "color": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
-            },
-            "alpha": 1.0
-        },
-        "animation": {
-            "frameNumber": 9,
-            "framesPerSecond": 1,
-            "frameTimer": 9.416694641113281,
-            "isAnimating": true,
-            "stripCount": 14
-        },
-        "script": {
-            "scripts": [
-                {
-                    "name": "EnemyScript",
-                    "enabled": true,
-                    "map": [
-                        {
-                            "variable": "isDead",
-                            "base64": ""
-                        }
-                    ]
-                }
-            ]
-        },
-        "pathfinding": {
-            "startPosition": {
-                "x": 1.0,
-                "y": 0.0
-            },
-            "targetPosition": {
-                "x": 1.0,
-                "y": 0.0
-            },
-            "gridKey": 1
         }
     },
     {
         "name": {
-            "namestr": "wall",
+            "namestr": "Trees in Sunlight - Free Stock Footage HD",
             "layer": 0,
             "isprefab": false,
             "tagstr": "Default"
         },
         "transform": {
             "position": {
-                "x": -4.0,
-                "y": 4.0
+                "x": -4.272714614868164,
+                "y": 0.6401627659797668
             },
-            "rotation": -0.0,
+            "rotation": 0.0,
             "scale": {
                 "x": 1.0,
                 "y": 1.0
             }
         },
-        "grid": {
-            "gridRowLength": 12,
-            "gridColumnLength": 9,
-            "setCollidable": false,
-            "gridKey": 1,
-            "isWall": [
-                [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ],
-                [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ]
-            ]
+        "VideoComponent": {
+            "filename": "Trees in Sunlight - Free Stock Footage HD.mpg",
+            "pause": false,
+            "loop": true,
+            "layer": 0
+        }
+    },
+    {
+        "name": {
+            "namestr": "test",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": 2.605313777923584,
+                "y": -0.6103878021240234
+            },
+            "rotation": 0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "VideoComponent": {
+            "filename": "test.mpg",
+            "pause": false,
+            "loop": true,
+            "layer": 0
         }
     }
 ]

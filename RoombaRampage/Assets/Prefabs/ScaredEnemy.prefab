@@ -1,5 +1,15 @@
 [
     {
+        "GlobalSettings": {
+            "globalIllumination": 0.30000001192092896,
+            "backgroundColor": {
+                "r": 0.13716816902160645,
+                "g": 0.13716816902160645,
+                "b": 0.13716816902160645
+            }
+        }
+    },
+    {
         "name": {
             "namestr": "ScaredEnemy",
             "layer": 2,
@@ -10,13 +20,13 @@
         },
         "transform": {
             "position": {
-                "x": 5.074708461761475,
-                "y": -3.7879483699798584
+                "x": -4.528764724731445,
+                "y": -8.563582420349121
             },
-            "rotation": -0.0,
+            "rotation": 0.0,
             "scale": {
-                "x": 3.0,
-                "y": 3.0
+                "x": 3.0000009536743164,
+                "y": 3.0000009536743164
             }
         },
         "collider": {
@@ -27,8 +37,8 @@
                 "y": 0.23999999463558197
             },
             "offset": {
-                "x": -0.009999999776482582,
-                "y": 0.05999999865889549
+                "x": 0.0,
+                "y": 0.0
             },
             "drawDebug": true,
             "radius": 0.5,
@@ -64,21 +74,22 @@
             "static": false
         },
         "sprite": {
-            "imagefile": "ani_scientistWalk_strip14.png",
-            "layer": 22,
+            "imagefile": "ani_scientistWalk_strip8.png",
+            "layer": 32,
             "color": {
                 "r": 1.0,
                 "g": 1.0,
                 "b": 1.0
             },
-            "alpha": 1.0
+            "alpha": 1.0,
+            "isLit": true
         },
         "animation": {
-            "frameNumber": 0,
-            "framesPerSecond": 0,
+            "frameNumber": 2,
+            "framesPerSecond": 10,
             "frameTimer": 0.0,
-            "isAnimating": true,
-            "stripCount": 14
+            "isAnimating": false,
+            "stripCount": 8
         },
         "script": {
             "scripts": [
@@ -89,6 +100,10 @@
                         {
                             "variable": "isDead",
                             "base64": ""
+                        },
+                        {
+                            "variable": "isPatrolling",
+                            "base64": ""
                         }
                     ]
                 }
@@ -96,8 +111,74 @@
         },
         "audio": [
             {
-                "name": "aud_humanDeath01",
-                "volume": 0.4490000009536743,
+                "name": "aud_bodyDeath01",
+                "volume": 0.3160000145435333,
+                "loop": false,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_bodyStab01",
+                "volume": 0.4880000054836273,
+                "loop": false,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_bodyStab02",
+                "volume": 0.7009999752044678,
+                "loop": false,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_bodyFall01",
+                "volume": 0.24899999797344208,
+                "loop": false,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_bodyFall02",
+                "volume": 0.2849999964237213,
+                "loop": false,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_bodyFall03",
+                "volume": 0.3070000112056732,
+                "loop": false,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_bodyFall04",
+                "volume": 0.24300000071525574,
+                "loop": false,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_bodyFall05",
+                "volume": 0.2290000021457672,
+                "loop": false,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_bodyFall06",
+                "volume": 0.21199999749660492,
+                "loop": false,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_bodyFall07",
+                "volume": 0.20399999618530273,
+                "loop": false,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_bodyFall08",
+                "volume": 0.25099998712539673,
+                "loop": false,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_bodyFall09",
+                "volume": 0.2290000021457672,
                 "loop": false,
                 "playOnStart": false
             }
@@ -113,7 +194,7 @@
                     },
                     "Layer Vector": [
                         {
-                            "layer": 7
+                            "layer": 5
                         }
                     ]
                 }
@@ -144,6 +225,27 @@
                     "position": {
                         "x": 0.0,
                         "y": 0.0
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                }
+            },
+            {
+                "name": {
+                    "namestr": "Waypoint 2",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "ScaredEnemy.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 11.203680992126465,
+                        "y": 12.516178131103516
                     },
                     "rotation": 0.0,
                     "scale": {

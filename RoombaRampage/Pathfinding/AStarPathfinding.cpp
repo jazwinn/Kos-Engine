@@ -1,3 +1,17 @@
+/******************************************************************/
+/*!
+\file      AStarPathfinding.cpp
+\author    Clarence Boey
+\par       c.boey@digipen.edu
+\date      Jan 14, 2025
+\brief     This file contains the definition for the AStarPathingFinding class along with the Node struct
+           This file also contains the definition for the member functions for both the class and the struct
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/******************************************************************/
 #include "../Config/pch.h"
 #include "AStarPathfinding.h"
 

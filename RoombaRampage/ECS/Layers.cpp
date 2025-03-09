@@ -1,3 +1,27 @@
+/******************************************************************/
+/*!
+\file      ECS.cpp
+\author    Ng Jaz winn, jazwinn.ng , 2301502
+\par       jazwinn.ng@digipen.edu
+\date      8 Nov, 2024
+\brief     This header file defines the `LayerStack` class and associated
+		   enums for handling layer management in the ECS framework.
+		   - LayerStack: Manages named layers that contain entities.
+		   - m_ChangeLayerName: Renames a specified layer.
+		   - m_SwapEntityLayer: Moves an entity from one layer to another.
+		   - m_RetrieveEntityID: Retrieves all entity IDs within a specified layer.
+
+This file allows flexible layer-based organization of entities in the ECS system,
+providing functionality for managing multiple layers for scene composition.
+
+
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/********************************************************************/
+
 #include "../Config/pch.h"
 #include "Layers.h"
 #include "../Debugging/Logging.h"
@@ -51,6 +75,14 @@ namespace layer {
 		m_layerMap[LAYER6].first = "Layer 6";
 		m_layerMap[LAYER7].first = "Layer 7";
 		m_layerMap[LAYER8].first = "Layer 8";
+		m_layerMap[LAYER9].first = "Layer 9";
+		m_layerMap[LAYER10].first = "Layer 10";
+		m_layerMap[LAYER11].first = "Layer 11";
+		m_layerMap[LAYER12].first = "Layer 12";
+		m_layerMap[LAYER13].first = "Layer 13";
+		m_layerMap[LAYER14].first = "Layer 14";
+		m_layerMap[LAYER15].first = "Layer 15";
+		m_layerMap[LAYER16].first = "Layer 16";
 
 	}
 

@@ -1,3 +1,16 @@
+/******************************************************************/
+/*!
+\file      PathfindingSystem.h
+\author    Clarence Boey
+\par       c.boey@digipen.edu
+\date      Sept 29, 2024
+\brief     
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/******************************************************************/
 #pragma once
 #pragma once
 #ifndef PATHSYS_H

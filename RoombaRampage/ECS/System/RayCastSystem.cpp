@@ -2,11 +2,11 @@
 #include "RayCastSystem.h"
 
 /*!
-\file      PhysicsSystem.h
-\author    Elijah Teo, teo.e , 2301530
-\par       teo.e@digipen.edu
-\date      Sept 28, 2024
-\brief     This file holds the definition of the PhysicsSystem class's member functions
+\file      RayCastSystem.cp
+\author	   Jazwinn Ng
+\par       jazwinn.ng@digipen.edu
+\date      Jan 20, 2025
+\brief     This file holds the declaration of the RayCastSystem class
 
 Copyright (C) 2024 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the
@@ -90,6 +90,8 @@ namespace ecs {
 					ray.m_hitposition = { 0,0 };
 					continue;
 				}
+
+				ray.m_targetReached = true;
 				//vector2::Vec2 direction = ray.m_targetPosition - transform->m_position;
 				ray.m_distance = abs(vector2::Vec2::m_funcVec2DDistance(ray.m_targetPosition, transform->m_position));
 

@@ -1,3 +1,18 @@
+/******************************************************************/
+/*!
+\file      GridComponent.h
+\author    Sean Tiu
+\par       s.tiu@digipen.edu
+\date      Jan 25, 2025
+\brief
+
+
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/********************************************************************/
 #pragma once
 #ifndef GRIDCOM_H
 #define GRIDCOM_H

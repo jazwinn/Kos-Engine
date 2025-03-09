@@ -95,12 +95,20 @@ void gui::ImGuiHandler::m_DrawLayerWindow() {
         ImGui::SetCursorPosX(labelWidth + col * cellWidth); // Position the vertical text over each column
         auto it = layers.m_layerMap.find(static_cast<layer::LAYERS>(col));
         if (it != layers.m_layerMap.end()) {
-            DrawVerticalLabel(it->second.first, 0.0f, 230.0f); // Adjust x and y offsets as needed
+            DrawVerticalLabel(it->second.first, 0.0f, 0.0f); // Adjust x and y offsets as needed
         }
         else {
             LOGGING_ERROR_NO_SOURCE_LOCATION("NO SUCH NAME");
         }
     }
+
+    ImGui::NewLine();
+    ImGui::NewLine();
+    ImGui::NewLine();
+    ImGui::NewLine();
+    ImGui::NewLine();
+    ImGui::NewLine();
+
 
     // Draw the matrix rows
     for (int row = 0; row < layerCount; ++row)

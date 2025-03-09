@@ -32,6 +32,7 @@ namespace script {
 
 	bool InternalCall::m_InternalGetTransformComponent(ecs::EntityID entity, vector2::Vec2* trans, vector2::Vec2* scale, float* rotate)
 	{
+
 		auto* transform = static_cast<ecs::TransformComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(entity));
 
 		if (transform) {
@@ -487,6 +488,7 @@ namespace script {
 		}
 		else {
 			ASSERTNOCOMPONENT(RigidBodyComponent, entity);
+			return false;
 		}
 		
 
@@ -519,6 +521,11 @@ namespace script {
 	*/
 	void InternalCall::m_InternalCallSetTimeScale(const float x) {
 		Helper::Helpers::GetInstance()->m_timeScale = x;
+	}
+
+	float InternalCall::m_InternalCallGetTimeScale()
+	{
+		return Helper::Helpers::GetInstance()->m_timeScale;
 	}
 
 	void InternalCall::m_InternalCallResetTimeScale() {
@@ -578,6 +585,11 @@ namespace script {
 			nc->m_Layer = (layer::LAYERS)layerid;
 		}
 
+	}
+
+	float InternalCall::m_getFPS()
+	{
+		return Helper::Helpers::GetInstance()->m_fps;
 	}
 
 	MonoArray* InternalCall::m_InternalCallGetTagIDs(MonoString* monostring)
@@ -731,13 +743,15 @@ namespace script {
 
 	void InternalCall::m_InternalGetWorldMousePosition(vector2::Vec2* mousecord) {
 		//Get mouse pos
+
+		Helper::Helpers* helper = Helper::Helpers::GetInstance();
 		vector2::Vec2 mouse_Pos = Input::InputSystem::m_getMousePosition();
 		//window height width
 		float width = Helper::Helpers::GetInstance()->m_windowWidth;
 		float height = Helper::Helpers::GetInstance()->m_windowHeight;
 		//world coordinate
-		float world_Mouse_Pos_X = (mouse_Pos.m_x - (width / 2.f)) / (width / 2.f);
-		float world_Mouse_Pos_Y = (std::abs(mouse_Pos.m_y) - (height / 2.f)) / (height / 2.f);
+		float world_Mouse_Pos_X = ((mouse_Pos.m_x - helper->m_viewportOffsetX )- (width / 2.f)) / (width / 2.f);
+		float world_Mouse_Pos_Y = (std::abs((mouse_Pos.m_y - helper-> m_viewportOffsetY)) - (height / 2.f)) / (height / 2.f);
 		vector2::Vec2 world_Mouse_Pos{ world_Mouse_Pos_X, world_Mouse_Pos_Y };
 		//include the camera
 		//scale according to camera scale
@@ -816,6 +830,96 @@ namespace script {
 	{
 		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
 		assetmanager->m_audioManager.m_StopAllSounds();
+
+	}
+
+	void InternalCall::m_InternalCallPauseAudio(ecs::EntityID id, MonoString* monoString)
+	{
+
+		char* nativeString = mono_string_to_utf8(monoString);
+		std::filesystem::path filepath = nativeString;
+
+		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+		assetmanager->m_audioManager.m_PauseAudioForEntity(id, filepath.filename().stem().string());
+
+		mono_free(nativeString);
+
+
+	}
+
+	void InternalCall::m_InternalCallUnPauseAudio(ecs::EntityID id, MonoString* monoString)
+	{
+
+		char* nativeString = mono_string_to_utf8(monoString);
+		std::filesystem::path filepath = nativeString;
+
+		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+		assetmanager->m_audioManager.m_UnpauseAudioForEntity(id, filepath.filename().stem().string());
+
+		mono_free(nativeString);
+
+
+	}
+
+	void InternalCall::m_InternalCallPauseAllAudio()
+	{
+		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+		assetmanager->m_audioManager.m_PauseAllSounds();
+
+	}
+
+	void InternalCall::m_InternalCallUnPauseAllAudio()
+	{
+		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+		assetmanager->m_audioManager.m_UnpauseAllSounds();
+	}
+
+	void InternalCall::m_InternalCallSetGlobalBGMVolume(float volume)
+	{
+		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+		assetmanager->m_audioManager.m_SetGlobalBGMVolume(volume);
+	}
+
+	void InternalCall::m_InternalCallSetGlobalSFXVolume(float volume)
+	{
+		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+		assetmanager->m_audioManager.m_SetGlobalSFXVolume(volume);
+	}
+
+	float InternalCall::m_InternalCallGetGlobalBGMVolume() 
+	{
+		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+		return assetmanager->m_audioManager.m_GlobalBGMVolume;
+	}
+
+	float InternalCall::m_InternalCallGetGlobalSFXVolume()
+	{
+		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+		return assetmanager->m_audioManager.m_GlobalSFXVolume;
+	}
+
+	bool InternalCall::m_InternalCallCheckIsBGM(ecs::EntityID id, MonoString* monoString) {
+		char* nativeString = mono_string_to_utf8(monoString);
+		std::filesystem::path filepath = nativeString;
+
+		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+		bool result = assetmanager->m_audioManager.m_CheckIsBGMForEntity(id, filepath.filename().stem().string());
+
+		mono_free(nativeString);
+
+		return result;
+	}
+
+	bool InternalCall::m_InternalCallCheckIsSFX(ecs::EntityID id, MonoString* monoString) {
+		char* nativeString = mono_string_to_utf8(monoString);
+		std::filesystem::path filepath = nativeString;
+
+		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+		bool result = assetmanager->m_audioManager.m_CheckIsSFXForEntity(id, filepath.filename().stem().string());
+
+		mono_free(nativeString);
+
+		return result;
 
 	}
 
@@ -1054,7 +1158,7 @@ namespace script {
 
 
 
-		return false;
+		//return false;
 	}
 
 	void InternalCall::m_InternalCallGetPath(int gridKey, int* startX, int* startY, int* targetX, int* targetY, MonoArray** nodeArray_x, MonoArray** nodeArray_y)
@@ -1242,6 +1346,7 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_InternalGetWorldMousePosition);
 
 		MONO_ADD_INTERNAL_CALL(m_InternalCallSetTimeScale);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallGetTimeScale);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallResetTimeScale);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallCloseWindow);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallGetChildrenID);
@@ -1250,6 +1355,17 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_InternalCallPlayAudio);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallStopAudio);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallStopAllAudio);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallPauseAudio);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallUnPauseAudio);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallPauseAllAudio);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallUnPauseAllAudio);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallSetGlobalBGMVolume);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallSetGlobalSFXVolume);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallGetGlobalBGMVolume);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallGetGlobalSFXVolume);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallCheckIsBGM);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallCheckIsSFX);
+
 
 		MONO_ADD_INTERNAL_CALL(m_InternalCallIsWindowMinimise);
 		MONO_ADD_INTERNAL_CALL(m_getAccumulatedDeltaTime);
@@ -1279,5 +1395,7 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_InternalGetEntityIdFromGridKey);
 
 		MONO_ADD_INTERNAL_CALL(m_ChangeLayer);
+
+		MONO_ADD_INTERNAL_CALL(m_getFPS);
 	}
 }

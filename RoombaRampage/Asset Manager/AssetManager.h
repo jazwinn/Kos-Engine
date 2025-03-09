@@ -23,12 +23,12 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 
 #include <../GLEW/include/GL/glew.h>
-#include "../Asset Manager/Audio.h"
+#include "Audio.h"
 #include "Prefab.h"
 #include "Image.h"
 #include "Text.h"
+#include "Video.h"
 #include "../C#Mono/mono_handler.h"
-
 #include "../C#Mono/InternalCall.h"
 
 
@@ -167,6 +167,8 @@ namespace assetmanager {
         */
         /******************************************************************/
         script::ScriptHandler m_scriptManager;
+
+        video::VideoManager m_videoManager;
 
         /******************************************************************/
         /*!

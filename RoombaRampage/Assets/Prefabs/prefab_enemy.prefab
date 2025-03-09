@@ -1,5 +1,15 @@
 [
     {
+        "GlobalSettings": {
+            "globalIllumination": 0.30000001192092896,
+            "backgroundColor": {
+                "r": 0.13716816902160645,
+                "g": 0.13716816902160645,
+                "b": 0.13716816902160645
+            }
+        }
+    },
+    {
         "name": {
             "namestr": "Enemy",
             "layer": 2,
@@ -64,12 +74,13 @@
                 "g": 1.0,
                 "b": 1.0
             },
-            "alpha": 1.0
+            "alpha": 1.0,
+            "isLit": true
         },
         "animation": {
-            "frameNumber": 6,
+            "frameNumber": 12,
             "framesPerSecond": 10,
-            "frameTimer": 0.6000000834465027,
+            "frameTimer": 12515.8486328125,
             "isAnimating": true,
             "stripCount": 14
         },
