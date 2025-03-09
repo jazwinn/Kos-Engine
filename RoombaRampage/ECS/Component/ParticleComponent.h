@@ -32,7 +32,7 @@ namespace ecs
 		float m_lifeSpan{ 1.f };
 		vector2::Vec2 m_velocity{};
 		vector2::Vec2 m_acceleration{};
-		vector3::Vec3 m_color{};
+		vector3::Vec3 m_color{1.f,1.f,1.f};
 		float m_coneRotation{}; //Cone Rotation
 		float m_coneAngle{ 360.f };
 		float m_randomFactor{};
