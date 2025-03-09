@@ -23,7 +23,7 @@
                 "x": 0.0,
                 "y": 0.0
             },
-            "rotation": -54.48418426513672,
+            "rotation": 0.0,
             "scale": {
                 "x": 3.0,
                 "y": 3.0
@@ -221,6 +221,12 @@
                         "volume": 0.22100000083446503,
                         "loop": false,
                         "playOnStart": false
+                    },
+                    {
+                        "name": "aud_tempcock",
+                        "volume": 0.22200000286102295,
+                        "loop": false,
+                        "playOnStart": false
                     }
                 ]
             },
@@ -312,6 +318,12 @@
                     {
                         "name": "aud_emptyGun01",
                         "volume": 0.23199999332427979,
+                        "loop": false,
+                        "playOnStart": false
+                    },
+                    {
+                        "name": "aud_tempcock",
+                        "volume": 0.22699999809265137,
                         "loop": false,
                         "playOnStart": false
                     }
