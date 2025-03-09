@@ -53,13 +53,15 @@ namespace graphicpipe {
 
 		// Reserve memory for the maximum number of entities.
 		m_modelData.reserve(ecs::MaxEntity);
+		m_unlitModelData.reserve(ecs::MaxEntity);
 		m_debugBoxData.reserve(ecs::MaxEntity);
 		m_textData.reserve(ecs::MaxEntity);
 		m_modelToNDCMatrix.reserve(ecs::MaxEntity);
 		m_debugBoxToNDCMatrix.reserve(ecs::MaxEntity);
 		m_debugBoxCollisionChecks.reserve(ecs::MaxEntity);
 		m_frameNumbers.reserve(ecs::MaxEntity);
-		m_stripCounts.reserve(ecs::MaxEntity);
+		m_iVec3Array.reserve(ecs::MaxEntity);
+		m_vec3Array.reserve(ecs::MaxEntity);
 		m_layers.reserve(ecs::MaxEntity);
 
 		// Set up VAOs for different shapes and text rendering.
@@ -69,6 +71,7 @@ namespace graphicpipe {
 		m_funcSetupSquareLinesVao();
 		m_funcSetupGridVao();
 		m_funcSetupTextVao();
+		m_funcSetupVideoVAO();
 		m_funcSetDrawMode(GL_FILL);
 
 		// Compile and set up shader programs for various rendering tasks.
@@ -79,13 +82,16 @@ namespace graphicpipe {
 		m_textShaderProgram = m_funcSetupShader(textVertexShader, textFragmentShader);
 		m_gridShaderProgram = m_funcSetupShader(gridVertexShader, gridFragmentShader);
 		m_tilemapShaderProgram = m_funcSetupShader(tilemapVertexShader, tilemapFragmentShader);
-		
+		m_lightingShaderProgram = m_funcSetupShader(lightingVertexShader, lightingFragmentShader);
+		m_finalPassShaderProgram = m_funcSetupShader(finalPassVertexShader, finalPassFragmentShader);
+		m_videoShaderProgram = m_funcSetupShader(videoVertexShader,videoFragmentShader);
 
 		// Initialize model-to-NDC transformation matrix and other drawing data.
 		m_modelToNDCMatrix.push_back(m_testMatrix);
-		m_textureOrder.push_back(0);
+		//m_vec3Array.push_back(0);
 		m_frameNumbers.push_back(0);
-		m_stripCounts.push_back({ 0,0 });
+		m_iVec3Array.push_back({ 0,0,0 });
+		m_vec3Array.push_back({ 0,0,0 });
 		m_layers.push_back(0);
 		m_tileIndexes.push_back({0});
 		m_colors.push_back({ 0.f, 0.f, 0.f, 0.f });
@@ -97,20 +103,23 @@ namespace graphicpipe {
 		m_funcSetupArrayBuffer();
 		m_funcSetupFrameBuffer();
 		m_funcSetupGamePreviewFrameBuffer();
+		m_funcSetupLightingFrameBuffer();
+		m_funcSetupFinalPassBuffer();
 
 		// Clear temporary data structures used during setup.
 		m_debugBoxToNDCMatrix.clear();
 		m_debugBoxCollisionChecks.clear();
 		m_modelToNDCMatrix.clear();
-		m_textureOrder.clear();
+		m_vec3Array.clear();
 		m_frameNumbers.clear();
-		m_stripCounts.clear();
+		m_iVec3Array.clear();
 		m_layers.clear();
 		m_colors.clear();
 		m_tileIndexes.clear();
 
 		// Enable scissor test for limiting rendering to a specific area.
-		glEnable(GL_SCISSOR_TEST);
+		//glEnable(GL_SCISSOR_TEST);
+
 
 	}
 
@@ -149,7 +158,9 @@ namespace graphicpipe {
 
 		if (!m_gameMode)
 		{
+			
 			m_funcDrawWindow();
+			//m_drawLightingTexture();
 		}
 		
 	}
@@ -157,11 +168,16 @@ namespace graphicpipe {
 	void GraphicsPipe::m_funcClearContainers()
 	{
 		m_modelToNDCMatrix.clear();
-		m_textureOrder.clear();
+		m_vec3Array.clear();
 		m_frameNumbers.clear();
-		m_stripCounts.clear();
+		m_iVec3Array.clear();
 		m_layers.clear();
 		m_modelMatrix.clear();
+		m_unlitModelMatrix.clear();
+		m_unlitModelParams.clear();
+		m_unlitLayers.clear();
+		m_unlitColors.clear();
+		m_unlitModelData.clear();
 		m_modelData.clear();
 		m_debugBoxToNDCMatrix.clear();
 		m_debugBoxCollisionChecks.clear();
@@ -170,6 +186,10 @@ namespace graphicpipe {
 		m_debugBoxData.clear();
 		m_textData.clear();
 		m_colors.clear();
+		m_lightingData.clear();
+		m_lightingColors.clear();
+		m_lightingTransforms.clear();
+		m_lightingParams.clear();
 		m_tilemapData.clear();
 		m_transformedTilemaps.clear();
 		m_tileIndexes.clear();
@@ -177,35 +197,21 @@ namespace graphicpipe {
 		m_gridColliderArrays.clear();
 		m_gridColliderChecks.clear();
 		m_colliderGridData.clear();
+		m_videoData.clear();
 		GraphicsCamera::m_cameras.clear();
 		
 	}
 
 	void GraphicsPipe::m_funcRenderGameScene()
 	{
-
+		
 		if (m_gameMode)
 		{
-			//Helper::Helpers* help = Helper::Helpers::GetInstance();
-			/*if (GraphicsCamera::m_cameras.size() > 0 && m_gameMode)
-			{
-				GraphicsCamera::setCurrCamera(0);
-				GraphicsCamera::m_CalculateCurrView();
-			}
-			GraphicsCamera::setCurrCamera(0);
-			GraphicsCamera::m_CalculateCurrView();*/
-			
-			/*glClearColor(0.86f, 0.86f, 0.86f, 1.f);
-			glEnable(GL_DEPTH_TEST);
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-			m_funcDraw();
-			m_funcDrawTilemap();
-			m_funcDrawText();*/
-			//std::cout << "Hello" << std::endl;
-			m_funcDrawGameFrameBuffer();
-
+			glClearColor(0,0,0,1.f);
+			m_renderFinalPass();
+			//m_funcDrawFullScreenQuad(m_finalPassTexture);
 		}
-
+		
 		m_funcClearContainers();
 	}
 

@@ -1,3 +1,16 @@
+/******************************************************************/
+/*!
+\file      Image.cpp
+\author    Sean Tiu
+\par       s.tiu@digipen.edu
+\date      20 Nov, 2024
+\brief     
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/******************************************************************/
 #ifndef TILEMAPSYS_H
 #define TILEMAPSYS_H
 

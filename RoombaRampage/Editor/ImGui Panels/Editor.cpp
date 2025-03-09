@@ -226,6 +226,7 @@ namespace gui {
 				m_DrawLogsWindow();
 				//m_DrawTestWindow();
 				m_DrawLayerWindow();
+				m_DrawGlobalSettingsWindow();
 				m_DrawInputWindow();
 				m_DrawContentBrowser();
 				m_DrawRenderScreenWindow(static_cast<unsigned int>(Helper::Helpers::GetInstance()->m_windowWidth), static_cast<unsigned int>(Helper::Helpers::GetInstance()->m_windowHeight));
@@ -372,14 +373,14 @@ namespace gui {
 			auto* newAct = new actions::RemoveComponentAction(givenEvent.m_ToType<events::RemoveComponent>().m_GetID(), givenEvent.m_ToType<events::RemoveComponent>().m_GetComponentType());
 			actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
 		}
-		else if (givenEvent.m_GetEventType() == events::Actions::ADDENT) {
-			auto* newAct = new actions::AddEntityAction(givenEvent.m_ToType<events::AddEntity>().m_GetID());
-			actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
-		}
-		else if (givenEvent.m_GetEventType() == events::Actions::DELENT) {
-			auto* newAct = new actions::RemoveEntityAction(givenEvent.m_ToType<events::RemoveEntity>().m_GetID());
-			actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
-		}
+		//else if (givenEvent.m_GetEventType() == events::Actions::ADDENT) {
+		//	auto* newAct = new actions::AddEntityAction(givenEvent.m_ToType<events::AddEntity>().m_GetID());
+		//	actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
+		//}
+		//else if (givenEvent.m_GetEventType() == events::Actions::DELENT) {
+		//	auto* newAct = new actions::RemoveEntityAction(givenEvent.m_ToType<events::RemoveEntity>().m_GetID());
+		//	actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
+		//}
 		else if (givenEvent.m_GetEventType() == events::Actions::MOVECTC) {
 			auto* newAct = new actions::MoveEntityChildToChildAction(givenEvent.m_ToType<events::MoveEntityChildToChild>().m_GetID(), givenEvent.m_ToType<events::MoveEntityChildToChild>().m_GetOldParentID(), givenEvent.m_ToType<events::MoveEntityChildToChild>().m_GetNewParentID());
 			actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
@@ -405,15 +406,28 @@ namespace gui {
 	void ImGuiHandler::m_UpdateOnPrefabMode()
 	{
 		Helper::Helpers* help = Helper::Helpers::GetInstance();
-		help->m_colour = { 0.86f, 0.86f, 0.86f };
-		//return if not on prefab mode
-		if (m_prefabSceneMode == false) return;
+		static bool colorChanged = false;
+		static vector3::Vec3 originalColor = {}; // Store original color
 
-		help->m_colour = { 0.133f, 0.23f, 0.32f };
+		if (m_prefabSceneMode)
+		{
+			if (!colorChanged)
+			{
+				originalColor = help->m_colour;
+				colorChanged = true;
+			}
 
-		//update all entity with prefab
-		prefab::Prefab::m_UpdateAllPrefabEntity(m_activeScene);
-
+			prefab::Prefab::m_UpdateAllPrefabEntity(m_activeScene);
+			help->m_colour = { 0.133f, 0.23f, 0.32f };
+		}
+		else
+		{
+			if (colorChanged)
+			{
+				help->m_colour = originalColor;
+				colorChanged = false;
+			}
+		}
 
 
 	}

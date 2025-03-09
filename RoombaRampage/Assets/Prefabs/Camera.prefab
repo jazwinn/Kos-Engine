@@ -1,0 +1,60 @@
+[
+    {
+        "GlobalSettings": {
+            "globalIllumination": 0.30000001192092896,
+            "backgroundColor": {
+                "r": 0.13716816902160645,
+                "g": 0.13716816902160645,
+                "b": 0.13716816902160645
+            }
+        }
+    },
+    {
+        "name": {
+            "namestr": "Camera",
+            "layer": 0,
+            "isprefab": true,
+            "tagstr": "Camera",
+            "prefabname": "Camera.prefab",
+            "issync": true
+        },
+        "transform": {
+            "position": {
+                "x": 0.0,
+                "y": 0.3626401424407959
+            },
+            "rotation": 0.0,
+            "scale": {
+                "x": 8.0,
+                "y": 8.0
+            }
+        },
+        "camera": {
+            "planes": {
+                "left": 0.0,
+                "right": 0.0,
+                "top": 0.0,
+                "bottom": 0.0
+            },
+            "aspectRatio": 0.0
+        },
+        "script": {
+            "scripts": [
+                {
+                    "name": "CameraFollowPlayerScript",
+                    "enabled": true,
+                    "map": [
+                        {
+                            "variable": "shakeIntensity",
+                            "base64": ""
+                        },
+                        {
+                            "variable": "shakeDuration",
+                            "base64": ""
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+]

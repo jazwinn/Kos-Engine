@@ -1,0 +1,107 @@
+/******************************************************************/
+/*!
+\file      RenderSystem.cpp
+\author    Ng Jaz winn, jazwinn.ng , 2301502
+\par       jazwinn.ng@digipen.edu
+\date      Jan 30, 2025
+\brief     This file contains class for the Render System
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/********************************************************************/
+#include "../Config/pch.h"
+
+#include "../ECS.h"
+
+#include "../ECS/System/ParticleSystem.h"
+#include "../Graphics/GraphicsPipe.h"
+#include "../Asset Manager/AssetManager.h"
+
+namespace ecs {
+
+	void ParticleSystem::m_RegisterSystem(EntityID ID) {
+		ECS* ecs = ECS::m_GetInstance();
+
+		if (std::find_if(m_vecTransformComponentPtr.begin(), m_vecTransformComponentPtr.end(), [ID](const auto& obj) { return obj->m_Entity == ID; })
+			== m_vecTransformComponentPtr.end()) {
+			m_vecTransformComponentPtr.push_back((TransformComponent*)ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(ID));
+			m_vecParticleComponentPtr.push_back((ParticleComponent*)ecs->m_ECS_CombinedComponentPool[TYPEPARTICLECOMPONENT]->m_GetEntityComponent(ID));
+			m_vecNameComponentPtr.push_back((NameComponent*)ecs->m_ECS_CombinedComponentPool[TYPENAMECOMPONENT]->m_GetEntityComponent(ID));
+		}
+
+	}
+
+	void ParticleSystem::m_DeregisterSystem(EntityID ID) {
+
+		//search element location for the entity
+		size_t IndexID{};
+		for (auto& ParticleComponentPtr : m_vecParticleComponentPtr) {
+			if (ParticleComponentPtr->m_Entity == ID) {
+				break;
+			}
+			IndexID++;
+		}
+
+		//index to the last element
+		size_t IndexLast = m_vecParticleComponentPtr.size() - 1;
+		std::swap(m_vecParticleComponentPtr[IndexID], m_vecParticleComponentPtr[IndexLast]);
+		std::swap(m_vecTransformComponentPtr[IndexID], m_vecTransformComponentPtr[IndexLast]);
+		std::swap(m_vecNameComponentPtr[IndexID], m_vecNameComponentPtr[IndexLast]);
+
+		//popback the vector;
+		m_vecParticleComponentPtr.pop_back();
+		m_vecTransformComponentPtr.pop_back();
+		m_vecNameComponentPtr.pop_back();
+	}
+
+	void ParticleSystem::m_Init()
+	{
+		m_SystemSignature.set(TYPETRANSFORMCOMPONENT);
+		m_SystemSignature.set(TYPEPARTICLECOMPONENT);
+	}
+
+	void ParticleSystem::m_Update(const std::string& scene)
+	{
+		ECS* ecs = ECS::m_GetInstance();
+		graphicpipe::GraphicsPipe* graphicsPipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
+		//assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+
+		if (m_vecParticleComponentPtr.size() != m_vecTransformComponentPtr.size()) {
+			LOGGING_ERROR("Error: Vectors container size does not Match");
+			return;
+		}
+
+		//loops through all vecoters pointing to component
+		for (int n{}; n < m_vecParticleComponentPtr.size(); n++)
+		{
+			TransformComponent* transform = m_vecTransformComponentPtr[n];
+			ParticleComponent* particle = m_vecParticleComponentPtr[n];
+			NameComponent* nc = m_vecNameComponentPtr[n];
+			//skip component not of the scene
+			if ((particle->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(nc->m_Layer)) continue;
+
+			transform;
+			particle;
+			nc;
+
+			if (particle->m_willSpawn)
+			{
+				graphicsPipe->m_particleData.push_back({ 100, 5.f, {transform->m_position.m_x, transform->m_position.m_y}, {1.f,1.f,}, {0.5f, 0.5f},
+				{transform->m_scale.m_x, transform->m_scale.m_y} , {1.f,1.f,1.f,1.f }, transform->m_rotation, 360.f, 0.f /*Change this later*/,
+				0, 0, 0, 0 });
+				particle->m_willSpawn = false;
+			}
+			
+
+
+
+		}
+
+
+	}
+
+
+}
+

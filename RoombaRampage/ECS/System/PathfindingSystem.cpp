@@ -90,33 +90,41 @@ namespace ecs {
                 return;
             }
 
-            
-            pathfinding->m_StartPos.m_x = floor(transform->m_position.m_x) - grid->m_Anchor.m_x;
-            pathfinding->m_StartPos.m_y = grid->m_Anchor.m_y - floor(transform->m_transformation.m_e21) - 1.0f;
-
-
-            int startX = pathfinding->m_StartPos.m_x;
-            int startY = pathfinding->m_StartPos.m_y;
-            int targetX = pathfinding->m_TargetPos.m_x;
-            int targetY = pathfinding->m_TargetPos.m_y;
-
-            auto path = pathfinder.FindPath(grid, startX, startY, targetX, targetY);
-
-            if (!path.empty()) {
-                pathfinding->m_Path = path;
-                //LOGGING_INFO("Path found");
-                for (const auto& node : path) {
-                   std::cout << "Step: (" << node.x << ", " << node.y << ")\n";
-
-                   /* if (!pathfinding->m_Path.empty())
-                    {
-                        std::cout << "has path" << "\n";
-                    }*/
-                }
+            if ((transform->m_position.m_x < grid->m_Anchor.m_x || transform->m_position.m_y > grid->m_Anchor.m_y) ||
+                (transform->m_position.m_x > (grid->m_Anchor.m_x + grid->m_GridRowLength) || transform->m_position.m_y < (grid->m_Anchor.m_y - grid->m_GridColumnLength)))
+            {
+                LOGGING_WARN("Error: Pathfinding Component -> Outside grid component");
+                return;
             }
-            else {
-                LOGGING_INFO("No path found");
+            else
+            { 
+                pathfinding->m_StartPos.m_x = floor(transform->m_position.m_x) - grid->m_Anchor.m_x;
+                pathfinding->m_StartPos.m_y = grid->m_Anchor.m_y - floor(transform->m_transformation.m_e21) - 1.0f;
             }
+
+
+            /*int startX = static_cast<int>(pathfinding->m_StartPos.m_x);
+            int startY = static_cast<int>(pathfinding->m_StartPos.m_y);
+            int targetX = static_cast<int>(pathfinding->m_TargetPos.m_x);
+            int targetY = static_cast<int>(pathfinding->m_TargetPos.m_y);
+
+            auto path = pathfinder.FindPath(grid, startX, startY, targetX, targetY);*/
+
+            //if (!path.empty()) {
+            //    pathfinding->m_Path = path;
+            //    //LOGGING_INFO("Path found");
+            //    /*for (const auto& node : path) {*/
+            //       //std::cout << "Step: (" << node.x << ", " << node.y << ")\n";
+
+            //       /* if (!pathfinding->m_Path.empty())
+            //        {
+            //            std::cout << "has path" << "\n";
+            //        }*/
+            //   // }
+            //}
+            //else {
+            //    //LOGGING_INFO("No path found");
+            //}
         }
     }
 

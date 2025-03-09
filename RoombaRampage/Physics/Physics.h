@@ -386,6 +386,7 @@ namespace physicspipe {
 		bool m_CollisionIntersection_CircleRect_AABB(const Circle&, const Rectangle&);
 		bool m_CollisionIntersection_CircleRect_SAT(const Circle&, const Rectangle&);
 		std::pair<bool, std::pair<vector2::Vec2, float>> m_CollisionIntersection_CircleRect_SAT_TEST(const Circle&, const Rectangle&);
+		std::pair<bool, std::pair<vector2::Vec2, float>> m_CollisionIntersection_CircleCircle_SAT_TEST(const Circle&, const Circle&);
 		/******************************************************************/
 		/*!
 		\fn        bool Physics::m_CollisionIntersection_CircleCircle(const Circle& circle1, const Circle& circle2)
@@ -507,7 +508,7 @@ namespace physicspipe {
 		bool LineIntersect(const vector2::Vec2& p1, const vector2::Vec2& p2, const vector2::Vec2& q1, const vector2::Vec2& q2, vector2::Vec2& intersection);
 		bool LineRectangleIntersect(const vector2::Vec2& p1, const vector2::Vec2& p2, const vector2::Vec2& rectBottomLeft, const vector2::Vec2& rectTopRight, vector2::Vec2& intersectionpoint);
 
-		void IsLineIntersecting(const vector2::Vec2& p1, const vector2::Vec2& p2, const std::vector<layer::LAYERS>& layer, bool& isHit, vector2::Vec2& hitPosition);
+		void IsLineIntersecting(const ecs::EntityID id, const vector2::Vec2& p1, const vector2::Vec2& p2, const std::vector<layer::LAYERS>& layer, bool& isHit, vector2::Vec2& hitPosition);
 };
 }
 #endif

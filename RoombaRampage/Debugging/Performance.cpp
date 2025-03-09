@@ -65,6 +65,16 @@ namespace performancetracker {
 			return "Tile Map System";
 		case ecs::TypeSystem::TYPEAUDIOSYSTEM:
 			return "Audio System";
+		case ecs::TypeSystem::TYPEGRIDSYSTEM:
+			return "Grid System";
+		case ecs::TypeSystem::TYPEPATHFINDINGSYSTEM:
+			return "Pathfinding System";
+		case ecs::TypeSystem::TYPERAYCASTSYSTEM:
+			return "Raycast System";
+		case ecs::TypeSystem::TYPELIGHTINGSYSTEM:
+			return "Lighting System";
+		case ecs::TypeSystem::TYPEVIDEOSYSTEM:
+			return "Video System";
 		case ecs::TypeSystem::TOTALTYPESYSTEM:
 			return "ImGui System";
 		default:

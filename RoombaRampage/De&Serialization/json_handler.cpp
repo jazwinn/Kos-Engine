@@ -27,23 +27,13 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 //SAVING
 
-//rapidjson::Value name(rapidjson::kObjectType);
-//SaveComponent<decltype(ec->Names())> saver{ ec->Names() };  // Create SaveEntity with member names
-//
-//ec->ApplyFunction([&](auto& member) {
-//	saver(member, name, allocator);  // Apply SaveEntity to each member
-//	});
-//
-//entityData.AddMember(rapidjson::Value(ec->classname(), allocator), name, allocator);
+//template <typename T>//T refers to component
+//void m_saveComponentreflect(T* component, rapidjson::Value& entityData, rapidjson::Document::AllocatorType& allocator);
 
 //LOADING
 
-//const rapidjson::Value& name = entityData["EnemyComponent"]; // <- change string to ecs::EnemyCoponent::classname().cstr()
-//LoadComponent<decltype(ecs::EnemyComponent::Names())> loader{ ecs::EnemyComponent::Names() };
-//
-//pc->ApplyFunction([&](auto& member) {
-//	loader(member, name);
-//	});
+//template <typename T>//T refers to component
+//void m_LoadComponentreflect(T* component, rapidjson::Value& entityData);
 
 
 /********************************************************************/
@@ -61,6 +51,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Application/Helper.h"
 #include "../Debugging/Logging.h"
 #include "../Asset Manager/Prefab.h"
+#include "../Graphics/GraphicsPipe.h"
 #include "json_handler.h"
 
 #include <cstdio>
@@ -73,287 +64,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 namespace Serialization {
 
-	template <typename T>
-	struct SaveComponent {
-
-		T m_Array;
-		int count{};
-
-
 	
-		void operator()(float& _args, rapidjson::Value& value, rapidjson::Document::AllocatorType& allocator) {
-			rapidjson::Value key;
-			key.SetString(m_Array[count].c_str(), allocator);
-			value.AddMember(key, _args, allocator);
-			count++;
-		}
-
-
-		void operator()(int& _args, rapidjson::Value& value, rapidjson::Document::AllocatorType& allocator) {
-			rapidjson::Value key;
-			key.SetString(m_Array[count].c_str(), allocator);
-
-			value.AddMember(key, _args, allocator);
-			count++;
-		}
-
-		void operator()(vector2::Vec2& _args, rapidjson::Value& value, rapidjson::Document::AllocatorType& allocator) {
-			rapidjson::Value key;
-			key.SetString(m_Array[count].c_str(), allocator);
-
-			value.AddMember(key, rapidjson::Value().SetObject()
-				.AddMember("x", _args.m_x, allocator)
-				.AddMember("y", _args.m_y, allocator), allocator);
-			count++;
-		}
-
-		void operator()(vector3::Vec3& _args, rapidjson::Value& value, rapidjson::Document::AllocatorType& allocator) {
-			rapidjson::Value key;
-			key.SetString(m_Array[count].c_str(), allocator);
-
-			value.AddMember(key, rapidjson::Value().SetObject()
-				.AddMember("x", _args.m_x, allocator)
-				.AddMember("y", _args.m_y, allocator)
-				.AddMember("Z", _args.m_z, allocator), allocator);
-			count++;
-		}
-
-
-		void operator()(bool& _args, rapidjson::Value& value, rapidjson::Document::AllocatorType& allocator) {
-			rapidjson::Value key;
-			key.SetString(m_Array[count].c_str(), allocator);
-
-			value.AddMember(key, _args, allocator);
-			count++;
-		}
-
-		void operator()(std::string& _args, rapidjson::Value& value, rapidjson::Document::AllocatorType& allocator) {
-			rapidjson::Value jsonString;
-			jsonString.SetString(_args.c_str(), allocator); // Set the string
-			value.AddMember(rapidjson::Value(m_Array[count].c_str(), allocator), jsonString, allocator); // Add the key-value pair
-			count++;
-		}
-
-
-		template <typename EnumType, typename = std::enable_if_t<std::is_enum_v<EnumType>>>
-		void operator()(EnumType& _args, rapidjson::Value& value, rapidjson::Document::AllocatorType& allocator) {
-			// Create a rapidjson::Value key from the string
-			rapidjson::Value key;
-			key.SetString(m_Array[count].c_str(), allocator);
-
-			// Add the member using the key and integer value
-			value.AddMember(key, static_cast<int>(_args), allocator);
-
-			count++;
-		}
-
-		template <typename U>
-		void operator()(std::vector<U>& _args, rapidjson::Value& value, rapidjson::Document::AllocatorType& allocator) {
-			if constexpr (std::is_class_v<U>) {
-				rapidjson::Value Array(rapidjson::kArrayType);
-				for (U& x : _args) {
-					rapidjson::Value name(rapidjson::kObjectType);
-					SaveComponent<decltype(x.Names())> saver{ x.Names() };
-
-					x.ApplyFunction([&](auto& member) {
-						saver(member, name, allocator);  // Apply SaveEntity to each member
-						});
-
-					Array.PushBack(name, allocator);
-				}
-
-				rapidjson::Value key;
-				key.SetString(m_Array[count].c_str(), allocator);
-
-				value.AddMember(key, Array, allocator);
-			}
-			else {
-				rapidjson::Value Array(rapidjson::kArrayType);
-				for (U& x : _args) {
-
-					rapidjson::Value name(rapidjson::kObjectType);
-					(*this)(x, name, allocator); // Handle non-class types
-					Array.PushBack(name, allocator);
-					count--;// minus so no subsciprt error
-
-				}
-
-				rapidjson::Value key;
-				key.SetString(m_Array[count].c_str(), allocator);
-
-				value.AddMember(key, Array, allocator);
-			}
-			count++;
-		}
-
-		template <typename K>
-		void operator()(K& _args, rapidjson::Value& value, rapidjson::Document::AllocatorType& allocator) {
-			if constexpr (std::is_class_v<K>) {
-				rapidjson::Value name(rapidjson::kObjectType);
-				SaveComponent<decltype(_args.Names())> saver{ _args.Names() };
-
-				_args.ApplyFunction([&](auto& member) {
-					saver(member, name, allocator);  // Apply SaveEntity to each member
-					});
-
-				value.AddMember(rapidjson::Value(_args.classname(), allocator), name, allocator);
-				//_args.ApplyFunction(DrawComponents<decltype(_args.Names())>{_args.Names()});
-				count++;
-			}
-
-		}
-
-	};
-
-	template <typename T>
-	struct LoadComponent {
-
-		T m_Array;
-		int count{};
-
-
-
-		void operator()(float& _args, const rapidjson::Value& value) {
-			
-			if (value.HasMember(m_Array[count].c_str()) && value[m_Array[count].c_str()].IsFloat()) {
-				_args = value[m_Array[count].c_str()].GetFloat();
-			}
-
-			count++;
-		}
-
-
-		void operator()(int& _args, const rapidjson::Value& value) {
-			
-			if (value.HasMember(m_Array[count].c_str()) && value[m_Array[count].c_str()].IsInt()) {
-				_args = value[m_Array[count].c_str()].GetInt();
-			}
-
-			count++;
-		}
-
-		void operator()(vector2::Vec2& _args, const rapidjson::Value& value) {
-			
-			if (value.HasMember(m_Array[count].c_str()) && value[m_Array[count].c_str()].IsObject()) {
-				const rapidjson::Value& vector = value[m_Array[count].c_str()];
-				if (vector.HasMember("x") && vector["x"].IsFloat()) {
-					_args.m_x = vector["x"].GetFloat();
-				}
-				if (vector.HasMember("y") && vector["y"].IsFloat()) {
-					_args.m_y = vector["y"].GetFloat();
-				}
-			}
-
-			count++;
-		}
-
-		void operator()(vector3::Vec3& _args, const rapidjson::Value& value) {
-
-			if (value.HasMember(m_Array[count].c_str()) && value[m_Array[count].c_str()].IsObject()) {
-				const rapidjson::Value& vector = value[m_Array[count].c_str()];
-				if (vector.HasMember("x") && vector["x"].IsFloat()) {
-					_args.m_x = vector["x"].GetFloat();
-				}
-				if (vector.HasMember("y") && vector["y"].IsFloat()) {
-					_args.m_y = vector["y"].GetFloat();
-				}
-				if (vector.HasMember("z") && vector["z"].IsFloat()) {
-					_args.m_z = vector["z"].GetFloat();
-				}
-			}
-
-			count++;
-		}
-
-
-		void operator()(bool& _args, const rapidjson::Value& value) {
-			
-			if (value.HasMember(m_Array[count].c_str()) && value[m_Array[count].c_str()].IsBool()) {
-				_args = value[m_Array[count].c_str()].GetBool();
-			}
-
-			count++;
-		}
-
-		void operator()(std::string& _args, const rapidjson::Value& value) {
-			if (value.HasMember(m_Array[count].c_str()) && value[m_Array[count].c_str()].IsString()) {
-				_args = value[m_Array[count].c_str()].GetString();
-			}
-
-			count++;
-		}
-
-		template <typename EnumType, typename = std::enable_if_t<std::is_enum_v<EnumType>>>
-		void operator()(EnumType& _args, const rapidjson::Value& value) {
-			if (value.HasMember(m_Array[count].c_str()) && value[m_Array[count].c_str()].IsInt()) {
-				_args = static_cast<EnumType>(value[m_Array[count].c_str()].GetInt());
-			}
-			count++;
-		}
-
-		template <typename U>
-		void operator()(std::vector<U>& _args, const rapidjson::Value& value) {
-			if constexpr (std::is_class_v<U>) {
-				if (value.HasMember(m_Array[count].c_str()) && value[m_Array[count].c_str()].IsArray()) {
-
-					const rapidjson::Value& Array = value[m_Array[count].c_str()];
-
-					for (rapidjson::SizeType i = 0; i < Array.Size(); i++) {
-						const rapidjson::Value& Object = Array[i];
-
-						LoadComponent<decltype(U::Names())> loader{U::Names() };
-
-						U temp;
-
-						temp.ApplyFunction([&](auto& member) {
-							loader(member, Object);
-							});
-
-						_args.push_back(temp);
-					}
-				}
-
-			}
-			else {
-				const rapidjson::Value& Array = value[m_Array[count].c_str()];
-
-				for (rapidjson::SizeType i = 0; i < Array.Size(); i++) {
-					const rapidjson::Value& name = Array[i];
-
-					U temp;
-					(*this)(temp, name); // Handle non-class types
-					
-					_args.push_back(temp);
-					count--; //offset 
-				}
-			}
-			count++;
-		}
-
-		template <typename K>
-		void operator()(K& _args, const rapidjson::Value& value) {
-			if constexpr (std::is_class_v<K>) {
-				const rapidjson::Value& name = value[_args.classname()];
-				LoadComponent<decltype(_args.Names())> loader{ _args.Names() };
-
-				_args.ApplyFunction([&](auto& member) {
-					loader(member, name);
-					});
-
-				count++;
-			}
-
-		}
-		//template <typename K>
-		//void operator()(K& _args) {
-		//	if constexpr (std::is_class_v<K>) {
-		//		_args.ApplyFunction(DrawComponents<decltype(_args.Names())>{_args.Names()});
-		//		count++;
-		//	}
-
-		//}
-
-	};
 
 	void Serialize::m_LoadConfig() {
 		std::ifstream file;
@@ -364,6 +75,7 @@ namespace Serialization {
 			return;
 		}
 		Helper::Helpers* help = Helper::Helpers::GetInstance();
+		//graphicpipe::GraphicsPipe* graphics = graphicpipe::GraphicsPipe::m_funcGetInstance();
 
 		std::string line;
 		
@@ -377,6 +89,7 @@ namespace Serialization {
 			if (temp == "WindowWidth:") str2 >> help->m_windowWidth;
 			if (temp == "FpsCap:") str2 >> help->m_fpsCap;
 			if (temp == "StartScene:") str2 >> help->m_startScene;
+		
 		}
 
 
@@ -420,11 +133,37 @@ namespace Serialization {
 
 		std::string scenename = jsonFilePath.filename().string();
 		
+
+		// Load Global Setting
+		bool foundGlobalSettings = false;
+		for (rapidjson::SizeType i = 0; i < doc.Size(); i++) {
+			const rapidjson::Value& entry = doc[i];
+			if (entry.HasMember("GlobalSettings")) {
+				foundGlobalSettings = true;
+				const rapidjson::Value& globalSettings = entry["GlobalSettings"];
+				if (globalSettings.HasMember("globalIllumination")) {
+					graphicpipe::GraphicsPipe::m_funcGetInstance()->m_globalLightIntensity = globalSettings["globalIllumination"].GetFloat();
+				}
+				if (globalSettings.HasMember("backgroundColor")) {
+					const rapidjson::Value& bgColor = globalSettings["backgroundColor"];
+					Helper::Helpers* helper = Helper::Helpers::GetInstance();
+					helper->m_colour.m_x = bgColor["r"].GetFloat();
+					helper->m_colour.m_y = bgColor["g"].GetFloat();
+					helper->m_colour.m_z = bgColor["b"].GetFloat();
+				}
+			}
+		}
+
 		/*******************INSERT INTO FUNCTION*****************************/
 
 		// Iterate through each component entry in the JSON array
 		for (rapidjson::SizeType i = 0; i < doc.Size(); i++) {
 			const rapidjson::Value& entityData = doc[i];
+
+			if (entityData.HasMember("GlobalSettings")) {
+				continue;
+			}
+
 			m_LoadEntity(entityData, std::nullopt, scenename);
 		}
 
@@ -446,10 +185,26 @@ namespace Serialization {
 
 		std::unordered_set<ecs::EntityID> savedEntities;  //track saved entities
 
+		rapidjson::Value globalSettings(rapidjson::kObjectType);
+		globalSettings.AddMember("globalIllumination",
+			graphicpipe::GraphicsPipe::m_funcGetInstance()->m_globalLightIntensity, allocator);
+
+		rapidjson::Value backgroundColor(rapidjson::kObjectType);
+		Helper::Helpers* helper = Helper::Helpers::GetInstance();
+		backgroundColor.AddMember("r", helper->m_colour.m_x, allocator);
+		backgroundColor.AddMember("g", helper->m_colour.m_y, allocator);
+		backgroundColor.AddMember("b", helper->m_colour.m_z, allocator);
+		globalSettings.AddMember("backgroundColor", backgroundColor, allocator);
+
+		rapidjson::Value settingsWrapper(rapidjson::kObjectType);
+		settingsWrapper.AddMember("GlobalSettings", globalSettings, allocator);
+		doc.PushBack(settingsWrapper, allocator);
+
 		//Start saving the entities
 		std::vector<ecs::EntityID> entities = ecs->m_ECS_SceneMap.find(scene.filename().string())->second.m_sceneIDs;
 		for (const auto& entityId : entities) {
 			if (!ecs::Hierachy::m_GetParent(entityId).has_value()) {
+				rapidjson::Value entityData(rapidjson::kObjectType);
 				m_SaveEntity(entityId, doc, allocator, savedEntities);
 			}
 		}
@@ -520,6 +275,7 @@ namespace Serialization {
 					.AddMember("y", tc->m_scale.m_y, allocator), allocator);
 				entityData.AddMember("transform", transform, allocator);
 				hasComponents = true;
+
 			}
 		}
 
@@ -528,7 +284,8 @@ namespace Serialization {
 			ecs::ColliderComponent* cc = static_cast<ecs::ColliderComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(entityId));
 			if (cc) {
 				rapidjson::Value collider(rapidjson::kObjectType);
-				collider.AddMember("checkcollision", cc->m_CollisionCheck, allocator);
+				collider.AddMember("checkcollision", cc->m_collisionCheck, allocator);
+				collider.AddMember("checkresponse", cc->m_collisionResponse, allocator);
 				collider.AddMember("size", rapidjson::Value().SetObject()
 					.AddMember("x", cc->m_Size.m_x, allocator)
 					.AddMember("y", cc->m_Size.m_y, allocator), allocator);
@@ -553,7 +310,7 @@ namespace Serialization {
 				rapidjson::Value player(rapidjson::kObjectType);
 				player.AddMember("enemytag", ec->m_enemyTag, allocator);
 				player.AddMember("enemytype", ec->m_enemyTypeInt, allocator);
-				player.AddMember("enemybehaviour", ec->m_enemyTypeInt, allocator);
+				player.AddMember("enemybehaviour", ec->m_enemyRoamBehaviourInt, allocator);
 				entityData.AddMember("enemy", player, allocator);
 				hasComponents = true;  // Mark as having a component
 			}
@@ -613,6 +370,7 @@ namespace Serialization {
 				colorValue.AddMember("b", sc->m_color.m_z, allocator);
 				sprite.AddMember("color", colorValue, allocator);
 				sprite.AddMember("alpha", sc->m_alpha, allocator);
+				sprite.AddMember("isLit", sc->m_isIlluminated, allocator);
 
 				entityData.AddMember("sprite", sprite, allocator);
 				hasComponents = true;  // Mark as having a component
@@ -726,11 +484,28 @@ namespace Serialization {
 
 					// Add the script name (string) to the object
 					rapidjson::Value scriptValue;
-					scriptValue.SetString(scriptName.first.c_str(), allocator);
+					scriptValue.SetString(std::get<0>(scriptName).c_str(), allocator);
 					scriptObject.AddMember("name", scriptValue, allocator);
 
 					// Add the boolean value to the object
-					scriptObject.AddMember("enabled", scriptName.second, allocator);
+					scriptObject.AddMember("enabled", std::get<1>(scriptName), allocator);
+
+					rapidjson::Value variableMapValue(rapidjson::kArrayType);
+					for (const auto& x : std::get<2>(scriptName)) {
+						rapidjson::Value VariableString, base64string;
+
+						VariableString.SetString(x.first.c_str(), allocator);
+						base64string.SetString(x.second.c_str(), allocator);
+
+						rapidjson::Value publicVariable(rapidjson::kObjectType); // Create "publicvariable" object
+						publicVariable.AddMember("variable", VariableString, allocator);
+						publicVariable.AddMember("base64", base64string, allocator); // Fixed the name
+
+
+						variableMapValue.PushBack(publicVariable, allocator); // Push to array
+					}
+
+					scriptObject.AddMember("map", variableMapValue, allocator);
 
 					// Add the object to the array
 					scriptArray.PushBack(scriptObject, allocator);
@@ -739,7 +514,6 @@ namespace Serialization {
 				// Add the script array to the "script" object
 				script.AddMember("scripts", scriptArray, allocator);
 				entityData.AddMember("script", script, allocator);
-				hasComponents = true;
 			}
 		}
 
@@ -863,26 +637,26 @@ namespace Serialization {
 				// Create an array to store script objects
 				rapidjson::Value rayArray(rapidjson::kArrayType);
 
-				for (const auto& raycast : rc->m_raycast) {
+				for (const auto& raycast2 : rc->m_raycast) {
 					// Create an object for each script
 					rapidjson::Value raycastObject(rapidjson::kObjectType);
 					
 					rapidjson::Value raycastID;
-					raycastID.SetString(raycast.m_rayID.c_str(), allocator);
+					raycastID.SetString(raycast2.m_rayID.c_str(), allocator);
 					raycastObject.AddMember("raycastID", raycastID, allocator);
 
 
 					// Add the boolean value to the object
-					raycastObject.AddMember("israycasting", raycast.m_isRaycasting, allocator);
+					raycastObject.AddMember("israycasting", raycast2.m_isRaycasting, allocator);
 
 					raycastObject.AddMember("targetposition", rapidjson::Value().SetObject()
-						.AddMember("x", raycast.m_targetPosition.m_x, allocator)
-						.AddMember("y", raycast.m_targetPosition.m_y, allocator), allocator);
+						.AddMember("x", raycast2.m_targetPosition.m_x, allocator)
+						.AddMember("y", raycast2.m_targetPosition.m_y, allocator), allocator);
 
-					if (raycast.m_Layers.size() > 0) {
+					if (raycast2.m_Layers.size() > 0) {
 						rapidjson::Value layerArray(rapidjson::kArrayType);
 
-						for (const auto layer : raycast.m_Layers) {
+						for (const auto layer : raycast2.m_Layers) {
 							rapidjson::Value layerObject(rapidjson::kObjectType);
 
 							layerObject.AddMember("layer", (int)layer, allocator);
@@ -930,6 +704,19 @@ namespace Serialization {
 			}
 		}
 
+		if (signature.test(ecs::ComponentType::TYPELIGHTINGCOMPONENT)) {
+			ecs::LightingComponent *lc = static_cast<ecs::LightingComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPELIGHTINGCOMPONENT]->m_GetEntityComponent(entityId));
+			if (lc) {
+				m_saveComponentreflect(lc, entityData, allocator);
+			}
+		}
+
+		if (signature.test(ecs::ComponentType::TYPEVIDEOCOMPONENT)) {
+			ecs::VideoComponent* vc = static_cast<ecs::VideoComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPEVIDEOCOMPONENT]->m_GetEntityComponent(entityId));
+			if (vc) {
+				m_saveComponentreflect(vc, entityData, allocator);
+			}
+		}
 
 		// Add children
 		std::optional<std::vector<ecs::EntityID>> childrenOptional = ecs::Hierachy::m_GetChild(entityId);
@@ -1001,6 +788,7 @@ namespace Serialization {
 				tc->m_scale.m_x = transform["scale"]["x"].GetFloat();
 				tc->m_scale.m_y = transform["scale"]["y"].GetFloat();
 			}
+	
 		}
 
 		// Load Collider Component if it exists
@@ -1028,13 +816,16 @@ namespace Serialization {
 					cc->m_type = (physicspipe::EntityType)collider["shapetype"].GetInt();
 				}
 				if (collider.HasMember("checkcollision")) {
-					cc->m_CollisionCheck = collider["checkcollision"].GetBool();
+					cc->m_collisionCheck = collider["checkcollision"].GetBool();
+				}
+				if (collider.HasMember("checkresponse")) {
+					cc->m_collisionResponse = collider["checkresponse"].GetBool();
 				}
 			}
 		}
 
 		// Load Player Component if it exists
-		if (entityData.HasMember("EnemyComponent") && entityData["EnemyComponent"].IsObject()) {
+		if (entityData.HasMember("enemy") && entityData["enemy"].IsObject()) {
 			ecs::EnemyComponent* pc = static_cast<ecs::EnemyComponent*>(ecs->m_AddComponent(ecs::TYPEENEMYCOMPONENT, newEntityId));
 
 			if (pc) {
@@ -1137,6 +928,10 @@ namespace Serialization {
 				}
 				if (sprite.HasMember("alpha")) {
 					sc->m_alpha = sprite["alpha"].GetFloat();
+				}
+				if (sprite.HasMember("isLit"))
+				{
+					sc->m_isIlluminated = sprite["isLit"].GetBool();
 				}
 			}
 		}
@@ -1265,8 +1060,22 @@ namespace Serialization {
 									enabled = scriptObject["enabled"].GetBool();
 								}
 
+								std::unordered_map<std::string, std::string> variableMap;
+								if (scriptObject.HasMember("map") && scriptObject["map"].IsArray()) {
+									for (const auto& variable : scriptObject["map"].GetArray()) {
+										if (!variable.HasMember("variable") || !variable["variable"].IsString() ||
+											!variable.HasMember("base64") || !variable["base64"].IsString()) {
+											continue; // Skip invalid map entries
+										}
+
+										std::string key = variable["variable"].GetString();
+										std::string value = variable["base64"].GetString();
+										variableMap[key] = value;
+									}
+								}
+
 								// Add to the script list
-								sc->m_scripts.push_back(std::make_pair(scriptName, enabled));
+								sc->m_scripts.push_back(std::make_tuple(scriptName, enabled, variableMap));
 							}
 						}
 					}
@@ -1502,6 +1311,28 @@ namespace Serialization {
 		}
 
 
+
+		if (entityData.HasMember(ecs::LightingComponent::classname()) && entityData[ecs::LightingComponent::classname()].IsObject()) {
+			ecs::LightingComponent* lc = static_cast<ecs::LightingComponent*>(
+				ecs->m_AddComponent(ecs::TYPELIGHTINGCOMPONENT, newEntityId)
+				);
+
+			if (lc) {
+				m_LoadComponentreflect(lc, entityData);
+			}
+		}
+
+		if (entityData.HasMember(ecs::VideoComponent::classname()) && entityData[ecs::VideoComponent::classname()].IsObject()) {
+			ecs::VideoComponent* vc = static_cast<ecs::VideoComponent*>(
+				ecs->m_AddComponent(ecs::TYPEVIDEOCOMPONENT, newEntityId)
+				);
+
+			if (vc) {
+				m_LoadComponentreflect(vc, entityData);
+			}
+		}
+
+
 		//Attach entity to parent
 		if (parentID.has_value()) {
 			ecs::Hierachy::m_SetParent(parentID.value(), newEntityId);
@@ -1516,7 +1347,7 @@ namespace Serialization {
 		}
 	}
 	void Serialization::Serialize::m_SavePhysicsLayerMatrix() {
-		std::ofstream file("./ECS/LayerConfig.txt");
+		std::ofstream file("./Config/LayerConfig.txt");
 		if (!file.is_open()) {
 			LOGGING_ERROR("Could not open LayerConfig.txt for writing.");
 			return;
@@ -1537,7 +1368,7 @@ namespace Serialization {
 	}
 
 	void Serialization::Serialize::m_LoadPhysicsLayerMatrix() {
-		std::ifstream file("./ECS/LayerConfig.txt");
+		std::ifstream file("./Config/LayerConfig.txt");
 		if (!file.is_open()) {
 			LOGGING_ERROR("Could not open LayerConfig.txt for reading.");
 			return;
@@ -1571,6 +1402,136 @@ namespace Serialization {
 
 		file.close();
 		LOGGING_INFO("Collision matrix loaded from LayerConfig.txt");
+	}
+
+	void Serialization::Serialize::m_SaveGlobaalSettings()
+	{
+		std::ofstream file("./Config/GlobalConfig.txt");
+		if (!file.is_open()) {
+			LOGGING_ERROR("Could not open GlobalConfig.txt for writing.");
+			return;
+		}
+		graphicpipe::GraphicsPipe* graphics = graphicpipe::GraphicsPipe::m_funcGetInstance();
+		Helper::Helpers* helper = Helper::Helpers::GetInstance();
+		file << "GlobalIllumination: " << graphics->m_globalLightIntensity << std::endl;
+		file << "BackgroundColor: " << helper->m_colour.m_x << ' ' << helper->m_colour.m_y << ' ' << helper->m_colour.m_z << std::endl;
+		file.close();
+	}
+
+	void Serialization::Serialize::m_LoadGlobalSettings()
+	{
+		std::ifstream file("./Config/GlobalConfig.txt");
+		if (!file.is_open()) {
+			LOGGING_ERROR("Could not open GlobalConfig.txt for reading.");
+			return;
+		}
+
+		std::string line;
+		graphicpipe::GraphicsPipe* graphics = graphicpipe::GraphicsPipe::m_funcGetInstance();
+		Helper::Helpers* helper = Helper::Helpers::GetInstance();
+
+		while (std::getline(file, line))
+		{
+			std::istringstream iss(line);
+			std::string temp;
+			iss >> temp;
+			if (temp == "GlobalIllumination:") {
+				float light;
+				iss >> light;
+				graphics->m_globalLightIntensity = light;
+			}
+			if (temp == "BackgroundColor:") {
+				float r, g, b = 0;
+				iss >> r >> g >> b;
+				helper->m_colour = { r,g,b };
+			}
+		}
+		
+
+
+		file.close();
+		LOGGING_INFO("Global Settings loaded from GlobalConfig.txt");
+	}
+	std::string Serialize::m_EncodeBase64(const void* data, size_t size)
+	{
+		static const char encodingTable[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+		if (!data || size == 0) {
+			return ""; // Return empty string if no data
+		}
+
+		const uint8_t* bytes = static_cast<const uint8_t*>(data);
+		std::string encoded;
+		encoded.reserve((size + 2) / 3 * 4); // Reserve space for performance
+
+		for (size_t i = 0; i < size; i += 3) {
+			uint32_t value = 0;
+			int count = 0;
+
+			// Read up to 3 bytes
+			for (int j = 0; j < 3; ++j) {
+				if (i + j < size) {
+					value |= (bytes[i + j] << (16 - j * 8));
+					count++;
+				}
+			}
+
+			// Encode into 4 Base64 characters
+			for (int j = 0; j < 4; ++j) {
+				if (j <= (count + 1)) {
+					encoded += encodingTable[(value >> (18 - j * 6)) & 0x3F];
+				}
+				else {
+					encoded += '='; // Padding
+				}
+			}
+		}
+
+		return encoded;
+	}
+
+	std::unique_ptr<void, Serialize::VoidDeleter> Serialize::DecodeBase64(const std::string& base64) {
+		static const int DECODING_TABLE[256] = {
+			-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 0-15
+			-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 16-31
+			-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 62, -1, -1, -1, 63, // 32-47  (+ and /)
+			52, 53, 54, 55, 56, 57, 58, 59, 60, 61, -1, -1, -1, -1, -1, -1, // 48-63  (0-9)
+			-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,           // 64-79  (A-O)
+			15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, -1, -1, -1, -1, -1, // 80-95  (P-Z)
+			-1, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, // 96-111 (a-o)
+			41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, -1, -1, -1, -1, -1  // 112-127 (p-z)
+		};
+
+		if (base64.empty()) return nullptr;
+
+		size_t inputLen = base64.length();
+		size_t padding = (base64[inputLen - 1] == '=') + (base64[inputLen - 2] == '=');
+		
+		size_t outSize = (inputLen * 3) / 4 - padding;
+
+		// Allocate memory using malloc (will be managed by unique_ptr)
+		auto buffer = std::unique_ptr<void, VoidDeleter>(malloc(outSize), VoidDeleter());
+		if (!buffer) return nullptr; // Memory allocation failed
+
+		uint8_t* output = static_cast<uint8_t*>(buffer.get());
+		uint32_t value = 0;
+		int bits = -8;
+		size_t index = 0;
+
+		for (char c : base64) {
+			if (c == '=') break;
+			int decoded = (c >= 0 && c <= 127) ? DECODING_TABLE[c] : -1;
+			if (decoded == -1) continue;
+
+			value = (value << 6) | decoded;
+			bits += 6;
+
+			if (bits >= 0) {
+				output[index++] = (value >> bits) & 0xFF;
+				bits -= 8;
+			}
+		}
+
+		return buffer;
 	}
 }
 

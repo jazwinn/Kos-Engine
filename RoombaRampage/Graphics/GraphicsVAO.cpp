@@ -37,6 +37,8 @@ namespace graphicpipe
 			1.0f,1.0f,		1.0f,1.0f,
 			1.0f,-1.0f,		1.0f,0.f,
 			-1.0f,1.0f,		0.0f,1.0f
+
+
 		};
 
 		unsigned int vbo;
@@ -168,6 +170,43 @@ namespace graphicpipe
 
 	}
 
+	void GraphicsPipe::m_funcSetupVideoVAO()
+	{
+		float vertices[] = {
+			// Positions     // Texture Coords
+			-1.0f, -1.0f, 0.0f,  0.0f, 1.0f,  // Bottom-left
+			 1.0f, -1.0f, 0.0f,  1.0f, 1.0f,  // Bottom-right
+			 1.0f,  1.0f, 0.0f,  1.0f, 0.0f,  // Top-right
+			-1.0f,  1.0f, 0.0f,  0.0f, 0.0f,   // Top-left
+		};
+
+		GLuint indices[] = {
+			0, 1, 2, // First triangle
+			2, 3, 0  // Second triangle
+		};
+
+		m_videoMesh;
+		GLuint EBO;
+		glGenVertexArrays(1, &m_videoMesh.m_vaoId);
+		glGenBuffers(1, &m_videoBuffer);
+		glGenBuffers(1, &EBO);
+
+		glBindVertexArray(m_videoMesh.m_vaoId);
+		glBindBuffer(GL_ARRAY_BUFFER, m_videoBuffer);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
+
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_DYNAMIC_DRAW);
+
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+		glEnableVertexAttribArray(1);
+
+		glBindVertexArray(0);
+
+	}
+
 	
 
 	void GraphicsPipe::m_funcSetupGrid(std::vector<glm::vec3>& vertices, int gridSize, float spacing)
@@ -217,7 +256,7 @@ namespace graphicpipe
 	void GraphicsPipe::m_funcSetupVao(Mesh& shape)
 	{
 		std::vector<glm::vec2> lvPosVtx;
-		std::vector<glm::vec3> lvClrVtx;
+		std::vector<glm::vec2> lvNDCVtx;
 		std::vector<glm::vec2> lvTexCoords;
 		std::vector<GLushort>idx_vtx;
 
@@ -226,10 +265,10 @@ namespace graphicpipe
 						glm::vec2(0.5f, 0.5f),
 						glm::vec2(-0.5f, 0.5f),
 						glm::vec2(-0.5f, -0.5f) };
-		lvClrVtx = { glm::vec3(1.f, 1.f, 1.f),
-						glm::vec3(1.f, 1.f, 1.f),
-						glm::vec3(1.f, 1.f, 1.f),
-						glm::vec3(1.f, 1.f, 1.f) };
+		lvNDCVtx = { glm::vec2(1.f, -1.f),
+						glm::vec2(1.f, 1.f),
+						glm::vec2(-1.f, 1.f),
+						glm::vec2(-1.f, -1.f) };
 		lvTexCoords = { glm::vec2(1.f, 0.f),
 						glm::vec2(1.f, 1.f),
 						glm::vec2(0.f, 1.f),
@@ -240,7 +279,10 @@ namespace graphicpipe
 		GLsizei position_data_offset = 0;
 		GLsizei position_attribute_size = sizeof(glm::vec2);
 		GLsizei position_data_size = position_attribute_size * static_cast<GLsizei>(lvPosVtx.size());
-		GLsizei texcoord_data_offset = position_data_size;
+		GLsizei NDC_data_offset = position_data_size;
+		GLsizei NDC_attribute_size = sizeof(glm::vec2);
+		GLsizei NDC_data_size = position_attribute_size * static_cast<GLsizei>(lvNDCVtx.size());
+		GLsizei texcoord_data_offset = position_data_size + NDC_data_size;
 		GLsizei texcoord_attribute_size = sizeof(glm::vec2);
 		GLsizei texcoord_data_size = texcoord_attribute_size * static_cast<GLsizei>(lvTexCoords.size());
 
@@ -249,9 +291,10 @@ namespace graphicpipe
 
 		glCreateBuffers(1, &lvVboId);
 
-		glNamedBufferStorage(lvVboId, position_data_size + texcoord_data_size, nullptr, GL_DYNAMIC_STORAGE_BIT);
+		glNamedBufferStorage(lvVboId, position_data_size + NDC_data_size  + texcoord_data_size, nullptr, GL_DYNAMIC_STORAGE_BIT);
 
 		glNamedBufferSubData(lvVboId, position_data_offset, position_data_size, lvPosVtx.data());
+		glNamedBufferSubData(lvVboId, NDC_data_offset, NDC_data_size, lvNDCVtx.data());
 		glNamedBufferSubData(lvVboId, texcoord_data_offset, texcoord_data_size, lvTexCoords.data());
 
 		glCreateVertexArrays(1, &shape.m_vaoId);
@@ -260,6 +303,12 @@ namespace graphicpipe
 			position_data_offset, position_attribute_size);
 		glVertexArrayAttribFormat(shape.m_vaoId, 0, 2, GL_FLOAT, GL_FALSE, 0);
 		glVertexArrayAttribBinding(shape.m_vaoId, 0, 0);
+
+		glEnableVertexArrayAttrib(shape.m_vaoId, 1);
+		glVertexArrayVertexBuffer(shape.m_vaoId, 1, lvVboId,
+			NDC_data_offset, NDC_attribute_size);
+		glVertexArrayAttribFormat(shape.m_vaoId, 1, 2, GL_FLOAT, GL_FALSE, 0);
+		glVertexArrayAttribBinding(shape.m_vaoId, 1, 1);
 
 		glEnableVertexArrayAttrib(shape.m_vaoId, 2);
 		glVertexArrayVertexBuffer(shape.m_vaoId, 2, lvVboId, texcoord_data_offset,

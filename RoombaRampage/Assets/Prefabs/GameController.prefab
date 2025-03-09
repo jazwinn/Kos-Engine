@@ -1,0 +1,61 @@
+[
+    {
+        "GlobalSettings": {
+            "globalIllumination": 0.30000001192092896,
+            "backgroundColor": {
+                "r": 0.13716816902160645,
+                "g": 0.13716816902160645,
+                "b": 0.13716816902160645
+            }
+        }
+    },
+    {
+        "name": {
+            "namestr": "GameController",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "script": {
+            "scripts": [
+                {
+                    "name": "GameController",
+                    "enabled": true,
+                    "map": [
+                        {
+                            "variable": "isSceneActive",
+                            "base64": ""
+                        },
+                        {
+                            "variable": "gameIsPaused",
+                            "base64": ""
+                        },
+                        {
+                            "variable": "easyMode",
+                            "base64": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        "audio": [
+            {
+                "name": "aud_testLoop",
+                "volume": 0.2770000100135803,
+                "loop": true,
+                "playOnStart": false
+            }
+        ]
+    }
+]

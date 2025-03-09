@@ -1,3 +1,17 @@
+/******************************************************************/
+/*!
+\file      Image.cpp
+\author    Sean Tiu
+\par       s.tiu@digipen.edu
+\date      15 Jan, 2025
+\brief
+
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/******************************************************************/
 #include "../Config/pch.h"
 #include "../ECS.h"
 #include "GridSystem.h"
@@ -54,7 +68,7 @@ namespace ecs {
 	{
 		ECS* ecs = ECS::m_GetInstance();
 		graphicpipe::GraphicsPipe* graphicsPipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
-		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+		//assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance(); //commented cuz unused
 
 		if (m_vecGridComponentPtr.size() != m_vecTransformComponentPtr.size()) {
 			LOGGING_ERROR("Error: Vectors container size does not match");
@@ -68,7 +82,7 @@ namespace ecs {
 			TransformComponent* transform = m_vecTransformComponentPtr[n];
 			GridComponent* grid = m_vecGridComponentPtr[n];
 			NameComponent* NameComp = m_vecNameComponentPtr[n];
-			graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
+			//graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance(); //unused
 
 
 			//skip component not of the scene
@@ -77,8 +91,8 @@ namespace ecs {
 			grid->m_Anchor.m_x = floor(transform->m_transformation.m_e20);
 			grid->m_Anchor.m_y = floor(transform->m_transformation.m_e21) + 1.0f;
 
-			transform->m_position.m_x = floor(transform->m_transformation.m_e20);
-			transform->m_position.m_y = floor(transform->m_transformation.m_e21);
+			transform->m_position.m_x = floor(transform->m_position.m_x);
+			transform->m_position.m_y = floor(transform->m_position.m_y);
 
 			transform->m_transformation.m_e20 = floor(transform->m_transformation.m_e20) + 0.5f;
 			transform->m_transformation.m_e21 = floor(transform->m_transformation.m_e21) + 0.5f;

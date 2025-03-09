@@ -25,6 +25,7 @@ R"( #version 460 core
 	layout (location=0) out vec4 fragColor;
 
 	uniform sampler2D textures[192]; // Subscript indicates max texture amount
+	uniform float globalBrightness;
 
 
 	void main()
@@ -34,6 +35,6 @@ R"( #version 460 core
 		 if(texColor.a < 0.1)
 		 discard;
     
-		fragColor = texColor;
+		fragColor = vec4(vec3(texColor.xyz),texColor.w);
 	}
 )"

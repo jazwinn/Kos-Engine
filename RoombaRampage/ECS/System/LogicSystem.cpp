@@ -42,6 +42,14 @@ namespace ecs {
 			IndexID++;
 		}
 
+
+		//free script handler 
+		for (int x : m_vecScriptComponentPtr[IndexID]->m_scriptHandler) {
+			mono_gchandle_free(x);
+		}
+
+
+
 		//index to the last element
 		size_t IndexLast = m_vecScriptComponentPtr.size() - 1;
 		std::swap(m_vecScriptComponentPtr[IndexID], m_vecScriptComponentPtr[IndexLast]);
@@ -75,7 +83,7 @@ namespace ecs {
 
 			CreateandStartScriptInstance(scriptComp);
 
-		}
+		} 
 	}
 
 
@@ -91,8 +99,16 @@ namespace ecs {
 			//}
 
 			// retieve isntance for each object
-			//std::cout << _script << std::endl;
-			scriptComp->m_scriptInstances[_script.first] = std::make_pair(assetManager->m_scriptManager.m_CreateObjectInstance("LogicScript", _script.first), false);
+			//
+			//  << _script << std::endl;
+			auto instance = assetManager->m_scriptManager.m_CreateObjectInstance("LogicScript", std::get<0>(_script));
+			scriptComp->m_scriptInstances[std::get<0>(_script)] = std::make_pair(instance, false);
+			scriptComp->m_scriptHandler.push_back(mono_gchandle_new(instance, true));
+
+			
+
+			//assign instance with script varaibles
+			assetManager->m_scriptManager.m_assignVaraiblestoScript(scriptComp, std::get<0>(_script));
 		}
 
 		// invoke start function
@@ -133,7 +149,7 @@ namespace ecs {
 			//check if scriptcomponent have instance
 			for (auto& scriptstring : scriptComp->m_scripts) {
 
-				if (std::find_if(scriptComp->m_scriptInstances.begin(), scriptComp->m_scriptInstances.end(), [&](auto& x){return x.first == scriptstring.first;}) == scriptComp->m_scriptInstances.end()) {
+				if (std::find_if(scriptComp->m_scriptInstances.begin(), scriptComp->m_scriptInstances.end(), [&](auto& x){return x.first == std::get<0>(scriptstring);}) == scriptComp->m_scriptInstances.end()) {
 					CreateandStartScriptInstance(scriptComp);
 					LOGGING_INFO("Script Instance Created");
 					break;
@@ -143,31 +159,72 @@ namespace ecs {
 
 			for (auto& scriptname : scriptComp->m_scripts) {
 
-				auto script = scriptComp->m_scriptInstances.find(scriptname.first);
+				auto script = scriptComp->m_scriptInstances.find(std::get<0>(scriptname));
 				try {
 					// run the scripts update fuction
-					const auto& scriptIsEnabled = std::find_if(scriptComp->m_scripts.begin(), scriptComp->m_scripts.end(), [&](auto& x) {return x.first == script->first;});
+					const auto& scriptIsEnabled = std::find_if(scriptComp->m_scripts.begin(), scriptComp->m_scripts.end(), [&](auto& x) {return std::get<0>(x) == script->first;});
 					if (scriptIsEnabled == scriptComp->m_scripts.end()) continue;
 
-					if (scriptIsEnabled->second) {
+					if (std::get<1>(*scriptIsEnabled)){
 
 						if (script->second.second == false) {
 							assetManager->m_scriptManager.m_InvokeMethod(script->first, "Start", script->second.first, nullptr);
 							script->second.second = true;
 						}
 
-						assetManager->m_scriptManager.m_InvokeMethod(script->first, "Update", script->second.first, nullptr);
+
+						else if (script->second.first) {
+							assetManager->m_scriptManager.m_InvokeMethod(script->first, "Update", script->second.first, nullptr);
+							
+						} 
+
 					}
 					
 				}
 				catch (...) {
-					break;
+					return;
+
 				}
 
 
 			}
 		}
+
+		for (int n{}; n < m_vecScriptComponentPtr.size(); n++) { 
+			//std::cout << "Entity: " << n << "Movement System is getting Updated";
+
+			ScriptComponent* scriptComp = m_vecScriptComponentPtr[n];
+			NameComponent* NameComp = m_vecNameComponentPtr[n];
+			//skip component not of the scene
+			if ((scriptComp->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer)) continue;
+
+
+			for (auto& scriptname : scriptComp->m_scripts) {
+
+				auto script = scriptComp->m_scriptInstances.find(std::get<0>(scriptname));
+				if (script == scriptComp->m_scriptInstances.end()) continue;
+				try {
+					// run the scripts update fuction
+					const auto& scriptIsEnabled = std::find_if(scriptComp->m_scripts.begin(), scriptComp->m_scripts.end(), [&](auto& x) {return std::get<0>(x) == script->first; });
+					if (scriptIsEnabled == scriptComp->m_scripts.end()) continue;
+
+					if (std::get<1>(*scriptIsEnabled)) {
+						assetManager->m_scriptManager.m_InvokeMethod(script->first, "LateUpdate", script->second.first, nullptr);
+
+					}
+
+				}
+				catch (...) {
+					return;
+				}
+
+
+			}
+		}
+
 	}
+
+
 
 }
 

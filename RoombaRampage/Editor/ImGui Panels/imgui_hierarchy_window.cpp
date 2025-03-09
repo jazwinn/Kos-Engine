@@ -80,8 +80,8 @@ namespace gui {
                 //Add the string into the vector
                 // add string to name component
                 static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(newEntityID))->m_entityName = std::string(m_charBuffer);
-                events::AddEntity addEvent(newEntityID);
-                DISPATCH_ACTION_EVENT(addEvent);
+                //events::AddEntity addEvent(newEntityID);
+                //DISPATCH_ACTION_EVENT(addEvent);
 
                 m_charBuffer[0] = '\0';
                 m_objectNameBox = false;
@@ -429,8 +429,8 @@ namespace gui {
                 if (m_prefabSceneMode && (!ecs::Hierachy::m_GetParent(id).has_value())) {
                    ecs::Hierachy::m_SetParent(id, newid);
                 }
-                events::AddEntity addEvent(newid);
-                DISPATCH_ACTION_EVENT(addEvent);
+                //events::AddEntity addEvent(newid);
+                //DISPATCH_ACTION_EVENT(addEvent);
 
 
 

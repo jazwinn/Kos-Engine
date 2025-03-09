@@ -84,7 +84,7 @@ namespace script {
 			\return    True if the collider is found and retrieved; otherwise, false.
 		*/
 		/******************************************************************/
-		static bool m_InternalGetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, unsigned int* m_blockedFlag, float* isCollided, bool* collisionCheck);
+		static bool m_InternalGetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, unsigned int* m_blockedFlag, float* isCollided, bool* collisionCheck, bool* collisionresponse);
 
 		/******************************************************************/
 		/*!
@@ -101,7 +101,7 @@ namespace script {
 			\return    True if the collider is found and updated; otherwise, false.
 		*/
 		/******************************************************************/
-		static bool m_InternalSetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, unsigned int* m_blockedFlag, float* isCollided, bool* collisionCheck);
+		static bool m_InternalSetColliderComponent(ecs::EntityID entity, vector2::Vec2* size, vector2::Vec2* offset, bool* drawDebug, float* radius, unsigned int* m_blockedFlag, float* isCollided, bool* collisionCheck, bool* collisionresponse);
 
 		/******************************************************************/
 		/*!
@@ -481,6 +481,8 @@ namespace script {
 		/******************************************************************/
 		static void m_InternalCallSetTimeScale(const float x);
 
+		static float m_InternalCallGetTimeScale();
+
 		/******************************************************************/
 		/*!
 			\fn        void InternalCall::m_InternalCallResetTimeScale()
@@ -547,6 +549,55 @@ namespace script {
 
 		/******************************************************************/
 		/*!
+			\fn        void InternalCall::m_InternalCallPauseAudio(ecs::EntityID id, MonoString* monoString)
+			\brief     Pauses the audio associated with a specified entity.
+			\param[in] id The ID of the entity whose audio is to be paused.
+			\param[in] monoString Pointer to the MonoString containing the name of the audio clip.
+		*/
+		/******************************************************************/
+		static void m_InternalCallPauseAudio(ecs::EntityID id, MonoString* monoString);
+
+		/******************************************************************/
+		/*!
+			\fn        void InternalCall::m_InternalCallUnPauseAudio(ecs::EntityID id, MonoString* monoString)
+			\brief     Unpauses the audio associated with a specified entity.
+			\param[in] id The ID of the entity whose audio is to be unpaused.
+			\param[in] monoString Pointer to the MonoString containing the name of the audio clip.
+		*/
+		/******************************************************************/
+		static void m_InternalCallUnPauseAudio(ecs::EntityID id, MonoString* monoString);
+
+
+		/******************************************************************/
+		/*!
+			\fn        void InternalCall::m_InternalCallPauseAllAudio()
+			\brief     Pauses all currently playing audio within the application.
+		*/
+		/******************************************************************/
+		static void m_InternalCallPauseAllAudio();
+
+		/******************************************************************/
+		/*!
+			\fn        void InternalCall::m_InternalCallUnPauseAllAudio()
+			\brief     Unpauses all currently paused audio within the application.
+		*/
+		/******************************************************************/
+		static void m_InternalCallUnPauseAllAudio();
+
+		static void m_InternalCallSetGlobalBGMVolume(float volume);
+
+		static void m_InternalCallSetGlobalSFXVolume(float volume);
+
+		static float m_InternalCallGetGlobalBGMVolume();
+
+		static float m_InternalCallGetGlobalSFXVolume();
+
+		static bool m_InternalCallCheckIsBGM(ecs::EntityID id, MonoString* monoString);
+
+		static bool m_InternalCallCheckIsSFX(ecs::EntityID id, MonoString* monoString);
+
+		/******************************************************************/
+		/*!
 		\fn      static bool m_InternalCallIsWindowMinimise()
 		\brief   Checks if the application window is minimized.
 		\return  True if the window is minimized; otherwise, false.
@@ -572,25 +623,210 @@ namespace script {
 		/******************************************************************/
 		static int m_InternalCallGetSteps();
 
+		/******************************************************************/
+		/*!
+			\fn        float InternalCall::m_InternalCallGetGameTime()
+			\brief     Retrieves the game time elapsed since the start of the application.
+			\return    The game time as a float, measured in seconds.
+		*/
+		/******************************************************************/
 		static float m_InternalCallGetGameTime();
 
+		/******************************************************************/
+		/*!
+			\fn        void InternalCall::m_EnableScript(ecs::EntityID id, MonoString* monoString)
+			\brief     Enables a script component for a specified entity.
+			\param[in] id The ID of the entity whose script is to be enabled.
+			\param[in] monoString Pointer to the MonoString containing the script name.
+		*/
+		/******************************************************************/
 		static void m_EnableScript(ecs::EntityID id, MonoString* monoString);
 
+		/******************************************************************/
+		/*!
+			\fn        void InternalCall::m_DisableScript(ecs::EntityID id, MonoString* monoString)
+			\brief     Disables a script component for a specified entity.
+			\param[in] id The ID of the entity whose script is to be disabled.
+			\param[in] monoString Pointer to the MonoString containing the script name.
+		*/
+		/******************************************************************/
 		static void m_DisableScript(ecs::EntityID id, MonoString* monoString);
 
+		/******************************************************************/
+		/*!
+			\fn        MonoArray* InternalCall::m_RetrieveCollidableEntities(MonoString* scene)
+			\brief     Retrieves all entities with collidable components within a specified scene.
+			\param[in] scene Pointer to the MonoString containing the scene name.
+			\return    A MonoArray containing the IDs of entities with collidable components; null if none are found.
+		*/
+		/******************************************************************/
 		static MonoArray* m_RetrieveCollidableEntities(MonoString* scene);
 
-		static bool m_InternalCallGetRayCast( ecs::EntityID id,  MonoString* monoString, bool* isRaycasting, vector2::Vec2* targetposition, float* m_distance, bool* targetReached, vector2::Vec2* hitposition);
+		/******************************************************************/
+		/*!
+			\fn        bool InternalCall::m_InternalCallGetRayCast(ecs::EntityID id, MonoString* monoString, bool* isRaycasting, vector2::Vec2* targetposition, float* m_distance, bool* targetReached, vector2::Vec2* hitposition)
+			\brief     Performs a raycast from a specified entity towards a target position, checking for hits.
+			\param[in] id The ID of the entity performing the raycast.
+			\param[in] monoString Pointer to additional data for raycast.
+			\param[out] isRaycasting Pointer to the boolean storing if the raycast is active.
+			\param[out] targetposition Pointer to the target position vector.
+			\param[out] m_distance Pointer to the distance to the target.
+			\param[out] targetReached Pointer to the boolean indicating if the target is reached.
+			\param[out] hitposition Pointer to store the hit position if a collision occurs.
+			\return    True if the raycast hits a target; otherwise, false.
+		*/
+		/******************************************************************/
+		static bool m_InternalCallGetRayCast(ecs::EntityID id, MonoString* monoString, bool* isRaycasting, vector2::Vec2* targetposition, float* m_distance, bool* targetReached, vector2::Vec2* hitposition);
 
+		/******************************************************************/
+		/*!
+			\fn        bool InternalCall::m_InternalCallSetRayCast(ecs::EntityID id, MonoString* monoString, bool* isRaycasting, vector2::Vec2* targetposition, float* m_distance, bool* targetReached, vector2::Vec2* hitposition)
+			\brief     Sets the parameters for a raycast from a specified entity towards a target position.
+			\param[in] id The ID of the entity setting the raycast.
+			\param[in] monoString Pointer to additional data for raycast setup.
+			\param[in] isRaycasting Pointer to the boolean to activate or deactivate raycasting.
+			\param[in] targetposition Pointer to the target position vector to set.
+			\param[in] m_distance Pointer to the distance to the target to set.
+			\param[in] targetReached Pointer to the boolean to set if the target is reached.
+			\param[in] hitposition Pointer to set the hit position if a collision occurs.
+			\return    True if the raycast parameters are successfully set; otherwise, false.
+		*/
+		/******************************************************************/
 		static bool m_InternalCallSetRayCast(ecs::EntityID id, MonoString* monoString, bool* isRaycasting, vector2::Vec2* targetposition, float* m_distance, bool* targetReached, vector2::Vec2* hitposition);;
 
-		static bool m_InternalCallGetPathfinding(ecs::EntityID id, vector2::Vec2* m_startpos, vector2::Vec2* m_startend, int* gridkey, MonoArray** nodeArray_x, MonoArray** nodeArray_y);
+		/******************************************************************/
+		/*!
+			\fn        bool InternalCall::m_InternalGetGridComponent(ecs::EntityID entity, vector2::Vec2* anchor, int* gridRowLength, int* gridColumnLength, bool* setCollidable, int* gridKey)
+			\brief     Retrieves the grid component details of a specified entity.
+			\param[in] entity The ID of the entity to retrieve the grid component from.
+			\param[out] anchor Pointer to the anchor position vector.
+			\param[out] gridRowLength Pointer to the number of rows in the grid.
+			\param[out] gridColumnLength Pointer to the number of columns in the grid.
+			\param[out] setCollidable Pointer to the boolean indicating if the grid is collidable.
+			\param[out] gridKey Pointer to the grid key identifier.
+			\return    True if the grid component is found and retrieved; otherwise, false.
+		*/
+		/******************************************************************/
+		static bool m_InternalGetGridComponent(ecs::EntityID entity, vector2::Vec2* anchor, int* gridRowLength, int* gridColumnLength, bool* setCollidable, int* gridKey);
 
+		/******************************************************************/
+		/*!
+			\fn        bool InternalCall::m_InternalSetGridComponent(ecs::EntityID entity, vector2::Vec2* anchor, int* gridRowLength, int* gridColumnLength, bool* setCollidable, int* gridKey)
+			\brief     Sets the grid component details of a specified entity.
+			\param[in] entity The ID of the entity to set the grid component for.
+			\param[in] anchor Pointer to the anchor position vector to set.
+			\param[in] gridRowLength Pointer to the number of rows in the grid to set.
+			\param[in] gridColumnLength Pointer to the number of columns in the grid to set.
+			\param[in] setCollidable Pointer to the boolean to set if the grid is collidable.
+			\param[in] gridKey Pointer to the grid key identifier to set.
+			\return    True if the grid component is found and updated; otherwise, false.
+		*/
+		/******************************************************************/
+		static bool m_InternalSetGridComponent(ecs::EntityID entity, vector2::Vec2* anchor, int* gridRowLength, int* gridColumnLength, bool* setCollidable, int* gridKey);
+
+		/******************************************************************/
+		/*!
+			\fn        bool InternalCall::m_InternalCallGetPathfinding(ecs::EntityID id, vector2::Vec2* m_startpos, vector2::Vec2* m_startend, int* gridkey)
+			\brief     Retrieves the pathfinding information from a specified entity.
+			\param[in] id The ID of the entity to retrieve pathfinding details from.
+			\param[out] m_startpos Pointer to the start position for pathfinding.
+			\param[out] m_startend Pointer to the end position for pathfinding.
+			\param[out] gridkey Pointer to the grid key used in pathfinding.
+			\return    True if pathfinding details are found; otherwise, false.
+		*/
+		/******************************************************************/
+		static bool m_InternalCallGetPathfinding(ecs::EntityID id, vector2::Vec2* m_startpos, vector2::Vec2* m_startend, int* gridkey);
+
+		/******************************************************************/
+		/*!
+			\fn        void InternalCall::m_InternalCallSetTargetPathfinding(ecs::EntityID id, vector2::Vec2* m_targetgridposition)
+			\brief     Sets the target position for pathfinding for a specified entity.
+			\param[in] id The ID of the entity to set the target for pathfinding.
+			\param[in] m_targetgridposition Pointer to the target grid position.
+		*/
+		/******************************************************************/
 		static void m_InternalCallSetTargetPathfinding(ecs::EntityID id, vector2::Vec2* m_targetgridposition);
 
+		/******************************************************************/
+		/*!
+			\fn        void InternalCall::m_InternalCallGetPath(int gridKey, int* startX, int* startY, int* targetX, int* targetY, MonoArray** nodeArray_x, MonoArray** nodeArray_y)
+			\brief     Retrieves a path based on the specified grid key and coordinates.
+			\param[in] gridKey The grid key identifier.
+			\param[in] startX Pointer to the start x-coordinate.
+			\param[in] startY Pointer to the start y-coordinate.
+			\param[in] targetX Pointer to the target x-coordinate.
+			\param[in] targetY Pointer to the target y-coordinate.
+			\param[out] nodeArray_x Pointer to the MonoArray to store the x-coordinates of the path nodes.
+			\param[out] nodeArray_y Pointer to the MonoArray to store the y-coordinates of the path nodes.
+		*/
+		/******************************************************************/
+		static void m_InternalCallGetPath(int gridKey, int* startX, int* startY, int* targetX, int* targetY, MonoArray** nodeArray_x, MonoArray** nodeArray_y);
+
+		/******************************************************************/
+		/*!
+			\fn        void InternalCall::m_EnableLayer(unsigned int layer)
+			\brief     Enables the specified layer in the application.
+			\param[in] layer The layer identifier to enable.
+		*/
+		/******************************************************************/
 		static void m_EnableLayer(unsigned int layer);
 
+		/******************************************************************/
+		/*!
+			\fn        void InternalCall::m_DisableLayer(unsigned int layer)
+			\brief     Disables the specified layer in the application.
+			\param[in] layer The layer identifier to disable.
+		*/
+		/******************************************************************/
 		static void m_DisableLayer(unsigned int layer);
+
+		/******************************************************************/
+		/*!
+			\fn        float InternalCall::m_GetUnfixedDeltaTie()
+			\brief     Retrieves the unfixed delta time, which is not adjusted by the time scale.
+			\return    The unfixed delta time as a float.
+		*/
+		/******************************************************************/
+		static float m_GetUnfixedDeltaTie();
+
+		/******************************************************************/
+		/*!
+			\fn        void InternalCall::m_GetNameComponent(ecs::EntityID id, void** outptr)
+			\brief     Retrieves the name component of a specified entity.
+			\param[in] id The ID of the entity to retrieve the name from.
+			\param[out] outptr Pointer to store the name component.
+		*/
+		/******************************************************************/
+		static void m_GetNameComponent(ecs::EntityID id, void** outptr);
+
+		/******************************************************************/
+		/*!
+			\fn        int InternalCall::m_InternalGetEntityIdFromGridKey(int gridkey)
+			\brief     Retrieves the entity ID associated with a specific grid key.
+			\param[in] gridkey The grid key identifier.
+			\return    The entity ID associated with the grid key; returns -1 if no entity is found.
+		*/
+		/******************************************************************/
+		static int m_InternalGetEntityIdFromGridKey(int gridkey);
+
+		/******************************************************************/
+		/*!
+			\fn        void InternalCall::m_ChangeLayer(ecs::EntityID id, unsigned int layerid)
+			\brief     Changes the layer of a specified entity.
+			\param[in] id The ID of the entity whose layer is to be changed.
+			\param[in] layerid The new layer identifier to set for the entity.
+		*/
+		/******************************************************************/
+		static void m_ChangeLayer(ecs::EntityID id, unsigned int layerid);
+
+		/******************************************************************/
+		/*!
+			\fn        float InternalCall::m_getFPS()
+			\brief     Retrieves the current frames per second (FPS) of the application.
+			\return    The current FPS as a float.
+		*/
+		/******************************************************************/
+		static float m_getFPS();
 
 	public:
 		/******************************************************************/

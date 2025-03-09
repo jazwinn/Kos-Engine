@@ -1,5 +1,15 @@
 [
     {
+        "GlobalSettings": {
+            "globalIllumination": 0.30000001192092896,
+            "backgroundColor": {
+                "r": 0.13716816902160645,
+                "g": 0.13716816902160645,
+                "b": 0.13716816902160645
+            }
+        }
+    },
+    {
         "name": {
             "namestr": "WallDoor",
             "layer": 6,
@@ -19,6 +29,7 @@
         },
         "collider": {
             "checkcollision": false,
+            "checkresponse": true,
             "size": {
                 "x": 11.600000381469727,
                 "y": 3.5

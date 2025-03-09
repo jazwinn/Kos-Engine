@@ -39,6 +39,14 @@ namespace Helper {
 
 		std::string m_startScene;
 
+		int m_currWindowWidth;
+
+		int m_currWindowHeight;
+
+		int m_viewportOffsetX;
+
+		int m_viewportOffsetY;
+
 		float m_windowWidth;
 
 		float m_windowHeight;
@@ -61,7 +69,7 @@ namespace Helper {
 
 		float m_accumulatedTime = 0.f;
 
-		vector3::Vec3 m_colour;
+		vector3::Vec3 m_colour{0.86f,0.86f,0.86f};
 
 		float m_timeScale = 1.0f; //default to 1x
 		

@@ -25,6 +25,8 @@ in vec2 texCoords;
 
 uniform sampler2D screenTexture;
 
+uniform float globalBrightness;
+
 void main()
 {
     vec2 pixelCoord = gl_FragCoord.xy;
