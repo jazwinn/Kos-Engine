@@ -655,7 +655,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
     public void MoveToTarget(Vector2 targetPosition, float maxSpeed)
     {
-        Console.WriteLine($"Moving to: {targetPosition.X}, {targetPosition.Y}");
+        //Console.WriteLine($"Moving to: {targetPosition.X}, {targetPosition.Y}");
 
         // Convert target grid position to world coordinates
         Vector2 targetPos = Grid2WorldCoordinates((int)targetPosition.X, (int)targetPosition.Y, pathFindComp.m_gridkey);

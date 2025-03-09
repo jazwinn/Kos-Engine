@@ -39,9 +39,9 @@
             "isLit": true
         },
         "animation": {
-            "frameNumber": 4,
+            "frameNumber": 2,
             "framesPerSecond": 2,
-            "frameTimer": 2.216665267944336,
+            "frameTimer": 1.0999996662139893,
             "isAnimating": true,
             "stripCount": 9
         },
