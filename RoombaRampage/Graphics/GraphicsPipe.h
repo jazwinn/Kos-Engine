@@ -40,7 +40,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 namespace graphicpipe {
 
-    struct ParticleData
+    struct EmitterData
     {
         int m_noOfParticles{};
         float m_lifeSpan{};
@@ -49,24 +49,39 @@ namespace graphicpipe {
         glm::vec2 m_acceleration{};
         glm::vec2 m_scale{};
         glm::vec4 m_color{};
-        float m_rotation{}; //Cone Rotation
-        float m_coneAngle{ 360.f }; //
+        float m_rotation{};
+        float m_coneRotation{}; //Cone Rotation
+        float m_coneAngle{}; //
         float m_randomFactor{};
         unsigned int m_textureID{};
         int m_stripCount{};
         int m_frameNumber{};
+        int m_framesPerSecond{};
         int m_layer{};
+        float m_friction{};
     };
 
-    struct EmmiterData
+    struct ParticleData
     {
-        int m_noOfParticles{};
-        glm::vec2 m_position{};
-        float m_coneRotation{};
-        float m_coneAngle{};
-        float randomFactor{};
-        float m_lifeSpan{};
+        float m_lifeSpan;
+        float m_rotation;
+        float m_isActive;
+        int m_textureID;
+        int m_stripCount;
+        int m_frameNumber;
+        int m_layer;
+        float m_initialEmissionAngle;
+        glm::vec2 m_position;
+        glm::vec2 m_velocity;
+        glm::vec2 m_acceleration;
+        glm::vec2 m_scale;
+  
+        glm::vec4 m_color;
 
+        float m_friction;
+        int m_framesPerSecond{};
+        float m_animationTimer{};
+        float padding3{};
     };
 
     struct LightingData
@@ -214,6 +229,8 @@ namespace graphicpipe {
          */
         void m_funcSetupArrayBuffer();
 
+        void m_funcSetupSSBO();
+
 
         /**
          * @brief Compiles and links a shader program from vertex and fragment shader sources.
@@ -223,6 +240,8 @@ namespace graphicpipe {
          * @return The compiled and linked shader program ID.
          */
         unsigned int m_funcSetupShader(const std::string& vertexShader, const std::string& fragmentShader);
+
+        unsigned int m_funcSetupComputerShader(const std::string& computerShader);
 
         /**
          * @brief Deletes the currently active shader program.
@@ -240,6 +259,8 @@ namespace graphicpipe {
         unsigned int m_gridDebugShaderProgram{};    ///< Shader program for rendering collidable grids.
         unsigned int m_lightingShaderProgram{};     ///< Shader program for the lighting pass.
         unsigned int m_finalPassShaderProgram{};    ///< Shader program for the final post-processing pass.
+        unsigned int m_particleComputerShaderProgram{};
+        unsigned int m_particleShaderProgram{};
 
     public:
         unsigned int m_videoShaderProgram{};        ///< Shader program for video
@@ -286,7 +307,7 @@ namespace graphicpipe {
         int m_unitWidth{ 100 };         ///< The default width for the graphics unit.
         int m_unitHeight{ 100 };        ///< The default height for the graphics unit.
         float m_globalLightIntensity{ 1.f }; ///< The global illumination value.
-        const int MAX_PARTICLES = 10000;
+        const int MAX_PARTICLES = 100000;
 
         /**
          * @enum ShapeType
@@ -437,6 +458,7 @@ namespace graphicpipe {
         void m_renderFinalPassWithDebug();
 
 
+
         /**
          * @brief Renders the lighting effects in the scene.
          *
@@ -518,6 +540,10 @@ namespace graphicpipe {
         */
         void m_funcClearContainers();
 
+        void m_spawnParticles();
+
+        void m_updateParticles();
+
         //Boolean Values
         bool m_gameMode{ false };
 
@@ -537,7 +563,8 @@ namespace graphicpipe {
         std::vector<glm::mat3> m_debugCircleToNDCMatrix{}; ///< Debug model-to-NDC matrices for circles.
 
         // Data for rendering
-        std::vector<ParticleData> m_particleData{}; ///< Particle Data for the Scene.
+        std::vector<ParticleData> m_particleData{};
+        std::vector<EmitterData> m_emitterData{}; ///< Emitter Data for the Scene.
         std::vector<LightingData> m_lightingData{}; ///< Lighting data for the scene.
         std::vector<ColliderGridData> m_colliderGridData{}; ///< Collider grid data for collision checks.
         std::vector<TilemapData> m_tilemapData{}; ///< Data for tilemaps in the scene.
@@ -681,7 +708,23 @@ namespace graphicpipe {
             #include "../Graphics/finalPassFragmentShader.frag"
         };
 
-    };
+        const std::string particleComputerShader =
+        {
+            #include "../Graphics/particleComputer.comp"
+        };
+
+        const std::string particleVertexShader =
+        {
+            #include "../Graphics/particleVertexShader.vert"
+        };
+
+        const std::string particleFragmentShader =
+        {
+            #include "../Graphics/particleFragmentShader.frag"
+        };
+        
+        
+};
 
 } // namespace graphicpipe
 

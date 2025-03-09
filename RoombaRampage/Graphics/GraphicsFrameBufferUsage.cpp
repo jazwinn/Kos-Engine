@@ -29,6 +29,7 @@ namespace graphicpipe
 
 		m_funcDrawTilemap();
 		m_funcDraw();
+		m_funcDrawParticles();
 
 		// Switch back to the default framebuffer
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -48,6 +49,7 @@ namespace graphicpipe
 
 		m_funcDrawTilemap();
 		m_funcDraw();
+		m_funcDrawParticles();
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		glDisable(GL_DEPTH_TEST);
@@ -104,6 +106,7 @@ namespace graphicpipe
 		m_funcDrawDebug();
 		m_funcDrawGrid();
 		m_funcDrawGridCollider();
+		m_funcDrawParticles();
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		glDisable(GL_DEPTH_TEST);

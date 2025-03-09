@@ -43,14 +43,35 @@
         },
         "transform": {
             "position": {
-                "x": 2.605313777923584,
-                "y": -0.6103878021240234
+                "x": 0.7256385087966919,
+                "y": -1.5618282556533813
             },
-            "rotation": 0.0,
+            "rotation": -0.0,
             "scale": {
                 "x": 1.0,
                 "y": 1.0
             }
+        },
+        "particle": {
+            "willSpawn": true,
+            "noOfParticles": 1,
+            "lifeSpan": 8.0,
+            "velocityX": 1.7000000476837158,
+            "velocityY": 0.0,
+            "accelerationX": 1.6399999856948853,
+            "accelerationY": 0.0,
+            "colorR": 1.0,
+            "colorG": 1.0,
+            "colorB": 1.0,
+            "coneRotation": 0.0,
+            "coneAngle": 360.0,
+            "randomFactor": 0.0,
+            "imageFile": "",
+            "stripCount": 0,
+            "frameNumber": 0,
+            "layer": 0,
+            "friction": 0.0,
+            "fps": 0
         },
         "VideoComponent": {
             "filename": "test.mpg",

@@ -66,6 +66,7 @@ namespace ecs {
 	{
 		ECS* ecs = ECS::m_GetInstance();
 		graphicpipe::GraphicsPipe* graphicsPipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
+		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
 		//assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
 
 		if (m_vecParticleComponentPtr.size() != m_vecTransformComponentPtr.size()) {
@@ -82,16 +83,23 @@ namespace ecs {
 			//skip component not of the scene
 			if ((particle->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(nc->m_Layer)) continue;
 
-			transform;
-			particle;
-			nc;
-
+			unsigned int textureid{};
+			if (assetmanager->m_imageManager.m_imageMap.find(particle->m_imageFile) == assetmanager->m_imageManager.m_imageMap.end())
+			{
+				textureid = 0;
+			}
+			else
+			{
+				textureid = assetmanager->m_imageManager.m_imageMap.find(particle->m_imageFile)->second.m_imageID;
+			}
+			
+		
 			if (particle->m_willSpawn)
 			{
-				graphicsPipe->m_particleData.push_back({ 100, 5.f, {transform->m_position.m_x, transform->m_position.m_y}, {1.f,1.f,}, {0.5f, 0.5f},
-				{transform->m_scale.m_x, transform->m_scale.m_y} , {1.f,1.f,1.f,1.f }, transform->m_rotation, 360.f, 0.f /*Change this later*/,
-				0, 0, 0, 0 });
-				particle->m_willSpawn = false;
+				graphicsPipe->m_emitterData.push_back({ particle->m_noOfParticles, particle->m_lifeSpan, {transform->m_position.m_x, transform->m_position.m_y}, {particle->m_velocity.m_x,particle->m_velocity.m_y}, {particle->m_acceleration.m_x,particle->m_acceleration.m_y},
+				{transform->m_scale.m_x, transform->m_scale.m_y} , {particle->m_color.m_x,particle->m_color.m_y,particle->m_color.m_z, 1.f }, transform->m_rotation, particle->m_coneRotation, particle->m_coneAngle /*Change this later*/,particle->m_randomFactor,
+				textureid, particle->m_stripCount, particle->m_frameNumber, particle->m_fps,particle->m_layer, particle->m_friction});
+				//particle->m_willSpawn = false;
 			}
 			
 
