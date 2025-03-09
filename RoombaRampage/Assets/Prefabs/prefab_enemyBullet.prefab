@@ -12,9 +12,9 @@
     {
         "name": {
             "namestr": "prefab_enemyBullet",
-            "layer": 0,
+            "layer": 2,
             "isprefab": false,
-            "tagstr": "Default"
+            "tagstr": "EnemyBullet"
         },
         "transform": {
             "position": {
@@ -29,7 +29,7 @@
         },
         "collider": {
             "checkcollision": true,
-            "checkresponse": true,
+            "checkresponse": false,
             "size": {
                 "x": 1.0,
                 "y": 1.0
@@ -42,9 +42,33 @@
             "radius": 0.5,
             "shapetype": 0
         },
+        "rigidbody": {
+            "linearVelocity": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "linearAcceleration": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "angularVelocity": 0.0,
+            "angularAcceleration": 0.0,
+            "mass": 1.0,
+            "inverseMass": 1.0,
+            "linearDamping": 0.9900000095367432,
+            "angularDamping": 0.9900000095367432,
+            "force": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "torque": 0.0,
+            "kinematic": false,
+            "static": false
+        },
         "sprite": {
             "imagefile": "img_BulletPrefab1.png",
-            "layer": 0,
+            "layer": 14,
             "color": {
                 "r": 1.0,
                 "g": 1.0,
@@ -52,6 +76,13 @@
             },
             "alpha": 1.0,
             "isLit": true
+        },
+        "animation": {
+            "frameNumber": 0,
+            "framesPerSecond": 80,
+            "frameTimer": 0.0,
+            "isAnimating": false,
+            "stripCount": 1
         },
         "script": {
             "scripts": [

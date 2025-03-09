@@ -79,8 +79,6 @@
     <Compile Include="LogicScript\EnemyController.cs" />
     <Compile Include="LogicScript\EnemyScript.cs" />
     <Compile Include="LogicScript\EnemyState.cs" />
-    <Compile Include="LogicScript\EnemyStateRangedAttack.cs" />
-    <Compile Include="LogicScript\EnemyStateRangedSearch.cs" />
     <Compile Include="LogicScript\ExitGameButton.cs" />
     <Compile Include="LogicScript\GameController.cs" />
     <Compile Include="LogicScript\GameControllerLevel1.cs" />
@@ -104,7 +102,6 @@
     <Compile Include="LogicScript\PlayerLoadoutText.cs" />
     <Compile Include="LogicScript\PlayerMeleeKillZone.cs" />
     <Compile Include="LogicScript\Prop_GlassWall.cs" />
-    <Compile Include="LogicScript\EnemyStateRangedPatrol.cs" />
     <Compile Include="LogicScript\StartGameButton.cs" />
     <Compile Include="LogicScript\StartMenuButtons.cs" />
     <Compile Include="LogicScript\StartMenuCursor.cs" />
