@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static EnemyScript;
-// EnemyStateRangedPatrol.cs
+
 public class EnemyStateRangedPatrol : EnemyState
 {
     private float scanInterval = 0.5f;

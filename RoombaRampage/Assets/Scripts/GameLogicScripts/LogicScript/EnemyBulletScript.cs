@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 public class EnemyBulletScript : ScriptBase
 {
     private uint EntityID;
@@ -18,15 +19,11 @@ public class EnemyBulletScript : ScriptBase
 
     public override void Start()
     {
-        // Get the bullet's transform
         TransformComponent transformComp = Component.Get<TransformComponent>(EntityID);
-
-        // Calculate velocity based on rotation
         float rotationInRadians = (float)(transformComp.m_rotation * Math.PI / 180.0);
         float directionX = (float)Math.Sin(rotationInRadians);
         float directionY = (float)Math.Cos(rotationInRadians);
 
-        // Set velocity
         movement.X = directionX * bulletSpeed;
         movement.Y = directionY * bulletSpeed;
 
@@ -35,7 +32,6 @@ public class EnemyBulletScript : ScriptBase
 
     public override void Update()
     {
-        // Update lifetime and destroy if expired
         currentLifetime += InternalCall.m_InternalCallGetDeltaTime();
         if (currentLifetime >= bulletLifetime)
         {
@@ -43,7 +39,6 @@ public class EnemyBulletScript : ScriptBase
             return;
         }
 
-        // Check for collisions
         CheckForCollisions();
     }
 
@@ -68,7 +63,6 @@ public class EnemyBulletScript : ScriptBase
                         transformComp.m_rotation
                     );
 
-                    // Destroy bullet
                     InternalCall.m_InternalCallDeleteEntity(EntityID);
                     return;
                 }
@@ -83,7 +77,7 @@ public class EnemyBulletScript : ScriptBase
                         transformComp.m_rotation
                     );
 
-                    // Destroy bullet
+                    //This is to destroy the bullet
                     InternalCall.m_InternalCallDeleteEntity(EntityID);
                     return;
                 }

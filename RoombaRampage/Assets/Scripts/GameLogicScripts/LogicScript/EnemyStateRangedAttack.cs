@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-// EnemyStateRangedAttack.cs
 public class EnemyStateRangedAttack : EnemyState
 {
-    private float fireRate = 1.5f; // Seconds between shots
+    private float fireRate = 1.5f; 
     private float fireTimer = 0f;
     private float targetCheckInterval = 0.3f;
     private float targetCheckTimer = 0f;
@@ -37,8 +36,7 @@ public class EnemyStateRangedAttack : EnemyState
             }
         }
 
-        // Always face the player when attacking
-        enemyScript.FaceTarget();
+        enemyScript.FaceTarget(); //To facee the player
 
         // Fire at player when timer expires
         fireTimer -= dTime;

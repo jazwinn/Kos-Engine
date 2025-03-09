@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-// EnemyStateRangedSearch.cs
 public class EnemyStateRangedSearch : EnemyState
 {
     private float searchDuration = 5.0f;
@@ -23,7 +22,6 @@ public class EnemyStateRangedSearch : EnemyState
     {
         if (enemyScript.isDead) return;
 
-        // Look around for the player
         scanTimer -= dTime;
         if (scanTimer <= 0)
         {
@@ -42,11 +40,9 @@ public class EnemyStateRangedSearch : EnemyState
         // Move toward last known player position
         enemyScript.MoveToLastKnownPosition(lastKnownPlayerPosition);
 
-        // Count down search timer
         searchTimer -= dTime;
         if (searchTimer <= 0)
         {
-            // Give up search and return to patrol
             enemyScript.SetCurrentState(new EnemyStateRangedPatrol(enemyScript));
         }
     }
