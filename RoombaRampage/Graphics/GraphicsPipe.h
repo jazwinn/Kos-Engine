@@ -56,6 +56,7 @@ namespace graphicpipe {
         unsigned int m_textureID{};
         int m_stripCount{};
         int m_frameNumber{};
+        int m_framesPerSecond{};
         int m_layer{};
         float m_friction{};
     };
@@ -78,8 +79,8 @@ namespace graphicpipe {
         glm::vec4 m_color;
 
         float m_friction;
-        float padding{};
-        float padding2{};
+        int m_framesPerSecond{};
+        float m_animationTimer{};
         float padding3{};
     };
 

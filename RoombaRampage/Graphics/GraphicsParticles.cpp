@@ -5,9 +5,6 @@
 
 namespace graphicpipe
 {
-
-
-
     // Function to generate a random float in range [minVal, maxVal]
     float randomInRange(float minVal, float maxVal) 
     {
@@ -33,6 +30,8 @@ namespace graphicpipe
             << "  Texture ID: " << particle.m_textureID << "\n"
             << "  Strip Count: " << particle.m_stripCount << "\n"
             << "  Frame Number: " << particle.m_frameNumber << "\n"
+            << "  Frame Timer : " << particle.m_animationTimer << "\n"
+            << "  Frame Per Second : " << particle.m_framesPerSecond << "\n"
             << "  Layer: " << particle.m_layer << "\n"
             << "  Is Active: " << particle.m_isActive << "\n"
             << "-----------------------------------\n";
@@ -81,6 +80,8 @@ namespace graphicpipe
                             particles[j].m_layer = m_emitterData[i].m_layer;
                             particles[j].m_isActive = 2.f;
                             particles[j].m_friction = m_emitterData[i].m_friction;
+                            particles[j].m_framesPerSecond = m_emitterData[i].m_framesPerSecond;
+                            particles[j].m_animationTimer = 0.f;
                             particlesProcessed++;
                             if (particlesProcessed > m_emitterData[i].m_noOfParticles)
                                 break;
@@ -103,6 +104,7 @@ namespace graphicpipe
         //glGetBufferSubData(GL_SHADER_STORAGE_BUFFER, 0, sizeof(ParticleData) * MAX_PARTICLES, debugData.data());
         glUseProgram(m_particleComputerShaderProgram);
         glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, m_particleSSBO);
+        //PrintParticleData(debugData[0], 0);
 
         // Pass uniforms
         glUniform1f(glGetUniformLocation(m_particleComputerShaderProgram, "deltaTime"), Helper::Helpers::GetInstance()->m_fixedDeltaTime);

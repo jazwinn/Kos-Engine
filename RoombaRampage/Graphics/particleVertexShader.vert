@@ -5,7 +5,7 @@ layout (location=0) in vec2 vertexPosition;
 layout (location=2) in vec2 vertexTexCoords;
 
 
-struct Particle 
+ struct Particle 
 {
     float lifeSpan;      
     float rotation;
@@ -14,14 +14,17 @@ struct Particle
     int stripCount;     
     int frameNumber;    
     int layer;        
-    float padding; 
+    float initialEmissionAngle; 
     vec2 position;       
     vec2 velocity;       
     vec2 acceleration;  
     vec2 scale;          
-    vec4 color;          
+    vec4 color;
+    float friction;
+    int framesPerSecond;
+    float frameTimer;
+    float padding3;
 };
-
 
 layout(std430, binding = 0) buffer ParticleBuffer 
 {
@@ -75,7 +78,12 @@ void main()
     gl_Position = vec4(vec2(matrix * vec3(vertexPosition, 1.f)),
 					   -0.0001 * particles[id].layer, 1.0);
 
-    float frameWidth = 1.0 / particles[id].stripCount;
+    float frameWidth = 1.0f;
+
+    if (particles[id].stripCount > 0)
+    {
+        frameWidth = 1.0 / particles[id].stripCount;
+    }
 
     float frameOffset = frameWidth * particles[id].frameNumber;
 
