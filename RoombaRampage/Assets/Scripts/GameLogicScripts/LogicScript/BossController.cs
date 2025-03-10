@@ -286,29 +286,14 @@ public class BossController : ScriptBase
                 float spawnY = position.Y + (float)Math.Sin(radian) * radius;
 
                 uint bullet = (uint)InternalCall.m_InternalCallAddPrefab(bossBulletPrefab, spawnX, spawnY, baseAngle);
-                CoroutineManager.Instance.StartCoroutine(CurveBullet(bullet, baseAngle));
-
+              
                 yield return new CoroutineManager.WaitForSeconds(bulletInterval);
             }
             yield return new CoroutineManager.WaitForSeconds(0.2f);
         }
     }
 
-    private IEnumerator CurveBullet(uint bulletID, float initialAngle)
-    {
-        float speed = 2.0f, acceleration = 0.05f, maxSpeed = 10.0f, curveStrength = 0.5f;
 
-        while (InternalCall.m_InternalGetTranslate(bulletID, out Vector2 bulletPos))
-        {
-            speed = Math.Min(speed + acceleration, maxSpeed);
-            initialAngle += curveStrength;
-            float radian = (float)(initialAngle * (Math.PI / 180f));
-
-            InternalCall.m_InternalSetVelocity(bulletID, new Vector2((float)Math.Cos(radian) * speed, (float)Math.Sin(radian) * speed));
-
-            yield return null;
-        }
-    }
     #endregion
 
     #region Boss Forcefield

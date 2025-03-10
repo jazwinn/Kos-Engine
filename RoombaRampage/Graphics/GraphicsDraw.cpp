@@ -545,13 +545,47 @@ namespace graphicpipe
 
 	void GraphicsPipe::m_funcDrawParticles()
 	{
-		if (!m_particleData.empty())
+		glUseProgram(m_particleShaderProgram);
+		glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_particleSSBO);
+		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, m_particleSSBO);
+
+
+		glUniformMatrix3fv(glGetUniformLocation(m_particleShaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currViewMatrix));
+
+		glUniformMatrix3fv(glGetUniformLocation(m_particleShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currOrthoMatrix));
+
+		GLint lvUniformVarLoc1 = glGetUniformLocation(m_genericShaderProgram, "textures");
+
+		if (lvUniformVarLoc1 >= 0)
 		{
-			glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_particleSSBO);
-			glBufferData(GL_SHADER_STORAGE_BUFFER, m_particleData.size() * sizeof(ParticleData), m_particleData.data(), GL_DYNAMIC_DRAW);
-			glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, m_particleSSBO);
-			glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
+			glUniform1iv(lvUniformVarLoc1, static_cast<GLsizei>(m_textureIDs.size()), (GLint*)&m_textureIDs[0]);
 		}
+		else
+		{
+			LOGGING_ERROR("Uniform variable location: %d", lvUniformVarLoc1);
+			LOGGING_ERROR("Uniform variable 'textures' doesn't exist!");
+			std::exit(EXIT_FAILURE);
+		}
+
+		for (int i = 0; i < m_textureIDs.size(); ++i)
+		{
+			glActiveTexture(GL_TEXTURE0 + m_textureIDs[i]);
+			glBindTexture(GL_TEXTURE_2D, m_textureIDs[i]);
+
+		}
+
+		glBindVertexArray(m_squareMesh.m_vaoId);
+		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, m_particleSSBO);
+		glDrawElementsInstanced(m_squareMesh.m_primitiveType, m_squareMesh.m_indexElementCount, GL_UNSIGNED_SHORT, NULL, MAX_PARTICLES);
+		glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
+
+		GLenum err2 = glGetError();
+		if (err2 != GL_NO_ERROR) {
+			//LOGGING_ERROR("First OpenGL Error: 0x%X", err);
+			std::cout << "Particle OpenGL Error : " << err2 << std::endl;
+		}
+
+		
 	}
 
 	void GraphicsPipe::m_funcSetDrawMode(GLenum mode)
