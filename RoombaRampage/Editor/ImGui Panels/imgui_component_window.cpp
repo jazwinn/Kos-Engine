@@ -1552,6 +1552,20 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                      }
                      ImGui::SameLine();
                      ImGui::Text("Color");
+                     ImGui::SetNextItemWidth(100.0f);
+                     if (ImGui::BeginCombo("Images", rbc->m_imageFile.c_str()))
+                     {
+                         assetmanager::AssetManager* Asset = assetmanager::AssetManager::m_funcGetInstance();
+                         for (const auto& image : Asset->m_imageManager.m_imageMap) {
+
+                             if (ImGui::Selectable(image.first.c_str())) 
+                             {
+                                 rbc->m_imageFile = image.first.c_str();
+                             }
+                         }
+                         ImGui::EndCombo();
+                     }
+
                  }
 
 

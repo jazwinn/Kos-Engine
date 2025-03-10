@@ -54,412 +54,6 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 22.481346130371094,
-                        "y": -13.047983169555664
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 3.0000009536743164,
-                        "y": 3.0000009536743164
-                    }
-                },
-                "collider": {
-                    "checkcollision": true,
-                    "checkresponse": true,
-                    "size": {
-                        "x": 0.7400000095367432,
-                        "y": 0.23999999463558197
-                    },
-                    "offset": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "drawDebug": true,
-                    "radius": 0.5,
-                    "shapetype": 0
-                },
-                "enemy": {
-                    "enemytag": -1,
-                    "enemytype": 1,
-                    "enemybehaviour": 0
-                },
-                "rigidbody": {
-                    "linearVelocity": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "linearAcceleration": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "rotation": 0.0,
-                    "angularVelocity": 0.0,
-                    "angularAcceleration": 0.0,
-                    "mass": 1.0,
-                    "inverseMass": 1.0,
-                    "linearDamping": 0.9900000095367432,
-                    "angularDamping": 0.9900000095367432,
-                    "force": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "torque": 0.0,
-                    "kinematic": false,
-                    "static": false
-                },
-                "sprite": {
-                    "imagefile": "ani_scientistWalk_strip8.png",
-                    "layer": 30,
-                    "color": {
-                        "r": 1.0,
-                        "g": 1.0,
-                        "b": 1.0
-                    },
-                    "alpha": 1.0,
-                    "isLit": true
-                },
-                "animation": {
-                    "frameNumber": 0,
-                    "framesPerSecond": 15,
-                    "frameTimer": 0.0,
-                    "isAnimating": false,
-                    "stripCount": 8
-                },
-                "script": {
-                    "scripts": [
-                        {
-                            "name": "EnemyScript",
-                            "enabled": true,
-                            "map": [
-                                {
-                                    "variable": "isDead",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "isPatrolling",
-                                    "base64": ""
-                                }
-                            ]
-                        }
-                    ]
-                },
-                "audio": [
-                    {
-                        "name": "aud_bodyDeath01",
-                        "volume": 0.3160000145435333,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyStab01",
-                        "volume": 0.4880000054836273,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyStab02",
-                        "volume": 0.6650000214576721,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall01",
-                        "volume": 0.24899999797344208,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall02",
-                        "volume": 0.2849999964237213,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall03",
-                        "volume": 0.3070000112056732,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall04",
-                        "volume": 0.24300000071525574,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall05",
-                        "volume": 0.2290000021457672,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall06",
-                        "volume": 0.21199999749660492,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall07",
-                        "volume": 0.20399999618530273,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall08",
-                        "volume": 0.25099998712539673,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall09",
-                        "volume": 0.2290000021457672,
-                        "loop": false,
-                        "playOnStart": false
-                    }
-                ],
-                "raycast": {
-                    "raycasts": [
-                        {
-                            "raycastID": "RaycastToPlayer",
-                            "israycasting": true,
-                            "targetposition": {
-                                "x": 0.0,
-                                "y": 0.0
-                            },
-                            "Layer Vector": [
-                                {
-                                    "layer": 5
-                                }
-                            ]
-                        }
-                    ]
-                },
-                "pathfinding": {
-                    "startPosition": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "targetPosition": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "gridKey": 0
-                }
-            },
-            {
-                "name": {
-                    "namestr": "FearlessEnemyStatic",
-                    "layer": 2,
-                    "isprefab": true,
-                    "tagstr": "Enemy",
-                    "prefabname": "FearlessEnemyStatic.prefab",
-                    "issync": false
-                },
-                "transform": {
-                    "position": {
-                        "x": 22.81730079650879,
-                        "y": -24.330684661865234
-                    },
-                    "rotation": -46.70338439941406,
-                    "scale": {
-                        "x": 2.9999990463256836,
-                        "y": 2.9999990463256836
-                    }
-                },
-                "collider": {
-                    "checkcollision": true,
-                    "checkresponse": true,
-                    "size": {
-                        "x": 0.7400000095367432,
-                        "y": 0.23999999463558197
-                    },
-                    "offset": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "drawDebug": true,
-                    "radius": 0.5,
-                    "shapetype": 0
-                },
-                "enemy": {
-                    "enemytag": -1,
-                    "enemytype": 1,
-                    "enemybehaviour": 0
-                },
-                "rigidbody": {
-                    "linearVelocity": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "linearAcceleration": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "rotation": 0.0,
-                    "angularVelocity": 0.0,
-                    "angularAcceleration": 0.0,
-                    "mass": 1.0,
-                    "inverseMass": 1.0,
-                    "linearDamping": 0.9900000095367432,
-                    "angularDamping": 0.9900000095367432,
-                    "force": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "torque": 0.0,
-                    "kinematic": false,
-                    "static": false
-                },
-                "sprite": {
-                    "imagefile": "ani_scientistWalk_strip8.png",
-                    "layer": 31,
-                    "color": {
-                        "r": 1.0,
-                        "g": 1.0,
-                        "b": 1.0
-                    },
-                    "alpha": 1.0,
-                    "isLit": true
-                },
-                "animation": {
-                    "frameNumber": 0,
-                    "framesPerSecond": 15,
-                    "frameTimer": 0.0,
-                    "isAnimating": false,
-                    "stripCount": 8
-                },
-                "script": {
-                    "scripts": [
-                        {
-                            "name": "EnemyScript",
-                            "enabled": true,
-                            "map": [
-                                {
-                                    "variable": "isDead",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "isPatrolling",
-                                    "base64": ""
-                                }
-                            ]
-                        }
-                    ]
-                },
-                "audio": [
-                    {
-                        "name": "aud_bodyDeath01",
-                        "volume": 0.3160000145435333,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyStab01",
-                        "volume": 0.4880000054836273,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyStab02",
-                        "volume": 0.6650000214576721,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall01",
-                        "volume": 0.24899999797344208,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall02",
-                        "volume": 0.2849999964237213,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall03",
-                        "volume": 0.3070000112056732,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall04",
-                        "volume": 0.24300000071525574,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall05",
-                        "volume": 0.2290000021457672,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall06",
-                        "volume": 0.21199999749660492,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall07",
-                        "volume": 0.20399999618530273,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall08",
-                        "volume": 0.25099998712539673,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall09",
-                        "volume": 0.2290000021457672,
-                        "loop": false,
-                        "playOnStart": false
-                    }
-                ],
-                "raycast": {
-                    "raycasts": [
-                        {
-                            "raycastID": "RaycastToPlayer",
-                            "israycasting": true,
-                            "targetposition": {
-                                "x": 0.0,
-                                "y": 0.0
-                            },
-                            "Layer Vector": [
-                                {
-                                    "layer": 5
-                                }
-                            ]
-                        }
-                    ]
-                },
-                "pathfinding": {
-                    "startPosition": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "targetPosition": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "gridKey": 0
-                }
-            },
-            {
-                "name": {
-                    "namestr": "FearlessEnemyStatic",
-                    "layer": 2,
-                    "isprefab": true,
-                    "tagstr": "Enemy",
-                    "prefabname": "FearlessEnemyStatic.prefab",
-                    "issync": false
-                },
-                "transform": {
-                    "position": {
                         "x": -16.41188621520996,
                         "y": -22.767107009887695
                     },
@@ -651,862 +245,6 @@
                     },
                     "gridKey": 0
                 }
-            },
-            {
-                "name": {
-                    "namestr": "ScaredEnemyStatic",
-                    "layer": 2,
-                    "isprefab": true,
-                    "tagstr": "Enemy",
-                    "prefabname": "ScaredEnemyStatic.prefab",
-                    "issync": false
-                },
-                "transform": {
-                    "position": {
-                        "x": 22.537616729736328,
-                        "y": -11.318988800048828
-                    },
-                    "rotation": -171.77098083496094,
-                    "scale": {
-                        "x": 3.0000011920928955,
-                        "y": 3.0000011920928955
-                    }
-                },
-                "collider": {
-                    "checkcollision": true,
-                    "checkresponse": true,
-                    "size": {
-                        "x": 0.7400000095367432,
-                        "y": 0.23999999463558197
-                    },
-                    "offset": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "drawDebug": true,
-                    "radius": 0.5,
-                    "shapetype": 0
-                },
-                "enemy": {
-                    "enemytag": -1,
-                    "enemytype": 0,
-                    "enemybehaviour": 0
-                },
-                "rigidbody": {
-                    "linearVelocity": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "linearAcceleration": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "rotation": 0.0,
-                    "angularVelocity": 0.0,
-                    "angularAcceleration": 0.0,
-                    "mass": 1.0,
-                    "inverseMass": 1.0,
-                    "linearDamping": 0.9900000095367432,
-                    "angularDamping": 0.9900000095367432,
-                    "force": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "torque": 0.0,
-                    "kinematic": false,
-                    "static": false
-                },
-                "sprite": {
-                    "imagefile": "ani_scientistWalk_strip8.png",
-                    "layer": 36,
-                    "color": {
-                        "r": 1.0,
-                        "g": 1.0,
-                        "b": 1.0
-                    },
-                    "alpha": 1.0,
-                    "isLit": true
-                },
-                "animation": {
-                    "frameNumber": 0,
-                    "framesPerSecond": 15,
-                    "frameTimer": 0.0,
-                    "isAnimating": false,
-                    "stripCount": 8
-                },
-                "script": {
-                    "scripts": [
-                        {
-                            "name": "EnemyScript",
-                            "enabled": true,
-                            "map": [
-                                {
-                                    "variable": "isDead",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "isPatrolling",
-                                    "base64": ""
-                                }
-                            ]
-                        }
-                    ]
-                },
-                "audio": [
-                    {
-                        "name": "aud_bodyDeath01",
-                        "volume": 0.3160000145435333,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyStab01",
-                        "volume": 0.4880000054836273,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyStab02",
-                        "volume": 0.6650000214576721,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall01",
-                        "volume": 0.24899999797344208,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall02",
-                        "volume": 0.2849999964237213,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall03",
-                        "volume": 0.3070000112056732,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall04",
-                        "volume": 0.24300000071525574,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall05",
-                        "volume": 0.2290000021457672,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall06",
-                        "volume": 0.21199999749660492,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall07",
-                        "volume": 0.20399999618530273,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall08",
-                        "volume": 0.25099998712539673,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall09",
-                        "volume": 0.2290000021457672,
-                        "loop": false,
-                        "playOnStart": false
-                    }
-                ],
-                "raycast": {
-                    "raycasts": [
-                        {
-                            "raycastID": "RaycastToPlayer",
-                            "israycasting": true,
-                            "targetposition": {
-                                "x": 0.0,
-                                "y": 0.0
-                            },
-                            "Layer Vector": [
-                                {
-                                    "layer": 5
-                                }
-                            ]
-                        }
-                    ]
-                },
-                "pathfinding": {
-                    "startPosition": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "targetPosition": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "gridKey": 0
-                }
-            },
-            {
-                "name": {
-                    "namestr": "ScaredEnemyStatic",
-                    "layer": 2,
-                    "isprefab": true,
-                    "tagstr": "Enemy",
-                    "prefabname": "ScaredEnemyStatic.prefab",
-                    "issync": false
-                },
-                "transform": {
-                    "position": {
-                        "x": -4.019617080688477,
-                        "y": -6.057861804962158
-                    },
-                    "rotation": 22.76314353942871,
-                    "scale": {
-                        "x": 3.000002145767212,
-                        "y": 3.000002145767212
-                    }
-                },
-                "collider": {
-                    "checkcollision": true,
-                    "checkresponse": true,
-                    "size": {
-                        "x": 0.7400000095367432,
-                        "y": 0.23999999463558197
-                    },
-                    "offset": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "drawDebug": true,
-                    "radius": 0.5,
-                    "shapetype": 0
-                },
-                "enemy": {
-                    "enemytag": -1,
-                    "enemytype": 0,
-                    "enemybehaviour": 0
-                },
-                "rigidbody": {
-                    "linearVelocity": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "linearAcceleration": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "rotation": 0.0,
-                    "angularVelocity": 0.0,
-                    "angularAcceleration": 0.0,
-                    "mass": 1.0,
-                    "inverseMass": 1.0,
-                    "linearDamping": 0.9900000095367432,
-                    "angularDamping": 0.9900000095367432,
-                    "force": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "torque": 0.0,
-                    "kinematic": false,
-                    "static": false
-                },
-                "sprite": {
-                    "imagefile": "ani_scientistWalk_strip8.png",
-                    "layer": 37,
-                    "color": {
-                        "r": 1.0,
-                        "g": 1.0,
-                        "b": 1.0
-                    },
-                    "alpha": 1.0,
-                    "isLit": true
-                },
-                "animation": {
-                    "frameNumber": 0,
-                    "framesPerSecond": 15,
-                    "frameTimer": 0.0,
-                    "isAnimating": false,
-                    "stripCount": 8
-                },
-                "script": {
-                    "scripts": [
-                        {
-                            "name": "EnemyScript",
-                            "enabled": true,
-                            "map": [
-                                {
-                                    "variable": "isDead",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "isPatrolling",
-                                    "base64": ""
-                                }
-                            ]
-                        }
-                    ]
-                },
-                "audio": [
-                    {
-                        "name": "aud_bodyDeath01",
-                        "volume": 0.3160000145435333,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyStab01",
-                        "volume": 0.4880000054836273,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyStab02",
-                        "volume": 0.6650000214576721,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall01",
-                        "volume": 0.24899999797344208,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall02",
-                        "volume": 0.2849999964237213,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall03",
-                        "volume": 0.3070000112056732,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall04",
-                        "volume": 0.24300000071525574,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall05",
-                        "volume": 0.2290000021457672,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall06",
-                        "volume": 0.21199999749660492,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall07",
-                        "volume": 0.20399999618530273,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall08",
-                        "volume": 0.25099998712539673,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall09",
-                        "volume": 0.2290000021457672,
-                        "loop": false,
-                        "playOnStart": false
-                    }
-                ],
-                "raycast": {
-                    "raycasts": [
-                        {
-                            "raycastID": "RaycastToPlayer",
-                            "israycasting": true,
-                            "targetposition": {
-                                "x": 0.0,
-                                "y": 0.0
-                            },
-                            "Layer Vector": [
-                                {
-                                    "layer": 5
-                                }
-                            ]
-                        }
-                    ]
-                },
-                "pathfinding": {
-                    "startPosition": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "targetPosition": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "gridKey": 0
-                }
-            },
-            {
-                "name": {
-                    "namestr": "ScaredEnemyStatic",
-                    "layer": 2,
-                    "isprefab": true,
-                    "tagstr": "Enemy",
-                    "prefabname": "ScaredEnemyStatic.prefab",
-                    "issync": false
-                },
-                "transform": {
-                    "position": {
-                        "x": -0.04556548595428467,
-                        "y": -5.491678714752197
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 3.0000009536743164,
-                        "y": 3.0000009536743164
-                    }
-                },
-                "collider": {
-                    "checkcollision": true,
-                    "checkresponse": true,
-                    "size": {
-                        "x": 0.7400000095367432,
-                        "y": 0.23999999463558197
-                    },
-                    "offset": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "drawDebug": true,
-                    "radius": 0.5,
-                    "shapetype": 0
-                },
-                "enemy": {
-                    "enemytag": -1,
-                    "enemytype": 0,
-                    "enemybehaviour": 0
-                },
-                "rigidbody": {
-                    "linearVelocity": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "linearAcceleration": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "rotation": 0.0,
-                    "angularVelocity": 0.0,
-                    "angularAcceleration": 0.0,
-                    "mass": 1.0,
-                    "inverseMass": 1.0,
-                    "linearDamping": 0.9900000095367432,
-                    "angularDamping": 0.9900000095367432,
-                    "force": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "torque": 0.0,
-                    "kinematic": false,
-                    "static": false
-                },
-                "sprite": {
-                    "imagefile": "ani_scientistWalk_strip8.png",
-                    "layer": 38,
-                    "color": {
-                        "r": 1.0,
-                        "g": 1.0,
-                        "b": 1.0
-                    },
-                    "alpha": 1.0,
-                    "isLit": true
-                },
-                "animation": {
-                    "frameNumber": 0,
-                    "framesPerSecond": 15,
-                    "frameTimer": 0.0,
-                    "isAnimating": false,
-                    "stripCount": 8
-                },
-                "script": {
-                    "scripts": [
-                        {
-                            "name": "EnemyScript",
-                            "enabled": true,
-                            "map": [
-                                {
-                                    "variable": "isDead",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "isPatrolling",
-                                    "base64": ""
-                                }
-                            ]
-                        }
-                    ]
-                },
-                "audio": [
-                    {
-                        "name": "aud_bodyDeath01",
-                        "volume": 0.3160000145435333,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyStab01",
-                        "volume": 0.4880000054836273,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyStab02",
-                        "volume": 0.6650000214576721,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall01",
-                        "volume": 0.24899999797344208,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall02",
-                        "volume": 0.2849999964237213,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall03",
-                        "volume": 0.3070000112056732,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall04",
-                        "volume": 0.24300000071525574,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall05",
-                        "volume": 0.2290000021457672,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall06",
-                        "volume": 0.21199999749660492,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall07",
-                        "volume": 0.20399999618530273,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall08",
-                        "volume": 0.25099998712539673,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall09",
-                        "volume": 0.2290000021457672,
-                        "loop": false,
-                        "playOnStart": false
-                    }
-                ],
-                "raycast": {
-                    "raycasts": [
-                        {
-                            "raycastID": "RaycastToPlayer",
-                            "israycasting": true,
-                            "targetposition": {
-                                "x": 0.0,
-                                "y": 0.0
-                            },
-                            "Layer Vector": [
-                                {
-                                    "layer": 5
-                                }
-                            ]
-                        }
-                    ]
-                },
-                "pathfinding": {
-                    "startPosition": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "targetPosition": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "gridKey": 0
-                }
-            },
-            {
-                "name": {
-                    "namestr": "ScaredEnemyPatrol",
-                    "layer": 2,
-                    "isprefab": true,
-                    "tagstr": "Enemy",
-                    "prefabname": "ScaredEnemyPatrol.prefab",
-                    "issync": false
-                },
-                "transform": {
-                    "position": {
-                        "x": -3.6239571571350098,
-                        "y": -8.785510063171387
-                    },
-                    "rotation": -0.0,
-                    "scale": {
-                        "x": 3.0000009536743164,
-                        "y": 3.0000009536743164
-                    }
-                },
-                "collider": {
-                    "checkcollision": true,
-                    "checkresponse": true,
-                    "size": {
-                        "x": 0.7400000095367432,
-                        "y": 0.23999999463558197
-                    },
-                    "offset": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "drawDebug": true,
-                    "radius": 0.5,
-                    "shapetype": 0
-                },
-                "enemy": {
-                    "enemytag": -1,
-                    "enemytype": 0,
-                    "enemybehaviour": 1
-                },
-                "rigidbody": {
-                    "linearVelocity": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "linearAcceleration": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "rotation": 0.0,
-                    "angularVelocity": 0.0,
-                    "angularAcceleration": 0.0,
-                    "mass": 1.0,
-                    "inverseMass": 1.0,
-                    "linearDamping": 0.9900000095367432,
-                    "angularDamping": 0.9900000095367432,
-                    "force": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "torque": 0.0,
-                    "kinematic": false,
-                    "static": false
-                },
-                "sprite": {
-                    "imagefile": "ani_scientistWalk_strip8.png",
-                    "layer": 33,
-                    "color": {
-                        "r": 1.0,
-                        "g": 1.0,
-                        "b": 1.0
-                    },
-                    "alpha": 1.0,
-                    "isLit": true
-                },
-                "animation": {
-                    "frameNumber": 2,
-                    "framesPerSecond": 10,
-                    "frameTimer": 0.0,
-                    "isAnimating": false,
-                    "stripCount": 8
-                },
-                "script": {
-                    "scripts": [
-                        {
-                            "name": "EnemyScript",
-                            "enabled": true,
-                            "map": [
-                                {
-                                    "variable": "isDead",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "isPatrolling",
-                                    "base64": ""
-                                }
-                            ]
-                        }
-                    ]
-                },
-                "audio": [
-                    {
-                        "name": "aud_bodyDeath01",
-                        "volume": 0.3160000145435333,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyStab01",
-                        "volume": 0.4880000054836273,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyStab02",
-                        "volume": 0.7009999752044678,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall01",
-                        "volume": 0.24899999797344208,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall02",
-                        "volume": 0.2849999964237213,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall03",
-                        "volume": 0.3070000112056732,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall04",
-                        "volume": 0.24300000071525574,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall05",
-                        "volume": 0.2290000021457672,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall06",
-                        "volume": 0.21199999749660492,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall07",
-                        "volume": 0.20399999618530273,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall08",
-                        "volume": 0.25099998712539673,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall09",
-                        "volume": 0.2290000021457672,
-                        "loop": false,
-                        "playOnStart": false
-                    }
-                ],
-                "raycast": {
-                    "raycasts": [
-                        {
-                            "raycastID": "RaycastToPlayer",
-                            "israycasting": true,
-                            "targetposition": {
-                                "x": 0.0,
-                                "y": 0.0
-                            },
-                            "Layer Vector": [
-                                {
-                                    "layer": 5
-                                }
-                            ]
-                        }
-                    ]
-                },
-                "pathfinding": {
-                    "startPosition": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "targetPosition": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "gridKey": 0
-                },
-                "children": [
-                    {
-                        "name": {
-                            "namestr": "Waypoint 1",
-                            "layer": 0,
-                            "isprefab": true,
-                            "tagstr": "Default",
-                            "prefabname": "ScaredEnemyPatrol.prefab",
-                            "issync": true
-                        },
-                        "transform": {
-                            "position": {
-                                "x": 0.0,
-                                "y": 0.0
-                            },
-                            "rotation": 0.0,
-                            "scale": {
-                                "x": 1.0,
-                                "y": 1.0
-                            }
-                        }
-                    },
-                    {
-                        "name": {
-                            "namestr": "Waypoint 2",
-                            "layer": 0,
-                            "isprefab": true,
-                            "tagstr": "Default",
-                            "prefabname": "ScaredEnemyPatrol.prefab",
-                            "issync": true
-                        },
-                        "transform": {
-                            "position": {
-                                "x": 2.692307472229004,
-                                "y": 0.007251149974763393
-                            },
-                            "rotation": 0.0,
-                            "scale": {
-                                "x": 1.0,
-                                "y": 1.0
-                            }
-                        }
-                    }
-                ]
             },
             {
                 "name": {
@@ -1957,209 +695,6 @@
                         }
                     }
                 ]
-            },
-            {
-                "name": {
-                    "namestr": "ScaredEnemyStatic",
-                    "layer": 2,
-                    "isprefab": true,
-                    "tagstr": "Enemy",
-                    "prefabname": "ScaredEnemyStatic.prefab",
-                    "issync": false
-                },
-                "transform": {
-                    "position": {
-                        "x": 4.059585094451904,
-                        "y": -5.763680934906006
-                    },
-                    "rotation": -22.867517471313477,
-                    "scale": {
-                        "x": 3.000000476837158,
-                        "y": 3.000000476837158
-                    }
-                },
-                "collider": {
-                    "checkcollision": true,
-                    "checkresponse": true,
-                    "size": {
-                        "x": 0.7400000095367432,
-                        "y": 0.23999999463558197
-                    },
-                    "offset": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "drawDebug": true,
-                    "radius": 0.5,
-                    "shapetype": 0
-                },
-                "enemy": {
-                    "enemytag": -1,
-                    "enemytype": 0,
-                    "enemybehaviour": 0
-                },
-                "rigidbody": {
-                    "linearVelocity": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "linearAcceleration": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "rotation": 0.0,
-                    "angularVelocity": 0.0,
-                    "angularAcceleration": 0.0,
-                    "mass": 1.0,
-                    "inverseMass": 1.0,
-                    "linearDamping": 0.9900000095367432,
-                    "angularDamping": 0.9900000095367432,
-                    "force": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "torque": 0.0,
-                    "kinematic": false,
-                    "static": false
-                },
-                "sprite": {
-                    "imagefile": "ani_scientistWalk_strip8.png",
-                    "layer": 29,
-                    "color": {
-                        "r": 1.0,
-                        "g": 1.0,
-                        "b": 1.0
-                    },
-                    "alpha": 1.0,
-                    "isLit": true
-                },
-                "animation": {
-                    "frameNumber": 0,
-                    "framesPerSecond": 15,
-                    "frameTimer": 0.0,
-                    "isAnimating": false,
-                    "stripCount": 8
-                },
-                "script": {
-                    "scripts": [
-                        {
-                            "name": "EnemyScript",
-                            "enabled": true,
-                            "map": [
-                                {
-                                    "variable": "isDead",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "isPatrolling",
-                                    "base64": ""
-                                }
-                            ]
-                        }
-                    ]
-                },
-                "audio": [
-                    {
-                        "name": "aud_bodyDeath01",
-                        "volume": 0.3160000145435333,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyStab01",
-                        "volume": 0.4880000054836273,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyStab02",
-                        "volume": 0.6650000214576721,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall01",
-                        "volume": 0.24899999797344208,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall02",
-                        "volume": 0.2849999964237213,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall03",
-                        "volume": 0.3070000112056732,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall04",
-                        "volume": 0.24300000071525574,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall05",
-                        "volume": 0.2290000021457672,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall06",
-                        "volume": 0.21199999749660492,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall07",
-                        "volume": 0.20399999618530273,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall08",
-                        "volume": 0.25099998712539673,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall09",
-                        "volume": 0.2290000021457672,
-                        "loop": false,
-                        "playOnStart": false
-                    }
-                ],
-                "raycast": {
-                    "raycasts": [
-                        {
-                            "raycastID": "RaycastToPlayer",
-                            "israycasting": true,
-                            "targetposition": {
-                                "x": 0.0,
-                                "y": 0.0
-                            },
-                            "Layer Vector": [
-                                {
-                                    "layer": 5
-                                }
-                            ]
-                        }
-                    ]
-                },
-                "pathfinding": {
-                    "startPosition": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "targetPosition": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "gridKey": 0
-                }
             },
             {
                 "name": {
@@ -2622,209 +1157,6 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 21.65333366394043,
-                        "y": -23.237262725830078
-                    },
-                    "rotation": 99.19043731689453,
-                    "scale": {
-                        "x": 2.9999988079071045,
-                        "y": 2.9999988079071045
-                    }
-                },
-                "collider": {
-                    "checkcollision": true,
-                    "checkresponse": true,
-                    "size": {
-                        "x": 0.7400000095367432,
-                        "y": 0.23999999463558197
-                    },
-                    "offset": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "drawDebug": true,
-                    "radius": 0.5,
-                    "shapetype": 0
-                },
-                "enemy": {
-                    "enemytag": -1,
-                    "enemytype": 1,
-                    "enemybehaviour": 0
-                },
-                "rigidbody": {
-                    "linearVelocity": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "linearAcceleration": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "rotation": 0.0,
-                    "angularVelocity": 0.0,
-                    "angularAcceleration": 0.0,
-                    "mass": 1.0,
-                    "inverseMass": 1.0,
-                    "linearDamping": 0.9900000095367432,
-                    "angularDamping": 0.9900000095367432,
-                    "force": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "torque": 0.0,
-                    "kinematic": false,
-                    "static": false
-                },
-                "sprite": {
-                    "imagefile": "ani_scientistWalk_strip8.png",
-                    "layer": 40,
-                    "color": {
-                        "r": 1.0,
-                        "g": 1.0,
-                        "b": 1.0
-                    },
-                    "alpha": 1.0,
-                    "isLit": true
-                },
-                "animation": {
-                    "frameNumber": 0,
-                    "framesPerSecond": 15,
-                    "frameTimer": 0.0,
-                    "isAnimating": false,
-                    "stripCount": 8
-                },
-                "script": {
-                    "scripts": [
-                        {
-                            "name": "EnemyScript",
-                            "enabled": true,
-                            "map": [
-                                {
-                                    "variable": "isDead",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "isPatrolling",
-                                    "base64": ""
-                                }
-                            ]
-                        }
-                    ]
-                },
-                "audio": [
-                    {
-                        "name": "aud_bodyDeath01",
-                        "volume": 0.3160000145435333,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyStab01",
-                        "volume": 0.4880000054836273,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyStab02",
-                        "volume": 0.6650000214576721,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall01",
-                        "volume": 0.24899999797344208,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall02",
-                        "volume": 0.2849999964237213,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall03",
-                        "volume": 0.3070000112056732,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall04",
-                        "volume": 0.24300000071525574,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall05",
-                        "volume": 0.2290000021457672,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall06",
-                        "volume": 0.21199999749660492,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall07",
-                        "volume": 0.20399999618530273,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall08",
-                        "volume": 0.25099998712539673,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall09",
-                        "volume": 0.2290000021457672,
-                        "loop": false,
-                        "playOnStart": false
-                    }
-                ],
-                "raycast": {
-                    "raycasts": [
-                        {
-                            "raycastID": "RaycastToPlayer",
-                            "israycasting": true,
-                            "targetposition": {
-                                "x": 0.0,
-                                "y": 0.0
-                            },
-                            "Layer Vector": [
-                                {
-                                    "layer": 5
-                                }
-                            ]
-                        }
-                    ]
-                },
-                "pathfinding": {
-                    "startPosition": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "targetPosition": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "gridKey": 0
-                }
-            },
-            {
-                "name": {
-                    "namestr": "FearlessEnemyStatic",
-                    "layer": 2,
-                    "isprefab": true,
-                    "tagstr": "Enemy",
-                    "prefabname": "FearlessEnemyStatic.prefab",
-                    "issync": false
-                },
-                "transform": {
-                    "position": {
                         "x": 60.50803756713867,
                         "y": 0.454076886177063
                     },
@@ -2881,412 +1213,6 @@
                 "sprite": {
                     "imagefile": "ani_scientistWalk_strip8.png",
                     "layer": 41,
-                    "color": {
-                        "r": 1.0,
-                        "g": 1.0,
-                        "b": 1.0
-                    },
-                    "alpha": 1.0,
-                    "isLit": true
-                },
-                "animation": {
-                    "frameNumber": 0,
-                    "framesPerSecond": 15,
-                    "frameTimer": 0.0,
-                    "isAnimating": false,
-                    "stripCount": 8
-                },
-                "script": {
-                    "scripts": [
-                        {
-                            "name": "EnemyScript",
-                            "enabled": true,
-                            "map": [
-                                {
-                                    "variable": "isDead",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "isPatrolling",
-                                    "base64": ""
-                                }
-                            ]
-                        }
-                    ]
-                },
-                "audio": [
-                    {
-                        "name": "aud_bodyDeath01",
-                        "volume": 0.3160000145435333,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyStab01",
-                        "volume": 0.4880000054836273,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyStab02",
-                        "volume": 0.6650000214576721,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall01",
-                        "volume": 0.24899999797344208,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall02",
-                        "volume": 0.2849999964237213,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall03",
-                        "volume": 0.3070000112056732,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall04",
-                        "volume": 0.24300000071525574,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall05",
-                        "volume": 0.2290000021457672,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall06",
-                        "volume": 0.21199999749660492,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall07",
-                        "volume": 0.20399999618530273,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall08",
-                        "volume": 0.25099998712539673,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall09",
-                        "volume": 0.2290000021457672,
-                        "loop": false,
-                        "playOnStart": false
-                    }
-                ],
-                "raycast": {
-                    "raycasts": [
-                        {
-                            "raycastID": "RaycastToPlayer",
-                            "israycasting": true,
-                            "targetposition": {
-                                "x": 0.0,
-                                "y": 0.0
-                            },
-                            "Layer Vector": [
-                                {
-                                    "layer": 5
-                                }
-                            ]
-                        }
-                    ]
-                },
-                "pathfinding": {
-                    "startPosition": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "targetPosition": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "gridKey": 0
-                }
-            },
-            {
-                "name": {
-                    "namestr": "FearlessEnemyStatic",
-                    "layer": 2,
-                    "isprefab": true,
-                    "tagstr": "Enemy",
-                    "prefabname": "FearlessEnemyStatic.prefab",
-                    "issync": false
-                },
-                "transform": {
-                    "position": {
-                        "x": 28.022951126098633,
-                        "y": -18.222047805786133
-                    },
-                    "rotation": -78.97846221923828,
-                    "scale": {
-                        "x": 2.9999988079071045,
-                        "y": 2.9999988079071045
-                    }
-                },
-                "collider": {
-                    "checkcollision": true,
-                    "checkresponse": true,
-                    "size": {
-                        "x": 0.7400000095367432,
-                        "y": 0.23999999463558197
-                    },
-                    "offset": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "drawDebug": true,
-                    "radius": 0.5,
-                    "shapetype": 0
-                },
-                "enemy": {
-                    "enemytag": -1,
-                    "enemytype": 1,
-                    "enemybehaviour": 0
-                },
-                "rigidbody": {
-                    "linearVelocity": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "linearAcceleration": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "rotation": 0.0,
-                    "angularVelocity": 0.0,
-                    "angularAcceleration": 0.0,
-                    "mass": 1.0,
-                    "inverseMass": 1.0,
-                    "linearDamping": 0.9900000095367432,
-                    "angularDamping": 0.9900000095367432,
-                    "force": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "torque": 0.0,
-                    "kinematic": false,
-                    "static": false
-                },
-                "sprite": {
-                    "imagefile": "ani_scientistWalk_strip8.png",
-                    "layer": 42,
-                    "color": {
-                        "r": 1.0,
-                        "g": 1.0,
-                        "b": 1.0
-                    },
-                    "alpha": 1.0,
-                    "isLit": true
-                },
-                "animation": {
-                    "frameNumber": 0,
-                    "framesPerSecond": 15,
-                    "frameTimer": 0.0,
-                    "isAnimating": false,
-                    "stripCount": 8
-                },
-                "script": {
-                    "scripts": [
-                        {
-                            "name": "EnemyScript",
-                            "enabled": true,
-                            "map": [
-                                {
-                                    "variable": "isDead",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "isPatrolling",
-                                    "base64": ""
-                                }
-                            ]
-                        }
-                    ]
-                },
-                "audio": [
-                    {
-                        "name": "aud_bodyDeath01",
-                        "volume": 0.3160000145435333,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyStab01",
-                        "volume": 0.4880000054836273,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyStab02",
-                        "volume": 0.6650000214576721,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall01",
-                        "volume": 0.24899999797344208,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall02",
-                        "volume": 0.2849999964237213,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall03",
-                        "volume": 0.3070000112056732,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall04",
-                        "volume": 0.24300000071525574,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall05",
-                        "volume": 0.2290000021457672,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall06",
-                        "volume": 0.21199999749660492,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall07",
-                        "volume": 0.20399999618530273,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall08",
-                        "volume": 0.25099998712539673,
-                        "loop": false,
-                        "playOnStart": false
-                    },
-                    {
-                        "name": "aud_bodyFall09",
-                        "volume": 0.2290000021457672,
-                        "loop": false,
-                        "playOnStart": false
-                    }
-                ],
-                "raycast": {
-                    "raycasts": [
-                        {
-                            "raycastID": "RaycastToPlayer",
-                            "israycasting": true,
-                            "targetposition": {
-                                "x": 0.0,
-                                "y": 0.0
-                            },
-                            "Layer Vector": [
-                                {
-                                    "layer": 5
-                                }
-                            ]
-                        }
-                    ]
-                },
-                "pathfinding": {
-                    "startPosition": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "targetPosition": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "gridKey": 0
-                }
-            },
-            {
-                "name": {
-                    "namestr": "FearlessEnemyStatic",
-                    "layer": 2,
-                    "isprefab": true,
-                    "tagstr": "Enemy",
-                    "prefabname": "FearlessEnemyStatic.prefab",
-                    "issync": false
-                },
-                "transform": {
-                    "position": {
-                        "x": 28.572826385498047,
-                        "y": -12.17340087890625
-                    },
-                    "rotation": -78.97846221923828,
-                    "scale": {
-                        "x": 2.9999988079071045,
-                        "y": 2.9999988079071045
-                    }
-                },
-                "collider": {
-                    "checkcollision": true,
-                    "checkresponse": true,
-                    "size": {
-                        "x": 0.7400000095367432,
-                        "y": 0.23999999463558197
-                    },
-                    "offset": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "drawDebug": true,
-                    "radius": 0.5,
-                    "shapetype": 0
-                },
-                "enemy": {
-                    "enemytag": -1,
-                    "enemytype": 1,
-                    "enemybehaviour": 0
-                },
-                "rigidbody": {
-                    "linearVelocity": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "linearAcceleration": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "rotation": 0.0,
-                    "angularVelocity": 0.0,
-                    "angularAcceleration": 0.0,
-                    "mass": 1.0,
-                    "inverseMass": 1.0,
-                    "linearDamping": 0.9900000095367432,
-                    "angularDamping": 0.9900000095367432,
-                    "force": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "torque": 0.0,
-                    "kinematic": false,
-                    "static": false
-                },
-                "sprite": {
-                    "imagefile": "ani_scientistWalk_strip8.png",
-                    "layer": 43,
                     "color": {
                         "r": 1.0,
                         "g": 1.0,
@@ -83334,5 +81260,252 @@
                 ]
             ]
         }
+    },
+    {
+        "name": {
+            "namestr": "prefab_enemyRanged",
+            "layer": 2,
+            "isprefab": true,
+            "tagstr": "Enemy",
+            "prefabname": "prefab_enemyRanged.prefab",
+            "issync": false
+        },
+        "transform": {
+            "position": {
+                "x": 0.710839569568634,
+                "y": -7.933077335357666
+            },
+            "rotation": -114.10620880126953,
+            "scale": {
+                "x": 2.9999983310699463,
+                "y": 2.9999983310699463
+            }
+        },
+        "collider": {
+            "checkcollision": true,
+            "checkresponse": true,
+            "size": {
+                "x": 0.7400000095367432,
+                "y": 0.23999999463558197
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true,
+            "radius": 0.5,
+            "shapetype": 0
+        },
+        "enemy": {
+            "enemytag": -1,
+            "enemytype": 2,
+            "enemybehaviour": 1
+        },
+        "rigidbody": {
+            "linearVelocity": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "linearAcceleration": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "angularVelocity": 0.0,
+            "angularAcceleration": 0.0,
+            "mass": 1.0,
+            "inverseMass": 1.0,
+            "linearDamping": 0.9900000095367432,
+            "angularDamping": 0.9900000095367432,
+            "force": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "torque": 0.0,
+            "kinematic": false,
+            "static": false
+        },
+        "sprite": {
+            "imagefile": "ani_scientistWalk_strip8.png",
+            "layer": 65,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0,
+            "isLit": true
+        },
+        "animation": {
+            "frameNumber": 2,
+            "framesPerSecond": 10,
+            "frameTimer": 0.0,
+            "isAnimating": false,
+            "stripCount": 8
+        },
+        "script": {
+            "scripts": [
+                {
+                    "name": "EnemyScript",
+                    "enabled": true,
+                    "map": [
+                        {
+                            "variable": "isDead",
+                            "base64": ""
+                        },
+                        {
+                            "variable": "isPatrolling",
+                            "base64": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        "audio": [
+            {
+                "name": "aud_bodyDeath01",
+                "volume": 0.3160000145435333,
+                "loop": false,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_bodyStab01",
+                "volume": 0.4880000054836273,
+                "loop": false,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_bodyStab02",
+                "volume": 0.6650000214576721,
+                "loop": false,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_bodyFall01",
+                "volume": 0.24899999797344208,
+                "loop": false,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_bodyFall02",
+                "volume": 0.2849999964237213,
+                "loop": false,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_bodyFall03",
+                "volume": 0.3070000112056732,
+                "loop": false,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_bodyFall04",
+                "volume": 0.24300000071525574,
+                "loop": false,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_bodyFall05",
+                "volume": 0.2290000021457672,
+                "loop": false,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_bodyFall06",
+                "volume": 0.21199999749660492,
+                "loop": false,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_bodyFall07",
+                "volume": 0.20399999618530273,
+                "loop": false,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_bodyFall08",
+                "volume": 0.25099998712539673,
+                "loop": false,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_bodyFall09",
+                "volume": 0.2290000021457672,
+                "loop": false,
+                "playOnStart": false
+            }
+        ],
+        "raycast": {
+            "raycasts": [
+                {
+                    "raycastID": "RaycastToPlayer",
+                    "israycasting": true,
+                    "targetposition": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "Layer Vector": [
+                        {
+                            "layer": 5
+                        }
+                    ]
+                }
+            ]
+        },
+        "pathfinding": {
+            "startPosition": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "targetPosition": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "gridKey": 0
+        },
+        "children": [
+            {
+                "name": {
+                    "namestr": "waypoint 1",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "prefab_enemyRanged.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.244460791349411,
+                        "y": 1.8961265087127686
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                }
+            },
+            {
+                "name": {
+                    "namestr": "waypoint 2",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "prefab_enemyRanged.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": -1.076829433441162,
+                        "y": -0.9230600595474243
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                }
+            }
+        ]
     }
 ]

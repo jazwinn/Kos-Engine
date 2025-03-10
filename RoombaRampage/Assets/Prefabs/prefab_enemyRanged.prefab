@@ -11,17 +11,17 @@
     },
     {
         "name": {
-            "namestr": "FearlessEnemyStatic",
+            "namestr": "prefab_enemyRanged",
             "layer": 2,
             "isprefab": true,
             "tagstr": "Enemy",
-            "prefabname": "FearlessEnemyStatic.prefab",
+            "prefabname": "prefab_enemyRanged.prefab",
             "issync": false
         },
         "transform": {
             "position": {
-                "x": 42.26792907714844,
-                "y": 4.780803203582764
+                "x": 1.6800018548965454,
+                "y": -6.171558856964111
             },
             "rotation": -114.10630798339844,
             "scale": {
@@ -46,8 +46,8 @@
         },
         "enemy": {
             "enemytag": -1,
-            "enemytype": 1,
-            "enemybehaviour": 0
+            "enemytype": 2,
+            "enemybehaviour": 1
         },
         "rigidbody": {
             "linearVelocity": {
@@ -75,7 +75,7 @@
         },
         "sprite": {
             "imagefile": "ani_scientistWalk_strip8.png",
-            "layer": 63,
+            "layer": 64,
             "color": {
                 "r": 1.0,
                 "g": 1.0,
@@ -85,8 +85,8 @@
             "isLit": true
         },
         "animation": {
-            "frameNumber": 0,
-            "framesPerSecond": 15,
+            "frameNumber": 2,
+            "framesPerSecond": 10,
             "frameTimer": 0.0,
             "isAnimating": false,
             "stripCount": 8
@@ -210,6 +210,50 @@
                 "y": 0.0
             },
             "gridKey": 0
-        }
+        },
+        "children": [
+            {
+                "name": {
+                    "namestr": "waypoint 1",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "prefab_enemyRanged.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.244460791349411,
+                        "y": 1.8961265087127686
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                }
+            },
+            {
+                "name": {
+                    "namestr": "waypoint 2",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "prefab_enemyRanged.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": -1.076829433441162,
+                        "y": -0.9230600595474243
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                }
+            }
+        ]
     }
 ]

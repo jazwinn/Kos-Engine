@@ -600,6 +600,38 @@ namespace Serialization {
 			}
 		}
 
+		if (signature.test(ecs::ComponentType::TYPEPARTICLECOMPONENT))
+		{
+			ecs::ParticleComponent* particle = static_cast<ecs::ParticleComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPEPARTICLECOMPONENT]->m_GetEntityComponent(entityId));
+			if (particle)
+			{
+				rapidjson::Value par(rapidjson::kObjectType);
+
+				par.AddMember("willSpawn", particle->m_willSpawn, allocator);
+				par.AddMember("noOfParticles", particle->m_noOfParticles, allocator);
+				par.AddMember("lifeSpan", particle->m_lifeSpan, allocator);
+				par.AddMember("velocityX", particle->m_velocity.m_x, allocator);
+				par.AddMember("velocityY", particle->m_velocity.m_y, allocator);
+				par.AddMember("accelerationX", particle->m_acceleration.m_x, allocator);
+				par.AddMember("accelerationY", particle->m_acceleration.m_y, allocator);
+				par.AddMember("colorR", particle->m_color.m_x, allocator);
+				par.AddMember("colorG", particle->m_color.m_y, allocator);
+				par.AddMember("colorB", particle->m_color.m_z, allocator);
+				par.AddMember("coneRotation", particle->m_coneRotation, allocator);
+				par.AddMember("coneAngle", particle->m_coneAngle, allocator);
+				par.AddMember("randomFactor", particle->m_randomFactor, allocator);
+				par.AddMember("imageFile", rapidjson::Value(particle->m_imageFile.c_str(), allocator), allocator);
+				par.AddMember("stripCount", particle->m_stripCount, allocator);
+				par.AddMember("frameNumber", particle->m_frameNumber, allocator);
+				par.AddMember("layer", particle->m_layer, allocator);
+				par.AddMember("friction", particle->m_friction, allocator);
+				par.AddMember("fps", particle->m_fps, allocator);
+
+				entityData.AddMember("particle", par, allocator);
+				hasComponents = true;
+			}
+		}
+
 		// Check if the entity has AudioComponent and save it
 		if (signature.test(ecs::ComponentType::TYPEAUDIOCOMPONENT)) {
 			ecs::AudioComponent* ac = static_cast<ecs::AudioComponent*>(
@@ -1307,6 +1339,35 @@ namespace Serialization {
 				if (pathfindingObject.HasMember("gridKey") && pathfindingObject["gridKey"].IsInt()) {
 					pc->m_GridKey = pathfindingObject["gridKey"].GetInt();
 				}
+			}
+		}
+
+		// Load Particle Component if it exists
+		if (entityData.HasMember("particle") && entityData["particle"].IsObject()) {
+			ecs::ParticleComponent* particle = static_cast<ecs::ParticleComponent*>(ecs->m_AddComponent(ecs::TYPEPARTICLECOMPONENT, newEntityId));
+
+			if (particle) {
+				const rapidjson::Value& par = entityData["particle"];
+
+				if (par.HasMember("willSpawn")) particle->m_willSpawn = par["willSpawn"].GetBool();
+				if (par.HasMember("noOfParticles")) particle->m_noOfParticles = par["noOfParticles"].GetInt();
+				if (par.HasMember("lifeSpan")) particle->m_lifeSpan = par["lifeSpan"].GetFloat();
+				if (par.HasMember("velocityX")) particle->m_velocity.m_x = par["velocityX"].GetFloat();
+				if (par.HasMember("velocityY")) particle->m_velocity.m_y = par["velocityY"].GetFloat();
+				if (par.HasMember("accelerationX")) particle->m_acceleration.m_x = par["accelerationX"].GetFloat();
+				if (par.HasMember("accelerationY")) particle->m_acceleration.m_y = par["accelerationY"].GetFloat();
+				if (par.HasMember("colorR")) particle->m_color.m_x = par["colorR"].GetFloat();
+				if (par.HasMember("colorG")) particle->m_color.m_y = par["colorG"].GetFloat();
+				if (par.HasMember("colorB")) particle->m_color.m_z = par["colorB"].GetFloat();
+				if (par.HasMember("coneRotation")) particle->m_coneRotation = par["coneRotation"].GetFloat();
+				if (par.HasMember("coneAngle")) particle->m_coneAngle = par["coneAngle"].GetFloat();
+				if (par.HasMember("randomFactor")) particle->m_randomFactor = par["randomFactor"].GetFloat();
+				if (par.HasMember("imageFile")) particle->m_imageFile = par["imageFile"].GetString();
+				if (par.HasMember("stripCount")) particle->m_stripCount = par["stripCount"].GetInt();
+				if (par.HasMember("frameNumber")) particle->m_frameNumber = par["frameNumber"].GetInt();
+				if (par.HasMember("layer")) particle->m_layer = par["layer"].GetInt();
+				if (par.HasMember("friction")) particle->m_friction = par["friction"].GetFloat();
+				if (par.HasMember("fps")) particle->m_fps = par["fps"].GetInt();
 			}
 		}
 
