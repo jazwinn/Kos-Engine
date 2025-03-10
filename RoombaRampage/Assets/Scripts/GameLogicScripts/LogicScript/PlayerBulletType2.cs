@@ -15,7 +15,7 @@ public class PlayerBulletType2 : ScriptBase
     {
         EntityID = id;
 
-        speed = 4;
+        speed = 12;
 
         InternalCall.m_InternalGetTransformComponent(EntityID, out startingBulletPos, out startingBulletScale, out startingBulletRotate);
 

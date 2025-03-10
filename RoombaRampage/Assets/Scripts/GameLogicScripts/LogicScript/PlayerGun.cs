@@ -65,7 +65,7 @@ public class PlayerGun : ScriptBase
         leftLimbRailGunHold = 0;
         rightLimbRailGunHold = 0;
         chargeDurationRailGun = 0.5f; //duration to charge up railgun
-        railGunLightMaxIntensity = 10f;
+        railGunLightMaxIntensity = 1f;
 
         limbTag = InternalCall.m_InternalCallGetTag(EntityID);
         leftLimbPosID = (uint)InternalCall.m_InternalCallGetTagID("LeftLimbPos");

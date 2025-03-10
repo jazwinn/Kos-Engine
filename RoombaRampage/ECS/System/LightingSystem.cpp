@@ -14,7 +14,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Config/pch.h"
 
 #include "../ECS.h"
-#include "../ECS/Hierachy.h"
+
 #include "../ECS/System/LightingSystem.h"
 #include "../Graphics/GraphicsPipe.h"
 #include "../Asset Manager/AssetManager.h"
@@ -87,109 +87,11 @@ namespace ecs {
 
 			light->m_innerOuterRadius.m_y = light->m_innerOuterRadius.m_y > 1.f ? 1.f : light->m_innerOuterRadius.m_y < 0.f ? 0.f : light->m_innerOuterRadius.m_y;
 
-			//TODO recalculate the entire thing
-			vector2::Vec2 position = transform->m_position;
-			vector2::Vec2 scale = transform->m_scale;
-			float rotation = transform->m_rotation;
-
-
-			//Light 
-			vector2::Vec2 light_offset = light->m_light_OffSet;
-			vector2::Vec2 light_scale = light->m_light_scale;
-			float light_rotation = light->m_light_rotation;
-
-			mat3x3::Mat3x3 posMatrix, scaleMatrix, rotMatrix, light_rotMatrix;
-			vector2::Vec2 final_Pos = position + light_offset;
-			vector2::Vec2 final_scale = scale * light_scale;
-
-			mat3x3::Mat3x3 translateMatrix;
-			mat3x3::Mat3x3 translateBackMatrix;
-			mat3x3::Mat3x3 translateToOriginMatrix;
-			mat3x3::Mat3x3 rotateMatrix;
-
-			//Matrix
-			mat3x3::Mat3Scale(scaleMatrix, final_scale.m_x, final_scale.m_y);
-			mat3x3::Mat3RotDeg(rotMatrix, rotation);
-			mat3x3::Mat3RotDeg(light_rotMatrix, light_rotation);
-			mat3x3::Mat3Translate(posMatrix, final_Pos.m_x, final_Pos.m_y);
-
-			//transform->m_transformation = final_Matrix;
-			if (transform->m_haveParent) {
-				EntityID parentID = ecs::Hierachy::m_GetParent(transform->m_Entity).value();
-				TransformComponent* parentComp{ static_cast<TransformComponent*>(ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(parentID)) };
-
-				if (!parentComp) {
-					continue;
-				}
-
-				mat3x3::Mat3x3 lightTransformation = mat3x3::Mat3Transform(transform->m_position, vector2::Vec2{ 1.f, 1.f }, 0);
-				
-				lightTransformation.m_e20 += parentComp->m_position.m_x;
-				lightTransformation.m_e21 += parentComp->m_position.m_y;
-
-				mat3x3::Mat3Scale(scaleMatrix, parentComp->m_scale.m_x, parentComp->m_scale.m_y);
-				mat3x3::Mat3RotDeg(rotateMatrix, parentComp->m_rotation);
-				mat3x3::Mat3Translate(translateToOriginMatrix, -parentComp->m_position.m_x, -parentComp->m_position.m_y);
-				mat3x3::Mat3Translate(translateBackMatrix, parentComp->m_position.m_x, (parentComp->m_position.m_y));
-				lightTransformation = translateBackMatrix * rotateMatrix * scaleMatrix * translateToOriginMatrix * lightTransformation;
-
-				mat3x3::Mat3RotDeg(rotateMatrix, transform->m_rotation);
-				mat3x3::Mat3Translate(translateToOriginMatrix, -lightTransformation.m_e20, -lightTransformation.m_e21);
-				mat3x3::Mat3Translate(translateBackMatrix, lightTransformation.m_e20, lightTransformation.m_e21);
-
-				lightTransformation = translateBackMatrix * rotateMatrix * translateToOriginMatrix * lightTransformation;
-
-				mat3x3::Mat3RotDeg(rotateMatrix, light->m_light_rotation);
-				mat3x3::Mat3Translate(translateToOriginMatrix, -lightTransformation.m_e20, -lightTransformation.m_e21);
-				mat3x3::Mat3Translate(translateBackMatrix, lightTransformation.m_e20, lightTransformation.m_e21);
-
-				lightTransformation = translateBackMatrix * rotateMatrix * translateToOriginMatrix * lightTransformation;
-
-				lightTransformation = lightTransformation * mat3x3::Mat3Transform(light->m_light_OffSet, light->m_light_scale, 0);
-
-				//transform->m_transformation = lightTransformation;
-
-				graphicsPipe->m_lightingData.push_back({ { lightTransformation.m_e00,lightTransformation.m_e01,lightTransformation.m_e02,
-										   lightTransformation.m_e10,lightTransformation.m_e11, lightTransformation.m_e12,
-										   lightTransformation.m_e20, lightTransformation.m_e21, lightTransformation.m_e22 },
-										{  light->m_colour.m_x,light->m_colour.m_y,light->m_colour.m_z ,1.f }, { light->m_innerOuterRadius.m_x ,light->m_innerOuterRadius.m_y },
-										   light->m_intensity, light->m_lightType });
-
-			}
-			else {
-
-				mat3x3::Mat3x3 lightTransformation = mat3x3::Mat3Transform(vector2::Vec2{ transform->m_transformation.m_e20 , transform->m_transformation.m_e21 }, transform->m_scale, 0);
-
-				mat3x3::Mat3RotDeg(rotateMatrix, transform->m_rotation);
-				mat3x3::Mat3Translate(translateToOriginMatrix, -lightTransformation.m_e20, -lightTransformation.m_e21);
-				mat3x3::Mat3Translate(translateBackMatrix, lightTransformation.m_e20, lightTransformation.m_e21);
-
-				lightTransformation = translateBackMatrix * rotateMatrix * translateToOriginMatrix * lightTransformation;
-				
-				mat3x3::Mat3RotDeg(rotateMatrix, light->m_light_rotation);
-				mat3x3::Mat3Translate(translateToOriginMatrix, -lightTransformation.m_e20, -lightTransformation.m_e21);
-				mat3x3::Mat3Translate(translateBackMatrix, lightTransformation.m_e20, lightTransformation.m_e21);
-
-
-				lightTransformation = translateBackMatrix * rotateMatrix * translateToOriginMatrix * lightTransformation;
-
-				lightTransformation = lightTransformation * mat3x3::Mat3Transform(light->m_light_OffSet, light->m_light_scale, 0);
-
-				//transform->m_transformation = lightTransformation;
-				graphicsPipe->m_lightingData.push_back({ { lightTransformation.m_e00,lightTransformation.m_e01,lightTransformation.m_e02,
-														   lightTransformation.m_e10,lightTransformation.m_e11, lightTransformation.m_e12,
-														   lightTransformation.m_e20, lightTransformation.m_e21, lightTransformation.m_e22 },
-														{  light->m_colour.m_x,light->m_colour.m_y,light->m_colour.m_z ,1.f }, { light->m_innerOuterRadius.m_x ,light->m_innerOuterRadius.m_y },
-														   light->m_intensity, light->m_lightType });
-			}
-
-			//ORIGINAL
-			//graphicsPipe->m_lightingData.push_back({ { transform->m_transformation.m_e00,transform->m_transformation.m_e01,transform->m_transformation.m_e02,
-			//										   transform->m_transformation.m_e10,transform->m_transformation.m_e11, transform->m_transformation.m_e12,
-			//										   transform->m_transformation.m_e20, transform->m_transformation.m_e21, transform->m_transformation.m_e22 },
-			//										{  light->m_colour.m_x,light->m_colour.m_y,light->m_colour.m_z ,1.f }, { light->m_innerOuterRadius.m_x ,light->m_innerOuterRadius.m_y },
-			//										   light->m_intensity, light->m_lightType });
-		
+			graphicsPipe->m_lightingData.push_back({ { transform->m_transformation.m_e00,transform->m_transformation.m_e01,transform->m_transformation.m_e02,
+													   transform->m_transformation.m_e10,transform->m_transformation.m_e11, transform->m_transformation.m_e12,
+													   transform->m_transformation.m_e20, transform->m_transformation.m_e21, transform->m_transformation.m_e22 },
+													{  light->m_colour.m_x,light->m_colour.m_y,light->m_colour.m_z ,1.f }, { light->m_innerOuterRadius.m_x ,light->m_innerOuterRadius.m_y },
+													   light->m_intensity, light->m_lightType });
 
 		}
 
