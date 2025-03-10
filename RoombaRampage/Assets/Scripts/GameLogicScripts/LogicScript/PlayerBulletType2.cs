@@ -152,8 +152,8 @@ public class PlayerBulletType2 : ScriptBase
                             float halfWallHeight = wallCC.m_Size.Y / 2f;
 
                             Vector2 normal = GetRectangleNormal(bulletpos, wallcenter, halfWallWidth, halfWallHeight);
-                            Console.WriteLine(normal.X);
-                            Console.WriteLine(normal.Y);
+                            //Console.WriteLine(normal.X);
+                            //Console.WriteLine(normal.Y);
                             Vector2 bulletVelocity;
                             InternalCall.m_InternalGetVelocity(EntityID, out bulletVelocity);
 
@@ -165,7 +165,7 @@ public class PlayerBulletType2 : ScriptBase
                             // Reflect the rotation using the general reflection formula
                             newRotation = 2 * wallNormalAngle - rotation;
 
-                            Console.WriteLine(rotation);
+                            //Console.WriteLine(rotation);
                             //set rotation to transform component
 
                             TransformComponent tc = Component.Get<TransformComponent>(EntityID);
