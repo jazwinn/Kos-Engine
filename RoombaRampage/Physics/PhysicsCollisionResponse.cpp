@@ -34,32 +34,32 @@ namespace physicspipe {
 			const auto& colComp2 = static_cast<ecs::ColliderComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(second));
 			if (entA.get()->m_GetEntity() == EntityType::RECTANGLE && entB.get()->m_GetEntity() == EntityType::RECTANGLE) {
 				std::tuple<int, vector2::Vec2, vector2::Vec2> contact = m_FindSquareSquareContact(static_cast<physicspipe::Rectangle*>(entA.get())->m_GetRotatedVertices(), static_cast<physicspipe::Rectangle*>(entB.get())->m_GetRotatedVertices());
-
+				
 				if (std::get<0>(contact) == 1) {
-					colComp->m_contactPoints.emplace_back(std::get<1>(contact), second, 1);
-					colComp2->m_contactPoints.emplace_back(std::get<1>(contact), first, 1);
+					colComp->m_contactPoints.emplace_back(std::get<1>(contact), second,1);
+					colComp2->m_contactPoints.emplace_back(std::get<1>(contact), first,1);
 				}
 				else {
-					colComp->m_contactPoints.emplace_back(std::get<1>(contact), second, 2);
-					colComp2->m_contactPoints.emplace_back(std::get<1>(contact), first, 2);
-					colComp->m_contactPoints.emplace_back(std::get<2>(contact), second, 2);
-					colComp2->m_contactPoints.emplace_back(std::get<2>(contact), first, 2);
+					colComp->m_contactPoints.emplace_back(std::get<1>(contact), second,2);
+					colComp2->m_contactPoints.emplace_back(std::get<1>(contact), first,2);
+					colComp->m_contactPoints.emplace_back(std::get<2>(contact), second,2);
+					colComp2->m_contactPoints.emplace_back(std::get<2>(contact), first,2);
 				}
 			}
 			else if (entA.get()->m_GetEntity() == EntityType::RECTANGLE && entB.get()->m_GetEntity() == EntityType::CIRCLE) {
 				vector2::Vec2 contact = m_FindCircleSquareContact(entB.get()->m_position, static_cast<physicspipe::Rectangle*>(entA.get())->m_GetRotatedVertices());
-				colComp->m_contactPoints.emplace_back(contact, second, 1);
-				colComp2->m_contactPoints.emplace_back(contact, first, 1);
+				colComp->m_contactPoints.emplace_back(contact, second,1);
+				colComp2->m_contactPoints.emplace_back(contact, first,1);
 			}
 			else if (entA.get()->m_GetEntity() == EntityType::CIRCLE && entB.get()->m_GetEntity() == EntityType::RECTANGLE) {
 				vector2::Vec2 contact = m_FindCircleSquareContact(entA.get()->m_position, static_cast<physicspipe::Rectangle*>(entB.get())->m_GetRotatedVertices());
-				colComp->m_contactPoints.emplace_back(contact, second, 1);
-				colComp2->m_contactPoints.emplace_back(contact, first, 1);
+				colComp->m_contactPoints.emplace_back(contact, second,1);
+				colComp2->m_contactPoints.emplace_back(contact, first,1);
 			}
 			else if (entA.get()->m_GetEntity() == EntityType::CIRCLE && entB.get()->m_GetEntity() == EntityType::CIRCLE) {
 				vector2::Vec2 contact = m_FindCircleCirleContact(entA.get()->m_position, static_cast<physicspipe::Circle*>(entA.get())->m_radius, entB.get()->m_position);
-				colComp->m_contactPoints.emplace_back(contact, second, 1);
-				colComp2->m_contactPoints.emplace_back(contact, first, 1);
+				colComp->m_contactPoints.emplace_back(contact,second,1);
+				colComp2->m_contactPoints.emplace_back(contact, first,1);
 			}
 		}
 	}
@@ -85,12 +85,12 @@ namespace physicspipe {
 		if (lineSegLenSq <= 0.0005f) {
 			ret.first = startingPoint;
 		}
-		else if (dist <= 0.0005f) {
+		else if (dist<= 0.0005f) {
 			ret.first = startingPoint;
 		}
 		else if (dist >= 1.f) {
 			ret.first = endPoint;
-
+			
 		}
 		else {
 			ret.first = startingPoint + lineSeg * dist;
@@ -116,7 +116,7 @@ namespace physicspipe {
 		}
 		return contactRet;
 	}
-
+	
 	bool m_AlmostEqual(float lhs, float rhs) {
 		const float minDist = 0.0005f;
 		return abs(lhs - rhs) < minDist;
@@ -212,10 +212,10 @@ namespace physicspipe {
 				if (rigComp == NULL || rigComp2 == NULL) continue;
 				vector2::Vec2 dirA = rigComp->m_PrevDirVec;
 				vector2::Vec2 dirB = rigComp2->m_PrevDirVec;
-				vector2::Vec2::m_funcVec2Normalize(dirA, dirA);
+				vector2::Vec2::m_funcVec2Normalize(dirA,dirA);
 				vector2::Vec2::m_funcVec2Normalize(dirB, dirB);
-				std::pair<std::bitset<4>, std::bitset<4>> flags = m_FindCircleCircleFlags(colComp->m_contactPoints, first, second, entA.get()->m_position, static_cast<physicspipe::Circle*>(entA.get())->m_radius,
-					entB.get()->m_position, static_cast<physicspipe::Circle*>(entB.get())->m_radius, dirA, dirB);
+				std::pair<std::bitset<4>, std::bitset<4>> flags = m_FindCircleCircleFlags(colComp->m_contactPoints,first, second,entA.get()->m_position, static_cast<physicspipe::Circle*>(entA.get())->m_radius,
+										entB.get()->m_position, static_cast<physicspipe::Circle*>(entB.get())->m_radius,dirA,dirB);
 				colComp->m_bits |= flags.first;
 				colComp2->m_bits |= flags.second;
 				colComp->m_blockedFlag = colComp->m_bits.to_ulong();
@@ -235,19 +235,17 @@ namespace physicspipe {
 			else if (colComp->m_type == EntityType::RECTANGLE && colComp2->m_type == EntityType::CIRCLE) {
 				if (rigComp2 == NULL) continue;
 				//m_FindCircleSquareFlags(colComp2, colComp);
-				//if (nameComp->m_entityTag == "Wall") {
-				//	vector2::Vec2 dirB = rigComp2->m_PrevDirVec;
-				//	vector2::Vec2::m_funcVec2Normalize(dirB, dirB);
-				//	std::pair<std::bitset<4>, std::bitset<4>> flags = m_FindCircleSquareFlags(colComp2->m_contactPoints, second, first, entB.get()->m_position, static_cast<physicspipe::Circle*>(entB.get())->m_radius, dirB,
-				//		entA.get()->m_position, static_cast<physicspipe::Rectangle*>(entA.get())->m_GetRotatedVertices(), static_cast<physicspipe::Rectangle*>(entA.get())->m_GetEdges());
-				//	colComp2->m_bits |= flags.first;
-				//	colComp->m_bits |= flags.second;
-				//	colComp->m_blockedFlag = colComp->m_bits.to_ulong();
-				//	colComp2->m_blockedFlag = colComp2->m_bits.to_ulong();
-				//}
+				vector2::Vec2 dirB = rigComp2->m_PrevDirVec;
+				vector2::Vec2::m_funcVec2Normalize(dirB, dirB);
+				std::pair<std::bitset<4>, std::bitset<4>> flags = m_FindCircleSquareFlags(colComp2->m_contactPoints, second, first, entB.get()->m_position, static_cast<physicspipe::Circle*>(entB.get())->m_radius, dirB,
+					entA.get()->m_position, static_cast<physicspipe::Rectangle*>(entA.get())->m_GetRotatedVertices(), static_cast<physicspipe::Rectangle*>(entA.get())->m_GetEdges());
+				colComp2->m_bits |= flags.first;
+				colComp->m_bits |= flags.second;
+				colComp->m_blockedFlag = colComp->m_bits.to_ulong();
+				colComp2->m_blockedFlag = colComp2->m_bits.to_ulong();
 			}
 			else {
-				std::pair<std::bitset<4>, std::bitset<4>> collFlags = m_FindSquareSquareFlags(colComp->m_contactPoints, first, second, entA.get()->m_position, static_cast<physicspipe::Rectangle*>(entA.get())->m_GetRotatedVertices(), static_cast<physicspipe::Rectangle*>(entA.get())->m_GetEdges(),
+				std::pair<std::bitset<4>, std::bitset<4>> collFlags = m_FindSquareSquareFlags(colComp->m_contactPoints,first, second, entA.get()->m_position, static_cast<physicspipe::Rectangle*>(entA.get())->m_GetRotatedVertices(), static_cast<physicspipe::Rectangle*>(entA.get())->m_GetEdges(),
 					entB.get()->m_position, static_cast<physicspipe::Rectangle*>(entB.get())->m_GetRotatedVertices(), static_cast<physicspipe::Rectangle*>(entB.get())->m_GetEdges());
 				colComp->m_bits |= collFlags.first;
 				colComp2->m_bits |= collFlags.second;
@@ -297,7 +295,7 @@ namespace physicspipe {
 					numOfContacts = 1;
 					break;
 				}
-				else if (contactPoints[i].m_numOfContacts == 2) {
+				else if(contactPoints[i].m_numOfContacts == 2){
 					contactPoint1 = contactPoints[i].m_contactPointEnt.first;
 					contactPoint2 = contactPoints[i + 1].m_contactPointEnt.first;
 					//midPoint = (contactPoint1 + contactPoint2) / 2;
@@ -321,7 +319,7 @@ namespace physicspipe {
 				//float dotCPA2 = vector2::Vec2::m_funcVec2DDotProduct(normalsA[i], centerToCP2);
 				float eq = dotCPA - dotVertA;
 				//float eq2 = dotCPA2 - dotVertA;
-				if (m_AlmostEqualCP(eq, 0.f) && eq < min) {
+				if (m_AlmostEqualCP(eq,0.f) && eq < min) {
 					min = std::min(eq, min);
 					if (i == 0) {
 						ret.first.reset();
@@ -393,8 +391,7 @@ namespace physicspipe {
 							ret.first.reset();
 							ret.first.set(3);							//break;
 						}
-					}
-					else if (dotCPA <= 0.f && max < dotCPA && eq < min) {
+					}else if(dotCPA <= 0.f && max < dotCPA && eq < min) {
 						max = std::max(dotCPA, max);
 						if (i == 0) {
 							ret.first.set(0);
@@ -431,7 +428,7 @@ namespace physicspipe {
 				float dotVertB = vector2::Vec2::m_funcVec2DDotProduct(normalsB[i], centerToVert);
 				float dotCPB = vector2::Vec2::m_funcVec2DDotProduct(normalsB[i], centerToCP);
 				float eq = dotCPB - dotVertB;
-				if (m_AlmostEqualCP(eq, 0.f) && eq < min) {
+				if (m_AlmostEqualCP(eq,0.f) && eq < min) {
 					min = std::min(eq, min);
 					if (i == 0) {
 						ret.second.reset();
@@ -553,7 +550,7 @@ namespace physicspipe {
 		float dotProdDirBCP = vector2::Vec2::m_funcVec2DDotProduct(centerBToCP, dirB);
 		float crossProdDirACP = vector2::Vec2::m_funcVec2CrossProduct(centerAToCP, dirA);
 		float crossProdDirBCP = vector2::Vec2::m_funcVec2CrossProduct(centerBToCP, dirB);
-		float angBetDirACP = mathlibrary::mathlib::funcRadianToDegree(atan2f(crossProdDirACP, dotProdDirACP));
+		float angBetDirACP = mathlibrary::mathlib::funcRadianToDegree(atan2f(crossProdDirACP,dotProdDirACP));
 		float angBetDirBCP = mathlibrary::mathlib::funcRadianToDegree(atan2f(crossProdDirBCP, dotProdDirBCP));
 		if (angBetDirACP < 0.f) {
 			angBetDirACP += 360.f;
@@ -561,7 +558,7 @@ namespace physicspipe {
 		if (angBetDirBCP < 0.f) {
 			angBetDirBCP += 360.f;
 		}
-		if (angBetDirACP >= 315.f || (angBetDirACP >= 0.f && angBetDirACP <= 45.f)) {
+		if (angBetDirACP >= 315.f ||( angBetDirACP >= 0.f && angBetDirACP <= 45.f)) {
 			if (m_AlmostEqualAng(angBetDirACP, 315.f)) {
 				ret.first.set(0);
 				ret.first.set(3);
@@ -574,8 +571,7 @@ namespace physicspipe {
 				ret.first.set(0);
 			}
 
-		}
-		else if (angBetDirACP >= 45.f && angBetDirACP <= 135.f) {
+		} else if (angBetDirACP >= 45.f && angBetDirACP <= 135.f) {
 			if (m_AlmostEqualAng(angBetDirACP, 45.f)) {
 				ret.first.set(0);
 				ret.first.set(1);
@@ -773,7 +769,7 @@ namespace physicspipe {
 		float min = std::numeric_limits<float>::max();
 		float max = -9999.f;
 		for (int i = 0; i < verticesB.size(); i++) {
-
+			
 			if (m_AlmostEqualCP(contactPoint1, verticesB[i])) {
 				if (i == 0) {
 					ret.second.set(0);
@@ -844,7 +840,7 @@ namespace physicspipe {
 					}
 				}
 			}
-
+			
 		}
 
 
