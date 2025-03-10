@@ -33,7 +33,13 @@ namespace ecs
 		vector2::Vec2 m_innerOuterRadius{ 0.f,1.f };
 		vector3::Vec3 m_colour{ 1.f,1.f,1.f };
 
-		REFLECTABLE(LightingComponent, m_innerOuterRadius, m_intensity, m_colour);
+		vector2::Vec2 m_light_scale{ 1.f,1.f };
+		
+		vector2::Vec2 m_light_OffSet{};
+		
+		float m_light_rotation{};
+
+		REFLECTABLE(LightingComponent, m_innerOuterRadius, m_intensity, m_colour, m_light_scale, m_light_OffSet, m_light_rotation);
 	};
 
 }

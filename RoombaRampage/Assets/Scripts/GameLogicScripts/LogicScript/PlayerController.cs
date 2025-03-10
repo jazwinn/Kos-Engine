@@ -81,6 +81,7 @@ public class PlayerController : ScriptBase
 
     public override void Update()
     {
+
         //Checks if game is paused and prevents player from doing anything
         if (GameControllerLevel1.gameIsPaused) { return; }
 

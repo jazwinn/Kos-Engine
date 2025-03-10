@@ -583,9 +583,10 @@ namespace physicspipe {
 
 				if (m_physicsEntities[i]->m_ID == m_physicsEntities[j]->m_ID) continue;
 				// Check if these layers should collide
-				if (physicsLayer->m_GetCollide(layer1, layer2) && m_WithinBoundingRadius(m_physicsEntities[i], m_physicsEntities[j])) {
+				if (physicsLayer->m_GetCollide(layer1, layer2)){// && m_WithinBoundingRadius(m_physicsEntities[i], m_physicsEntities[j])) {
 					if (m_CheckCollision(m_physicsEntities[i], m_physicsEntities[j])) {
 						pair.emplace(m_physicsEntities[i], m_physicsEntities[j]);
+						pair.emplace(m_physicsEntities[j], m_physicsEntities[i]);
 						m_AddCollidedEntity(m_physicsEntities[i]);
 						m_AddCollidedEntity(m_physicsEntities[j]);
 
