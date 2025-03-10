@@ -9,8 +9,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 
-
-
 public class PlayerGun : ScriptBase
 {
     #region Entity ID
@@ -335,7 +333,7 @@ public class PlayerGun : ScriptBase
                 return;
         }
 
-        CoroutineManager.Instance.StartCoroutine(Shoot(), "Shooting");
+
     }
 
     private void SetRailGunLightIntensity(float intensity, string playergunlimb)
@@ -415,41 +413,43 @@ public class PlayerGun : ScriptBase
         switch (limbTag)
         {
             case "LeftLimbSprite":
+                //reset gun
+                leftLimbRailGunHold = 0f;
+                SetRailGunLightIntensity(0f , "PlayerGunLightLeft"); //set light intensity to 0 to reset
+                GetComponentValues();
+                limbAnimComp.m_frameNumber = (0);
+                Component.Set<AnimationComponent>(EntityID, limbAnimComp);
 
-                if (leftLimbRailGunAmmo > 0 && (leftLimbRailGunHold >= chargeDurationRailGun))
+
+                if (leftLimbShotGunAmmo != 0 && leftLimbRailGunHold >= chargeDurationRailGun)
                 {
                     leftLimbRailGunAmmo--;
-                    CoroutineManager.Instance.StartCoroutine(Shoot(), "Shooting");
                 }
                 else
                 {
-                    if (leftLimbRailGunAmmo <= 0)
+                    if (leftLimbShotGunAmmo <= 0)
                     {
                         //InternalCall.m_InternalCallPlayAudio(EntityID, emptyGunSound);
+
                     }
 
+                    return;
                 }
-
-                if(leftLimbRailGunHold > 0f)
-                {
-                    //reset gun
-                    leftLimbRailGunHold = 0f;
-                    SetRailGunLightIntensity(0f, "PlayerGunLightLeft"); //set light intensity to 0 to reset
-                    GetComponentValues();
-                    limbAnimComp.m_frameNumber = (0);
-                    Component.Set<AnimationComponent>(EntityID, limbAnimComp);
-
-                }
-
 
                 break;
 
             case "RightLimbSprite":
 
+
+                rightLimbRailGunHold = 0f;
+                SetRailGunLightIntensity(0f, "PlayerGunLightRight"); //set light intensity to 0 to reset
+                GetComponentValues();
+                limbAnimComp.m_frameNumber = (0);
+                Component.Set<AnimationComponent>(EntityID, limbAnimComp);
+
                 if (rightLimbShotGunAmmo != 0 && rightLimbRailGunHold >= chargeDurationRailGun)
                 {
                     rightLimbRailGunAmmo--;
-                    CoroutineManager.Instance.StartCoroutine(Shoot(), "Shooting");
                 }
                 else
                 {
@@ -457,23 +457,18 @@ public class PlayerGun : ScriptBase
                     {
                        // InternalCall.m_InternalCallPlayAudio(EntityID, emptyGunSound);
                     }
+
+                    return;
                 }
-
-                if(rightLimbRailGunHold > 0f)
-                {
-                    rightLimbRailGunHold = 0f;
-                    SetRailGunLightIntensity(0f, "PlayerGunLightRight"); //set light intensity to 0 to reset
-                    GetComponentValues();
-                    limbAnimComp.m_frameNumber = (0);
-                    Component.Set<AnimationComponent>(EntityID, limbAnimComp);
-                }
-
-
+                rightLimbRailGunHold = 0f;
                 break;
 
             default:
                 return;
         }
+
+
+        //CoroutineManager.Instance.StartCoroutine(Shoot(), "Shooting");
 
     }
 
@@ -588,43 +583,22 @@ public class PlayerGun : ScriptBase
     private IEnumerator Shoot()
     {
         //Plays Audio
-        switch (weaponEquipped)
-        {
-            case 0:
-                InternalCall.m_InternalCallPlayAudio(EntityID, gunshotSound);
-                break;
-            case 3:
-                InternalCall.m_InternalCallPlayAudio(EntityID, gunshotSound);
-                break;
-            case 4:
-                InternalCall.m_InternalCallPlayAudio(EntityID, gunshotSound);
-                break;
-            default :
-                break;
-
-        }
-
-        
+        InternalCall.m_InternalCallPlayAudio(EntityID, gunshotSound);
 
         //Update Component Values, mainly for roomba rotation
         GetComponentValues();
 
-        //only animate gun -> shotgun, except railgun
-        if(weaponEquipped >= 0 && weaponEquipped <= 3)
+        if (isAnimating)
         {
-            if (isAnimating)
-            {
-                StopAnimation();
-                yield return new CoroutineManager.WaitForSeconds(0.001f);
-                StartAnimation();
-            }
-
-            else
-            {
-                StartAnimation();
-            }
+            StopAnimation();
+            yield return new CoroutineManager.WaitForSeconds(0.001f);
+            StartAnimation();
         }
 
+        else
+        {
+            StartAnimation();
+        }
 
         switch (limbTag)
         {
@@ -660,8 +634,8 @@ public class PlayerGun : ScriptBase
         {
             CoroutineManager.Instance.StartCoroutine(StartWeaponCooldown(0.7f), "GunCooldown");
 
-            int numberofpallets = 4;
-            float spread = 45.0f; // in degree
+            int numberofpallets = 40;
+            float spread = 360.0f; // in degree
 
             double interval = Math.Floor(spread / (float)numberofpallets);
 
@@ -680,11 +654,6 @@ public class PlayerGun : ScriptBase
 
             InternalCall.m_InternalCallPlayAudio(EntityID, cockingSound);
 
-        }
-        if(weaponEquipped == 4)
-        {
-            //Spawn bullet at limb
-            InternalCall.m_InternalCallAddPrefab(bulletPrefab, limbPos.X, limbPos.Y, playerTransformComp.m_rotation);
         }
 
 
