@@ -77,6 +77,8 @@ public class PlayerBullet : ScriptBase
             movement.Y = 0 + forwardY * speed;
 
             InternalCall.m_InternalSetVelocity(EntityID, movement);
+
+
         }
 
         else
@@ -89,6 +91,7 @@ public class PlayerBullet : ScriptBase
             {
                 bulletHasHit = true;
                 InternalCall.m_InternalCallDeleteEntity(EntityID);
+                return;
             }
         }
 
@@ -122,6 +125,7 @@ public class PlayerBullet : ScriptBase
                             movement.Y = 0;
 
                             InternalCall.m_InternalSetVelocity(EntityID, movement);
+
                         }
 
                         break;

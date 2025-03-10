@@ -185,6 +185,8 @@ namespace gui {
 
 	void ImGuiHandler::m_update()
 	{
+		m_NewFrame();
+
 		if (Input::InputSystem::m_isKeyTriggered(keys::F11))
 		{
 			//std::cout << Input::InputSystem::m_isKeyTriggered(keys::F11) << std::endl;
@@ -192,12 +194,29 @@ namespace gui {
 			graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
 			EditorCamera::m_editorMode = (EditorCamera::m_editorMode) ? false : true;
 			pipe->m_gameMode = (pipe->m_gameMode) ? false : true;
-		}
 
+			if(pipe->m_gameMode) ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_NoMouse;
+			else {
+			
+				ImGuiIO& io = ImGui::GetIO();
+				ImGui::GetIO().ConfigFlags &= ~ImGuiConfigFlags_NoMouse;
+				// Clear keyboard state
+				memset(io.KeysDown, 0, sizeof(io.KeysDown));  // Clear all key states
+				io.KeyCtrl = io.KeyShift = io.KeyAlt = io.KeySuper = false; // Clear modifier keys
+				io.InputQueueCharacters.resize(0); // Clear text input queue
+
+				// Clear mouse state
+				io.MouseDown[0] = io.MouseDown[1] = io.MouseDown[2] = io.MouseDown[3] = io.MouseDown[4] = false;
+				io.MouseWheel = io.MouseWheelH = 0.0f;
+				io.MousePos = ImVec2(-FLT_MAX, -FLT_MAX); // Reset mouse position
+
+			} 
+		}
+		
 		if (EditorCamera::m_editorMode)
 		{
 			// Render ImGui
-			m_NewFrame();
+			
 			//for gizmo - todo once camera is done
 			//ImGuizmo::SetOrthographic(true);
 			
@@ -229,7 +248,7 @@ namespace gui {
 
 			ImVec2 windowSize = ImGui::GetIO().DisplaySize;
 			// only render when window is not minimize
-			if (windowSize.x > 0 && windowSize.y > 0) {
+			if ((windowSize.x > 0 && windowSize.y > 0) || !EditorCamera::m_editorMode) {
 				std::chrono::duration<float> duration{};
 				auto start = std::chrono::steady_clock::now();
 				m_DrawMainMenuBar();

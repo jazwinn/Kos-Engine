@@ -782,12 +782,12 @@ namespace script {
 
 		/******************************************************************/
 		/*!
-			\fn        float InternalCall::m_GetUnfixedDeltaTie()
+			\fn        float InternalCall::m_GetUnfixedDeltaTime()
 			\brief     Retrieves the unfixed delta time, which is not adjusted by the time scale.
 			\return    The unfixed delta time as a float.
 		*/
 		/******************************************************************/
-		static float m_GetUnfixedDeltaTie();
+		static float m_GetUnfixedDeltaTime();
 
 		/******************************************************************/
 		/*!
@@ -827,6 +827,10 @@ namespace script {
 		*/
 		/******************************************************************/
 		static float m_getFPS();
+
+		static void m_InternalCallGetLightingComponent(ecs::EntityID id, vector2::Vec2* innerouterradius, vector3::Vec3* color, float* intensity);
+
+		static void m_InternalCallSetLightingComponent(ecs::EntityID id, vector2::Vec2* innerouterradius, vector3::Vec3* color, float* intensity);
 
 	public:
 		/******************************************************************/

@@ -9,6 +9,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 
+
+
 public class PlayerGun : ScriptBase
 {
     #region Entity ID
@@ -41,7 +43,11 @@ public class PlayerGun : ScriptBase
         leftShotGunTexture = "ani_gunLeftAnim_strip8.png";
         rightShotGunTexture = "ani_gunRightAnim_strip8.png";
 
+        leftRailGunTexture = "ani_railgunLeftAnim_strip10.png";
+        rightRailGunTexture = "ani_railgunRightAnim_strip10.png";
+
         bulletPrefab = "prefab_playerBullet";
+        bulletPrefabType2 = "PlayerBulletType2";
 
         leftLimbGunAmmo = 6;
         rightLimbGunAmmo = 6;
@@ -50,8 +56,16 @@ public class PlayerGun : ScriptBase
         leftLimbShotGunAmmo = 6;
         rightLimbShotGunAmmo = 6;
 
-        leftWeaponCount = 1;
+        leftLimbRailGunAmmo = 6;
+        rightLimbRailGunAmmo = 6;
+
+        leftWeaponCount = 1; // for cool down / firerate
         rightWeaponCount = 1;
+
+        leftLimbRailGunHold = 0;
+        rightLimbRailGunHold = 0;
+        chargeDurationRailGun = 0.5f; //duration to charge up railgun
+        railGunLightMaxIntensity = 1f;
 
         limbTag = InternalCall.m_InternalCallGetTag(EntityID);
         leftLimbPosID = (uint)InternalCall.m_InternalCallGetTagID("LeftLimbPos");
@@ -89,8 +103,11 @@ public class PlayerGun : ScriptBase
     private string rightGunTexture;
     private string backGunTexture;
     private string bulletPrefab;
+    private string bulletPrefabType2;
     private string leftShotGunTexture;
     private string rightShotGunTexture;
+    private string leftRailGunTexture;
+    private string rightRailGunTexture;
 
     private SpriteComponent limbSpriteComp;
     private AnimationComponent limbAnimComp;
@@ -105,8 +122,17 @@ public class PlayerGun : ScriptBase
     public static int leftLimbShotGunAmmo;
     public static int rightLimbShotGunAmmo;
 
+    public static int leftLimbRailGunAmmo;
+    public static int rightLimbRailGunAmmo;
+
     public static int leftWeaponCount;
     public static int rightWeaponCount;
+
+    public float leftLimbRailGunHold;
+    public float rightLimbRailGunHold;
+    public float chargeDurationRailGun;
+
+    public float railGunLightMaxIntensity;
 
     private uint uiLeftLimbCounterID;
     private uint uiRightLimbCounterID;
@@ -174,6 +200,9 @@ public class PlayerGun : ScriptBase
                 CheckMeleeCounter();
                 break;
             case 3:
+                CheckAmmo();
+                break;
+            case 4:
                 CheckAmmo();
                 break;
             default:
@@ -308,13 +337,149 @@ public class PlayerGun : ScriptBase
                 return;
         }
 
-        
         CoroutineManager.Instance.StartCoroutine(Shoot(), "Shooting");
+    }
 
-        
+    private void SetRailGunLightIntensity(float intensity, string playergunlimb)
+    {
+        int lightid = InternalCall.m_InternalCallGetTagID(playergunlimb);
+        if (lightid > 0)
+        {
+            LightComponent lc = Component.Get<LightComponent>((uint)lightid);
+            lc.m_intensity = intensity;
+            Component.Set<LightComponent>((uint)lightid, lc);
 
+        }
+    }
+    private void AttemptShootRailGunHold()
+    {
+        switch (limbTag)
+        {
+            case "LeftLimbSprite":
+                {
+                    leftLimbRailGunHold += InternalCall.m_GetUnfixedDeltaTime();
+                    int strip = GetStripCount(leftRailGunTexture);
+                    if (strip == 0) break;//in case strip returns 0
+
+                    int railGunstrip = (int)Math.Floor(leftLimbRailGunHold / (chargeDurationRailGun / (float)strip));
+                    float lightintensity = leftLimbRailGunHold / (chargeDurationRailGun / (float)railGunLightMaxIntensity);
+                    if (railGunstrip >= strip)
+                    {
+                        railGunstrip = (strip - 1);
+                        lightintensity = railGunLightMaxIntensity;
+                    }
+
+                    SetRailGunLightIntensity(lightintensity, "PlayerGunLightLeft");
+
+                    GetComponentValues();
+                    
+                    limbAnimComp.m_frameNumber = (railGunstrip);// -1 cause start from 0
+
+                    Component.Set<AnimationComponent>(EntityID, limbAnimComp);
+
+                }
+
+                //Console.WriteLine(leftLimbRailGunHold);
+                break;
+
+            case "RightLimbSprite":
+
+                {
+                    rightLimbRailGunHold += InternalCall.m_GetUnfixedDeltaTime();
+                    int strip = GetStripCount(leftRailGunTexture);
+                    if (strip == 0) break;//in case strip returns 0
+
+                    int railGunstrip = (int)Math.Floor(rightLimbRailGunHold / (chargeDurationRailGun / (float)strip));
+                    float lightintensity = rightLimbRailGunHold / (chargeDurationRailGun / (float)railGunLightMaxIntensity);
+                    if (railGunstrip >= strip)
+                    {
+                        railGunstrip = (strip - 1);
+                        lightintensity = railGunLightMaxIntensity;
+                    }
+
+                    SetRailGunLightIntensity(lightintensity, "PlayerGunLightRight");
+
+                    GetComponentValues();
+                    limbAnimComp.m_frameNumber = (railGunstrip);// -1 cause start from 0
+                    Component.Set<AnimationComponent>(EntityID, limbAnimComp);
+                }
+               
+                break;
+
+            default:
+                return;
+        }
 
     }
+
+    private void AttemptShootRailGunRelease()
+    {
+        switch (limbTag)
+        {
+            case "LeftLimbSprite":
+
+                if (leftLimbRailGunAmmo > 0 && (leftLimbRailGunHold >= chargeDurationRailGun))
+                {
+                    leftLimbRailGunAmmo--;
+                    CoroutineManager.Instance.StartCoroutine(Shoot(), "Shooting");
+                }
+                else
+                {
+                    if (leftLimbRailGunAmmo <= 0)
+                    {
+                        //InternalCall.m_InternalCallPlayAudio(EntityID, emptyGunSound);
+                    }
+
+                }
+
+                if(leftLimbRailGunHold > 0f)
+                {
+                    //reset gun
+                    leftLimbRailGunHold = 0f;
+                    SetRailGunLightIntensity(0f, "PlayerGunLightLeft"); //set light intensity to 0 to reset
+                    GetComponentValues();
+                    limbAnimComp.m_frameNumber = (0);
+                    Component.Set<AnimationComponent>(EntityID, limbAnimComp);
+
+                }
+
+
+                break;
+
+            case "RightLimbSprite":
+
+                if (rightLimbRailGunAmmo != 0 && rightLimbRailGunHold >= chargeDurationRailGun)
+                {
+                    rightLimbRailGunAmmo--;
+                    CoroutineManager.Instance.StartCoroutine(Shoot(), "Shooting");
+                }
+                else
+                {
+                    if (rightLimbRailGunAmmo <= 0)
+                    {
+                       // InternalCall.m_InternalCallPlayAudio(EntityID, emptyGunSound);
+                    }
+                }
+
+                if(rightLimbRailGunHold > 0f)
+                {
+                    rightLimbRailGunHold = 0f;
+                    SetRailGunLightIntensity(0f, "PlayerGunLightRight"); //set light intensity to 0 to reset
+                    GetComponentValues();
+                    limbAnimComp.m_frameNumber = (0);
+                    Component.Set<AnimationComponent>(EntityID, limbAnimComp);
+                }
+
+
+                break;
+
+            default:
+                return;
+        }
+
+    }
+
+
     private void AttemptMelee()
     {
         switch (limbTag)
@@ -425,22 +590,43 @@ public class PlayerGun : ScriptBase
     private IEnumerator Shoot()
     {
         //Plays Audio
-        InternalCall.m_InternalCallPlayAudio(EntityID, gunshotSound);
+        switch (weaponEquipped)
+        {
+            case 0:
+                InternalCall.m_InternalCallPlayAudio(EntityID, gunshotSound);
+                break;
+            case 3:
+                InternalCall.m_InternalCallPlayAudio(EntityID, gunshotSound);
+                break;
+            case 4:
+                InternalCall.m_InternalCallPlayAudio(EntityID, gunshotSound);
+                break;
+            default :
+                break;
+
+        }
+
+        
 
         //Update Component Values, mainly for roomba rotation
         GetComponentValues();
 
-        if (isAnimating)
+        //only animate gun -> shotgun, except railgun
+        if(weaponEquipped >= 0 && weaponEquipped <= 3)
         {
-            StopAnimation();
-            yield return new CoroutineManager.WaitForSeconds(0.001f);
-            StartAnimation();
+            if (isAnimating)
+            {
+                StopAnimation();
+                yield return new CoroutineManager.WaitForSeconds(0.001f);
+                StartAnimation();
+            }
+
+            else
+            {
+                StartAnimation();
+            }
         }
 
-        else
-        {
-            StartAnimation();
-        }
 
         switch (limbTag)
         {
@@ -476,8 +662,8 @@ public class PlayerGun : ScriptBase
         {
             CoroutineManager.Instance.StartCoroutine(StartWeaponCooldown(0.7f), "GunCooldown");
 
-            int numberofpallets = 40;
-            float spread = 360.0f; // in degree
+            int numberofpallets = 4;
+            float spread = 45.0f; // in degree
 
             double interval = Math.Floor(spread / (float)numberofpallets);
 
@@ -496,6 +682,11 @@ public class PlayerGun : ScriptBase
 
             InternalCall.m_InternalCallPlayAudio(EntityID, cockingSound);
 
+        }
+        if(weaponEquipped == 4)
+        {
+            //Spawn bullet at limb
+            InternalCall.m_InternalCallAddPrefab(bulletPrefabType2, limbPos.X, limbPos.Y, playerTransformComp.m_rotation);
         }
 
 
@@ -541,6 +732,10 @@ public class PlayerGun : ScriptBase
             case 3:
                 leftWeaponAmmo = leftLimbShotGunAmmo;
                 rightWeaponAmmo = rightLimbShotGunAmmo;
+                break;
+            case 4:
+                leftWeaponAmmo = leftLimbRailGunAmmo;
+                rightWeaponAmmo = rightLimbRailGunAmmo;
                 break;
             default:
                 break;
@@ -750,7 +945,9 @@ public class PlayerGun : ScriptBase
                 case 3:
                     SwitchWeapon("ShotGun");
                     break;
-
+                case 4:
+                    SwitchWeapon("RailGun");
+                    break;
                 default:
                     break;
             }
@@ -817,7 +1014,57 @@ public class PlayerGun : ScriptBase
                     break;
             }
         }
+        if (InternalCall.m_InternalCallIsKeyPressed(keyCode.LMB) && limbTag == "LeftLimbSprite" && PlayerLoadoutManager.isSortieing == false)
+        {
+            switch (weaponEquipped)
+            {
+                case 4:
+                    AttemptShootRailGunHold();
+                    break;
 
+                default:
+                    break;
+            }
+        }
+
+        if (InternalCall.m_InternalCallIsKeyPressed(keyCode.RMB) && limbTag == "RightLimbSprite" && PlayerLoadoutManager.isSortieing == false)
+        {
+            switch (weaponEquipped)
+            {
+                case 4:
+                    AttemptShootRailGunHold();
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        if (InternalCall.m_InternalCallIsKeyReleased(keyCode.LMB) && limbTag == "LeftLimbSprite" && PlayerLoadoutManager.isSortieing == false)
+        {
+            switch (weaponEquipped)
+            {
+                case 4:
+                    AttemptShootRailGunRelease();
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        if (InternalCall.m_InternalCallIsKeyReleased(keyCode.RMB) && limbTag == "RightLimbSprite" && PlayerLoadoutManager.isSortieing == false)
+        {
+            switch (weaponEquipped)
+            {
+                case 4:
+                    AttemptShootRailGunRelease();
+                    break;
+
+                default:
+                    break;
+            }
+        }
         #endregion
 
         #region Keyboard Checks
