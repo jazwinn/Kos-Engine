@@ -188,14 +188,9 @@ public class UI_AmmoHUD : ScriptBase
             case 1:
                 return fullBarTexture;
 
-            case 3:
-                return fullBarTexture;
-            
-            case 4:
-                return segmentedBarTexture;
 
             default:
-                return null;
+                return fullBarTexture;
         }
     }
 

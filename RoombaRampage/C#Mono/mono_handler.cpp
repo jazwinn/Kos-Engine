@@ -214,6 +214,7 @@ namespace script {
     void ScriptHandler::m_InvokeMethod(const std::string& className, const std::string& func, MonoObject* objInstance, void** args) {
 
         if (objInstance == nullptr) return;
+        if (className.empty()) return;
 
         //// Check if the method exists
         auto it = m_methodMap.find(className);

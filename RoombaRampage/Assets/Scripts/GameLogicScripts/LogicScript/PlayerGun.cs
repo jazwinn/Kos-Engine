@@ -47,6 +47,7 @@ public class PlayerGun : ScriptBase
         rightRailGunTexture = "ani_railgunRightAnim_strip10.png";
 
         bulletPrefab = "prefab_playerBullet";
+        bulletPrefabType2 = "PlayerBulletType2";
 
         leftLimbGunAmmo = 6;
         rightLimbGunAmmo = 6;
@@ -102,6 +103,7 @@ public class PlayerGun : ScriptBase
     private string rightGunTexture;
     private string backGunTexture;
     private string bulletPrefab;
+    private string bulletPrefabType2;
     private string leftShotGunTexture;
     private string rightShotGunTexture;
     private string leftRailGunTexture;
@@ -446,14 +448,14 @@ public class PlayerGun : ScriptBase
 
             case "RightLimbSprite":
 
-                if (rightLimbShotGunAmmo != 0 && rightLimbRailGunHold >= chargeDurationRailGun)
+                if (rightLimbRailGunAmmo != 0 && rightLimbRailGunHold >= chargeDurationRailGun)
                 {
                     rightLimbRailGunAmmo--;
                     CoroutineManager.Instance.StartCoroutine(Shoot(), "Shooting");
                 }
                 else
                 {
-                    if (rightLimbShotGunAmmo <= 0)
+                    if (rightLimbRailGunAmmo <= 0)
                     {
                        // InternalCall.m_InternalCallPlayAudio(EntityID, emptyGunSound);
                     }
@@ -684,7 +686,7 @@ public class PlayerGun : ScriptBase
         if(weaponEquipped == 4)
         {
             //Spawn bullet at limb
-            InternalCall.m_InternalCallAddPrefab(bulletPrefab, limbPos.X, limbPos.Y, playerTransformComp.m_rotation);
+            InternalCall.m_InternalCallAddPrefab(bulletPrefabType2, limbPos.X, limbPos.Y, playerTransformComp.m_rotation);
         }
 
 

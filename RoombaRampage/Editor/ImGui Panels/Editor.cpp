@@ -229,7 +229,7 @@ namespace gui {
 
 			ImVec2 windowSize = ImGui::GetIO().DisplaySize;
 			// only render when window is not minimize
-			if (windowSize.x > 0 && windowSize.y > 0) {
+			if ((windowSize.x > 0 && windowSize.y > 0) || !EditorCamera::m_editorMode) {
 				std::chrono::duration<float> duration{};
 				auto start = std::chrono::steady_clock::now();
 				m_DrawMainMenuBar();
