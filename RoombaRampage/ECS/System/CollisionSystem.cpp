@@ -135,7 +135,6 @@ namespace ecs {
 			//If Entity Has A Parent
 			if (TransComp->m_haveParent) {
 				EntityID parentID = ecs::Hierachy::m_GetParent(TransComp->m_Entity).value();
-				TransformComponent* parentComp{ nullptr };
 				TransformComponent* parentComp{ static_cast<TransformComponent*>(ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(parentID)) };
 
 				if (!parentComp) {
