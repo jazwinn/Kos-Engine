@@ -136,12 +136,12 @@ namespace ecs {
 			if (TransComp->m_haveParent) {
 				EntityID parentID = ecs::Hierachy::m_GetParent(TransComp->m_Entity).value();
 				TransformComponent* parentComp{ nullptr };
-				TransformComponent* parentComp{ static_cast<TransformComponent*>(ecs->m_ECS_CombinedComponentPool[TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(parentID)) };
-
-				if (!parentComp) {
-					continue;
+				for (auto& com : m_vecTransformComponentPtr) {
+					if (com->m_Entity == parentID) {
+						parentComp = com;
+					}
 				}
-
+				if (!parentComp) continue;
 							
 				if (ColComp->m_type == physicspipe::EntityType::CIRCLE) {
 					mat3x3::Mat3x3 debugTransformation = mat3x3::Mat3Transform(TransComp->m_position, vector2::Vec2{ 1.f, 1.f }, 0);
