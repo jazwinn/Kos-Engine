@@ -8,5 +8,285 @@
                 "b": 0.3199999928474426
             }
         }
+    },
+    {
+        "name": {
+            "namestr": "img_pauseMenuFrame",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": -0.6766307950019836,
+                "y": 0.6998029947280884
+            },
+            "rotation": 0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "collider": {
+            "checkcollision": true,
+            "checkresponse": true,
+            "size": {
+                "x": 1.9199999570846558,
+                "y": 3.069999933242798
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true,
+            "radius": 0.5,
+            "shapetype": 0
+        },
+        "sprite": {
+            "imagefile": "img_pauseMenuFrame.png",
+            "layer": 0,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0,
+            "isLit": true
+        }
+    },
+    {
+        "name": {
+            "namestr": "img_pauseMenuNormalButton",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": -0.7138352990150452,
+                "y": 0.1492697298526764
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "collider": {
+            "checkcollision": true,
+            "checkresponse": true,
+            "size": {
+                "x": 1.4800000190734863,
+                "y": 0.30000001192092896
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true,
+            "radius": 0.5,
+            "shapetype": 0
+        },
+        "sprite": {
+            "imagefile": "img_pauseMenuNormalButton.png",
+            "layer": 1,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0,
+            "isLit": true
+        },
+        "children": [
+            {
+                "name": {
+                    "namestr": "slider",
+                    "layer": 0,
+                    "isprefab": false,
+                    "tagstr": "Default"
+                },
+                "transform": {
+                    "position": {
+                        "x": -0.6189652681350708,
+                        "y": -0.004739135503768921
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 0.034348536282777786,
+                        "y": 0.24042430520057678
+                    }
+                },
+                "sprite": {
+                    "imagefile": "img_dialogueFrame.png",
+                    "layer": 3,
+                    "color": {
+                        "r": 1.0,
+                        "g": 1.0,
+                        "b": 1.0
+                    },
+                    "alpha": 1.0,
+                    "isLit": true
+                }
+            }
+        ]
+    },
+    {
+        "name": {
+            "namestr": "img_pauseMenuNormalButton",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": -0.7164750695228577,
+                "y": 1.1497513055801392
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "collider": {
+            "checkcollision": true,
+            "checkresponse": true,
+            "size": {
+                "x": 1.4800000190734863,
+                "y": 0.30000001192092896
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true,
+            "radius": 0.5,
+            "shapetype": 0
+        },
+        "sprite": {
+            "imagefile": "img_pauseMenuNormalButton.png",
+            "layer": 2,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0,
+            "isLit": true
+        },
+        "children": [
+            {
+                "name": {
+                    "namestr": "slider",
+                    "layer": 0,
+                    "isprefab": false,
+                    "tagstr": "Default"
+                },
+                "transform": {
+                    "position": {
+                        "x": -0.617099404335022,
+                        "y": -0.0033777952194213867
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 0.034348536282777786,
+                        "y": 0.24042430520057678
+                    }
+                },
+                "sprite": {
+                    "imagefile": "img_dialogueFrame.png",
+                    "layer": 4,
+                    "color": {
+                        "r": 1.0,
+                        "g": 1.0,
+                        "b": 1.0
+                    },
+                    "alpha": 1.0,
+                    "isLit": true
+                }
+            }
+        ]
+    },
+    {
+        "name": {
+            "namestr": "SFXTEXT",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": -1.3361691236495972,
+                "y": 0.3216339945793152
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 0.05000000074505806,
+                "y": 0.05000000074505806
+            }
+        },
+        "text": {
+            "text": "SFX",
+            "text": null,
+            "filename": "fnt_silkscreenRegular.ttf",
+            "fontsize": 100.0,
+            "color": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0
+            },
+            "layer": 5
+        }
+    },
+    {
+        "name": {
+            "namestr": "BGMTEXT",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": -1.3279995918273926,
+                "y": 1.3178846836090088
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 0.05000000074505806,
+                "y": 0.05000000074505806
+            }
+        },
+        "text": {
+            "text": "BGM",
+            "text": null,
+            "filename": "fnt_silkscreenRegular.ttf",
+            "fontsize": 100.0,
+            "color": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0
+            },
+            "layer": 6
+        }
+    },
+    {
+        "name": {
+            "namestr": "Sound Manager",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        }
     }
 ]
