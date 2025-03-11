@@ -592,6 +592,41 @@ namespace script {
 		return Helper::Helpers::GetInstance()->m_fps;
 	}
 
+	void InternalCall::m_InternalCallGetLightingComponent(ecs::EntityID id, vector2::Vec2* innerouterradius, vector3::Vec3* color, float* intensity)
+	{
+		auto* LC = static_cast<ecs::LightingComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPELIGHTINGCOMPONENT]->m_GetEntityComponent(id));
+
+		if (LC) {
+			*innerouterradius = LC->m_innerOuterRadius;
+			*color = LC->m_colour;
+			*intensity = LC->m_intensity;
+		}
+		else {
+			ASSERTNOCOMPONENT(LC, id);
+		}
+
+
+		return;
+
+	}
+
+	void InternalCall::m_InternalCallSetLightingComponent(ecs::EntityID id, vector2::Vec2* innerouterradius, vector3::Vec3* color, float* intensity)
+	{
+		auto* LC = static_cast<ecs::LightingComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPELIGHTINGCOMPONENT]->m_GetEntityComponent(id));
+
+		if (LC) {
+			LC->m_innerOuterRadius = *innerouterradius;
+			LC->m_colour = *color;
+			LC->m_intensity = *intensity;
+		}
+		else {
+			ASSERTNOCOMPONENT(LC, id);
+		}
+
+
+		return;
+	}
+
 	MonoArray* InternalCall::m_InternalCallGetTagIDs(MonoString* monostring)
 	{
 		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
@@ -1221,7 +1256,7 @@ namespace script {
 		ecs->m_layersStack.m_DisableLayer((layer::LAYERS)layer);
 	}
 
-	float InternalCall::m_GetUnfixedDeltaTie()
+	float InternalCall::m_GetUnfixedDeltaTime()
 	{
 		
 		 float dt = Helper::Helpers::GetInstance()->m_deltaTime;
@@ -1314,6 +1349,9 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_InternalGetButtonComponent);
 		MONO_ADD_INTERNAL_CALL(m_InternalSetButtonComponent);
 
+		MONO_ADD_INTERNAL_CALL(m_InternalCallGetLightingComponent);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallSetLightingComponent);
+
 		MONO_ADD_INTERNAL_CALL(m_InternalGetScriptNames);
 		MONO_ADD_INTERNAL_CALL(m_InternalAddScriptInstance);
 
@@ -1321,7 +1359,7 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_InternalSetVelocity);
 
 		MONO_ADD_INTERNAL_CALL(m_InternalCallGetDeltaTime);
-		MONO_ADD_INTERNAL_CALL(m_GetUnfixedDeltaTie);
+		MONO_ADD_INTERNAL_CALL(m_GetUnfixedDeltaTime);
 
 		MONO_ADD_INTERNAL_CALL(m_InternalCallGetTagID);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallGetTagIDs);

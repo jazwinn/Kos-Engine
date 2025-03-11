@@ -47,12 +47,12 @@ public class EnemyBulletScript : ScriptBase
     {
         if (bulletHasHit) { return; }
 
-        currentLifetime += InternalCall.m_InternalCallGetDeltaTime();
-        if (currentLifetime >= bulletLifetime)
-        {
-            InternalCall.m_InternalCallDeleteEntity(EntityID);
-            return;
-        }
+        //currentLifetime += InternalCall.m_InternalCallGetDeltaTime();
+        //if (currentLifetime >= bulletLifetime)
+        //{
+        //    InternalCall.m_InternalCallDeleteEntity(EntityID);
+        //    return;
+        //}
 
         InternalCall.m_InternalGetAnimationComponent(EntityID, out frameNumber, out framesPerSecond, out frameTimer, out isAnimating, out stripCount);
 

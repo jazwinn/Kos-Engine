@@ -129,13 +129,13 @@ namespace Input {
 	}
 	bool InputSystem::m_isKeyReleased(const keyCode givenKey) {
 		int state;
-		if (givenKey == keys::LMB || givenKey == keys::RMB || givenKey == keys::MMB) {
+			if (givenKey == keys::LMB || givenKey == keys::RMB || givenKey == keys::MMB) {
 			state = glfwGetMouseButton(m_windowInput, givenKey);
 		}
 		else {
 			state = glfwGetKey(m_windowInput, givenKey);
 		}
-		return state == GLFW_RELEASE ? true : false;
+			return (state == GLFW_RELEASE);
 	}
 
 	vector2::Vec2 InputSystem::m_getMousePosition() {
