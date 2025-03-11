@@ -363,10 +363,13 @@ public class PlayerGun : ScriptBase
 
                     int railGunstrip = (int)Math.Floor(leftLimbRailGunHold / (chargeDurationRailGun / (float)strip));
                     float lightintensity = leftLimbRailGunHold / (chargeDurationRailGun / (float)railGunLightMaxIntensity);
+                    float glowFactor = 8.0f * (float)Math.Cos((double)InternalCall.m_InternalCallGetGameTime()*20);
+                    glowFactor = glowFactor / 2.0f + 8.0f;
+
                     if (railGunstrip >= strip)
                     {
                         railGunstrip = (strip - 1);
-                        lightintensity = railGunLightMaxIntensity;
+                        lightintensity = railGunLightMaxIntensity * glowFactor;
                     }
 
                     SetRailGunLightIntensity(lightintensity, "PlayerGunLightLeft");
