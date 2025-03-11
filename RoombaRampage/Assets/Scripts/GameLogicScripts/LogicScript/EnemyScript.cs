@@ -112,7 +112,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     #endregion
 
     #region Enemy Variables
-    private float fireRate = 1.5f;
+    private float fireRate = 0.75f;
     private float fireTimer = 0f;
     private float targetCheckInterval = 0.3f;
     private float targetCheckTimer = 0f;

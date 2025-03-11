@@ -3,9 +3,9 @@
         "GlobalSettings": {
             "globalIllumination": 0.30000001192092896,
             "backgroundColor": {
-                "r": 0.13716816902160645,
-                "g": 0.13716816902160645,
-                "b": 0.13716816902160645
+                "r": 0.13300000131130219,
+                "g": 0.23000000417232513,
+                "b": 0.3199999928474426
             }
         }
     },
@@ -74,7 +74,7 @@
             "static": false
         },
         "sprite": {
-            "imagefile": "ani_scientistWalk_strip8.png",
+            "imagefile": "ani_rangedEnemyMoving_strip6.png",
             "layer": 64,
             "color": {
                 "r": 1.0,
@@ -89,7 +89,7 @@
             "framesPerSecond": 10,
             "frameTimer": 0.0,
             "isAnimating": false,
-            "stripCount": 8
+            "stripCount": 6
         },
         "script": {
             "scripts": [
