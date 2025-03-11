@@ -109,7 +109,7 @@ namespace ecs {
 
 			//Matrix
 			mat3x3::Mat3Scale(scaleMatrix, final_scale.m_x, final_scale.m_y);
-			mat3x3::Mat3RotDeg(rotMatrix, rotation);
+			mat3x3::Mat3RotDeg(rotateMatrix, rotation);
 			mat3x3::Mat3RotDeg(light_rotMatrix, light_rotation);
 			mat3x3::Mat3Translate(posMatrix, final_Pos.m_x, final_Pos.m_y);
 
@@ -122,7 +122,7 @@ namespace ecs {
 					continue;
 				}
 
-				mat3x3::Mat3x3 lightTransformation = mat3x3::Mat3Transform(transform->m_position, vector2::Vec2{ 1.f, 1.f }, 0);
+				mat3x3::Mat3x3 lightTransformation = mat3x3::Mat3Transform(transform->m_position, transform->m_scale, 0);
 				
 				lightTransformation.m_e20 += parentComp->m_position.m_x;
 				lightTransformation.m_e21 += parentComp->m_position.m_y;
@@ -139,11 +139,11 @@ namespace ecs {
 
 				lightTransformation = translateBackMatrix * rotateMatrix * translateToOriginMatrix * lightTransformation;
 
-				mat3x3::Mat3RotDeg(rotateMatrix, light->m_light_rotation);
+				/*mat3x3::Mat3RotDeg(rotateMatrix, light->m_light_rotation);
 				mat3x3::Mat3Translate(translateToOriginMatrix, -lightTransformation.m_e20, -lightTransformation.m_e21);
 				mat3x3::Mat3Translate(translateBackMatrix, lightTransformation.m_e20, lightTransformation.m_e21);
 
-				lightTransformation = translateBackMatrix * rotateMatrix * translateToOriginMatrix * lightTransformation;
+				lightTransformation = translateBackMatrix * rotateMatrix * translateToOriginMatrix * lightTransformation;*/
 
 				lightTransformation = lightTransformation * mat3x3::Mat3Transform(light->m_light_OffSet, light->m_light_scale, 0);
 
@@ -158,7 +158,7 @@ namespace ecs {
 			}
 			else {
 
-				mat3x3::Mat3x3 lightTransformation = mat3x3::Mat3Transform(vector2::Vec2{ transform->m_transformation.m_e20 , transform->m_transformation.m_e21 }, transform->m_scale, 0);
+				mat3x3::Mat3x3 lightTransformation = mat3x3::Mat3Transform(transform->m_position, transform->m_scale, 0);
 
 				mat3x3::Mat3RotDeg(rotateMatrix, transform->m_rotation);
 				mat3x3::Mat3Translate(translateToOriginMatrix, -lightTransformation.m_e20, -lightTransformation.m_e21);
