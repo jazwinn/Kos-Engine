@@ -1448,5 +1448,7 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_ChangeLayer);
 
 		MONO_ADD_INTERNAL_CALL(m_getFPS);
+
+		///SO HELP ME THEN OVER HERE
 	}
 }

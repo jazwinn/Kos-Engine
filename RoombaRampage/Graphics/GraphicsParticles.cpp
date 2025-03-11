@@ -1,5 +1,6 @@
 #include "../Config/pch.h"
 #include "../Graphics/GraphicsPipe.h"
+#include "../Asset Manager/SceneManager.h"
 #include <random>
 
 
@@ -45,47 +46,55 @@ namespace graphicpipe
 
         if (particles) 
         {
-            for (size_t i = 0; i < m_emitterData.size(); i++)
+            if (scenes::SceneManager::m_GetInstance()->isSceneChanged)
             {
-                if (m_emitterData[i].m_noOfParticles >= 0)
+                scenes::SceneManager::m_GetInstance()->isSceneChanged = false;
+                memset(particles, 0, MAX_PARTICLES * sizeof(ParticleData));
+            }
+            else
+            {
+                for (size_t i = 0; i < m_emitterData.size(); i++)
                 {
-                    int particlesProcessed = 0;
-                    const float radian = 3.1415f / 180.f;
-                    for (int j = 0; j < MAX_PARTICLES; j++)
+                    if (m_emitterData[i].m_noOfParticles >= 0)
                     {
-                        if (particles[j].m_isActive < 1.f)
+                        int particlesProcessed = 0;
+                        const float radian = 3.1415f / 180.f;
+                        for (int j = 0; j < MAX_PARTICLES; j++)
                         {
-                           // float randomValue = randomInRange(-m_emitterData[i].m_randomFactor / 2.f, m_emitterData[i].m_randomFactor / 2.f);
-                            particles[j].m_lifeSpan = m_emitterData[i].m_lifeSpan;
-                            particles[j].m_position = m_emitterData[i].m_position;
-                            particles[j].m_scale = m_emitterData[i].m_scale;
-                            particles[j].m_color = m_emitterData[i].m_color;
-                            particles[j].m_rotation = m_emitterData[i].m_rotation;
-                           
-                            float newAngle = m_emitterData[i].m_coneRotation + randomInRange(-m_emitterData[i].m_coneAngle / 2.f, m_emitterData[i].m_coneAngle / 2.f);
+                            if (particles[j].m_isActive < 1.f)
+                            {
+                                // float randomValue = randomInRange(-m_emitterData[i].m_randomFactor / 2.f, m_emitterData[i].m_randomFactor / 2.f);
+                                particles[j].m_lifeSpan = m_emitterData[i].m_lifeSpan;
+                                particles[j].m_position = m_emitterData[i].m_position;
+                                particles[j].m_scale = m_emitterData[i].m_scale;
+                                particles[j].m_color = m_emitterData[i].m_color;
+                                particles[j].m_rotation = m_emitterData[i].m_rotation;
 
-                            newAngle *= radian;
+                                float newAngle = m_emitterData[i].m_coneRotation + randomInRange(-m_emitterData[i].m_coneAngle / 2.f, m_emitterData[i].m_coneAngle / 2.f);
 
-                            glm::vec2 newVelocity = { m_emitterData[i].m_velocity.x * cos(newAngle) + m_emitterData[i].m_velocity.y * sin(newAngle),
-                                                    -m_emitterData[i].m_velocity.x * sin(newAngle) + m_emitterData[i].m_velocity.y * cos(newAngle) };
-                            
-                            particles[j].m_initialEmissionAngle = newAngle;
+                                newAngle *= radian;
 
-                            particles[j].m_velocity = newVelocity; //* randomValue;
-                            particles[j].m_acceleration = m_emitterData[i].m_acceleration; //* randomValue;
+                                glm::vec2 newVelocity = { m_emitterData[i].m_velocity.x * cos(newAngle) + m_emitterData[i].m_velocity.y * sin(newAngle),
+                                                        -m_emitterData[i].m_velocity.x * sin(newAngle) + m_emitterData[i].m_velocity.y * cos(newAngle) };
 
-                            particles[j].m_textureID = m_emitterData[i].m_textureID;
-                            particles[j].m_stripCount = m_emitterData[i].m_stripCount;
-                            particles[j].m_frameNumber = m_emitterData[i].m_frameNumber;
-                            particles[j].m_layer = m_emitterData[i].m_layer;
-                            particles[j].m_isActive = 2.f;
-                            particles[j].m_friction = m_emitterData[i].m_friction;
-                            particles[j].m_framesPerSecond = m_emitterData[i].m_framesPerSecond;
-                            particles[j].m_animationTimer = 0.f;
-                            particlesProcessed++;
-                            if (particlesProcessed > m_emitterData[i].m_noOfParticles)
-                                break;
+                                particles[j].m_initialEmissionAngle = newAngle;
 
+                                particles[j].m_velocity = newVelocity; //* randomValue;
+                                particles[j].m_acceleration = m_emitterData[i].m_acceleration; //* randomValue;
+
+                                particles[j].m_textureID = m_emitterData[i].m_textureID;
+                                particles[j].m_stripCount = m_emitterData[i].m_stripCount;
+                                particles[j].m_frameNumber = m_emitterData[i].m_frameNumber;
+                                particles[j].m_layer = m_emitterData[i].m_layer;
+                                particles[j].m_isActive = 2.f;
+                                particles[j].m_friction = m_emitterData[i].m_friction;
+                                particles[j].m_framesPerSecond = m_emitterData[i].m_framesPerSecond;
+                                particles[j].m_animationTimer = 0.f;
+                                particlesProcessed++;
+                                if (particlesProcessed > m_emitterData[i].m_noOfParticles)
+                                    break;
+
+                            }
                         }
                     }
                 }

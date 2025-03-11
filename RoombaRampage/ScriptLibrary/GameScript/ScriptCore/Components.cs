@@ -169,6 +169,16 @@ public class GridComponent
     public List<List<int>> m_IsWall;
 }
 
+public class ParticleComponent //Create internal call, IntercalCall.cs, Intercall.cpp, Interakfn.h
+{
+    public Vector2 m_Anchor;
+    public int m_GridRowLength;
+    public int m_GridColumnLength;
+    public bool m_SetCollidable;
+    public int m_GridKey;
+    public List<List<int>> m_IsWall;
+}
+
 public class LightComponent
 {
     public Vector2 m_innerOuterRadius;
