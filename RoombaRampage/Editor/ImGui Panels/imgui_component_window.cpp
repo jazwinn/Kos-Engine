@@ -553,7 +553,10 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
             ImGui::Text("Object Name: ");
             ImGui::SameLine(slider_start_pos_x);
             ImGui::SetNextItemWidth(100.0f);
-            ImGui::InputText("##NAMETEXT##", &nc->m_entityName);
+            std::string name = nc->m_entityName;
+            if (ImGui::InputText("##NAMETEXT##", &name) && ImGui::IsKeyPressed(ImGuiKey_Enter)) {
+                nc->m_entityName = name;
+            }
             
             //layer selector
             const char* layers[] = { ecs->m_layersStack.m_layerMap[layer::DEFAULT].first.c_str(), ecs->m_layersStack.m_layerMap[layer::LAYER1].first.c_str(),ecs->m_layersStack.m_layerMap[layer::LAYER2].first.c_str(),
