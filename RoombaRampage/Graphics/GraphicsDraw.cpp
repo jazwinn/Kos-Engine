@@ -487,7 +487,10 @@ namespace graphicpipe
 	{
 		if (!m_lightingTransforms.empty())
 		{
-			glBlendFunc(GL_SRC_ALPHA, GL_ONE); //USE THIS BLENDING FOR LIGHTS
+			//glBlendFunc(GL_SRC_ALPHA, GL_ONE); //USE THIS BLENDING FOR LIGHTS
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			//glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+
 
 			glUseProgram(m_lightingShaderProgram);
 

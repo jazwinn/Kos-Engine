@@ -30,20 +30,21 @@ void main()
     vec4 unlitSceneColor = texture(unlitScreenTexture, texCoords);
 
     vec4 darkenedScene = sceneColor * globalBrightness;  
-    vec4 restoredBrightness = vec4 (0,0,0,1.f);
+    vec4 restoredBrightness = vec4 (0,0,0,0.f);
     restoredBrightness.r = mix(darkenedScene.r, sceneColor.r, lightColor.r);
-     restoredBrightness.g = mix(darkenedScene.g, sceneColor.g, lightColor.g);
-      restoredBrightness.b = mix(darkenedScene.b, sceneColor.b, lightColor.b);
+    restoredBrightness.g = mix(darkenedScene.g, sceneColor.g, lightColor.g);
+    restoredBrightness.b = mix(darkenedScene.b, sceneColor.b, lightColor.b);
+     restoredBrightness.a = mix(darkenedScene.a, sceneColor.a, lightColor.a);
        
 
-    vec4 light = vec4(lightColor.rgb, 1.0);
+    vec4 light = vec4(lightColor.rgba);
 
-    vec4 multipliedLighting = restoredBrightness * light;
+    vec4 multipliedLighting = restoredBrightness;
 
     float r = max(darkenedScene.r, multipliedLighting.r);
-     float g = max(darkenedScene.g, multipliedLighting.g);
-      float b = max(darkenedScene.b, multipliedLighting.b);
-      // float a = max(darkenedScene.a, multipliedLighting.a);
+    float g = max(darkenedScene.g, multipliedLighting.g);
+    float b = max(darkenedScene.b, multipliedLighting.b);
+    float a = max(darkenedScene.a, multipliedLighting.a);
 
     vec4 final = vec4(r,g,b,1.0);
     vec4 litScene = clamp(final, 0.0, 1.0);
