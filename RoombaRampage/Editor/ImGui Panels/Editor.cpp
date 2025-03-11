@@ -72,6 +72,7 @@ namespace gui {
 		REGISTER_ACTION_LISTENER(events::Actions::MODIFYRIGID, ImGuiHandler::m_OnAction, this)
 		REGISTER_ACTION_LISTENER(events::Actions::MODIFYSPRITE, ImGuiHandler::m_OnAction, this)
 		REGISTER_ACTION_LISTENER(events::Actions::MODIFYTEXT, ImGuiHandler::m_OnAction, this)
+		REGISTER_ACTION_LISTENER(events::Actions::MODIFYBUTTON, ImGuiHandler::m_OnAction, this)
 		REGISTER_ACTION_LISTENER(events::Actions::ADDAUDIO, ImGuiHandler::m_OnAction, this)
 		REGISTER_ACTION_LISTENER(events::Actions::REMOVEAUDIO, ImGuiHandler::m_OnAction, this)
 	} //CTORdoing 
@@ -438,7 +439,7 @@ namespace gui {
 			auto* newAct = new actions::ModifyAnimComponent(givenEvent.m_ToType<events::ModifyAnim>().m_GetID(),givenEvent.m_ToType<events::ModifyAnim>().m_GetComp(), givenEvent.m_ToType<events::ModifyAnim>().m_GetOldFrameNum(),
 															givenEvent.m_ToType<events::ModifyAnim>().m_GetOldFPS(), givenEvent.m_ToType<events::ModifyAnim>().m_GetOldFT(), givenEvent.m_ToType<events::ModifyAnim>().m_GetOldIsAnim(),
 															givenEvent.m_ToType<events::ModifyAnim>().m_GetOldStrip());
-			actions::ActionManager::m_GetManagerInstance()->m_DoAction(newAct);
+			actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
 		}else if (givenEvent.m_GetEventType() == events::Actions::MODIFYCAMERA) {
 		auto* newAct = new actions::ModifyCamera(
 													givenEvent.m_ToType<events::ModifyCamera>().m_GetID(),
@@ -448,7 +449,7 @@ namespace gui {
 													givenEvent.m_ToType<events::ModifyCamera>().m_GetOldTop(),
 													givenEvent.m_ToType<events::ModifyCamera>().m_GetOldBottom(),
 													givenEvent.m_ToType<events::ModifyCamera>().m_GetOldAspectRatio());
-		actions::ActionManager::m_GetManagerInstance()->m_DoAction(newAct);
+		actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
 	}
 
 	else if (givenEvent.m_GetEventType() == events::Actions::MODIFYCOLL) {
@@ -456,12 +457,13 @@ namespace gui {
 													givenEvent.m_ToType<events::ModifyCollider>().m_GetID(),
 													givenEvent.m_ToType<events::ModifyCollider>().m_GetComp(),
 													givenEvent.m_ToType<events::ModifyCollider>().m_GetOldSize(),
+													givenEvent.m_ToType<events::ModifyCollider>().m_GetOldOffset(),
 													givenEvent.m_ToType<events::ModifyCollider>().m_GetOldDrawDebug(),
 													givenEvent.m_ToType<events::ModifyCollider>().m_GetOldRadius(),
 													givenEvent.m_ToType<events::ModifyCollider>().m_GetOldCollisionResponse(),
 													givenEvent.m_ToType<events::ModifyCollider>().m_GetOldCollisionCheck(),
 													givenEvent.m_ToType<events::ModifyCollider>().m_GetOldShape());
-		actions::ActionManager::m_GetManagerInstance()->m_DoAction(newAct);
+		actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
 	}
 
 	else if (givenEvent.m_GetEventType() == events::Actions::MODIFYENEMY) {
@@ -471,7 +473,7 @@ namespace gui {
 												givenEvent.m_ToType<events::ModifyEnemy>().m_GetOldTag(),
 												givenEvent.m_ToType<events::ModifyEnemy>().m_GetOldType(),
 												givenEvent.m_ToType<events::ModifyEnemy>().m_GetOldBehavior());
-		actions::ActionManager::m_GetManagerInstance()->m_DoAction(newAct);
+		actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
 	}
 
 	else if (givenEvent.m_GetEventType() == events::Actions::MODIFYGRID) {
@@ -483,7 +485,7 @@ namespace gui {
 												givenEvent.m_ToType<events::ModifyGrid>().m_GetOldColumnLength(),
 												givenEvent.m_ToType<events::ModifyGrid>().m_GetOldCollidable(),
 												givenEvent.m_ToType<events::ModifyGrid>().m_GetOldGridKey());
-		actions::ActionManager::m_GetManagerInstance()->m_DoAction(newAct);
+		actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
 	}
 
 	else if (givenEvent.m_GetEventType() == events::Actions::MODIFYLIGHT) {
@@ -494,7 +496,7 @@ namespace gui {
 												givenEvent.m_ToType<events::ModifyLight>().m_GetOldIntensity(),
 												givenEvent.m_ToType<events::ModifyLight>().m_GetOldInnerOuterRadius(),
 												givenEvent.m_ToType<events::ModifyLight>().m_GetOldColor());
-		actions::ActionManager::m_GetManagerInstance()->m_DoAction(newAct);
+		actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
 	}
 
 	else if (givenEvent.m_GetEventType() == events::Actions::MODIFYPATHFINDING) {
@@ -504,7 +506,7 @@ namespace gui {
 													givenEvent.m_ToType<events::ModifyPathfinding>().m_GetOldStartPos(),
 													givenEvent.m_ToType<events::ModifyPathfinding>().m_GetOldEndPos(),
 													givenEvent.m_ToType<events::ModifyPathfinding>().m_GetOldGridKey());
-		actions::ActionManager::m_GetManagerInstance()->m_DoAction(newAct);
+		actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
 	}
 
 	else if (givenEvent.m_GetEventType() == events::Actions::MODIFYRIGID) {
@@ -523,7 +525,7 @@ namespace gui {
 												givenEvent.m_ToType<events::ModifyRigid>().m_GetOldTorque(),
 												givenEvent.m_ToType<events::ModifyRigid>().m_GetOldKinematic(),
 												givenEvent.m_ToType<events::ModifyRigid>().m_GetOldStatic());
-		actions::ActionManager::m_GetManagerInstance()->m_DoAction(newAct);
+		actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
 	}
 
 	else if (givenEvent.m_GetEventType() == events::Actions::MODIFYTEXT) {
@@ -534,7 +536,7 @@ namespace gui {
 												givenEvent.m_ToType<events::ModifyText>().m_GetOldLayer(),
 												givenEvent.m_ToType<events::ModifyText>().m_GetOldSize(),
 												givenEvent.m_ToType<events::ModifyText>().m_GetOldColor());
-		actions::ActionManager::m_GetManagerInstance()->m_DoAction(newAct);
+		actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
 	}
 	else if (givenEvent.m_GetEventType() == events::Actions::MODIFYSPRITE) {
 		auto* newAct = new actions::ModifySprite(
@@ -545,8 +547,17 @@ namespace gui {
 			givenEvent.m_ToType<events::ModifySprite>().m_GetOldColor(),
 			givenEvent.m_ToType<events::ModifySprite>().m_GetOldAlpha(),
 			givenEvent.m_ToType<events::ModifySprite>().m_GetOldIlluminated());
-		actions::ActionManager::m_GetManagerInstance()->m_DoAction(newAct);
+		actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
 	}
+	else if (givenEvent.m_GetEventType() == events::Actions::MODIFYBUTTON) {
+		auto* newAct = new actions::ModifyButton(
+			givenEvent.m_ToType<events::ModifyButton>().m_GetID(),
+			givenEvent.m_ToType<events::ModifyButton>().m_GetComp(),
+			givenEvent.m_ToType<events::ModifyButton>().m_GetOldPos(),
+			givenEvent.m_ToType<events::ModifyButton>().m_GetOldScale(),
+			givenEvent.m_ToType<events::ModifyButton>().m_GetOldClick());
+		actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
+		}
 
 
 		

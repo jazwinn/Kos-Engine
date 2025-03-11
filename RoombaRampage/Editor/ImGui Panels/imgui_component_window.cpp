@@ -230,7 +230,7 @@ struct DrawComponents {
         std::string title = "##" + m_Array[count];
         ImGui::Checkbox(title.c_str(), &_args);
         bool changed = false;
-        if (ImGui::IsItemActivated()) {
+        if (ImGui::IsItemEdited()) {
             changed = true;
         }
         count++;
@@ -798,30 +798,41 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         //events::ModifySprite action(ecs::TYPESPRITECOMPONENT, entityID, sc, oldValS);
                         //DISPATCH_ACTION_EVENT(action);
                     }
-
+                    if (ImGui::IsItemActivated()) {
+                        if ((dragfloat::DragFloatCheck::m_GetInstance()->m_GetPrevMem() != dragfloat::Member::SPRITECLR)) {
+                            oldValS = *sc;
+                        }
+                        if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::SPRITE, dragfloat::Member::SPRITECLR)) {
+                            events::ModifySprite action(ecs::TYPESPRITECOMPONENT, entityID, sc, oldValS);
+                            DISPATCH_ACTION_EVENT(action);
+                            oldValS = *sc;
+                        }
+                    }
+                    if (ImGui::IsItemDeactivatedAfterEdit()) {
+                        if ((dragfloat::DragFloatCheck::m_GetInstance()->m_GetPrevMem() != dragfloat::Member::SPRITECLR)) {
+                            oldValS = *sc;
+                        }
+                        if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::SPRITE, dragfloat::Member::SPRITECLR)) {
+                            events::ModifySprite action(ecs::TYPESPRITECOMPONENT, entityID, sc, oldValS);
+                            DISPATCH_ACTION_EVENT(action);
+                            oldValS = *sc;
+                        }
+                    }
                     //static ecs::SpriteComponent oldValS2 = *sc;
                     if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPESPRITECOMPONENT)) {
                         auto* rbc = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(entityID));
                         //rbc->ApplyFunction(DrawComponents(rbc->Names()));
                         DrawComponents toDraw(rbc->Names());
-                        if (toDraw(rbc->m_imageFile) || toDraw(rbc->m_isIlluminated)) {
+                        if (toDraw(rbc->m_imageFile)) {
 
                             events::ModifySprite action(ecs::TYPESPRITECOMPONENT, entityID, sc, oldValS);
                             DISPATCH_ACTION_EVENT(action);
                             oldValS = *rbc;
                         }
-                        if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::SPRITE, dragfloat::Member::SPRITECLR)) {
-
-                        }
-                        if (toDraw(rbc->m_color)) {
-                            if ((dragfloat::DragFloatCheck::m_GetInstance()->m_GetPrevMem() != dragfloat::Member::SPRITECLR)) {
-                                oldValS = *rbc;
-                            }
-                            if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::SPRITE, dragfloat::Member::SPRITECLR)) {
-                                events::ModifySprite action(ecs::TYPESPRITECOMPONENT, entityID, rbc, oldValS);
-                                DISPATCH_ACTION_EVENT(action);
-                                oldValS = *rbc;
-                            }
+                        if (toDraw(rbc->m_isIlluminated)) {
+                            events::ModifySprite action(ecs::TYPESPRITECOMPONENT, entityID, sc, oldValS);
+                            DISPATCH_ACTION_EVENT(action);
+                            oldValS = *rbc;
                         }
                         if (toDraw(rbc->m_alpha)) {
                             if ((dragfloat::DragFloatCheck::m_GetInstance()->m_GetPrevMem() != dragfloat::Member::SPRITEALPHA)) {
@@ -943,7 +954,22 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                     //rbc->ApplyFunction(DrawComponents(rbc->Names()));
                     static ecs::ColliderComponent oldValC = *rbc;
                     DrawComponents toDraw(rbc->Names());
-                    if (toDraw(rbc->m_collisionCheck) || toDraw(rbc->m_collisionResponse) || toDraw(rbc->m_drawDebug) || toDraw(rbc->m_type)) {
+                    if (toDraw(rbc->m_collisionResponse)) {
+                        events::ModifyCollider action(ecs::TYPECOLLIDERCOMPONENT, entityID, rbc, oldValC);
+                        DISPATCH_ACTION_EVENT(action);
+                        oldValC = *rbc;
+                    }
+                    if (toDraw(rbc->m_collisionCheck)) {
+                        events::ModifyCollider action(ecs::TYPECOLLIDERCOMPONENT, entityID, rbc, oldValC);
+                        DISPATCH_ACTION_EVENT(action);
+                        oldValC = *rbc;
+                    }
+                    if (toDraw(rbc->m_drawDebug)) {
+                        events::ModifyCollider action(ecs::TYPECOLLIDERCOMPONENT, entityID, rbc, oldValC);
+                        DISPATCH_ACTION_EVENT(action);
+                        oldValC = *rbc;
+                    }
+                    if (toDraw(rbc->m_type)) {
                         events::ModifyCollider action(ecs::TYPECOLLIDERCOMPONENT, entityID, rbc, oldValC);
                         DISPATCH_ACTION_EVENT(action);
                         oldValC = *rbc;
@@ -994,11 +1020,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                     //rbc->ApplyFunction(DrawComponents(rbc->Names()));
                     static ecs::RigidBodyComponent oldValR = *rbc;
                     DrawComponents toDraw(rbc->Names());
-                    if (toDraw(rbc->m_IsKinematic) || toDraw(rbc->m_IsStatic)) {
-                        events::ModifyRigid action(ecs::TYPERIGIDBODYCOMPONENT, entityID, rbc, oldValR);
-                        DISPATCH_ACTION_EVENT(action);
-                        oldValR = *rbc;
-                    }
+
                     if (toDraw(rbc->m_Velocity)) {
                         if ((dragfloat::DragFloatCheck::m_GetInstance()->m_GetPrevMem() != dragfloat::Member::RIGIDVELO)) {
                             oldValR = *rbc;
@@ -1109,6 +1131,16 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             DISPATCH_ACTION_EVENT(action);
                             oldValR = *rbc;
                         }
+                    }
+                    if (toDraw(rbc->m_IsKinematic)) {
+                        events::ModifyRigid action(ecs::TYPERIGIDBODYCOMPONENT, entityID, rbc, oldValR);
+                        DISPATCH_ACTION_EVENT(action);
+                        oldValR = *rbc;
+                    }
+                    if (toDraw(rbc->m_IsStatic)) {
+                        events::ModifyRigid action(ecs::TYPERIGIDBODYCOMPONENT, entityID, rbc, oldValR);
+                        DISPATCH_ACTION_EVENT(action);
+                        oldValR = *rbc;
                     }
                 }
 
@@ -1358,24 +1390,25 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         }
                         ImGui::TreePop();
                     }
-                }
-
-                if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPETEXTCOMPONENT)) {
-                    auto* rbc = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(entityID));
-                    //rbc->ApplyFunction(DrawComponents(rbc->Names()));
-                    static ecs::TextComponent oldValT2 = *rbc;
-                    DrawComponents toDraw(rbc->Names());
-                    if (toDraw(rbc->m_fontLayer)) {
+                    //DrawComponents toDraw(tc->Names());
+                    if (toDraw(tc->m_fontLayer)) {
                         if ((dragfloat::DragFloatCheck::m_GetInstance()->m_GetPrevMem() != dragfloat::Member::TEXTLAYER)) {
-                            oldValT2 = *rbc;
+                            oldValT = *tc;
                         }
                         if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::TEXT, dragfloat::Member::TEXTLAYER)) {
-                            events::ModifyText action(ecs::TYPETEXTCOMPONENT, entityID, rbc, oldValT2);
+                            events::ModifyText action(ecs::TYPETEXTCOMPONENT, entityID, tc, oldValT);
                             DISPATCH_ACTION_EVENT(action);
-                            oldValT2 = *rbc;
+                            oldValT = *tc;
                         }
                     }
                 }
+
+                //if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPETEXTCOMPONENT)) {
+                //    auto* rbc = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(entityID));
+                //    //rbc->ApplyFunction(DrawComponents(rbc->Names()));
+                //    static ecs::TextComponent oldValT2 = *rbc;
+                //   
+                //}
 
             }
             if (EntitySignature.test(ecs::TYPEANIMATIONCOMPONENT)) {
@@ -1389,11 +1422,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                     //rbc->ApplyFunction(DrawComponents(rbc->Names()));
                     static ecs::AnimationComponent oldValA = *rbc;
                     DrawComponents toDraw(rbc->Names());
-                    if (toDraw(rbc->m_isAnimating)) {
-                        events::ModifyAnim action(ecs::TYPEANIMATIONCOMPONENT, entityID, rbc, oldValA);
-                        DISPATCH_ACTION_EVENT(action);
-                        oldValA = *rbc;
-                    }
+
                     if (toDraw(rbc->m_frameNumber)) {
                         if ((dragfloat::DragFloatCheck::m_GetInstance()->m_GetPrevMem() != dragfloat::Member::ANIMFRAMENUM)) {
                             oldValA = *rbc;
@@ -1423,6 +1452,11 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             DISPATCH_ACTION_EVENT(action);
                             oldValA = *rbc;
                         }
+                    }
+                    if (toDraw(rbc->m_isAnimating)) {
+                        events::ModifyAnim action(ecs::TYPEANIMATIONCOMPONENT, entityID, rbc, oldValA);
+                        DISPATCH_ACTION_EVENT(action);
+                        oldValA = *rbc;
                     }
                     if (toDraw(rbc->m_stripCount)) {
                         if ((dragfloat::DragFloatCheck::m_GetInstance()->m_GetPrevMem() != dragfloat::Member::ANIMSC)) {
@@ -1511,7 +1545,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                 if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPESCRIPTCOMPONENT)) {
                     auto* sc = static_cast<ecs::ScriptComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESCRIPTCOMPONENT]->m_GetEntityComponent(entityID));
-                    static ecs::ScriptComponent oldValS = *sc;
+                    //static ecs::ScriptComponent oldValS = *sc;
                     //DrawComponents toDraw(sc->Names());
                     for (const auto& scriptname : sc->m_scripts)
                     {
