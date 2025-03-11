@@ -1,7 +1,7 @@
 [
     {
         "GlobalSettings": {
-            "globalIllumination": 0.30000001192092896,
+            "globalIllumination": 1.059999942779541,
             "backgroundColor": {
                 "r": 0.13300000131130219,
                 "g": 0.23000000417232513,
@@ -23,10 +23,10 @@
                 "x": 0.0,
                 "y": 0.0
             },
-            "rotation": 0.0,
+            "rotation": -0.0,
             "scale": {
-                "x": 1.0,
-                "y": 1.0
+                "x": 5.0,
+                "y": 5.0
             }
         },
         "collider": {
@@ -69,7 +69,7 @@
             "static": false
         },
         "sprite": {
-            "imagefile": "img_BulletPrefab1.png",
+            "imagefile": "ani_bossBulletEffect_strip10.png",
             "layer": 5,
             "color": {
                 "r": 1.0,
@@ -78,6 +78,13 @@
             },
             "alpha": 1.0,
             "isLit": true
+        },
+        "animation": {
+            "frameNumber": 0,
+            "framesPerSecond": 8,
+            "frameTimer": 0.0,
+            "isAnimating": false,
+            "stripCount": 10
         },
         "script": {
             "scripts": [

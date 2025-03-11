@@ -1,7 +1,7 @@
 [
     {
         "GlobalSettings": {
-            "globalIllumination": 0.30000001192092896,
+            "globalIllumination": 1.059999942779541,
             "backgroundColor": {
                 "r": 0.13300000131130219,
                 "g": 0.23000000417232513,
@@ -20,17 +20,17 @@
         },
         "transform": {
             "position": {
-                "x": 12.5,
-                "y": -0.5346207022666931
+                "x": 0.0,
+                "y": 0.0
             },
             "rotation": -179.99989318847656,
             "scale": {
-                "x": 0.05000000074505806,
-                "y": 0.03999999910593033
+                "x": 3.200000047683716,
+                "y": 3.200000047683716
             }
         },
         "sprite": {
-            "imagefile": "img_Forcefield.png",
+            "imagefile": "ani_bossShield_strip4.png",
             "layer": 101,
             "color": {
                 "r": 1.0,
@@ -39,6 +39,13 @@
             },
             "alpha": 1.0,
             "isLit": true
+        },
+        "animation": {
+            "frameNumber": 0,
+            "framesPerSecond": 8,
+            "frameTimer": 0.0,
+            "isAnimating": true,
+            "stripCount": 4
         }
     }
 ]
