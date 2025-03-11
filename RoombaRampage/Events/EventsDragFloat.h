@@ -24,6 +24,41 @@ namespace dragfloat {
 		POS,
 		ROT,
 		SCALE,
+		SPRITELAYER,
+		SPRITECLR,
+		SPRITEALPHA,
+		COLLOFFSET,
+		COLLRAD,
+		COLLSIZE,
+		RIGIDVELO,
+		RIGIDACCEL,
+		RIGIDROT,
+		RIGIDANGVELO,
+		RIGIDANGACCEL,
+		RIGIDMASS,
+		RIGIDINVMASS,
+		RIGIDLINDAMP,
+		RIGIDANGDAMP,
+		RIGIDFORCE,
+		RIGIDTORQUE,
+		ENEMYTAG,
+		ENEMYTYPE,
+		ENEMYBEHAVE,
+		TEXTSIZE,
+		TEXTCLR,
+		TEXTLAYER,
+		ANIMFRAMENUM,
+		ANIMFPS,
+		ANIMFT,
+		ANIMSC,
+		CAMLEFT,
+		CAMRIGHT,
+		CAMUP,
+		CAMDOWN,
+		CAMAR,
+		BUTTONPOS,
+		BUTTONSCALE,
+
 		NONE
 	};
 
@@ -34,6 +69,15 @@ namespace dragfloat {
 	/******************************************************************/
 	enum class Comp {
 		TRANSFORM,
+		ANIM,
+		TEXT,
+		ENEMY,
+		RIGID,
+		COLL,
+		SPRITE,
+		CAMERA,
+		BUTTON,
+
 		NONE
 	};
 

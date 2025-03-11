@@ -49,6 +49,7 @@ namespace events {
 		MODIFYTEXT,
 		ADDAUDIO,
 		REMOVEAUDIO,
+		MODIFYBUTTON,
 		UNDO,
 		REDO
 	};
