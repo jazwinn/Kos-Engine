@@ -23,16 +23,16 @@
             },
             "rotation": 0.0,
             "scale": {
-                "x": 1.0,
-                "y": 1.0
+                "x": 1.75,
+                "y": 1.75
             }
         },
         "collider": {
             "checkcollision": true,
             "checkresponse": false,
             "size": {
-                "x": 1.0,
-                "y": 1.0
+                "x": 0.07000000029802322,
+                "y": 0.25999999046325684
             },
             "offset": {
                 "x": 0.0,
@@ -67,7 +67,7 @@
             "static": false
         },
         "sprite": {
-            "imagefile": "img_BulletPrefab1.png",
+            "imagefile": "ani_railgunBulletEffect_strip10.png",
             "layer": 14,
             "color": {
                 "r": 1.0,
@@ -82,7 +82,7 @@
             "framesPerSecond": 80,
             "frameTimer": 0.0,
             "isAnimating": false,
-            "stripCount": 1
+            "stripCount": 10
         },
         "script": {
             "scripts": [

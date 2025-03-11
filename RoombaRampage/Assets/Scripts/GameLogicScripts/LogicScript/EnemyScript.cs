@@ -450,13 +450,13 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
             pathFindComp.m_targetPosition = gridTargetPos;
 
 
-            //if (Paths == null || Paths.Count == 0)
-            //{
-            //    enemyRoamBehaviour = EnemyRoamType.Static;
+            if (Paths == null || Paths.Count == 0)
+            {
+                enemyRoamBehaviour = EnemyRoamType.Static;
 
-            //    //Console.WriteLine("No valid path found!");
-            //    yield return new CoroutineManager.WaitForSeconds(1.0f);
-            //}
+                //Console.WriteLine("No valid path found!");
+                yield return new CoroutineManager.WaitForSeconds(1.0f);
+            }
 
 
 

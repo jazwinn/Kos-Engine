@@ -162,6 +162,9 @@ public static class InternalCall
     public extern static void m_InternalCallUnPauseAudio(uint id, string monoString);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static bool m_InternalCallAudioIsPlayingForEntity(uint id, string monoString);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static void m_InternalCallPauseAllAudio();
 
     [MethodImpl(MethodImplOptions.InternalCall)]
