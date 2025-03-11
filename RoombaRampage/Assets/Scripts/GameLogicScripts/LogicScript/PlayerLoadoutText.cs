@@ -64,9 +64,10 @@ public class PlayerLoadoutText : ScriptBase
 
             case 3:
                 return "Shotgun";
-
+            case 4:
+                return "Railgun";
             default:
-                return null;
+                return "Placeholder_Weapon";
         }
     }
 

@@ -168,3 +168,11 @@ public class GridComponent
     public int m_GridKey;
     public List<List<int>> m_IsWall;
 }
+
+public class LightComponent
+{
+    public Vector2 m_innerOuterRadius;
+    public Vector3 m_colour;
+    public float m_intensity;
+
+}

@@ -75,6 +75,7 @@
     <Compile Include="LogicScript\CutsceneManager.cs" />
     <Compile Include="LogicScript\CutsceneMenuButtons.cs" />
     <Compile Include="LogicScript\EnemyBloodPool.cs" />
+    <Compile Include="LogicScript\EnemyBulletScript.cs" />
     <Compile Include="LogicScript\EnemyController.cs" />
     <Compile Include="LogicScript\EnemyScript.cs" />
     <Compile Include="LogicScript\EnemyState.cs" />
@@ -92,6 +93,7 @@
     <Compile Include="LogicScript\PauseMenuButtons.cs" />
     <Compile Include="LogicScript\PauseMenuCursor.cs" />
     <Compile Include="LogicScript\PauseMenuManager.cs" />
+    <Compile Include="LogicScript\PlayerBulletType2.cs" />
     <Compile Include="LogicScript\PlayerBullet.cs" />
     <Compile Include="LogicScript\PlayerController.cs" />
     <Compile Include="LogicScript\PlayerGun.cs" />

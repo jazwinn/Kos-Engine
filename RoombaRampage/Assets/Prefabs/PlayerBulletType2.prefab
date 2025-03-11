@@ -11,34 +11,34 @@
     },
     {
         "name": {
-            "namestr": "End Point",
-            "layer": 10,
+            "namestr": "PlayerBulletType2",
+            "layer": 3,
             "isprefab": true,
-            "tagstr": "Default",
-            "prefabname": "EndPoint.prefab",
-            "issync": true
+            "tagstr": "PlayerBullet",
+            "prefabname": "prefab_playerBullet.prefab",
+            "issync": false
         },
         "transform": {
             "position": {
-                "x": -25.01907730102539,
-                "y": 36.98648452758789
+                "x": 0.0,
+                "y": 0.0
             },
-            "rotation": -0.0,
+            "rotation": 0.0,
             "scale": {
-                "x": 1.0,
-                "y": 1.0
+                "x": 2.274125099182129,
+                "y": 2.274125099182129
             }
         },
         "collider": {
             "checkcollision": true,
             "checkresponse": false,
             "size": {
-                "x": 1.0,
-                "y": 1.0
+                "x": 0.07000000029802322,
+                "y": 0.25999999046325684
             },
             "offset": {
                 "x": 0.0,
-                "y": 0.0
+                "y": 0.03999999910593033
             },
             "drawDebug": true,
             "radius": 0.5,
@@ -46,8 +46,8 @@
         },
         "rigidbody": {
             "linearVelocity": {
-                "x": 0.0,
-                "y": 0.0
+                "x": 11.46951675415039,
+                "y": 3.5284833908081055
             },
             "linearAcceleration": {
                 "x": 0.0,
@@ -69,8 +69,8 @@
             "static": false
         },
         "sprite": {
-            "imagefile": "",
-            "layer": 1,
+            "imagefile": "ani_railgunBulletEffect_strip10.png",
+            "layer": 14,
             "color": {
                 "r": 1.0,
                 "g": 1.0,
@@ -79,19 +79,38 @@
             "alpha": 1.0,
             "isLit": true
         },
+        "animation": {
+            "frameNumber": 0,
+            "framesPerSecond": 80,
+            "frameTimer": 0.0,
+            "isAnimating": false,
+            "stripCount": 10
+        },
         "script": {
             "scripts": [
                 {
-                    "name": "LevelTransition",
+                    "name": "PlayerBulletType2",
                     "enabled": true,
                     "map": [
                         {
-                            "variable": "NextLevelName",
-                            "base64": "Cutscene05"
+                            "variable": "speed",
+                            "base64": ""
                         }
                     ]
                 }
             ]
+        },
+        "LightingComponent": {
+            "m_innerOuterRadius": {
+                "x": 0.03999999910593033,
+                "y": 0.800000011920929
+            },
+            "m_intensity": 4.400000095367432,
+            "m_colour": {
+                "x": 0.20796459913253784,
+                "y": 1.0,
+                "z": 0.8738349080085754
+            }
         }
     }
 ]

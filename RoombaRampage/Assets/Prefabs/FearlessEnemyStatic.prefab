@@ -3,9 +3,9 @@
         "GlobalSettings": {
             "globalIllumination": 0.30000001192092896,
             "backgroundColor": {
-                "r": 0.13716816902160645,
-                "g": 0.13716816902160645,
-                "b": 0.13716816902160645
+                "r": 0.13300000131130219,
+                "g": 0.23000000417232513,
+                "b": 0.3199999928474426
             }
         }
     },
@@ -15,18 +15,18 @@
             "layer": 2,
             "isprefab": true,
             "tagstr": "Enemy",
-            "prefabname": "ScaredEnemyStatic.prefab",
+            "prefabname": "FearlessEnemyStatic.prefab",
             "issync": false
         },
         "transform": {
             "position": {
-                "x": 0.5266342163085938,
-                "y": -8.807215690612793
+                "x": 42.26792907714844,
+                "y": 4.780803203582764
             },
-            "rotation": -0.0,
+            "rotation": -114.10630798339844,
             "scale": {
-                "x": 3.0000009536743164,
-                "y": 3.0000009536743164
+                "x": 2.999998092651367,
+                "y": 2.999998092651367
             }
         },
         "collider": {
@@ -75,7 +75,7 @@
         },
         "sprite": {
             "imagefile": "ani_scientistWalk_strip8.png",
-            "layer": 28,
+            "layer": 63,
             "color": {
                 "r": 1.0,
                 "g": 1.0,

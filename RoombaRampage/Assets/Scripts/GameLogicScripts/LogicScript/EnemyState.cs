@@ -64,6 +64,8 @@ public class EnemyStatePatrol : EnemyState
                     break;
 
                 case EnemyScript.EnemySelection.Ranged: //Start Ranged State
+                    enemyScript.SetCurrentState(new EnemyStateRangedAttack(enemyScript));
+                    enemyScript.isPatrolling = false;
                     break;
 
                 default:
@@ -195,9 +197,6 @@ public class EnemyStatePanic : EnemyState
                     enemyScript.isPatrolling = false;
                     break;
 
-                case EnemyScript.EnemySelection.Ranged: //Start Ranged State
-                    break;
-
                 default:
                     break;
             }
@@ -210,4 +209,103 @@ public class EnemyStatePanic : EnemyState
 
     public override void EnemyDead() { }
 
+}
+
+public class EnemyStateRangedAttack : EnemyState
+{
+
+
+    public EnemyStateRangedAttack(EnemyScript enemyScript) : base(enemyScript)
+    {
+        enemyScript.RangedAttackStart();
+    }
+
+    public override void DoActionUpdate(float dTime)
+    {
+        enemyScript.RangedAttackUpdate();
+
+    }
+
+    public override void LostTarget()
+    {
+        // Switch to search state
+        enemyScript.SetCurrentState(new EnemyStateRangedSearch(enemyScript));
+    }
+
+    public override void PlayerDead()
+    {
+        // Return to patrol
+        enemyScript.SetCurrentState(new EnemyStatePatrol(enemyScript));
+    }
+
+    public override void EnemyDead()
+    {
+        // Handle enemy death
+        enemyScript.SetCurrentState(new EnemyStateEnemyDead(enemyScript));
+    }
+}
+
+
+public class EnemyStateRangedSearch : EnemyState
+{
+
+
+    public EnemyStateRangedSearch(EnemyScript enemyScript) : base(enemyScript)
+    {
+        enemyScript.RangedSearchStart();
+    }
+
+    public override void DoActionUpdate(float dTime)
+    {
+        enemyScript.RangedSearchUpdate();
+    }
+
+    public override void LostTarget()
+    {
+        // Already searching, nothing to do
+    }
+
+    public override void PlayerDead()
+    {
+        // Return to patrol
+        enemyScript.SetCurrentState(new EnemyStatePatrol(enemyScript));
+    }
+
+    public override void EnemyDead()
+    {
+        // Handle enemy death
+        enemyScript.SetCurrentState(new EnemyStateEnemyDead(enemyScript));
+
+    }
+}
+
+public class EnemyStateScan : EnemyState
+{
+    public EnemyStateScan(EnemyScript enemyScript) : base(enemyScript)
+    {
+        enemyScript.EnemyScanStart();
+    }
+
+    public override void DoActionUpdate(float dTime)
+    {
+        enemyScript.EnemyScanUpdate();
+    }
+
+    public override void LostTarget()
+    {
+        // Already searching, nothing to do
+    }
+
+    public override void PlayerDead()
+    {
+        // Return to patrol
+        enemyScript.SetCurrentState(new EnemyStatePatrol(enemyScript));
+    }
+
+    public override void EnemyDead()
+    {
+        // Handle enemy death
+        enemyScript.SetCurrentState(new EnemyStateEnemyDead(enemyScript));
+
+    }
 }

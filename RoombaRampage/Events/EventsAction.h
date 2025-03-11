@@ -413,5 +413,294 @@ namespace events {
 		RedoPrevious() : BaseEvent<Actions>(Actions::REDO) {}
 	};
 
+	class ModifyAnim : public BaseEvent<Actions> {
+	private:
+		ecs::ComponentType m_changedType;
+		ecs::EntityID m_entityID;
+		ecs::AnimationComponent* m_changedComp;
+		int m_oldFrameNum;
+		int m_oldFPS;
+		float m_oldFrameTimer;
+		bool m_oldIsAnim;
+		int m_oldStrip;
+	public:
+		ModifyAnim(ecs::ComponentType inType, ecs::EntityID inID, ecs::AnimationComponent* inComp, ecs::AnimationComponent inOld) : BaseEvent<Actions>(Actions::MODIFYANIM),
+			m_changedType(inType), m_entityID(inID), m_changedComp(inComp), m_oldFrameNum(inOld.m_frameNumber), m_oldFPS(inOld.m_framesPerSecond),
+			m_oldFrameTimer(inOld.m_frameTimer), m_oldIsAnim(inOld.m_isAnimating),m_oldStrip(inOld.m_stripCount) {}
+		ecs::ComponentType m_GetType() { return m_changedType; }
+		ecs::EntityID m_GetID() { return m_entityID; }
+		ecs::AnimationComponent* m_GetComp() { return m_changedComp; }
+		int m_GetOldFrameNum() { return m_oldFrameNum; }
+		int m_GetOldFPS() { return m_oldFPS; }
+		float m_GetOldFT() { return m_oldFrameTimer; }
+		bool m_GetOldIsAnim() { return m_oldIsAnim; }
+		int m_GetOldStrip() { return m_oldStrip; }
+	};
+
+	class ModifyCamera : public BaseEvent<Actions> {
+	private:
+		ecs::ComponentType m_changedType;
+		ecs::EntityID m_entityID;
+		ecs::CameraComponent* m_changedComp;
+		float m_oldLeft, m_oldRight, m_oldTop, m_oldBottom, m_oldAspectRatio;
+
+	public:
+		ModifyCamera(ecs::ComponentType inType, ecs::EntityID inID, ecs::CameraComponent* inComp, ecs::CameraComponent inOld)
+			: BaseEvent<Actions>(Actions::MODIFYCAMERA),
+			m_changedType(inType), m_entityID(inID), m_changedComp(inComp),
+			m_oldLeft(inOld.m_left), m_oldRight(inOld.m_right),
+			m_oldTop(inOld.m_top), m_oldBottom(inOld.m_bottom),
+			m_oldAspectRatio(inOld.m_aspectRatio) {}
+
+		ecs::ComponentType m_GetType() { return m_changedType; }
+		ecs::EntityID m_GetID() { return m_entityID; }
+		ecs::CameraComponent* m_GetComp() { return m_changedComp; }
+		float m_GetOldLeft() { return m_oldLeft; }
+		float m_GetOldRight() { return m_oldRight; }
+		float m_GetOldTop() { return m_oldTop; }
+		float m_GetOldBottom() { return m_oldBottom; }
+		float m_GetOldAspectRatio() { return m_oldAspectRatio; }
+	};
+
+	class ModifyCollider : public BaseEvent<Actions> {
+	private:
+		ecs::ComponentType m_changedType;
+		ecs::EntityID m_entityID;
+		ecs::ColliderComponent* m_changedComp;
+		vector2::Vec2 m_oldSize;
+		bool m_oldDrawDebug, m_oldCollisionResponse, m_oldCollisionCheck;
+		float m_oldRadius;
+		physicspipe::EntityType m_oldShape;
+
+	public:
+		ModifyCollider(ecs::ComponentType inType, ecs::EntityID inID, ecs::ColliderComponent* inComp, ecs::ColliderComponent inOld)
+			: BaseEvent<Actions>(Actions::MODIFYCOLL),
+			m_changedType(inType), m_entityID(inID), m_changedComp(inComp),
+			m_oldSize(inOld.m_Size), m_oldDrawDebug(inOld.m_drawDebug),
+			m_oldRadius(inOld.m_radius), m_oldCollisionResponse(inOld.m_collisionResponse),
+			m_oldCollisionCheck(inOld.m_collisionCheck), m_oldShape(inOld.m_type) {}
+
+		ecs::ComponentType m_GetType() { return m_changedType; }
+		ecs::EntityID m_GetID() { return m_entityID; }
+		ecs::ColliderComponent* m_GetComp() { return m_changedComp; }
+		vector2::Vec2 m_GetOldSize() { return m_oldSize; }
+		bool m_GetOldDrawDebug() { return m_oldDrawDebug; }
+		float m_GetOldRadius() { return m_oldRadius; }
+		bool m_GetOldCollisionResponse() { return m_oldCollisionResponse; }
+		bool m_GetOldCollisionCheck() { return m_oldCollisionCheck; }
+		physicspipe::EntityType m_GetOldShape() { return m_oldShape; }
+	};
+
+	class ModifyEnemy : public BaseEvent<Actions> {
+	private:
+		ecs::ComponentType m_changedType;
+		ecs::EntityID m_entityID;
+		ecs::EnemyComponent* m_changedComp;
+		int m_oldTag, m_oldType, m_oldBehavior;
+
+	public:
+		ModifyEnemy(ecs::ComponentType inType, ecs::EntityID inID, ecs::EnemyComponent* inComp, ecs::EnemyComponent inOld)
+			: BaseEvent<Actions>(Actions::MODIFYENEMY),
+			m_changedType(inType), m_entityID(inID), m_changedComp(inComp),
+			m_oldTag(inOld.m_enemyTag), m_oldType(inOld.m_enemyTypeInt),
+			m_oldBehavior(inOld.m_enemyRoamBehaviourInt) {}
+
+		ecs::ComponentType m_GetType() { return m_changedType; }
+		ecs::EntityID m_GetID() { return m_entityID; }
+		ecs::EnemyComponent* m_GetComp() { return m_changedComp; }
+		int m_GetOldTag() { return m_oldTag; }
+		int m_GetOldType() { return m_oldType; }
+		int m_GetOldBehavior() { return m_oldBehavior; }
+	};
+
+	class ModifyGrid : public BaseEvent<Actions> {
+	private:
+		ecs::ComponentType m_changedType;
+		ecs::EntityID m_entityID;
+		ecs::GridComponent* m_changedComp;
+		vector2::Vec2 m_oldAnchor;
+		int m_oldRowLength, m_oldColumnLength, m_oldGridKey;
+		bool m_oldCollidable;
+
+	public:
+		ModifyGrid(ecs::ComponentType inType, ecs::EntityID inID, ecs::GridComponent* inComp, ecs::GridComponent inOld)
+			: BaseEvent<Actions>(Actions::MODIFYGRID),
+			m_changedType(inType), m_entityID(inID), m_changedComp(inComp),
+			m_oldAnchor(inOld.m_Anchor), m_oldRowLength(inOld.m_GridRowLength),
+			m_oldColumnLength(inOld.m_GridColumnLength), m_oldCollidable(inOld.m_SetCollidable),
+			m_oldGridKey(inOld.m_GridKey) {}
+
+		ecs::ComponentType m_GetType() { return m_changedType; }
+		ecs::EntityID m_GetID() { return m_entityID; }
+		ecs::GridComponent* m_GetComp() { return m_changedComp; }
+		vector2::Vec2 m_GetOldAnchor() { return m_oldAnchor; }
+		int m_GetOldRowLength() { return m_oldRowLength; }
+		int m_GetOldColumnLength() { return m_oldColumnLength; }
+		bool m_GetOldCollidable() { return m_oldCollidable; }
+		int m_GetOldGridKey() { return m_oldGridKey; }
+	};
+
+	class ModifyLight : public BaseEvent<Actions> {
+	private:
+		ecs::ComponentType m_changedType;
+		ecs::EntityID m_entityID;
+		ecs::LightingComponent* m_changedComp;
+		graphicpipe::LightType m_oldType;
+		float m_oldIntensity;
+		vector2::Vec2 m_oldInnerOuterRadius;
+		vector3::Vec3 m_oldColor;
+
+	public:
+		ModifyLight(ecs::ComponentType inType, ecs::EntityID inID, ecs::LightingComponent* inComp, ecs::LightingComponent inOld)
+			: BaseEvent<Actions>(Actions::MODIFYLIGHT),
+			m_changedType(inType), m_entityID(inID), m_changedComp(inComp),
+			m_oldType(inOld.m_lightType), m_oldIntensity(inOld.m_intensity),
+			m_oldInnerOuterRadius(inOld.m_innerOuterRadius), m_oldColor(inOld.m_colour) {}
+
+		ecs::ComponentType m_GetType() { return m_changedType; }
+		ecs::EntityID m_GetID() { return m_entityID; }
+		ecs::LightingComponent* m_GetComp() { return m_changedComp; }
+		graphicpipe::LightType m_GetOldType() { return m_oldType; }
+		float m_GetOldIntensity() { return m_oldIntensity; }
+		vector2::Vec2 m_GetOldInnerOuterRadius() { return m_oldInnerOuterRadius; }
+		vector3::Vec3 m_GetOldColor() { return m_oldColor; }
+	};
+
+	class ModifyPathfinding : public BaseEvent<Actions> {
+	private:
+		ecs::ComponentType m_changedType;
+		ecs::EntityID m_entityID;
+		ecs::PathfindingComponent* m_changedComp;
+		vector2::Vec2 m_oldStartPos, m_oldEndPos;
+		int m_oldGridKey;
+
+	public:
+		ModifyPathfinding(ecs::ComponentType inType, ecs::EntityID inID, ecs::PathfindingComponent* inComp, ecs::PathfindingComponent inOld)
+			: BaseEvent<Actions>(Actions::MODIFYPATHFINDING),
+			m_changedType(inType), m_entityID(inID), m_changedComp(inComp),
+			m_oldStartPos(inOld.m_StartPos), m_oldEndPos(inOld.m_TargetPos),
+			m_oldGridKey(inOld.m_GridKey) {}
+
+		ecs::ComponentType m_GetType() { return m_changedType; }
+		ecs::PathfindingComponent* m_GetComp() { return m_changedComp; }
+		ecs::EntityID m_GetID() { return m_entityID; }
+		vector2::Vec2 m_GetOldStartPos() { return m_oldStartPos; }
+		vector2::Vec2 m_GetOldEndPos() { return m_oldEndPos; }
+		int m_GetOldGridKey() { return m_oldGridKey; }
+	};
+
+	class ModifyText : public BaseEvent<Actions> {
+	private:
+		ecs::ComponentType m_changedType;
+		ecs::EntityID m_entityID;
+		ecs::TextComponent* m_changedComp;
+		std::string m_oldFile;
+		std::string m_oldText;
+		int m_oldLayer;
+		float m_oldSize;
+		vector3::Vec3 m_oldColor;
+
+	public:
+		ModifyText(ecs::ComponentType inType, ecs::EntityID inID, ecs::TextComponent* inComp, ecs::TextComponent inOld)
+			: BaseEvent<Actions>(Actions::MODIFYTEXT),
+			m_changedType(inType), m_entityID(inID), m_changedComp(inComp),
+			m_oldFile(inOld.m_fileName), m_oldText(inOld.m_text),
+			m_oldLayer(inOld.m_fontLayer), m_oldSize(inOld.m_fontSize),
+			m_oldColor(inOld.m_color) {}
+
+		ecs::ComponentType m_GetType() { return m_changedType; }
+		ecs::EntityID m_GetID() { return m_entityID; }
+		std::string m_GetOldFile() { return m_oldFile; }
+		std::string m_GetOldText() { return m_oldText; }
+		int m_GetOldLayer() { return m_oldLayer; }
+		float m_GetOldSize() { return m_oldSize; }
+		vector3::Vec3 m_GetOldColor() { return m_oldColor; }
+
+		// New function
+		ecs::TextComponent* m_GetComp() { return m_changedComp; }
+	};
+
+	class ModifyRigid : public BaseEvent<Actions> {
+	private:
+		ecs::ComponentType m_changedType;
+		ecs::EntityID m_entityID;
+		ecs::RigidBodyComponent* m_changedComp;
+		vector2::Vec2 m_oldVelocity;
+		vector2::Vec2 m_oldAcceleration;
+		float m_oldRotation;
+		float m_oldAngularVelocity;
+		float m_oldAngularAcceleration;
+		float m_oldMass;
+		float m_oldInverseMass;
+		float m_oldLinearDamping;
+		float m_oldAngularDamping;
+		vector2::Vec2 m_oldForce;
+		float m_oldTorque;
+		bool m_oldKinematic;
+		bool m_oldStatic;
+
+	public:
+		ModifyRigid(ecs::ComponentType inType, ecs::EntityID inID, ecs::RigidBodyComponent* inComp, ecs::RigidBodyComponent inOld)
+			: BaseEvent<Actions>(Actions::MODIFYRIGID),
+			m_changedType(inType), m_entityID(inID), m_changedComp(inComp),
+			m_oldVelocity(inOld.m_Velocity), m_oldAcceleration(inOld.m_Acceleration),
+			m_oldRotation(inOld.m_Rotation), m_oldAngularVelocity(inOld.m_AngularVelocity),
+			m_oldAngularAcceleration(inOld.m_AngularAcceleration), m_oldMass(inOld.m_Mass),
+			m_oldInverseMass(inOld.m_InverseMass), m_oldLinearDamping(inOld.m_LinearDamping),
+			m_oldAngularDamping(inOld.m_AngularDamping), m_oldForce(inOld.m_Force),
+			m_oldTorque(inOld.m_Torque), m_oldKinematic(inOld.m_IsKinematic), m_oldStatic(inOld.m_IsStatic) {}
+
+		ecs::ComponentType m_GetType() { return m_changedType; }
+		ecs::EntityID m_GetID() { return m_entityID; }
+		vector2::Vec2 m_GetOldVelocity() { return m_oldVelocity; }
+		vector2::Vec2 m_GetOldAcceleration() { return m_oldAcceleration; }
+		float m_GetOldRotation() { return m_oldRotation; }
+		float m_GetOldAngularVelocity() { return m_oldAngularVelocity; }
+		float m_GetOldAngularAcceleration() { return m_oldAngularAcceleration; }
+		float m_GetOldMass() { return m_oldMass; }
+		float m_GetOldInverseMass() { return m_oldInverseMass; }
+		float m_GetOldLinearDamping() { return m_oldLinearDamping; }
+		float m_GetOldAngularDamping() { return m_oldAngularDamping; }
+		vector2::Vec2 m_GetOldForce() { return m_oldForce; }
+		float m_GetOldTorque() { return m_oldTorque; }
+		bool m_GetOldKinematic() { return m_oldKinematic; }
+		bool m_GetOldStatic() { return m_oldStatic; }
+
+		// New function
+		ecs::RigidBodyComponent* m_GetComp() { return m_changedComp; }
+	};
+
+	class ModifySprite : public BaseEvent<Actions> {
+	private:
+		ecs::ComponentType m_changedType;
+		ecs::EntityID m_entityID;
+		ecs::SpriteComponent* m_changedComp;
+		std::string m_oldFile;
+		int m_oldLayer;
+		vector3::Vec3 m_oldColor;
+		float m_oldAlpha;
+		bool m_oldIlluminated;
+
+	public:
+		ModifySprite(ecs::ComponentType inType, ecs::EntityID inID, ecs::SpriteComponent* inComp, ecs::SpriteComponent inOld)
+			: BaseEvent<Actions>(Actions::MODIFYSPRITE),
+			m_changedType(inType), m_entityID(inID), m_changedComp(inComp),
+			m_oldFile(inOld.m_imageFile), m_oldLayer(inOld.m_layer),
+			m_oldColor(inOld.m_color), m_oldAlpha(inOld.m_alpha),
+			m_oldIlluminated(inOld.m_isIlluminated) {}
+
+		ecs::ComponentType m_GetType() { return m_changedType; }
+		ecs::EntityID m_GetID() { return m_entityID; }
+		std::string m_GetOldFile() { return m_oldFile; }
+		int m_GetOldLayer() { return m_oldLayer; }
+		vector3::Vec3 m_GetOldColor() { return m_oldColor; }
+		float m_GetOldAlpha() { return m_oldAlpha; }
+		bool m_GetOldIlluminated() { return m_oldIlluminated; }
+
+		// New function
+		ecs::SpriteComponent* m_GetComp() { return m_changedComp; }
+	};
+
+
 
 }
