@@ -185,7 +185,7 @@ namespace gui {
 
 	void ImGuiHandler::m_update()
 	{
-		m_NewFrame();
+		
 
 		if (Input::InputSystem::m_isKeyTriggered(keys::F11))
 		{
@@ -216,7 +216,7 @@ namespace gui {
 		if (EditorCamera::m_editorMode)
 		{
 			// Render ImGui
-			
+			m_NewFrame();
 			//for gizmo - todo once camera is done
 			//ImGuizmo::SetOrthographic(true);
 			
