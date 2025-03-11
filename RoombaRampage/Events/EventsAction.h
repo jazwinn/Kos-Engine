@@ -548,7 +548,9 @@ namespace events {
 		ecs::EntityID m_entityID;
 		ecs::LightingComponent* m_changedComp;
 		graphicpipe::LightType m_oldType;
-		float m_oldIntensity;
+		float m_oldIntensity, m_oldRot;
+		vector2::Vec2 m_oldScale;
+		vector2::Vec2 m_oldOffset;
 		vector2::Vec2 m_oldInnerOuterRadius;
 		vector3::Vec3 m_oldColor;
 
@@ -556,7 +558,7 @@ namespace events {
 		ModifyLight(ecs::ComponentType inType, ecs::EntityID inID, ecs::LightingComponent* inComp, ecs::LightingComponent inOld)
 			: BaseEvent<Actions>(Actions::MODIFYLIGHT),
 			m_changedType(inType), m_entityID(inID), m_changedComp(inComp),
-			m_oldType(inOld.m_lightType), m_oldIntensity(inOld.m_intensity),
+			m_oldType(inOld.m_lightType), m_oldIntensity(inOld.m_intensity), m_oldRot(inOld.m_light_rotation), m_oldOffset(inOld.m_light_OffSet), m_oldScale(inOld.m_light_scale),
 			m_oldInnerOuterRadius(inOld.m_innerOuterRadius), m_oldColor(inOld.m_colour) {}
 
 		ecs::ComponentType m_GetType() { return m_changedType; }
@@ -564,8 +566,11 @@ namespace events {
 		ecs::LightingComponent* m_GetComp() { return m_changedComp; }
 		graphicpipe::LightType m_GetOldType() { return m_oldType; }
 		float m_GetOldIntensity() { return m_oldIntensity; }
+		float m_GetOldRot() { return m_oldRot; }
 		vector2::Vec2 m_GetOldInnerOuterRadius() { return m_oldInnerOuterRadius; }
 		vector3::Vec3 m_GetOldColor() { return m_oldColor; }
+		vector2::Vec2 m_GetOldScale() { return m_oldScale; }
+		vector2::Vec2 m_GetOldOffset() { return m_oldOffset; }
 	};
 
 	class ModifyPathfinding : public BaseEvent<Actions> {
