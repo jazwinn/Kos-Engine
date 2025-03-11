@@ -61,6 +61,7 @@ public class EnemyStatePatrol : EnemyState
 
                 case EnemyScript.EnemySelection.Melee: //Start Melee State
                     enemyScript.SetCurrentState(new EnemyStateChase(enemyScript));
+                    enemyScript.isPatrolling = false;
                     break;
 
                 case EnemyScript.EnemySelection.Ranged: //Start Ranged State
@@ -97,7 +98,68 @@ public class EnemyStateChase : EnemyState
 
     public override void LostTarget()
     {
+        // Switch to search state
+        enemyScript.SetCurrentState(new EnemyStateMeleeSearch(enemyScript));
+    }
+
+    public override void PlayerDead()
+    {
+    }
+
+    public override void EnemyDead()
+    {
+        enemyScript.SetCurrentState(new EnemyStateEnemyDead(enemyScript));
+    }
+
+}
+
+public class EnemyStateMeleeSearch : EnemyState
+{
+    public EnemyStateMeleeSearch(EnemyScript enemyScript) : base(enemyScript)
+    {
+        enemyScript.MeleeSearchStart();
+    }
+
+    public override void DoActionUpdate(float dTime)
+    {
+        enemyScript.MeleeSearchUpdate();
+    }
+
+    public override void LostTarget()
+    {
+        // Already searching, nothing to do
+    }
+
+    public override void PlayerDead()
+    {
+        // Return to patrol
         enemyScript.SetCurrentState(new EnemyStatePatrol(enemyScript));
+    }
+
+    public override void EnemyDead()
+    {
+        // Handle enemy death
+        enemyScript.SetCurrentState(new EnemyStateEnemyDead(enemyScript));
+
+    }
+}
+
+public class EnemyStateReturnToHome : EnemyState
+{
+
+    public EnemyStateReturnToHome(EnemyScript enemyScript) : base(enemyScript)
+    {
+
+    }
+
+    public override void DoActionUpdate(float dTime)
+    {
+        enemyScript.ReturnHomeUpdate();
+    }
+
+    public override void LostTarget()
+    {
+
     }
 
     public override void PlayerDead()

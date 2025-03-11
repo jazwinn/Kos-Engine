@@ -57,7 +57,6 @@ namespace ecs {
     }
 
     void AudioSystem::m_Update(const std::string& scene) {
-        //ECS* ecs = ECS::m_GetInstance();
         assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
         ECS* ecs = ECS::m_GetInstance();
 
@@ -78,8 +77,15 @@ namespace ecs {
                 if (it != assetManager->m_audioManager.getSoundMap().end()) {
                     auto& sound = it->second;
 
-                    sound->m_SetVolume(std::to_string(audioCompPtr->m_Entity), audioFile.m_Volume);
+                    float adjustedVolume = audioFile.m_Volume;
+                    if (audioFile.m_IsBGM) {
+                        adjustedVolume *= assetManager->m_audioManager.m_GlobalBGMVolume;
+                    }
+                    else if (audioFile.m_IsSFX) {
+                        adjustedVolume *= assetManager->m_audioManager.m_GlobalSFXVolume;
+                    }
 
+                    sound->m_SetVolume(std::to_string(audioCompPtr->m_Entity), adjustedVolume);
                     sound->m_SetLooping(std::to_string(audioCompPtr->m_Entity), audioFile.m_Loop);
 
                     if (audioFile.m_PlayOnStart) {
@@ -89,13 +95,8 @@ namespace ecs {
                         }
                     }
                 }
-                else {
-                    //std::cerr << "Audio file " << audioFile.m_Name << " not found in the sound map." << std::endl;
-                }
             }
         }
     }
-
-
 
 }
