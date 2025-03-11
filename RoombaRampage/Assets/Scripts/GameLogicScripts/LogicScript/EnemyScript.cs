@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using static EnemyScript;
 
 
 public class EnemyScript : ScriptBase //Enemy Script, not state machine
@@ -86,8 +87,8 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     private float enemyBloodPoolSpawnDelay = 0.5f;
     private float enemySpeed = 1.5f;
     private float patrolSpeed = 1.5f;
-    private float enemyFOVangle = 80.0f;
-    private float enemyFOVdistance = 20.0f;
+    private float enemyFOVangle = 160.0f;
+    private float enemyFOVdistance = 12.0f;
 
     private float scanTime = 0f;
     private bool scanning = false;
@@ -114,8 +115,12 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     #region Enemy Variables
     private Vector2 originalPosition;
 
-    private float fireRate = 0.75f;
+    private float fireRate = 1.0f;
     private float fireTimer = 0f;
+    private float shuffleDistance = 0.20f;
+    private bool  rangedShuffleLeft = true;
+    private float rangedShuffleRate = 1.1f;
+    private float rangedShuffleTimer = 0f;
     private float targetCheckInterval = 0.3f;
     private float targetCheckTimer = 0f;
 
@@ -143,6 +148,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         enemyRobotDeathTexture = "img_scientistDeath.png"; //Set to ranged enemy death texture
         originalPosition = transformComp.m_position;
         enemyDeathKnockbackMultiplier = 0.4f;
+
 
         switch (enemyComp.m_enemyTypeInt) //Sets enemy type based on EnemyComponent enemy type int ID
         {
@@ -183,27 +189,44 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
         UpdateRayCastToPlayerPosition(); //Updates Raycast Position at the start to lock onto the Player
 
-        currentState = CheckEnemyType(); //Checks enemy type to start off new state
+        currentState = CheckEnemyType(); // Checks enemy type to start off new state
 
         if (enemyRoamBehaviour == EnemyRoamType.Patrolling)
         {
-            childrenIDList = InternalCall.m_InternalCallGetChildrenID(EntityID); //Gets waypoints for enemy, will be null/empty if there are no children waypoints
+            childrenIDList = InternalCall.m_InternalCallGetChildrenID(EntityID);
             StoreWaypoints();
-            if (waypoints.Count != 0)
+
+            if (waypoints == null || waypoints.Count == 0)
             {
-                Vector2 targetWaypoint = waypoints[currentPatrolWaypoint];
-
-                Vector2 gridTargetPos = World2GridCoordinates(targetWaypoint.X, targetWaypoint.Y, pathFindComp.m_gridkey);
-
-                pathFindComp.m_targetPosition = gridTargetPos;
+                //Console.WriteLine("[WARNING] No waypoints found. Enemy will remain static.");
+                enemyRoamBehaviour = EnemyRoamType.Static;
+                return;
             }
 
+            // Ensure `currentPatrolWaypoint` is within a valid range
+            if (currentPatrolWaypoint < 0 || currentPatrolWaypoint >= waypoints.Count)
+            {
+                //Console.WriteLine($"[ERROR] Invalid waypoint index {currentPatrolWaypoint}. Resetting to 0.");
+                currentPatrolWaypoint = 0;
+            }
+
+            Vector2 targetWaypoint = waypoints[currentPatrolWaypoint];
+            Vector2 gridTargetPos = World2GridCoordinates(targetWaypoint.X, targetWaypoint.Y, pathFindComp.m_gridkey);
+            pathFindComp.m_targetPosition = gridTargetPos;
+
+            // Ensure GetPath() is only called if there is a valid target
             Paths = GetPath(
                pathFindComp.m_gridkey,
-               (int)World2GridCoordinates(transformComp.m_position.X, transformComp.m_position.Y, pathFindComp.m_gridkey).X, (int)World2GridCoordinates(transformComp.m_position.X, transformComp.m_position.Y, pathFindComp.m_gridkey).Y,
-               (int)pathFindComp.m_targetPosition.X, (int)pathFindComp.m_targetPosition.Y
+               (int)World2GridCoordinates(transformComp.m_position.X, transformComp.m_position.Y, pathFindComp.m_gridkey).X,
+               (int)World2GridCoordinates(transformComp.m_position.X, transformComp.m_position.Y, pathFindComp.m_gridkey).Y,
+               (int)pathFindComp.m_targetPosition.X,
+               (int)pathFindComp.m_targetPosition.Y
             );
 
+            if (Paths == null || Paths.Count == 0)
+            {
+                //Console.WriteLine("[WARNING] No valid path found! Enemy may remain idle.");
+            }
         }
     }
 
@@ -222,23 +245,25 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         currentState = nextState; //Set current state
     }
 
-    public EnemyState CheckEnemyType() //Check for which enemy type, and creates a new state to begin AI
+    public EnemyState CheckEnemyType()
     {
         switch (enemyType)
         {
-            case EnemySelection.Helpless: //Return helpless beginning state
+            case EnemySelection.Helpless:
                 return new EnemyStatePatrol(this);
 
-            case EnemySelection.Melee: //Return melee beginning state
-                return new EnemyStatePatrol(this);
+            case EnemySelection.Melee:
+                return new EnemyStateScan(this); // Start with scanning before chasing
 
-            case EnemySelection.Ranged: //Return ranged beginning state
-                return new EnemyStatePatrol(this);
+            case EnemySelection.Ranged:
+                return new EnemyStateScan(this); // Scanning before attacking
 
             default:
+                //Console.WriteLine("[ERROR] Invalid enemy type!");
                 return null;
         }
     }
+
 
     #endregion
 
@@ -403,35 +428,64 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     #endregion
 
     #region Patrolling Behaviour
+    public void PatrolSetup()
+    {
+        if (enemyRoamBehaviour == EnemyScript.EnemyRoamType.Patrolling)
+        {
+            SetInitialPatrolPaths();
+
+            if (!AreWaypointsAvailable())
+            {
+                //Console.WriteLine("[WARNING] No valid waypoints for patrol!");
+                return;
+            }
+
+            StartPatrol();
+        }
+    }
+
+
+
     public void StartPatrol()
     {
-        //Console.WriteLine("patrolling");
+        if (!AreWaypointsAvailable())
+        {
+            //Console.WriteLine("[ERROR] No waypoints available! Calling StoreWaypoints...");
+            //StoreWaypoints();
+
+            if (waypoints == null || waypoints.Count == 0)
+            {
+                //Console.WriteLine("[ERROR] Waypoints still empty after StoreWaypoints(). Enemy will stop.");
+                return;
+            }
+        }
+
+        if (Paths == null || Paths.Count == 0)
+        {
+            //Console.WriteLine("[ERROR] Paths list is empty! Resetting to waypoints.");
+            SetInitialPatrolPaths();
+            return;
+        }
+
+        if (currentPatrolPath < 0 || currentPatrolPath >= Paths.Count)
+        {
+            //Console.WriteLine("[ERROR] Invalid patrol path index: " + currentPatrolPath);
+            currentPatrolPath = 0;
+        }
+
         if (!Vector2DistanceChecker(transformComp.m_position, Grid2WorldCoordinates((int)Paths[currentPatrolPath].X, (int)Paths[currentPatrolPath].Y, pathFindComp.m_gridkey), 0.8f))
         {
-            //Console.WriteLine("patrolling");
             MoveToTarget(Paths[currentPatrolPath], patrolSpeed);
-        }
-        else if (Vector2DistanceChecker(transformComp.m_position, Grid2WorldCoordinates((int)Paths[currentPatrolPath].X, (int)Paths[currentPatrolPath].Y, pathFindComp.m_gridkey), 0.8f))
-        {
-            RigidBodyComponent rb = Component.Get<RigidBodyComponent>(EntityID);
-
-            SetToNextPath();
-        }
-        if (childrenIDList.Length > 0)
-        {
-
-            if (!isPatrolling)
-            {
-
-                isPatrolling = true;
-
-                CoroutineManager.Instance.StartCoroutine(PatrolRoutine(), "Patrol");
-
-            }
         }
         else
         {
-            //Console.WriteLine("Enemy Has No Waypoints!");
+            SetToNextPath();
+        }
+
+        if (childrenIDList.Length > 0 && !isPatrolling)
+        {
+            isPatrolling = true;
+            CoroutineManager.Instance.StartCoroutine(PatrolRoutine(), "Patrol");
         }
     }
 
@@ -439,32 +493,62 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     {
         if (waypoints == null || waypoints.Count == 0)
         {
-            //Console.WriteLine("Waypoints list is empty!");
+            //Console.WriteLine("[ERROR] No waypoints found! Stopping patrol.");
+            isPatrolling = false;
             yield break;
         }
 
-        if (isPatrolling)
+        while (isPatrolling)
         {
+            if (Paths == null || Paths.Count == 0)
+            {
+                //Console.WriteLine("[ERROR] No waypoints available for fallback movement. Stopping patrol.");
+                isPatrolling = false;
+                yield break;
+            }
+
             Vector2 targetWaypoint = waypoints[currentPatrolWaypoint];
             Vector2 gridTargetPos = World2GridCoordinates(targetWaypoint.X, targetWaypoint.Y, pathFindComp.m_gridkey);
             pathFindComp.m_targetPosition = gridTargetPos;
 
-
-            if (Paths == null || Paths.Count == 0)
-            {
-                enemyRoamBehaviour = EnemyRoamType.Static;
-
-                //Console.WriteLine("No valid path found!");
-                yield return new CoroutineManager.WaitForSeconds(1.0f);
-            }
-
-
-
-            //Wait at the waypoint for 3 seconds before moving to the next waypoint
             yield return new CoroutineManager.WaitForSeconds(5.0f);
         }
-
     }
+
+    public void SetInitialPatrolPaths()
+    {
+        if (!AreWaypointsAvailable())
+        {
+            //Console.WriteLine("[ERROR] No waypoints set for patrolling!");
+            enemyRoamBehaviour = EnemyRoamType.Static;
+            return;
+        }
+
+        //Console.WriteLine("[DEBUG] Setting initial patrol paths...");
+
+        Vector2 targetWaypoint = waypoints[currentPatrolWaypoint];
+        Vector2 gridTargetPos = World2GridCoordinates(targetWaypoint.X, targetWaypoint.Y, pathFindComp.m_gridkey);
+        pathFindComp.m_targetPosition = gridTargetPos;
+
+        Paths = GetPath(
+            pathFindComp.m_gridkey,
+            (int)World2GridCoordinates(transformComp.m_position.X, transformComp.m_position.Y, pathFindComp.m_gridkey).X,
+            (int)World2GridCoordinates(transformComp.m_position.X, transformComp.m_position.Y, pathFindComp.m_gridkey).Y,
+            (int)pathFindComp.m_targetPosition.X, (int)pathFindComp.m_targetPosition.Y
+        );
+
+        if (Paths == null || Paths.Count == 0)
+        {
+            //Console.WriteLine("[WARNING] No valid path found! Enemy will remain idle.");
+            enemyRoamBehaviour = EnemyRoamType.Static;
+        }
+    }
+
+    public bool AreWaypointsAvailable()
+    {
+        return waypoints != null && waypoints.Count > 0;
+    }
+
 
     public void SetToNextWaypoint()
     {
@@ -522,31 +606,40 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     #region Pathfinding
     private void StoreWaypoints()
     {
-        if (childrenIDList == null || childrenIDList.Length <= 0)
+        //Console.WriteLine("[DEBUG] Storing Waypoints!");
+
+        if (childrenIDList == null || childrenIDList.Length == 0)
         {
-            Console.WriteLine("No child waypoints found!");
+            //Console.WriteLine("[WARNING] No child waypoints found!");
             return;
         }
 
-        waypoints = new List<Vector2>();
+        waypoints = new List<Vector2>(); // Ensure list is fresh
 
         foreach (var waypointID in childrenIDList)
         {
-            TransformComponent waypointTransform = GetComponent.GetTransformComponent((uint)waypointID);
-            if (waypointTransform == null)
+            Vector2 waypointPos;
+            bool success = InternalCall.m_InternalGetTranslate((uint)waypointID, out waypointPos);
+
+            if (!success)
             {
-                // Console.WriteLine($"Waypoint ID {waypointID} has no TransformComponent!");
+                //Console.WriteLine($"[ERROR] Failed to get translation for waypoint ID {waypointID}!");
                 continue;
             }
 
-            Vector2 waypointPos;
-
-            InternalCall.m_InternalGetTranslate((uint)waypointID, out waypointPos);
-
             waypoints.Add(waypointPos);
+        }
 
+        if (waypoints.Count == 0)
+        {
+            //Console.WriteLine("[WARNING] All waypoints failed to load!");
+        }
+        else
+        {
+            //Console.WriteLine($"[INFO] Successfully stored {waypoints.Count} waypoints.");
         }
     }
+
     public bool ReachedEndOfPathChecker()
     {
         return false;
@@ -597,10 +690,37 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     #endregion
 
     #region Enemy Behaviour
+    public void ReturnHomeStart()
+    {
+        currentChasePath = 0;
+
+        // Convert positions to grid coordinates
+        Vector2 gridLastPos = World2GridCoordinates(originalPosition.X, originalPosition.Y, pathFindComp.m_gridkey);
+        Vector2 gridCurrentPos = World2GridCoordinates(transformComp.m_position.X, transformComp.m_position.Y, pathFindComp.m_gridkey);
+
+        // Attempt pathfinding
+        ChasePaths = GetPath(pathFindComp.m_gridkey,
+                             (int)gridCurrentPos.X, (int)gridCurrentPos.Y,
+                             (int)gridLastPos.X, (int)gridLastPos.Y);
+
+        if (ChasePaths.Count == 0)
+        {
+            HandleFailedPathfinding();
+        }
+    }
 
     public void ReturnHomeUpdate()
     {
-        MoveToTarget(originalPosition, 1.5f);
+        if (isDead) return;
+
+        UpdateRayCastToPlayerPosition();
+        if (CheckPlayerWithinSight() && IsPlayerInFOV())
+        {
+            SetCurrentState(new EnemyStateChase(this));
+            return;
+        }
+        MoveToLastKnownPosition(lastKnownPlayerPosition);
+
     }
 
     public void RunFromPlayer()
@@ -710,56 +830,53 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
     public void RunAtPlayer()
     {
-        //Call MoveToTarget method with player's position
         UpdateRayCastToPlayerPosition();
+
         if (!CheckPlayerWithinSight())
         {
             currentState.LostTarget();
-        }
-
-        //UpdateComponentValues();
-        transformComp = Component.Get<TransformComponent>(EntityID);
-        playerTransformComp = Component.Get<TransformComponent>(playerID);
-
-        Vector2 direction;
-
-        //Gets direction to look towards
-        direction.X = (playerTransformComp.m_position.X - transformComp.m_position.X); //Gets Vector.X towards player
-        direction.Y = (playerTransformComp.m_position.Y - transformComp.m_position.Y); //Gets Vector.Y towards player
-
-        float rotationFloat = (float)(Math.Atan2(direction.X, direction.Y) * (180 / Math.PI)); //Gets rotation towards player
-
-        transformComp.m_rotation = rotationFloat; //Sets rotation values
-
-        SetComponent.SetTransformComponent(EntityID, transformComp); //Sets transform component
-
-        direction.X = (playerTransformComp.m_position.X - transformComp.m_position.X); //Gets Vector.X towards player
-        direction.Y = (playerTransformComp.m_position.Y - transformComp.m_position.Y); //Gets Vector.Y away from player
-
-        rotationFloat = (float)(Math.Atan2(direction.X, direction.Y) * (180 / Math.PI)); //Gets rotation away player
-
-        //Convert into radians
-        float rotationInRadians = (float)((rotationFloat) * Math.PI / 180.0);
-
-        //Get forward vector X
-        float forwardX = (float)(Math.Sin(rotationInRadians));
-
-        //Get forward vector Y
-        float forwardY = (float)(Math.Cos(rotationInRadians));
-
-        if (!InternalCall.m_InternalGetVelocity(EntityID, out movement))
-        {
-            // return cause velocity -> rigidbody is not present in entity
             return;
         }
 
-        movement.X = 0 + forwardX * enemySpeed;
-        movement.Y = 0 + forwardY * enemySpeed;
+        // Fetch enemy and player transform components
+        transformComp = Component.Get<TransformComponent>(EntityID);
+        playerTransformComp = Component.Get<TransformComponent>(playerID);
 
+        // Compute direction vector to the player
+        Vector2 direction;
+        direction.X = playerTransformComp.m_position.X - transformComp.m_position.X;
+        direction.Y = playerTransformComp.m_position.Y - transformComp.m_position.Y;
 
+        // Normalize direction to maintain consistent movement speed
+        float magnitude = (float)Math.Sqrt(direction.X * direction.X + direction.Y * direction.Y);
+        if (magnitude > 0)
+        {
+            direction.X /= magnitude;
+            direction.Y /= magnitude;
+        }
 
-        InternalCall.m_InternalSetVelocity(EntityID, in movement); //BANE OF MY EXISTENCE
+        // Compute rotation angle towards the player
+        float rotationFloat = (float)(Math.Atan2(direction.X, direction.Y) * (180 / Math.PI));
+        transformComp.m_rotation = rotationFloat;
+
+        // Apply updated transform
+        SetComponent.SetTransformComponent(EntityID, transformComp);
+
+        // Get velocity reference
+        if (!InternalCall.m_InternalGetVelocity(EntityID, out movement))
+        {
+            //Console.WriteLine($"[ERROR] Entity {EntityID} has no Rigidbody!");
+            return;
+        }
+
+        // Compute movement based on direction
+        movement.X = direction.X * enemySpeed;
+        movement.Y = direction.Y * enemySpeed;
+
+        // Apply movement
+        InternalCall.m_InternalSetVelocity(EntityID, in movement);
     }
+
 
     //public void PatrolToWaypoint()
     //{
@@ -941,30 +1058,59 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
     public void MoveToLastKnownPosition(Vector2 lastPosition)
     {
-
         UpdateComponentValues();
 
+        // Ensure ChasePaths is valid before clearing it
         if (ChasePaths == null || ChasePaths.Count == 0)
         {
-            Console.WriteLine("no path");
-            // No valid path found, stop movement
+            //Console.WriteLine("[DEBUG] No path found. Switching to fallback behavior.");
+
+            // Stop movement
             movement.X = 0;
             movement.Y = 0;
             InternalCall.m_InternalSetVelocity(EntityID, in movement);
-            ChasePaths.Clear();
+
+            // Clear paths only if ChasePaths is not null
+            ChasePaths?.Clear();
             currentChasePath = 0;
-            SetCurrentState(new EnemyStateScan(this));
+
+            // Ensure melee enemies properly return to patrolling
+            HandleLostPath();
             return;
         }
 
-        if (!Vector2DistanceChecker(transformComp.m_position, Grid2WorldCoordinates((int)ChasePaths[currentChasePath].X, (int)ChasePaths[currentChasePath].Y, pathFindComp.m_gridkey), 0.5f))
-        {
+        // Convert the current path point to world coordinates
+        Vector2 targetPos = Grid2WorldCoordinates((int)ChasePaths[currentChasePath].X, (int)ChasePaths[currentChasePath].Y, pathFindComp.m_gridkey);
 
+        // Move to the next waypoint if not close enough
+        if (!Vector2DistanceChecker(transformComp.m_position, targetPos, 0.5f))
+        {
             MoveToTarget(ChasePaths[currentChasePath], enemySpeed);
         }
         else
         {
             SetToNextChasePath();
+        }
+    }
+
+    private void HandleLostPath()
+    {
+        //Console.WriteLine("[DEBUG] Enemy lost path. Checking behavior...");
+
+        if (enemyRoamBehaviour == EnemyRoamType.Patrolling)
+        {
+            //Console.WriteLine("[DEBUG] Returning to patrol.");
+            SetCurrentState(new EnemyStatePatrol(this));
+        }
+        else if (enemyRoamBehaviour == EnemyRoamType.Static)
+        {
+           // Console.WriteLine("[DEBUG] Returning to home position.");
+            SetCurrentState(new EnemyStateReturnToHome(this));
+        }
+        else
+        {
+            //Console.WriteLine("[DEBUG] Defaulting to scan state.");
+            SetCurrentState(new EnemyStateScan(this));
         }
     }
 
@@ -1057,6 +1203,23 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
     public void RangedSearchStart()
     {
+        //searchTimer = searchDuration;
+        //lastKnownPlayerPosition = GetPlayerPosition();
+        //currentChasePath = 0;
+
+        //// Convert positions to grid coordinates
+        //Vector2 gridLastPos = World2GridCoordinates(lastKnownPlayerPosition.X, lastKnownPlayerPosition.Y, pathFindComp.m_gridkey);
+        //Vector2 gridCurrentPos = World2GridCoordinates(transformComp.m_position.X, transformComp.m_position.Y, pathFindComp.m_gridkey);
+
+        //// Attempt pathfinding
+        //ChasePaths = GetPath(pathFindComp.m_gridkey,
+        //                     (int)gridCurrentPos.X, (int)gridCurrentPos.Y,
+        //                     (int)gridLastPos.X, (int)gridLastPos.Y);
+
+        //if (ChasePaths.Count == 0)
+        //{
+        //    HandleFailedPathfinding();
+        //}
         //Console.WriteLine("startsearch");
         searchTimer = searchDuration;
         lastKnownPlayerPosition = GetPlayerPosition();
@@ -1072,36 +1235,38 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
             (int)gridCurrentPos.X, (int)gridCurrentPos.Y,
             (int)gridLastPos.X, (int)gridLastPos.Y
         );
-
-        if(ChasePaths.Count > 0 )
+        //Console.WriteLine(ChasePaths.Count);
+        if (ChasePaths.Count > 0)
         {
             return;
         }
         else
         {
-            SetCurrentState(new EnemyStatePatrol(this));
+            if (enemyRoamBehaviour == EnemyRoamType.Patrolling)
+            {
+                SetCurrentState(new EnemyStatePatrol(this));
+            }
+            else if (enemyRoamBehaviour == EnemyRoamType.Static)
+            {
+                SetCurrentState(new EnemyStateReturnToHome(this));
+            }
         }
     }
 
     public void RangedSearchUpdate()
     {
-
         if (isDead) return;
 
+        // Update vision check and transition if player is found
         UpdateRayCastToPlayerPosition();
-
-        // Check if player is back in sight
         if (CheckPlayerWithinSight() && IsPlayerInFOV())
         {
-
-            // Player spotted again, switch back to attack
             SetCurrentState(new EnemyStateRangedAttack(this));
             return;
         }
+            MoveToLastKnownPosition(lastKnownPlayerPosition);
 
-        // Move toward last known player position
-        MoveToLastKnownPosition(lastKnownPlayerPosition);
-
+        // Countdown search timer
         searchTimer -= InternalCall.m_InternalCallGetDeltaTime();
         if (searchTimer <= 0)
         {
@@ -1121,6 +1286,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         Component.Set<RigidBodyComponent>(EntityID, rb);
         // Initial delay before first shot
         fireTimer = fireRate * 0.5f;
+        rangedShuffleTimer = fireRate * 0.6f;
 
     }
 
@@ -1148,12 +1314,80 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
         // Fire at player when timer expires
         fireTimer -= InternalCall.m_InternalCallGetDeltaTime();
+        rangedShuffleTimer -= InternalCall.m_InternalCallGetDeltaTime();
         if (fireTimer <= 0)
         {
             fireTimer = fireRate;
             FireAtPlayer();
         }
+        if (rangedShuffleTimer <= 0)
+        {
+            rangedShuffleTimer = rangedShuffleRate;
+            if (rangedShuffleLeft)
+            {
+                ShuffleLeft();
+                rangedShuffleLeft = !rangedShuffleLeft;
+            }
+            else
+            {
+                ShuffleRight();
+                rangedShuffleLeft = !rangedShuffleLeft;
+
+            }
+        }
     }
+
+    private void ShuffleLeft()
+    {
+        UpdateComponentValues();
+
+        // Get direction to player
+        Vector2 directionToPlayer = new Vector2(
+            playerTransformComp.m_position.X - transformComp.m_position.X,
+            playerTransformComp.m_position.Y - transformComp.m_position.Y
+        );
+
+        // Get perpendicular direction for left shuffle
+        Vector2 leftShuffleDir = new Vector2(-directionToPlayer.Y, directionToPlayer.X);
+
+        // Apply movement (multiply components separately)
+        Vector2 newPosition = new Vector2(
+            transformComp.m_position.X + (leftShuffleDir.X * shuffleDistance),
+            transformComp.m_position.Y + (leftShuffleDir.Y * shuffleDistance)
+        );
+
+        movement.X = newPosition.X - transformComp.m_position.X;
+        movement.Y = newPosition.Y - transformComp.m_position.Y;
+
+        InternalCall.m_InternalSetVelocity(EntityID, in movement);
+    }
+
+    private void ShuffleRight()
+    {
+        UpdateComponentValues();
+
+        // Get direction to player
+        Vector2 directionToPlayer = new Vector2(
+            playerTransformComp.m_position.X - transformComp.m_position.X,
+            playerTransformComp.m_position.Y - transformComp.m_position.Y
+        );
+
+        // Get perpendicular direction for right shuffle
+        Vector2 rightShuffleDir = new Vector2(directionToPlayer.Y, -directionToPlayer.X);
+
+        // Apply movement (multiply components separately)
+        Vector2 newPosition = new Vector2(
+            transformComp.m_position.X + (rightShuffleDir.X * shuffleDistance),
+            transformComp.m_position.Y + (rightShuffleDir.Y * shuffleDistance)
+        );
+
+        movement.X = newPosition.X - transformComp.m_position.X;
+        movement.Y = newPosition.Y - transformComp.m_position.Y;
+
+        InternalCall.m_InternalSetVelocity(EntityID, in movement);
+
+    }
+
 
     public void EnemyScanStart()
     {
@@ -1177,29 +1411,25 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
         if (scanTime >= scanDuration)
         {
-            // Stop scanning and return to patrol
-            scanning = false;
-            if (waypoints.Count != 0)
-            {
-                Vector2 targetWaypoint = waypoints[currentPatrolWaypoint];
+            HandleLostPath();
+            return;
+        }
 
-                Vector2 gridTargetPos = World2GridCoordinates(targetWaypoint.X, targetWaypoint.Y, pathFindComp.m_gridkey);
-
-                pathFindComp.m_targetPosition = gridTargetPos;
-            }
-
-            Paths = GetPath(
-               pathFindComp.m_gridkey,
-               (int)World2GridCoordinates(transformComp.m_position.X, transformComp.m_position.Y, pathFindComp.m_gridkey).X, (int)World2GridCoordinates(transformComp.m_position.X, transformComp.m_position.Y, pathFindComp.m_gridkey).Y,
-               (int)pathFindComp.m_targetPosition.X, (int)pathFindComp.m_targetPosition.Y
-            );
-            SetCurrentState(new EnemyStatePatrol(this));
+        UpdateRayCastToPlayerPosition();
+        if (CheckPlayerWithinSight() && IsPlayerInFOV() && enemyType == EnemySelection.Ranged)
+        {
+            SetCurrentState(new EnemyStateRangedAttack(this));
+            return;
+        }
+        else if(CheckPlayerWithinSight() && IsPlayerInFOV() && enemyType == EnemySelection.Melee)
+        {
+            SetCurrentState(new EnemyStateChase(this));
             return;
         }
 
         // Define left and right limits
-        float leftRotation = initialRotation - enemyFOVangle / 2;
-        float rightRotation = initialRotation + enemyFOVangle / 2;
+        float leftRotation = initialRotation - enemyFOVangle / 4;
+        float rightRotation = initialRotation + enemyFOVangle / 4;
 
         // Use time-based interpolation for smooth back-and-forth motion
         float t = (float)(Math.Sin(scanTime * Math.PI / scanDuration)); // Oscillates between -1 and 1
@@ -1209,5 +1439,19 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         SetComponent.SetTransformComponent(EntityID, transformComp);
     }
 
+    private void HandleFailedPathfinding()
+    {
+        // Example fallback strategy: enemy roams near the last known position before giving up
+        if (enemyRoamBehaviour == EnemyRoamType.Patrolling)
+        {
+            SetCurrentState(new EnemyStatePatrol(this));
+        }
+        else if (enemyRoamBehaviour == EnemyRoamType.Static)
+        {
+            SetCurrentState(new EnemyStateReturnToHome(this));
+        }
+    }
+
 }
+
 

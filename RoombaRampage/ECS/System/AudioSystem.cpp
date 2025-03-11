@@ -84,8 +84,16 @@ namespace ecs {
                         adjustedVolume *= assetManager->m_audioManager.m_GlobalSFXVolume;
                     }
 
-                    sound->m_SetVolume(std::to_string(audioCompPtr->m_Entity), adjustedVolume);
-                    sound->m_SetLooping(std::to_string(audioCompPtr->m_Entity), audioFile.m_Loop);
+
+                    if (audioFile.m_Volume != audioFile.m_LastVolume) {
+                        sound->m_SetVolume(std::to_string(audioCompPtr->m_Entity), adjustedVolume);
+                        audioFile.m_LastVolume = audioFile.m_Volume;
+                    }
+
+                    if (audioFile.m_Loop != audioFile.m_LastLoopState) {
+                        sound->m_SetLooping(std::to_string(audioCompPtr->m_Entity), audioFile.m_Loop);
+                        audioFile.m_LastLoopState = audioFile.m_Loop;
+                    }
 
                     if (audioFile.m_PlayOnStart) {
                         if (!sound->m_IsPlaying(std::to_string(audioCompPtr->m_Entity))) {
@@ -97,5 +105,6 @@ namespace ecs {
             }
         }
     }
+
 
 }
