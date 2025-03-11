@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Policy;
@@ -23,15 +24,32 @@ public class MainMenuScript : ScriptBase
     public override void Start()
     {
         
+        CoroutineManager.Instance.StartCoroutine(Wait(), "Wait");
+        
+    }
+
+    private IEnumerator Wait()
+    {
+        InternalCall.m_InternalCallPlayAudio(EntityID, "aud_startMenuAmbienceStart01");
+        yield return new CoroutineManager.WaitForSeconds(0.3f);
+        InternalCall.m_InternalCallPlayAudio(EntityID, "aud_startMenuAmbienceLoop01");
     }
 
     public override void Update()
     {
         if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.LMB))
         {
+            InternalCall.m_InternalCallPlayAudio(EntityID, "aud_buttonClick01");
+
             InternalCall.m_InternalGetButtonComponent(EntityID, out Vector2 position, out Vector2 scale, out bool isClick);
             if (isClick == true)
             {
+                CoroutineManager.Instance.StopAllCoroutines();
+                InternalCall.m_InternalCallStopAllAudio();
+                InternalCall.m_InternalCallPlayAudio(EntityID, "aud_buttonClick01");
+                InternalCall.m_InternalCallPlayAudio(EntityID, "aud_startMenuAmbienceQuit01");
+                StartMenuButtons.isReading = false;
+                InternalCall.m_DisableLayer(9);
                 isClick = false;
                 InternalCall.m_InternalCallAddPrefab(commandPromptPrefab, 0, 0, 0);
             }

@@ -2,6 +2,7 @@
 /*!
 \file      CollisionResponseSystem.cpp
 \author    Ng Jaz winn, jazwinn.ng , 2301502
+\co-author Elijah Teo (teo.e, 2301530), Rayner Tan(raynerweichen.tan, 2301449)
 \par       jazwinn.ng@digipen.edu
 \date      Oct 02, 2024
 \brief     This file contains the defination for the collision
@@ -112,8 +113,6 @@ namespace ecs {
 			if ((rigidComp->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer)) continue;
 
 
-			
-
 			EntityID obj1_EntityID = rigidComp->m_Entity;
 
 			std::vector<EntityID> colidedwith;
@@ -188,37 +187,12 @@ namespace ecs {
 					continue;
 
 				if (ColComp->m_collisionResponse) {
-					//if (swap) {
-					//	transform->m_position += (valit->second.first * valit->second.second);
-					//	//obj2_TC->m_position += (-valit->second.first * valit->second.second);
-					//}
-					//else {
-					//	transform->m_position += (-valit->second.first * valit->second.second);
-					//	//obj2_TC->m_position += (valit->second.first * valit->second.second);
-					//}
+
 
 					rigidComp->m_Velocity = {0.f,0.f};
-					//obj2_RC->m_Velocity = {};
-					//obj2_CC->m_isCollided = 1.0f;
+
 					ColComp->m_isCollided = 1.0f;
 				}
-
-
-				//if (std::find_if(m_vecRigidBodyComponentPtr.begin(), m_vecRigidBodyComponentPtr.end(), [obj2_EntityID](const auto& obj) { return obj->m_Entity == obj2_EntityID; })
-				//	!= m_vecRigidBodyComponentPtr.end()) {
-				//	if (obj2_CC->m_collisionResponse) {
-				//		vector2::Vec2 toMove{};
-				//		if (swap) {
-				//			toMove = -valit->second.first * valit->second.second; //DISTANCE TO SHIFT BACK
-				//		}
-				//		else {
-				//			toMove = valit->second.first * valit->second.second; //DISTANCE TO SHIFT BACK
-				//		}
-
-				//		obj2_TC->m_position += toMove;
-				//	}
-				//	//obj2_RC->m_Velocity = -obj2_RC->m_Velocity;
-				//}
 
 
 				if (std::find_if(m_vecRigidBodyComponentPtr.begin(), m_vecRigidBodyComponentPtr.end(), [obj1_EntityID](const auto& obj) { return obj->m_Entity == obj1_EntityID; })

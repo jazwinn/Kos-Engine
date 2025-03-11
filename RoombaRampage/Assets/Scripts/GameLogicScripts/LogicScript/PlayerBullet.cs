@@ -15,7 +15,7 @@ public class PlayerBullet : ScriptBase
     {
         EntityID = id;
 
-        speed = 8;
+        speed = 12;
 
         InternalCall.m_InternalGetTransformComponent(EntityID, out startingBulletPos, out startingBulletScale, out startingBulletRotate);
 
@@ -51,14 +51,16 @@ public class PlayerBullet : ScriptBase
     private bool isAnimating;
     private int stripCount;
 
+    private bool bulletHasHit;
+
     public override void Start()
     {
-
-
+        bulletHasHit = false;
     }
 
     public override void Update()
     {
+        if (bulletHasHit) { return; }
         #region Movement in forward direction
         
         if (!isAnimating)
@@ -75,6 +77,8 @@ public class PlayerBullet : ScriptBase
             movement.Y = 0 + forwardY * speed;
 
             InternalCall.m_InternalSetVelocity(EntityID, movement);
+
+
         }
 
         else
@@ -85,10 +89,10 @@ public class PlayerBullet : ScriptBase
 
             if (frameNumber == stripCount - 1)
             {
+                bulletHasHit = true;
                 InternalCall.m_InternalCallDeleteEntity(EntityID);
-
+                return;
             }
-            return;
         }
 
         
@@ -107,7 +111,9 @@ public class PlayerBullet : ScriptBase
 
                 switch (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID))
                 {
-                    case "Wall": 
+                    case "PropGlassWall":
+                    case "Wall":
+                       
                         if (!isAnimating)
                         {
                             isAnimating = true;
@@ -121,11 +127,13 @@ public class PlayerBullet : ScriptBase
                             InternalCall.m_InternalSetVelocity(EntityID, movement);
 
                         }
-                        
-                        return;
+
+                        break;
 
                     case "Enemy":
+                        bulletHasHit = true;
                         InternalCall.m_InternalCallDeleteEntity(EntityID);
+
                         return;
 
                     default:

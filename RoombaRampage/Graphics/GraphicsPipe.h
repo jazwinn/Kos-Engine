@@ -40,6 +40,50 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 namespace graphicpipe {
 
+    struct EmitterData
+    {
+        int m_noOfParticles{};
+        float m_lifeSpan{};
+        glm::vec2 m_position{};
+        glm::vec2 m_velocity{};
+        glm::vec2 m_acceleration{};
+        glm::vec2 m_scale{};
+        glm::vec4 m_color{};
+        float m_rotation{};
+        float m_coneRotation{}; //Cone Rotation
+        float m_coneAngle{}; //
+        float m_randomFactor{};
+        unsigned int m_textureID{};
+        int m_stripCount{};
+        int m_frameNumber{};
+        int m_framesPerSecond{};
+        int m_layer{};
+        float m_friction{};
+    };
+
+    struct ParticleData
+    {
+        float m_lifeSpan;
+        float m_rotation;
+        float m_isActive;
+        int m_textureID;
+        int m_stripCount;
+        int m_frameNumber;
+        int m_layer;
+        float m_initialEmissionAngle;
+        glm::vec2 m_position;
+        glm::vec2 m_velocity;
+        glm::vec2 m_acceleration;
+        glm::vec2 m_scale;
+  
+        glm::vec4 m_color;
+
+        float m_friction;
+        int m_framesPerSecond{};
+        float m_animationTimer{};
+        float padding3{};
+    };
+
     struct LightingData
     {
         glm::mat3 m_transformation{};      ///< Transformation matrix for the light source.
@@ -91,6 +135,20 @@ namespace graphicpipe {
         std::string m_fileName;            ///< Font file used for rendering.
     };
 
+    struct VideoData {
+
+        glm::mat3 transformation;
+        GLuint yTexture;
+        GLuint uTexture;
+        GLuint vTexture;
+        GLint locTransformation;
+        GLint locView;
+        GLint locProjection;
+
+        GLuint unilayer;
+        int layer;
+    };
+
     /**
      * @class GraphicsPipe
      * @brief Manages the rendering pipeline, shaders, and drawing functions.
@@ -134,6 +192,8 @@ namespace graphicpipe {
          */
         void m_funcSetupGridVao();
 
+        void m_funcSetupVideoVAO();
+
         /**
          * @brief Generates vertices for a grid and configures spacing.
          *
@@ -169,6 +229,9 @@ namespace graphicpipe {
          */
         void m_funcSetupArrayBuffer();
 
+        void m_funcSetupSSBO();
+
+
         /**
          * @brief Compiles and links a shader program from vertex and fragment shader sources.
          *
@@ -177,6 +240,8 @@ namespace graphicpipe {
          * @return The compiled and linked shader program ID.
          */
         unsigned int m_funcSetupShader(const std::string& vertexShader, const std::string& fragmentShader);
+
+        unsigned int m_funcSetupComputerShader(const std::string& computerShader);
 
         /**
          * @brief Deletes the currently active shader program.
@@ -194,6 +259,12 @@ namespace graphicpipe {
         unsigned int m_gridDebugShaderProgram{};    ///< Shader program for rendering collidable grids.
         unsigned int m_lightingShaderProgram{};     ///< Shader program for the lighting pass.
         unsigned int m_finalPassShaderProgram{};    ///< Shader program for the final post-processing pass.
+        unsigned int m_particleComputerShaderProgram{};
+        unsigned int m_particleShaderProgram{};
+
+    public:
+        unsigned int m_videoShaderProgram{};        ///< Shader program for video
+    private:
         // Buffers
         unsigned int m_modelMatrixArrayBuffer{};    ///< Array buffer for model matrices.
         unsigned int m_debugMatrixArrayBuffer{};    ///< Array buffer for debug matrices.
@@ -208,12 +279,17 @@ namespace graphicpipe {
         unsigned int m_depthBufferObject{};         ///< Depth buffer object for storing depth information.
         unsigned int m_gamePreviewFrameBufferObject{};   ///< Framebuffer object for the game preview window.
         unsigned int m_gamePreviewDepthBufferObject{};   ///< Depth buffer for the game preview framebuffer.
+        unsigned int m_unlitScreenFrameBufferObject{};
+        unsigned int m_unlitScreenDepthBufferObject{};
+        unsigned int m_particleSSBO{};
+        
         unsigned int m_textBuffer{};                ///< Buffer for text rendering.
         unsigned int m_layerBuffer{};               ///< Buffer for rendering layer data.
         unsigned int m_gridBuffer{};                ///< Buffer for grid vertex data.
         unsigned int m_colorBuffer{};               ///< Buffer for vertex color data.
         unsigned int m_tileIndexBuffer{};           ///< Buffer for tilemap indices.
         unsigned int m_gridColliderBuffer{};        ///< Buffer for grid-based collider data.
+        unsigned int m_videoBuffer{};
 
         glm::mat3 m_testMatrix{};                   ///< Test matrix for rendering.
 
@@ -231,6 +307,7 @@ namespace graphicpipe {
         int m_unitWidth{ 100 };         ///< The default width for the graphics unit.
         int m_unitHeight{ 100 };        ///< The default height for the graphics unit.
         float m_globalLightIntensity{ 1.f }; ///< The global illumination value.
+        const int MAX_PARTICLES = 100000;
 
         /**
          * @enum ShapeType
@@ -312,6 +389,10 @@ namespace graphicpipe {
          */
         void m_funcDraw();
 
+        void m_funcDrawUnlit();
+
+        void m_funcDrawVideos();
+
         /**
          * @brief Draws debug elements.
          *
@@ -368,6 +449,15 @@ namespace graphicpipe {
          */
         void m_drawLightingTexture();
 
+        void m_funcDrawUnlitObjectTexture();
+
+        void m_funcDrawDebugTexture();
+
+        void m_renderFinalPass();
+
+        void m_renderFinalPassWithDebug();
+
+
 
         /**
          * @brief Renders the lighting effects in the scene.
@@ -376,6 +466,10 @@ namespace graphicpipe {
          * framebuffer, shaders, and associated buffers.
          */
         void m_funcRenderLighting();
+
+        void m_funcDrawFullScreenQuad(unsigned int texture);
+
+        void m_funcDrawParticles();
 
         /**
          * @brief Sets the drawing mode for rendering.
@@ -404,6 +498,10 @@ namespace graphicpipe {
          */
         void m_funcSetupGamePreviewFrameBuffer();
 
+
+        void m_funcSetupFinalPassBuffer();
+
+        void m_funcSetUpUnlitScreenFrameBuffer();
 
         /**
          * @brief Sets up the framebuffer for lighting rendering.
@@ -442,6 +540,10 @@ namespace graphicpipe {
         */
         void m_funcClearContainers();
 
+        void m_spawnParticles();
+
+        void m_updateParticles();
+
         //Boolean Values
         bool m_gameMode{ false };
 
@@ -452,6 +554,7 @@ namespace graphicpipe {
         Mesh m_circleLinesMesh;
         Mesh m_textMesh;                ///< Mesh for text rendering.
         Mesh m_lineMesh;
+        Mesh m_videoMesh;
 
         // Matrix Containers
         std::vector<glm::mat3> m_modelMatrix{}; ///< Model transformation matrices.
@@ -460,12 +563,16 @@ namespace graphicpipe {
         std::vector<glm::mat3> m_debugCircleToNDCMatrix{}; ///< Debug model-to-NDC matrices for circles.
 
         // Data for rendering
+        std::vector<ParticleData> m_particleData{};
+        std::vector<EmitterData> m_emitterData{}; ///< Emitter Data for the Scene.
         std::vector<LightingData> m_lightingData{}; ///< Lighting data for the scene.
         std::vector<ColliderGridData> m_colliderGridData{}; ///< Collider grid data for collision checks.
         std::vector<TilemapData> m_tilemapData{}; ///< Data for tilemaps in the scene.
         std::vector<GraphicsData> m_modelData{}; ///< Graphics data for rendering 3D models.
+        std::vector<GraphicsData> m_unlitModelData{};
         std::vector<DebugDrawData> m_debugBoxData{}; ///< Data for rendering debug boxes.
         std::vector<TextData> m_textData{}; ///< Data for rendering text elements.
+        std::vector<VideoData> m_videoData{};
         std::vector<float> m_debugBoxCollisionChecks{}; ///< Collision check data for debug box rendering.
         std::vector<float> m_debugCircleCollisionChecks{}; ///< Collision check data for debug circle rendering.
 
@@ -486,11 +593,17 @@ namespace graphicpipe {
         std::vector<std::vector<std::vector<int>>> m_tilemapIndexArrays{}; ///< Tilemap index arrays for 2D grid-based tiles.
         std::vector<std::vector<std::vector<int>>> m_gridColliderArrays{}; ///< Grid collider arrays for collision handling.
 
+        std::vector<glm::ivec3> m_unlitModelParams{};
+        std::vector<int> m_unlitLayers{};
+        std::vector<glm::vec4> m_unlitColors{};
+        std::vector<glm::mat3> m_unlitModelMatrix{};
+
         unsigned int m_screenTextureVAO{}; ///< Vertex Array Object for screen texture rendering.
         unsigned int m_screenTexture{}; ///< Texture for rendering the screen.
         unsigned int m_gamePreviewTexture{}; ///< Texture for displaying game preview.
         unsigned int m_lightingTexture{}; ///< Texture for storing lighting data.
         unsigned int m_finalPassTexture{}; ///< Texture for the final rendering pass.
+        unsigned int m_unlitScreenTexture{};
 
         //Shaders
         const std::string debugVertexShader =
@@ -575,7 +688,43 @@ namespace graphicpipe {
           #include "../Graphics/lightingFragmentShader.frag"
         };
 
-    };
+        const std::string videoVertexShader =
+        {
+            #include "../Graphics/videoVertexShader.vert"
+        };
+
+        const std::string videoFragmentShader =
+        {
+            #include "../Graphics/videoFragmentShader.frag"
+        };
+
+        const std::string finalPassVertexShader =
+        {
+            #include "../Graphics/finalPassVertexShader.vert"
+        };
+
+        const std::string finalPassFragmentShader =
+        {
+            #include "../Graphics/finalPassFragmentShader.frag"
+        };
+
+        const std::string particleComputerShader =
+        {
+            #include "../Graphics/particleComputer.comp"
+        };
+
+        const std::string particleVertexShader =
+        {
+            #include "../Graphics/particleVertexShader.vert"
+        };
+
+        const std::string particleFragmentShader =
+        {
+            #include "../Graphics/particleFragmentShader.frag"
+        };
+        
+        
+};
 
 } // namespace graphicpipe
 

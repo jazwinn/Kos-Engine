@@ -35,6 +35,6 @@ R"( #version 460 core
 		 if(texColor.a < 0.1)
 		 discard;
     
-		fragColor = vec4(vec3(texColor.xyz * globalBrightness),texColor.w);
+		fragColor = vec4(vec3(texColor.xyz),texColor.w);
 	}
 )"

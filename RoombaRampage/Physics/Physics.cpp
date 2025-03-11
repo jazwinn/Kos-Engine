@@ -412,6 +412,51 @@ namespace physicspipe {
 		return ret_Val;
 
 	}
+
+
+	std::pair<bool, std::pair<vector2::Vec2, float>> Physics::m_CollisionIntersection_CircleCircle_SAT_TEST(const Circle& circleA, const Circle& circleB) {
+		vector2::Vec2 normal{};
+		float depth = FLT_MAX;
+		bool flag = true;
+		std::pair<bool, std::pair<vector2::Vec2, float>> ret_Val;
+		// Compute vector between circle centers
+		vector2::Vec2 ab = circleB.m_position - circleA.m_position;
+
+		// Compute squared distance between centers
+		float distanceSquared = vector2::Vec2::m_funcVec2DDotProduct(ab, ab);
+
+		// Compute squared sum of radii
+		float combinedRadius = circleA.m_radius + circleB.m_radius;
+		float combinedRadiusSquared = combinedRadius * combinedRadius;
+
+		// Check if circles overlap
+		if (distanceSquared >= combinedRadiusSquared) {
+			flag = false;
+			ret_Val.first = flag;
+			ret_Val.second.first = {};
+			ret_Val.second.second = {};
+			return ret_Val;
+		}
+
+		// Compute actual distance between centers
+		float distance = sqrt(distanceSquared);
+
+		// Normal is the direction vector between centers
+		normal = ab;
+		//vector2::Vec2::m_funcVec2Normalize(normal, normal);
+
+		// Compute penetration depth
+		depth = combinedRadius - distance;
+
+		// Return collision information
+		ret_Val.first = flag;
+		ret_Val.second.first = normal;
+		ret_Val.second.second = depth;
+
+		return ret_Val;
+
+	}
+
 	bool Physics::m_CollisionIntersection_CircleRect_SAT(const Circle& circle, const Rectangle& rect) {
 		//need the vertices of the rectangle
 		vector2::Vec2 normal{};
@@ -573,7 +618,18 @@ namespace physicspipe {
 			//return m_CollisionIntersection_RectRect_SAT(*static_cast<Rectangle*>(entity1.get()), *static_cast<Rectangle*>(entity2.get()));
 		}
 		else if (entity1->m_GetEntity() == EntityType::CIRCLE && entity2->m_GetEntity() == EntityType::CIRCLE) {
-			return m_CollisionIntersection_CircleCircle(*static_cast<Circle*>(entity1.get()), *static_cast<Circle*>(entity2.get()));
+			std::pair<bool, std::pair<vector2::Vec2, float>> ret_Val = m_CollisionIntersection_CircleCircle_SAT_TEST(*static_cast<Circle*>(entity1.get()), *static_cast<Circle*>(entity2.get()));
+			if (ret_Val.first) {
+				std::pair< std::shared_ptr<PhysicsData>, std::shared_ptr<PhysicsData>> obj_Pair;
+				obj_Pair.first = entity1;
+				obj_Pair.second = entity2;
+				std::pair< std::pair< std::shared_ptr<PhysicsData>, std::shared_ptr<PhysicsData>>, std::pair<vector2::Vec2, float>> store_Pairs;
+				store_Pairs.first = obj_Pair;
+				store_Pairs.second.first = ret_Val.second.first;
+				store_Pairs.second.second = ret_Val.second.second;
+				m_collidedEntitiesPairWithVector.push_back(store_Pairs);
+			}
+			return ret_Val.first;
 		}
 		else if (entity1->m_GetEntity() == EntityType::CIRCLE && entity2->m_GetEntity() == EntityType::RECTANGLE) {
 			//return m_CollisionIntersection_CircleRect_SAT(*static_cast<Circle*>(entity1.get()), *static_cast<Rectangle*>(entity2.get()));
@@ -672,6 +728,7 @@ namespace physicspipe {
 	}
 	std::pair<bool, std::pair<vector2::Vec2, float>> Physics::m_CollisionIntersection_RectRect_SAT_TEST(const Rectangle& obj1, const Rectangle& obj2) {
 		vector2::Vec2 normal{};
+		float maxAllowedDepth = 1.f;
 		float depth = std::numeric_limits<float>::max();
 		bool flag = true;
 		std::pair<bool, std::pair<vector2::Vec2, float>> ret_Val;
@@ -697,6 +754,7 @@ namespace physicspipe {
 			float axisDepth = std::min(maxB - minA, maxA - minB);
 			if (axisDepth < depth) {
 				depth = axisDepth;
+				depth = std::max(0.0f, std::min(depth, maxAllowedDepth));
 				normal = axis;
 			}
 		}
@@ -717,6 +775,7 @@ namespace physicspipe {
 			float axisDepth = std::min(maxB - minA, maxA - minB);
 			if (axisDepth < depth) {
 				depth = axisDepth;
+				depth = std::max(0.0f, std::min(depth, maxAllowedDepth));
 				normal = axis;
 			}
 		}

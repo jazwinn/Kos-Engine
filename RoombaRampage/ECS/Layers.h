@@ -37,6 +37,14 @@ namespace layer{
 		LAYER6,
 		LAYER7,
 		LAYER8,
+		LAYER9,
+		LAYER10,
+		LAYER11,
+		LAYER12,
+		LAYER13,
+		LAYER14,
+		LAYER15,
+		LAYER16,
 
 		MAXLAYER
 	};
@@ -62,9 +70,9 @@ namespace layer{
 		/*!
 			\fn        void m_ChangeLayerName(LAYERS layer, std::string newName)
 			\brief     Renames a specified layer.
-			\param[in] layer   The enum value of the layer to rename.
+			\param[in] layer The enum value of the layer to rename.
 			\param[in] newName The new name for the layer.
-			\details   Updates the specified layer�s name, if the layer exists.
+			\details   Updates the specified layers name, if the layer exists.
 		*/
 		/******************************************************************/
 		void m_ChangeLayerName(LAYERS layer, std::string newName);

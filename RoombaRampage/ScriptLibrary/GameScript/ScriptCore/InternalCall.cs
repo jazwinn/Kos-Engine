@@ -132,7 +132,10 @@ public static class InternalCall
     public extern static void m_InternalGetWorldMousePosition(out Vector2 mousepos);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static void m_InternalCallSetTimeScale(in float timescale);
+    public extern static void m_InternalCallSetTimeScale(float timescale);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static float m_InternalCallGetTimeScale();
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static void m_InternalCallResetTimeScale();
@@ -151,6 +154,36 @@ public static class InternalCall
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static void m_InternalCallStopAllAudio();
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static void m_InternalCallPauseAudio(uint id, string monoString);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static void m_InternalCallUnPauseAudio(uint id, string monoString);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static void m_InternalCallPauseAllAudio();
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static void m_InternalCallUnPauseAllAudio();
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static void m_InternalCallSetGlobalBGMVolume(float volume);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static void m_InternalCallSetGlobalSFXVolume(float volume);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static float m_InternalCallGetGlobalBGMVolume();
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static float m_InternalCallGetGlobalSFXVolume();
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static bool m_InternalCallCheckIsBGM(uint id, string monoString);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static bool m_InternalCallCheckIsSFX(uint id, string monoString);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static bool m_InternalCallIsWindowMinimise();
@@ -218,13 +251,22 @@ public static class InternalCall
     public extern static void m_InternalCallSetTargetPathfinding(uint id, in Vector2 m_targetgridposition);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static float m_GetUnfixedDeltaTie();
+    public extern static float m_GetUnfixedDeltaTime();
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public static extern void m_GetNameComponent(uint id, out IntPtr outPtr);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public static extern void m_ChangeLayer(uint id, uint layerid);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public static extern float m_getFPS();
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public static extern void m_InternalCallGetLightingComponent(uint id, out Vector2 innerouterradius, out Vector3 color, out float intensity);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public static extern void m_InternalCallSetLightingComponent(uint id, in Vector2 innerouterradius, in Vector3 color, in float intensity);
 }
 
 
@@ -285,6 +327,11 @@ public static class Component
             var _component = component as GridComponent;
             InternalCall.m_InternalGetGridComponent(id, out _component.m_Anchor, out _component.m_GridRowLength, out _component.m_GridColumnLength, out _component.m_SetCollidable, out _component.m_GridKey);
         }
+        else if (typeof(T) == typeof(LightComponent))
+        {
+            var _component = component as LightComponent;
+            InternalCall.m_InternalCallGetLightingComponent(id, out _component.m_innerOuterRadius, out _component.m_colour, out _component.m_intensity);
+        }
         else
         {
             throw new NotSupportedException($"Component type {typeof(T).Name} is not supported.");
@@ -326,6 +373,10 @@ public static class Component
         else if (component is GridComponent grid)
         {
             InternalCall.m_InternalSetGridComponent(id, in grid.m_Anchor, in grid.m_GridRowLength, in grid.m_GridColumnLength, in grid.m_SetCollidable, in grid.m_GridKey);
+        }
+        else if (component is LightComponent light)
+        {
+            InternalCall.m_InternalCallSetLightingComponent(id, in light.m_innerOuterRadius, in light.m_colour, in light.m_intensity);
         }
         else
         {
