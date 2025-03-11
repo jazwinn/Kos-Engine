@@ -684,6 +684,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         for (const auto& image : Asset->m_imageManager.m_imageMap) {
 
                             if (ImGui::Selectable(image.first.c_str())) {
+                                static ecs::SpriteComponent oldValA = *sc;
                                 sc->m_imageFile = image.first.c_str();
                                 if (!ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEANIMATIONCOMPONENT))
                                 {
@@ -694,7 +695,8 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                                        
                                         ecs::AnimationComponent* com = static_cast<ecs::AnimationComponent*>(ecs->m_AddComponent(ecs::TYPEANIMATIONCOMPONENT, entityID));
                                         com->m_stripCount = assets->m_imageManager.m_imageMap[sc->m_imageFile].m_stripCount;
-                                        
+                                        events::ModifySprite action(ecs::TYPESPRITECOMPONENT, entityID, sc, oldValA);
+                                        DISPATCH_ACTION_EVENT(action);
                                        
                                     }
                                 }
@@ -703,6 +705,11 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                                     assetmanager::AssetManager* assets = assetmanager::AssetManager::m_funcGetInstance();
                                     ecs::AnimationComponent* com = static_cast<ecs::AnimationComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEANIMATIONCOMPONENT]->m_GetEntityComponent(entityID));
                                     com->m_stripCount = assets->m_imageManager.m_imageMap[sc->m_imageFile].m_stripCount;
+                                    //static ecs::AnimationComponent oldValA2 = *com;
+                                    //events::ModifyAnim action(ecs::TYPESPRITECOMPONENT, entityID, com, oldValA2);
+                                    //DISPATCH_ACTION_EVENT(action);
+                                    events::ModifySprite action(ecs::TYPESPRITECOMPONENT, entityID, sc, oldValA);
+                                    DISPATCH_ACTION_EVENT(action);
                                 }
                             }
                         }
@@ -1552,6 +1559,20 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                      }
                      ImGui::SameLine();
                      ImGui::Text("Color");
+                     ImGui::SetNextItemWidth(100.0f);
+                     if (ImGui::BeginCombo("Images", rbc->m_imageFile.c_str()))
+                     {
+                         assetmanager::AssetManager* Asset = assetmanager::AssetManager::m_funcGetInstance();
+                         for (const auto& image : Asset->m_imageManager.m_imageMap) {
+
+                             if (ImGui::Selectable(image.first.c_str())) 
+                             {
+                                 rbc->m_imageFile = image.first.c_str();
+                             }
+                         }
+                         ImGui::EndCombo();
+                     }
+
                  }
 
 

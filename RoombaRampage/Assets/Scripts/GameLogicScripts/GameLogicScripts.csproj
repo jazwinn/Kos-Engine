@@ -93,6 +93,7 @@
     <Compile Include="LogicScript\PauseMenuButtons.cs" />
     <Compile Include="LogicScript\PauseMenuCursor.cs" />
     <Compile Include="LogicScript\PauseMenuManager.cs" />
+    <Compile Include="LogicScript\PlayerBulletType2.cs" />
     <Compile Include="LogicScript\PlayerBullet.cs" />
     <Compile Include="LogicScript\PlayerController.cs" />
     <Compile Include="LogicScript\PlayerGun.cs" />

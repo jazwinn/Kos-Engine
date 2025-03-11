@@ -500,6 +500,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClCompile Include="Graphics\GraphicsDraw.cpp" />
     <ClCompile Include="Graphics\GraphicsFrameBufferUsage.cpp" />
     <ClCompile Include="Graphics\GraphicsMatrix.cpp" />
+    <ClCompile Include="Graphics\GraphicsParticles.cpp" />
     <ClCompile Include="Graphics\GraphicsPipe.cpp" />
     <ClCompile Include="Graphics\GraphicsShader.cpp" />
     <ClCompile Include="Graphics\GraphicsVAO.cpp" />
@@ -630,7 +631,9 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <None Include="Graphics\gridVertexShader.vert" />
     <None Include="Graphics\lightingFragmentShader.frag" />
     <None Include="Graphics\lightingVertexShader.vert" />
-    <None Include="Graphics\particleComputer.glsl" />
+    <None Include="Graphics\particleComputer.comp" />
+    <None Include="Graphics\particleFragmentShader.frag" />
+    <None Include="Graphics\particleVertexShader.vert" />
     <None Include="Graphics\textFragmentShader.frag" />
     <None Include="Graphics\textVertexShader.vert" />
     <None Include="Graphics\tilemapFragmentShader.frag" />

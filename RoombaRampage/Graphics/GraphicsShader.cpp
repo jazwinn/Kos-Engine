@@ -81,6 +81,30 @@ namespace graphicpipe
 		return lvProgram;
 	}
 
+	unsigned int GraphicsPipe::m_funcSetupComputerShader(const std::string& computerShader)
+	{
+		GLuint computeShader = m_funcCompileShader(GL_COMPUTE_SHADER, computerShader);
+
+		GLuint program = glCreateProgram();
+		glAttachShader(program, computeShader);
+		glLinkProgram(program);
+
+		// Check linking status
+		GLint success;
+		glGetProgramiv(program, GL_LINK_STATUS, &success);
+		if (!success) {
+			GLchar infoLog[512];
+			glGetProgramInfoLog(program, 512, NULL, infoLog);
+			LOGGING_ERROR("Error linking shader program: {}", infoLog);
+		}
+		else
+		{
+			LOGGING_INFO("Shader compiled successfully");
+		}
+
+		return program;
+	}
+
 
 	void GraphicsPipe::m_funcDeleteShader()
 	{
