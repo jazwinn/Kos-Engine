@@ -3,9 +3,9 @@
         "GlobalSettings": {
             "globalIllumination": 0.30000001192092896,
             "backgroundColor": {
-                "r": 0.13716816902160645,
-                "g": 0.13716816902160645,
-                "b": 0.13716816902160645
+                "r": 0.13300000131130219,
+                "g": 0.23000000417232513,
+                "b": 0.3199999928474426
             }
         }
     },
@@ -56,7 +56,7 @@
             "angularAcceleration": 0.0,
             "mass": 1.0,
             "inverseMass": 1.0,
-            "linearDamping": 0.9900000095367432,
+            "linearDamping": 1.0,
             "angularDamping": 0.9900000095367432,
             "force": {
                 "x": 0.0,
