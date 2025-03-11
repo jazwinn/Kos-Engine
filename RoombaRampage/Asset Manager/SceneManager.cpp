@@ -149,6 +149,8 @@ namespace scenes {
             }
             
         }
+        isSceneChanged = true;
+
         LOGGING_INFO("Entities successfully loaded!");
     }
 
@@ -269,7 +271,7 @@ namespace scenes {
 
             }
         }
-
+       
 
 
     }
