@@ -179,7 +179,7 @@ namespace scenes {
 		/******************************************************************/
 		std::vector<std::filesystem::path> m_recentFiles;
 
-
+		bool isSceneChanged{};
 		//std::string m_AddScene(std::string filepath);
 
 	private:
