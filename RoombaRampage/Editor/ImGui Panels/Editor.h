@@ -267,6 +267,8 @@ namespace gui {
         /******************************************************************/
         void m_DrawLayerWindow();
 
+        void m_DrawGlobalSettingsWindow();
+
         /******************************************************************/
         /*!
         \fn      void gui::ImGuiHandler::m_DrawGameSceneWindow()
@@ -340,5 +342,6 @@ namespace gui {
         std::vector<std::string>m_tags;
 
         ImVec4 clearColor = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
-    };
+        
+};
 }

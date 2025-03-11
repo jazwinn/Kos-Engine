@@ -1,4 +1,21 @@
+/******************************************************************/
+/*!
+\file      Image.cpp
+\author    Sean Tiu
+\par       s.tiu@digipen.edu
+\date      Nov 20, 2024
+\brief     
 
+\dependencies
+		 - STB image library for loading images.
+		 - RapidJSON for serialization/deserialization.
+		 - OpenGL for texture handling.
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/******************************************************************/
 #include "../Config/pch.h"
 #include "../ECS.h"
 
@@ -78,8 +95,8 @@ namespace ecs {
 			if (assetmanager->m_imageManager.m_imageMap.find(tile->m_tilemapFile) == assetmanager->m_imageManager.m_imageMap.end()) continue;
 
 
-			transform->m_position.m_x = floor(transform->m_transformation.m_e20);
-			transform->m_position.m_y = floor(transform->m_transformation.m_e21);
+			transform->m_position.m_x = floor(transform->m_position.m_x);
+			transform->m_position.m_y = floor(transform->m_position.m_y);
 
 			transform->m_transformation.m_e20 = floor(transform->m_transformation.m_e20) + 0.5f;
 			transform->m_transformation.m_e21 = floor(transform->m_transformation.m_e21) + 0.5f;
@@ -87,7 +104,7 @@ namespace ecs {
 			//float imageWidth = assetmanager->m_imageManager.m_imageMap.find(tile->m_tilemapFile)->second.m_width / 2.f;
 			float imageHeight = static_cast<float>(assetmanager->m_imageManager.m_imageMap.find(tile->m_tilemapFile)->second.m_height);
 
-			transform->m_scale = vector2::Vec2{ pipe->m_unitHeight / imageHeight , pipe->m_unitHeight / imageHeight };
+			transform->m_scale = vector2::Vec2{ static_cast<float>(pipe->m_unitHeight) / imageHeight , static_cast<float>(pipe->m_unitHeight) / imageHeight };
 
 			unsigned int textureid = assetmanager->m_imageManager.m_imageMap.find(tile->m_tilemapFile)->second.m_imageID;
 			graphicsPipe->m_tilemapData.push_back({ glm::mat3{transform->m_transformation.m_e00,transform->m_transformation.m_e01,transform->m_transformation.m_e02,

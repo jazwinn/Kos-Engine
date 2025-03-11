@@ -66,23 +66,29 @@ namespace graphicpipe
 		glVertexAttribIPointer(10, 1, GL_INT, sizeof(int), (void*)0);
 		glVertexAttribDivisor(10, 1);
 
-		glGenBuffers(1, &m_textureOrderBuffer);
-		glBindBuffer(GL_ARRAY_BUFFER, m_textureOrderBuffer);
-		glBufferData(GL_ARRAY_BUFFER, m_textureOrder.size() * sizeof(int), &m_textureOrder[0], GL_DYNAMIC_DRAW);
+
+		glGenBuffers(1, &m_vec3Buffer);
+		glBindBuffer(GL_ARRAY_BUFFER, m_vec3Buffer);
+		glBufferData(GL_ARRAY_BUFFER, m_vec3Array.size() * sizeof(glm::vec3), &m_vec3Array[0], GL_DYNAMIC_DRAW);
 		glEnableVertexAttribArray(5);
-		glVertexAttribIPointer(5, 1, GL_INT, sizeof(int), (void*)0);
+		glVertexAttribPointer(5, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), (void*)0);
 		glVertexAttribDivisor(5, 1);
 
-		glGenBuffers(1, &m_stripCountBuffer);
-		glBindBuffer(GL_ARRAY_BUFFER, m_stripCountBuffer);
-		glBufferData(GL_ARRAY_BUFFER, m_stripCounts.size() * sizeof(glm::ivec2), &m_stripCounts[0], GL_DYNAMIC_DRAW);
+		
+
+
+
+		glGenBuffers(1, &m_iVec3Buffer);
+		glBindBuffer(GL_ARRAY_BUFFER, m_iVec3Buffer);
+		glBufferData(GL_ARRAY_BUFFER, m_iVec3Array.size() * sizeof(glm::ivec3), &m_iVec3Array[0], GL_DYNAMIC_DRAW); // Strip, FrameNumber, Texture Order
 		glEnableVertexAttribArray(4);
-		glVertexAttribIPointer(4, 2, GL_INT, sizeof(glm::ivec2), (void*)0);
+		glVertexAttribIPointer(4, 3, GL_INT, sizeof(glm::ivec3), (void*)0);
 		glVertexAttribDivisor(4, 1);
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-
+		//Check for errors
+		
 
 		glGenBuffers(1, &m_colorBuffer);
 
@@ -92,13 +98,8 @@ namespace graphicpipe
 
 		glEnableVertexAttribArray(11);
 		
-
-		//Check for errors
 		glVertexAttribPointer(11, 4, GL_FLOAT, GL_FALSE, sizeof(glm::vec4), (void*)0);
-		GLenum err = glGetError();
-		if (err != GL_NO_ERROR) {
-			LOGGING_ERROR("First OpenGL Error: 0x%X", err);
-		}
+
 		glVertexAttribDivisor(11, 1);
 		glBindVertexArray(0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -157,12 +158,30 @@ namespace graphicpipe
 
 
 		
+		GLenum err = glGetError();
+		if (err != GL_NO_ERROR) {
+			LOGGING_ERROR("First OpenGL Error: 0x%X", err);
+			std::cout << "ERROR: " << err << std::endl;
+		}
+	}
 
+	void GraphicsPipe::m_funcSetupSSBO()
+	{
+		// Generate SSBO for Particles
+		glGenBuffers(1, &m_particleSSBO);
+		glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_particleSSBO);
+		glBufferData(GL_SHADER_STORAGE_BUFFER, MAX_PARTICLES * sizeof(ParticleData), nullptr, GL_DYNAMIC_DRAW);
+		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, m_particleSSBO);
+		glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
 	}
 
 	void GraphicsPipe::m_funcSetupFrameBuffer()
 	{
 		Helper::Helpers* help = Helper::Helpers::GetInstance();
+		if (help->m_windowWidth <= 0 || help->m_windowHeight <= 0) //Skip if window is minimized
+		{
+			return;
+		}
 
 		if (m_screenTexture)
 		{
@@ -205,7 +224,117 @@ namespace graphicpipe
 #endif
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-		glScissor(0, 0, static_cast<GLsizei>(help->m_windowWidth), static_cast<GLsizei>(help->m_windowHeight));
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		//glScissor(0, 0, static_cast<GLsizei>(help->m_windowWidth), static_cast<GLsizei>(help->m_windowHeight));
+
+	}
+
+
+	void GraphicsPipe::m_funcSetupFinalPassBuffer()
+	{
+		Helper::Helpers* help = Helper::Helpers::GetInstance();
+		if (help->m_windowWidth <= 0 || help->m_windowHeight <= 0) //Skip if window is minimized
+		{
+			return;
+		}
+
+		if (m_finalPassTexture)
+		{
+			glDeleteTextures(1, &m_finalPassTexture);
+		}
+		if (m_finalPassDepthBufferObject)
+		{
+			glDeleteRenderbuffers(1, &m_finalPassDepthBufferObject);
+		}
+		if (m_finalPassFrameBufferObject)
+		{
+			glDeleteFramebuffers(1, &m_finalPassFrameBufferObject);
+		}
+		glGenFramebuffers(1, &m_finalPassFrameBufferObject);
+		glBindFramebuffer(GL_FRAMEBUFFER, m_finalPassFrameBufferObject);
+
+		glGenTextures(1, &m_finalPassTexture);
+		glBindTexture(GL_TEXTURE_2D, m_finalPassTexture);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, static_cast<GLsizei>(help->m_windowWidth), static_cast<GLsizei>(help->m_windowHeight), 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glBindTexture(GL_TEXTURE_2D, 0);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_finalPassTexture, 0);
+
+
+		glGenRenderbuffers(1, &m_finalPassDepthBufferObject);
+		glBindRenderbuffer(GL_RENDERBUFFER, m_finalPassDepthBufferObject);
+		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, static_cast<GLsizei>(help->m_windowWidth), static_cast<GLsizei>(help->m_windowHeight));
+		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_finalPassDepthBufferObject);
+
+#if DEBUG
+		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE)
+		{
+			LOGGING_INFO("Framebuffer successfully created");
+		}
+		else
+		{
+			LOGGING_INFO("Framebuffer has not been created");
+		}
+#endif
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		//glScissor(0, 0, static_cast<GLsizei>(help->m_windowWidth), static_cast<GLsizei>(help->m_windowHeight));
+
+	}
+
+	void GraphicsPipe::m_funcSetUpUnlitScreenFrameBuffer()
+	{
+		Helper::Helpers* help = Helper::Helpers::GetInstance();
+		if (help->m_windowWidth <= 0 || help->m_windowHeight <= 0) //Skip if window is minimized
+		{
+			return;
+		}
+
+		if (m_unlitScreenTexture)
+		{
+			glDeleteTextures(1, &m_unlitScreenTexture);
+		}
+		if (m_finalPassDepthBufferObject)
+		{
+			glDeleteRenderbuffers(1, &m_unlitScreenDepthBufferObject);
+		}
+		if (m_unlitScreenFrameBufferObject)
+		{
+			glDeleteFramebuffers(1, &m_unlitScreenFrameBufferObject);
+		}
+		glGenFramebuffers(1, &m_unlitScreenFrameBufferObject);
+		glBindFramebuffer(GL_FRAMEBUFFER, m_unlitScreenFrameBufferObject);
+
+		glGenTextures(1, &m_unlitScreenTexture);
+		glBindTexture(GL_TEXTURE_2D, m_unlitScreenTexture);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, static_cast<GLsizei>(help->m_windowWidth), static_cast<GLsizei>(help->m_windowHeight), 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glBindTexture(GL_TEXTURE_2D, 0);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_unlitScreenTexture, 0);
+
+
+		glGenRenderbuffers(1, &m_unlitScreenDepthBufferObject);
+		glBindRenderbuffer(GL_RENDERBUFFER, m_unlitScreenDepthBufferObject);
+		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, static_cast<GLsizei>(help->m_windowWidth), static_cast<GLsizei>(help->m_windowHeight));
+		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_unlitScreenDepthBufferObject);
+
+#if DEBUG
+		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE)
+		{
+			LOGGING_INFO("Framebuffer successfully created");
+		}
+		else
+		{
+			LOGGING_INFO("Framebuffer has not been created");
+		}
+#endif
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		//glScissor(0, 0, static_cast<GLsizei>(help->m_windowWidth), static_cast<GLsizei>(help->m_windowHeight));
 
 	}
 
@@ -254,7 +383,58 @@ namespace graphicpipe
 #endif
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-		glScissor(0, 0, static_cast<GLsizei>(help->m_windowWidth), static_cast<GLsizei>(help->m_windowHeight));
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		//glScissor(0, 0, static_cast<GLsizei>(help->m_windowWidth), static_cast<GLsizei>(help->m_windowHeight));
+
+	}
+
+	void GraphicsPipe::m_funcSetupLightingFrameBuffer()
+	{
+		Helper::Helpers* help = Helper::Helpers::GetInstance();
+
+		if (m_lightingTexture)
+		{
+			glDeleteTextures(1, &m_lightingTexture);
+		}
+		if (m_lightingDepthBufferObject)
+		{
+			glDeleteRenderbuffers(1, &m_lightingDepthBufferObject);
+		}
+		if (m_lightingFrameBufferObject)
+		{
+			glDeleteFramebuffers(1, &m_lightingFrameBufferObject);
+		}
+		glGenFramebuffers(1, &m_lightingFrameBufferObject);
+		glBindFramebuffer(GL_FRAMEBUFFER, m_lightingFrameBufferObject);
+
+		glGenTextures(1, &m_lightingTexture);
+		glBindTexture(GL_TEXTURE_2D, m_lightingTexture);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, static_cast<GLsizei>(help->m_windowWidth), static_cast<GLsizei>(help->m_windowHeight), 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glBindTexture(GL_TEXTURE_2D, 0);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_lightingTexture, 0);
+
+
+		glGenRenderbuffers(1, &m_lightingDepthBufferObject);
+		glBindRenderbuffer(GL_RENDERBUFFER, m_lightingDepthBufferObject);
+		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, static_cast<GLsizei>(help->m_windowWidth), static_cast<GLsizei>(help->m_windowHeight));
+		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_lightingDepthBufferObject);
+
+#if DEBUG
+		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE)
+		{
+			LOGGING_INFO("Framebuffer successfully created");
+		}
+		else
+		{
+			LOGGING_INFO("Framebuffer has not been created");
+		}
+#endif
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		//glScissor(0, 0, static_cast<GLsizei>(help->m_windowWidth), static_cast<GLsizei>(help->m_windowHeight));
 
 	}
 }

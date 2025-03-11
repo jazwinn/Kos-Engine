@@ -31,26 +31,19 @@ namespace graphicpipe
 {
 	void GraphicsPipe::m_funcDraw()
 	{
-		if (!m_modelToNDCMatrix.empty())
+		if (!m_modelMatrix.empty())
 		{
 			glBindBuffer(GL_ARRAY_BUFFER, m_modelMatrixArrayBuffer);
-			glNamedBufferData(m_modelMatrixArrayBuffer, m_modelToNDCMatrix.size() * sizeof(glm::mat3), &m_modelToNDCMatrix[0], GL_DYNAMIC_DRAW);
-			glBindBuffer(GL_ARRAY_BUFFER, m_textureOrderBuffer);
-			glNamedBufferData(m_textureOrderBuffer, m_textureOrder.size() * sizeof(int), &m_textureOrder[0], GL_DYNAMIC_DRAW);
+			glNamedBufferData(m_modelMatrixArrayBuffer, m_modelMatrix.size() * sizeof(glm::mat3), &m_modelMatrix[0], GL_DYNAMIC_DRAW);
 
-			glBindBuffer(GL_ARRAY_BUFFER, m_stripCountBuffer);
-			glNamedBufferData(m_stripCountBuffer, m_stripCounts.size() * sizeof(glm::ivec2), &m_stripCounts[0], GL_DYNAMIC_DRAW);
+			glBindBuffer(GL_ARRAY_BUFFER, m_iVec3Buffer);
+			glNamedBufferData(m_iVec3Buffer, m_iVec3Array.size() * sizeof(glm::ivec3), &m_iVec3Array[0], GL_DYNAMIC_DRAW); //Strip Count, FrameNumber, Texture Order
 
-		/*	glBindBuffer(GL_ARRAY_BUFFER, m_frameNumberBuffer);
-			glNamedBufferData(m_frameNumberBuffer, m_frameNumbers.size() * sizeof(int), &m_frameNumbers[0], GL_DYNAMIC_DRAW);*/
 			glBindBuffer(GL_ARRAY_BUFFER, m_layerBuffer);
 			glNamedBufferData(m_layerBuffer, m_layers.size() * sizeof(int), &m_layers[0], GL_DYNAMIC_DRAW);
 
 			glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer);
 			glNamedBufferData(m_colorBuffer, m_colors.size() * sizeof(glm::vec4), &m_colors[0], GL_DYNAMIC_DRAW);
-			glBindBuffer(GL_ARRAY_BUFFER, m_layerBuffer);
-
-
 
 
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -76,26 +69,123 @@ namespace graphicpipe
 				glBindTexture(GL_TEXTURE_2D, m_textureIDs[i]);
 			
 			}
+
+			glUniformMatrix3fv(glGetUniformLocation(m_genericShaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currViewMatrix));
+			glUniformMatrix3fv(glGetUniformLocation(m_genericShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currOrthoMatrix));
 			
+			glUniform1f(glGetUniformLocation(m_genericShaderProgram, "globalBrightness"), m_globalLightIntensity);
 
 			glBindVertexArray(m_squareMesh.m_vaoId);
-			glDrawElementsInstanced(m_squareMesh.m_primitiveType, m_squareMesh.m_indexElementCount, GL_UNSIGNED_SHORT, NULL, static_cast<GLsizei>(m_modelToNDCMatrix.size()));
+			glDrawElementsInstanced(m_squareMesh.m_primitiveType, m_squareMesh.m_indexElementCount, GL_UNSIGNED_SHORT, NULL, static_cast<GLsizei>(m_modelMatrix.size()));
 			glBindVertexArray(0);
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 		
 		
 		}
+		
+		
+	}
+
+	void GraphicsPipe::m_funcDrawUnlit()
+	{
+		if (!m_unlitModelMatrix.empty())
+		{
+			glBindBuffer(GL_ARRAY_BUFFER, m_modelMatrixArrayBuffer);
+			glNamedBufferData(m_modelMatrixArrayBuffer, m_unlitModelMatrix.size() * sizeof(glm::mat3), &m_unlitModelMatrix[0], GL_DYNAMIC_DRAW);
+
+			glBindBuffer(GL_ARRAY_BUFFER, m_iVec3Buffer);
+			glNamedBufferData(m_iVec3Buffer, m_unlitModelParams.size() * sizeof(glm::ivec3), &m_unlitModelParams[0], GL_DYNAMIC_DRAW); //Strip Count, FrameNumber, Texture Order
+
+			glBindBuffer(GL_ARRAY_BUFFER, m_layerBuffer);
+			glNamedBufferData(m_layerBuffer, m_unlitLayers.size() * sizeof(int), &m_unlitLayers[0], GL_DYNAMIC_DRAW);
+
+			glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer);
+			glNamedBufferData(m_colorBuffer, m_unlitColors.size() * sizeof(glm::vec4), &m_unlitColors[0], GL_DYNAMIC_DRAW);
+
+
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+			glUseProgram(m_genericShaderProgram);
+
+			GLint lvUniformVarLoc1 = glGetUniformLocation(m_genericShaderProgram, "textures");
+
+			if (lvUniformVarLoc1 >= 0)
+			{
+				glUniform1iv(lvUniformVarLoc1, static_cast<GLsizei>(m_textureIDs.size()), (GLint*)&m_textureIDs[0]);
+			}
+			else
+			{
+				LOGGING_ERROR("Uniform variable location: %d", lvUniformVarLoc1);
+				LOGGING_ERROR("Uniform variable 'textures' doesn't exist!");
+				std::exit(EXIT_FAILURE);
+			}
+
+			for (int i = 0; i < m_textureIDs.size(); ++i)
+			{
+				glActiveTexture(GL_TEXTURE0 + m_textureIDs[i]);
+				glBindTexture(GL_TEXTURE_2D, m_textureIDs[i]);
+
+			}
+
+			glUniformMatrix3fv(glGetUniformLocation(m_genericShaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currViewMatrix));
+			glUniformMatrix3fv(glGetUniformLocation(m_genericShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currOrthoMatrix));
+
+			glUniform1f(glGetUniformLocation(m_genericShaderProgram, "globalBrightness"), m_globalLightIntensity);
+
+			glBindVertexArray(m_squareMesh.m_vaoId);
+			glDrawElementsInstanced(m_squareMesh.m_primitiveType, m_squareMesh.m_indexElementCount, GL_UNSIGNED_SHORT, NULL, static_cast<GLsizei>(m_unlitModelMatrix.size()));
+			glBindVertexArray(0);
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+
+
+		}
+	}
+
+	void GraphicsPipe::m_funcDrawVideos()
+	{
+		for (VideoData x : m_videoData) {
+
+			glUseProgram(m_videoShaderProgram);
+
+			//set uniform
+			glUniformMatrix3fv(x.locTransformation, 1, GL_FALSE, glm::value_ptr(x.transformation));
+			glUniformMatrix3fv(x.locView, 1, GL_FALSE, glm::value_ptr(graphicpipe::GraphicsCamera::m_currViewMatrix));
+			glUniformMatrix3fv(x.locProjection, 1, GL_FALSE, glm::value_ptr(graphicpipe::GraphicsCamera::m_currOrthoMatrix));
+			glUniform1iv(x.unilayer, 1, &x.layer);
+			
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, x.yTexture);
+
+			glActiveTexture(GL_TEXTURE1);
+			glBindTexture(GL_TEXTURE_2D, x.uTexture);
+
+			glActiveTexture(GL_TEXTURE2);
+			glBindTexture(GL_TEXTURE_2D, x.vTexture);
+
+
+			glBindVertexArray(m_videoMesh.m_vaoId);
+			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+			//glDrawArraysInstanced(GL_TRIANGLES, 0, 6, 10);
+
+		}
+		
 	}
 
 	void GraphicsPipe::m_funcDrawDebug()
 	{
+
+
 		if (!m_debugBoxToNDCMatrix.empty())
 		{
 			glBindBuffer(GL_ARRAY_BUFFER, m_debugCollisionCheckBuffer);
 			glNamedBufferData(m_debugCollisionCheckBuffer, m_debugBoxCollisionChecks.size() * sizeof(float), &m_debugBoxCollisionChecks[0], GL_DYNAMIC_DRAW);
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
 			glUseProgram(m_debugShaderProgram);
+
+			glUniformMatrix3fv(glGetUniformLocation(m_debugShaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currViewMatrix));
+			glUniformMatrix3fv(glGetUniformLocation(m_debugShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currOrthoMatrix));
 
 			glBindBuffer(GL_ARRAY_BUFFER, m_debugMatrixArrayBuffer);
 			glNamedBufferData(m_debugMatrixArrayBuffer, m_debugBoxToNDCMatrix.size() * sizeof(glm::mat3), &m_debugBoxToNDCMatrix[0], GL_DYNAMIC_DRAW);
@@ -115,6 +205,9 @@ namespace graphicpipe
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
 			glUseProgram(m_debugShaderProgram);
 
+			glUniformMatrix3fv(glGetUniformLocation(m_debugShaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currViewMatrix));
+			glUniformMatrix3fv(glGetUniformLocation(m_debugShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currOrthoMatrix));
+
 			glBindBuffer(GL_ARRAY_BUFFER, m_debugMatrixArrayBuffer);
 			glNamedBufferData(m_debugMatrixArrayBuffer, m_debugCircleToNDCMatrix.size() * sizeof(glm::mat3), &m_debugCircleToNDCMatrix[0], GL_DYNAMIC_DRAW);
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -126,112 +219,7 @@ namespace graphicpipe
 		}
 	}
 
-	void GraphicsPipe::m_funcDrawGameFrameBuffer()
-	{
-		/*glBindFramebuffer(GL_FRAMEBUFFER, m_frameBufferObject);
-		glEnable(GL_DEPTH_TEST);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		m_funcDrawTilemap();
-		m_funcDraw();
-		m_funcDrawText();
-
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		glDisable(GL_DEPTH_TEST);
-		glClear(GL_COLOR_BUFFER_BIT);
-
-		glUseProgram(m_frameBufferShaderProgram);*/
-
-		/*m_funcDrawWindow();
-
-		glUseProgram(m_frameBufferShaderProgram);
-
-		glBindVertexArray(m_screenTextureVAO);
-		glBindTexture(GL_TEXTURE_2D, m_screenTexture);
-
-		glUniform1i(glGetUniformLocation(m_frameBufferShaderProgram, "screenTexture"), m_screenTexture);
-
-		glDrawArrays(GL_TRIANGLES, 0, 6);
-
-		GLenum err = glGetError();
-		if (err != GL_NO_ERROR) {
-			LOGGING_ERROR("First OpenGL Error: 0x%X", err);
-		}*/
-
-		// Render game elements to the framebuffer
-		glBindFramebuffer(GL_FRAMEBUFFER, m_frameBufferObject);
-		glEnable(GL_DEPTH_TEST);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		m_funcDrawTilemap();
-		m_funcDraw();
-		m_funcDrawText();
-
-		// Switch back to the default framebuffer
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		glDisable(GL_DEPTH_TEST);
-		glClear(GL_COLOR_BUFFER_BIT);
-
-		// Use the framebuffer shader program
-		glUseProgram(m_frameBufferShaderProgram);
-
-		// Draw the framebuffer texture to the screen
-		glBindVertexArray(m_screenTextureVAO);
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, m_screenTexture);
-
-		glDrawArrays(GL_TRIANGLES, 0, 6);
-
-		// Check for OpenGL errors
-		GLenum err;
-		while ((err = glGetError()) != GL_NO_ERROR) {
-			LOGGING_ERROR("OpenGL Error: 0x%X", err);
-		}
-	}
-
-	void GraphicsPipe::m_funcDrawWindow()
-	{
-		
-		glBindFramebuffer(GL_FRAMEBUFFER, m_frameBufferObject);
-		glEnable(GL_DEPTH_TEST);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		m_funcDrawGrid();
-		m_funcDrawDebug();
-		m_funcDrawTilemap();
-		m_funcDrawGridCollider();
-		m_funcDraw();
-		//m_funcDrawLine({ 1.f,1.f,0 }, { -1.f,-1.f,0 }); // Comment this out when done debugging;
-		m_funcDrawText();
-		
-
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		glDisable(GL_DEPTH_TEST);
-		glClear(GL_COLOR_BUFFER_BIT);
-
-		glUseProgram(m_frameBufferShaderProgram);
-
-	}
-
-	void GraphicsPipe::m_funcDrawGamePreviewWindow()
-	{
-		glBindFramebuffer(GL_FRAMEBUFFER, m_gamePreviewFrameBufferObject);
-		glEnable(GL_DEPTH_TEST);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		m_funcDrawTilemap();
-		m_funcDraw();
-		
-		m_funcDrawText();
-		
-
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		glDisable(GL_DEPTH_TEST);
-		glClear(GL_COLOR_BUFFER_BIT);
-
-		glUseProgram(m_frameBufferShaderProgram);
-
-	}
+	
 
 	void GraphicsPipe::m_funcDrawText()
 	{
@@ -271,19 +259,33 @@ namespace graphicpipe
 				float originX{ textData.m_x };
 				float originY{ textData.m_y };
 
+				Helper::Helpers* help = Helper::Helpers::GetInstance();
+				//float scale = help->m_windowHeight / static_cast<float>(help->m_currWindowHeight);
+				//scale /= (help->m_windowWidth / 1920.f); ///Recalibrate if needed
+
 				// Step 1: Calculate total width and height of the text
 				float totalWidth = 0.0f;
 				float maxAscent = 0.0f;
 				float maxDescent = 0.0f;
-
-				for (const char& c : textData.m_text)
+				for (int i = 0; i < textData.m_text.size(); ++i) // To calculate the total width of the text
 				{
+					char c = textData.m_text[i];
 					text::CharacterData ch = assetmanager->m_fontManager.m_fonts[textData.m_fileName][c];
-					totalWidth += ((ch.m_advance >> 6) * textData.m_scale * textData.m_xyScale.x) / GraphicsCamera::m_windowHeight;
-					maxAscent = std::max(maxAscent, (ch.m_bearing.y * textData.m_scale * textData.m_xyScale.y) / GraphicsCamera::m_windowHeight);
-					maxDescent = std::max(maxDescent, ((ch.m_size.y - ch.m_bearing.y) * textData.m_scale * textData.m_xyScale.y) / GraphicsCamera::m_windowHeight);
+					if (i == textData.m_text.size() - 1) // If it's the last letter, add only the letter size
+					{
+						totalWidth += ((ch.m_size.x * textData.m_scale * textData.m_xyScale.x) / ((static_cast<float>(help->m_currWindowHeight))));
+					}
+					else // Add the letter size and the space
+					{
+						totalWidth += ((ch.m_advance >> 6) * textData.m_scale * textData.m_xyScale.x) / ((static_cast<float>(help->m_currWindowHeight)));
+					}
+					maxAscent = std::max(maxAscent, (ch.m_bearing.y * textData.m_scale * textData.m_xyScale.y) / ((static_cast<float>(help->m_currWindowHeight))));
+					maxDescent = std::max(maxDescent, ((ch.m_size.y - ch.m_bearing.y) * textData.m_scale * textData.m_xyScale.y) / ((static_cast<float>(help->m_currWindowHeight))));
 				}
+				
 				float totalHeight = maxAscent + maxDescent;
+
+
 
 				// Adjust starting position to center the text
 				textData.m_x = originX - totalWidth / 2.0f;  // Horizontal centering
@@ -295,10 +297,10 @@ namespace graphicpipe
 					text::CharacterData ch = assetmanager->m_fontManager.m_fonts[textData.m_fileName][c];
 
 					// Calculate position and size for each character quad
-					float xpos = (textData.m_x + ch.m_bearing.x / GraphicsCamera::m_windowHeight * (textData.m_scale * textData.m_xyScale.x));
-					float ypos = (textData.m_y - (ch.m_size.y - ch.m_bearing.y) / GraphicsCamera::m_windowHeight * (textData.m_scale * textData.m_xyScale.y));
-					float w = ch.m_size.x * textData.m_scale * textData.m_xyScale.x / GraphicsCamera::m_windowHeight;
-					float h = ch.m_size.y * textData.m_scale * textData.m_xyScale.y / GraphicsCamera::m_windowHeight;
+					float xpos = (textData.m_x + ch.m_bearing.x / ((static_cast<float>(help->m_currWindowHeight))) * (textData.m_scale * textData.m_xyScale.x));
+					float ypos = (textData.m_y - ((float)ch.m_size.y - (float)ch.m_bearing.y) / ((static_cast<float>(help->m_currWindowHeight))) * (textData.m_scale * textData.m_xyScale.y));
+					float w = ch.m_size.x * textData.m_scale * textData.m_xyScale.x / ((static_cast<float>(help->m_currWindowHeight)));
+					float h = ch.m_size.y * textData.m_scale * textData.m_xyScale.y / ((static_cast<float>(help->m_currWindowHeight)));
 
 					// Update VBO for each character with texture coordinates from the atlas
 					float vertices[6][4] =
@@ -324,7 +326,7 @@ namespace graphicpipe
 					glDrawArrays(GL_TRIANGLES, 0, 6);
 
 					// Advance cursor for next glyph
-					textData.m_x += ((ch.m_advance >> 6) * textData.m_scale * textData.m_xyScale.x) / GraphicsCamera::m_windowHeight;
+					textData.m_x += ((ch.m_advance >> 6) * textData.m_scale * textData.m_xyScale.x) / ((static_cast<float>(help->m_currWindowHeight)));
 				}
 				textData.m_x = origin;
 
@@ -382,10 +384,8 @@ namespace graphicpipe
 
 	void GraphicsPipe::m_funcDrawGridCollider()
 	{
-		
-		glUseProgram(m_gridDebugShaderProgram);
 
-		
+		glUseProgram(m_gridDebugShaderProgram);
 
 		for (int i{}; i < m_colliderGridData.size() && !m_gridColliderChecks.empty(); ++i)
 		{
@@ -397,7 +397,7 @@ namespace graphicpipe
 			GLenum err = glGetError();
 			if (err != GL_NO_ERROR) {
 				//LOGGING_ERROR("First OpenGL Error: 0x%X", err);
-				std::cout << "First OpenGL Error: " << err << std::endl;
+				std::cout << "#02 OpenGL Error: " << err << std::endl;
 			}
 
 			glBindBuffer(GL_ARRAY_BUFFER, m_gridColliderBuffer);
@@ -409,7 +409,7 @@ namespace graphicpipe
 			GLenum err2 = glGetError();
 			if (err2 != GL_NO_ERROR) {
 				//LOGGING_ERROR("First OpenGL Error: 0x%X", err);
-				std::cout << "Second OpenGL Error: " << err2 << std::endl;
+				std::cout << "#03 OpenGL Error: " << err2 << std::endl;
 			}
 
 			glUniform1i(glGetUniformLocation(m_gridDebugShaderProgram, "tilemapColumns"), m_colliderGridData[i].m_gridDimensions.y);
@@ -447,8 +447,6 @@ namespace graphicpipe
 			glActiveTexture(GL_TEXTURE0 + m_textureIDs[m_transformedTilemaps[i].m_textureID]); // Activate each texture unit
 			glBindTexture(GL_TEXTURE_2D, m_textureIDs[m_transformedTilemaps[i].m_textureID]);  // Unbind the 2D texture from that unit
 			
-			
-
 			glUniform1i(glGetUniformLocation(m_tilemapShaderProgram, "textureID"), m_textureIDs[m_transformedTilemaps[i].m_textureID]);
 
 			glUniform1i(glGetUniformLocation(m_tilemapShaderProgram, "layer"), m_transformedTilemaps[i].m_layer);
@@ -471,13 +469,123 @@ namespace graphicpipe
 
 			glUniformMatrix3fv(glGetUniformLocation(m_tilemapShaderProgram, "modelMatrix"), 1, GL_FALSE, glm::value_ptr(m_transformedTilemaps[i].m_transformation));
 
+			glUniform1f(glGetUniformLocation(m_tilemapShaderProgram, "globalBrightness"), m_globalLightIntensity);
+
 			
 
 			glBindVertexArray(m_squareMesh.m_vaoId);
 			glDrawElementsInstanced(m_squareMesh.m_primitiveType, m_squareMesh.m_indexElementCount, GL_UNSIGNED_SHORT, NULL, static_cast<GLsizei>(m_transformedTilemaps[i].m_tilemapDimensions.x * m_transformedTilemaps[i].m_tilemapDimensions.y));
 			glBindVertexArray(0);
+			
 		}
 
+	}
+
+	
+
+	void GraphicsPipe::m_funcRenderLighting()
+	{
+		if (!m_lightingTransforms.empty())
+		{
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE); //USE THIS BLENDING FOR LIGHTS
+
+			glUseProgram(m_lightingShaderProgram);
+
+			glBindBuffer(GL_ARRAY_BUFFER, m_modelMatrixArrayBuffer);
+			glNamedBufferData(m_modelMatrixArrayBuffer, m_lightingTransforms.size() * sizeof(glm::mat3), &m_lightingTransforms[0], GL_DYNAMIC_DRAW);
+
+
+			glBindBuffer(GL_ARRAY_BUFFER, m_vec3Buffer);
+			glNamedBufferData(m_vec3Buffer, m_lightingParams.size() * sizeof(glm::vec3), &m_lightingParams[0], GL_DYNAMIC_DRAW); // Light Intensity, Inner/Outer Radius
+
+			glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer);
+			glNamedBufferData(m_colorBuffer, m_lightingColors.size() * sizeof(glm::vec4), &m_lightingColors[0], GL_DYNAMIC_DRAW);
+	
+
+			glUniformMatrix3fv(glGetUniformLocation(m_lightingShaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currViewMatrix));
+
+			glUniformMatrix3fv(glGetUniformLocation(m_lightingShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currOrthoMatrix));
+
+			glUniform1f(glGetUniformLocation(m_lightingShaderProgram, "globalBrightness"), m_globalLightIntensity);
+
+			GLenum err = glGetError();
+			if (err != GL_NO_ERROR) {
+				//LOGGING_ERROR("First OpenGL Error: 0x%X", err);
+				std::cout << "#04 OpenGL Error: " << err << std::endl;
+			}
+
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+			
+
+			glBindVertexArray(m_squareMesh.m_vaoId);
+			glDrawElementsInstanced(m_squareMesh.m_primitiveType, m_squareMesh.m_indexElementCount, GL_UNSIGNED_SHORT, NULL, static_cast<GLsizei>(m_lightingTransforms.size()));
+			glBindVertexArray(0);
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+			GLenum err2 = glGetError();
+			if (err2 != GL_NO_ERROR) {
+				//LOGGING_ERROR("First OpenGL Error: 0x%X", err);
+				std::cout << "#05 OpenGL Error : " << err2 << std::endl;
+			}
+
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		}
+	}
+
+	void GraphicsPipe::m_funcDrawFullScreenQuad(unsigned int texture)
+	{
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		glUseProgram(m_frameBufferShaderProgram);
+		glBindVertexArray(m_screenTextureVAO);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, texture);
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+	}
+
+	void GraphicsPipe::m_funcDrawParticles()
+	{
+		glUseProgram(m_particleShaderProgram);
+		glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_particleSSBO);
+		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, m_particleSSBO);
+
+
+		glUniformMatrix3fv(glGetUniformLocation(m_particleShaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currViewMatrix));
+
+		glUniformMatrix3fv(glGetUniformLocation(m_particleShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currOrthoMatrix));
+
+		GLint lvUniformVarLoc1 = glGetUniformLocation(m_genericShaderProgram, "textures");
+
+		if (lvUniformVarLoc1 >= 0)
+		{
+			glUniform1iv(lvUniformVarLoc1, static_cast<GLsizei>(m_textureIDs.size()), (GLint*)&m_textureIDs[0]);
+		}
+		else
+		{
+			LOGGING_ERROR("Uniform variable location: %d", lvUniformVarLoc1);
+			LOGGING_ERROR("Uniform variable 'textures' doesn't exist!");
+			std::exit(EXIT_FAILURE);
+		}
+
+		for (int i = 0; i < m_textureIDs.size(); ++i)
+		{
+			glActiveTexture(GL_TEXTURE0 + m_textureIDs[i]);
+			glBindTexture(GL_TEXTURE_2D, m_textureIDs[i]);
+
+		}
+
+		glBindVertexArray(m_squareMesh.m_vaoId);
+		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, m_particleSSBO);
+		glDrawElementsInstanced(m_squareMesh.m_primitiveType, m_squareMesh.m_indexElementCount, GL_UNSIGNED_SHORT, NULL, MAX_PARTICLES);
+		glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
+
+		GLenum err2 = glGetError();
+		if (err2 != GL_NO_ERROR) {
+			//LOGGING_ERROR("First OpenGL Error: 0x%X", err);
+			std::cout << "Particle OpenGL Error : " << err2 << std::endl;
+		}
+
+		
 	}
 
 	void GraphicsPipe::m_funcSetDrawMode(GLenum mode)

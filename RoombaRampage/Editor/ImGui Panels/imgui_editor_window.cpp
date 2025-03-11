@@ -99,8 +99,9 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
     }
 
 
+    pipe->m_renderFinalPassWithDebug();
     ImGui::GetWindowDrawList()->AddImage(
-        (void*)(long long unsigned int)pipe->m_screenTexture, pos,
+        (void*)(long long unsigned int)pipe->m_gamePreviewTexture, pos,
         ImVec2(pos.x + imageSize.x, pos.y + imageSize.y),
         ImVec2(0, 1), ImVec2(1, 0));
 
@@ -223,7 +224,7 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
         auto* transform = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(m_clickedEntityId));
       
         Tilemap::setCollidableTile(transform->m_position, EditorCamera::calculateWorldCoordinatesFromMouse(static_cast<int>(ImGui::GetMousePos().x), static_cast<int>(ImGui::GetMousePos().y)), grid);
-        Tilemap::debugGridChecks(grid);
+        /*Tilemap::debugGridChecks(grid);*/
         
 
     }
@@ -375,6 +376,24 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
                 ecs::TextComponent* textCom = static_cast<ecs::TextComponent*>(fileecs->m_AddComponent(ecs::TYPETEXTCOMPONENT, id));
                 textCom->m_fileName = filename->filename().string();
 
+                if (m_prefabSceneMode) {
+                    ecs::Hierachy::m_SetParent(ecs->m_ECS_SceneMap.find(m_activeScene)->second.m_prefabID, id);
+                }
+
+                m_clickedEntityId = id;
+            }
+
+            if (filename->filename().extension().string() == ".mpg" || filename->filename().extension().string() == ".mpeg") {
+
+                ecs::EntityID id = fileecs->m_CreateEntity(m_activeScene); //assign to top most scene
+                ecs::TransformComponent* transCom = static_cast<ecs::TransformComponent*>(fileecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id));
+                transCom->m_position = { translate.m_x, translate.m_y };
+                // Insert matrix
+                ecs::NameComponent* nameCom = static_cast<ecs::NameComponent*>(fileecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id));
+                nameCom->m_entityName = filename->filename().stem().string();
+                ecs::VideoComponent* vc = static_cast<ecs::VideoComponent*>(fileecs->m_AddComponent(ecs::TYPEVIDEOCOMPONENT, id));
+                vc->filename = filename->filename().string();
+                vc->play = true;
                 if (m_prefabSceneMode) {
                     ecs::Hierachy::m_SetParent(ecs->m_ECS_SceneMap.find(m_activeScene)->second.m_prefabID, id);
                 }

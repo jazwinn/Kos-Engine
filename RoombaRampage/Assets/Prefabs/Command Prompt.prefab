@@ -1,0 +1,58 @@
+[
+    {
+        "GlobalSettings": {
+            "globalIllumination": 0.30000001192092896,
+            "backgroundColor": {
+                "r": 0.13716816902160645,
+                "g": 0.13716816902160645,
+                "b": 0.13716816902160645
+            }
+        }
+    },
+    {
+        "name": {
+            "namestr": "Command Promp",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": -1.7104480266571045,
+                "y": -0.2072351574897766
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 0.550000011920929,
+                "y": 0.550000011920929
+            }
+        },
+        "sprite": {
+            "imagefile": "ani_loadingScreen_strip5.png",
+            "layer": 3,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0,
+            "isLit": true
+        },
+        "animation": {
+            "frameNumber": 3,
+            "framesPerSecond": 1,
+            "frameTimer": 3.1499977111816406,
+            "isAnimating": true,
+            "stripCount": 5
+        },
+        "script": {
+            "scripts": [
+                {
+                    "name": "MainMenuTransition",
+                    "enabled": true,
+                    "map": []
+                }
+            ]
+        }
+    }
+]

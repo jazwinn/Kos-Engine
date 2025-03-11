@@ -1,5 +1,15 @@
 [
     {
+        "GlobalSettings": {
+            "globalIllumination": 0.30000001192092896,
+            "backgroundColor": {
+                "r": 0.13716816902160645,
+                "g": 0.13716816902160645,
+                "b": 0.13716816902160645
+            }
+        }
+    },
+    {
         "name": {
             "namestr": "EnemyBloodPool",
             "layer": 0,
@@ -13,8 +23,8 @@
             },
             "rotation": 0.0,
             "scale": {
-                "x": 3.0,
-                "y": 3.0
+                "x": 2.0,
+                "y": 2.0
             }
         },
         "sprite": {
@@ -25,12 +35,13 @@
                 "g": 1.0,
                 "b": 1.0
             },
-            "alpha": 1.0
+            "alpha": 1.0,
+            "isLit": true
         },
         "animation": {
-            "frameNumber": 7,
+            "frameNumber": 2,
             "framesPerSecond": 2,
-            "frameTimer": 3.9499969482421875,
+            "frameTimer": 1.0999996662139893,
             "isAnimating": true,
             "stripCount": 9
         },

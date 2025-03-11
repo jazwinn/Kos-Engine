@@ -18,6 +18,8 @@ public class PlayerController : ScriptBase
         //Dead Player Texture Allocation
         playerDeathTexture = "img_roombertDeath.png";
 
+        animComp = Component.Get<AnimationComponent>(EntityID);
+
         //Get starting component values
         InternalCall.m_InternalGetTransformComponent(EntityID, out startingRoombaPos, out startingRoombaScale, out startingRoombaRotate);
         InternalCall.m_InternalGetSpriteComponent(EntityID, out startingSprite, out startingLayer, out startingColor, out startingAlpha);
@@ -29,7 +31,7 @@ public class PlayerController : ScriptBase
         speed = 5;
 
         //Set tolerance to prevent jittering, higher values = more rigid rotation, but no more jittering due to micro changes
-        angleTolerance = 3.5f;
+        angleTolerance = 4f;
     }
     #endregion
 
@@ -59,10 +61,18 @@ public class PlayerController : ScriptBase
     private float startingAlpha;
 
     //Stop playing from doing anything if dead
-    private bool isDead;
+    public static bool isDead;
 
     //Dead player texture, swap once dead
     private string playerDeathTexture;
+
+    //Components
+    private AnimationComponent animComp;
+    private bool isAnimating;
+
+    private string movementStartAudio = "aud_vacuumStart01.wav";
+    private string movementLoopAudio = "aud_vacuumLoop01.wav";
+    private string movementStopAudio = "aud_vacuumEnd01.wav";
 
     public override void Start()
     {
@@ -73,7 +83,7 @@ public class PlayerController : ScriptBase
     {
 
         //Checks if game is paused and prevents player from doing anything
-        if (GameController.gameIsPaused) { return; }
+        if (GameControllerLevel1.gameIsPaused) { return; }
 
         //Dead player, return to prevent actions
         if (isDead) { return; }
@@ -116,6 +126,62 @@ public class PlayerController : ScriptBase
 
         #endregion
 
+        #region Collision
+        if (InternalCall.m_InternalCallIsCollided(EntityID) != 0.0f)
+        {
+            collidedEntities = InternalCall.m_InternalCallGetCollidedEntities(EntityID);
+
+            foreach (int collidedEntitiesID in collidedEntities)
+            {
+                if (InternalCall.m_InternalCallGetTag((uint) collidedEntitiesID) == "Enemy")
+                {
+                    CameraFollowPlayerScript.Shake(10f, 1f);
+
+                    InternalCall.m_InternalCallPlayAudio(EntityID, "aud_playerDeath01");
+
+                    var collisionComponent = GetComponent.GetColliderComponent(EntityID);
+                    collisionComponent.m_collisionCheck = !collisionComponent.m_collisionCheck;
+                    SetComponent.SetCollisionComponent(EntityID, collisionComponent);
+
+                    InternalCall.m_InternalSetAnimationComponent(EntityID, 0, 0, 0, false, 1);
+                    InternalCall.m_InternalSetSpriteComponent(EntityID, playerDeathTexture, startingLayer, startingColor, startingAlpha);
+
+                    movement.X = 0;
+                    movement.Y = 0;
+
+                    InternalCall.m_InternalSetVelocity(EntityID, movement);
+
+                    isDead = true;
+
+                    InternalCall.m_InternalCallSetTimeScale(0);
+                }
+                if (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID) == "EnemyBullet")
+                {
+                    CameraFollowPlayerScript.Shake(10f, 1f);
+
+                    InternalCall.m_InternalCallPlayAudio(EntityID, "aud_playerDeath01");
+
+                    var collisionComponent = GetComponent.GetColliderComponent(EntityID);
+                    collisionComponent.m_collisionCheck = !collisionComponent.m_collisionCheck;
+                    SetComponent.SetCollisionComponent(EntityID, collisionComponent);
+
+                    InternalCall.m_InternalSetAnimationComponent(EntityID, 0, 0, 0, false, 1);
+                    InternalCall.m_InternalSetSpriteComponent(EntityID, playerDeathTexture, startingLayer, startingColor, startingAlpha);
+
+                    movement.X = 0;
+                    movement.Y = 0;
+
+                    InternalCall.m_InternalSetVelocity(EntityID, movement);
+
+                    isDead = true;
+
+                    InternalCall.m_InternalCallSetTimeScale(0);
+                }
+            }
+        }
+
+        #endregion
+
         #region Mouse Rotation
 
         Vector2 mousePos;
@@ -143,44 +209,49 @@ public class PlayerController : ScriptBase
 
         #endregion
 
-        #region Collision
-        if (InternalCall.m_InternalCallIsCollided(EntityID) != 0.0f)
-        {
-            collidedEntities = InternalCall.m_InternalCallGetCollidedEntities(EntityID);
-
-            foreach (int collidedEntitiesID in collidedEntities)
-            {
-                if (InternalCall.m_InternalCallGetTag((uint) collidedEntitiesID) == "Enemy")
-                {
-                    InternalCall.m_InternalCallPlayAudio(EntityID, "aud_playerDeath01");
-
-                    var collisionComponent = GetComponent.GetColliderComponent(EntityID);
-                    collisionComponent.m_collisionCheck = !collisionComponent.m_collisionCheck;
-                    SetComponent.SetCollisionComponent(EntityID, collisionComponent);
-
-                    InternalCall.m_InternalSetAnimationComponent(EntityID, 0, 0, 0, false, 1);
-                    InternalCall.m_InternalSetSpriteComponent(EntityID, playerDeathTexture, startingLayer, startingColor, startingAlpha);
-
-                    movement.X = 0;
-                    movement.Y = 0;
-
-                    InternalCall.m_InternalSetVelocity(EntityID, movement);
-
-                    isDead = true;
-                }
-            }
-        }
-
-        #endregion
-
-        //PathfindingComponent path;
-
-        //path = Component.Get<PathfindingComponent>(EntityID);
-
+        CheckMovement();
 
     }
 
-    #region Normalize
+    public void LateUpdate()
+    {
+        //Checks if game is paused and prevents player from doing anything
+        if (GameControllerLevel1.gameIsPaused) { return; }
+
+        if (isDead) { return; }
+
+    }
+
+    private void CheckMovement()
+    {
+        Vector2 temp;
+        InternalCall.m_InternalGetVelocity(EntityID, out temp);
+
+        if (Magnitude(temp) != 0 && isAnimating == false)
+        {
+            InternalCall.m_InternalCallPlayAudio(EntityID, movementStartAudio);
+            InternalCall.m_InternalCallPlayAudio(EntityID, movementLoopAudio);
+            animComp = Component.Get<AnimationComponent>(EntityID);
+            animComp.m_isAnimating = true;
+            Component.Set<AnimationComponent>(EntityID, animComp);
+            isAnimating = true;
+
+            
+        }
+
+        else if (Magnitude(temp) == 0 && isAnimating == true)
+        {
+            InternalCall.m_InternalCallStopAudio(EntityID, movementLoopAudio);
+            InternalCall.m_InternalCallPlayAudio(EntityID, movementStopAudio);
+            animComp = Component.Get<AnimationComponent>(EntityID);
+            animComp.m_isAnimating = false;
+            animComp.m_frameNumber = 0;
+            Component.Set<AnimationComponent>(EntityID, animComp);
+            isAnimating = false;
+        }
+    }
+
+    #region Vec2 Functions
     public Vector2 NormalizeAndScale(float x, float y, float speed)
     {
         // Calculate the magnitude of the vector
@@ -211,6 +282,31 @@ public class PlayerController : ScriptBase
         temp.Y = (float)scaledY;
 
         return temp;
+    }
+
+    public float Magnitude(Vector2 v2)
+    {
+        return (float)Math.Sqrt(v2.X * v2.X + v2.Y * v2.Y);
+    }
+
+    public Vector2 MoveTowards(Vector2 current, Vector2 target, float maxDistance)
+    {
+        float dx = target.X - current.X;
+        float dy = target.Y - current.Y;
+        float distance = (float)Math.Sqrt(dx * dx + dy * dy);
+
+        // If the distance to the target is less than maxDistance, move directly to the target
+        if (distance <= maxDistance || distance == 0f)
+        {
+            return target;
+        }
+
+        // Otherwise, move a fraction towards the target
+        float ratio = maxDistance / distance;
+        return new Vector2(
+            current.X + dx * ratio,
+            current.Y + dy * ratio
+        );
     }
     #endregion
 }

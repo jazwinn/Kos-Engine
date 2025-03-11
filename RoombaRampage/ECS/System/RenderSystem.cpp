@@ -87,7 +87,7 @@ namespace ecs {
 			//skip component not of the scene
 			if ((sprite->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer)) continue;
 
-			ECS* ecs = ECS::m_GetInstance();
+			//ECS* ecs = ECS::m_GetInstance();
 
 			if (assetmanager->m_imageManager.m_imageMap.find(sprite->m_imageFile) == assetmanager->m_imageManager.m_imageMap.end()) continue;
 
@@ -96,18 +96,39 @@ namespace ecs {
 			if (ecs->m_ECS_EntityMap[sprite->m_Entity].test(TYPEANIMATIONCOMPONENT)) 
 			{
 				AnimationComponent* animation = (AnimationComponent*)ecs->m_ECS_CombinedComponentPool[TYPEANIMATIONCOMPONENT]->m_GetEntityComponent(sprite->m_Entity);
-				
-				graphicsPipe->m_modelData.push_back({ glm::mat3{transform->m_transformation.m_e00,transform->m_transformation.m_e01,transform->m_transformation.m_e02,
+				if (sprite->m_isIlluminated)
+				{
+					graphicsPipe->m_modelData.push_back({ glm::mat3{transform->m_transformation.m_e00,transform->m_transformation.m_e01,transform->m_transformation.m_e02,
 																transform->m_transformation.m_e10,transform->m_transformation.m_e11, transform->m_transformation.m_e12,
 															transform->m_transformation.m_e20, transform->m_transformation.m_e21, transform->m_transformation.m_e22} ,
 															textureid,animation->m_stripCount, animation->m_frameNumber ,sprite->m_layer, glm::vec4{sprite->m_color.m_x,sprite->m_color.m_y, sprite->m_color.m_z, sprite->m_alpha} });
+				}
+				else
+				{
+					graphicsPipe->m_unlitModelData.push_back({ glm::mat3{transform->m_transformation.m_e00,transform->m_transformation.m_e01,transform->m_transformation.m_e02,
+																transform->m_transformation.m_e10,transform->m_transformation.m_e11, transform->m_transformation.m_e12,
+															transform->m_transformation.m_e20, transform->m_transformation.m_e21, transform->m_transformation.m_e22} ,
+															textureid,animation->m_stripCount, animation->m_frameNumber ,sprite->m_layer, glm::vec4{sprite->m_color.m_x,sprite->m_color.m_y, sprite->m_color.m_z, sprite->m_alpha} });
+				}
+				
 			}
 			else
 			{
-				graphicsPipe->m_modelData.push_back({ glm::mat3{transform->m_transformation.m_e00,transform->m_transformation.m_e01,transform->m_transformation.m_e02,
+				if (sprite->m_isIlluminated)
+				{
+					graphicsPipe->m_modelData.push_back({ glm::mat3{transform->m_transformation.m_e00,transform->m_transformation.m_e01,transform->m_transformation.m_e02,
 																transform->m_transformation.m_e10,transform->m_transformation.m_e11, transform->m_transformation.m_e12,
-															transform->m_transformation.m_e20, transform->m_transformation.m_e21, transform->m_transformation.m_e22},textureid, 1, 0 ,sprite->m_layer 
+															transform->m_transformation.m_e20, transform->m_transformation.m_e21, transform->m_transformation.m_e22},textureid, 1, 0 ,sprite->m_layer
 															, glm::vec4{sprite->m_color.m_x,sprite->m_color.m_y, sprite->m_color.m_z, sprite->m_alpha} });
+				}
+				else
+				{
+					graphicsPipe->m_unlitModelData.push_back({ glm::mat3{transform->m_transformation.m_e00,transform->m_transformation.m_e01,transform->m_transformation.m_e02,
+																transform->m_transformation.m_e10,transform->m_transformation.m_e11, transform->m_transformation.m_e12,
+															transform->m_transformation.m_e20, transform->m_transformation.m_e21, transform->m_transformation.m_e22},textureid, 1, 0 ,sprite->m_layer
+															, glm::vec4{sprite->m_color.m_x,sprite->m_color.m_y, sprite->m_color.m_z, sprite->m_alpha} });
+				}
+				
 			}
 			
 		}

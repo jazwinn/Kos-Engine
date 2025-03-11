@@ -51,6 +51,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Application/Helper.h"
 #include "../Debugging/Logging.h"
 #include "../Asset Manager/Prefab.h"
+#include "../Graphics/GraphicsPipe.h"
 #include "json_handler.h"
 
 #include <cstdio>
@@ -74,6 +75,7 @@ namespace Serialization {
 			return;
 		}
 		Helper::Helpers* help = Helper::Helpers::GetInstance();
+		//graphicpipe::GraphicsPipe* graphics = graphicpipe::GraphicsPipe::m_funcGetInstance();
 
 		std::string line;
 		
@@ -87,6 +89,7 @@ namespace Serialization {
 			if (temp == "WindowWidth:") str2 >> help->m_windowWidth;
 			if (temp == "FpsCap:") str2 >> help->m_fpsCap;
 			if (temp == "StartScene:") str2 >> help->m_startScene;
+		
 		}
 
 
@@ -130,11 +133,37 @@ namespace Serialization {
 
 		std::string scenename = jsonFilePath.filename().string();
 		
+
+		// Load Global Setting
+		bool foundGlobalSettings = false;
+		for (rapidjson::SizeType i = 0; i < doc.Size(); i++) {
+			const rapidjson::Value& entry = doc[i];
+			if (entry.HasMember("GlobalSettings")) {
+				foundGlobalSettings = true;
+				const rapidjson::Value& globalSettings = entry["GlobalSettings"];
+				if (globalSettings.HasMember("globalIllumination")) {
+					graphicpipe::GraphicsPipe::m_funcGetInstance()->m_globalLightIntensity = globalSettings["globalIllumination"].GetFloat();
+				}
+				if (globalSettings.HasMember("backgroundColor")) {
+					const rapidjson::Value& bgColor = globalSettings["backgroundColor"];
+					Helper::Helpers* helper = Helper::Helpers::GetInstance();
+					helper->m_colour.m_x = bgColor["r"].GetFloat();
+					helper->m_colour.m_y = bgColor["g"].GetFloat();
+					helper->m_colour.m_z = bgColor["b"].GetFloat();
+				}
+			}
+		}
+
 		/*******************INSERT INTO FUNCTION*****************************/
 
 		// Iterate through each component entry in the JSON array
 		for (rapidjson::SizeType i = 0; i < doc.Size(); i++) {
 			const rapidjson::Value& entityData = doc[i];
+
+			if (entityData.HasMember("GlobalSettings")) {
+				continue;
+			}
+
 			m_LoadEntity(entityData, std::nullopt, scenename);
 		}
 
@@ -156,10 +185,26 @@ namespace Serialization {
 
 		std::unordered_set<ecs::EntityID> savedEntities;  //track saved entities
 
+		rapidjson::Value globalSettings(rapidjson::kObjectType);
+		globalSettings.AddMember("globalIllumination",
+			graphicpipe::GraphicsPipe::m_funcGetInstance()->m_globalLightIntensity, allocator);
+
+		rapidjson::Value backgroundColor(rapidjson::kObjectType);
+		Helper::Helpers* helper = Helper::Helpers::GetInstance();
+		backgroundColor.AddMember("r", helper->m_colour.m_x, allocator);
+		backgroundColor.AddMember("g", helper->m_colour.m_y, allocator);
+		backgroundColor.AddMember("b", helper->m_colour.m_z, allocator);
+		globalSettings.AddMember("backgroundColor", backgroundColor, allocator);
+
+		rapidjson::Value settingsWrapper(rapidjson::kObjectType);
+		settingsWrapper.AddMember("GlobalSettings", globalSettings, allocator);
+		doc.PushBack(settingsWrapper, allocator);
+
 		//Start saving the entities
 		std::vector<ecs::EntityID> entities = ecs->m_ECS_SceneMap.find(scene.filename().string())->second.m_sceneIDs;
 		for (const auto& entityId : entities) {
 			if (!ecs::Hierachy::m_GetParent(entityId).has_value()) {
+				rapidjson::Value entityData(rapidjson::kObjectType);
 				m_SaveEntity(entityId, doc, allocator, savedEntities);
 			}
 		}
@@ -265,7 +310,7 @@ namespace Serialization {
 				rapidjson::Value player(rapidjson::kObjectType);
 				player.AddMember("enemytag", ec->m_enemyTag, allocator);
 				player.AddMember("enemytype", ec->m_enemyTypeInt, allocator);
-				player.AddMember("enemybehaviour", ec->m_enemyTypeInt, allocator);
+				player.AddMember("enemybehaviour", ec->m_enemyRoamBehaviourInt, allocator);
 				entityData.AddMember("enemy", player, allocator);
 				hasComponents = true;  // Mark as having a component
 			}
@@ -325,6 +370,7 @@ namespace Serialization {
 				colorValue.AddMember("b", sc->m_color.m_z, allocator);
 				sprite.AddMember("color", colorValue, allocator);
 				sprite.AddMember("alpha", sc->m_alpha, allocator);
+				sprite.AddMember("isLit", sc->m_isIlluminated, allocator);
 
 				entityData.AddMember("sprite", sprite, allocator);
 				hasComponents = true;  // Mark as having a component
@@ -554,6 +600,38 @@ namespace Serialization {
 			}
 		}
 
+		if (signature.test(ecs::ComponentType::TYPEPARTICLECOMPONENT))
+		{
+			ecs::ParticleComponent* particle = static_cast<ecs::ParticleComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPEPARTICLECOMPONENT]->m_GetEntityComponent(entityId));
+			if (particle)
+			{
+				rapidjson::Value par(rapidjson::kObjectType);
+
+				par.AddMember("willSpawn", particle->m_willSpawn, allocator);
+				par.AddMember("noOfParticles", particle->m_noOfParticles, allocator);
+				par.AddMember("lifeSpan", particle->m_lifeSpan, allocator);
+				par.AddMember("velocityX", particle->m_velocity.m_x, allocator);
+				par.AddMember("velocityY", particle->m_velocity.m_y, allocator);
+				par.AddMember("accelerationX", particle->m_acceleration.m_x, allocator);
+				par.AddMember("accelerationY", particle->m_acceleration.m_y, allocator);
+				par.AddMember("colorR", particle->m_color.m_x, allocator);
+				par.AddMember("colorG", particle->m_color.m_y, allocator);
+				par.AddMember("colorB", particle->m_color.m_z, allocator);
+				par.AddMember("coneRotation", particle->m_coneRotation, allocator);
+				par.AddMember("coneAngle", particle->m_coneAngle, allocator);
+				par.AddMember("randomFactor", particle->m_randomFactor, allocator);
+				par.AddMember("imageFile", rapidjson::Value(particle->m_imageFile.c_str(), allocator), allocator);
+				par.AddMember("stripCount", particle->m_stripCount, allocator);
+				par.AddMember("frameNumber", particle->m_frameNumber, allocator);
+				par.AddMember("layer", particle->m_layer, allocator);
+				par.AddMember("friction", particle->m_friction, allocator);
+				par.AddMember("fps", particle->m_fps, allocator);
+
+				entityData.AddMember("particle", par, allocator);
+				hasComponents = true;
+			}
+		}
+
 		// Check if the entity has AudioComponent and save it
 		if (signature.test(ecs::ComponentType::TYPEAUDIOCOMPONENT)) {
 			ecs::AudioComponent* ac = static_cast<ecs::AudioComponent*>(
@@ -591,26 +669,26 @@ namespace Serialization {
 				// Create an array to store script objects
 				rapidjson::Value rayArray(rapidjson::kArrayType);
 
-				for (const auto& raycast : rc->m_raycast) {
+				for (const auto& raycast2 : rc->m_raycast) {
 					// Create an object for each script
 					rapidjson::Value raycastObject(rapidjson::kObjectType);
 					
 					rapidjson::Value raycastID;
-					raycastID.SetString(raycast.m_rayID.c_str(), allocator);
+					raycastID.SetString(raycast2.m_rayID.c_str(), allocator);
 					raycastObject.AddMember("raycastID", raycastID, allocator);
 
 
 					// Add the boolean value to the object
-					raycastObject.AddMember("israycasting", raycast.m_isRaycasting, allocator);
+					raycastObject.AddMember("israycasting", raycast2.m_isRaycasting, allocator);
 
 					raycastObject.AddMember("targetposition", rapidjson::Value().SetObject()
-						.AddMember("x", raycast.m_targetPosition.m_x, allocator)
-						.AddMember("y", raycast.m_targetPosition.m_y, allocator), allocator);
+						.AddMember("x", raycast2.m_targetPosition.m_x, allocator)
+						.AddMember("y", raycast2.m_targetPosition.m_y, allocator), allocator);
 
-					if (raycast.m_Layers.size() > 0) {
+					if (raycast2.m_Layers.size() > 0) {
 						rapidjson::Value layerArray(rapidjson::kArrayType);
 
-						for (const auto layer : raycast.m_Layers) {
+						for (const auto layer : raycast2.m_Layers) {
 							rapidjson::Value layerObject(rapidjson::kObjectType);
 
 							layerObject.AddMember("layer", (int)layer, allocator);
@@ -658,6 +736,19 @@ namespace Serialization {
 			}
 		}
 
+		if (signature.test(ecs::ComponentType::TYPELIGHTINGCOMPONENT)) {
+			ecs::LightingComponent *lc = static_cast<ecs::LightingComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPELIGHTINGCOMPONENT]->m_GetEntityComponent(entityId));
+			if (lc) {
+				m_saveComponentreflect(lc, entityData, allocator);
+			}
+		}
+
+		if (signature.test(ecs::ComponentType::TYPEVIDEOCOMPONENT)) {
+			ecs::VideoComponent* vc = static_cast<ecs::VideoComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::ComponentType::TYPEVIDEOCOMPONENT]->m_GetEntityComponent(entityId));
+			if (vc) {
+				m_saveComponentreflect(vc, entityData, allocator);
+			}
+		}
 
 		// Add children
 		std::optional<std::vector<ecs::EntityID>> childrenOptional = ecs::Hierachy::m_GetChild(entityId);
@@ -869,6 +960,10 @@ namespace Serialization {
 				}
 				if (sprite.HasMember("alpha")) {
 					sc->m_alpha = sprite["alpha"].GetFloat();
+				}
+				if (sprite.HasMember("isLit"))
+				{
+					sc->m_isIlluminated = sprite["isLit"].GetBool();
 				}
 			}
 		}
@@ -1247,6 +1342,57 @@ namespace Serialization {
 			}
 		}
 
+		// Load Particle Component if it exists
+		if (entityData.HasMember("particle") && entityData["particle"].IsObject()) {
+			ecs::ParticleComponent* particle = static_cast<ecs::ParticleComponent*>(ecs->m_AddComponent(ecs::TYPEPARTICLECOMPONENT, newEntityId));
+
+			if (particle) {
+				const rapidjson::Value& par = entityData["particle"];
+
+				if (par.HasMember("willSpawn")) particle->m_willSpawn = par["willSpawn"].GetBool();
+				if (par.HasMember("noOfParticles")) particle->m_noOfParticles = par["noOfParticles"].GetInt();
+				if (par.HasMember("lifeSpan")) particle->m_lifeSpan = par["lifeSpan"].GetFloat();
+				if (par.HasMember("velocityX")) particle->m_velocity.m_x = par["velocityX"].GetFloat();
+				if (par.HasMember("velocityY")) particle->m_velocity.m_y = par["velocityY"].GetFloat();
+				if (par.HasMember("accelerationX")) particle->m_acceleration.m_x = par["accelerationX"].GetFloat();
+				if (par.HasMember("accelerationY")) particle->m_acceleration.m_y = par["accelerationY"].GetFloat();
+				if (par.HasMember("colorR")) particle->m_color.m_x = par["colorR"].GetFloat();
+				if (par.HasMember("colorG")) particle->m_color.m_y = par["colorG"].GetFloat();
+				if (par.HasMember("colorB")) particle->m_color.m_z = par["colorB"].GetFloat();
+				if (par.HasMember("coneRotation")) particle->m_coneRotation = par["coneRotation"].GetFloat();
+				if (par.HasMember("coneAngle")) particle->m_coneAngle = par["coneAngle"].GetFloat();
+				if (par.HasMember("randomFactor")) particle->m_randomFactor = par["randomFactor"].GetFloat();
+				if (par.HasMember("imageFile")) particle->m_imageFile = par["imageFile"].GetString();
+				if (par.HasMember("stripCount")) particle->m_stripCount = par["stripCount"].GetInt();
+				if (par.HasMember("frameNumber")) particle->m_frameNumber = par["frameNumber"].GetInt();
+				if (par.HasMember("layer")) particle->m_layer = par["layer"].GetInt();
+				if (par.HasMember("friction")) particle->m_friction = par["friction"].GetFloat();
+				if (par.HasMember("fps")) particle->m_fps = par["fps"].GetInt();
+			}
+		}
+
+
+
+		if (entityData.HasMember(ecs::LightingComponent::classname()) && entityData[ecs::LightingComponent::classname()].IsObject()) {
+			ecs::LightingComponent* lc = static_cast<ecs::LightingComponent*>(
+				ecs->m_AddComponent(ecs::TYPELIGHTINGCOMPONENT, newEntityId)
+				);
+
+			if (lc) {
+				m_LoadComponentreflect(lc, entityData);
+			}
+		}
+
+		if (entityData.HasMember(ecs::VideoComponent::classname()) && entityData[ecs::VideoComponent::classname()].IsObject()) {
+			ecs::VideoComponent* vc = static_cast<ecs::VideoComponent*>(
+				ecs->m_AddComponent(ecs::TYPEVIDEOCOMPONENT, newEntityId)
+				);
+
+			if (vc) {
+				m_LoadComponentreflect(vc, entityData);
+			}
+		}
+
 
 		//Attach entity to parent
 		if (parentID.has_value()) {
@@ -1262,7 +1408,7 @@ namespace Serialization {
 		}
 	}
 	void Serialization::Serialize::m_SavePhysicsLayerMatrix() {
-		std::ofstream file("./ECS/LayerConfig.txt");
+		std::ofstream file("./Config/LayerConfig.txt");
 		if (!file.is_open()) {
 			LOGGING_ERROR("Could not open LayerConfig.txt for writing.");
 			return;
@@ -1283,7 +1429,7 @@ namespace Serialization {
 	}
 
 	void Serialization::Serialize::m_LoadPhysicsLayerMatrix() {
-		std::ifstream file("./ECS/LayerConfig.txt");
+		std::ifstream file("./Config/LayerConfig.txt");
 		if (!file.is_open()) {
 			LOGGING_ERROR("Could not open LayerConfig.txt for reading.");
 			return;
@@ -1317,6 +1463,55 @@ namespace Serialization {
 
 		file.close();
 		LOGGING_INFO("Collision matrix loaded from LayerConfig.txt");
+	}
+
+	void Serialization::Serialize::m_SaveGlobaalSettings()
+	{
+		std::ofstream file("./Config/GlobalConfig.txt");
+		if (!file.is_open()) {
+			LOGGING_ERROR("Could not open GlobalConfig.txt for writing.");
+			return;
+		}
+		graphicpipe::GraphicsPipe* graphics = graphicpipe::GraphicsPipe::m_funcGetInstance();
+		Helper::Helpers* helper = Helper::Helpers::GetInstance();
+		file << "GlobalIllumination: " << graphics->m_globalLightIntensity << std::endl;
+		file << "BackgroundColor: " << helper->m_colour.m_x << ' ' << helper->m_colour.m_y << ' ' << helper->m_colour.m_z << std::endl;
+		file.close();
+	}
+
+	void Serialization::Serialize::m_LoadGlobalSettings()
+	{
+		std::ifstream file("./Config/GlobalConfig.txt");
+		if (!file.is_open()) {
+			LOGGING_ERROR("Could not open GlobalConfig.txt for reading.");
+			return;
+		}
+
+		std::string line;
+		graphicpipe::GraphicsPipe* graphics = graphicpipe::GraphicsPipe::m_funcGetInstance();
+		Helper::Helpers* helper = Helper::Helpers::GetInstance();
+
+		while (std::getline(file, line))
+		{
+			std::istringstream iss(line);
+			std::string temp;
+			iss >> temp;
+			if (temp == "GlobalIllumination:") {
+				float light;
+				iss >> light;
+				graphics->m_globalLightIntensity = light;
+			}
+			if (temp == "BackgroundColor:") {
+				float r, g, b = 0;
+				iss >> r >> g >> b;
+				helper->m_colour = { r,g,b };
+			}
+		}
+		
+
+
+		file.close();
+		LOGGING_INFO("Global Settings loaded from GlobalConfig.txt");
 	}
 	std::string Serialize::m_EncodeBase64(const void* data, size_t size)
 	{

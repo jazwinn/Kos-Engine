@@ -1,5 +1,15 @@
 [
     {
+        "GlobalSettings": {
+            "globalIllumination": 0.30000001192092896,
+            "backgroundColor": {
+                "r": 0.13716816902160645,
+                "g": 0.13716816902160645,
+                "b": 0.13716816902160645
+            }
+        }
+    },
+    {
         "name": {
             "namestr": "FearlessEnemy",
             "layer": 2,
@@ -27,8 +37,8 @@
                 "y": 0.23999999463558197
             },
             "offset": {
-                "x": -0.009999999776482582,
-                "y": 0.05999999865889549
+                "x": 0.0,
+                "y": 0.0
             },
             "drawDebug": true,
             "radius": 0.5,
@@ -64,21 +74,22 @@
             "static": false
         },
         "sprite": {
-            "imagefile": "ani_scientistWalk_strip14.png",
+            "imagefile": "ani_scientistWalk_strip8.png",
             "layer": 28,
             "color": {
                 "r": 1.0,
                 "g": 1.0,
                 "b": 1.0
             },
-            "alpha": 1.0
+            "alpha": 1.0,
+            "isLit": true
         },
         "animation": {
             "frameNumber": 0,
             "framesPerSecond": 0,
             "frameTimer": 0.0,
             "isAnimating": true,
-            "stripCount": 14
+            "stripCount": 8
         },
         "script": {
             "scripts": [
@@ -118,7 +129,7 @@
                     },
                     "Layer Vector": [
                         {
-                            "layer": 7
+                            "layer": 5
                         }
                     ]
                 }

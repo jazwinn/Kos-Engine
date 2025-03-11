@@ -59,9 +59,12 @@ namespace ecs{
 		m_AddComponentToECS<ButtonComponent>(TYPEBUTTONCOMPONENT);
 		m_AddComponentToECS<TilemapComponent>(TYPETILEMAPCOMPONENT);
 		m_AddComponentToECS<AudioComponent>(TYPEAUDIOCOMPONENT);
+		m_AddComponentToECS<LightingComponent>(TYPELIGHTINGCOMPONENT);
 		m_AddComponentToECS<GridComponent>(TYPEGRIDCOMPONENT);
 		m_AddComponentToECS<RaycastComponent>(TYPERAYCASTINGCOMPONENT);
 		m_AddComponentToECS<PathfindingComponent>(TYPEPATHFINDINGCOMPONENT);
+		m_AddComponentToECS<ParticleComponent>(TYPEPARTICLECOMPONENT);
+		m_AddComponentToECS<VideoComponent>(TYPEVIDEOCOMPONENT);
 
 
 
@@ -80,9 +83,15 @@ namespace ecs{
 		ecs->m_ECS_SystemMap[TYPECAMERASYSTEM] = std::make_shared<CameraSystem>();
 		ecs->m_ECS_SystemMap[TYPEANIMATIONSYSTEM] = std::make_shared<AnimationSystem>();
 		ecs->m_ECS_SystemMap[TYPETILEMAPSYSTEM] = std::make_shared<TilemapSystem>();
+		ecs->m_ECS_SystemMap[TYPELIGHTINGSYSTEM] = std::make_shared<LightingSystem>();
+
+
 		ecs->m_ECS_SystemMap[TYPEGRIDSYSTEM] = std::make_shared<GridSystem>();
 		ecs->m_ECS_SystemMap[TYPERAYCASTSYSTEM] = std::make_shared<RayCastSystem>();
 		ecs->m_ECS_SystemMap[TYPEPATHFINDINGSYSTEM] = std::make_shared<PathfindingSystem>();
+		ecs->m_ECS_SystemMap[TYPEPARTICLESYSTEM] = std::make_shared<ParticleSystem>();
+
+		ecs->m_ECS_SystemMap[TYPEVIDEOSYSTEM] = std::make_shared<VideoSystem>();
 
 		
 
@@ -421,6 +430,7 @@ namespace ecs{
 		//store delete entity
 		m_deletedentity.push_back(std::make_pair(ID, ecs->m_ECS_EntityMap.find(ID)->second));
 		ecs->m_ECS_EntityMap.erase(ID);
+
 
 		return true;
 	}

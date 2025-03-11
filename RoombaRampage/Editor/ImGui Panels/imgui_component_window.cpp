@@ -95,6 +95,23 @@ struct DrawComponents {
         }
         count++;
     }
+    void operator()(graphicpipe::LightType& _args)
+    {
+        const char* shapeName = (_args == graphicpipe::LightType::GLOW) ? "GLOW" : "MULTIPLY";
+        if (ImGui::BeginCombo("Shape Types", shapeName))
+        {
+            if (ImGui::Selectable("GLOW"))
+            {
+                _args = graphicpipe::LightType::GLOW;
+            }
+            if (ImGui::Selectable("MULTIPLY"))
+            {
+                _args = graphicpipe::LightType::MULTIPLY;
+            }
+            ImGui::EndCombo();
+        }
+        count++;
+    }
 
     void operator()(int& _args) {
         
@@ -165,7 +182,7 @@ struct DrawComponents {
         ImGui::SetNextItemWidth(100.0f);
         title = "Z##" + m_Array[count];
         ImGui::PushItemWidth(slidersize);
-        ImGui::DragFloat(title.c_str(), &_args.m_y, 0.02f, -50.0f, 50.0f, "%.2f");
+        ImGui::DragFloat(title.c_str(), &_args.m_z, 0.02f, -50.0f, 50.0f, "%.2f");
 
         ImGui::PopItemWidth();
         ImGui::PopItemWidth();
@@ -259,7 +276,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
     {
         "Add Components", "Collider Component", "Sprite Component", "Enemy Component", "Rigid Body Component", "Text Component", 
         "Animation Component", "Camera Component" , "Button Component" , "Script Component", "Tilemap Component", "Audio Component",
-        "Grid Component", "RayCast Component", "PathfindingComponent"
+        "Grid Component", "RayCast Component", "PathfindingComponent", "Lighting Component", "Particle Component","Video Component"
     };
     static int ComponentType = 0;
 
@@ -375,6 +392,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 }
             }
             if (ComponentType == 12) {
+                
                 ecs->m_AddComponent(ecs::TYPEGRIDCOMPONENT, entityID);
                 ComponentType = 0;
                 if (!EntitySignature.test(ecs::TYPEGRIDCOMPONENT)) {
@@ -398,6 +416,33 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                     DISPATCH_ACTION_EVENT(action);
                 }
             }
+            if (ComponentType == 15) {
+                 ecs->m_AddComponent(ecs::TYPELIGHTINGCOMPONENT, entityID);
+                ComponentType = 0;
+                if (!EntitySignature.test(ecs::TYPELIGHTINGCOMPONENT)) {
+                    events::AddComponent action(entityID, ecs::TYPELIGHTINGCOMPONENT);
+                    DISPATCH_ACTION_EVENT(action);
+                }
+            }
+            if (ComponentType == 16) {
+                ecs->m_AddComponent(ecs::TYPEPARTICLECOMPONENT, entityID);
+                ComponentType = 0;
+                if (!EntitySignature.test(ecs::TYPEPARTICLECOMPONENT)) {
+                    events::AddComponent action(entityID, ecs::TYPEPARTICLECOMPONENT);
+                    DISPATCH_ACTION_EVENT(action);
+                }
+            }
+            if (ComponentType == 17) {
+                ecs->m_AddComponent(ecs::TYPEVIDEOCOMPONENT, entityID);
+                ComponentType = 0;
+                if (!EntitySignature.test(ecs::TYPEVIDEOCOMPONENT)) {
+                    events::AddComponent action(entityID, ecs::TYPEVIDEOCOMPONENT);
+                    DISPATCH_ACTION_EVENT(action);
+                }
+            }
+
+
+           
         }
 
         auto CreateContext = [](ecs::ComponentType Type, ecs::EntityID ID) {
@@ -467,7 +512,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         if (ecs->m_ECS_EntityMap[id].test(ecs::TYPETEXTCOMPONENT))
                         {
                             ecs::TextComponent* text = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(id));
-                            const int maxLayer = 99;
+                            const int maxLayer = 999;
                             int layer = text->m_fontLayer;
                             if (layer >= maxLayer)
                             {
@@ -514,8 +559,15 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
             const char* layers[] = { ecs->m_layersStack.m_layerMap[layer::DEFAULT].first.c_str(), ecs->m_layersStack.m_layerMap[layer::LAYER1].first.c_str(),ecs->m_layersStack.m_layerMap[layer::LAYER2].first.c_str(),
                                   ecs->m_layersStack.m_layerMap[layer::LAYER3].first.c_str(), ecs->m_layersStack.m_layerMap[layer::LAYER4].first.c_str(), ecs->m_layersStack.m_layerMap[layer::LAYER5].first.c_str(),
                                   ecs->m_layersStack.m_layerMap[layer::LAYER6].first.c_str(), ecs->m_layersStack.m_layerMap[layer::LAYER7].first.c_str(), ecs->m_layersStack.m_layerMap[layer::LAYER8].first.c_str() };
+
+
+            std::vector<const char*> layers_vec;
+            for (const auto& _layer : ecs->m_layersStack.m_layerMap) {
+                layers_vec.push_back(_layer.second.first.c_str());
+            }
+
             int layer_current = nc->m_Layer;
-            if (ImGui::Combo("Layers", &layer_current, layers, IM_ARRAYSIZE(layers))) {
+            if (ImGui::Combo("Layers", &layer_current, layers_vec.data(), static_cast<int>(layers_vec.size()))) {
                 ecs->m_layersStack.m_SwapEntityLayer((layer::LAYERS)layer_current, nc->m_Layer, entityID);
 
             }
@@ -1230,7 +1282,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEGRIDCOMPONENT)) {
 
                     auto* grid = static_cast<ecs::GridComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEGRIDCOMPONENT]->m_GetEntityComponent(entityID));
-                    auto* transform = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(entityID));
+                    //auto* transform = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(entityID)); //unused
                     
                     if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEGRIDCOMPONENT)) {
                         auto* rbc = static_cast<ecs::GridComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEGRIDCOMPONENT]->m_GetEntityComponent(entityID));
@@ -1374,7 +1426,19 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                                     }
                                 }
 
+                                if (ImGui::Checkbox("isBGM", &it2->m_IsBGM)) {
+                                    auto& audioManager = assetManager->m_audioManager;
 
+                                    audioManager.m_SetIsBGMForEntity(entityID, it2->m_Name, it2->m_IsBGM);
+                                    //std::cout << it2->m_IsBGM << std::endl;
+                                }
+
+                                if (ImGui::Checkbox("isSFX", &it2->m_IsSFX)) {
+                                    auto& audioManager = assetManager->m_audioManager;
+
+                                    audioManager.m_SetIsSFXForEntity(entityID, it2->m_Name, it2->m_IsSFX);
+                                    //std::cout << it2->m_IsSFX << std::endl;
+                                }
 
 
                                 bool isPaused = false;
@@ -1436,7 +1500,76 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                     }
                 }
             }
+             if (EntitySignature.test(ecs::TYPELIGHTINGCOMPONENT)) {
 
+                open = ImGui::CollapsingHeader("Lighting Component");
+
+                CreateContext(ecs::TYPELIGHTINGCOMPONENT, entityID);
+
+                if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPELIGHTINGCOMPONENT)) {
+                    auto* lc = static_cast<ecs::LightingComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPELIGHTINGCOMPONENT]->m_GetEntityComponent(entityID));
+                    lc->ApplyFunction(DrawComponents(lc->Names()));
+
+
+                    ImVec4 color = ImVec4(lc->m_colour.m_x, lc->m_colour.m_y, lc->m_colour.m_z, 1.f);
+
+                    ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
+
+                    ImGui::SameLine();
+                    if (ImGui::ColorEdit4("MyColor##3", (float*)&color, ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel))
+                    {
+                        lc->m_colour.m_x = color.x;
+                        lc->m_colour.m_y = color.y;
+                        lc->m_colour.m_z = color.z;
+                    }
+                    ImGui::SameLine();
+                    ImGui::Text("Color");
+
+                }
+
+            }
+
+             if (EntitySignature.test(ecs::TYPEPARTICLECOMPONENT)) {
+
+                 open = ImGui::CollapsingHeader("Particle Component");
+
+                 CreateContext(ecs::TYPEPARTICLECOMPONENT, entityID);
+
+                 if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEPARTICLECOMPONENT)) {
+                     auto* rbc = static_cast<ecs::ParticleComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEPARTICLECOMPONENT]->m_GetEntityComponent(entityID));
+                     rbc->ApplyFunction(DrawComponents(rbc->Names()));
+
+                     ImVec4 color = ImVec4(rbc->m_color.m_x, rbc->m_color.m_y, rbc->m_color.m_z, 1.f);
+
+                     ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
+
+                     ImGui::SameLine();
+                     if (ImGui::ColorEdit4("MyColor##4", (float*)&color, ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel))
+                     {
+                         rbc->m_color.m_x = color.x;
+                         rbc->m_color.m_y = color.y;
+                         rbc->m_color.m_z = color.z;
+                     }
+                     ImGui::SameLine();
+                     ImGui::Text("Color");
+                     ImGui::SetNextItemWidth(100.0f);
+                     if (ImGui::BeginCombo("Images", rbc->m_imageFile.c_str()))
+                     {
+                         assetmanager::AssetManager* Asset = assetmanager::AssetManager::m_funcGetInstance();
+                         for (const auto& image : Asset->m_imageManager.m_imageMap) {
+
+                             if (ImGui::Selectable(image.first.c_str())) 
+                             {
+                                 rbc->m_imageFile = image.first.c_str();
+                             }
+                         }
+                         ImGui::EndCombo();
+                     }
+
+                 }
+
+
+            }
             if (EntitySignature.test(ecs::TYPERAYCASTINGCOMPONENT)) {
 
                 open = ImGui::CollapsingHeader("Raycast Component");
@@ -1454,24 +1587,24 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
 
                     int _count{};
-                    for (auto it = rcc->m_raycast.begin(); it != rcc->m_raycast.end(); it++) {
+                    for (auto it2 = rcc->m_raycast.begin(); it2 != rcc->m_raycast.end(); it2++) {
                         ImGui::PushID(_count);
-                        it->ApplyFunction(DrawComponents(it->Names()));
+                        it2->ApplyFunction(DrawComponents(it2->Names()));
 
                         if (ImGui::Button("+ Layer")) {
-                            it->m_Layers.push_back((layer::LAYERS)0);
+                            it2->m_Layers.push_back((layer::LAYERS)0);
                         }
 
                         ImGui::SameLine();
-                        if (it->m_Layers.size() > 0 && ImGui::Button("- Layer")) {
-                            it->m_Layers.pop_back();
+                        if (it2->m_Layers.size() > 0 && ImGui::Button("- Layer")) {
+                            it2->m_Layers.pop_back();
                             ImGui::PopID();
                             break;
 
                         }
                         ImGui::SameLine();
                         if (ImGui::Button(" Delete Ray")) {
-                            rcc->m_raycast.erase(it);
+                            rcc->m_raycast.erase(it2);
                             ImGui::PopID();
                             break;
                         }
@@ -1486,11 +1619,11 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
             }
 
             if (EntitySignature.test(ecs::TYPEPATHFINDINGCOMPONENT)) {
-                bool open = ImGui::CollapsingHeader("Pathfinding Component");
+                bool openPC = ImGui::CollapsingHeader("Pathfinding Component");
 
                 CreateContext(ecs::TYPEPATHFINDINGCOMPONENT, entityID);
 
-                if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEPATHFINDINGCOMPONENT)) {
+                if (openPC && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEPATHFINDINGCOMPONENT)) {
                     auto* pfc = static_cast<ecs::PathfindingComponent*>(
                         ecs->m_ECS_CombinedComponentPool[ecs::TYPEPATHFINDINGCOMPONENT]->m_GetEntityComponent(entityID)
                         );
@@ -1500,45 +1633,41 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                         pfc->ApplyFunction(DrawComponents(pfc->Names()));
 
-                        //int x[2] = { pfc->m_StartPos.m_x,  pfc->m_StartPos.m_y };
-                        //if (ImGui::InputInt2("Start Position", x)) {
-                        //    // Optionally validate start position
-                        //}
-                        //int x1[2] = { pfc->m_TargetPos.m_x,  pfc->m_TargetPos.m_y };
-                        //if (ImGui::InputInt2("Target Position", x1)) {
-                        //    // Optionally validate target position
-                        //}
-
-                        //ImGui::InputText("Grid Key", &pfc->m_GridKey);
-
-                        //if (ImGui::Button("Recalculate Path")) {
-                        //    auto* grid = GetGridByKey(pfc->m_GridKey); // Assume a function to get GridComponent by key
-                        //    if (grid) {
-                        //        AStarPathfinding pathfinder;
-                        //        auto pathNodes = pathfinder.FindPath(grid, pfc->m_StartPos[0], pfc->m_StartPos[1],
-                        //            pfc->m_TargetPos[0], pfc->m_TargetPos[1]);
-                        //        pfc->m_Path.clear();
-                        //        for (const auto& node : pathNodes) {
-                        //            pfc->m_Path.emplace_back(node.x, node.y);
-                        //        }
-                        //    }
-                        //    else {
-                        //        LOGGING_WARN("Invalid Grid Key!");
-                        //    }
-                        //}
-
-                        /*if (!pfc->m_Path.empty()) {
-                            ImGui::Text("Calculated Path:");
-                            for (const auto& pos : pfc->m_Path) {
-                                ImGui::BulletText("(%d, %d)", pos.first, pos.second);
-                            }
-                        }*/
+                       
                     }
                 }
             }
 
 
+            if (EntitySignature.test(ecs::TYPEVIDEOCOMPONENT)) {
+                bool openPC = ImGui::CollapsingHeader("Video Component");
 
+                CreateContext(ecs::TYPEVIDEOCOMPONENT, entityID);
+
+                if (openPC && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEVIDEOCOMPONENT)) {
+                    auto* vc = static_cast<ecs::VideoComponent*>(
+                        ecs->m_ECS_CombinedComponentPool[ecs::TYPEVIDEOCOMPONENT]->m_GetEntityComponent(entityID)
+                        );
+
+                    if (vc) {
+
+                        if (vc->play == false) {
+                            if (ImGui::Button("Play")) {
+                                vc->play = true;
+                            }
+                        }
+                        else {
+                            if (ImGui::Button("Stop")) {
+                                vc->play = false;
+                            }
+                        }
+
+                        vc->ApplyFunction(DrawComponents(vc->Names()));
+
+
+                    }
+                }
+            }
             
 
             //draw invinsible box
@@ -1607,6 +1736,20 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             else {
                                 auto* sc = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(entityID));
                                 sc->m_fileName = filename->filename().string();
+                            }
+                        }
+
+                        if (filename->filename().extension().string() == ".mpg" || filename->filename().extension().string() == ".mpeg") {
+
+                            if (!EntitySignature.test(ecs::TYPEVIDEOCOMPONENT)) {// does not have sprite component, create one
+                                ecs::VideoComponent* vid = static_cast<ecs::VideoComponent*>(ecs->m_AddComponent(ecs::TYPEVIDEOCOMPONENT, entityID));
+                                vid->filename = filename->filename().string();
+                                vid->play = true;
+                            }
+                            else {
+                                auto* vc = static_cast<ecs::VideoComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEVIDEOCOMPONENT]->m_GetEntityComponent(entityID));
+                                vc->filename = filename->filename().string();
+                                vc->play = true;
                             }
                         }
 

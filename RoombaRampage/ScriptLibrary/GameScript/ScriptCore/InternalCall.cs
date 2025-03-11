@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Reflection.Emit;
 using System.Data.SqlClient;
+using System.Runtime.InteropServices;
 
 public static class InternalCall
 {
@@ -131,7 +132,10 @@ public static class InternalCall
     public extern static void m_InternalGetWorldMousePosition(out Vector2 mousepos);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static void m_InternalCallSetTimeScale(in float timescale);
+    public extern static void m_InternalCallSetTimeScale(float timescale);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static float m_InternalCallGetTimeScale();
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static void m_InternalCallResetTimeScale();
@@ -150,6 +154,36 @@ public static class InternalCall
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static void m_InternalCallStopAllAudio();
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static void m_InternalCallPauseAudio(uint id, string monoString);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static void m_InternalCallUnPauseAudio(uint id, string monoString);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static void m_InternalCallPauseAllAudio();
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static void m_InternalCallUnPauseAllAudio();
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static void m_InternalCallSetGlobalBGMVolume(float volume);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static void m_InternalCallSetGlobalSFXVolume(float volume);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static float m_InternalCallGetGlobalBGMVolume();
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static float m_InternalCallGetGlobalSFXVolume();
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static bool m_InternalCallCheckIsBGM(uint id, string monoString);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static bool m_InternalCallCheckIsSFX(uint id, string monoString);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static bool m_InternalCallIsWindowMinimise();
@@ -178,6 +212,14 @@ public static class InternalCall
     [MethodImpl(MethodImplOptions.InternalCall)]
     private extern static bool m_InternalCallSetRayCast(uint id, string monoString, in bool isRaycasting, in Vector2 targetposition, in float m_distance, in bool targetReached, in Vector2 hitposition);
 
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static bool m_InternalGetGridComponent(uint id, out Vector2 anchor, out int gridRowLength, out int gridColumnLength, out bool setCollidable, out int gridKey);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static bool m_InternalSetGridComponent(uint id, in Vector2 anchor, in int gridRowLength, in int gridColumnLength, in bool setCollidable, in int gridKey);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static int m_InternalGetEntityIdFromGridKey(int gridkey);
     public static Raycast m_GetRay(uint id, string monoString)
     {
         Raycast ray = new Raycast();
@@ -193,9 +235,11 @@ public static class InternalCall
         m_InternalCallSetRayCast(id, monoString, in ray.m_isRaycasting, in ray.m_targetposition, in ray.m_distance, in ray.m_targetReached, in ray.m_hitPosition);
 
     }
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static bool m_InternalCallGetPath(int gridkey, in int startX, in int startY, in int targetX, in int targetY, out int[] pathX, out int[] pathY);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static bool m_InternalCallGetPathfinding(uint id, out Vector2 m_startpos, out Vector2 m_startend, out int gridkey, out int[] nodeArray_x, out int[] nodeArray_y);
+    public extern static bool m_InternalCallGetPathfinding(uint id, out Vector2 m_startpos, out Vector2 m_startend, out int gridkey);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static void m_EnableLayer(uint layer);
@@ -209,6 +253,14 @@ public static class InternalCall
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static float m_GetUnfixedDeltaTie();
 
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public static extern void m_GetNameComponent(uint id, out IntPtr outPtr);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public static extern void m_ChangeLayer(uint id, uint layerid);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public static extern float m_getFPS();
 }
 
 
@@ -256,25 +308,18 @@ public static class Component
         else if(typeof(T) == typeof(PathfindingComponent))
         {
             var pathfindingcomponent = component as PathfindingComponent;
-            int[] x, y;
-            InternalCall.m_InternalCallGetPathfinding(id, out pathfindingcomponent.m_startPosition, out pathfindingcomponent.m_targetPosition, out pathfindingcomponent.m_gridkey, out x, out y);
+            InternalCall.m_InternalCallGetPathfinding(id, out pathfindingcomponent.m_startPosition, out pathfindingcomponent.m_targetPosition, out pathfindingcomponent.m_gridkey);
 
-            if (x != null && y != null)
-            {
-                for (int n = 0; n < x.Length; n++)
-                {
-                    if (pathfindingcomponent.m_node == null)
-                    {
-                        pathfindingcomponent.m_node = new List<Vector2>();
-                    }
-                    pathfindingcomponent.m_node.Add(new Vector2(x[n], y[n]));
-                }
-            }
         }
         else if (typeof(T) == typeof(EnemyComponent))
         {
             var enemyComponent = component as EnemyComponent;
             InternalCall.m_InternalGetEnemyComponent(id, out enemyComponent.m_tag, out enemyComponent.m_enemyTypeInt, out enemyComponent.m_enemyRoamBehaviourInt);
+        }
+        else if(typeof(T) == typeof(GridComponent))
+        {
+            var _component = component as GridComponent;
+            InternalCall.m_InternalGetGridComponent(id, out _component.m_Anchor, out _component.m_GridRowLength, out _component.m_GridColumnLength, out _component.m_SetCollidable, out _component.m_GridKey);
         }
         else
         {
@@ -314,12 +359,18 @@ public static class Component
         {
             InternalCall.m_InternalSetEnemyComponent(id, in enemy.m_tag, in enemy.m_enemyTypeInt, in enemy.m_enemyRoamBehaviourInt);
         }
+        else if (component is GridComponent grid)
+        {
+            InternalCall.m_InternalSetGridComponent(id, in grid.m_Anchor, in grid.m_GridRowLength, in grid.m_GridColumnLength, in grid.m_SetCollidable, in grid.m_GridKey);
+        }
         else
         {
             throw new NotSupportedException($"Component type {typeof(T).Name} is not supported.");
         }
     }
 }
+
+
 
 public static class GetComponent
 {

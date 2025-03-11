@@ -137,6 +137,24 @@ namespace Serialization {
 		/******************************************************************/
 		static void m_LoadPhysicsLayerMatrix();
 
+		/******************************************************************/
+		/*!
+			\fn        void Serialize::m_SaveGlobalSettings()
+			\brief     Saves the global settings of the application to a JSON file.
+			\details   This function serializes all global settings, including graphics and user preferences, into a JSON format and writes them to a file. This ensures that settings are persistent across sessions and can be reloaded at startup.
+		*/
+		/******************************************************************/
+		static void m_SaveGlobaalSettings();
+
+		/******************************************************************/
+		/*!
+			\fn        void Serialize::m_LoadGlobalSettings()
+			\brief     Loads global settings from a JSON file.
+			\details   This function reads a JSON file containing global settings, such as window size, audio preferences, and graphical settings, and applies these settings to the application upon startup or when settings are reset.
+		*/
+		/******************************************************************/
+		static void m_LoadGlobalSettings();
+
 		static std::string m_EncodeBase64(const void* data, size_t);
 
 		struct VoidDeleter {
@@ -192,7 +210,7 @@ namespace Serialization {
 			value.AddMember(key, rapidjson::Value().SetObject()
 				.AddMember("x", _args.m_x, allocator)
 				.AddMember("y", _args.m_y, allocator)
-				.AddMember("Z", _args.m_z, allocator), allocator);
+				.AddMember("z", _args.m_z, allocator), allocator);
 			count++;
 		}
 

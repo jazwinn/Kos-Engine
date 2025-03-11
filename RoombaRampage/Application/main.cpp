@@ -14,12 +14,17 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 */
 /********************************************************************/
 #include "../Config/pch.h"
-#include <iostream>
+#include <Windows.h>
 #include "Application.h"
 #include "../Debugging/Logging.h"
 
+#ifdef _GAME
+    int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+#else
+    int main()
+#endif _GAME
 
-    int main(void)
+    
     {
         
         // Enable run-time memory check for debug builds.

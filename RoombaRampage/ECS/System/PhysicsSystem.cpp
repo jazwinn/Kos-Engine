@@ -1,15 +1,16 @@
+/******************************************************************/
 /*!
-\file      PhysicsSystem.h
-\author    Elijah Teo, teo.e , 2301530
-\par       teo.e@digipen.edu
-\date      Sept 28, 2024
-\brief     This file holds the definition of the PhysicsSystem class's member functions
+\file      PathfindingSystem.h
+\author    Clarence Boey
+\par       c.boey@digipen.edu
+\date      Sept 29, 2024
+\brief
 
 Copyright (C) 2024 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the
 prior written consent of DigiPen Institute of Technology is prohibited.
 */
-/********************************************************************/
+/******************************************************************/
 
 #include "../Config/pch.h"
 #include "../ECS.h"
@@ -115,11 +116,6 @@ namespace ecs {
 				if (!(rigidBody->m_DirectionVector.m_x == 0.f && rigidBody->m_DirectionVector.m_y == 0.f)) {
 					rigidBody->m_PrevDirVec = rigidBody->m_DirectionVector;
 				}
-				
-
-				//update physics pipline
-			
-				//TODO optimize,  causing longer load time
 				
 			}
 		}
