@@ -403,14 +403,22 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
 
             if (!m_prefabSceneMode && filename->filename().extension().string() == ".prefab") {//dont allow adding of prefab in prefab 
 
-                //check to see if prefab is even loaded
-                if (ecs->m_ECS_SceneMap.find(filename->filename().string()) != ecs->m_ECS_SceneMap.end()) {
-                    ecs::EntityID id = prefab::Prefab::m_CreatePrefab(filename->filename().string(), m_activeScene);
-                    ecs::TransformComponent* transCom = static_cast<ecs::TransformComponent*>(fileecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id));
-                    transCom->m_position = { translate.m_x, translate.m_y };
+                try {
+                    //check to see if prefab is even loaded
+                    if (ecs->m_ECS_SceneMap.find(filename->filename().string()) != ecs->m_ECS_SceneMap.end()) {
+                        ecs::EntityID id = prefab::Prefab::m_CreatePrefab(filename->filename().string(), m_activeScene);
+                        ecs::TransformComponent* transCom = static_cast<ecs::TransformComponent*>(fileecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id));
+                        transCom->m_position = { translate.m_x, translate.m_y };
+                    }
+                    else {
+                        LOGGING_ERROR("Prefab not loaded");
+                    }
+
+
+
                 }
-                else {
-                    LOGGING_ERROR("Prefab not loaded");
+                catch (...) {
+                    LOGGING_ERROR("Prefab fail to load");
                 }
 
             }

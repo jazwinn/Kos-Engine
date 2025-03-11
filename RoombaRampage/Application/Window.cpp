@@ -204,6 +204,9 @@ namespace Application {
             return -1;
         }
 
+        //create icon
+        SetWindowIcon(m_window);
+
         
         return 0;
 	}
@@ -213,8 +216,7 @@ namespace Application {
 
 	int AppWindow::Draw() {
 
-        //create icon
-        SetWindowIcon(m_window);
+
 
         if (Input::InputSystem::m_isKeyPressed(keys::LeftAlt) && Input::InputSystem::m_isKeyTriggered(keys::ENTER)) {
             if (m_enabledFullScreen) {
