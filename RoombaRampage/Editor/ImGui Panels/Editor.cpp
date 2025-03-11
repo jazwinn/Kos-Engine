@@ -177,7 +177,7 @@ namespace gui {
 	void ImGuiHandler::m_NewFrame()
 	{
 		// Start a new ImGui frame
-		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplOpenGL3_NewFrame(); //needs to be called every frame
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 		ImGuizmo::BeginFrame();
@@ -186,7 +186,8 @@ namespace gui {
 	void ImGuiHandler::m_update()
 	{
 		
-
+		m_NewFrame();
+		
 		if (Input::InputSystem::m_isKeyTriggered(keys::F11))
 		{
 			//std::cout << Input::InputSystem::m_isKeyTriggered(keys::F11) << std::endl;
@@ -216,7 +217,7 @@ namespace gui {
 		if (EditorCamera::m_editorMode)
 		{
 			// Render ImGui
-			m_NewFrame();
+
 			//for gizmo - todo once camera is done
 			//ImGuizmo::SetOrthographic(true);
 			
@@ -290,19 +291,21 @@ namespace gui {
 	{
 		ImGuiIO& io = ImGui::GetIO();
 
-		if (EditorCamera::m_editorMode)
-		{
-			ImGui::Render();
+		//if (EditorCamera::m_editorMode)
+		//{
 
-			if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-			{
-				GLFWwindow* backup_current_context = glfwGetCurrentContext();
-				ImGui::UpdatePlatformWindows();
-				ImGui::RenderPlatformWindowsDefault();
-				glfwMakeContextCurrent(backup_current_context);
-			}
-			ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+		//}
+
+		ImGui::Render();
+
+		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+		{
+			GLFWwindow* backup_current_context = glfwGetCurrentContext();
+			ImGui::UpdatePlatformWindows();
+			ImGui::RenderPlatformWindowsDefault();
+			glfwMakeContextCurrent(backup_current_context);
 		}
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	}
 
 

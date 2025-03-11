@@ -152,8 +152,8 @@ public class PlayerBulletType2 : ScriptBase
                             float halfWallHeight = wallCC.m_Size.Y / 2f;
 
                             Vector2 normal = GetRectangleNormal(bulletpos, wallcenter, halfWallWidth, halfWallHeight);
-                            //Console.WriteLine(normal.X);
-                            //Console.WriteLine(normal.Y);
+                                Console.WriteLine(normal.X);
+                                Console.WriteLine(normal.Y);
                             Vector2 bulletVelocity;
                             InternalCall.m_InternalGetVelocity(EntityID, out bulletVelocity);
 
@@ -280,23 +280,29 @@ public class PlayerBulletType2 : ScriptBase
         float top = rectCenter.Y + halfHeight;
         float bottom = rectCenter.Y - halfHeight;
 
-        //Console.WriteLine("Left: " + left);
-        //Console.WriteLine("Right: " + right);
-        //Console.WriteLine("Top: " + top);
-        //Console.WriteLine("Bottom: " + bottom);
+        float dxLeft = Math.Abs(bulletPos.X - left);
+        float dxRight = Math.Abs(bulletPos.X - right);
+        float dyTop = Math.Abs(bulletPos.Y - top);
+        float dyBottom = Math.Abs(bulletPos.Y - bottom);
 
-        //Console.WriteLine("bullet pos x: " + bulletPos.X + " bullet pos y: "+ bulletPos.Y);
+        float minDx = Math.Min(dxLeft, dxRight);
+        float minDy = Math.Min(dyTop, dyBottom);
 
-        float dx = Math.Min(Math.Abs(bulletPos.X - left), Math.Abs(bulletPos.X - right));
-        float dy = Math.Min(Math.Abs(bulletPos.Y - top), Math.Abs(bulletPos.Y - bottom));
-        //Console.WriteLine(dx + " " + dy);
-        if (dx < dy) // Closer to left/right edge
+        if (Math.Abs(minDx - minDy) < 0.001f) // Bullet hit close to a corner (floating-point precision check)
         {
-            return (bulletPos.X < rectCenter.X) ? new Vector2(-1, 0) : new Vector2(1, 0); // Left or Right normal
+            return new Vector2(
+                (bulletPos.X < rectCenter.X) ? -1 : 1,
+                (bulletPos.Y < rectCenter.Y) ? -1 : 1
+            ); // Diagonal normal (corner hit)
+        }
+        else if (minDx < minDy) // Closer to left/right edge
+        {
+            return (dxLeft < dxRight) ? new Vector2(-1, 0) : new Vector2(1, 0); // Left or Right normal
         }
         else // Closer to top/bottom edge
         {
-            return (bulletPos.Y < rectCenter.Y) ? new Vector2(0, -1) : new Vector2(0, 1); // Bottom or Top normal
+            return (dyBottom < dyTop) ? new Vector2(0, -1) : new Vector2(0, 1); // Bottom or Top normal
         }
     }
+
 }
