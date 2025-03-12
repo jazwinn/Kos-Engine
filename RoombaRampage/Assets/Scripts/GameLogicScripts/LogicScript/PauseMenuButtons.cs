@@ -24,7 +24,7 @@ public class PauseMenuButtons : ScriptBase
 
     public override void Update()
     {
-        if (GameControllerLevel1.gameIsPaused)
+        if (true)
         {
             CheckForCollisions();
             CheckForHover();
@@ -44,6 +44,7 @@ public class PauseMenuButtons : ScriptBase
                 switch (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID))
                 {
                     case "PauseMenuCursor":
+                    case "SoundMenuCursor":
                         if (isHovering)
                         {
                             break;
@@ -77,6 +78,7 @@ public class PauseMenuButtons : ScriptBase
             animComp.m_frameNumber = 0;
             Component.Set<AnimationComponent>(EntityID, animComp);
         }
+        
     }
 
     private void CheckForClicks()
@@ -105,6 +107,37 @@ public class PauseMenuButtons : ScriptBase
                     InternalCall.m_InternalCallPlayAudio(EntityID, "aud_buttonClick01");
                     HowToPlayBack();
                     break;
+                case 32:
+                    //enter sound menu
+                    InternalCall.m_InternalCallPlayAudio(EntityID, "aud_buttonClick01");
+                    PauseToSoundMenu();
+                    break;
+                case 35:
+                    //leave sound menu
+                    InternalCall.m_InternalCallPlayAudio(EntityID, "aud_buttonClick01");
+                    SoundToPauseMenu();
+                    break;
+                case 80:
+                    //increase/decrease SFX, BGM
+                    InternalCall.m_InternalCallPlayAudio(EntityID, "aud_buttonClick01");
+                    AddSFXBGM(0.1f, "BGM");
+                    break;
+                case 81:
+                    //increase/decrease SFX, BGM
+                    InternalCall.m_InternalCallPlayAudio(EntityID, "aud_buttonClick01");
+                    AddSFXBGM(-0.1f, "BGM");
+                    break;
+                case 82:
+                    //increase/decrease SFX, BGM
+                    InternalCall.m_InternalCallPlayAudio(EntityID, "aud_buttonClick01");
+                    AddSFXBGM(0.1f, "SFX");
+                    break;
+                case 83:
+                    //increase/decrease SFX, BGM
+                    InternalCall.m_InternalCallPlayAudio(EntityID, "aud_buttonClick01");
+                    AddSFXBGM(-0.1f, "SFX");
+                    break;
+
                 case -1:
                     //Quit Game
                     InternalCall.m_InternalCallPlayAudio(EntityID, "aud_buttonClick01");
@@ -190,5 +223,41 @@ public class PauseMenuButtons : ScriptBase
         InternalCall.m_InternalCallSetTimeScale(1);
         InternalCall.m_UnloadAllScene();
         InternalCall.m_InternalCallLoadScene("MainMenu");
+    }
+
+    private void PauseToSoundMenu()
+    {
+        InternalCall.m_EnableLayer(16);
+        InternalCall.m_DisableLayer(7);
+    }
+    private void SoundToPauseMenu()
+    {
+        InternalCall.m_DisableLayer(16); //insert x with layer
+        InternalCall.m_EnableLayer(7);
+
+    }
+
+    private void AddSFXBGM(float f, string type)
+    {
+        switch (type)
+        {
+            case "SFX":
+                SoundManager.sfx += f;
+                if (SoundManager.sfx > 1f) SoundManager.sfx = 1f;
+                if (SoundManager.sfx < 0f) SoundManager.sfx = 0f;
+                break;
+            case "BGM":
+                SoundManager.bgm += f;
+                if (SoundManager.bgm > 1f) SoundManager.bgm = 1f;
+                if (SoundManager.bgm < 0f) SoundManager.bgm = 0f;
+                break;
+
+            default:
+                break;
+        }
+
+        //Console.WriteLine(SoundManager.sfx);
+        //Console.WriteLine(SoundManager.bgm);
+
     }
 }

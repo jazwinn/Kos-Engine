@@ -13,6 +13,8 @@ public class GameControllerLevel1 : ScriptBase
 
     public static bool gameIsPaused; //For all scripts to check if game is paused
 
+    public static bool gameAudioUp;
+
     public static bool runOnce; //Prevents PauseGame from running more than once
 
     private bool isShowingFps;
@@ -30,7 +32,7 @@ public class GameControllerLevel1 : ScriptBase
         InternalCall.m_DisableLayer(7); //Disables Pause Menu UI
         InternalCall.m_DisableLayer(6); //Disable How To Play UI
         InternalCall.m_DisableLayer(9); //Disable Death Screen UI
-
+        InternalCall.m_DisableLayer(16); //Disable sound UI
     }
 
     public override void Update()
@@ -43,6 +45,7 @@ public class GameControllerLevel1 : ScriptBase
         if (!gameIsPaused && !runOnce)
         {
             gameIsPaused = true;
+            gameAudioUp = false;
             runOnce = true;
 
             //Pauses all coroutines
@@ -71,6 +74,9 @@ public class GameControllerLevel1 : ScriptBase
 
             InternalCall.m_DisableLayer(6);
 
+            //hide sound menu
+            InternalCall.m_DisableLayer(16);
+
             InternalCall.m_InternalCallUnPauseAllAudio();
 
             gameIsPaused = false;
@@ -89,6 +95,7 @@ public class GameControllerLevel1 : ScriptBase
             InternalCall.m_DisableLayer(6); //Disable How To Play UI
             InternalCall.m_DisableLayer(9); //Disable Death Screen UI
             InternalCall.m_DisableLayer(15); //Disable FPS counter UI
+            InternalCall.m_DisableLayer(16); // disable sound option
 
             InternalCall.m_InternalCallStopAllAudio();
             CoroutineManager.Instance.StopAllCoroutines();
