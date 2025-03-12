@@ -15,23 +15,11 @@ public class BossController : ScriptBase
 
     #region Component Variable
     private SpriteComponent spriteComp;
-    //private ColliderComponent collComp;
+    private ColliderComponent collComp;
 
-    private AnimationComponent animComp;
-    //private bool isAnimating = false;
-
-    private string respawnForcefieldTexture;
-    private string despawnForcefieldTexture;
-    private string bossDamageTexture;
-    private string bossDestroyedTexture;
-
-    private bool isDying = false;
-    private bool isTakingDamage = false;
-    private bool isForceFieldSpawning = false;
-    private bool isForceFieldDeactivating = false;
-
-    private bool isAttacking = false;
-
+    //private AnimationComponent animComp;
+    //private TransformComponent transformComp;
+    //private TransformComponent playerTransformComp;
     #endregion
 
     #region Boss Variable
@@ -39,11 +27,11 @@ public class BossController : ScriptBase
     private long seed = DateTime.Now.Ticks; // seed for randomizer
 
     private Vector2 bossPosition;
-    //private bool canAttack = true;
-    private float attackCooldown = 4.0f;
+    private bool canAttack = true;
+    private float attackCooldown = 10.0f;
 
-    public int forceFieldHealth = 1;
-    public int bossHealth = 5;
+    public int forceFieldHealth = 3; 
+    public int bossHealth = 3;
     public bool isForceFieldActive = true;
     private string forceFieldPrefab = "Boss_Forcefield";
 
@@ -52,12 +40,10 @@ public class BossController : ScriptBase
 
     #region Enemy Spawning
     private uint[] enemySpawnPoints; // Store spawn point entity IDs
-    private string[] enemyPrefabs = { "prefab_enemyRanged", "FearlessEnemyStatic" };
-
-    //private string[] enemyPrefabs = { "FearlessEnemy" };
+    private string[] enemyPrefabs = { "EnemyType1", "EnemyType2", "EnemyType3" };
     private List<uint> activeEnemies = new List<uint>();
 
-    //private float enemySpawnCooldown = 10.0f;
+    private float enemySpawnCooldown = 10.0f;
     private int maxEnemies = 5;
     #endregion
 
@@ -80,135 +66,20 @@ public class BossController : ScriptBase
 
         int[] childIDs = InternalCall.m_InternalCallGetChildrenID(EntityID);
         enemySpawnPoints = Array.ConvertAll(childIDs, item => (uint)item);
-        animComp = Component.Get<AnimationComponent>(EntityID);
-
-        //forcefield animation Texture
-        respawnForcefieldTexture = "ani_bossShield_strip4.png";
-        despawnForcefieldTexture = "ani_bossShieldDeactivate_strip7.png";
-
-        //boss animation texture
-        bossDamageTexture = "ani_bossHit_strip4.png";
-        bossDestroyedTexture = "ani_bossDeath_strip15.png";
 
     }
     public override void Start()
     {
+        Console.WriteLine($"Selected Pattern: {currentPattern}");
+        CoroutineManager.Instance.StartCoroutine(AttackLoop()); // Start attacks
         CoroutineManager.Instance.StartCoroutine(EnemySpawnLoop()); // Start enemy spawns
 
     }
 
     public override void Update()
     {
-        if (GameControllerLevel6.isBossDead) return;
-
-        if (isTakingDamage)
-        {
-            animComp = Component.Get<AnimationComponent>(EntityID);
-
-            if (animComp.m_frameNumber >= animComp.m_stripCount - 1) // Check for last frame
-            {
-                animComp.m_isAnimating = false;
-                animComp.m_frameNumber = 0;
-                Component.Set<AnimationComponent>(EntityID, animComp);
-                isTakingDamage = false;
-            }
-        }
-
-        if (isDying)
-        {
-            animComp = Component.Get<AnimationComponent>(EntityID);
-
-            if (animComp.m_frameNumber >= animComp.m_stripCount - 1)
-            {
-                animComp.m_isAnimating = false;
-
-                animComp.m_frameNumber = 14;
-                Component.Set<AnimationComponent>(EntityID, animComp);
-
-                isDying = false;
-                GameControllerLevel6.isBossDead = true;
-
-            }
-        }
-
-
-        if (isForceFieldActive)
-        {
-            AnimationComponent forceFieldAnim = Component.Get<AnimationComponent>(forceFieldID);
-
-            if (forceFieldAnim.m_frameNumber >= forceFieldAnim.m_stripCount - 1)
-            {
-                forceFieldAnim.m_isAnimating = false;
-                forceFieldAnim.m_frameNumber = 3;
-                Component.Set<AnimationComponent>(forceFieldID, forceFieldAnim);
-            }
-        }
-
-        if (isForceFieldSpawning)
-        {
-            AnimationComponent forceFieldAnim = Component.Get<AnimationComponent>(forceFieldID);
-
-            if (forceFieldAnim.m_frameNumber >= forceFieldAnim.m_stripCount - 1)
-            {
-                forceFieldAnim.m_isAnimating = false;
-                forceFieldAnim.m_frameNumber = 3;
-                Component.Set<AnimationComponent>(forceFieldID, forceFieldAnim);
-                isForceFieldSpawning = false;
-            }
-        }
-
-        if (isForceFieldDeactivating)
-        {
-            AnimationComponent forceFieldAnim = Component.Get<AnimationComponent>(forceFieldID);
-
-            if (forceFieldAnim.m_frameNumber >= forceFieldAnim.m_stripCount - 1)
-            {
-                InternalCall.m_InternalCallDeleteEntity(forceFieldID);
-                isForceFieldDeactivating = false;
-            }
-        }
         CheckCollision();
-
-        if (GameControllerLevel6.isActivated == true && isAttacking == false)
-        {
-            isAttacking = true;
-            CoroutineManager.Instance.StartCoroutine(AttackLoop()); // Start attacks
-        }
-
     }
-
-    #region Animation
-
-    private void StartBossDamageAnimation()
-    {
-        spriteComp = GetComponent.GetSpriteComponent(EntityID);
-        InternalCall.m_InternalSetSpriteComponent(EntityID, bossDamageTexture, spriteComp.m_layer, spriteComp.m_color, spriteComp.m_alpha);
-        animComp.m_frameNumber = 0;
-        animComp.m_framesPerSecond = 7;
-        animComp.m_isAnimating = true;
-
-        Component.Set<AnimationComponent>(EntityID, animComp);
-        isTakingDamage = true;
-
-    }
-
-    private void StartBossDestroyedAnimation()
-    {
-        spriteComp = GetComponent.GetSpriteComponent(EntityID);
-        InternalCall.m_InternalSetSpriteComponent(EntityID, bossDestroyedTexture, spriteComp.m_layer, spriteComp.m_color, spriteComp.m_alpha);
-
-        animComp = Component.Get<AnimationComponent>(EntityID);
-        animComp.m_frameNumber = 0;
-        animComp.m_isAnimating = true;
-        animComp.m_stripCount = 15; // Set frame strip count to 15
-        animComp.m_frameTimer = 8;
-
-        Component.Set<AnimationComponent>(EntityID, animComp);
-
-        isDying = true;  // Track that death animation is playing
-    }
-    #endregion Animation
-
 
     private int GenerateRandom(int min, int max)
     {
@@ -312,6 +183,13 @@ public class BossController : ScriptBase
 #endregion
 
     #region Boss Attack Pattern
+    private IEnumerator ResetAttackCooldown()
+    {
+        yield return new CoroutineManager.WaitForSeconds(attackCooldown);
+        canAttack = true;
+    }
+
+
     private IEnumerator FireAlternatingWaves()
     {
         int waveCount = 3; // Number of waves 
@@ -424,24 +302,7 @@ public class BossController : ScriptBase
         InternalCall.m_InternalGetTranslate(EntityID, out Vector2 bossPosition);
         forceFieldID = (uint)InternalCall.m_InternalCallAddPrefab(forceFieldPrefab, bossPosition.X, bossPosition.Y, 0);
         isForceFieldActive = true;
-        forceFieldHealth = 1;
-    }
-
-
-    private void StartForceFieldDeactivateAnimation()
-    {
-        if (forceFieldID == 0) return;
-
-        spriteComp = GetComponent.GetSpriteComponent(forceFieldID);
-        InternalCall.m_InternalSetSpriteComponent(forceFieldID, despawnForcefieldTexture, spriteComp.m_layer, spriteComp.m_color, spriteComp.m_alpha);
-
-        AnimationComponent forceFieldAnim = Component.Get<AnimationComponent>(forceFieldID);
-        forceFieldAnim.m_frameNumber = 0;
-        forceFieldAnim.m_isAnimating = true;
-        forceFieldAnim.m_stripCount = 7; // Set frame strip count to 7
-        Component.Set<AnimationComponent>(forceFieldID, forceFieldAnim);
-
-        isForceFieldDeactivating = true;
+        forceFieldHealth = 3;
     }
 
     private void CheckCollision()
@@ -453,52 +314,38 @@ public class BossController : ScriptBase
 
             foreach (int collidedEntitiesID in collidedEntities)
             {
-                switch (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID))
+                if (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID) == "PlayerBullet")
                 {
+                    if (isForceFieldActive)
+                    {
+                        forceFieldHealth--;
+
+                        Console.WriteLine($"[Boss] Force Field hit! Remaining Health: {forceFieldHealth}");
+
+                        if (forceFieldHealth <= 0)
+                        {
+                            Console.WriteLine("[Boss] Force Field Destroyed!");
+                            InternalCall.m_InternalCallDeleteEntity(forceFieldID);
+                            isForceFieldActive = false;
+                        }
+                    }
+                    else
+                    {
+                        bossHealth--;
+                        Console.WriteLine($"[Boss] Hit! Remaining Health: {bossHealth}");
+
+                        if (bossHealth <= 0)
+                        {
+                            Console.WriteLine("[Boss] Defeated!");
+                            InternalCall.m_InternalCallDeleteEntity(EntityID);
+                            return;
+                        }
+
+                        SpawnForceField();
+                    }
                     
-                    case "PlayerBullet":
-                    case "MeleeKillZoneSpawn":
-                    case "PlayerRailgunBullet":
-
-                        if (isForceFieldDeactivating || isDying)
-                        {
-                            continue;
-                        }
-
-                        if (isForceFieldActive)
-                        {
-                            forceFieldHealth--;
-
-                            Console.WriteLine($"[Boss] Force Field hit! Remaining Health: {forceFieldHealth}");
-
-                            if (forceFieldHealth <= 0)
-                            {
-                                Console.WriteLine("[Boss] Force Field Destroyed!");
-                                isForceFieldActive = false;
-                                StartForceFieldDeactivateAnimation(); // Play destruction animation
-                            }
-                        }
-                        else
-                        {
-                            bossHealth--;
-                            Console.WriteLine($"[Boss] Hit! Remaining Health: {bossHealth}");
-                            //StartAnimationOnHit();
-                            if (bossHealth <= 0)
-                            {
-                                StartBossDestroyedAnimation();  // Trigger death animation
-                            }
-                            else
-                            {
-                                StartBossDamageAnimation();  // Trigger damage animation
-                                SpawnForceField();
-
-                            }
-                        }
-
-                        break;
-
+                    InternalCall.m_InternalCallDeleteEntity((uint)collidedEntitiesID);
                 }
-               
             }
         }
     }

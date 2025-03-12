@@ -20,17 +20,17 @@
         },
         "transform": {
             "position": {
-                "x": 0.0,
-                "y": 0.0
+                "x": 12.5,
+                "y": -0.5346207022666931
             },
             "rotation": -179.99989318847656,
             "scale": {
-                "x": 3.200000047683716,
-                "y": 3.200000047683716
+                "x": 0.05000000074505806,
+                "y": 0.03999999910593033
             }
         },
         "sprite": {
-            "imagefile": "ani_bossShield_strip4.png",
+            "imagefile": "img_Forcefield.png",
             "layer": 101,
             "color": {
                 "r": 1.0,
@@ -39,29 +39,6 @@
             },
             "alpha": 1.0,
             "isLit": true
-        },
-        "animation": {
-            "frameNumber": 0,
-            "framesPerSecond": 8,
-            "frameTimer": 0.0,
-            "isAnimating": true,
-            "stripCount": 4
-        },
-        "LightingComponent": {
-            "m_innerOuterRadius": {
-                "x": 1.0,
-                "y": 1.0
-            },
-            "m_intensity": 1.0,
-            "m_light_OffSet": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "m_light_scale": {
-                "x": 1.7000000476837158,
-                "y": 1.7000000476837158
-            },
-            "m_light_rotation": 0.0
         }
     }
 ]
