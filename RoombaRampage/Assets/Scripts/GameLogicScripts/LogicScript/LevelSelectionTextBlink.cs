@@ -33,6 +33,10 @@ public class LevelSelectionTextBlink : ScriptBase
         else if (LevelSelection.LevelSelected == false)
         {
             isBlinking = false;
+
+            CoroutineManager.Instance.StopCoroutinesByTag("BlinkText");
+            textComp.m_fontLayer = -1;
+            Component.Set<TextComponent>(EntityID, textComp);
         }
 
     }

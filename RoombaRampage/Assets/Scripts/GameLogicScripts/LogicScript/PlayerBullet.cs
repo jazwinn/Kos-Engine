@@ -108,7 +108,7 @@ public class PlayerBullet : ScriptBase
 
             foreach (int collidedEntitiesID in collidedEntities)
             {
-
+                if (bulletHasHit) { return; }
                 switch (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID))
                 {
                     case "PropGlassWall":

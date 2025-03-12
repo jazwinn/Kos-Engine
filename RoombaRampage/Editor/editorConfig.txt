@@ -10,6 +10,8 @@ MeleeKillZoneSpawn
 LeftLimbPos
 RightLimbPos
 BackLimbPos
+LeftShotgunLimbPos
+RightShotgunLimbPos
 LeftLimbSprite
 RightLimbSprite
 BackLimbSprite

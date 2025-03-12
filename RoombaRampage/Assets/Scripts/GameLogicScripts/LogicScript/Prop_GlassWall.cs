@@ -60,20 +60,21 @@ public class Prop_GlassWall : ScriptBase
 
             foreach (int collidedEntitiesID in collidedEntities)
             {
-                if (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID) == "Player" && !isAnimating && !isBroken)
-                {
-                    InternalCall.m_InternalCallPlayAudio(EntityID, "aud_glassBreak01");
+                    if (!isAnimating && !isBroken)
+                    {
+                        InternalCall.m_InternalCallPlayAudio(EntityID, "aud_glassBreak01");
 
-                    isAnimating = true;
+                        isAnimating = true;
 
-                    InternalCall.m_InternalCallDeleteEntity(rCWallID);
+                        InternalCall.m_InternalCallDeleteEntity(rCWallID);
 
-                    animComp = Component.Get<AnimationComponent>(EntityID);
-                    animComp.m_frameNumber = 0;
-                    animComp.m_isAnimating = isAnimating;
+                        animComp = Component.Get<AnimationComponent>(EntityID);
+                        animComp.m_frameNumber = 0;
+                        animComp.m_isAnimating = isAnimating;
 
-                    Component.Set<AnimationComponent>(EntityID, animComp);
-                }
+                        Component.Set<AnimationComponent>(EntityID, animComp);
+                    }
+                
             }
         }
 

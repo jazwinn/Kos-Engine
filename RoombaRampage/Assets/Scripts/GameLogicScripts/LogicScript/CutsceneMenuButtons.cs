@@ -75,7 +75,7 @@ public class CutsceneMenuButtons : ScriptBase
 
     private void CheckForClicks()
     {
-        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.LMB) && isHovering == true)
+        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.LMB) || InternalCall.m_InternalCallIsKeyTriggered(keyCode.RMB) || InternalCall.m_InternalCallIsKeyTriggered(keyCode.ESC) || InternalCall.m_InternalCallIsKeyTriggered(keyCode.SPACE) || InternalCall.m_InternalCallIsKeyTriggered(keyCode.ENTER))
         {
             InternalCall.m_InternalCallPlayAudio(EntityID, "aud_buttonClick01");
             switch (buttonFunctionNo)

@@ -85,7 +85,7 @@
     <Compile Include="LogicScript\LevelDoorLocker.cs" />
     <Compile Include="LogicScript\LevelEndPoint.cs" />
     <Compile Include="LogicScript\LevelEnemySpawner.cs" />
-    <Compile Include="LogicScript\LevelOneButton.cs" />
+    <Compile Include="LogicScript\LevelSelectButton.cs" />
     <Compile Include="LogicScript\LevelSelection.cs" />
     <Compile Include="LogicScript\LevelSelectionTextBlink.cs" />
     <Compile Include="LogicScript\LevelTransition.cs" />
@@ -112,6 +112,7 @@
     <Compile Include="LogicScript\UI_AmmoHUD.cs" />
     <Compile Include="LogicScript\UI_FPSCounter.cs" />
     <Compile Include="LogicScript\UI_PlayerDeath.cs" />
+    <Compile Include="LogicScript\UI_TabPrompt.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\ScriptLibrary\GameScript\GameScript.csproj">

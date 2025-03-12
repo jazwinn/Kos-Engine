@@ -310,6 +310,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
                     case "MeleeKillZoneSpawn":
                         CoroutineManager.Instance.StartCoroutine(EnemyDeath("Katana"), "EnemyDeath");
                         break;
+                    case "PlayerRailgunBullet":
                     case "PlayerBullet":
                         CoroutineManager.Instance.StartCoroutine(EnemyDeath("Gun"), "EnemyDeath"); //Runs coroutine to spawn blood pool
                         break;
