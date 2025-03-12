@@ -468,6 +468,7 @@ namespace events {
 		ecs::EntityID m_entityID;
 		ecs::ColliderComponent* m_changedComp;
 		vector2::Vec2 m_oldSize;
+		vector2::Vec2 m_oldOffset;
 		bool m_oldDrawDebug, m_oldCollisionResponse, m_oldCollisionCheck;
 		float m_oldRadius;
 		physicspipe::EntityType m_oldShape;
@@ -476,7 +477,7 @@ namespace events {
 		ModifyCollider(ecs::ComponentType inType, ecs::EntityID inID, ecs::ColliderComponent* inComp, ecs::ColliderComponent inOld)
 			: BaseEvent<Actions>(Actions::MODIFYCOLL),
 			m_changedType(inType), m_entityID(inID), m_changedComp(inComp),
-			m_oldSize(inOld.m_Size), m_oldDrawDebug(inOld.m_drawDebug),
+			m_oldSize(inOld.m_Size), m_oldOffset(inOld.m_OffSet), m_oldDrawDebug(inOld.m_drawDebug),
 			m_oldRadius(inOld.m_radius), m_oldCollisionResponse(inOld.m_collisionResponse),
 			m_oldCollisionCheck(inOld.m_collisionCheck), m_oldShape(inOld.m_type) {}
 
@@ -484,6 +485,7 @@ namespace events {
 		ecs::EntityID m_GetID() { return m_entityID; }
 		ecs::ColliderComponent* m_GetComp() { return m_changedComp; }
 		vector2::Vec2 m_GetOldSize() { return m_oldSize; }
+		vector2::Vec2 m_GetOldOffset() { return m_oldOffset; }
 		bool m_GetOldDrawDebug() { return m_oldDrawDebug; }
 		float m_GetOldRadius() { return m_oldRadius; }
 		bool m_GetOldCollisionResponse() { return m_oldCollisionResponse; }
@@ -701,6 +703,30 @@ namespace events {
 		ecs::SpriteComponent* m_GetComp() { return m_changedComp; }
 	};
 
+	class ModifyButton : public BaseEvent<Actions> {
+	private:
+		ecs::ComponentType m_changedType;
+		ecs::EntityID m_entityID;
+		ecs::ButtonComponent* m_changedComp;
+		vector2::Vec2 m_oldPos;
+		vector2::Vec2 m_oldScale;
+		bool m_oldClick;
 
+	public:
+		ModifyButton(ecs::ComponentType inType, ecs::EntityID inID, ecs::ButtonComponent* inComp, ecs::ButtonComponent inOld)
+			: BaseEvent<Actions>(Actions::MODIFYSPRITE),
+			m_changedType(inType), m_entityID(inID), m_changedComp(inComp),
+			m_oldPos(inOld.m_Position), m_oldScale(inOld.m_Scale),
+			m_oldClick(inOld.m_IsClick){}
+
+		ecs::ComponentType m_GetType() { return m_changedType; }
+		ecs::EntityID m_GetID() { return m_entityID; }
+		vector2::Vec2 m_GetOldPos() { return m_oldPos; }
+		vector2::Vec2 m_GetOldScale() { return m_oldScale; }
+		bool m_GetOldClick() { return m_oldClick; }
+
+		// New function
+		ecs::ButtonComponent* m_GetComp() { return m_changedComp; }
+	};
 
 }

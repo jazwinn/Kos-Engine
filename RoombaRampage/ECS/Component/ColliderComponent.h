@@ -65,7 +65,7 @@ namespace ecs {
 
 		mat3x3::Mat3x3 m_collider_Transformation{};
 
-		REFLECTABLE(ColliderComponent, m_collisionResponse, m_collisionCheck,  m_Size, m_OffSet, m_drawDebug, m_radius, m_type)
+		REFLECTABLE(ColliderComponent, m_collisionResponse, m_collisionCheck, m_drawDebug, m_type, m_OffSet, m_radius , m_Size )
 	};
 
 }
