@@ -15,8 +15,9 @@ public class GameControllerLevel6 : ScriptBase
     #endregion
 
     private string blockDoorPrefab;
-    private bool isActivated = false;
+    public static bool isActivated = false;
     public static bool isBossDead = false;
+    private string bossBGM = "aud_bossLevelLoop.wav";
 
 
     public override void Awake(uint id)
@@ -47,6 +48,8 @@ public class GameControllerLevel6 : ScriptBase
                         {
                             isActivated = true;
                             SpawnDoor();
+                            InternalCall.m_InternalCallPlayAudio(EntityID, bossBGM);
+
                         }
                         break;
 
@@ -62,7 +65,6 @@ public class GameControllerLevel6 : ScriptBase
     {
         InternalCall.m_InternalGetTranslate(EntityID, out Vector2 doorPosition);
         InternalCall.m_InternalCallAddPrefab(blockDoorPrefab, doorPosition.X, doorPosition.Y, 0);
-        //InternalCall.m_internalcall
     }
 
 }

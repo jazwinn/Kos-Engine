@@ -1,7 +1,7 @@
 [
     {
         "GlobalSettings": {
-            "globalIllumination": 1.059999942779541,
+            "globalIllumination": 0.30000001192092896,
             "backgroundColor": {
                 "r": 0.13300000131130219,
                 "g": 0.23000000417232513,
@@ -20,8 +20,8 @@
         },
         "transform": {
             "position": {
-                "x": 0.0,
-                "y": 0.0
+                "x": 15.853328704833984,
+                "y": -15.908940315246582
             },
             "rotation": -0.0,
             "scale": {
@@ -38,7 +38,7 @@
             },
             "offset": {
                 "x": 0.0,
-                "y": 0.0
+                "y": 0.5199999809265137
             },
             "drawDebug": true,
             "radius": 0.20000000298023224,
@@ -99,6 +99,22 @@
                     ]
                 }
             ]
+        },
+        "LightingComponent": {
+            "m_innerOuterRadius": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "m_intensity": 2.200000047683716,
+            "m_light_OffSet": {
+                "x": 0.0,
+                "y": 0.11999999731779099
+            },
+            "m_light_scale": {
+                "x": 1.0,
+                "y": 1.0
+            },
+            "m_light_rotation": 0.0
         }
     }
 ]
