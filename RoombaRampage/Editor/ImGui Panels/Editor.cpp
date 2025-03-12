@@ -284,7 +284,7 @@ namespace gui {
 
 			
 		}
-	
+		ImGui::EndFrame();
 	}
 
 	void ImGuiHandler::m_render()

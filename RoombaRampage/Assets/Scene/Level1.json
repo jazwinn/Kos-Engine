@@ -66633,6 +66633,51 @@
     },
     {
         "name": {
+            "namestr": "UI_Sound_Cursor",
+            "layer": 16,
+            "isprefab": true,
+            "tagstr": "SoundMenuCursor",
+            "prefabname": "UI_Sound_Cursor.prefab",
+            "issync": true
+        },
+        "transform": {
+            "position": {
+                "x": -20.16810417175293,
+                "y": -7.84364128112793
+            },
+            "rotation": 0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "collider": {
+            "checkcollision": true,
+            "checkresponse": false,
+            "size": {
+                "x": 1.0,
+                "y": 1.0
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true,
+            "radius": 0.10000000149011612,
+            "shapetype": 1
+        },
+        "script": {
+            "scripts": [
+                {
+                    "name": "SoundCursor",
+                    "enabled": true,
+                    "map": []
+                }
+            ]
+        }
+    },
+    {
+        "name": {
             "namestr": "UI_HowToPlay_Cursor",
             "layer": 6,
             "isprefab": true,
@@ -67815,7 +67860,7 @@
     {
         "name": {
             "namestr": "UI_PauseMenu",
-            "layer": 0,
+            "layer": 7,
             "isprefab": true,
             "tagstr": "Default",
             "prefabname": "UI_PauseMenu.prefab",
@@ -68118,7 +68163,7 @@
                 "transform": {
                     "position": {
                         "x": 0.0,
-                        "y": -0.49978548288345337
+                        "y": -2.6046059131622314
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -68428,8 +68473,147 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 0.1125917136669159,
+                        "x": -0.08570563793182373,
                         "y": -0.71555495262146
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "text": {
+                    "text": "SOUND",
+                    "text": null,
+                    "filename": "fnt_silkscreenRegular.ttf",
+                    "fontsize": 12.0,
+                    "color": {
+                        "r": 0.0,
+                        "g": 0.0,
+                        "b": 0.0
+                    },
+                    "layer": 424
+                }
+            },
+            {
+                "name": {
+                    "namestr": "UI_PauseMenu_UserManual",
+                    "layer": 7,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "UI_PauseMenu.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.0,
+                        "y": -0.49978548288345337
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 4.0,
+                        "y": 4.0
+                    }
+                },
+                "collider": {
+                    "checkcollision": true,
+                    "checkresponse": false,
+                    "size": {
+                        "x": 1.4800000190734863,
+                        "y": 0.30000001192092896
+                    },
+                    "offset": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "drawDebug": true,
+                    "radius": 0.5,
+                    "shapetype": 0
+                },
+                "rigidbody": {
+                    "linearVelocity": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "linearAcceleration": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "rotation": 0.0,
+                    "angularVelocity": 0.0,
+                    "angularAcceleration": 0.0,
+                    "mass": 1.0,
+                    "inverseMass": 1.0,
+                    "linearDamping": 0.9900000095367432,
+                    "angularDamping": 0.9900000095367432,
+                    "force": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "torque": 0.0,
+                    "kinematic": false,
+                    "static": false
+                },
+                "sprite": {
+                    "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
+                    "layer": 410,
+                    "color": {
+                        "r": 1.0,
+                        "g": 1.0,
+                        "b": 1.0
+                    },
+                    "alpha": 1.0,
+                    "isLit": false
+                },
+                "animation": {
+                    "frameNumber": 0,
+                    "framesPerSecond": 0,
+                    "frameTimer": 0.0,
+                    "isAnimating": false,
+                    "stripCount": 2
+                },
+                "script": {
+                    "scripts": [
+                        {
+                            "name": "PauseMenuButtons",
+                            "enabled": true,
+                            "map": [
+                                {
+                                    "variable": "buttonFunctionNo",
+                                    "base64": "IAAAAMzMzMwA"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "audio": [
+                    {
+                        "name": "aud_buttonHover01",
+                        "volume": 0.4830000102519989,
+                        "loop": false,
+                        "playOnStart": false
+                    },
+                    {
+                        "name": "aud_buttonClick01",
+                        "volume": 1.0,
+                        "loop": false,
+                        "playOnStart": false
+                    }
+                ]
+            },
+            {
+                "name": {
+                    "namestr": "UI_PauseMenu_UserManualText",
+                    "layer": 7,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "UI_PauseMenu.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.1125917136669159,
+                        "y": -2.7719311714172363
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -68447,7 +68631,7 @@
                         "g": 0.0,
                         "b": 0.0
                     },
-                    "layer": 424
+                    "layer": 425
                 }
             }
         ]
@@ -69229,7 +69413,16 @@
                         "x": 0.7176470756530762,
                         "y": 0.8705882430076599,
                         "z": 0.43529412150382996
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -69262,7 +69455,16 @@
                         "x": 0.7174015641212463,
                         "y": 0.8716814517974854,
                         "z": 0.4358407258987427
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -69295,7 +69497,16 @@
                         "x": 0.6898566484451294,
                         "y": 0.9115044474601746,
                         "z": 0.36702170968055725
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -69328,7 +69539,16 @@
                         "x": 0.8705882430076599,
                         "y": 0.7588755488395691,
                         "z": 0.43529412150382996
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -69361,7 +69581,16 @@
                         "x": 0.7176470756530762,
                         "y": 0.8705882430076599,
                         "z": 0.43529412150382996
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -69394,7 +69623,16 @@
                         "x": 0.7176470756530762,
                         "y": 0.8705882430076599,
                         "z": 0.43529412150382996
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -69427,7 +69665,16 @@
                         "x": 0.7176470756530762,
                         "y": 0.8705882430076599,
                         "z": 0.43529412150382996
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -69460,7 +69707,16 @@
                         "x": 0.7176470756530762,
                         "y": 0.8705882430076599,
                         "z": 0.43529412150382996
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -69493,7 +69749,16 @@
                         "x": 0.9115044474601746,
                         "y": 0.7428593635559082,
                         "z": 0.36702170968055725
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -69526,7 +69791,16 @@
                         "x": 0.9115044474601746,
                         "y": 0.5983063578605652,
                         "z": 0.36702170968055725
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -69559,7 +69833,16 @@
                         "x": 0.7187671661376953,
                         "y": 0.9115044474601746,
                         "z": 0.36702170968055725
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -69592,7 +69875,16 @@
                         "x": 0.9115044474601746,
                         "y": 0.5983063578605652,
                         "z": 0.36702170968055725
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -69625,7 +69917,16 @@
                         "x": 0.9115044474601746,
                         "y": 0.5983063578605652,
                         "z": 0.36702170968055725
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -69658,7 +69959,16 @@
                         "x": 0.9115044474601746,
                         "y": 0.5983063578605652,
                         "z": 0.36702170968055725
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -69691,7 +70001,16 @@
                         "x": 0.9115044474601746,
                         "y": 0.7428593635559082,
                         "z": 0.36702170968055725
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -69724,7 +70043,16 @@
                         "x": 0.9115044474601746,
                         "y": 0.5983063578605652,
                         "z": 0.36702170968055725
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -69757,7 +70085,16 @@
                         "x": 0.9115044474601746,
                         "y": 0.5983063578605652,
                         "z": 0.36702170968055725
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -69790,7 +70127,16 @@
                         "x": 0.8633201718330383,
                         "y": 0.9115044474601746,
                         "z": 0.36702170968055725
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -69823,7 +70169,16 @@
                         "x": 0.9115044474601746,
                         "y": 0.5983063578605652,
                         "z": 0.36702170968055725
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -69856,7 +70211,16 @@
                         "x": 0.9115044474601746,
                         "y": 0.5983063578605652,
                         "z": 0.36702170968055725
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -69889,7 +70253,16 @@
                         "x": 0.9115044474601746,
                         "y": 0.5983063578605652,
                         "z": 0.36702170968055725
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -69922,7 +70295,16 @@
                         "x": 0.9115044474601746,
                         "y": 0.5983063578605652,
                         "z": 0.36702170968055725
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -69955,7 +70337,16 @@
                         "x": 0.9115044474601746,
                         "y": 0.5983063578605652,
                         "z": 0.36702170968055725
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -69988,7 +70379,16 @@
                         "x": 0.2611010670661926,
                         "y": 1.0,
                         "z": 0.017699122428894043
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -70021,7 +70421,16 @@
                         "x": 0.9115044474601746,
                         "y": 0.5983063578605652,
                         "z": 0.36702170968055725
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             }
         ]
@@ -70566,7 +70975,16 @@
                         "x": 1.0,
                         "y": 1.0,
                         "z": 1.0
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -70599,7 +71017,16 @@
                         "x": 1.0,
                         "y": 0.0,
                         "z": 0.0
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -70632,7 +71059,16 @@
                         "x": 0.09432999789714813,
                         "y": 0.945805013179779,
                         "z": 0.9690265655517578
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -70665,7 +71101,16 @@
                         "x": 0.09432999789714813,
                         "y": 0.945805013179779,
                         "z": 0.9690265655517578
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             }
         ]
@@ -81571,6 +82016,1635 @@
                         "y": 1.0
                     }
                 }
+            }
+        ]
+    },
+    {
+        "name": {
+            "namestr": "prefab_sound",
+            "layer": 16,
+            "isprefab": true,
+            "tagstr": "Default",
+            "prefabname": "prefab_sound.prefab",
+            "issync": false
+        },
+        "transform": {
+            "position": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "script": {
+            "scripts": [
+                {
+                    "name": "SoundManager",
+                    "enabled": true,
+                    "map": [
+                        {
+                            "variable": "sfx",
+                            "base64": ""
+                        },
+                        {
+                            "variable": "bgm",
+                            "base64": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        "children": [
+            {
+                "name": {
+                    "namestr": "img_pauseMenuFrame",
+                    "layer": 16,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "prefab_sound.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": -0.6766307950019836,
+                        "y": 0.6998029947280884
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 4.0,
+                        "y": 4.0
+                    }
+                },
+                "sprite": {
+                    "imagefile": "img_pauseMenuFrame.png",
+                    "layer": 2,
+                    "color": {
+                        "r": 1.0,
+                        "g": 1.0,
+                        "b": 1.0
+                    },
+                    "alpha": 1.0,
+                    "isLit": false
+                }
+            },
+            {
+                "name": {
+                    "namestr": "Music Title",
+                    "layer": 16,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "prefab_sound.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": -0.8510099649429321,
+                        "y": 4.585991382598877
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 0.20000000298023224,
+                        "y": 0.20000000298023224
+                    }
+                },
+                "text": {
+                    "text": "Sound",
+                    "text": null,
+                    "filename": "fnt_silkscreenRegular.ttf",
+                    "fontsize": 134.9499969482422,
+                    "color": {
+                        "r": 0.0,
+                        "g": 0.0,
+                        "b": 0.0
+                    },
+                    "layer": 7
+                }
+            },
+            {
+                "name": {
+                    "namestr": "BGMTEXT",
+                    "layer": 16,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "prefab_sound.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": -2.690028429031372,
+                        "y": 2.6423182487487793
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 0.20000000298023224,
+                        "y": 0.20000000298023224
+                    }
+                },
+                "text": {
+                    "text": "BGM",
+                    "text": null,
+                    "filename": "fnt_silkscreenRegular.ttf",
+                    "fontsize": 100.0,
+                    "color": {
+                        "r": 0.0,
+                        "g": 0.0,
+                        "b": 0.0
+                    },
+                    "layer": 8
+                }
+            },
+            {
+                "name": {
+                    "namestr": "BGMVALUE",
+                    "layer": 16,
+                    "isprefab": true,
+                    "tagstr": "UIPauseTextBGM",
+                    "prefabname": "prefab_sound.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 1.2499711513519287,
+                        "y": 2.643402576446533
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 0.20000000298023224,
+                        "y": 0.20000000298023224
+                    }
+                },
+                "text": {
+                    "text": "100",
+                    "text": null,
+                    "filename": "fnt_silkscreenRegular.ttf",
+                    "fontsize": 100.0,
+                    "color": {
+                        "r": 0.0,
+                        "g": 0.0,
+                        "b": 0.0
+                    },
+                    "layer": 9
+                }
+            },
+            {
+                "name": {
+                    "namestr": "SFXTEXT",
+                    "layer": 16,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "prefab_sound.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": -2.790656089782715,
+                        "y": -0.07440803945064545
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 0.20000000298023224,
+                        "y": 0.20000000298023224
+                    }
+                },
+                "text": {
+                    "text": "SFX",
+                    "text": null,
+                    "filename": "fnt_silkscreenRegular.ttf",
+                    "fontsize": 100.0,
+                    "color": {
+                        "r": 0.0,
+                        "g": 0.0,
+                        "b": 0.0
+                    },
+                    "layer": 10
+                }
+            },
+            {
+                "name": {
+                    "namestr": "SFXVALUE",
+                    "layer": 16,
+                    "isprefab": true,
+                    "tagstr": "UIPauseTextSFX",
+                    "prefabname": "prefab_sound.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 1.2723941802978516,
+                        "y": -0.08123068511486053
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 0.20000000298023224,
+                        "y": 0.20000000298023224
+                    }
+                },
+                "text": {
+                    "text": "100",
+                    "text": null,
+                    "filename": "fnt_silkscreenRegular.ttf",
+                    "fontsize": 100.0,
+                    "color": {
+                        "r": 0.0,
+                        "g": 0.0,
+                        "b": 0.0
+                    },
+                    "layer": 15
+                }
+            },
+            {
+                "name": {
+                    "namestr": "backButton",
+                    "layer": 16,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "prefab_sound.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": -0.7448434829711914,
+                        "y": -3.839062452316284
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 2.5999999046325684,
+                        "y": 4.0
+                    }
+                },
+                "collider": {
+                    "checkcollision": true,
+                    "checkresponse": false,
+                    "size": {
+                        "x": 1.4800000190734863,
+                        "y": 0.2800000011920929
+                    },
+                    "offset": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "drawDebug": true,
+                    "radius": 0.5,
+                    "shapetype": 0
+                },
+                "rigidbody": {
+                    "linearVelocity": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "linearAcceleration": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "rotation": 0.0,
+                    "angularVelocity": 0.0,
+                    "angularAcceleration": 0.0,
+                    "mass": 1.0,
+                    "inverseMass": 1.0,
+                    "linearDamping": 0.9900000095367432,
+                    "angularDamping": 0.9900000095367432,
+                    "force": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "torque": 0.0,
+                    "kinematic": false,
+                    "static": false
+                },
+                "sprite": {
+                    "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
+                    "layer": 3,
+                    "color": {
+                        "r": 1.0,
+                        "g": 1.0,
+                        "b": 1.0
+                    },
+                    "alpha": 1.0,
+                    "isLit": false
+                },
+                "animation": {
+                    "frameNumber": 0,
+                    "framesPerSecond": 0,
+                    "frameTimer": 0.0,
+                    "isAnimating": true,
+                    "stripCount": 2
+                },
+                "script": {
+                    "scripts": [
+                        {
+                            "name": "PauseMenuButtons",
+                            "enabled": true,
+                            "map": [
+                                {
+                                    "variable": "buttonFunctionNo",
+                                    "base64": "IwAAAMzMzMwA"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "audio": [
+                    {
+                        "name": "aud_buttonClick01",
+                        "volume": 1.0,
+                        "loop": false,
+                        "playOnStart": false
+                    },
+                    {
+                        "name": "aud_buttonHover01",
+                        "volume": 1.0,
+                        "loop": false,
+                        "playOnStart": false
+                    }
+                ],
+                "children": [
+                    {
+                        "name": {
+                            "namestr": "BackButtonText",
+                            "layer": 16,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "prefab_sound.prefab",
+                            "issync": true
+                        },
+                        "transform": {
+                            "position": {
+                                "x": -0.035187169909477234,
+                                "y": -0.07281500101089478
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 1.2400000095367432,
+                                "y": 1.0
+                            }
+                        },
+                        "text": {
+                            "text": "Back",
+                            "text": null,
+                            "filename": "fnt_silkscreenRegular.ttf",
+                            "fontsize": 5.0,
+                            "color": {
+                                "r": 0.0,
+                                "g": 0.0,
+                                "b": 0.0
+                            },
+                            "layer": 16
+                        }
+                    }
+                ]
+            },
+            {
+                "name": {
+                    "namestr": "SoundBarGroup",
+                    "layer": 16,
+                    "isprefab": true,
+                    "tagstr": "SoundBarBGM",
+                    "prefabname": "prefab_sound.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": -0.1083105206489563,
+                        "y": -0.06217384338378906
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "children": [
+                    {
+                        "name": {
+                            "namestr": "ani_pauseMenuUserManualButton_strip2",
+                            "layer": 16,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "prefab_sound.prefab",
+                            "issync": true
+                        },
+                        "transform": {
+                            "position": {
+                                "x": -3.299999952316284,
+                                "y": 2.200000047683716
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 0.30000001192092896,
+                                "y": 2.5
+                            }
+                        },
+                        "sprite": {
+                            "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
+                            "layer": 4,
+                            "color": {
+                                "r": 1.0,
+                                "g": 1.0,
+                                "b": 1.0
+                            },
+                            "alpha": 1.0,
+                            "isLit": false
+                        },
+                        "animation": {
+                            "frameNumber": 1,
+                            "framesPerSecond": 0,
+                            "frameTimer": 0.0,
+                            "isAnimating": true,
+                            "stripCount": 2
+                        }
+                    },
+                    {
+                        "name": {
+                            "namestr": "ani_pauseMenuUserManualButton_strip2",
+                            "layer": 16,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "prefab_sound.prefab",
+                            "issync": true
+                        },
+                        "transform": {
+                            "position": {
+                                "x": -2.700000047683716,
+                                "y": 2.1959502696990967
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 0.30000001192092896,
+                                "y": 2.5
+                            }
+                        },
+                        "sprite": {
+                            "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
+                            "layer": 17,
+                            "color": {
+                                "r": 1.0,
+                                "g": 1.0,
+                                "b": 1.0
+                            },
+                            "alpha": 1.0,
+                            "isLit": false
+                        },
+                        "animation": {
+                            "frameNumber": 1,
+                            "framesPerSecond": 0,
+                            "frameTimer": 0.0,
+                            "isAnimating": true,
+                            "stripCount": 2
+                        }
+                    },
+                    {
+                        "name": {
+                            "namestr": "ani_pauseMenuUserManualButton_strip2",
+                            "layer": 16,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "prefab_sound.prefab",
+                            "issync": true
+                        },
+                        "transform": {
+                            "position": {
+                                "x": -2.0999999046325684,
+                                "y": 2.1959502696990967
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 0.30000001192092896,
+                                "y": 2.5
+                            }
+                        },
+                        "sprite": {
+                            "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
+                            "layer": 18,
+                            "color": {
+                                "r": 1.0,
+                                "g": 1.0,
+                                "b": 1.0
+                            },
+                            "alpha": 1.0,
+                            "isLit": false
+                        },
+                        "animation": {
+                            "frameNumber": 1,
+                            "framesPerSecond": 0,
+                            "frameTimer": 0.0,
+                            "isAnimating": true,
+                            "stripCount": 2
+                        }
+                    },
+                    {
+                        "name": {
+                            "namestr": "ani_pauseMenuUserManualButton_strip2",
+                            "layer": 16,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "prefab_sound.prefab",
+                            "issync": true
+                        },
+                        "transform": {
+                            "position": {
+                                "x": -1.5,
+                                "y": 2.1959502696990967
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 0.30000001192092896,
+                                "y": 2.5
+                            }
+                        },
+                        "sprite": {
+                            "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
+                            "layer": 19,
+                            "color": {
+                                "r": 1.0,
+                                "g": 1.0,
+                                "b": 1.0
+                            },
+                            "alpha": 1.0,
+                            "isLit": false
+                        },
+                        "animation": {
+                            "frameNumber": 1,
+                            "framesPerSecond": 0,
+                            "frameTimer": 0.0,
+                            "isAnimating": true,
+                            "stripCount": 2
+                        }
+                    },
+                    {
+                        "name": {
+                            "namestr": "ani_pauseMenuUserManualButton_strip2",
+                            "layer": 16,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "prefab_sound.prefab",
+                            "issync": true
+                        },
+                        "transform": {
+                            "position": {
+                                "x": -0.8999999761581421,
+                                "y": 2.1959502696990967
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 0.30000001192092896,
+                                "y": 2.5
+                            }
+                        },
+                        "sprite": {
+                            "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
+                            "layer": 20,
+                            "color": {
+                                "r": 1.0,
+                                "g": 1.0,
+                                "b": 1.0
+                            },
+                            "alpha": 1.0,
+                            "isLit": false
+                        },
+                        "animation": {
+                            "frameNumber": 1,
+                            "framesPerSecond": 0,
+                            "frameTimer": 0.0,
+                            "isAnimating": true,
+                            "stripCount": 2
+                        }
+                    },
+                    {
+                        "name": {
+                            "namestr": "ani_pauseMenuUserManualButton_strip2",
+                            "layer": 16,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "prefab_sound.prefab",
+                            "issync": true
+                        },
+                        "transform": {
+                            "position": {
+                                "x": -0.30000001192092896,
+                                "y": 2.1959502696990967
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 0.30000001192092896,
+                                "y": 2.5
+                            }
+                        },
+                        "sprite": {
+                            "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
+                            "layer": 21,
+                            "color": {
+                                "r": 1.0,
+                                "g": 1.0,
+                                "b": 1.0
+                            },
+                            "alpha": 1.0,
+                            "isLit": false
+                        },
+                        "animation": {
+                            "frameNumber": 1,
+                            "framesPerSecond": 0,
+                            "frameTimer": 0.0,
+                            "isAnimating": true,
+                            "stripCount": 2
+                        }
+                    },
+                    {
+                        "name": {
+                            "namestr": "ani_pauseMenuUserManualButton_strip2",
+                            "layer": 16,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "prefab_sound.prefab",
+                            "issync": true
+                        },
+                        "transform": {
+                            "position": {
+                                "x": 0.30000001192092896,
+                                "y": 2.1959502696990967
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 0.30000001192092896,
+                                "y": 2.5
+                            }
+                        },
+                        "sprite": {
+                            "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
+                            "layer": 22,
+                            "color": {
+                                "r": 1.0,
+                                "g": 1.0,
+                                "b": 1.0
+                            },
+                            "alpha": 1.0,
+                            "isLit": false
+                        },
+                        "animation": {
+                            "frameNumber": 1,
+                            "framesPerSecond": 0,
+                            "frameTimer": 0.0,
+                            "isAnimating": true,
+                            "stripCount": 2
+                        }
+                    },
+                    {
+                        "name": {
+                            "namestr": "ani_pauseMenuUserManualButton_strip2",
+                            "layer": 16,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "prefab_sound.prefab",
+                            "issync": true
+                        },
+                        "transform": {
+                            "position": {
+                                "x": 0.8999999761581421,
+                                "y": 2.1959502696990967
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 0.30000001192092896,
+                                "y": 2.5
+                            }
+                        },
+                        "sprite": {
+                            "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
+                            "layer": 23,
+                            "color": {
+                                "r": 1.0,
+                                "g": 1.0,
+                                "b": 1.0
+                            },
+                            "alpha": 1.0,
+                            "isLit": false
+                        },
+                        "animation": {
+                            "frameNumber": 1,
+                            "framesPerSecond": 0,
+                            "frameTimer": 0.0,
+                            "isAnimating": true,
+                            "stripCount": 2
+                        }
+                    },
+                    {
+                        "name": {
+                            "namestr": "ani_pauseMenuUserManualButton_strip2",
+                            "layer": 16,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "prefab_sound.prefab",
+                            "issync": true
+                        },
+                        "transform": {
+                            "position": {
+                                "x": 1.5,
+                                "y": 2.1959502696990967
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 0.30000001192092896,
+                                "y": 2.5
+                            }
+                        },
+                        "sprite": {
+                            "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
+                            "layer": 24,
+                            "color": {
+                                "r": 1.0,
+                                "g": 1.0,
+                                "b": 1.0
+                            },
+                            "alpha": 1.0,
+                            "isLit": false
+                        },
+                        "animation": {
+                            "frameNumber": 1,
+                            "framesPerSecond": 0,
+                            "frameTimer": 0.0,
+                            "isAnimating": true,
+                            "stripCount": 2
+                        }
+                    },
+                    {
+                        "name": {
+                            "namestr": "ani_pauseMenuUserManualButton_strip2",
+                            "layer": 16,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "prefab_sound.prefab",
+                            "issync": true
+                        },
+                        "transform": {
+                            "position": {
+                                "x": 2.0999999046325684,
+                                "y": 2.1959502696990967
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 0.30000001192092896,
+                                "y": 2.5
+                            }
+                        },
+                        "sprite": {
+                            "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
+                            "layer": 25,
+                            "color": {
+                                "r": 1.0,
+                                "g": 1.0,
+                                "b": 1.0
+                            },
+                            "alpha": 1.0,
+                            "isLit": false
+                        },
+                        "animation": {
+                            "frameNumber": 1,
+                            "framesPerSecond": 0,
+                            "frameTimer": 0.0,
+                            "isAnimating": true,
+                            "stripCount": 2
+                        }
+                    },
+                    {
+                        "name": {
+                            "namestr": "ArrowIncrease",
+                            "layer": 16,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "prefab_sound.prefab",
+                            "issync": true
+                        },
+                        "transform": {
+                            "position": {
+                                "x": 2.036818504333496,
+                                "y": 1.3535691499710083
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 5.0,
+                                "y": 5.0
+                            }
+                        },
+                        "collider": {
+                            "checkcollision": true,
+                            "checkresponse": false,
+                            "size": {
+                                "x": 0.09000000357627869,
+                                "y": 0.12999999523162842
+                            },
+                            "offset": {
+                                "x": 0.019999999552965164,
+                                "y": 0.0
+                            },
+                            "drawDebug": true,
+                            "radius": 0.5,
+                            "shapetype": 0
+                        },
+                        "rigidbody": {
+                            "linearVelocity": {
+                                "x": 0.0,
+                                "y": 0.0
+                            },
+                            "linearAcceleration": {
+                                "x": 0.0,
+                                "y": 0.0
+                            },
+                            "rotation": 0.0,
+                            "angularVelocity": 0.0,
+                            "angularAcceleration": 0.0,
+                            "mass": 1.0,
+                            "inverseMass": 1.0,
+                            "linearDamping": 0.9900000095367432,
+                            "angularDamping": 0.9900000095367432,
+                            "force": {
+                                "x": 0.0,
+                                "y": 0.0
+                            },
+                            "torque": 0.0,
+                            "kinematic": false,
+                            "static": false
+                        },
+                        "sprite": {
+                            "imagefile": "ani_inventoryRightArrow_strip2.png",
+                            "layer": 26,
+                            "color": {
+                                "r": 1.0,
+                                "g": 1.0,
+                                "b": 1.0
+                            },
+                            "alpha": 1.0,
+                            "isLit": false
+                        },
+                        "animation": {
+                            "frameNumber": 0,
+                            "framesPerSecond": 0,
+                            "frameTimer": 0.0,
+                            "isAnimating": true,
+                            "stripCount": 2
+                        },
+                        "script": {
+                            "scripts": [
+                                {
+                                    "name": "PauseMenuButtons",
+                                    "enabled": true,
+                                    "map": [
+                                        {
+                                            "variable": "buttonFunctionNo",
+                                            "base64": "UAAAAMzMzMwA"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        "audio": [
+                            {
+                                "name": "aud_buttonHover01",
+                                "volume": 1.0,
+                                "loop": false,
+                                "playOnStart": false
+                            },
+                            {
+                                "name": "aud_buttonClick01",
+                                "volume": 1.0,
+                                "loop": false,
+                                "playOnStart": false
+                            }
+                        ]
+                    },
+                    {
+                        "name": {
+                            "namestr": "ArrowDecrease",
+                            "layer": 16,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "prefab_sound.prefab",
+                            "issync": true
+                        },
+                        "transform": {
+                            "position": {
+                                "x": 1.6779330968856812,
+                                "y": 1.3578965663909912
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 5.0,
+                                "y": 5.0
+                            }
+                        },
+                        "collider": {
+                            "checkcollision": true,
+                            "checkresponse": false,
+                            "size": {
+                                "x": 0.09000000357627869,
+                                "y": 0.12999999523162842
+                            },
+                            "offset": {
+                                "x": -0.019999999552965164,
+                                "y": 0.0
+                            },
+                            "drawDebug": true,
+                            "radius": 0.5,
+                            "shapetype": 0
+                        },
+                        "rigidbody": {
+                            "linearVelocity": {
+                                "x": 0.0,
+                                "y": 0.0
+                            },
+                            "linearAcceleration": {
+                                "x": 0.0,
+                                "y": 0.0
+                            },
+                            "rotation": 0.0,
+                            "angularVelocity": 0.0,
+                            "angularAcceleration": 0.0,
+                            "mass": 1.0,
+                            "inverseMass": 1.0,
+                            "linearDamping": 0.9900000095367432,
+                            "angularDamping": 0.9900000095367432,
+                            "force": {
+                                "x": 0.0,
+                                "y": 0.0
+                            },
+                            "torque": 0.0,
+                            "kinematic": false,
+                            "static": false
+                        },
+                        "sprite": {
+                            "imagefile": "ani_inventoryLeftArrow_strip2.png",
+                            "layer": 27,
+                            "color": {
+                                "r": 1.0,
+                                "g": 1.0,
+                                "b": 1.0
+                            },
+                            "alpha": 1.0,
+                            "isLit": false
+                        },
+                        "animation": {
+                            "frameNumber": 0,
+                            "framesPerSecond": 0,
+                            "frameTimer": 0.0,
+                            "isAnimating": true,
+                            "stripCount": 2
+                        },
+                        "script": {
+                            "scripts": [
+                                {
+                                    "name": "PauseMenuButtons",
+                                    "enabled": true,
+                                    "map": [
+                                        {
+                                            "variable": "buttonFunctionNo",
+                                            "base64": "UQAAAMzMzMwA"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        "audio": [
+                            {
+                                "name": "aud_buttonHover01",
+                                "volume": 1.0,
+                                "loop": false,
+                                "playOnStart": false
+                            },
+                            {
+                                "name": "aud_buttonClick01",
+                                "volume": 1.0,
+                                "loop": false,
+                                "playOnStart": false
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": {
+                    "namestr": "SoundBarGroup",
+                    "layer": 16,
+                    "isprefab": true,
+                    "tagstr": "SoundBarSFX",
+                    "prefabname": "prefab_sound.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": -0.1083105206489563,
+                        "y": -2.8074703216552734
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "children": [
+                    {
+                        "name": {
+                            "namestr": "ani_pauseMenuUserManualButton_strip2",
+                            "layer": 16,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "prefab_sound.prefab",
+                            "issync": true
+                        },
+                        "transform": {
+                            "position": {
+                                "x": -3.299999952316284,
+                                "y": 2.200000047683716
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 0.30000001192092896,
+                                "y": 2.5
+                            }
+                        },
+                        "sprite": {
+                            "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
+                            "layer": 29,
+                            "color": {
+                                "r": 1.0,
+                                "g": 1.0,
+                                "b": 1.0
+                            },
+                            "alpha": 1.0,
+                            "isLit": false
+                        },
+                        "animation": {
+                            "frameNumber": 0,
+                            "framesPerSecond": 0,
+                            "frameTimer": 0.0,
+                            "isAnimating": true,
+                            "stripCount": 2
+                        }
+                    },
+                    {
+                        "name": {
+                            "namestr": "ani_pauseMenuUserManualButton_strip2",
+                            "layer": 16,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "prefab_sound.prefab",
+                            "issync": true
+                        },
+                        "transform": {
+                            "position": {
+                                "x": -2.700000047683716,
+                                "y": 2.1959502696990967
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 0.30000001192092896,
+                                "y": 2.5
+                            }
+                        },
+                        "sprite": {
+                            "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
+                            "layer": 30,
+                            "color": {
+                                "r": 1.0,
+                                "g": 1.0,
+                                "b": 1.0
+                            },
+                            "alpha": 1.0,
+                            "isLit": false
+                        },
+                        "animation": {
+                            "frameNumber": 1,
+                            "framesPerSecond": 0,
+                            "frameTimer": 0.0,
+                            "isAnimating": true,
+                            "stripCount": 2
+                        }
+                    },
+                    {
+                        "name": {
+                            "namestr": "ani_pauseMenuUserManualButton_strip2",
+                            "layer": 16,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "prefab_sound.prefab",
+                            "issync": true
+                        },
+                        "transform": {
+                            "position": {
+                                "x": -2.0999999046325684,
+                                "y": 2.1959502696990967
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 0.30000001192092896,
+                                "y": 2.5
+                            }
+                        },
+                        "sprite": {
+                            "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
+                            "layer": 31,
+                            "color": {
+                                "r": 1.0,
+                                "g": 1.0,
+                                "b": 1.0
+                            },
+                            "alpha": 1.0,
+                            "isLit": false
+                        },
+                        "animation": {
+                            "frameNumber": 1,
+                            "framesPerSecond": 0,
+                            "frameTimer": 0.0,
+                            "isAnimating": true,
+                            "stripCount": 2
+                        }
+                    },
+                    {
+                        "name": {
+                            "namestr": "ani_pauseMenuUserManualButton_strip2",
+                            "layer": 16,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "prefab_sound.prefab",
+                            "issync": true
+                        },
+                        "transform": {
+                            "position": {
+                                "x": -1.5,
+                                "y": 2.1959502696990967
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 0.30000001192092896,
+                                "y": 2.5
+                            }
+                        },
+                        "sprite": {
+                            "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
+                            "layer": 33,
+                            "color": {
+                                "r": 1.0,
+                                "g": 1.0,
+                                "b": 1.0
+                            },
+                            "alpha": 1.0,
+                            "isLit": false
+                        },
+                        "animation": {
+                            "frameNumber": 1,
+                            "framesPerSecond": 0,
+                            "frameTimer": 0.0,
+                            "isAnimating": true,
+                            "stripCount": 2
+                        }
+                    },
+                    {
+                        "name": {
+                            "namestr": "ani_pauseMenuUserManualButton_strip2",
+                            "layer": 16,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "prefab_sound.prefab",
+                            "issync": true
+                        },
+                        "transform": {
+                            "position": {
+                                "x": -0.8999999761581421,
+                                "y": 2.1959502696990967
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 0.30000001192092896,
+                                "y": 2.5
+                            }
+                        },
+                        "sprite": {
+                            "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
+                            "layer": 36,
+                            "color": {
+                                "r": 1.0,
+                                "g": 1.0,
+                                "b": 1.0
+                            },
+                            "alpha": 1.0,
+                            "isLit": false
+                        },
+                        "animation": {
+                            "frameNumber": 1,
+                            "framesPerSecond": 0,
+                            "frameTimer": 0.0,
+                            "isAnimating": true,
+                            "stripCount": 2
+                        }
+                    },
+                    {
+                        "name": {
+                            "namestr": "ani_pauseMenuUserManualButton_strip2",
+                            "layer": 16,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "prefab_sound.prefab",
+                            "issync": true
+                        },
+                        "transform": {
+                            "position": {
+                                "x": -0.30000001192092896,
+                                "y": 2.1959502696990967
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 0.30000001192092896,
+                                "y": 2.5
+                            }
+                        },
+                        "sprite": {
+                            "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
+                            "layer": 37,
+                            "color": {
+                                "r": 1.0,
+                                "g": 1.0,
+                                "b": 1.0
+                            },
+                            "alpha": 1.0,
+                            "isLit": false
+                        },
+                        "animation": {
+                            "frameNumber": 1,
+                            "framesPerSecond": 0,
+                            "frameTimer": 0.0,
+                            "isAnimating": true,
+                            "stripCount": 2
+                        }
+                    },
+                    {
+                        "name": {
+                            "namestr": "ani_pauseMenuUserManualButton_strip2",
+                            "layer": 16,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "prefab_sound.prefab",
+                            "issync": true
+                        },
+                        "transform": {
+                            "position": {
+                                "x": 0.30000001192092896,
+                                "y": 2.1959502696990967
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 0.30000001192092896,
+                                "y": 2.5
+                            }
+                        },
+                        "sprite": {
+                            "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
+                            "layer": 38,
+                            "color": {
+                                "r": 1.0,
+                                "g": 1.0,
+                                "b": 1.0
+                            },
+                            "alpha": 1.0,
+                            "isLit": false
+                        },
+                        "animation": {
+                            "frameNumber": 1,
+                            "framesPerSecond": 0,
+                            "frameTimer": 0.0,
+                            "isAnimating": true,
+                            "stripCount": 2
+                        }
+                    },
+                    {
+                        "name": {
+                            "namestr": "ani_pauseMenuUserManualButton_strip2",
+                            "layer": 16,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "prefab_sound.prefab",
+                            "issync": true
+                        },
+                        "transform": {
+                            "position": {
+                                "x": 0.8999999761581421,
+                                "y": 2.1959502696990967
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 0.30000001192092896,
+                                "y": 2.5
+                            }
+                        },
+                        "sprite": {
+                            "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
+                            "layer": 40,
+                            "color": {
+                                "r": 1.0,
+                                "g": 1.0,
+                                "b": 1.0
+                            },
+                            "alpha": 1.0,
+                            "isLit": false
+                        },
+                        "animation": {
+                            "frameNumber": 1,
+                            "framesPerSecond": 0,
+                            "frameTimer": 0.0,
+                            "isAnimating": true,
+                            "stripCount": 2
+                        }
+                    },
+                    {
+                        "name": {
+                            "namestr": "ani_pauseMenuUserManualButton_strip2",
+                            "layer": 16,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "prefab_sound.prefab",
+                            "issync": true
+                        },
+                        "transform": {
+                            "position": {
+                                "x": 1.5,
+                                "y": 2.1959502696990967
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 0.30000001192092896,
+                                "y": 2.5
+                            }
+                        },
+                        "sprite": {
+                            "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
+                            "layer": 42,
+                            "color": {
+                                "r": 1.0,
+                                "g": 1.0,
+                                "b": 1.0
+                            },
+                            "alpha": 1.0,
+                            "isLit": false
+                        },
+                        "animation": {
+                            "frameNumber": 0,
+                            "framesPerSecond": 0,
+                            "frameTimer": 0.0,
+                            "isAnimating": true,
+                            "stripCount": 2
+                        }
+                    },
+                    {
+                        "name": {
+                            "namestr": "ani_pauseMenuUserManualButton_strip2",
+                            "layer": 16,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "prefab_sound.prefab",
+                            "issync": true
+                        },
+                        "transform": {
+                            "position": {
+                                "x": 2.0999999046325684,
+                                "y": 2.1959502696990967
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 0.30000001192092896,
+                                "y": 2.5
+                            }
+                        },
+                        "sprite": {
+                            "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
+                            "layer": 43,
+                            "color": {
+                                "r": 1.0,
+                                "g": 1.0,
+                                "b": 1.0
+                            },
+                            "alpha": 1.0,
+                            "isLit": false
+                        },
+                        "animation": {
+                            "frameNumber": 1,
+                            "framesPerSecond": 0,
+                            "frameTimer": 0.0,
+                            "isAnimating": true,
+                            "stripCount": 2
+                        }
+                    },
+                    {
+                        "name": {
+                            "namestr": "ArrowIncrease",
+                            "layer": 16,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "prefab_sound.prefab",
+                            "issync": true
+                        },
+                        "transform": {
+                            "position": {
+                                "x": 2.036818504333496,
+                                "y": 1.3535691499710083
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 5.0,
+                                "y": 5.0
+                            }
+                        },
+                        "collider": {
+                            "checkcollision": true,
+                            "checkresponse": false,
+                            "size": {
+                                "x": 0.09000000357627869,
+                                "y": 0.12999999523162842
+                            },
+                            "offset": {
+                                "x": 0.019999999552965164,
+                                "y": 0.0
+                            },
+                            "drawDebug": true,
+                            "radius": 0.5,
+                            "shapetype": 0
+                        },
+                        "rigidbody": {
+                            "linearVelocity": {
+                                "x": 0.0,
+                                "y": 0.0
+                            },
+                            "linearAcceleration": {
+                                "x": 0.0,
+                                "y": 0.0
+                            },
+                            "rotation": 0.0,
+                            "angularVelocity": 0.0,
+                            "angularAcceleration": 0.0,
+                            "mass": 1.0,
+                            "inverseMass": 1.0,
+                            "linearDamping": 0.9900000095367432,
+                            "angularDamping": 0.9900000095367432,
+                            "force": {
+                                "x": 0.0,
+                                "y": 0.0
+                            },
+                            "torque": 0.0,
+                            "kinematic": false,
+                            "static": false
+                        },
+                        "sprite": {
+                            "imagefile": "ani_inventoryRightArrow_strip2.png",
+                            "layer": 65,
+                            "color": {
+                                "r": 1.0,
+                                "g": 1.0,
+                                "b": 1.0
+                            },
+                            "alpha": 1.0,
+                            "isLit": false
+                        },
+                        "animation": {
+                            "frameNumber": 0,
+                            "framesPerSecond": 0,
+                            "frameTimer": 0.0,
+                            "isAnimating": true,
+                            "stripCount": 2
+                        },
+                        "script": {
+                            "scripts": [
+                                {
+                                    "name": "PauseMenuButtons",
+                                    "enabled": true,
+                                    "map": [
+                                        {
+                                            "variable": "buttonFunctionNo",
+                                            "base64": "UgAAAMzMzMwA"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        "audio": [
+                            {
+                                "name": "aud_buttonHover01",
+                                "volume": 1.0,
+                                "loop": false,
+                                "playOnStart": false
+                            },
+                            {
+                                "name": "aud_buttonClick01",
+                                "volume": 1.0,
+                                "loop": false,
+                                "playOnStart": false
+                            }
+                        ]
+                    },
+                    {
+                        "name": {
+                            "namestr": "ArrowDecrease",
+                            "layer": 16,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "prefab_sound.prefab",
+                            "issync": true
+                        },
+                        "transform": {
+                            "position": {
+                                "x": 1.6779330968856812,
+                                "y": 1.3578965663909912
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 5.0,
+                                "y": 5.0
+                            }
+                        },
+                        "collider": {
+                            "checkcollision": true,
+                            "checkresponse": false,
+                            "size": {
+                                "x": 0.09000000357627869,
+                                "y": 0.12999999523162842
+                            },
+                            "offset": {
+                                "x": -0.019999999552965164,
+                                "y": 0.0
+                            },
+                            "drawDebug": true,
+                            "radius": 0.5,
+                            "shapetype": 0
+                        },
+                        "rigidbody": {
+                            "linearVelocity": {
+                                "x": 0.0,
+                                "y": 0.0
+                            },
+                            "linearAcceleration": {
+                                "x": 0.0,
+                                "y": 0.0
+                            },
+                            "rotation": 0.0,
+                            "angularVelocity": 0.0,
+                            "angularAcceleration": 0.0,
+                            "mass": 1.0,
+                            "inverseMass": 1.0,
+                            "linearDamping": 0.9900000095367432,
+                            "angularDamping": 0.9900000095367432,
+                            "force": {
+                                "x": 0.0,
+                                "y": 0.0
+                            },
+                            "torque": 0.0,
+                            "kinematic": false,
+                            "static": false
+                        },
+                        "sprite": {
+                            "imagefile": "ani_inventoryLeftArrow_strip2.png",
+                            "layer": 66,
+                            "color": {
+                                "r": 1.0,
+                                "g": 1.0,
+                                "b": 1.0
+                            },
+                            "alpha": 1.0,
+                            "isLit": false
+                        },
+                        "animation": {
+                            "frameNumber": 0,
+                            "framesPerSecond": 0,
+                            "frameTimer": 0.0,
+                            "isAnimating": true,
+                            "stripCount": 2
+                        },
+                        "script": {
+                            "scripts": [
+                                {
+                                    "name": "PauseMenuButtons",
+                                    "enabled": true,
+                                    "map": [
+                                        {
+                                            "variable": "buttonFunctionNo",
+                                            "base64": "UwAAAMzMzMwA"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        "audio": [
+                            {
+                                "name": "aud_buttonHover01",
+                                "volume": 1.0,
+                                "loop": false,
+                                "playOnStart": false
+                            },
+                            {
+                                "name": "aud_buttonClick01",
+                                "volume": 1.0,
+                                "loop": false,
+                                "playOnStart": false
+                            }
+                        ]
+                    }
+                ]
             }
         ]
     }

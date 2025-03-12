@@ -519,6 +519,8 @@ namespace script {
 		/******************************************************************/
 		static MonoArray* m_InternalCallGetChildrenID(ecs::EntityID);
 
+		static int m_InternalCallGetParentID(ecs::EntityID);
+
 		/******************************************************************/
 		/*!
 			\fn        void InternalCall::m_InternalCallPlayAudio(ecs::EntityID id, MonoString* monoString)
@@ -831,6 +833,10 @@ namespace script {
 		static void m_InternalCallGetLightingComponent(ecs::EntityID id, vector2::Vec2* innerouterradius, vector3::Vec3* color, float* intensity);
 
 		static void m_InternalCallSetLightingComponent(ecs::EntityID id, vector2::Vec2* innerouterradius, vector3::Vec3* color, float* intensity);
+
+		static bool m_IsLayerVisable(int layer);
+
+		static void m_GetColliderDecomposedTRS(ecs::EntityID id, vector2::Vec2* translate, vector2::Vec2* rotate, float* scale);
 
 	public:
 		/******************************************************************/

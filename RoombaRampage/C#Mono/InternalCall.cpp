@@ -546,7 +546,11 @@ namespace script {
 				for (const auto& id : scene.second.m_sceneIDs) {
 					ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id));
 					
-					if (nc->m_entityTag == tag) {
+					if (nc->m_entityTag == tag ) {
+						//check prefab and ignore if prefab
+						
+
+
 						return id;
 
 						break;
@@ -621,6 +625,34 @@ namespace script {
 		}
 		else {
 			ASSERTNOCOMPONENT(LC, id);
+		}
+
+
+		return;
+	}
+
+	bool InternalCall::m_IsLayerVisable(int layer)
+	{
+		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+		
+		return ecs->m_layersStack.m_IsLayerVisable(layer);;
+	}
+
+	void InternalCall::m_GetColliderDecomposedTRS(ecs::EntityID id, vector2::Vec2* _translate, vector2::Vec2* _rotate, float* _scale)
+	{
+
+		auto* CC = static_cast<ecs::ColliderComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPECOLLIDERCOMPONENT]->m_GetEntityComponent(id));
+
+		if (CC) {
+			vector2::Vec2 translate, rotate;
+			float scale;
+			mat3x3::Mat3Decompose(CC->m_collider_Transformation, translate, rotate, scale);
+			*_translate = translate;
+			*_rotate = rotate;
+			*_scale = scale;
+		}
+		else {
+			ASSERTNOCOMPONENT(CC, id);
 		}
 
 
@@ -826,6 +858,18 @@ namespace script {
 		}
 
 		return nullptr;
+	}
+
+	int InternalCall::m_InternalCallGetParentID(ecs::EntityID id)
+	{
+
+		auto result = ecs::Hierachy::m_GetParent(id);
+
+		if (result.has_value()) {
+			return result.value();
+		}
+
+		return -1;
 	}
 
 	void InternalCall::m_InternalCallPlayAudio(ecs::EntityID id, MonoString* monoString)
@@ -1327,6 +1371,7 @@ namespace script {
 
 		MONO_ADD_INTERNAL_CALL(m_InternalGetColliderComponent);
 		MONO_ADD_INTERNAL_CALL(m_InternalSetColliderComponent);
+		MONO_ADD_INTERNAL_CALL(m_GetColliderDecomposedTRS);
 
 		MONO_ADD_INTERNAL_CALL(m_InternalGetEnemyComponent);
 		MONO_ADD_INTERNAL_CALL(m_InternalSetEnemyComponent);
@@ -1388,7 +1433,7 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_InternalCallResetTimeScale);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallCloseWindow);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallGetChildrenID);
-
+		MONO_ADD_INTERNAL_CALL(m_InternalCallGetParentID);
 
 		MONO_ADD_INTERNAL_CALL(m_InternalCallPlayAudio);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallStopAudio);
@@ -1435,6 +1480,8 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_ChangeLayer);
 
 		MONO_ADD_INTERNAL_CALL(m_getFPS);
+
+		MONO_ADD_INTERNAL_CALL(m_IsLayerVisable);
 
 		///SO HELP ME THEN OVER HERE
 	}

@@ -14,6 +14,9 @@ LeftLimbSprite
 RightLimbSprite
 BackLimbSprite
 PauseMenuCursor
+SoundMenuCursor
+SoundBarSFX
+SoundBarBGM
 PlayerLoadoutCursor
 PlayerGunLightLeft
 PlayerGunLightRight
@@ -26,4 +29,7 @@ UIGameBackLimbCounter
 UIGameLeftLimbCounterIcon
 UIGameRightLimbCounterIcon
 UIGameBackLimbCounterIcon
+UIPauseTextBGM
+UIPauseTextSFX
 PropGlassWall
+

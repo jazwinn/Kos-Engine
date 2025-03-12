@@ -91,6 +91,8 @@
     <Compile Include="LogicScript\LevelTransition.cs" />
     <Compile Include="LogicScript\MainMenuScript.cs" />
     <Compile Include="LogicScript\PauseMenuButtons.cs" />
+    <Compile Include="LogicScript\SoundButton.cs" />
+    <Compile Include="LogicScript\SoundCursor.cs" />
     <Compile Include="LogicScript\PauseMenuCursor.cs" />
     <Compile Include="LogicScript\PauseMenuManager.cs" />
     <Compile Include="LogicScript\PlayerBulletType2.cs" />
@@ -104,7 +106,6 @@
     <Compile Include="LogicScript\PlayerMeleeKillZone.cs" />
     <Compile Include="LogicScript\Prop_GlassWall.cs" />
     <Compile Include="LogicScript\StartGameButton.cs" />
-    <Compile Include="LogicScript\SoundSlider.cs" />
     <Compile Include="LogicScript\StartMenuButtons.cs" />
     <Compile Include="LogicScript\StartMenuCursor.cs" />
     <Compile Include="LogicScript\SoundManager.cs" />

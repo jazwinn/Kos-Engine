@@ -267,6 +267,15 @@ public static class InternalCall
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public static extern void m_InternalCallSetLightingComponent(uint id, in Vector2 innerouterradius, in Vector3 color, in float intensity);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public static extern bool m_IsLayerVisable(int layer);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public static extern void m_GetColliderDecomposedTRS(uint id, out Vector2 _translate, out Vector2 _rotate, out float _scale);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public static extern int m_InternalCallGetParentID(uint id);
 }
 
 
