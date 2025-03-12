@@ -1,2 +1,2 @@
-GlobalIllumination: 1.38
+GlobalIllumination: 0.3
 BackgroundColor: 0.133 0.23 0.32

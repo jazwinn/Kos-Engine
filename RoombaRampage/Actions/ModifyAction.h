@@ -75,11 +75,21 @@ namespace actions {
 		AddComponentAction(ecs::EntityID inID, ecs::ComponentType inType) : m_entityID(inID), m_type(inType) {};
 
 		void m_UndoAction() override {
-			ecs::ECS::m_GetInstance()->m_RemoveComponent(m_type, m_entityID);
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap.find(m_entityID) == ecs::ECS::m_GetInstance()->m_ECS_EntityMap.end()) {
+
+			}
+			else {
+				ecs::ECS::m_GetInstance()->m_RemoveComponent(m_type, m_entityID);
+			}
 		}
 
 		void m_RedoAction() override {
-			ecs::ECS::m_GetInstance()->m_AddComponent(m_type, m_entityID);
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap[m_entityID] == NULL) {
+
+			}
+			else {
+				ecs::ECS::m_GetInstance()->m_AddComponent(m_type, m_entityID);
+			}
 		}
 	};
 
@@ -96,11 +106,21 @@ namespace actions {
 		RemoveComponentAction(ecs::EntityID inID, ecs::ComponentType inType) : m_entityID(inID), m_type(inType) {};
 
 		void m_UndoAction() override {
-			ecs::ECS::m_GetInstance()->m_AddComponent(m_type, m_entityID);
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap.find(m_entityID) == ecs::ECS::m_GetInstance()->m_ECS_EntityMap.end()) {
+
+			}
+			else {
+				ecs::ECS::m_GetInstance()->m_AddComponent(m_type, m_entityID);
+			}
 		}
 
 		void m_RedoAction() override {
-			ecs::ECS::m_GetInstance()->m_RemoveComponent(m_type, m_entityID);
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap.find(m_entityID) == ecs::ECS::m_GetInstance()->m_ECS_EntityMap.end()) {
+
+			}
+			else {
+				ecs::ECS::m_GetInstance()->m_RemoveComponent(m_type, m_entityID);
+			}
 		}
 	};
 
@@ -117,16 +137,20 @@ namespace actions {
 		AddEntityAction(ecs::EntityID inID) : m_entityID(inID), m_hasBeenUndo(false) {};
 
 		void m_UndoAction() override {
-			if (!m_hasBeenUndo) {
-				ecs::ECS::m_GetInstance()->m_DeleteEntity(m_entityID);
-				m_hasBeenUndo = true;
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap.find(m_entityID) != ecs::ECS::m_GetInstance()->m_ECS_EntityMap.end()) {
+				if (!m_hasBeenUndo) {
+					ecs::ECS::m_GetInstance()->m_DeleteEntity(m_entityID);
+					m_hasBeenUndo = true;
+				}
 			}
 		}
 
 		void m_RedoAction() override {
-			if (m_hasBeenUndo) {
-				ecs::ECS::m_GetInstance()->m_RestoreEntity(m_entityID);
-				m_hasBeenUndo = false;
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap.find(m_entityID) != ecs::ECS::m_GetInstance()->m_ECS_EntityMap.end()) {
+				if (m_hasBeenUndo) {
+					ecs::ECS::m_GetInstance()->m_RestoreEntity(m_entityID);
+					m_hasBeenUndo = false;
+				}
 			}
 		}
 	};
@@ -144,16 +168,20 @@ namespace actions {
 		RemoveEntityAction(ecs::EntityID inID) : m_entityID(inID), m_hasBeenUndo(false) {};
 
 		void m_UndoAction() override {
-			if (!m_hasBeenUndo) {
-				m_hasBeenUndo = true;
-				ecs::ECS::m_GetInstance()->m_RestoreEntity(m_entityID);
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap.find(m_entityID) != ecs::ECS::m_GetInstance()->m_ECS_EntityMap.end()) {
+				if (!m_hasBeenUndo) {
+					m_hasBeenUndo = true;
+					ecs::ECS::m_GetInstance()->m_RestoreEntity(m_entityID);
+				}
 			}
 		}
 
 		void m_RedoAction() override {
-			if (m_hasBeenUndo) {
-				m_hasBeenUndo = false;
-				ecs::ECS::m_GetInstance()->m_DeleteEntity(m_entityID);
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap.find(m_entityID) != ecs::ECS::m_GetInstance()->m_ECS_EntityMap.end()) {
+				if (m_hasBeenUndo) {
+					m_hasBeenUndo = false;
+					ecs::ECS::m_GetInstance()->m_DeleteEntity(m_entityID);
+				}
 			}
 		}
 	};
@@ -168,16 +196,20 @@ namespace actions {
 		MoveEntityChildToChildAction(ecs::EntityID inID, ecs::EntityID inOld, ecs::EntityID inNew) : m_entityID(inID), m_prevParent(inOld), m_newParent(inNew), m_hasBeenUndo(false) {};
 
 		void m_UndoAction() override {
-			if (!m_hasBeenUndo) {
-				m_hasBeenUndo = true;
-				ecs::Hierachy::m_SetParent(m_prevParent, m_entityID);
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap.find(m_entityID) != ecs::ECS::m_GetInstance()->m_ECS_EntityMap.end()) {
+				if (!m_hasBeenUndo) {
+					m_hasBeenUndo = true;
+					ecs::Hierachy::m_SetParent(m_prevParent, m_entityID);
+				}
 			}
 		}
 
 		void m_RedoAction() override {
-			if (m_hasBeenUndo) {
-				m_hasBeenUndo = false;
-				ecs::Hierachy::m_SetParent(m_newParent, m_entityID);
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap.find(m_entityID) != ecs::ECS::m_GetInstance()->m_ECS_EntityMap.end()) {
+				if (m_hasBeenUndo) {
+					m_hasBeenUndo = false;
+					ecs::Hierachy::m_SetParent(m_newParent, m_entityID);
+				}
 			}
 		}
 	};
@@ -191,16 +223,20 @@ namespace actions {
 		MoveEntityChildToParentAction(ecs::EntityID inID, ecs::EntityID inOld) : m_entityID(inID), m_prevParent(inOld), m_hasBeenUndo(false) {};
 
 		void m_UndoAction() override {
-			if (!m_hasBeenUndo) {
-				m_hasBeenUndo = true;
-				ecs::Hierachy::m_SetParent(m_prevParent, m_entityID);
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap.find(m_entityID) != ecs::ECS::m_GetInstance()->m_ECS_EntityMap.end()) {
+				if (!m_hasBeenUndo) {
+					m_hasBeenUndo = true;
+					ecs::Hierachy::m_SetParent(m_prevParent, m_entityID);
+				}
 			}
 		}
 
 		void m_RedoAction() override {
-			if (m_hasBeenUndo) {
-				m_hasBeenUndo = false;
-				ecs::Hierachy::m_RemoveParent(m_entityID);
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap.find(m_entityID) != ecs::ECS::m_GetInstance()->m_ECS_EntityMap.end()) {
+				if (m_hasBeenUndo) {
+					m_hasBeenUndo = false;
+					ecs::Hierachy::m_RemoveParent(m_entityID);
+				}
 			}
 		}
 	};
@@ -214,16 +250,20 @@ namespace actions {
 		MoveEntityParentToChildAction(ecs::EntityID inID,  ecs::EntityID inNew) : m_entityID(inID), m_newParent(inNew), m_hasBeenUndo(false) {};
 
 		void m_UndoAction() override {
-			if (!m_hasBeenUndo) {
-				m_hasBeenUndo = true;
-				ecs::Hierachy::m_RemoveParent(m_entityID);
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap.find(m_entityID) != ecs::ECS::m_GetInstance()->m_ECS_EntityMap.end()) {
+				if (!m_hasBeenUndo) {
+					m_hasBeenUndo = true;
+					ecs::Hierachy::m_RemoveParent(m_entityID);
+				}
 			}
 		}
 
 		void m_RedoAction() override {
-			if (m_hasBeenUndo) {
-				m_hasBeenUndo = false;
-				ecs::Hierachy::m_SetParent(m_newParent, m_entityID);
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap.find(m_entityID) != ecs::ECS::m_GetInstance()->m_ECS_EntityMap.end()) {
+				if (m_hasBeenUndo) {
+					m_hasBeenUndo = false;
+					ecs::Hierachy::m_SetParent(m_newParent, m_entityID);
+				}
 			}
 		}
 	};
@@ -244,24 +284,100 @@ namespace actions {
 			m_oldFrameTimer(inOldFT), m_newFrameTimer(inComp->m_frameTimer),m_oldIsAnim(oldCheck),m_newIsAnim(inComp->m_isAnimating), m_oldStrip(inOldStip), m_newStrip(inComp->m_stripCount) {}
 
 		void m_UndoAction() override {
-			m_changedComp->m_frameNumber = m_oldFrameNum;
-			m_changedComp->m_framesPerSecond = m_oldFPS;
-			m_changedComp->m_frameTimer = m_oldFrameTimer;
-			m_changedComp->m_isAnimating = m_oldIsAnim;
-			m_changedComp->m_stripCount = m_oldStrip;
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap.find(m_entityID) != ecs::ECS::m_GetInstance()->m_ECS_EntityMap.end()) {
+				m_changedComp->m_frameNumber = m_oldFrameNum;
+				m_changedComp->m_framesPerSecond = m_oldFPS;
+				m_changedComp->m_frameTimer = m_oldFrameTimer;
+				m_changedComp->m_isAnimating = m_oldIsAnim;
+				m_changedComp->m_stripCount = m_oldStrip;
+			}
 
 		}
 
 		void m_RedoAction() override {
-			m_changedComp->m_frameNumber = m_newFrameNum;
-			m_changedComp->m_framesPerSecond = m_newFPS;
-			m_changedComp->m_frameTimer = m_newFrameTimer;
-			m_changedComp->m_isAnimating = m_newIsAnim;
-			m_changedComp->m_stripCount = m_newStrip;
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap.find(m_entityID) != ecs::ECS::m_GetInstance()->m_ECS_EntityMap.end()) {
+				m_changedComp->m_frameNumber = m_newFrameNum;
+				m_changedComp->m_framesPerSecond = m_newFPS;
+				m_changedComp->m_frameTimer = m_newFrameTimer;
+				m_changedComp->m_isAnimating = m_newIsAnim;
+				m_changedComp->m_stripCount = m_newStrip;
+			}
 		}
 
 
 	};
+
+	class ModifyAudio : public Action {
+	private:
+		ecs::EntityID m_entityID;
+		ecs::AudioComponent* m_changedComp;
+		int m_index;
+		//std::vector<ecs::AudioFile>::iterator m_changedAudioFile;
+		std::string m_oldName, m_newName;
+		std::string m_oldfilePath, m_newfilePath;
+		float m_oldVolume, m_newVolume;
+		bool m_oldLoop, m_newLoop;
+		bool m_oldPlayOnStart, m_newPlayOnStart;
+		bool m_oldHasPlayed, m_newHasPlayed;
+		float m_oldPan, m_newPan;
+		bool m_oldIsSFX, m_newIsSFX;
+		bool m_oldIsBGM, m_newIsBGM;
+		bool m_hasBeenUndo;
+	public:
+		ModifyAudio(ecs::EntityID inID, ecs::AudioComponent* inIter, int inIdx,std::string inName, std::string inFP, float inVol, bool inLoop, bool inPlay, bool inPlayed, float inPan, bool inSFX, bool inBGM) :
+			m_entityID(inID), m_changedComp(inIter), m_oldName(inName), m_newName(inIter->m_AudioFiles[inIdx].m_Name),
+			m_oldfilePath(inFP), m_newfilePath(inIter->m_AudioFiles[inIdx].m_FilePath),
+			m_oldVolume(inVol), m_newVolume(inIter->m_AudioFiles[inIdx].m_Volume),
+			m_oldLoop(inLoop), m_newLoop(inIter->m_AudioFiles[inIdx].m_Loop),
+			m_oldPlayOnStart(inPlay), m_newPlayOnStart(inIter->m_AudioFiles[inIdx].m_PlayOnStart),
+			m_oldHasPlayed(inPlayed), m_newHasPlayed(inIter->m_AudioFiles[inIdx].m_HasPlayed),
+			m_oldPan(inPan), m_newPan(inIter->m_AudioFiles[inIdx].m_Pan),
+			m_oldIsSFX(inSFX), m_newIsSFX(inIter->m_AudioFiles[inIdx].m_IsSFX),
+			m_oldIsBGM(inBGM), m_newIsBGM(inIter->m_AudioFiles[inIdx].m_IsBGM),
+			m_hasBeenUndo(false) {}
+
+		void m_UndoAction() override {
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap.find(m_entityID) != ecs::ECS::m_GetInstance()->m_ECS_EntityMap.end()) {
+				for (auto it2 = m_changedComp->m_AudioFiles.begin(); it2 != m_changedComp->m_AudioFiles.end();) {
+					if (it2->m_hasChanged == true && m_hasBeenUndo == false) {
+						it2->m_FilePath = m_oldfilePath;
+						it2->m_Name = m_oldName;
+						it2->m_Volume = m_oldVolume;
+						it2->m_Loop = m_oldLoop;
+						it2->m_PlayOnStart = m_oldPlayOnStart;
+						it2->m_HasPlayed = m_oldHasPlayed;
+						it2->m_Pan = m_oldPan;
+						it2->m_hasChanged = false;
+						m_hasBeenUndo = true;
+						break;
+					}
+				}
+			}
+		}
+
+		void m_RedoAction() override {
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap.find(m_entityID) != ecs::ECS::m_GetInstance()->m_ECS_EntityMap.end()) {
+				for (auto it2 = m_changedComp->m_AudioFiles.begin(); it2 != m_changedComp->m_AudioFiles.end();) {
+					if (m_hasBeenUndo) {
+						it2->m_FilePath = m_newfilePath;
+						it2->m_Name = m_newName;
+						it2->m_Volume = m_newVolume;
+						it2->m_Loop = m_newLoop;
+						it2->m_PlayOnStart = m_newPlayOnStart;
+						it2->m_HasPlayed = m_newHasPlayed;
+						it2->m_Pan = m_newPan;
+						it2->m_hasChanged = true;
+						m_hasBeenUndo = false;
+						break;
+					}
+				}
+			}
+
+		}
+
+
+	};
+
 	class RemoveAudio : public Action {
 	private:
 		ecs::EntityID m_entityID;
@@ -272,29 +388,37 @@ namespace actions {
 		bool m_loop;
 		bool m_playOnStart, m_hasPlayed;
 		float m_pan;
+		bool m_isSFX, m_isBGM;
+		
 	public:
-		RemoveAudio(ecs::EntityID inID, ecs::AudioComponent* inComp,std::string inName, std::string inFP ,float inVol, bool inLoop, bool inPlay, bool inPlayed, float inPan) :
-			m_entityID(inID), m_changedComp(inComp), m_name(inName), m_filePath(inFP), m_volume(inVol), m_loop(inLoop), m_playOnStart(inPlay), m_hasPlayed(inPlayed), m_pan(inPan) {}
+		RemoveAudio(ecs::EntityID inID, ecs::AudioComponent* inComp,std::string inName, std::string inFP ,float inVol, bool inLoop, bool inPlay, bool inPlayed, float inPan, bool inSFX, bool inBGM) :
+			m_entityID(inID), m_changedComp(inComp), m_name(inName), m_filePath(inFP), m_volume(inVol), m_loop(inLoop), m_playOnStart(inPlay), m_hasPlayed(inPlayed), m_pan(inPan), m_isSFX(inSFX), m_isBGM(inBGM) {}
 
 		void m_UndoAction() override {
-			ecs::AudioFile newAF;
-			newAF.m_Name = m_name;
-			newAF.m_FilePath = m_filePath;
-			newAF.m_Volume = m_volume;
-			newAF.m_Loop = m_loop;
-			newAF.m_PlayOnStart = m_playOnStart;
-			newAF.m_HasPlayed = m_hasPlayed;
-			newAF.m_Pan = m_pan;
-			m_changedComp->m_AudioFiles.emplace_back(newAF);
-
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap.find(m_entityID) != ecs::ECS::m_GetInstance()->m_ECS_EntityMap.end()) {
+				ecs::AudioFile newAF;
+				newAF.m_Name = m_name;
+				newAF.m_FilePath = m_filePath;
+				newAF.m_Volume = m_volume;
+				newAF.m_Loop = m_loop;
+				newAF.m_PlayOnStart = m_playOnStart;
+				newAF.m_HasPlayed = m_hasPlayed;
+				newAF.m_Pan = m_pan;
+				newAF.m_IsSFX = m_isSFX;
+				newAF.m_IsBGM = m_isBGM;
+				m_changedComp->m_AudioFiles.emplace_back(newAF);
+			}
 		}
 
 		void m_RedoAction() override {
-			for (auto it2 = m_changedComp->m_AudioFiles.begin(); it2 != m_changedComp->m_AudioFiles.end();) {
-				if (it2->m_Name == m_name && it2->m_FilePath == m_filePath && it2->m_Volume == m_volume) {
-					auto& audioManager = assetmanager::AssetManager::m_funcGetInstance()->m_audioManager;
-					audioManager.m_StopAudioForEntity(m_entityID, it2->m_Name);
-					it2 = m_changedComp->m_AudioFiles.erase(it2);
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap.find(m_entityID) != ecs::ECS::m_GetInstance()->m_ECS_EntityMap.end()) {
+				for (auto it2 = m_changedComp->m_AudioFiles.begin(); it2 != m_changedComp->m_AudioFiles.end();) {
+					if (it2->m_Name == m_name && it2->m_FilePath == m_filePath && it2->m_Volume == m_volume) {
+						auto& audioManager = assetmanager::AssetManager::m_funcGetInstance()->m_audioManager;
+						audioManager.m_StopAudioForEntity(m_entityID, it2->m_Name);
+						it2 = m_changedComp->m_AudioFiles.erase(it2);
+						break;
+					}
 				}
 			}
 			
@@ -312,32 +436,39 @@ namespace actions {
 		bool m_loop;
 		bool m_playOnStart, m_hasPlayed;
 		float m_pan;
+		bool m_isSFX, m_isBGM;
 	public:
-		AddAudio(ecs::EntityID inID, ecs::AudioComponent* inComp, std::string inName, std::string inFP, float inVol, bool inLoop, bool inPlay, bool inPlayed, float inPan) :
-			m_entityID(inID), m_changedComp(inComp), m_name(inName), m_filePath(inFP), m_volume(inVol), m_loop(inLoop), m_playOnStart(inPlay), m_hasPlayed(inPlayed), m_pan(inPan) {}
+		AddAudio(ecs::EntityID inID, ecs::AudioComponent* inComp, std::string inName, std::string inFP, float inVol, bool inLoop, bool inPlay, bool inPlayed, float inPan, bool inSFX, bool inBGM) :
+			m_entityID(inID), m_changedComp(inComp), m_name(inName), m_filePath(inFP), m_volume(inVol), m_loop(inLoop), m_playOnStart(inPlay), m_hasPlayed(inPlayed), m_pan(inPan), m_isSFX(inSFX), m_isBGM(inBGM) {}
 
 		void m_UndoAction() override {
-			for (auto it2 = m_changedComp->m_AudioFiles.begin(); it2 != m_changedComp->m_AudioFiles.end();) {
-				if (it2->m_Name == m_name && it2->m_FilePath == m_filePath && it2->m_Volume == m_volume) {
-					auto& audioManager = assetmanager::AssetManager::m_funcGetInstance()->m_audioManager;
-					audioManager.m_StopAudioForEntity(m_entityID, it2->m_Name);
-					it2 = m_changedComp->m_AudioFiles.erase(it2);
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap.find(m_entityID) != ecs::ECS::m_GetInstance()->m_ECS_EntityMap.end()) {
+				for (auto it2 = m_changedComp->m_AudioFiles.begin(); it2 != m_changedComp->m_AudioFiles.end();) {
+					if (it2->m_Name == m_name && it2->m_FilePath == m_filePath && it2->m_Volume == m_volume) {
+						auto& audioManager = assetmanager::AssetManager::m_funcGetInstance()->m_audioManager;
+						audioManager.m_StopAudioForEntity(m_entityID, it2->m_Name);
+						it2 = m_changedComp->m_AudioFiles.erase(it2);
+						break;
+					}
 				}
 			}
-			//ecs::AudioFile newAF;
-			//newAF.m_Name = m_name;
-			//newAF.m_FilePath = m_filePath;
-			//newAF.m_Volume = m_volume;
-			//newAF.m_Loop = m_loop;
-			//newAF.m_PlayOnStart = m_playOnStart;
-			//newAF.m_HasPlayed = m_hasPlayed;
-			//newAF.m_Pan = m_pan;
-			//m_changedComp->m_AudioFiles.emplace_back(newAF);
 
 		}
 
 		void m_RedoAction() override {
-			m_changedComp->m_AudioFiles.emplace_back();
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap.find(m_entityID) != ecs::ECS::m_GetInstance()->m_ECS_EntityMap.end()) {
+				ecs::AudioFile newAF;
+				newAF.m_Name = m_name;
+				newAF.m_FilePath = m_filePath;
+				newAF.m_Volume = m_volume;
+				newAF.m_Loop = m_loop;
+				newAF.m_PlayOnStart = m_playOnStart;
+				newAF.m_HasPlayed = m_hasPlayed;
+				newAF.m_Pan = m_pan;
+				newAF.m_IsSFX = m_isSFX;
+				newAF.m_IsBGM = m_isBGM;
+				m_changedComp->m_AudioFiles.emplace_back(newAF);
+			}
 
 		}
 	};
@@ -357,20 +488,24 @@ namespace actions {
 			m_oldTop(inTop), m_newTop(inComp->m_top), m_oldBot(inBot), m_newBot(inComp->m_bottom), m_oldAR(inAR), m_newAR(inComp->m_aspectRatio) {}
 
 		void m_UndoAction() override {
-			m_changedComp->m_left = m_oldLeft;
-			m_changedComp->m_right = m_oldRight;
-			m_changedComp->m_top = m_oldTop;
-			m_changedComp->m_bottom = m_oldBot;
-			m_changedComp->m_aspectRatio = m_oldAR;
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap.find(m_entityID) != ecs::ECS::m_GetInstance()->m_ECS_EntityMap.end()) {
+				m_changedComp->m_left = m_oldLeft;
+				m_changedComp->m_right = m_oldRight;
+				m_changedComp->m_top = m_oldTop;
+				m_changedComp->m_bottom = m_oldBot;
+				m_changedComp->m_aspectRatio = m_oldAR;
+			}
 			
 		}
 
 		void m_RedoAction() override {
-			m_changedComp->m_left = m_newLeft;
-			m_changedComp->m_right = m_newRight;
-			m_changedComp->m_top = m_newTop;
-			m_changedComp->m_bottom = m_newBot;
-			m_changedComp->m_aspectRatio = m_newAR;
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap.find(m_entityID) != ecs::ECS::m_GetInstance()->m_ECS_EntityMap.end()) {
+				m_changedComp->m_left = m_newLeft;
+				m_changedComp->m_right = m_newRight;
+				m_changedComp->m_top = m_newTop;
+				m_changedComp->m_bottom = m_newBot;
+				m_changedComp->m_aspectRatio = m_newAR;
+			}
 		}
 	};
 
@@ -392,24 +527,28 @@ namespace actions {
 			m_oldShape(inShape), m_newShape(inComp->m_type) {}
 
 		void m_UndoAction() override {
-			m_changedComp->m_Size = m_oldSize;
-			m_changedComp->m_OffSet = m_oldOffset;
-			m_changedComp->m_drawDebug = m_oldDraw;
-			m_changedComp->m_radius = m_oldRad;
-			m_changedComp->m_collisionResponse = m_oldCR;
-			m_changedComp->m_collisionCheck = m_oldCC;
-			m_changedComp->m_type = m_oldShape;
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap.find(m_entityID) != ecs::ECS::m_GetInstance()->m_ECS_EntityMap.end()) {
+				m_changedComp->m_Size = m_oldSize;
+				m_changedComp->m_OffSet = m_oldOffset;
+				m_changedComp->m_drawDebug = m_oldDraw;
+				m_changedComp->m_radius = m_oldRad;
+				m_changedComp->m_collisionResponse = m_oldCR;
+				m_changedComp->m_collisionCheck = m_oldCC;
+				m_changedComp->m_type = m_oldShape;
+			}
 
 		}
 
 		void m_RedoAction() override {
-			m_changedComp->m_Size = m_newSize;
-			m_changedComp->m_OffSet = m_newOffset;
-			m_changedComp->m_drawDebug = m_newDraw;
-			m_changedComp->m_radius = m_newRad;
-			m_changedComp->m_collisionResponse = m_newCR;
-			m_changedComp->m_collisionCheck = m_newCC;
-			m_changedComp->m_type = m_newShape;
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap.find(m_entityID) != ecs::ECS::m_GetInstance()->m_ECS_EntityMap.end()) {
+				m_changedComp->m_Size = m_newSize;
+				m_changedComp->m_OffSet = m_newOffset;
+				m_changedComp->m_drawDebug = m_newDraw;
+				m_changedComp->m_radius = m_newRad;
+				m_changedComp->m_collisionResponse = m_newCR;
+				m_changedComp->m_collisionCheck = m_newCC;
+				m_changedComp->m_type = m_newShape;
+			}
 		}
 	};
 
@@ -426,16 +565,20 @@ namespace actions {
 			m_oldBehave(inBehave), m_newBehave(inComp->m_enemyRoamBehaviourInt) {}
 
 		void m_UndoAction() override {
-			m_changedComp->m_enemyTag = m_oldTag;
-			m_changedComp->m_enemyTypeInt = m_oldType;
-			m_changedComp->m_enemyRoamBehaviourInt = m_oldBehave;
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap.find(m_entityID) != ecs::ECS::m_GetInstance()->m_ECS_EntityMap.end()) {
+				m_changedComp->m_enemyTag = m_oldTag;
+				m_changedComp->m_enemyTypeInt = m_oldType;
+				m_changedComp->m_enemyRoamBehaviourInt = m_oldBehave;
+			}
 
 		}
 
 		void m_RedoAction() override {
-			m_changedComp->m_enemyTag = m_newTag;
-			m_changedComp->m_enemyTypeInt = m_newType;
-			m_changedComp->m_enemyRoamBehaviourInt = m_newBehave;
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap.find(m_entityID) != ecs::ECS::m_GetInstance()->m_ECS_EntityMap.end()) {
+				m_changedComp->m_enemyTag = m_newTag;
+				m_changedComp->m_enemyTypeInt = m_newType;
+				m_changedComp->m_enemyRoamBehaviourInt = m_newBehave;
+			}
 		}
 	};
 
@@ -455,20 +598,24 @@ namespace actions {
 			m_oldGridKey(inGridKey), m_newGridKey(inComp->m_GridKey){}
 
 		void m_UndoAction() override {
-			m_changedComp->m_Anchor = m_oldAnc;
-			m_changedComp->m_GridRowLength = m_oldRowLen;
-			m_changedComp->m_GridColumnLength = m_oldColLen;
-			m_changedComp->m_SetCollidable = m_oldColl;
-			m_changedComp->m_GridKey = m_oldGridKey;
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap.find(m_entityID) != ecs::ECS::m_GetInstance()->m_ECS_EntityMap.end()) {
+				m_changedComp->m_Anchor = m_oldAnc;
+				m_changedComp->m_GridRowLength = m_oldRowLen;
+				m_changedComp->m_GridColumnLength = m_oldColLen;
+				m_changedComp->m_SetCollidable = m_oldColl;
+				m_changedComp->m_GridKey = m_oldGridKey;
+			}
 
 		}
 
 		void m_RedoAction() override {
-			m_changedComp->m_Anchor = m_newAnc;
-			m_changedComp->m_GridRowLength = m_newRowLen;
-			m_changedComp->m_GridColumnLength = m_newColLen;
-			m_changedComp->m_SetCollidable = m_newColl;
-			m_changedComp->m_GridKey = m_newGridKey;
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap.find(m_entityID) != ecs::ECS::m_GetInstance()->m_ECS_EntityMap.end()) {
+				m_changedComp->m_Anchor = m_newAnc;
+				m_changedComp->m_GridRowLength = m_newRowLen;
+				m_changedComp->m_GridColumnLength = m_newColLen;
+				m_changedComp->m_SetCollidable = m_newColl;
+				m_changedComp->m_GridKey = m_newGridKey;
+			}
 		}
 	};
 
@@ -490,23 +637,27 @@ namespace actions {
 			m_oldScale(inScale), m_newScale(inComp->m_light_scale),m_oldRot(inRot), m_newRot(inComp->m_light_rotation) {}
 
 		void m_UndoAction() override {
-			m_changedComp->m_lightType = m_oldType;
-			m_changedComp->m_intensity = m_oldIntensity;
-			m_changedComp->m_innerOuterRadius = m_oldInOutRad;
-			m_changedComp->m_colour = m_oldClr;
-			m_changedComp->m_light_rotation = m_oldRot;
-			m_changedComp->m_light_scale = m_oldScale;
-			m_changedComp->m_light_OffSet = m_oldOffset;
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap.find(m_entityID) != ecs::ECS::m_GetInstance()->m_ECS_EntityMap.end()) {
+				m_changedComp->m_lightType = m_oldType;
+				m_changedComp->m_intensity = m_oldIntensity;
+				m_changedComp->m_innerOuterRadius = m_oldInOutRad;
+				m_changedComp->m_colour = m_oldClr;
+				m_changedComp->m_light_rotation = m_oldRot;
+				m_changedComp->m_light_scale = m_oldScale;
+				m_changedComp->m_light_OffSet = m_oldOffset;
+			}
 		}
 
 		void m_RedoAction() override {
-			m_changedComp->m_lightType = m_newType;
-			m_changedComp->m_intensity = m_newIntensity;
-			m_changedComp->m_innerOuterRadius = m_newInOutRad;
-			m_changedComp->m_colour = m_newClr;
-			m_changedComp->m_light_rotation = m_newRot;
-			m_changedComp->m_light_scale = m_newScale;
-			m_changedComp->m_light_OffSet = m_oldOffset;
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap.find(m_entityID) != ecs::ECS::m_GetInstance()->m_ECS_EntityMap.end()) {
+				m_changedComp->m_lightType = m_newType;
+				m_changedComp->m_intensity = m_newIntensity;
+				m_changedComp->m_innerOuterRadius = m_newInOutRad;
+				m_changedComp->m_colour = m_newClr;
+				m_changedComp->m_light_rotation = m_newRot;
+				m_changedComp->m_light_scale = m_newScale;
+				m_changedComp->m_light_OffSet = m_oldOffset;
+			}
 		}
 	};
 
@@ -524,15 +675,19 @@ namespace actions {
 			m_oldKey(inKey), m_newKey(inComp->m_GridKey) {}
 
 		void m_UndoAction() override {
-			m_changedComp->m_StartPos = m_oldStart;
-			m_changedComp->m_TargetPos = m_oldEnd;
-			m_changedComp->m_GridKey = m_oldKey;
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap.find(m_entityID) != ecs::ECS::m_GetInstance()->m_ECS_EntityMap.end()) {
+				m_changedComp->m_StartPos = m_oldStart;
+				m_changedComp->m_TargetPos = m_oldEnd;
+				m_changedComp->m_GridKey = m_oldKey;
+			}
 		}
 
 		void m_RedoAction() override {
-			m_changedComp->m_StartPos = m_newStart;
-			m_changedComp->m_TargetPos = m_newEnd;
-			m_changedComp->m_GridKey = m_newKey;
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap.find(m_entityID) != ecs::ECS::m_GetInstance()->m_ECS_EntityMap.end()) {
+				m_changedComp->m_StartPos = m_newStart;
+				m_changedComp->m_TargetPos = m_newEnd;
+				m_changedComp->m_GridKey = m_newKey;
+			}
 		}
 	};
 
@@ -564,35 +719,39 @@ namespace actions {
 					m_oldTorque(inTorque), m_newTorque(inComp->m_Torque), m_oldKine(inKine), m_newKine(inComp->m_IsKinematic), m_oldStatic(inStatic), m_newStatic(inComp->m_IsStatic){}
 
 		void m_UndoAction() override {
-			m_changedComp->m_Velocity = m_oldVelo;
-			m_changedComp->m_Acceleration = m_oldAccel;
-			m_changedComp->m_Rotation = m_oldRot;
-			m_changedComp->m_AngularVelocity = m_oldAngVelo;
-			m_changedComp->m_AngularAcceleration = m_oldAngAccel;
-			m_changedComp->m_Mass = m_oldMass;
-			m_changedComp->m_InverseMass = m_oldInvMass;
-			m_changedComp->m_LinearDamping = m_oldLinDamp;
-			m_changedComp->m_AngularDamping = m_oldAngDamp;
-			m_changedComp->m_Force = m_oldForce;
-			m_changedComp->m_Torque = m_oldTorque;
-			m_changedComp->m_IsKinematic = m_oldKine;
-			m_changedComp->m_IsStatic = m_oldStatic;
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap.find(m_entityID) != ecs::ECS::m_GetInstance()->m_ECS_EntityMap.end()) {
+				m_changedComp->m_Velocity = m_oldVelo;
+				m_changedComp->m_Acceleration = m_oldAccel;
+				m_changedComp->m_Rotation = m_oldRot;
+				m_changedComp->m_AngularVelocity = m_oldAngVelo;
+				m_changedComp->m_AngularAcceleration = m_oldAngAccel;
+				m_changedComp->m_Mass = m_oldMass;
+				m_changedComp->m_InverseMass = m_oldInvMass;
+				m_changedComp->m_LinearDamping = m_oldLinDamp;
+				m_changedComp->m_AngularDamping = m_oldAngDamp;
+				m_changedComp->m_Force = m_oldForce;
+				m_changedComp->m_Torque = m_oldTorque;
+				m_changedComp->m_IsKinematic = m_oldKine;
+				m_changedComp->m_IsStatic = m_oldStatic;
+			}
 		}
 
 		void m_RedoAction() override {
-			m_changedComp->m_Velocity = m_newVelo;
-			m_changedComp->m_Acceleration = m_newAccel;
-			m_changedComp->m_Rotation = m_newRot;
-			m_changedComp->m_AngularVelocity = m_newAngVelo;
-			m_changedComp->m_AngularAcceleration = m_newAngAccel;
-			m_changedComp->m_Mass = m_newMass;
-			m_changedComp->m_InverseMass = m_newInvMass;
-			m_changedComp->m_LinearDamping = m_newLinDamp;
-			m_changedComp->m_AngularDamping = m_newAngDamp;
-			m_changedComp->m_Force = m_newForce;
-			m_changedComp->m_Torque = m_newTorque;
-			m_changedComp->m_IsKinematic = m_newKine;
-			m_changedComp->m_IsStatic = m_newStatic;
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap.find(m_entityID) != ecs::ECS::m_GetInstance()->m_ECS_EntityMap.end()) {
+				m_changedComp->m_Velocity = m_newVelo;
+				m_changedComp->m_Acceleration = m_newAccel;
+				m_changedComp->m_Rotation = m_newRot;
+				m_changedComp->m_AngularVelocity = m_newAngVelo;
+				m_changedComp->m_AngularAcceleration = m_newAngAccel;
+				m_changedComp->m_Mass = m_newMass;
+				m_changedComp->m_InverseMass = m_newInvMass;
+				m_changedComp->m_LinearDamping = m_newLinDamp;
+				m_changedComp->m_AngularDamping = m_newAngDamp;
+				m_changedComp->m_Force = m_newForce;
+				m_changedComp->m_Torque = m_newTorque;
+				m_changedComp->m_IsKinematic = m_newKine;
+				m_changedComp->m_IsStatic = m_newStatic;
+			}
 		}
 	};
 
@@ -611,19 +770,23 @@ namespace actions {
 			m_oldClr(inClr), m_newClr(inComp->m_color), m_oldAlpha(inAlpha), m_newAlpha(inComp->m_alpha), m_oldIllum(inIllum), m_newIllum(inComp->m_isIlluminated) {}
 
 		void m_UndoAction() override {
-			m_changedComp->m_imageFile = m_oldFile;
-			m_changedComp->m_layer = m_oldLayer;
-			m_changedComp->m_color = m_oldClr;
-			m_changedComp->m_alpha = m_oldAlpha;
-			m_changedComp->m_isIlluminated = m_oldIllum;
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap.find(m_entityID) != ecs::ECS::m_GetInstance()->m_ECS_EntityMap.end()) {
+				m_changedComp->m_imageFile = m_oldFile;
+				m_changedComp->m_layer = m_oldLayer;
+				m_changedComp->m_color = m_oldClr;
+				m_changedComp->m_alpha = m_oldAlpha;
+				m_changedComp->m_isIlluminated = m_oldIllum;
+			}
 		}
 
 		void m_RedoAction() override {
-			m_changedComp->m_imageFile = m_newFile;
-			m_changedComp->m_layer = m_newLayer;
-			m_changedComp->m_color = m_newClr;
-			m_changedComp->m_alpha = m_newAlpha;
-			m_changedComp->m_isIlluminated = m_newIllum;
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap.find(m_entityID) != ecs::ECS::m_GetInstance()->m_ECS_EntityMap.end()) {
+				m_changedComp->m_imageFile = m_newFile;
+				m_changedComp->m_layer = m_newLayer;
+				m_changedComp->m_color = m_newClr;
+				m_changedComp->m_alpha = m_newAlpha;
+				m_changedComp->m_isIlluminated = m_newIllum;
+			}
 		}
 	};
 
@@ -642,19 +805,23 @@ namespace actions {
 			m_oldLayer(inLayer), m_newLayer(inComp->m_fontLayer), m_oldSize(inSize), m_newSize(inComp->m_fontSize), m_oldClr(inClr), m_newClr(inComp->m_color){}
 
 		void m_UndoAction() override {
-			m_changedComp->m_fileName = m_oldFile;
-			m_changedComp->m_text = m_oldText;
-			m_changedComp->m_color = m_oldClr;
-			m_changedComp->m_fontLayer = m_oldLayer;
-			m_changedComp->m_fontSize = m_oldSize;
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap.find(m_entityID) != ecs::ECS::m_GetInstance()->m_ECS_EntityMap.end()) {
+				m_changedComp->m_fileName = m_oldFile;
+				m_changedComp->m_text = m_oldText;
+				m_changedComp->m_color = m_oldClr;
+				m_changedComp->m_fontLayer = m_oldLayer;
+				m_changedComp->m_fontSize = m_oldSize;
+			}
 		}
 
 		void m_RedoAction() override {
-			m_changedComp->m_fileName = m_newFile;
-			m_changedComp->m_text = m_newText;
-			m_changedComp->m_color = m_newClr;
-			m_changedComp->m_fontLayer = m_newLayer;
-			m_changedComp->m_fontSize = m_newSize;
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap.find(m_entityID) != ecs::ECS::m_GetInstance()->m_ECS_EntityMap.end()) {
+				m_changedComp->m_fileName = m_newFile;
+				m_changedComp->m_text = m_newText;
+				m_changedComp->m_color = m_newClr;
+				m_changedComp->m_fontLayer = m_newLayer;
+				m_changedComp->m_fontSize = m_newSize;
+			}
 		}
 	};
 
@@ -671,52 +838,323 @@ namespace actions {
 			m_oldClick(inClick), m_newClick(inComp->m_IsClick) {}
 
 		void m_UndoAction() override {
-			m_changedComp->m_Position = m_oldPos;
-			m_changedComp->m_Scale = m_oldScale;
-			m_changedComp->m_IsClick = m_oldClick;
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap.find(m_entityID) != ecs::ECS::m_GetInstance()->m_ECS_EntityMap.end()) {
+				m_changedComp->m_Position = m_oldPos;
+				m_changedComp->m_Scale = m_oldScale;
+				m_changedComp->m_IsClick = m_oldClick;
+			}
 		}
 
 		void m_RedoAction() override {
-			m_changedComp->m_Position = m_newPos;
-			m_changedComp->m_Scale = m_newScale;
-			m_changedComp->m_IsClick = m_newClick;
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap.find(m_entityID) != ecs::ECS::m_GetInstance()->m_ECS_EntityMap.end()) {
+				m_changedComp->m_Position = m_newPos;
+				m_changedComp->m_Scale = m_newScale;
+				m_changedComp->m_IsClick = m_newClick;
+			}
+		}
+	};
+	class ModifyNameAction : public Action {
+	private:
+		ecs::EntityID m_entityID;
+		ecs::NameComponent* m_changedComp;
+		std::string m_oldName, m_newName;
+		std::string m_oldTag, m_newTag;
+		bool m_oldIsPrefab, m_newIsPrefab;
+		std::string m_oldPrefabName, m_newPrefabName;
+		layer::LAYERS m_oldLayer, m_newLayer;
+
+	public:
+		ModifyNameAction(ecs::EntityID inID, ecs::NameComponent* inComp, std::string inOldName, std::string inOldTag, bool inOldIsPrefab, std::string inOldPrefab, layer::LAYERS inOldLayer)
+			: m_entityID(inID), m_changedComp(inComp),
+			m_oldName(inOldName), m_newName(inComp->m_entityName),
+			m_oldTag(inOldTag), m_newTag(inComp->m_entityTag),
+			m_oldIsPrefab(inOldIsPrefab), m_newIsPrefab(inComp->m_isPrefab),
+			m_oldPrefabName(inOldPrefab), m_newPrefabName(inComp->m_prefabName),
+			m_oldLayer(inOldLayer), m_newLayer(inComp->m_Layer) {}
+
+		void m_UndoAction() override {
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap.find(m_entityID) != ecs::ECS::m_GetInstance()->m_ECS_EntityMap.end()) {
+				m_changedComp->m_entityName = m_oldName;
+				m_changedComp->m_entityTag = m_oldTag;
+				m_changedComp->m_isPrefab = m_oldIsPrefab;
+				m_changedComp->m_prefabName = m_oldPrefabName;
+				m_changedComp->m_Layer = m_oldLayer;
+			}
+		}
+
+		void m_RedoAction() override {
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap.find(m_entityID) != ecs::ECS::m_GetInstance()->m_ECS_EntityMap.end()) {
+				m_changedComp->m_entityName = m_newName;
+				m_changedComp->m_entityTag = m_newTag;
+				m_changedComp->m_isPrefab = m_newIsPrefab;
+				m_changedComp->m_prefabName = m_newPrefabName;
+				m_changedComp->m_Layer = m_newLayer;
+			}
+		}
+	};
+	class ModifyParticleAction : public Action {
+	private:
+		ecs::EntityID m_entityID;
+		ecs::ParticleComponent* m_changedComp;
+		bool m_oldWillSpawn, m_newWillSpawn;
+		int m_oldNoOfParticles, m_newNoOfParticles;
+		float m_oldLifeSpan, m_newLifeSpan;
+		vector2::Vec2 m_oldVelocity, m_newVelocity;
+		vector2::Vec2 m_oldAcceleration, m_newAcceleration;
+		vector3::Vec3 m_oldColor, m_newColor;
+		float m_oldConeRotation, m_newConeRotation;
+		float m_oldConeAngle, m_newConeAngle;
+		float m_oldRandomFactor, m_newRandomFactor;
+		std::string m_oldImageFile, m_newImageFile;
+		int m_oldStripCount, m_newStripCount;
+		int m_oldFrameNumber, m_newFrameNumber;
+		int m_oldLayer, m_newLayer;
+		float m_oldFriction, m_newFriction;
+		int m_oldFps, m_newFps;
+
+	public:
+		ModifyParticleAction(ecs::EntityID inID, ecs::ParticleComponent* inComp, bool inWillSpawn, int inNoOfParticles, float inLifeSpan,
+			vector2::Vec2 inVelocity, vector2::Vec2 inAcceleration, vector3::Vec3 inColor, float inConeRotation,
+			float inConeAngle, float inRandomFactor, std::string inImageFile, int inStripCount, int inFrameNumber,
+			int inLayer, float inFriction, int inFps)
+			: m_entityID(inID), m_changedComp(inComp), m_oldWillSpawn(inWillSpawn), m_newWillSpawn(inComp->m_willSpawn),
+			m_oldNoOfParticles(inNoOfParticles), m_newNoOfParticles(inComp->m_noOfParticles),
+			m_oldLifeSpan(inLifeSpan), m_newLifeSpan(inComp->m_lifeSpan),
+			m_oldVelocity(inVelocity), m_newVelocity(inComp->m_velocity),
+			m_oldAcceleration(inAcceleration), m_newAcceleration(inComp->m_acceleration),
+			m_oldColor(inColor), m_newColor(inComp->m_color),
+			m_oldConeRotation(inConeRotation), m_newConeRotation(inComp->m_coneRotation),
+			m_oldConeAngle(inConeAngle), m_newConeAngle(inComp->m_coneAngle),
+			m_oldRandomFactor(inRandomFactor), m_newRandomFactor(inComp->m_randomFactor),
+			m_oldImageFile(inImageFile), m_newImageFile(inComp->m_imageFile),
+			m_oldStripCount(inStripCount), m_newStripCount(inComp->m_stripCount),
+			m_oldFrameNumber(inFrameNumber), m_newFrameNumber(inComp->m_frameNumber),
+			m_oldLayer(inLayer), m_newLayer(inComp->m_layer),
+			m_oldFriction(inFriction), m_newFriction(inComp->m_friction),
+			m_oldFps(inFps), m_newFps(inComp->m_fps) {}
+
+		void m_UndoAction() override {
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap.find(m_entityID) != ecs::ECS::m_GetInstance()->m_ECS_EntityMap.end()) {
+				m_changedComp->m_willSpawn = m_oldWillSpawn;
+				m_changedComp->m_noOfParticles = m_oldNoOfParticles;
+				m_changedComp->m_lifeSpan = m_oldLifeSpan;
+				m_changedComp->m_velocity = m_oldVelocity;
+				m_changedComp->m_acceleration = m_oldAcceleration;
+				m_changedComp->m_color = m_oldColor;
+				m_changedComp->m_coneRotation = m_oldConeRotation;
+				m_changedComp->m_coneAngle = m_oldConeAngle;
+				m_changedComp->m_randomFactor = m_oldRandomFactor;
+				m_changedComp->m_imageFile = m_oldImageFile;
+				m_changedComp->m_stripCount = m_oldStripCount;
+				m_changedComp->m_frameNumber = m_oldFrameNumber;
+				m_changedComp->m_layer = m_oldLayer;
+				m_changedComp->m_friction = m_oldFriction;
+				m_changedComp->m_fps = m_oldFps;
+			}
+		}
+
+		void m_RedoAction() override {
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap.find(m_entityID) != ecs::ECS::m_GetInstance()->m_ECS_EntityMap.end()) {
+				m_changedComp->m_willSpawn = m_newWillSpawn;
+				m_changedComp->m_noOfParticles = m_newNoOfParticles;
+				m_changedComp->m_lifeSpan = m_newLifeSpan;
+				m_changedComp->m_velocity = m_newVelocity;
+				m_changedComp->m_acceleration = m_newAcceleration;
+				m_changedComp->m_color = m_newColor;
+				m_changedComp->m_coneRotation = m_newConeRotation;
+				m_changedComp->m_coneAngle = m_newConeAngle;
+				m_changedComp->m_randomFactor = m_newRandomFactor;
+				m_changedComp->m_imageFile = m_newImageFile;
+				m_changedComp->m_stripCount = m_newStripCount;
+				m_changedComp->m_frameNumber = m_newFrameNumber;
+				m_changedComp->m_layer = m_newLayer;
+				m_changedComp->m_friction = m_newFriction;
+				m_changedComp->m_fps = m_newFps;
+			}
 		}
 	};
 
+	class ModifyTilemapAction : public Action {
+	private:
+		ecs::EntityID m_entityID;
+		ecs::TilemapComponent* m_changedComp;
 
-	//class ModifyAudio : public Action {
-	//private:
-	//	ecs::EntityID m_entityID;
-	//	ecs::AudioComponent* m_changedComp;
-	//	std::string m_oldName, m_newName;
-	//	std::string m_oldFilePath, m_newFilePath;
-	//	float m_oldVolume, m_newVolume;
-	//	bool m_oldLoop,m_newLoop;
-	//	bool m_oldPlayOnS, m_newPlayOns;
-	//	bool m_oldHasPlayed, m_newHasPlayed;
-	//	float m_oldPan, m_newPan;
-	//public:
-	//	ModifyAudio(ecs::EntityID inID, ecs::AudioComponent* inComp, std::string inName, std::string inFP, float inVol, bool inLoop, bool inPlay, bool inPlayed, float inPan) :
-	//		m_entityID(inID), m_changedComp(inComp), m_oldName(inName) {}//m_newName(), m_filePath(inFP), m_volume(inVol), m_loop(inLoop), m_playOnStart(inPlay), m_hasPlayed(inPlayed), m_pan(inPan) {}
+		std::string m_oldTilemapFile, m_newTilemapFile;
+		int m_oldTileLayer, m_newTileLayer;
+		vector3::Vec3 m_oldColor, m_newColor;
+		float m_oldAlpha, m_newAlpha;
+		int m_oldTileIndex, m_newTileIndex;
+		int m_oldRowLength, m_newRowLength;
+		int m_oldColumnLength, m_newColumnLength;
+		int m_oldPictureRowLength, m_newPictureRowLength;
+		int m_oldPictureColumnLength, m_newPictureColumnLength;
 
-	//	void m_UndoAction() override {
+	public:
+		ModifyTilemapAction(ecs::EntityID inID, ecs::TilemapComponent* inComp, std::string inTilemapFile, int inTileLayer,
+			vector3::Vec3 inColor, float inAlpha, int inTileIndex,
+			int inRowLength, int inColumnLength, int inPictureRowLength, int inPictureColumnLength)
+			: m_entityID(inID), m_changedComp(inComp),
+			m_oldTilemapFile(inTilemapFile), m_newTilemapFile(inComp->m_tilemapFile),
+			m_oldTileLayer(inTileLayer), m_newTileLayer(inComp->m_tileLayer),
+			m_oldColor(inColor), m_newColor(inComp->m_color),
+			m_oldAlpha(inAlpha), m_newAlpha(inComp->m_alpha),
+			m_oldTileIndex(inTileIndex), m_newTileIndex(inComp->m_tileIndex),
+			m_oldRowLength(inRowLength), m_newRowLength(inComp->m_rowLength),
+			m_oldColumnLength(inColumnLength), m_newColumnLength(inComp->m_columnLength),
+			m_oldPictureRowLength(inPictureRowLength), m_newPictureRowLength(inComp->m_pictureRowLength),
+			m_oldPictureColumnLength(inPictureColumnLength), m_newPictureColumnLength(inComp->m_pictureColumnLength){}
 
-	//		//ecs::AudioFile newAF;
-	//		//newAF.m_Name = m_name;
-	//		//newAF.m_FilePath = m_filePath;
-	//		//newAF.m_Volume = m_volume;
-	//		//newAF.m_Loop = m_loop;
-	//		//newAF.m_PlayOnStart = m_playOnStart;
-	//		//newAF.m_HasPlayed = m_hasPlayed;
-	//		//newAF.m_Pan = m_pan;
-	//		//m_changedComp->m_AudioFiles.emplace_back(newAF);
+		void m_UndoAction() override {
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap.find(m_entityID) != ecs::ECS::m_GetInstance()->m_ECS_EntityMap.end()) {
+				m_changedComp->m_tilemapFile = m_oldTilemapFile;
+				m_changedComp->m_tileLayer = m_oldTileLayer;
+				m_changedComp->m_color = m_oldColor;
+				m_changedComp->m_alpha = m_oldAlpha;
+				m_changedComp->m_tileIndex = m_oldTileIndex;
+				m_changedComp->m_rowLength = m_oldRowLength;
+				m_changedComp->m_columnLength = m_oldColumnLength;
+				m_changedComp->m_pictureRowLength = m_oldPictureRowLength;
+				m_changedComp->m_pictureColumnLength = m_oldPictureColumnLength;
+			}
+		}
 
-	//	}
+		void m_RedoAction() override {
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap.find(m_entityID) != ecs::ECS::m_GetInstance()->m_ECS_EntityMap.end()) {
+				m_changedComp->m_tilemapFile = m_newTilemapFile;
+				m_changedComp->m_tileLayer = m_newTileLayer;
+				m_changedComp->m_color = m_newColor;
+				m_changedComp->m_alpha = m_newAlpha;
+				m_changedComp->m_tileIndex = m_newTileIndex;
+				m_changedComp->m_rowLength = m_newRowLength;
+				m_changedComp->m_columnLength = m_newColumnLength;
+				m_changedComp->m_pictureRowLength = m_newPictureRowLength;
+				m_changedComp->m_pictureColumnLength = m_newPictureColumnLength;
+			}
+		}
 
-	//	void m_RedoAction() override {
-	//		m_changedComp->m_AudioFiles.emplace_back();
+	};
 
-	//	}
-	//};
+
+	class ModifyVideoAction : public Action {
+	private:
+		ecs::EntityID m_entityID;
+		ecs::VideoComponent* m_changedComp;
+		std::string m_oldFilename, m_newFilename;
+		bool m_oldPause, m_newPause;
+		bool m_oldLoop, m_newLoop;
+		int m_oldLayer, m_newLayer;
+
+	public:
+		ModifyVideoAction(ecs::EntityID inID, ecs::VideoComponent* inComp, std::string inFilename, bool inPause, bool inLoop, int inLayer)
+			: m_entityID(inID), m_changedComp(inComp),
+			m_oldFilename(inFilename), m_newFilename(inComp->filename),
+			m_oldPause(inPause), m_newPause(inComp->pause),
+			m_oldLoop(inLoop), m_newLoop(inComp->loop),
+			m_oldLayer(inLayer), m_newLayer(inComp->layer) {}
+
+		void m_UndoAction() override {
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap.find(m_entityID) != ecs::ECS::m_GetInstance()->m_ECS_EntityMap.end()) {
+				m_changedComp->filename = m_oldFilename;
+				m_changedComp->pause = m_oldPause;
+				m_changedComp->loop = m_oldLoop;
+				m_changedComp->layer = m_oldLayer;
+			}
+		}
+
+		void m_RedoAction() override {
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap.find(m_entityID) != ecs::ECS::m_GetInstance()->m_ECS_EntityMap.end()) {
+				m_changedComp->filename = m_newFilename;
+				m_changedComp->pause = m_newPause;
+				m_changedComp->loop = m_newLoop;
+				m_changedComp->layer = m_newLayer;
+			}
+		}
+	};
+
+	class RemoveRay : public Action {
+	private:
+		ecs::EntityID m_entityID;
+		ecs::RaycastComponent* m_changedComp;
+		std::string m_rayID;
+
+		bool m_isRaycasting;
+
+		vector2::Vec2 m_targetPosition;
+
+		std::vector<layer::LAYERS> m_Layers;
+
+
+	public:
+		RemoveRay(ecs::EntityID inID, ecs::RaycastComponent* inComp, std::string inRayID, bool inCheck, vector2::Vec2 inTarget, std::vector<layer::LAYERS> inLayers) :
+			m_entityID(inID), m_changedComp(inComp), m_rayID(inRayID), m_isRaycasting(inCheck), m_targetPosition(inTarget), m_Layers(inLayers){}
+
+		void m_UndoAction() override {
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap.find(m_entityID) != ecs::ECS::m_GetInstance()->m_ECS_EntityMap.end()) {
+				ecs::RaycastComponent::Raycast newRay;
+				newRay.m_isRaycasting = m_isRaycasting;
+				newRay.m_Layers = m_Layers;
+				newRay.m_rayID = m_rayID;
+				newRay.m_targetPosition = m_targetPosition;
+				m_changedComp->m_raycast.emplace_back(newRay);
+			}
+		}
+
+		void m_RedoAction() override {
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap.find(m_entityID) != ecs::ECS::m_GetInstance()->m_ECS_EntityMap.end()) {
+				for (auto it2 = m_changedComp->m_raycast.begin(); it2 != m_changedComp->m_raycast.end();) {
+					if (it2->m_rayID == m_rayID && it2->m_targetPosition.m_x == m_targetPosition.m_x && it2->m_targetPosition.m_y == m_targetPosition.m_y) {
+						it2 = m_changedComp->m_raycast.erase(it2);
+						break;
+					}
+				}
+			}
+
+		}
+
+
+	};
+
+	class AddRay : public Action {
+	private:
+		ecs::EntityID m_entityID;
+		ecs::RaycastComponent* m_changedComp;
+		std::string m_rayID;
+
+		bool m_isRaycasting;
+
+		vector2::Vec2 m_targetPosition;
+
+		std::vector<layer::LAYERS> m_Layers;
+
+
+	public:
+		AddRay(ecs::EntityID inID, ecs::RaycastComponent* inComp, std::string inRayID, bool inCheck, vector2::Vec2 inTarget, std::vector<layer::LAYERS> inLayers) :
+			m_entityID(inID), m_changedComp(inComp), m_rayID(inRayID), m_isRaycasting(inCheck), m_targetPosition(inTarget), m_Layers(inLayers) {}
+
+		void m_UndoAction() override {
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap.find(m_entityID) != ecs::ECS::m_GetInstance()->m_ECS_EntityMap.end()) {
+				for (auto it2 = m_changedComp->m_raycast.begin(); it2 != m_changedComp->m_raycast.end();) {
+					if (it2->m_rayID == m_rayID && it2->m_targetPosition.m_x == m_targetPosition.m_x && it2->m_targetPosition.m_y == m_targetPosition.m_y) {
+						it2 = m_changedComp->m_raycast.erase(it2);
+						break;
+					}
+				}
+			}
+		}
+
+		void m_RedoAction() override {
+			if (ecs::ECS::m_GetInstance()->m_ECS_EntityMap.find(m_entityID) != ecs::ECS::m_GetInstance()->m_ECS_EntityMap.end()) {
+				ecs::RaycastComponent::Raycast newRay;
+				newRay.m_isRaycasting = m_isRaycasting;
+				newRay.m_Layers = m_Layers;
+				newRay.m_rayID = m_rayID;
+				newRay.m_targetPosition = m_targetPosition;
+				m_changedComp->m_raycast.emplace_back(newRay);
+			}
+		}
+
+
+	};
+
 
 }
