@@ -977,6 +977,19 @@ namespace script {
 		return assetmanager->m_audioManager.m_GlobalSFXVolume;
 	}
 
+	bool InternalCall::m_InternalCallAudioIsPlayingForEntity(ecs::EntityID id, MonoString* monoString) 
+	{
+		char* nativeString = mono_string_to_utf8(monoString);
+		std::filesystem::path filepath = nativeString;
+
+		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+		bool result = assetmanager->m_audioManager.m_IsPlayingForEntity(id, filepath.filename().stem().string());
+
+		mono_free(nativeString);
+
+		return result;
+	}
+
 	bool InternalCall::m_InternalCallCheckIsBGM(ecs::EntityID id, MonoString* monoString) {
 		char* nativeString = mono_string_to_utf8(monoString);
 		std::filesystem::path filepath = nativeString;
@@ -1435,6 +1448,8 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_InternalCallGetChildrenID);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallGetParentID);
 
+
+		MONO_ADD_INTERNAL_CALL(m_InternalCallAudioIsPlayingForEntity);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallPlayAudio);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallStopAudio);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallStopAllAudio);

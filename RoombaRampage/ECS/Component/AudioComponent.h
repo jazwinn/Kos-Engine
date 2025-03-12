@@ -31,6 +31,10 @@ namespace ecs {
         float m_Pan{ 0.0f };
         bool m_IsBGM{ false };
         bool m_IsSFX{ true };
+
+
+        float m_LastVolume{ -1.0f };
+        bool m_LastLoopState{ false };
         REFLECTABLE(AudioFile, m_FilePath, m_Volume, m_Loop, m_PlayOnStart, m_HasPlayed, m_Pan, m_IsBGM, m_IsSFX)
     };
 
