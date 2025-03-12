@@ -1,25 +1,37 @@
 [
     {
+        "GlobalSettings": {
+            "globalIllumination": 0.8399999737739563,
+            "backgroundColor": {
+                "r": 0.13300000131130219,
+                "g": 0.23000000417232513,
+                "b": 0.3199999928474426
+            }
+        }
+    },
+    {
         "name": {
             "namestr": "prefab_Vertical_Lazer",
-            "layer": 0,
-            "isprefab": false,
-            "tagstr": "Enemy"
+            "layer": 2,
+            "isprefab": true,
+            "tagstr": "Enemy",
+            "prefabname": "prefab_Vertical_Lazer.prefab",
+            "issync": false
         },
         "transform": {
             "position": {
-                "x": 0.40591737627983093,
-                "y": 1.5579153299331665
+                "x": -1.0142779350280762,
+                "y": 32.591575622558594
             },
             "rotation": -0.0,
             "scale": {
-                "x": 12.720000267028809,
-                "y": 1.0
+                "x": 10.100000381469727,
+                "y": 1.6200000047683716
             }
         },
         "collider": {
             "checkcollision": true,
-            "checkresponse": true,
+            "checkresponse": false,
             "size": {
                 "x": 0.1899999976158142,
                 "y": 0.1899999976158142
@@ -58,7 +70,7 @@
         },
         "sprite": {
             "imagefile": "ani_inventoryCloseButton_strip2.png",
-            "layer": 0,
+            "layer": 2,
             "color": {
                 "r": 1.0,
                 "g": 1.0,
@@ -88,13 +100,15 @@
                 "name": {
                     "namestr": "Waypoint 1",
                     "layer": 0,
-                    "isprefab": false,
-                    "tagstr": "Default"
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "prefab_Vertical_Lazer.prefab",
+                    "issync": true
                 },
                 "transform": {
                     "position": {
                         "x": -0.0010843176860362291,
-                        "y": -1.8068135976791382
+                        "y": -6.48015022277832
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -107,13 +121,15 @@
                 "name": {
                     "namestr": "Waypoint 2",
                     "layer": 0,
-                    "isprefab": false,
-                    "tagstr": "Default"
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "prefab_Vertical_Lazer.prefab",
+                    "issync": true
                 },
                 "transform": {
                     "position": {
                         "x": 0.0021955023985356092,
-                        "y": 2.8801050186157227
+                        "y": 7.028032302856445
                     },
                     "rotation": 0.0,
                     "scale": {
