@@ -71,6 +71,8 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     private string bodyStabAud1 = "aud_bodyStab01.wav";
     private string bodyStabAud2 = "aud_bodyStab02.wav";
 
+    private string enemyShootAud1 = "aud_railgunShot01.wav";
+
     private List<string> bodyDeathAudList = new List<string>();
     private List<string> bodyFallAudList = new List<string>();
     private List<string> bodyStabAudList = new List<string>();
@@ -145,7 +147,8 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         playerID = (uint)InternalCall.m_InternalCallGetTagID("Player"); //Get Player ID
         UpdateComponentValues();
         enemyScientistDeathTexture = "img_scientistDeath.png";
-        enemyRobotDeathTexture = "img_scientistDeath.png"; //Set to ranged enemy death texture
+        enemyRobotDeathTexture = "img_rangedEnemyDeath.png"; //Set to ranged enemy death texture
+
         originalPosition = transformComp.m_position;
         enemyDeathKnockbackMultiplier = 0.4f;
 
@@ -232,7 +235,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
     public override void Update() //Runs every frame
     {
-        if (isDead) return;
+        if (isDead || PlayerController.isDead || GameControllerLevel1.gameIsPaused) return;
         CheckForCollisions(); //Checks for collisions in the event an enemy touches the player
         CheckWalking();
 
@@ -1141,10 +1144,9 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         );
 
         // Play shooting sound
-        InternalCall.m_InternalCallPlayAudio(EntityID, "aud_enemyShoot.wav"); //AUDIOHERE
+        InternalCall.m_InternalCallPlayAudio(EntityID, enemyShootAud1); //AUDIOHERE
 
-        // Optional: Add muzzle flash effect
-        // InternalCall.m_InternalCallAddPrefab("prefab_muzzleFlash", bulletSpawnPosition.X, bulletSpawnPosition.Y, transformComp.m_rotation);
+
     }
 
 
