@@ -36,7 +36,7 @@ public class CameraFollowPlayerScript : ScriptBase
         camTransformComp = GetComponent.GetTransformComponent(EntityID);
 
         trackScale = 0.2f;
-        trackSpeed = 10f;
+        trackSpeed = 20f;
     }
 
     public override void Start()
