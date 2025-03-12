@@ -122,10 +122,10 @@
                 },
                 "transform": {
                     "position": {
-                        "x": -6.620002746582031,
-                        "y": 1.9196752309799194
+                        "x": -6.010573387145996,
+                        "y": 1.8769081830978394
                     },
-                    "rotation": -0.0,
+                    "rotation": 0.0,
                     "scale": {
                         "x": 4.0,
                         "y": 4.0
@@ -135,11 +135,11 @@
                     "checkcollision": true,
                     "checkresponse": false,
                     "size": {
-                        "x": 0.10000000149011612,
+                        "x": 0.14000000059604645,
                         "y": 0.15000000596046448
                     },
                     "offset": {
-                        "x": -0.014999999664723873,
+                        "x": 0.0,
                         "y": 0.0
                     },
                     "drawDebug": true,
@@ -228,10 +228,10 @@
                 },
                 "transform": {
                     "position": {
-                        "x": -4.180798530578613,
-                        "y": 1.9204864501953125
+                        "x": -3.604339838027954,
+                        "y": 1.8777196407318115
                     },
-                    "rotation": -0.0,
+                    "rotation": 0.0,
                     "scale": {
                         "x": 4.0,
                         "y": 4.0
@@ -241,11 +241,11 @@
                     "checkcollision": true,
                     "checkresponse": false,
                     "size": {
-                        "x": 0.10000000149011612,
+                        "x": 0.14000000059604645,
                         "y": 0.15000000596046448
                     },
                     "offset": {
-                        "x": 0.014999999664723873,
+                        "x": 0.0,
                         "y": 0.0
                     },
                     "drawDebug": true,
@@ -334,10 +334,10 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 3.8610196113586426,
-                        "y": 1.9199999570846558
+                        "x": 3.581515312194824,
+                        "y": 1.8769992589950562
                     },
-                    "rotation": -0.0,
+                    "rotation": 0.0,
                     "scale": {
                         "x": 4.0,
                         "y": 4.0
@@ -347,11 +347,11 @@
                     "checkcollision": true,
                     "checkresponse": false,
                     "size": {
-                        "x": 0.10000000149011612,
+                        "x": 0.14000000059604645,
                         "y": 0.15000000596046448
                     },
                     "offset": {
-                        "x": -0.014999999664723873,
+                        "x": 0.0,
                         "y": 0.0
                     },
                     "drawDebug": true,
@@ -440,10 +440,10 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 6.300156593322754,
-                        "y": 1.9199999570846558
+                        "x": 6.0206522941589355,
+                        "y": 1.8769992589950562
                     },
-                    "rotation": -0.0,
+                    "rotation": 0.0,
                     "scale": {
                         "x": 4.0,
                         "y": 4.0
@@ -453,11 +453,11 @@
                     "checkcollision": true,
                     "checkresponse": false,
                     "size": {
-                        "x": 0.10000000149011612,
+                        "x": 0.14000000059604645,
                         "y": 0.15000000596046448
                     },
                     "offset": {
-                        "x": 0.014999999664723873,
+                        "x": 0.0,
                         "y": 0.0
                     },
                     "drawDebug": true,
@@ -546,10 +546,10 @@
                 },
                 "transform": {
                     "position": {
-                        "x": -6.619999885559082,
-                        "y": -2.4005203247070313
+                        "x": -5.9959821701049805,
+                        "y": -2.4427108764648438
                     },
-                    "rotation": -0.0,
+                    "rotation": 0.0,
                     "scale": {
                         "x": 4.0,
                         "y": 4.0
@@ -559,11 +559,11 @@
                     "checkcollision": true,
                     "checkresponse": false,
                     "size": {
-                        "x": 0.10000000149011612,
+                        "x": 0.14000000059604645,
                         "y": 0.15000000596046448
                     },
                     "offset": {
-                        "x": -0.014999999664723873,
+                        "x": 0.0,
                         "y": 0.0
                     },
                     "drawDebug": true,
@@ -652,10 +652,10 @@
                 },
                 "transform": {
                     "position": {
-                        "x": -4.179999828338623,
-                        "y": -2.4000415802001953
+                        "x": -3.5757646560668945,
+                        "y": -2.436885118484497
                     },
-                    "rotation": -0.0,
+                    "rotation": 0.0,
                     "scale": {
                         "x": 4.0,
                         "y": 4.0
@@ -665,11 +665,11 @@
                     "checkcollision": true,
                     "checkresponse": false,
                     "size": {
-                        "x": 0.10000000149011612,
+                        "x": 0.14000000059604645,
                         "y": 0.15000000596046448
                     },
                     "offset": {
-                        "x": 0.014999999664723873,
+                        "x": 0.0,
                         "y": 0.0
                     },
                     "drawDebug": true,
@@ -864,10 +864,10 @@
                 },
                 "transform": {
                     "position": {
-                        "x": -5.333443641662598,
-                        "y": 1.8276896476745605
+                        "x": -4.820194244384766,
+                        "y": 1.809999942779541
                     },
-                    "rotation": -0.0,
+                    "rotation": 0.0,
                     "scale": {
                         "x": 1.0,
                         "y": 1.0
@@ -911,10 +911,10 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 5.134071350097656,
-                        "y": 1.8300000429153442
+                        "x": 4.757815837860107,
+                        "y": 1.8084996938705444
                     },
-                    "rotation": -0.0,
+                    "rotation": 0.0,
                     "scale": {
                         "x": 1.0,
                         "y": 1.0
@@ -958,10 +958,10 @@
                 },
                 "transform": {
                     "position": {
-                        "x": -5.329999923706055,
-                        "y": -2.5054843425750732
+                        "x": -4.8289265632629395,
+                        "y": -2.52759051322937
                     },
-                    "rotation": -0.0,
+                    "rotation": 0.0,
                     "scale": {
                         "x": 1.0,
                         "y": 1.0
@@ -1047,7 +1047,7 @@
                     }
                 },
                 "sprite": {
-                    "imagefile": "ani_inventoryLeftIconSwitch_strip3.png",
+                    "imagefile": "ani_inventoryLeftIconSwitch_strip4.png",
                     "layer": 302,
                     "color": {
                         "r": 1.0,
@@ -1062,7 +1062,7 @@
                     "framesPerSecond": 0,
                     "frameTimer": 0.0,
                     "isAnimating": true,
-                    "stripCount": 3
+                    "stripCount": 4
                 }
             },
             {
@@ -1086,7 +1086,7 @@
                     }
                 },
                 "sprite": {
-                    "imagefile": "ani_inventoryRightIconSwitch_strip3.png",
+                    "imagefile": "ani_inventoryRightIconSwitch_strip4.png",
                     "layer": 304,
                     "color": {
                         "r": 1.0,
@@ -1101,7 +1101,7 @@
                     "framesPerSecond": 0,
                     "frameTimer": 0.0,
                     "isAnimating": true,
-                    "stripCount": 3
+                    "stripCount": 4
                 }
             },
             {
