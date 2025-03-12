@@ -93,6 +93,8 @@ namespace layer{
 		void m_DisableLayer(LAYERS layer);
 		void m_EnableLayer(LAYERS layer);
 
+		bool m_IsLayerVisable(int layer);
+
 		/******************************************************************/
 		/*!
 			\fn        std::vector<ecs::EntityID> m_RetrieveEntityID(LAYERS layer)

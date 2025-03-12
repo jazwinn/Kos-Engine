@@ -137,6 +137,11 @@ namespace layer {
 		m_layerBitSet.set(layer);
 	}
 
+	bool LayerStack::m_IsLayerVisable(int layer)
+	{
+		return m_layerBitSet.test((LAYERS)layer);
+	}
+
 	std::vector<ecs::EntityID> LayerStack::m_RetrieveEntityID(LAYERS layer)
 	{
 		if (m_layerMap.find(layer) == m_layerMap.end()) {

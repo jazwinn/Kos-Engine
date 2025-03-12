@@ -19,24 +19,24 @@
         "transform": {
             "position": {
                 "x": 0.0,
-                "y": 0.0
+                "y": 101.03352355957031
             },
             "rotation": 0.0,
             "scale": {
-                "x": 1.0,
-                "y": 1.0
+                "x": 3.549999952316284,
+                "y": 3.450000047683716
             }
         },
         "collider": {
             "checkcollision": true,
             "checkresponse": false,
             "size": {
-                "x": 1.0,
-                "y": 1.0
+                "x": 0.05000000074505806,
+                "y": 0.25999999046325684
             },
             "offset": {
                 "x": 0.0,
-                "y": 0.0
+                "y": 0.03999999910593033
             },
             "drawDebug": true,
             "radius": 0.5,
@@ -45,7 +45,7 @@
         "rigidbody": {
             "linearVelocity": {
                 "x": 0.0,
-                "y": 0.0
+                "y": 7.0
             },
             "linearAcceleration": {
                 "x": 0.0,
@@ -67,7 +67,7 @@
             "static": false
         },
         "sprite": {
-            "imagefile": "img_BulletPrefab1.png",
+            "imagefile": "ani_railgunBulletEffect_strip10.png",
             "layer": 14,
             "color": {
                 "r": 1.0,
@@ -82,7 +82,7 @@
             "framesPerSecond": 80,
             "frameTimer": 0.0,
             "isAnimating": false,
-            "stripCount": 1
+            "stripCount": 10
         },
         "script": {
             "scripts": [
@@ -92,6 +92,22 @@
                     "map": []
                 }
             ]
+        },
+        "LightingComponent": {
+            "m_innerOuterRadius": {
+                "x": 0.23999999463558197,
+                "y": 0.7200000286102295
+            },
+            "m_intensity": 23.799999237060547,
+            "m_light_OffSet": {
+                "x": 0.0,
+                "y": 0.029999999329447746
+            },
+            "m_light_scale": {
+                "x": 0.44999998807907104,
+                "y": 1.0700000524520874
+            },
+            "m_light_rotation": 1.0
         }
     }
 ]

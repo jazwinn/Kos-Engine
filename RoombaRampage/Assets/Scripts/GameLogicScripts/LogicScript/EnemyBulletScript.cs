@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,7 +9,7 @@ public class EnemyBulletScript : ScriptBase
 {
     #region Entity ID
     private uint EntityID;
-    private float bulletSpeed = 8.0f;
+    private float bulletSpeed = 7.0f;
     private float bulletLifetime = 5.0f;
     private float currentLifetime = 0.0f;
     private Vector2 movement;
@@ -79,6 +80,8 @@ public class EnemyBulletScript : ScriptBase
                     case "Player":
                     case "Wall":
                     case "Obstacle":
+                    case "MeleeKillZoneSpawn":
+                    case "PlayerBullet":
                         if (!isAnimating)
                         {
                             isAnimating = true;

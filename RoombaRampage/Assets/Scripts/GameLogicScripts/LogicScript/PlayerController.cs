@@ -121,7 +121,13 @@ public class PlayerController : ScriptBase
         //Normalize to prevent diagonal movement from adding speed
         movement = NormalizeAndScale(movement.X, movement.Y, speed);
 
-        InternalCall.m_InternalSetVelocity(EntityID, movement);
+        if (!PlayerGun.playerBoost)
+        {
+            InternalCall.m_InternalSetVelocity(EntityID, movement);
+        }
+
+
+
 
         #endregion
 
@@ -132,49 +138,88 @@ public class PlayerController : ScriptBase
 
             foreach (int collidedEntitiesID in collidedEntities)
             {
-                if (InternalCall.m_InternalCallGetTag((uint) collidedEntitiesID) == "Enemy")
+                if (!PlayerGun.playerBoost)
                 {
-                    CameraFollowPlayerScript.Shake(10f, 1f);
+                    if (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID) == "Enemy")
+                    {
+                        CameraFollowPlayerScript.Shake(10f, 1f);
 
-                    InternalCall.m_InternalCallPlayAudio(EntityID, "aud_playerDeath01");
+                        InternalCall.m_InternalCallPlayAudio(EntityID, "aud_playerDeath01");
 
-                    var collisionComponent = GetComponent.GetColliderComponent(EntityID);
-                    collisionComponent.m_collisionCheck = !collisionComponent.m_collisionCheck;
-                    SetComponent.SetCollisionComponent(EntityID, collisionComponent);
+                        var collisionComponent = GetComponent.GetColliderComponent(EntityID);
+                        collisionComponent.m_collisionCheck = !collisionComponent.m_collisionCheck;
+                        SetComponent.SetCollisionComponent(EntityID, collisionComponent);
 
-                    InternalCall.m_InternalSetAnimationComponent(EntityID, 0, 0, 0, false, 1);
-                    InternalCall.m_InternalSetSpriteComponent(EntityID, playerDeathTexture, startingLayer, startingColor, startingAlpha);
+                        InternalCall.m_InternalSetAnimationComponent(EntityID, 0, 0, 0, false, 1);
+                        InternalCall.m_InternalSetSpriteComponent(EntityID, playerDeathTexture, startingLayer, startingColor, startingAlpha);
 
-                    movement.X = 0;
-                    movement.Y = 0;
+                        movement.X = 0;
+                        movement.Y = 0;
 
-                    InternalCall.m_InternalSetVelocity(EntityID, movement);
+                        InternalCall.m_InternalSetVelocity(EntityID, movement);
 
-                    isDead = true;
+                        isDead = true;
 
-                    InternalCall.m_InternalCallSetTimeScale(0);
+                        InternalCall.m_InternalCallSetTimeScale(0);
+                    }
+                    if (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID) == "EnemyBullet")
+                    {
+                        CameraFollowPlayerScript.Shake(10f, 1f);
+
+                        InternalCall.m_InternalCallPlayAudio(EntityID, "aud_playerDeath01");
+
+                        var collisionComponent = GetComponent.GetColliderComponent(EntityID);
+                        collisionComponent.m_collisionCheck = !collisionComponent.m_collisionCheck;
+                        SetComponent.SetCollisionComponent(EntityID, collisionComponent);
+
+                        InternalCall.m_InternalSetAnimationComponent(EntityID, 0, 0, 0, false, 1);
+                        InternalCall.m_InternalSetSpriteComponent(EntityID, playerDeathTexture, startingLayer, startingColor, startingAlpha);
+
+                        movement.X = 0;
+                        movement.Y = 0;
+
+                        InternalCall.m_InternalSetVelocity(EntityID, movement);
+
+                        isDead = true;
+
+                        InternalCall.m_InternalCallSetTimeScale(0);
+                    }
+
+                    if (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID) == "PlayerRailgunBullet")
+                    {
+                        CameraFollowPlayerScript.Shake(10f, 1f);
+
+                        InternalCall.m_InternalCallPlayAudio(EntityID, "aud_playerDeath01");
+
+                        var collisionComponent = GetComponent.GetColliderComponent(EntityID);
+                        collisionComponent.m_collisionCheck = !collisionComponent.m_collisionCheck;
+                        SetComponent.SetCollisionComponent(EntityID, collisionComponent);
+
+                        InternalCall.m_InternalSetAnimationComponent(EntityID, 0, 0, 0, false, 1);
+                        InternalCall.m_InternalSetSpriteComponent(EntityID, playerDeathTexture, startingLayer, startingColor, startingAlpha);
+
+                        movement.X = 0;
+                        movement.Y = 0;
+
+                        InternalCall.m_InternalSetVelocity(EntityID, movement);
+
+                        isDead = true;
+
+                        InternalCall.m_InternalCallSetTimeScale(0);
+                    }
                 }
-                if (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID) == "EnemyBullet")
+                
+                if (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID) == "Wall")
                 {
-                    CameraFollowPlayerScript.Shake(10f, 1f);
 
-                    InternalCall.m_InternalCallPlayAudio(EntityID, "aud_playerDeath01");
+                    if (PlayerGun.playerBoost)
+                    {
+                        CameraFollowPlayerScript.Shake(10f, 1f);
+                        PlayerGun.playerBoost = false;
+                    }
 
-                    var collisionComponent = GetComponent.GetColliderComponent(EntityID);
-                    collisionComponent.m_collisionCheck = !collisionComponent.m_collisionCheck;
-                    SetComponent.SetCollisionComponent(EntityID, collisionComponent);
 
-                    InternalCall.m_InternalSetAnimationComponent(EntityID, 0, 0, 0, false, 1);
-                    InternalCall.m_InternalSetSpriteComponent(EntityID, playerDeathTexture, startingLayer, startingColor, startingAlpha);
 
-                    movement.X = 0;
-                    movement.Y = 0;
-
-                    InternalCall.m_InternalSetVelocity(EntityID, movement);
-
-                    isDead = true;
-
-                    InternalCall.m_InternalCallSetTimeScale(0);
                 }
             }
         }
@@ -182,6 +227,10 @@ public class PlayerController : ScriptBase
         #endregion
 
         #region Mouse Rotation
+        if (PlayerGun.playerBoost)
+        {
+            return;
+        }
 
         Vector2 mousePos;
         Vector2 roombaPos;

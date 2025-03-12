@@ -589,14 +589,18 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
             // Retrieve the TransformComponent
             ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]
                 ->m_GetEntityComponent(entityID));
-
+            static ecs::NameComponent oldValN = *nc;
             //Display Position
             ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
             ImGui::Text("Object Name: ");
             ImGui::SameLine(slider_start_pos_x);
             ImGui::SetNextItemWidth(100.0f);
             ImGui::InputText("##NAMETEXT##", &nc->m_entityName);
-            
+            if (ImGui::IsItemDeactivatedAfterEdit()) {
+                events::ModifyName action(ecs::TYPENAMECOMPONENT, entityID, nc, oldValN);
+                DISPATCH_ACTION_EVENT(action);
+                oldValN = *nc;
+            }
             //layer selector
             const char* layers[] = { ecs->m_layersStack.m_layerMap[layer::DEFAULT].first.c_str(), ecs->m_layersStack.m_layerMap[layer::LAYER1].first.c_str(),ecs->m_layersStack.m_layerMap[layer::LAYER2].first.c_str(),
                                   ecs->m_layersStack.m_layerMap[layer::LAYER3].first.c_str(), ecs->m_layersStack.m_layerMap[layer::LAYER4].first.c_str(), ecs->m_layersStack.m_layerMap[layer::LAYER5].first.c_str(),
@@ -611,7 +615,9 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
             int layer_current = nc->m_Layer;
             if (ImGui::Combo("Layers", &layer_current, layers_vec.data(), static_cast<int>(layers_vec.size()))) {
                 ecs->m_layersStack.m_SwapEntityLayer((layer::LAYERS)layer_current, nc->m_Layer, entityID);
-
+                events::ModifyName action(ecs::TYPENAMECOMPONENT, entityID, nc, oldValN);
+                DISPATCH_ACTION_EVENT(action);
+                oldValN = *nc;
             }
 
             // Convert vector to array of char* for ImGui
@@ -633,6 +639,9 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
             
             if (ImGui::Combo("Tag", &item, tag_Names.data(), static_cast<int>(tag_Names.size()))) {
                 nc->m_entityTag = m_tags[item];
+                events::ModifyName action(ecs::TYPENAMECOMPONENT, entityID, nc, oldValN);
+                DISPATCH_ACTION_EVENT(action);
+                oldValN = *nc;
             }
 
            // std::cout << nc->m_entityTag << std::endl;
@@ -741,6 +750,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                                         DISPATCH_ACTION_EVENT(action2);
                                         events::AddComponent action1(entityID, ecs::TYPEANIMATIONCOMPONENT);
                                         DISPATCH_ACTION_EVENT(action1);
+                                        oldValS = *sc;
                                        
                                     }
                                 }
@@ -754,6 +764,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                                     //DISPATCH_ACTION_EVENT(action);
                                     events::ModifySprite action(ecs::TYPESPRITECOMPONENT, entityID, sc, oldValS);
                                     DISPATCH_ACTION_EVENT(action);
+                                    oldValS = *sc;
                                 }
                             }
                         }

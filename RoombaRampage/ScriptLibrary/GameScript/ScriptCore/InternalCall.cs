@@ -36,10 +36,10 @@ public static class InternalCall
     public extern static bool m_InternalSetEnemyComponent(uint entity, in int enemyTag, in int enemytype, in int enemybehaviour);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static bool m_InternalGetRigidBodyComponent(uint entity, out Vector2 velocity, out Vector2 acceleration, out float rotation, out Vector2 previouspos, out Vector2 direction);
+    public extern static bool m_InternalGetRigidBodyComponent(uint entity, out Vector2 velocity, out Vector2 acceleration, out float rotation, out Vector2 previouspos, out Vector2 direction, out Vector2 force);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static bool m_InternalSetRigidBodyComponent(uint entity, in Vector2 velocity, in Vector2 acceleration, in float rotation, in Vector2 previouspos, in Vector2 direction);
+    public extern static bool m_InternalSetRigidBodyComponent(uint entity, in Vector2 velocity, in Vector2 acceleration, in float rotation, in Vector2 previouspos, in Vector2 direction, in Vector2 force);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static bool m_InternalGetTextComponent(uint entity, out string text, out string fileName, out int fontLayer, out float fontSize, out Vector3 color);
@@ -162,6 +162,9 @@ public static class InternalCall
     public extern static void m_InternalCallUnPauseAudio(uint id, string monoString);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static bool m_InternalCallAudioIsPlayingForEntity(uint id, string monoString);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static void m_InternalCallPauseAllAudio();
 
     [MethodImpl(MethodImplOptions.InternalCall)]
@@ -267,6 +270,15 @@ public static class InternalCall
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public static extern void m_InternalCallSetLightingComponent(uint id, in Vector2 innerouterradius, in Vector3 color, in float intensity);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public static extern bool m_IsLayerVisable(int layer);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public static extern void m_GetColliderDecomposedTRS(uint id, out Vector2 _translate, out Vector2 _rotate, out float _scale);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public static extern int m_InternalCallGetParentID(uint id);
 }
 
 
@@ -299,7 +311,7 @@ public static class Component
         else if (typeof(T) == typeof(RigidBodyComponent))
         {
             var rigidComponent = component as RigidBodyComponent;
-            InternalCall.m_InternalGetRigidBodyComponent(id, out rigidComponent.m_Velocity, out rigidComponent.m_Acceleration, out rigidComponent.m_Rotation, out rigidComponent.m_prevPos, out rigidComponent.m_direction);
+            InternalCall.m_InternalGetRigidBodyComponent(id, out rigidComponent.m_Velocity, out rigidComponent.m_Acceleration, out rigidComponent.m_Rotation, out rigidComponent.m_prevPos, out rigidComponent.m_direction, out rigidComponent.m_Force);
         }
         else if (typeof(T) == typeof(AnimationComponent))
         {
@@ -360,7 +372,7 @@ public static class Component
         }
         else if (component is RigidBodyComponent rigid)
         {
-            InternalCall.m_InternalSetRigidBodyComponent(id, in rigid.m_Velocity, in rigid.m_Acceleration, in rigid.m_Rotation, in rigid.m_prevPos, in rigid.m_direction);
+            InternalCall.m_InternalSetRigidBodyComponent(id, in rigid.m_Velocity, in rigid.m_Acceleration, in rigid.m_Rotation, in rigid.m_prevPos, in rigid.m_direction, in rigid.m_Force);
         }
         else if (component is AnimationComponent animation)
         {

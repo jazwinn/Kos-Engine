@@ -60,12 +60,11 @@ public class PlayerLoadoutText : ScriptBase
                 return "Katana";
 
             case 2:
-                return "Booster";
+                return "Shotgun";
 
             case 3:
-                return "Shotgun";
-            case 4:
                 return "Railgun";
+
             default:
                 return "Placeholder_Weapon";
         }
