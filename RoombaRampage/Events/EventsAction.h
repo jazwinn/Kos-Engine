@@ -733,5 +733,308 @@ namespace events {
 		// New function
 		ecs::ButtonComponent* m_GetComp() { return m_changedComp; }
 	};
+	class ModifyVideo : public BaseEvent<Actions> {
+	private:
+		ecs::ComponentType m_changedType;
+		ecs::EntityID m_entityID;
+		ecs::VideoComponent* m_changedComp;
+		std::string m_oldFilename;
+		bool m_oldPause;
+		bool m_oldLoop;
+		int m_oldLayer;
+
+	public:
+		ModifyVideo(ecs::ComponentType inType, ecs::EntityID inID, ecs::VideoComponent* inComp, ecs::VideoComponent inOld)
+			: BaseEvent<Actions>(Actions::MODIFYVIDEO),
+			m_changedType(inType), m_entityID(inID), m_changedComp(inComp),
+			m_oldFilename(inOld.filename), m_oldPause(inOld.pause),
+			m_oldLoop(inOld.loop), m_oldLayer(inOld.layer) {}
+		ecs::EntityID m_GetID() { return m_entityID; }
+		ecs::VideoComponent* m_GetComp() { return m_changedComp; }
+		std::string m_GetOldFilename() { return m_oldFilename; }
+		bool m_GetOldPause() { return m_oldPause; }
+		bool m_GetOldLoop() { return m_oldLoop; }
+		int m_GetOldLayer() { return m_oldLayer; }
+	};
+
+	class ModifyTilemap : public BaseEvent<Actions> {
+	private:
+		ecs::ComponentType m_changedType;
+		ecs::EntityID m_entityID;
+		ecs::TilemapComponent* m_changedComp;
+		std::string m_oldTilemapFile;
+		int m_oldTileLayer;
+		vector3::Vec3 m_oldColor;
+		float m_oldAlpha;
+		int m_oldTileIndex, m_oldRowLength, m_oldColumnLength, m_oldPictureRowLength, m_oldPictureColumnLength;
+
+	public:
+		ModifyTilemap(ecs::ComponentType inType, ecs::EntityID inID, ecs::TilemapComponent* inComp, ecs::TilemapComponent inOld)
+			: BaseEvent<Actions>(Actions::MODIFYTILEMAP),
+			m_changedType(inType), m_entityID(inID), m_changedComp(inComp),
+			m_oldTilemapFile(inOld.m_tilemapFile), m_oldTileLayer(inOld.m_tileLayer),
+			m_oldColor(inOld.m_color), m_oldAlpha(inOld.m_alpha), m_oldTileIndex(inOld.m_tileIndex),
+			m_oldRowLength(inOld.m_rowLength), m_oldColumnLength(inOld.m_columnLength), m_oldPictureRowLength(inOld.m_pictureRowLength), m_oldPictureColumnLength(inOld.m_pictureColumnLength){}
+
+		ecs::EntityID m_GetID() { return m_entityID; }
+		ecs::TilemapComponent* m_GetComp() { return m_changedComp; }
+		std::string m_GetOldTilemapFile() { return m_oldTilemapFile; }
+		int m_GetOldTileLayer() { return m_oldTileLayer; }
+		vector3::Vec3 m_GetOldColor() { return m_oldColor; }
+		float m_GetOldAlpha() { return m_oldAlpha; }
+		int m_GetOldTileIndex() { return m_oldTileIndex; }
+		int m_GetOldRowLength() { return m_oldRowLength; }
+		int m_GetOldColumnLength() { return m_oldColumnLength; }
+		int m_GetOldPictureRowLength() { return m_oldPictureRowLength; }
+		int m_GetOldPictureColumnLength() { return m_oldPictureColumnLength; }
+	};
+
+	class ModifyParticle : public BaseEvent<Actions> {
+	private:
+		ecs::ComponentType m_changedType;
+		ecs::EntityID m_entityID;
+		ecs::ParticleComponent* m_changedComp;
+		bool m_oldWillSpawn;
+		int m_oldNoOfParticles;
+		float m_oldLifeSpan;
+		vector2::Vec2 m_oldVelocity;
+		vector2::Vec2 m_oldAcceleration;
+		vector3::Vec3 m_oldColor;
+		float m_oldConeRotation;
+		float m_oldConeAngle;
+		float m_oldRandomFactor;
+		std::string m_oldImageFile;
+		int m_oldStripCount;
+		int m_oldFrameNumber;
+		int m_oldLayer;
+		float m_oldFriction;
+		int m_oldFps;
+
+	public:
+		ModifyParticle(ecs::ComponentType inType, ecs::EntityID inID, ecs::ParticleComponent* inComp, ecs::ParticleComponent inOld)
+			: BaseEvent<Actions>(Actions::MODIFYPARTICLE),
+			m_changedType(inType), m_entityID(inID), m_changedComp(inComp),
+			m_oldWillSpawn(inOld.m_willSpawn), m_oldNoOfParticles(inOld.m_noOfParticles),
+			m_oldLifeSpan(inOld.m_lifeSpan), m_oldVelocity(inOld.m_velocity),
+			m_oldAcceleration(inOld.m_acceleration), m_oldColor(inOld.m_color),
+			m_oldConeRotation(inOld.m_coneRotation), m_oldConeAngle(inOld.m_coneAngle),
+			m_oldRandomFactor(inOld.m_randomFactor), m_oldImageFile(inOld.m_imageFile),
+			m_oldStripCount(inOld.m_stripCount), m_oldFrameNumber(inOld.m_frameNumber),
+			m_oldLayer(inOld.m_layer), m_oldFriction(inOld.m_friction), m_oldFps(inOld.m_fps) {}
+
+		ecs::ComponentType m_GetType() { return m_changedType; }
+		ecs::EntityID m_GetID() { return m_entityID; }
+		bool m_GetOldWillSpawn() { return m_oldWillSpawn; }
+		int m_GetOldNoOfParticles() { return m_oldNoOfParticles; }
+		float m_GetOldLifeSpan() { return m_oldLifeSpan; }
+		vector2::Vec2 m_GetOldVelocity() { return m_oldVelocity; }
+		vector2::Vec2 m_GetOldAcceleration() { return m_oldAcceleration; }
+		vector3::Vec3 m_GetOldColor() { return m_oldColor; }
+		float m_GetOldConeRotation() { return m_oldConeRotation; }
+		float m_GetOldConeAngle() { return m_oldConeAngle; }
+		float m_GetOldRandomFactor() { return m_oldRandomFactor; }
+		std::string m_GetOldImageFile() { return m_oldImageFile; }
+		int m_GetOldStripCount() { return m_oldStripCount; }
+		int m_GetOldFrameNumber() { return m_oldFrameNumber; }
+		int m_GetOldLayer() { return m_oldLayer; }
+		float m_GetOldFriction() { return m_oldFriction; }
+		int m_GetOldFps() { return m_oldFps; }
+
+		ecs::ParticleComponent* m_GetComp() { return m_changedComp; }
+	};
+
+	class ModifyName : public BaseEvent<Actions> {
+	private:
+		ecs::ComponentType m_changedType;
+		ecs::EntityID m_entityID;
+		ecs::NameComponent* m_changedComp;
+		std::string m_oldName;
+		std::string m_oldTag;
+		bool m_oldIsPrefab;
+		std::string m_oldPrefabName;
+		layer::LAYERS m_oldLayer;
+
+	public:
+		ModifyName(ecs::ComponentType inType, ecs::EntityID inID, ecs::NameComponent* inComp, ecs::NameComponent inOld)
+			: BaseEvent<Actions>(Actions::MODIFYNAME),
+			m_changedType(inType), m_entityID(inID), m_changedComp(inComp),
+			m_oldName(inOld.m_entityName), m_oldTag(inOld.m_entityTag),
+			m_oldIsPrefab(inOld.m_isPrefab), m_oldPrefabName(inOld.m_prefabName),
+			m_oldLayer(inOld.m_Layer) {}
+
+		ecs::ComponentType m_GetType() { return m_changedType; }
+		ecs::EntityID m_GetID() { return m_entityID; }
+		std::string m_GetOldName() { return m_oldName; }
+		std::string m_GetOldTag() { return m_oldTag; }
+		bool m_GetOldIsPrefab() { return m_oldIsPrefab; }
+		std::string m_GetOldPrefabName() { return m_oldPrefabName; }
+		layer::LAYERS m_GetOldLayer() { return m_oldLayer; }
+
+		ecs::NameComponent* m_GetComp() { return m_changedComp; }
+	};
+
+	class AddAudio : public BaseEvent<Actions> {
+	private:
+		ecs::ComponentType m_changedType;
+		ecs::EntityID m_entityID;
+		ecs::AudioComponent* m_changedComp;
+		std::string m_name;
+		std::string m_filePath;
+		float m_volume;
+		bool m_loop;
+		bool m_playOnStart, m_hasPlayed;
+		float m_pan;
+		bool m_isSFX, m_isBGM;
+
+	public:
+		AddAudio(ecs::ComponentType inType, ecs::EntityID inID, ecs::AudioComponent* inComp, ecs::AudioComponent inOld)
+			: BaseEvent<Actions>(Actions::ADDAUDIO),
+			m_changedType(inType), m_entityID(inID), m_changedComp(inComp),
+			m_name(inComp->m_AudioFiles.back().m_Name), m_filePath(inComp->m_AudioFiles.back().m_FilePath),
+			m_volume(inComp->m_AudioFiles.back().m_Volume), m_loop(inComp->m_AudioFiles.back().m_Loop),
+			m_playOnStart(inComp->m_AudioFiles.back().m_PlayOnStart), m_hasPlayed(inComp->m_AudioFiles.back().m_HasPlayed), m_pan(inComp->m_AudioFiles.back().m_Pan),
+			m_isSFX(inComp->m_AudioFiles.back().m_IsSFX), m_isBGM(inComp->m_AudioFiles.back().m_IsBGM){}
+		ecs::EntityID m_GetID() { return m_entityID; }
+		ecs::AudioComponent* m_GetComp() { return m_changedComp; }
+		std::string m_GetOldFilename() { return m_name; }
+		std::string m_GetOldFilePath() { return m_filePath; }
+		bool m_GetOldPlayOnStart() { return m_playOnStart; }
+		bool m_GetOldLoop() { return m_loop; }
+		bool m_GetOldHasPlayed() { return m_hasPlayed; }
+		bool m_GetOldSFX() { return m_isSFX; }
+		bool m_GetOldBGM() { return m_isBGM; }
+		float m_GetOldVol() { return m_volume; }
+		float m_GetOldPan() { return m_pan; }
+	};
+
+	class RemoveAudio : public BaseEvent<Actions> {
+	private:
+		ecs::ComponentType m_changedType;
+		ecs::EntityID m_entityID;
+		ecs::AudioComponent* m_changedComp;
+		std::string m_name;
+		std::string m_filePath;
+		float m_volume;
+		bool m_loop;
+		bool m_playOnStart, m_hasPlayed;
+		float m_pan;
+		bool m_isSFX, m_isBGM;
+
+
+	public:
+		RemoveAudio(ecs::ComponentType inType, ecs::EntityID inID, ecs::AudioComponent* inComp, ecs::AudioComponent inOld)
+			: BaseEvent<Actions>(Actions::REMOVEAUDIO),
+			m_changedType(inType), m_entityID(inID), m_changedComp(inComp),
+			m_name(inOld.m_AudioFiles.back().m_Name), m_filePath(inOld.m_AudioFiles.back().m_FilePath),
+			m_volume(inOld.m_AudioFiles.back().m_Volume), m_loop(inOld.m_AudioFiles.back().m_Loop),
+			m_playOnStart(inOld.m_AudioFiles.back().m_PlayOnStart), m_hasPlayed(inOld.m_AudioFiles.back().m_HasPlayed), m_pan(inOld.m_AudioFiles.back().m_Pan),
+			m_isSFX(inOld.m_AudioFiles.back().m_IsSFX), m_isBGM(inOld.m_AudioFiles.back().m_IsBGM){}
+		ecs::EntityID m_GetID() { return m_entityID; }
+		ecs::AudioComponent* m_GetComp() { return m_changedComp; }
+		std::string m_GetOldFilename() { return m_name; }
+		std::string m_GetOldFilePath() { return m_filePath; }
+		bool m_GetOldPlayOnStart() { return m_playOnStart; }
+		bool m_GetOldLoop() { return m_loop; }
+		bool m_GetOldHasPlayed() { return m_hasPlayed; }
+		float m_GetOldVol() { return m_volume; }
+		float m_GetOldPan() { return m_pan; }
+		bool m_GetOldSFX() { return m_isSFX; }
+		bool m_GetOldBGM() { return m_isBGM; }
+	};
+
+	class ModifyAudio : public BaseEvent<Actions> {
+	private:
+		ecs::ComponentType m_changedType;
+		ecs::EntityID m_entityID;
+		std::vector<ecs::AudioFile>::iterator m_changedComp;
+		std::string m_name;
+		std::string m_filePath;
+		float m_volume;
+		bool m_loop;
+		bool m_playOnStart, m_hasPlayed;
+		float m_pan;
+		bool m_isSFX, m_isBGM;
+
+
+	public:
+		ModifyAudio(ecs::ComponentType inType, ecs::EntityID inID, std::vector<ecs::AudioFile>::iterator inComp, std::vector<ecs::AudioFile>::iterator inOld)
+			: BaseEvent<Actions>(Actions::MODIFYAUDIO),
+			m_changedType(inType), m_entityID(inID), m_changedComp(inComp),
+			m_name(inOld->m_Name), m_filePath(inOld->m_FilePath),
+			m_volume(inOld->m_Volume), m_loop(inOld->m_Loop),
+			m_playOnStart(inOld->m_PlayOnStart), m_hasPlayed(inOld->m_HasPlayed), m_pan(inOld->m_Pan),
+			m_isSFX(inOld->m_IsSFX), m_isBGM(inOld->m_IsBGM) {}
+		ecs::EntityID m_GetID() { return m_entityID; }
+		std::vector<ecs::AudioFile>::iterator m_GetComp() { return m_changedComp; }
+		std::string m_GetOldFilename() { return m_name; }
+		std::string m_GetOldFilePath() { return m_filePath; }
+		bool m_GetOldPlayOnStart() { return m_playOnStart; }
+		bool m_GetOldLoop() { return m_loop; }
+		bool m_GetOldHasPlayed() { return m_hasPlayed; }
+		float m_GetOldVol() { return m_volume; }
+		float m_GetOldPan() { return m_pan; }
+		bool m_GetOldSFX() { return m_isSFX; }
+		bool m_GetOldBGM() { return m_isBGM; }
+	};
+
+	class AddRay : public BaseEvent<Actions> {
+	private:
+		ecs::ComponentType m_changedType;
+		ecs::EntityID m_entityID;
+		ecs::RaycastComponent* m_changedComp;
+		std::string m_rayID;
+
+		bool m_isRaycasting;
+
+		vector2::Vec2 m_targetPosition;
+
+		std::vector<layer::LAYERS> m_Layers;
+
+
+
+	public:
+		AddRay(ecs::ComponentType inType, ecs::EntityID inID, ecs::RaycastComponent* inComp, ecs::RaycastComponent inOld)
+			: BaseEvent<Actions>(Actions::ADDRAY),
+			m_changedType(inType), m_entityID(inID), m_changedComp(inComp),
+			m_rayID(inComp->m_raycast.back().m_rayID), m_isRaycasting(inComp->m_raycast.back().m_isRaycasting),
+			m_targetPosition(inComp->m_raycast.back().m_targetPosition), m_Layers(inComp->m_raycast.back().m_Layers){}
+		ecs::EntityID m_GetID() { return m_entityID; }
+		ecs::RaycastComponent* m_GetComp() { return m_changedComp; }
+		std::string m_GetOldRayID() { return m_rayID; }
+		bool m_GetOldIsRayCasting() { return m_isRaycasting; }
+		vector2::Vec2 m_GetOldTargetPos() { return m_targetPosition; }
+		std::vector<layer::LAYERS> m_GetOldLayers() { return m_Layers; }
+
+	};
+
+	class RemoveRay : public BaseEvent<Actions> {
+	private:
+		ecs::ComponentType m_changedType;
+		ecs::EntityID m_entityID;
+		ecs::RaycastComponent* m_changedComp;
+		std::string m_rayID;
+
+		bool m_isRaycasting;
+
+		vector2::Vec2 m_targetPosition;
+
+		std::vector<layer::LAYERS> m_Layers;
+
+
+
+	public:
+		RemoveRay(ecs::ComponentType inType, ecs::EntityID inID, ecs::RaycastComponent* inComp, ecs::RaycastComponent inOld)
+			: BaseEvent<Actions>(Actions::REMOVERAY),
+			m_changedType(inType), m_entityID(inID), m_changedComp(inComp),
+			m_rayID(inOld.m_raycast.back().m_rayID), m_isRaycasting(inOld.m_raycast.back().m_isRaycasting),
+			m_targetPosition(inOld.m_raycast.back().m_targetPosition), m_Layers(inOld.m_raycast.back().m_Layers) {}
+		ecs::EntityID m_GetID() { return m_entityID; }
+		ecs::RaycastComponent* m_GetComp() { return m_changedComp; }
+		std::string m_GetOldRayID() { return m_rayID; }
+		bool m_GetOldIsRayCasting() { return m_isRaycasting; }
+		vector2::Vec2 m_GetOldTargetPos() { return m_targetPosition; }
+		std::vector<layer::LAYERS> m_GetOldLayers() { return m_Layers; }
+
+	};
 
 }
