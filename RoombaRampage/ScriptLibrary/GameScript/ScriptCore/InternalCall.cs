@@ -219,6 +219,53 @@ public static class InternalCall
     public extern static bool m_InternalSetGridComponent(uint id, in Vector2 anchor, in int gridRowLength, in int gridColumnLength, in bool setCollidable, in int gridKey);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static bool m_InternalGetParticleComponent(
+        uint id,
+        out bool willSpawn,
+        out int noOfParticles,
+        out float lifeSpan,
+        out Vector2 velocity,
+        out Vector2 acceleration,
+        out Vector3 color,
+        out float coneRotation,
+        out float coneAngle,
+        out float randomFactor,
+        out string imageFile,
+        out int stripCount,
+        out int frameNumber,
+        out int layer,
+        out float friction,
+        out int fps
+    );
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static bool m_InternalSetParticleComponent(
+       uint id,
+       bool willSpawn,
+       in int noOfParticles,
+       in float lifeSpan,
+       in Vector2 velocity,
+       in Vector2 acceleration,
+       in Vector3 color,
+       in float coneRotation,
+       in float coneAngle,
+       in float randomFactor,
+       in string imageFile,
+       in int stripCount,
+       in int frameNumber,
+       in int layer,
+       in float friction,
+       in int fps
+   );
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static void m_InternalCallSpawnParticle(uint id);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static void m_InternalCallDespawnParticle(uint id);
+
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static int m_InternalGetEntityIdFromGridKey(int gridkey);
     public static Raycast m_GetRay(uint id, string monoString)
     {
@@ -332,6 +379,27 @@ public static class Component
             var _component = component as LightComponent;
             InternalCall.m_InternalCallGetLightingComponent(id, out _component.m_innerOuterRadius, out _component.m_colour, out _component.m_intensity);
         }
+        else if (typeof(T) == typeof(ParticleComponent))
+        {
+            var _component = component as ParticleComponent;
+            InternalCall.m_InternalGetParticleComponent(
+            id,
+            out _component.m_willSpawn,
+            out _component.m_noOfParticles,
+            out _component.m_lifeSpan,
+            out _component.m_velocity,
+            out _component.m_acceleration,
+            out _component.m_color,
+            out _component.m_coneRotation,
+            out _component.m_coneAngle,
+            out _component.m_randomFactor,
+            out _component.m_imageFile,
+            out _component.m_stripCount,
+            out _component.m_frameNumber,
+            out _component.m_layer,
+            out _component.m_friction,
+            out _component.m_fps);
+        }
         else
         {
             throw new NotSupportedException($"Component type {typeof(T).Name} is not supported.");
@@ -377,6 +445,26 @@ public static class Component
         else if (component is LightComponent light)
         {
             InternalCall.m_InternalCallSetLightingComponent(id, in light.m_innerOuterRadius, in light.m_colour, in light.m_intensity);
+        }
+        else if (component is ParticleComponent particle)
+        {
+            InternalCall.m_InternalSetParticleComponent(
+                         id,
+                         particle.m_willSpawn,
+                         in particle.m_noOfParticles,
+                         in particle.m_lifeSpan,
+                         in particle.m_velocity,
+                         in particle.m_acceleration,
+                         in particle.m_color,
+                         in particle.m_coneRotation,
+                         in particle.m_coneAngle,
+                         in particle.m_randomFactor,
+                         in particle.m_imageFile,
+                         in particle.m_stripCount,
+                         in particle.m_frameNumber,
+                         in particle.m_layer,
+                         in particle.m_friction,
+                         in particle.m_fps );
         }
         else
         {

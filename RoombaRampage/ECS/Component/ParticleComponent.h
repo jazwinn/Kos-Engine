@@ -39,7 +39,7 @@ namespace ecs
 		std::string m_imageFile{};
 		int m_stripCount{};
 		int m_frameNumber{};
-		int m_layer{};
+		int m_layer{500};
 		float m_friction{};
 		int m_fps{};
 		

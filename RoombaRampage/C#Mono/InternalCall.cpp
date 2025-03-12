@@ -1120,6 +1120,100 @@ namespace script {
 		return true;
 	}
 
+	//Particle Component
+
+	bool InternalCall::m_InternalGetParticleComponent(ecs::EntityID entity, bool* willSpawn, int* noOfParticles, float* lifeSpan, vector2::Vec2* velocity,
+		vector2::Vec2* acceleration, vector3::Vec3* color, float* coneRotation, float* coneAngle, float* randomFactor, MonoString** imageFile, int* stripCount,
+		int* frameNumber, int* layer, float* friction, int* fps)
+	{
+		auto* particleComponent = static_cast<ecs::ParticleComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPEPARTICLECOMPONENT]->m_GetEntityComponent(entity));
+		if (particleComponent) {
+			*willSpawn = particleComponent->m_willSpawn;
+			*noOfParticles = particleComponent->m_noOfParticles;
+			*lifeSpan = particleComponent->m_lifeSpan;
+			*velocity = particleComponent->m_velocity;
+			*acceleration = particleComponent->m_acceleration;
+			*color = particleComponent->m_color;
+			*coneRotation = particleComponent->m_coneRotation;
+			*coneAngle = particleComponent->m_coneAngle;
+			*randomFactor = particleComponent->m_randomFactor;
+			*imageFile = mono_string_new(mono_domain_get(), particleComponent->m_imageFile.c_str());
+			*stripCount = particleComponent->m_stripCount;
+			*frameNumber = particleComponent->m_frameNumber;
+			*layer = particleComponent->m_layer;
+			*friction = particleComponent->m_friction;
+			*fps = particleComponent->m_fps;
+			return true;
+		}
+		else
+		{
+			ASSERTNOCOMPONENT(ParticleComponent, entity);
+			return false;
+		}
+	}
+
+	bool InternalCall::m_InternalSetParticleComponent(ecs::EntityID entity, bool* willSpawn, int* noOfParticles, float* lifeSpan, vector2::Vec2* velocity, vector2::Vec2* acceleration, vector3::Vec3* color, float* coneRotation, float* coneAngle, float* randomFactor, MonoString* imageFile, int* stripCount, int* frameNumber, int* layer, float* friction, int* fps)
+	{
+		auto* particleComponent = static_cast<ecs::ParticleComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPEPARTICLECOMPONENT]->m_GetEntityComponent(entity));
+		if (particleComponent) {
+			particleComponent->m_willSpawn = *willSpawn;
+			particleComponent->m_noOfParticles = *noOfParticles;
+			particleComponent->m_lifeSpan = *lifeSpan;
+			particleComponent->m_velocity = *velocity;
+			particleComponent->m_acceleration = *acceleration;
+			particleComponent->m_color = *color;
+			particleComponent->m_coneRotation = *coneRotation;
+			particleComponent->m_coneAngle = *coneAngle;
+			particleComponent->m_randomFactor = *randomFactor;
+
+			char* nativeString = mono_string_to_utf8(imageFile);
+			std::string imagefile = nativeString;
+
+			particleComponent->m_imageFile = imagefile;
+			particleComponent->m_stripCount = *stripCount;
+			particleComponent->m_frameNumber = *frameNumber;
+			particleComponent->m_layer = *layer;
+			particleComponent->m_friction = *friction;
+			particleComponent->m_fps = *fps;
+			return true;
+		}
+		else 
+		{
+			ASSERTNOCOMPONENT(ParticleComponent, entity);
+			return false;
+		}
+	}
+
+	bool InternalCall::m_InternalCallSpawnParticle(ecs::EntityID entity)
+	{
+		auto* particleComponent = static_cast<ecs::ParticleComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPEPARTICLECOMPONENT]->m_GetEntityComponent(entity));
+		if (particleComponent)
+		{
+			particleComponent->m_willSpawn = true;
+			
+		}
+		else
+		{
+			ASSERTNOCOMPONENT(ParticleComponent, entity);
+			return false;
+		}
+	}
+
+	bool InternalCall::m_InternalCallDespawnParticle(ecs::EntityID entity)
+	{
+		auto* particleComponent = static_cast<ecs::ParticleComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPEPARTICLECOMPONENT]->m_GetEntityComponent(entity));
+		if (particleComponent)
+		{
+			particleComponent->m_willSpawn = false;
+		}
+		else
+		{
+			ASSERTNOCOMPONENT(ParticleComponent, entity);
+			return false;
+		}
+	}
+
+
 	// Grid Component
 	bool InternalCall::m_InternalGetGridComponent(ecs::EntityID entity, vector2::Vec2* anchor, int* gridRowLength, int* gridColumnLength, bool* setCollidable, int* gridKey) {
 		auto* gridComponent = static_cast<ecs::GridComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPEGRIDCOMPONENT]->m_GetEntityComponent(entity));
@@ -1273,6 +1367,8 @@ namespace script {
 	}
 
 
+
+
 	void InternalCall::m_InternalCallDeleteEntity(ecs::EntityID id)
 	{
 		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
@@ -1411,6 +1507,11 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_InternalCallGetGameTime);
 		MONO_ADD_INTERNAL_CALL(m_InternalGetGridComponent);
 		MONO_ADD_INTERNAL_CALL(m_InternalSetGridComponent);
+
+		MONO_ADD_INTERNAL_CALL(m_InternalGetParticleComponent);
+		MONO_ADD_INTERNAL_CALL(m_InternalSetParticleComponent);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallSpawnParticle);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallDespawnParticle);
 
 		MONO_ADD_INTERNAL_CALL(m_EnableScript);
 		MONO_ADD_INTERNAL_CALL(m_DisableScript);

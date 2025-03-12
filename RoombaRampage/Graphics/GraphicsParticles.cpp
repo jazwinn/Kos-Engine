@@ -91,7 +91,7 @@ namespace graphicpipe
                                 particles[j].m_framesPerSecond = m_emitterData[i].m_framesPerSecond;
                                 particles[j].m_animationTimer = 0.f;
                                 particlesProcessed++;
-                                if (particlesProcessed > m_emitterData[i].m_noOfParticles)
+                                if (particlesProcessed >= m_emitterData[i].m_noOfParticles)
                                     break;
 
                             }

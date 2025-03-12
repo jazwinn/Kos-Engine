@@ -99,7 +99,7 @@ namespace ecs {
 				graphicsPipe->m_emitterData.push_back({ particle->m_noOfParticles, particle->m_lifeSpan, {transform->m_position.m_x, transform->m_position.m_y}, {particle->m_velocity.m_x,particle->m_velocity.m_y}, {particle->m_acceleration.m_x,particle->m_acceleration.m_y},
 				{transform->m_scale.m_x, transform->m_scale.m_y} , {particle->m_color.m_x,particle->m_color.m_y,particle->m_color.m_z, 1.f }, transform->m_rotation, particle->m_coneRotation, particle->m_coneAngle /*Change this later*/,particle->m_randomFactor,
 				textureid, particle->m_stripCount, particle->m_frameNumber, particle->m_fps,particle->m_layer, particle->m_friction});
-				//particle->m_willSpawn = false;
+				particle->m_willSpawn = false;
 			}
 			
 

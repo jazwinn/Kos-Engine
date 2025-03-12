@@ -45,6 +45,8 @@ namespace Application {
 
     GLFWmonitor* AppWindow::m_monitor;
 
+
+
     void SetWindowIcon(GLFWwindow* window) {
         GLFWimage icon;
 
@@ -165,6 +167,8 @@ namespace Application {
         // Create a window based on the current screen size
         m_windowWidth = Helper::Helpers::GetInstance()->m_windowWidth;
         m_windowHeight = Helper::Helpers::GetInstance()->m_windowHeight;
+
+
         
         //Set Context Version
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -204,7 +208,7 @@ namespace Application {
             return -1;
         }
 
-        
+     
         return 0;
 	}
 
@@ -304,6 +308,14 @@ namespace Application {
        // glClearColor(static_cast<GLclampf>(help->m_colour.m_x * pipe->m_globalLightIntensity), static_cast<GLclampf>(help->m_colour.m_y * pipe->m_globalLightIntensity), static_cast<GLclampf>(help->m_colour.m_z * pipe->m_globalLightIntensity), static_cast<GLclampf>(1));
         glClear(GL_COLOR_BUFFER_BIT);
 
+        static std::string oldCursor{ "default" };
+        static bool mouseCenterCheck{ false };
+
+        if (help->m_currMousePicture != oldCursor || help->m_isMouseCentered != mouseCenterCheck)
+        {
+            setCursorImage(help->m_currMousePicture, help->m_isMouseCentered);
+        }
+
         if (help->m_closeWindow) {
             glfwSetWindowShouldClose(m_window, GLFW_TRUE);
         }
@@ -316,6 +328,61 @@ namespace Application {
         glfwDestroyWindow(m_window);
         return 0;
 	}
+
+    void AppWindow::setCursorImage(const std::string& imageFile, bool centered)
+    {
+        if (imageFile.empty() || imageFile == "default") {
+            // Set default cursor
+            GLFWcursor* defaultCursor = glfwCreateStandardCursor(GLFW_ARROW_CURSOR);
+            if (!defaultCursor) {
+                LOGGING_ERROR("Failed to create default GLFW cursor.");
+                return;
+            }
+            glfwSetCursor(AppWindow::m_window, defaultCursor);
+            return;
+        }
+
+        stbi_set_flip_vertically_on_load(false);
+
+        // Load custom cursor image
+        GLFWimage image;
+        image.pixels = stbi_load(imageFile.c_str(), &image.width, &image.height, 0, 4);
+
+        if (!image.pixels) {
+            LOGGING_ERROR("Cursor Image Loading Failed: Recheck file path (" + imageFile + ")");
+
+            // Fall back to default cursor
+            GLFWcursor* defaultCursor = glfwCreateStandardCursor(GLFW_ARROW_CURSOR);
+            if (!defaultCursor) {
+                LOGGING_ERROR("Failed to create default GLFW cursor.");
+                return;
+            }
+            glfwSetCursor(AppWindow::m_window, defaultCursor);
+            return;
+        }
+
+        // Create custom cursor
+        GLFWcursor* customCursor = glfwCreateCursor(&image, centered ? image.width / 2 : 0, centered ? image.height / 2 : 0);
+
+        if (!customCursor) {
+            LOGGING_ERROR("Cursor Creation Failed: Using default cursor instead.");
+            stbi_image_free(image.pixels);
+
+            // Fall back to default cursor
+            GLFWcursor* defaultCursor = glfwCreateStandardCursor(GLFW_ARROW_CURSOR);
+            if (!defaultCursor) {
+                LOGGING_ERROR("Failed to create default GLFW cursor.");
+                return;
+            }
+            glfwSetCursor(AppWindow::m_window, defaultCursor);
+            return;
+        }
+
+        glfwSetCursor(AppWindow::m_window, customCursor);
+        stbi_image_free(image.pixels);
+
+        stbi_set_flip_vertically_on_load(true);
+    }
 
   
 

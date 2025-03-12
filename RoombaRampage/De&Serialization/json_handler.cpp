@@ -152,6 +152,7 @@ namespace Serialization {
 					helper->m_colour.m_z = bgColor["b"].GetFloat();
 				}
 			}
+
 		}
 
 		/*******************INSERT INTO FUNCTION*****************************/

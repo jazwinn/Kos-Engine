@@ -52,6 +52,31 @@ void gui::ImGuiHandler::m_DrawGlobalSettingsWindow()
         helper->m_colour.m_z = color.z;
     }
   
+
+    // Dropdown menu for cursor selection
+    static const char* cursorOptions[] = 
+    {
+        "default",
+        "./Assets/Texture/UI/img_startScreenCursor.png",
+        "./Assets/Texture/UI/img_inGameCursor.png"
+    };
+
+
+    static int selectedCursorIndex = 0;
+    ImGui::Text("Cursor Image:");
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(200.0f);
+    if (ImGui::Combo("##CursorDropdown", &selectedCursorIndex, cursorOptions, IM_ARRAYSIZE(cursorOptions)))
+    {
+        // Update the cursor image selection
+        helper->m_currMousePicture = cursorOptions[selectedCursorIndex];
+    }
+
+    // Checkbox for cursor centering
+    ImGui::Text("Center Cursor:");
+    ImGui::SameLine();
+    ImGui::Checkbox("##CursorCentered", &helper->m_isMouseCentered);
+
     ImGui::End();
 }
 
