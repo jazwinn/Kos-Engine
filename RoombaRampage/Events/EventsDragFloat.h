@@ -58,7 +58,16 @@ namespace dragfloat {
 		CAMAR,
 		BUTTONPOS,
 		BUTTONSCALE,
-
+		GRIDANCHOR,
+		GRIDROW,
+		GRIDCOL,
+		GRIDKEY,
+		LIGHTRAD,
+		LIGHTCLR,
+		LIGHTOFFSET,
+		LIGHTSCALE,
+		LIGHTINTENSE,
+		LIGHTROT,
 		NONE
 	};
 
@@ -77,7 +86,8 @@ namespace dragfloat {
 		SPRITE,
 		CAMERA,
 		BUTTON,
-
+		GRID,
+		LIGHT,
 		NONE
 	};
 

@@ -1797,7 +1797,55 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                     
                     if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEGRIDCOMPONENT)) {
                         auto* rbc = static_cast<ecs::GridComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEGRIDCOMPONENT]->m_GetEntityComponent(entityID));
-                        rbc->ApplyFunction(DrawComponents(rbc->Names()));
+                        //rbc->ApplyFunction(DrawComponents(rbc->Names()));
+                        static ecs::GridComponent oldValG = *rbc;
+                        DrawComponents toDraw(rbc->Names());
+                        if (toDraw(rbc->m_Anchor)) {
+                            if ((dragfloat::DragFloatCheck::m_GetInstance()->m_GetPrevMem() != dragfloat::Member::GRIDANCHOR)) {
+                                oldValG = *rbc;
+                            }
+                            if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::GRID, dragfloat::Member::GRIDANCHOR)) {
+                                events::ModifyGrid action(ecs::TYPEGRIDCOMPONENT, entityID, rbc, oldValG);
+                                DISPATCH_ACTION_EVENT(action);
+                                oldValG = *rbc;
+                            }
+                        }
+                        if (toDraw(rbc->m_GridRowLength)) {
+                            if ((dragfloat::DragFloatCheck::m_GetInstance()->m_GetPrevMem() != dragfloat::Member::GRIDROW)) {
+                                oldValG = *rbc;
+                            }
+                            if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::GRID, dragfloat::Member::GRIDROW)) {
+                                events::ModifyGrid action(ecs::TYPEGRIDCOMPONENT, entityID, rbc, oldValG);
+                                DISPATCH_ACTION_EVENT(action);
+                                oldValG = *rbc;
+                            }
+                        }
+                        if (toDraw(rbc->m_GridColumnLength)) {
+                            if ((dragfloat::DragFloatCheck::m_GetInstance()->m_GetPrevMem() != dragfloat::Member::GRIDCOL)) {
+                                oldValG = *rbc;
+                            }
+                            if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::GRID, dragfloat::Member::GRIDCOL)) {
+                                events::ModifyGrid action(ecs::TYPEGRIDCOMPONENT, entityID, rbc, oldValG);
+                                DISPATCH_ACTION_EVENT(action);
+                                oldValG = *rbc;
+                            }
+                        }
+                        if (toDraw(rbc->m_SetCollidable)) {
+                            events::ModifyGrid action(ecs::TYPEGRIDCOMPONENT, entityID, rbc, oldValG);
+                            DISPATCH_ACTION_EVENT(action);
+                            oldValG = *rbc;
+                         
+                        }
+                        if (toDraw(rbc->m_GridKey)) {
+                            if ((dragfloat::DragFloatCheck::m_GetInstance()->m_GetPrevMem() != dragfloat::Member::GRIDKEY)) {
+                                oldValG = *rbc;
+                            }
+                            if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::GRID, dragfloat::Member::GRIDKEY)) {
+                                events::ModifyGrid action(ecs::TYPEGRIDCOMPONENT, entityID, rbc, oldValG);
+                                DISPATCH_ACTION_EVENT(action);
+                                oldValG = *rbc;
+                            }
+                        }
                     }
                     Tilemap::resizeCollidableGrid(grid, grid->m_GridRowLength, grid->m_GridColumnLength);
 
@@ -2019,8 +2067,59 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                 if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPELIGHTINGCOMPONENT)) {
                     auto* lc = static_cast<ecs::LightingComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPELIGHTINGCOMPONENT]->m_GetEntityComponent(entityID));
-                    lc->ApplyFunction(DrawComponents(lc->Names()));
-
+                    //lc->ApplyFunction(DrawComponents(lc->Names()));
+                    static ecs::LightingComponent oldValL = *lc;
+                    DrawComponents toDraw(lc->Names());
+                    if (toDraw(lc->m_innerOuterRadius)) {
+                        if ((dragfloat::DragFloatCheck::m_GetInstance()->m_GetPrevMem() != dragfloat::Member::LIGHTRAD)) {
+                            oldValL = *lc;
+                        }
+                        if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::LIGHT, dragfloat::Member::LIGHTRAD)) {
+                            events::ModifyLight action(ecs::TYPELIGHTINGCOMPONENT, entityID, lc, oldValL);
+                            DISPATCH_ACTION_EVENT(action);
+                            oldValL = *lc;
+                        }
+                    }
+                    if (toDraw(lc->m_intensity)) {
+                        if ((dragfloat::DragFloatCheck::m_GetInstance()->m_GetPrevMem() != dragfloat::Member::LIGHTINTENSE)) {
+                            oldValL = *lc;
+                        }
+                        if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::LIGHT, dragfloat::Member::LIGHTINTENSE)) {
+                            events::ModifyLight action(ecs::TYPELIGHTINGCOMPONENT, entityID, lc, oldValL);
+                            DISPATCH_ACTION_EVENT(action);
+                            oldValL = *lc;
+                        }
+                    }
+                    if (toDraw(lc->m_light_OffSet)) {
+                        if ((dragfloat::DragFloatCheck::m_GetInstance()->m_GetPrevMem() != dragfloat::Member::LIGHTOFFSET)) {
+                            oldValL = *lc;
+                        }
+                        if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::LIGHT, dragfloat::Member::LIGHTOFFSET)) {
+                            events::ModifyLight action(ecs::TYPELIGHTINGCOMPONENT, entityID, lc, oldValL);
+                            DISPATCH_ACTION_EVENT(action);
+                            oldValL = *lc;
+                        }
+                    }
+                    if (toDraw(lc->m_light_scale)) {
+                        if ((dragfloat::DragFloatCheck::m_GetInstance()->m_GetPrevMem() != dragfloat::Member::LIGHTSCALE)) {
+                            oldValL = *lc;
+                        }
+                        if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::LIGHT, dragfloat::Member::LIGHTSCALE)) {
+                            events::ModifyLight action(ecs::TYPELIGHTINGCOMPONENT, entityID, lc, oldValL);
+                            DISPATCH_ACTION_EVENT(action);
+                            oldValL = *lc;
+                        }
+                    }
+                    if (toDraw(lc->m_light_rotation)) {
+                        if ((dragfloat::DragFloatCheck::m_GetInstance()->m_GetPrevMem() != dragfloat::Member::LIGHTROT)) {
+                            oldValL = *lc;
+                        }
+                        if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::LIGHT, dragfloat::Member::LIGHTROT)) {
+                            events::ModifyLight action(ecs::TYPELIGHTINGCOMPONENT, entityID, lc, oldValL);
+                            DISPATCH_ACTION_EVENT(action);
+                            oldValL = *lc;
+                        }
+                    }
 
                     ImVec4 color = ImVec4(lc->m_colour.m_x, lc->m_colour.m_y, lc->m_colour.m_z, 1.f);
 
@@ -2032,6 +2131,26 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         lc->m_colour.m_x = color.x;
                         lc->m_colour.m_y = color.y;
                         lc->m_colour.m_z = color.z;
+                    }
+                    if (ImGui::IsItemActivated()) {
+                        if ((dragfloat::DragFloatCheck::m_GetInstance()->m_GetPrevMem() != dragfloat::Member::LIGHTCLR)) {
+                            oldValL = *lc;
+                        }
+                        if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::LIGHT, dragfloat::Member::LIGHTCLR)) {
+                            events::ModifyLight action(ecs::TYPESPRITECOMPONENT, entityID, lc, oldValL);
+                            DISPATCH_ACTION_EVENT(action);
+                            oldValL = *lc;
+                        }
+                    }
+                    if (ImGui::IsItemDeactivatedAfterEdit()) {
+                        if ((dragfloat::DragFloatCheck::m_GetInstance()->m_GetPrevMem() != dragfloat::Member::LIGHTCLR)) {
+                            oldValL = *lc;
+                        }
+                        if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::LIGHT, dragfloat::Member::LIGHTCLR)) {
+                            events::ModifyLight action(ecs::TYPESPRITECOMPONENT, entityID, lc, oldValL);
+                            DISPATCH_ACTION_EVENT(action);
+                            oldValL = *lc;
+                        }
                     }
                     ImGui::SameLine();
                     ImGui::Text("Color");

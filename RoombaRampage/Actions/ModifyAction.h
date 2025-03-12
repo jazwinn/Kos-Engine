@@ -480,16 +480,23 @@ namespace actions {
 		float m_oldIntensity, m_newIntensity;
 		vector2::Vec2 m_oldInOutRad, m_newInOutRad;
 		vector3::Vec3 m_oldClr, m_newClr;
+		vector2::Vec2 m_oldOffset, m_newOffset;
+		vector2::Vec2 m_oldScale, m_newScale;
+		float m_oldRot, m_newRot;
 	public:
-		ModifyLight(ecs::EntityID inID, ecs::LightingComponent* inComp, graphicpipe::LightType inType, float inIntensity,vector2::Vec2 inRad, vector3::Vec3 inClr) :
+		ModifyLight(ecs::EntityID inID, ecs::LightingComponent* inComp, graphicpipe::LightType inType, float inIntensity,vector2::Vec2 inRad, vector3::Vec3 inClr, vector2::Vec2 inOffset,vector2::Vec2 inScale ,float inRot) :
 			m_entityID(inID), m_changedComp(inComp), m_oldType(inType), m_newType(inComp->m_lightType), m_oldIntensity(inIntensity), m_newIntensity(inComp->m_intensity),
-			m_oldInOutRad(inRad), m_newInOutRad(inComp->m_innerOuterRadius), m_oldClr(inClr), m_newClr(inComp->m_colour) {}
+			m_oldInOutRad(inRad), m_newInOutRad(inComp->m_innerOuterRadius), m_oldClr(inClr), m_newClr(inComp->m_colour), m_oldOffset(inOffset), m_newOffset(inComp->m_light_OffSet),
+			m_oldScale(inScale), m_newScale(inComp->m_light_scale),m_oldRot(inRot), m_newRot(inComp->m_light_rotation) {}
 
 		void m_UndoAction() override {
 			m_changedComp->m_lightType = m_oldType;
 			m_changedComp->m_intensity = m_oldIntensity;
 			m_changedComp->m_innerOuterRadius = m_oldInOutRad;
 			m_changedComp->m_colour = m_oldClr;
+			m_changedComp->m_light_rotation = m_oldRot;
+			m_changedComp->m_light_scale = m_oldScale;
+			m_changedComp->m_light_OffSet = m_oldOffset;
 		}
 
 		void m_RedoAction() override {
@@ -497,6 +504,9 @@ namespace actions {
 			m_changedComp->m_intensity = m_newIntensity;
 			m_changedComp->m_innerOuterRadius = m_newInOutRad;
 			m_changedComp->m_colour = m_newClr;
+			m_changedComp->m_light_rotation = m_newRot;
+			m_changedComp->m_light_scale = m_newScale;
+			m_changedComp->m_light_OffSet = m_oldOffset;
 		}
 	};
 

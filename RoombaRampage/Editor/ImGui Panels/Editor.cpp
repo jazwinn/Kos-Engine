@@ -495,7 +495,10 @@ namespace gui {
 												givenEvent.m_ToType<events::ModifyLight>().m_GetOldType(),
 												givenEvent.m_ToType<events::ModifyLight>().m_GetOldIntensity(),
 												givenEvent.m_ToType<events::ModifyLight>().m_GetOldInnerOuterRadius(),
-												givenEvent.m_ToType<events::ModifyLight>().m_GetOldColor());
+												givenEvent.m_ToType<events::ModifyLight>().m_GetOldColor(),
+												givenEvent.m_ToType<events::ModifyLight>().m_GetOldOffset(),
+												givenEvent.m_ToType<events::ModifyLight>().m_GetOldScale(),
+												givenEvent.m_ToType<events::ModifyLight>().m_GetOldRot());
 		actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
 	}
 
