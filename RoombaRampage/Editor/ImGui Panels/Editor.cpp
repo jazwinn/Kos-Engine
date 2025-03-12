@@ -73,8 +73,14 @@ namespace gui {
 		REGISTER_ACTION_LISTENER(events::Actions::MODIFYSPRITE, ImGuiHandler::m_OnAction, this)
 		REGISTER_ACTION_LISTENER(events::Actions::MODIFYTEXT, ImGuiHandler::m_OnAction, this)
 		REGISTER_ACTION_LISTENER(events::Actions::MODIFYBUTTON, ImGuiHandler::m_OnAction, this)
+		REGISTER_ACTION_LISTENER(events::Actions::MODIFYVIDEO, ImGuiHandler::m_OnAction, this)
+		REGISTER_ACTION_LISTENER(events::Actions::MODIFYNAME, ImGuiHandler::m_OnAction, this)
+		REGISTER_ACTION_LISTENER(events::Actions::MODIFYPARTICLE, ImGuiHandler::m_OnAction, this)
+		REGISTER_ACTION_LISTENER(events::Actions::MODIFYTILEMAP, ImGuiHandler::m_OnAction, this)
 		REGISTER_ACTION_LISTENER(events::Actions::ADDAUDIO, ImGuiHandler::m_OnAction, this)
 		REGISTER_ACTION_LISTENER(events::Actions::REMOVEAUDIO, ImGuiHandler::m_OnAction, this)
+		REGISTER_ACTION_LISTENER(events::Actions::ADDRAY, ImGuiHandler::m_OnAction, this)
+		REGISTER_ACTION_LISTENER(events::Actions::REMOVERAY, ImGuiHandler::m_OnAction, this)
 	} //CTORdoing 
 
 	ImGuiHandler::~ImGuiHandler() {} //Destructor
@@ -409,14 +415,14 @@ namespace gui {
 			auto* newAct = new actions::RemoveComponentAction(givenEvent.m_ToType<events::RemoveComponent>().m_GetID(), givenEvent.m_ToType<events::RemoveComponent>().m_GetComponentType());
 			actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
 		}
-		else if (givenEvent.m_GetEventType() == events::Actions::ADDENT) {
-			auto* newAct = new actions::AddEntityAction(givenEvent.m_ToType<events::AddEntity>().m_GetID());
-			actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
-		}
-		else if (givenEvent.m_GetEventType() == events::Actions::DELENT) {
-			auto* newAct = new actions::RemoveEntityAction(givenEvent.m_ToType<events::RemoveEntity>().m_GetID());
-			actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
-		}
+		//else if (givenEvent.m_GetEventType() == events::Actions::ADDENT) {
+		//	auto* newAct = new actions::AddEntityAction(givenEvent.m_ToType<events::AddEntity>().m_GetID());
+		//	actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
+		//}
+		//else if (givenEvent.m_GetEventType() == events::Actions::DELENT) {
+		//	auto* newAct = new actions::RemoveEntityAction(givenEvent.m_ToType<events::RemoveEntity>().m_GetID());
+		//	actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
+		//}
 		else if (givenEvent.m_GetEventType() == events::Actions::MOVECTC) {
 			auto* newAct = new actions::MoveEntityChildToChildAction(givenEvent.m_ToType<events::MoveEntityChildToChild>().m_GetID(), givenEvent.m_ToType<events::MoveEntityChildToChild>().m_GetOldParentID(), givenEvent.m_ToType<events::MoveEntityChildToChild>().m_GetNewParentID());
 			actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
@@ -450,117 +456,235 @@ namespace gui {
 													givenEvent.m_ToType<events::ModifyCamera>().m_GetOldBottom(),
 													givenEvent.m_ToType<events::ModifyCamera>().m_GetOldAspectRatio());
 		actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
-	}
-
-	else if (givenEvent.m_GetEventType() == events::Actions::MODIFYCOLL) {
-		auto* newAct = new actions::ModifyCollider(
-													givenEvent.m_ToType<events::ModifyCollider>().m_GetID(),
-													givenEvent.m_ToType<events::ModifyCollider>().m_GetComp(),
-													givenEvent.m_ToType<events::ModifyCollider>().m_GetOldSize(),
-													givenEvent.m_ToType<events::ModifyCollider>().m_GetOldOffset(),
-													givenEvent.m_ToType<events::ModifyCollider>().m_GetOldDrawDebug(),
-													givenEvent.m_ToType<events::ModifyCollider>().m_GetOldRadius(),
-													givenEvent.m_ToType<events::ModifyCollider>().m_GetOldCollisionResponse(),
-													givenEvent.m_ToType<events::ModifyCollider>().m_GetOldCollisionCheck(),
-													givenEvent.m_ToType<events::ModifyCollider>().m_GetOldShape());
-		actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
-	}
-
-	else if (givenEvent.m_GetEventType() == events::Actions::MODIFYENEMY) {
-		auto* newAct = new actions::ModifyEnemy(
-												givenEvent.m_ToType<events::ModifyEnemy>().m_GetID(),
-												givenEvent.m_ToType<events::ModifyEnemy>().m_GetComp(),
-												givenEvent.m_ToType<events::ModifyEnemy>().m_GetOldTag(),
-												givenEvent.m_ToType<events::ModifyEnemy>().m_GetOldType(),
-												givenEvent.m_ToType<events::ModifyEnemy>().m_GetOldBehavior());
-		actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
-	}
-
-	else if (givenEvent.m_GetEventType() == events::Actions::MODIFYGRID) {
-		auto* newAct = new actions::ModifyGrid(
-												givenEvent.m_ToType<events::ModifyGrid>().m_GetID(),
-												givenEvent.m_ToType<events::ModifyGrid>().m_GetComp(),
-												givenEvent.m_ToType<events::ModifyGrid>().m_GetOldAnchor(),
-												givenEvent.m_ToType<events::ModifyGrid>().m_GetOldRowLength(),
-												givenEvent.m_ToType<events::ModifyGrid>().m_GetOldColumnLength(),
-												givenEvent.m_ToType<events::ModifyGrid>().m_GetOldCollidable(),
-												givenEvent.m_ToType<events::ModifyGrid>().m_GetOldGridKey());
-		actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
-	}
-
-	else if (givenEvent.m_GetEventType() == events::Actions::MODIFYLIGHT) {
-		auto* newAct = new actions::ModifyLight(
-												givenEvent.m_ToType<events::ModifyLight>().m_GetID(),
-												givenEvent.m_ToType<events::ModifyLight>().m_GetComp(),
-												givenEvent.m_ToType<events::ModifyLight>().m_GetOldType(),
-												givenEvent.m_ToType<events::ModifyLight>().m_GetOldIntensity(),
-												givenEvent.m_ToType<events::ModifyLight>().m_GetOldInnerOuterRadius(),
-												givenEvent.m_ToType<events::ModifyLight>().m_GetOldColor(),
-												givenEvent.m_ToType<events::ModifyLight>().m_GetOldOffset(),
-												givenEvent.m_ToType<events::ModifyLight>().m_GetOldScale(),
-												givenEvent.m_ToType<events::ModifyLight>().m_GetOldRot());
-		actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
-	}
-
-	else if (givenEvent.m_GetEventType() == events::Actions::MODIFYPATHFINDING) {
-		auto* newAct = new actions::ModifyPathfinding(
-													givenEvent.m_ToType<events::ModifyPathfinding>().m_GetID(),
-													givenEvent.m_ToType<events::ModifyPathfinding>().m_GetComp(),
-													givenEvent.m_ToType<events::ModifyPathfinding>().m_GetOldStartPos(),
-													givenEvent.m_ToType<events::ModifyPathfinding>().m_GetOldEndPos(),
-													givenEvent.m_ToType<events::ModifyPathfinding>().m_GetOldGridKey());
-		actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
-	}
-
-	else if (givenEvent.m_GetEventType() == events::Actions::MODIFYRIGID) {
-		auto* newAct = new actions::ModifyRigid(givenEvent.m_ToType<events::ModifyRigid>().m_GetID(),
-												givenEvent.m_ToType<events::ModifyRigid>().m_GetComp(),
-												givenEvent.m_ToType<events::ModifyRigid>().m_GetOldVelocity(),
-												givenEvent.m_ToType<events::ModifyRigid>().m_GetOldAcceleration(),
-												givenEvent.m_ToType<events::ModifyRigid>().m_GetOldRotation(),
-												givenEvent.m_ToType<events::ModifyRigid>().m_GetOldAngularVelocity(),
-												givenEvent.m_ToType<events::ModifyRigid>().m_GetOldAngularAcceleration(),
-												givenEvent.m_ToType<events::ModifyRigid>().m_GetOldMass(),
-												givenEvent.m_ToType<events::ModifyRigid>().m_GetOldInverseMass(),
-												givenEvent.m_ToType<events::ModifyRigid>().m_GetOldLinearDamping(),
-												givenEvent.m_ToType<events::ModifyRigid>().m_GetOldAngularDamping(),
-												givenEvent.m_ToType<events::ModifyRigid>().m_GetOldForce(),
-												givenEvent.m_ToType<events::ModifyRigid>().m_GetOldTorque(),
-												givenEvent.m_ToType<events::ModifyRigid>().m_GetOldKinematic(),
-												givenEvent.m_ToType<events::ModifyRigid>().m_GetOldStatic());
-		actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
-	}
-
-	else if (givenEvent.m_GetEventType() == events::Actions::MODIFYTEXT) {
-		auto* newAct = new actions::ModifyText(givenEvent.m_ToType<events::ModifyText>().m_GetID(),
-												givenEvent.m_ToType<events::ModifyText>().m_GetComp(),
-												givenEvent.m_ToType<events::ModifyText>().m_GetOldFile(),
-												givenEvent.m_ToType<events::ModifyText>().m_GetOldText(),
-												givenEvent.m_ToType<events::ModifyText>().m_GetOldLayer(),
-												givenEvent.m_ToType<events::ModifyText>().m_GetOldSize(),
-												givenEvent.m_ToType<events::ModifyText>().m_GetOldColor());
-		actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
-	}
-	else if (givenEvent.m_GetEventType() == events::Actions::MODIFYSPRITE) {
-		auto* newAct = new actions::ModifySprite(
-			givenEvent.m_ToType<events::ModifySprite>().m_GetID(),
-			givenEvent.m_ToType<events::ModifySprite>().m_GetComp(),
-			givenEvent.m_ToType<events::ModifySprite>().m_GetOldFile(),
-			givenEvent.m_ToType<events::ModifySprite>().m_GetOldLayer(),
-			givenEvent.m_ToType<events::ModifySprite>().m_GetOldColor(),
-			givenEvent.m_ToType<events::ModifySprite>().m_GetOldAlpha(),
-			givenEvent.m_ToType<events::ModifySprite>().m_GetOldIlluminated());
-		actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
-	}
-	else if (givenEvent.m_GetEventType() == events::Actions::MODIFYBUTTON) {
-		auto* newAct = new actions::ModifyButton(
-			givenEvent.m_ToType<events::ModifyButton>().m_GetID(),
-			givenEvent.m_ToType<events::ModifyButton>().m_GetComp(),
-			givenEvent.m_ToType<events::ModifyButton>().m_GetOldPos(),
-			givenEvent.m_ToType<events::ModifyButton>().m_GetOldScale(),
-			givenEvent.m_ToType<events::ModifyButton>().m_GetOldClick());
-		actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
 		}
+
+		else if (givenEvent.m_GetEventType() == events::Actions::MODIFYCOLL) {
+			auto* newAct = new actions::ModifyCollider(
+														givenEvent.m_ToType<events::ModifyCollider>().m_GetID(),
+														givenEvent.m_ToType<events::ModifyCollider>().m_GetComp(),
+														givenEvent.m_ToType<events::ModifyCollider>().m_GetOldSize(),
+														givenEvent.m_ToType<events::ModifyCollider>().m_GetOldOffset(),
+														givenEvent.m_ToType<events::ModifyCollider>().m_GetOldDrawDebug(),
+														givenEvent.m_ToType<events::ModifyCollider>().m_GetOldRadius(),
+														givenEvent.m_ToType<events::ModifyCollider>().m_GetOldCollisionResponse(),
+														givenEvent.m_ToType<events::ModifyCollider>().m_GetOldCollisionCheck(),
+														givenEvent.m_ToType<events::ModifyCollider>().m_GetOldShape());
+			actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
+		}
+
+		else if (givenEvent.m_GetEventType() == events::Actions::MODIFYENEMY) {
+			auto* newAct = new actions::ModifyEnemy(
+													givenEvent.m_ToType<events::ModifyEnemy>().m_GetID(),
+													givenEvent.m_ToType<events::ModifyEnemy>().m_GetComp(),
+													givenEvent.m_ToType<events::ModifyEnemy>().m_GetOldTag(),
+													givenEvent.m_ToType<events::ModifyEnemy>().m_GetOldType(),
+													givenEvent.m_ToType<events::ModifyEnemy>().m_GetOldBehavior());
+			actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
+		}
+
+		else if (givenEvent.m_GetEventType() == events::Actions::MODIFYGRID) {
+			auto* newAct = new actions::ModifyGrid(
+													givenEvent.m_ToType<events::ModifyGrid>().m_GetID(),
+													givenEvent.m_ToType<events::ModifyGrid>().m_GetComp(),
+													givenEvent.m_ToType<events::ModifyGrid>().m_GetOldAnchor(),
+													givenEvent.m_ToType<events::ModifyGrid>().m_GetOldRowLength(),
+													givenEvent.m_ToType<events::ModifyGrid>().m_GetOldColumnLength(),
+													givenEvent.m_ToType<events::ModifyGrid>().m_GetOldCollidable(),
+													givenEvent.m_ToType<events::ModifyGrid>().m_GetOldGridKey());
+			actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
+		}
+
+		else if (givenEvent.m_GetEventType() == events::Actions::MODIFYLIGHT) {
+			auto* newAct = new actions::ModifyLight(
+													givenEvent.m_ToType<events::ModifyLight>().m_GetID(),
+													givenEvent.m_ToType<events::ModifyLight>().m_GetComp(),
+													givenEvent.m_ToType<events::ModifyLight>().m_GetOldType(),
+													givenEvent.m_ToType<events::ModifyLight>().m_GetOldIntensity(),
+													givenEvent.m_ToType<events::ModifyLight>().m_GetOldInnerOuterRadius(),
+													givenEvent.m_ToType<events::ModifyLight>().m_GetOldColor(),
+													givenEvent.m_ToType<events::ModifyLight>().m_GetOldOffset(),
+													givenEvent.m_ToType<events::ModifyLight>().m_GetOldScale(),
+													givenEvent.m_ToType<events::ModifyLight>().m_GetOldRot());
+			actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
+		}
+
+		else if (givenEvent.m_GetEventType() == events::Actions::MODIFYPATHFINDING) {
+			auto* newAct = new actions::ModifyPathfinding(
+														givenEvent.m_ToType<events::ModifyPathfinding>().m_GetID(),
+														givenEvent.m_ToType<events::ModifyPathfinding>().m_GetComp(),
+														givenEvent.m_ToType<events::ModifyPathfinding>().m_GetOldStartPos(),
+														givenEvent.m_ToType<events::ModifyPathfinding>().m_GetOldEndPos(),
+														givenEvent.m_ToType<events::ModifyPathfinding>().m_GetOldGridKey());
+			actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
+		}
+
+		else if (givenEvent.m_GetEventType() == events::Actions::MODIFYRIGID) {
+			auto* newAct = new actions::ModifyRigid(givenEvent.m_ToType<events::ModifyRigid>().m_GetID(),
+													givenEvent.m_ToType<events::ModifyRigid>().m_GetComp(),
+													givenEvent.m_ToType<events::ModifyRigid>().m_GetOldVelocity(),
+													givenEvent.m_ToType<events::ModifyRigid>().m_GetOldAcceleration(),
+													givenEvent.m_ToType<events::ModifyRigid>().m_GetOldRotation(),
+													givenEvent.m_ToType<events::ModifyRigid>().m_GetOldAngularVelocity(),
+													givenEvent.m_ToType<events::ModifyRigid>().m_GetOldAngularAcceleration(),
+													givenEvent.m_ToType<events::ModifyRigid>().m_GetOldMass(),
+													givenEvent.m_ToType<events::ModifyRigid>().m_GetOldInverseMass(),
+													givenEvent.m_ToType<events::ModifyRigid>().m_GetOldLinearDamping(),
+													givenEvent.m_ToType<events::ModifyRigid>().m_GetOldAngularDamping(),
+													givenEvent.m_ToType<events::ModifyRigid>().m_GetOldForce(),
+													givenEvent.m_ToType<events::ModifyRigid>().m_GetOldTorque(),
+													givenEvent.m_ToType<events::ModifyRigid>().m_GetOldKinematic(),
+													givenEvent.m_ToType<events::ModifyRigid>().m_GetOldStatic());
+			actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
+		}
+
+		else if (givenEvent.m_GetEventType() == events::Actions::MODIFYTEXT) {
+			auto* newAct = new actions::ModifyText(givenEvent.m_ToType<events::ModifyText>().m_GetID(),
+													givenEvent.m_ToType<events::ModifyText>().m_GetComp(),
+													givenEvent.m_ToType<events::ModifyText>().m_GetOldFile(),
+													givenEvent.m_ToType<events::ModifyText>().m_GetOldText(),
+													givenEvent.m_ToType<events::ModifyText>().m_GetOldLayer(),
+													givenEvent.m_ToType<events::ModifyText>().m_GetOldSize(),
+													givenEvent.m_ToType<events::ModifyText>().m_GetOldColor());
+			actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
+		}
+		else if (givenEvent.m_GetEventType() == events::Actions::MODIFYSPRITE) {
+			auto* newAct = new actions::ModifySprite(
+				givenEvent.m_ToType<events::ModifySprite>().m_GetID(),
+				givenEvent.m_ToType<events::ModifySprite>().m_GetComp(),
+				givenEvent.m_ToType<events::ModifySprite>().m_GetOldFile(),
+				givenEvent.m_ToType<events::ModifySprite>().m_GetOldLayer(),
+				givenEvent.m_ToType<events::ModifySprite>().m_GetOldColor(),
+				givenEvent.m_ToType<events::ModifySprite>().m_GetOldAlpha(),
+				givenEvent.m_ToType<events::ModifySprite>().m_GetOldIlluminated());
+			actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
+		}
+		else if (givenEvent.m_GetEventType() == events::Actions::MODIFYBUTTON) {
+			auto* newAct = new actions::ModifyButton(
+				givenEvent.m_ToType<events::ModifyButton>().m_GetID(),
+				givenEvent.m_ToType<events::ModifyButton>().m_GetComp(),
+				givenEvent.m_ToType<events::ModifyButton>().m_GetOldPos(),
+				givenEvent.m_ToType<events::ModifyButton>().m_GetOldScale(),
+				givenEvent.m_ToType<events::ModifyButton>().m_GetOldClick());
+			actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
+		}
+		else if (givenEvent.m_GetEventType() == events::Actions::MODIFYVIDEO) {
+			auto* newAct = new actions::ModifyVideoAction(
+				givenEvent.m_ToType<events::ModifyVideo>().m_GetID(),
+				givenEvent.m_ToType<events::ModifyVideo>().m_GetComp(),
+				givenEvent.m_ToType<events::ModifyVideo>().m_GetOldFilename(),
+				givenEvent.m_ToType<events::ModifyVideo>().m_GetOldPause(),
+				givenEvent.m_ToType<events::ModifyVideo>().m_GetOldLoop(),
+				givenEvent.m_ToType<events::ModifyVideo>().m_GetOldLayer());
+			actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
+		}
+		else if (givenEvent.m_GetEventType() == events::Actions::MODIFYTILEMAP) {
+			auto* newAct = new actions::ModifyTilemapAction(
+				givenEvent.m_ToType<events::ModifyTilemap>().m_GetID(),
+				givenEvent.m_ToType<events::ModifyTilemap>().m_GetComp(),
+				givenEvent.m_ToType<events::ModifyTilemap>().m_GetOldTilemapFile(),
+				givenEvent.m_ToType<events::ModifyTilemap>().m_GetOldTileLayer(),
+				givenEvent.m_ToType<events::ModifyTilemap>().m_GetOldColor(),
+				givenEvent.m_ToType<events::ModifyTilemap>().m_GetOldAlpha(),
+				givenEvent.m_ToType<events::ModifyTilemap>().m_GetOldTileIndex(),
+				givenEvent.m_ToType<events::ModifyTilemap>().m_GetOldRowLength(),
+				givenEvent.m_ToType<events::ModifyTilemap>().m_GetOldColumnLength(),
+				givenEvent.m_ToType<events::ModifyTilemap>().m_GetOldPictureRowLength(),
+				givenEvent.m_ToType<events::ModifyTilemap>().m_GetOldPictureColumnLength());
+			actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
+		}
+		else if (givenEvent.m_GetEventType() == events::Actions::MODIFYPARTICLE) {
+			auto* newAct = new actions::ModifyParticleAction(
+				givenEvent.m_ToType<events::ModifyParticle>().m_GetID(),
+				givenEvent.m_ToType<events::ModifyParticle>().m_GetComp(),
+				givenEvent.m_ToType<events::ModifyParticle>().m_GetOldWillSpawn(),
+				givenEvent.m_ToType<events::ModifyParticle>().m_GetOldNoOfParticles(),
+				givenEvent.m_ToType<events::ModifyParticle>().m_GetOldLifeSpan(),
+				givenEvent.m_ToType<events::ModifyParticle>().m_GetOldVelocity(),
+				givenEvent.m_ToType<events::ModifyParticle>().m_GetOldAcceleration(),
+				givenEvent.m_ToType<events::ModifyParticle>().m_GetOldColor(),
+				givenEvent.m_ToType<events::ModifyParticle>().m_GetOldConeRotation(),
+				givenEvent.m_ToType<events::ModifyParticle>().m_GetOldConeAngle(),
+				givenEvent.m_ToType<events::ModifyParticle>().m_GetOldRandomFactor(),
+				givenEvent.m_ToType<events::ModifyParticle>().m_GetOldImageFile(),
+				givenEvent.m_ToType<events::ModifyParticle>().m_GetOldStripCount(),
+				givenEvent.m_ToType<events::ModifyParticle>().m_GetOldFrameNumber(),
+				givenEvent.m_ToType<events::ModifyParticle>().m_GetOldLayer(),
+				givenEvent.m_ToType<events::ModifyParticle>().m_GetOldFriction(),
+				givenEvent.m_ToType<events::ModifyParticle>().m_GetOldFps());
+			actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
+		}
+		else if (givenEvent.m_GetEventType() == events::Actions::MODIFYNAME) {
+			auto* newAct = new actions::ModifyNameAction(
+				givenEvent.m_ToType<events::ModifyName>().m_GetID(),
+				givenEvent.m_ToType<events::ModifyName>().m_GetComp(),
+				givenEvent.m_ToType<events::ModifyName>().m_GetOldName(),
+				givenEvent.m_ToType<events::ModifyName>().m_GetOldTag(),
+				givenEvent.m_ToType<events::ModifyName>().m_GetOldIsPrefab(),
+				givenEvent.m_ToType<events::ModifyName>().m_GetOldPrefabName(),
+				givenEvent.m_ToType<events::ModifyName>().m_GetOldLayer());
+			actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
+		}
+		else if (givenEvent.m_GetEventType() == events::Actions::MODIFYNAME) {
+			auto* newAct = new actions::ModifyNameAction(
+				givenEvent.m_ToType<events::ModifyName>().m_GetID(),
+				givenEvent.m_ToType<events::ModifyName>().m_GetComp(),
+				givenEvent.m_ToType<events::ModifyName>().m_GetOldName(),
+				givenEvent.m_ToType<events::ModifyName>().m_GetOldTag(),
+				givenEvent.m_ToType<events::ModifyName>().m_GetOldIsPrefab(),
+				givenEvent.m_ToType<events::ModifyName>().m_GetOldPrefabName(),
+				givenEvent.m_ToType<events::ModifyName>().m_GetOldLayer());
+			actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
+		}
+		else if (givenEvent.m_GetEventType() == events::Actions::ADDAUDIO) {
+			auto* newAct = new actions::AddAudio(givenEvent.m_ToType<events::AddAudio>().m_GetID(),
+												givenEvent.m_ToType<events::AddAudio>().m_GetComp(),
+												givenEvent.m_ToType<events::AddAudio>().m_GetOldFilename(),
+												givenEvent.m_ToType<events::AddAudio>().m_GetOldFilePath(), 
+												givenEvent.m_ToType<events::AddAudio>().m_GetOldVol(),
+												givenEvent.m_ToType<events::AddAudio>().m_GetOldLoop(),
+												givenEvent.m_ToType<events::AddAudio>().m_GetOldPlayOnStart(),
+												givenEvent.m_ToType<events::AddAudio>().m_GetOldHasPlayed(),
+												givenEvent.m_ToType<events::AddAudio>().m_GetOldPan(),
+												givenEvent.m_ToType<events::AddAudio>().m_GetOldSFX(),
+												givenEvent.m_ToType<events::AddAudio>().m_GetOldBGM()
+												);
+			actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
+		}
+		else if (givenEvent.m_GetEventType() == events::Actions::REMOVEAUDIO) {
+			auto* newAct = new actions::RemoveAudio(givenEvent.m_ToType<events::RemoveAudio>().m_GetID(),
+													givenEvent.m_ToType<events::RemoveAudio>().m_GetComp(),
+													givenEvent.m_ToType<events::RemoveAudio>().m_GetOldFilename(),
+													givenEvent.m_ToType<events::RemoveAudio>().m_GetOldFilePath(),
+													givenEvent.m_ToType<events::RemoveAudio>().m_GetOldVol(),
+													givenEvent.m_ToType<events::RemoveAudio>().m_GetOldLoop(),
+													givenEvent.m_ToType<events::RemoveAudio>().m_GetOldPlayOnStart(),
+													givenEvent.m_ToType<events::RemoveAudio>().m_GetOldHasPlayed(),
+													givenEvent.m_ToType<events::RemoveAudio>().m_GetOldPan(),
+													givenEvent.m_ToType<events::AddAudio>().m_GetOldSFX(),
+													givenEvent.m_ToType<events::AddAudio>().m_GetOldBGM()
+													);
+			actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
+		}
+		else if (givenEvent.m_GetEventType() == events::Actions::ADDRAY) {
+			auto* newAct = new actions::AddRay(givenEvent.m_ToType<events::AddRay>().m_GetID(),
+												givenEvent.m_ToType<events::AddRay>().m_GetComp(),
+												givenEvent.m_ToType<events::AddRay>().m_GetOldRayID(),
+												givenEvent.m_ToType<events::AddRay>().m_GetOldIsRayCasting(),
+												givenEvent.m_ToType<events::AddRay>().m_GetOldTargetPos(),
+												givenEvent.m_ToType<events::AddRay>().m_GetOldLayers()
+												);
+			actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
+		}
+		else if (givenEvent.m_GetEventType() == events::Actions::REMOVERAY) {
+			auto* newAct = new actions::RemoveRay(givenEvent.m_ToType<events::RemoveRay>().m_GetID(),
+				givenEvent.m_ToType<events::RemoveRay>().m_GetComp(),
+				givenEvent.m_ToType<events::RemoveRay>().m_GetOldRayID(),
+				givenEvent.m_ToType<events::RemoveRay>().m_GetOldIsRayCasting(),
+				givenEvent.m_ToType<events::RemoveRay>().m_GetOldTargetPos(),
+				givenEvent.m_ToType<events::RemoveRay>().m_GetOldLayers()
+			);
+			actions::ActionManager::m_GetManagerInstance()->m_Push(newAct);
+			}
 
 
 		
