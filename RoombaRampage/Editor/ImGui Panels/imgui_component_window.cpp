@@ -866,6 +866,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         for (auto it2 = layerMap.begin(); it2 != layerMap.end(); ++it2) 
                         {
                             ecs::NameComponent* namec = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(it2->second.first));
+                            if (namec == nullptr) continue;
                             std::string entityIDS = std::to_string(it2->second.first);
                             if (it2->second.second)
                             {

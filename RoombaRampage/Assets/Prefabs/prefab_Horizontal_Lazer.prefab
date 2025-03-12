@@ -1,8 +1,18 @@
 [
     {
+        "GlobalSettings": {
+            "globalIllumination": 0.8399999737739563,
+            "backgroundColor": {
+                "r": 0.13300000131130219,
+                "g": 0.23000000417232513,
+                "b": 0.3199999928474426
+            }
+        }
+    },
+    {
         "name": {
             "namestr": "prefab_Horizontal_Lazer",
-            "layer": 0,
+            "layer": 2,
             "isprefab": false,
             "tagstr": "Enemy"
         },

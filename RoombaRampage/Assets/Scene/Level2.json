@@ -2515,7 +2515,7 @@
     {
         "name": {
             "namestr": "UI_PauseMenu",
-            "layer": 0,
+            "layer": 7,
             "isprefab": true,
             "tagstr": "Default",
             "prefabname": "UI_PauseMenu.prefab",
@@ -2818,7 +2818,7 @@
                 "transform": {
                     "position": {
                         "x": 0.0,
-                        "y": -0.49978548288345337
+                        "y": -2.6046059131622314
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -3128,8 +3128,147 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 0.1125917136669159,
+                        "x": -0.08570563793182373,
                         "y": -0.71555495262146
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "text": {
+                    "text": "SOUND",
+                    "text": null,
+                    "filename": "fnt_silkscreenRegular.ttf",
+                    "fontsize": 12.0,
+                    "color": {
+                        "r": 0.0,
+                        "g": 0.0,
+                        "b": 0.0
+                    },
+                    "layer": 424
+                }
+            },
+            {
+                "name": {
+                    "namestr": "UI_PauseMenu_Sound",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "UI_PauseMenu.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.0,
+                        "y": -0.49978548288345337
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 4.0,
+                        "y": 4.0
+                    }
+                },
+                "collider": {
+                    "checkcollision": true,
+                    "checkresponse": false,
+                    "size": {
+                        "x": 1.4800000190734863,
+                        "y": 0.30000001192092896
+                    },
+                    "offset": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "drawDebug": true,
+                    "radius": 0.5,
+                    "shapetype": 0
+                },
+                "rigidbody": {
+                    "linearVelocity": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "linearAcceleration": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "rotation": 0.0,
+                    "angularVelocity": 0.0,
+                    "angularAcceleration": 0.0,
+                    "mass": 1.0,
+                    "inverseMass": 1.0,
+                    "linearDamping": 0.9900000095367432,
+                    "angularDamping": 0.9900000095367432,
+                    "force": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "torque": 0.0,
+                    "kinematic": false,
+                    "static": false
+                },
+                "sprite": {
+                    "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
+                    "layer": 410,
+                    "color": {
+                        "r": 1.0,
+                        "g": 1.0,
+                        "b": 1.0
+                    },
+                    "alpha": 1.0,
+                    "isLit": false
+                },
+                "animation": {
+                    "frameNumber": 0,
+                    "framesPerSecond": 0,
+                    "frameTimer": 0.0,
+                    "isAnimating": false,
+                    "stripCount": 2
+                },
+                "script": {
+                    "scripts": [
+                        {
+                            "name": "PauseMenuButtons",
+                            "enabled": true,
+                            "map": [
+                                {
+                                    "variable": "buttonFunctionNo",
+                                    "base64": "IAAAAMzMzMwA"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "audio": [
+                    {
+                        "name": "aud_buttonHover01",
+                        "volume": 0.4830000102519989,
+                        "loop": false,
+                        "playOnStart": false
+                    },
+                    {
+                        "name": "aud_buttonClick01",
+                        "volume": 1.0,
+                        "loop": false,
+                        "playOnStart": false
+                    }
+                ]
+            },
+            {
+                "name": {
+                    "namestr": "UI_PauseMenu_UserManualText",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "UI_PauseMenu.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.1125917136669159,
+                        "y": -2.7719311714172363
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -3147,7 +3286,7 @@
                         "g": 0.0,
                         "b": 0.0
                     },
-                    "layer": 424
+                    "layer": 425
                 }
             }
         ]
@@ -3717,11 +3856,6 @@
                         "y": 1.0
                     },
                     "m_intensity": 0.800000011920929,
-                    "m_colour": {
-                        "x": 0.7176470756530762,
-                        "y": 0.8705882430076599,
-                        "z": 0.43529412150382996
-                    },
                     "m_light_OffSet": {
                         "x": 0.0,
                         "y": 0.0
@@ -3759,11 +3893,6 @@
                         "y": 1.0
                     },
                     "m_intensity": 0.800000011920929,
-                    "m_colour": {
-                        "x": 0.7174015641212463,
-                        "y": 0.8716814517974854,
-                        "z": 0.4358407258987427
-                    },
                     "m_light_OffSet": {
                         "x": 0.0,
                         "y": 0.0
@@ -3801,11 +3930,6 @@
                         "y": 1.0
                     },
                     "m_intensity": 0.800000011920929,
-                    "m_colour": {
-                        "x": 0.6898566484451294,
-                        "y": 0.9115044474601746,
-                        "z": 0.36702170968055725
-                    },
                     "m_light_OffSet": {
                         "x": 0.0,
                         "y": 0.0
@@ -3843,11 +3967,6 @@
                         "y": 1.0
                     },
                     "m_intensity": 0.800000011920929,
-                    "m_colour": {
-                        "x": 0.8705882430076599,
-                        "y": 0.7588755488395691,
-                        "z": 0.43529412150382996
-                    },
                     "m_light_OffSet": {
                         "x": 0.0,
                         "y": 0.0
@@ -3885,11 +4004,6 @@
                         "y": 1.0
                     },
                     "m_intensity": 0.800000011920929,
-                    "m_colour": {
-                        "x": 0.7176470756530762,
-                        "y": 0.8705882430076599,
-                        "z": 0.43529412150382996
-                    },
                     "m_light_OffSet": {
                         "x": 0.0,
                         "y": 0.0
@@ -3927,11 +4041,6 @@
                         "y": 1.0
                     },
                     "m_intensity": 0.800000011920929,
-                    "m_colour": {
-                        "x": 0.7176470756530762,
-                        "y": 0.8705882430076599,
-                        "z": 0.43529412150382996
-                    },
                     "m_light_OffSet": {
                         "x": 0.0,
                         "y": 0.0
@@ -3969,11 +4078,6 @@
                         "y": 1.0
                     },
                     "m_intensity": 0.800000011920929,
-                    "m_colour": {
-                        "x": 0.7176470756530762,
-                        "y": 0.8705882430076599,
-                        "z": 0.43529412150382996
-                    },
                     "m_light_OffSet": {
                         "x": 0.0,
                         "y": 0.0
@@ -4011,11 +4115,6 @@
                         "y": 1.0
                     },
                     "m_intensity": 0.800000011920929,
-                    "m_colour": {
-                        "x": 0.7176470756530762,
-                        "y": 0.8705882430076599,
-                        "z": 0.43529412150382996
-                    },
                     "m_light_OffSet": {
                         "x": 0.0,
                         "y": 0.0
@@ -4053,11 +4152,6 @@
                         "y": 1.0
                     },
                     "m_intensity": 0.800000011920929,
-                    "m_colour": {
-                        "x": 0.9115044474601746,
-                        "y": 0.7428593635559082,
-                        "z": 0.36702170968055725
-                    },
                     "m_light_OffSet": {
                         "x": 0.0,
                         "y": 0.0
@@ -4095,11 +4189,6 @@
                         "y": 1.0
                     },
                     "m_intensity": 0.800000011920929,
-                    "m_colour": {
-                        "x": 0.9115044474601746,
-                        "y": 0.5983063578605652,
-                        "z": 0.36702170968055725
-                    },
                     "m_light_OffSet": {
                         "x": 0.0,
                         "y": 0.0
@@ -4137,11 +4226,6 @@
                         "y": 1.0
                     },
                     "m_intensity": 0.800000011920929,
-                    "m_colour": {
-                        "x": 0.7187671661376953,
-                        "y": 0.9115044474601746,
-                        "z": 0.36702170968055725
-                    },
                     "m_light_OffSet": {
                         "x": 0.0,
                         "y": 0.0
@@ -4179,11 +4263,6 @@
                         "y": 1.0
                     },
                     "m_intensity": 0.800000011920929,
-                    "m_colour": {
-                        "x": 0.9115044474601746,
-                        "y": 0.5983063578605652,
-                        "z": 0.36702170968055725
-                    },
                     "m_light_OffSet": {
                         "x": 0.0,
                         "y": 0.0
@@ -4221,11 +4300,6 @@
                         "y": 1.0
                     },
                     "m_intensity": 0.800000011920929,
-                    "m_colour": {
-                        "x": 0.9115044474601746,
-                        "y": 0.5983063578605652,
-                        "z": 0.36702170968055725
-                    },
                     "m_light_OffSet": {
                         "x": 0.0,
                         "y": 0.0
@@ -4263,11 +4337,6 @@
                         "y": 1.0
                     },
                     "m_intensity": 0.800000011920929,
-                    "m_colour": {
-                        "x": 0.9115044474601746,
-                        "y": 0.5983063578605652,
-                        "z": 0.36702170968055725
-                    },
                     "m_light_OffSet": {
                         "x": 0.0,
                         "y": 0.0
@@ -4305,11 +4374,6 @@
                         "y": 1.0
                     },
                     "m_intensity": 0.800000011920929,
-                    "m_colour": {
-                        "x": 0.9115044474601746,
-                        "y": 0.7428593635559082,
-                        "z": 0.36702170968055725
-                    },
                     "m_light_OffSet": {
                         "x": 0.0,
                         "y": 0.0
@@ -4347,11 +4411,6 @@
                         "y": 1.0
                     },
                     "m_intensity": 0.800000011920929,
-                    "m_colour": {
-                        "x": 0.9115044474601746,
-                        "y": 0.5983063578605652,
-                        "z": 0.36702170968055725
-                    },
                     "m_light_OffSet": {
                         "x": 0.0,
                         "y": 0.0
@@ -4389,11 +4448,6 @@
                         "y": 1.0
                     },
                     "m_intensity": 0.800000011920929,
-                    "m_colour": {
-                        "x": 0.9115044474601746,
-                        "y": 0.5983063578605652,
-                        "z": 0.36702170968055725
-                    },
                     "m_light_OffSet": {
                         "x": 0.0,
                         "y": 0.0
@@ -4431,11 +4485,6 @@
                         "y": 1.0
                     },
                     "m_intensity": 0.800000011920929,
-                    "m_colour": {
-                        "x": 0.8633201718330383,
-                        "y": 0.9115044474601746,
-                        "z": 0.36702170968055725
-                    },
                     "m_light_OffSet": {
                         "x": 0.0,
                         "y": 0.0
@@ -4473,11 +4522,6 @@
                         "y": 1.0
                     },
                     "m_intensity": 0.800000011920929,
-                    "m_colour": {
-                        "x": 0.9115044474601746,
-                        "y": 0.5983063578605652,
-                        "z": 0.36702170968055725
-                    },
                     "m_light_OffSet": {
                         "x": 0.0,
                         "y": 0.0
@@ -4515,11 +4559,6 @@
                         "y": 1.0
                     },
                     "m_intensity": 0.800000011920929,
-                    "m_colour": {
-                        "x": 0.9115044474601746,
-                        "y": 0.5983063578605652,
-                        "z": 0.36702170968055725
-                    },
                     "m_light_OffSet": {
                         "x": 0.0,
                         "y": 0.0
@@ -4557,11 +4596,6 @@
                         "y": 1.0
                     },
                     "m_intensity": 0.800000011920929,
-                    "m_colour": {
-                        "x": 0.9115044474601746,
-                        "y": 0.5983063578605652,
-                        "z": 0.36702170968055725
-                    },
                     "m_light_OffSet": {
                         "x": 0.0,
                         "y": 0.0
@@ -4599,11 +4633,6 @@
                         "y": 1.0
                     },
                     "m_intensity": 0.800000011920929,
-                    "m_colour": {
-                        "x": 0.9115044474601746,
-                        "y": 0.5983063578605652,
-                        "z": 0.36702170968055725
-                    },
                     "m_light_OffSet": {
                         "x": 0.0,
                         "y": 0.0
@@ -4641,11 +4670,6 @@
                         "y": 1.0
                     },
                     "m_intensity": 0.800000011920929,
-                    "m_colour": {
-                        "x": 0.9115044474601746,
-                        "y": 0.5983063578605652,
-                        "z": 0.36702170968055725
-                    },
                     "m_light_OffSet": {
                         "x": 0.0,
                         "y": 0.0
@@ -4683,11 +4707,6 @@
                         "y": 1.0
                     },
                     "m_intensity": 2.299999952316284,
-                    "m_colour": {
-                        "x": 0.2611010670661926,
-                        "y": 1.0,
-                        "z": 0.017699122428894043
-                    },
                     "m_light_OffSet": {
                         "x": 0.0,
                         "y": 0.0
@@ -4725,11 +4744,6 @@
                         "y": 1.0
                     },
                     "m_intensity": 0.800000011920929,
-                    "m_colour": {
-                        "x": 0.9115044474601746,
-                        "y": 0.5983063578605652,
-                        "z": 0.36702170968055725
-                    },
                     "m_light_OffSet": {
                         "x": 0.0,
                         "y": 0.0
@@ -4775,7 +4789,7 @@
                 "y": 0.0
             },
             "drawDebug": true,
-            "radius": 0.6499999761581421,
+            "radius": 0.550000011920929,
             "shapetype": 1
         },
         "rigidbody": {
@@ -4918,7 +4932,51 @@
                                     "base64": ""
                                 },
                                 {
+                                    "variable": "backLimbGunAmmo",
+                                    "base64": ""
+                                },
+                                {
                                     "variable": "meleeCount",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "leftLimbShotGunAmmo",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "railGunLightMaxIntensity",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "rightLimbRailGunHold",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "rightWeaponCount",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "leftLimbGunAmmo",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "rightLimbShotGunAmmo",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "rightLimbGunAmmo",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "leftWeaponCount",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "leftLimbRailGunHold",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "chargeDurationRailGun",
                                     "base64": ""
                                 }
                             ]
@@ -4959,6 +5017,24 @@
                     {
                         "name": "aud_tempcock",
                         "volume": 0.22200000286102295,
+                        "loop": false,
+                        "playOnStart": false
+                    },
+                    {
+                        "name": "aud_railgunChargeUp01",
+                        "volume": 0.6209999918937683,
+                        "loop": false,
+                        "playOnStart": false
+                    },
+                    {
+                        "name": "aud_railgunShot01",
+                        "volume": 0.5960000157356262,
+                        "loop": false,
+                        "playOnStart": false
+                    },
+                    {
+                        "name": "aud_railgunChargeDown01",
+                        "volume": 1.0,
                         "loop": false,
                         "playOnStart": false
                     }
@@ -5017,7 +5093,51 @@
                                     "base64": ""
                                 },
                                 {
+                                    "variable": "backLimbGunAmmo",
+                                    "base64": ""
+                                },
+                                {
                                     "variable": "meleeCount",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "railGunLightMaxIntensity",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "leftLimbShotGunAmmo",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "leftLimbGunAmmo",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "rightWeaponCount",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "rightLimbRailGunHold",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "rightLimbShotGunAmmo",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "leftWeaponCount",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "rightLimbGunAmmo",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "leftLimbRailGunHold",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "chargeDurationRailGun",
                                     "base64": ""
                                 }
                             ]
@@ -5058,6 +5178,24 @@
                     {
                         "name": "aud_tempcock",
                         "volume": 0.22699999809265137,
+                        "loop": false,
+                        "playOnStart": false
+                    },
+                    {
+                        "name": "aud_railgunChargeUp01",
+                        "volume": 0.6159999966621399,
+                        "loop": false,
+                        "playOnStart": false
+                    },
+                    {
+                        "name": "aud_railgunShot01",
+                        "volume": 0.6349999904632568,
+                        "loop": false,
+                        "playOnStart": false
+                    },
+                    {
+                        "name": "aud_railgunChargeDown01",
+                        "volume": 1.0,
                         "loop": false,
                         "playOnStart": false
                     }
@@ -5149,6 +5287,18 @@
                     {
                         "name": "aud_emptyGun01",
                         "volume": 0.25699999928474426,
+                        "loop": false,
+                        "playOnStart": false
+                    },
+                    {
+                        "name": "aud_boosters01",
+                        "volume": 1.0,
+                        "loop": false,
+                        "playOnStart": false
+                    },
+                    {
+                        "name": "aud_vacuumStart01",
+                        "volume": 1.0,
                         "loop": false,
                         "playOnStart": false
                     }
@@ -5264,8 +5414,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 0.025833845138549805,
-                        "y": -0.03542914241552353
+                        "x": 0.0,
+                        "y": 0.0
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -5279,11 +5429,6 @@
                         "y": 1.0
                     },
                     "m_intensity": 0.550000011920929,
-                    "m_colour": {
-                        "x": 1.0,
-                        "y": 1.0,
-                        "z": 1.0
-                    },
                     "m_light_OffSet": {
                         "x": 0.0,
                         "y": 0.0
@@ -5321,11 +5466,6 @@
                         "y": 1.0
                     },
                     "m_intensity": 0.699999988079071,
-                    "m_colour": {
-                        "x": 1.0,
-                        "y": 0.0,
-                        "z": 0.0
-                    },
                     "m_light_OffSet": {
                         "x": 0.0,
                         "y": 0.0
@@ -5363,11 +5503,6 @@
                         "y": 1.0
                     },
                     "m_intensity": 0.0,
-                    "m_colour": {
-                        "x": 0.09432999789714813,
-                        "y": 0.945805013179779,
-                        "z": 0.9690265655517578
-                    },
                     "m_light_OffSet": {
                         "x": 0.0,
                         "y": 0.0
@@ -5405,11 +5540,6 @@
                         "y": 1.0
                     },
                     "m_intensity": 0.0,
-                    "m_colour": {
-                        "x": 0.09432999789714813,
-                        "y": 0.945805013179779,
-                        "z": 0.9690265655517578
-                    },
                     "m_light_OffSet": {
                         "x": 0.0,
                         "y": 0.0
@@ -5419,6 +5549,48 @@
                         "y": 1.0
                     },
                     "m_light_rotation": 0.0
+                }
+            },
+            {
+                "name": {
+                    "namestr": "ShotgunBulletSpawnLeft",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "prefab_player.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": -0.07722800970077515,
+                        "y": 0.6750263571739197
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                }
+            },
+            {
+                "name": {
+                    "namestr": "ShotgunBulletSpawnRight",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "prefab_player.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.08051446080207825,
+                        "y": 0.6800000071525574
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
                 }
             }
         ]
@@ -40235,5 +40407,539 @@
                 ]
             ]
         }
+    },
+    {
+        "name": {
+            "namestr": "prefab_Vertical_Lazer",
+            "layer": 2,
+            "isprefab": true,
+            "tagstr": "Enemy",
+            "prefabname": "prefab_Vertical_Lazer.prefab",
+            "issync": false
+        },
+        "transform": {
+            "position": {
+                "x": -1.0142779350280762,
+                "y": 32.591575622558594
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 10.100000381469727,
+                "y": 1.6200000047683716
+            }
+        },
+        "collider": {
+            "checkcollision": true,
+            "checkresponse": false,
+            "size": {
+                "x": 0.1899999976158142,
+                "y": 0.1899999976158142
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true,
+            "radius": 0.5,
+            "shapetype": 0
+        },
+        "rigidbody": {
+            "linearVelocity": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "linearAcceleration": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "angularVelocity": 0.0,
+            "angularAcceleration": 0.0,
+            "mass": 1.0,
+            "inverseMass": 1.0,
+            "linearDamping": 1.0,
+            "angularDamping": 1.0,
+            "force": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "torque": 0.0,
+            "kinematic": false,
+            "static": false
+        },
+        "sprite": {
+            "imagefile": "ani_inventoryCloseButton_strip2.png",
+            "layer": 2,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0,
+            "isLit": true
+        },
+        "animation": {
+            "frameNumber": 0,
+            "framesPerSecond": 0,
+            "frameTimer": 0.0,
+            "isAnimating": true,
+            "stripCount": 2
+        },
+        "script": {
+            "scripts": [
+                {
+                    "name": "LazerForwardBackward",
+                    "enabled": true,
+                    "map": [
+                        {
+                            "variable": "startOpposite",
+                            "base64": "AczMzMzMzMwA"
+                        }
+                    ]
+                }
+            ]
+        },
+        "children": [
+            {
+                "name": {
+                    "namestr": "Waypoint 1",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "prefab_Vertical_Lazer.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": -0.0010843176860362291,
+                        "y": -6.48015022277832
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                }
+            },
+            {
+                "name": {
+                    "namestr": "Waypoint 2",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "prefab_Vertical_Lazer.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.0021955023985356092,
+                        "y": 7.028032302856445
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "name": {
+            "namestr": "prefab_Vertical_Lazer",
+            "layer": 2,
+            "isprefab": true,
+            "tagstr": "Enemy",
+            "prefabname": "prefab_Vertical_Lazer.prefab",
+            "issync": false
+        },
+        "transform": {
+            "position": {
+                "x": 9.972610473632813,
+                "y": 31.29452133178711
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 10.640000343322754,
+                "y": 1.3600000143051147
+            }
+        },
+        "collider": {
+            "checkcollision": true,
+            "checkresponse": false,
+            "size": {
+                "x": 0.1899999976158142,
+                "y": 0.1899999976158142
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true,
+            "radius": 0.5,
+            "shapetype": 0
+        },
+        "rigidbody": {
+            "linearVelocity": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "linearAcceleration": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "angularVelocity": 0.0,
+            "angularAcceleration": 0.0,
+            "mass": 1.0,
+            "inverseMass": 1.0,
+            "linearDamping": 1.0,
+            "angularDamping": 1.0,
+            "force": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "torque": 0.0,
+            "kinematic": false,
+            "static": false
+        },
+        "sprite": {
+            "imagefile": "ani_inventoryCloseButton_strip2.png",
+            "layer": 3,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0,
+            "isLit": true
+        },
+        "animation": {
+            "frameNumber": 0,
+            "framesPerSecond": 0,
+            "frameTimer": 0.0,
+            "isAnimating": true,
+            "stripCount": 2
+        },
+        "script": {
+            "scripts": [
+                {
+                    "name": "LazerForwardBackward",
+                    "enabled": true,
+                    "map": []
+                }
+            ]
+        },
+        "children": [
+            {
+                "name": {
+                    "namestr": "Waypoint 1",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "prefab_Vertical_Lazer.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": -0.0010843176860362291,
+                        "y": -6.879489898681641
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                }
+            },
+            {
+                "name": {
+                    "namestr": "Waypoint 2",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "prefab_Vertical_Lazer.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.0021955023985356092,
+                        "y": 9.27035903930664
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "name": {
+            "namestr": "prefab_Vertical_Lazer",
+            "layer": 2,
+            "isprefab": true,
+            "tagstr": "Enemy",
+            "prefabname": "prefab_Vertical_Lazer.prefab",
+            "issync": false
+        },
+        "transform": {
+            "position": {
+                "x": 20.965267181396484,
+                "y": 31.93437957763672
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 11.15999984741211,
+                "y": 1.600000023841858
+            }
+        },
+        "collider": {
+            "checkcollision": true,
+            "checkresponse": false,
+            "size": {
+                "x": 0.1899999976158142,
+                "y": 0.1899999976158142
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true,
+            "radius": 0.5,
+            "shapetype": 0
+        },
+        "rigidbody": {
+            "linearVelocity": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "linearAcceleration": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "angularVelocity": 0.0,
+            "angularAcceleration": 0.0,
+            "mass": 1.0,
+            "inverseMass": 1.0,
+            "linearDamping": 1.0,
+            "angularDamping": 1.0,
+            "force": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "torque": 0.0,
+            "kinematic": false,
+            "static": false
+        },
+        "sprite": {
+            "imagefile": "ani_inventoryCloseButton_strip2.png",
+            "layer": 4,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0,
+            "isLit": true
+        },
+        "animation": {
+            "frameNumber": 0,
+            "framesPerSecond": 0,
+            "frameTimer": 0.0,
+            "isAnimating": true,
+            "stripCount": 2
+        },
+        "script": {
+            "scripts": [
+                {
+                    "name": "LazerForwardBackward",
+                    "enabled": true,
+                    "map": [
+                        {
+                            "variable": "startOpposite",
+                            "base64": "AczMzMzMzMwA"
+                        }
+                    ]
+                }
+            ]
+        },
+        "children": [
+            {
+                "name": {
+                    "namestr": "Waypoint 1",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "prefab_Vertical_Lazer.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": -0.0010843176860362291,
+                        "y": -6.1465864181518555
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                }
+            },
+            {
+                "name": {
+                    "namestr": "Waypoint 2",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "prefab_Vertical_Lazer.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.0021955023985356092,
+                        "y": 7.555858135223389
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "name": {
+            "namestr": "prefab_Vertical_Lazer",
+            "layer": 2,
+            "isprefab": true,
+            "tagstr": "Enemy",
+            "prefabname": "prefab_Vertical_Lazer.prefab",
+            "issync": false
+        },
+        "transform": {
+            "position": {
+                "x": 32.01483154296875,
+                "y": 33.38630676269531
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 10.100000381469727,
+                "y": 1.6200000047683716
+            }
+        },
+        "collider": {
+            "checkcollision": true,
+            "checkresponse": false,
+            "size": {
+                "x": 0.1899999976158142,
+                "y": 0.1899999976158142
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true,
+            "radius": 0.5,
+            "shapetype": 0
+        },
+        "rigidbody": {
+            "linearVelocity": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "linearAcceleration": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "angularVelocity": 0.0,
+            "angularAcceleration": 0.0,
+            "mass": 1.0,
+            "inverseMass": 1.0,
+            "linearDamping": 1.0,
+            "angularDamping": 1.0,
+            "force": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "torque": 0.0,
+            "kinematic": false,
+            "static": false
+        },
+        "sprite": {
+            "imagefile": "ani_inventoryCloseButton_strip2.png",
+            "layer": 5,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0,
+            "isLit": true
+        },
+        "animation": {
+            "frameNumber": 0,
+            "framesPerSecond": 0,
+            "frameTimer": 0.0,
+            "isAnimating": true,
+            "stripCount": 2
+        },
+        "script": {
+            "scripts": [
+                {
+                    "name": "LazerForwardBackward",
+                    "enabled": true,
+                    "map": []
+                }
+            ]
+        },
+        "children": [
+            {
+                "name": {
+                    "namestr": "Waypoint 1",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "prefab_Vertical_Lazer.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": -0.0010843176860362291,
+                        "y": -7.086800575256348
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                }
+            },
+            {
+                "name": {
+                    "namestr": "Waypoint 2",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "prefab_Vertical_Lazer.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.0021955023985356092,
+                        "y": 6.566980361938477
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                }
+            }
+        ]
     }
 ]

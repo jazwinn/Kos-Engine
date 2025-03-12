@@ -6,6 +6,8 @@ public class LazerForwardBackward : ScriptBase
     #region Entity ID
     private uint EntityID;
 
+    public bool startOpposite;
+
     const int HORIZONTAL = 0;
     const int VERTICAL = 1;
 
@@ -61,8 +63,10 @@ public class LazerForwardBackward : ScriptBase
             movement = VERTICAL;
         }
 
-
+        
+        
         speed = 5f;
+        if (startOpposite) speed *= -1;
     }
     #endregion
 
