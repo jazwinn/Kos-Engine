@@ -136,7 +136,7 @@ namespace script {
 			\return    True if the rigid body component is found and retrieved; otherwise, false.
 		*/
 		/******************************************************************/
-		static bool m_InternalGetRigidBodyComponent(ecs::EntityID entity, vector2::Vec2* velocity, vector2::Vec2* acceleration, float* rotation, vector2::Vec2* previouspos, vector2::Vec2* directionvector);
+		static bool m_InternalGetRigidBodyComponent(ecs::EntityID entity, vector2::Vec2* velocity, vector2::Vec2* acceleration, float* rotation, vector2::Vec2* previouspos, vector2::Vec2* directionvector, vector2::Vec2* force);
 
 		/******************************************************************/
 		/*!
@@ -149,7 +149,7 @@ namespace script {
 			\return    True if the rigid body component is found and updated; otherwise, false.
 		*/
 		/******************************************************************/
-		static bool m_InternalSetRigidBodyComponent(ecs::EntityID entity, vector2::Vec2* velocity, vector2::Vec2* acceleration, float* rotation, vector2::Vec2* previouspos, vector2::Vec2* directionvector);
+		static bool m_InternalSetRigidBodyComponent(ecs::EntityID entity, vector2::Vec2* velocity, vector2::Vec2* acceleration, float* rotation, vector2::Vec2* previouspos, vector2::Vec2* directionvector, vector2::Vec2* force);
 
 		/******************************************************************/
 		/*!

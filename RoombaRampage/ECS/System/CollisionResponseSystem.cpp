@@ -190,6 +190,7 @@ namespace ecs {
 
 
 					rigidComp->m_Velocity = {0.f,0.f};
+					rigidComp->m_Acceleration = { 0.f,0.f };
 
 					ColComp->m_isCollided = 1.0f;
 				}

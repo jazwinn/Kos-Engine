@@ -180,7 +180,7 @@ namespace script {
 	}
 
 	//RigidBody Component
-	bool InternalCall::m_InternalGetRigidBodyComponent(ecs::EntityID entity, vector2::Vec2* velocity, vector2::Vec2* acceleration, float* rotation, vector2::Vec2* previouspos, vector2::Vec2* directionvector)
+	bool InternalCall::m_InternalGetRigidBodyComponent(ecs::EntityID entity, vector2::Vec2* velocity, vector2::Vec2* acceleration, float* rotation, vector2::Vec2* previouspos, vector2::Vec2* directionvector, vector2::Vec2* force)
 	{
 		auto* rbComponent = static_cast<ecs::RigidBodyComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPERIGIDBODYCOMPONENT]->m_GetEntityComponent(entity));
 
@@ -190,6 +190,7 @@ namespace script {
 			*rotation = rbComponent->m_Rotation;
 			*previouspos = rbComponent->m_PrevPos;
 			*directionvector = rbComponent->m_DirectionVector;
+			*force = rbComponent->m_Force;
 		}
 		else {
 			ASSERTNOCOMPONENT(RigidBodyComponent, entity);
@@ -199,7 +200,7 @@ namespace script {
 		return true;
 	}
 
-	bool InternalCall::m_InternalSetRigidBodyComponent(ecs::EntityID entity, vector2::Vec2* velocity, vector2::Vec2* acceleration, float* rotation, vector2::Vec2* previouspos, vector2::Vec2* directionvector)
+	bool InternalCall::m_InternalSetRigidBodyComponent(ecs::EntityID entity, vector2::Vec2* velocity, vector2::Vec2* acceleration, float* rotation, vector2::Vec2* previouspos, vector2::Vec2* directionvector, vector2::Vec2* force)
 	{
 		auto* rbComponent = static_cast<ecs::RigidBodyComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPERIGIDBODYCOMPONENT]->m_GetEntityComponent(entity));
 
@@ -209,6 +210,7 @@ namespace script {
 			rbComponent->m_Rotation = *rotation;
 			rbComponent->m_PrevPos = *previouspos;
 			rbComponent->m_DirectionVector = *directionvector;
+			rbComponent->m_Force = *force;
 		}
 		else {
 			ASSERTNOCOMPONENT(RigidBodyComponent, entity);
