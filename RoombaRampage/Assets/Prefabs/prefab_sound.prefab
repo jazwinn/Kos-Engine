@@ -1,55 +1,12 @@
 [
     {
         "GlobalSettings": {
-            "globalIllumination": 1.0,
+            "globalIllumination": 0.30000001192092896,
             "backgroundColor": {
                 "r": 0.13300000131130219,
                 "g": 0.23000000417232513,
                 "b": 0.3199999928474426
             }
-        }
-    },
-    {
-        "name": {
-            "namestr": "UI_Sound_Cursor",
-            "layer": 16,
-            "isprefab": false,
-            "tagstr": "SoundMenuCursor"
-        },
-        "transform": {
-            "position": {
-                "x": -5.53892707824707,
-                "y": 3.1698596477508545
-            },
-            "rotation": -0.0,
-            "scale": {
-                "x": 1.0,
-                "y": 1.0
-            }
-        },
-        "collider": {
-            "checkcollision": true,
-            "checkresponse": false,
-            "size": {
-                "x": 1.0,
-                "y": 1.0
-            },
-            "offset": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "drawDebug": true,
-            "radius": 0.10000000149011612,
-            "shapetype": 1
-        },
-        "script": {
-            "scripts": [
-                {
-                    "name": "SoundCursor",
-                    "enabled": true,
-                    "map": []
-                }
-            ]
         }
     },
     {

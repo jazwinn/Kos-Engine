@@ -318,7 +318,11 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
                         //playerIsDead = true;
                         //InternalCall.m_InternalSetAnimationComponent(EntityID, frameNumber, 10, frameTimer, !playerIsDead, stripCount);
-
+                        if (PlayerGun.playerBoost) //kill enemy if player is boosting
+                        {
+                            CoroutineManager.Instance.StartCoroutine(EnemyDeath("Booster"), "EnemyDeath"); //Runs coroutine to spawn blood pool
+                            break;
+                        }
                         movement.X = 0;
                         movement.Y = 0;
 
@@ -953,6 +957,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     {
         switch (causeOfDeath)
         {
+            case "Booster":
             case "Gun":
                 InternalCall.m_InternalCallPlayAudio(EntityID, ReturnRandomAudio("Death")); //Plays enemy death sound
                 yield return new CoroutineManager.WaitForSeconds(0.1f);
