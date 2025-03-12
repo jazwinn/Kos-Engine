@@ -54,8 +54,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": -16.41188621520996,
-                        "y": -22.767107009887695
+                        "x": -16.045045852661133,
+                        "y": -22.976728439331055
                     },
                     "rotation": -46.70338439941406,
                     "scale": {
@@ -257,13 +257,13 @@
                 },
                 "transform": {
                     "position": {
-                        "x": -17.51716423034668,
-                        "y": -21.685348510742188
+                        "x": -18.634035110473633,
+                        "y": -23.19463348388672
                     },
-                    "rotation": 135.53857421875,
+                    "rotation": 31.23741912841797,
                     "scale": {
-                        "x": 2.9999988079071045,
-                        "y": 2.9999988079071045
+                        "x": 2.9999985694885254,
+                        "y": 2.9999985694885254
                     }
                 },
                 "collider": {
@@ -954,13 +954,13 @@
                 },
                 "transform": {
                     "position": {
-                        "x": -22.479148864746094,
-                        "y": -21.52073097229004
+                        "x": -21.965991973876953,
+                        "y": -22.818716049194336
                     },
-                    "rotation": -46.70338439941406,
+                    "rotation": 17.193782806396484,
                     "scale": {
-                        "x": 2.9999990463256836,
-                        "y": 2.9999990463256836
+                        "x": 3.0000009536743164,
+                        "y": 3.0000009536743164
                     }
                 },
                 "collider": {
@@ -69229,7 +69229,16 @@
                         "x": 0.7176470756530762,
                         "y": 0.8705882430076599,
                         "z": 0.43529412150382996
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -69262,7 +69271,16 @@
                         "x": 0.7174015641212463,
                         "y": 0.8716814517974854,
                         "z": 0.4358407258987427
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -69295,7 +69313,16 @@
                         "x": 0.6898566484451294,
                         "y": 0.9115044474601746,
                         "z": 0.36702170968055725
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -69328,7 +69355,16 @@
                         "x": 0.8705882430076599,
                         "y": 0.7588755488395691,
                         "z": 0.43529412150382996
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -69361,7 +69397,16 @@
                         "x": 0.7176470756530762,
                         "y": 0.8705882430076599,
                         "z": 0.43529412150382996
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -69394,7 +69439,16 @@
                         "x": 0.7176470756530762,
                         "y": 0.8705882430076599,
                         "z": 0.43529412150382996
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -69427,7 +69481,16 @@
                         "x": 0.7176470756530762,
                         "y": 0.8705882430076599,
                         "z": 0.43529412150382996
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -69460,7 +69523,16 @@
                         "x": 0.7176470756530762,
                         "y": 0.8705882430076599,
                         "z": 0.43529412150382996
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -69493,7 +69565,16 @@
                         "x": 0.9115044474601746,
                         "y": 0.7428593635559082,
                         "z": 0.36702170968055725
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -69526,7 +69607,16 @@
                         "x": 0.9115044474601746,
                         "y": 0.5983063578605652,
                         "z": 0.36702170968055725
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -69559,7 +69649,16 @@
                         "x": 0.7187671661376953,
                         "y": 0.9115044474601746,
                         "z": 0.36702170968055725
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -69592,7 +69691,16 @@
                         "x": 0.9115044474601746,
                         "y": 0.5983063578605652,
                         "z": 0.36702170968055725
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -69625,7 +69733,16 @@
                         "x": 0.9115044474601746,
                         "y": 0.5983063578605652,
                         "z": 0.36702170968055725
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -69658,7 +69775,16 @@
                         "x": 0.9115044474601746,
                         "y": 0.5983063578605652,
                         "z": 0.36702170968055725
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -69691,7 +69817,16 @@
                         "x": 0.9115044474601746,
                         "y": 0.7428593635559082,
                         "z": 0.36702170968055725
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -69724,7 +69859,16 @@
                         "x": 0.9115044474601746,
                         "y": 0.5983063578605652,
                         "z": 0.36702170968055725
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -69757,7 +69901,16 @@
                         "x": 0.9115044474601746,
                         "y": 0.5983063578605652,
                         "z": 0.36702170968055725
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -69790,7 +69943,16 @@
                         "x": 0.8633201718330383,
                         "y": 0.9115044474601746,
                         "z": 0.36702170968055725
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -69823,7 +69985,16 @@
                         "x": 0.9115044474601746,
                         "y": 0.5983063578605652,
                         "z": 0.36702170968055725
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -69856,7 +70027,16 @@
                         "x": 0.9115044474601746,
                         "y": 0.5983063578605652,
                         "z": 0.36702170968055725
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -69889,7 +70069,16 @@
                         "x": 0.9115044474601746,
                         "y": 0.5983063578605652,
                         "z": 0.36702170968055725
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -69922,7 +70111,16 @@
                         "x": 0.9115044474601746,
                         "y": 0.5983063578605652,
                         "z": 0.36702170968055725
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -69955,7 +70153,16 @@
                         "x": 0.9115044474601746,
                         "y": 0.5983063578605652,
                         "z": 0.36702170968055725
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -69988,7 +70195,16 @@
                         "x": 0.2611010670661926,
                         "y": 1.0,
                         "z": 0.017699122428894043
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -70021,7 +70237,16 @@
                         "x": 0.9115044474601746,
                         "y": 0.5983063578605652,
                         "z": 0.36702170968055725
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             }
         ]
@@ -70566,7 +70791,16 @@
                         "x": 1.0,
                         "y": 1.0,
                         "z": 1.0
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -70599,7 +70833,16 @@
                         "x": 1.0,
                         "y": 0.0,
                         "z": 0.0
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -70632,7 +70875,16 @@
                         "x": 0.09432999789714813,
                         "y": 0.945805013179779,
                         "z": 0.9690265655517578
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -70665,7 +70917,16 @@
                         "x": 0.09432999789714813,
                         "y": 0.945805013179779,
                         "z": 0.9690265655517578
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             }
         ]
@@ -81564,6 +81825,584 @@
                     "position": {
                         "x": -1.4637032747268677,
                         "y": -0.8799273371696472
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "name": {
+            "namestr": "prefab_enemyRanged",
+            "layer": 2,
+            "isprefab": true,
+            "tagstr": "Enemy",
+            "prefabname": "prefab_enemyRanged.prefab",
+            "issync": false
+        },
+        "transform": {
+            "position": {
+                "x": 26.33550262451172,
+                "y": -12.925020217895508
+            },
+            "rotation": -114.10602569580078,
+            "scale": {
+                "x": 2.9999983310699463,
+                "y": 2.9999983310699463
+            }
+        },
+        "collider": {
+            "checkcollision": true,
+            "checkresponse": true,
+            "size": {
+                "x": 0.7400000095367432,
+                "y": 0.23999999463558197
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true,
+            "radius": 0.5,
+            "shapetype": 0
+        },
+        "enemy": {
+            "enemytag": -1,
+            "enemytype": 2,
+            "enemybehaviour": 1
+        },
+        "rigidbody": {
+            "linearVelocity": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "linearAcceleration": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "angularVelocity": 0.0,
+            "angularAcceleration": 0.0,
+            "mass": 1.0,
+            "inverseMass": 1.0,
+            "linearDamping": 0.9900000095367432,
+            "angularDamping": 0.9900000095367432,
+            "force": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "torque": 0.0,
+            "kinematic": false,
+            "static": false
+        },
+        "sprite": {
+            "imagefile": "ani_rangedEnemyMoving_strip6.png",
+            "layer": 65,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0,
+            "isLit": true
+        },
+        "animation": {
+            "frameNumber": 2,
+            "framesPerSecond": 10,
+            "frameTimer": 0.0,
+            "isAnimating": false,
+            "stripCount": 6
+        },
+        "script": {
+            "scripts": [
+                {
+                    "name": "EnemyScript",
+                    "enabled": true,
+                    "map": [
+                        {
+                            "variable": "isDead",
+                            "base64": ""
+                        },
+                        {
+                            "variable": "isPatrolling",
+                            "base64": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        "audio": [
+            {
+                "name": "aud_bodyDeath01",
+                "volume": 0.3160000145435333,
+                "loop": false,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_bodyStab01",
+                "volume": 0.4880000054836273,
+                "loop": false,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_bodyStab02",
+                "volume": 0.6650000214576721,
+                "loop": false,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_bodyFall01",
+                "volume": 0.24899999797344208,
+                "loop": false,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_bodyFall02",
+                "volume": 0.2849999964237213,
+                "loop": false,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_bodyFall03",
+                "volume": 0.3070000112056732,
+                "loop": false,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_bodyFall04",
+                "volume": 0.24300000071525574,
+                "loop": false,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_bodyFall05",
+                "volume": 0.2290000021457672,
+                "loop": false,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_bodyFall06",
+                "volume": 0.21199999749660492,
+                "loop": false,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_bodyFall07",
+                "volume": 0.20399999618530273,
+                "loop": false,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_bodyFall08",
+                "volume": 0.25099998712539673,
+                "loop": false,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_bodyFall09",
+                "volume": 0.2290000021457672,
+                "loop": false,
+                "playOnStart": false
+            }
+        ],
+        "raycast": {
+            "raycasts": [
+                {
+                    "raycastID": "RaycastToPlayer",
+                    "israycasting": true,
+                    "targetposition": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "Layer Vector": [
+                        {
+                            "layer": 5
+                        }
+                    ]
+                }
+            ]
+        },
+        "pathfinding": {
+            "startPosition": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "targetPosition": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "gridKey": 0
+        },
+        "children": [
+            {
+                "name": {
+                    "namestr": "waypoint 1",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "prefab_enemyRanged.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.8706881999969482,
+                        "y": 1.1579302549362183
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                }
+            },
+            {
+                "name": {
+                    "namestr": "waypoint 2",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "prefab_enemyRanged.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": -0.059432245790958405,
+                        "y": -0.8036285042762756
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                }
+            },
+            {
+                "name": {
+                    "namestr": "waypoint 3",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "prefab_enemyRanged.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": -3.824917793273926,
+                        "y": 0.8420815467834473
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                }
+            },
+            {
+                "name": {
+                    "namestr": "waypoint 4",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "prefab_enemyRanged.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": -2.876296043395996,
+                        "y": 2.9621474742889404
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "name": {
+            "namestr": "prefab_enemyRanged",
+            "layer": 2,
+            "isprefab": true,
+            "tagstr": "Enemy",
+            "prefabname": "prefab_enemyRanged.prefab",
+            "issync": false
+        },
+        "transform": {
+            "position": {
+                "x": 25.1622257232666,
+                "y": -21.21047019958496
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 2.999998092651367,
+                "y": 2.999998092651367
+            }
+        },
+        "collider": {
+            "checkcollision": true,
+            "checkresponse": true,
+            "size": {
+                "x": 0.7400000095367432,
+                "y": 0.23999999463558197
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true,
+            "radius": 0.5,
+            "shapetype": 0
+        },
+        "enemy": {
+            "enemytag": -1,
+            "enemytype": 2,
+            "enemybehaviour": 1
+        },
+        "rigidbody": {
+            "linearVelocity": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "linearAcceleration": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "angularVelocity": 0.0,
+            "angularAcceleration": 0.0,
+            "mass": 1.0,
+            "inverseMass": 1.0,
+            "linearDamping": 0.9900000095367432,
+            "angularDamping": 0.9900000095367432,
+            "force": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "torque": 0.0,
+            "kinematic": false,
+            "static": false
+        },
+        "sprite": {
+            "imagefile": "ani_rangedEnemyMoving_strip6.png",
+            "layer": 66,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0,
+            "isLit": true
+        },
+        "animation": {
+            "frameNumber": 2,
+            "framesPerSecond": 10,
+            "frameTimer": 0.0,
+            "isAnimating": false,
+            "stripCount": 6
+        },
+        "script": {
+            "scripts": [
+                {
+                    "name": "EnemyScript",
+                    "enabled": true,
+                    "map": [
+                        {
+                            "variable": "isDead",
+                            "base64": ""
+                        },
+                        {
+                            "variable": "isPatrolling",
+                            "base64": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        "audio": [
+            {
+                "name": "aud_bodyDeath01",
+                "volume": 0.3160000145435333,
+                "loop": false,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_bodyStab01",
+                "volume": 0.4880000054836273,
+                "loop": false,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_bodyStab02",
+                "volume": 0.6650000214576721,
+                "loop": false,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_bodyFall01",
+                "volume": 0.24899999797344208,
+                "loop": false,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_bodyFall02",
+                "volume": 0.2849999964237213,
+                "loop": false,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_bodyFall03",
+                "volume": 0.3070000112056732,
+                "loop": false,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_bodyFall04",
+                "volume": 0.24300000071525574,
+                "loop": false,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_bodyFall05",
+                "volume": 0.2290000021457672,
+                "loop": false,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_bodyFall06",
+                "volume": 0.21199999749660492,
+                "loop": false,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_bodyFall07",
+                "volume": 0.20399999618530273,
+                "loop": false,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_bodyFall08",
+                "volume": 0.25099998712539673,
+                "loop": false,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_bodyFall09",
+                "volume": 0.2290000021457672,
+                "loop": false,
+                "playOnStart": false
+            }
+        ],
+        "raycast": {
+            "raycasts": [
+                {
+                    "raycastID": "RaycastToPlayer",
+                    "israycasting": true,
+                    "targetposition": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "Layer Vector": [
+                        {
+                            "layer": 5
+                        }
+                    ]
+                }
+            ]
+        },
+        "pathfinding": {
+            "startPosition": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "targetPosition": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "gridKey": 0
+        },
+        "children": [
+            {
+                "name": {
+                    "namestr": "waypoint 1",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "prefab_enemyRanged.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": -1.1625961065292358,
+                        "y": 0.8478450775146484
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                }
+            },
+            {
+                "name": {
+                    "namestr": "waypoint 2",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "prefab_enemyRanged.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 1.148582100868225,
+                        "y": 0.8193612694740295
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                }
+            },
+            {
+                "name": {
+                    "namestr": "waypoint 3",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "prefab_enemyRanged.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 1.169382095336914,
+                        "y": -0.8393873572349548
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                }
+            },
+            {
+                "name": {
+                    "namestr": "waypoint 4",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "prefab_enemyRanged.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": -1.234452486038208,
+                        "y": -0.8211713433265686
                     },
                     "rotation": 0.0,
                     "scale": {

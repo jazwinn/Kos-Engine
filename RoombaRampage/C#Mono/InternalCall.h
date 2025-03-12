@@ -584,6 +584,8 @@ namespace script {
 		/******************************************************************/
 		static void m_InternalCallUnPauseAllAudio();
 
+		static bool m_InternalCallAudioIsPlayingForEntity(ecs::EntityID id, MonoString* monoString);
+
 		static void m_InternalCallSetGlobalBGMVolume(float volume);
 
 		static void m_InternalCallSetGlobalSFXVolume(float volume);

@@ -379,19 +379,21 @@ namespace actions {
 		ecs::EntityID m_entityID;
 		ecs::ColliderComponent* m_changedComp;
 		vector2::Vec2 m_oldSize, m_newSize;
+		vector2::Vec2 m_oldOffset, m_newOffset;
 		bool m_oldDraw, m_newDraw;
 		float m_oldRad, m_newRad;
 		bool m_oldCR, m_newCR;
 		bool m_oldCC, m_newCC;
 		physicspipe::EntityType m_oldShape, m_newShape;
 	public:
-		ModifyCollider(ecs::EntityID inID, ecs::ColliderComponent* inComp, vector2::Vec2 inSize, bool inDraw, float inRad, bool inCR, bool inCC, physicspipe::EntityType inShape) :
-			m_entityID(inID), m_changedComp(inComp), m_oldSize(inSize), m_newSize(inComp->m_Size), m_oldDraw(inDraw), m_newDraw(inComp->m_drawDebug),
+		ModifyCollider(ecs::EntityID inID, ecs::ColliderComponent* inComp, vector2::Vec2 inSize, vector2::Vec2 inOffset,bool inDraw, float inRad, bool inCR, bool inCC, physicspipe::EntityType inShape) :
+			m_entityID(inID), m_changedComp(inComp), m_oldSize(inSize), m_newSize(inComp->m_Size), m_oldOffset(inOffset), m_newOffset(inComp->m_OffSet), m_oldDraw(inDraw), m_newDraw(inComp->m_drawDebug),
 			m_oldRad(inRad), m_newRad(inComp->m_radius), m_oldCR(inCR), m_newCR(inComp->m_collisionResponse), m_oldCC(inCC), m_newCC(inComp->m_collisionCheck),
 			m_oldShape(inShape), m_newShape(inComp->m_type) {}
 
 		void m_UndoAction() override {
 			m_changedComp->m_Size = m_oldSize;
+			m_changedComp->m_OffSet = m_oldOffset;
 			m_changedComp->m_drawDebug = m_oldDraw;
 			m_changedComp->m_radius = m_oldRad;
 			m_changedComp->m_collisionResponse = m_oldCR;
@@ -402,6 +404,7 @@ namespace actions {
 
 		void m_RedoAction() override {
 			m_changedComp->m_Size = m_newSize;
+			m_changedComp->m_OffSet = m_newOffset;
 			m_changedComp->m_drawDebug = m_newDraw;
 			m_changedComp->m_radius = m_newRad;
 			m_changedComp->m_collisionResponse = m_newCR;
@@ -477,16 +480,23 @@ namespace actions {
 		float m_oldIntensity, m_newIntensity;
 		vector2::Vec2 m_oldInOutRad, m_newInOutRad;
 		vector3::Vec3 m_oldClr, m_newClr;
+		vector2::Vec2 m_oldOffset, m_newOffset;
+		vector2::Vec2 m_oldScale, m_newScale;
+		float m_oldRot, m_newRot;
 	public:
-		ModifyLight(ecs::EntityID inID, ecs::LightingComponent* inComp, graphicpipe::LightType inType, float inIntensity,vector2::Vec2 inRad, vector3::Vec3 inClr) :
+		ModifyLight(ecs::EntityID inID, ecs::LightingComponent* inComp, graphicpipe::LightType inType, float inIntensity,vector2::Vec2 inRad, vector3::Vec3 inClr, vector2::Vec2 inOffset,vector2::Vec2 inScale ,float inRot) :
 			m_entityID(inID), m_changedComp(inComp), m_oldType(inType), m_newType(inComp->m_lightType), m_oldIntensity(inIntensity), m_newIntensity(inComp->m_intensity),
-			m_oldInOutRad(inRad), m_newInOutRad(inComp->m_innerOuterRadius), m_oldClr(inClr), m_newClr(inComp->m_colour) {}
+			m_oldInOutRad(inRad), m_newInOutRad(inComp->m_innerOuterRadius), m_oldClr(inClr), m_newClr(inComp->m_colour), m_oldOffset(inOffset), m_newOffset(inComp->m_light_OffSet),
+			m_oldScale(inScale), m_newScale(inComp->m_light_scale),m_oldRot(inRot), m_newRot(inComp->m_light_rotation) {}
 
 		void m_UndoAction() override {
 			m_changedComp->m_lightType = m_oldType;
 			m_changedComp->m_intensity = m_oldIntensity;
 			m_changedComp->m_innerOuterRadius = m_oldInOutRad;
 			m_changedComp->m_colour = m_oldClr;
+			m_changedComp->m_light_rotation = m_oldRot;
+			m_changedComp->m_light_scale = m_oldScale;
+			m_changedComp->m_light_OffSet = m_oldOffset;
 		}
 
 		void m_RedoAction() override {
@@ -494,6 +504,9 @@ namespace actions {
 			m_changedComp->m_intensity = m_newIntensity;
 			m_changedComp->m_innerOuterRadius = m_newInOutRad;
 			m_changedComp->m_colour = m_newClr;
+			m_changedComp->m_light_rotation = m_newRot;
+			m_changedComp->m_light_scale = m_newScale;
+			m_changedComp->m_light_OffSet = m_oldOffset;
 		}
 	};
 
@@ -645,6 +658,30 @@ namespace actions {
 		}
 	};
 
+	class ModifyButton : public Action {
+	private:
+		ecs::EntityID m_entityID;
+		ecs::ButtonComponent* m_changedComp;
+		vector2::Vec2 m_oldPos, m_newPos;
+		vector2::Vec2 m_oldScale, m_newScale;
+		bool m_oldClick, m_newClick;
+	public:
+		ModifyButton(ecs::EntityID inID, ecs::ButtonComponent* inComp, vector2::Vec2 inPos, vector2::Vec2 inScale, bool inClick) :
+			m_entityID(inID), m_changedComp(inComp), m_oldPos(inPos), m_newPos(inComp->m_Position), m_oldScale(inScale), m_newScale(inComp->m_Scale),
+			m_oldClick(inClick), m_newClick(inComp->m_IsClick) {}
+
+		void m_UndoAction() override {
+			m_changedComp->m_Position = m_oldPos;
+			m_changedComp->m_Scale = m_oldScale;
+			m_changedComp->m_IsClick = m_oldClick;
+		}
+
+		void m_RedoAction() override {
+			m_changedComp->m_Position = m_newPos;
+			m_changedComp->m_Scale = m_newScale;
+			m_changedComp->m_IsClick = m_newClick;
+		}
+	};
 
 
 	//class ModifyAudio : public Action {
