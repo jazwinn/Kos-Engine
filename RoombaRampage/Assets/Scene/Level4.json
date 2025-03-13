@@ -10640,8 +10640,8 @@
         },
         "transform": {
             "position": {
-                "x": 32.29639434814453,
-                "y": 26.490673065185547
+                "x": 0.31142234802246094,
+                "y": 41.62430191040039
             },
             "rotation": -0.0,
             "scale": {
@@ -12515,8 +12515,8 @@
         },
         "transform": {
             "position": {
-                "x": 40.98295974731445,
-                "y": 21.996036529541016
+                "x": 41.21767807006836,
+                "y": 22.214529037475586
             },
             "rotation": -0.0,
             "scale": {
@@ -12683,11 +12683,11 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "ammoCount",
+                                    "variable": "backLimbGunAmmo",
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "backLimbGunAmmo",
+                                    "variable": "ammoCount",
                                     "base64": ""
                                 },
                                 {
@@ -12699,11 +12699,7 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "railGunLightMaxIntensity",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "rightLimbRailGunHold",
+                                    "variable": "leftLimbGunAmmo",
                                     "base64": ""
                                 },
                                 {
@@ -12711,7 +12707,11 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "leftLimbGunAmmo",
+                                    "variable": "rightLimbRailGunHold",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "railGunLightMaxIntensity",
                                     "base64": ""
                                 },
                                 {
@@ -12898,11 +12898,11 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "ammoCount",
+                                    "variable": "backLimbGunAmmo",
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "backLimbGunAmmo",
+                                    "variable": "ammoCount",
                                     "base64": ""
                                 },
                                 {
@@ -12914,11 +12914,7 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "leftLimbShotGunAmmo",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "leftLimbGunAmmo",
+                                    "variable": "rightLimbRailGunHold",
                                     "base64": ""
                                 },
                                 {
@@ -12926,7 +12922,11 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "rightLimbRailGunHold",
+                                    "variable": "leftLimbGunAmmo",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "leftLimbShotGunAmmo",
                                     "base64": ""
                                 },
                                 {
@@ -99907,8 +99907,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 39.951934814453125,
-                        "y": 126.40650939941406
+                        "x": 39.439029693603516,
+                        "y": 126.79119110107422
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -100281,6 +100281,143 @@
                         "y": 1.0
                     },
                     "m_light_rotation": 0.0
+                }
+            }
+        ]
+    },
+    {
+        "name": {
+            "namestr": "Keycard",
+            "layer": 1,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": 40.78913879394531,
+                "y": 129.0799560546875
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 5.0,
+                "y": 5.0
+            }
+        },
+        "collider": {
+            "checkcollision": true,
+            "checkresponse": false,
+            "size": {
+                "x": 0.20000000298023224,
+                "y": 0.23000000417232513
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true,
+            "radius": 0.5,
+            "shapetype": 0
+        },
+        "rigidbody": {
+            "linearVelocity": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "linearAcceleration": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "angularVelocity": 0.0,
+            "angularAcceleration": 0.0,
+            "mass": 1.0,
+            "inverseMass": 1.0,
+            "linearDamping": 0.9900000095367432,
+            "angularDamping": 0.9900000095367432,
+            "force": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "torque": 0.0,
+            "kinematic": false,
+            "static": false
+        },
+        "sprite": {
+            "imagefile": "img_keycard.png",
+            "layer": 17,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0,
+            "isLit": true
+        },
+        "script": {
+            "scripts": [
+                {
+                    "name": "Keycard",
+                    "enabled": true,
+                    "map": [
+                        {
+                            "variable": "keyDoorCollected",
+                            "base64": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        "children": [
+            {
+                "name": {
+                    "namestr": "KeyDoor",
+                    "layer": 5,
+                    "isprefab": false,
+                    "tagstr": "Default"
+                },
+                "transform": {
+                    "position": {
+                        "x": -8.156838417053223,
+                        "y": -17.864667892456055
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.5,
+                        "y": 1.5
+                    }
+                },
+                "collider": {
+                    "checkcollision": false,
+                    "checkresponse": true,
+                    "size": {
+                        "x": 1.2799999713897705,
+                        "y": 0.11999999731779099
+                    },
+                    "offset": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "drawDebug": true,
+                    "radius": -3.5,
+                    "shapetype": 0
+                },
+                "sprite": {
+                    "imagefile": "ani_doorsRed_strip13.png",
+                    "layer": 100,
+                    "color": {
+                        "r": 1.0,
+                        "g": 1.0,
+                        "b": 1.0
+                    },
+                    "alpha": 1.0,
+                    "isLit": true
+                },
+                "animation": {
+                    "frameNumber": 0,
+                    "framesPerSecond": 0,
+                    "frameTimer": 0.0,
+                    "isAnimating": true,
+                    "stripCount": 13
                 }
             }
         ]

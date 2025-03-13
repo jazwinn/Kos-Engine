@@ -84,6 +84,7 @@
     <Compile Include="LogicScript\GameController.cs" />
     <Compile Include="LogicScript\GameControllerLevel1.cs" />
     <Compile Include="LogicScript\GameControllerLevel6.cs" />
+    <Compile Include="LogicScript\Keycard.cs" />
     <Compile Include="LogicScript\LevelDoorLocker.cs" />
     <Compile Include="LogicScript\LevelEndPoint.cs" />
     <Compile Include="LogicScript\LevelEnemySpawner.cs" />
