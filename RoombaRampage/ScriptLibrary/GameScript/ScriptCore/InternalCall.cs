@@ -342,6 +342,9 @@ public static class InternalCall
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     static public extern int m_GetRandomInt(int min, int max);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    static public extern string m_GetScenefromID(uint id);
 }
 
 

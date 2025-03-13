@@ -1,3 +1,14 @@
+/******************************************************************/
+/*!
+\file      particleComputer.comp
+\author    Sean Tiu
+\par       s.tiu@digipen.edu
+\date      8th March, 2025
+\brief     This com shader is used to calculate the particles
+           physics and lifetime
+*/
+/******************************************************************/
+
 R"( #version 430 core
 
  struct Particle 
