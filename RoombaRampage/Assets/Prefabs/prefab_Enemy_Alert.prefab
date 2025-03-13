@@ -17,22 +17,22 @@
     },
     {
         "name": {
-            "namestr": "ScaredEnemyPatrol",
+            "namestr": "prefab_Enemy_Alert",
             "layer": 2,
             "isprefab": true,
             "tagstr": "Enemy",
-            "prefabname": "ScaredEnemy.prefab",
+            "prefabname": "FearlessEnemyStatic.prefab",
             "issync": false
         },
         "transform": {
             "position": {
-                "x": -4.528764724731445,
-                "y": -8.563582420349121
+                "x": 0.4291214942932129,
+                "y": -10.266487121582031
             },
-            "rotation": 0.0,
+            "rotation": -95.4654769897461,
             "scale": {
-                "x": 3.0000009536743164,
-                "y": 3.0000009536743164
+                "x": 2.9999983310699463,
+                "y": 2.9999983310699463
             }
         },
         "collider": {
@@ -52,8 +52,8 @@
         },
         "enemy": {
             "enemytag": -1,
-            "enemytype": 0,
-            "enemybehaviour": 1
+            "enemytype": 3,
+            "enemybehaviour": 0
         },
         "rigidbody": {
             "linearVelocity": {
@@ -81,7 +81,7 @@
         },
         "sprite": {
             "imagefile": "ani_scientistWalk_strip8.png",
-            "layer": 32,
+            "layer": 64,
             "color": {
                 "r": 1.0,
                 "g": 1.0,
@@ -91,8 +91,8 @@
             "isLit": true
         },
         "animation": {
-            "frameNumber": 2,
-            "framesPerSecond": 10,
+            "frameNumber": 0,
+            "framesPerSecond": 15,
             "frameTimer": 0.0,
             "isAnimating": false,
             "stripCount": 8
@@ -115,6 +115,30 @@
                 }
             ]
         },
+        "particle": {
+            "willSpawn": false,
+            "noOfParticles": 10,
+            "lifeSpan": 20.0,
+            "velocityX": 0.0,
+            "velocityY": 40.0,
+            "sizeX": 1.0,
+            "sizeY": 0.699999988079071,
+            "accelerationX": 0.0,
+            "accelerationY": 0.0,
+            "colorR": 1.0,
+            "colorG": 1.0,
+            "colorB": 1.0,
+            "coneRotation": 0.0,
+            "coneAngle": 45.0,
+            "randomFactor": 2.0,
+            "imageFile": "ani_bloodPool_strip9.png",
+            "stripCount": 9,
+            "frameNumber": 0,
+            "layer": 500,
+            "friction": 20.0,
+            "fps": 1,
+            "loopAnimation": false
+        },
         "audio": [
             {
                 "name": "aud_bodyDeath01",
@@ -134,7 +158,7 @@
             },
             {
                 "name": "aud_bodyStab02",
-                "volume": 0.7009999752044678,
+                "volume": 0.6650000214576721,
                 "loop": false,
                 "playOnStart": false,
                 "isBGM": false,
@@ -240,50 +264,6 @@
                 "y": 0.0
             },
             "gridKey": 0
-        },
-        "children": [
-            {
-                "name": {
-                    "namestr": "Waypoint 1",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "ScaredEnemy.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    }
-                }
-            },
-            {
-                "name": {
-                    "namestr": "Waypoint 2",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "ScaredEnemy.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": 2.692307472229004,
-                        "y": 0.007251149974763393
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    }
-                }
-            }
-        ]
+        }
     }
 ]

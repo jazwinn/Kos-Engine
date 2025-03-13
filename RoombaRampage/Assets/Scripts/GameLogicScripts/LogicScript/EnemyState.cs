@@ -65,10 +65,12 @@ public class EnemyStatePatrol : EnemyState
                     break;
 
                 case EnemyScript.EnemySelection.Melee:
+                case EnemyScript.EnemySelection.AlertMelee:
                     enemyScript.SetCurrentState(new EnemyStateChase(enemyScript));
                     break;
 
                 case EnemyScript.EnemySelection.Ranged:
+                case EnemyScript.EnemySelection.AlertRanged:
                     enemyScript.SetCurrentState(new EnemyStateRangedAttack(enemyScript));
                     break;
             }
@@ -251,6 +253,7 @@ public class EnemyStatePanic : EnemyState
                     break;
 
                 case EnemyScript.EnemySelection.Melee: //Start Melee State
+                case EnemyScript.EnemySelection.AlertMelee:
                     enemyScript.SetCurrentState(new EnemyStateChase(enemyScript));
                     enemyScript.isPatrolling = false;
                     break;

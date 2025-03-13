@@ -1,3 +1,17 @@
+/******************************************************************/
+/*!
+\file      Video.h
+\author    Ng Jaz winn, jazwinn.ng , 2301502
+\par       jazwinn.ng@digipen.edu
+\date      March 01, 2025
+\brief     This file contains the declaration for the video object.
+
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/********************************************************************/
 #ifndef VIDEO_H
 #define VIDEO_H
 

@@ -1,3 +1,13 @@
+/******************************************************************/
+/*!
+\file      particleFragmentShader.frag
+\author    Sean Tiu
+\par       s.tiu@digipen.edu
+\date      8th March, 2025
+\brief     This fragment shader is used to render the particles
+*/
+/******************************************************************/
+
 R"( #version 430 core
 
 	layout (location=0) in vec4 color;
