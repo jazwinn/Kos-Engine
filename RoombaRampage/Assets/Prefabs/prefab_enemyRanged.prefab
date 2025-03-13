@@ -26,10 +26,10 @@
         },
         "transform": {
             "position": {
-                "x": 1.6800018548965454,
-                "y": -6.171558856964111
+                "x": 0.0,
+                "y": 0.0
             },
-            "rotation": -114.10630798339844,
+            "rotation": 0.0,
             "scale": {
                 "x": 2.999998092651367,
                 "y": 2.999998092651367
@@ -229,8 +229,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 0.244460791349411,
-                        "y": 1.8961265087127686
+                        "x": -1.1625961065292358,
+                        "y": 0.8478450775146484
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -250,8 +250,50 @@
                 },
                 "transform": {
                     "position": {
-                        "x": -1.076829433441162,
-                        "y": -0.9230600595474243
+                        "x": 1.148582100868225,
+                        "y": 0.8193612694740295
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                }
+            },
+            {
+                "name": {
+                    "namestr": "waypoint 3",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "prefab_enemyRanged.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 1.169382095336914,
+                        "y": -0.8393873572349548
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                }
+            },
+            {
+                "name": {
+                    "namestr": "waypoint 4",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "prefab_enemyRanged.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": -1.140386700630188,
+                        "y": -0.8211713433265686
                     },
                     "rotation": 0.0,
                     "scale": {

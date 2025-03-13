@@ -9,7 +9,6 @@
            the engine and works with the Audio Manager interface.
 
 
-
 Copyright (C) 2024 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the
 prior written consent of DigiPen Institute of Technology is prohibited.
@@ -57,7 +56,6 @@ namespace ecs {
     }
 
     void AudioSystem::m_Update(const std::string& scene) {
-        //ECS* ecs = ECS::m_GetInstance();
         assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
         ECS* ecs = ECS::m_GetInstance();
 
@@ -78,9 +76,24 @@ namespace ecs {
                 if (it != assetManager->m_audioManager.getSoundMap().end()) {
                     auto& sound = it->second;
 
-                    sound->m_SetVolume(std::to_string(audioCompPtr->m_Entity), audioFile.m_Volume);
+                    float adjustedVolume = audioFile.m_Volume;
+                    if (audioFile.m_IsBGM) {
+                        adjustedVolume *= assetManager->m_audioManager.m_GlobalBGMVolume;
+                    }
+                    else if (audioFile.m_IsSFX) {
+                        adjustedVolume *= assetManager->m_audioManager.m_GlobalSFXVolume;
+                    }
 
-                    sound->m_SetLooping(std::to_string(audioCompPtr->m_Entity), audioFile.m_Loop);
+
+                    if (audioFile.m_Volume != audioFile.m_LastVolume) {
+                        sound->m_SetVolume(std::to_string(audioCompPtr->m_Entity), adjustedVolume);
+                        audioFile.m_LastVolume = audioFile.m_Volume;
+                    }
+
+                    if (audioFile.m_Loop != audioFile.m_LastLoopState) {
+                        sound->m_SetLooping(std::to_string(audioCompPtr->m_Entity), audioFile.m_Loop);
+                        audioFile.m_LastLoopState = audioFile.m_Loop;
+                    }
 
                     if (audioFile.m_PlayOnStart) {
                         if (!sound->m_IsPlaying(std::to_string(audioCompPtr->m_Entity))) {
@@ -89,13 +102,9 @@ namespace ecs {
                         }
                     }
                 }
-                else {
-                    //std::cerr << "Audio file " << audioFile.m_Name << " not found in the sound map." << std::endl;
-                }
             }
         }
     }
-
 
 
 }

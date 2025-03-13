@@ -47,7 +47,7 @@
         "animation": {
             "frameNumber": 0,
             "framesPerSecond": 1,
-            "frameTimer": 0.25,
+            "frameTimer": 0.6666666865348816,
             "isAnimating": true,
             "stripCount": 5
         },

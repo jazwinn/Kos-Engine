@@ -486,13 +486,34 @@ namespace fmodaudio {
         auto it = m_soundMap.find(name);
         if (it != m_soundMap.end()) {
             FModAudio* sound = it->second.get();
-            sound->m_SetVolume(std::to_string(entityId), volume);
+
+            auto* ecs = ecs::ECS::m_GetInstance();
+            auto* entityComponent = ecs->m_ECS_CombinedComponentPool[ecs::TYPEAUDIOCOMPONENT]->m_GetEntityComponent(entityId);
+
+            if (entityComponent) {
+                ecs::AudioComponent* ac = static_cast<ecs::AudioComponent*>(entityComponent);
+
+                for (auto& audioFile : ac->m_AudioFiles) {
+                    if (audioFile.m_Name == name) {
+                        float adjustedVolume = volume;
+                        if (audioFile.m_IsBGM) {
+                            adjustedVolume *= m_GlobalBGMVolume;
+                        }
+                        else if (audioFile.m_IsSFX) {
+                            adjustedVolume *= m_GlobalSFXVolume;
+                        }
+
+                        sound->m_SetVolume(std::to_string(entityId), adjustedVolume);
+                        return;
+                    }
+                }
+            }
         }
         else {
-            // TODO Handle error (e.g., logging or notification)
-            // std::cerr << "Sound not found: " << name << std::endl;
+            LOGGING_WARN("Sound not found: " + name);
         }
     }
+
 
     void AudioManager::m_SetLoopingForEntity(ecs::EntityID entityId, const std::string& name, bool loop) {
         auto it = m_soundMap.find(name);

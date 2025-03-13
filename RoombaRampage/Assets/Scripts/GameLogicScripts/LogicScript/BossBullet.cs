@@ -10,6 +10,9 @@ public class BossBullet : ScriptBase
 {
     #region Entity ID
     private uint EntityID;
+    private AnimationComponent animComp;
+    private bool isAnimating = false;
+    private bool waitingToDelete = false;
 
     public override void Awake(uint id)
     {
@@ -33,8 +36,8 @@ public class BossBullet : ScriptBase
         Console.WriteLine($"[Bullet Spawned] Position: X={startingBulletPos.X}, Y={startingBulletPos.Y}, Rotation={rotation}°");
         Console.WriteLine($"[Bullet Direction] ForwardX={forwardX}, ForwardY={forwardY}");
 
-        //if(EntityID !=)
-        //CoroutineManager.Instance.StartCoroutine(DeathTimer());
+        animComp = Component.Get<AnimationComponent>(EntityID);
+
     }
     #endregion
 
@@ -57,7 +60,24 @@ public class BossBullet : ScriptBase
 
     public override void Update()
     {
-        if (bulletHasHit) return;
+        if (bulletHasHit)
+        {
+            AnimationComponent bulletAnimComp = Component.Get<AnimationComponent>(EntityID);
+
+            // Check if animation has finished
+            if (bulletAnimComp.m_frameNumber >= bulletAnimComp.m_stripCount - 1)
+            {
+                // Once the animation is done, mark it for deletion
+                waitingToDelete = true;
+            }
+
+            if (waitingToDelete)
+            {
+                InternalCall.m_InternalCallDeleteEntity(EntityID);
+            }
+
+            return;
+        }
 
         #region Movement in Forward Direction
         Vector2 movement;
@@ -84,15 +104,15 @@ public class BossBullet : ScriptBase
                 {
                     case "PropGlassWall":
                     case "Wall":
-                        bulletHasHit = true;
-
-                        InternalCall.m_InternalCallDeleteEntity(EntityID);
-                        return;
-
                     case "Player": // If it hits the player, delete it
+
                         bulletHasHit = true;
-                        InternalCall.m_InternalCallDeleteEntity(EntityID);
-                        return;
+                        animComp.m_isAnimating = true;
+                        animComp.m_framesPerSecond = 20;
+                        Component.Set<AnimationComponent>(EntityID, animComp);
+                        InternalCall.m_InternalSetVelocity(EntityID, new Vector2(0, 0));
+
+                        break;
 
                     default:
                         break;

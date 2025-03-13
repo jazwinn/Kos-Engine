@@ -9,8 +9,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 
-
-
 public class PlayerGun : ScriptBase
 {
     #region Entity ID
@@ -24,7 +22,13 @@ public class PlayerGun : ScriptBase
         cleaverSound = "aud_cleaver.wav";
         katanaSound = "aud_katana01.wav";
         emptyGunSound = "aud_emptyGun01.wav";
-        cockingSound = "aud_tempcock.wav";
+        cockingSound = "aud_tempcock.wav"; //Replace
+        shotGunShotSound = "aud_tempcock.wav";
+        railGunChargeSound = "aud_railgunChargeUp01.wav";
+        railGunUnchargeSound = "aud_railgunChargeDown01.wav";
+        railGunReleaseSound = "aud_railgunShot01.wav";
+        boosterBoostSound = "aud_boosters01.wav";
+        boosterMovementSound = "aud_vacuumStart01.wav";
 
         leftCleaverTexture = "ani_cleaverLeftAnim_strip6.png";
         rightCleaverTexture = "ani_cleaverRightAnim_strip6.png";
@@ -32,16 +36,14 @@ public class PlayerGun : ScriptBase
         leftKatanaTexture = "ani_katanaLeftAnim_strip19.png";
         rightKatanaTexture = "ani_katanaRightAnim_strip19.png";
 
-        leftBoosterTexture = "ani_boostersLeftAnim_strip8.png";
-        rightBoosterTexture = "ani_boostersRightAnim_strip8.png";
-        backBoosterTexture = "ani_boostersTailAnim_strip8.png";
+        backBoosterTexture = "ani_boostersTailAnim_strip18.png";
 
         leftGunTexture = "ani_gunLeftAnim_strip8.png";
         rightGunTexture = "ani_gunRightAnim_strip8.png";
         backGunTexture = "ani_gunTailAnim_strip8.png";
 
-        leftShotGunTexture = "ani_gunLeftAnim_strip8.png";
-        rightShotGunTexture = "ani_gunRightAnim_strip8.png";
+        leftShotGunTexture = "ani_shotGunLeftAnim_strip8.png";
+        rightShotGunTexture = "ani_shotGunRightAnim_strip8.png";
 
         leftRailGunTexture = "ani_railgunLeftAnim_strip10.png";
         rightRailGunTexture = "ani_railgunRightAnim_strip10.png";
@@ -56,48 +58,64 @@ public class PlayerGun : ScriptBase
         leftLimbShotGunAmmo = 6;
         rightLimbShotGunAmmo = 6;
 
-        leftLimbRailGunAmmo = 6;
-        rightLimbRailGunAmmo = 6;
-
         leftWeaponCount = 1; // for cool down / firerate
         rightWeaponCount = 1;
+        backWeaponcount = 1;
 
         leftLimbRailGunHold = 0;
         rightLimbRailGunHold = 0;
-        chargeDurationRailGun = 0.5f; //duration to charge up railgun
+        chargeDurationRailGun = 2f; //duration to charge up railgun
         railGunLightMaxIntensity = 1f;
+
+        playerBoost = false;
+        boostAcceleration = 40f;
+        boostDuration = 0.60f;
+        boostCoolDown = 1.4f;
 
         limbTag = InternalCall.m_InternalCallGetTag(EntityID);
         leftLimbPosID = (uint)InternalCall.m_InternalCallGetTagID("LeftLimbPos");
         rightLimbPosID = (uint)InternalCall.m_InternalCallGetTagID("RightLimbPos");
         backLimbPosID = (uint)InternalCall.m_InternalCallGetTagID("BackLimbPos");
-        InternalCall.m_InternalGetTranslate(EntityID, out limbPos);
+        leftShotgunLimbPosID = (uint)InternalCall.m_InternalCallGetTagID("LeftShotgunLimbPos");
+        rightShotgunLimbPosID = (uint)InternalCall.m_InternalCallGetTagID("RightShotgunLimbPos");
 
+        InternalCall.m_InternalGetTranslate(EntityID, out limbPos);
+        InternalCall.m_InternalGetTranslate(EntityID, out shotgunLimbPos);
         GetComponentValues();
 
     }
     #endregion
 
+    #region Variables
     public string limbTag;
     private uint leftLimbPosID;
     private uint rightLimbPosID;
     private uint backLimbPosID;
+    private uint leftShotgunLimbPosID;
+    private uint rightShotgunLimbPosID;
     private Vector2 limbPos;
+    private Vector2 shotgunLimbPos;
 
     private int weaponEquipped;
 
+    //Audio
     private string gunshotSound;
     private string cleaverSound;
     private string katanaSound;
     private string emptyGunSound;
+    private string shotGunShotSound;
     private string cockingSound;
+    private string railGunChargeSound;
+    private string railGunUnchargeSound;
+    private string railGunReleaseSound;
+    private string boosterBoostSound;
+    private string boosterMovementSound;
 
+    //Texture
     private string leftCleaverTexture;
     private string rightCleaverTexture;
     private string leftKatanaTexture;
     private string rightKatanaTexture;
-    private string leftBoosterTexture;
-    private string rightBoosterTexture;
     private string backBoosterTexture;
     private string leftGunTexture;
     private string rightGunTexture;
@@ -113,7 +131,7 @@ public class PlayerGun : ScriptBase
     private AnimationComponent limbAnimComp;
     private TransformComponent playerTransformComp;
 
-    private bool isAnimating;
+    private uint playerID;
 
     public static int leftLimbGunAmmo;
     public static int rightLimbGunAmmo;
@@ -122,11 +140,9 @@ public class PlayerGun : ScriptBase
     public static int leftLimbShotGunAmmo;
     public static int rightLimbShotGunAmmo;
 
-    public static int leftLimbRailGunAmmo;
-    public static int rightLimbRailGunAmmo;
-
     public static int leftWeaponCount;
     public static int rightWeaponCount;
+    public static int backWeaponcount;
 
     public float leftLimbRailGunHold;
     public float rightLimbRailGunHold;
@@ -134,9 +150,19 @@ public class PlayerGun : ScriptBase
 
     public float railGunLightMaxIntensity;
 
+    private bool isRailGunCharging;
+
+    private bool isBoosting;
+
+    //UI
     private uint uiLeftLimbCounterID;
     private uint uiRightLimbCounterID;
     private uint uiBackLimbCounterID;
+
+    public static bool playerBoost;
+    public float boostAcceleration;
+    public float boostDuration;
+    public float boostCoolDown;
 
     private SpriteComponent uiLeftLimbCounterSC;
     private SpriteComponent uiRightLimbCounterSC;
@@ -146,9 +172,13 @@ public class PlayerGun : ScriptBase
     private AnimationComponent uiRightLimbCounterAC;
     private AnimationComponent uiBackLimbCounterAC;
 
+    //Animation
     private bool uiLeftLimbCounterAnimating;
     private bool uiRightLimbCounterAnimating;
     private bool uiBackLimbCounterAnimating;
+
+    private bool isAnimating;
+    #endregion
 
     public override void Start()
     {
@@ -165,6 +195,8 @@ public class PlayerGun : ScriptBase
         uiLeftLimbCounterAC = Component.Get<AnimationComponent>(uiLeftLimbCounterID);
         uiRightLimbCounterAC = Component.Get<AnimationComponent>(uiRightLimbCounterID);
         uiBackLimbCounterAC = Component.Get<AnimationComponent>(uiBackLimbCounterID);
+
+        playerID = (uint)InternalCall.m_InternalCallGetTagID("Player");
     }
 
     public override void Update()
@@ -197,22 +229,40 @@ public class PlayerGun : ScriptBase
                 CheckAmmo();
                 break;
             case 1:
+                if (limbTag == "LeftLimbSprite" || limbTag == "RightLimbSprite")
+                {
+                    CheckMeleeCounter();
+                    break;
+                }
+                else if (limbTag == "BackLimbSprite")
+                {
+                    CheckBoosterCounter();
+                    break;
+                }
+
+                break;
+
+            case 2:
                 CheckMeleeCounter();
                 break;
             case 3:
-                CheckAmmo();
-                break;
-            case 4:
                 CheckAmmo();
                 break;
             default:
                 break;
         }
 
-        if (!GameControllerLevel1.gameIsPaused)
+        if (!GameControllerLevel1.gameIsPaused || isBoosting)
         {
-            CheckInputs();
+            CheckAndSetBoost();
+
+            if (!isBoosting)
+            {
+                CheckInputs();
+            }
         }
+
+
 
         #region Animation
 
@@ -254,7 +304,20 @@ public class PlayerGun : ScriptBase
                 Component.Set<AnimationComponent>(uiRightLimbCounterID, uiRightLimbCounterAC);
             }
         }
+        if (uiBackLimbCounterAnimating)
+        {
+            uiBackLimbCounterAC = Component.Get<AnimationComponent>(uiBackLimbCounterID);
 
+            if (uiBackLimbCounterAC.m_frameNumber == uiBackLimbCounterAC.m_stripCount - 1)
+            {
+                uiBackLimbCounterAnimating = false;
+                uiBackLimbCounterAC = Component.Get<AnimationComponent>(uiRightLimbCounterID);
+                uiBackLimbCounterAC.m_frameNumber = 6;
+                uiBackLimbCounterAC.m_isAnimating = false;
+
+                Component.Set<AnimationComponent>(uiBackLimbCounterID, uiBackLimbCounterAC);
+            }
+        }
         #endregion
 
     }
@@ -295,7 +358,6 @@ public class PlayerGun : ScriptBase
 
         CoroutineManager.Instance.StartCoroutine(Shoot(), "Shooting");
     }
-
     private void AttemptShootShotGun()
     {
         switch (limbTag)
@@ -339,7 +401,6 @@ public class PlayerGun : ScriptBase
 
         CoroutineManager.Instance.StartCoroutine(Shoot(), "Shooting");
     }
-
     private void SetRailGunLightIntensity(float intensity, string playergunlimb)
     {
         int lightid = InternalCall.m_InternalCallGetTagID(playergunlimb);
@@ -353,6 +414,10 @@ public class PlayerGun : ScriptBase
     }
     private void AttemptShootRailGunHold()
     {
+        if (!isRailGunCharging) { InternalCall.m_InternalCallPlayAudio(EntityID, railGunChargeSound); }
+
+        isRailGunCharging = true;
+
         switch (limbTag)
         {
             case "LeftLimbSprite":
@@ -386,7 +451,6 @@ public class PlayerGun : ScriptBase
                 break;
 
             case "RightLimbSprite":
-
                 {
                     rightLimbRailGunHold += InternalCall.m_GetUnfixedDeltaTime();
                     int strip = GetStripCount(leftRailGunTexture);
@@ -396,6 +460,7 @@ public class PlayerGun : ScriptBase
                     float lightintensity = rightLimbRailGunHold / (chargeDurationRailGun / (float)railGunLightMaxIntensity);
                     float glowFactor = 8.0f * (float)Math.Cos((double)InternalCall.m_InternalCallGetGameTime() * 20);
                     glowFactor = glowFactor / 2.0f + 8.0f;
+
                     if (railGunstrip >= strip)
                     {
                         railGunstrip = (strip - 1);
@@ -416,29 +481,20 @@ public class PlayerGun : ScriptBase
         }
 
     }
-
     private void AttemptShootRailGunRelease()
     {
+        InternalCall.m_InternalCallStopAudio(EntityID, railGunChargeSound);
+
+        isRailGunCharging = false;
+
         switch (limbTag)
         {
             case "LeftLimbSprite":
 
-                if (leftLimbRailGunAmmo > 0 && (leftLimbRailGunHold >= chargeDurationRailGun))
+                if (leftLimbRailGunHold >= chargeDurationRailGun)
                 {
-                    leftLimbRailGunAmmo--;
                     CoroutineManager.Instance.StartCoroutine(Shoot(), "Shooting");
-                }
-                else
-                {
-                    if (leftLimbRailGunAmmo <= 0)
-                    {
-                        //InternalCall.m_InternalCallPlayAudio(EntityID, emptyGunSound);
-                    }
 
-                }
-
-                if(leftLimbRailGunHold > 0f)
-                {
                     //reset gun
                     leftLimbRailGunHold = 0f;
                     SetRailGunLightIntensity(0f, "PlayerGunLightLeft"); //set light intensity to 0 to reset
@@ -446,6 +502,19 @@ public class PlayerGun : ScriptBase
                     limbAnimComp.m_frameNumber = (0);
                     Component.Set<AnimationComponent>(EntityID, limbAnimComp);
 
+                    CameraFollowPlayerScript.Shake(0.7f, 1f);
+
+                }
+
+                else if(leftLimbRailGunHold > 0f)
+                {
+                    //reset gun
+                    leftLimbRailGunHold = 0f;
+                    SetRailGunLightIntensity(0f, "PlayerGunLightLeft"); //set light intensity to 0 to reset
+                    GetComponentValues();
+                    limbAnimComp.m_frameNumber = (0);
+                    Component.Set<AnimationComponent>(EntityID, limbAnimComp);
+                    InternalCall.m_InternalCallPlayAudio(EntityID, railGunUnchargeSound);
                 }
 
 
@@ -453,26 +522,29 @@ public class PlayerGun : ScriptBase
 
             case "RightLimbSprite":
 
-                if (rightLimbRailGunAmmo != 0 && rightLimbRailGunHold >= chargeDurationRailGun)
+                if (rightLimbRailGunHold >= chargeDurationRailGun)
                 {
-                    rightLimbRailGunAmmo--;
                     CoroutineManager.Instance.StartCoroutine(Shoot(), "Shooting");
-                }
-                else
-                {
-                    if (rightLimbRailGunAmmo <= 0)
-                    {
-                       // InternalCall.m_InternalCallPlayAudio(EntityID, emptyGunSound);
-                    }
+
+                    rightLimbRailGunHold = 0f;
+                    SetRailGunLightIntensity(0f, "PlayerGunLightRight"); //set light intensity to 0 to reset
+                    GetComponentValues();
+                    limbAnimComp.m_frameNumber = (0);
+                    Component.Set<AnimationComponent>(EntityID, limbAnimComp);
+
+                    CameraFollowPlayerScript.Shake(0.7f, 1f);
+
                 }
 
-                if(rightLimbRailGunHold > 0f)
+
+                else if(rightLimbRailGunHold > 0f)
                 {
                     rightLimbRailGunHold = 0f;
                     SetRailGunLightIntensity(0f, "PlayerGunLightRight"); //set light intensity to 0 to reset
                     GetComponentValues();
                     limbAnimComp.m_frameNumber = (0);
                     Component.Set<AnimationComponent>(EntityID, limbAnimComp);
+                    InternalCall.m_InternalCallPlayAudio(EntityID, railGunUnchargeSound);
                 }
 
 
@@ -483,8 +555,6 @@ public class PlayerGun : ScriptBase
         }
 
     }
-
-
     private void AttemptMelee()
     {
         switch (limbTag)
@@ -511,9 +581,21 @@ public class PlayerGun : ScriptBase
                 return;
         }
     }
-    
+    private void AttemptBoost()
+    {
+        switch (limbTag)
+        {
+            case "BackLimbSprite":
+                if (backWeaponcount != 0)
+                {
+                    backWeaponcount--;
+                    CoroutineManager.Instance.StartCoroutine(Boost(), "Boost");
+                }
+                else { return; }
+                break;
+        }
+    }
     #region Coroutines
-
     private IEnumerator Melee()
     {
         CoroutineManager.Instance.StartCoroutine(StartWeaponCooldown(1f), "MeleeCooldown");
@@ -572,7 +654,6 @@ public class PlayerGun : ScriptBase
         Component.Set<ColliderComponent>(killZoneID, killZoneCollComp);
 
     }
-
     private IEnumerator StartWeaponCooldown(float duration)
     {
         yield return new CoroutineManager.WaitForSeconds(duration);
@@ -587,11 +668,79 @@ public class PlayerGun : ScriptBase
                 rightWeaponCount++;
                 break;
 
+            case "BackLimbSprite":
+                backWeaponcount++;
+                break;
+
             default:
                 break;
         }
     }
+    private IEnumerator Boost()
+    {
+        InternalCall.m_InternalCallPlayAudio(EntityID, boosterMovementSound);
+        InternalCall.m_InternalCallPlayAudio(EntityID, boosterBoostSound);
 
+        CoroutineManager.Instance.StartCoroutine(StartWeaponCooldown(boostCoolDown), "BoostCooldown");
+
+        if (isAnimating)
+        {
+            StopAnimation();
+            yield return new CoroutineManager.WaitForSeconds(0.001f);
+            StartAnimation();
+        }
+
+        else
+        {
+            StartAnimation();
+        }
+
+
+        switch (limbTag)
+        {
+            case "BackLimbSprite":
+                uiBackLimbCounterAnimating = true;
+
+                uiBackLimbCounterAC = Component.Get<AnimationComponent>(uiBackLimbCounterID);
+                uiBackLimbCounterAC.m_frameNumber = 0;
+                uiBackLimbCounterAC.m_isAnimating = true;
+
+                Component.Set<AnimationComponent>(uiBackLimbCounterID, uiBackLimbCounterAC);
+
+
+                break;
+
+            default:
+                break;
+        }
+
+        if (weaponEquipped == 1) // booster
+        {
+            // take control away in playercontroller.cs
+            playerBoost = true;
+            CheckAndSetBoost();
+
+
+            yield return new CoroutineManager.WaitForSeconds(boostDuration);
+
+            //reset control
+            RigidBodyComponent rigidBodyComponent = Component.Get<RigidBodyComponent>(playerID);
+            rigidBodyComponent = Component.Get<RigidBodyComponent>(playerID);
+            rigidBodyComponent.m_Acceleration.X = 0;
+            rigidBodyComponent.m_Acceleration.Y = 0;
+ 
+
+            Component.Set<RigidBodyComponent>(playerID, rigidBodyComponent);
+
+            playerBoost = false;
+        }
+
+        //RigidBodyComponent rigidBodyComponent = Component.Get<RigidBodyComponent>(EntityID);
+        ////rigidBodyComponent.m_Force.Y = -3f;
+        //rigidBodyComponent.m_Acceleration
+        //    Component.Set<RigidBodyComponent>(EntityID, rigidBodyComponent);
+
+    }
     private IEnumerator Shoot()
     {
         //Plays Audio
@@ -600,49 +749,58 @@ public class PlayerGun : ScriptBase
             case 0:
                 InternalCall.m_InternalCallPlayAudio(EntityID, gunshotSound);
                 break;
-            case 3:
-                InternalCall.m_InternalCallPlayAudio(EntityID, gunshotSound);
+            case 2:
+                InternalCall.m_InternalCallPlayAudio(EntityID, shotGunShotSound);
                 break;
-            case 4:
-                InternalCall.m_InternalCallPlayAudio(EntityID, gunshotSound);
+            case 3:
+                InternalCall.m_InternalCallPlayAudio(EntityID, railGunReleaseSound);
                 break;
             default :
                 break;
 
         }
 
-        
-
         //Update Component Values, mainly for roomba rotation
         GetComponentValues();
 
         //only animate gun -> shotgun, except railgun
-        if(weaponEquipped >= 0 && weaponEquipped <= 3)
+        switch (weaponEquipped)
         {
-            if (isAnimating)
-            {
-                StopAnimation();
-                yield return new CoroutineManager.WaitForSeconds(0.001f);
-                StartAnimation();
-            }
+            case 0:
+            case 1:
+            case 2:
+                if (isAnimating)
+                {
+                    StopAnimation();
+                    yield return new CoroutineManager.WaitForSeconds(0.001f);
+                    StartAnimation();
+                }
 
-            else
-            {
-                StartAnimation();
-            }
+                else
+                {
+                    StartAnimation();
+                }
+                break;
+            //Railgun
+            case 3:
+                break;
+
+            default:
+                break;
         }
-
 
         switch (limbTag)
         {
             case "LeftLimbSprite":
                 //Get limbPos
                 InternalCall.m_InternalGetTranslate(leftLimbPosID, out limbPos);
+                InternalCall.m_InternalGetTranslate(leftShotgunLimbPosID, out shotgunLimbPos);
                 break;
 
             case "RightLimbSprite":
                 //Get limbPos
                 InternalCall.m_InternalGetTranslate(rightLimbPosID, out limbPos);
+                InternalCall.m_InternalGetTranslate(rightShotgunLimbPosID, out shotgunLimbPos);
                 break;
 
             case "BackLimbSprite":
@@ -654,7 +812,7 @@ public class PlayerGun : ScriptBase
                 break;
         }
 
-
+        //Pistol
         if(weaponEquipped == 0)
         {
             //Spawn bullet at limb
@@ -663,7 +821,9 @@ public class PlayerGun : ScriptBase
             //Shake Camera
             CameraFollowPlayerScript.Shake(0.5f, 1f);
         }
-        if(weaponEquipped == 3)
+
+        //Shotgun
+        if(weaponEquipped == 2)
         {
             CoroutineManager.Instance.StartCoroutine(StartWeaponCooldown(0.7f), "GunCooldown");
 
@@ -676,28 +836,27 @@ public class PlayerGun : ScriptBase
 
             for (int n = 0; n < numberofpallets; n++)
             {
-                InternalCall.m_InternalCallAddPrefab(bulletPrefab, limbPos.X, limbPos.Y, startangle);
-                startangle += (float)interval;
-
-                CameraFollowPlayerScript.Shake(0.7f, 1f);
-
+                InternalCall.m_InternalCallAddPrefab(bulletPrefab, shotgunLimbPos.X, shotgunLimbPos.Y, startangle);
+                startangle += (float)interval; 
             }
+
+            CameraFollowPlayerScript.Shake(0.7f, 1f);
 
             yield return new CoroutineManager.WaitForSeconds(0.5f);
 
             InternalCall.m_InternalCallPlayAudio(EntityID, cockingSound);
 
         }
-        if(weaponEquipped == 4)
+
+        if(weaponEquipped == 3)
         {
             //Spawn bullet at limb
-            InternalCall.m_InternalCallAddPrefab(bulletPrefabType2, limbPos.X, limbPos.Y, playerTransformComp.m_rotation);
+            InternalCall.m_InternalCallAddPrefab(bulletPrefabType2, shotgunLimbPos.X, shotgunLimbPos.Y, playerTransformComp.m_rotation);
         }
 
 
 
     }
-
     private IEnumerator PauseAnimation()
     {
         isAnimating = false;
@@ -718,9 +877,25 @@ public class PlayerGun : ScriptBase
         limbAnimComp.m_frameNumber = tempCurrentFrame;
         Component.Set<AnimationComponent>(EntityID, limbAnimComp);
     }
-
     #endregion
 
+    private void CheckAndSetBoost()
+    {
+        if (playerBoost)
+        {
+            RigidBodyComponent rigidBodyComponent = Component.Get<RigidBodyComponent>(playerID);
+            TransformComponent transformComponent = Component.Get<TransformComponent>(playerID);
+            //get boost direction based on rotation
+            float degree = transformComponent.m_rotation;
+            float radian = degree * ((float)Math.PI / 180f);
+            Vector2 direction = new Vector2((float)Math.Sin(radian), (float)Math.Cos(radian));
+
+            rigidBodyComponent.m_Acceleration.X = direction.X * boostAcceleration;
+            rigidBodyComponent.m_Acceleration.Y = direction.Y * boostAcceleration;
+
+            Component.Set<RigidBodyComponent>(playerID, rigidBodyComponent);
+        }
+    }
     private void CheckAmmo()
     {
         int leftWeaponAmmo = 0;
@@ -734,13 +909,9 @@ public class PlayerGun : ScriptBase
                 rightWeaponAmmo = rightLimbGunAmmo;
                 backWeaponAmmo = backLimbGunAmmo;
                 break;
-            case 3:
+            case 2:
                 leftWeaponAmmo = leftLimbShotGunAmmo;
                 rightWeaponAmmo = rightLimbShotGunAmmo;
-                break;
-            case 4:
-                leftWeaponAmmo = leftLimbRailGunAmmo;
-                rightWeaponAmmo = rightLimbRailGunAmmo;
                 break;
             default:
                 break;
@@ -782,7 +953,6 @@ public class PlayerGun : ScriptBase
                 break;
         }
     }
-
     private void CheckMeleeCounter()
     {
         switch (limbTag)
@@ -812,12 +982,25 @@ public class PlayerGun : ScriptBase
                 }
 
                 break;
+            case "BackLimbSprite":
+                if (backWeaponcount == 1)
+                {
+                    uiRightLimbCounterAC = Component.Get<AnimationComponent>(uiRightLimbCounterID);
+                    uiRightLimbCounterAC.m_frameNumber = 6;
+                    uiRightLimbCounterAC.m_isAnimating = false;
 
+                    Component.Set<AnimationComponent>(uiRightLimbCounterID, uiRightLimbCounterAC);
+                }
+                break;
             default:
                 break;
         }
     }
 
+    private void CheckBoosterCounter()
+    {
+
+    }
     private string GetWeaponSprite(string weaponName)
     {
         string limbTag = InternalCall.m_InternalCallGetTag(EntityID);
@@ -843,7 +1026,6 @@ public class PlayerGun : ScriptBase
                 return null;
         }
     }
-
     private int GetStripCount(string fileName)
     {
         // Find the last non-digit position before the number
@@ -865,14 +1047,12 @@ public class PlayerGun : ScriptBase
         // Convert to integer
         return int.TryParse(numberStr, out int result) ? result : -1;
     }
-
     private void GetComponentValues()
     {
         limbSpriteComp = GetComponent.GetSpriteComponent(EntityID);
         limbAnimComp = Component.Get<AnimationComponent>(EntityID);
-        playerTransformComp = Component.Get<TransformComponent>((uint)InternalCall.m_InternalCallGetTagID("Player"));
+        playerTransformComp = Component.Get<TransformComponent>(playerID);
     }
-
     private void SwitchWeapon(string weaponName)
     {
         string fileName = GetWeaponSprite(weaponName);
@@ -880,10 +1060,14 @@ public class PlayerGun : ScriptBase
         limbSpriteComp.m_imageFile = fileName;
         SetComponent.SetSpriteComponent(EntityID, limbSpriteComp);
 
+        limbAnimComp.m_frameNumber = 0;
+        limbAnimComp.m_isAnimating = false;
         limbAnimComp.m_stripCount = GetStripCount(fileName);
         Component.Set<AnimationComponent>(EntityID, limbAnimComp);
-    }
 
+        //Reset Railgun Values
+        AttemptShootRailGunRelease();
+    }
     private void StartAnimation()
     {
         isAnimating = true;
@@ -894,7 +1078,6 @@ public class PlayerGun : ScriptBase
 
         Component.Set<AnimationComponent>(EntityID, limbAnimComp);
     }
-
     private void StopAnimation()
     {
         isAnimating = false;
@@ -905,7 +1088,6 @@ public class PlayerGun : ScriptBase
 
         Component.Set<AnimationComponent>(EntityID, limbAnimComp);
     }
-
     private void CheckWeapons()
     {
         switch (limbTag)
@@ -928,7 +1110,6 @@ public class PlayerGun : ScriptBase
 
         ChangeWeaponSprite();
     }
-
     private void ChangeWeaponSprite()
     {
         if (limbTag == "LeftLimbSprite" || limbTag == "RightLimbSprite")
@@ -944,15 +1125,13 @@ public class PlayerGun : ScriptBase
                     break;
 
                 case 2:
-                    SwitchWeapon("Booster");
+                    SwitchWeapon("ShotGun");
                     break;
 
                 case 3:
-                    SwitchWeapon("ShotGun");
-                    break;
-                case 4:
                     SwitchWeapon("RailGun");
                     break;
+
                 default:
                     break;
             }
@@ -975,10 +1154,9 @@ public class PlayerGun : ScriptBase
             }
         }
     }
-
     private void CheckInputs()
     {
-        #region Mouse Checks
+        #region Checks
 
         if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.LMB) && limbTag == "LeftLimbSprite" && PlayerLoadoutManager.isSortieing == false)
         {
@@ -991,7 +1169,7 @@ public class PlayerGun : ScriptBase
                 case 1:
                     AttemptMelee();
                     break;
-                case 3:
+                case 2:
                     AttemptShootShotGun();
                     break;
 
@@ -1011,7 +1189,7 @@ public class PlayerGun : ScriptBase
                 case 1:
                     AttemptMelee();
                     break;
-                case 3:
+                case 2:
                     AttemptShootShotGun();
                     break;
 
@@ -1019,11 +1197,13 @@ public class PlayerGun : ScriptBase
                     break;
             }
         }
+
+        //Railgun
         if (InternalCall.m_InternalCallIsKeyPressed(keyCode.LMB) && limbTag == "LeftLimbSprite" && PlayerLoadoutManager.isSortieing == false)
         {
             switch (weaponEquipped)
             {
-                case 4:
+                case 3:
                     AttemptShootRailGunHold();
                     break;
 
@@ -1036,7 +1216,7 @@ public class PlayerGun : ScriptBase
         {
             switch (weaponEquipped)
             {
-                case 4:
+                case 3:
                     AttemptShootRailGunHold();
                     break;
 
@@ -1049,7 +1229,7 @@ public class PlayerGun : ScriptBase
         {
             switch (weaponEquipped)
             {
-                case 4:
+                case 3:
                     AttemptShootRailGunRelease();
                     break;
 
@@ -1062,7 +1242,7 @@ public class PlayerGun : ScriptBase
         {
             switch (weaponEquipped)
             {
-                case 4:
+                case 3:
                     AttemptShootRailGunRelease();
                     break;
 
@@ -1070,21 +1250,30 @@ public class PlayerGun : ScriptBase
                     break;
             }
         }
-        #endregion
 
-        #region Keyboard Checks
-        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.SPACE) && limbTag == "BackLimbSprite" && PlayerLoadoutManager.isSortieing == false)
+        //Back limb
+        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.SPACE) || InternalCall.m_InternalCallIsKeyTriggered(keyCode.MMB) || InternalCall.m_InternalCallIsKeyTriggered(keyCode.LeftShift))
         {
-            switch (weaponEquipped)
+            if (limbTag == "BackLimbSprite" && PlayerLoadoutManager.isSortieing == false)
             {
-                case 0:
-                    AttemptShootGun();
-                    break;
+                switch (weaponEquipped)
+                {
+                    case 0:
+                        AttemptShootGun();
+                        break;
 
-                default:
-                    break;
+                    case 1:
+                        AttemptBoost();
+                        break;
+
+                    default:
+                        break;
+                }
             }
         }
+
         #endregion
     }
+
+
 }

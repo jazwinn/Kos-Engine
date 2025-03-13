@@ -26,13 +26,13 @@
         },
         "transform": {
             "position": {
-                "x": 0.0,
-                "y": 0.0
+                "x": 15.853328704833984,
+                "y": -15.908940315246582
             },
-            "rotation": 0.0,
+            "rotation": -0.0,
             "scale": {
-                "x": 1.0,
-                "y": 1.0
+                "x": 5.0,
+                "y": 5.0
             }
         },
         "collider": {
@@ -44,7 +44,7 @@
             },
             "offset": {
                 "x": 0.0,
-                "y": 0.0
+                "y": 0.5199999809265137
             },
             "drawDebug": true,
             "radius": 0.20000000298023224,
@@ -75,7 +75,7 @@
             "static": false
         },
         "sprite": {
-            "imagefile": "img_BulletPrefab1.png",
+            "imagefile": "ani_bossBulletEffect_strip10.png",
             "layer": 5,
             "color": {
                 "r": 1.0,
@@ -84,6 +84,13 @@
             },
             "alpha": 1.0,
             "isLit": true
+        },
+        "animation": {
+            "frameNumber": 0,
+            "framesPerSecond": 8,
+            "frameTimer": 0.0,
+            "isAnimating": false,
+            "stripCount": 10
         },
         "script": {
             "scripts": [
@@ -98,6 +105,22 @@
                     ]
                 }
             ]
+        },
+        "LightingComponent": {
+            "m_innerOuterRadius": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "m_intensity": 2.200000047683716,
+            "m_light_OffSet": {
+                "x": 0.0,
+                "y": 0.11999999731779099
+            },
+            "m_light_scale": {
+                "x": 1.0,
+                "y": 1.0
+            },
+            "m_light_rotation": 0.0
         }
     }
 ]

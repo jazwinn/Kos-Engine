@@ -32,7 +32,7 @@ void gui::ImGuiHandler::m_DrawMainMenuBar() {
     scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();
     ecs::ECS* ecs = ecs::ECS::m_GetInstance();
     //If CTRL + S press, save
-    if (io.KeyCtrl && ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_S))) {
+    if (io.KeyCtrl && ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_S)) && (ecs->m_getState() != ecs::RUNNING)) {
         scenemanager->m_SaveAllActiveScenes();
         LOGGING_INFO("Saving data...");
     }

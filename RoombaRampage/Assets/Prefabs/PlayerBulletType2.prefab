@@ -10,24 +10,18 @@
         }
     },
     {
-        "CursorSettings": {
-            "cursorImage": "./Assets/Texture/UI/img_startScreenCursor.png",
-            "isCursorCentered": false
-        }
-    },
-    {
         "name": {
             "namestr": "PlayerBulletType2",
             "layer": 3,
             "isprefab": true,
-            "tagstr": "PlayerBullet",
+            "tagstr": "PlayerRailgunBullet",
             "prefabname": "prefab_playerBullet.prefab",
             "issync": false
         },
         "transform": {
             "position": {
                 "x": 0.0,
-                "y": 0.0
+                "y": 24.406795501708984
             },
             "rotation": 0.0,
             "scale": {
@@ -44,7 +38,7 @@
             },
             "offset": {
                 "x": 0.0,
-                "y": 0.03999999910593033
+                "y": 0.019999999552965164
             },
             "drawDebug": true,
             "radius": 0.5,
@@ -52,8 +46,8 @@
         },
         "rigidbody": {
             "linearVelocity": {
-                "x": 11.46951675415039,
-                "y": 3.5284833908081055
+                "x": 0.0,
+                "y": 19.799999237060547
             },
             "linearAcceleration": {
                 "x": 0.0,
@@ -108,21 +102,16 @@
         },
         "LightingComponent": {
             "m_innerOuterRadius": {
-                "x": 0.03999999910593033,
-                "y": 0.800000011920929
+                "x": 0.0,
+                "y": 0.7799999713897705
             },
-            "m_intensity": 4.400000095367432,
-            "m_colour": {
-                "x": 0.20796459913253784,
-                "y": 1.0,
-                "z": 0.8738349080085754
-            },
+            "m_intensity": 5.599999904632568,
             "m_light_OffSet": {
                 "x": 0.0,
-                "y": 0.0
+                "y": 0.18000000715255737
             },
             "m_light_scale": {
-                "x": 1.0,
+                "x": 0.46000000834465027,
                 "y": 1.0
             },
             "m_light_rotation": 0.0

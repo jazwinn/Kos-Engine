@@ -136,7 +136,7 @@ namespace script {
 			\return    True if the rigid body component is found and retrieved; otherwise, false.
 		*/
 		/******************************************************************/
-		static bool m_InternalGetRigidBodyComponent(ecs::EntityID entity, vector2::Vec2* velocity, vector2::Vec2* acceleration, float* rotation, vector2::Vec2* previouspos, vector2::Vec2* directionvector);
+		static bool m_InternalGetRigidBodyComponent(ecs::EntityID entity, vector2::Vec2* velocity, vector2::Vec2* acceleration, float* rotation, vector2::Vec2* previouspos, vector2::Vec2* directionvector, vector2::Vec2* force);
 
 		/******************************************************************/
 		/*!
@@ -149,7 +149,7 @@ namespace script {
 			\return    True if the rigid body component is found and updated; otherwise, false.
 		*/
 		/******************************************************************/
-		static bool m_InternalSetRigidBodyComponent(ecs::EntityID entity, vector2::Vec2* velocity, vector2::Vec2* acceleration, float* rotation, vector2::Vec2* previouspos, vector2::Vec2* directionvector);
+		static bool m_InternalSetRigidBodyComponent(ecs::EntityID entity, vector2::Vec2* velocity, vector2::Vec2* acceleration, float* rotation, vector2::Vec2* previouspos, vector2::Vec2* directionvector, vector2::Vec2* force);
 
 		/******************************************************************/
 		/*!
@@ -519,6 +519,8 @@ namespace script {
 		/******************************************************************/
 		static MonoArray* m_InternalCallGetChildrenID(ecs::EntityID);
 
+		static int m_InternalCallGetParentID(ecs::EntityID);
+
 		/******************************************************************/
 		/*!
 			\fn        void InternalCall::m_InternalCallPlayAudio(ecs::EntityID id, MonoString* monoString)
@@ -583,6 +585,8 @@ namespace script {
 		*/
 		/******************************************************************/
 		static void m_InternalCallUnPauseAllAudio();
+
+		static bool m_InternalCallAudioIsPlayingForEntity(ecs::EntityID id, MonoString* monoString);
 
 		static void m_InternalCallSetGlobalBGMVolume(float volume);
 
@@ -840,6 +844,10 @@ namespace script {
 		static void m_InternalCallGetLightingComponent(ecs::EntityID id, vector2::Vec2* innerouterradius, vector3::Vec3* color, float* intensity);
 
 		static void m_InternalCallSetLightingComponent(ecs::EntityID id, vector2::Vec2* innerouterradius, vector3::Vec3* color, float* intensity);
+
+		static bool m_IsLayerVisable(int layer);
+
+		static void m_GetColliderDecomposedTRS(ecs::EntityID id, vector2::Vec2* translate, vector2::Vec2* rotate, float* scale);
 
 	public:
 		/******************************************************************/
