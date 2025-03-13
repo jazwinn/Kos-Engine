@@ -106,7 +106,7 @@ public class BossController : ScriptBase
 
     public override void Update()
     {
-        if (GameControllerLevel6.isBossDead) return;
+        if (GameControllerLevel1.isBossDead) return;
 
         if (isTakingDamage)
         {
@@ -134,7 +134,7 @@ public class BossController : ScriptBase
                 Component.Set<AnimationComponent>(EntityID, animComp);
 
                 isDying = false;
-                GameControllerLevel6.isBossDead = true;
+                GameControllerLevel1.isBossDead = true;
 
             }
         }
@@ -177,7 +177,7 @@ public class BossController : ScriptBase
         }
         CheckCollision();
 
-        if (GameControllerLevel6.isActivated == true && isAttacking == false)
+        if (GameControllerLevel1.isActivated == true && isAttacking == false)
         {
             isAttacking = true;
             CoroutineManager.Instance.StartCoroutine(AttackLoop()); // Start attacks

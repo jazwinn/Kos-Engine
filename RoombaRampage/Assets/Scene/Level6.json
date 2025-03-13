@@ -3062,11 +3062,11 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "backLimbGunAmmo",
+                                    "variable": "ammoCount",
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "ammoCount",
+                                    "variable": "backLimbGunAmmo",
                                     "base64": ""
                                 },
                                 {
@@ -3078,11 +3078,7 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "leftLimbGunAmmo",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "rightWeaponCount",
+                                    "variable": "railGunLightMaxIntensity",
                                     "base64": ""
                                 },
                                 {
@@ -3090,7 +3086,11 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "railGunLightMaxIntensity",
+                                    "variable": "rightWeaponCount",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "leftLimbGunAmmo",
                                     "base64": ""
                                 },
                                 {
@@ -3223,11 +3223,11 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "backLimbGunAmmo",
+                                    "variable": "ammoCount",
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "ammoCount",
+                                    "variable": "backLimbGunAmmo",
                                     "base64": ""
                                 },
                                 {
@@ -3239,11 +3239,7 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "rightLimbRailGunHold",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "rightWeaponCount",
+                                    "variable": "leftLimbShotGunAmmo",
                                     "base64": ""
                                 },
                                 {
@@ -3251,7 +3247,11 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "leftLimbShotGunAmmo",
+                                    "variable": "rightWeaponCount",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "rightLimbRailGunHold",
                                     "base64": ""
                                 },
                                 {
@@ -8076,9 +8076,22 @@
         "script": {
             "scripts": [
                 {
-                    "name": "GameControllerLevel6",
+                    "name": "GameControllerLevel1",
                     "enabled": true,
-                    "map": []
+                    "map": [
+                        {
+                            "variable": "gameIsPaused",
+                            "base64": ""
+                        },
+                        {
+                            "variable": "gameAudioUp",
+                            "base64": ""
+                        },
+                        {
+                            "variable": "runOnce",
+                            "base64": ""
+                        }
+                    ]
                 }
             ]
         },
