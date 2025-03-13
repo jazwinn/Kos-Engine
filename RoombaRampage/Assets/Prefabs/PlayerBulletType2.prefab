@@ -10,6 +10,12 @@
         }
     },
     {
+        "CursorSettings": {
+            "cursorImage": "./Assets/Texture/UI/img_startScreenCursor.png",
+            "isCursorCentered": false
+        }
+    },
+    {
         "name": {
             "namestr": "PlayerBulletType2",
             "layer": 3,
@@ -110,7 +116,16 @@
                 "x": 0.20796459913253784,
                 "y": 1.0,
                 "z": 0.8738349080085754
-            }
+            },
+            "m_light_OffSet": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "m_light_scale": {
+                "x": 1.0,
+                "y": 1.0
+            },
+            "m_light_rotation": 0.0
         }
     }
 ]

@@ -8,5 +8,11 @@
                 "b": 0.3199999928474426
             }
         }
+    },
+    {
+        "CursorSettings": {
+            "cursorImage": "./Assets/Texture/UI/img_startScreenCursor.png",
+            "isCursorCentered": false
+        }
     }
 ]

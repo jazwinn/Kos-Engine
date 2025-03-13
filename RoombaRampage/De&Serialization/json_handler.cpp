@@ -152,7 +152,18 @@ namespace Serialization {
 					helper->m_colour.m_z = bgColor["b"].GetFloat();
 				}
 			}
+			// Load Cursor Settings
+			if (entry.HasMember("CursorSettings")) {
+				const rapidjson::Value& cursorSettings = entry["CursorSettings"];
+				Helper::Helpers* helper = Helper::Helpers::GetInstance();
 
+				if (cursorSettings.HasMember("cursorImage")) {
+					helper->m_currMousePicture = cursorSettings["cursorImage"].GetString();
+				}
+				if (cursorSettings.HasMember("isCursorCentered")) {
+					helper->m_isMouseCentered = cursorSettings["isCursorCentered"].GetBool();
+				}
+			}
 		}
 
 		/*******************INSERT INTO FUNCTION*****************************/
@@ -161,9 +172,10 @@ namespace Serialization {
 		for (rapidjson::SizeType i = 0; i < doc.Size(); i++) {
 			const rapidjson::Value& entityData = doc[i];
 
-			if (entityData.HasMember("GlobalSettings")) {
+			if (entityData.HasMember("GlobalSettings") || entityData.HasMember("CursorSettings")) {
 				continue;
 			}
+
 
 			m_LoadEntity(entityData, std::nullopt, scenename);
 		}
@@ -200,6 +212,15 @@ namespace Serialization {
 		rapidjson::Value settingsWrapper(rapidjson::kObjectType);
 		settingsWrapper.AddMember("GlobalSettings", globalSettings, allocator);
 		doc.PushBack(settingsWrapper, allocator);
+
+		// Save Cursor Settings
+		rapidjson::Value cursorSettings(rapidjson::kObjectType);
+		cursorSettings.AddMember("cursorImage", rapidjson::Value(helper->m_currMousePicture.c_str(), allocator), allocator);
+		cursorSettings.AddMember("isCursorCentered", helper->m_isMouseCentered, allocator);
+
+		rapidjson::Value cursorWrapper(rapidjson::kObjectType);
+		cursorWrapper.AddMember("CursorSettings", cursorSettings, allocator);
+		doc.PushBack(cursorWrapper, allocator);
 
 		//Start saving the entities
 		std::vector<ecs::EntityID> entities = ecs->m_ECS_SceneMap.find(scene.filename().string())->second.m_sceneIDs;

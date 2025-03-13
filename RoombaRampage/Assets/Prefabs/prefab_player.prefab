@@ -10,6 +10,12 @@
         }
     },
     {
+        "CursorSettings": {
+            "cursorImage": "./Assets/Texture/UI/img_startScreenCursor.png",
+            "isCursorCentered": false
+        }
+    },
+    {
         "name": {
             "namestr": "Player",
             "layer": 1,
@@ -549,7 +555,16 @@
                         "x": 1.0,
                         "y": 1.0,
                         "z": 1.0
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -582,7 +597,16 @@
                         "x": 1.0,
                         "y": 0.0,
                         "z": 0.0
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -615,7 +639,16 @@
                         "x": 0.09432999789714813,
                         "y": 0.945805013179779,
                         "z": 0.9690265655517578
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -648,7 +681,16 @@
                         "x": 0.09432999789714813,
                         "y": 0.945805013179779,
                         "z": 0.9690265655517578
-                    }
+                    },
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
                 }
             }
         ]

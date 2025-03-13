@@ -62,7 +62,9 @@ void gui::ImGuiHandler::m_DrawGlobalSettingsWindow()
     };
 
 
-    static int selectedCursorIndex = 0;
+    static int selectedCursorIndex = (helper->m_currMousePicture == "./Assets/Texture/UI/img_startScreenCursor.png") ? 1 :
+                                      (helper->m_currMousePicture == "./Assets/Texture/UI/img_inGameCursor.png") ? 2: 0;// Keep track of selected cursor index
+
     ImGui::Text("Cursor Image:");
     ImGui::SameLine();
     ImGui::SetNextItemWidth(200.0f);

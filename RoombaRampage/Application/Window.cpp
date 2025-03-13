@@ -313,6 +313,8 @@ namespace Application {
 
         if (help->m_currMousePicture != oldCursor || help->m_isMouseCentered != mouseCenterCheck)
         {
+            oldCursor = help->m_currMousePicture;
+            mouseCenterCheck = help->m_isMouseCentered;
             setCursorImage(help->m_currMousePicture, help->m_isMouseCentered);
         }
 
