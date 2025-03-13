@@ -94,7 +94,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     private float enemyBloodPoolSpawnDelay = 0.5f;
     private float enemySpeed = 1.9f;
     private float patrolSpeed = 1.9f;
-    private float enemyFOVangle = 180.0f;
+    private float enemyFOVangle = 300.0f;
     private float enemyFOVdistance = 10.0f;
 
     private float scanTime = 0f;
@@ -123,7 +123,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     private Vector2 originalPosition;
 
     private float fireRate = 1.5f;
-    private float fireFirstDelay = 0.2f;
+    private float fireFirstDelay = 0.5f;
     private float fireTimer = 0f;
     private float shuffleDistance = 0.20f;
     private bool  rangedShuffleLeft = true;
@@ -345,6 +345,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
             foreach (int collidedEntitiesID in collidedEntities)
             {
+                if (isDead) return;
                 switch (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID))
                 {
                     case "MeleeKillZoneSpawn":
@@ -407,16 +408,17 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         }
 
         Component.Set<SpriteComponent>(EntityID, spriteComp); //Sets sprite component
-        KillCounter.killCount++;
+
+
     }
 
 
 
     private IEnumerator EnemyDeath(string causeOfDeath) //Coroutine for enemy death
     {
-        
+        if (isDead) yield break;
         CoroutineManager.Instance.StartCoroutine(PlayEnemyDeathAudio(causeOfDeath), "EnemyDeathAudio");
-
+       
         isDead = true;
         currentState.EnemyDead();
 
@@ -433,7 +435,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         willSpawn = true;
         InternalCall.m_InternalCallSpawnParticle(EntityID);
 
-    
+
 
         transformComp = Component.Get<TransformComponent>(EntityID);
 
@@ -445,10 +447,10 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
         float rotationFloat = (float)(Math.Atan2(direction.X, direction.Y) * (180 / Math.PI)); //Gets rotation towards player
 
-        
+
         InternalCall.m_InternalCallSpawnParticle(EntityID);
         InternalCall.m_InternalCallSetParticleConeRotation(EntityID, rotationFloat);
-        InternalCall.m_InternalCallSetParticleLayer(EntityID,8);// 1 Below the sprite layer;
+        InternalCall.m_InternalCallSetParticleLayer(EntityID, 8);// 1 Below the sprite layer;
 
         transformComp.m_rotation = rotationFloat; //Sets rotation values
 
@@ -484,15 +486,18 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         yield return null;
         //yield return new CoroutineManager.WaitForSeconds(enemyBloodPoolSpawnDelay); //Waits for time before moving to next line;
 
-        
+
         int poolId = InternalCall.m_InternalCallAddPrefab("prefab_enemyBloodPool", transformComp.m_position.X, transformComp.m_position.Y, transformComp.m_rotation); //Spawns blood pool
-        if(enemyType == EnemySelection.Ranged || enemyType == EnemySelection.AlertRanged)
+        if (enemyType == EnemySelection.Ranged || enemyType == EnemySelection.AlertRanged)
         {
             SpriteComponent sc = Component.Get<SpriteComponent>(EntityID);
             sc.m_color = new Vector3();
             Component.Set<SpriteComponent>((uint)poolId, sc);
             //sc.m_color = 
         }
+
+        KillCounter.killCount++;
+        Console.WriteLine($"Kill Count: {KillCounter.killCount}");
     }
     #endregion
 
@@ -1483,7 +1488,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         Component.Set<RigidBodyComponent>(EntityID, rb);
         scanning = true;
         scanTime = 0f;
-        initialRotation = transformComp.m_rotation;
+        initialRotation = transformComp.m_rotation - 180f;
     }
 
     public void EnemyScanUpdate()
@@ -1511,8 +1516,8 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         }
 
         // Define left and right limits
-        float leftRotation = initialRotation - enemyFOVangle / 4;
-        float rightRotation = initialRotation + enemyFOVangle / 4;
+        float leftRotation = initialRotation - enemyFOVangle / 2;
+        float rightRotation = initialRotation + enemyFOVangle / 2;
 
         // Use time-based interpolation for smooth back-and-forth motion
         float t = (float)(Math.Sin(scanTime * Math.PI / scanDuration)); // Oscillates between -1 and 1

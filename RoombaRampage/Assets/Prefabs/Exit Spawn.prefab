@@ -18,7 +18,7 @@
     {
         "name": {
             "namestr": "Exit Spawn",
-            "layer": 10,
+            "layer": 2,
             "isprefab": true,
             "tagstr": "ExitSpawn",
             "prefabname": "EndPoint.prefab",
@@ -29,18 +29,18 @@
                 "x": 2.0246949195861816,
                 "y": -22.959794998168945
             },
-            "rotation": -0.0,
+            "rotation": 0.0,
             "scale": {
-                "x": 1.0,
-                "y": 1.0
+                "x": 2.700000047683716,
+                "y": 2.700000047683716
             }
         },
         "collider": {
             "checkcollision": true,
             "checkresponse": false,
             "size": {
-                "x": 1.0,
-                "y": 1.0
+                "x": 0.5,
+                "y": 0.5
             },
             "offset": {
                 "x": 0.0,
@@ -75,8 +75,8 @@
             "static": false
         },
         "sprite": {
-            "imagefile": "",
-            "layer": 1,
+            "imagefile": "img_exitPoint.png",
+            "layer": 4,
             "color": {
                 "r": 1.0,
                 "g": 1.0,
