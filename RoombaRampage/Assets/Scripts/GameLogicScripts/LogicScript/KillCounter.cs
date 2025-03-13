@@ -8,7 +8,8 @@ public class KillCounter : ScriptBase
     #endregion
 
     public static int killCount = 0;
-    private string exitPrefab = "prefab_enemy";
+    private bool hasSpawned = false;
+    private string exitPrefab = "Exit Spawn";
     public override void Awake(uint id) //Called everytime instance is created
     {
         EntityID = id; //Sets ID for object, DO NOT TOUCH
@@ -18,20 +19,22 @@ public class KillCounter : ScriptBase
     public override void Start() //Called once at the start of the game
     {
         ResetKillCount();
+
     }
 
     public override void Update()
     {
         if (LevelSelection.SceneName == "Level5")
         {
-            Console.WriteLine($"Kill Count: {killCount}");
-            int spawnPoint = InternalCall.m_InternalCallGetTagID("ExitSpawn");
-            if (killCount >= 5)
-            {
-                Vector2 spawnPointTransform;
-                InternalCall.m_InternalGetTranslate((uint)spawnPoint, out spawnPointTransform);
+            //Console.WriteLine($"Kill Count: {killCount}");
 
-                InternalCall.m_InternalCallAddPrefab(exitPrefab, spawnPointTransform.X, spawnPointTransform.Y, 0.0f);
+            if (killCount >= 20 && hasSpawned == false)
+            {
+                Console.WriteLine("spawn");
+                TransformComponent spawnPoint = Component.Get<TransformComponent>(EntityID);
+
+                InternalCall.m_InternalCallAddPrefab(exitPrefab, spawnPoint.m_position.X, spawnPoint.m_position.Y, 0.0f);
+                hasSpawned = true;
             }
         }
     }

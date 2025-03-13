@@ -19,18 +19,20 @@
         "name": {
             "namestr": "prefab_Enemy_Spawner",
             "layer": 0,
-            "isprefab": false,
-            "tagstr": "Default"
+            "isprefab": true,
+            "tagstr": "Default",
+            "prefabname": "prefab_Enemy_Spawner.prefab",
+            "issync": false
         },
         "transform": {
             "position": {
-                "x": 0.0,
-                "y": 0.0
+                "x": 21.053258895874023,
+                "y": -12.054062843322754
             },
-            "rotation": 0.0,
+            "rotation": -0.0,
             "scale": {
-                "x": 1.0,
-                "y": 1.0
+                "x": 0.18000000715255737,
+                "y": 0.23999999463558197
             }
         },
         "collider": {
@@ -53,7 +55,20 @@
                 {
                     "name": "EnemySpawner",
                     "enabled": true,
-                    "map": []
+                    "map": [
+                        {
+                            "variable": "spawnlimit",
+                            "base64": "AgAAAMzMzMwA"
+                        },
+                        {
+                            "variable": "minSpawnInterval",
+                            "base64": "AADAQMzMzMwA"
+                        },
+                        {
+                            "variable": "maxSpawnInterval",
+                            "base64": "AABAQczMzMwA"
+                        }
+                    ]
                 }
             ]
         }
