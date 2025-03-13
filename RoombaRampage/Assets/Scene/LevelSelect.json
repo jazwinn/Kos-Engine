@@ -10,6 +10,12 @@
         }
     },
     {
+        "CursorSettings": {
+            "cursorImage": "./Assets/Texture/UI/img_startScreenCursor.png",
+            "isCursorCentered": false
+        }
+    },
+    {
         "name": {
             "namestr": "Camera",
             "layer": 0,
@@ -104,13 +110,17 @@
                 "name": "aud_mainMenuLoop",
                 "volume": 0.20900000631809235,
                 "loop": true,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             },
             {
                 "name": "aud_startMenuAmbienceLoop01",
                 "volume": 1.0,
                 "loop": true,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             }
         ]
     },
@@ -197,7 +207,7 @@
                     }
                 },
                 "text": {
-                    "text": "BUILD: M4",
+                    "text": "BUILD: M5",
                     "text": null,
                     "filename": "fnt_silkscreenRegular.ttf",
                     "fontsize": 70.0,
@@ -775,17 +785,17 @@
                 },
                 "transform": {
                     "position": {
-                        "x": -1.2780033349990845,
+                        "x": -1.330936312675476,
                         "y": -0.2892287075519562
                     },
-                    "rotation": -0.0,
+                    "rotation": 0.0,
                     "scale": {
                         "x": 1.0,
                         "y": 1.0
                     }
                 },
                 "text": {
-                    "text": "GOAL: ESCAPE.",
+                    "text": "GOAL: RUN!",
                     "text": null,
                     "filename": "fnt_silkscreenRegular.ttf",
                     "fontsize": 1.5,
@@ -1001,10 +1011,10 @@
                 },
                 "transform": {
                     "position": {
-                        "x": -1.2780033349990845,
+                        "x": -1.2515366077423096,
                         "y": -0.2892287075519562
                     },
-                    "rotation": -0.0,
+                    "rotation": 0.0,
                     "scale": {
                         "x": 1.0,
                         "y": 1.0
@@ -1114,10 +1124,10 @@
                 },
                 "transform": {
                     "position": {
-                        "x": -1.2780033349990845,
+                        "x": -1.2515368461608887,
                         "y": -0.2892287075519562
                     },
-                    "rotation": -0.0,
+                    "rotation": 0.0,
                     "scale": {
                         "x": 1.0,
                         "y": 1.0
@@ -1186,7 +1196,7 @@
                     }
                 },
                 "sprite": {
-                    "imagefile": "img_uiLevelSelectFrameLevel5.png",
+                    "imagefile": "img_uiLevelSelectFrameLevel6.png",
                     "layer": 39,
                     "color": {
                         "r": 1.0,
@@ -1237,8 +1247,8 @@
         },
         "button": {
             "force": {
-                "x": 220.97314453125,
-                "y": 119.1785888671875
+                "x": -184.72607421875,
+                "y": -3.22918701171875
             },
             "scale": {
                 "x": 0.550000011920929,
@@ -1272,7 +1282,9 @@
                 "name": "aud_buttonClick01",
                 "volume": 1.0,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             }
         ],
         "children": [
@@ -1347,8 +1359,8 @@
         },
         "button": {
             "force": {
-                "x": 619.877685546875,
-                "y": 119.1785888671875
+                "x": 214.1783447265625,
+                "y": -3.22918701171875
             },
             "scale": {
                 "x": 0.550000011920929,
@@ -1382,7 +1394,9 @@
                 "name": "aud_buttonClick01",
                 "volume": 1.0,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             }
         ],
         "children": [
@@ -1457,8 +1471,8 @@
         },
         "button": {
             "force": {
-                "x": 1016.3342895507813,
-                "y": 119.1785888671875
+                "x": 610.6349487304688,
+                "y": -3.22918701171875
             },
             "scale": {
                 "x": 0.550000011920929,
@@ -1492,7 +1506,9 @@
                 "name": "aud_buttonClick01",
                 "volume": 1.0,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             }
         ],
         "children": [
@@ -1567,8 +1583,8 @@
         },
         "button": {
             "force": {
-                "x": 1410.200927734375,
-                "y": 119.1785888671875
+                "x": 1004.5016479492188,
+                "y": -3.22918701171875
             },
             "scale": {
                 "x": 0.550000011920929,
@@ -1602,7 +1618,9 @@
                 "name": "aud_buttonClick01",
                 "volume": 1.0,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             }
         ],
         "children": [
@@ -1677,8 +1695,8 @@
         },
         "button": {
             "force": {
-                "x": 1808.0291748046875,
-                "y": 119.1785888671875
+                "x": 1402.329833984375,
+                "y": -3.22918701171875
             },
             "scale": {
                 "x": 0.550000011920929,
@@ -1712,7 +1730,9 @@
                 "name": "aud_buttonClick01",
                 "volume": 1.0,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             }
         ],
         "children": [
@@ -1787,8 +1807,8 @@
         },
         "button": {
             "force": {
-                "x": 2206.894775390625,
-                "y": 119.1785888671875
+                "x": 1801.1956787109375,
+                "y": -3.22918701171875
             },
             "scale": {
                 "x": 0.550000011920929,
@@ -1822,7 +1842,9 @@
                 "name": "aud_buttonClick01",
                 "volume": 1.0,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             }
         ],
         "children": [
@@ -1845,7 +1867,7 @@
                     }
                 },
                 "text": {
-                    "text": "MEMORY1",
+                    "text": "MEMORY6",
                     "text": null,
                     "filename": "fnt_silkscreenRegular.ttf",
                     "fontsize": 2.5,

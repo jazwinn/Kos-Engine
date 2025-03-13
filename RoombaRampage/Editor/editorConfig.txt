@@ -2,6 +2,7 @@ Default
 Player
 Wall
 Bullet
+Boss
 Enemy
 EnemyBullet
 Camera
@@ -33,5 +34,6 @@ UIGameRightLimbCounterIcon
 UIGameBackLimbCounterIcon
 UIPauseTextBGM
 UIPauseTextSFX
+UIConfirmQuit
 PropGlassWall
 

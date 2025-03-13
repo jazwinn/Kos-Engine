@@ -1,17 +1,17 @@
 [
     {
         "GlobalSettings": {
-            "globalIllumination": 0.30000001192092896,
+            "globalIllumination": 1.0,
             "backgroundColor": {
-                "r": 0.13300000131130219,
-                "g": 0.23000000417232513,
-                "b": 0.3199999928474426
+                "r": 0.8274509906768799,
+                "g": 0.7137255072593689,
+                "b": 0.7137255072593689
             }
         }
     },
     {
         "CursorSettings": {
-            "cursorImage": "./Assets/Texture/UI/img_startScreenCursor.png",
+            "cursorImage": "default",
             "isCursorCentered": false
         }
     },
@@ -76,7 +76,7 @@
         },
         "sprite": {
             "imagefile": "ani_bossHit_strip4.png",
-            "layer": 100,
+            "layer": 7,
             "color": {
                 "r": 1.0,
                 "g": 1.0,
@@ -146,6 +146,38 @@
             {
                 "name": "aud_bossBullet01",
                 "volume": 0.3100000023841858,
+                "loop": false,
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
+            },
+            {
+                "name": "aud_railgunShot01",
+                "volume": 0.15800000727176666,
+                "loop": false,
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
+            },
+            {
+                "name": "aud_playerDeath01",
+                "volume": 0.6700000166893005,
+                "loop": false,
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
+            },
+            {
+                "name": "aud_bossHit01",
+                "volume": 0.33500000834465027,
+                "loop": false,
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
+            },
+            {
+                "name": "aud_katana01",
+                "volume": 0.3840000033378601,
                 "loop": false,
                 "playOnStart": false,
                 "isBGM": false,

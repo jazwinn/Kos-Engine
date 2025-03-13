@@ -10,6 +10,12 @@
         }
     },
     {
+        "CursorSettings": {
+            "cursorImage": "./Assets/Texture/UI/img_startScreenCursor.png",
+            "isCursorCentered": false
+        }
+    },
+    {
         "name": {
             "namestr": "Camera",
             "layer": 0,
@@ -86,7 +92,9 @@
                 "name": "aud_buttonClick01",
                 "volume": 0.5220000147819519,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             }
         ]
     },
@@ -167,8 +175,8 @@
         },
         "button": {
             "force": {
-                "x": -1351.9775390625,
-                "y": 3074.87939453125
+                "x": -7761.041015625,
+                "y": 8657.751953125
             },
             "scale": {
                 "x": 0.20999999344348907,
@@ -212,7 +220,9 @@
                 "name": "aud_buttonHover01",
                 "volume": 0.3440000116825104,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             }
         ]
     },
@@ -293,8 +303,8 @@
         },
         "button": {
             "force": {
-                "x": -1351.9775390625,
-                "y": 2894.068115234375
+                "x": -7761.041015625,
+                "y": 8476.939453125
             },
             "scale": {
                 "x": 0.18000000715255737,
@@ -329,31 +339,41 @@
                 "name": "aud_buttonClick01",
                 "volume": 1.0,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             },
             {
                 "name": "aud_startMenuAmbienceStart01",
                 "volume": 1.0,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             },
             {
                 "name": "aud_startMenuAmbienceLoop01",
                 "volume": 1.0,
                 "loop": true,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             },
             {
                 "name": "aud_startMenuAmbienceQuitt01",
                 "volume": 1.0,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             },
             {
                 "name": "aud_buttonHover01",
                 "volume": 0.37400001287460327,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             }
         ]
     },
@@ -455,7 +475,9 @@
                 "name": "aud_buttonHover01",
                 "volume": 0.39899998903274536,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             }
         ]
     },
@@ -714,7 +736,9 @@
                         "name": "aud_buttonHover01",
                         "volume": 0.3490000069141388,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             }

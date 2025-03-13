@@ -41,6 +41,11 @@ public class GameControllerLevel1 : ScriptBase
             InternalCall.m_InternalCallPlayAudio(EntityID, "aud_mainLevelLoop");
         }
 
+        else
+        {
+            InternalCall.m_InternalCallPlayAudio(EntityID, bossBGM);
+        }
+
         runOnce = false; 
         gameIsPaused = false;
         isShowingFps = false;
@@ -72,7 +77,7 @@ public class GameControllerLevel1 : ScriptBase
                         {
                             isActivated = true;
                             SpawnDoor();
-                            InternalCall.m_InternalCallPlayAudio(EntityID, bossBGM);
+                            
 
                         }
                         break;

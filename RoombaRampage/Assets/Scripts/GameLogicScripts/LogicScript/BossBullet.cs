@@ -33,8 +33,8 @@ public class BossBullet : ScriptBase
         forwardX = (float)Math.Cos(rotationInRadians);
         forwardY = (float)Math.Sin(rotationInRadians);
 
-        Console.WriteLine($"[Bullet Spawned] Position: X={startingBulletPos.X}, Y={startingBulletPos.Y}, Rotation={rotation}°");
-        Console.WriteLine($"[Bullet Direction] ForwardX={forwardX}, ForwardY={forwardY}");
+        //Console.WriteLine($"[Bullet Spawned] Position: X={startingBulletPos.X}, Y={startingBulletPos.Y}, Rotation={rotation}°");
+        //Console.WriteLine($"[Bullet Direction] ForwardX={forwardX}, ForwardY={forwardY}");
 
         animComp = Component.Get<AnimationComponent>(EntityID);
 
@@ -60,6 +60,12 @@ public class BossBullet : ScriptBase
 
     public override void Update()
     {
+        if (waitingToDelete)
+        {
+            InternalCall.m_InternalCallDeleteEntity(EntityID);
+            return;
+        }
+
         if (bulletHasHit)
         {
             AnimationComponent bulletAnimComp = Component.Get<AnimationComponent>(EntityID);
@@ -71,10 +77,7 @@ public class BossBullet : ScriptBase
                 waitingToDelete = true;
             }
 
-            if (waitingToDelete)
-            {
-                InternalCall.m_InternalCallDeleteEntity(EntityID);
-            }
+
 
             return;
         }
