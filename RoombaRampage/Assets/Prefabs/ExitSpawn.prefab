@@ -17,17 +17,15 @@
     },
     {
         "name": {
-            "namestr": "End Point",
-            "layer": 10,
-            "isprefab": true,
-            "tagstr": "Default",
-            "prefabname": "EndPoint.prefab",
-            "issync": false
+            "namestr": "ExitSpawn",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "ExitSpawn"
         },
         "transform": {
             "position": {
-                "x": 0.0,
-                "y": 0.0
+                "x": 2.0,
+                "y": -23.0
             },
             "rotation": -0.0,
             "scale": {
@@ -37,7 +35,7 @@
         },
         "collider": {
             "checkcollision": true,
-            "checkresponse": false,
+            "checkresponse": true,
             "size": {
                 "x": 1.0,
                 "y": 1.0
@@ -76,7 +74,7 @@
         },
         "sprite": {
             "imagefile": "",
-            "layer": 1,
+            "layer": 0,
             "color": {
                 "r": 1.0,
                 "g": 1.0,
@@ -84,20 +82,6 @@
             },
             "alpha": 1.0,
             "isLit": true
-        },
-        "script": {
-            "scripts": [
-                {
-                    "name": "LevelTransition",
-                    "enabled": true,
-                    "map": [
-                        {
-                            "variable": "NextLevelName",
-                            "base64": "Level2"
-                        }
-                    ]
-                }
-            ]
         }
     }
 ]

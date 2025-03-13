@@ -29,7 +29,7 @@ public class PlayerController : ScriptBase
         isDead = false;
 
         //Set speed of player
-        speed = 5;
+        speed = 4;
 
         //Set tolerance to prevent jittering, higher values = more rigid rotation, but no more jittering due to micro changes
         angleTolerance = 4f;

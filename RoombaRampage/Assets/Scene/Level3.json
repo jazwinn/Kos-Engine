@@ -1,7 +1,7 @@
 [
     {
         "GlobalSettings": {
-            "globalIllumination": 0.7799999713897705,
+            "globalIllumination": 1.3600000143051147,
             "backgroundColor": {
                 "r": 0.13300000131130219,
                 "g": 0.23000000417232513,
@@ -2315,14 +2315,14 @@
                     "isprefab": true,
                     "tagstr": "Default",
                     "prefabname": "prefab_Enemy_Spawner.prefab",
-                    "issync": true
+                    "issync": false
                 },
                 "transform": {
                     "position": {
-                        "x": -0.03534984588623047,
+                        "x": -3.830080509185791,
                         "y": -27.804826736450195
                     },
-                    "rotation": -0.0,
+                    "rotation": 0.0,
                     "scale": {
                         "x": 1.0,
                         "y": 1.0
@@ -2348,7 +2348,20 @@
                         {
                             "name": "EnemySpawner",
                             "enabled": true,
-                            "map": []
+                            "map": [
+                                {
+                                    "variable": "minSpawnInterval",
+                                    "base64": "AAAAQMzMzMwA"
+                                },
+                                {
+                                    "variable": "maxSpawnInterval",
+                                    "base64": "AABAQMzMzMwA"
+                                },
+                                {
+                                    "variable": "spawnlimit",
+                                    "base64": ""
+                                }
+                            ]
                         }
                     ]
                 }
@@ -2360,7 +2373,7 @@
                     "isprefab": true,
                     "tagstr": "Default",
                     "prefabname": "prefab_Enemy_Spawner.prefab",
-                    "issync": true
+                    "issync": false
                 },
                 "transform": {
                     "position": {
@@ -2393,7 +2406,20 @@
                         {
                             "name": "EnemySpawner",
                             "enabled": true,
-                            "map": []
+                            "map": [
+                                {
+                                    "variable": "minSpawnInterval",
+                                    "base64": "AAAAQMzMzMwA"
+                                },
+                                {
+                                    "variable": "maxSpawnInterval",
+                                    "base64": "AABAQMzMzMwA"
+                                },
+                                {
+                                    "variable": "spawnlimit",
+                                    "base64": ""
+                                }
+                            ]
                         }
                     ]
                 }
@@ -2405,7 +2431,7 @@
                     "isprefab": true,
                     "tagstr": "Default",
                     "prefabname": "prefab_Enemy_Spawner.prefab",
-                    "issync": true
+                    "issync": false
                 },
                 "transform": {
                     "position": {
@@ -2438,7 +2464,20 @@
                         {
                             "name": "EnemySpawner",
                             "enabled": true,
-                            "map": []
+                            "map": [
+                                {
+                                    "variable": "minSpawnInterval",
+                                    "base64": "AAAAQMzMzMwA"
+                                },
+                                {
+                                    "variable": "maxSpawnInterval",
+                                    "base64": "AABAQMzMzMwA"
+                                },
+                                {
+                                    "variable": "spawnlimit",
+                                    "base64": ""
+                                }
+                            ]
                         }
                     ]
                 }
@@ -3303,6 +3342,122 @@
                         }
                     }
                 ]
+            },
+            {
+                "name": {
+                    "namestr": "prefab_Enemy_Spawner",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "prefab_Enemy_Spawner.prefab",
+                    "issync": false
+                },
+                "transform": {
+                    "position": {
+                        "x": -0.03534984588623047,
+                        "y": -27.804826736450195
+                    },
+                    "rotation": -0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "collider": {
+                    "checkcollision": false,
+                    "checkresponse": false,
+                    "size": {
+                        "x": 6.400000095367432,
+                        "y": 5.639999866485596
+                    },
+                    "offset": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "drawDebug": true,
+                    "radius": 0.5,
+                    "shapetype": 0
+                },
+                "script": {
+                    "scripts": [
+                        {
+                            "name": "EnemySpawner",
+                            "enabled": true,
+                            "map": [
+                                {
+                                    "variable": "minSpawnInterval",
+                                    "base64": "AAAAQMzMzMwA"
+                                },
+                                {
+                                    "variable": "maxSpawnInterval",
+                                    "base64": "AABAQMzMzMwA"
+                                },
+                                {
+                                    "variable": "spawnlimit",
+                                    "base64": ""
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "name": {
+                    "namestr": "prefab_Enemy_Spawner",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "prefab_Enemy_Spawner.prefab",
+                    "issync": false
+                },
+                "transform": {
+                    "position": {
+                        "x": 3.829652786254883,
+                        "y": -27.804826736450195
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "collider": {
+                    "checkcollision": false,
+                    "checkresponse": false,
+                    "size": {
+                        "x": 6.400000095367432,
+                        "y": 5.639999866485596
+                    },
+                    "offset": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "drawDebug": true,
+                    "radius": 0.5,
+                    "shapetype": 0
+                },
+                "script": {
+                    "scripts": [
+                        {
+                            "name": "EnemySpawner",
+                            "enabled": true,
+                            "map": [
+                                {
+                                    "variable": "minSpawnInterval",
+                                    "base64": "AAAAQMzMzMwA"
+                                },
+                                {
+                                    "variable": "maxSpawnInterval",
+                                    "base64": "AABAQMzMzMwA"
+                                },
+                                {
+                                    "variable": "spawnlimit",
+                                    "base64": ""
+                                }
+                            ]
+                        }
+                    ]
+                }
             }
         ]
     },
@@ -28312,34 +28467,34 @@
                     0,
                     0,
                     0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
                     1,
                     0,
                     0,
                     0,
                     0,
                     1,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
                     0,
                     0,
                     0,
@@ -28492,22 +28647,6 @@
                     0,
                     0,
                     0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    1,
-                    0,
-                    0,
-                    0,
-                    0,
                     1,
                     0,
                     0,
@@ -28520,6 +28659,22 @@
                     0,
                     0,
                     0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
                     0,
                     0,
                     0,
@@ -28672,34 +28827,34 @@
                     0,
                     0,
                     0,
-                    0,
-                    0,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
                     1,
                     0,
                     0,
                     0,
                     0,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
                     0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
                     0,
                     0,
                     0,
@@ -28852,8 +29007,6 @@
                     0,
                     0,
                     0,
-                    0,
-                    0,
                     1,
                     0,
                     0,
@@ -28878,8 +29031,10 @@
                     0,
                     0,
                     0,
-                    1,
                     0,
+                    0,
+                    0,
+                    1,
                     0,
                     0,
                     0,
@@ -29032,8 +29187,6 @@
                     0,
                     0,
                     0,
-                    0,
-                    0,
                     1,
                     0,
                     0,
@@ -29058,8 +29211,10 @@
                     0,
                     0,
                     0,
-                    1,
                     0,
+                    0,
+                    0,
+                    1,
                     0,
                     0,
                     0,
@@ -29212,8 +29367,6 @@
                     0,
                     0,
                     0,
-                    0,
-                    0,
                     1,
                     0,
                     0,
@@ -29238,8 +29391,10 @@
                     0,
                     0,
                     0,
-                    1,
                     0,
+                    0,
+                    0,
+                    1,
                     0,
                     0,
                     0,
@@ -29392,8 +29547,6 @@
                     0,
                     0,
                     0,
-                    0,
-                    0,
                     1,
                     0,
                     0,
@@ -29418,8 +29571,10 @@
                     0,
                     0,
                     0,
-                    1,
                     0,
+                    0,
+                    0,
+                    1,
                     0,
                     0,
                     0,
@@ -29572,8 +29727,6 @@
                     0,
                     0,
                     0,
-                    0,
-                    0,
                     1,
                     0,
                     0,
@@ -29598,8 +29751,10 @@
                     0,
                     0,
                     0,
-                    1,
                     0,
+                    0,
+                    0,
+                    1,
                     0,
                     0,
                     0,
@@ -29752,8 +29907,6 @@
                     0,
                     0,
                     0,
-                    0,
-                    0,
                     1,
                     0,
                     0,
@@ -29778,8 +29931,10 @@
                     0,
                     0,
                     0,
-                    1,
                     0,
+                    0,
+                    0,
+                    1,
                     0,
                     0,
                     0,
@@ -29932,8 +30087,6 @@
                     0,
                     0,
                     0,
-                    0,
-                    0,
                     1,
                     0,
                     0,
@@ -29958,8 +30111,10 @@
                     0,
                     0,
                     0,
-                    1,
                     0,
+                    0,
+                    0,
+                    1,
                     0,
                     0,
                     0,
@@ -30112,8 +30267,6 @@
                     0,
                     0,
                     0,
-                    0,
-                    0,
                     1,
                     0,
                     0,
@@ -30138,8 +30291,10 @@
                     0,
                     0,
                     0,
-                    1,
                     0,
+                    0,
+                    0,
+                    1,
                     0,
                     0,
                     0,
@@ -30292,34 +30447,34 @@
                     0,
                     0,
                     0,
-                    0,
-                    0,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
                     1,
                     0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
                     0,
                     0,
                     0,
@@ -30472,6 +30627,7 @@
                     0,
                     0,
                     0,
+                    1,
                     0,
                     0,
                     0,
@@ -30498,8 +30654,7 @@
                     0,
                     0,
                     0,
-                    0,
-                    0,
+                    1,
                     0,
                     0,
                     0,
@@ -30652,34 +30807,34 @@
                     0,
                     0,
                     0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
                     0,
                     0,
                     0,
@@ -70190,992 +70345,6 @@
     },
     {
         "name": {
-            "namestr": "Player",
-            "layer": 1,
-            "isprefab": true,
-            "tagstr": "Player",
-            "prefabname": "prefab_player.prefab",
-            "issync": true
-        },
-        "transform": {
-            "position": {
-                "x": 0.003694787621498108,
-                "y": -16.0
-            },
-            "rotation": -0.0,
-            "scale": {
-                "x": 3.0,
-                "y": 3.0
-            }
-        },
-        "collider": {
-            "checkcollision": true,
-            "checkresponse": true,
-            "size": {
-                "x": 1.0,
-                "y": 1.0
-            },
-            "offset": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "drawDebug": true,
-            "radius": 0.550000011920929,
-            "shapetype": 1
-        },
-        "rigidbody": {
-            "linearVelocity": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "linearAcceleration": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "rotation": 0.0,
-            "angularVelocity": 0.0,
-            "angularAcceleration": 0.0,
-            "mass": 1.0,
-            "inverseMass": 1.0,
-            "linearDamping": 0.9900000095367432,
-            "angularDamping": 0.9900000095367432,
-            "force": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "torque": 0.0,
-            "kinematic": false,
-            "static": false
-        },
-        "sprite": {
-            "imagefile": "ani_roombertMove_strip6.png",
-            "layer": 11,
-            "color": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
-            },
-            "alpha": 1.0,
-            "isLit": true
-        },
-        "animation": {
-            "frameNumber": 0,
-            "framesPerSecond": 20,
-            "frameTimer": 0.0,
-            "isAnimating": false,
-            "stripCount": 6
-        },
-        "script": {
-            "scripts": [
-                {
-                    "name": "PlayerController",
-                    "enabled": true,
-                    "map": [
-                        {
-                            "variable": "speed",
-                            "base64": ""
-                        },
-                        {
-                            "variable": "isDead",
-                            "base64": ""
-                        }
-                    ]
-                }
-            ]
-        },
-        "audio": [
-            {
-                "name": "aud_playerDeath01",
-                "volume": 0.9269999861717224,
-                "loop": false,
-                "playOnStart": false,
-                "isBGM": false,
-                "isSFX": true
-            },
-            {
-                "name": "aud_vacuumStart01",
-                "volume": 1.0,
-                "loop": false,
-                "playOnStart": false,
-                "isBGM": false,
-                "isSFX": true
-            },
-            {
-                "name": "aud_vacuumLoop01",
-                "volume": 0.3140000104904175,
-                "loop": true,
-                "playOnStart": false,
-                "isBGM": false,
-                "isSFX": true
-            },
-            {
-                "name": "aud_vacuumEnd01",
-                "volume": 1.0,
-                "loop": false,
-                "playOnStart": false,
-                "isBGM": false,
-                "isSFX": true
-            }
-        ],
-        "children": [
-            {
-                "name": {
-                    "namestr": "GunLeft",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "LeftLimbSprite",
-                    "prefabname": "prefab_player.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": -0.1494445502758026,
-                        "y": 0.32930514216423035
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    }
-                },
-                "sprite": {
-                    "imagefile": "ani_gunLeftAnim_strip8.png",
-                    "layer": 12,
-                    "color": {
-                        "r": 1.0,
-                        "g": 1.0,
-                        "b": 1.0
-                    },
-                    "alpha": 1.0,
-                    "isLit": true
-                },
-                "animation": {
-                    "frameNumber": 0,
-                    "framesPerSecond": 35,
-                    "frameTimer": 0.0,
-                    "isAnimating": false,
-                    "stripCount": 8
-                },
-                "script": {
-                    "scripts": [
-                        {
-                            "name": "PlayerGun",
-                            "enabled": true,
-                            "map": [
-                                {
-                                    "variable": "limbTag",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "ammoCount",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "backLimbGunAmmo",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "meleeCount",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "leftLimbShotGunAmmo",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "railGunLightMaxIntensity",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "rightLimbRailGunHold",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "rightWeaponCount",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "leftLimbGunAmmo",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "rightLimbShotGunAmmo",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "playerBoost",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "rightLimbGunAmmo",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "leftWeaponCount",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "leftLimbRailGunHold",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "chargeDurationRailGun",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "backWeaponcount",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "boostAcceleration",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "boostDuration",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "boostCoolDown",
-                                    "base64": ""
-                                }
-                            ]
-                        }
-                    ]
-                },
-                "audio": [
-                    {
-                        "name": "aud_cleaver",
-                        "volume": 1.0,
-                        "loop": false,
-                        "playOnStart": false,
-                        "isBGM": false,
-                        "isSFX": true
-                    },
-                    {
-                        "name": "aud_gunshot01",
-                        "volume": 0.6539999842643738,
-                        "loop": false,
-                        "playOnStart": false,
-                        "isBGM": false,
-                        "isSFX": true
-                    },
-                    {
-                        "name": "aud_weaponSwitch01",
-                        "volume": 0.20900000631809235,
-                        "loop": false,
-                        "playOnStart": false,
-                        "isBGM": false,
-                        "isSFX": true
-                    },
-                    {
-                        "name": "aud_katana01",
-                        "volume": 0.5199999809265137,
-                        "loop": false,
-                        "playOnStart": false,
-                        "isBGM": false,
-                        "isSFX": true
-                    },
-                    {
-                        "name": "aud_emptyGun01",
-                        "volume": 0.22100000083446503,
-                        "loop": false,
-                        "playOnStart": false,
-                        "isBGM": false,
-                        "isSFX": true
-                    },
-                    {
-                        "name": "aud_tempcock",
-                        "volume": 0.22200000286102295,
-                        "loop": false,
-                        "playOnStart": false,
-                        "isBGM": false,
-                        "isSFX": true
-                    },
-                    {
-                        "name": "aud_railgunChargeUp01",
-                        "volume": 0.6209999918937683,
-                        "loop": false,
-                        "playOnStart": false,
-                        "isBGM": false,
-                        "isSFX": true
-                    },
-                    {
-                        "name": "aud_railgunShot01",
-                        "volume": 0.5960000157356262,
-                        "loop": false,
-                        "playOnStart": false,
-                        "isBGM": false,
-                        "isSFX": true
-                    },
-                    {
-                        "name": "aud_railgunChargeDown01",
-                        "volume": 1.0,
-                        "loop": false,
-                        "playOnStart": false,
-                        "isBGM": false,
-                        "isSFX": true
-                    },
-                    {
-                        "name": "aud_shotgunShot01",
-                        "volume": 0.6869999766349792,
-                        "loop": false,
-                        "playOnStart": false,
-                        "isBGM": false,
-                        "isSFX": true
-                    },
-                    {
-                        "name": "aud_shotgunCocking01",
-                        "volume": 1.0,
-                        "loop": false,
-                        "playOnStart": false,
-                        "isBGM": false,
-                        "isSFX": true
-                    }
-                ]
-            },
-            {
-                "name": {
-                    "namestr": "GunRight",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "RightLimbSprite",
-                    "prefabname": "prefab_player.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": 0.15000000596046448,
-                        "y": 0.33000001311302185
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    }
-                },
-                "sprite": {
-                    "imagefile": "ani_gunRightAnim_strip8.png",
-                    "layer": 13,
-                    "color": {
-                        "r": 1.0,
-                        "g": 1.0,
-                        "b": 1.0
-                    },
-                    "alpha": 1.0,
-                    "isLit": true
-                },
-                "animation": {
-                    "frameNumber": 0,
-                    "framesPerSecond": 35,
-                    "frameTimer": 0.0,
-                    "isAnimating": false,
-                    "stripCount": 8
-                },
-                "script": {
-                    "scripts": [
-                        {
-                            "name": "PlayerGun",
-                            "enabled": true,
-                            "map": [
-                                {
-                                    "variable": "limbTag",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "ammoCount",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "backLimbGunAmmo",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "meleeCount",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "railGunLightMaxIntensity",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "leftLimbShotGunAmmo",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "leftLimbGunAmmo",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "rightWeaponCount",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "rightLimbRailGunHold",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "rightLimbShotGunAmmo",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "playerBoost",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "leftWeaponCount",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "rightLimbGunAmmo",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "leftLimbRailGunHold",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "chargeDurationRailGun",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "backWeaponcount",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "boostAcceleration",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "boostDuration",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "boostCoolDown",
-                                    "base64": ""
-                                }
-                            ]
-                        }
-                    ]
-                },
-                "audio": [
-                    {
-                        "name": "aud_cleaver",
-                        "volume": 1.0,
-                        "loop": false,
-                        "playOnStart": false,
-                        "isBGM": false,
-                        "isSFX": true
-                    },
-                    {
-                        "name": "aud_gunshot01",
-                        "volume": 0.6589999794960022,
-                        "loop": false,
-                        "playOnStart": false,
-                        "isBGM": false,
-                        "isSFX": true
-                    },
-                    {
-                        "name": "aud_weaponSwitch01",
-                        "volume": 0.2029999941587448,
-                        "loop": false,
-                        "playOnStart": false,
-                        "isBGM": false,
-                        "isSFX": true
-                    },
-                    {
-                        "name": "aud_katana01",
-                        "volume": 0.48899999260902405,
-                        "loop": false,
-                        "playOnStart": false,
-                        "isBGM": false,
-                        "isSFX": true
-                    },
-                    {
-                        "name": "aud_emptyGun01",
-                        "volume": 0.23199999332427979,
-                        "loop": false,
-                        "playOnStart": false,
-                        "isBGM": false,
-                        "isSFX": true
-                    },
-                    {
-                        "name": "aud_tempcock",
-                        "volume": 0.22699999809265137,
-                        "loop": false,
-                        "playOnStart": false,
-                        "isBGM": false,
-                        "isSFX": true
-                    },
-                    {
-                        "name": "aud_railgunChargeUp01",
-                        "volume": 0.6159999966621399,
-                        "loop": false,
-                        "playOnStart": false,
-                        "isBGM": false,
-                        "isSFX": true
-                    },
-                    {
-                        "name": "aud_railgunShot01",
-                        "volume": 0.6349999904632568,
-                        "loop": false,
-                        "playOnStart": false,
-                        "isBGM": false,
-                        "isSFX": true
-                    },
-                    {
-                        "name": "aud_railgunChargeDown01",
-                        "volume": 1.0,
-                        "loop": false,
-                        "playOnStart": false,
-                        "isBGM": false,
-                        "isSFX": true
-                    },
-                    {
-                        "name": "aud_shotgunShot01",
-                        "volume": 0.6869999766349792,
-                        "loop": false,
-                        "playOnStart": false,
-                        "isBGM": false,
-                        "isSFX": true
-                    },
-                    {
-                        "name": "aud_shotgunCocking01",
-                        "volume": 1.0,
-                        "loop": false,
-                        "playOnStart": false,
-                        "isBGM": false,
-                        "isSFX": true
-                    }
-                ]
-            },
-            {
-                "name": {
-                    "namestr": "GunBack",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "BackLimbSprite",
-                    "prefabname": "prefab_player.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": 0.0,
-                        "y": -0.047722700983285904
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    }
-                },
-                "sprite": {
-                    "imagefile": "ani_gunTailAnim_strip8.png",
-                    "layer": 14,
-                    "color": {
-                        "r": 1.0,
-                        "g": 1.0,
-                        "b": 1.0
-                    },
-                    "alpha": 1.0,
-                    "isLit": true
-                },
-                "animation": {
-                    "frameNumber": 0,
-                    "framesPerSecond": 35,
-                    "frameTimer": 0.0,
-                    "isAnimating": false,
-                    "stripCount": 8
-                },
-                "script": {
-                    "scripts": [
-                        {
-                            "name": "PlayerGun",
-                            "enabled": true,
-                            "map": [
-                                {
-                                    "variable": "limbTag",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "ammoCount",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "meleeCount",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "CheckWeaponsBool",
-                                    "base64": ""
-                                }
-                            ]
-                        }
-                    ]
-                },
-                "audio": [
-                    {
-                        "name": "aud_gunshot01",
-                        "volume": 0.6759999990463257,
-                        "loop": false,
-                        "playOnStart": false,
-                        "isBGM": false,
-                        "isSFX": true
-                    },
-                    {
-                        "name": "aud_cleaver",
-                        "volume": 0.546999990940094,
-                        "loop": false,
-                        "playOnStart": false,
-                        "isBGM": false,
-                        "isSFX": true
-                    },
-                    {
-                        "name": "aud_katana01",
-                        "volume": 0.4970000088214874,
-                        "loop": false,
-                        "playOnStart": false,
-                        "isBGM": false,
-                        "isSFX": true
-                    },
-                    {
-                        "name": "aud_emptyGun01",
-                        "volume": 0.25699999928474426,
-                        "loop": false,
-                        "playOnStart": false,
-                        "isBGM": false,
-                        "isSFX": true
-                    },
-                    {
-                        "name": "aud_boosters01",
-                        "volume": 1.0,
-                        "loop": false,
-                        "playOnStart": false,
-                        "isBGM": false,
-                        "isSFX": true
-                    },
-                    {
-                        "name": "aud_vacuumStart01",
-                        "volume": 1.0,
-                        "loop": false,
-                        "playOnStart": false,
-                        "isBGM": false,
-                        "isSFX": true
-                    }
-                ]
-            },
-            {
-                "name": {
-                    "namestr": "MeleeKillZoneSpawn",
-                    "layer": 4,
-                    "isprefab": true,
-                    "tagstr": "MeleeKillZoneSpawn",
-                    "prefabname": "prefab_player.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": 0.0,
-                        "y": 0.22081679105758667
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    }
-                },
-                "collider": {
-                    "checkcollision": false,
-                    "checkresponse": false,
-                    "size": {
-                        "x": 1.0,
-                        "y": 1.0
-                    },
-                    "offset": {
-                        "x": 0.0,
-                        "y": 0.07999999821186066
-                    },
-                    "drawDebug": true,
-                    "radius": 2.299999952316284,
-                    "shapetype": 1
-                }
-            },
-            {
-                "name": {
-                    "namestr": "BulletSpawnLeft",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "LeftLimbPos",
-                    "prefabname": "prefab_player.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": -0.07722800970077515,
-                        "y": 0.3199999928474426
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    }
-                }
-            },
-            {
-                "name": {
-                    "namestr": "BulletSpawnRight",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "RightLimbPos",
-                    "prefabname": "prefab_player.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": 0.08051446080207825,
-                        "y": 0.3176966905593872
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    }
-                }
-            },
-            {
-                "name": {
-                    "namestr": "BulletSpawnBack",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "BackLimbPos",
-                    "prefabname": "prefab_player.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": 0.0029742319602519274,
-                        "y": 0.024165907874703407
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    }
-                }
-            },
-            {
-                "name": {
-                    "namestr": "PlayerGlow",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "prefab_player.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 5.0,
-                        "y": 5.0
-                    }
-                },
-                "LightingComponent": {
-                    "m_innerOuterRadius": {
-                        "x": 0.0,
-                        "y": 1.0
-                    },
-                    "m_intensity": 0.550000011920929,
-                    "m_light_OffSet": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "m_light_scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    },
-                    "m_light_rotation": 0.0,
-                    "m_colour": {
-                        "x": 1.0,
-                        "y": 1.0,
-                        "z": 1.0
-                    }
-                }
-            },
-            {
-                "name": {
-                    "namestr": "PlayerEyeGlow",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "prefab_player.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": 0.0,
-                        "y": 0.11136922240257263
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 0.9799999594688416,
-                        "y": 0.9799999594688416
-                    }
-                },
-                "LightingComponent": {
-                    "m_innerOuterRadius": {
-                        "x": 0.0,
-                        "y": 1.0
-                    },
-                    "m_intensity": 0.699999988079071,
-                    "m_light_OffSet": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "m_light_scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    },
-                    "m_light_rotation": 0.0,
-                    "m_colour": {
-                        "x": 1.0,
-                        "y": 1.0,
-                        "z": 1.0
-                    }
-                }
-            },
-            {
-                "name": {
-                    "namestr": "LeftRailgunGlow",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "PlayerGunLightLeft",
-                    "prefabname": "prefab_player.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": -0.13173292577266693,
-                        "y": 0.3606119155883789
-                    },
-                    "rotation": -0.30000001192092896,
-                    "scale": {
-                        "x": 0.5199999809265137,
-                        "y": 1.2000000476837158
-                    }
-                },
-                "LightingComponent": {
-                    "m_innerOuterRadius": {
-                        "x": 0.05999999865889549,
-                        "y": 1.0
-                    },
-                    "m_intensity": 0.0,
-                    "m_light_OffSet": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "m_light_scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    },
-                    "m_light_rotation": 0.0,
-                    "m_colour": {
-                        "x": 1.0,
-                        "y": 1.0,
-                        "z": 1.0
-                    }
-                }
-            },
-            {
-                "name": {
-                    "namestr": "RightRailgunGlow",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "PlayerGunLightRight",
-                    "prefabname": "prefab_player.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": 0.14029377698898315,
-                        "y": 0.3606119155883789
-                    },
-                    "rotation": -0.30000001192092896,
-                    "scale": {
-                        "x": 0.5199999809265137,
-                        "y": 1.2000000476837158
-                    }
-                },
-                "LightingComponent": {
-                    "m_innerOuterRadius": {
-                        "x": 0.05999999865889549,
-                        "y": 1.0
-                    },
-                    "m_intensity": 0.0,
-                    "m_light_OffSet": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "m_light_scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    },
-                    "m_light_rotation": 0.0,
-                    "m_colour": {
-                        "x": 1.0,
-                        "y": 1.0,
-                        "z": 1.0
-                    }
-                }
-            },
-            {
-                "name": {
-                    "namestr": "ShotgunBulletSpawnLeft",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "LeftShotgunLimbPos",
-                    "prefabname": "prefab_player.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": -0.07722800970077515,
-                        "y": 0.6750263571739197
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    }
-                }
-            },
-            {
-                "name": {
-                    "namestr": "ShotgunBulletSpawnRight",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "RightShotgunLimbPos",
-                    "prefabname": "prefab_player.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": 0.08051446080207825,
-                        "y": 0.6800000071525574
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    }
-                }
-            }
-        ]
-    },
-    {
-        "name": {
             "namestr": "UI_PauseMenu",
             "layer": 0,
             "isprefab": true,
@@ -73689,7 +72858,7 @@
                 },
                 "sprite": {
                     "imagefile": "img_userManual.png",
-                    "layer": 501,
+                    "layer": 500,
                     "color": {
                         "r": 1.0,
                         "g": 1.0,
@@ -73760,7 +72929,7 @@
                 },
                 "sprite": {
                     "imagefile": "ani_inventoryCloseButton_strip2.png",
-                    "layer": 533,
+                    "layer": 501,
                     "color": {
                         "r": 1.0,
                         "g": 1.0,
@@ -73870,7 +73039,7 @@
                 },
                 "sprite": {
                     "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
-                    "layer": 534,
+                    "layer": 502,
                     "color": {
                         "r": 1.0,
                         "g": 1.0,
@@ -73949,7 +73118,7 @@
                         "g": 0.0,
                         "b": 0.0
                     },
-                    "layer": 535
+                    "layer": 503
                 }
             }
         ]
@@ -75177,8 +74346,8 @@
                 "volume": 0.17000000178813934,
                 "loop": true,
                 "playOnStart": false,
-                "isBGM": true,
-                "isSFX": false
+                "isBGM": false,
+                "isSFX": true
             }
         ]
     },
@@ -79948,6 +79117,972 @@
                     "position": {
                         "x": -0.0514955148100853,
                         "y": 3.9899744987487793
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "name": {
+            "namestr": "Player",
+            "layer": 1,
+            "isprefab": true,
+            "tagstr": "Player",
+            "prefabname": "prefab_player.prefab",
+            "issync": true
+        },
+        "transform": {
+            "position": {
+                "x": 0.06042289733886719,
+                "y": -15.931792259216309
+            },
+            "rotation": 0.0,
+            "scale": {
+                "x": 3.0,
+                "y": 3.0
+            }
+        },
+        "collider": {
+            "checkcollision": true,
+            "checkresponse": true,
+            "size": {
+                "x": 1.0,
+                "y": 1.0
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true,
+            "radius": 0.550000011920929,
+            "shapetype": 1
+        },
+        "rigidbody": {
+            "linearVelocity": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "linearAcceleration": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "angularVelocity": 0.0,
+            "angularAcceleration": 0.0,
+            "mass": 1.0,
+            "inverseMass": 1.0,
+            "linearDamping": 0.9900000095367432,
+            "angularDamping": 0.9900000095367432,
+            "force": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "torque": 0.0,
+            "kinematic": false,
+            "static": false
+        },
+        "sprite": {
+            "imagefile": "ani_roombertMove_strip6.png",
+            "layer": 11,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0,
+            "isLit": true
+        },
+        "animation": {
+            "frameNumber": 0,
+            "framesPerSecond": 20,
+            "frameTimer": 0.0,
+            "isAnimating": false,
+            "stripCount": 6
+        },
+        "script": {
+            "scripts": [
+                {
+                    "name": "PlayerController",
+                    "enabled": true,
+                    "map": [
+                        {
+                            "variable": "speed",
+                            "base64": ""
+                        },
+                        {
+                            "variable": "isDead",
+                            "base64": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        "audio": [
+            {
+                "name": "aud_playerDeath01",
+                "volume": 0.9269999861717224,
+                "loop": false,
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
+            },
+            {
+                "name": "aud_vacuumStart01",
+                "volume": 1.0,
+                "loop": false,
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
+            },
+            {
+                "name": "aud_vacuumLoop01",
+                "volume": 0.3140000104904175,
+                "loop": true,
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
+            },
+            {
+                "name": "aud_vacuumEnd01",
+                "volume": 1.0,
+                "loop": false,
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
+            }
+        ],
+        "children": [
+            {
+                "name": {
+                    "namestr": "GunLeft",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "LeftLimbSprite",
+                    "prefabname": "prefab_player.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": -0.1494445502758026,
+                        "y": 0.32930514216423035
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "sprite": {
+                    "imagefile": "ani_gunLeftAnim_strip8.png",
+                    "layer": 12,
+                    "color": {
+                        "r": 1.0,
+                        "g": 1.0,
+                        "b": 1.0
+                    },
+                    "alpha": 1.0,
+                    "isLit": true
+                },
+                "animation": {
+                    "frameNumber": 0,
+                    "framesPerSecond": 35,
+                    "frameTimer": 0.0,
+                    "isAnimating": false,
+                    "stripCount": 8
+                },
+                "script": {
+                    "scripts": [
+                        {
+                            "name": "PlayerGun",
+                            "enabled": true,
+                            "map": [
+                                {
+                                    "variable": "limbTag",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "ammoCount",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "backLimbGunAmmo",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "meleeCount",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "leftLimbShotGunAmmo",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "railGunLightMaxIntensity",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "rightLimbRailGunHold",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "rightWeaponCount",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "leftLimbGunAmmo",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "rightLimbShotGunAmmo",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "playerBoost",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "rightLimbGunAmmo",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "leftWeaponCount",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "leftLimbRailGunHold",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "chargeDurationRailGun",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "backWeaponcount",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "boostAcceleration",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "boostDuration",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "boostCoolDown",
+                                    "base64": ""
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "audio": [
+                    {
+                        "name": "aud_cleaver",
+                        "volume": 1.0,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    },
+                    {
+                        "name": "aud_gunshot01",
+                        "volume": 0.6539999842643738,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    },
+                    {
+                        "name": "aud_weaponSwitch01",
+                        "volume": 0.20900000631809235,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    },
+                    {
+                        "name": "aud_katana01",
+                        "volume": 0.5199999809265137,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    },
+                    {
+                        "name": "aud_emptyGun01",
+                        "volume": 0.22100000083446503,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    },
+                    {
+                        "name": "aud_tempcock",
+                        "volume": 0.22200000286102295,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    },
+                    {
+                        "name": "aud_railgunChargeUp01",
+                        "volume": 0.6209999918937683,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    },
+                    {
+                        "name": "aud_railgunShot01",
+                        "volume": 0.5960000157356262,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    },
+                    {
+                        "name": "aud_railgunChargeDown01",
+                        "volume": 1.0,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    },
+                    {
+                        "name": "aud_shotgunShot01",
+                        "volume": 0.6869999766349792,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    },
+                    {
+                        "name": "aud_shotgunCocking01",
+                        "volume": 1.0,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    }
+                ]
+            },
+            {
+                "name": {
+                    "namestr": "GunRight",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "RightLimbSprite",
+                    "prefabname": "prefab_player.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.15000000596046448,
+                        "y": 0.33000001311302185
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "sprite": {
+                    "imagefile": "ani_gunRightAnim_strip8.png",
+                    "layer": 13,
+                    "color": {
+                        "r": 1.0,
+                        "g": 1.0,
+                        "b": 1.0
+                    },
+                    "alpha": 1.0,
+                    "isLit": true
+                },
+                "animation": {
+                    "frameNumber": 0,
+                    "framesPerSecond": 35,
+                    "frameTimer": 0.0,
+                    "isAnimating": false,
+                    "stripCount": 8
+                },
+                "script": {
+                    "scripts": [
+                        {
+                            "name": "PlayerGun",
+                            "enabled": true,
+                            "map": [
+                                {
+                                    "variable": "limbTag",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "ammoCount",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "backLimbGunAmmo",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "meleeCount",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "railGunLightMaxIntensity",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "leftLimbShotGunAmmo",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "leftLimbGunAmmo",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "rightWeaponCount",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "rightLimbRailGunHold",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "rightLimbShotGunAmmo",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "playerBoost",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "leftWeaponCount",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "rightLimbGunAmmo",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "leftLimbRailGunHold",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "chargeDurationRailGun",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "backWeaponcount",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "boostAcceleration",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "boostDuration",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "boostCoolDown",
+                                    "base64": ""
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "audio": [
+                    {
+                        "name": "aud_cleaver",
+                        "volume": 1.0,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    },
+                    {
+                        "name": "aud_gunshot01",
+                        "volume": 0.6589999794960022,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    },
+                    {
+                        "name": "aud_weaponSwitch01",
+                        "volume": 0.2029999941587448,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    },
+                    {
+                        "name": "aud_katana01",
+                        "volume": 0.48899999260902405,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    },
+                    {
+                        "name": "aud_emptyGun01",
+                        "volume": 0.23199999332427979,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    },
+                    {
+                        "name": "aud_tempcock",
+                        "volume": 0.22699999809265137,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    },
+                    {
+                        "name": "aud_railgunChargeUp01",
+                        "volume": 0.6159999966621399,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    },
+                    {
+                        "name": "aud_railgunShot01",
+                        "volume": 0.6349999904632568,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    },
+                    {
+                        "name": "aud_railgunChargeDown01",
+                        "volume": 1.0,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    },
+                    {
+                        "name": "aud_shotgunShot01",
+                        "volume": 0.6869999766349792,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    },
+                    {
+                        "name": "aud_shotgunCocking01",
+                        "volume": 1.0,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    }
+                ]
+            },
+            {
+                "name": {
+                    "namestr": "GunBack",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "BackLimbSprite",
+                    "prefabname": "prefab_player.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.0,
+                        "y": -0.047722700983285904
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "sprite": {
+                    "imagefile": "ani_gunTailAnim_strip8.png",
+                    "layer": 14,
+                    "color": {
+                        "r": 1.0,
+                        "g": 1.0,
+                        "b": 1.0
+                    },
+                    "alpha": 1.0,
+                    "isLit": true
+                },
+                "animation": {
+                    "frameNumber": 0,
+                    "framesPerSecond": 35,
+                    "frameTimer": 0.0,
+                    "isAnimating": false,
+                    "stripCount": 8
+                },
+                "script": {
+                    "scripts": [
+                        {
+                            "name": "PlayerGun",
+                            "enabled": true,
+                            "map": [
+                                {
+                                    "variable": "limbTag",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "ammoCount",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "meleeCount",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "CheckWeaponsBool",
+                                    "base64": ""
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "audio": [
+                    {
+                        "name": "aud_gunshot01",
+                        "volume": 0.6759999990463257,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    },
+                    {
+                        "name": "aud_cleaver",
+                        "volume": 0.546999990940094,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    },
+                    {
+                        "name": "aud_katana01",
+                        "volume": 0.4970000088214874,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    },
+                    {
+                        "name": "aud_emptyGun01",
+                        "volume": 0.25699999928474426,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    },
+                    {
+                        "name": "aud_boosters01",
+                        "volume": 1.0,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    },
+                    {
+                        "name": "aud_vacuumStart01",
+                        "volume": 1.0,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    }
+                ]
+            },
+            {
+                "name": {
+                    "namestr": "MeleeKillZoneSpawn",
+                    "layer": 4,
+                    "isprefab": true,
+                    "tagstr": "MeleeKillZoneSpawn",
+                    "prefabname": "prefab_player.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.0,
+                        "y": 0.22081679105758667
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "collider": {
+                    "checkcollision": false,
+                    "checkresponse": false,
+                    "size": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "offset": {
+                        "x": 0.0,
+                        "y": 0.07999999821186066
+                    },
+                    "drawDebug": true,
+                    "radius": 2.299999952316284,
+                    "shapetype": 1
+                }
+            },
+            {
+                "name": {
+                    "namestr": "BulletSpawnLeft",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "LeftLimbPos",
+                    "prefabname": "prefab_player.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": -0.07722800970077515,
+                        "y": 0.3199999928474426
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                }
+            },
+            {
+                "name": {
+                    "namestr": "BulletSpawnRight",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "RightLimbPos",
+                    "prefabname": "prefab_player.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.08051446080207825,
+                        "y": 0.3176966905593872
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                }
+            },
+            {
+                "name": {
+                    "namestr": "BulletSpawnBack",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "BackLimbPos",
+                    "prefabname": "prefab_player.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.0029742319602519274,
+                        "y": 0.024165907874703407
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                }
+            },
+            {
+                "name": {
+                    "namestr": "PlayerGlow",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "prefab_player.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 5.0,
+                        "y": 5.0
+                    }
+                },
+                "LightingComponent": {
+                    "m_innerOuterRadius": {
+                        "x": 0.0,
+                        "y": 1.0
+                    },
+                    "m_intensity": 0.550000011920929,
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
+                }
+            },
+            {
+                "name": {
+                    "namestr": "PlayerEyeGlow",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "prefab_player.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.0,
+                        "y": 0.11136922240257263
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 0.9799999594688416,
+                        "y": 0.9799999594688416
+                    }
+                },
+                "LightingComponent": {
+                    "m_innerOuterRadius": {
+                        "x": 0.0,
+                        "y": 1.0
+                    },
+                    "m_intensity": 0.699999988079071,
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
+                }
+            },
+            {
+                "name": {
+                    "namestr": "LeftRailgunGlow",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "PlayerGunLightLeft",
+                    "prefabname": "prefab_player.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": -0.13173292577266693,
+                        "y": 0.3606119155883789
+                    },
+                    "rotation": -0.30000001192092896,
+                    "scale": {
+                        "x": 0.5199999809265137,
+                        "y": 1.2000000476837158
+                    }
+                },
+                "LightingComponent": {
+                    "m_innerOuterRadius": {
+                        "x": 0.05999999865889549,
+                        "y": 1.0
+                    },
+                    "m_intensity": 0.0,
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
+                }
+            },
+            {
+                "name": {
+                    "namestr": "RightRailgunGlow",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "PlayerGunLightRight",
+                    "prefabname": "prefab_player.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.14029377698898315,
+                        "y": 0.3606119155883789
+                    },
+                    "rotation": -0.30000001192092896,
+                    "scale": {
+                        "x": 0.5199999809265137,
+                        "y": 1.2000000476837158
+                    }
+                },
+                "LightingComponent": {
+                    "m_innerOuterRadius": {
+                        "x": 0.05999999865889549,
+                        "y": 1.0
+                    },
+                    "m_intensity": 0.0,
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
+                }
+            },
+            {
+                "name": {
+                    "namestr": "ShotgunBulletSpawnLeft",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "LeftShotgunLimbPos",
+                    "prefabname": "prefab_player.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": -0.07722800970077515,
+                        "y": 0.6750263571739197
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                }
+            },
+            {
+                "name": {
+                    "namestr": "ShotgunBulletSpawnRight",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "RightShotgunLimbPos",
+                    "prefabname": "prefab_player.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.08051446080207825,
+                        "y": 0.6800000071525574
                     },
                     "rotation": 0.0,
                     "scale": {

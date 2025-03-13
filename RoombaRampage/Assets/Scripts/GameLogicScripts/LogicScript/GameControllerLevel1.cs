@@ -51,6 +51,7 @@ public class GameControllerLevel1 : ScriptBase
         isShowingFps = false;
 
         InternalCall.m_InternalCallSetTimeScale(1);
+        //LevelSelection.SceneName = InternalCall.m_scene
 
         InternalCall.m_DisableLayer(8); //Disables Loadout Menu UI
         InternalCall.m_DisableLayer(7); //Disables Pause Menu UI
