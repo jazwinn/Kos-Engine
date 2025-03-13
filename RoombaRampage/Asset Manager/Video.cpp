@@ -18,7 +18,7 @@ namespace video {
 		//graphicpipe::GraphicsPipe* graphics = graphicpipe::GraphicsPipe::m_funcGetInstance();
 		mpeg = plm_create_with_filename(filepath.c_str());
 
-        videoframes = plm_get_framerate(mpeg);
+        videoframes = static_cast<int>(plm_get_framerate(mpeg));
 
         //check flags 
         if (flag.test(VIDEO_FLAGS::AUDIO)) {
