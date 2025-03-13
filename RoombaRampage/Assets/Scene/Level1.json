@@ -1,7 +1,7 @@
 [
     {
         "GlobalSettings": {
-            "globalIllumination": 0.30000001192092896,
+            "globalIllumination": -0.05000000074505806,
             "backgroundColor": {
                 "r": 0.13300000131130219,
                 "g": 0.23000000417232513,
@@ -76200,10 +76200,10 @@
         },
         "transform": {
             "position": {
-                "x": -25.0,
-                "y": 36.901615142822266
+                "x": 12.841791152954102,
+                "y": 16.98488998413086
             },
-            "rotation": 0.0,
+            "rotation": -0.0,
             "scale": {
                 "x": 8.0,
                 "y": 8.0
@@ -80932,7 +80932,7 @@
                 },
                 "sprite": {
                     "imagefile": "img_userManual.png",
-                    "layer": 500,
+                    "layer": 501,
                     "color": {
                         "r": 1.0,
                         "g": 1.0,
@@ -81003,7 +81003,7 @@
                 },
                 "sprite": {
                     "imagefile": "ani_inventoryCloseButton_strip2.png",
-                    "layer": 501,
+                    "layer": 533,
                     "color": {
                         "r": 1.0,
                         "g": 1.0,
@@ -81113,7 +81113,7 @@
                 },
                 "sprite": {
                     "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
-                    "layer": 502,
+                    "layer": 534,
                     "color": {
                         "r": 1.0,
                         "g": 1.0,
@@ -81192,7 +81192,7 @@
                         "g": 0.0,
                         "b": 0.0
                     },
-                    "layer": 503
+                    "layer": 535
                 }
             }
         ]
