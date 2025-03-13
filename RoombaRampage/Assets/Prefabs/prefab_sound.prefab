@@ -1,7 +1,7 @@
 [
     {
         "GlobalSettings": {
-            "globalIllumination": 0.8399999737739563,
+            "globalIllumination": 1.0,
             "backgroundColor": {
                 "r": 0.13300000131130219,
                 "g": 0.23000000417232513,
@@ -341,17 +341,13 @@
                         "name": "aud_buttonClick01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false,
-                        "isBGM": false,
-                        "isSFX": true
+                        "playOnStart": false
                     },
                     {
                         "name": "aud_buttonHover01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false,
-                        "isBGM": false,
-                        "isSFX": true
+                        "playOnStart": false
                     }
                 ],
                 "children": [
@@ -897,17 +893,13 @@
                                 "name": "aud_buttonHover01",
                                 "volume": 1.0,
                                 "loop": false,
-                                "playOnStart": false,
-                                "isBGM": false,
-                                "isSFX": true
+                                "playOnStart": false
                             },
                             {
                                 "name": "aud_buttonClick01",
                                 "volume": 1.0,
                                 "loop": false,
-                                "playOnStart": false,
-                                "isBGM": false,
-                                "isSFX": true
+                                "playOnStart": false
                             }
                         ]
                     },
@@ -1007,17 +999,13 @@
                                 "name": "aud_buttonHover01",
                                 "volume": 1.0,
                                 "loop": false,
-                                "playOnStart": false,
-                                "isBGM": false,
-                                "isSFX": true
+                                "playOnStart": false
                             },
                             {
                                 "name": "aud_buttonClick01",
                                 "volume": 1.0,
                                 "loop": false,
-                                "playOnStart": false,
-                                "isBGM": false,
-                                "isSFX": true
+                                "playOnStart": false
                             }
                         ]
                     }
@@ -1530,17 +1518,13 @@
                                 "name": "aud_buttonHover01",
                                 "volume": 1.0,
                                 "loop": false,
-                                "playOnStart": false,
-                                "isBGM": false,
-                                "isSFX": true
+                                "playOnStart": false
                             },
                             {
                                 "name": "aud_buttonClick01",
                                 "volume": 1.0,
                                 "loop": false,
-                                "playOnStart": false,
-                                "isBGM": false,
-                                "isSFX": true
+                                "playOnStart": false
                             }
                         ]
                     },
@@ -1640,17 +1624,13 @@
                                 "name": "aud_buttonHover01",
                                 "volume": 1.0,
                                 "loop": false,
-                                "playOnStart": false,
-                                "isBGM": false,
-                                "isSFX": true
+                                "playOnStart": false
                             },
                             {
                                 "name": "aud_buttonClick01",
                                 "volume": 1.0,
                                 "loop": false,
-                                "playOnStart": false,
-                                "isBGM": false,
-                                "isSFX": true
+                                "playOnStart": false
                             }
                         ]
                     }

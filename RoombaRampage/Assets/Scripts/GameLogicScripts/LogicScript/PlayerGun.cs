@@ -702,14 +702,8 @@ public class PlayerGun : ScriptBase
         switch (limbTag)
         {
             case "BackLimbSprite":
-                uiBackLimbCounterAnimating = true;
 
-                uiBackLimbCounterAC = Component.Get<AnimationComponent>(uiBackLimbCounterID);
-                uiBackLimbCounterAC.m_frameNumber = 0;
-                uiBackLimbCounterAC.m_isAnimating = true;
-
-                Component.Set<AnimationComponent>(uiBackLimbCounterID, uiBackLimbCounterAC);
-
+                CoroutineManager.Instance.StartCoroutine(BoosterCooldownUI(), "BoostCooldownUI");
 
                 break;
 
@@ -744,6 +738,26 @@ public class PlayerGun : ScriptBase
         //    Component.Set<RigidBodyComponent>(EntityID, rigidBodyComponent);
 
     }
+
+    private IEnumerator BoosterCooldownUI()
+    {
+        int temp = 0;
+
+        uiBackLimbCounterAC.m_frameNumber = temp;
+        Component.Set<AnimationComponent>(uiBackLimbCounterID, uiBackLimbCounterAC);
+
+        while (temp < uiBackLimbCounterAC.m_stripCount)
+        {
+            uiBackLimbCounterAC.m_frameNumber = temp;
+            temp++;
+            Component.Set<AnimationComponent>(uiBackLimbCounterID, uiBackLimbCounterAC);
+
+            yield return new CoroutineManager.WaitForSeconds(boostCoolDown/6);
+        }
+
+        yield return null;
+    }
+
     private IEnumerator Shoot()
     {
         //Plays Audio
@@ -1009,11 +1023,10 @@ public class PlayerGun : ScriptBase
         switch (limbTag)
         {
             case "LeftLimbSprite":
-                int tempLeft = (int)Math.Floor(leftLimbRailGunHold / (chargeDurationRailGun / (float)strip));
-                if (tempLeft >= strip)
-                {
-                    tempLeft = (strip - 1);
-                }
+                int tempLeft = (int)Math.Floor((leftLimbRailGunHold / chargeDurationRailGun) * (strip - 1));
+
+                if (tempLeft >= strip) tempLeft = strip - 1;
+
                 uiLeftLimbCounterAC = Component.Get<AnimationComponent>(uiLeftLimbCounterID);
                 uiLeftLimbCounterAC.m_frameNumber = tempLeft;
                 uiLeftLimbCounterAC.m_isAnimating = false;
@@ -1022,11 +1035,14 @@ public class PlayerGun : ScriptBase
                 break;
 
             case "RightLimbSprite":
-                int tempRight = (int)Math.Floor(rightLimbRailGunHold / (chargeDurationRailGun / (float)strip));
+                int tempRight = (int)Math.Floor(rightLimbRailGunHold / (chargeDurationRailGun) * (strip - 1));
+
                 if (tempRight >= strip)
                 {
-                    tempRight = (strip - 1);
+                    tempLeft = strip - 1;
                 }
+
+
                 uiRightLimbCounterAC = Component.Get<AnimationComponent>(uiRightLimbCounterID);
                 uiRightLimbCounterAC.m_frameNumber = tempRight;
                 uiRightLimbCounterAC.m_isAnimating = false;
@@ -1040,6 +1056,7 @@ public class PlayerGun : ScriptBase
     {
 
     }
+
     private string GetWeaponSprite(string weaponName)
     {
         string limbTag = InternalCall.m_InternalCallGetTag(EntityID);

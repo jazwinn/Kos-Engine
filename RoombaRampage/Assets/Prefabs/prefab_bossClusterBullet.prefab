@@ -1,7 +1,7 @@
 [
     {
         "GlobalSettings": {
-            "globalIllumination": 0.8399999737739563,
+            "globalIllumination": 1.0,
             "backgroundColor": {
                 "r": 0.13300000131130219,
                 "g": 0.23000000417232513,
@@ -20,8 +20,8 @@
         },
         "transform": {
             "position": {
-                "x": 19.367717742919922,
-                "y": -15.908940315246582
+                "x": 17.619770050048828,
+                "y": -15.726987838745117
             },
             "rotation": -0.0,
             "scale": {
@@ -38,7 +38,7 @@
             },
             "offset": {
                 "x": 0.0,
-                "y": 0.5199999809265137
+                "y": 0.0
             },
             "drawDebug": true,
             "radius": 0.20000000298023224,
@@ -70,7 +70,7 @@
         },
         "sprite": {
             "imagefile": "ani_bossClusterBulletEffect_strip2.png",
-            "layer": 5,
+            "layer": 7,
             "color": {
                 "r": 1.0,
                 "g": 1.0,
@@ -80,9 +80,9 @@
             "isLit": true
         },
         "animation": {
-            "frameNumber": 0,
+            "frameNumber": 1,
             "framesPerSecond": 8,
-            "frameTimer": 0.05000000447034836,
+            "frameTimer": 0.13333334028720856,
             "isAnimating": true,
             "stripCount": 2
         },
@@ -108,7 +108,7 @@
             "m_intensity": 2.200000047683716,
             "m_light_OffSet": {
                 "x": 0.0,
-                "y": 0.11999999731779099
+                "y": 0.0
             },
             "m_light_scale": {
                 "x": 1.0,
