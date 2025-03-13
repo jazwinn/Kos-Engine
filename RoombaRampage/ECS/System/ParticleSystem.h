@@ -1,11 +1,11 @@
 
 /******************************************************************/
 /*!
-\file      RenderSystem.h
-\author    Ng Jaz winn, jazwinn.ng , 2301502
-\par       jazwinn.ng@digipen.edu
-\date      Jan 30, 2025
-\brief     This file contains class for the Render System
+\file      ParticleSystem.h
+\author    Sean Tiu
+\par       s.tiu@digipen.edu
+\date      Feb 30, 2025
+\brief     This file contains class for the particle System
 
 Copyright (C) 2024 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the
