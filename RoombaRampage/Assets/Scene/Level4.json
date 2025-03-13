@@ -1,7 +1,7 @@
 [
     {
         "GlobalSettings": {
-            "globalIllumination": 0.9800000190734863,
+            "globalIllumination": 0.05999999865889549,
             "backgroundColor": {
                 "r": 0.13300000131130219,
                 "g": 0.23000000417232513,
@@ -355,8 +355,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 55.29610824584961,
-                        "y": 35.262664794921875
+                        "x": 47.62455368041992,
+                        "y": 129.35186767578125
                     },
                     "rotation": -140.27000427246094,
                     "scale": {
@@ -10375,6 +10375,257 @@
                     },
                     "gridKey": 0
                 }
+            },
+            {
+                "name": {
+                    "namestr": "FearlessEnemyStatic",
+                    "layer": 2,
+                    "isprefab": true,
+                    "tagstr": "Enemy",
+                    "prefabname": "FearlessEnemyStatic.prefab",
+                    "issync": false
+                },
+                "transform": {
+                    "position": {
+                        "x": 55.29610824584961,
+                        "y": 35.262664794921875
+                    },
+                    "rotation": -140.27000427246094,
+                    "scale": {
+                        "x": 2.999998092651367,
+                        "y": 2.999998092651367
+                    }
+                },
+                "collider": {
+                    "checkcollision": true,
+                    "checkresponse": true,
+                    "size": {
+                        "x": 0.7400000095367432,
+                        "y": 0.23999999463558197
+                    },
+                    "offset": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "drawDebug": true,
+                    "radius": 0.5,
+                    "shapetype": 0
+                },
+                "enemy": {
+                    "enemytag": -1,
+                    "enemytype": 1,
+                    "enemybehaviour": 0
+                },
+                "rigidbody": {
+                    "linearVelocity": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "linearAcceleration": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "rotation": 0.0,
+                    "angularVelocity": 0.0,
+                    "angularAcceleration": 0.0,
+                    "mass": 1.0,
+                    "inverseMass": 1.0,
+                    "linearDamping": 0.9900000095367432,
+                    "angularDamping": 0.9900000095367432,
+                    "force": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "torque": 0.0,
+                    "kinematic": false,
+                    "static": false
+                },
+                "sprite": {
+                    "imagefile": "ani_scientistWalk_strip8.png",
+                    "layer": 64,
+                    "color": {
+                        "r": 1.0,
+                        "g": 1.0,
+                        "b": 1.0
+                    },
+                    "alpha": 1.0,
+                    "isLit": true
+                },
+                "animation": {
+                    "frameNumber": 0,
+                    "framesPerSecond": 15,
+                    "frameTimer": 0.0,
+                    "isAnimating": false,
+                    "stripCount": 8
+                },
+                "script": {
+                    "scripts": [
+                        {
+                            "name": "EnemyScript",
+                            "enabled": true,
+                            "map": [
+                                {
+                                    "variable": "isDead",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "isPatrolling",
+                                    "base64": ""
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "particle": {
+                    "willSpawn": false,
+                    "noOfParticles": 10,
+                    "lifeSpan": 20.0,
+                    "velocityX": 0.0,
+                    "velocityY": 40.0,
+                    "sizeX": 1.0,
+                    "sizeY": 0.699999988079071,
+                    "accelerationX": 0.0,
+                    "accelerationY": 0.0,
+                    "colorR": 1.0,
+                    "colorG": 1.0,
+                    "colorB": 1.0,
+                    "coneRotation": 0.0,
+                    "coneAngle": 45.0,
+                    "randomFactor": 2.0,
+                    "imageFile": "ani_bloodPool_strip9.png",
+                    "stripCount": 9,
+                    "frameNumber": 0,
+                    "layer": 500,
+                    "friction": 20.0,
+                    "fps": 1,
+                    "loopAnimation": false
+                },
+                "audio": [
+                    {
+                        "name": "aud_bodyDeath01",
+                        "volume": 0.3160000145435333,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    },
+                    {
+                        "name": "aud_bodyStab01",
+                        "volume": 0.4880000054836273,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    },
+                    {
+                        "name": "aud_bodyStab02",
+                        "volume": 0.6650000214576721,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    },
+                    {
+                        "name": "aud_bodyFall01",
+                        "volume": 0.24899999797344208,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    },
+                    {
+                        "name": "aud_bodyFall02",
+                        "volume": 0.2849999964237213,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    },
+                    {
+                        "name": "aud_bodyFall03",
+                        "volume": 0.3070000112056732,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    },
+                    {
+                        "name": "aud_bodyFall04",
+                        "volume": 0.24300000071525574,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    },
+                    {
+                        "name": "aud_bodyFall05",
+                        "volume": 0.2290000021457672,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    },
+                    {
+                        "name": "aud_bodyFall06",
+                        "volume": 0.21199999749660492,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    },
+                    {
+                        "name": "aud_bodyFall07",
+                        "volume": 0.20399999618530273,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    },
+                    {
+                        "name": "aud_bodyFall08",
+                        "volume": 0.25099998712539673,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    },
+                    {
+                        "name": "aud_bodyFall09",
+                        "volume": 0.2290000021457672,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    }
+                ],
+                "raycast": {
+                    "raycasts": [
+                        {
+                            "raycastID": "RaycastToPlayer",
+                            "israycasting": true,
+                            "targetposition": {
+                                "x": 0.0,
+                                "y": 0.0
+                            },
+                            "Layer Vector": [
+                                {
+                                    "layer": 5
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "pathfinding": {
+                    "startPosition": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "targetPosition": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "gridKey": 0
+                }
             }
         ]
     },
@@ -10389,8 +10640,8 @@
         },
         "transform": {
             "position": {
-                "x": 0.0,
-                "y": -30.0
+                "x": 0.31142234802246094,
+                "y": 41.62430191040039
             },
             "rotation": -0.0,
             "scale": {
@@ -12264,8 +12515,8 @@
         },
         "transform": {
             "position": {
-                "x": 40.98295974731445,
-                "y": 21.996036529541016
+                "x": 41.21767807006836,
+                "y": 22.214529037475586
             },
             "rotation": -0.0,
             "scale": {
@@ -98959,6 +99210,1214 @@
                         "x": 1.0,
                         "y": 1.0
                     }
+                }
+            }
+        ]
+    },
+    {
+        "name": {
+            "namestr": "LightParent",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "children": [
+            {
+                "name": {
+                    "namestr": "Light",
+                    "layer": 0,
+                    "isprefab": false,
+                    "tagstr": "Default"
+                },
+                "transform": {
+                    "position": {
+                        "x": 39.8546142578125,
+                        "y": 23.07697868347168
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 16.0,
+                        "y": 16.0
+                    }
+                },
+                "LightingComponent": {
+                    "m_innerOuterRadius": {
+                        "x": 0.0,
+                        "y": 1.0
+                    },
+                    "m_intensity": 1.100000023841858,
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
+                }
+            },
+            {
+                "name": {
+                    "namestr": "Light",
+                    "layer": 0,
+                    "isprefab": false,
+                    "tagstr": "Default"
+                },
+                "transform": {
+                    "position": {
+                        "x": 74.05828094482422,
+                        "y": 33.94581985473633
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 35.02000045776367,
+                        "y": 36.63999938964844
+                    }
+                },
+                "LightingComponent": {
+                    "m_innerOuterRadius": {
+                        "x": 0.0,
+                        "y": 1.0
+                    },
+                    "m_intensity": 1.2999999523162842,
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
+                }
+            },
+            {
+                "name": {
+                    "namestr": "Light",
+                    "layer": 0,
+                    "isprefab": false,
+                    "tagstr": "Default"
+                },
+                "transform": {
+                    "position": {
+                        "x": 41.638633728027344,
+                        "y": 33.945823669433594
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 35.02000045776367,
+                        "y": 36.63999938964844
+                    }
+                },
+                "LightingComponent": {
+                    "m_innerOuterRadius": {
+                        "x": 0.0,
+                        "y": 1.0
+                    },
+                    "m_intensity": 1.2999999523162842,
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
+                }
+            },
+            {
+                "name": {
+                    "namestr": "Light",
+                    "layer": 0,
+                    "isprefab": false,
+                    "tagstr": "Default"
+                },
+                "transform": {
+                    "position": {
+                        "x": 82.89999389648438,
+                        "y": 67.4990234375
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 35.02000045776367,
+                        "y": 36.63999938964844
+                    }
+                },
+                "LightingComponent": {
+                    "m_innerOuterRadius": {
+                        "x": 0.0,
+                        "y": 1.0
+                    },
+                    "m_intensity": 1.2999999523162842,
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
+                }
+            },
+            {
+                "name": {
+                    "namestr": "Light",
+                    "layer": 0,
+                    "isprefab": false,
+                    "tagstr": "Default"
+                },
+                "transform": {
+                    "position": {
+                        "x": 40.987548828125,
+                        "y": 109.31889343261719
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 35.02000045776367,
+                        "y": 36.63999938964844
+                    }
+                },
+                "LightingComponent": {
+                    "m_innerOuterRadius": {
+                        "x": 0.0,
+                        "y": 1.0
+                    },
+                    "m_intensity": 1.2999999523162842,
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
+                }
+            },
+            {
+                "name": {
+                    "namestr": "Light",
+                    "layer": 0,
+                    "isprefab": false,
+                    "tagstr": "Default"
+                },
+                "transform": {
+                    "position": {
+                        "x": 57.045658111572266,
+                        "y": 61.465576171875
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 35.02000045776367,
+                        "y": 36.63999938964844
+                    }
+                },
+                "LightingComponent": {
+                    "m_innerOuterRadius": {
+                        "x": 0.0,
+                        "y": 1.0
+                    },
+                    "m_intensity": 1.2999999523162842,
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
+                }
+            },
+            {
+                "name": {
+                    "namestr": "Light",
+                    "layer": 0,
+                    "isprefab": false,
+                    "tagstr": "Default"
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.17247390747070313,
+                        "y": 40.619285583496094
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 35.02000045776367,
+                        "y": 36.63999938964844
+                    }
+                },
+                "LightingComponent": {
+                    "m_innerOuterRadius": {
+                        "x": 0.0,
+                        "y": 1.0
+                    },
+                    "m_intensity": 1.2999999523162842,
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
+                }
+            },
+            {
+                "name": {
+                    "namestr": "Light",
+                    "layer": 0,
+                    "isprefab": false,
+                    "tagstr": "Default"
+                },
+                "transform": {
+                    "position": {
+                        "x": 47.41975784301758,
+                        "y": 51.175846099853516
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 35.02000045776367,
+                        "y": 36.63999938964844
+                    }
+                },
+                "LightingComponent": {
+                    "m_innerOuterRadius": {
+                        "x": 0.0,
+                        "y": 1.0
+                    },
+                    "m_intensity": 1.2999999523162842,
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
+                }
+            },
+            {
+                "name": {
+                    "namestr": "Light",
+                    "layer": 0,
+                    "isprefab": false,
+                    "tagstr": "Default"
+                },
+                "transform": {
+                    "position": {
+                        "x": 28.66586685180664,
+                        "y": 57.6484260559082
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 35.02000045776367,
+                        "y": 36.63999938964844
+                    }
+                },
+                "LightingComponent": {
+                    "m_innerOuterRadius": {
+                        "x": 0.0,
+                        "y": 1.0
+                    },
+                    "m_intensity": 1.2999999523162842,
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
+                }
+            },
+            {
+                "name": {
+                    "namestr": "Light",
+                    "layer": 0,
+                    "isprefab": false,
+                    "tagstr": "Default"
+                },
+                "transform": {
+                    "position": {
+                        "x": -0.5796594619750977,
+                        "y": -28.095123291015625
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 35.02000045776367,
+                        "y": 36.63999938964844
+                    }
+                },
+                "LightingComponent": {
+                    "m_innerOuterRadius": {
+                        "x": 0.0,
+                        "y": 1.0
+                    },
+                    "m_intensity": 1.2999999523162842,
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
+                }
+            },
+            {
+                "name": {
+                    "namestr": "Light",
+                    "layer": 0,
+                    "isprefab": false,
+                    "tagstr": "Default"
+                },
+                "transform": {
+                    "position": {
+                        "x": 61.526676177978516,
+                        "y": 75.40652465820313
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 35.02000045776367,
+                        "y": 36.63999938964844
+                    }
+                },
+                "LightingComponent": {
+                    "m_innerOuterRadius": {
+                        "x": 0.0,
+                        "y": 1.0
+                    },
+                    "m_intensity": 1.2999999523162842,
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
+                }
+            },
+            {
+                "name": {
+                    "namestr": "Light",
+                    "layer": 0,
+                    "isprefab": false,
+                    "tagstr": "Default"
+                },
+                "transform": {
+                    "position": {
+                        "x": 77.3455810546875,
+                        "y": 53.89637756347656
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 35.02000045776367,
+                        "y": 36.63999938964844
+                    }
+                },
+                "LightingComponent": {
+                    "m_innerOuterRadius": {
+                        "x": 0.0,
+                        "y": 1.0
+                    },
+                    "m_intensity": 1.2999999523162842,
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
+                }
+            },
+            {
+                "name": {
+                    "namestr": "Light",
+                    "layer": 0,
+                    "isprefab": false,
+                    "tagstr": "Default"
+                },
+                "transform": {
+                    "position": {
+                        "x": 84.81394958496094,
+                        "y": 89.24663543701172
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 35.02000045776367,
+                        "y": 36.63999938964844
+                    }
+                },
+                "LightingComponent": {
+                    "m_innerOuterRadius": {
+                        "x": 0.0,
+                        "y": 1.0
+                    },
+                    "m_intensity": 1.2999999523162842,
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
+                }
+            },
+            {
+                "name": {
+                    "namestr": "Light",
+                    "layer": 0,
+                    "isprefab": false,
+                    "tagstr": "Default"
+                },
+                "transform": {
+                    "position": {
+                        "x": 64.89830017089844,
+                        "y": 92.56590270996094
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 35.02000045776367,
+                        "y": 36.63999938964844
+                    }
+                },
+                "LightingComponent": {
+                    "m_innerOuterRadius": {
+                        "x": 0.0,
+                        "y": 1.0
+                    },
+                    "m_intensity": 1.2999999523162842,
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
+                }
+            },
+            {
+                "name": {
+                    "namestr": "Light",
+                    "layer": 0,
+                    "isprefab": false,
+                    "tagstr": "Default"
+                },
+                "transform": {
+                    "position": {
+                        "x": 13.781494140625,
+                        "y": 92.89783477783203
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 35.02000045776367,
+                        "y": 36.63999938964844
+                    }
+                },
+                "LightingComponent": {
+                    "m_innerOuterRadius": {
+                        "x": 0.0,
+                        "y": 1.0
+                    },
+                    "m_intensity": 1.2999999523162842,
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
+                }
+            },
+            {
+                "name": {
+                    "namestr": "Light",
+                    "layer": 0,
+                    "isprefab": false,
+                    "tagstr": "Default"
+                },
+                "transform": {
+                    "position": {
+                        "x": 49.29771041870117,
+                        "y": 94.0595703125
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 50.0,
+                        "y": 39.2400016784668
+                    }
+                },
+                "LightingComponent": {
+                    "m_innerOuterRadius": {
+                        "x": 0.0,
+                        "y": 1.0
+                    },
+                    "m_intensity": 1.2000000476837158,
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
+                }
+            },
+            {
+                "name": {
+                    "namestr": "Light",
+                    "layer": 0,
+                    "isprefab": false,
+                    "tagstr": "Default"
+                },
+                "transform": {
+                    "position": {
+                        "x": 5.317344665527344,
+                        "y": 57.54758071899414
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 35.02000045776367,
+                        "y": 36.63999938964844
+                    }
+                },
+                "LightingComponent": {
+                    "m_innerOuterRadius": {
+                        "x": 0.0,
+                        "y": 1.0
+                    },
+                    "m_intensity": 1.2999999523162842,
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
+                }
+            },
+            {
+                "name": {
+                    "namestr": "Light",
+                    "layer": 0,
+                    "isprefab": false,
+                    "tagstr": "Default"
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.006511688232421875,
+                        "y": 75.96954345703125
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 35.02000045776367,
+                        "y": 36.63999938964844
+                    }
+                },
+                "LightingComponent": {
+                    "m_innerOuterRadius": {
+                        "x": 0.0,
+                        "y": 1.0
+                    },
+                    "m_intensity": 1.2999999523162842,
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
+                }
+            },
+            {
+                "name": {
+                    "namestr": "Light",
+                    "layer": 0,
+                    "isprefab": false,
+                    "tagstr": "Default"
+                },
+                "transform": {
+                    "position": {
+                        "x": 33.19923782348633,
+                        "y": 93.56169128417969
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 50.0,
+                        "y": 39.2400016784668
+                    }
+                },
+                "LightingComponent": {
+                    "m_innerOuterRadius": {
+                        "x": 0.0,
+                        "y": 1.0
+                    },
+                    "m_intensity": 1.2000000476837158,
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
+                }
+            },
+            {
+                "name": {
+                    "namestr": "Light",
+                    "layer": 0,
+                    "isprefab": false,
+                    "tagstr": "Default"
+                },
+                "transform": {
+                    "position": {
+                        "x": 39.439029693603516,
+                        "y": 126.79119110107422
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 35.02000045776367,
+                        "y": 36.63999938964844
+                    }
+                },
+                "LightingComponent": {
+                    "m_innerOuterRadius": {
+                        "x": 0.0,
+                        "y": 1.0
+                    },
+                    "m_intensity": 1.2999999523162842,
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
+                }
+            },
+            {
+                "name": {
+                    "namestr": "Light",
+                    "layer": 0,
+                    "isprefab": false,
+                    "tagstr": "Default"
+                },
+                "transform": {
+                    "position": {
+                        "x": 58.075164794921875,
+                        "y": 33.719112396240234
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 35.02000045776367,
+                        "y": 36.63999938964844
+                    }
+                },
+                "LightingComponent": {
+                    "m_innerOuterRadius": {
+                        "x": 0.0,
+                        "y": 1.0
+                    },
+                    "m_intensity": 1.2999999523162842,
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
+                }
+            },
+            {
+                "name": {
+                    "namestr": "Light",
+                    "layer": 0,
+                    "isprefab": false,
+                    "tagstr": "Default"
+                },
+                "transform": {
+                    "position": {
+                        "x": 40.78121566772461,
+                        "y": 71.42340850830078
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 35.02000045776367,
+                        "y": 36.63999938964844
+                    }
+                },
+                "LightingComponent": {
+                    "m_innerOuterRadius": {
+                        "x": 0.0,
+                        "y": 1.0
+                    },
+                    "m_intensity": 1.2999999523162842,
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
+                }
+            },
+            {
+                "name": {
+                    "namestr": "Light",
+                    "layer": 0,
+                    "isprefab": false,
+                    "tagstr": "Default"
+                },
+                "transform": {
+                    "position": {
+                        "x": -15.989934921264648,
+                        "y": 28.15240478515625
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 35.02000045776367,
+                        "y": 36.63999938964844
+                    }
+                },
+                "LightingComponent": {
+                    "m_innerOuterRadius": {
+                        "x": 0.0,
+                        "y": 1.0
+                    },
+                    "m_intensity": 1.2999999523162842,
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
+                }
+            },
+            {
+                "name": {
+                    "namestr": "Light",
+                    "layer": 0,
+                    "isprefab": false,
+                    "tagstr": "Default"
+                },
+                "transform": {
+                    "position": {
+                        "x": 14.610483169555664,
+                        "y": 28.3725528717041
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 35.02000045776367,
+                        "y": 36.63999938964844
+                    }
+                },
+                "LightingComponent": {
+                    "m_innerOuterRadius": {
+                        "x": 0.0,
+                        "y": 1.0
+                    },
+                    "m_intensity": 1.2999999523162842,
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
+                }
+            },
+            {
+                "name": {
+                    "namestr": "Light",
+                    "layer": 0,
+                    "isprefab": false,
+                    "tagstr": "Default"
+                },
+                "transform": {
+                    "position": {
+                        "x": -0.689725935459137,
+                        "y": 28.70277214050293
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 35.02000045776367,
+                        "y": 36.63999938964844
+                    }
+                },
+                "LightingComponent": {
+                    "m_innerOuterRadius": {
+                        "x": 0.0,
+                        "y": 1.0
+                    },
+                    "m_intensity": 1.2999999523162842,
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
+                }
+            },
+            {
+                "name": {
+                    "namestr": "Light",
+                    "layer": 0,
+                    "isprefab": false,
+                    "tagstr": "Default"
+                },
+                "transform": {
+                    "position": {
+                        "x": -13.458246231079102,
+                        "y": 12.742121696472168
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 35.02000045776367,
+                        "y": 36.63999938964844
+                    }
+                },
+                "LightingComponent": {
+                    "m_innerOuterRadius": {
+                        "x": 0.0,
+                        "y": 1.0
+                    },
+                    "m_intensity": 1.2999999523162842,
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
+                }
+            },
+            {
+                "name": {
+                    "namestr": "Light",
+                    "layer": 0,
+                    "isprefab": false,
+                    "tagstr": "Default"
+                },
+                "transform": {
+                    "position": {
+                        "x": 14.610479354858398,
+                        "y": 11.311166763305664
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 35.02000045776367,
+                        "y": 36.63999938964844
+                    }
+                },
+                "LightingComponent": {
+                    "m_innerOuterRadius": {
+                        "x": 0.0,
+                        "y": 1.0
+                    },
+                    "m_intensity": 1.2999999523162842,
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
+                }
+            },
+            {
+                "name": {
+                    "namestr": "Light",
+                    "layer": 0,
+                    "isprefab": false,
+                    "tagstr": "Default"
+                },
+                "transform": {
+                    "position": {
+                        "x": -8.615019798278809,
+                        "y": -0.026400595903396606
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 35.02000045776367,
+                        "y": 36.63999938964844
+                    }
+                },
+                "LightingComponent": {
+                    "m_innerOuterRadius": {
+                        "x": 0.0,
+                        "y": 1.0
+                    },
+                    "m_intensity": 1.2999999523162842,
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
+                }
+            },
+            {
+                "name": {
+                    "namestr": "Light",
+                    "layer": 0,
+                    "isprefab": false,
+                    "tagstr": "Default"
+                },
+                "transform": {
+                    "position": {
+                        "x": 7.785924911499023,
+                        "y": -2.1177964210510254
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 35.02000045776367,
+                        "y": 36.63999938964844
+                    }
+                },
+                "LightingComponent": {
+                    "m_innerOuterRadius": {
+                        "x": 0.0,
+                        "y": 1.0
+                    },
+                    "m_intensity": 1.2999999523162842,
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
+                }
+            },
+            {
+                "name": {
+                    "namestr": "Light",
+                    "layer": 0,
+                    "isprefab": false,
+                    "tagstr": "Default"
+                },
+                "transform": {
+                    "position": {
+                        "x": -1.5703201293945313,
+                        "y": -11.694183349609375
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 35.02000045776367,
+                        "y": 36.63999938964844
+                    }
+                },
+                "LightingComponent": {
+                    "m_innerOuterRadius": {
+                        "x": 0.0,
+                        "y": 1.0
+                    },
+                    "m_intensity": 1.2999999523162842,
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "m_light_rotation": 0.0
+                }
+            }
+        ]
+    },
+    {
+        "name": {
+            "namestr": "Keycard",
+            "layer": 1,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": 40.78913879394531,
+                "y": 129.0799560546875
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 5.0,
+                "y": 5.0
+            }
+        },
+        "collider": {
+            "checkcollision": true,
+            "checkresponse": false,
+            "size": {
+                "x": 0.20000000298023224,
+                "y": 0.23000000417232513
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true,
+            "radius": 0.5,
+            "shapetype": 0
+        },
+        "rigidbody": {
+            "linearVelocity": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "linearAcceleration": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "angularVelocity": 0.0,
+            "angularAcceleration": 0.0,
+            "mass": 1.0,
+            "inverseMass": 1.0,
+            "linearDamping": 0.9900000095367432,
+            "angularDamping": 0.9900000095367432,
+            "force": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "torque": 0.0,
+            "kinematic": false,
+            "static": false
+        },
+        "sprite": {
+            "imagefile": "img_keycard.png",
+            "layer": 17,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0,
+            "isLit": true
+        },
+        "script": {
+            "scripts": [
+                {
+                    "name": "Keycard",
+                    "enabled": true,
+                    "map": [
+                        {
+                            "variable": "keyDoorCollected",
+                            "base64": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        "children": [
+            {
+                "name": {
+                    "namestr": "KeyDoor",
+                    "layer": 5,
+                    "isprefab": false,
+                    "tagstr": "Default"
+                },
+                "transform": {
+                    "position": {
+                        "x": -8.156838417053223,
+                        "y": -17.864667892456055
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.5,
+                        "y": 1.5
+                    }
+                },
+                "collider": {
+                    "checkcollision": false,
+                    "checkresponse": true,
+                    "size": {
+                        "x": 1.2799999713897705,
+                        "y": 0.11999999731779099
+                    },
+                    "offset": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "drawDebug": true,
+                    "radius": -3.5,
+                    "shapetype": 0
+                },
+                "sprite": {
+                    "imagefile": "ani_doorsRed_strip13.png",
+                    "layer": 100,
+                    "color": {
+                        "r": 1.0,
+                        "g": 1.0,
+                        "b": 1.0
+                    },
+                    "alpha": 1.0,
+                    "isLit": true
+                },
+                "animation": {
+                    "frameNumber": 0,
+                    "framesPerSecond": 0,
+                    "frameTimer": 0.0,
+                    "isAnimating": true,
+                    "stripCount": 13
                 }
             }
         ]
