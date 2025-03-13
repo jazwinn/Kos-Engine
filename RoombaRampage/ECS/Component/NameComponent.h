@@ -37,7 +37,7 @@ namespace ecs {
 
 		bool m_isPrefab{ false };
 		
-		bool m_syncPrefab{true};
+		bool m_syncPrefab{false};
 		std::string m_prefabName{};
 
 		std::string m_entityTag = "Default";

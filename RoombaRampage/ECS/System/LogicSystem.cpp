@@ -47,7 +47,18 @@ namespace ecs {
 		for (int x : m_vecScriptComponentPtr[IndexID]->m_scriptHandler) {
 			mono_gchandle_free(x);
 		}
+		
 
+		for (auto& scriptname : m_vecScriptComponentPtr[IndexID]->m_scripts) {
+
+			auto script = m_vecScriptComponentPtr[IndexID]->m_scriptInstances.find(std::get<0>(scriptname));
+
+			if (!(script == m_vecScriptComponentPtr[IndexID]->m_scriptInstances.end())) {
+				script->second.first = nullptr;
+			}
+			
+			
+		}
 
 
 		//index to the last element
@@ -174,6 +185,8 @@ namespace ecs {
 
 
 						else if (script->second.first) {
+
+							// Call the Update function
 							assetManager->m_scriptManager.m_InvokeMethod(script->first, "Update", script->second.first, nullptr);
 							
 						} 

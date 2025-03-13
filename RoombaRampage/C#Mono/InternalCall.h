@@ -857,6 +857,9 @@ namespace script {
 
 		static int m_GetRandomInt(int min, int max);
 
+		static MonoString* m_GetScenefromID(ecs::EntityID id);
+
+
 	public:
 		/******************************************************************/
 		/*!
