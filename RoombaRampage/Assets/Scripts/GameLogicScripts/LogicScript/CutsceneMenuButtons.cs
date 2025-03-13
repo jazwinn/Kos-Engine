@@ -122,22 +122,32 @@ public class CutsceneMenuButtons : ScriptBase
                     InternalCall.m_InternalCallLoadScene("LevelSelect");
                     break;
                 case 21:
+                    InternalCall.m_InternalCallPlayAudio(EntityID, "aud_startMenuAmbienceStop01");
+                    InternalCall.m_InternalCallStopAllAudio();
                     InternalCall.m_UnloadAllScene();
                     InternalCall.m_InternalCallLoadScene("Level2");
                     break;
                 case 22:
+                    InternalCall.m_InternalCallPlayAudio(EntityID, "aud_startMenuAmbienceStop01");
+                    InternalCall.m_InternalCallStopAllAudio();
                     InternalCall.m_UnloadAllScene();
                     InternalCall.m_InternalCallLoadScene("Level3");
                     break;
                 case 23:
+                    InternalCall.m_InternalCallPlayAudio(EntityID, "aud_startMenuAmbienceStop01");
+                    InternalCall.m_InternalCallStopAllAudio();
                     InternalCall.m_UnloadAllScene();
                     InternalCall.m_InternalCallLoadScene("Level4");
                     break;
                 case 24:
+                    InternalCall.m_InternalCallPlayAudio(EntityID, "aud_startMenuAmbienceStop01");
+                    InternalCall.m_InternalCallStopAllAudio();
                     InternalCall.m_UnloadAllScene();
                     InternalCall.m_InternalCallLoadScene("Level5");
                     break;
                 case 25:
+                    InternalCall.m_InternalCallPlayAudio(EntityID, "aud_startMenuAmbienceStop01");
+                    InternalCall.m_InternalCallStopAllAudio();
                     InternalCall.m_UnloadAllScene();
                     InternalCall.m_InternalCallLoadScene("Level6");
                     break;

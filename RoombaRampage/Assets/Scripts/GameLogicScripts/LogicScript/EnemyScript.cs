@@ -122,7 +122,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     #region Enemy Variables
     private Vector2 originalPosition;
 
-    private float fireRate = 1.5f;
+    private float fireRate = 2.5f;
     private float fireFirstDelay = 0.5f;
     private float fireTimer = 0f;
     private float shuffleDistance = 0.20f;

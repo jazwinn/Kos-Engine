@@ -9,7 +9,7 @@ public class EnemyBulletScript : ScriptBase
 {
     #region Entity ID
     private uint EntityID;
-    private float bulletSpeed = 4.5f;
+    private float bulletSpeed = 6.0f;
     private float bulletLifetime = 5.0f;
     private float currentLifetime = 0.0f;
     private Vector2 movement;

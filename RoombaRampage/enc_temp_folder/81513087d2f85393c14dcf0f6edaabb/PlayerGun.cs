@@ -64,7 +64,7 @@ public class PlayerGun : ScriptBase
 
         leftLimbRailGunHold = 0;
         rightLimbRailGunHold = 0;
-        chargeDurationRailGun = 1.5f; //duration to charge up railgun
+        chargeDurationRailGun = 2f; //duration to charge up railgun
         railGunLightMaxIntensity = 1f;
 
         playerBoost = false;
