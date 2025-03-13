@@ -34,7 +34,7 @@ public class BossController : ScriptBase
     private string bossDeathSound = "aud_bossDeath01.wav";
     private string shieldRegenSound = "aud_bossShieldRegen01.wav";
     private string shieldBreakSound = "aud_bossShieldBreak01.wav";
-    private string bossShootingSound = "aud_bossBullet01.wav";
+
 
     #endregion
 
@@ -52,7 +52,6 @@ public class BossController : ScriptBase
     private string forceFieldPrefab = "Boss_Forcefield";
 
     private string bossBulletPrefab;
-    private string bossClusterBulletPrefab;
 
     #endregion
 
@@ -82,8 +81,6 @@ public class BossController : ScriptBase
     {
         EntityID = id; //Sets ID for object, DO NOT TOUCH
         bossBulletPrefab = "prefab_bossBullet";
-        bossClusterBulletPrefab = "prefab_bossClusterBullet";
-
         SpawnForceField();
 
         int[] childIDs = InternalCall.m_InternalCallGetChildrenID(EntityID);
@@ -331,8 +328,6 @@ public class BossController : ScriptBase
 
         for (int i = 0; i < waveCount; i++)
         {
-            InternalCall.m_InternalCallPlayAudio(EntityID, bossShootingSound);
-
             float waveAngleOffset = (i % 2 == 0) ? positionOffset : -positionOffset;
             SpawnBullets(bossPosition, 8, 0.2f, 180f + waveAngleOffset, 360f + waveAngleOffset);
             yield return new CoroutineManager.WaitForSeconds(waveDelay);
@@ -341,8 +336,6 @@ public class BossController : ScriptBase
 
     private void SpawnBullets(Vector2 position, int bulletCount, float radius, float startAngle, float endAngle)
     {
-        InternalCall.m_InternalCallPlayAudio(EntityID, bossShootingSound);
-
         float angleStep = (endAngle - startAngle) / (bulletCount - 1);
 
         for (int i = 0; i < bulletCount; i++)
@@ -360,9 +353,7 @@ public class BossController : ScriptBase
     {
         float bigBulletAngle = 270f;
 
-        InternalCall.m_InternalCallPlayAudio(EntityID, bossShootingSound);
-
-        uint largeBullet = (uint)InternalCall.m_InternalCallAddPrefab(bossClusterBulletPrefab, position.X, position.Y, bigBulletAngle);
+        uint largeBullet = (uint)InternalCall.m_InternalCallAddPrefab(bossBulletPrefab, position.X, position.Y, bigBulletAngle);
 
         CoroutineManager.Instance.StartCoroutine(ExplodeBigBullet(largeBullet));
     }
@@ -400,8 +391,6 @@ public class BossController : ScriptBase
                 float offsetX = (float)(mediumBulletPosition.X + Math.Cos(radian) * 0.3f);
                 float offsetY = (float)(mediumBulletPosition.Y + Math.Sin(radian) * 0.3f);
 
-                //InternalCall.m_InternalCallPlayAudio(EntityID, bossShootingSound);
-
                 InternalCall.m_InternalCallAddPrefab(bossBulletPrefab, offsetX, offsetY, spreadAngle);
             }
 
@@ -427,7 +416,6 @@ public class BossController : ScriptBase
                 float spawnY = position.Y + (float)Math.Sin(radian) * radius;
 
                 uint bullet = (uint)InternalCall.m_InternalCallAddPrefab(bossBulletPrefab, spawnX, spawnY, baseAngle);
-                InternalCall.m_InternalCallPlayAudio(EntityID, bossShootingSound);
 
                 yield return new CoroutineManager.WaitForSeconds(bulletInterval);
             }

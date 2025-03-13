@@ -163,9 +163,9 @@
         "transform": {
             "position": {
                 "x": 0.0,
-                "y": 14.302980422973633
+                "y": 0.0
             },
-            "rotation": -0.0,
+            "rotation": 0.0,
             "scale": {
                 "x": 1.0,
                 "y": 1.0
@@ -180,55 +180,6 @@
                 }
             ]
         }
-    },
-    {
-        "name": {
-            "namestr": "GameControllerLevel1",
-            "layer": 0,
-            "isprefab": false,
-            "tagstr": "Default"
-        },
-        "transform": {
-            "position": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "rotation": 0.0,
-            "scale": {
-                "x": 1.0,
-                "y": 1.0
-            }
-        },
-        "script": {
-            "scripts": [
-                {
-                    "name": "GameControllerLevel1",
-                    "enabled": true,
-                    "map": [
-                        {
-                            "variable": "gameIsPaused",
-                            "base64": ""
-                        },
-                        {
-                            "variable": "runOnce",
-                            "base64": ""
-                        },
-                        {
-                            "variable": "gameAudioUp",
-                            "base64": ""
-                        }
-                    ]
-                }
-            ]
-        },
-        "audio": [
-            {
-                "name": "aud_mainLevelLoop",
-                "volume": 0.17000000178813934,
-                "loop": true,
-                "playOnStart": false
-            }
-        ]
     },
     {
         "name": {
@@ -2951,13 +2902,13 @@
         },
         "transform": {
             "position": {
-                "x": 12.9795560836792,
-                "y": -37.77201843261719
+                "x": 13.245849609375,
+                "y": -40.36406707763672
             },
             "rotation": -0.0,
             "scale": {
-                "x": 0.0,
-                "y": 0.0
+                "x": 3.0,
+                "y": 3.0
             }
         },
         "collider": {
@@ -3789,13 +3740,13 @@
         },
         "transform": {
             "position": {
-                "x": 0.0,
-                "y": 0.0
+                "x": 12.964741706848145,
+                "y": -10.023512840270996
             },
             "rotation": -0.0,
             "scale": {
-                "x": 0.0,
-                "y": 0.0
+                "x": 3.0999999046325684,
+                "y": 3.0
             }
         },
         "collider": {
@@ -3870,6 +3821,10 @@
                             "base64": ""
                         },
                         {
+                            "variable": "isForceFieldActive",
+                            "base64": ""
+                        },
+                        {
                             "variable": "bossHealth",
                             "base64": ""
                         }
@@ -3880,6 +3835,24 @@
         "audio": [
             {
                 "name": "aud_bossDeath01",
+                "volume": 1.0,
+                "loop": false,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_bossShieldRegen01",
+                "volume": 1.0,
+                "loop": false,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_bossShieldBreak01",
+                "volume": 1.0,
+                "loop": false,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_bossBullet01",
                 "volume": 1.0,
                 "loop": false,
                 "playOnStart": false
