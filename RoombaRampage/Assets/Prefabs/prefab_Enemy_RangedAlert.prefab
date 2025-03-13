@@ -17,34 +17,34 @@
     },
     {
         "name": {
-            "namestr": "ScaredEnemyPatrol",
+            "namestr": "prefab_Enemy_RangedAlert",
             "layer": 2,
             "isprefab": true,
             "tagstr": "Enemy",
-            "prefabname": "ScaredEnemy.prefab",
+            "prefabname": "prefab_Enemy_RangedAlert.prefab",
             "issync": false
         },
         "transform": {
             "position": {
-                "x": -4.528764724731445,
-                "y": -8.563582420349121
+                "x": -7.495279788970947,
+                "y": -28.535255432128906
             },
-            "rotation": 0.0,
+            "rotation": -0.0,
             "scale": {
-                "x": 3.0000009536743164,
-                "y": 3.0000009536743164
+                "x": 2.999998092651367,
+                "y": 2.999998092651367
             }
         },
         "collider": {
             "checkcollision": true,
             "checkresponse": true,
             "size": {
-                "x": 0.7400000095367432,
-                "y": 0.23999999463558197
+                "x": 0.5199999809265137,
+                "y": 0.5199999809265137
             },
             "offset": {
                 "x": 0.0,
-                "y": 0.0
+                "y": -0.10000000149011612
             },
             "drawDebug": true,
             "radius": 0.5,
@@ -52,7 +52,7 @@
         },
         "enemy": {
             "enemytag": -1,
-            "enemytype": 0,
+            "enemytype": 4,
             "enemybehaviour": 1
         },
         "rigidbody": {
@@ -80,8 +80,8 @@
             "static": false
         },
         "sprite": {
-            "imagefile": "ani_scientistWalk_strip8.png",
-            "layer": 32,
+            "imagefile": "ani_rangedEnemyMoving_strip6.png",
+            "layer": 76,
             "color": {
                 "r": 1.0,
                 "g": 1.0,
@@ -95,7 +95,7 @@
             "framesPerSecond": 10,
             "frameTimer": 0.0,
             "isAnimating": false,
-            "stripCount": 8
+            "stripCount": 6
         },
         "script": {
             "scripts": [
@@ -134,7 +134,7 @@
             },
             {
                 "name": "aud_bodyStab02",
-                "volume": 0.7009999752044678,
+                "volume": 0.6650000214576721,
                 "loop": false,
                 "playOnStart": false,
                 "isBGM": false,
@@ -211,6 +211,22 @@
                 "playOnStart": false,
                 "isBGM": false,
                 "isSFX": true
+            },
+            {
+                "name": "aud_railgunShot01",
+                "volume": 0.14499999582767487,
+                "loop": false,
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
+            },
+            {
+                "name": "aud_playerDeath01",
+                "volume": 0.2750000059604645,
+                "loop": false,
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             }
         ],
         "raycast": {
@@ -244,11 +260,11 @@
         "children": [
             {
                 "name": {
-                    "namestr": "Waypoint 1",
+                    "namestr": "waypoint 1",
                     "layer": 0,
                     "isprefab": true,
                     "tagstr": "Default",
-                    "prefabname": "ScaredEnemy.prefab",
+                    "prefabname": "prefab_Enemy_RangedAlert.prefab",
                     "issync": true
                 },
                 "transform": {
@@ -265,17 +281,17 @@
             },
             {
                 "name": {
-                    "namestr": "Waypoint 2",
+                    "namestr": "waypoint 2",
                     "layer": 0,
                     "isprefab": true,
                     "tagstr": "Default",
-                    "prefabname": "ScaredEnemy.prefab",
+                    "prefabname": "prefab_Enemy_RangedAlert.prefab",
                     "issync": true
                 },
                 "transform": {
                     "position": {
-                        "x": 2.692307472229004,
-                        "y": 0.007251149974763393
+                        "x": 0.0,
+                        "y": 0.0
                     },
                     "rotation": 0.0,
                     "scale": {

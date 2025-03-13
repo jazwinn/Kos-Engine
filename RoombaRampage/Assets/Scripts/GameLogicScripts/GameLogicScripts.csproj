@@ -79,6 +79,7 @@
     <Compile Include="LogicScript\EnemyBulletScript.cs" />
     <Compile Include="LogicScript\EnemyController.cs" />
     <Compile Include="LogicScript\EnemyScript.cs" />
+    <Compile Include="LogicScript\EnemySpawner.cs" />
     <Compile Include="LogicScript\EnemyState.cs" />
     <Compile Include="LogicScript\ExitGameButton.cs" />
     <Compile Include="LogicScript\GameController.cs" />
