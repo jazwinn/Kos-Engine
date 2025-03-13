@@ -677,6 +677,9 @@ namespace Serialization {
 					audioObject.AddMember("volume", audioFile.m_Volume, allocator);
 					audioObject.AddMember("loop", audioFile.m_Loop, allocator);
 					audioObject.AddMember("playOnStart", audioFile.m_PlayOnStart, allocator);
+					audioObject.AddMember("isBGM", audioFile.m_IsBGM, allocator);
+					audioObject.AddMember("isSFX", audioFile.m_IsSFX, allocator);
+
 
 					audioArray.PushBack(audioObject, allocator);
 				}
@@ -1268,6 +1271,12 @@ namespace Serialization {
 					}
 					if (audioObject.HasMember("playonstart")) {
 						audioFile.m_PlayOnStart = audioObject["playonstart"].GetBool();
+					}
+					if (audioObject.HasMember("isBGM")) {
+						audioFile.m_IsBGM = audioObject["isBGM"].GetBool();
+					}
+					if (audioObject.HasMember("isSFX")) {
+						audioFile.m_IsSFX = audioObject["isSFX"].GetBool();
 					}
 
 					ac->m_AudioFiles.push_back(audioFile);

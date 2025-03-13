@@ -59,52 +59,45 @@ namespace ecs {
         assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
         ECS* ecs = ECS::m_GetInstance();
 
-        if (m_vecAudioComponentPtr.empty()) {
-            return;
-        }
+        if (m_vecAudioComponentPtr.empty()) return;
 
         int n{ 0 };
         for (auto& audioCompPtr : m_vecAudioComponentPtr) {
             TransformComponent* transform = m_vecTransformComponentPtr[n];
-            NameComponent* NameComp = m_vecNameComponentPtr[n];
+            NameComponent* nameComp = m_vecNameComponentPtr[n];
             n++;
 
-            if ((transform->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer)) continue;
+            if ((transform->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(nameComp->m_Layer)) continue;
 
+            std::string entityIDStr = std::to_string(audioCompPtr->m_Entity);
             for (auto& audioFile : audioCompPtr->m_AudioFiles) {
                 auto it = assetManager->m_audioManager.getSoundMap().find(audioFile.m_Name);
-                if (it != assetManager->m_audioManager.getSoundMap().end()) {
-                    auto& sound = it->second;
+                if (it == assetManager->m_audioManager.getSoundMap().end()) continue;
 
-                    float adjustedVolume = audioFile.m_Volume;
-                    if (audioFile.m_IsBGM) {
-                        adjustedVolume *= assetManager->m_audioManager.m_GlobalBGMVolume;
-                    }
-                    else if (audioFile.m_IsSFX) {
-                        adjustedVolume *= assetManager->m_audioManager.m_GlobalSFXVolume;
-                    }
+                auto& sound = it->second;
 
+                float adjustedVolume = audioFile.m_Volume;
+                if (audioFile.m_IsBGM) {
+                    adjustedVolume *= assetManager->m_audioManager.m_GlobalBGMVolume;
+                }
+                else if (audioFile.m_IsSFX) {
+                    adjustedVolume *= assetManager->m_audioManager.m_GlobalSFXVolume;
+                }
+                if (adjustedVolume < 0)
+                {
+                    adjustedVolume = 0;
+                }
+                sound->m_SetVolume(entityIDStr, adjustedVolume);
+                sound->m_SetLooping(entityIDStr, audioFile.m_Loop);
 
-                    if (audioFile.m_Volume != audioFile.m_LastVolume) {
-                        sound->m_SetVolume(std::to_string(audioCompPtr->m_Entity), adjustedVolume);
-                        audioFile.m_LastVolume = audioFile.m_Volume;
-                    }
-
-                    if (audioFile.m_Loop != audioFile.m_LastLoopState) {
-                        sound->m_SetLooping(std::to_string(audioCompPtr->m_Entity), audioFile.m_Loop);
-                        audioFile.m_LastLoopState = audioFile.m_Loop;
-                    }
-
-                    if (audioFile.m_PlayOnStart) {
-                        if (!sound->m_IsPlaying(std::to_string(audioCompPtr->m_Entity))) {
-                            sound->m_PlaySound(std::to_string(audioCompPtr->m_Entity));
-                            audioFile.m_PlayOnStart = false;
-                        }
-                    }
+                if (audioFile.m_PlayOnStart && !sound->m_IsPlaying(entityIDStr)) {
+                    sound->m_PlaySound(entityIDStr);
+                    audioFile.m_PlayOnStart = false;  // Ensure the original struct is modified
                 }
             }
         }
     }
+
 
 
 }
