@@ -4853,8 +4853,8 @@
                 "volume": 0.6060000061988831,
                 "loop": true,
                 "playOnStart": false,
-                "isBGM": false,
-                "isSFX": true
+                "isBGM": true,
+                "isSFX": false
             }
         ]
     },
