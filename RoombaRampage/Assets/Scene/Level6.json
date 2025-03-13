@@ -163,9 +163,9 @@
         "transform": {
             "position": {
                 "x": 0.0,
-                "y": 0.0
+                "y": 14.302980422973633
             },
-            "rotation": 0.0,
+            "rotation": -0.0,
             "scale": {
                 "x": 1.0,
                 "y": 1.0
@@ -739,10 +739,10 @@
                 },
                 "transform": {
                     "position": {
-                        "x": -6.620002746582031,
-                        "y": 1.9196752309799194
+                        "x": -6.010573387145996,
+                        "y": 1.8769081830978394
                     },
-                    "rotation": -0.0,
+                    "rotation": 0.0,
                     "scale": {
                         "x": 4.0,
                         "y": 4.0
@@ -752,11 +752,11 @@
                     "checkcollision": true,
                     "checkresponse": false,
                     "size": {
-                        "x": 0.10000000149011612,
+                        "x": 0.14000000059604645,
                         "y": 0.15000000596046448
                     },
                     "offset": {
-                        "x": -0.014999999664723873,
+                        "x": 0.0,
                         "y": 0.0
                     },
                     "drawDebug": true,
@@ -845,10 +845,10 @@
                 },
                 "transform": {
                     "position": {
-                        "x": -4.180798530578613,
-                        "y": 1.9204864501953125
+                        "x": -3.604339838027954,
+                        "y": 1.8777196407318115
                     },
-                    "rotation": -0.0,
+                    "rotation": 0.0,
                     "scale": {
                         "x": 4.0,
                         "y": 4.0
@@ -858,11 +858,11 @@
                     "checkcollision": true,
                     "checkresponse": false,
                     "size": {
-                        "x": 0.10000000149011612,
+                        "x": 0.14000000059604645,
                         "y": 0.15000000596046448
                     },
                     "offset": {
-                        "x": 0.014999999664723873,
+                        "x": 0.0,
                         "y": 0.0
                     },
                     "drawDebug": true,
@@ -951,10 +951,10 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 3.8610196113586426,
-                        "y": 1.9199999570846558
+                        "x": 3.581515312194824,
+                        "y": 1.8769992589950562
                     },
-                    "rotation": -0.0,
+                    "rotation": 0.0,
                     "scale": {
                         "x": 4.0,
                         "y": 4.0
@@ -964,11 +964,11 @@
                     "checkcollision": true,
                     "checkresponse": false,
                     "size": {
-                        "x": 0.10000000149011612,
+                        "x": 0.14000000059604645,
                         "y": 0.15000000596046448
                     },
                     "offset": {
-                        "x": -0.014999999664723873,
+                        "x": 0.0,
                         "y": 0.0
                     },
                     "drawDebug": true,
@@ -1057,10 +1057,10 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 6.300156593322754,
-                        "y": 1.9199999570846558
+                        "x": 6.0206522941589355,
+                        "y": 1.8769992589950562
                     },
-                    "rotation": -0.0,
+                    "rotation": 0.0,
                     "scale": {
                         "x": 4.0,
                         "y": 4.0
@@ -1070,11 +1070,11 @@
                     "checkcollision": true,
                     "checkresponse": false,
                     "size": {
-                        "x": 0.10000000149011612,
+                        "x": 0.14000000059604645,
                         "y": 0.15000000596046448
                     },
                     "offset": {
-                        "x": 0.014999999664723873,
+                        "x": 0.0,
                         "y": 0.0
                     },
                     "drawDebug": true,
@@ -1163,10 +1163,10 @@
                 },
                 "transform": {
                     "position": {
-                        "x": -6.619999885559082,
-                        "y": -2.4005203247070313
+                        "x": -5.9959821701049805,
+                        "y": -2.4427108764648438
                     },
-                    "rotation": -0.0,
+                    "rotation": 0.0,
                     "scale": {
                         "x": 4.0,
                         "y": 4.0
@@ -1176,11 +1176,11 @@
                     "checkcollision": true,
                     "checkresponse": false,
                     "size": {
-                        "x": 0.10000000149011612,
+                        "x": 0.14000000059604645,
                         "y": 0.15000000596046448
                     },
                     "offset": {
-                        "x": -0.014999999664723873,
+                        "x": 0.0,
                         "y": 0.0
                     },
                     "drawDebug": true,
@@ -1269,10 +1269,10 @@
                 },
                 "transform": {
                     "position": {
-                        "x": -4.179999828338623,
-                        "y": -2.4000415802001953
+                        "x": -3.5757646560668945,
+                        "y": -2.436885118484497
                     },
-                    "rotation": -0.0,
+                    "rotation": 0.0,
                     "scale": {
                         "x": 4.0,
                         "y": 4.0
@@ -1282,11 +1282,11 @@
                     "checkcollision": true,
                     "checkresponse": false,
                     "size": {
-                        "x": 0.10000000149011612,
+                        "x": 0.14000000059604645,
                         "y": 0.15000000596046448
                     },
                     "offset": {
-                        "x": 0.014999999664723873,
+                        "x": 0.0,
                         "y": 0.0
                     },
                     "drawDebug": true,
@@ -1481,10 +1481,10 @@
                 },
                 "transform": {
                     "position": {
-                        "x": -5.333443641662598,
-                        "y": 1.8276896476745605
+                        "x": -4.820194244384766,
+                        "y": 1.809999942779541
                     },
-                    "rotation": -0.0,
+                    "rotation": 0.0,
                     "scale": {
                         "x": 1.0,
                         "y": 1.0
@@ -1528,10 +1528,10 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 5.134071350097656,
-                        "y": 1.8300000429153442
+                        "x": 4.757815837860107,
+                        "y": 1.8084996938705444
                     },
-                    "rotation": -0.0,
+                    "rotation": 0.0,
                     "scale": {
                         "x": 1.0,
                         "y": 1.0
@@ -1575,10 +1575,10 @@
                 },
                 "transform": {
                     "position": {
-                        "x": -5.329999923706055,
-                        "y": -2.5054843425750732
+                        "x": -4.8289265632629395,
+                        "y": -2.52759051322937
                     },
-                    "rotation": -0.0,
+                    "rotation": 0.0,
                     "scale": {
                         "x": 1.0,
                         "y": 1.0
@@ -1664,7 +1664,7 @@
                     }
                 },
                 "sprite": {
-                    "imagefile": "ani_inventoryLeftIconSwitch_strip3.png",
+                    "imagefile": "ani_inventoryLeftIconSwitch_strip4.png",
                     "layer": 302,
                     "color": {
                         "r": 1.0,
@@ -1679,7 +1679,7 @@
                     "framesPerSecond": 0,
                     "frameTimer": 0.0,
                     "isAnimating": true,
-                    "stripCount": 3
+                    "stripCount": 4
                 }
             },
             {
@@ -1703,7 +1703,7 @@
                     }
                 },
                 "sprite": {
-                    "imagefile": "ani_inventoryRightIconSwitch_strip3.png",
+                    "imagefile": "ani_inventoryRightIconSwitch_strip4.png",
                     "layer": 304,
                     "color": {
                         "r": 1.0,
@@ -1718,7 +1718,7 @@
                     "framesPerSecond": 0,
                     "frameTimer": 0.0,
                     "isAnimating": true,
-                    "stripCount": 3
+                    "stripCount": 4
                 }
             },
             {
@@ -2951,13 +2951,13 @@
         },
         "transform": {
             "position": {
-                "x": 13.245849609375,
-                "y": -40.36406707763672
+                "x": 12.9795560836792,
+                "y": -37.77201843261719
             },
             "rotation": -0.0,
             "scale": {
-                "x": 3.0,
-                "y": 3.0
+                "x": 0.0,
+                "y": 0.0
             }
         },
         "collider": {
@@ -2972,7 +2972,7 @@
                 "y": 0.0
             },
             "drawDebug": true,
-            "radius": 0.6499999761581421,
+            "radius": 0.550000011920929,
             "shapetype": 1
         },
         "rigidbody": {
@@ -3111,11 +3111,55 @@
                                     "base64": ""
                                 },
                                 {
+                                    "variable": "backLimbGunAmmo",
+                                    "base64": ""
+                                },
+                                {
                                     "variable": "ammoCount",
                                     "base64": ""
                                 },
                                 {
                                     "variable": "meleeCount",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "leftLimbShotGunAmmo",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "leftLimbGunAmmo",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "rightWeaponCount",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "rightLimbRailGunHold",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "railGunLightMaxIntensity",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "rightLimbShotGunAmmo",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "rightLimbGunAmmo",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "leftWeaponCount",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "leftLimbRailGunHold",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "chargeDurationRailGun",
                                     "base64": ""
                                 }
                             ]
@@ -3156,6 +3200,24 @@
                     {
                         "name": "aud_tempcock",
                         "volume": 0.22200000286102295,
+                        "loop": false,
+                        "playOnStart": false
+                    },
+                    {
+                        "name": "aud_railgunChargeUp01",
+                        "volume": 0.6209999918937683,
+                        "loop": false,
+                        "playOnStart": false
+                    },
+                    {
+                        "name": "aud_railgunShot01",
+                        "volume": 0.5960000157356262,
+                        "loop": false,
+                        "playOnStart": false
+                    },
+                    {
+                        "name": "aud_railgunChargeDown01",
+                        "volume": 1.0,
                         "loop": false,
                         "playOnStart": false
                     }
@@ -3210,11 +3272,55 @@
                                     "base64": ""
                                 },
                                 {
+                                    "variable": "backLimbGunAmmo",
+                                    "base64": ""
+                                },
+                                {
                                     "variable": "ammoCount",
                                     "base64": ""
                                 },
                                 {
                                     "variable": "meleeCount",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "railGunLightMaxIntensity",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "rightLimbRailGunHold",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "rightWeaponCount",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "leftLimbGunAmmo",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "leftLimbShotGunAmmo",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "rightLimbShotGunAmmo",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "leftWeaponCount",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "rightLimbGunAmmo",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "leftLimbRailGunHold",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "chargeDurationRailGun",
                                     "base64": ""
                                 }
                             ]
@@ -3255,6 +3361,24 @@
                     {
                         "name": "aud_tempcock",
                         "volume": 0.22699999809265137,
+                        "loop": false,
+                        "playOnStart": false
+                    },
+                    {
+                        "name": "aud_railgunChargeUp01",
+                        "volume": 0.6159999966621399,
+                        "loop": false,
+                        "playOnStart": false
+                    },
+                    {
+                        "name": "aud_railgunShot01",
+                        "volume": 0.6349999904632568,
+                        "loop": false,
+                        "playOnStart": false
+                    },
+                    {
+                        "name": "aud_railgunChargeDown01",
+                        "volume": 1.0,
                         "loop": false,
                         "playOnStart": false
                     }
@@ -3346,6 +3470,18 @@
                     {
                         "name": "aud_emptyGun01",
                         "volume": 0.25699999928474426,
+                        "loop": false,
+                        "playOnStart": false
+                    },
+                    {
+                        "name": "aud_boosters01",
+                        "volume": 1.0,
+                        "loop": false,
+                        "playOnStart": false
+                    },
+                    {
+                        "name": "aud_vacuumStart01",
+                        "volume": 1.0,
                         "loop": false,
                         "playOnStart": false
                     }
@@ -3597,6 +3733,48 @@
                     },
                     "m_light_rotation": 0.0
                 }
+            },
+            {
+                "name": {
+                    "namestr": "ShotgunBulletSpawnLeft",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "prefab_player.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": -0.07722800970077515,
+                        "y": 0.6750263571739197
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                }
+            },
+            {
+                "name": {
+                    "namestr": "ShotgunBulletSpawnRight",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "prefab_player.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.08051446080207825,
+                        "y": 0.6800000071525574
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                }
             }
         ]
     },
@@ -3611,13 +3789,13 @@
         },
         "transform": {
             "position": {
-                "x": 12.964741706848145,
-                "y": -10.023512840270996
+                "x": 0.0,
+                "y": 0.0
             },
             "rotation": -0.0,
             "scale": {
-                "x": 3.0999999046325684,
-                "y": 3.0
+                "x": 0.0,
+                "y": 0.0
             }
         },
         "collider": {
@@ -3699,6 +3877,14 @@
                 }
             ]
         },
+        "audio": [
+            {
+                "name": "aud_bossDeath01",
+                "volume": 1.0,
+                "loop": false,
+                "playOnStart": false
+            }
+        ],
         "LightingComponent": {
             "m_innerOuterRadius": {
                 "x": 1.0,

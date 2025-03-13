@@ -31,6 +31,7 @@ public class BossController : ScriptBase
     private bool isForceFieldDeactivating = false;
 
     private bool isAttacking = false;
+    private string bossDeathSound = "aud_bossDeath01.wav";
 
     #endregion
 
@@ -52,13 +53,13 @@ public class BossController : ScriptBase
 
     #region Enemy Spawning
     private uint[] enemySpawnPoints; // Store spawn point entity IDs
-    private string[] enemyPrefabs = { "prefab_enemyRanged", "FearlessEnemyStatic" };
+    private string[] enemyPrefabs = {"FearlessEnemyStatic" };
 
     //private string[] enemyPrefabs = { "FearlessEnemy" };
     private List<uint> activeEnemies = new List<uint>();
 
     //private float enemySpawnCooldown = 10.0f;
-    private int maxEnemies = 5;
+    private int maxEnemies = 2;
     #endregion
 
 
@@ -120,6 +121,7 @@ public class BossController : ScriptBase
 
             if (animComp.m_frameNumber >= animComp.m_stripCount - 1)
             {
+
                 animComp.m_isAnimating = false;
 
                 animComp.m_frameNumber = 14;
@@ -172,7 +174,7 @@ public class BossController : ScriptBase
         if (GameControllerLevel6.isActivated == true && isAttacking == false)
         {
             isAttacking = true;
-            CoroutineManager.Instance.StartCoroutine(AttackLoop()); // Start attacks
+            //CoroutineManager.Instance.StartCoroutine(AttackLoop()); // Start attacks
         }
 
     }
@@ -285,7 +287,7 @@ public class BossController : ScriptBase
                 SpawnEnemy();
             }
 
-            float randomDelay = GenerateRandom(2, 4);
+            float randomDelay = GenerateRandom(4, 7);
             yield return new CoroutineManager.WaitForSeconds(randomDelay);
         }
     }
@@ -485,6 +487,8 @@ public class BossController : ScriptBase
                             //StartAnimationOnHit();
                             if (bossHealth <= 0)
                             {
+                                InternalCall.m_InternalCallPlayAudio(EntityID, bossDeathSound);
+
                                 StartBossDestroyedAnimation();  // Trigger death animation
                             }
                             else
