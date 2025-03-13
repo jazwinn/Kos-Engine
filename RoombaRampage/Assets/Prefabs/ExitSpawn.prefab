@@ -17,25 +17,25 @@
     },
     {
         "name": {
-            "namestr": "EnemyType3",
+            "namestr": "ExitSpawn",
             "layer": 0,
             "isprefab": false,
-            "tagstr": "Default"
+            "tagstr": "ExitSpawn"
         },
         "transform": {
             "position": {
-                "x": 0.0,
-                "y": 0.0
+                "x": 2.0,
+                "y": -23.0
             },
-            "rotation": 0.0,
+            "rotation": -0.0,
             "scale": {
                 "x": 1.0,
                 "y": 1.0
             }
         },
         "sprite": {
-            "imagefile": "img_BulletPrefab1.png",
-            "layer": 103,
+            "imagefile": "",
+            "layer": 0,
             "color": {
                 "r": 1.0,
                 "g": 1.0,

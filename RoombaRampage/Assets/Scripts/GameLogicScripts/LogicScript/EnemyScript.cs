@@ -95,7 +95,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     private float enemySpeed = 1.9f;
     private float patrolSpeed = 1.9f;
     private float enemyFOVangle = 180.0f;
-    private float enemyFOVdistance = 12.0f;
+    private float enemyFOVdistance = 10.0f;
 
     private float scanTime = 0f;
     private bool scanning = false;
@@ -407,7 +407,9 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         }
 
         Component.Set<SpriteComponent>(EntityID, spriteComp); //Sets sprite component
+        KillCounter.killCount++;
     }
+
 
 
     private IEnumerator EnemyDeath(string causeOfDeath) //Coroutine for enemy death
