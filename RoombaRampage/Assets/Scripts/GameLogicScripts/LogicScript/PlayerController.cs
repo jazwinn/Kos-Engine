@@ -274,20 +274,26 @@ public class PlayerController : ScriptBase
     {
         Vector2 temp;
         InternalCall.m_InternalGetVelocity(EntityID, out temp);
+        RigidBodyComponent rigidBodyComponent = Component.Get<RigidBodyComponent>(EntityID);
 
-        if (Magnitude(temp) != 0 && isAnimating == false)
+        if ((Magnitude(temp) != 0 && isAnimating == false)||(Magnitude(rigidBodyComponent.m_Acceleration) != 0 && isAnimating == false))
         {
-            InternalCall.m_InternalCallPlayAudio(EntityID, movementStartAudio);
-            InternalCall.m_InternalCallPlayAudio(EntityID, movementLoopAudio);
-            animComp = Component.Get<AnimationComponent>(EntityID);
-            animComp.m_isAnimating = true;
-            Component.Set<AnimationComponent>(EntityID, animComp);
-            isAnimating = true;
+            if (isAnimating == false)
+            {
+                InternalCall.m_InternalCallPlayAudio(EntityID, movementStartAudio);
+                InternalCall.m_InternalCallPlayAudio(EntityID, movementLoopAudio);
+                animComp = Component.Get<AnimationComponent>(EntityID);
+                animComp.m_isAnimating = true;
+                Component.Set<AnimationComponent>(EntityID, animComp);
+                isAnimating = true;
+
+
+            }
 
             
         }
 
-        else if (Magnitude(temp) == 0 && isAnimating == true)
+        else if ((Magnitude(temp) == 0 && Magnitude(rigidBodyComponent.m_Acceleration) == 0 && isAnimating == true))
         {
             InternalCall.m_InternalCallStopAudio(EntityID, movementLoopAudio);
             InternalCall.m_InternalCallPlayAudio(EntityID, movementStopAudio);
@@ -297,6 +303,7 @@ public class PlayerController : ScriptBase
             Component.Set<AnimationComponent>(EntityID, animComp);
             isAnimating = false;
         }
+
     }
 
     #region Vec2 Functions

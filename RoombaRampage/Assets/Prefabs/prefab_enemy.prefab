@@ -1,12 +1,18 @@
 [
     {
         "GlobalSettings": {
-            "globalIllumination": 0.30000001192092896,
+            "globalIllumination": 0.8399999737739563,
             "backgroundColor": {
                 "r": 0.13300000131130219,
                 "g": 0.23000000417232513,
                 "b": 0.3199999928474426
             }
+        }
+    },
+    {
+        "CursorSettings": {
+            "cursorImage": "./Assets/Texture/UI/img_startScreenCursor.png",
+            "isCursorCentered": false
         }
     },
     {
@@ -80,7 +86,7 @@
         "animation": {
             "frameNumber": 12,
             "framesPerSecond": 10,
-            "frameTimer": 17105.736328125,
+            "frameTimer": 18562.6640625,
             "isAnimating": true,
             "stripCount": 14
         },
@@ -119,7 +125,9 @@
                 "name": "aud_humanDeath01",
                 "volume": 0.23399999737739563,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             }
         ]
     }

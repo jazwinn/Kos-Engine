@@ -171,12 +171,23 @@ public class GridComponent
 
 public class ParticleComponent //Create internal call, IntercalCall.cs, Intercall.cpp, Interakfn.h
 {
-    public Vector2 m_Anchor;
-    public int m_GridRowLength;
-    public int m_GridColumnLength;
-    public bool m_SetCollidable;
-    public int m_GridKey;
-    public List<List<int>> m_IsWall;
+    public bool m_willSpawn;        
+    public int m_noOfParticles;     
+    public float m_lifeSpan;
+    public Vector2 m_size;
+    public Vector2 m_velocity;      
+    public Vector2 m_acceleration;   
+    public Vector3 m_color;          
+    public float m_coneRotation;    
+    public float m_coneAngle;       
+    public float m_randomFactor;    
+    public string m_imageFile;      
+    public int m_stripCount;        
+    public int m_frameNumber;       
+    public int m_layer;             
+    public float m_friction;        
+    public int m_fps;
+    public bool m_loopAnimation;
 }
 
 public class LightComponent
