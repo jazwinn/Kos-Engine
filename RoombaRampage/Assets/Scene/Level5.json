@@ -10,6 +10,12 @@
         }
     },
     {
+        "CursorSettings": {
+            "cursorImage": "./Assets/Texture/UI/img_startScreenCursor.png",
+            "isCursorCentered": false
+        }
+    },
+    {
         "name": {
             "namestr": "EnemiesParent",
             "layer": 0,
@@ -59974,13 +59980,17 @@
                         "name": "aud_buttonHover01",
                         "volume": 0.4909999966621399,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_buttonClick01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             },
@@ -60080,13 +60090,17 @@
                         "name": "aud_buttonHover01",
                         "volume": 0.47200000286102295,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_buttonClick01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             },
@@ -60303,13 +60317,17 @@
                         "name": "aud_buttonHover01",
                         "volume": 0.4970000088214874,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_buttonClick01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             },
@@ -60409,13 +60427,17 @@
                         "name": "aud_buttonHover01",
                         "volume": 0.49399998784065247,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_buttonClick01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             },
@@ -60515,13 +60537,17 @@
                         "name": "aud_buttonHover01",
                         "volume": 0.4830000102519989,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_buttonClick01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             },
@@ -60621,13 +60647,17 @@
                         "name": "aud_buttonHover01",
                         "volume": 0.5,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_buttonClick01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             },
@@ -60859,13 +60889,17 @@
                         "name": "aud_buttonHover01",
                         "volume": 0.4830000102519989,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_buttonClick01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             },
@@ -61102,13 +61136,17 @@
                         "name": "aud_buttonHover01",
                         "volume": 0.44699999690055847,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_buttonClick01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             },
@@ -61208,13 +61246,17 @@
                         "name": "aud_buttonHover01",
                         "volume": 0.40799999237060547,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_buttonClick01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             },
@@ -61314,13 +61356,17 @@
                         "name": "aud_buttonHover01",
                         "volume": 0.43299999833106995,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_buttonClick01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             },
@@ -61420,13 +61466,17 @@
                         "name": "aud_buttonHover01",
                         "volume": 0.4580000042915344,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_buttonClick01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             },
@@ -61526,13 +61576,17 @@
                         "name": "aud_buttonHover01",
                         "volume": 0.3799999952316284,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_buttonClick01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             },
@@ -61632,13 +61686,17 @@
                         "name": "aud_buttonHover01",
                         "volume": 0.382999986410141,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_buttonClick01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             },
@@ -61738,13 +61796,17 @@
                         "name": "aud_buttonHover01",
                         "volume": 0.38499999046325684,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_buttonClick01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             },
@@ -62372,13 +62434,17 @@
                         "name": "aud_buttonClick01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_buttonHover01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ],
                 "children": [
@@ -62924,13 +62990,17 @@
                                 "name": "aud_buttonHover01",
                                 "volume": 1.0,
                                 "loop": false,
-                                "playOnStart": false
+                                "playOnStart": false,
+                                "isBGM": false,
+                                "isSFX": true
                             },
                             {
                                 "name": "aud_buttonClick01",
                                 "volume": 1.0,
                                 "loop": false,
-                                "playOnStart": false
+                                "playOnStart": false,
+                                "isBGM": false,
+                                "isSFX": true
                             }
                         ]
                     },
@@ -63030,13 +63100,17 @@
                                 "name": "aud_buttonHover01",
                                 "volume": 1.0,
                                 "loop": false,
-                                "playOnStart": false
+                                "playOnStart": false,
+                                "isBGM": false,
+                                "isSFX": true
                             },
                             {
                                 "name": "aud_buttonClick01",
                                 "volume": 1.0,
                                 "loop": false,
-                                "playOnStart": false
+                                "playOnStart": false,
+                                "isBGM": false,
+                                "isSFX": true
                             }
                         ]
                     }
@@ -63549,13 +63623,17 @@
                                 "name": "aud_buttonHover01",
                                 "volume": 1.0,
                                 "loop": false,
-                                "playOnStart": false
+                                "playOnStart": false,
+                                "isBGM": false,
+                                "isSFX": true
                             },
                             {
                                 "name": "aud_buttonClick01",
                                 "volume": 1.0,
                                 "loop": false,
-                                "playOnStart": false
+                                "playOnStart": false,
+                                "isBGM": false,
+                                "isSFX": true
                             }
                         ]
                     },
@@ -63655,13 +63733,17 @@
                                 "name": "aud_buttonHover01",
                                 "volume": 1.0,
                                 "loop": false,
-                                "playOnStart": false
+                                "playOnStart": false,
+                                "isBGM": false,
+                                "isSFX": true
                             },
                             {
                                 "name": "aud_buttonClick01",
                                 "volume": 1.0,
                                 "loop": false,
-                                "playOnStart": false
+                                "playOnStart": false,
+                                "isBGM": false,
+                                "isSFX": true
                             }
                         ]
                     }
@@ -63727,7 +63809,9 @@
                 "name": "aud_mainLevelLoop",
                 "volume": 0.17000000178813934,
                 "loop": true,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             }
         ]
     },
@@ -63831,25 +63915,33 @@
                 "name": "aud_playerDeath01",
                 "volume": 0.9269999861717224,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             },
             {
                 "name": "aud_vacuumStart01",
                 "volume": 1.0,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             },
             {
                 "name": "aud_vacuumLoop01",
                 "volume": 0.3140000104904175,
                 "loop": true,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             },
             {
                 "name": "aud_vacuumEnd01",
                 "volume": 1.0,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             }
         ],
         "children": [
@@ -63982,67 +64074,89 @@
                         "name": "aud_cleaver",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_gunshot01",
                         "volume": 0.6539999842643738,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_weaponSwitch01",
                         "volume": 0.20900000631809235,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_katana01",
                         "volume": 0.5199999809265137,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_emptyGun01",
                         "volume": 0.22100000083446503,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_tempcock",
                         "volume": 0.22200000286102295,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_railgunChargeUp01",
                         "volume": 0.6209999918937683,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_railgunShot01",
                         "volume": 0.5960000157356262,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_railgunChargeDown01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_shotgunShot01",
                         "volume": 0.6869999766349792,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_shotgunCocking01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             },
@@ -64175,67 +64289,89 @@
                         "name": "aud_cleaver",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_gunshot01",
                         "volume": 0.6589999794960022,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_weaponSwitch01",
                         "volume": 0.2029999941587448,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_katana01",
                         "volume": 0.48899999260902405,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_emptyGun01",
                         "volume": 0.23199999332427979,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_tempcock",
                         "volume": 0.22699999809265137,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_railgunChargeUp01",
                         "volume": 0.6159999966621399,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_railgunShot01",
                         "volume": 0.6349999904632568,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_railgunChargeDown01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_shotgunShot01",
                         "volume": 0.6869999766349792,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_shotgunCocking01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             },
@@ -64308,37 +64444,49 @@
                         "name": "aud_gunshot01",
                         "volume": 0.6759999990463257,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_cleaver",
                         "volume": 0.546999990940094,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_katana01",
                         "volume": 0.4970000088214874,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_emptyGun01",
                         "volume": 0.25699999928474426,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_boosters01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_vacuumStart01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             },
@@ -64632,5 +64780,933 @@
                 }
             }
         ]
+    },
+    {
+        "name": {
+            "namestr": "prefab_Enemy_Spawner",
+            "layer": 0,
+            "isprefab": true,
+            "tagstr": "Default",
+            "prefabname": "prefab_Enemy_Spawner.prefab",
+            "issync": false
+        },
+        "transform": {
+            "position": {
+                "x": 5.054069519042969,
+                "y": -3.868551015853882
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 0.30000001192092896,
+                "y": 0.3400000035762787
+            }
+        },
+        "collider": {
+            "checkcollision": false,
+            "checkresponse": false,
+            "size": {
+                "x": 6.400000095367432,
+                "y": 5.639999866485596
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true,
+            "radius": 0.5,
+            "shapetype": 0
+        },
+        "script": {
+            "scripts": [
+                {
+                    "name": "EnemySpawner",
+                    "enabled": true,
+                    "map": [
+                        {
+                            "variable": "spawnlimit",
+                            "base64": "AgAAAMzMzMwA"
+                        },
+                        {
+                            "variable": "minSpawnInterval",
+                            "base64": "AACAQMzMzMwA"
+                        },
+                        {
+                            "variable": "maxSpawnInterval",
+                            "base64": "AAAAQczMzMwA"
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "name": {
+            "namestr": "prefab_Enemy_Spawner",
+            "layer": 0,
+            "isprefab": true,
+            "tagstr": "Default",
+            "prefabname": "prefab_Enemy_Spawner.prefab",
+            "issync": false
+        },
+        "transform": {
+            "position": {
+                "x": -8.922616004943848,
+                "y": -3.9933409690856934
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 0.30000001192092896,
+                "y": 0.3400000035762787
+            }
+        },
+        "collider": {
+            "checkcollision": false,
+            "checkresponse": false,
+            "size": {
+                "x": 6.400000095367432,
+                "y": 5.639999866485596
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true,
+            "radius": 0.5,
+            "shapetype": 0
+        },
+        "script": {
+            "scripts": [
+                {
+                    "name": "EnemySpawner",
+                    "enabled": true,
+                    "map": [
+                        {
+                            "variable": "spawnlimit",
+                            "base64": "AgAAAMzMzMwA"
+                        },
+                        {
+                            "variable": "minSpawnInterval",
+                            "base64": "AACAQMzMzMwA"
+                        },
+                        {
+                            "variable": "maxSpawnInterval",
+                            "base64": "AADgQMzMzMwA"
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "name": {
+            "namestr": "prefab_Enemy_Spawner",
+            "layer": 0,
+            "isprefab": true,
+            "tagstr": "Default",
+            "prefabname": "prefab_Enemy_Spawner.prefab",
+            "issync": false
+        },
+        "transform": {
+            "position": {
+                "x": 13.04074478149414,
+                "y": -4.055737495422363
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 0.30000001192092896,
+                "y": 0.3400000035762787
+            }
+        },
+        "collider": {
+            "checkcollision": false,
+            "checkresponse": false,
+            "size": {
+                "x": 6.400000095367432,
+                "y": 5.639999866485596
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true,
+            "radius": 0.5,
+            "shapetype": 0
+        },
+        "script": {
+            "scripts": [
+                {
+                    "name": "EnemySpawner",
+                    "enabled": true,
+                    "map": [
+                        {
+                            "variable": "spawnlimit",
+                            "base64": "AgAAAMzMzMwA"
+                        },
+                        {
+                            "variable": "minSpawnInterval",
+                            "base64": "AABAQMzMzMwA"
+                        },
+                        {
+                            "variable": "maxSpawnInterval",
+                            "base64": "AADAQMzMzMwA"
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "name": {
+            "namestr": "prefab_Enemy_Spawner",
+            "layer": 0,
+            "isprefab": true,
+            "tagstr": "Default",
+            "prefabname": "prefab_Enemy_Spawner.prefab",
+            "issync": false
+        },
+        "transform": {
+            "position": {
+                "x": 20.873924255371094,
+                "y": -12.055359840393066
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 0.30000001192092896,
+                "y": 0.3400000035762787
+            }
+        },
+        "collider": {
+            "checkcollision": false,
+            "checkresponse": false,
+            "size": {
+                "x": 6.400000095367432,
+                "y": 5.639999866485596
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true,
+            "radius": 0.5,
+            "shapetype": 0
+        },
+        "script": {
+            "scripts": [
+                {
+                    "name": "EnemySpawner",
+                    "enabled": true,
+                    "map": [
+                        {
+                            "variable": "spawnlimit",
+                            "base64": "AgAAAMzMzMwA"
+                        },
+                        {
+                            "variable": "minSpawnInterval",
+                            "base64": "AACAQMzMzMwA"
+                        },
+                        {
+                            "variable": "maxSpawnInterval",
+                            "base64": "AADgQMzMzMwA"
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "name": {
+            "namestr": "prefab_Enemy_Spawner",
+            "layer": 0,
+            "isprefab": true,
+            "tagstr": "Default",
+            "prefabname": "prefab_Enemy_Spawner.prefab",
+            "issync": false
+        },
+        "transform": {
+            "position": {
+                "x": -0.9945278167724609,
+                "y": -4.138787269592285
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 0.30000001192092896,
+                "y": 0.3400000035762787
+            }
+        },
+        "collider": {
+            "checkcollision": false,
+            "checkresponse": false,
+            "size": {
+                "x": 6.400000095367432,
+                "y": 5.639999866485596
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true,
+            "radius": 0.5,
+            "shapetype": 0
+        },
+        "script": {
+            "scripts": [
+                {
+                    "name": "EnemySpawner",
+                    "enabled": true,
+                    "map": [
+                        {
+                            "variable": "spawnlimit",
+                            "base64": "AgAAAMzMzMwA"
+                        },
+                        {
+                            "variable": "minSpawnInterval",
+                            "base64": "AACAQMzMzMwA"
+                        },
+                        {
+                            "variable": "maxSpawnInterval",
+                            "base64": "AADAQMzMzMwA"
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "name": {
+            "namestr": "prefab_Enemy_Spawner",
+            "layer": 0,
+            "isprefab": true,
+            "tagstr": "Default",
+            "prefabname": "prefab_Enemy_Spawner.prefab",
+            "issync": false
+        },
+        "transform": {
+            "position": {
+                "x": -16.79143714904785,
+                "y": -12.218120574951172
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 0.30000001192092896,
+                "y": 0.3400000035762787
+            }
+        },
+        "collider": {
+            "checkcollision": false,
+            "checkresponse": false,
+            "size": {
+                "x": 6.400000095367432,
+                "y": 5.639999866485596
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true,
+            "radius": 0.5,
+            "shapetype": 0
+        },
+        "script": {
+            "scripts": [
+                {
+                    "name": "EnemySpawner",
+                    "enabled": true,
+                    "map": [
+                        {
+                            "variable": "spawnlimit",
+                            "base64": "AgAAAMzMzMwA"
+                        },
+                        {
+                            "variable": "minSpawnInterval",
+                            "base64": "AABAQMzMzMwA"
+                        },
+                        {
+                            "variable": "maxSpawnInterval",
+                            "base64": "AADAQMzMzMwA"
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "name": {
+            "namestr": "prefab_Enemy_Spawner",
+            "layer": 0,
+            "isprefab": true,
+            "tagstr": "Default",
+            "prefabname": "prefab_Enemy_Spawner.prefab",
+            "issync": false
+        },
+        "transform": {
+            "position": {
+                "x": -17.032609939575195,
+                "y": -19.93568992614746
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 0.30000001192092896,
+                "y": 0.3400000035762787
+            }
+        },
+        "collider": {
+            "checkcollision": false,
+            "checkresponse": false,
+            "size": {
+                "x": 6.400000095367432,
+                "y": 5.639999866485596
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true,
+            "radius": 0.5,
+            "shapetype": 0
+        },
+        "script": {
+            "scripts": [
+                {
+                    "name": "EnemySpawner",
+                    "enabled": true,
+                    "map": [
+                        {
+                            "variable": "spawnlimit",
+                            "base64": "AgAAAMzMzMwA"
+                        },
+                        {
+                            "variable": "minSpawnInterval",
+                            "base64": "AACAQMzMzMwA"
+                        },
+                        {
+                            "variable": "maxSpawnInterval",
+                            "base64": "AADgQMzMzMwA"
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "name": {
+            "namestr": "prefab_Enemy_Spawner",
+            "layer": 0,
+            "isprefab": true,
+            "tagstr": "Default",
+            "prefabname": "prefab_Enemy_Spawner.prefab",
+            "issync": false
+        },
+        "transform": {
+            "position": {
+                "x": -17.032609939575195,
+                "y": -26.08563232421875
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 0.30000001192092896,
+                "y": 0.3400000035762787
+            }
+        },
+        "collider": {
+            "checkcollision": false,
+            "checkresponse": false,
+            "size": {
+                "x": 6.400000095367432,
+                "y": 5.639999866485596
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true,
+            "radius": 0.5,
+            "shapetype": 0
+        },
+        "script": {
+            "scripts": [
+                {
+                    "name": "EnemySpawner",
+                    "enabled": true,
+                    "map": [
+                        {
+                            "variable": "spawnlimit",
+                            "base64": "AgAAAMzMzMwA"
+                        },
+                        {
+                            "variable": "minSpawnInterval",
+                            "base64": "AACAQMzMzMwA"
+                        },
+                        {
+                            "variable": "maxSpawnInterval",
+                            "base64": "AADAQMzMzMwA"
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "name": {
+            "namestr": "prefab_Enemy_Spawner",
+            "layer": 0,
+            "isprefab": true,
+            "tagstr": "Default",
+            "prefabname": "prefab_Enemy_Spawner.prefab",
+            "issync": false
+        },
+        "transform": {
+            "position": {
+                "x": -16.91202163696289,
+                "y": -34.04438018798828
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 0.30000001192092896,
+                "y": 0.3400000035762787
+            }
+        },
+        "collider": {
+            "checkcollision": false,
+            "checkresponse": false,
+            "size": {
+                "x": 6.400000095367432,
+                "y": 5.639999866485596
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true,
+            "radius": 0.5,
+            "shapetype": 0
+        },
+        "script": {
+            "scripts": [
+                {
+                    "name": "EnemySpawner",
+                    "enabled": true,
+                    "map": [
+                        {
+                            "variable": "spawnlimit",
+                            "base64": "AgAAAMzMzMwA"
+                        },
+                        {
+                            "variable": "minSpawnInterval",
+                            "base64": "AABAQMzMzMwA"
+                        },
+                        {
+                            "variable": "maxSpawnInterval",
+                            "base64": "AACgQMzMzMwA"
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "name": {
+            "namestr": "prefab_Enemy_Spawner",
+            "layer": 0,
+            "isprefab": true,
+            "tagstr": "Default",
+            "prefabname": "prefab_Enemy_Spawner.prefab",
+            "issync": false
+        },
+        "transform": {
+            "position": {
+                "x": -8.953271865844727,
+                "y": -41.88254165649414
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 0.30000001192092896,
+                "y": 0.3400000035762787
+            }
+        },
+        "collider": {
+            "checkcollision": false,
+            "checkresponse": false,
+            "size": {
+                "x": 6.400000095367432,
+                "y": 5.639999866485596
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true,
+            "radius": 0.5,
+            "shapetype": 0
+        },
+        "script": {
+            "scripts": [
+                {
+                    "name": "EnemySpawner",
+                    "enabled": true,
+                    "map": [
+                        {
+                            "variable": "spawnlimit",
+                            "base64": "AgAAAMzMzMwA"
+                        },
+                        {
+                            "variable": "minSpawnInterval",
+                            "base64": "AACAQMzMzMwA"
+                        },
+                        {
+                            "variable": "maxSpawnInterval",
+                            "base64": "AADgQMzMzMwA"
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "name": {
+            "namestr": "prefab_Enemy_Spawner",
+            "layer": 0,
+            "isprefab": true,
+            "tagstr": "Default",
+            "prefabname": "prefab_Enemy_Spawner.prefab",
+            "issync": false
+        },
+        "transform": {
+            "position": {
+                "x": -0.9624347686767578,
+                "y": -42.11989212036133
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 0.30000001192092896,
+                "y": 0.3400000035762787
+            }
+        },
+        "collider": {
+            "checkcollision": false,
+            "checkresponse": false,
+            "size": {
+                "x": 6.400000095367432,
+                "y": 5.639999866485596
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true,
+            "radius": 0.5,
+            "shapetype": 0
+        },
+        "script": {
+            "scripts": [
+                {
+                    "name": "EnemySpawner",
+                    "enabled": true,
+                    "map": [
+                        {
+                            "variable": "spawnlimit",
+                            "base64": "AgAAAMzMzMwA"
+                        },
+                        {
+                            "variable": "minSpawnInterval",
+                            "base64": "AABAQMzMzMwA"
+                        },
+                        {
+                            "variable": "maxSpawnInterval",
+                            "base64": "AADAQMzMzMwA"
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "name": {
+            "namestr": "prefab_Enemy_Spawner",
+            "layer": 0,
+            "isprefab": true,
+            "tagstr": "Default",
+            "prefabname": "prefab_Enemy_Spawner.prefab",
+            "issync": false
+        },
+        "transform": {
+            "position": {
+                "x": 4.97135591506958,
+                "y": -41.9616584777832
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 0.30000001192092896,
+                "y": 0.3400000035762787
+            }
+        },
+        "collider": {
+            "checkcollision": false,
+            "checkresponse": false,
+            "size": {
+                "x": 6.400000095367432,
+                "y": 5.639999866485596
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true,
+            "radius": 0.5,
+            "shapetype": 0
+        },
+        "script": {
+            "scripts": [
+                {
+                    "name": "EnemySpawner",
+                    "enabled": true,
+                    "map": [
+                        {
+                            "variable": "spawnlimit",
+                            "base64": "AgAAAMzMzMwA"
+                        },
+                        {
+                            "variable": "minSpawnInterval",
+                            "base64": "AACAQMzMzMwA"
+                        },
+                        {
+                            "variable": "maxSpawnInterval",
+                            "base64": "AADgQMzMzMwA"
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "name": {
+            "namestr": "prefab_Enemy_Spawner",
+            "layer": 0,
+            "isprefab": true,
+            "tagstr": "Default",
+            "prefabname": "prefab_Enemy_Spawner.prefab",
+            "issync": false
+        },
+        "transform": {
+            "position": {
+                "x": 12.883074760437012,
+                "y": -42.119895935058594
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 0.30000001192092896,
+                "y": 0.3400000035762787
+            }
+        },
+        "collider": {
+            "checkcollision": false,
+            "checkresponse": false,
+            "size": {
+                "x": 6.400000095367432,
+                "y": 5.639999866485596
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true,
+            "radius": 0.5,
+            "shapetype": 0
+        },
+        "script": {
+            "scripts": [
+                {
+                    "name": "EnemySpawner",
+                    "enabled": true,
+                    "map": [
+                        {
+                            "variable": "spawnlimit",
+                            "base64": "AgAAAMzMzMwA"
+                        },
+                        {
+                            "variable": "minSpawnInterval",
+                            "base64": "AABAQMzMzMwA"
+                        },
+                        {
+                            "variable": "maxSpawnInterval",
+                            "base64": "AADAQMzMzMwA"
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "name": {
+            "namestr": "prefab_Enemy_Spawner",
+            "layer": 0,
+            "isprefab": true,
+            "tagstr": "Default",
+            "prefabname": "prefab_Enemy_Spawner.prefab",
+            "issync": false
+        },
+        "transform": {
+            "position": {
+                "x": 21.03214454650879,
+                "y": -34.04994201660156
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 0.30000001192092896,
+                "y": 0.3400000035762787
+            }
+        },
+        "collider": {
+            "checkcollision": false,
+            "checkresponse": false,
+            "size": {
+                "x": 6.400000095367432,
+                "y": 5.639999866485596
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true,
+            "radius": 0.5,
+            "shapetype": 0
+        },
+        "script": {
+            "scripts": [
+                {
+                    "name": "EnemySpawner",
+                    "enabled": true,
+                    "map": [
+                        {
+                            "variable": "spawnlimit",
+                            "base64": "AgAAAMzMzMwA"
+                        },
+                        {
+                            "variable": "minSpawnInterval",
+                            "base64": "AACAQMzMzMwA"
+                        },
+                        {
+                            "variable": "maxSpawnInterval",
+                            "base64": "AADgQMzMzMwA"
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "name": {
+            "namestr": "prefab_Enemy_Spawner",
+            "layer": 0,
+            "isprefab": true,
+            "tagstr": "Default",
+            "prefabname": "prefab_Enemy_Spawner.prefab",
+            "issync": false
+        },
+        "transform": {
+            "position": {
+                "x": 20.87391471862793,
+                "y": -25.9799861907959
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 0.30000001192092896,
+                "y": 0.3400000035762787
+            }
+        },
+        "collider": {
+            "checkcollision": false,
+            "checkresponse": false,
+            "size": {
+                "x": 6.400000095367432,
+                "y": 5.639999866485596
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true,
+            "radius": 0.5,
+            "shapetype": 0
+        },
+        "script": {
+            "scripts": [
+                {
+                    "name": "EnemySpawner",
+                    "enabled": true,
+                    "map": [
+                        {
+                            "variable": "spawnlimit",
+                            "base64": "AgAAAMzMzMwA"
+                        },
+                        {
+                            "variable": "minSpawnInterval",
+                            "base64": "AABAQMzMzMwA"
+                        },
+                        {
+                            "variable": "maxSpawnInterval",
+                            "base64": "AADAQMzMzMwA"
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "name": {
+            "namestr": "prefab_Enemy_Spawner",
+            "layer": 0,
+            "isprefab": true,
+            "tagstr": "Default",
+            "prefabname": "prefab_Enemy_Spawner.prefab",
+            "issync": false
+        },
+        "transform": {
+            "position": {
+                "x": 21.111270904541016,
+                "y": -19.967079162597656
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 0.30000001192092896,
+                "y": 0.3400000035762787
+            }
+        },
+        "collider": {
+            "checkcollision": false,
+            "checkresponse": false,
+            "size": {
+                "x": 6.400000095367432,
+                "y": 5.639999866485596
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true,
+            "radius": 0.5,
+            "shapetype": 0
+        },
+        "script": {
+            "scripts": [
+                {
+                    "name": "EnemySpawner",
+                    "enabled": true,
+                    "map": [
+                        {
+                            "variable": "spawnlimit",
+                            "base64": "AgAAAMzMzMwA"
+                        },
+                        {
+                            "variable": "minSpawnInterval",
+                            "base64": "AACAQMzMzMwA"
+                        },
+                        {
+                            "variable": "maxSpawnInterval",
+                            "base64": "AADgQMzMzMwA"
+                        }
+                    ]
+                }
+            ]
+        }
     }
 ]
