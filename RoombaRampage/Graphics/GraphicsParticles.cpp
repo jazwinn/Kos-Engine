@@ -86,7 +86,16 @@ namespace graphicpipe
                                 particles[j].m_stripCount = m_emitterData[i].m_stripCount;
                                 particles[j].m_frameNumber = m_emitterData[i].m_frameNumber;
                                 particles[j].m_layer = m_emitterData[i].m_layer;
-                                particles[j].m_isActive = 2.f;
+
+                                if (!m_emitterData[i].m_loopAnimation)
+                                {
+                                    particles[j].m_isActive = 101.f;
+                                }
+                                else
+                                {
+                                    particles[j].m_isActive = 2.f;
+                                }
+                               
                                 particles[j].m_friction = m_emitterData[i].m_friction;
                                 particles[j].m_framesPerSecond = m_emitterData[i].m_framesPerSecond;
                                 particles[j].m_animationTimer = 0.f;

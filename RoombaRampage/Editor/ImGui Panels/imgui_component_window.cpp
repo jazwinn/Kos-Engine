@@ -2288,6 +2288,16 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                              oldValP = *rbc;
                          }
                      }
+                     if (toDraw(rbc->m_particleSize)) {
+                         if ((dragfloat::DragFloatCheck::m_GetInstance()->m_GetPrevMem() != dragfloat::Member::PARTICLENUM)) {
+                             oldValP = *rbc;
+                         }
+                         if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::PARTICLE, dragfloat::Member::PARTICLENUM)) {
+                             events::ModifyParticle action(ecs::TYPEPARTICLECOMPONENT, entityID, rbc, oldValP);
+                             DISPATCH_ACTION_EVENT(action);
+                             oldValP = *rbc;
+                         }
+                     }
                      if (toDraw(rbc->m_velocity)) {
                          if ((dragfloat::DragFloatCheck::m_GetInstance()->m_GetPrevMem() != dragfloat::Member::PARTICLENUM)) {
                              oldValP = *rbc;
@@ -2388,6 +2398,13 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                              oldValP = *rbc;
                          }
                      }
+
+                     if (toDraw(rbc->m_loopAnimation)) {
+                         events::ModifyParticle action(ecs::TYPEPARTICLECOMPONENT, entityID, rbc, oldValP);
+                         DISPATCH_ACTION_EVENT(action);
+                         oldValP = *rbc;
+                     }
+
                      ImVec4 color = ImVec4(rbc->m_color.m_x, rbc->m_color.m_y, rbc->m_color.m_z, 1.f);
 
                      ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
