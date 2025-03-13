@@ -1,7 +1,7 @@
 [
     {
         "GlobalSettings": {
-            "globalIllumination": 0.30000001192092896,
+            "globalIllumination": 0.8399999737739563,
             "backgroundColor": {
                 "r": 0.13300000131130219,
                 "g": 0.23000000417232513,
@@ -20,10 +20,10 @@
         },
         "transform": {
             "position": {
-                "x": 0.0,
-                "y": 0.0
+                "x": 0.08369886875152588,
+                "y": -9.08764362335205
             },
-            "rotation": 0.0,
+            "rotation": -0.0,
             "scale": {
                 "x": 2.999998092651367,
                 "y": 2.999998092651367
@@ -33,12 +33,12 @@
             "checkcollision": true,
             "checkresponse": true,
             "size": {
-                "x": 0.7400000095367432,
-                "y": 0.23999999463558197
+                "x": 0.5199999809265137,
+                "y": 0.5199999809265137
             },
             "offset": {
                 "x": 0.0,
-                "y": 0.0
+                "y": -0.10000000149011612
             },
             "drawDebug": true,
             "radius": 0.5,
@@ -75,7 +75,7 @@
         },
         "sprite": {
             "imagefile": "ani_rangedEnemyMoving_strip6.png",
-            "layer": 64,
+            "layer": 65,
             "color": {
                 "r": 1.0,
                 "g": 1.0,
@@ -114,73 +114,113 @@
                 "name": "aud_bodyDeath01",
                 "volume": 0.3160000145435333,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             },
             {
                 "name": "aud_bodyStab01",
                 "volume": 0.4880000054836273,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             },
             {
                 "name": "aud_bodyStab02",
                 "volume": 0.6650000214576721,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             },
             {
                 "name": "aud_bodyFall01",
                 "volume": 0.24899999797344208,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             },
             {
                 "name": "aud_bodyFall02",
                 "volume": 0.2849999964237213,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             },
             {
                 "name": "aud_bodyFall03",
                 "volume": 0.3070000112056732,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             },
             {
                 "name": "aud_bodyFall04",
                 "volume": 0.24300000071525574,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             },
             {
                 "name": "aud_bodyFall05",
                 "volume": 0.2290000021457672,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             },
             {
                 "name": "aud_bodyFall06",
                 "volume": 0.21199999749660492,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             },
             {
                 "name": "aud_bodyFall07",
                 "volume": 0.20399999618530273,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             },
             {
                 "name": "aud_bodyFall08",
                 "volume": 0.25099998712539673,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             },
             {
                 "name": "aud_bodyFall09",
                 "volume": 0.2290000021457672,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
+            },
+            {
+                "name": "aud_railgunShot01",
+                "volume": 0.14499999582767487,
+                "loop": false,
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
+            },
+            {
+                "name": "aud_playerDeath01",
+                "volume": 0.2750000059604645,
+                "loop": false,
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             }
         ],
         "raycast": {
@@ -223,8 +263,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": -1.1625961065292358,
-                        "y": 0.8478450775146484
+                        "x": -1.45293390750885,
+                        "y": 0.7901915311813354
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -244,50 +284,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 1.148582100868225,
-                        "y": 0.8193612694740295
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    }
-                }
-            },
-            {
-                "name": {
-                    "namestr": "waypoint 3",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "prefab_enemyRanged.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": 1.169382095336914,
-                        "y": -0.8393873572349548
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    }
-                }
-            },
-            {
-                "name": {
-                    "namestr": "waypoint 4",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "prefab_enemyRanged.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": -1.140386700630188,
-                        "y": -0.8211713433265686
+                        "x": 1.6313644647598267,
+                        "y": 0.7137218713760376
                     },
                     "rotation": 0.0,
                     "scale": {

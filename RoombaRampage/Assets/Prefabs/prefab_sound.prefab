@@ -1,7 +1,7 @@
 [
     {
         "GlobalSettings": {
-            "globalIllumination": 0.30000001192092896,
+            "globalIllumination": 0.8399999737739563,
             "backgroundColor": {
                 "r": 0.13300000131130219,
                 "g": 0.23000000417232513,
@@ -12,7 +12,7 @@
     {
         "name": {
             "namestr": "prefab_sound",
-            "layer": 16,
+            "layer": 0,
             "isprefab": true,
             "tagstr": "Default",
             "prefabname": "prefab_sound.prefab",
@@ -20,8 +20,8 @@
         },
         "transform": {
             "position": {
-                "x": 0.6463159322738647,
-                "y": -1.8635358810424805
+                "x": 0.0,
+                "y": 0.0
             },
             "rotation": -0.0,
             "scale": {
@@ -59,7 +59,7 @@
                 },
                 "transform": {
                     "position": {
-                        "x": -0.6766307950019836,
+                        "x": 0.0,
                         "y": 0.6998029947280884
                     },
                     "rotation": 0.0,
@@ -70,7 +70,7 @@
                 },
                 "sprite": {
                     "imagefile": "img_pauseMenuFrame.png",
-                    "layer": 0,
+                    "layer": 500,
                     "color": {
                         "r": 1.0,
                         "g": 1.0,
@@ -91,8 +91,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": -0.8510099649429321,
-                        "y": 4.585991382598877
+                        "x": 0.0,
+                        "y": 4.368076801300049
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -104,13 +104,13 @@
                     "text": "Sound",
                     "text": null,
                     "filename": "fnt_silkscreenRegular.ttf",
-                    "fontsize": 134.9499969482422,
+                    "fontsize": 93.5,
                     "color": {
-                        "r": 0.0,
-                        "g": 0.0,
-                        "b": 0.0
+                        "r": 0.10588235408067703,
+                        "g": 0.8823529481887817,
+                        "b": 0.06666667014360428
                     },
-                    "layer": 5
+                    "layer": 502
                 }
             },
             {
@@ -124,8 +124,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": -2.690028429031372,
-                        "y": 2.6423182487487793
+                        "x": -2.355748176574707,
+                        "y": 2.75
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -137,13 +137,13 @@
                     "text": "BGM",
                     "text": null,
                     "filename": "fnt_silkscreenRegular.ttf",
-                    "fontsize": 100.0,
+                    "fontsize": 50.0,
                     "color": {
-                        "r": 0.0,
-                        "g": 0.0,
-                        "b": 0.0
+                        "r": 0.10588235408067703,
+                        "g": 0.8823529481887817,
+                        "b": 0.06666667014360428
                     },
-                    "layer": 6
+                    "layer": 503
                 }
             },
             {
@@ -157,8 +157,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 1.2499711513519287,
-                        "y": 2.643402576446533
+                        "x": 2.4642953872680664,
+                        "y": 2.753795623779297
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -170,13 +170,13 @@
                     "text": "100",
                     "text": null,
                     "filename": "fnt_silkscreenRegular.ttf",
-                    "fontsize": 100.0,
+                    "fontsize": 50.0,
                     "color": {
-                        "r": 0.0,
-                        "g": 0.0,
-                        "b": 0.0
+                        "r": 0.10588235408067703,
+                        "g": 0.8823529481887817,
+                        "b": 0.06666667014360428
                     },
-                    "layer": 8
+                    "layer": 504
                 }
             },
             {
@@ -190,8 +190,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": -2.790656089782715,
-                        "y": -0.07440803945064545
+                        "x": -2.3873393535614014,
+                        "y": -0.6299999952316284
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -203,13 +203,13 @@
                     "text": "SFX",
                     "text": null,
                     "filename": "fnt_silkscreenRegular.ttf",
-                    "fontsize": 100.0,
+                    "fontsize": 50.0,
                     "color": {
-                        "r": 0.0,
-                        "g": 0.0,
-                        "b": 0.0
+                        "r": 0.10588235408067703,
+                        "g": 0.8823529481887817,
+                        "b": 0.06666667014360428
                     },
-                    "layer": 9
+                    "layer": 505
                 }
             },
             {
@@ -223,8 +223,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 1.2723941802978516,
-                        "y": -0.08123068511486053
+                        "x": 2.4600000381469727,
+                        "y": -0.6276767253875732
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -236,13 +236,13 @@
                     "text": "100",
                     "text": null,
                     "filename": "fnt_silkscreenRegular.ttf",
-                    "fontsize": 100.0,
+                    "fontsize": 50.0,
                     "color": {
-                        "r": 0.0,
-                        "g": 0.0,
-                        "b": 0.0
+                        "r": 0.10588235408067703,
+                        "g": 0.8823529481887817,
+                        "b": 0.06666667014360428
                     },
-                    "layer": 10
+                    "layer": 506
                 }
             },
             {
@@ -256,13 +256,13 @@
                 },
                 "transform": {
                     "position": {
-                        "x": -0.7448434829711914,
-                        "y": -3.839062452316284
+                        "x": 0.0,
+                        "y": -4.16275691986084
                     },
                     "rotation": 0.0,
                     "scale": {
-                        "x": 2.5999999046325684,
-                        "y": 4.0
+                        "x": 2.0,
+                        "y": 3.0
                     }
                 },
                 "collider": {
@@ -306,7 +306,7 @@
                 },
                 "sprite": {
                     "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
-                    "layer": 3,
+                    "layer": 507,
                     "color": {
                         "r": 1.0,
                         "g": 1.0,
@@ -341,13 +341,17 @@
                         "name": "aud_buttonClick01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_buttonHover01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ],
                 "children": [
@@ -362,13 +366,13 @@
                         },
                         "transform": {
                             "position": {
-                                "x": -0.035187169909477234,
-                                "y": -0.07281500101089478
+                                "x": -0.03436813876032829,
+                                "y": -0.05792297422885895
                             },
                             "rotation": 0.0,
                             "scale": {
-                                "x": 1.2400000095367432,
-                                "y": 1.0
+                                "x": 1.0,
+                                "y": 0.7439739108085632
                             }
                         },
                         "text": {
@@ -381,7 +385,7 @@
                                 "g": 0.0,
                                 "b": 0.0
                             },
-                            "layer": 11
+                            "layer": 508
                         }
                     }
                 ]
@@ -397,7 +401,7 @@
                 },
                 "transform": {
                     "position": {
-                        "x": -0.1083105206489563,
+                        "x": 0.6676761507987976,
                         "y": -0.06217384338378906
                     },
                     "rotation": 0.0,
@@ -429,7 +433,7 @@
                         },
                         "sprite": {
                             "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
-                            "layer": 1,
+                            "layer": 509,
                             "color": {
                                 "r": 1.0,
                                 "g": 1.0,
@@ -468,7 +472,7 @@
                         },
                         "sprite": {
                             "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
-                            "layer": 2,
+                            "layer": 510,
                             "color": {
                                 "r": 1.0,
                                 "g": 1.0,
@@ -507,7 +511,7 @@
                         },
                         "sprite": {
                             "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
-                            "layer": 7,
+                            "layer": 511,
                             "color": {
                                 "r": 1.0,
                                 "g": 1.0,
@@ -546,7 +550,7 @@
                         },
                         "sprite": {
                             "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
-                            "layer": 12,
+                            "layer": 512,
                             "color": {
                                 "r": 1.0,
                                 "g": 1.0,
@@ -585,7 +589,7 @@
                         },
                         "sprite": {
                             "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
-                            "layer": 13,
+                            "layer": 513,
                             "color": {
                                 "r": 1.0,
                                 "g": 1.0,
@@ -624,7 +628,7 @@
                         },
                         "sprite": {
                             "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
-                            "layer": 14,
+                            "layer": 514,
                             "color": {
                                 "r": 1.0,
                                 "g": 1.0,
@@ -663,7 +667,7 @@
                         },
                         "sprite": {
                             "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
-                            "layer": 15,
+                            "layer": 515,
                             "color": {
                                 "r": 1.0,
                                 "g": 1.0,
@@ -702,7 +706,7 @@
                         },
                         "sprite": {
                             "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
-                            "layer": 17,
+                            "layer": 516,
                             "color": {
                                 "r": 1.0,
                                 "g": 1.0,
@@ -741,7 +745,7 @@
                         },
                         "sprite": {
                             "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
-                            "layer": 18,
+                            "layer": 517,
                             "color": {
                                 "r": 1.0,
                                 "g": 1.0,
@@ -780,7 +784,7 @@
                         },
                         "sprite": {
                             "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
-                            "layer": 19,
+                            "layer": 518,
                             "color": {
                                 "r": 1.0,
                                 "g": 1.0,
@@ -808,8 +812,8 @@
                         },
                         "transform": {
                             "position": {
-                                "x": 2.036818504333496,
-                                "y": 1.3535691499710083
+                                "x": 2.0092201232910156,
+                                "y": 1.1603811979293823
                             },
                             "rotation": 0.0,
                             "scale": {
@@ -821,11 +825,11 @@
                             "checkcollision": true,
                             "checkresponse": false,
                             "size": {
-                                "x": 0.09000000357627869,
+                                "x": 0.12999999523162842,
                                 "y": 0.12999999523162842
                             },
                             "offset": {
-                                "x": 0.019999999552965164,
+                                "x": 0.0,
                                 "y": 0.0
                             },
                             "drawDebug": true,
@@ -858,7 +862,7 @@
                         },
                         "sprite": {
                             "imagefile": "ani_inventoryRightArrow_strip2.png",
-                            "layer": 16,
+                            "layer": 519,
                             "color": {
                                 "r": 1.0,
                                 "g": 1.0,
@@ -893,13 +897,17 @@
                                 "name": "aud_buttonHover01",
                                 "volume": 1.0,
                                 "loop": false,
-                                "playOnStart": false
+                                "playOnStart": false,
+                                "isBGM": false,
+                                "isSFX": true
                             },
                             {
                                 "name": "aud_buttonClick01",
                                 "volume": 1.0,
                                 "loop": false,
-                                "playOnStart": false
+                                "playOnStart": false,
+                                "isBGM": false,
+                                "isSFX": true
                             }
                         ]
                     },
@@ -914,8 +922,8 @@
                         },
                         "transform": {
                             "position": {
-                                "x": 1.6779330968856812,
-                                "y": 1.3578965663909912
+                                "x": -3.1619873046875,
+                                "y": 1.159999966621399
                             },
                             "rotation": 0.0,
                             "scale": {
@@ -927,11 +935,11 @@
                             "checkcollision": true,
                             "checkresponse": false,
                             "size": {
-                                "x": 0.09000000357627869,
+                                "x": 0.12999999523162842,
                                 "y": 0.12999999523162842
                             },
                             "offset": {
-                                "x": -0.019999999552965164,
+                                "x": 0.0,
                                 "y": 0.0
                             },
                             "drawDebug": true,
@@ -964,7 +972,7 @@
                         },
                         "sprite": {
                             "imagefile": "ani_inventoryLeftArrow_strip2.png",
-                            "layer": 4,
+                            "layer": 520,
                             "color": {
                                 "r": 1.0,
                                 "g": 1.0,
@@ -999,13 +1007,17 @@
                                 "name": "aud_buttonHover01",
                                 "volume": 1.0,
                                 "loop": false,
-                                "playOnStart": false
+                                "playOnStart": false,
+                                "isBGM": false,
+                                "isSFX": true
                             },
                             {
                                 "name": "aud_buttonClick01",
                                 "volume": 1.0,
                                 "loop": false,
-                                "playOnStart": false
+                                "playOnStart": false,
+                                "isBGM": false,
+                                "isSFX": true
                             }
                         ]
                     }
@@ -1022,8 +1034,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": -0.1083105206489563,
-                        "y": -2.8074703216552734
+                        "x": 0.6700000166893005,
+                        "y": -3.4449901580810547
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -1054,7 +1066,7 @@
                         },
                         "sprite": {
                             "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
-                            "layer": 20,
+                            "layer": 521,
                             "color": {
                                 "r": 1.0,
                                 "g": 1.0,
@@ -1064,7 +1076,7 @@
                             "isLit": false
                         },
                         "animation": {
-                            "frameNumber": 0,
+                            "frameNumber": 1,
                             "framesPerSecond": 0,
                             "frameTimer": 0.0,
                             "isAnimating": true,
@@ -1093,7 +1105,7 @@
                         },
                         "sprite": {
                             "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
-                            "layer": 21,
+                            "layer": 522,
                             "color": {
                                 "r": 1.0,
                                 "g": 1.0,
@@ -1132,7 +1144,7 @@
                         },
                         "sprite": {
                             "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
-                            "layer": 22,
+                            "layer": 523,
                             "color": {
                                 "r": 1.0,
                                 "g": 1.0,
@@ -1171,7 +1183,7 @@
                         },
                         "sprite": {
                             "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
-                            "layer": 23,
+                            "layer": 524,
                             "color": {
                                 "r": 1.0,
                                 "g": 1.0,
@@ -1210,7 +1222,7 @@
                         },
                         "sprite": {
                             "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
-                            "layer": 24,
+                            "layer": 525,
                             "color": {
                                 "r": 1.0,
                                 "g": 1.0,
@@ -1249,7 +1261,7 @@
                         },
                         "sprite": {
                             "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
-                            "layer": 25,
+                            "layer": 526,
                             "color": {
                                 "r": 1.0,
                                 "g": 1.0,
@@ -1288,7 +1300,7 @@
                         },
                         "sprite": {
                             "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
-                            "layer": 26,
+                            "layer": 527,
                             "color": {
                                 "r": 1.0,
                                 "g": 1.0,
@@ -1327,7 +1339,7 @@
                         },
                         "sprite": {
                             "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
-                            "layer": 27,
+                            "layer": 528,
                             "color": {
                                 "r": 1.0,
                                 "g": 1.0,
@@ -1366,7 +1378,7 @@
                         },
                         "sprite": {
                             "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
-                            "layer": 28,
+                            "layer": 529,
                             "color": {
                                 "r": 1.0,
                                 "g": 1.0,
@@ -1376,7 +1388,7 @@
                             "isLit": false
                         },
                         "animation": {
-                            "frameNumber": 0,
+                            "frameNumber": 1,
                             "framesPerSecond": 0,
                             "frameTimer": 0.0,
                             "isAnimating": true,
@@ -1405,7 +1417,7 @@
                         },
                         "sprite": {
                             "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
-                            "layer": 29,
+                            "layer": 530,
                             "color": {
                                 "r": 1.0,
                                 "g": 1.0,
@@ -1434,7 +1446,7 @@
                         "transform": {
                             "position": {
                                 "x": 2.036818504333496,
-                                "y": 1.3535691499710083
+                                "y": 1.1804814338684082
                             },
                             "rotation": 0.0,
                             "scale": {
@@ -1446,11 +1458,11 @@
                             "checkcollision": true,
                             "checkresponse": false,
                             "size": {
-                                "x": 0.09000000357627869,
+                                "x": 0.12999999523162842,
                                 "y": 0.12999999523162842
                             },
                             "offset": {
-                                "x": 0.019999999552965164,
+                                "x": 0.0,
                                 "y": 0.0
                             },
                             "drawDebug": true,
@@ -1483,7 +1495,7 @@
                         },
                         "sprite": {
                             "imagefile": "ani_inventoryRightArrow_strip2.png",
-                            "layer": 30,
+                            "layer": 531,
                             "color": {
                                 "r": 1.0,
                                 "g": 1.0,
@@ -1518,13 +1530,17 @@
                                 "name": "aud_buttonHover01",
                                 "volume": 1.0,
                                 "loop": false,
-                                "playOnStart": false
+                                "playOnStart": false,
+                                "isBGM": false,
+                                "isSFX": true
                             },
                             {
                                 "name": "aud_buttonClick01",
                                 "volume": 1.0,
                                 "loop": false,
-                                "playOnStart": false
+                                "playOnStart": false,
+                                "isBGM": false,
+                                "isSFX": true
                             }
                         ]
                     },
@@ -1539,8 +1555,8 @@
                         },
                         "transform": {
                             "position": {
-                                "x": 1.6779330968856812,
-                                "y": 1.3578965663909912
+                                "x": -3.1600000858306885,
+                                "y": 1.1799999475479126
                             },
                             "rotation": 0.0,
                             "scale": {
@@ -1552,11 +1568,11 @@
                             "checkcollision": true,
                             "checkresponse": false,
                             "size": {
-                                "x": 0.09000000357627869,
+                                "x": 0.12999999523162842,
                                 "y": 0.12999999523162842
                             },
                             "offset": {
-                                "x": -0.019999999552965164,
+                                "x": 0.0,
                                 "y": 0.0
                             },
                             "drawDebug": true,
@@ -1589,7 +1605,7 @@
                         },
                         "sprite": {
                             "imagefile": "ani_inventoryLeftArrow_strip2.png",
-                            "layer": 31,
+                            "layer": 532,
                             "color": {
                                 "r": 1.0,
                                 "g": 1.0,
@@ -1624,13 +1640,17 @@
                                 "name": "aud_buttonHover01",
                                 "volume": 1.0,
                                 "loop": false,
-                                "playOnStart": false
+                                "playOnStart": false,
+                                "isBGM": false,
+                                "isSFX": true
                             },
                             {
                                 "name": "aud_buttonClick01",
                                 "volume": 1.0,
                                 "loop": false,
-                                "playOnStart": false
+                                "playOnStart": false,
+                                "isBGM": false,
+                                "isSFX": true
                             }
                         ]
                     }

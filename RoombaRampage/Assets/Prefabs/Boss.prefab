@@ -1,7 +1,7 @@
 [
     {
         "GlobalSettings": {
-            "globalIllumination": 0.30000001192092896,
+            "globalIllumination": 0.8399999737739563,
             "backgroundColor": {
                 "r": 0.13300000131130219,
                 "g": 0.23000000417232513,
@@ -117,25 +117,33 @@
                 "name": "aud_bossDeath01",
                 "volume": 1.0,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             },
             {
                 "name": "aud_bossShieldRegen01",
                 "volume": 1.0,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             },
             {
                 "name": "aud_bossShieldBreak01",
                 "volume": 1.0,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             },
             {
                 "name": "aud_bossBullet01",
-                "volume": 1.0,
+                "volume": 0.3100000023841858,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             }
         ],
         "LightingComponent": {

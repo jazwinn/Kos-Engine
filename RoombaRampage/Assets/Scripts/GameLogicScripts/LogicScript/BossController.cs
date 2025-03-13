@@ -106,7 +106,7 @@ public class BossController : ScriptBase
 
     public override void Update()
     {
-        if (GameControllerLevel1.isBossDead) return;
+        if (GameControllerLevel1.isBossDead || !GameControllerLevel1.isActivated) return;
 
         if (isTakingDamage)
         {

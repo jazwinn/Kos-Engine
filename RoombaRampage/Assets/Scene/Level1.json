@@ -148,73 +148,97 @@
                         "name": "aud_bodyDeath01",
                         "volume": 0.3160000145435333,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyStab01",
                         "volume": 0.4880000054836273,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyStab02",
                         "volume": 0.6650000214576721,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall01",
                         "volume": 0.24899999797344208,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall02",
                         "volume": 0.2849999964237213,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall03",
                         "volume": 0.3070000112056732,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall04",
                         "volume": 0.24300000071525574,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall05",
                         "volume": 0.2290000021457672,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall06",
                         "volume": 0.21199999749660492,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall07",
                         "volume": 0.20399999618530273,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall08",
                         "volume": 0.25099998712539673,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall09",
                         "volume": 0.2290000021457672,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ],
                 "raycast": {
@@ -351,73 +375,97 @@
                         "name": "aud_bodyDeath01",
                         "volume": 0.3160000145435333,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyStab01",
                         "volume": 0.4880000054836273,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyStab02",
                         "volume": 0.6650000214576721,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall01",
                         "volume": 0.24899999797344208,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall02",
                         "volume": 0.2849999964237213,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall03",
                         "volume": 0.3070000112056732,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall04",
                         "volume": 0.24300000071525574,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall05",
                         "volume": 0.2290000021457672,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall06",
                         "volume": 0.21199999749660492,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall07",
                         "volume": 0.20399999618530273,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall08",
                         "volume": 0.25099998712539673,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall09",
                         "volume": 0.2290000021457672,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ],
                 "raycast": {
@@ -554,73 +602,97 @@
                         "name": "aud_bodyDeath01",
                         "volume": 0.3160000145435333,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyStab01",
                         "volume": 0.4880000054836273,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyStab02",
                         "volume": 0.7009999752044678,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall01",
                         "volume": 0.24899999797344208,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall02",
                         "volume": 0.2849999964237213,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall03",
                         "volume": 0.3070000112056732,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall04",
                         "volume": 0.24300000071525574,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall05",
                         "volume": 0.2290000021457672,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall06",
                         "volume": 0.21199999749660492,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall07",
                         "volume": 0.20399999618530273,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall08",
                         "volume": 0.25099998712539673,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall09",
                         "volume": 0.2290000021457672,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ],
                 "raycast": {
@@ -801,73 +873,97 @@
                         "name": "aud_bodyDeath01",
                         "volume": 0.3160000145435333,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyStab01",
                         "volume": 0.4880000054836273,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyStab02",
                         "volume": 0.7009999752044678,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall01",
                         "volume": 0.24899999797344208,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall02",
                         "volume": 0.2849999964237213,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall03",
                         "volume": 0.3070000112056732,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall04",
                         "volume": 0.24300000071525574,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall05",
                         "volume": 0.2290000021457672,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall06",
                         "volume": 0.21199999749660492,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall07",
                         "volume": 0.20399999618530273,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall08",
                         "volume": 0.25099998712539673,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall09",
                         "volume": 0.2290000021457672,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ],
                 "raycast": {
@@ -1048,73 +1144,97 @@
                         "name": "aud_bodyDeath01",
                         "volume": 0.3160000145435333,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyStab01",
                         "volume": 0.4880000054836273,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyStab02",
                         "volume": 0.6650000214576721,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall01",
                         "volume": 0.24899999797344208,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall02",
                         "volume": 0.2849999964237213,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall03",
                         "volume": 0.3070000112056732,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall04",
                         "volume": 0.24300000071525574,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall05",
                         "volume": 0.2290000021457672,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall06",
                         "volume": 0.21199999749660492,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall07",
                         "volume": 0.20399999618530273,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall08",
                         "volume": 0.25099998712539673,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall09",
                         "volume": 0.2290000021457672,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ],
                 "raycast": {
@@ -1251,73 +1371,97 @@
                         "name": "aud_bodyDeath01",
                         "volume": 0.3160000145435333,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyStab01",
                         "volume": 0.4880000054836273,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyStab02",
                         "volume": 0.6650000214576721,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall01",
                         "volume": 0.24899999797344208,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall02",
                         "volume": 0.2849999964237213,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall03",
                         "volume": 0.3070000112056732,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall04",
                         "volume": 0.24300000071525574,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall05",
                         "volume": 0.2290000021457672,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall06",
                         "volume": 0.21199999749660492,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall07",
                         "volume": 0.20399999618530273,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall08",
                         "volume": 0.25099998712539673,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall09",
                         "volume": 0.2290000021457672,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ],
                 "raycast": {
@@ -1454,73 +1598,97 @@
                         "name": "aud_bodyDeath01",
                         "volume": 0.3160000145435333,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyStab01",
                         "volume": 0.4880000054836273,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyStab02",
                         "volume": 0.6650000214576721,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall01",
                         "volume": 0.24899999797344208,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall02",
                         "volume": 0.2849999964237213,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall03",
                         "volume": 0.3070000112056732,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall04",
                         "volume": 0.24300000071525574,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall05",
                         "volume": 0.2290000021457672,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall06",
                         "volume": 0.21199999749660492,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall07",
                         "volume": 0.20399999618530273,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall08",
                         "volume": 0.25099998712539673,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall09",
                         "volume": 0.2290000021457672,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ],
                 "raycast": {
@@ -1657,73 +1825,97 @@
                         "name": "aud_bodyDeath01",
                         "volume": 0.3160000145435333,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyStab01",
                         "volume": 0.4880000054836273,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyStab02",
                         "volume": 0.6650000214576721,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall01",
                         "volume": 0.24899999797344208,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall02",
                         "volume": 0.2849999964237213,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall03",
                         "volume": 0.3070000112056732,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall04",
                         "volume": 0.24300000071525574,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall05",
                         "volume": 0.2290000021457672,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall06",
                         "volume": 0.21199999749660492,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall07",
                         "volume": 0.20399999618530273,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall08",
                         "volume": 0.25099998712539673,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall09",
                         "volume": 0.2290000021457672,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ],
                 "raycast": {
@@ -1860,73 +2052,97 @@
                         "name": "aud_bodyDeath01",
                         "volume": 0.3160000145435333,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyStab01",
                         "volume": 0.4880000054836273,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyStab02",
                         "volume": 0.6650000214576721,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall01",
                         "volume": 0.24899999797344208,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall02",
                         "volume": 0.2849999964237213,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall03",
                         "volume": 0.3070000112056732,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall04",
                         "volume": 0.24300000071525574,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall05",
                         "volume": 0.2290000021457672,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall06",
                         "volume": 0.21199999749660492,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall07",
                         "volume": 0.20399999618530273,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall08",
                         "volume": 0.25099998712539673,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall09",
                         "volume": 0.2290000021457672,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ],
                 "raycast": {
@@ -2063,73 +2279,97 @@
                         "name": "aud_bodyDeath01",
                         "volume": 0.3160000145435333,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyStab01",
                         "volume": 0.4880000054836273,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyStab02",
                         "volume": 0.7009999752044678,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall01",
                         "volume": 0.24899999797344208,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall02",
                         "volume": 0.2849999964237213,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall03",
                         "volume": 0.3070000112056732,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall04",
                         "volume": 0.24300000071525574,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall05",
                         "volume": 0.2290000021457672,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall06",
                         "volume": 0.21199999749660492,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall07",
                         "volume": 0.20399999618530273,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall08",
                         "volume": 0.25099998712539673,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall09",
                         "volume": 0.2290000021457672,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ],
                 "raycast": {
@@ -2310,73 +2550,97 @@
                         "name": "aud_bodyDeath01",
                         "volume": 0.3160000145435333,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyStab01",
                         "volume": 0.4880000054836273,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyStab02",
                         "volume": 0.6650000214576721,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall01",
                         "volume": 0.24899999797344208,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall02",
                         "volume": 0.2849999964237213,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall03",
                         "volume": 0.3070000112056732,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall04",
                         "volume": 0.24300000071525574,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall05",
                         "volume": 0.2290000021457672,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall06",
                         "volume": 0.21199999749660492,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall07",
                         "volume": 0.20399999618530273,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall08",
                         "volume": 0.25099998712539673,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall09",
                         "volume": 0.2290000021457672,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ],
                 "raycast": {
@@ -2513,73 +2777,97 @@
                         "name": "aud_bodyDeath01",
                         "volume": 0.3160000145435333,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyStab01",
                         "volume": 0.4880000054836273,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyStab02",
                         "volume": 0.6650000214576721,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall01",
                         "volume": 0.24899999797344208,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall02",
                         "volume": 0.2849999964237213,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall03",
                         "volume": 0.3070000112056732,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall04",
                         "volume": 0.24300000071525574,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall05",
                         "volume": 0.2290000021457672,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall06",
                         "volume": 0.21199999749660492,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall07",
                         "volume": 0.20399999618530273,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall08",
                         "volume": 0.25099998712539673,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall09",
                         "volume": 0.2290000021457672,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ],
                 "raycast": {
@@ -2716,73 +3004,97 @@
                         "name": "aud_bodyDeath01",
                         "volume": 0.3160000145435333,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyStab01",
                         "volume": 0.4880000054836273,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyStab02",
                         "volume": 0.6650000214576721,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall01",
                         "volume": 0.24899999797344208,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall02",
                         "volume": 0.2849999964237213,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall03",
                         "volume": 0.3070000112056732,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall04",
                         "volume": 0.24300000071525574,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall05",
                         "volume": 0.2290000021457672,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall06",
                         "volume": 0.21199999749660492,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall07",
                         "volume": 0.20399999618530273,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall08",
                         "volume": 0.25099998712539673,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall09",
                         "volume": 0.2290000021457672,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ],
                 "raycast": {
@@ -2919,73 +3231,97 @@
                         "name": "aud_bodyDeath01",
                         "volume": 0.3160000145435333,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyStab01",
                         "volume": 0.4880000054836273,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyStab02",
                         "volume": 0.6650000214576721,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall01",
                         "volume": 0.24899999797344208,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall02",
                         "volume": 0.2849999964237213,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall03",
                         "volume": 0.3070000112056732,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall04",
                         "volume": 0.24300000071525574,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall05",
                         "volume": 0.2290000021457672,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall06",
                         "volume": 0.21199999749660492,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall07",
                         "volume": 0.20399999618530273,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall08",
                         "volume": 0.25099998712539673,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall09",
                         "volume": 0.2290000021457672,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ],
                 "raycast": {
@@ -3122,73 +3458,97 @@
                         "name": "aud_bodyDeath01",
                         "volume": 0.3160000145435333,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyStab01",
                         "volume": 0.4880000054836273,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyStab02",
                         "volume": 0.6650000214576721,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall01",
                         "volume": 0.24899999797344208,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall02",
                         "volume": 0.2849999964237213,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall03",
                         "volume": 0.3070000112056732,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall04",
                         "volume": 0.24300000071525574,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall05",
                         "volume": 0.2290000021457672,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall06",
                         "volume": 0.21199999749660492,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall07",
                         "volume": 0.20399999618530273,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall08",
                         "volume": 0.25099998712539673,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall09",
                         "volume": 0.2290000021457672,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ],
                 "raycast": {
@@ -3325,73 +3685,97 @@
                         "name": "aud_bodyDeath01",
                         "volume": 0.3160000145435333,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyStab01",
                         "volume": 0.4880000054836273,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyStab02",
                         "volume": 0.6650000214576721,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall01",
                         "volume": 0.24899999797344208,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall02",
                         "volume": 0.2849999964237213,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall03",
                         "volume": 0.3070000112056732,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall04",
                         "volume": 0.24300000071525574,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall05",
                         "volume": 0.2290000021457672,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall06",
                         "volume": 0.21199999749660492,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall07",
                         "volume": 0.20399999618530273,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall08",
                         "volume": 0.25099998712539673,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall09",
                         "volume": 0.2290000021457672,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ],
                 "raycast": {
@@ -3528,73 +3912,97 @@
                         "name": "aud_bodyDeath01",
                         "volume": 0.3160000145435333,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyStab01",
                         "volume": 0.4880000054836273,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyStab02",
                         "volume": 0.7009999752044678,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall01",
                         "volume": 0.24899999797344208,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall02",
                         "volume": 0.2849999964237213,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall03",
                         "volume": 0.3070000112056732,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall04",
                         "volume": 0.24300000071525574,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall05",
                         "volume": 0.2290000021457672,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall06",
                         "volume": 0.21199999749660492,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall07",
                         "volume": 0.20399999618530273,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall08",
                         "volume": 0.25099998712539673,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall09",
                         "volume": 0.2290000021457672,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ],
                 "raycast": {
@@ -3775,73 +4183,97 @@
                         "name": "aud_bodyDeath01",
                         "volume": 0.3160000145435333,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyStab01",
                         "volume": 0.4880000054836273,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyStab02",
                         "volume": 0.7009999752044678,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall01",
                         "volume": 0.24899999797344208,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall02",
                         "volume": 0.2849999964237213,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall03",
                         "volume": 0.3070000112056732,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall04",
                         "volume": 0.24300000071525574,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall05",
                         "volume": 0.2290000021457672,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall06",
                         "volume": 0.21199999749660492,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall07",
                         "volume": 0.20399999618530273,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall08",
                         "volume": 0.25099998712539673,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall09",
                         "volume": 0.2290000021457672,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ],
                 "raycast": {
@@ -4022,73 +4454,97 @@
                         "name": "aud_bodyDeath01",
                         "volume": 0.3160000145435333,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyStab01",
                         "volume": 0.4880000054836273,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyStab02",
                         "volume": 0.7009999752044678,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall01",
                         "volume": 0.24899999797344208,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall02",
                         "volume": 0.2849999964237213,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall03",
                         "volume": 0.3070000112056732,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall04",
                         "volume": 0.24300000071525574,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall05",
                         "volume": 0.2290000021457672,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall06",
                         "volume": 0.21199999749660492,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall07",
                         "volume": 0.20399999618530273,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall08",
                         "volume": 0.25099998712539673,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall09",
                         "volume": 0.2290000021457672,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ],
                 "raycast": {
@@ -4269,73 +4725,97 @@
                         "name": "aud_bodyDeath01",
                         "volume": 0.3160000145435333,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyStab01",
                         "volume": 0.4880000054836273,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyStab02",
                         "volume": 0.7009999752044678,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall01",
                         "volume": 0.24899999797344208,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall02",
                         "volume": 0.2849999964237213,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall03",
                         "volume": 0.3070000112056732,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall04",
                         "volume": 0.24300000071525574,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall05",
                         "volume": 0.2290000021457672,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall06",
                         "volume": 0.21199999749660492,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall07",
                         "volume": 0.20399999618530273,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall08",
                         "volume": 0.25099998712539673,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall09",
                         "volume": 0.2290000021457672,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ],
                 "raycast": {
@@ -4516,73 +4996,97 @@
                         "name": "aud_bodyDeath01",
                         "volume": 0.3160000145435333,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyStab01",
                         "volume": 0.4880000054836273,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyStab02",
                         "volume": 0.6650000214576721,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall01",
                         "volume": 0.24899999797344208,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall02",
                         "volume": 0.2849999964237213,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall03",
                         "volume": 0.3070000112056732,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall04",
                         "volume": 0.24300000071525574,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall05",
                         "volume": 0.2290000021457672,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall06",
                         "volume": 0.21199999749660492,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall07",
                         "volume": 0.20399999618530273,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall08",
                         "volume": 0.25099998712539673,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall09",
                         "volume": 0.2290000021457672,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ],
                 "raycast": {
@@ -4719,73 +5223,97 @@
                         "name": "aud_bodyDeath01",
                         "volume": 0.3160000145435333,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyStab01",
                         "volume": 0.4880000054836273,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyStab02",
                         "volume": 0.6650000214576721,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall01",
                         "volume": 0.24899999797344208,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall02",
                         "volume": 0.2849999964237213,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall03",
                         "volume": 0.3070000112056732,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall04",
                         "volume": 0.24300000071525574,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall05",
                         "volume": 0.2290000021457672,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall06",
                         "volume": 0.21199999749660492,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall07",
                         "volume": 0.20399999618530273,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall08",
                         "volume": 0.25099998712539673,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall09",
                         "volume": 0.2290000021457672,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ],
                 "raycast": {
@@ -4922,73 +5450,97 @@
                         "name": "aud_bodyDeath01",
                         "volume": 0.3160000145435333,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyStab01",
                         "volume": 0.4880000054836273,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyStab02",
                         "volume": 0.6650000214576721,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall01",
                         "volume": 0.24899999797344208,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall02",
                         "volume": 0.2849999964237213,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall03",
                         "volume": 0.3070000112056732,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall04",
                         "volume": 0.24300000071525574,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall05",
                         "volume": 0.2290000021457672,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall06",
                         "volume": 0.21199999749660492,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall07",
                         "volume": 0.20399999618530273,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall08",
                         "volume": 0.25099998712539673,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall09",
                         "volume": 0.2290000021457672,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ],
                 "raycast": {
@@ -5125,73 +5677,97 @@
                         "name": "aud_bodyDeath01",
                         "volume": 0.3160000145435333,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyStab01",
                         "volume": 0.4880000054836273,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyStab02",
                         "volume": 0.6650000214576721,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall01",
                         "volume": 0.24899999797344208,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall02",
                         "volume": 0.2849999964237213,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall03",
                         "volume": 0.3070000112056732,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall04",
                         "volume": 0.24300000071525574,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall05",
                         "volume": 0.2290000021457672,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall06",
                         "volume": 0.21199999749660492,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall07",
                         "volume": 0.20399999618530273,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall08",
                         "volume": 0.25099998712539673,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall09",
                         "volume": 0.2290000021457672,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ],
                 "raycast": {
@@ -5328,73 +5904,97 @@
                         "name": "aud_bodyDeath01",
                         "volume": 0.3160000145435333,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyStab01",
                         "volume": 0.4880000054836273,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyStab02",
                         "volume": 0.6650000214576721,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall01",
                         "volume": 0.24899999797344208,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall02",
                         "volume": 0.2849999964237213,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall03",
                         "volume": 0.3070000112056732,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall04",
                         "volume": 0.24300000071525574,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall05",
                         "volume": 0.2290000021457672,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall06",
                         "volume": 0.21199999749660492,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall07",
                         "volume": 0.20399999618530273,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall08",
                         "volume": 0.25099998712539673,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_bodyFall09",
                         "volume": 0.2290000021457672,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ],
                 "raycast": {
@@ -64898,6 +65498,10 @@
                         {
                             "variable": "runOnce",
                             "base64": ""
+                        },
+                        {
+                            "variable": "gameAudioUp",
+                            "base64": ""
                         }
                     ]
                 }
@@ -64908,7 +65512,9 @@
                 "name": "aud_mainLevelLoop",
                 "volume": 0.17000000178813934,
                 "loop": true,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": true,
+                "isSFX": false
             }
         ]
     },
@@ -66919,13 +67525,17 @@
                         "name": "aud_buttonHover01",
                         "volume": 0.44699999690055847,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_buttonClick01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             },
@@ -67025,13 +67635,17 @@
                         "name": "aud_buttonHover01",
                         "volume": 0.40799999237060547,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_buttonClick01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             },
@@ -67131,13 +67745,17 @@
                         "name": "aud_buttonHover01",
                         "volume": 0.43299999833106995,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_buttonClick01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             },
@@ -67237,13 +67855,17 @@
                         "name": "aud_buttonHover01",
                         "volume": 0.4580000042915344,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_buttonClick01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             },
@@ -67343,13 +67965,17 @@
                         "name": "aud_buttonHover01",
                         "volume": 0.3799999952316284,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_buttonClick01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             },
@@ -67449,13 +68075,17 @@
                         "name": "aud_buttonHover01",
                         "volume": 0.382999986410141,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_buttonClick01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             },
@@ -67555,13 +68185,17 @@
                         "name": "aud_buttonHover01",
                         "volume": 0.38499999046325684,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_buttonClick01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             },
@@ -67860,7 +68494,7 @@
     {
         "name": {
             "namestr": "UI_PauseMenu",
-            "layer": 7,
+            "layer": 0,
             "isprefab": true,
             "tagstr": "Default",
             "prefabname": "UI_PauseMenu.prefab",
@@ -68035,13 +68669,17 @@
                         "name": "aud_buttonHover01",
                         "volume": 0.4970000088214874,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_buttonClick01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             },
@@ -68141,13 +68779,17 @@
                         "name": "aud_buttonHover01",
                         "volume": 0.49399998784065247,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_buttonClick01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             },
@@ -68247,13 +68889,17 @@
                         "name": "aud_buttonHover01",
                         "volume": 0.4830000102519989,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_buttonClick01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             },
@@ -68353,13 +68999,17 @@
                         "name": "aud_buttonHover01",
                         "volume": 0.5,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_buttonClick01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             },
@@ -68591,13 +69241,17 @@
                         "name": "aud_buttonHover01",
                         "volume": 0.4830000102519989,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_buttonClick01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             },
@@ -68639,7 +69293,7 @@
     {
         "name": {
             "namestr": "prefab_sound",
-            "layer": 16,
+            "layer": 0,
             "isprefab": true,
             "tagstr": "Default",
             "prefabname": "prefab_sound.prefab",
@@ -68686,7 +69340,7 @@
                 },
                 "transform": {
                     "position": {
-                        "x": -0.6766307950019836,
+                        "x": 0.0,
                         "y": 0.6998029947280884
                     },
                     "rotation": 0.0,
@@ -68697,7 +69351,7 @@
                 },
                 "sprite": {
                     "imagefile": "img_pauseMenuFrame.png",
-                    "layer": 2,
+                    "layer": 500,
                     "color": {
                         "r": 1.0,
                         "g": 1.0,
@@ -68718,8 +69372,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": -0.8510099649429321,
-                        "y": 4.585991382598877
+                        "x": 0.0,
+                        "y": 4.368076801300049
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -68731,13 +69385,13 @@
                     "text": "Sound",
                     "text": null,
                     "filename": "fnt_silkscreenRegular.ttf",
-                    "fontsize": 134.9499969482422,
+                    "fontsize": 93.5,
                     "color": {
-                        "r": 0.0,
-                        "g": 0.0,
-                        "b": 0.0
+                        "r": 0.10588235408067703,
+                        "g": 0.8823529481887817,
+                        "b": 0.06666667014360428
                     },
-                    "layer": 7
+                    "layer": 502
                 }
             },
             {
@@ -68751,8 +69405,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": -2.690028429031372,
-                        "y": 2.6423182487487793
+                        "x": -2.355748176574707,
+                        "y": 2.75
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -68764,13 +69418,13 @@
                     "text": "BGM",
                     "text": null,
                     "filename": "fnt_silkscreenRegular.ttf",
-                    "fontsize": 100.0,
+                    "fontsize": 50.0,
                     "color": {
-                        "r": 0.0,
-                        "g": 0.0,
-                        "b": 0.0
+                        "r": 0.10588235408067703,
+                        "g": 0.8823529481887817,
+                        "b": 0.06666667014360428
                     },
-                    "layer": 8
+                    "layer": 503
                 }
             },
             {
@@ -68784,8 +69438,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 1.2499711513519287,
-                        "y": 2.643402576446533
+                        "x": 2.4642953872680664,
+                        "y": 2.753795623779297
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -68797,13 +69451,13 @@
                     "text": "100",
                     "text": null,
                     "filename": "fnt_silkscreenRegular.ttf",
-                    "fontsize": 100.0,
+                    "fontsize": 50.0,
                     "color": {
-                        "r": 0.0,
-                        "g": 0.0,
-                        "b": 0.0
+                        "r": 0.10588235408067703,
+                        "g": 0.8823529481887817,
+                        "b": 0.06666667014360428
                     },
-                    "layer": 9
+                    "layer": 504
                 }
             },
             {
@@ -68817,8 +69471,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": -2.790656089782715,
-                        "y": -0.07440803945064545
+                        "x": -2.3873393535614014,
+                        "y": -0.6299999952316284
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -68830,13 +69484,13 @@
                     "text": "SFX",
                     "text": null,
                     "filename": "fnt_silkscreenRegular.ttf",
-                    "fontsize": 100.0,
+                    "fontsize": 50.0,
                     "color": {
-                        "r": 0.0,
-                        "g": 0.0,
-                        "b": 0.0
+                        "r": 0.10588235408067703,
+                        "g": 0.8823529481887817,
+                        "b": 0.06666667014360428
                     },
-                    "layer": 10
+                    "layer": 505
                 }
             },
             {
@@ -68850,8 +69504,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 1.2723941802978516,
-                        "y": -0.08123068511486053
+                        "x": 2.4600000381469727,
+                        "y": -0.6276767253875732
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -68863,13 +69517,13 @@
                     "text": "100",
                     "text": null,
                     "filename": "fnt_silkscreenRegular.ttf",
-                    "fontsize": 100.0,
+                    "fontsize": 50.0,
                     "color": {
-                        "r": 0.0,
-                        "g": 0.0,
-                        "b": 0.0
+                        "r": 0.10588235408067703,
+                        "g": 0.8823529481887817,
+                        "b": 0.06666667014360428
                     },
-                    "layer": 15
+                    "layer": 506
                 }
             },
             {
@@ -68883,13 +69537,13 @@
                 },
                 "transform": {
                     "position": {
-                        "x": -0.7448434829711914,
-                        "y": -3.839062452316284
+                        "x": 0.0,
+                        "y": -4.16275691986084
                     },
                     "rotation": 0.0,
                     "scale": {
-                        "x": 2.5999999046325684,
-                        "y": 4.0
+                        "x": 2.0,
+                        "y": 3.0
                     }
                 },
                 "collider": {
@@ -68933,7 +69587,7 @@
                 },
                 "sprite": {
                     "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
-                    "layer": 3,
+                    "layer": 507,
                     "color": {
                         "r": 1.0,
                         "g": 1.0,
@@ -68968,13 +69622,17 @@
                         "name": "aud_buttonClick01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_buttonHover01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ],
                 "children": [
@@ -68989,13 +69647,13 @@
                         },
                         "transform": {
                             "position": {
-                                "x": -0.035187169909477234,
-                                "y": -0.07281500101089478
+                                "x": -0.03436813876032829,
+                                "y": -0.05792297422885895
                             },
                             "rotation": 0.0,
                             "scale": {
-                                "x": 1.2400000095367432,
-                                "y": 1.0
+                                "x": 1.0,
+                                "y": 0.7439739108085632
                             }
                         },
                         "text": {
@@ -69008,7 +69666,7 @@
                                 "g": 0.0,
                                 "b": 0.0
                             },
-                            "layer": 16
+                            "layer": 508
                         }
                     }
                 ]
@@ -69024,7 +69682,7 @@
                 },
                 "transform": {
                     "position": {
-                        "x": -0.1083105206489563,
+                        "x": 0.6676761507987976,
                         "y": -0.06217384338378906
                     },
                     "rotation": 0.0,
@@ -69056,7 +69714,7 @@
                         },
                         "sprite": {
                             "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
-                            "layer": 4,
+                            "layer": 509,
                             "color": {
                                 "r": 1.0,
                                 "g": 1.0,
@@ -69095,7 +69753,7 @@
                         },
                         "sprite": {
                             "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
-                            "layer": 17,
+                            "layer": 510,
                             "color": {
                                 "r": 1.0,
                                 "g": 1.0,
@@ -69134,7 +69792,7 @@
                         },
                         "sprite": {
                             "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
-                            "layer": 18,
+                            "layer": 511,
                             "color": {
                                 "r": 1.0,
                                 "g": 1.0,
@@ -69173,7 +69831,7 @@
                         },
                         "sprite": {
                             "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
-                            "layer": 19,
+                            "layer": 512,
                             "color": {
                                 "r": 1.0,
                                 "g": 1.0,
@@ -69212,7 +69870,7 @@
                         },
                         "sprite": {
                             "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
-                            "layer": 20,
+                            "layer": 513,
                             "color": {
                                 "r": 1.0,
                                 "g": 1.0,
@@ -69251,7 +69909,7 @@
                         },
                         "sprite": {
                             "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
-                            "layer": 21,
+                            "layer": 514,
                             "color": {
                                 "r": 1.0,
                                 "g": 1.0,
@@ -69290,7 +69948,7 @@
                         },
                         "sprite": {
                             "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
-                            "layer": 22,
+                            "layer": 515,
                             "color": {
                                 "r": 1.0,
                                 "g": 1.0,
@@ -69329,7 +69987,7 @@
                         },
                         "sprite": {
                             "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
-                            "layer": 23,
+                            "layer": 516,
                             "color": {
                                 "r": 1.0,
                                 "g": 1.0,
@@ -69368,7 +70026,7 @@
                         },
                         "sprite": {
                             "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
-                            "layer": 24,
+                            "layer": 517,
                             "color": {
                                 "r": 1.0,
                                 "g": 1.0,
@@ -69407,7 +70065,7 @@
                         },
                         "sprite": {
                             "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
-                            "layer": 25,
+                            "layer": 518,
                             "color": {
                                 "r": 1.0,
                                 "g": 1.0,
@@ -69435,8 +70093,8 @@
                         },
                         "transform": {
                             "position": {
-                                "x": 2.036818504333496,
-                                "y": 1.3535691499710083
+                                "x": 2.0092201232910156,
+                                "y": 1.1603811979293823
                             },
                             "rotation": 0.0,
                             "scale": {
@@ -69448,11 +70106,11 @@
                             "checkcollision": true,
                             "checkresponse": false,
                             "size": {
-                                "x": 0.09000000357627869,
+                                "x": 0.12999999523162842,
                                 "y": 0.12999999523162842
                             },
                             "offset": {
-                                "x": 0.019999999552965164,
+                                "x": 0.0,
                                 "y": 0.0
                             },
                             "drawDebug": true,
@@ -69485,7 +70143,7 @@
                         },
                         "sprite": {
                             "imagefile": "ani_inventoryRightArrow_strip2.png",
-                            "layer": 26,
+                            "layer": 519,
                             "color": {
                                 "r": 1.0,
                                 "g": 1.0,
@@ -69520,13 +70178,17 @@
                                 "name": "aud_buttonHover01",
                                 "volume": 1.0,
                                 "loop": false,
-                                "playOnStart": false
+                                "playOnStart": false,
+                                "isBGM": false,
+                                "isSFX": true
                             },
                             {
                                 "name": "aud_buttonClick01",
                                 "volume": 1.0,
                                 "loop": false,
-                                "playOnStart": false
+                                "playOnStart": false,
+                                "isBGM": false,
+                                "isSFX": true
                             }
                         ]
                     },
@@ -69541,8 +70203,8 @@
                         },
                         "transform": {
                             "position": {
-                                "x": 1.6779330968856812,
-                                "y": 1.3578965663909912
+                                "x": -3.1619873046875,
+                                "y": 1.159999966621399
                             },
                             "rotation": 0.0,
                             "scale": {
@@ -69554,11 +70216,11 @@
                             "checkcollision": true,
                             "checkresponse": false,
                             "size": {
-                                "x": 0.09000000357627869,
+                                "x": 0.12999999523162842,
                                 "y": 0.12999999523162842
                             },
                             "offset": {
-                                "x": -0.019999999552965164,
+                                "x": 0.0,
                                 "y": 0.0
                             },
                             "drawDebug": true,
@@ -69591,7 +70253,7 @@
                         },
                         "sprite": {
                             "imagefile": "ani_inventoryLeftArrow_strip2.png",
-                            "layer": 27,
+                            "layer": 520,
                             "color": {
                                 "r": 1.0,
                                 "g": 1.0,
@@ -69626,13 +70288,17 @@
                                 "name": "aud_buttonHover01",
                                 "volume": 1.0,
                                 "loop": false,
-                                "playOnStart": false
+                                "playOnStart": false,
+                                "isBGM": false,
+                                "isSFX": true
                             },
                             {
                                 "name": "aud_buttonClick01",
                                 "volume": 1.0,
                                 "loop": false,
-                                "playOnStart": false
+                                "playOnStart": false,
+                                "isBGM": false,
+                                "isSFX": true
                             }
                         ]
                     }
@@ -69649,8 +70315,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": -0.1083105206489563,
-                        "y": -2.8074703216552734
+                        "x": 0.6700000166893005,
+                        "y": -3.4449901580810547
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -69681,7 +70347,7 @@
                         },
                         "sprite": {
                             "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
-                            "layer": 29,
+                            "layer": 521,
                             "color": {
                                 "r": 1.0,
                                 "g": 1.0,
@@ -69691,7 +70357,7 @@
                             "isLit": false
                         },
                         "animation": {
-                            "frameNumber": 0,
+                            "frameNumber": 1,
                             "framesPerSecond": 0,
                             "frameTimer": 0.0,
                             "isAnimating": true,
@@ -69720,7 +70386,7 @@
                         },
                         "sprite": {
                             "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
-                            "layer": 30,
+                            "layer": 522,
                             "color": {
                                 "r": 1.0,
                                 "g": 1.0,
@@ -69759,7 +70425,7 @@
                         },
                         "sprite": {
                             "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
-                            "layer": 31,
+                            "layer": 523,
                             "color": {
                                 "r": 1.0,
                                 "g": 1.0,
@@ -69798,7 +70464,7 @@
                         },
                         "sprite": {
                             "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
-                            "layer": 33,
+                            "layer": 524,
                             "color": {
                                 "r": 1.0,
                                 "g": 1.0,
@@ -69837,7 +70503,7 @@
                         },
                         "sprite": {
                             "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
-                            "layer": 36,
+                            "layer": 525,
                             "color": {
                                 "r": 1.0,
                                 "g": 1.0,
@@ -69876,7 +70542,7 @@
                         },
                         "sprite": {
                             "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
-                            "layer": 37,
+                            "layer": 526,
                             "color": {
                                 "r": 1.0,
                                 "g": 1.0,
@@ -69915,7 +70581,7 @@
                         },
                         "sprite": {
                             "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
-                            "layer": 38,
+                            "layer": 527,
                             "color": {
                                 "r": 1.0,
                                 "g": 1.0,
@@ -69954,7 +70620,7 @@
                         },
                         "sprite": {
                             "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
-                            "layer": 40,
+                            "layer": 528,
                             "color": {
                                 "r": 1.0,
                                 "g": 1.0,
@@ -69993,7 +70659,7 @@
                         },
                         "sprite": {
                             "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
-                            "layer": 42,
+                            "layer": 529,
                             "color": {
                                 "r": 1.0,
                                 "g": 1.0,
@@ -70003,7 +70669,7 @@
                             "isLit": false
                         },
                         "animation": {
-                            "frameNumber": 0,
+                            "frameNumber": 1,
                             "framesPerSecond": 0,
                             "frameTimer": 0.0,
                             "isAnimating": true,
@@ -70032,7 +70698,7 @@
                         },
                         "sprite": {
                             "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
-                            "layer": 43,
+                            "layer": 530,
                             "color": {
                                 "r": 1.0,
                                 "g": 1.0,
@@ -70061,7 +70727,7 @@
                         "transform": {
                             "position": {
                                 "x": 2.036818504333496,
-                                "y": 1.3535691499710083
+                                "y": 1.1804814338684082
                             },
                             "rotation": 0.0,
                             "scale": {
@@ -70073,11 +70739,11 @@
                             "checkcollision": true,
                             "checkresponse": false,
                             "size": {
-                                "x": 0.09000000357627869,
+                                "x": 0.12999999523162842,
                                 "y": 0.12999999523162842
                             },
                             "offset": {
-                                "x": 0.019999999552965164,
+                                "x": 0.0,
                                 "y": 0.0
                             },
                             "drawDebug": true,
@@ -70110,7 +70776,7 @@
                         },
                         "sprite": {
                             "imagefile": "ani_inventoryRightArrow_strip2.png",
-                            "layer": 67,
+                            "layer": 531,
                             "color": {
                                 "r": 1.0,
                                 "g": 1.0,
@@ -70145,13 +70811,17 @@
                                 "name": "aud_buttonHover01",
                                 "volume": 1.0,
                                 "loop": false,
-                                "playOnStart": false
+                                "playOnStart": false,
+                                "isBGM": false,
+                                "isSFX": true
                             },
                             {
                                 "name": "aud_buttonClick01",
                                 "volume": 1.0,
                                 "loop": false,
-                                "playOnStart": false
+                                "playOnStart": false,
+                                "isBGM": false,
+                                "isSFX": true
                             }
                         ]
                     },
@@ -70166,8 +70836,8 @@
                         },
                         "transform": {
                             "position": {
-                                "x": 1.6779330968856812,
-                                "y": 1.3578965663909912
+                                "x": -3.1600000858306885,
+                                "y": 1.1799999475479126
                             },
                             "rotation": 0.0,
                             "scale": {
@@ -70179,11 +70849,11 @@
                             "checkcollision": true,
                             "checkresponse": false,
                             "size": {
-                                "x": 0.09000000357627869,
+                                "x": 0.12999999523162842,
                                 "y": 0.12999999523162842
                             },
                             "offset": {
-                                "x": -0.019999999552965164,
+                                "x": 0.0,
                                 "y": 0.0
                             },
                             "drawDebug": true,
@@ -70216,7 +70886,7 @@
                         },
                         "sprite": {
                             "imagefile": "ani_inventoryLeftArrow_strip2.png",
-                            "layer": 68,
+                            "layer": 532,
                             "color": {
                                 "r": 1.0,
                                 "g": 1.0,
@@ -70251,13 +70921,17 @@
                                 "name": "aud_buttonHover01",
                                 "volume": 1.0,
                                 "loop": false,
-                                "playOnStart": false
+                                "playOnStart": false,
+                                "isBGM": false,
+                                "isSFX": true
                             },
                             {
                                 "name": "aud_buttonClick01",
                                 "volume": 1.0,
                                 "loop": false,
-                                "playOnStart": false
+                                "playOnStart": false,
+                                "isBGM": false,
+                                "isSFX": true
                             }
                         ]
                     }
@@ -70438,13 +71112,17 @@
                         "name": "aud_buttonHover01",
                         "volume": 0.4909999966621399,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_buttonClick01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             },
@@ -70544,13 +71222,17 @@
                         "name": "aud_buttonHover01",
                         "volume": 0.47200000286102295,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_buttonClick01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             },
@@ -70855,7 +71537,9 @@
                         "name": "aud_glassBreak01",
                         "volume": 0.48899999260902405,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             }
@@ -72039,25 +72723,33 @@
                 "name": "aud_playerDeath01",
                 "volume": 0.9269999861717224,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             },
             {
                 "name": "aud_vacuumStart01",
                 "volume": 1.0,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             },
             {
                 "name": "aud_vacuumLoop01",
                 "volume": 0.3140000104904175,
                 "loop": true,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             },
             {
                 "name": "aud_vacuumEnd01",
                 "volume": 1.0,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             }
         ],
         "children": [
@@ -72146,6 +72838,10 @@
                                     "base64": ""
                                 },
                                 {
+                                    "variable": "playerBoost",
+                                    "base64": ""
+                                },
+                                {
                                     "variable": "rightLimbGunAmmo",
                                     "base64": ""
                                 },
@@ -72160,6 +72856,22 @@
                                 {
                                     "variable": "chargeDurationRailGun",
                                     "base64": ""
+                                },
+                                {
+                                    "variable": "backWeaponcount",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "boostAcceleration",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "boostDuration",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "boostCoolDown",
+                                    "base64": ""
                                 }
                             ]
                         }
@@ -72170,55 +72882,89 @@
                         "name": "aud_cleaver",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_gunshot01",
                         "volume": 0.6539999842643738,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_weaponSwitch01",
                         "volume": 0.20900000631809235,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_katana01",
                         "volume": 0.5199999809265137,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_emptyGun01",
                         "volume": 0.22100000083446503,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_tempcock",
                         "volume": 0.22200000286102295,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_railgunChargeUp01",
                         "volume": 0.6209999918937683,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_railgunShot01",
                         "volume": 0.5960000157356262,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_railgunChargeDown01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    },
+                    {
+                        "name": "aud_shotgunShot01",
+                        "volume": 0.6869999766349792,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    },
+                    {
+                        "name": "aud_shotgunCocking01",
+                        "volume": 1.0,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             },
@@ -72307,6 +73053,10 @@
                                     "base64": ""
                                 },
                                 {
+                                    "variable": "playerBoost",
+                                    "base64": ""
+                                },
+                                {
                                     "variable": "leftWeaponCount",
                                     "base64": ""
                                 },
@@ -72321,6 +73071,22 @@
                                 {
                                     "variable": "chargeDurationRailGun",
                                     "base64": ""
+                                },
+                                {
+                                    "variable": "backWeaponcount",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "boostAcceleration",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "boostDuration",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "boostCoolDown",
+                                    "base64": ""
                                 }
                             ]
                         }
@@ -72331,55 +73097,89 @@
                         "name": "aud_cleaver",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_gunshot01",
                         "volume": 0.6589999794960022,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_weaponSwitch01",
                         "volume": 0.2029999941587448,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_katana01",
                         "volume": 0.48899999260902405,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_emptyGun01",
                         "volume": 0.23199999332427979,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_tempcock",
                         "volume": 0.22699999809265137,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_railgunChargeUp01",
                         "volume": 0.6159999966621399,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_railgunShot01",
                         "volume": 0.6349999904632568,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_railgunChargeDown01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    },
+                    {
+                        "name": "aud_shotgunShot01",
+                        "volume": 0.6869999766349792,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    },
+                    {
+                        "name": "aud_shotgunCocking01",
+                        "volume": 1.0,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             },
@@ -72452,37 +73252,49 @@
                         "name": "aud_gunshot01",
                         "volume": 0.6759999990463257,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_cleaver",
                         "volume": 0.546999990940094,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_katana01",
                         "volume": 0.4970000088214874,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_emptyGun01",
                         "volume": 0.25699999928474426,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_boosters01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_vacuumStart01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             },
@@ -83445,10 +84257,10 @@
         },
         "transform": {
             "position": {
-                "x": 1.6800018548965454,
-                "y": -6.171558856964111
+                "x": 0.08369886875152588,
+                "y": -9.08764362335205
             },
-            "rotation": -114.10630798339844,
+            "rotation": -0.0,
             "scale": {
                 "x": 2.999998092651367,
                 "y": 2.999998092651367
@@ -83458,259 +84270,12 @@
             "checkcollision": true,
             "checkresponse": true,
             "size": {
-                "x": 0.7400000095367432,
-                "y": 0.23999999463558197
+                "x": 0.5199999809265137,
+                "y": 0.5199999809265137
             },
             "offset": {
                 "x": 0.0,
-                "y": 0.0
-            },
-            "drawDebug": true,
-            "radius": 0.5,
-            "shapetype": 0
-        },
-        "enemy": {
-            "enemytag": -1,
-            "enemytype": 2,
-            "enemybehaviour": 1
-        },
-        "rigidbody": {
-            "linearVelocity": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "linearAcceleration": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "rotation": 0.0,
-            "angularVelocity": 0.0,
-            "angularAcceleration": 0.0,
-            "mass": 1.0,
-            "inverseMass": 1.0,
-            "linearDamping": 0.9900000095367432,
-            "angularDamping": 0.9900000095367432,
-            "force": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "torque": 0.0,
-            "kinematic": false,
-            "static": false
-        },
-        "sprite": {
-            "imagefile": "ani_rangedEnemyMoving_strip6.png",
-            "layer": 64,
-            "color": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
-            },
-            "alpha": 1.0,
-            "isLit": true
-        },
-        "animation": {
-            "frameNumber": 2,
-            "framesPerSecond": 10,
-            "frameTimer": 0.0,
-            "isAnimating": false,
-            "stripCount": 6
-        },
-        "script": {
-            "scripts": [
-                {
-                    "name": "EnemyScript",
-                    "enabled": true,
-                    "map": [
-                        {
-                            "variable": "isDead",
-                            "base64": ""
-                        },
-                        {
-                            "variable": "isPatrolling",
-                            "base64": ""
-                        }
-                    ]
-                }
-            ]
-        },
-        "audio": [
-            {
-                "name": "aud_bodyDeath01",
-                "volume": 0.3160000145435333,
-                "loop": false,
-                "playOnStart": false
-            },
-            {
-                "name": "aud_bodyStab01",
-                "volume": 0.4880000054836273,
-                "loop": false,
-                "playOnStart": false
-            },
-            {
-                "name": "aud_bodyStab02",
-                "volume": 0.6650000214576721,
-                "loop": false,
-                "playOnStart": false
-            },
-            {
-                "name": "aud_bodyFall01",
-                "volume": 0.24899999797344208,
-                "loop": false,
-                "playOnStart": false
-            },
-            {
-                "name": "aud_bodyFall02",
-                "volume": 0.2849999964237213,
-                "loop": false,
-                "playOnStart": false
-            },
-            {
-                "name": "aud_bodyFall03",
-                "volume": 0.3070000112056732,
-                "loop": false,
-                "playOnStart": false
-            },
-            {
-                "name": "aud_bodyFall04",
-                "volume": 0.24300000071525574,
-                "loop": false,
-                "playOnStart": false
-            },
-            {
-                "name": "aud_bodyFall05",
-                "volume": 0.2290000021457672,
-                "loop": false,
-                "playOnStart": false
-            },
-            {
-                "name": "aud_bodyFall06",
-                "volume": 0.21199999749660492,
-                "loop": false,
-                "playOnStart": false
-            },
-            {
-                "name": "aud_bodyFall07",
-                "volume": 0.20399999618530273,
-                "loop": false,
-                "playOnStart": false
-            },
-            {
-                "name": "aud_bodyFall08",
-                "volume": 0.25099998712539673,
-                "loop": false,
-                "playOnStart": false
-            },
-            {
-                "name": "aud_bodyFall09",
-                "volume": 0.2290000021457672,
-                "loop": false,
-                "playOnStart": false
-            }
-        ],
-        "raycast": {
-            "raycasts": [
-                {
-                    "raycastID": "RaycastToPlayer",
-                    "israycasting": true,
-                    "targetposition": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "Layer Vector": [
-                        {
-                            "layer": 5
-                        }
-                    ]
-                }
-            ]
-        },
-        "pathfinding": {
-            "startPosition": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "targetPosition": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "gridKey": 0
-        },
-        "children": [
-            {
-                "name": {
-                    "namestr": "waypoint 1",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "prefab_enemyRanged.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": 0.21669802069664001,
-                        "y": 2.2334883213043213
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    }
-                }
-            },
-            {
-                "name": {
-                    "namestr": "waypoint 2",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "prefab_enemyRanged.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": -1.4637032747268677,
-                        "y": -0.8799273371696472
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    }
-                }
-            }
-        ]
-    },
-    {
-        "name": {
-            "namestr": "prefab_enemyRanged",
-            "layer": 2,
-            "isprefab": true,
-            "tagstr": "Enemy",
-            "prefabname": "prefab_enemyRanged.prefab",
-            "issync": false
-        },
-        "transform": {
-            "position": {
-                "x": 26.33550262451172,
-                "y": -12.925020217895508
-            },
-            "rotation": -114.10602569580078,
-            "scale": {
-                "x": 2.9999983310699463,
-                "y": 2.9999983310699463
-            }
-        },
-        "collider": {
-            "checkcollision": true,
-            "checkresponse": true,
-            "size": {
-                "x": 0.7400000095367432,
-                "y": 0.23999999463558197
-            },
-            "offset": {
-                "x": 0.0,
-                "y": 0.0
+                "y": -0.10000000149011612
             },
             "drawDebug": true,
             "radius": 0.5,
@@ -83786,73 +84351,113 @@
                 "name": "aud_bodyDeath01",
                 "volume": 0.3160000145435333,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             },
             {
                 "name": "aud_bodyStab01",
                 "volume": 0.4880000054836273,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             },
             {
                 "name": "aud_bodyStab02",
                 "volume": 0.6650000214576721,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             },
             {
                 "name": "aud_bodyFall01",
                 "volume": 0.24899999797344208,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             },
             {
                 "name": "aud_bodyFall02",
                 "volume": 0.2849999964237213,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             },
             {
                 "name": "aud_bodyFall03",
                 "volume": 0.3070000112056732,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             },
             {
                 "name": "aud_bodyFall04",
                 "volume": 0.24300000071525574,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             },
             {
                 "name": "aud_bodyFall05",
                 "volume": 0.2290000021457672,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             },
             {
                 "name": "aud_bodyFall06",
                 "volume": 0.21199999749660492,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             },
             {
                 "name": "aud_bodyFall07",
                 "volume": 0.20399999618530273,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             },
             {
                 "name": "aud_bodyFall08",
                 "volume": 0.25099998712539673,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             },
             {
                 "name": "aud_bodyFall09",
                 "volume": 0.2290000021457672,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
+            },
+            {
+                "name": "aud_railgunShot01",
+                "volume": 0.14499999582767487,
+                "loop": false,
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
+            },
+            {
+                "name": "aud_playerDeath01",
+                "volume": 0.2750000059604645,
+                "loop": false,
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             }
         ],
         "raycast": {
@@ -83895,8 +84500,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 0.8706881999969482,
-                        "y": 1.1579302549362183
+                        "x": -1.45293390750885,
+                        "y": 0.7901915311813354
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -83916,339 +84521,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": -0.059432245790958405,
-                        "y": -0.8036285042762756
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    }
-                }
-            },
-            {
-                "name": {
-                    "namestr": "waypoint 3",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "prefab_enemyRanged.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": -3.824917793273926,
-                        "y": 0.8420815467834473
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    }
-                }
-            },
-            {
-                "name": {
-                    "namestr": "waypoint 4",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "prefab_enemyRanged.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": -2.876296043395996,
-                        "y": 2.9621474742889404
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    }
-                }
-            }
-        ]
-    },
-    {
-        "name": {
-            "namestr": "prefab_enemyRanged",
-            "layer": 2,
-            "isprefab": true,
-            "tagstr": "Enemy",
-            "prefabname": "prefab_enemyRanged.prefab",
-            "issync": false
-        },
-        "transform": {
-            "position": {
-                "x": 25.1622257232666,
-                "y": -21.21047019958496
-            },
-            "rotation": -0.0,
-            "scale": {
-                "x": 2.999998092651367,
-                "y": 2.999998092651367
-            }
-        },
-        "collider": {
-            "checkcollision": true,
-            "checkresponse": true,
-            "size": {
-                "x": 0.7400000095367432,
-                "y": 0.23999999463558197
-            },
-            "offset": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "drawDebug": true,
-            "radius": 0.5,
-            "shapetype": 0
-        },
-        "enemy": {
-            "enemytag": -1,
-            "enemytype": 2,
-            "enemybehaviour": 1
-        },
-        "rigidbody": {
-            "linearVelocity": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "linearAcceleration": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "rotation": 0.0,
-            "angularVelocity": 0.0,
-            "angularAcceleration": 0.0,
-            "mass": 1.0,
-            "inverseMass": 1.0,
-            "linearDamping": 0.9900000095367432,
-            "angularDamping": 0.9900000095367432,
-            "force": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "torque": 0.0,
-            "kinematic": false,
-            "static": false
-        },
-        "sprite": {
-            "imagefile": "ani_rangedEnemyMoving_strip6.png",
-            "layer": 66,
-            "color": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
-            },
-            "alpha": 1.0,
-            "isLit": true
-        },
-        "animation": {
-            "frameNumber": 2,
-            "framesPerSecond": 10,
-            "frameTimer": 0.0,
-            "isAnimating": false,
-            "stripCount": 6
-        },
-        "script": {
-            "scripts": [
-                {
-                    "name": "EnemyScript",
-                    "enabled": true,
-                    "map": [
-                        {
-                            "variable": "isDead",
-                            "base64": ""
-                        },
-                        {
-                            "variable": "isPatrolling",
-                            "base64": ""
-                        }
-                    ]
-                }
-            ]
-        },
-        "audio": [
-            {
-                "name": "aud_bodyDeath01",
-                "volume": 0.3160000145435333,
-                "loop": false,
-                "playOnStart": false
-            },
-            {
-                "name": "aud_bodyStab01",
-                "volume": 0.4880000054836273,
-                "loop": false,
-                "playOnStart": false
-            },
-            {
-                "name": "aud_bodyStab02",
-                "volume": 0.6650000214576721,
-                "loop": false,
-                "playOnStart": false
-            },
-            {
-                "name": "aud_bodyFall01",
-                "volume": 0.24899999797344208,
-                "loop": false,
-                "playOnStart": false
-            },
-            {
-                "name": "aud_bodyFall02",
-                "volume": 0.2849999964237213,
-                "loop": false,
-                "playOnStart": false
-            },
-            {
-                "name": "aud_bodyFall03",
-                "volume": 0.3070000112056732,
-                "loop": false,
-                "playOnStart": false
-            },
-            {
-                "name": "aud_bodyFall04",
-                "volume": 0.24300000071525574,
-                "loop": false,
-                "playOnStart": false
-            },
-            {
-                "name": "aud_bodyFall05",
-                "volume": 0.2290000021457672,
-                "loop": false,
-                "playOnStart": false
-            },
-            {
-                "name": "aud_bodyFall06",
-                "volume": 0.21199999749660492,
-                "loop": false,
-                "playOnStart": false
-            },
-            {
-                "name": "aud_bodyFall07",
-                "volume": 0.20399999618530273,
-                "loop": false,
-                "playOnStart": false
-            },
-            {
-                "name": "aud_bodyFall08",
-                "volume": 0.25099998712539673,
-                "loop": false,
-                "playOnStart": false
-            },
-            {
-                "name": "aud_bodyFall09",
-                "volume": 0.2290000021457672,
-                "loop": false,
-                "playOnStart": false
-            }
-        ],
-        "raycast": {
-            "raycasts": [
-                {
-                    "raycastID": "RaycastToPlayer",
-                    "israycasting": true,
-                    "targetposition": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "Layer Vector": [
-                        {
-                            "layer": 5
-                        }
-                    ]
-                }
-            ]
-        },
-        "pathfinding": {
-            "startPosition": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "targetPosition": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "gridKey": 0
-        },
-        "children": [
-            {
-                "name": {
-                    "namestr": "waypoint 1",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "prefab_enemyRanged.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": -1.1625961065292358,
-                        "y": 0.8478450775146484
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    }
-                }
-            },
-            {
-                "name": {
-                    "namestr": "waypoint 2",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "prefab_enemyRanged.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": 1.148582100868225,
-                        "y": 0.8193612694740295
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    }
-                }
-            },
-            {
-                "name": {
-                    "namestr": "waypoint 3",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "prefab_enemyRanged.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": 1.169382095336914,
-                        "y": -0.8393873572349548
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    }
-                }
-            },
-            {
-                "name": {
-                    "namestr": "waypoint 4",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "prefab_enemyRanged.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": -1.234452486038208,
-                        "y": -0.8211713433265686
+                        "x": 1.6313644647598267,
+                        "y": 0.7137218713760376
                     },
                     "rotation": 0.0,
                     "scale": {

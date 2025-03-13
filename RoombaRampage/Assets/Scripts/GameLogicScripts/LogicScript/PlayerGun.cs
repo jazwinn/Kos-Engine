@@ -22,8 +22,8 @@ public class PlayerGun : ScriptBase
         cleaverSound = "aud_cleaver.wav";
         katanaSound = "aud_katana01.wav";
         emptyGunSound = "aud_emptyGun01.wav";
-        cockingSound = "aud_tempcock.wav"; //Replace
-        shotGunShotSound = "aud_tempcock.wav";
+        cockingSound = "aud_shotgunCocking01.wav";
+        shotGunShotSound = "aud_shotgunShot01.wav";
         railGunChargeSound = "aud_railgunChargeUp01.wav";
         railGunUnchargeSound = "aud_railgunChargeDown01.wav";
         railGunReleaseSound = "aud_railgunShot01.wav";
@@ -228,6 +228,7 @@ public class PlayerGun : ScriptBase
             case 0:
                 CheckAmmo();
                 break;
+
             case 1:
                 if (limbTag == "LeftLimbSprite" || limbTag == "RightLimbSprite")
                 {
@@ -243,10 +244,11 @@ public class PlayerGun : ScriptBase
                 break;
 
             case 2:
-                CheckMeleeCounter();
-                break;
-            case 3:
                 CheckAmmo();
+                break;
+
+            case 3:
+                CheckRailgunCounter();
                 break;
             default:
                 break;
@@ -595,6 +597,7 @@ public class PlayerGun : ScriptBase
                 break;
         }
     }
+
     #region Coroutines
     private IEnumerator Melee()
     {
@@ -909,13 +912,17 @@ public class PlayerGun : ScriptBase
                 rightWeaponAmmo = rightLimbGunAmmo;
                 backWeaponAmmo = backLimbGunAmmo;
                 break;
+
             case 2:
                 leftWeaponAmmo = leftLimbShotGunAmmo;
                 rightWeaponAmmo = rightLimbShotGunAmmo;
                 break;
-            default:
+
+            case 3:
                 break;
 
+            default:
+                break;
         }
 
 
@@ -928,7 +935,6 @@ public class PlayerGun : ScriptBase
                 uiLeftLimbCounterAC.m_isAnimating = false;
 
                 Component.Set<AnimationComponent>(uiLeftLimbCounterID, uiLeftLimbCounterAC);
-
                 break;
 
             case "RightLimbSprite":
@@ -996,7 +1002,40 @@ public class PlayerGun : ScriptBase
                 break;
         }
     }
+    private void CheckRailgunCounter()
+    {
+        int strip = GetStripCount("ani_hudFullBar_strip7.png");
 
+        switch (limbTag)
+        {
+            case "LeftLimbSprite":
+                int tempLeft = (int)Math.Floor(leftLimbRailGunHold / (chargeDurationRailGun / (float)strip));
+                if (tempLeft >= strip)
+                {
+                    tempLeft = (strip - 1);
+                }
+                uiLeftLimbCounterAC = Component.Get<AnimationComponent>(uiLeftLimbCounterID);
+                uiLeftLimbCounterAC.m_frameNumber = tempLeft;
+                uiLeftLimbCounterAC.m_isAnimating = false;
+
+                Component.Set<AnimationComponent>(uiLeftLimbCounterID, uiLeftLimbCounterAC);
+                break;
+
+            case "RightLimbSprite":
+                int tempRight = (int)Math.Floor(rightLimbRailGunHold / (chargeDurationRailGun / (float)strip));
+                if (tempRight >= strip)
+                {
+                    tempRight = (strip - 1);
+                }
+                uiRightLimbCounterAC = Component.Get<AnimationComponent>(uiRightLimbCounterID);
+                uiRightLimbCounterAC.m_frameNumber = tempRight;
+                uiRightLimbCounterAC.m_isAnimating = false;
+
+                Component.Set<AnimationComponent>(uiRightLimbCounterID, uiRightLimbCounterAC);
+                break;
+        }
+
+    }
     private void CheckBoosterCounter()
     {
 

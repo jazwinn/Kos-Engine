@@ -1,7 +1,7 @@
 [
     {
         "GlobalSettings": {
-            "globalIllumination": 0.30000001192092896,
+            "globalIllumination": 0.8399999737739563,
             "backgroundColor": {
                 "r": 0.13300000131130219,
                 "g": 0.23000000417232513,
@@ -39,9 +39,9 @@
             "isLit": true
         },
         "animation": {
-            "frameNumber": 0,
+            "frameNumber": 1,
             "framesPerSecond": 1,
-            "frameTimer": 0.6666666865348816,
+            "frameTimer": 1.0166664123535156,
             "isAnimating": true,
             "stripCount": 5
         },
