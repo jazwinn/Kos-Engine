@@ -8,8 +8,8 @@ public class EnemySpawner : ScriptBase
     private uint EntityID;
 
     private float timeSinceLastSpawn;
-    private float minSpawnInterval;
-    private float maxSpawnInterval;
+    public float minSpawnInterval;
+    public float maxSpawnInterval;
     public int spawnlimit;
     private bool stopspawn;
 
@@ -33,8 +33,6 @@ public class EnemySpawner : ScriptBase
         spawnedEnemies = 0;
         stopspawn = false;
 
-        minSpawnInterval = 2f;
-        maxSpawnInterval = 5f;
         timeSinceLastSpawn = 0f;
     }
     #endregion
@@ -76,7 +74,7 @@ public class EnemySpawner : ScriptBase
 
     public override void Update()
     {
-        if (stopspawn) return;
+        if (GameControllerLevel1.gameIsPaused || stopspawn || PlayerController.isDead) return;
 
         //update time
         timeSinceLastSpawn += InternalCall.m_GetUnfixedDeltaTime();
@@ -90,11 +88,11 @@ public class EnemySpawner : ScriptBase
             {
                 case EnemyType.ENEMY1:
 
-                    InternalCall.m_InternalCallAddPrefab("FearlessEnemyStatic", spawnpos.X, spawnpos.Y, spawnrot);
+                    InternalCall.m_InternalCallAddPrefab("prefab_Enemy_Alert", spawnpos.X, spawnpos.Y, spawnrot);
 
                     break;
                 case EnemyType.RANGEENEMY:
-                    InternalCall.m_InternalCallAddPrefab("prefab_enemyRanged", spawnpos.X, spawnpos.Y, spawnrot);
+                    InternalCall.m_InternalCallAddPrefab("prefab_Enemy_RangedAlert", spawnpos.X, spawnpos.Y, spawnrot);
                     break;
                 default:
 

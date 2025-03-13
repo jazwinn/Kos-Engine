@@ -21,7 +21,9 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     {
         Helpless,
         Melee,
-        Ranged
+        Ranged,
+        AlertMelee,
+        AlertRanged
     };
 
     public enum EnemyRoamType //Enemy roaming type enum, add here for more roaming behaviours
@@ -90,9 +92,9 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     private Vector2 movement = new Vector2();
     private float enemyDeathKnockbackMultiplier;
     private float enemyBloodPoolSpawnDelay = 0.5f;
-    private float enemySpeed = 1.5f;
-    private float patrolSpeed = 1.5f;
-    private float enemyFOVangle = 160.0f;
+    private float enemySpeed = 1.9f;
+    private float patrolSpeed = 1.9f;
+    private float enemyFOVangle = 180.0f;
     private float enemyFOVdistance = 12.0f;
 
     private float scanTime = 0f;
@@ -120,7 +122,8 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     #region Enemy Variables
     private Vector2 originalPosition;
 
-    private float fireRate = 2f;
+    private float fireRate = 1.5f;
+    private float fireFirstDelay = 0.2f;
     private float fireTimer = 0f;
     private float shuffleDistance = 0.20f;
     private bool  rangedShuffleLeft = true;
@@ -191,6 +194,14 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
                 enemyType = EnemySelection.Ranged; //Set enemy type to ranged
                 break;
 
+            case 3:
+                enemyType = EnemySelection.AlertMelee; //Set enemy type to AlertMelee
+                break;
+
+            case 4:
+                enemyType = EnemySelection.AlertRanged; //Set enemy type to AlertRanged
+                break;
+
             default:
                 break;
         }
@@ -259,7 +270,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         if (isDead || PlayerController.isDead || GameControllerLevel1.gameIsPaused) return;
         CheckForCollisions(); //Checks for collisions in the event an enemy touches the player
         CheckWalking();
-
+        Console.WriteLine($"Total Memory Used: {GC.GetTotalMemory(false)} bytes");
         currentState.DoActionUpdate(InternalCall.m_InternalCallGetDeltaTime()); //Update the current state's DoActionUpdate function, such as patrolling, chasing etc, with delta time
     }
 
@@ -281,6 +292,12 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
             case EnemySelection.Ranged:
                 return new EnemyStateScan(this); // Scanning before attacking
+
+            case EnemySelection.AlertMelee:
+                return new EnemyStateChase(this);
+
+            case EnemySelection.AlertRanged:
+                return new EnemyStateRangedSearch(this);
 
             default:
                 //Console.WriteLine("[ERROR] Invalid enemy type!");
@@ -377,10 +394,12 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
                 break;
 
             case EnemySelection.Melee: //Set dead scientist image
+            case EnemySelection.AlertMelee:
                 spriteComp.m_imageFile = enemyScientistDeathTexture;
                 break;
 
             case EnemySelection.Ranged: //Set dead robot image
+            case EnemySelection.AlertRanged:
                 spriteComp.m_imageFile = enemyRobotDeathTexture;
                 break;
 
@@ -1340,7 +1359,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         rb.m_Acceleration = movement;
         Component.Set<RigidBodyComponent>(EntityID, rb);
         // Initial delay before first shot
-        fireTimer = fireRate * 0.5f;
+        fireTimer = fireRate * fireFirstDelay;
         rangedShuffleTimer = fireRate * 0.6f;
 
     }

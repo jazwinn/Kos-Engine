@@ -677,6 +677,24 @@ namespace script {
 		return dist(gen);
 	}
 
+	MonoString* InternalCall::m_GetScenefromID(ecs::EntityID id)
+	{
+		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+
+		std::string results{};
+		if (id >= 0) {
+			scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();
+			auto result = scenemanager->GetSceneByEntityID(id);
+			if (result.has_value()) {
+				results = result.value();
+			}
+		}
+
+
+
+		return mono_string_new(assetmanager->m_scriptManager.m_GetDomain(), results.c_str());
+	}
+
 	MonoArray* InternalCall::m_InternalCallGetTagIDs(MonoString* monostring)
 	{
 		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
@@ -1654,6 +1672,7 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_GetRandomFloat);
 		MONO_ADD_INTERNAL_CALL(m_GetRandomInt);
 
+		MONO_ADD_INTERNAL_CALL(m_GetScenefromID);
 		///SO HELP ME THEN OVER HERE
 	}
 }

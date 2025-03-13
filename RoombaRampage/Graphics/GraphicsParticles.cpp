@@ -1,3 +1,27 @@
+/******************************************************************/
+/*!
+\file      GraphicsParticles.cpp
+\author    Sean Tiu
+\par       s.tiu@digipen.edu
+\date      8th Mar, 2025
+\brief     This file implements functions for managing particle 
+           rendering and simulation.
+
+\details   This file is responsible for       
+           handling GPU-based particle effects, including     
+           spawning, updating, and rendering particles. It    
+           utilizes OpenGL's Shader Storage Buffer Objects    
+           (SSBOs) to efficiently manage particle data on the 
+           GPU. The class also provides utility functions     
+           for particle generation with randomization and     
+           ensures smooth animation through compute shaders.
+
+Copyright (C) 2024 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the
+prior written consent of DigiPen Institute of Technology is prohibited.
+*/
+/******************************************************************/
+
 #include "../Config/pch.h"
 #include "../Graphics/GraphicsPipe.h"
 #include "../Asset Manager/SceneManager.h"
