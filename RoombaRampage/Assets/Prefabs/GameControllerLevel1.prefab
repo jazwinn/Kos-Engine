@@ -1,12 +1,18 @@
 [
     {
         "GlobalSettings": {
-            "globalIllumination": 1.0,
+            "globalIllumination": 0.30000001192092896,
             "backgroundColor": {
                 "r": 0.13300000131130219,
                 "g": 0.23000000417232513,
                 "b": 0.3199999928474426
             }
+        }
+    },
+    {
+        "CursorSettings": {
+            "cursorImage": "./Assets/Texture/UI/img_startScreenCursor.png",
+            "isCursorCentered": false
         }
     },
     {
@@ -65,7 +71,9 @@
                 "name": "aud_mainLevelLoop",
                 "volume": 0.17000000178813934,
                 "loop": true,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             }
         ]
     }
