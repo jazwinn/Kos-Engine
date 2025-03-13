@@ -488,8 +488,10 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         int poolId = InternalCall.m_InternalCallAddPrefab("prefab_enemyBloodPool", transformComp.m_position.X, transformComp.m_position.Y, transformComp.m_rotation); //Spawns blood pool
         if(enemyType == EnemySelection.Ranged || enemyType == EnemySelection.AlertRanged)
         {
-            SpriteComponent sc = Component.Get<SpriteComponent>(EntityID);
-            sc.m_color = new Vector3();
+            SpriteComponent sc = Component.Get<SpriteComponent>((uint)poolId);
+            sc.m_color.R = 0;
+            sc.m_color.G = 0;
+            sc.m_color.B = 0;
             Component.Set<SpriteComponent>((uint)poolId, sc);
             //sc.m_color = 
         }
