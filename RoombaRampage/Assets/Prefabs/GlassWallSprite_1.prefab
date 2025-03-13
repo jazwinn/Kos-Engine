@@ -1,7 +1,7 @@
 [
     {
         "GlobalSettings": {
-            "globalIllumination": 0.30000001192092896,
+            "globalIllumination": 0.8399999737739563,
             "backgroundColor": {
                 "r": 0.13300000131130219,
                 "g": 0.23000000417232513,
@@ -106,7 +106,9 @@
                 "name": "aud_glassBreak01",
                 "volume": 0.48899999260902405,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             }
         ]
     }

@@ -8,8 +8,14 @@ public class GameControllerLevel1 : ScriptBase
     public override void Awake(uint id)
     {
         EntityID = id;
+        
     }
     #endregion
+
+    private string blockDoorPrefab;
+    public static bool isActivated;
+    public static bool isBossDead;
+    private string bossBGM = "aud_bossLevelLoop.wav";
 
     public static bool gameIsPaused; //For all scripts to check if game is paused
 
@@ -19,10 +25,21 @@ public class GameControllerLevel1 : ScriptBase
 
     private bool isShowingFps;
 
+    private float previousTimeScale;
+
 
     public override void Start()
     {
-        InternalCall.m_InternalCallPlayAudio(EntityID, "aud_mainLevelLoop");
+        blockDoorPrefab = "door_block";
+        isActivated = false;
+        isBossDead = false;
+
+        InternalCall.m_InternalGetTranslate(EntityID, out Vector2 doorPosition);
+
+        if (LevelSelection.SceneName != "Level6")
+        {
+            InternalCall.m_InternalCallPlayAudio(EntityID, "aud_mainLevelLoop");
+        }
 
         runOnce = false; 
         gameIsPaused = false;
@@ -38,6 +55,38 @@ public class GameControllerLevel1 : ScriptBase
     public override void Update()
     {
         InputChecker();
+
+        #region Collision Handling
+        if (InternalCall.m_InternalCallIsCollided(EntityID) != 0.0f)
+        {
+            int[] collidedEntities = InternalCall.m_InternalCallGetCollidedEntities(EntityID);
+
+            foreach (int collidedEntitiesID in collidedEntities)
+            {
+                switch (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID))
+                {
+                    case "Player": // If it hits the player
+                        if (isActivated == false)
+                        {
+                            isActivated = true;
+                            SpawnDoor();
+                            InternalCall.m_InternalCallPlayAudio(EntityID, bossBGM);
+
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+        }
+        #endregion
+    }
+
+    public void SpawnDoor()
+    {
+        InternalCall.m_InternalGetTranslate(EntityID, out Vector2 doorPosition);
+        InternalCall.m_InternalCallAddPrefab(blockDoorPrefab, doorPosition.X, doorPosition.Y, 0);
     }
 
     private void PauseGame()
@@ -47,6 +96,8 @@ public class GameControllerLevel1 : ScriptBase
             gameIsPaused = true;
             gameAudioUp = false;
             runOnce = true;
+
+            previousTimeScale = InternalCall.m_InternalCallGetTimeScale();
 
             //Pauses all coroutines
             CoroutineManager.Instance.PauseAllCoroutines();
@@ -66,8 +117,8 @@ public class GameControllerLevel1 : ScriptBase
             //Resumes all coroutines
             CoroutineManager.Instance.ResumeAllCoroutines();
 
-            //Sets delta timescale to 1
-            InternalCall.m_InternalCallSetTimeScale(1f);
+            //Sets delta timescale to 1 or previous
+            InternalCall.m_InternalCallSetTimeScale(previousTimeScale);
 
             //Hide Pause Menu Layer
             InternalCall.m_DisableLayer(7);

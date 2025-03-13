@@ -26,7 +26,7 @@ public class BossDoor : ScriptBase
     public override void Update()
     {
 
-        if (GameControllerLevel6.isBossDead == true)
+        if (GameControllerLevel1.isBossDead == true)
         {
             InternalCall.m_InternalCallDeleteEntity(EntityID);
 

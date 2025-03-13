@@ -853,6 +853,10 @@ namespace script {
 
 		static void m_GetColliderDecomposedTRS(ecs::EntityID id, vector2::Vec2* translate, vector2::Vec2* rotate, float* scale);
 
+		static float m_GetRandomFloat(float min, float max);
+
+		static int m_GetRandomInt(int min, int max);
+
 	public:
 		/******************************************************************/
 		/*!
