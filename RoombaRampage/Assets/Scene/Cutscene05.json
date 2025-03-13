@@ -10,6 +10,12 @@
         }
     },
     {
+        "CursorSettings": {
+            "cursorImage": "./Assets/Texture/UI/img_startScreenCursor.png",
+            "isCursorCentered": false
+        }
+    },
+    {
         "name": {
             "namestr": "img_cutscene",
             "layer": 0,
@@ -221,25 +227,33 @@
                 "name": "aud_buttonHover01",
                 "volume": 0.4440000057220459,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             },
             {
                 "name": "aud_buttonClick01",
                 "volume": 1.0,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             },
             {
                 "name": "",
                 "volume": 1.0,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             },
             {
                 "name": "aud_startMenuAmbienceQuitt01",
                 "volume": 1.0,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             }
         ]
     },
@@ -283,8 +297,8 @@
         },
         "transform": {
             "position": {
-                "x": -0.1765206754207611,
-                "y": -0.6225347518920898
+                "x": -0.13514649868011475,
+                "y": -0.6260688304901123
             },
             "rotation": -0.0,
             "scale": {
@@ -293,7 +307,7 @@
             }
         },
         "text": {
-            "text": "OBJECTIVE : FIND BOSS IN MILESTONE 5 AND KILL.",
+            "text": "OBJECTIVE : ESCAPE IN CUTSCENE.MP4 IN MILESTONE 6",
             "text": null,
             "filename": "fnt_silkscreenRegular.ttf",
             "fontsize": 1.0,
@@ -389,7 +403,7 @@
         },
         "transform": {
             "position": {
-                "x": -0.5060957670211792,
+                "x": -0.5313889384269714,
                 "y": -0.5382811427116394
             },
             "rotation": -0.0,
@@ -399,7 +413,7 @@
             }
         },
         "text": {
-            "text": "STATUS: LEVEL 1 COMPLETED",
+            "text": "STATUS: BOSS DESTROYED.",
             "text": null,
             "filename": "fnt_silkscreenRegular.ttf",
             "fontsize": 1.0,
@@ -443,13 +457,17 @@
                 "name": "aud_startMenuAmbienceLoop01",
                 "volume": 1.0,
                 "loop": true,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             },
             {
                 "name": "aud_startMenuAmbienceStart01",
                 "volume": 1.0,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             }
         ]
     },

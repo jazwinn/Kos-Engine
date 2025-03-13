@@ -17,9 +17,16 @@ public class PauseMenuButtons : ScriptBase
 
     private AnimationComponent animComp;
 
+    private bool confirmQuit;
+
+    private TextComponent quitConfirmTextComp;
     public override void Start()
     {
         animComp = Component.Get<AnimationComponent>(EntityID);
+
+        quitConfirmTextComp = Component.Get<TextComponent>((uint)InternalCall.m_InternalCallGetTagID("UIConfirmQuit"));
+        
+        confirmQuit = false;
     }
 
     public override void Update()
@@ -141,7 +148,7 @@ public class PauseMenuButtons : ScriptBase
                 case -1:
                     //Quit Game
                     InternalCall.m_InternalCallPlayAudio(EntityID, "aud_buttonClick01");
-                    QuitToMainMenu();
+                    ConfirmQuit();
                     break;
 
                 default:
@@ -152,6 +159,8 @@ public class PauseMenuButtons : ScriptBase
 
     private void ResumeGame()
     {
+        UnconfirmQuit();
+
         //Hide Pause Menu Layer
         InternalCall.m_DisableLayer(7);
 
@@ -166,10 +175,14 @@ public class PauseMenuButtons : ScriptBase
 
         //continue sound
         InternalCall.m_InternalCallUnPauseAllAudio();
+
+
     }
 
     private void RestartGame()
     {
+        UnconfirmQuit();
+
         if (LevelSelection.SceneName != null)
         {
             InternalCall.m_DisableLayer(8); //Disables Loadout Menu UI
@@ -208,6 +221,32 @@ public class PauseMenuButtons : ScriptBase
     {
         InternalCall.m_DisableLayer(6);
         InternalCall.m_EnableLayer(7);
+    }
+
+    private void ConfirmQuit()
+    {
+        if (confirmQuit == false)
+        {
+            confirmQuit = true;
+
+            quitConfirmTextComp.m_text = "Confirm";
+
+            Component.Set<TextComponent>((uint)InternalCall.m_InternalCallGetTagID("UIConfirmQuit"), quitConfirmTextComp);
+        }
+
+        else if (confirmQuit == true)
+        {
+            QuitToMainMenu();
+        }
+    }
+
+    private void UnconfirmQuit()
+    {
+        confirmQuit = false;
+
+        quitConfirmTextComp.m_text = "Quit";
+
+        Component.Set<TextComponent>((uint)InternalCall.m_InternalCallGetTagID("UIConfirmQuit"), quitConfirmTextComp);
     }
 
     private void QuitToMainMenu()

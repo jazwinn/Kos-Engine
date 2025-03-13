@@ -66,27 +66,27 @@ public class LevelSelectButton : ScriptBase
         switch (buttonFunctionNo)
         {
             case 10:
-                LevelSelection.SceneName = "Cutscene01";
+                LevelSelection.SceneName = "TutorialCutscene01";
                 InternalCall.m_EnableLayer(1);
                 break;
             case 20:
-                LevelSelection.SceneName = "Level2";
+                LevelSelection.SceneName = "CutsceneLevel2";
                 InternalCall.m_EnableLayer(2);
                 break;
             case 30:
-                LevelSelection.SceneName = "Level3";
+                LevelSelection.SceneName = "CutsceneLevel3";
                 InternalCall.m_EnableLayer(3);
                 break;
             case 40:
-                LevelSelection.SceneName = "Level4";
+                LevelSelection.SceneName = "CutsceneLevel4";
                 InternalCall.m_EnableLayer(4);
                 break;
             case 50:
-                LevelSelection.SceneName = "Level5";
+                LevelSelection.SceneName = "CutsceneLevel5";
                 InternalCall.m_EnableLayer(5);
                 break;
             case 60:
-                LevelSelection.SceneName = "Level6";
+                LevelSelection.SceneName = "CutsceneLevel6";
                 InternalCall.m_EnableLayer(6);
                 break;
             default:

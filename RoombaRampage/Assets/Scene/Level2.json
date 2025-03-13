@@ -1,11 +1,11 @@
 [
     {
         "GlobalSettings": {
-            "globalIllumination": -0.03999999910593033,
+            "globalIllumination": 0.36000001430511475,
             "backgroundColor": {
-                "r": 0.13300000131130219,
-                "g": 0.23000000417232513,
-                "b": 0.3199999928474426
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0
             }
         }
     },
@@ -6845,8 +6845,8 @@
         },
         "transform": {
             "position": {
-                "x": -16.685771942138672,
-                "y": 33.59535217285156
+                "x": -0.010188698768615723,
+                "y": -31.976465225219727
             },
             "rotation": -0.0,
             "scale": {
@@ -8263,7 +8263,7 @@
             "isprefab": true,
             "tagstr": "Default",
             "prefabname": "EndPoint.prefab",
-            "issync": true
+            "issync": false
         },
         "transform": {
             "position": {
@@ -8334,960 +8334,12 @@
                     "map": [
                         {
                             "variable": "NextLevelName",
-                            "base64": "Cutscene05"
+                            "base64": "CutsceneLevel3"
                         }
                     ]
                 }
             ]
         }
-    },
-    {
-        "name": {
-            "namestr": "LightParent",
-            "layer": 0,
-            "isprefab": true,
-            "tagstr": "Default",
-            "prefabname": "LightParent.prefab",
-            "issync": true
-        },
-        "transform": {
-            "position": {
-                "x": 101.03895568847656,
-                "y": 16.906919479370117
-            },
-            "rotation": -0.0,
-            "scale": {
-                "x": 1.0,
-                "y": 1.0
-            }
-        },
-        "children": [
-            {
-                "name": {
-                    "namestr": "Lights",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "LightParent.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": 59.06800079345703,
-                        "y": 4.985283851623535
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 48.0,
-                        "y": 68.0
-                    }
-                },
-                "LightingComponent": {
-                    "m_innerOuterRadius": {
-                        "x": 0.10000000149011612,
-                        "y": 1.0
-                    },
-                    "m_intensity": 0.800000011920929,
-                    "m_light_OffSet": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "m_light_scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    },
-                    "m_light_rotation": 0.0
-                }
-            },
-            {
-                "name": {
-                    "namestr": "Lights",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "LightParent.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": 0.0,
-                        "y": -7.993094444274902
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 50.0,
-                        "y": 50.0
-                    }
-                },
-                "LightingComponent": {
-                    "m_innerOuterRadius": {
-                        "x": 0.10000000149011612,
-                        "y": 1.0
-                    },
-                    "m_intensity": 0.800000011920929,
-                    "m_light_OffSet": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "m_light_scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    },
-                    "m_light_rotation": 0.0
-                }
-            },
-            {
-                "name": {
-                    "namestr": "Lights",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "LightParent.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": -25.02438735961914,
-                        "y": 37.08807373046875
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 20.0,
-                        "y": 20.0
-                    }
-                },
-                "LightingComponent": {
-                    "m_innerOuterRadius": {
-                        "x": 0.0,
-                        "y": 1.0
-                    },
-                    "m_intensity": 0.800000011920929,
-                    "m_light_OffSet": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "m_light_scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    },
-                    "m_light_rotation": 0.0
-                }
-            },
-            {
-                "name": {
-                    "namestr": "Lights",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "LightParent.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": 25.012388229370117,
-                        "y": -17.992115020751953
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 50.0,
-                        "y": 80.0
-                    }
-                },
-                "LightingComponent": {
-                    "m_innerOuterRadius": {
-                        "x": 0.10000000149011612,
-                        "y": 1.0
-                    },
-                    "m_intensity": 0.800000011920929,
-                    "m_light_OffSet": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "m_light_scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    },
-                    "m_light_rotation": 0.0
-                }
-            },
-            {
-                "name": {
-                    "namestr": "Lights",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "LightParent.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": -0.5466887950897217,
-                        "y": 27.05553436279297
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 70.0,
-                        "y": 130.0
-                    }
-                },
-                "LightingComponent": {
-                    "m_innerOuterRadius": {
-                        "x": 0.10000000149011612,
-                        "y": 1.0
-                    },
-                    "m_intensity": 0.800000011920929,
-                    "m_light_OffSet": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "m_light_scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    },
-                    "m_light_rotation": 0.0
-                }
-            },
-            {
-                "name": {
-                    "namestr": "Lights",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "LightParent.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": 36.99250030517578,
-                        "y": 23.840980529785156
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 30.0,
-                        "y": 30.0
-                    }
-                },
-                "LightingComponent": {
-                    "m_innerOuterRadius": {
-                        "x": 0.10000000149011612,
-                        "y": 1.0
-                    },
-                    "m_intensity": 0.800000011920929,
-                    "m_light_OffSet": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "m_light_scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    },
-                    "m_light_rotation": 0.0
-                }
-            },
-            {
-                "name": {
-                    "namestr": "Lights",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "LightParent.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": 37.01701354980469,
-                        "y": 4.9666876792907715
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 25.0,
-                        "y": 25.0
-                    }
-                },
-                "LightingComponent": {
-                    "m_innerOuterRadius": {
-                        "x": 0.10000000149011612,
-                        "y": 1.0
-                    },
-                    "m_intensity": 0.800000011920929,
-                    "m_light_OffSet": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "m_light_scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    },
-                    "m_light_rotation": 0.0
-                }
-            },
-            {
-                "name": {
-                    "namestr": "Lights",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "LightParent.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": -20.017610549926758,
-                        "y": -17.992115020751953
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 50.0,
-                        "y": 65.0
-                    }
-                },
-                "LightingComponent": {
-                    "m_innerOuterRadius": {
-                        "x": 0.10000000149011612,
-                        "y": 1.0
-                    },
-                    "m_intensity": 0.800000011920929,
-                    "m_light_OffSet": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "m_light_scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    },
-                    "m_light_rotation": 0.0
-                }
-            },
-            {
-                "name": {
-                    "namestr": "Lights",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "LightParent.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": -9.974212646484375,
-                        "y": -17.992115020751953
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 16.0,
-                        "y": 16.0
-                    }
-                },
-                "LightingComponent": {
-                    "m_innerOuterRadius": {
-                        "x": 0.0,
-                        "y": 1.0
-                    },
-                    "m_intensity": 0.800000011920929,
-                    "m_light_OffSet": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "m_light_scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    },
-                    "m_light_rotation": 0.0
-                }
-            },
-            {
-                "name": {
-                    "namestr": "Lights",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "LightParent.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": -0.04752063751220703,
-                        "y": -17.992115020751953
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 16.0,
-                        "y": 16.0
-                    }
-                },
-                "LightingComponent": {
-                    "m_innerOuterRadius": {
-                        "x": 0.0,
-                        "y": 1.0
-                    },
-                    "m_intensity": 0.800000011920929,
-                    "m_light_OffSet": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "m_light_scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    },
-                    "m_light_rotation": 0.0
-                }
-            },
-            {
-                "name": {
-                    "namestr": "Lights",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "LightParent.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": 10.556527137756348,
-                        "y": -17.992115020751953
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 16.0,
-                        "y": 16.0
-                    }
-                },
-                "LightingComponent": {
-                    "m_innerOuterRadius": {
-                        "x": 0.0,
-                        "y": 1.0
-                    },
-                    "m_intensity": 0.800000011920929,
-                    "m_light_OffSet": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "m_light_scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    },
-                    "m_light_rotation": 0.0
-                }
-            },
-            {
-                "name": {
-                    "namestr": "Lights",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "LightParent.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": 37.07835388183594,
-                        "y": -17.992115020751953
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 16.0,
-                        "y": 16.0
-                    }
-                },
-                "LightingComponent": {
-                    "m_innerOuterRadius": {
-                        "x": 0.0,
-                        "y": 1.0
-                    },
-                    "m_intensity": 0.800000011920929,
-                    "m_light_OffSet": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "m_light_scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    },
-                    "m_light_rotation": 0.0
-                }
-            },
-            {
-                "name": {
-                    "namestr": "Lights",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "LightParent.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": 37.07835388183594,
-                        "y": -10.852524757385254
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 16.0,
-                        "y": 16.0
-                    }
-                },
-                "LightingComponent": {
-                    "m_innerOuterRadius": {
-                        "x": 0.0,
-                        "y": 1.0
-                    },
-                    "m_intensity": 0.800000011920929,
-                    "m_light_OffSet": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "m_light_scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    },
-                    "m_light_rotation": 0.0
-                }
-            },
-            {
-                "name": {
-                    "namestr": "Lights",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "LightParent.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": 37.07835388183594,
-                        "y": -4.017244338989258
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 16.0,
-                        "y": 16.0
-                    }
-                },
-                "LightingComponent": {
-                    "m_innerOuterRadius": {
-                        "x": 0.0,
-                        "y": 1.0
-                    },
-                    "m_intensity": 0.800000011920929,
-                    "m_light_OffSet": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "m_light_scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    },
-                    "m_light_rotation": 0.0
-                }
-            },
-            {
-                "name": {
-                    "namestr": "Lights",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "LightParent.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": 47.752628326416016,
-                        "y": 4.971617698669434
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 16.0,
-                        "y": 16.0
-                    }
-                },
-                "LightingComponent": {
-                    "m_innerOuterRadius": {
-                        "x": 0.0,
-                        "y": 1.0
-                    },
-                    "m_intensity": 0.800000011920929,
-                    "m_light_OffSet": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "m_light_scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    },
-                    "m_light_rotation": 0.0
-                }
-            },
-            {
-                "name": {
-                    "namestr": "Lights",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "LightParent.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": 37.03153610229492,
-                        "y": 11.64303970336914
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 16.0,
-                        "y": 16.0
-                    }
-                },
-                "LightingComponent": {
-                    "m_innerOuterRadius": {
-                        "x": 0.0,
-                        "y": 1.0
-                    },
-                    "m_intensity": 0.800000011920929,
-                    "m_light_OffSet": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "m_light_scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    },
-                    "m_light_rotation": 0.0
-                }
-            },
-            {
-                "name": {
-                    "namestr": "Lights",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "LightParent.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": 37.03153610229492,
-                        "y": 17.916515350341797
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 16.0,
-                        "y": 16.0
-                    }
-                },
-                "LightingComponent": {
-                    "m_innerOuterRadius": {
-                        "x": 0.0,
-                        "y": 1.0
-                    },
-                    "m_intensity": 0.800000011920929,
-                    "m_light_OffSet": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "m_light_scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    },
-                    "m_light_rotation": 0.0
-                }
-            },
-            {
-                "name": {
-                    "namestr": "Lights",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "LightParent.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": 28.01926612854004,
-                        "y": 5.065252780914307
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 16.0,
-                        "y": 16.0
-                    }
-                },
-                "LightingComponent": {
-                    "m_innerOuterRadius": {
-                        "x": 0.0,
-                        "y": 1.0
-                    },
-                    "m_intensity": 0.800000011920929,
-                    "m_light_OffSet": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "m_light_scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    },
-                    "m_light_rotation": 0.0
-                }
-            },
-            {
-                "name": {
-                    "namestr": "Lights",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "LightParent.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": 20.06037712097168,
-                        "y": 4.995026588439941
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 16.0,
-                        "y": 16.0
-                    }
-                },
-                "LightingComponent": {
-                    "m_innerOuterRadius": {
-                        "x": 0.0,
-                        "y": 1.0
-                    },
-                    "m_intensity": 0.800000011920929,
-                    "m_light_OffSet": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "m_light_scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    },
-                    "m_light_rotation": 0.0
-                }
-            },
-            {
-                "name": {
-                    "namestr": "Lights",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "LightParent.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": 20.06037712097168,
-                        "y": 11.034418106079102
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 16.0,
-                        "y": 16.0
-                    }
-                },
-                "LightingComponent": {
-                    "m_innerOuterRadius": {
-                        "x": 0.0,
-                        "y": 1.0
-                    },
-                    "m_intensity": 0.800000011920929,
-                    "m_light_OffSet": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "m_light_scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    },
-                    "m_light_rotation": 0.0
-                }
-            },
-            {
-                "name": {
-                    "namestr": "Lights",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "LightParent.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": 20.06037712097168,
-                        "y": 19.601926803588867
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 16.0,
-                        "y": 16.0
-                    }
-                },
-                "LightingComponent": {
-                    "m_innerOuterRadius": {
-                        "x": 0.0,
-                        "y": 1.0
-                    },
-                    "m_intensity": 0.800000011920929,
-                    "m_light_OffSet": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "m_light_scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    },
-                    "m_light_rotation": 0.0
-                }
-            },
-            {
-                "name": {
-                    "namestr": "Lights",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "LightParent.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": 13.763492584228516,
-                        "y": 20.84257698059082
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 16.0,
-                        "y": 16.0
-                    }
-                },
-                "LightingComponent": {
-                    "m_innerOuterRadius": {
-                        "x": 0.0,
-                        "y": 1.0
-                    },
-                    "m_intensity": 0.800000011920929,
-                    "m_light_OffSet": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "m_light_scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    },
-                    "m_light_rotation": 0.0
-                }
-            },
-            {
-                "name": {
-                    "namestr": "Lights",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "LightParent.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": -14.982141494750977,
-                        "y": 37.08807373046875
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 16.0,
-                        "y": 16.0
-                    }
-                },
-                "LightingComponent": {
-                    "m_innerOuterRadius": {
-                        "x": 0.0,
-                        "y": 1.0
-                    },
-                    "m_intensity": 0.800000011920929,
-                    "m_light_OffSet": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "m_light_scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    },
-                    "m_light_rotation": 0.0
-                }
-            },
-            {
-                "name": {
-                    "namestr": "Lights",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "LightParent.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": -25.029953002929688,
-                        "y": 37.08807373046875
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 20.0,
-                        "y": 20.0
-                    }
-                },
-                "LightingComponent": {
-                    "m_innerOuterRadius": {
-                        "x": 0.0,
-                        "y": 1.0
-                    },
-                    "m_intensity": 2.299999952316284,
-                    "m_light_OffSet": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "m_light_scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    },
-                    "m_light_rotation": 0.0
-                }
-            },
-            {
-                "name": {
-                    "namestr": "Lights",
-                    "layer": 0,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "LightParent.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": -0.04752063751220703,
-                        "y": 0.1582350730895996
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 16.0,
-                        "y": 16.0
-                    }
-                },
-                "LightingComponent": {
-                    "m_innerOuterRadius": {
-                        "x": 0.0,
-                        "y": 1.0
-                    },
-                    "m_intensity": 0.800000011920929,
-                    "m_light_OffSet": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "m_light_scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    },
-                    "m_light_rotation": 0.0
-                }
-            }
-        ]
     },
     {
         "name": {
@@ -45444,7 +44496,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {
@@ -45481,7 +44538,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {
@@ -45518,7 +44580,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {
@@ -45555,7 +44622,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {
@@ -45614,7 +44686,7 @@
         "transform": {
             "position": {
                 "x": -0.27116507291793823,
-                "y": -16.24612045288086
+                "y": -30.689252853393555
             },
             "rotation": -0.0,
             "scale": {
@@ -47253,805 +46325,6 @@
     },
     {
         "name": {
-            "namestr": "UI_PauseMenu",
-            "layer": 0,
-            "isprefab": true,
-            "tagstr": "Default",
-            "prefabname": "UI_PauseMenu.prefab",
-            "issync": true
-        },
-        "transform": {
-            "position": {
-                "x": -0.27116507291793823,
-                "y": -16.24612045288086
-            },
-            "rotation": -0.0,
-            "scale": {
-                "x": 1.0,
-                "y": 1.0
-            }
-        },
-        "collider": {
-            "checkcollision": false,
-            "checkresponse": false,
-            "size": {
-                "x": 0.10000000149011612,
-                "y": 0.10000000149011612
-            },
-            "offset": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "drawDebug": true,
-            "radius": 0.5,
-            "shapetype": 0
-        },
-        "script": {
-            "scripts": [
-                {
-                    "name": "PauseMenuManager",
-                    "enabled": true,
-                    "map": [
-                        {
-                            "variable": "isPausing",
-                            "base64": ""
-                        }
-                    ]
-                }
-            ]
-        },
-        "children": [
-            {
-                "name": {
-                    "namestr": "UI_PauseMenu_Background",
-                    "layer": 7,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "UI_PauseMenu.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 4.0,
-                        "y": 4.0
-                    }
-                },
-                "sprite": {
-                    "imagefile": "img_pauseMenuFrame.png",
-                    "layer": 405,
-                    "color": {
-                        "r": 1.0,
-                        "g": 1.0,
-                        "b": 1.0
-                    },
-                    "alpha": 1.0,
-                    "isLit": false
-                }
-            },
-            {
-                "name": {
-                    "namestr": "UI_PauseMenu_Resume",
-                    "layer": 7,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "UI_PauseMenu.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": 0.0,
-                        "y": 3.500983953475952
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 4.0,
-                        "y": 4.0
-                    }
-                },
-                "collider": {
-                    "checkcollision": true,
-                    "checkresponse": false,
-                    "size": {
-                        "x": 1.4800000190734863,
-                        "y": 0.30000001192092896
-                    },
-                    "offset": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "drawDebug": true,
-                    "radius": 0.5,
-                    "shapetype": 0
-                },
-                "rigidbody": {
-                    "linearVelocity": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "linearAcceleration": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "rotation": 0.0,
-                    "angularVelocity": 0.0,
-                    "angularAcceleration": 0.0,
-                    "mass": 1.0,
-                    "inverseMass": 1.0,
-                    "linearDamping": 0.9900000095367432,
-                    "angularDamping": 0.9900000095367432,
-                    "force": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "torque": 0.0,
-                    "kinematic": false,
-                    "static": false
-                },
-                "sprite": {
-                    "imagefile": "ani_pauseMenuResumeButton_strip2.png",
-                    "layer": 406,
-                    "color": {
-                        "r": 1.0,
-                        "g": 1.0,
-                        "b": 1.0
-                    },
-                    "alpha": 1.0,
-                    "isLit": false
-                },
-                "animation": {
-                    "frameNumber": 0,
-                    "framesPerSecond": 0,
-                    "frameTimer": 0.0,
-                    "isAnimating": false,
-                    "stripCount": 2
-                },
-                "script": {
-                    "scripts": [
-                        {
-                            "name": "PauseMenuButtons",
-                            "enabled": true,
-                            "map": [
-                                {
-                                    "variable": "buttonFunctionNo",
-                                    "base64": "CgAAAMzMzMwA"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                "audio": [
-                    {
-                        "name": "aud_buttonHover01",
-                        "volume": 0.4970000088214874,
-                        "loop": false,
-                        "playOnStart": false,
-                        "isBGM": false,
-                        "isSFX": true
-                    },
-                    {
-                        "name": "aud_buttonClick01",
-                        "volume": 1.0,
-                        "loop": false,
-                        "playOnStart": false,
-                        "isBGM": false,
-                        "isSFX": true
-                    }
-                ]
-            },
-            {
-                "name": {
-                    "namestr": "UI_PauseMenu_Restart",
-                    "layer": 7,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "UI_PauseMenu.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": 0.0,
-                        "y": 1.4954073429107666
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 4.0,
-                        "y": 4.0
-                    }
-                },
-                "collider": {
-                    "checkcollision": true,
-                    "checkresponse": false,
-                    "size": {
-                        "x": 1.4800000190734863,
-                        "y": 0.30000001192092896
-                    },
-                    "offset": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "drawDebug": true,
-                    "radius": 0.5,
-                    "shapetype": 0
-                },
-                "rigidbody": {
-                    "linearVelocity": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "linearAcceleration": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "rotation": 0.0,
-                    "angularVelocity": 0.0,
-                    "angularAcceleration": 0.0,
-                    "mass": 1.0,
-                    "inverseMass": 1.0,
-                    "linearDamping": 0.9900000095367432,
-                    "angularDamping": 0.9900000095367432,
-                    "force": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "torque": 0.0,
-                    "kinematic": false,
-                    "static": false
-                },
-                "sprite": {
-                    "imagefile": "ani_pauseMenuRestartButton_strip2.png",
-                    "layer": 407,
-                    "color": {
-                        "r": 1.0,
-                        "g": 1.0,
-                        "b": 1.0
-                    },
-                    "alpha": 1.0,
-                    "isLit": false
-                },
-                "animation": {
-                    "frameNumber": 0,
-                    "framesPerSecond": 0,
-                    "frameTimer": 0.0,
-                    "isAnimating": false,
-                    "stripCount": 2
-                },
-                "script": {
-                    "scripts": [
-                        {
-                            "name": "PauseMenuButtons",
-                            "enabled": true,
-                            "map": [
-                                {
-                                    "variable": "buttonFunctionNo",
-                                    "base64": "FAAAAMzMzMwA"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                "audio": [
-                    {
-                        "name": "aud_buttonHover01",
-                        "volume": 0.49399998784065247,
-                        "loop": false,
-                        "playOnStart": false,
-                        "isBGM": false,
-                        "isSFX": true
-                    },
-                    {
-                        "name": "aud_buttonClick01",
-                        "volume": 1.0,
-                        "loop": false,
-                        "playOnStart": false,
-                        "isBGM": false,
-                        "isSFX": true
-                    }
-                ]
-            },
-            {
-                "name": {
-                    "namestr": "UI_PauseMenu_UserManual",
-                    "layer": 7,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "UI_PauseMenu.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": 0.0,
-                        "y": -2.6046059131622314
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 4.0,
-                        "y": 4.0
-                    }
-                },
-                "collider": {
-                    "checkcollision": true,
-                    "checkresponse": false,
-                    "size": {
-                        "x": 1.4800000190734863,
-                        "y": 0.30000001192092896
-                    },
-                    "offset": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "drawDebug": true,
-                    "radius": 0.5,
-                    "shapetype": 0
-                },
-                "rigidbody": {
-                    "linearVelocity": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "linearAcceleration": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "rotation": 0.0,
-                    "angularVelocity": 0.0,
-                    "angularAcceleration": 0.0,
-                    "mass": 1.0,
-                    "inverseMass": 1.0,
-                    "linearDamping": 0.9900000095367432,
-                    "angularDamping": 0.9900000095367432,
-                    "force": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "torque": 0.0,
-                    "kinematic": false,
-                    "static": false
-                },
-                "sprite": {
-                    "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
-                    "layer": 408,
-                    "color": {
-                        "r": 1.0,
-                        "g": 1.0,
-                        "b": 1.0
-                    },
-                    "alpha": 1.0,
-                    "isLit": false
-                },
-                "animation": {
-                    "frameNumber": 0,
-                    "framesPerSecond": 0,
-                    "frameTimer": 0.0,
-                    "isAnimating": false,
-                    "stripCount": 2
-                },
-                "script": {
-                    "scripts": [
-                        {
-                            "name": "PauseMenuButtons",
-                            "enabled": true,
-                            "map": [
-                                {
-                                    "variable": "buttonFunctionNo",
-                                    "base64": "HgAAAMzMzMwA"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                "audio": [
-                    {
-                        "name": "aud_buttonHover01",
-                        "volume": 0.4830000102519989,
-                        "loop": false,
-                        "playOnStart": false,
-                        "isBGM": false,
-                        "isSFX": true
-                    },
-                    {
-                        "name": "aud_buttonClick01",
-                        "volume": 1.0,
-                        "loop": false,
-                        "playOnStart": false,
-                        "isBGM": false,
-                        "isSFX": true
-                    }
-                ]
-            },
-            {
-                "name": {
-                    "namestr": "UI_PauseMenu_Quit",
-                    "layer": 7,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "UI_PauseMenu.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": 0.0,
-                        "y": -4.661163806915283
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 4.0,
-                        "y": 4.0
-                    }
-                },
-                "collider": {
-                    "checkcollision": true,
-                    "checkresponse": true,
-                    "size": {
-                        "x": 1.1200000047683716,
-                        "y": 0.30000001192092896
-                    },
-                    "offset": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "drawDebug": true,
-                    "radius": 0.5,
-                    "shapetype": 0
-                },
-                "rigidbody": {
-                    "linearVelocity": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "linearAcceleration": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "rotation": 0.0,
-                    "angularVelocity": 0.0,
-                    "angularAcceleration": 0.0,
-                    "mass": 1.0,
-                    "inverseMass": 1.0,
-                    "linearDamping": 0.9900000095367432,
-                    "angularDamping": 0.9900000095367432,
-                    "force": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "torque": 0.0,
-                    "kinematic": false,
-                    "static": false
-                },
-                "sprite": {
-                    "imagefile": "ani_pauseMenuQuitButton_strip2.png",
-                    "layer": 409,
-                    "color": {
-                        "r": 1.0,
-                        "g": 1.0,
-                        "b": 1.0
-                    },
-                    "alpha": 1.0,
-                    "isLit": false
-                },
-                "animation": {
-                    "frameNumber": 0,
-                    "framesPerSecond": 0,
-                    "frameTimer": 0.0,
-                    "isAnimating": false,
-                    "stripCount": 2
-                },
-                "script": {
-                    "scripts": [
-                        {
-                            "name": "PauseMenuButtons",
-                            "enabled": true,
-                            "map": [
-                                {
-                                    "variable": "buttonFunctionNo",
-                                    "base64": "/////8zMzMwA"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                "audio": [
-                    {
-                        "name": "aud_buttonHover01",
-                        "volume": 0.5,
-                        "loop": false,
-                        "playOnStart": false,
-                        "isBGM": false,
-                        "isSFX": true
-                    },
-                    {
-                        "name": "aud_buttonClick01",
-                        "volume": 1.0,
-                        "loop": false,
-                        "playOnStart": false,
-                        "isBGM": false,
-                        "isSFX": true
-                    }
-                ]
-            },
-            {
-                "name": {
-                    "namestr": "UI_PauseMenu_ResumeText",
-                    "layer": 7,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "UI_PauseMenu.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": 0.39932894706726074,
-                        "y": 3.277216911315918
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    }
-                },
-                "text": {
-                    "text": "Resume",
-                    "text": null,
-                    "filename": "fnt_silkscreenRegular.ttf",
-                    "fontsize": 12.0,
-                    "color": {
-                        "r": 0.0,
-                        "g": 0.0,
-                        "b": 0.0
-                    },
-                    "layer": 421
-                }
-            },
-            {
-                "name": {
-                    "namestr": "UI_PauseMenu_RestartText",
-                    "layer": 7,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "UI_PauseMenu.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": 0.4092021584510803,
-                        "y": 1.2865631580352783
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    }
-                },
-                "text": {
-                    "text": "Restart",
-                    "text": null,
-                    "filename": "fnt_silkscreenRegular.ttf",
-                    "fontsize": 12.0,
-                    "color": {
-                        "r": 0.0,
-                        "g": 0.0,
-                        "b": 0.0
-                    },
-                    "layer": 422
-                }
-            },
-            {
-                "name": {
-                    "namestr": "UI_PauseMenu_QuitText",
-                    "layer": 7,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "UI_PauseMenu.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": -0.031008124351501465,
-                        "y": -4.820469379425049
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    }
-                },
-                "text": {
-                    "text": "QUIT",
-                    "text": null,
-                    "filename": "fnt_silkscreenRegular.ttf",
-                    "fontsize": 12.0,
-                    "color": {
-                        "r": 0.0,
-                        "g": 0.0,
-                        "b": 0.0
-                    },
-                    "layer": 423
-                }
-            },
-            {
-                "name": {
-                    "namestr": "UI_SoundText",
-                    "layer": 7,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "UI_PauseMenu.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": -0.08570563793182373,
-                        "y": -0.71555495262146
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    }
-                },
-                "text": {
-                    "text": "SOUND",
-                    "text": null,
-                    "filename": "fnt_silkscreenRegular.ttf",
-                    "fontsize": 12.0,
-                    "color": {
-                        "r": 0.0,
-                        "g": 0.0,
-                        "b": 0.0
-                    },
-                    "layer": 424
-                }
-            },
-            {
-                "name": {
-                    "namestr": "UI_PauseMenu_Sound",
-                    "layer": 7,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "UI_PauseMenu.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": 0.0,
-                        "y": -0.49978548288345337
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 4.0,
-                        "y": 4.0
-                    }
-                },
-                "collider": {
-                    "checkcollision": true,
-                    "checkresponse": false,
-                    "size": {
-                        "x": 1.4800000190734863,
-                        "y": 0.30000001192092896
-                    },
-                    "offset": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "drawDebug": true,
-                    "radius": 0.5,
-                    "shapetype": 0
-                },
-                "rigidbody": {
-                    "linearVelocity": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "linearAcceleration": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "rotation": 0.0,
-                    "angularVelocity": 0.0,
-                    "angularAcceleration": 0.0,
-                    "mass": 1.0,
-                    "inverseMass": 1.0,
-                    "linearDamping": 0.9900000095367432,
-                    "angularDamping": 0.9900000095367432,
-                    "force": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "torque": 0.0,
-                    "kinematic": false,
-                    "static": false
-                },
-                "sprite": {
-                    "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
-                    "layer": 410,
-                    "color": {
-                        "r": 1.0,
-                        "g": 1.0,
-                        "b": 1.0
-                    },
-                    "alpha": 1.0,
-                    "isLit": false
-                },
-                "animation": {
-                    "frameNumber": 0,
-                    "framesPerSecond": 0,
-                    "frameTimer": 0.0,
-                    "isAnimating": false,
-                    "stripCount": 2
-                },
-                "script": {
-                    "scripts": [
-                        {
-                            "name": "PauseMenuButtons",
-                            "enabled": true,
-                            "map": [
-                                {
-                                    "variable": "buttonFunctionNo",
-                                    "base64": "IAAAAMzMzMwA"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                "audio": [
-                    {
-                        "name": "aud_buttonHover01",
-                        "volume": 0.4830000102519989,
-                        "loop": false,
-                        "playOnStart": false,
-                        "isBGM": false,
-                        "isSFX": true
-                    },
-                    {
-                        "name": "aud_buttonClick01",
-                        "volume": 1.0,
-                        "loop": false,
-                        "playOnStart": false,
-                        "isBGM": false,
-                        "isSFX": true
-                    }
-                ]
-            },
-            {
-                "name": {
-                    "namestr": "UI_PauseMenu_UserManualText",
-                    "layer": 7,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "UI_PauseMenu.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": 0.1125917136669159,
-                        "y": -2.7719311714172363
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    }
-                },
-                "text": {
-                    "text": "USER MANUAL",
-                    "text": null,
-                    "filename": "fnt_silkscreenRegular.ttf",
-                    "fontsize": 12.0,
-                    "color": {
-                        "r": 0.0,
-                        "g": 0.0,
-                        "b": 0.0
-                    },
-                    "layer": 425
-                }
-            }
-        ]
-    },
-    {
-        "name": {
             "namestr": "UI_LoadoutMenu",
             "layer": 0,
             "isprefab": true,
@@ -48061,10 +46334,10 @@
         },
         "transform": {
             "position": {
-                "x": -0.04110598564147949,
-                "y": -16.004907608032227
+                "x": -0.041106224060058594,
+                "y": -30.303077697753906
             },
-            "rotation": 0.0,
+            "rotation": -0.0,
             "scale": {
                 "x": 1.0,
                 "y": 1.0
@@ -49223,8 +47496,8 @@
         },
         "transform": {
             "position": {
-                "x": -0.04110598564147949,
-                "y": -16.004907608032227
+                "x": 0.04159903526306152,
+                "y": -31.98632049560547
             },
             "rotation": -0.0,
             "scale": {
@@ -49486,10 +47759,10 @@
         },
         "transform": {
             "position": {
-                "x": -0.27116507291793823,
-                "y": -16.24612045288086
+                "x": 0.17565059661865234,
+                "y": -31.735803604125977
             },
-            "rotation": 0.0,
+            "rotation": -0.0,
             "scale": {
                 "x": 1.0,
                 "y": 1.0
@@ -49563,10 +47836,10 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 6.017176628112793,
+                        "x": 9.127551078796387,
                         "y": 5.757751941680908
                     },
-                    "rotation": -0.0,
+                    "rotation": 0.0,
                     "scale": {
                         "x": 4.0,
                         "y": 4.0
@@ -49884,114 +48157,6 @@
     },
     {
         "name": {
-            "namestr": "PlayerBullet",
-            "layer": 3,
-            "isprefab": true,
-            "tagstr": "PlayerBullet",
-            "prefabname": "prefab_playerBullet.prefab",
-            "issync": true
-        },
-        "transform": {
-            "position": {
-                "x": -0.29714435338974,
-                "y": -29.008163452148438
-            },
-            "rotation": -1.2803975343704224,
-            "scale": {
-                "x": 1.75,
-                "y": 1.75
-            }
-        },
-        "collider": {
-            "checkcollision": true,
-            "checkresponse": false,
-            "size": {
-                "x": 0.07000000029802322,
-                "y": 0.25999999046325684
-            },
-            "offset": {
-                "x": 0.0,
-                "y": 0.03999999910593033
-            },
-            "drawDebug": true,
-            "radius": 0.5,
-            "shapetype": 0
-        },
-        "rigidbody": {
-            "linearVelocity": {
-                "x": 0.0,
-                "y": 1.0
-            },
-            "linearAcceleration": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "rotation": 0.0,
-            "angularVelocity": 0.0,
-            "angularAcceleration": 0.0,
-            "mass": 1.0,
-            "inverseMass": 1.0,
-            "linearDamping": 0.9900000095367432,
-            "angularDamping": 0.9900000095367432,
-            "force": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "torque": 0.0,
-            "kinematic": false,
-            "static": false
-        },
-        "sprite": {
-            "imagefile": "ani_gunBulletEffect_strip10.png",
-            "layer": 15,
-            "color": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
-            },
-            "alpha": 1.0,
-            "isLit": true
-        },
-        "animation": {
-            "frameNumber": 0,
-            "framesPerSecond": 80,
-            "frameTimer": 0.0,
-            "isAnimating": false,
-            "stripCount": 10
-        },
-        "script": {
-            "scripts": [
-                {
-                    "name": "PlayerBullet",
-                    "enabled": true,
-                    "map": [
-                        {
-                            "variable": "speed",
-                            "base64": ""
-                        }
-                    ]
-                }
-            ]
-        },
-        "LightingComponent": {
-            "m_innerOuterRadius": {
-                "x": 0.0,
-                "y": 1.0
-            },
-            "m_intensity": 6.300000190734863,
-            "m_light_OffSet": {
-                "x": 0.0,
-                "y": 0.019999999552965164
-            },
-            "m_light_scale": {
-                "x": 0.4000000059604645,
-                "y": 0.699999988079071
-            },
-            "m_light_rotation": 0.0
-        }
-    },
-    {
-        "name": {
             "namestr": "Light Parent",
             "layer": 0,
             "isprefab": false,
@@ -50018,8 +48183,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 3.427023410797119,
-                        "y": -26.010719299316406
+                        "x": 0.04435408115386963,
+                        "y": -24.032718658447266
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -50032,16 +48197,21 @@
                         "x": 0.0,
                         "y": 1.0
                     },
-                    "m_intensity": 0.800000011920929,
+                    "m_intensity": 3.4000000953674316,
                     "m_light_OffSet": {
                         "x": 0.0,
                         "y": 0.0
                     },
                     "m_light_scale": {
-                        "x": 1.0,
-                        "y": 1.0
+                        "x": 3.0,
+                        "y": 3.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 0.9778761267662048,
+                        "y": 0.5581682324409485,
+                        "z": 0.5581682324409485
+                    }
                 }
             },
             {
@@ -50076,42 +48246,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
-                }
-            },
-            {
-                "name": {
-                    "namestr": "Light",
-                    "layer": 0,
-                    "isprefab": false,
-                    "tagstr": "Default"
-                },
-                "transform": {
-                    "position": {
-                        "x": -0.9593381881713867,
-                        "y": -24.720613479614258
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 16.0,
-                        "y": 16.0
-                    }
-                },
-                "LightingComponent": {
-                    "m_innerOuterRadius": {
-                        "x": 0.0,
-                        "y": 1.0
-                    },
-                    "m_intensity": 0.800000011920929,
-                    "m_light_OffSet": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "m_light_scale": {
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
                         "x": 1.0,
-                        "y": 1.0
-                    },
-                    "m_light_rotation": 0.0
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {
@@ -50146,7 +48286,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {
@@ -50181,7 +48326,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {
@@ -50216,7 +48366,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {
@@ -50251,7 +48406,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {
@@ -50286,7 +48446,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {
@@ -50321,7 +48486,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {
@@ -50333,8 +48503,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 19.199674606323242,
-                        "y": -21.407487869262695
+                        "x": 22.1936092376709,
+                        "y": -19.843088150024414
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -50353,10 +48523,15 @@
                         "y": 0.0
                     },
                     "m_light_scale": {
-                        "x": 1.0,
-                        "y": 1.0
+                        "x": 3.0,
+                        "y": 3.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 0.39670827984809875,
+                        "y": 0.8982300758361816,
+                        "z": 0.31398308277130127
+                    }
                 }
             },
             {
@@ -50391,7 +48566,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {
@@ -50426,7 +48606,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {
@@ -50461,7 +48646,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {
@@ -50496,7 +48686,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {
@@ -50531,7 +48726,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {
@@ -50566,7 +48766,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {
@@ -50601,7 +48806,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {
@@ -50636,7 +48846,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {
@@ -50671,7 +48886,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {
@@ -50706,7 +48926,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {
@@ -50741,7 +48966,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {
@@ -50776,7 +49006,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {
@@ -50811,7 +49046,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {
@@ -50846,7 +49086,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {
@@ -50881,7 +49126,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {
@@ -50916,7 +49166,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {
@@ -50951,7 +49206,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {
@@ -50986,7 +49246,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {
@@ -51021,7 +49286,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {
@@ -51056,7 +49326,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {
@@ -51091,7 +49366,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {
@@ -51104,7 +49384,7 @@
                 "transform": {
                     "position": {
                         "x": 51.88893127441406,
-                        "y": 1.781158447265625
+                        "y": 3.0861902236938477
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -51123,10 +49403,15 @@
                         "y": 0.0
                     },
                     "m_light_scale": {
-                        "x": 1.0,
-                        "y": 1.0
+                        "x": 5.0,
+                        "y": 5.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 0.17851828038692474,
+                        "y": 0.8403571248054504,
+                        "z": 0.8584070801734924
+                    }
                 }
             },
             {
@@ -51161,7 +49446,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 },
                 "children": [
                     {
@@ -51196,7 +49486,12 @@
                                 "x": 1.0,
                                 "y": 1.0
                             },
-                            "m_light_rotation": 0.0
+                            "m_light_rotation": 0.0,
+                            "m_colour": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            }
                         }
                     }
                 ]
@@ -51233,7 +49528,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {
@@ -51268,7 +49568,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {
@@ -51303,7 +49608,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {
@@ -51338,7 +49648,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {
@@ -51373,7 +49688,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {
@@ -51408,7 +49728,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {
@@ -51443,7 +49768,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {
@@ -51478,7 +49808,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {
@@ -51513,7 +49848,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {
@@ -51548,7 +49888,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {
@@ -51583,7 +49928,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {
@@ -51618,7 +49968,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {
@@ -51653,7 +50008,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {
@@ -51688,7 +50048,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {
@@ -51701,7 +50066,7 @@
                 "transform": {
                     "position": {
                         "x": -13.895744323730469,
-                        "y": 32.29395294189453
+                        "y": 32.94496154785156
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -51720,10 +50085,814 @@
                         "y": 0.0
                     },
                     "m_light_scale": {
+                        "x": 3.0,
+                        "y": 3.0
+                    },
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 0.26806074380874634,
+                        "y": 0.9026548862457275,
+                        "z": 0.13979166746139526
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "name": {
+            "namestr": "UI_PauseMenu",
+            "layer": 0,
+            "isprefab": true,
+            "tagstr": "Default",
+            "prefabname": "UI_PauseMenu.prefab",
+            "issync": true
+        },
+        "transform": {
+            "position": {
+                "x": 0.09941720962524414,
+                "y": -30.29566764831543
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "collider": {
+            "checkcollision": false,
+            "checkresponse": false,
+            "size": {
+                "x": 0.10000000149011612,
+                "y": 0.10000000149011612
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true,
+            "radius": 0.5,
+            "shapetype": 0
+        },
+        "script": {
+            "scripts": [
+                {
+                    "name": "PauseMenuManager",
+                    "enabled": true,
+                    "map": [
+                        {
+                            "variable": "isPausing",
+                            "base64": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        "children": [
+            {
+                "name": {
+                    "namestr": "UI_PauseMenu_Background",
+                    "layer": 7,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "UI_PauseMenu.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 4.0,
+                        "y": 4.0
+                    }
+                },
+                "sprite": {
+                    "imagefile": "img_pauseMenuFrame.png",
+                    "layer": 405,
+                    "color": {
+                        "r": 1.0,
+                        "g": 1.0,
+                        "b": 1.0
+                    },
+                    "alpha": 1.0,
+                    "isLit": false
+                }
+            },
+            {
+                "name": {
+                    "namestr": "UI_PauseMenu_Resume",
+                    "layer": 7,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "UI_PauseMenu.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.0,
+                        "y": 3.500983953475952
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 4.0,
+                        "y": 4.0
+                    }
+                },
+                "collider": {
+                    "checkcollision": true,
+                    "checkresponse": false,
+                    "size": {
+                        "x": 1.4800000190734863,
+                        "y": 0.30000001192092896
+                    },
+                    "offset": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "drawDebug": true,
+                    "radius": 0.5,
+                    "shapetype": 0
+                },
+                "rigidbody": {
+                    "linearVelocity": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "linearAcceleration": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "rotation": 0.0,
+                    "angularVelocity": 0.0,
+                    "angularAcceleration": 0.0,
+                    "mass": 1.0,
+                    "inverseMass": 1.0,
+                    "linearDamping": 0.9900000095367432,
+                    "angularDamping": 0.9900000095367432,
+                    "force": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "torque": 0.0,
+                    "kinematic": false,
+                    "static": false
+                },
+                "sprite": {
+                    "imagefile": "ani_pauseMenuResumeButton_strip2.png",
+                    "layer": 406,
+                    "color": {
+                        "r": 1.0,
+                        "g": 1.0,
+                        "b": 1.0
+                    },
+                    "alpha": 1.0,
+                    "isLit": false
+                },
+                "animation": {
+                    "frameNumber": 0,
+                    "framesPerSecond": 0,
+                    "frameTimer": 0.0,
+                    "isAnimating": false,
+                    "stripCount": 2
+                },
+                "script": {
+                    "scripts": [
+                        {
+                            "name": "PauseMenuButtons",
+                            "enabled": true,
+                            "map": [
+                                {
+                                    "variable": "buttonFunctionNo",
+                                    "base64": "CgAAAMzMzMwA"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "audio": [
+                    {
+                        "name": "aud_buttonHover01",
+                        "volume": 0.4970000088214874,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    },
+                    {
+                        "name": "aud_buttonClick01",
+                        "volume": 1.0,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    }
+                ]
+            },
+            {
+                "name": {
+                    "namestr": "UI_PauseMenu_Restart",
+                    "layer": 7,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "UI_PauseMenu.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.0,
+                        "y": 1.4954073429107666
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 4.0,
+                        "y": 4.0
+                    }
+                },
+                "collider": {
+                    "checkcollision": true,
+                    "checkresponse": false,
+                    "size": {
+                        "x": 1.4800000190734863,
+                        "y": 0.30000001192092896
+                    },
+                    "offset": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "drawDebug": true,
+                    "radius": 0.5,
+                    "shapetype": 0
+                },
+                "rigidbody": {
+                    "linearVelocity": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "linearAcceleration": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "rotation": 0.0,
+                    "angularVelocity": 0.0,
+                    "angularAcceleration": 0.0,
+                    "mass": 1.0,
+                    "inverseMass": 1.0,
+                    "linearDamping": 0.9900000095367432,
+                    "angularDamping": 0.9900000095367432,
+                    "force": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "torque": 0.0,
+                    "kinematic": false,
+                    "static": false
+                },
+                "sprite": {
+                    "imagefile": "ani_pauseMenuRestartButton_strip2.png",
+                    "layer": 407,
+                    "color": {
+                        "r": 1.0,
+                        "g": 1.0,
+                        "b": 1.0
+                    },
+                    "alpha": 1.0,
+                    "isLit": false
+                },
+                "animation": {
+                    "frameNumber": 0,
+                    "framesPerSecond": 0,
+                    "frameTimer": 0.0,
+                    "isAnimating": false,
+                    "stripCount": 2
+                },
+                "script": {
+                    "scripts": [
+                        {
+                            "name": "PauseMenuButtons",
+                            "enabled": true,
+                            "map": [
+                                {
+                                    "variable": "buttonFunctionNo",
+                                    "base64": "FAAAAMzMzMwA"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "audio": [
+                    {
+                        "name": "aud_buttonHover01",
+                        "volume": 0.49399998784065247,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    },
+                    {
+                        "name": "aud_buttonClick01",
+                        "volume": 1.0,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    }
+                ]
+            },
+            {
+                "name": {
+                    "namestr": "UI_PauseMenu_UserManual",
+                    "layer": 7,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "UI_PauseMenu.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.0,
+                        "y": -2.6046059131622314
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 4.0,
+                        "y": 4.0
+                    }
+                },
+                "collider": {
+                    "checkcollision": true,
+                    "checkresponse": false,
+                    "size": {
+                        "x": 1.4800000190734863,
+                        "y": 0.30000001192092896
+                    },
+                    "offset": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "drawDebug": true,
+                    "radius": 0.5,
+                    "shapetype": 0
+                },
+                "rigidbody": {
+                    "linearVelocity": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "linearAcceleration": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "rotation": 0.0,
+                    "angularVelocity": 0.0,
+                    "angularAcceleration": 0.0,
+                    "mass": 1.0,
+                    "inverseMass": 1.0,
+                    "linearDamping": 0.9900000095367432,
+                    "angularDamping": 0.9900000095367432,
+                    "force": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "torque": 0.0,
+                    "kinematic": false,
+                    "static": false
+                },
+                "sprite": {
+                    "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
+                    "layer": 408,
+                    "color": {
+                        "r": 1.0,
+                        "g": 1.0,
+                        "b": 1.0
+                    },
+                    "alpha": 1.0,
+                    "isLit": false
+                },
+                "animation": {
+                    "frameNumber": 0,
+                    "framesPerSecond": 0,
+                    "frameTimer": 0.0,
+                    "isAnimating": false,
+                    "stripCount": 2
+                },
+                "script": {
+                    "scripts": [
+                        {
+                            "name": "PauseMenuButtons",
+                            "enabled": true,
+                            "map": [
+                                {
+                                    "variable": "buttonFunctionNo",
+                                    "base64": "HgAAAMzMzMwA"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "audio": [
+                    {
+                        "name": "aud_buttonHover01",
+                        "volume": 0.4830000102519989,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    },
+                    {
+                        "name": "aud_buttonClick01",
+                        "volume": 1.0,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    }
+                ]
+            },
+            {
+                "name": {
+                    "namestr": "UI_PauseMenu_Quit",
+                    "layer": 7,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "UI_PauseMenu.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.0,
+                        "y": -4.661163806915283
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 4.0,
+                        "y": 4.0
+                    }
+                },
+                "collider": {
+                    "checkcollision": true,
+                    "checkresponse": true,
+                    "size": {
+                        "x": 1.1200000047683716,
+                        "y": 0.30000001192092896
+                    },
+                    "offset": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "drawDebug": true,
+                    "radius": 0.5,
+                    "shapetype": 0
+                },
+                "rigidbody": {
+                    "linearVelocity": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "linearAcceleration": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "rotation": 0.0,
+                    "angularVelocity": 0.0,
+                    "angularAcceleration": 0.0,
+                    "mass": 1.0,
+                    "inverseMass": 1.0,
+                    "linearDamping": 0.9900000095367432,
+                    "angularDamping": 0.9900000095367432,
+                    "force": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "torque": 0.0,
+                    "kinematic": false,
+                    "static": false
+                },
+                "sprite": {
+                    "imagefile": "ani_pauseMenuQuitButton_strip2.png",
+                    "layer": 409,
+                    "color": {
+                        "r": 1.0,
+                        "g": 1.0,
+                        "b": 1.0
+                    },
+                    "alpha": 1.0,
+                    "isLit": false
+                },
+                "animation": {
+                    "frameNumber": 0,
+                    "framesPerSecond": 0,
+                    "frameTimer": 0.0,
+                    "isAnimating": false,
+                    "stripCount": 2
+                },
+                "script": {
+                    "scripts": [
+                        {
+                            "name": "PauseMenuButtons",
+                            "enabled": true,
+                            "map": [
+                                {
+                                    "variable": "buttonFunctionNo",
+                                    "base64": "/////8zMzMwA"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "audio": [
+                    {
+                        "name": "aud_buttonHover01",
+                        "volume": 0.5,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    },
+                    {
+                        "name": "aud_buttonClick01",
+                        "volume": 1.0,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    }
+                ]
+            },
+            {
+                "name": {
+                    "namestr": "UI_PauseMenu_ResumeText",
+                    "layer": 7,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "UI_PauseMenu.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.1307675838470459,
+                        "y": 3.277216911315918
+                    },
+                    "rotation": 0.0,
+                    "scale": {
                         "x": 1.0,
                         "y": 1.0
+                    }
+                },
+                "text": {
+                    "text": "Resume",
+                    "text": null,
+                    "filename": "fnt_silkscreenRegular.ttf",
+                    "fontsize": 12.0,
+                    "color": {
+                        "r": 0.0,
+                        "g": 0.0,
+                        "b": 0.0
                     },
-                    "m_light_rotation": 0.0
+                    "layer": 421
+                }
+            },
+            {
+                "name": {
+                    "namestr": "UI_PauseMenu_RestartText",
+                    "layer": 7,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "UI_PauseMenu.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.2382989525794983,
+                        "y": 1.2865631580352783
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "text": {
+                    "text": "Restart",
+                    "text": null,
+                    "filename": "fnt_silkscreenRegular.ttf",
+                    "fontsize": 12.0,
+                    "color": {
+                        "r": 0.0,
+                        "g": 0.0,
+                        "b": 0.0
+                    },
+                    "layer": 422
+                }
+            },
+            {
+                "name": {
+                    "namestr": "UI_PauseMenu_QuitText",
+                    "layer": 7,
+                    "isprefab": true,
+                    "tagstr": "UIConfirmQuit",
+                    "prefabname": "UI_PauseMenu.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": -0.031008124351501465,
+                        "y": -4.820469379425049
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "text": {
+                    "text": "QUIT",
+                    "text": null,
+                    "filename": "fnt_silkscreenRegular.ttf",
+                    "fontsize": 12.0,
+                    "color": {
+                        "r": 0.0,
+                        "g": 0.0,
+                        "b": 0.0
+                    },
+                    "layer": 423
+                }
+            },
+            {
+                "name": {
+                    "namestr": "UI_SoundText",
+                    "layer": 7,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "UI_PauseMenu.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": -0.08570563793182373,
+                        "y": -0.71555495262146
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "text": {
+                    "text": "SOUND",
+                    "text": null,
+                    "filename": "fnt_silkscreenRegular.ttf",
+                    "fontsize": 12.0,
+                    "color": {
+                        "r": 0.0,
+                        "g": 0.0,
+                        "b": 0.0
+                    },
+                    "layer": 424
+                }
+            },
+            {
+                "name": {
+                    "namestr": "UI_PauseMenu_Sound",
+                    "layer": 7,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "UI_PauseMenu.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.0,
+                        "y": -0.49978548288345337
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 4.0,
+                        "y": 4.0
+                    }
+                },
+                "collider": {
+                    "checkcollision": true,
+                    "checkresponse": false,
+                    "size": {
+                        "x": 1.4800000190734863,
+                        "y": 0.30000001192092896
+                    },
+                    "offset": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "drawDebug": true,
+                    "radius": 0.5,
+                    "shapetype": 0
+                },
+                "rigidbody": {
+                    "linearVelocity": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "linearAcceleration": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "rotation": 0.0,
+                    "angularVelocity": 0.0,
+                    "angularAcceleration": 0.0,
+                    "mass": 1.0,
+                    "inverseMass": 1.0,
+                    "linearDamping": 0.9900000095367432,
+                    "angularDamping": 0.9900000095367432,
+                    "force": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "torque": 0.0,
+                    "kinematic": false,
+                    "static": false
+                },
+                "sprite": {
+                    "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
+                    "layer": 410,
+                    "color": {
+                        "r": 1.0,
+                        "g": 1.0,
+                        "b": 1.0
+                    },
+                    "alpha": 1.0,
+                    "isLit": false
+                },
+                "animation": {
+                    "frameNumber": 0,
+                    "framesPerSecond": 0,
+                    "frameTimer": 0.0,
+                    "isAnimating": false,
+                    "stripCount": 2
+                },
+                "script": {
+                    "scripts": [
+                        {
+                            "name": "PauseMenuButtons",
+                            "enabled": true,
+                            "map": [
+                                {
+                                    "variable": "buttonFunctionNo",
+                                    "base64": "IAAAAMzMzMwA"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "audio": [
+                    {
+                        "name": "aud_buttonHover01",
+                        "volume": 0.4830000102519989,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    },
+                    {
+                        "name": "aud_buttonClick01",
+                        "volume": 1.0,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    }
+                ]
+            },
+            {
+                "name": {
+                    "namestr": "UI_PauseMenu_UserManualText",
+                    "layer": 7,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "UI_PauseMenu.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.1125917136669159,
+                        "y": -2.7719311714172363
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "text": {
+                    "text": "USER MANUAL",
+                    "text": null,
+                    "filename": "fnt_silkscreenRegular.ttf",
+                    "fontsize": 12.0,
+                    "color": {
+                        "r": 0.0,
+                        "g": 0.0,
+                        "b": 0.0
+                    },
+                    "layer": 425
                 }
             }
         ]

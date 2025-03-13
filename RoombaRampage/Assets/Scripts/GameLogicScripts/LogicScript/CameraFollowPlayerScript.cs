@@ -38,7 +38,7 @@ public class CameraFollowPlayerScript : ScriptBase
         camTransformComp = GetComponent.GetTransformComponent(EntityID);
 
         trackScale = 0.2f;
-        trackSpeed = 20f;
+        trackSpeed = 30f;
     }
 
     public override void Start()
@@ -98,7 +98,7 @@ public class CameraFollowPlayerScript : ScriptBase
         {
             //set previous as current
             previousPos = trackingPos;
-            Console.WriteLine(trackingPos.X);
+            //Console.WriteLine(trackingPos.X);
         }
 
         camTransformComp.m_position = MoveTowards(camTransformComp.m_position, trackingPos, trackSpeed * InternalCall.m_InternalCallGetDeltaTime());

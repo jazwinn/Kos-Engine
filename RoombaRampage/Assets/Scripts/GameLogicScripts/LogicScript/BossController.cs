@@ -34,6 +34,10 @@ public class BossController : ScriptBase
     private string bossDeathSound = "aud_bossDeath01.wav";
     private string shieldRegenSound = "aud_bossShieldRegen01.wav";
     private string shieldBreakSound = "aud_bossShieldBreak01.wav";
+    private string shieldDamageSound01 = "aud_railgunShot01.wav";
+    private string shieldDamageSound02 = "aud_katana01.wav";
+    private string bossDamageSound01 = "aud_playerDeath01.wav";
+    private string bossDamageSound02 = "aud_bossHit01.wav";
     private string bossShootingSound = "aud_bossBullet01.wav";
 
     #endregion
@@ -47,7 +51,7 @@ public class BossController : ScriptBase
     private float attackCooldown = 4.0f;
 
     public int forceFieldHealth = 3;
-    public int bossHealth = 4;
+    public int bossHealth = 21;
     public bool isForceFieldActive = true;
     private string forceFieldPrefab = "Boss_Forcefield";
 
@@ -55,18 +59,20 @@ public class BossController : ScriptBase
     private string bossClusterBulletPrefab;
 
     private bool isInvincible = false;
-    private float invicibilityTimer = 1f;
+    private float invicibilityTimer = 0.5f;
+
+    private int bossVulnerableHealth = 3;
     #endregion
 
     #region Enemy Spawning
     private uint[] enemySpawnPoints; // Store spawn point entity IDs
-    private string[] enemyPrefabs = { "FearlessEnemyStatic" };
+    private string[] enemyPrefabs = { "prefab_Enemy_Alert" };
 
     //private string[] enemyPrefabs = { "FearlessEnemy" };
     private List<uint> activeEnemies = new List<uint>();
 
     //private float enemySpawnCooldown = 10.0f;
-    private int maxEnemies = 2;
+    private int maxEnemies = 4;
     #endregion
 
 
@@ -93,7 +99,7 @@ public class BossController : ScriptBase
         animComp = Component.Get<AnimationComponent>(EntityID);
 
         //forcefield animation Texture
-        respawnForcefieldTexture = "ani_bossShield_strip4.png";
+        respawnForcefieldTexture = "ani_bossShield_strip6.png";
         despawnForcefieldTexture = "ani_bossShieldDeactivate_strip7.png";
 
         //boss animation texture
@@ -108,20 +114,7 @@ public class BossController : ScriptBase
 
     public override void Update()
     {
-        if (GameControllerLevel1.isBossDead || !GameControllerLevel1.isActivated) return;
-
-        if (isTakingDamage)
-        {
-            animComp = Component.Get<AnimationComponent>(EntityID);
-
-            if (animComp.m_frameNumber >= animComp.m_stripCount - 1) // Check for last frame
-            {
-                animComp.m_isAnimating = false;
-                animComp.m_frameNumber = 0;
-                Component.Set<AnimationComponent>(EntityID, animComp);
-                isTakingDamage = false;
-            }
-        }
+        if (GameControllerLevel1.isBossDead || !GameControllerLevel1.isActivated || PlayerController.isDead) return;
 
         if (isDying)
         {
@@ -138,20 +131,54 @@ public class BossController : ScriptBase
                 isDying = false;
                 GameControllerLevel1.isBossDead = true;
 
+                return;
             }
         }
+
+        if (isTakingDamage)
+        {
+            animComp = Component.Get<AnimationComponent>(EntityID);
+
+            if (animComp.m_frameNumber >= animComp.m_stripCount - 1) // Check for last frame
+            {
+                animComp.m_isAnimating = false;
+                animComp.m_framesPerSecond = 11;
+                animComp.m_frameNumber = 0;
+                Component.Set<AnimationComponent>(EntityID, animComp);
+                isTakingDamage = false;
+            }
+        }
+
+        
 
 
         if (isForceFieldActive)
         {
             AnimationComponent forceFieldAnim = Component.Get<AnimationComponent>(forceFieldID);
 
-            if (forceFieldAnim.m_frameNumber >= forceFieldAnim.m_stripCount - 1)
+            switch (forceFieldHealth)
             {
-                forceFieldAnim.m_isAnimating = false;
-                forceFieldAnim.m_frameNumber = 3;
-                Component.Set<AnimationComponent>(forceFieldID, forceFieldAnim);
+                case 3:
+                    forceFieldAnim.m_isAnimating = false;
+                    forceFieldAnim.m_frameNumber = 3;
+                    Component.Set<AnimationComponent>(forceFieldID, forceFieldAnim);
+                    break;
+                case 2:
+                    forceFieldAnim.m_isAnimating = false;
+                    forceFieldAnim.m_frameNumber = 4;
+                    Component.Set<AnimationComponent>(forceFieldID, forceFieldAnim);
+                    break;
+                case 1:
+                    forceFieldAnim.m_isAnimating = false;
+                    forceFieldAnim.m_frameNumber = 5;
+                    Component.Set<AnimationComponent>(forceFieldID, forceFieldAnim);
+                    break;
+
+
+                default:
+                    break;
             }
+            
         }
 
         if (isForceFieldSpawning)
@@ -191,29 +218,44 @@ public class BossController : ScriptBase
 
     #region Animation
 
-    private void StartBossDamageAnimation()
+    private IEnumerator StartBossDamageAnimation()
     {
+        isTakingDamage = true;
+
         spriteComp = GetComponent.GetSpriteComponent(EntityID);
-        InternalCall.m_InternalSetSpriteComponent(EntityID, bossDamageTexture, spriteComp.m_layer, spriteComp.m_color, spriteComp.m_alpha);
+        spriteComp.m_imageFile = bossDamageTexture;
+        Component.Set<SpriteComponent>(EntityID, spriteComp);
+
+        animComp = Component.Get<AnimationComponent>(EntityID);
+
         animComp.m_frameNumber = 0;
         animComp.m_framesPerSecond = 7;
         animComp.m_isAnimating = true;
 
         Component.Set<AnimationComponent>(EntityID, animComp);
-        isTakingDamage = true;
+
+        yield return null;
 
     }
 
     private void StartBossDestroyedAnimation()
     {
+        ColliderComponent tempColComp = Component.Get<ColliderComponent>(EntityID);
+
+        tempColComp.m_collisionCheck = false;
+        tempColComp.m_collisionResponse = false;
+
+        Component.Set<ColliderComponent>(EntityID, tempColComp);
+
         spriteComp = GetComponent.GetSpriteComponent(EntityID);
-        InternalCall.m_InternalSetSpriteComponent(EntityID, bossDestroyedTexture, spriteComp.m_layer, spriteComp.m_color, spriteComp.m_alpha);
+        spriteComp.m_imageFile = bossDestroyedTexture;
+        Component.Set<SpriteComponent>(EntityID, spriteComp);
 
         animComp = Component.Get<AnimationComponent>(EntityID);
         animComp.m_frameNumber = 0;
         animComp.m_isAnimating = true;
         animComp.m_stripCount = 15; // Set frame strip count to 15
-        animComp.m_frameTimer = 8;
+        animComp.m_frameTimer = 0;
 
         Component.Set<AnimationComponent>(EntityID, animComp);
 
@@ -298,7 +340,7 @@ public class BossController : ScriptBase
             //}
             SpawnEnemy();
 
-            float randomDelay = GenerateRandom(10, 14);
+            float randomDelay = GenerateRandom(3, 5);
             yield return new CoroutineManager.WaitForSeconds(randomDelay);
         }
     }
@@ -319,7 +361,7 @@ public class BossController : ScriptBase
         // Spawn the enemy
         uint enemyID = (uint)InternalCall.m_InternalCallAddPrefab(enemyType, spawnPosition.X, spawnPosition.Y, 0);
 
-        Console.WriteLine($"[Boss] Spawned {enemyType} at {spawnPosition.X}, {spawnPosition.Y}");
+        //Console.WriteLine($"[Boss] Spawned {enemyType} at {spawnPosition.X}, {spawnPosition.Y}");
         activeEnemies.Add(enemyID);
     }
     #endregion
@@ -446,7 +488,7 @@ public class BossController : ScriptBase
         InternalCall.m_InternalGetTranslate(EntityID, out Vector2 bossPosition);
         forceFieldID = (uint)InternalCall.m_InternalCallAddPrefab(forceFieldPrefab, bossPosition.X, bossPosition.Y, 0);
         AnimationComponent forceFieldAnim = Component.Get<AnimationComponent>(forceFieldID);
-        forceFieldAnim.m_stripCount = 4; // Set frame strip count to 7
+        forceFieldAnim.m_stripCount = 6; // Set frame strip count to 7
         Component.Set<AnimationComponent>(forceFieldID, forceFieldAnim);
 
         isForceFieldActive = true;
@@ -480,7 +522,6 @@ public class BossController : ScriptBase
     {
         if (InternalCall.m_InternalCallIsCollided(EntityID) != 0.0f)
         {
-
             int[] collidedEntities = InternalCall.m_InternalCallGetCollidedEntities(EntityID);
 
             foreach (int collidedEntityID in collidedEntities)
@@ -495,27 +536,43 @@ public class BossController : ScriptBase
                 // Apply damage to forcefield or boss
                 if (isForceFieldActive)
                 {
-                    forceFieldHealth--;
-                    Console.WriteLine($"[Boss] Force Field hit! Remaining Health: {forceFieldHealth}");
+                    InternalCall.m_InternalCallPlayAudio(EntityID, shieldDamageSound01);
+                    InternalCall.m_InternalCallPlayAudio(EntityID, shieldDamageSound02);
+
+                    if (entityTag == "MeleeKillZoneSpawn")
+                    {
+                        forceFieldHealth -= 2;
+                    }
+                    else
+                    {
+                        forceFieldHealth -= 1;
+                    }
+                    
+                    //Console.WriteLine($"[Boss] Force Field hit! Remaining Health: {forceFieldHealth}");
 
                     if (forceFieldHealth <= 0)
                     {
                         InternalCall.m_InternalCallPlayAudio(EntityID, shieldBreakSound);
 
-                        Console.WriteLine("[Boss] Force Field Destroyed!");
+                        //Console.WriteLine("[Boss] Force Field Destroyed!");
                         isForceFieldActive = false;
                         StartForceFieldDeactivateAnimation();
                     }
                     else
                     {
-                        CoroutineManager.Instance.StartCoroutine(InvincibilityTimer());
-
+                        if (entityTag != "MeleeKillZoneSpawn")
+                        {
+                            CoroutineManager.Instance.StartCoroutine(InvincibilityTimer());
+                        }
                     }
                 }
                 else
                 {
+                    InternalCall.m_InternalCallPlayAudio(EntityID, bossDamageSound01);
+                    InternalCall.m_InternalCallPlayAudio(EntityID, bossDamageSound02);
+
                     bossHealth--;
-                    Console.WriteLine($"[Boss] Hit! Remaining Health: {bossHealth}");
+                    //Console.WriteLine($"[Boss] Hit! Remaining Health: {bossHealth}");
 
                     if (bossHealth <= 0)
                     {
@@ -524,19 +581,22 @@ public class BossController : ScriptBase
                     }
                     else
                     {
-                        StartBossDamageAnimation();
-                        InternalCall.m_InternalCallPlayAudio(EntityID, shieldRegenSound);
-                        SpawnForceField();
+                        bossVulnerableHealth--;
 
-                        CoroutineManager.Instance.StartCoroutine(InvincibilityTimer());
+                        CoroutineManager.Instance.StartCoroutine(StartBossDamageAnimation(), "BossAnimation");
 
+                        if (bossVulnerableHealth == 0)
+                        {
+                            InternalCall.m_InternalCallPlayAudio(EntityID, shieldRegenSound);
+                            SpawnForceField();
+                            bossVulnerableHealth = 3;
+                        }
+
+                        if (entityTag != "MeleeKillZoneSpawn")
+                        {
+                            CoroutineManager.Instance.StartCoroutine(InvincibilityTimer());
+                        }
                     }
-                }
-
-                // Only delete bullets, NOT melee colliders
-                if (entityTag == "PlayerBullet" || entityTag == "PlayerRailgunBullet")
-                {
-                    InternalCall.m_InternalCallDeleteEntity(collidedEntity);
                 }
             }
 

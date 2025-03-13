@@ -1,11 +1,11 @@
 [
     {
         "GlobalSettings": {
-            "globalIllumination": 1.0,
+            "globalIllumination": 0.2199999988079071,
             "backgroundColor": {
-                "r": 0.13300000131130219,
-                "g": 0.23000000417232513,
-                "b": 0.3199999928474426
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0
             }
         }
     },
@@ -76,7 +76,7 @@
         },
         "sprite": {
             "imagefile": "ani_bossHit_strip4.png",
-            "layer": 100,
+            "layer": 7,
             "color": {
                 "r": 1.0,
                 "g": 1.0,
@@ -150,6 +150,38 @@
                 "playOnStart": false,
                 "isBGM": false,
                 "isSFX": true
+            },
+            {
+                "name": "aud_railgunShot01",
+                "volume": 0.15800000727176666,
+                "loop": false,
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
+            },
+            {
+                "name": "aud_playerDeath01",
+                "volume": 0.6700000166893005,
+                "loop": false,
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
+            },
+            {
+                "name": "aud_bossHit01",
+                "volume": 0.33500000834465027,
+                "loop": false,
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
+            },
+            {
+                "name": "aud_katana01",
+                "volume": 0.3840000033378601,
+                "loop": false,
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             }
         ],
         "LightingComponent": {
@@ -185,8 +217,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": -3.548457145690918,
-                        "y": -0.9380902051925659
+                        "x": -3.230449914932251,
+                        "y": 0.014869838021695614
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -206,8 +238,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 3.513596296310425,
-                        "y": -0.7475741505622864
+                        "x": 3.216789484024048,
+                        "y": -0.013684551231563091
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -227,8 +259,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": -3.6256368160247803,
-                        "y": -3.912334442138672
+                        "x": -1.2723848819732666,
+                        "y": 0.030953630805015564
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -248,8 +280,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 3.5377559661865234,
-                        "y": -3.9304616451263428
+                        "x": 1.3329079151153564,
+                        "y": 0.03473351150751114
                     },
                     "rotation": 0.0,
                     "scale": {

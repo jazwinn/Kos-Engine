@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
@@ -84,14 +85,6 @@ public class PlayerController : ScriptBase
         //Checks if game is paused and prevents player from doing anything
         if (GameControllerLevel1.gameIsPaused) { return; }
 
-        if (PlayerLoadoutManager.isSortieing)
-        {
-            movement.X = 0;
-            movement.Y = 0;
-            InternalCall.m_InternalSetVelocity(EntityID, movement);
-            return;
-        }
-
         //Dead player, return to prevent actions
         if (isDead) { return; }
 
@@ -134,7 +127,12 @@ public class PlayerController : ScriptBase
             InternalCall.m_InternalSetVelocity(EntityID, movement);
         }
 
-
+        if (PlayerLoadoutManager.isSortieing)
+        {
+            movement.X = 0;
+            movement.Y = 0;
+            InternalCall.m_InternalSetVelocity(EntityID, movement);
+        }
 
 
         #endregion
@@ -168,6 +166,8 @@ public class PlayerController : ScriptBase
 
                         isDead = true;
 
+                        CoroutineManager.Instance.PauseAllCoroutines();
+
                         InternalCall.m_InternalCallSetTimeScale(0);
                     }
                     if (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID) == "EnemyBullet")
@@ -189,6 +189,8 @@ public class PlayerController : ScriptBase
                         InternalCall.m_InternalSetVelocity(EntityID, movement);
 
                         isDead = true;
+
+                        CoroutineManager.Instance.PauseAllCoroutines();
 
                         InternalCall.m_InternalCallSetTimeScale(0);
                     }
@@ -213,7 +215,37 @@ public class PlayerController : ScriptBase
 
                         isDead = true;
 
+                        CoroutineManager.Instance.PauseAllCoroutines();
+
                         InternalCall.m_InternalCallSetTimeScale(0);
+                    }
+                }
+           
+                else
+                {
+                    if (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID) == "Boss")
+                    {
+                        CameraFollowPlayerScript.Shake(10f, 1f);
+
+                        InternalCall.m_InternalCallPlayAudio(EntityID, "aud_playerDeath01");
+
+                        var collisionComponent = GetComponent.GetColliderComponent(EntityID);
+                        collisionComponent.m_collisionCheck = !collisionComponent.m_collisionCheck;
+                        SetComponent.SetCollisionComponent(EntityID, collisionComponent);
+
+                        InternalCall.m_InternalSetAnimationComponent(EntityID, 0, 0, 0, false, 1);
+                        InternalCall.m_InternalSetSpriteComponent(EntityID, playerDeathTexture, startingLayer, startingColor, startingAlpha);
+
+                        movement.X = 0;
+                        movement.Y = 0;
+
+                        InternalCall.m_InternalSetVelocity(EntityID, movement);
+
+                        isDead = true;
+
+                        InternalCall.m_InternalCallSetTimeScale(0);
+
+                        CoroutineManager.Instance.PauseAllCoroutines();
                     }
                 }
                 
@@ -228,6 +260,31 @@ public class PlayerController : ScriptBase
 
 
 
+                }
+
+                if (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID) == "LaserWall")
+                {
+                    CameraFollowPlayerScript.Shake(10f, 1f);
+
+                    InternalCall.m_InternalCallPlayAudio(EntityID, "aud_playerDeath01");
+
+                    var collisionComponent = GetComponent.GetColliderComponent(EntityID);
+                    collisionComponent.m_collisionCheck = !collisionComponent.m_collisionCheck;
+                    SetComponent.SetCollisionComponent(EntityID, collisionComponent);
+
+                    InternalCall.m_InternalSetAnimationComponent(EntityID, 0, 0, 0, false, 1);
+                    InternalCall.m_InternalSetSpriteComponent(EntityID, playerDeathTexture, startingLayer, startingColor, startingAlpha);
+
+                    movement.X = 0;
+                    movement.Y = 0;
+
+                    InternalCall.m_InternalSetVelocity(EntityID, movement);
+
+                    isDead = true;
+
+                    InternalCall.m_InternalCallSetTimeScale(0);
+
+                    CoroutineManager.Instance.PauseAllCoroutines();
                 }
             }
         }
