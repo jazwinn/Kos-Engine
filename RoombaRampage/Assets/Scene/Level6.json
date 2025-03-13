@@ -1,7 +1,7 @@
 [
     {
         "GlobalSettings": {
-            "globalIllumination": 0.3400000035762787,
+            "globalIllumination": 0.2199999988079071,
             "backgroundColor": {
                 "r": 0.0,
                 "g": 0.0,
@@ -766,7 +766,12 @@
                 "x": 1.4500000476837158,
                 "y": 1.4500000476837158
             },
-            "m_light_rotation": 0.0
+            "m_light_rotation": 0.0,
+            "m_colour": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            }
         },
         "children": [
             {
@@ -10282,11 +10287,11 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "backLimbGunAmmo",
+                                    "variable": "ammoCount",
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "ammoCount",
+                                    "variable": "backLimbGunAmmo",
                                     "base64": ""
                                 },
                                 {
@@ -10298,11 +10303,7 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "leftLimbGunAmmo",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "rightWeaponCount",
+                                    "variable": "railGunLightMaxIntensity",
                                     "base64": ""
                                 },
                                 {
@@ -10310,7 +10311,11 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "railGunLightMaxIntensity",
+                                    "variable": "rightWeaponCount",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "leftLimbGunAmmo",
                                     "base64": ""
                                 },
                                 {
@@ -10497,11 +10502,11 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "backLimbGunAmmo",
+                                    "variable": "ammoCount",
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "ammoCount",
+                                    "variable": "backLimbGunAmmo",
                                     "base64": ""
                                 },
                                 {
@@ -10513,11 +10518,7 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "rightLimbRailGunHold",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "rightWeaponCount",
+                                    "variable": "leftLimbShotGunAmmo",
                                     "base64": ""
                                 },
                                 {
@@ -10525,7 +10526,11 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "leftLimbShotGunAmmo",
+                                    "variable": "rightWeaponCount",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "rightLimbRailGunHold",
                                     "base64": ""
                                 },
                                 {
@@ -10911,7 +10916,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {
@@ -10948,7 +10958,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {
@@ -10985,7 +11000,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {
@@ -11022,7 +11042,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {
@@ -11919,7 +11944,12 @@
                         "x": 20.0,
                         "y": 20.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 0.6769911646842957,
+                        "y": 0.28158038854599,
+                        "z": 0.28158038854599
+                    }
                 }
             },
             {
@@ -11954,7 +11984,12 @@
                         "x": 20.0,
                         "y": 20.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 0.8141592741012573,
+                        "y": 0.3602474629878998,
+                        "z": 0.3602474629878998
+                    }
                 }
             },
             {
@@ -11966,8 +12001,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 5.542973041534424,
-                        "y": -11.703351974487305
+                        "x": 1.749422550201416,
+                        "y": -9.410545349121094
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -11989,7 +12024,12 @@
                         "x": 20.0,
                         "y": 20.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 0.9424778819084167,
+                        "y": 0.47039011120796204,
+                        "z": 0.429536372423172
+                    }
                 }
             },
             {
@@ -12001,8 +12041,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 4.444029331207275,
-                        "y": -20.107040405273438
+                        "x": 3.2350966930389404,
+                        "y": -21.02416229248047
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -12024,7 +12064,12 @@
                         "x": 20.0,
                         "y": 20.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 0.9159291982650757,
+                        "y": 0.31611716747283936,
+                        "z": 0.31611716747283936
+                    }
                 }
             },
             {
@@ -12036,8 +12081,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 1.1744813919067383,
-                        "y": -22.74562644958496
+                        "x": 12.855484008789063,
+                        "y": -11.663352012634277
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -12047,89 +12092,24 @@
                 },
                 "LightingComponent": {
                     "m_innerOuterRadius": {
-                        "x": 0.0,
+                        "x": 0.11999999731779099,
                         "y": 1.0
                     },
-                    "m_intensity": 4.099999904632568,
+                    "m_intensity": 5.199999809265137,
                     "m_light_OffSet": {
                         "x": 0.0,
                         "y": 0.0
                     },
                     "m_light_scale": {
-                        "x": 20.0,
+                        "x": 31.899999618530273,
                         "y": 20.0
                     },
-                    "m_light_rotation": 0.0
-                }
-            },
-            {
-                "name": {
-                    "namestr": "Lights",
-                    "layer": 0,
-                    "isprefab": false,
-                    "tagstr": "Default"
-                },
-                "transform": {
-                    "position": {
-                        "x": 13.1341552734375,
-                        "y": -20.107040405273438
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 1.0,
-                        "y": 1.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 0.9513274431228638,
+                        "y": 0.26519307494163513,
+                        "z": 0.26519307494163513
                     }
-                },
-                "LightingComponent": {
-                    "m_innerOuterRadius": {
-                        "x": 0.0,
-                        "y": 1.0
-                    },
-                    "m_intensity": 4.099999904632568,
-                    "m_light_OffSet": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "m_light_scale": {
-                        "x": 20.0,
-                        "y": 20.0
-                    },
-                    "m_light_rotation": 0.0
-                }
-            },
-            {
-                "name": {
-                    "namestr": "Lights",
-                    "layer": 0,
-                    "isprefab": false,
-                    "tagstr": "Default"
-                },
-                "transform": {
-                    "position": {
-                        "x": 24.392704010009766,
-                        "y": -22.622840881347656
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    }
-                },
-                "LightingComponent": {
-                    "m_innerOuterRadius": {
-                        "x": 0.0,
-                        "y": 1.0
-                    },
-                    "m_intensity": 3.799999952316284,
-                    "m_light_OffSet": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "m_light_scale": {
-                        "x": 20.0,
-                        "y": 20.0
-                    },
-                    "m_light_rotation": 0.0
                 }
             },
             {
@@ -12164,7 +12144,12 @@
                         "x": 20.0,
                         "y": 20.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 0.6830605268478394,
+                        "z": 0.05752211809158325
+                    }
                 }
             },
             {
@@ -12199,7 +12184,92 @@
                         "x": 20.0,
                         "y": 20.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
+                }
+            },
+            {
+                "name": {
+                    "namestr": "Lights",
+                    "layer": 0,
+                    "isprefab": false,
+                    "tagstr": "Default"
+                },
+                "transform": {
+                    "position": {
+                        "x": 12.855484008789063,
+                        "y": -36.31195068359375
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "LightingComponent": {
+                    "m_innerOuterRadius": {
+                        "x": 0.11999999731779099,
+                        "y": 1.0
+                    },
+                    "m_intensity": 1.2000000476837158,
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 40.0,
+                        "y": 40.0
+                    },
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
+                }
+            },
+            {
+                "name": {
+                    "namestr": "Lights",
+                    "layer": 0,
+                    "isprefab": false,
+                    "tagstr": "Default"
+                },
+                "transform": {
+                    "position": {
+                        "x": 12.855484008789063,
+                        "y": -25.369213104248047
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "LightingComponent": {
+                    "m_innerOuterRadius": {
+                        "x": 0.11999999731779099,
+                        "y": 1.0
+                    },
+                    "m_intensity": 5.199999809265137,
+                    "m_light_OffSet": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "m_light_scale": {
+                        "x": 31.899999618530273,
+                        "y": 20.0
+                    },
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 0.9734513163566589,
+                        "y": 0.3273553252220154,
+                        "z": 0.3273553252220154
+                    }
                 }
             }
         ]

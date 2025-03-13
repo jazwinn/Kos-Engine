@@ -51,7 +51,7 @@ public class BossController : ScriptBase
     private float attackCooldown = 4.0f;
 
     public int forceFieldHealth = 3;
-    public int bossHealth = 15;
+    public int bossHealth = 18;
     public bool isForceFieldActive = true;
     private string forceFieldPrefab = "Boss_Forcefield";
 

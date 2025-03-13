@@ -63810,8 +63810,8 @@
                 "volume": 0.17000000178813934,
                 "loop": true,
                 "playOnStart": false,
-                "isBGM": false,
-                "isSFX": true
+                "isBGM": true,
+                "isSFX": false
             }
         ]
     },
@@ -63994,11 +63994,11 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "backLimbGunAmmo",
+                                    "variable": "ammoCount",
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "ammoCount",
+                                    "variable": "backLimbGunAmmo",
                                     "base64": ""
                                 },
                                 {
@@ -64010,11 +64010,7 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "leftLimbGunAmmo",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "rightWeaponCount",
+                                    "variable": "railGunLightMaxIntensity",
                                     "base64": ""
                                 },
                                 {
@@ -64022,7 +64018,11 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "railGunLightMaxIntensity",
+                                    "variable": "rightWeaponCount",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "leftLimbGunAmmo",
                                     "base64": ""
                                 },
                                 {
@@ -64209,11 +64209,11 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "backLimbGunAmmo",
+                                    "variable": "ammoCount",
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "ammoCount",
+                                    "variable": "backLimbGunAmmo",
                                     "base64": ""
                                 },
                                 {
@@ -64225,11 +64225,7 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "rightLimbRailGunHold",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "rightWeaponCount",
+                                    "variable": "leftLimbShotGunAmmo",
                                     "base64": ""
                                 },
                                 {
@@ -64237,7 +64233,11 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "leftLimbShotGunAmmo",
+                                    "variable": "rightWeaponCount",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "rightLimbRailGunHold",
                                     "base64": ""
                                 },
                                 {
@@ -64623,7 +64623,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {
@@ -64660,7 +64665,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {
@@ -64697,7 +64707,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {
@@ -64734,7 +64749,12 @@
                         "x": 1.0,
                         "y": 1.0
                     },
-                    "m_light_rotation": 0.0
+                    "m_light_rotation": 0.0,
+                    "m_colour": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    }
                 }
             },
             {

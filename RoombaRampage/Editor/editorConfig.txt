@@ -36,4 +36,5 @@ UIPauseTextBGM
 UIPauseTextSFX
 UIConfirmQuit
 PropGlassWall
+LaserWall
 

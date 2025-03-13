@@ -504,7 +504,7 @@ public class PlayerGun : ScriptBase
                     limbAnimComp.m_frameNumber = (0);
                     Component.Set<AnimationComponent>(EntityID, limbAnimComp);
 
-                    CameraFollowPlayerScript.Shake(0.7f, 1f);
+                    CameraFollowPlayerScript.Shake(0.6f, 1f);
 
                 }
 
@@ -534,7 +534,7 @@ public class PlayerGun : ScriptBase
                     limbAnimComp.m_frameNumber = (0);
                     Component.Set<AnimationComponent>(EntityID, limbAnimComp);
 
-                    CameraFollowPlayerScript.Shake(0.7f, 1f);
+                    CameraFollowPlayerScript.Shake(0.6f, 1f);
 
                 }
 
@@ -836,7 +836,7 @@ public class PlayerGun : ScriptBase
             InternalCall.m_InternalCallAddPrefab(bulletPrefab, limbPos.X, limbPos.Y, playerTransformComp.m_rotation);
 
             //Shake Camera
-            CameraFollowPlayerScript.Shake(0.5f, 1f);
+            CameraFollowPlayerScript.Shake(0.3f, 1f);
         }
 
         //Shotgun
@@ -857,7 +857,7 @@ public class PlayerGun : ScriptBase
                 startangle += (float)interval; 
             }
 
-            CameraFollowPlayerScript.Shake(0.7f, 1f);
+            CameraFollowPlayerScript.Shake(0.5f, 1f);
 
             yield return new CoroutineManager.WaitForSeconds(0.5f);
 

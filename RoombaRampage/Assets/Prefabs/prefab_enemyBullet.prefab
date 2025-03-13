@@ -3,15 +3,15 @@
         "GlobalSettings": {
             "globalIllumination": 1.0,
             "backgroundColor": {
-                "r": 0.8274509906768799,
-                "g": 0.7137255072593689,
-                "b": 0.7137255072593689
+                "r": 0.13300000131130219,
+                "g": 0.23000000417232513,
+                "b": 0.3199999928474426
             }
         }
     },
     {
         "CursorSettings": {
-            "cursorImage": "default",
+            "cursorImage": "./Assets/Texture/UI/img_startScreenCursor.png",
             "isCursorCentered": false
         }
     },
@@ -113,7 +113,12 @@
                 "x": 0.44999998807907104,
                 "y": 1.0700000524520874
             },
-            "m_light_rotation": 1.0
+            "m_light_rotation": 1.0,
+            "m_colour": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            }
         }
     }
 ]
