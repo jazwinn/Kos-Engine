@@ -456,11 +456,20 @@ namespace fmodaudio {
                     if (audioFile.m_Name == name) {
                         float adjustedVolume = volume;
                         if (audioFile.m_IsBGM) {
+                            if (m_GlobalBGMVolume == 0)
+                            {
+                                return;
+                            }
                             adjustedVolume *= m_GlobalBGMVolume;
                         }
                         else if (audioFile.m_IsSFX) {
+                            if (m_GlobalSFXVolume == 0)
+                            {
+                                return;
+                            }
                             adjustedVolume *= m_GlobalSFXVolume;
                         }
+
 
                         if (sound->m_PlaySound(entityIdStr)) {
                             sound->m_SetVolume(entityIdStr, adjustedVolume);

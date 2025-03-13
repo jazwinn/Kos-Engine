@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -71,6 +72,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     private string bodyStabAud1 = "aud_bodyStab01.wav";
     private string bodyStabAud2 = "aud_bodyStab02.wav";
 
+    private string rangedEnemyDeathAud1 = "aud_playerDeath01.wav";
     private string enemyShootAud1 = "aud_railgunShot01.wav";
 
     private List<string> bodyDeathAudList = new List<string>();
@@ -372,6 +374,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
     private IEnumerator EnemyDeath(string causeOfDeath) //Coroutine for enemy death
     {
+        
         CoroutineManager.Instance.StartCoroutine(PlayEnemyDeathAudio(causeOfDeath), "EnemyDeathAudio");
 
         isDead = true;
@@ -959,27 +962,41 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
     private IEnumerator PlayEnemyDeathAudio(string causeOfDeath)
     {
-        switch (causeOfDeath)
+        switch (enemyType)
         {
-            case "Booster":
-            case "Gun":
-                InternalCall.m_InternalCallPlayAudio(EntityID, ReturnRandomAudio("Death")); //Plays enemy death sound
-                yield return new CoroutineManager.WaitForSeconds(0.1f);
-                InternalCall.m_InternalCallPlayAudio(EntityID, ReturnRandomAudio("Fall")); //Plays enemy fall sound
+            case EnemySelection.Helpless:
+            case EnemySelection.Melee:
+                switch (causeOfDeath)
+                {
+                    case "Booster":
+                    case "Gun":
+                        InternalCall.m_InternalCallPlayAudio(EntityID, ReturnRandomAudio("Death")); //Plays enemy death sound
+                        yield return new CoroutineManager.WaitForSeconds(0.1f);
+                        InternalCall.m_InternalCallPlayAudio(EntityID, ReturnRandomAudio("Fall")); //Plays enemy fall sound
+                        break;
+
+                    case "Katana":
+                        InternalCall.m_InternalCallPlayAudio(EntityID, ReturnRandomAudio("Stab")); //Plays enemy death sound
+                        yield return new CoroutineManager.WaitForSeconds(0.1f);
+                        InternalCall.m_InternalCallPlayAudio(EntityID, ReturnRandomAudio("Death")); //Plays enemy fall sound
+                        yield return new CoroutineManager.WaitForSeconds(0.2f);
+                        InternalCall.m_InternalCallPlayAudio(EntityID, ReturnRandomAudio("Fall")); //Plays enemy fall sound
+                        break;
+
+                    default:
+                        break;
+
+                }
+                break;
+            case EnemySelection.Ranged:
+             InternalCall.m_InternalCallPlayAudio(EntityID, rangedEnemyDeathAud1); //Plays enemy death sound
                 break;
 
-            case "Katana":
-                InternalCall.m_InternalCallPlayAudio(EntityID, ReturnRandomAudio("Stab")); //Plays enemy death sound
-                yield return new CoroutineManager.WaitForSeconds(0.1f);
-                InternalCall.m_InternalCallPlayAudio(EntityID, ReturnRandomAudio("Death")); //Plays enemy fall sound
-                yield return new CoroutineManager.WaitForSeconds(0.2f);
-                InternalCall.m_InternalCallPlayAudio(EntityID, ReturnRandomAudio("Fall")); //Plays enemy fall sound
-                break;
-
-            default:
+            default :
                 break;
 
         }
+
     }
     #endregion
 
