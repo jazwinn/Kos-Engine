@@ -704,6 +704,10 @@ namespace script {
 
 		static bool m_InternalCallSpawnParticle(ecs::EntityID entity);
 
+		static bool m_InternalCallSetParticleLayer(ecs::EntityID entity, int* layer);
+
+		static bool m_InternalCallSetParticleConeRotation(ecs::EntityID entity, float* angle);
+
 		static bool m_InternalCallDespawnParticle(ecs::EntityID entity);
 
 

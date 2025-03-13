@@ -1258,6 +1258,36 @@ namespace script {
 		}
 	}
 
+	bool InternalCall::m_InternalCallSetParticleLayer(ecs::EntityID entity, int* layer)
+	{
+		auto* particleComponent = static_cast<ecs::ParticleComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPEPARTICLECOMPONENT]->m_GetEntityComponent(entity));
+		if (particleComponent)
+		{
+			particleComponent->m_layer = *layer;
+
+		}
+		else
+		{
+			ASSERTNOCOMPONENT(ParticleComponent, entity);
+			return false;
+		}
+	}
+
+	bool InternalCall::m_InternalCallSetParticleConeRotation(ecs::EntityID entity, float* angle)
+	{
+		auto* particleComponent = static_cast<ecs::ParticleComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPEPARTICLECOMPONENT]->m_GetEntityComponent(entity));
+		if (particleComponent)
+		{
+			particleComponent->m_coneRotation= *angle;
+
+		}
+		else
+		{
+			ASSERTNOCOMPONENT(ParticleComponent, entity);
+			return false;
+		}
+	}
+
 	bool InternalCall::m_InternalCallDespawnParticle(ecs::EntityID entity)
 	{
 		auto* particleComponent = static_cast<ecs::ParticleComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPEPARTICLECOMPONENT]->m_GetEntityComponent(entity));
@@ -1574,6 +1604,9 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_InternalSetParticleComponent);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallSpawnParticle);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallDespawnParticle);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallSetParticleLayer);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallSetParticleConeRotation);
+
 
 		MONO_ADD_INTERNAL_CALL(m_EnableScript);
 		MONO_ADD_INTERNAL_CALL(m_DisableScript);
