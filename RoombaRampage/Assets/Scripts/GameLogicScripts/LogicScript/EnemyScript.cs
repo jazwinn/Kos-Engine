@@ -46,6 +46,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     private ColliderComponent collComp;
     private TransformComponent transformComp;
     private TransformComponent playerTransformComp;
+    private ParticleComponent particleComp;
     //private GridComponent gridComp;
     #endregion
 
@@ -133,6 +134,24 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     private float scanInterval = 0.5f;
     private float scanTimer = 0f;
     private Vector2 lastKnownPlayerPosition;
+    #endregion
+
+    #region Particle Variables
+    private bool willSpawn = false;          // Whether the particle system should spawn particles
+    private int noOfParticles = 1;       // Number of particles in the system
+    private float lifeSpan = 3f;          // Lifespan of each particle
+    private Vector2 velocity;        // Initial velocity of the particles
+    private Vector2 acceleration;    // Acceleration affecting the particles
+    private Vector3 color;           // Color of the particles
+    private float coneRotation = 0;      // Rotation of the emission cone
+    private float coneAngle = 360f;         // Angle of the emission cone
+    private float randomFactor = 0;      // Randomness applied to particle properties
+    private string imageFile;        // Texture file for the particle
+    private int stripCount = 0;          // Number of strips in the particle animation
+    private int frameNumber = 0;         // Current frame in animation
+    private int layer = 500;               // Layer the particle system belongs to
+    private float friction = 0;          // Friction affecting particle movement
+    private int fps = 0;                 // Frames per second for particle animation
     #endregion
 
     public override void Awake(uint id) //Called everytime instance is created
@@ -372,6 +391,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         Component.Set<SpriteComponent>(EntityID, spriteComp); //Sets sprite component
     }
 
+
     private IEnumerator EnemyDeath(string causeOfDeath) //Coroutine for enemy death
     {
         
@@ -390,6 +410,11 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         InternalCall.m_InternalSetAnimationComponent(EntityID, 0, 0, 0, false, 1); //Stops animation of enemy
         SetDeadEnemySprite(); //Sets dead sprite
 
+        willSpawn = true;
+        InternalCall.m_InternalCallSpawnParticle(EntityID);
+
+    
+
         transformComp = Component.Get<TransformComponent>(EntityID);
 
         Vector2 direction;
@@ -399,6 +424,11 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         direction.Y = (transformComp.m_position.Y - playerTransformComp.m_position.Y); //Gets Vector.Y towards player
 
         float rotationFloat = (float)(Math.Atan2(direction.X, direction.Y) * (180 / Math.PI)); //Gets rotation towards player
+
+        
+        InternalCall.m_InternalCallSpawnParticle(EntityID);
+        InternalCall.m_InternalCallSetParticleConeRotation(EntityID, rotationFloat);
+        InternalCall.m_InternalCallSetParticleLayer(EntityID,8);// 1 Below the sprite layer;
 
         transformComp.m_rotation = rotationFloat; //Sets rotation values
 

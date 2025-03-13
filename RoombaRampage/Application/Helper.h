@@ -72,6 +72,10 @@ namespace Helper {
 		vector3::Vec3 m_colour{0.86f,0.86f,0.86f};
 
 		float m_timeScale = 1.0f; //default to 1x
+
+		std::string m_currMousePicture{};
+
+		bool m_isMouseCentered{ false };
 		
 	private:
 		static std::unique_ptr<Helpers> InstancePtr;

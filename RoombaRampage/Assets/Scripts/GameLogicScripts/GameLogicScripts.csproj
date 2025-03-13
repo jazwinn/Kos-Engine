@@ -92,6 +92,7 @@
     <Compile Include="LogicScript\LevelSelectionTextBlink.cs" />
     <Compile Include="LogicScript\LevelTransition.cs" />
     <Compile Include="LogicScript\MainMenuScript.cs" />
+    <Compile Include="LogicScript\ParticleEmitter.cs" />
     <Compile Include="LogicScript\PauseMenuButtons.cs" />
     <Compile Include="LogicScript\SoundCursor.cs" />
     <Compile Include="LogicScript\PauseMenuCursor.cs" />

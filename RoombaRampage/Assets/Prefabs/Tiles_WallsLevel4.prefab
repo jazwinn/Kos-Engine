@@ -10,6 +10,12 @@
         }
     },
     {
+        "CursorSettings": {
+            "cursorImage": "./Assets/Texture/UI/img_startScreenCursor.png",
+            "isCursorCentered": false
+        }
+    },
+    {
         "name": {
             "namestr": "Tiles_WallsLevel4",
             "layer": 0,
