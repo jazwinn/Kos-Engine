@@ -1,7 +1,7 @@
 [
     {
         "GlobalSettings": {
-            "globalIllumination": 0.8399999737739563,
+            "globalIllumination": 0.30000001192092896,
             "backgroundColor": {
                 "r": 0.13300000131130219,
                 "g": 0.23000000417232513,
@@ -19,8 +19,10 @@
         "name": {
             "namestr": "Tiles_WallsLevel2",
             "layer": 0,
-            "isprefab": false,
-            "tagstr": "Default"
+            "isprefab": true,
+            "tagstr": "Default",
+            "prefabname": "Tiles_WallsLevel2.prefab",
+            "issync": true
         },
         "transform": {
             "position": {
@@ -2106,8 +2108,8 @@
                     18,
                     76,
                     76,
-                    76,
-                    76,
+                    17,
+                    43,
                     76,
                     76,
                     76,
@@ -2225,8 +2227,8 @@
                     18,
                     76,
                     76,
-                    76,
-                    76,
+                    30,
+                    56,
                     76,
                     76,
                     76,
@@ -9855,8 +9857,8 @@
                     77,
                     61,
                     18,
-                    77,
-                    77,
+                    17,
+                    43,
                     20,
                     61,
                     77,
@@ -9974,8 +9976,8 @@
                     77,
                     61,
                     18,
-                    77,
-                    77,
+                    30,
+                    56,
                     20,
                     61,
                     77,

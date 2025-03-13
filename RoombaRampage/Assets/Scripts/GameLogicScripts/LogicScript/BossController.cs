@@ -54,6 +54,8 @@ public class BossController : ScriptBase
     private string bossBulletPrefab;
     private string bossClusterBulletPrefab;
 
+    private bool isInvincible = false;
+    private float invicibilityTimer = 1f;
     #endregion
 
     #region Enemy Spawning
@@ -468,6 +470,12 @@ public class BossController : ScriptBase
         isForceFieldDeactivating = true;
     }
 
+    private IEnumerator InvincibilityTimer()
+    {
+        isInvincible = true;
+        yield return new CoroutineManager.WaitForSeconds(invicibilityTimer);
+        isInvincible = false;
+    }
     private void CheckCollision()
     {
         if (InternalCall.m_InternalCallIsCollided(EntityID) != 0.0f)
@@ -481,7 +489,7 @@ public class BossController : ScriptBase
                 string entityTag = InternalCall.m_InternalCallGetTag(collidedEntity);
 
                 // Ignore damage if forcefield is deactivating or boss is dying
-                if (isForceFieldDeactivating || isDying)
+                if (isForceFieldDeactivating || isDying || isInvincible)
                     continue;
 
                 // Apply damage to forcefield or boss
@@ -497,6 +505,11 @@ public class BossController : ScriptBase
                         Console.WriteLine("[Boss] Force Field Destroyed!");
                         isForceFieldActive = false;
                         StartForceFieldDeactivateAnimation();
+                    }
+                    else
+                    {
+                        CoroutineManager.Instance.StartCoroutine(InvincibilityTimer());
+
                     }
                 }
                 else
@@ -514,6 +527,9 @@ public class BossController : ScriptBase
                         StartBossDamageAnimation();
                         InternalCall.m_InternalCallPlayAudio(EntityID, shieldRegenSound);
                         SpawnForceField();
+
+                        CoroutineManager.Instance.StartCoroutine(InvincibilityTimer());
+
                     }
                 }
 

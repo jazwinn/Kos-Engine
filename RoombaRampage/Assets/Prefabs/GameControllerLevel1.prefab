@@ -17,7 +17,7 @@
     },
     {
         "name": {
-            "namestr": "spawner",
+            "namestr": "GameControllerLevel1",
             "layer": 0,
             "isprefab": false,
             "tagstr": "Default"
@@ -37,8 +37,8 @@
             "checkcollision": false,
             "checkresponse": false,
             "size": {
-                "x": 6.400000095367432,
-                "y": 5.639999866485596
+                "x": 0.10000000149011612,
+                "y": 0.10000000149011612
             },
             "offset": {
                 "x": 0.0,
@@ -51,11 +51,30 @@
         "script": {
             "scripts": [
                 {
-                    "name": "EnemySpawner",
+                    "name": "GameControllerLevel1",
                     "enabled": true,
-                    "map": []
+                    "map": [
+                        {
+                            "variable": "gameIsPaused",
+                            "base64": ""
+                        },
+                        {
+                            "variable": "runOnce",
+                            "base64": ""
+                        }
+                    ]
                 }
             ]
-        }
+        },
+        "audio": [
+            {
+                "name": "aud_mainLevelLoop",
+                "volume": 0.17000000178813934,
+                "loop": true,
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
+            }
+        ]
     }
 ]
