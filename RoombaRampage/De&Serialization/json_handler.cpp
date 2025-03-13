@@ -634,6 +634,8 @@ namespace Serialization {
 				par.AddMember("lifeSpan", particle->m_lifeSpan, allocator);
 				par.AddMember("velocityX", particle->m_velocity.m_x, allocator);
 				par.AddMember("velocityY", particle->m_velocity.m_y, allocator);
+				par.AddMember("sizeX", particle->m_particleSize.m_x, allocator);
+				par.AddMember("sizeY", particle->m_particleSize.m_y, allocator);
 				par.AddMember("accelerationX", particle->m_acceleration.m_x, allocator);
 				par.AddMember("accelerationY", particle->m_acceleration.m_y, allocator);
 				par.AddMember("colorR", particle->m_color.m_x, allocator);
@@ -648,6 +650,8 @@ namespace Serialization {
 				par.AddMember("layer", particle->m_layer, allocator);
 				par.AddMember("friction", particle->m_friction, allocator);
 				par.AddMember("fps", particle->m_fps, allocator);
+				par.AddMember("loopAnimation", particle->m_loopAnimation, allocator);
+
 
 				entityData.AddMember("particle", par, allocator);
 				hasComponents = true;
@@ -1376,6 +1380,8 @@ namespace Serialization {
 				if (par.HasMember("lifeSpan")) particle->m_lifeSpan = par["lifeSpan"].GetFloat();
 				if (par.HasMember("velocityX")) particle->m_velocity.m_x = par["velocityX"].GetFloat();
 				if (par.HasMember("velocityY")) particle->m_velocity.m_y = par["velocityY"].GetFloat();
+				if (par.HasMember("sizeX")) particle->m_particleSize.m_x = par["sizeX"].GetFloat();
+				if (par.HasMember("sizeY")) particle->m_particleSize.m_y = par["sizeY"].GetFloat();
 				if (par.HasMember("accelerationX")) particle->m_acceleration.m_x = par["accelerationX"].GetFloat();
 				if (par.HasMember("accelerationY")) particle->m_acceleration.m_y = par["accelerationY"].GetFloat();
 				if (par.HasMember("colorR")) particle->m_color.m_x = par["colorR"].GetFloat();
@@ -1390,6 +1396,7 @@ namespace Serialization {
 				if (par.HasMember("layer")) particle->m_layer = par["layer"].GetInt();
 				if (par.HasMember("friction")) particle->m_friction = par["friction"].GetFloat();
 				if (par.HasMember("fps")) particle->m_fps = par["fps"].GetInt();
+				if (par.HasMember("loopAnimation")) particle->m_willSpawn = par["loopAnimation"].GetBool();
 			}
 		}
 

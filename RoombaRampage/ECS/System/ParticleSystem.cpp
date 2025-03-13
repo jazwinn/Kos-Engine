@@ -86,7 +86,7 @@ namespace ecs {
 			unsigned int textureid{};
 			if (assetmanager->m_imageManager.m_imageMap.find(particle->m_imageFile) == assetmanager->m_imageManager.m_imageMap.end())
 			{
-				textureid = 0;
+				textureid = 300;
 			}
 			else
 			{

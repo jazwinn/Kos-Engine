@@ -227,6 +227,7 @@ public static class InternalCall
         out bool willSpawn,
         out int noOfParticles,
         out float lifeSpan,
+        out Vector2 size,
         out Vector2 velocity,
         out Vector2 acceleration,
         out Vector3 color,
@@ -238,7 +239,8 @@ public static class InternalCall
         out int frameNumber,
         out int layer,
         out float friction,
-        out int fps
+        out int fps,
+        out bool loopAnimation
     );
 
     [MethodImpl(MethodImplOptions.InternalCall)]
@@ -247,6 +249,7 @@ public static class InternalCall
        bool willSpawn,
        in int noOfParticles,
        in float lifeSpan,
+       in Vector2 size,
        in Vector2 velocity,
        in Vector2 acceleration,
        in Vector3 color,
@@ -258,7 +261,8 @@ public static class InternalCall
        in int frameNumber,
        in int layer,
        in float friction,
-       in int fps
+       in int fps,
+       bool loopAnimation
    );
 
     [MethodImpl(MethodImplOptions.InternalCall)]
@@ -399,6 +403,7 @@ public static class Component
             out _component.m_willSpawn,
             out _component.m_noOfParticles,
             out _component.m_lifeSpan,
+            out _component.m_size,
             out _component.m_velocity,
             out _component.m_acceleration,
             out _component.m_color,
@@ -410,7 +415,8 @@ public static class Component
             out _component.m_frameNumber,
             out _component.m_layer,
             out _component.m_friction,
-            out _component.m_fps);
+            out _component.m_fps,
+            out _component.m_loopAnimation);
         }
         else
         {
@@ -465,6 +471,7 @@ public static class Component
                          particle.m_willSpawn,
                          in particle.m_noOfParticles,
                          in particle.m_lifeSpan,
+                         in particle.m_size,
                          in particle.m_velocity,
                          in particle.m_acceleration,
                          in particle.m_color,
@@ -476,7 +483,8 @@ public static class Component
                          in particle.m_frameNumber,
                          in particle.m_layer,
                          in particle.m_friction,
-                         in particle.m_fps );
+                         in particle.m_fps,
+                         particle.m_loopAnimation);
         }
         else
         {

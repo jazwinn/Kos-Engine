@@ -173,7 +173,8 @@ public class ParticleComponent //Create internal call, IntercalCall.cs, Intercal
 {
     public bool m_willSpawn;        
     public int m_noOfParticles;     
-    public float m_lifeSpan;        
+    public float m_lifeSpan;
+    public Vector2 m_size;
     public Vector2 m_velocity;      
     public Vector2 m_acceleration;   
     public Vector3 m_color;          
@@ -185,7 +186,8 @@ public class ParticleComponent //Create internal call, IntercalCall.cs, Intercal
     public int m_frameNumber;       
     public int m_layer;             
     public float m_friction;        
-    public int m_fps;              
+    public int m_fps;
+    public bool m_loopAnimation;
 }
 
 public class LightComponent

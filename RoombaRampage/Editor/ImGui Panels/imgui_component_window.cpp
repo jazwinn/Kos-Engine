@@ -2454,6 +2454,19 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                          }
                          ImGui::EndCombo();
                      }
+       
+                     static bool resetImage = false; 
+                     if (ImGui::Checkbox("Reset Image", &resetImage))
+                     {
+                         if (resetImage)
+                         {
+                             rbc->m_imageFile.clear();
+                             events::ModifyParticle action(ecs::TYPEPARTICLECOMPONENT, entityID, rbc, oldValP);
+                             DISPATCH_ACTION_EVENT(action);
+                             oldValP = *rbc;
+                             resetImage = false;
+                         }
+                     }
 
                  }
 

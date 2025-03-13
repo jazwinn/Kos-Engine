@@ -33,7 +33,7 @@ R"( #version 460 core
          }
          else
          {
-             col = vec4(0.2,0.2,0.2,1.f);
+             col = vec4(0.5,0.5,0.5,1.f);
          }
     }
 

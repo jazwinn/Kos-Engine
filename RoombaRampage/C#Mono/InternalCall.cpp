@@ -1181,9 +1181,9 @@ namespace script {
 
 	//Particle Component
 
-	bool InternalCall::m_InternalGetParticleComponent(ecs::EntityID entity, bool* willSpawn, int* noOfParticles, float* lifeSpan, vector2::Vec2* velocity,
+	bool InternalCall::m_InternalGetParticleComponent(ecs::EntityID entity, bool* willSpawn, int* noOfParticles, float* lifeSpan, vector2::Vec2* size, vector2::Vec2* velocity,
 		vector2::Vec2* acceleration, vector3::Vec3* color, float* coneRotation, float* coneAngle, float* randomFactor, MonoString** imageFile, int* stripCount,
-		int* frameNumber, int* layer, float* friction, int* fps)
+		int* frameNumber, int* layer, float* friction, int* fps, bool* loopAnimation)
 	{
 		auto* particleComponent = static_cast<ecs::ParticleComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPEPARTICLECOMPONENT]->m_GetEntityComponent(entity));
 		if (particleComponent) {
@@ -1211,7 +1211,7 @@ namespace script {
 		}
 	}
 
-	bool InternalCall::m_InternalSetParticleComponent(ecs::EntityID entity, bool* willSpawn, int* noOfParticles, float* lifeSpan, vector2::Vec2* velocity, vector2::Vec2* acceleration, vector3::Vec3* color, float* coneRotation, float* coneAngle, float* randomFactor, MonoString* imageFile, int* stripCount, int* frameNumber, int* layer, float* friction, int* fps)
+	bool InternalCall::m_InternalSetParticleComponent(ecs::EntityID entity, bool* willSpawn, int* noOfParticles, float* lifeSpan, vector2::Vec2* size, vector2::Vec2* velocity, vector2::Vec2* acceleration, vector3::Vec3* color, float* coneRotation, float* coneAngle, float* randomFactor, MonoString* imageFile, int* stripCount, int* frameNumber, int* layer, float* friction, int* fps, bool* loopAnimation)
 	{
 		auto* particleComponent = static_cast<ecs::ParticleComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPEPARTICLECOMPONENT]->m_GetEntityComponent(entity));
 		if (particleComponent) {

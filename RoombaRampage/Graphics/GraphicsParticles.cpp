@@ -118,6 +118,7 @@ namespace graphicpipe
                         }
                     }
                 }
+                m_emitterData.clear();
                
             }
         }
