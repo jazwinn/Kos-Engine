@@ -256,7 +256,9 @@
                 "name": "aud_mainLevelLoop",
                 "volume": 0.17000000178813934,
                 "loop": true,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             }
         ]
     },
@@ -1574,13 +1576,17 @@
                         "name": "aud_buttonHover01",
                         "volume": 0.44699999690055847,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_buttonClick01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             },
@@ -1680,13 +1686,17 @@
                         "name": "aud_buttonHover01",
                         "volume": 0.40799999237060547,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_buttonClick01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             },
@@ -1786,13 +1796,17 @@
                         "name": "aud_buttonHover01",
                         "volume": 0.43299999833106995,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_buttonClick01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             },
@@ -1892,13 +1906,17 @@
                         "name": "aud_buttonHover01",
                         "volume": 0.4580000042915344,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_buttonClick01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             },
@@ -1998,13 +2016,17 @@
                         "name": "aud_buttonHover01",
                         "volume": 0.3799999952316284,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_buttonClick01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             },
@@ -2104,13 +2126,17 @@
                         "name": "aud_buttonHover01",
                         "volume": 0.382999986410141,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_buttonClick01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             },
@@ -2210,13 +2236,17 @@
                         "name": "aud_buttonHover01",
                         "volume": 0.38499999046325684,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_buttonClick01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             },
@@ -2515,7 +2545,7 @@
     {
         "name": {
             "namestr": "UI_PauseMenu",
-            "layer": 7,
+            "layer": 0,
             "isprefab": true,
             "tagstr": "Default",
             "prefabname": "UI_PauseMenu.prefab",
@@ -2690,13 +2720,17 @@
                         "name": "aud_buttonHover01",
                         "volume": 0.4970000088214874,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_buttonClick01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             },
@@ -2796,13 +2830,17 @@
                         "name": "aud_buttonHover01",
                         "volume": 0.49399998784065247,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_buttonClick01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             },
@@ -2902,13 +2940,17 @@
                         "name": "aud_buttonHover01",
                         "volume": 0.4830000102519989,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_buttonClick01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             },
@@ -3008,13 +3050,17 @@
                         "name": "aud_buttonHover01",
                         "volume": 0.5,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_buttonClick01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             },
@@ -3246,13 +3292,17 @@
                         "name": "aud_buttonHover01",
                         "volume": 0.4830000102519989,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_buttonClick01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             },
@@ -3464,13 +3514,17 @@
                         "name": "aud_buttonHover01",
                         "volume": 0.4909999966621399,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_buttonClick01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             },
@@ -3570,13 +3624,17 @@
                         "name": "aud_buttonHover01",
                         "volume": 0.47200000286102295,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_buttonClick01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             },
@@ -4857,25 +4915,33 @@
                 "name": "aud_playerDeath01",
                 "volume": 0.9269999861717224,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             },
             {
                 "name": "aud_vacuumStart01",
                 "volume": 1.0,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             },
             {
                 "name": "aud_vacuumLoop01",
                 "volume": 0.3140000104904175,
                 "loop": true,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             },
             {
                 "name": "aud_vacuumEnd01",
                 "volume": 1.0,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             }
         ],
         "children": [
@@ -4964,6 +5030,10 @@
                                     "base64": ""
                                 },
                                 {
+                                    "variable": "playerBoost",
+                                    "base64": ""
+                                },
+                                {
                                     "variable": "rightLimbGunAmmo",
                                     "base64": ""
                                 },
@@ -4978,6 +5048,22 @@
                                 {
                                     "variable": "chargeDurationRailGun",
                                     "base64": ""
+                                },
+                                {
+                                    "variable": "backWeaponcount",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "boostAcceleration",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "boostDuration",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "boostCoolDown",
+                                    "base64": ""
                                 }
                             ]
                         }
@@ -4988,55 +5074,89 @@
                         "name": "aud_cleaver",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_gunshot01",
                         "volume": 0.6539999842643738,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_weaponSwitch01",
                         "volume": 0.20900000631809235,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_katana01",
                         "volume": 0.5199999809265137,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_emptyGun01",
                         "volume": 0.22100000083446503,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_tempcock",
                         "volume": 0.22200000286102295,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_railgunChargeUp01",
                         "volume": 0.6209999918937683,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_railgunShot01",
                         "volume": 0.5960000157356262,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_railgunChargeDown01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    },
+                    {
+                        "name": "aud_shotgunShot01",
+                        "volume": 0.6869999766349792,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    },
+                    {
+                        "name": "aud_shotgunCocking01",
+                        "volume": 1.0,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             },
@@ -5125,6 +5245,10 @@
                                     "base64": ""
                                 },
                                 {
+                                    "variable": "playerBoost",
+                                    "base64": ""
+                                },
+                                {
                                     "variable": "leftWeaponCount",
                                     "base64": ""
                                 },
@@ -5139,6 +5263,22 @@
                                 {
                                     "variable": "chargeDurationRailGun",
                                     "base64": ""
+                                },
+                                {
+                                    "variable": "backWeaponcount",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "boostAcceleration",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "boostDuration",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "boostCoolDown",
+                                    "base64": ""
                                 }
                             ]
                         }
@@ -5149,55 +5289,89 @@
                         "name": "aud_cleaver",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_gunshot01",
                         "volume": 0.6589999794960022,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_weaponSwitch01",
                         "volume": 0.2029999941587448,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_katana01",
                         "volume": 0.48899999260902405,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_emptyGun01",
                         "volume": 0.23199999332427979,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_tempcock",
                         "volume": 0.22699999809265137,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_railgunChargeUp01",
                         "volume": 0.6159999966621399,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_railgunShot01",
                         "volume": 0.6349999904632568,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_railgunChargeDown01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    },
+                    {
+                        "name": "aud_shotgunShot01",
+                        "volume": 0.6869999766349792,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
+                    },
+                    {
+                        "name": "aud_shotgunCocking01",
+                        "volume": 1.0,
+                        "loop": false,
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             },
@@ -5270,37 +5444,49 @@
                         "name": "aud_gunshot01",
                         "volume": 0.6759999990463257,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_cleaver",
                         "volume": 0.546999990940094,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_katana01",
                         "volume": 0.4970000088214874,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_emptyGun01",
                         "volume": 0.25699999928474426,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_boosters01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     },
                     {
                         "name": "aud_vacuumStart01",
                         "volume": 1.0,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             },

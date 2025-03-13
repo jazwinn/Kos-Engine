@@ -8,8 +8,14 @@ public class GameControllerLevel1 : ScriptBase
     public override void Awake(uint id)
     {
         EntityID = id;
+        
     }
     #endregion
+
+    private string blockDoorPrefab;
+    public static bool isActivated;
+    public static bool isBossDead;
+    private string bossBGM = "aud_bossLevelLoop.wav";
 
     public static bool gameIsPaused; //For all scripts to check if game is paused
 
@@ -19,20 +25,21 @@ public class GameControllerLevel1 : ScriptBase
 
     private bool isShowingFps;
 
-    private string blockDoorPrefab;
-    public static bool isActivated = false;
-    public static bool isBossDead = false;
-    private string bossBGM = "aud_bossLevelLoop.wav";
+    private float previousTimeScale;
 
 
     public override void Start()
     {
-        if(LevelSelection.SceneName != "Level6")
+        blockDoorPrefab = "door_block";
+        isActivated = false;
+        isBossDead = false;
+
+        InternalCall.m_InternalGetTranslate(EntityID, out Vector2 doorPosition);
+
+        if (LevelSelection.SceneName != "Level6")
         {
             InternalCall.m_InternalCallPlayAudio(EntityID, "aud_mainLevelLoop");
         }
-
-        blockDoorPrefab = "door_block";
 
         runOnce = false; 
         gameIsPaused = false;
@@ -90,6 +97,8 @@ public class GameControllerLevel1 : ScriptBase
             gameAudioUp = false;
             runOnce = true;
 
+            previousTimeScale = InternalCall.m_InternalCallGetTimeScale();
+
             //Pauses all coroutines
             CoroutineManager.Instance.PauseAllCoroutines();
 
@@ -108,8 +117,8 @@ public class GameControllerLevel1 : ScriptBase
             //Resumes all coroutines
             CoroutineManager.Instance.ResumeAllCoroutines();
 
-            //Sets delta timescale to 1
-            InternalCall.m_InternalCallSetTimeScale(1f);
+            //Sets delta timescale to 1 or previous
+            InternalCall.m_InternalCallSetTimeScale(previousTimeScale);
 
             //Hide Pause Menu Layer
             InternalCall.m_DisableLayer(7);
