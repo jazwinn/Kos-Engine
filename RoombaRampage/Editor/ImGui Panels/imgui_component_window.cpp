@@ -662,7 +662,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                     }
                 }
                 
-                static const char* buf = nc->m_prefabName.c_str();
+                const char* buf = nc->m_prefabName.c_str();
                 ImGui::InputText("##readonlytext", (char*)buf, strlen(buf), ImGuiInputTextFlags_ReadOnly);
             }
 
