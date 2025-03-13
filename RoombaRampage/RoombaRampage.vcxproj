@@ -211,7 +211,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>../Config/pch.h</PrecompiledHeaderFile>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <DisableSpecificWarnings>26945; 4005; 4245;4083;26495;6255;6263;6001</DisableSpecificWarnings>
+      <DisableSpecificWarnings>26945; 4005; 4245;4083;26495;6255;6263;6001; 4244; 4706;4267;4305;</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -247,7 +247,7 @@ xcopy /y /d "$(SolutionDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>../Config/pch.h</PrecompiledHeaderFile>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <DisableSpecificWarnings>26945; 4005; 4245;4083;26495;6255;6263;6001</DisableSpecificWarnings>
+      <DisableSpecificWarnings>26945; 4005; 4245;4083;26495;6255;6263;6001; 4244; 4706;4267;4305;</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
