@@ -109,6 +109,12 @@ namespace Application {
         static float m_windowWidth;
 
         static bool m_fullScreen;
+
+        static GLFWcursor* m_currCursor;
+
+        void setCursorImage(const std::string& image, bool centered);
+
+
 #ifdef IMGUIENABLED
         bool m_enabledFullScreen{ false };//use this to set launch application fullscreen or not
 #else

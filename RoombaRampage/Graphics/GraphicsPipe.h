@@ -57,6 +57,7 @@ namespace graphicpipe {
         int m_stripCount{};
         int m_frameNumber{};
         int m_framesPerSecond{};
+        bool m_loopAnimation{};
         int m_layer{};
         float m_friction{};
     };

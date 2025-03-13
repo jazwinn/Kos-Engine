@@ -30,6 +30,7 @@ namespace ecs
 		bool m_willSpawn{ false };
 		int m_noOfParticles{ 1 };
 		float m_lifeSpan{ 1.f };
+		
 		vector2::Vec2 m_velocity{};
 		vector2::Vec2 m_acceleration{};
 		vector3::Vec3 m_color{1.f,1.f,1.f};
@@ -39,14 +40,16 @@ namespace ecs
 		std::string m_imageFile{};
 		int m_stripCount{};
 		int m_frameNumber{};
-		int m_layer{};
+		int m_layer{500};
 		float m_friction{};
 		int m_fps{};
-		
+		bool m_loopAnimation{};
 
-		REFLECTABLE(ParticleComponent, m_willSpawn, m_noOfParticles, m_lifeSpan, m_velocity, m_acceleration,
+		vector2::Vec2 m_particleSize{ 1.f,1.f };
+
+		REFLECTABLE(ParticleComponent, m_willSpawn, m_noOfParticles, m_lifeSpan, m_particleSize, m_velocity, m_acceleration,
 										m_coneRotation, m_coneAngle, m_randomFactor, m_stripCount, m_frameNumber, 
-										m_layer, m_friction, m_fps);
+										m_layer, m_friction, m_fps, m_loopAnimation);
 	};
 
 }
