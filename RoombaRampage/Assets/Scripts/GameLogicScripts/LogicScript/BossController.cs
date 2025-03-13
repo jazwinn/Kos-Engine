@@ -31,6 +31,10 @@ public class BossController : ScriptBase
     private bool isForceFieldDeactivating = false;
 
     private bool isAttacking = false;
+    private string bossDeathSound = "aud_bossDeath01.wav";
+    private string shieldRegenSound = "aud_bossShieldRegen01.wav";
+    private string shieldBreakSound = "aud_bossShieldBreak01.wav";
+    private string bossShootingSound = "aud_bossBullet01.wav";
 
     #endregion
 
@@ -42,23 +46,25 @@ public class BossController : ScriptBase
     //private bool canAttack = true;
     private float attackCooldown = 4.0f;
 
-    public int forceFieldHealth = 1;
-    public int bossHealth = 5;
+    public int forceFieldHealth = 3;
+    public int bossHealth = 4;
     public bool isForceFieldActive = true;
     private string forceFieldPrefab = "Boss_Forcefield";
 
     private string bossBulletPrefab;
+    private string bossClusterBulletPrefab;
+
     #endregion
 
     #region Enemy Spawning
     private uint[] enemySpawnPoints; // Store spawn point entity IDs
-    private string[] enemyPrefabs = { "prefab_enemyRanged", "FearlessEnemyStatic" };
+    private string[] enemyPrefabs = { "FearlessEnemyStatic" };
 
     //private string[] enemyPrefabs = { "FearlessEnemy" };
     private List<uint> activeEnemies = new List<uint>();
 
     //private float enemySpawnCooldown = 10.0f;
-    private int maxEnemies = 5;
+    private int maxEnemies = 2;
     #endregion
 
 
@@ -76,6 +82,8 @@ public class BossController : ScriptBase
     {
         EntityID = id; //Sets ID for object, DO NOT TOUCH
         bossBulletPrefab = "prefab_bossBullet";
+        bossClusterBulletPrefab = "prefab_bossClusterBullet";
+
         SpawnForceField();
 
         int[] childIDs = InternalCall.m_InternalCallGetChildrenID(EntityID);
@@ -93,7 +101,6 @@ public class BossController : ScriptBase
     }
     public override void Start()
     {
-        CoroutineManager.Instance.StartCoroutine(EnemySpawnLoop()); // Start enemy spawns
 
     }
 
@@ -120,6 +127,7 @@ public class BossController : ScriptBase
 
             if (animComp.m_frameNumber >= animComp.m_stripCount - 1)
             {
+
                 animComp.m_isAnimating = false;
 
                 animComp.m_frameNumber = 14;
@@ -173,6 +181,8 @@ public class BossController : ScriptBase
         {
             isAttacking = true;
             CoroutineManager.Instance.StartCoroutine(AttackLoop()); // Start attacks
+            CoroutineManager.Instance.StartCoroutine(EnemySpawnLoop()); // Start enemy spawns
+
         }
 
     }
@@ -248,7 +258,7 @@ public class BossController : ScriptBase
                 break;
             case BossAttackPattern.BulletSpread:
                 Console.WriteLine("Firing Bullet Spread!");
-                SpawnBullets(bossPosition, 8, 0.2f, 180f, 360f);   
+                SpawnBullets(bossPosition, 8, 0.2f, 180f, 360f);
 
                 break;
             case BossAttackPattern.BulletDisperse:
@@ -258,7 +268,7 @@ public class BossController : ScriptBase
                 break;
             case BossAttackPattern.BulletSpiral:
                 Console.WriteLine("Firing Bullet Spiral!");
-                CoroutineManager.Instance.StartCoroutine(FireSweepingCurvingBulletVolley(bossPosition,10,0.2f,0.1f));
+                CoroutineManager.Instance.StartCoroutine(FireSweepingCurvingBulletVolley(bossPosition, 10, 0.2f, 0.1f));
 
                 break;
         }
@@ -279,13 +289,14 @@ public class BossController : ScriptBase
     {
         while (bossHealth > 0)
         {
-            //Only stop spawning if enemie count reaches max enemies count
-            if (activeEnemies.Count < maxEnemies)
-            {
-                SpawnEnemy();
-            }
+            ////Only stop spawning if enemie count reaches max enemies count
+            //if (activeEnemies.Count < maxEnemies)
+            //{
+            //    SpawnEnemy();
+            //}
+            SpawnEnemy();
 
-            float randomDelay = GenerateRandom(2, 4);
+            float randomDelay = GenerateRandom(10, 14);
             yield return new CoroutineManager.WaitForSeconds(randomDelay);
         }
     }
@@ -309,7 +320,7 @@ public class BossController : ScriptBase
         Console.WriteLine($"[Boss] Spawned {enemyType} at {spawnPosition.X}, {spawnPosition.Y}");
         activeEnemies.Add(enemyID);
     }
-#endregion
+    #endregion
 
     #region Boss Attack Pattern
     private IEnumerator FireAlternatingWaves()
@@ -320,6 +331,8 @@ public class BossController : ScriptBase
 
         for (int i = 0; i < waveCount; i++)
         {
+            InternalCall.m_InternalCallPlayAudio(EntityID, bossShootingSound);
+
             float waveAngleOffset = (i % 2 == 0) ? positionOffset : -positionOffset;
             SpawnBullets(bossPosition, 8, 0.2f, 180f + waveAngleOffset, 360f + waveAngleOffset);
             yield return new CoroutineManager.WaitForSeconds(waveDelay);
@@ -328,6 +341,8 @@ public class BossController : ScriptBase
 
     private void SpawnBullets(Vector2 position, int bulletCount, float radius, float startAngle, float endAngle)
     {
+        InternalCall.m_InternalCallPlayAudio(EntityID, bossShootingSound);
+
         float angleStep = (endAngle - startAngle) / (bulletCount - 1);
 
         for (int i = 0; i < bulletCount; i++)
@@ -345,7 +360,9 @@ public class BossController : ScriptBase
     {
         float bigBulletAngle = 270f;
 
-        uint largeBullet = (uint)InternalCall.m_InternalCallAddPrefab(bossBulletPrefab, position.X, position.Y, bigBulletAngle);
+        InternalCall.m_InternalCallPlayAudio(EntityID, bossShootingSound);
+
+        uint largeBullet = (uint)InternalCall.m_InternalCallAddPrefab(bossClusterBulletPrefab, position.X, position.Y, bigBulletAngle);
 
         CoroutineManager.Instance.StartCoroutine(ExplodeBigBullet(largeBullet));
     }
@@ -366,7 +383,7 @@ public class BossController : ScriptBase
             mediumBullets.Add(mediumBullet);
         }
 
-       InternalCall.m_InternalCallDeleteEntity(largeBullet);
+        InternalCall.m_InternalCallDeleteEntity(largeBullet);
 
         // Delay 
         yield return new CoroutineManager.WaitForSeconds(1f);
@@ -378,10 +395,12 @@ public class BossController : ScriptBase
 
             for (int j = 0; j < 8; j++)
             {
-                float spreadAngle = (j * 60f) - 30f; 
+                float spreadAngle = (j * 60f) - 30f;
                 float radian = (float)(spreadAngle * (Math.PI / 180f));
                 float offsetX = (float)(mediumBulletPosition.X + Math.Cos(radian) * 0.3f);
                 float offsetY = (float)(mediumBulletPosition.Y + Math.Sin(radian) * 0.3f);
+
+                //InternalCall.m_InternalCallPlayAudio(EntityID, bossShootingSound);
 
                 InternalCall.m_InternalCallAddPrefab(bossBulletPrefab, offsetX, offsetY, spreadAngle);
             }
@@ -408,7 +427,8 @@ public class BossController : ScriptBase
                 float spawnY = position.Y + (float)Math.Sin(radian) * radius;
 
                 uint bullet = (uint)InternalCall.m_InternalCallAddPrefab(bossBulletPrefab, spawnX, spawnY, baseAngle);
-              
+                InternalCall.m_InternalCallPlayAudio(EntityID, bossShootingSound);
+
                 yield return new CoroutineManager.WaitForSeconds(bulletInterval);
             }
             yield return new CoroutineManager.WaitForSeconds(0.2f);
@@ -423,8 +443,12 @@ public class BossController : ScriptBase
     {
         InternalCall.m_InternalGetTranslate(EntityID, out Vector2 bossPosition);
         forceFieldID = (uint)InternalCall.m_InternalCallAddPrefab(forceFieldPrefab, bossPosition.X, bossPosition.Y, 0);
+        AnimationComponent forceFieldAnim = Component.Get<AnimationComponent>(forceFieldID);
+        forceFieldAnim.m_stripCount = 4; // Set frame strip count to 7
+        Component.Set<AnimationComponent>(forceFieldID, forceFieldAnim);
+
         isForceFieldActive = true;
-        forceFieldHealth = 1;
+        forceFieldHealth = 3;
     }
 
 
@@ -451,55 +475,55 @@ public class BossController : ScriptBase
 
             int[] collidedEntities = InternalCall.m_InternalCallGetCollidedEntities(EntityID);
 
-            foreach (int collidedEntitiesID in collidedEntities)
+            foreach (int collidedEntityID in collidedEntities)
             {
-                switch (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID))
+                uint collidedEntity = (uint)collidedEntityID;
+                string entityTag = InternalCall.m_InternalCallGetTag(collidedEntity);
+
+                // Ignore damage if forcefield is deactivating or boss is dying
+                if (isForceFieldDeactivating || isDying)
+                    continue;
+
+                // Apply damage to forcefield or boss
+                if (isForceFieldActive)
                 {
-                    
-                    case "PlayerBullet":
-                    case "MeleeKillZoneSpawn":
-                    case "PlayerRailgunBullet":
+                    forceFieldHealth--;
+                    Console.WriteLine($"[Boss] Force Field hit! Remaining Health: {forceFieldHealth}");
 
-                        if (isForceFieldDeactivating || isDying)
-                        {
-                            continue;
-                        }
+                    if (forceFieldHealth <= 0)
+                    {
+                        InternalCall.m_InternalCallPlayAudio(EntityID, shieldBreakSound);
 
-                        if (isForceFieldActive)
-                        {
-                            forceFieldHealth--;
-
-                            Console.WriteLine($"[Boss] Force Field hit! Remaining Health: {forceFieldHealth}");
-
-                            if (forceFieldHealth <= 0)
-                            {
-                                Console.WriteLine("[Boss] Force Field Destroyed!");
-                                isForceFieldActive = false;
-                                StartForceFieldDeactivateAnimation(); // Play destruction animation
-                            }
-                        }
-                        else
-                        {
-                            bossHealth--;
-                            Console.WriteLine($"[Boss] Hit! Remaining Health: {bossHealth}");
-                            //StartAnimationOnHit();
-                            if (bossHealth <= 0)
-                            {
-                                StartBossDestroyedAnimation();  // Trigger death animation
-                            }
-                            else
-                            {
-                                StartBossDamageAnimation();  // Trigger damage animation
-                                SpawnForceField();
-
-                            }
-                        }
-
-                        break;
-
+                        Console.WriteLine("[Boss] Force Field Destroyed!");
+                        isForceFieldActive = false;
+                        StartForceFieldDeactivateAnimation();
+                    }
                 }
-               
+                else
+                {
+                    bossHealth--;
+                    Console.WriteLine($"[Boss] Hit! Remaining Health: {bossHealth}");
+
+                    if (bossHealth <= 0)
+                    {
+                        InternalCall.m_InternalCallPlayAudio(EntityID, bossDeathSound);
+                        StartBossDestroyedAnimation();
+                    }
+                    else
+                    {
+                        StartBossDamageAnimation();
+                        InternalCall.m_InternalCallPlayAudio(EntityID, shieldRegenSound);
+                        SpawnForceField();
+                    }
+                }
+
+                // Only delete bullets, NOT melee colliders
+                if (entityTag == "PlayerBullet" || entityTag == "PlayerRailgunBullet")
+                {
+                    InternalCall.m_InternalCallDeleteEntity(collidedEntity);
+                }
             }
+
         }
     }
     #endregion

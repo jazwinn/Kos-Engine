@@ -103,11 +103,41 @@
                         {
                             "variable": "bossHealth",
                             "base64": ""
+                        },
+                        {
+                            "variable": "isForceFieldActive",
+                            "base64": ""
                         }
                     ]
                 }
             ]
         },
+        "audio": [
+            {
+                "name": "aud_bossDeath01",
+                "volume": 1.0,
+                "loop": false,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_bossShieldRegen01",
+                "volume": 1.0,
+                "loop": false,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_bossShieldBreak01",
+                "volume": 1.0,
+                "loop": false,
+                "playOnStart": false
+            },
+            {
+                "name": "aud_bossBullet01",
+                "volume": 1.0,
+                "loop": false,
+                "playOnStart": false
+            }
+        ],
         "LightingComponent": {
             "m_innerOuterRadius": {
                 "x": 1.0,
