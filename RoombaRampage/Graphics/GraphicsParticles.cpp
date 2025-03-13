@@ -25,9 +25,6 @@ namespace graphicpipe
             << "  Scale: (" << particle.m_scale.x << ", " << particle.m_scale.y << ")\n"
             << "  Color: (" << particle.m_color.r << ", " << particle.m_color.g << ", " << particle.m_color.b << ", " << particle.m_color.a << ")\n"
             << "  Rotation: " << particle.m_rotation << "\n"
-            //<< "  Cone Rotation: " << particle.m_coneRotation << "\n"
-           // << "  Cone Angle: " << particle.m_coneAngle << "\n"
-           // << "  Random Factor: " << particle.m_randomFactor << "\n"
             << "  Texture ID: " << particle.m_textureID << "\n"
             << "  Strip Count: " << particle.m_stripCount << "\n"
             << "  Frame Number: " << particle.m_frameNumber << "\n"
@@ -58,17 +55,31 @@ namespace graphicpipe
                     if (m_emitterData[i].m_noOfParticles >= 0)
                     {
                         int particlesProcessed = 0;
+                        float speedRandomValue{};
+                        float sizeRandomValue{};
                         const float radian = 3.1415f / 180.f;
                         for (int j = 0; j < MAX_PARTICLES; j++)
                         {
                             if (particles[j].m_isActive < 1.f)
                             {
-                                // float randomValue = randomInRange(-m_emitterData[i].m_randomFactor / 2.f, m_emitterData[i].m_randomFactor / 2.f);
+                                if (m_emitterData[i].m_randomFactor >= 0.f)
+                                {
+                                    speedRandomValue = abs(1.f + randomInRange(-m_emitterData[i].m_randomFactor / 2.f, m_emitterData[i].m_randomFactor / 2.f));
+                                    sizeRandomValue = abs(1.f + randomInRange(-m_emitterData[i].m_randomFactor / 2.f, m_emitterData[i].m_randomFactor / 2.f));
+                                }
+                                else
+                                {
+                                    speedRandomValue = 1.f;
+                                    sizeRandomValue = 1.f;
+                                }
+                                
                                 particles[j].m_lifeSpan = m_emitterData[i].m_lifeSpan;
                                 particles[j].m_position = m_emitterData[i].m_position;
                                 particles[j].m_scale = m_emitterData[i].m_scale;
+                                particles[j].m_scale.x *= sizeRandomValue;
+                                particles[j].m_scale.y *= sizeRandomValue;
                                 particles[j].m_color = m_emitterData[i].m_color;
-                                particles[j].m_rotation = m_emitterData[i].m_rotation;
+                                particles[j].m_rotation = m_emitterData[i].m_rotation * sizeRandomValue;
 
                                 float newAngle = m_emitterData[i].m_coneRotation + randomInRange(-m_emitterData[i].m_coneAngle / 2.f, m_emitterData[i].m_coneAngle / 2.f);
 
@@ -79,8 +90,8 @@ namespace graphicpipe
 
                                 particles[j].m_initialEmissionAngle = newAngle;
 
-                                particles[j].m_velocity = newVelocity; //* randomValue;
-                                particles[j].m_acceleration = m_emitterData[i].m_acceleration; //* randomValue;
+                                particles[j].m_velocity = newVelocity * speedRandomValue;
+                                particles[j].m_acceleration = m_emitterData[i].m_acceleration * speedRandomValue; 
 
                                 particles[j].m_textureID = m_emitterData[i].m_textureID;
                                 particles[j].m_stripCount = m_emitterData[i].m_stripCount;

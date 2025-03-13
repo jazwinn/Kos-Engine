@@ -24,20 +24,20 @@
         },
         "transform": {
             "position": {
-                "x": -1.6388412714004517,
-                "y": 1.3867120742797852
+                "x": 0.4145808517932892,
+                "y": 2.1379637718200684
             },
-            "rotation": -0.0,
+            "rotation": -39.999977111816406,
             "scale": {
-                "x": 1.0,
-                "y": 1.0
+                "x": 0.9999998807907104,
+                "y": 0.9999998807907104
             }
         },
         "particle": {
             "willSpawn": false,
-            "noOfParticles": 3,
-            "lifeSpan": 1.0,
-            "velocityX": 1.0,
+            "noOfParticles": 2,
+            "lifeSpan": 5.300000190734863,
+            "velocityX": 10.0,
             "velocityY": 1.0,
             "accelerationX": 0.0,
             "accelerationY": 0.0,
@@ -45,14 +45,14 @@
             "colorG": 1.0,
             "colorB": 1.0,
             "coneRotation": 0.0,
-            "coneAngle": 360.0,
-            "randomFactor": 0.0,
+            "coneAngle": 30.0,
+            "randomFactor": 1.2999999523162842,
             "imageFile": "ani_bloodPool_strip9.png",
             "stripCount": 9,
             "frameNumber": 0,
             "layer": 500,
-            "friction": 0.0,
-            "fps": 24
+            "friction": 5.0,
+            "fps": 4
         },
         "LightingComponent": {
             "m_innerOuterRadius": {
