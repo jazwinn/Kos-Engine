@@ -272,7 +272,7 @@ public static class InternalCall
     public extern static void m_InternalCallDespawnParticle(uint id);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static void m_InternalSetParticleLayer(uint id, in int layer);
+    public extern static void m_InternalCallSetParticleLayer(uint id, in int layer);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static void m_InternalCallSetParticleConeRotation(uint id, in float angle);

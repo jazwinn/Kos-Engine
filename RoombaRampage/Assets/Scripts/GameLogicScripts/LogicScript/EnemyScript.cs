@@ -425,6 +425,11 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
         float rotationFloat = (float)(Math.Atan2(direction.X, direction.Y) * (180 / Math.PI)); //Gets rotation towards player
 
+        
+        InternalCall.m_InternalCallSpawnParticle(EntityID);
+        InternalCall.m_InternalCallSetParticleConeRotation(EntityID, rotationFloat);
+        InternalCall.m_InternalCallSetParticleLayer(EntityID,8);// 1 Below the sprite layer;
+
         transformComp.m_rotation = rotationFloat; //Sets rotation values
 
         SetComponent.SetTransformComponent(EntityID, transformComp); //Sets transform component
