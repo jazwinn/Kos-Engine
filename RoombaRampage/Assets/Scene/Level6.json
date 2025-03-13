@@ -785,8 +785,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": -3.548457145690918,
-                        "y": -0.9380902051925659
+                        "x": -3.230449914932251,
+                        "y": 0.014869838021695614
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -806,8 +806,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 3.513596296310425,
-                        "y": -0.7475741505622864
+                        "x": 3.216789484024048,
+                        "y": -0.013684551231563091
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -827,8 +827,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": -3.6256368160247803,
-                        "y": -3.912334442138672
+                        "x": -1.2723848819732666,
+                        "y": 0.030953630805015564
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -848,8 +848,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 3.5377559661865234,
-                        "y": -3.9304616451263428
+                        "x": 1.3329079151153564,
+                        "y": 0.03473351150751114
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -4762,163 +4762,6 @@
     },
     {
         "name": {
-            "namestr": "Props",
-            "layer": 0,
-            "isprefab": false,
-            "tagstr": "Default"
-        },
-        "transform": {
-            "position": {
-                "x": 12.613581657409668,
-                "y": -31.279537200927734
-            },
-            "rotation": 179.99989318847656,
-            "scale": {
-                "x": 1.0,
-                "y": 1.0
-            }
-        },
-        "script": {
-            "scripts": []
-        },
-        "children": [
-            {
-                "name": {
-                    "namestr": "GlassWallSprite",
-                    "layer": 5,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "GlassWallSprite_1.prefab",
-                    "issync": false
-                },
-                "transform": {
-                    "position": {
-                        "x": -0.35259246826171875,
-                        "y": -2.200000047683716
-                    },
-                    "rotation": 90.0,
-                    "scale": {
-                        "x": 3.0,
-                        "y": 2.440000057220459
-                    }
-                },
-                "collider": {
-                    "checkcollision": true,
-                    "checkresponse": false,
-                    "size": {
-                        "x": 0.11999999731779099,
-                        "y": 1.2999999523162842
-                    },
-                    "offset": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "drawDebug": true,
-                    "radius": 0.5,
-                    "shapetype": 0
-                },
-                "rigidbody": {
-                    "linearVelocity": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "linearAcceleration": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "rotation": 0.0,
-                    "angularVelocity": 0.0,
-                    "angularAcceleration": 0.0,
-                    "mass": 1.0,
-                    "inverseMass": 1.0,
-                    "linearDamping": 0.9900000095367432,
-                    "angularDamping": 0.9900000095367432,
-                    "force": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "torque": 0.0,
-                    "kinematic": false,
-                    "static": false
-                },
-                "sprite": {
-                    "imagefile": "ani_glassWallAnim_strip4.png",
-                    "layer": 6,
-                    "color": {
-                        "r": 1.0,
-                        "g": 1.0,
-                        "b": 1.0
-                    },
-                    "alpha": 1.0,
-                    "isLit": true
-                },
-                "animation": {
-                    "frameNumber": 0,
-                    "framesPerSecond": 20,
-                    "frameTimer": 0.0,
-                    "isAnimating": false,
-                    "stripCount": 4
-                },
-                "script": {
-                    "scripts": [
-                        {
-                            "name": "Prop_GlassWall",
-                            "enabled": true,
-                            "map": []
-                        }
-                    ]
-                },
-                "audio": [
-                    {
-                        "name": "aud_glassBreak01",
-                        "volume": 0.48899999260902405,
-                        "loop": false,
-                        "playOnStart": false,
-                        "isBGM": false,
-                        "isSFX": true
-                    }
-                ]
-            },
-            {
-                "name": {
-                    "namestr": "GlassWallCollider",
-                    "layer": 5,
-                    "isprefab": true,
-                    "tagstr": "PropGlassWall",
-                    "prefabname": "GlassWallCollider.prefab",
-                    "issync": false
-                },
-                "transform": {
-                    "position": {
-                        "x": 0.0,
-                        "y": -2.1963512897491455
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 0.800000011920929,
-                        "y": 1.0199999809265137
-                    }
-                },
-                "collider": {
-                    "checkcollision": true,
-                    "checkresponse": true,
-                    "size": {
-                        "x": 5.5,
-                        "y": 0.3400000035762787
-                    },
-                    "offset": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "drawDebug": true,
-                    "radius": 0.5,
-                    "shapetype": 0
-                }
-            }
-        ]
-    },
-    {
-        "name": {
             "namestr": "Boss Level Controller",
             "layer": 5,
             "isprefab": false,
@@ -4927,7 +4770,7 @@
         "transform": {
             "position": {
                 "x": 12.267993927001953,
-                "y": -7.2401275634765625
+                "y": -7.810030937194824
             },
             "rotation": -0.0,
             "scale": {
@@ -6765,7 +6608,7 @@
             "isprefab": true,
             "tagstr": "Default",
             "prefabname": "EndPoint.prefab",
-            "issync": true
+            "issync": false
         },
         "transform": {
             "position": {
@@ -6976,10 +6819,10 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 6.017176628112793,
+                        "x": 9.127551078796387,
                         "y": 5.757751941680908
                     },
-                    "rotation": -0.0,
+                    "rotation": 0.0,
                     "scale": {
                         "x": 4.0,
                         "y": 4.0
@@ -11627,7 +11470,7 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 0.39932894706726074,
+                        "x": 0.1307675838470459,
                         "y": 3.277216911315918
                     },
                     "rotation": 0.0,
@@ -11660,7 +11503,7 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 0.4092021584510803,
+                        "x": 0.2382989525794983,
                         "y": 1.2865631580352783
                     },
                     "rotation": 0.0,

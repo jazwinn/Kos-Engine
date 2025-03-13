@@ -1031,6 +1031,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         {
             case EnemySelection.Helpless:
             case EnemySelection.Melee:
+            case EnemySelection.AlertMelee:
                 switch (causeOfDeath)
                 {
                     case "Booster":
@@ -1054,6 +1055,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
                 }
                 break;
             case EnemySelection.Ranged:
+            case EnemySelection.AlertRanged:
              InternalCall.m_InternalCallPlayAudio(EntityID, rangedEnemyDeathAud1); //Plays enemy death sound
                 break;
 

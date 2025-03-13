@@ -1,11 +1,11 @@
 [
     {
         "GlobalSettings": {
-            "globalIllumination": 1.0,
+            "globalIllumination": 0.2199999988079071,
             "backgroundColor": {
-                "r": 0.13300000131130219,
-                "g": 0.23000000417232513,
-                "b": 0.3199999928474426
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0
             }
         }
     },
@@ -26,8 +26,8 @@
         },
         "transform": {
             "position": {
-                "x": 0.0,
-                "y": 0.0
+                "x": -25.01907730102539,
+                "y": 36.98648452758789
             },
             "rotation": -0.0,
             "scale": {
@@ -93,7 +93,7 @@
                     "map": [
                         {
                             "variable": "NextLevelName",
-                            "base64": "Level2"
+                            "base64": "CutsceneLevel6"
                         }
                     ]
                 }

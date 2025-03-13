@@ -30,7 +30,7 @@ public class KillCounter : ScriptBase
 
             if (killCount >= 20 && hasSpawned == false)
             {
-                Console.WriteLine("spawn");
+                //Console.WriteLine("spawn");
                 TransformComponent spawnPoint = Component.Get<TransformComponent>(EntityID);
 
                 InternalCall.m_InternalCallAddPrefab(exitPrefab, spawnPoint.m_position.X, spawnPoint.m_position.Y, 0.0f);

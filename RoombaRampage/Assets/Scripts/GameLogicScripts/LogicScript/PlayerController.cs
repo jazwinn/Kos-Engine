@@ -85,14 +85,6 @@ public class PlayerController : ScriptBase
         //Checks if game is paused and prevents player from doing anything
         if (GameControllerLevel1.gameIsPaused) { return; }
 
-        if (PlayerLoadoutManager.isSortieing)
-        {
-            movement.X = 0;
-            movement.Y = 0;
-            InternalCall.m_InternalSetVelocity(EntityID, movement);
-            return;
-        }
-
         //Dead player, return to prevent actions
         if (isDead) { return; }
 
@@ -135,7 +127,12 @@ public class PlayerController : ScriptBase
             InternalCall.m_InternalSetVelocity(EntityID, movement);
         }
 
-
+        if (PlayerLoadoutManager.isSortieing)
+        {
+            movement.X = 0;
+            movement.Y = 0;
+            InternalCall.m_InternalSetVelocity(EntityID, movement);
+        }
 
 
         #endregion

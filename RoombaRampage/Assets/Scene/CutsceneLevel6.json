@@ -11,7 +11,7 @@
     },
     {
         "CursorSettings": {
-            "cursorImage": "./Assets/Texture/UI/img_startScreenCursor.png",
+            "cursorImage": "default",
             "isCursorCentered": false
         }
     },
@@ -29,12 +29,12 @@
             },
             "rotation": -0.0,
             "scale": {
-                "x": 0.15109655261039734,
-                "y": 0.15000000596046448
+                "x": 0.7599999904632568,
+                "y": 0.7599999904632568
             }
         },
         "sprite": {
-            "imagefile": "img_cutscene.png",
+            "imagefile": "img_blackImage.png",
             "layer": 0,
             "color": {
                 "r": 1.0,
@@ -92,7 +92,7 @@
             }
         },
         "sprite": {
-            "imagefile": "img_portraitFrame.png",
+            "imagefile": "img_strangerPortrait.png",
             "layer": 4,
             "color": {
                 "r": 1.0,
@@ -216,7 +216,7 @@
                     "map": [
                         {
                             "variable": "buttonFunctionNo",
-                            "base64": "/////8zMzMwA"
+                            "base64": "GQAAAMzMzMwA"
                         }
                     ]
                 }
@@ -238,22 +238,6 @@
                 "playOnStart": false,
                 "isBGM": false,
                 "isSFX": true
-            },
-            {
-                "name": "",
-                "volume": 1.0,
-                "loop": false,
-                "playOnStart": false,
-                "isBGM": false,
-                "isSFX": true
-            },
-            {
-                "name": "aud_startMenuAmbienceQuitt01",
-                "volume": 1.0,
-                "loop": false,
-                "playOnStart": false,
-                "isBGM": false,
-                "isSFX": true
             }
         ]
     },
@@ -266,7 +250,7 @@
         },
         "transform": {
             "position": {
-                "x": -0.6567482948303223,
+                "x": -0.8112843036651611,
                 "y": -0.4461106061935425
             },
             "rotation": -0.0,
@@ -276,7 +260,7 @@
             }
         },
         "text": {
-            "text": "ROOM13A",
+            "text": "???",
             "text": null,
             "filename": "fnt_silkscreenRegular.ttf",
             "fontsize": 2.0,
@@ -297,8 +281,8 @@
         },
         "transform": {
             "position": {
-                "x": -0.13514649868011475,
-                "y": -0.6260688304901123
+                "x": -0.2589994966983795,
+                "y": -0.544570803642273
             },
             "rotation": -0.0,
             "scale": {
@@ -307,7 +291,7 @@
             }
         },
         "text": {
-            "text": "OBJECTIVE : ESCAPE IN CUTSCENE.MP4 IN MILESTONE 6",
+            "text": "congrats on surviving. your end is near.",
             "text": null,
             "filename": "fnt_silkscreenRegular.ttf",
             "fontsize": 1.0,
@@ -366,68 +350,7 @@
     },
     {
         "name": {
-            "namestr": "img_scientistPortrait",
-            "layer": 0,
-            "isprefab": false,
-            "tagstr": "Default"
-        },
-        "transform": {
-            "position": {
-                "x": -1.3862369060516357,
-                "y": -0.17917901277542114
-            },
-            "rotation": -0.0,
-            "scale": {
-                "x": 1.1159999370574951,
-                "y": 1.1159999370574951
-            }
-        },
-        "sprite": {
-            "imagefile": "img_roombert.png",
-            "layer": 5,
-            "color": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
-            },
-            "alpha": 1.0,
-            "isLit": false
-        }
-    },
-    {
-        "name": {
-            "namestr": "DialogueText",
-            "layer": 0,
-            "isprefab": false,
-            "tagstr": "Default"
-        },
-        "transform": {
-            "position": {
-                "x": -0.5313889384269714,
-                "y": -0.5382811427116394
-            },
-            "rotation": -0.0,
-            "scale": {
-                "x": 1.0,
-                "y": 1.0
-            }
-        },
-        "text": {
-            "text": "STATUS: BOSS DESTROYED.",
-            "text": null,
-            "filename": "fnt_silkscreenRegular.ttf",
-            "fontsize": 1.0,
-            "color": {
-                "r": 0.10588235408067703,
-                "g": 0.8823529481887817,
-                "b": 0.06666667014360428
-            },
-            "layer": 8
-        }
-    },
-    {
-        "name": {
-            "namestr": "Cutscene Manager",
+            "namestr": "CutsceneManager",
             "layer": 0,
             "isprefab": false,
             "tagstr": "Default"
@@ -454,17 +377,17 @@
         },
         "audio": [
             {
-                "name": "aud_startMenuAmbienceLoop01",
+                "name": "aud_startMenuAmbienceStart01",
                 "volume": 1.0,
-                "loop": true,
+                "loop": false,
                 "playOnStart": false,
                 "isBGM": false,
                 "isSFX": true
             },
             {
-                "name": "aud_startMenuAmbienceStart01",
+                "name": "aud_startMenuAmbienceLoop01",
                 "volume": 1.0,
-                "loop": false,
+                "loop": true,
                 "playOnStart": false,
                 "isBGM": false,
                 "isSFX": true
@@ -570,5 +493,35 @@
                 }
             }
         ]
+    },
+    {
+        "name": {
+            "namestr": "levelImage",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": 0.002915427088737488,
+                "y": 0.24923281371593475
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 0.4000000059604645,
+                "y": 0.4000000059604645
+            }
+        },
+        "sprite": {
+            "imagefile": "img_uiLevelSelectFrameLevel6.png",
+            "layer": 1,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0,
+            "isLit": false
+        }
     }
 ]

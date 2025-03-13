@@ -79764,7 +79764,7 @@
             "isprefab": true,
             "tagstr": "Default",
             "prefabname": "EndPoint.prefab",
-            "issync": true
+            "issync": false
         },
         "transform": {
             "position": {
@@ -79835,7 +79835,7 @@
                     "map": [
                         {
                             "variable": "NextLevelName",
-                            "base64": "Level2"
+                            "base64": "CutsceneLevel2"
                         }
                     ]
                 }
@@ -81267,7 +81267,7 @@
                 },
                 "sprite": {
                     "imagefile": "img_userManual.png",
-                    "layer": 500,
+                    "layer": 501,
                     "color": {
                         "r": 1.0,
                         "g": 1.0,
@@ -81288,10 +81288,10 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 6.017176628112793,
+                        "x": 9.127551078796387,
                         "y": 5.757751941680908
                     },
-                    "rotation": -0.0,
+                    "rotation": 0.0,
                     "scale": {
                         "x": 4.0,
                         "y": 4.0
@@ -81338,7 +81338,7 @@
                 },
                 "sprite": {
                     "imagefile": "ani_inventoryCloseButton_strip2.png",
-                    "layer": 501,
+                    "layer": 533,
                     "color": {
                         "r": 1.0,
                         "g": 1.0,
@@ -81448,7 +81448,7 @@
                 },
                 "sprite": {
                     "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
-                    "layer": 502,
+                    "layer": 534,
                     "color": {
                         "r": 1.0,
                         "g": 1.0,
@@ -81527,7 +81527,7 @@
                         "g": 0.0,
                         "b": 0.0
                     },
-                    "layer": 503
+                    "layer": 535
                 }
             }
         ]
@@ -82065,7 +82065,7 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 0.39932894706726074,
+                        "x": 0.1307675838470459,
                         "y": 3.277216911315918
                     },
                     "rotation": 0.0,
@@ -82098,7 +82098,7 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 0.4092021584510803,
+                        "x": 0.2382989525794983,
                         "y": 1.2865631580352783
                     },
                     "rotation": 0.0,

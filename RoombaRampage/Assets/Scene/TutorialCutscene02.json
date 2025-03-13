@@ -216,7 +216,7 @@
                     "map": [
                         {
                             "variable": "buttonFunctionNo",
-                            "base64": "CgAAAMzMzMwA"
+                            "base64": "AgAAAMzMzMwA"
                         }
                     ]
                 }
@@ -406,24 +406,7 @@
                 }
             ]
         },
-        "audio": [
-            {
-                "name": "aud_startMenuAmbienceStart01",
-                "volume": 1.0,
-                "loop": false,
-                "playOnStart": false,
-                "isBGM": false,
-                "isSFX": true
-            },
-            {
-                "name": "aud_startMenuAmbienceLoop01",
-                "volume": 1.0,
-                "loop": true,
-                "playOnStart": false,
-                "isBGM": false,
-                "isSFX": true
-            }
-        ]
+        "audio": []
     },
     {
         "name": {

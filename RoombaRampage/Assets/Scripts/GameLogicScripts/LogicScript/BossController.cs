@@ -51,7 +51,7 @@ public class BossController : ScriptBase
     private float attackCooldown = 4.0f;
 
     public int forceFieldHealth = 3;
-    public int bossHealth = 18;
+    public int bossHealth = 21;
     public bool isForceFieldActive = true;
     private string forceFieldPrefab = "Boss_Forcefield";
 
@@ -66,13 +66,13 @@ public class BossController : ScriptBase
 
     #region Enemy Spawning
     private uint[] enemySpawnPoints; // Store spawn point entity IDs
-    private string[] enemyPrefabs = { "FearlessEnemyStatic" };
+    private string[] enemyPrefabs = { "prefab_Enemy_Alert" };
 
     //private string[] enemyPrefabs = { "FearlessEnemy" };
     private List<uint> activeEnemies = new List<uint>();
 
     //private float enemySpawnCooldown = 10.0f;
-    private int maxEnemies = 2;
+    private int maxEnemies = 4;
     #endregion
 
 
@@ -340,7 +340,7 @@ public class BossController : ScriptBase
             //}
             SpawnEnemy();
 
-            float randomDelay = GenerateRandom(10, 14);
+            float randomDelay = GenerateRandom(3, 5);
             yield return new CoroutineManager.WaitForSeconds(randomDelay);
         }
     }
@@ -361,7 +361,7 @@ public class BossController : ScriptBase
         // Spawn the enemy
         uint enemyID = (uint)InternalCall.m_InternalCallAddPrefab(enemyType, spawnPosition.X, spawnPosition.Y, 0);
 
-        Console.WriteLine($"[Boss] Spawned {enemyType} at {spawnPosition.X}, {spawnPosition.Y}");
+        //Console.WriteLine($"[Boss] Spawned {enemyType} at {spawnPosition.X}, {spawnPosition.Y}");
         activeEnemies.Add(enemyID);
     }
     #endregion
@@ -539,7 +539,15 @@ public class BossController : ScriptBase
                     InternalCall.m_InternalCallPlayAudio(EntityID, shieldDamageSound01);
                     InternalCall.m_InternalCallPlayAudio(EntityID, shieldDamageSound02);
 
-                    forceFieldHealth--;
+                    if (entityTag == "MeleeKillZoneSpawn")
+                    {
+                        forceFieldHealth -= 2;
+                    }
+                    else
+                    {
+                        forceFieldHealth -= 1;
+                    }
+                    
                     //Console.WriteLine($"[Boss] Force Field hit! Remaining Health: {forceFieldHealth}");
 
                     if (forceFieldHealth <= 0)

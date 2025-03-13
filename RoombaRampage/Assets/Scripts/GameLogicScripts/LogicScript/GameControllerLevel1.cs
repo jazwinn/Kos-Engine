@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 public class GameControllerLevel1 : ScriptBase
 {
@@ -30,6 +31,9 @@ public class GameControllerLevel1 : ScriptBase
 
     public override void Start()
     {
+        LevelSelection.SceneName = Path.GetFileNameWithoutExtension(InternalCall.m_GetScenefromID(EntityID));
+        //Console.WriteLine(LevelSelection.SceneName);
+
         blockDoorPrefab = "door_block";
         isActivated = false;
         isBossDead = false;
@@ -58,6 +62,12 @@ public class GameControllerLevel1 : ScriptBase
         InternalCall.m_DisableLayer(6); //Disable How To Play UI
         InternalCall.m_DisableLayer(9); //Disable Death Screen UI
         InternalCall.m_DisableLayer(16); //Disable sound UI
+
+        InternalCall.m_EnableLayer(1);
+        InternalCall.m_EnableLayer(2);
+        InternalCall.m_EnableLayer(3);
+        InternalCall.m_EnableLayer(4);
+        InternalCall.m_EnableLayer(5);
     }
 
     public override void Update()
