@@ -270,7 +270,6 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         if (isDead || PlayerController.isDead || GameControllerLevel1.gameIsPaused) return;
         CheckForCollisions(); //Checks for collisions in the event an enemy touches the player
         CheckWalking();
-        Console.WriteLine($"Total Memory Used: {GC.GetTotalMemory(false)} bytes");
         currentState.DoActionUpdate(InternalCall.m_InternalCallGetDeltaTime()); //Update the current state's DoActionUpdate function, such as patrolling, chasing etc, with delta time
     }
 
