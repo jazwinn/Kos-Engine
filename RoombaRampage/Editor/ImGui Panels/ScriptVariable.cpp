@@ -64,6 +64,9 @@ namespace scripteditor {
         void* iter = nullptr;
         MonoClassField* field;
         while ((field = mono_class_get_fields(scriptclass, &iter)) != nullptr) {
+
+            if(mono_field_get_flags(field) & 0x0010)return; // 0x0010 means static
+
             // Check if the field is public
             if ((mono_field_get_flags(field) & 0x0006) == 0x0006) { //0x0006 representing public
                 const char* fieldName = mono_field_get_name(field);
