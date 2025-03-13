@@ -482,7 +482,15 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         yield return null;
         //yield return new CoroutineManager.WaitForSeconds(enemyBloodPoolSpawnDelay); //Waits for time before moving to next line;
 
-        InternalCall.m_InternalCallAddPrefab("prefab_enemyBloodPool", transformComp.m_position.X, transformComp.m_position.Y, transformComp.m_rotation); //Spawns blood pool
+        
+        int poolId = InternalCall.m_InternalCallAddPrefab("prefab_enemyBloodPool", transformComp.m_position.X, transformComp.m_position.Y, transformComp.m_rotation); //Spawns blood pool
+        if(enemyType == EnemySelection.Ranged || enemyType == EnemySelection.AlertRanged)
+        {
+            SpriteComponent sc = Component.Get<SpriteComponent>(EntityID);
+            sc.m_color = new Vector3();
+            Component.Set<SpriteComponent>((uint)poolId, sc);
+            //sc.m_color = 
+        }
     }
     #endregion
 
