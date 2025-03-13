@@ -1,7 +1,7 @@
 [
     {
         "GlobalSettings": {
-            "globalIllumination": 0.2199999988079071,
+            "globalIllumination": 0.05999999865889549,
             "backgroundColor": {
                 "r": 0.0,
                 "g": 0.0,
@@ -11,8 +11,8 @@
     },
     {
         "CursorSettings": {
-            "cursorImage": "./Assets/Texture/UI/img_startScreenCursor.png",
-            "isCursorCentered": false
+            "cursorImage": "./Assets/Texture/UI/img_inGameCursor.png",
+            "isCursorCentered": true
         }
     },
     {

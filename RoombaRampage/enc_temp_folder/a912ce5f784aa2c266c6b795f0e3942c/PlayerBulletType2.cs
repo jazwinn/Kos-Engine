@@ -177,6 +177,8 @@ public class PlayerBulletType2 : ScriptBase
                         break;
 
                     case "Player":
+                    case "Enemy":
+                    case "Boss":
                         bulletHasHit = true;
                         InternalCall.m_InternalCallDeleteEntity(EntityID);
 
