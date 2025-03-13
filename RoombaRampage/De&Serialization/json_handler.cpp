@@ -152,6 +152,18 @@ namespace Serialization {
 					helper->m_colour.m_z = bgColor["b"].GetFloat();
 				}
 			}
+			// Load Cursor Settings
+			if (entry.HasMember("CursorSettings")) {
+				const rapidjson::Value& cursorSettings = entry["CursorSettings"];
+				Helper::Helpers* helper = Helper::Helpers::GetInstance();
+
+				if (cursorSettings.HasMember("cursorImage")) {
+					helper->m_currMousePicture = cursorSettings["cursorImage"].GetString();
+				}
+				if (cursorSettings.HasMember("isCursorCentered")) {
+					helper->m_isMouseCentered = cursorSettings["isCursorCentered"].GetBool();
+				}
+			}
 		}
 
 		/*******************INSERT INTO FUNCTION*****************************/
@@ -160,9 +172,10 @@ namespace Serialization {
 		for (rapidjson::SizeType i = 0; i < doc.Size(); i++) {
 			const rapidjson::Value& entityData = doc[i];
 
-			if (entityData.HasMember("GlobalSettings")) {
+			if (entityData.HasMember("GlobalSettings") || entityData.HasMember("CursorSettings")) {
 				continue;
 			}
+
 
 			m_LoadEntity(entityData, std::nullopt, scenename);
 		}
@@ -199,6 +212,15 @@ namespace Serialization {
 		rapidjson::Value settingsWrapper(rapidjson::kObjectType);
 		settingsWrapper.AddMember("GlobalSettings", globalSettings, allocator);
 		doc.PushBack(settingsWrapper, allocator);
+
+		// Save Cursor Settings
+		rapidjson::Value cursorSettings(rapidjson::kObjectType);
+		cursorSettings.AddMember("cursorImage", rapidjson::Value(helper->m_currMousePicture.c_str(), allocator), allocator);
+		cursorSettings.AddMember("isCursorCentered", helper->m_isMouseCentered, allocator);
+
+		rapidjson::Value cursorWrapper(rapidjson::kObjectType);
+		cursorWrapper.AddMember("CursorSettings", cursorSettings, allocator);
+		doc.PushBack(cursorWrapper, allocator);
 
 		//Start saving the entities
 		std::vector<ecs::EntityID> entities = ecs->m_ECS_SceneMap.find(scene.filename().string())->second.m_sceneIDs;
@@ -612,6 +634,8 @@ namespace Serialization {
 				par.AddMember("lifeSpan", particle->m_lifeSpan, allocator);
 				par.AddMember("velocityX", particle->m_velocity.m_x, allocator);
 				par.AddMember("velocityY", particle->m_velocity.m_y, allocator);
+				par.AddMember("sizeX", particle->m_particleSize.m_x, allocator);
+				par.AddMember("sizeY", particle->m_particleSize.m_y, allocator);
 				par.AddMember("accelerationX", particle->m_acceleration.m_x, allocator);
 				par.AddMember("accelerationY", particle->m_acceleration.m_y, allocator);
 				par.AddMember("colorR", particle->m_color.m_x, allocator);
@@ -626,6 +650,8 @@ namespace Serialization {
 				par.AddMember("layer", particle->m_layer, allocator);
 				par.AddMember("friction", particle->m_friction, allocator);
 				par.AddMember("fps", particle->m_fps, allocator);
+				par.AddMember("loopAnimation", particle->m_loopAnimation, allocator);
+
 
 				entityData.AddMember("particle", par, allocator);
 				hasComponents = true;
@@ -651,6 +677,9 @@ namespace Serialization {
 					audioObject.AddMember("volume", audioFile.m_Volume, allocator);
 					audioObject.AddMember("loop", audioFile.m_Loop, allocator);
 					audioObject.AddMember("playOnStart", audioFile.m_PlayOnStart, allocator);
+					audioObject.AddMember("isBGM", audioFile.m_IsBGM, allocator);
+					audioObject.AddMember("isSFX", audioFile.m_IsSFX, allocator);
+
 
 					audioArray.PushBack(audioObject, allocator);
 				}
@@ -1243,6 +1272,12 @@ namespace Serialization {
 					if (audioObject.HasMember("playonstart")) {
 						audioFile.m_PlayOnStart = audioObject["playonstart"].GetBool();
 					}
+					if (audioObject.HasMember("isBGM")) {
+						audioFile.m_IsBGM = audioObject["isBGM"].GetBool();
+					}
+					if (audioObject.HasMember("isSFX")) {
+						audioFile.m_IsSFX = audioObject["isSFX"].GetBool();
+					}
 
 					ac->m_AudioFiles.push_back(audioFile);
 				}
@@ -1354,6 +1389,8 @@ namespace Serialization {
 				if (par.HasMember("lifeSpan")) particle->m_lifeSpan = par["lifeSpan"].GetFloat();
 				if (par.HasMember("velocityX")) particle->m_velocity.m_x = par["velocityX"].GetFloat();
 				if (par.HasMember("velocityY")) particle->m_velocity.m_y = par["velocityY"].GetFloat();
+				if (par.HasMember("sizeX")) particle->m_particleSize.m_x = par["sizeX"].GetFloat();
+				if (par.HasMember("sizeY")) particle->m_particleSize.m_y = par["sizeY"].GetFloat();
 				if (par.HasMember("accelerationX")) particle->m_acceleration.m_x = par["accelerationX"].GetFloat();
 				if (par.HasMember("accelerationY")) particle->m_acceleration.m_y = par["accelerationY"].GetFloat();
 				if (par.HasMember("colorR")) particle->m_color.m_x = par["colorR"].GetFloat();
@@ -1368,6 +1405,7 @@ namespace Serialization {
 				if (par.HasMember("layer")) particle->m_layer = par["layer"].GetInt();
 				if (par.HasMember("friction")) particle->m_friction = par["friction"].GetFloat();
 				if (par.HasMember("fps")) particle->m_fps = par["fps"].GetInt();
+				if (par.HasMember("loopAnimation")) particle->m_willSpawn = par["loopAnimation"].GetBool();
 			}
 		}
 

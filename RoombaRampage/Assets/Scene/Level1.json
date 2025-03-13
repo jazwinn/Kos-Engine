@@ -10,6 +10,12 @@
         }
     },
     {
+        "CursorSettings": {
+            "cursorImage": "./Assets/Texture/UI/img_startScreenCursor.png",
+            "isCursorCentered": false
+        }
+    },
+    {
         "name": {
             "namestr": "EnemiesParent",
             "layer": 0,
@@ -69981,7 +69987,7 @@
                 "x": -25.0,
                 "y": 36.901615142822266
             },
-            "rotation": -0.0,
+            "rotation": -182.5,
             "scale": {
                 "x": 8.0,
                 "y": 8.0

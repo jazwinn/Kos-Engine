@@ -106,7 +106,7 @@ namespace graphicpipe
 		m_funcDrawDebug();
 		m_funcDrawGrid();
 		m_funcDrawGridCollider();
-		m_funcDrawParticles();
+		
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		glDisable(GL_DEPTH_TEST);

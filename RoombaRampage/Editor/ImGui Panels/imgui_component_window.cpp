@@ -2288,6 +2288,16 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                              oldValP = *rbc;
                          }
                      }
+                     if (toDraw(rbc->m_particleSize)) {
+                         if ((dragfloat::DragFloatCheck::m_GetInstance()->m_GetPrevMem() != dragfloat::Member::PARTICLENUM)) {
+                             oldValP = *rbc;
+                         }
+                         if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::PARTICLE, dragfloat::Member::PARTICLENUM)) {
+                             events::ModifyParticle action(ecs::TYPEPARTICLECOMPONENT, entityID, rbc, oldValP);
+                             DISPATCH_ACTION_EVENT(action);
+                             oldValP = *rbc;
+                         }
+                     }
                      if (toDraw(rbc->m_velocity)) {
                          if ((dragfloat::DragFloatCheck::m_GetInstance()->m_GetPrevMem() != dragfloat::Member::PARTICLENUM)) {
                              oldValP = *rbc;
@@ -2388,6 +2398,13 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                              oldValP = *rbc;
                          }
                      }
+
+                     if (toDraw(rbc->m_loopAnimation)) {
+                         events::ModifyParticle action(ecs::TYPEPARTICLECOMPONENT, entityID, rbc, oldValP);
+                         DISPATCH_ACTION_EVENT(action);
+                         oldValP = *rbc;
+                     }
+
                      ImVec4 color = ImVec4(rbc->m_color.m_x, rbc->m_color.m_y, rbc->m_color.m_z, 1.f);
 
                      ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
@@ -2436,6 +2453,19 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                              }
                          }
                          ImGui::EndCombo();
+                     }
+       
+                     static bool resetImage = false; 
+                     if (ImGui::Checkbox("Reset Image", &resetImage))
+                     {
+                         if (resetImage)
+                         {
+                             rbc->m_imageFile.clear();
+                             events::ModifyParticle action(ecs::TYPEPARTICLECOMPONENT, entityID, rbc, oldValP);
+                             DISPATCH_ACTION_EVENT(action);
+                             oldValP = *rbc;
+                             resetImage = false;
+                         }
                      }
 
                  }
@@ -2580,11 +2610,41 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                         //vc->ApplyFunction(DrawComponents(vc->Names()));
 
-                        if (toDraw(vc->filename)) {
-                            events::ModifyVideo action(ecs::TYPEVIDEOCOMPONENT, entityID, vc, oldValV);
-                            DISPATCH_ACTION_EVENT(action);
-                            oldValV = *vc;
+                        std::string preview = vc->filename;
+                        toDraw.count++;
+                        ImGui::Text("Filename");
+                        ImGui::SameLine();
+                        if (ImGui::BeginCombo("####add video", preview.c_str()))
+                        {
+                            for (const auto& videoname : assetManager->m_videoManager.m_videopath) {
+
+
+
+                                const bool is_selected{};
+                                if (ImGui::Selectable(videoname.first.c_str(), is_selected)) {
+                                    //TODO for now push back
+                                    vc->filename = videoname.first;
+                                    events::ModifyVideo action(ecs::TYPEVIDEOCOMPONENT, entityID, vc, oldValV);
+                                    DISPATCH_ACTION_EVENT(action);
+                                    oldValV = *vc;
+
+
+                                }
+
+                                // Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
+                                if (is_selected)
+                                    ImGui::SetItemDefaultFocus();
+                            }
+
+                            ImGui::EndCombo();
                         }
+
+
+                        //if (toDraw(vc->filename)) {
+                        //    events::ModifyVideo action(ecs::TYPEVIDEOCOMPONENT, entityID, vc, oldValV);
+                        //    DISPATCH_ACTION_EVENT(action);
+                        //    oldValV = *vc;
+                        //}
                         if (toDraw(vc->pause)) {
                             events::ModifyVideo action(ecs::TYPEVIDEOCOMPONENT, entityID, vc, oldValV);
                             DISPATCH_ACTION_EVENT(action);

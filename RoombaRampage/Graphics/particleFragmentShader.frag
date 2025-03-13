@@ -19,7 +19,7 @@ R"( #version 430 core
 			return;
 		}
 	 
-		if (textureID > 0)
+		if (textureID < 200)
 		{
 			vec4 texColor = texture(textures[textureID], texCoords) * vec4(color);
 

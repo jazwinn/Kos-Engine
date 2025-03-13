@@ -57,25 +57,49 @@ void main()
 
   if (particles[id].framesPerSecond > 0)
   {
-    particles[id].frameTimer += deltaTime;
-
     float frameTime = 1.f / particles[id].framesPerSecond;
     float spriteTotalTime = frameTime * particles[id].stripCount;
-    if (particles[id].frameTimer > spriteTotalTime)
-    {
-        particles[id].frameTimer = 0;
-    }
-    if (frameTime < spriteTotalTime) // Actually Redundant
-    {
-        particles[id].frameNumber = int(particles[id].frameTimer / frameTime);
-    }
-  }
-  else
-  {
-       particles[id].frameTimer = 0;
-  }
-  
 
+    
+    if (particles[id].isActive < 100.f)
+    {
+         particles[id].frameTimer += deltaTime;
+        if (particles[id].frameTimer > spriteTotalTime)
+        {
+            particles[id].frameTimer = 0;
+        }
+        if (frameTime < spriteTotalTime) // Actually Redundant
+        {
+            particles[id].frameNumber = int(particles[id].frameTimer / frameTime);
+        }
+        else
+        {
+            particles[id].frameTimer = 0;
+        }
+    }
+    else
+    {
+        if (particles[id].frameTimer < spriteTotalTime)
+        {
+            particles[id].frameTimer += deltaTime;
+            if (particles[id].frameTimer < spriteTotalTime)
+            {
+                particles[id].frameNumber = int(particles[id].frameTimer / frameTime);
+            }
+            else
+            {
+                particles[id].frameNumber = particles[id].stripCount - 1;
+            }
+        }
+        else
+        {
+         particles[id].frameNumber = particles[id].stripCount - 1;
+        }
+       
+    }
+    
+  
+  }
 
 
 

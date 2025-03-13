@@ -84,7 +84,7 @@ public class CameraFollowPlayerScript : ScriptBase
         // Final camera position = tracked position + shake offset
         trackingPos = new Vector2(trackingPos.X + shakeOffset.X, trackingPos.Y + shakeOffset.Y);
 
-        if (float.IsNaN(trackingPos.X) || float.IsNaN(trackingPos.Y))
+        if (float.IsNaN(trackingPos.X) || float.IsNaN(trackingPos.Y) || float.IsNaN(camTransformComp.m_position.X) || float.IsNaN(camTransformComp.m_position.Y))
         {
             trackingPos = new Vector2(0, 0);
             camTransformComp.m_position = new Vector2(0, 0);
