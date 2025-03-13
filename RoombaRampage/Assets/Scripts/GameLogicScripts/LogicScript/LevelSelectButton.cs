@@ -86,7 +86,7 @@ public class LevelSelectButton : ScriptBase
                 InternalCall.m_EnableLayer(5);
                 break;
             case 60:
-                LevelSelection.SceneName = "Cutscene01";
+                LevelSelection.SceneName = "Level6";
                 InternalCall.m_EnableLayer(6);
                 break;
             default:
