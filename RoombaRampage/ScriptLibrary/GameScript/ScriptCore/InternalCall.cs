@@ -279,6 +279,12 @@ public static class InternalCall
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public static extern int m_InternalCallGetParentID(uint id);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    static public extern float m_GetRandomFloat(float min, float max);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    static public extern int m_GetRandomInt(int min, int max);
 }
 
 
