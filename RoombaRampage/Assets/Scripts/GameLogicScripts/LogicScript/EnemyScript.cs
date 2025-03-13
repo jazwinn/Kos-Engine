@@ -95,7 +95,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     private float enemySpeed = 1.9f;
     private float patrolSpeed = 1.9f;
     private float enemyFOVangle = 180.0f;
-    private float enemyFOVdistance = 12.0f;
+    private float enemyFOVdistance = 10.0f;
 
     private float scanTime = 0f;
     private bool scanning = false;
@@ -270,7 +270,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         if (isDead || PlayerController.isDead || GameControllerLevel1.gameIsPaused) return;
         CheckForCollisions(); //Checks for collisions in the event an enemy touches the player
         CheckWalking();
-        Console.WriteLine($"Total Memory Used: {GC.GetTotalMemory(false)} bytes");
+        
         currentState.DoActionUpdate(InternalCall.m_InternalCallGetDeltaTime()); //Update the current state's DoActionUpdate function, such as patrolling, chasing etc, with delta time
     }
 
@@ -408,7 +408,9 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         }
 
         Component.Set<SpriteComponent>(EntityID, spriteComp); //Sets sprite component
+        KillCounter.killCount++;
     }
+
 
 
     private IEnumerator EnemyDeath(string causeOfDeath) //Coroutine for enemy death

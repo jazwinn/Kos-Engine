@@ -17,30 +17,30 @@
     },
     {
         "name": {
-            "namestr": "GlassWallSprite",
+            "namestr": "Exit Spawn",
             "layer": 10,
             "isprefab": true,
-            "tagstr": "Default",
-            "prefabname": "GlassWallSprite.prefab",
+            "tagstr": "ExitSpawn",
+            "prefabname": "EndPoint.prefab",
             "issync": false
         },
         "transform": {
             "position": {
-                "x": -4.296412392523763e-10,
-                "y": -2.1454880237579346
+                "x": 2.0246949195861816,
+                "y": -22.959794998168945
             },
-            "rotation": 90.0,
+            "rotation": -0.0,
             "scale": {
-                "x": 3.140000104904175,
-                "y": 3.140000104904175
+                "x": 1.0,
+                "y": 1.0
             }
         },
         "collider": {
             "checkcollision": true,
             "checkresponse": false,
             "size": {
-                "x": 0.11999999731779099,
-                "y": 1.2999999523162842
+                "x": 1.0,
+                "y": 1.0
             },
             "offset": {
                 "x": 0.0,
@@ -75,8 +75,8 @@
             "static": false
         },
         "sprite": {
-            "imagefile": "ani_glassWallAnim_strip4.png",
-            "layer": 6,
+            "imagefile": "",
+            "layer": 1,
             "color": {
                 "r": 1.0,
                 "g": 1.0,
@@ -85,31 +85,19 @@
             "alpha": 1.0,
             "isLit": true
         },
-        "animation": {
-            "frameNumber": 0,
-            "framesPerSecond": 20,
-            "frameTimer": 0.0,
-            "isAnimating": false,
-            "stripCount": 4
-        },
         "script": {
             "scripts": [
                 {
-                    "name": "Prop_GlassWall",
+                    "name": "LevelTransition",
                     "enabled": true,
-                    "map": []
+                    "map": [
+                        {
+                            "variable": "NextLevelName",
+                            "base64": "Cutscene05"
+                        }
+                    ]
                 }
             ]
-        },
-        "audio": [
-            {
-                "name": "aud_glassBreak01",
-                "volume": 0.48899999260902405,
-                "loop": false,
-                "playOnStart": false,
-                "isBGM": false,
-                "isSFX": true
-            }
-        ]
+        }
     }
 ]
