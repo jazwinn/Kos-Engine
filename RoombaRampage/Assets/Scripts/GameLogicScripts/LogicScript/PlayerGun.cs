@@ -1039,7 +1039,7 @@ public class PlayerGun : ScriptBase
 
                 if (tempRight >= strip)
                 {
-                    tempLeft = strip - 1;
+                    tempRight = strip - 1;
                 }
 
 
