@@ -32,7 +32,7 @@ public class PlayerBulletType2 : ScriptBase
         //Get forward vector Y
         forwardY = (float)(Math.Cos(rotationInRadians));
 
-        BulletRichochet = 4;
+        BulletRichochet = 3;
     }
     #endregion
 
@@ -174,6 +174,11 @@ public class PlayerBulletType2 : ScriptBase
    
 
 
+                        break;
+
+                    case "Enemy":
+                    case "Boss":
+                        BulletRichochet--;
                         break;
 
                     case "Player":
