@@ -42,47 +42,45 @@ namespace graphicpipe {
 
     struct EmitterData
     {
-        int m_noOfParticles{};
-        float m_lifeSpan{};
-        glm::vec2 m_position{};
-        glm::vec2 m_velocity{};
-        glm::vec2 m_acceleration{};
-        glm::vec2 m_scale{};
-        glm::vec4 m_color{};
-        float m_rotation{};
-        float m_coneRotation{}; //Cone Rotation
-        float m_coneAngle{}; //
-        float m_randomFactor{};
-        unsigned int m_textureID{};
-        int m_stripCount{};
-        int m_frameNumber{};
-        int m_framesPerSecond{};
-        bool m_loopAnimation{};
-        int m_layer{};
-        float m_friction{};
+        int m_noOfParticles{};      ///< Number of particles emitted.
+        float m_lifeSpan{};        ///< Lifespan of each particle in seconds.
+        glm::vec2 m_position{};    ///< Emitter's position in world space.
+        glm::vec2 m_velocity{};    ///< Initial velocity of emitted particles.
+        glm::vec2 m_acceleration{}; ///< Acceleration applied to particles over time.
+        glm::vec2 m_scale{};       ///< Scale of emitted particles.
+        glm::vec4 m_color{};       ///< Initial color of emitted particles.
+        float m_rotation{};        ///< Initial rotation of emitted particles in degrees.
+        float m_coneRotation{};    ///< Rotation of the emission cone in degrees.
+        float m_coneAngle{};       ///< Spread angle of emitted particles in degrees.
+        float m_randomFactor{};    ///< Randomness applied to particle attributes.
+        unsigned int m_textureID{}; ///< Texture ID for particle rendering.
+        int m_stripCount{};        ///< Number of sprite strip frames.
+        int m_frameNumber{};       ///< Current animation frame.
+        int m_framesPerSecond{};   ///< Animation speed in frames per second.
+        bool m_loopAnimation{};    ///< Whether the animation should loop.
+        int m_layer{};             ///< Rendering layer order.
+        float m_friction{};        ///< Friction applied to slow down particles.
     };
 
     struct ParticleData
     {
-        float m_lifeSpan;
-        float m_rotation;
-        float m_isActive;
-        int m_textureID;
-        int m_stripCount;
-        int m_frameNumber;
-        int m_layer;
-        float m_initialEmissionAngle;
-        glm::vec2 m_position;
-        glm::vec2 m_velocity;
-        glm::vec2 m_acceleration;
-        glm::vec2 m_scale;
-  
-        glm::vec4 m_color;
-
-        float m_friction;
-        int m_framesPerSecond{};
-        float m_animationTimer{};
-        float padding3{};
+        float m_lifeSpan;            ///< Remaining lifespan of the particle.
+        float m_rotation;            ///< Current rotation of the particle in degrees.
+        float m_isActive;            ///< Flag indicating whether the particle is active.
+        int m_textureID;             ///< Texture ID used for rendering the particle.
+        int m_stripCount;            ///< Number of frames in the sprite strip.
+        int m_frameNumber;           ///< Current frame of animation.
+        int m_layer;                 ///< Rendering layer of the particle.
+        float m_initialEmissionAngle; ///< Initial angle at which the particle was emitted.
+        glm::vec2 m_position;        ///< Current position of the particle.
+        glm::vec2 m_velocity;        ///< Current velocity of the particle.
+        glm::vec2 m_acceleration;    ///< Acceleration applied to the particle.
+        glm::vec2 m_scale;           ///< Scale of the particle.
+        glm::vec4 m_color;           ///< Color of the particle.
+        float m_friction;            ///< Friction applied to slow the particle down.
+        int m_framesPerSecond{};     ///< Animation speed in frames per second.
+        float m_animationTimer{};    ///< Timer for animation updates.
+        float padding3{};            ///< Padding to align memory layout.
     };
 
     struct LightingData
@@ -136,18 +134,17 @@ namespace graphicpipe {
         std::string m_fileName;            ///< Font file used for rendering.
     };
 
-    struct VideoData {
-
-        glm::mat3 transformation;
-        GLuint yTexture;
-        GLuint uTexture;
-        GLuint vTexture;
-        GLint locTransformation;
-        GLint locView;
-        GLint locProjection;
-
-        GLuint unilayer;
-        int layer;
+    struct VideoData
+    {
+        glm::mat3 transformation; ///< Transformation matrix for video rendering.
+        GLuint yTexture;          ///< Texture ID for the Y (luminance) channel.
+        GLuint uTexture;          ///< Texture ID for the U (chrominance blue) channel.
+        GLuint vTexture;          ///< Texture ID for the V (chrominance red) channel.
+        GLint locTransformation;  ///< Shader location for the transformation matrix.
+        GLint locView;            ///< Shader location for the view matrix.
+        GLint locProjection;      ///< Shader location for the projection matrix.
+        GLuint unilayer;          ///< Uniform layer used for multi-layer rendering.
+        int layer;                ///< Layer index for rendering order.
     };
 
     /**
@@ -390,9 +387,20 @@ namespace graphicpipe {
          */
         void m_funcDraw();
 
+        /**
+          * @brief Draws all unlit graphical elements.
+          *
+          * Renders objects that do not require lighting calculations, such as UI elements.
+          */
         void m_funcDrawUnlit();
 
+        /**
+         * @brief Draws video textures.
+         *
+         * Renders video frames stored in textures, applying appropriate transformations.
+         */
         void m_funcDrawVideos();
+
 
         /**
          * @brief Draws debug elements.
@@ -450,12 +458,32 @@ namespace graphicpipe {
          */
         void m_drawLightingTexture();
 
+        /**
+          * @brief Draws unlit object textures.
+          *
+          * Renders textures for objects that do not use lighting calculations.
+          */
         void m_funcDrawUnlitObjectTexture();
 
+        /**
+         * @brief Draws debug textures.
+         *
+         * Renders debug-related textures, such as wireframes or overlays.
+         */
         void m_funcDrawDebugTexture();
 
+        /**
+         * @brief Executes the final rendering pass.
+         *
+         * Combines all rendering layers and outputs the final image to the screen.
+         */
         void m_renderFinalPass();
 
+        /**
+         * @brief Executes the final rendering pass with debug overlays.
+         *
+         * Similar to m_renderFinalPass but includes additional debug information.
+         */
         void m_renderFinalPassWithDebug();
 
 
@@ -468,10 +496,21 @@ namespace graphicpipe {
          */
         void m_funcRenderLighting();
 
+        /**
+          * @brief Draws a full-screen quad with a texture.
+          *
+          * Renders a full-screen quad using the specified texture, often used for post-processing effects.
+          *
+          * @param texture The texture to be applied to the full-screen quad.
+          */
         void m_funcDrawFullScreenQuad(unsigned int texture);
 
+        /**
+         * @brief Draws all active particles.
+         *
+         * Renders the particle system, displaying particles with their respective properties such as position, color, and animation.
+         */
         void m_funcDrawParticles();
-
         /**
          * @brief Sets the drawing mode for rendering.
          *
@@ -500,10 +539,19 @@ namespace graphicpipe {
         void m_funcSetupGamePreviewFrameBuffer();
 
 
+        /**
+          * @brief Sets up the final pass buffer.
+          *
+          * Configures the framebuffer and necessary resources for the final rendering pass.
+          */
         void m_funcSetupFinalPassBuffer();
 
+        /**
+         * @brief Sets up the framebuffer for unlit screen rendering.
+         *
+         * Initializes the framebuffer used for rendering unlit objects on the screen.
+         */
         void m_funcSetUpUnlitScreenFrameBuffer();
-
         /**
          * @brief Sets up the framebuffer for lighting rendering.
          *
@@ -541,8 +589,18 @@ namespace graphicpipe {
         */
         void m_funcClearContainers();
 
+        /**
+          * @brief Spawns new particles.
+          *
+          * Generates and initializes new particles based on the emitter's properties.
+          */
         void m_spawnParticles();
 
+        /**
+         * @brief Updates particle properties.
+         *
+         * Updates the position, velocity, lifespan, and animation of active particles over time.
+         */
         void m_updateParticles();
 
         //Boolean Values
