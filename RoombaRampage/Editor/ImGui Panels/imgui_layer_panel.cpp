@@ -16,12 +16,8 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "Editor.h"
-#include "implot.h"
-#include "../Debugging/Logging.h"
-#include "../Debugging/Performance.h"
-#include <../ECS/System/SystemType.h>
-#include <../Application/Helper.h>
 #include "../ECS/Layers.h"
+#include "../De&Serialization/json_handler.h"
 #include "../Debugging/Logging.h"
 
 
@@ -47,10 +43,28 @@ void DrawVerticalLabel(const std::string& text, float x, float y)
 }
 
 void gui::ImGuiHandler::m_DrawLayerWindow() {
-    ImGui::Begin("Layer Panel", nullptr, ImGuiWindowFlags_HorizontalScrollbar);
+    ImGui::Begin("Layer Panel", nullptr, ImGuiWindowFlags_HorizontalScrollbar | ImGuiWindowFlags_MenuBar);
 
     ecs::ECS* ecs = ecs::ECS::m_GetInstance();
     // draw combo box to enable/disable layer
+
+
+
+    //draw menu bar
+    if (ImGui::BeginMenuBar()) {
+        if (ImGui::Button("Save")) {
+           
+            Serialization::Serialize::m_SavePhysicsLayerMatrix(); // Save changes to file
+
+        }
+
+        if (ImGui::Button("Print Layer")) {
+
+            physicsLayer->m_PrintCollisionMatrix();
+
+        }
+        ImGui::EndMenuBar(); // End menu bar
+    }
 
     static bool flag = false;
     for (size_t n{}; n < ecs->m_layersStack.m_layerMap.size(); n++) {
@@ -145,9 +159,6 @@ void gui::ImGuiHandler::m_DrawLayerWindow() {
             ImGui::PopID();
         }
 
-    }
-    if (ImGui::Button("Print")) {
-        physicsLayer->m_PrintCollisionMatrix();
     }
 	ImGui::End();
 }
