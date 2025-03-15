@@ -729,5 +729,17 @@ namespace gui {
 
 
 	}
+
+	bool containsSubstring(const std::string& x, const std::string& y) {
+		// Convert both strings to lowercase
+		std::string lower_x = x;
+		std::string lower_y = y;
+
+		std::transform(lower_x.begin(), lower_x.end(), lower_x.begin(), ::tolower);
+		std::transform(lower_y.begin(), lower_y.end(), lower_y.begin(), ::tolower);
+
+		// Check if the lowercase version of y is found in x
+		return lower_x.find(lower_y) != std::string::npos;
+	}
 }
 

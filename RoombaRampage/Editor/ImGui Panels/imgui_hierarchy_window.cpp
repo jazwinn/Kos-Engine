@@ -33,7 +33,13 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include <mono/metadata/assembly.h>
 #include <mono/metadata/debug-helpers.h>
 
+
+
 namespace gui {
+
+    
+
+
     unsigned int ImGuiHandler::m_DrawHierachyWindow()
     {
         //fetch ecs
@@ -41,8 +47,7 @@ namespace gui {
         scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();
         //assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
         // Custom window with example widgets
-        bool open = true;
-        ImGui::Begin("Hierachy Window", &open);
+        ImGui::Begin("Hierachy Window", nullptr, ImGuiWindowFlags_MenuBar);
 
         //if (ImGui::BeginMenuBar())
         //{
@@ -52,6 +57,20 @@ namespace gui {
 
       /* std::string ObjectCountStr = "Oject Count: " + std::to_string(ecs->m_ECS_EntityMap.size());
         ImGui::Text(ObjectCountStr.c_str());*/
+
+        static std::string searchString;
+        if (m_prefabSceneMode)searchString.clear();
+
+        //menu bar for search
+        ImGui::Text("Search:");
+        ImGui::SameLine(); // Keep the next widget on the same line
+        if (ImGui::BeginMenuBar()) {
+            if (ImGui::InputText("###1234Search", &searchString)) {
+
+            }
+            ImGui::EndMenuBar(); // End menu bar
+        }
+
 
         if (ImGui::Button("+ Add GameObject"))
             ImGuiHandler::m_objectNameBox ? ImGuiHandler::m_objectNameBox = false : m_objectNameBox = true;
@@ -250,6 +269,11 @@ namespace gui {
 
 
                 for (auto entity : sceneentity.second.m_sceneIDs) {
+
+                    //search bar if if string not empty, must match the entity name
+                    ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(entity));
+                    if (!searchString.empty() && !containsSubstring(nc->m_entityName, searchString))continue;
+
                     //draw parent entity node
                     //draw entity with no parents hahaha
                     if (!ecs::Hierachy::m_GetParent(entity).has_value()) {
@@ -533,8 +557,6 @@ namespace gui {
 
         return true;
     }
-
-
 
 
 }

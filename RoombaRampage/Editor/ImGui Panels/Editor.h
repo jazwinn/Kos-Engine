@@ -26,6 +26,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
+#include "imgui_stdlib.h"
 #include "ImGuizmo.h"
 #include "../ECS/ECS.h"
 #include "../Asset Manager/Audio.h"
@@ -325,7 +326,6 @@ namespace gui {
         /******************************************************************/
         void m_UpdateOnPrefabMode();
 
-
         int m_clickedEntityId{ -1 };
 
         std::string m_activeScene{};
@@ -379,4 +379,8 @@ namespace gui {
 
         
 };
+
+
+bool containsSubstring(const std::string& x, const std::string& y);
+
 }

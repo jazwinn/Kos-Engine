@@ -27,7 +27,7 @@ namespace gui {
 	static std::filesystem::path assetDirectory = "Assets";
 	static std::filesystem::path currentDirectory  = assetDirectory;
 	static const char* fileIcon = "img_folderIcon.png";
-
+	static std::string searchString;
 
 	void MoveFolder(const std::filesystem::path& newDirectory) {
 		if (ImGui::BeginDragDropTarget())
@@ -49,6 +49,8 @@ namespace gui {
 			ImGui::EndDragDropTarget();
 		}
 	}
+
+
 
 	void ImGuiHandler::m_DrawContentBrowser() {
 
@@ -78,6 +80,8 @@ namespace gui {
 
 					if (std::filesystem::is_directory(directoryPath)) {
 						currentDirectory = assetDirectory / directoryPath.path().filename();
+						//reset search string
+						searchString.clear();
 					}
 
 
@@ -102,7 +106,7 @@ namespace gui {
 		}
 		else
 		{
-			ImGui::BeginChild("ChildLa", ImVec2(0, ImGui::GetContentRegionAvail().y));
+			ImGui::BeginChild("ChildLa", ImVec2(0, ImGui::GetContentRegionAvail().y) , 0 , ImGuiWindowFlags_MenuBar);
 
 			if (ImGui::BeginPopupContextWindow()) {
 				if (ImGui::MenuItem("Add Folder")) {
@@ -130,6 +134,20 @@ namespace gui {
 				ImGui::EndPopup();
 			}
 
+			//search bar
+			if (m_prefabSceneMode)searchString.clear();
+
+			//menu bar for search
+
+			if (ImGui::BeginMenuBar()) {
+				ImGui::Text("Search:");
+				ImGui::SameLine(); // Keep the next widget on the same line
+				ImGui::SetNextItemWidth(300);
+				if (ImGui::InputText("##4312Search", &searchString)) {
+
+				}
+				ImGui::EndMenuBar(); // End menu bar
+			}
 
 			//back button
 			
@@ -138,6 +156,7 @@ namespace gui {
 				MoveFolder(currentDirectory.parent_path());
 				if (open) {
 					currentDirectory = currentDirectory.parent_path();
+					searchString.clear();
 				}
 				
 			}
@@ -179,6 +198,13 @@ namespace gui {
 			for (auto& directoryPath : std::filesystem::directory_iterator(currentDirectory)) {
 				std::string directoryString = directoryPath.path().filename().string();
 
+				if (!searchString.empty() && !containsSubstring(directoryString, searchString)) {
+
+
+					continue;
+				}
+				
+
 				if (directoryPath.is_directory()) {
 					// if a folder
 					textorimage(directoryString, fileIcon);
@@ -188,6 +214,9 @@ namespace gui {
 
 					if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
 						currentDirectory /= directoryPath.path().filename();
+
+						//reset search
+						searchString.clear();
 					}
 				}
 				else {

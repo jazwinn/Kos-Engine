@@ -19,7 +19,6 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "Editor.h"
-#include "imgui_stdlib.h"
 #include "../ECS/ECS.h"
 #include "../Asset Manager/AssetManager.h"
 #include "../Graphics/GraphicsPipe.h"
@@ -37,12 +36,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Dependencies/rapidjson/filereadstream.h"
 #pragma warning(pop)
 
-#include<vector>
-#include<string>
-#include <iostream>
-#include <filesystem>
-#include <type_traits>
-#include <typeinfo>
+
 
 
 static const float slider_start_pos_x = 100.0f; //Padding for the slider
