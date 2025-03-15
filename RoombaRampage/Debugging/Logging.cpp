@@ -37,13 +37,22 @@ namespace logging {
     \param[in] filename  The name of the file to log messages to.
     */
     /******************************************************************/
-    Logger::Logger(const std::string& filename)
-    {
-        m_logFile.open(filename,std::ios::out | std::ios::trunc);
-        //std::cout << filename << std::endl;
+    Logger::Logger(const std::string& filename) {
+        // Attempt to open the log file in append mode to ensure it exists
+        std::ofstream tempFile(filename, std::ios::app);
+        if (!tempFile) {
+#ifdef IMGUIENABLED
+            std::cerr << "Error: Unable to create or access log file: " << filename << std::endl;
+#endif
+            return;
+        }
+        tempFile.close(); // Close temp file
+
+        // Open the actual log file for writing (clears existing content)
+        m_logFile.open(filename, std::ios::out | std::ios::trunc);
         if (!m_logFile.is_open()) {
 #ifdef IMGUIENABLED
-            std::cerr << "Error opening log file." << std::endl;
+            std::cerr << "Error: Failed to open log file for writing: " << filename << std::endl;
 #endif
         }
     }
