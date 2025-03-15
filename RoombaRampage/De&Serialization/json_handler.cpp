@@ -1503,7 +1503,7 @@ namespace Serialization {
 		LOGGING_INFO("Collision matrix loaded from LayerConfig.txt");
 	}
 
-	void Serialization::Serialize::m_SaveGlobaalSettings()
+	/*void Serialization::Serialize::m_SaveGlobaalSettings()
 	{
 		std::ofstream file("./Config/GlobalConfig.txt");
 		if (!file.is_open()) {
@@ -1550,7 +1550,7 @@ namespace Serialization {
 
 		file.close();
 		LOGGING_INFO("Global Settings loaded from GlobalConfig.txt");
-	}
+	}*/
 	std::string Serialize::m_EncodeBase64(const void* data, size_t size)
 	{
 		static const char encodingTable[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";

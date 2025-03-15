@@ -101,6 +101,10 @@ void gui::ImGuiHandler::m_DrawMainMenuBar() {
 
         if (ImGui::BeginMenu("Window"))
         {
+            if (ImGui::MenuItem("Save Layout")) {
+                SaveLayout();
+                
+            }
 
             ImGui::EndMenu();
         }
