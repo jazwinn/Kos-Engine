@@ -325,6 +325,7 @@ namespace gui {
         /******************************************************************/
         void m_UpdateOnPrefabMode();
 
+
         int m_clickedEntityId{ -1 };
 
         std::string m_activeScene{};
@@ -342,6 +343,40 @@ namespace gui {
         std::vector<std::string>m_tags;
 
         ImVec4 clearColor = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+
+
+        std::string m_imgui_layout = "Editor/Imgui Panels/imgui.ini";
+
+        inline void SaveLayout() {
+
+            if (!ImGui::GetCurrentContext()) {
+                std::cout << "Warning: No ImGui context found. Skipping LoadLayout()." << std::endl;
+                return;
+            }
+            std::ifstream file(m_imgui_layout);
+            if (!file.good()) {
+                std::cout << "Layout file not found: " << m_imgui_layout << std::endl;
+                return;
+            }
+
+            ImGui::SaveIniSettingsToDisk(m_imgui_layout.c_str());
+        }
+
+        inline void LoadLayout()
+        {
+            if (!ImGui::GetCurrentContext()) {
+                std::cout << "Warning: No ImGui context found. Skipping LoadLayout()." << std::endl;
+                return;
+            }
+            std::ifstream file(m_imgui_layout);
+            if (!file.good()) {
+                std::cout << "Layout file not found: " << m_imgui_layout << std::endl;
+                return;
+            }
+
+            ImGui::LoadIniSettingsFromDisk(m_imgui_layout.c_str());
+        }
+
         
 };
 }

@@ -31,7 +31,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 void gui::ImGuiHandler::m_DrawGlobalSettingsWindow() 
 {
-    ImGui::Begin("Global Settings", nullptr, ImGuiWindowFlags_HorizontalScrollbar);
+    ImGui::Begin("Scene Settings", nullptr, ImGuiWindowFlags_HorizontalScrollbar);
 
     graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
     Helper::Helpers* helper = Helper::Helpers::GetInstance();

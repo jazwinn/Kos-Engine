@@ -120,7 +120,7 @@ namespace gui {
 
                     //save all active scenes
                     scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();
-                    scenemanager->m_SaveAllActiveScenes();
+                    scenemanager->m_SaveAllActiveScenes(true); //do not include prefab
 
                     std::thread load(DrawLoading);
                     assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();

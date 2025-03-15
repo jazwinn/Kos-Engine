@@ -116,7 +116,7 @@ namespace scenes {
 					   ensuring that all scenes are up-to-date.
 		*/
 		/******************************************************************/
-		void m_SaveAllActiveScenes();
+		void m_SaveAllActiveScenes(bool includeprefab = false);
 
 		/******************************************************************/
 		/*!

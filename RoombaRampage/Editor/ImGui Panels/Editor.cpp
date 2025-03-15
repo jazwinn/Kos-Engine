@@ -87,9 +87,16 @@ namespace gui {
 
 	void ImGuiHandler::m_Initialize(GLFWwindow* window, const char* glsl_version)
 	{
+		
+		
 		// Setup Dear ImGui context
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
+		ImGui::SetCurrentContext(ImGui::GetCurrentContext()); // Ensure context is set
+
+		ImGui::GetIO().IniFilename = nullptr;
+
+
 		ImGuiIO& io = ImGui::GetIO(); (void)io;
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;  // Enable Gamepad Controls
@@ -167,6 +174,10 @@ namespace gui {
 		// Setup Platform/Renderer bindings
 		ImGui_ImplGlfw_InitForOpenGL(window, true);
 		ImGui_ImplOpenGL3_Init(glsl_version);
+
+
+		// load current layout
+		LoadLayout();
 
 		//set first active scene
 		ecs::ECS* ec = ecs::ECS::m_GetInstance();

@@ -190,11 +190,11 @@
                     "enabled": true,
                     "map": [
                         {
-                            "variable": "yolo",
+                            "variable": "speed",
                             "base64": ""
                         },
                         {
-                            "variable": "speed",
+                            "variable": "yolo",
                             "base64": ""
                         }
                     ]
