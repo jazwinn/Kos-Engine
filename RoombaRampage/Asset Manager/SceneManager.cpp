@@ -227,10 +227,12 @@ namespace scenes {
        
 
     }
-    void SceneManager::m_SaveAllActiveScenes()
+    void SceneManager::m_SaveAllActiveScenes(bool includeprefab)
     {
         ecs::ECS* ecs = ecs::ECS::m_GetInstance();
         for (auto& scenes : ecs->m_ECS_SceneMap) {
+            //skip prefabs
+            if (includeprefab && scenes.second.m_isPrefab) continue;
             m_SaveScene(scenes.first);
         }
        
