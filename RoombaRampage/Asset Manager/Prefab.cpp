@@ -241,8 +241,11 @@ namespace prefab {
         for (size_t n{}; n < ecs::TOTALTYPECOMPONENT; n++) {
 
             //skip transform component and name componetn
-            if ((ecs::ComponentType)n == ecs::TYPENAMECOMPONENT)continue;
-            if ((isPrefabChild == false) && (ecs::ComponentType)n == ecs::TYPETRANSFORMCOMPONENT) {// sync only layers and tagname
+            // if entity is parent and component is transform component, skip
+            if ((isPrefabChild == false) && (ecs::ComponentType)n == ecs::TYPETRANSFORMCOMPONENT)continue;
+
+            //if component is namecomponent, only share layer and entity tag 
+            if ((ecs::ComponentType)n == ecs::TYPENAMECOMPONENT) {// sync only layers and tagname
                 ecs::NameComponent* prefabNc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(sceneprefabID));
                 ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(entityid));
 
