@@ -26,12 +26,10 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "C#Mono/mono_handler.h"
 #include "Events/EventsEventHandler.h"
 
-#ifdef IMGUIENABLED
 	#include "../Editor/ImGui Panels/Editor.h"
 	#include "imgui.h"
 	#include "imgui_impl_glfw.h"
 	#include "imgui_impl_opengl3.h"
-#endif
 /******************************************************************/
 /*!
 \class     Application
@@ -74,9 +72,7 @@ namespace Application {
 
 
 	private:
-#ifdef IMGUIENABLED
 		gui::ImGuiHandler Editor; //should only remain in Application
-#endif
 		AppWindow lvWindow;
 		Input::InputSystem Input;
 		

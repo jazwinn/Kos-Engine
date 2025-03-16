@@ -174,10 +174,6 @@ namespace Application {
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
 
-#ifndef IMGUIENABLED
-        glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-#endif IMGUIENABLED
-
 
 
 

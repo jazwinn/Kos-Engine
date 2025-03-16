@@ -99,7 +99,6 @@ namespace Application {
 
         pipe->m_gameMode = true;
         ecs->m_nextState = ecs::START;
-        assetmanager::AssetManager::m_funcGetInstance()->m_scriptManager.m_ReloadAllDLL(); // MUST HAVE
         
 
         LOGGING_INFO("Application Init Successful");

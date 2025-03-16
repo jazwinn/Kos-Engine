@@ -148,7 +148,7 @@ namespace script {
 					   The method can later be invoked, enabling scripted functionality within the ECS.
 		*/
 		/******************************************************************/
-		bool m_LoadMethod(const std::string& scriptName, const std::string& className, const std::string& methodName, int paramCount);
+		bool m_LoadMethod(const std::string& scriptName, const std::string& className, const std::string&  nameSpace, const std::string& methodName, int paramCount);
 
 		/******************************************************************/
 		/*!

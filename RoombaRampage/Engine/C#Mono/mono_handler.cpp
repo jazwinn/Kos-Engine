@@ -154,7 +154,7 @@ namespace script {
         LOGGING_DEBUG("Successfully Added Script");
     }
 
-    bool ScriptHandler::m_LoadMethod(const std::string& scriptName, const std::string& className, const std::string& methodName, int paramCount) {
+    bool ScriptHandler::m_LoadMethod(const std::string& scriptName, const std::string& className, const std::string& nameSpace, const std::string& methodName, int paramCount) {
         // Find the assembly image for the script
         MonoImage* image = m_loadedDLLMap.find(scriptName)->second.m_image;
         if (!image) {
@@ -163,9 +163,9 @@ namespace script {
         }
 
         // Find the class inside the assembly
-        MonoClass* m_testClass = mono_class_from_name(image, "", className.c_str());
+        MonoClass* m_testClass = mono_class_from_name(image, nameSpace.c_str(), className.c_str());
         if (!m_testClass) {// give exception for gamescript
-            LOGGING_ERROR("Failed to find class: {} in script: {}", className.c_str(), scriptName.c_str());
+            //LOGGING_ERROR("Failed to find class: {} in script: {}", className.c_str(), scriptName.c_str());
             return false;
         }
 
@@ -283,15 +283,43 @@ namespace script {
 
                 std::string filename = directoryPath.path().filename().stem().string();
 
-                for (auto& script : m_CSScripts) {
-                    m_LoadMethod(filename, script.first, "Start", 0);
-                    m_LoadMethod(filename, script.first, "Update", 0);
-                    m_LoadMethod(filename, script.first, "Awake", 1);
-                    
-                    m_LoadMethod(filename, script.first, "LateUpdate",0);
+                //for (auto& script : m_CSScripts) {
+                //    m_LoadMethod(filename, script.first, "Start", 0);
+                //    m_LoadMethod(filename, script.first, "Update", 0);
+                //    m_LoadMethod(filename, script.first, "Awake", 1);
+                //    
+                //    m_LoadMethod(filename, script.first, "LateUpdate",0);
+                //}
+
+                MonoImage* image = m_loadedDLLMap.find(directoryPath.path().filename().stem().string())->second.m_image;
+
+                const MonoTableInfo* typeTable = mono_image_get_table_info(image, MONO_TABLE_TYPEDEF);
+                int numTypes = mono_table_info_get_rows(typeTable);
+
+                for (int i = 1; i < numTypes; i++) { // Start from 1 (skip <Module>)
+                    uint32_t cols[MONO_TYPEDEF_SIZE];
+                    mono_metadata_decode_row(typeTable, i, cols, MONO_TYPEDEF_SIZE);
+
+                    const char* className = mono_metadata_string_heap(image, cols[MONO_TYPEDEF_NAME]);
+                    const char* namespaceName = mono_metadata_string_heap(image, cols[MONO_TYPEDEF_NAMESPACE]);
+
+                    m_LoadMethod(filename, className, namespaceName, "Start", 0);
+                    m_LoadMethod(filename, className, namespaceName, "Update", 0);
+                    m_LoadMethod(filename, className, namespaceName, "Awake", 1);
+                    m_LoadMethod(filename, className, namespaceName, "LateUpdate", 0);
                 }
+
+
+
             }
         }
+
+       
+
+
+
+
+
     }
 
 

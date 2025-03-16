@@ -14,17 +14,11 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 */
 /********************************************************************/
 
-#include <Windows.h>
 #include "Application.h"
-#include "Debugging/Logging.h"
 
-#ifdef _GAME
-    int WINAPI WinMain([[maybe_unused]]HINSTANCE hInstance, [[maybe_unused]] HINSTANCE hPrevInstance, [[maybe_unused]] LPSTR lpCmdLine, [[maybe_unused]] int nCmdShow)
-#else
-    int main()
-#endif _GAME
 
-    
+
+int WINAPI WinMain([[maybe_unused]] HINSTANCE hInstance, [[maybe_unused]] HINSTANCE hPrevInstance, [[maybe_unused]] LPSTR lpCmdLine, [[maybe_unused]] int nCmdShow)
     {
         
         // Enable run-time memory check for debug builds.

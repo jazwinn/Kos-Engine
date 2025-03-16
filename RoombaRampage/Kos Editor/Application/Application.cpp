@@ -99,23 +99,10 @@ namespace Application {
         /*--------------------------------------------------------------
             INITIALIZE EDITOR // LAST INIT
          --------------------------------------------------------------*/
-#ifdef IMGUIENABLED
+
         const char* glsl_version = "#version 130";
         Editor.m_Initialize(lvWindow.m_window, glsl_version);
         LOGGING_INFO("Load ImGui Successful");
-
-#endif 
-
-#ifdef IMGUIENABLED
-        LOGGING_INFO("IMGUIENABLED is defined");
-        
-#else
-        LOGGING_INFO("IMGUIENABLED is undefined");
-        pipe->m_gameMode = true;
-        ecs->m_nextState = ecs::START;
-        assetmanager::AssetManager::m_funcGetInstance()->m_scriptManager.m_ReloadAllDLL(); // MUST HAVE
-        
-#endif      
         
 
         LOGGING_INFO("Application Init Successful");
@@ -177,13 +164,12 @@ namespace Application {
                 --------------------------------------------------------------*/
                 pipe->m_funcUpdate();
 
-#ifdef IMGUIENABLED
 
                 /*--------------------------------------------------------------
                     Update IMGUI FRAME
                 --------------------------------------------------------------*/
                 Editor.m_update();
-#endif
+
 
                 /*--------------------------------------------------------------
                     DRAWING/RENDERING Window
@@ -191,14 +177,11 @@ namespace Application {
                 lvWindow.Draw();
 
 
-
-#ifdef IMGUIENABLED
-
                 /*--------------------------------------------------------------
                     Draw IMGUI FRAME
                 --------------------------------------------------------------*/
                 Editor.m_render();
-#endif
+
                 /*--------------------------------------------------------------
                    Render Game Scene
                 --------------------------------------------------------------*/
@@ -233,9 +216,8 @@ namespace Application {
 
 	int Application::m_Cleanup() {
         ecs::ECS::m_GetInstance()->m_Unload();
-#ifdef IMGUIENABLED
         Editor.m_Shutdown();
-#endif
+
         lvWindow.CleanUp();
         glfwTerminate();
         LOGGING_INFO("Application Closed");
