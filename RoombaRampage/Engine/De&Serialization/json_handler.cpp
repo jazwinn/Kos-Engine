@@ -91,8 +91,9 @@ namespace Serialization {
 			if (temp == "WindowHeight:") str2 >> help->m_windowHeight;
 			if (temp == "WindowWidth:") str2 >> help->m_windowWidth;
 			if (temp == "FpsCap:") str2 >> help->m_fpsCap;
-			if (temp == "StartScene:") str2 >> help->m_startScene;
-		
+			if (temp == "StartScene:")std::getline(str2, help->m_startScene);
+			// Remove leading whitespace
+			help->m_startScene.erase(0, help->m_startScene.find_first_not_of(' '));
 		}
 
 
