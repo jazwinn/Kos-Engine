@@ -62,9 +62,10 @@ namespace gui {
         if (m_prefabSceneMode)searchString.clear();
 
         //menu bar for search
-        ImGui::Text("Search:");
-        ImGui::SameLine(); // Keep the next widget on the same line
+
         if (ImGui::BeginMenuBar()) {
+            ImGui::Text("Search:");
+            ImGui::SameLine(); // Keep the next widget on the same line
             if (ImGui::InputText("###1234Search", &searchString)) {
 
             }
