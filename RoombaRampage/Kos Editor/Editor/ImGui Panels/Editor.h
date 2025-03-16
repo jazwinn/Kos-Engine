@@ -92,6 +92,8 @@ namespace gui {
         /******************************************************************/
         void m_update();
 
+        void m_InputUpdate(GLFWwindow* window);
+
         /******************************************************************/
         /*!
         \fn      void gui::ImGuiHandler::m_render()
@@ -277,7 +279,7 @@ namespace gui {
         \details Displays the current game scene, including entities and their properties, allowing the user to interact with the scene.
         */
         /******************************************************************/
-        void m_DrawGameSceneWindow();
+        void m_DrawGameSceneWindow(std::string windowName);
 
         /******************************************************************/
         /*!
@@ -326,6 +328,8 @@ namespace gui {
         /******************************************************************/
         void m_UpdateOnPrefabMode();
 
+        
+
         int m_clickedEntityId{ -1 };
 
         std::string m_activeScene{};
@@ -344,6 +348,10 @@ namespace gui {
 
         ImVec4 clearColor = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
+        
+        /***********Window Names*************/
+        std::string gamePreviewName = "Game Window";
+        /************************************/
 
         std::string m_imgui_layout = "Editor/Imgui Panels/imgui.ini";
 

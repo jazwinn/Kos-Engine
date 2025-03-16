@@ -44,6 +44,8 @@ int EditorCamera::m_windowHeight{};
 
 vector2::Vec2 EditorCamera::m_editorWindowPosition{};
 vector2::Vec2 EditorCamera::m_editorWindowDimensions{};
+vector2::Vec2 EditorCamera::m_gamePreviewWindowPosition{};
+vector2::Vec2 EditorCamera::m_gamePreviewWindowDimensions{};
 bool EditorCamera::m_editorMode = true;
 EditorCamera::Camera EditorCamera::m_editorCamera{ 1.f, 1.f ,vector2::Vec2(0.f,0.f), vector2::Vec2(5.f,5.f), 0 }; // Zoom Set To 5.f on Init
 mat3x3::Mat3x3 EditorCamera::m_editorCameraMatrix{};

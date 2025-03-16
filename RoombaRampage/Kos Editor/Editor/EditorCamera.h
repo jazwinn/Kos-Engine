@@ -58,6 +58,8 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
         static vector2::Vec2 m_editorWindowPosition;
         static vector2::Vec2 m_editorWindowDimensions;
+        static vector2::Vec2 m_gamePreviewWindowPosition;
+        static vector2::Vec2 m_gamePreviewWindowDimensions;
 
         static bool m_editorMode;
         /**
@@ -70,7 +72,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
             float upVector;
             float rightVector;
             vector2::Vec2 m_coordinates;   ///< Coordinates of the camera.
-            vector2::Vec2 m_zoom;          ///< Zoom of the a=canera
+            vector2::Vec2 m_zoom{1,1};          ///< Zoom of the a=canera
             float m_angle;             ///< Rotation angle of the camera.
         };
 

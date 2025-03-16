@@ -154,7 +154,8 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
         graphicpipe::GraphicsCamera::m_currCameraTranslateY = EditorCamera::m_editorCamera.m_coordinates.m_y;
         graphicpipe::GraphicsCamera::m_currCameraRotate = 0.f;
     }
-  
+    
+
     //Draw gizmo
     m_DrawGizmo(pos.x, pos.y, imageSize.x, imageSize.y);
 

@@ -47,10 +47,11 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "Editor/EditorCamera.h"
 
 #include "Graphics/GraphicsCamera.h"
+#include <imgui_internal.h>
 
 namespace gui
 {
-	void ImGuiHandler::m_DrawGameSceneWindow()
+	void ImGuiHandler::m_DrawGameSceneWindow(std::string windowName)
 	{
         graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
 
@@ -58,7 +59,7 @@ namespace gui
         //pipe->m_funcUpdate();
         ////pipe->m_funcDrawGamePreviewWindow();
         //pipe->m_gameMode = false;
-        ImGui::Begin("Game Window");
+        ImGui::Begin(windowName.c_str());
 
 
         ImVec2 pos = ImGui::GetCursorScreenPos();
@@ -92,6 +93,13 @@ namespace gui
         {
             pos.y += (renderWindowSize.y - imageSize.y) / 2;
         }
+
+
+        EditorCamera::m_gamePreviewWindowPosition.m_x = pos.x;
+        EditorCamera::m_gamePreviewWindowPosition.m_y = pos.y;
+        EditorCamera::m_gamePreviewWindowDimensions.m_x = imageSize.x;
+        EditorCamera::m_gamePreviewWindowDimensions.m_y = imageSize.y;
+
         pipe->m_gameMode = true; //Set to game camera
         pipe->m_funcUpdate();
         pipe->m_gameMode = false;
@@ -109,6 +117,27 @@ namespace gui
         graphicpipe::GraphicsCamera::m_currViewMatrix = { EditorCamera::m_editorViewMatrix.m_e00, EditorCamera::m_editorViewMatrix.m_e01, EditorCamera::m_editorViewMatrix.m_e02,
                                                           EditorCamera::m_editorViewMatrix.m_e10 ,EditorCamera::m_editorViewMatrix.m_e11 ,EditorCamera::m_editorViewMatrix.m_e12 ,
                                                           EditorCamera::m_editorViewMatrix.m_e20 ,EditorCamera::m_editorViewMatrix.m_e21 ,EditorCamera::m_editorViewMatrix.m_e22 };
+
+
+
+        //IF GAME IS RUNNING set editor camera as game camera
+
+        if ((ecs::ECS::m_GetInstance()->m_getState() == ecs::RUNNING) && graphicpipe::GraphicsCamera::m_cameras.size() > 0)
+        {
+            ImGuiWindow* imguiWindow = ImGui::FindWindowByName(gamePreviewName.c_str());
+
+            if (imguiWindow) {
+                //temporary, unless someone whos good at math knows what to do
+                EditorCamera::m_editorCamera.m_zoom = { 5.f, 5.f };
+
+                EditorCamera::m_editorCamera.m_zoom.m_x = graphicpipe::GraphicsCamera::m_currCameraScaleX;
+                EditorCamera::m_editorCamera.m_zoom.m_y = graphicpipe::GraphicsCamera::m_currCameraScaleY;
+                EditorCamera::m_editorCamera.m_coordinates.m_x = graphicpipe::GraphicsCamera::m_currCameraTranslateX;
+                EditorCamera::m_editorCamera.m_coordinates.m_y = graphicpipe::GraphicsCamera::m_currCameraTranslateY;
+            }
+
+
+        }
 
         ImGui::End();
 

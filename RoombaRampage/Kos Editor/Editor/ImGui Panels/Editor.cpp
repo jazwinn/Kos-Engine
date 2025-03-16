@@ -43,6 +43,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "Actions/ModifyAction.h"
 #include "Inputs/Input.h"
 #include "Editor/WindowFile.h"
+#include "Graphics/GraphicsCamera.h"
 
 namespace gui {
 
@@ -280,7 +281,7 @@ namespace gui {
 				m_DrawInputWindow();
 				m_DrawContentBrowser();
 				m_DrawRenderScreenWindow(static_cast<unsigned int>(Helper::Helpers::GetInstance()->m_windowWidth), static_cast<unsigned int>(Helper::Helpers::GetInstance()->m_windowHeight));
-				m_DrawGameSceneWindow();
+				m_DrawGameSceneWindow(gamePreviewName);
 				auto end = std::chrono::steady_clock::now();
 				duration = end - start;
 				performancetracker::Performance::m_UpdateTotalSystemTime(duration.count());
@@ -345,64 +346,7 @@ namespace gui {
 			return;
 		}
 
-		//auto& soundMap = assetManager->m_audioManager.getSoundMap();
-
-		/*auto playSound = [&](const std::string& fileName) {
-			auto it = soundMap.find(fileName);
-			if (it != soundMap.end()) {
-				it->second->m_PlaySound();
-			}
-			else {
-				std::cerr << "Sound file not found: " << fileName << "\n";
-			}
-			};*/
-
-		/*auto stopSound = [&](const std::string& fileName) {
-			auto it = soundMap.find(fileName);
-			if (it != soundMap.end()) {
-				it->second->m_StopSound();
-			}
-			else {
-				std::cerr << "Sound file not found: " << fileName << "\n";
-			}
-			};*/
-
-		//int button = givenEvent.m_ToType<events::ButtonPressEvent>().m_GetButton();
-
-		/*if (button == 1) {
-			playSound("mindstorm.wav");
-		}
-		else if (button == 2) {
-			playSound("zwing.wav");
-		}
-		else if (button == 3) {
-			playSound("cleaver01.wav");
-		}
-		else if (button == 4) {
-			playSound("gunshot01.wav");
-		}
-		else if (button == 5) {
-			stopSound("mindstorm.wav");
-			stopSound("zwing.wav");
-			stopSound("cleaver01.wav");
-			stopSound("gunshot01.wav");
-		}
-		else if (givenEvent.m_ToType<events::AudioFromImgui>().m_GetEventType() == events::ButtonEvents::EVENTAUDIOFROMIMGUI) {
-			std::string fileToBePlayed = givenEvent.m_ToType<events::AudioFromImgui>().m_GetFile();
-			auto it = soundMap.find(fileToBePlayed);
-
-			if (it != soundMap.end()) {
-				if (it->second->m_IsPlaying()) {
-					it->second->m_StopSound();
-				}
-				else {
-					it->second->m_PlaySound();
-				}
-			}
-			else {
-				std::cerr << "Sound file not found: " << fileToBePlayed << "\n";
-			}
-		}*/
+		
 	}
 
 	/******************************************************************/
@@ -725,6 +669,122 @@ namespace gui {
 				colorChanged = false;
 			}
 		}
+
+
+	}
+
+	void ImGuiHandler::m_InputUpdate(GLFWwindow* window)
+	{
+		if (!EditorCamera::m_editorMode)return;
+		
+
+
+		ImGuiWindow* imguiWindow = ImGui::FindWindowByName(gamePreviewName.c_str());
+		
+		
+
+
+		if (imguiWindow && ecs::ECS::m_GetInstance()->m_getState() == ecs::RUNNING) { // && ()
+
+			vector2::Vec2 mp = Input::InputSystem::m_getMousePosition();
+			//std::cout << "Elijah input: " << mp.m_x << " , " << mp.m_y << std::endl;
+
+
+			//std::cout << "GLFW: " << mousex << " , " << mousey << std::endl;
+			static vector2::Vec2 prevCameraScale;
+
+			ImVec2 pos, imageSize;
+			pos.x = EditorCamera::m_gamePreviewWindowPosition.m_x;
+			pos.y = EditorCamera::m_gamePreviewWindowPosition.m_y;
+			imageSize.x = EditorCamera::m_gamePreviewWindowDimensions.m_x;
+			imageSize.y = EditorCamera::m_gamePreviewWindowDimensions.m_y;
+
+			float cordX = ImGui::GetMousePos().x - pos.x;
+			float cordY = ImGui::GetMousePos().y - pos.y;
+
+
+			//float windowHeight = Helper::Helpers::GetInstance()->m_windowHeight;
+			//float windowWidth = Helper::Helpers::GetInstance()->m_windowWidth;
+			
+			
+			int windowWidth, windowHeight;
+
+			glfwGetWindowSize(window, &windowWidth, &windowHeight);
+			//std::cout << imageSize.y << std::endl;
+			//ImVec2 imguiWindowSize = imguiWindow->Size;
+			float scaleX = static_cast<float>(windowWidth) / imageSize.x;
+			float scaleY = static_cast<float>(windowHeight) / (imageSize.y);
+			
+			cordX *= scaleX;
+			cordY *= scaleY;
+			//TODO calculate mouse pos correctly
+			//cordX = (cordX - imageSize.x / 2.f) / (imageSize.x / 2.f);
+			//cordY = (std::abs(cordY) - imageSize.y / 2.f) / (imageSize.y / 2.f);
+
+			//cordX *= windowWidth;
+			//cordY *= windowHeight;
+
+			//ImVec2 scaling = ImGui::GetIO().DisplayFramebufferScale;
+
+			//float windowHeight = Helper::Helpers::GetInstance()->m_windowHeight;
+			//float windowWidth = Helper::Helpers::GetInstance()->m_windowHeight;
+
+			//// Get the ImGui window size
+			//ImVec2 imguiWindowSize = imguiWindow->Size;
+			//// Calculate scaling factors
+			//float scaleX = static_cast<float>(windowWidth) / imguiWindowSize.x;
+			//float scaleY = static_cast<float>(windowHeight) / imguiWindowSize.y;
+
+
+			//// Get the ImGui window position
+			//ImVec2 imguiWindowPos = imguiWindow->Pos;
+
+			//// Transform the mouse position to ImGui coordinates
+			//float imguiMouseX = (mousex - imguiWindowPos.x) * scaleX;
+			//float imguiMouseY = (mousey - imguiWindowPos.y) * scaleY;
+			cordY = windowHeight - cordY;
+
+
+			///std::cout << "Sean cord: " << cordX << " , " << cordY << std::endl;
+
+			//inject to mouse input
+			Input::InputSystem::MousePosition = { cordX , cordY };
+
+
+			//std::cout << "imgui: " << imguiMouseX << " , " << imguiMouseY << std::endl;
+
+			//Helper::Helpers* helper = Helper::Helpers::GetInstance();
+			//vector2::Vec2 mouse_Pos = Input::InputSystem::m_getMousePosition();
+			////window height width
+			//float width = Helper::Helpers::GetInstance()->m_windowWidth;
+			//float height = Helper::Helpers::GetInstance()->m_windowHeight;
+			////world coordinate
+			//float world_Mouse_Pos_X = ((mouse_Pos.m_x - helper->m_viewportOffsetX) - (width / 2.f)) / (width / 2.f);
+			//float world_Mouse_Pos_Y = (std::abs((mouse_Pos.m_y - helper->m_viewportOffsetY)) - (height / 2.f)) / (height / 2.f);
+			//vector2::Vec2 world_Mouse_Pos{ world_Mouse_Pos_X, world_Mouse_Pos_Y };
+			////include the camera
+			////scale according to camera scale
+			//world_Mouse_Pos.m_x *= graphicpipe::GraphicsCamera::m_currCameraScaleX;
+			//world_Mouse_Pos.m_y *= graphicpipe::GraphicsCamera::m_currCameraScaleY;
+
+			////aspect ratio
+			//world_Mouse_Pos.m_x *= 1.f / graphicpipe::GraphicsCamera::m_aspectRatio;
+
+			////translate 
+			//world_Mouse_Pos.m_x += graphicpipe::GraphicsCamera::m_currCameraMatrix[2][0];
+			//world_Mouse_Pos.m_y += graphicpipe::GraphicsCamera::m_currCameraMatrix[2][1];
+
+			//ImGuiIO& io = ImGui::GetIO();
+
+			//// Define your custom mouse position
+			//ImVec2 customMousePos = ImVec2(world_Mouse_Pos.m_x, world_Mouse_Pos.m_y); // Replace with your calculated coordinates
+
+			//// Override the ImGui mouse position
+			//io.MousePos = customMousePos;
+		}
+		
+
+
 
 
 	}
