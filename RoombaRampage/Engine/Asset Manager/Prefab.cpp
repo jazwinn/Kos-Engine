@@ -110,7 +110,7 @@ namespace prefab {
     {
         ecs::ECS* ecs = ecs::ECS::m_GetInstance();
         ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id));
-        std::string m_jsonFilePath{ "Assets/Prefabs/" }; //TODO allow drag and drop onto content browser
+        std::string m_jsonFilePath{ "../Assets/Prefabs/" }; //TODO allow drag and drop onto content browser
 
         std::string filename;
 

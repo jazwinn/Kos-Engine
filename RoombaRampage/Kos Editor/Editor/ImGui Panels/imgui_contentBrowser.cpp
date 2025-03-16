@@ -28,6 +28,8 @@ namespace gui {
 	static std::filesystem::path currentDirectory  = assetDirectory;
 	static const char* fileIcon = "img_folderIcon.png";
 	static std::string searchString;
+	static float padding = 20.f;
+	static float thumbnail = 100.f;
 
 	void MoveFolder(const std::filesystem::path& newDirectory) {
 		if (ImGui::BeginDragDropTarget())
@@ -50,7 +52,24 @@ namespace gui {
 		}
 	}
 
+	void textorimage(std::string directoryString, std::string fileName) {
+		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+		if (assetmanager->m_imageManager.m_imageMap.find(fileName) != assetmanager->m_imageManager.m_imageMap.end()) {
+			float imageRatio = static_cast<float>(assetmanager->m_imageManager.m_imageMap.find(fileName)->second.m_height) / static_cast<float>(assetmanager->m_imageManager.m_imageMap.find(fileName)->second.m_width);
+			if (imageRatio > 1)
+			{
+				ImGui::ImageButton(directoryString.c_str(), (ImTextureID)(uintptr_t)assetmanager->m_imageManager.m_imageMap.find(fileName)->second.textureID, { thumbnail / imageRatio ,thumbnail }, { 0 ,1 }, { 1 ,0 }, { 0,0,0,0 });
+			}
+			else
+			{
+				ImGui::ImageButton(directoryString.c_str(), (ImTextureID)(uintptr_t)assetmanager->m_imageManager.m_imageMap.find(fileName)->second.textureID, { thumbnail ,thumbnail * imageRatio }, { 0 ,1 }, { 1 ,0 }, { 0,0,0,0 });
+			}
 
+		}
+		else {
+			ImGui::Button(directoryString.c_str(), { thumbnail ,thumbnail });
+		}
+		};
 
 	void ImGuiHandler::m_DrawContentBrowser() {
 
@@ -164,8 +183,7 @@ namespace gui {
 				ImGui::NewLine();
 			}
 
-			static float padding = 20.f;
-			static float thumbnail = 100.f;
+
 			float cellsize = padding + thumbnail;
 
 			float panelwidth = ImGui::GetContentRegionAvail().x;
@@ -175,24 +193,7 @@ namespace gui {
 			}
 			ImGui::Columns(columns, 0, false);
 
-			auto textorimage = [](std::string directoryString, std::string fileName) {
-				assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
-				if (assetmanager->m_imageManager.m_imageMap.find(fileName) != assetmanager->m_imageManager.m_imageMap.end()) {
-					float imageRatio =  static_cast<float>(assetmanager->m_imageManager.m_imageMap.find(fileName)->second.m_height) / static_cast<float>(assetmanager->m_imageManager.m_imageMap.find(fileName)->second.m_width);
-					if (imageRatio > 1)
-					{
-						ImGui::ImageButton(directoryString.c_str(), (ImTextureID)(uintptr_t)assetmanager->m_imageManager.m_imageMap.find(fileName)->second.textureID, { thumbnail / imageRatio ,thumbnail }, { 0 ,1 }, { 1 ,0 }, { 0,0,0,0 });
-					}
-					else
-					{
-						ImGui::ImageButton(directoryString.c_str(), (ImTextureID)(uintptr_t)assetmanager->m_imageManager.m_imageMap.find(fileName)->second.textureID, { thumbnail ,thumbnail * imageRatio }, { 0 ,1 }, { 1 ,0 }, { 0,0,0,0 });
-					}
-					
-				}
-				else {
-					ImGui::Button(directoryString.c_str(), { thumbnail ,thumbnail });
-				}
-				};
+
 
 
 			for (auto& directoryPath : std::filesystem::directory_iterator(currentDirectory)) {
@@ -350,6 +351,19 @@ namespace gui {
 						_delete = true;
 						selectedfile = directoryString;
 					}
+					if (directoryPath.path().filename().extension().string() == ".json" && ImGui::MenuItem("Set as Startup Scene")) {
+
+						if (Serialization::Serialize::m_UpdateConfigStartScene(directoryPath.path().string())) {
+							
+							LOGGING_INFO("Scene Updated to Config");
+						}
+						else {
+							LOGGING_ERROR("Scene fail to update Config");
+						}
+						
+					}
+
+
 					ImGui::EndPopup();
 				}
 

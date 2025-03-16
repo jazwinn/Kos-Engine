@@ -106,6 +106,8 @@ namespace Serialization {
 		/******************************************************************/
 		static void m_LoadConfig(std::string);
 
+		static bool m_UpdateConfigStartScene(const std::string& newStartScene);
+
 		/******************************************************************/
 		/*!
 			\fn        Serialize::m_JsonFileValidation(const std::string& filePath)
@@ -165,6 +167,8 @@ namespace Serialization {
 
 
 		static std::unique_ptr<void, VoidDeleter> DecodeBase64(const std::string& base64);
+	
+		static std::string configFilePath;
 
 	};
 
