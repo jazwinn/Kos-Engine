@@ -11,7 +11,7 @@
     },
     {
         "CursorSettings": {
-            "cursorImage": "./Assets/Texture/UI/img_startScreenCursor.png",
+            "cursorImage": "../Assets/Texture/UI/img_startScreenCursor.png",
             "isCursorCentered": false
         }
     },
@@ -175,8 +175,8 @@
         },
         "button": {
             "force": {
-                "x": 95.82659912109375,
-                "y": 950.8963012695313
+                "x": -463.62744140625,
+                "y": 1551.462158203125
             },
             "scale": {
                 "x": 0.20999999344348907,
@@ -303,8 +303,8 @@
         },
         "button": {
             "force": {
-                "x": 95.82659912109375,
-                "y": 810.7640991210938
+                "x": -463.62744140625,
+                "y": 1411.330078125
             },
             "scale": {
                 "x": 0.18000000715255737,

@@ -11,7 +11,7 @@
     },
     {
         "CursorSettings": {
-            "cursorImage": "./Assets/Texture/UI/img_inGameCursor.png",
+            "cursorImage": "../Assets/Texture/UI/img_inGameCursor.png",
             "isCursorCentered": true
         }
     },
@@ -43867,11 +43867,11 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "backLimbGunAmmo",
+                                    "variable": "ammoCount",
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "ammoCount",
+                                    "variable": "backLimbGunAmmo",
                                     "base64": ""
                                 },
                                 {
@@ -43883,11 +43883,7 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "leftLimbGunAmmo",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "rightWeaponCount",
+                                    "variable": "railGunLightMaxIntensity",
                                     "base64": ""
                                 },
                                 {
@@ -43895,7 +43891,11 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "railGunLightMaxIntensity",
+                                    "variable": "rightWeaponCount",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "leftLimbGunAmmo",
                                     "base64": ""
                                 },
                                 {
@@ -44082,11 +44082,11 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "backLimbGunAmmo",
+                                    "variable": "ammoCount",
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "ammoCount",
+                                    "variable": "backLimbGunAmmo",
                                     "base64": ""
                                 },
                                 {
@@ -44098,11 +44098,7 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "rightLimbRailGunHold",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "rightWeaponCount",
+                                    "variable": "leftLimbShotGunAmmo",
                                     "base64": ""
                                 },
                                 {
@@ -44110,7 +44106,11 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "leftLimbShotGunAmmo",
+                                    "variable": "rightWeaponCount",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "rightLimbRailGunHold",
                                     "base64": ""
                                 },
                                 {
@@ -47815,7 +47815,7 @@
                 },
                 "sprite": {
                     "imagefile": "img_userManual.png",
-                    "layer": 501,
+                    "layer": 500,
                     "color": {
                         "r": 1.0,
                         "g": 1.0,
@@ -47886,7 +47886,7 @@
                 },
                 "sprite": {
                     "imagefile": "ani_inventoryCloseButton_strip2.png",
-                    "layer": 533,
+                    "layer": 501,
                     "color": {
                         "r": 1.0,
                         "g": 1.0,
@@ -47996,7 +47996,7 @@
                 },
                 "sprite": {
                     "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
-                    "layer": 534,
+                    "layer": 502,
                     "color": {
                         "r": 1.0,
                         "g": 1.0,
@@ -48075,7 +48075,7 @@
                         "g": 0.0,
                         "b": 0.0
                     },
-                    "layer": 535
+                    "layer": 503
                 }
             }
         ]
