@@ -325,7 +325,8 @@ namespace graphicpipe
 					// Render quad
 					glDrawArrays(GL_TRIANGLES, 0, 6);
 
-					// Advance cursor for next glyph
+					// Advance 
+					//  for next glyph
 					textData.m_x += ((ch.m_advance >> 6) * textData.m_scale * textData.m_xyScale.x) / ((static_cast<float>(help->m_currWindowHeight)));
 				}
 				textData.m_x = origin;

@@ -125,8 +125,12 @@ void gui::ImGuiHandler::m_DrawMainMenuBar() {
             static char str1[128] = "";
             ImGui::InputTextWithHint(".json", "Enter scene name here", str1, IM_ARRAYSIZE(str1));
 
+
+
+
             if (ImGui::Button("Save", ImVec2(120, 0))) { 
-                std::string m_jsonFilePath{ "Assets/Scene/" }; //TODO temp open window in future
+
+                std::string m_jsonFilePath{ "../Assets/Scene/" }; //TODO temp open window in future
                 std::string scene = m_jsonFilePath + str1 + ".json";
                 m_activeScene = scene;
                 if (!scene.empty()) {

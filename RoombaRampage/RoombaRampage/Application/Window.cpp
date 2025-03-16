@@ -333,7 +333,28 @@ namespace Application {
 
     void AppWindow::setCursorImage(const std::string& imageFile, bool centered)
     {
-        if (imageFile.empty() || imageFile == "default") {
+
+        static const char* cursorOptions[] =
+        {
+            "default",
+            "../Assets/Texture/UI/img_startScreenCursor.png",
+            "../Assets/Texture/UI/img_inGameCursor.png"
+        };
+
+
+        //check if image file belong to any of the above, ELSE ERROR OCCUR
+        std::string test{};
+        for (auto cursor : cursorOptions) {
+            if (cursor == imageFile) {
+                test = imageFile;
+                break;
+            }
+
+        }
+
+
+
+        if (imageFile.empty() || imageFile == "default" || test.empty()) {
             // Set default cursor
             GLFWcursor* defaultCursor = glfwCreateStandardCursor(GLFW_ARROW_CURSOR);
             if (!defaultCursor) {

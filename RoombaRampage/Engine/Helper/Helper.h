@@ -74,7 +74,7 @@ namespace Helper {
 
 		float m_timeScale = 1.0f; //default to 1x
 
-		std::string m_currMousePicture{};
+		std::string m_currMousePicture{ "default" };
 
 		bool m_isMouseCentered{ false };
 		

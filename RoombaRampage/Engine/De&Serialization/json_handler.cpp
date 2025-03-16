@@ -64,11 +64,14 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 namespace Serialization {
 
-	
+	std::string Serialize::configFilePath;
 
 	void Serialize::m_LoadConfig(std::string filepath) {
+
+
 		std::ifstream file;
-		file.open(filepath + "/Config.txt");
+		configFilePath = filepath + "/Config.txt";
+		file.open(configFilePath);
 
 		if (!file.is_open()) {
 			LOGGING_ERROR("Error opening config file");
@@ -102,6 +105,57 @@ namespace Serialization {
 
 	}
 
+	bool Serialize::m_UpdateConfigStartScene( const std::string& newStartScene)
+	{
+		// Open the file for reading
+		std::ifstream inFile(configFilePath);
+		if (!inFile.is_open()) {
+			std::cerr << "Error: Could not open file for reading." << std::endl;
+			return false;
+		}
+
+		// Read all lines from the file
+		std::vector<std::string> lines;
+		std::string line;
+		while (std::getline(inFile, line)) {
+			lines.push_back(line);
+		}
+		inFile.close();
+
+		// Find and modify the StartScene line
+		bool startSceneFound = false;
+		for (auto& currentLine : lines) {
+			if (currentLine.find("StartScene:") == 0) { // Check if the line starts with "StartScene:"
+				currentLine = "StartScene: " + newStartScene;
+				startSceneFound = true;
+				break; // Exit the loop once the line is found and modified
+			}
+		}
+
+		if (!startSceneFound) {
+			std::cerr << "Error: StartScene line not found in the file." << std::endl;
+			return false;
+		}
+
+		// Open the file for writing
+		std::ofstream outFile(configFilePath);
+		if (!outFile.is_open()) {
+			std::cerr << "Error: Could not open file for writing." << std::endl;
+			return false;
+		}
+
+		// Write the modified lines back to the file
+		for (const auto& currentLine : lines) {
+			outFile << currentLine << std::endl;
+		}
+		outFile.close();
+
+		std::cout << "StartScene updated successfully!" << std::endl;
+		return true;
+
+
+	}
+
 	void Serialize::m_JsonFileValidation(const std::string& filePath) {
 
 		std::ifstream checkFile(filePath);
@@ -116,6 +170,8 @@ namespace Serialization {
 
 	void Serialize::m_LoadComponentsJson(const std::filesystem::path& jsonFilePath)
 	{
+
+
 		// Open the JSON file for reading
 		std::ifstream inputFile(jsonFilePath.string());
 
@@ -135,6 +191,13 @@ namespace Serialization {
 		
 
 		// Load Global Setting
+		//reset global settings
+		Helper::Helpers* helper = Helper::Helpers::GetInstance();
+		helper->m_colour = {0.f,0.f,0.f};
+		helper->m_currMousePicture = "default";
+		helper->m_isMouseCentered = false;
+
+
 		bool foundGlobalSettings = false;
 		for (rapidjson::SizeType i = 0; i < doc.Size(); i++) {
 			const rapidjson::Value& entry = doc[i];
@@ -146,7 +209,7 @@ namespace Serialization {
 				}
 				if (globalSettings.HasMember("backgroundColor")) {
 					const rapidjson::Value& bgColor = globalSettings["backgroundColor"];
-					Helper::Helpers* helper = Helper::Helpers::GetInstance();
+					
 					helper->m_colour.m_x = bgColor["r"].GetFloat();
 					helper->m_colour.m_y = bgColor["g"].GetFloat();
 					helper->m_colour.m_z = bgColor["b"].GetFloat();
@@ -155,7 +218,6 @@ namespace Serialization {
 			// Load Cursor Settings
 			if (entry.HasMember("CursorSettings")) {
 				const rapidjson::Value& cursorSettings = entry["CursorSettings"];
-				Helper::Helpers* helper = Helper::Helpers::GetInstance();
 
 				if (cursorSettings.HasMember("cursorImage")) {
 					helper->m_currMousePicture = cursorSettings["cursorImage"].GetString();
