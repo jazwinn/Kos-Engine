@@ -108,15 +108,15 @@ namespace events {
 		}
 
 		void m_DispatchToListeners(const BaseEvent<T>& givenEvent) {
-			if (m_listeners.find(givenEvent.m_GetEventType()) == m_listeners.end()) {
-				return;
-			}
+			//if (m_listeners.find(givenEvent.m_GetEventType()) == m_listeners.end()) {
+			//	return;
+			//}
 
-			for (auto&& currListener : m_listeners.at(givenEvent.m_GetEventType())) {
-				if (!givenEvent.m_IsHandled()) {
-					currListener(givenEvent);
-				}
-			}
+			//for (auto&& currListener : m_listeners.at(givenEvent.m_GetEventType())) {
+			//	if (!givenEvent.m_IsHandled()) {
+			//		currListener(givenEvent);
+			//	}
+			//}
 		}
 
 		void m_UnregisterListener(int ID) {

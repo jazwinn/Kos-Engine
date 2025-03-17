@@ -26,7 +26,10 @@ namespace ecs {
 		vector2::Vec2 m_Position{};
 		vector2::Vec2 m_Scale{1.f,1.f};
 		bool m_IsClick = false;
-		REFLECTABLE(ButtonComponent, m_Position, m_Scale, m_IsClick);
+
+		bool m_EnableHover = false;
+		bool m_IsHover = false;
+		REFLECTABLE(ButtonComponent, m_Position, m_Scale, m_IsClick, m_EnableHover, m_IsHover);
 	};
 
 }

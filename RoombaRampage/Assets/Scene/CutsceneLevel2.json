@@ -151,45 +151,6 @@
                 "y": 0.6000000238418579
             }
         },
-        "collider": {
-            "checkcollision": true,
-            "checkresponse": false,
-            "size": {
-                "x": 0.4399999976158142,
-                "y": 0.4399999976158142
-            },
-            "offset": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "drawDebug": true,
-            "radius": 0.5,
-            "shapetype": 0
-        },
-        "rigidbody": {
-            "linearVelocity": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "linearAcceleration": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "rotation": 0.0,
-            "angularVelocity": 0.0,
-            "angularAcceleration": 0.0,
-            "mass": 1.0,
-            "inverseMass": 1.0,
-            "linearDamping": 0.9900000095367432,
-            "angularDamping": 0.9900000095367432,
-            "force": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "torque": 0.0,
-            "kinematic": false,
-            "static": false
-        },
         "sprite": {
             "imagefile": "ani_dialogueArrows_strip2.png",
             "layer": 6,
@@ -207,6 +168,17 @@
             "frameTimer": 0.0,
             "isAnimating": false,
             "stripCount": 2
+        },
+        "button": {
+            "force": {
+                "x": 1551.61376953125,
+                "y": 133.88751220703125
+            },
+            "scale": {
+                "x": 0.2199999988079071,
+                "y": 0.23999999463558197
+            },
+            "enablehover": true
         },
         "script": {
             "scripts": [

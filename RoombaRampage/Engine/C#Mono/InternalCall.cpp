@@ -410,6 +410,21 @@ namespace script {
 		return true;
 	}
 
+	bool InternalCall::m_InternalIsButtonHovered(ecs::EntityID entity)
+	{
+		auto* buttonComponent = static_cast<ecs::ButtonComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPEBUTTONCOMPONENT]->m_GetEntityComponent(entity));
+
+		if (buttonComponent) {
+			return buttonComponent->m_IsHover;
+		}
+		else {
+			ASSERTNOCOMPONENT(ButtonComponent, entity);
+		}
+
+
+		return false;
+	}
+
 	bool InternalCall::m_InternalSetButtonComponent(ecs::EntityID entity, const vector2::Vec2& position, const vector2::Vec2& scale, bool isClick)
 	{
 		auto* buttonComponent = static_cast<ecs::ButtonComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPEBUTTONCOMPONENT]->m_GetEntityComponent(entity));
@@ -1569,6 +1584,7 @@ namespace script {
 
 		MONO_ADD_INTERNAL_CALL(m_InternalGetButtonComponent);
 		MONO_ADD_INTERNAL_CALL(m_InternalSetButtonComponent);
+		MONO_ADD_INTERNAL_CALL(m_InternalIsButtonHovered);
 
 		MONO_ADD_INTERNAL_CALL(m_InternalCallGetLightingComponent);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallSetLightingComponent);

@@ -1,17 +1,17 @@
 [
     {
         "GlobalSettings": {
-            "globalIllumination": 0.05999999865889549,
+            "globalIllumination": 0.46000000834465027,
             "backgroundColor": {
-                "r": 0.0,
-                "g": 0.0,
-                "b": 0.0
+                "r": 0.13300000131130219,
+                "g": 0.23000000417232513,
+                "b": 0.3199999928474426
             }
         }
     },
     {
         "CursorSettings": {
-            "cursorImage": "./Assets/Texture/UI/img_inGameCursor.png",
+            "cursorImage": "../Assets/Texture/UI/img_inGameCursor.png",
             "isCursorCentered": true
         }
     },
@@ -117,45 +117,6 @@
                         "y": 4.0
                     }
                 },
-                "collider": {
-                    "checkcollision": true,
-                    "checkresponse": false,
-                    "size": {
-                        "x": 1.4800000190734863,
-                        "y": 0.30000001192092896
-                    },
-                    "offset": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "drawDebug": true,
-                    "radius": 0.5,
-                    "shapetype": 0
-                },
-                "rigidbody": {
-                    "linearVelocity": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "linearAcceleration": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "rotation": 0.0,
-                    "angularVelocity": 0.0,
-                    "angularAcceleration": 0.0,
-                    "mass": 1.0,
-                    "inverseMass": 1.0,
-                    "linearDamping": 0.9900000095367432,
-                    "angularDamping": 0.9900000095367432,
-                    "force": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "torque": 0.0,
-                    "kinematic": false,
-                    "static": false
-                },
                 "sprite": {
                     "imagefile": "ani_pauseMenuResumeButton_strip2.png",
                     "layer": 406,
@@ -173,6 +134,17 @@
                     "frameTimer": 0.0,
                     "isAnimating": false,
                     "stripCount": 2
+                },
+                "button": {
+                    "force": {
+                        "x": 896.5,
+                        "y": 788.2498168945313
+                    },
+                    "scale": {
+                        "x": 5.920000076293945,
+                        "y": 1.2999999523162842
+                    },
+                    "enablehover": true
                 },
                 "script": {
                     "scripts": [
@@ -227,45 +199,6 @@
                         "y": 4.0
                     }
                 },
-                "collider": {
-                    "checkcollision": true,
-                    "checkresponse": false,
-                    "size": {
-                        "x": 1.4800000190734863,
-                        "y": 0.30000001192092896
-                    },
-                    "offset": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "drawDebug": true,
-                    "radius": 0.5,
-                    "shapetype": 0
-                },
-                "rigidbody": {
-                    "linearVelocity": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "linearAcceleration": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "rotation": 0.0,
-                    "angularVelocity": 0.0,
-                    "angularAcceleration": 0.0,
-                    "mass": 1.0,
-                    "inverseMass": 1.0,
-                    "linearDamping": 0.9900000095367432,
-                    "angularDamping": 0.9900000095367432,
-                    "force": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "torque": 0.0,
-                    "kinematic": false,
-                    "static": false
-                },
                 "sprite": {
                     "imagefile": "ani_pauseMenuRestartButton_strip2.png",
                     "layer": 407,
@@ -283,6 +216,17 @@
                     "frameTimer": 0.0,
                     "isAnimating": false,
                     "stripCount": 2
+                },
+                "button": {
+                    "force": {
+                        "x": 896.5,
+                        "y": 625.7006225585938
+                    },
+                    "scale": {
+                        "x": 5.800000190734863,
+                        "y": 1.2000000476837158
+                    },
+                    "enablehover": true
                 },
                 "script": {
                     "scripts": [
@@ -337,45 +281,6 @@
                         "y": 4.0
                     }
                 },
-                "collider": {
-                    "checkcollision": true,
-                    "checkresponse": false,
-                    "size": {
-                        "x": 1.4800000190734863,
-                        "y": 0.30000001192092896
-                    },
-                    "offset": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "drawDebug": true,
-                    "radius": 0.5,
-                    "shapetype": 0
-                },
-                "rigidbody": {
-                    "linearVelocity": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "linearAcceleration": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "rotation": 0.0,
-                    "angularVelocity": 0.0,
-                    "angularAcceleration": 0.0,
-                    "mass": 1.0,
-                    "inverseMass": 1.0,
-                    "linearDamping": 0.9900000095367432,
-                    "angularDamping": 0.9900000095367432,
-                    "force": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "torque": 0.0,
-                    "kinematic": false,
-                    "static": false
-                },
                 "sprite": {
                     "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
                     "layer": 408,
@@ -393,6 +298,17 @@
                     "frameTimer": 0.0,
                     "isAnimating": false,
                     "stripCount": 2
+                },
+                "button": {
+                    "force": {
+                        "x": 896.5,
+                        "y": 293.40032958984375
+                    },
+                    "scale": {
+                        "x": 5.840000152587891,
+                        "y": 1.1799999475479126
+                    },
+                    "enablehover": true
                 },
                 "script": {
                     "scripts": [
@@ -447,45 +363,6 @@
                         "y": 4.0
                     }
                 },
-                "collider": {
-                    "checkcollision": true,
-                    "checkresponse": true,
-                    "size": {
-                        "x": 1.1200000047683716,
-                        "y": 0.30000001192092896
-                    },
-                    "offset": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "drawDebug": true,
-                    "radius": 0.5,
-                    "shapetype": 0
-                },
-                "rigidbody": {
-                    "linearVelocity": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "linearAcceleration": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "rotation": 0.0,
-                    "angularVelocity": 0.0,
-                    "angularAcceleration": 0.0,
-                    "mass": 1.0,
-                    "inverseMass": 1.0,
-                    "linearDamping": 0.9900000095367432,
-                    "angularDamping": 0.9900000095367432,
-                    "force": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "torque": 0.0,
-                    "kinematic": false,
-                    "static": false
-                },
                 "sprite": {
                     "imagefile": "ani_pauseMenuQuitButton_strip2.png",
                     "layer": 409,
@@ -503,6 +380,17 @@
                     "frameTimer": 0.0,
                     "isAnimating": false,
                     "stripCount": 2
+                },
+                "button": {
+                    "force": {
+                        "x": 896.5,
+                        "y": 126.71932983398438
+                    },
+                    "scale": {
+                        "x": 4.539999961853027,
+                        "y": 1.1799999475479126
+                    },
+                    "enablehover": true
                 },
                 "script": {
                     "scripts": [
@@ -689,45 +577,6 @@
                         "y": 4.0
                     }
                 },
-                "collider": {
-                    "checkcollision": true,
-                    "checkresponse": false,
-                    "size": {
-                        "x": 1.4800000190734863,
-                        "y": 0.30000001192092896
-                    },
-                    "offset": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "drawDebug": true,
-                    "radius": 0.5,
-                    "shapetype": 0
-                },
-                "rigidbody": {
-                    "linearVelocity": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "linearAcceleration": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "rotation": 0.0,
-                    "angularVelocity": 0.0,
-                    "angularAcceleration": 0.0,
-                    "mass": 1.0,
-                    "inverseMass": 1.0,
-                    "linearDamping": 0.9900000095367432,
-                    "angularDamping": 0.9900000095367432,
-                    "force": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "torque": 0.0,
-                    "kinematic": false,
-                    "static": false
-                },
                 "sprite": {
                     "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
                     "layer": 410,
@@ -745,6 +594,17 @@
                     "frameTimer": 0.0,
                     "isAnimating": false,
                     "stripCount": 2
+                },
+                "button": {
+                    "force": {
+                        "x": 896.5,
+                        "y": 463.99310302734375
+                    },
+                    "scale": {
+                        "x": 5.900000095367432,
+                        "y": 1.2000000476837158
+                    },
+                    "enablehover": true
                 },
                 "script": {
                     "scripts": [
