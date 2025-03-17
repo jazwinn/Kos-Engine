@@ -66,6 +66,8 @@ namespace Serialization {
 
 	std::string Serialize::configFilePath;
 
+	std::string layerFilePath = "../Configs/LayerConfig.txt";
+
 	void Serialize::m_LoadConfig(std::string filepath) {
 
 
@@ -102,7 +104,7 @@ namespace Serialization {
 			LOGGING_ERROR("Error Reading Config file (Width or Height <= 0)");
 		}
 
-		m_LoadPhysicsLayerMatrix(filepath);
+		m_LoadPhysicsLayerMatrix();
 
 	}
 
@@ -545,7 +547,7 @@ namespace Serialization {
 					.AddMember("x", bc->m_Scale.m_x, allocator)
 					.AddMember("y", bc->m_Scale.m_y, allocator), allocator);
 
-				//button.AddMember("isClick", bc->m_IsClick, allocator);
+				button.AddMember("enablehover", bc->m_EnableHover, allocator);
 
 				entityData.AddMember("button", button, allocator);
 				hasComponents = true;
@@ -1104,10 +1106,10 @@ namespace Serialization {
 					bc->m_Scale.m_y = button["scale"]["y"].GetFloat();
 				}
 
-				//if (button.HasMember("isClick"))
-				//{
-				//	bc->m_IsClick = button["isClick"].GetBool();
-				//}
+				if (button.HasMember("enablehover"))
+				{
+					bc->m_EnableHover = button["enablehover"].GetBool();
+				}
 			}
 		}
 
@@ -1509,7 +1511,7 @@ namespace Serialization {
 		}
 	}
 	void Serialization::Serialize::m_SavePhysicsLayerMatrix() {
-		std::ofstream file("./Config/LayerConfig.txt");
+		std::ofstream file(layerFilePath);
 		if (!file.is_open()) {
 			LOGGING_ERROR("Could not open LayerConfig.txt for writing.");
 			return;
@@ -1529,8 +1531,8 @@ namespace Serialization {
 		//LOGGING_INFO("Collision matrix saved to PhysicsLayerMatrix.txt");
 	}
 
-	void Serialization::Serialize::m_LoadPhysicsLayerMatrix(std::string filepath) {
-		std::ifstream file(filepath + "/LayerConfig.txt");
+	void Serialization::Serialize::m_LoadPhysicsLayerMatrix() {
+		std::ifstream file(layerFilePath);
 		if (!file.is_open()) {
 			LOGGING_ERROR("Could not open LayerConfig.txt for reading.");
 			return;
@@ -1566,54 +1568,7 @@ namespace Serialization {
 		LOGGING_INFO("Collision matrix loaded from LayerConfig.txt");
 	}
 
-	/*void Serialization::Serialize::m_SaveGlobaalSettings()
-	{
-		std::ofstream file("./Config/GlobalConfig.txt");
-		if (!file.is_open()) {
-			LOGGING_ERROR("Could not open GlobalConfig.txt for writing.");
-			return;
-		}
-		graphicpipe::GraphicsPipe* graphics = graphicpipe::GraphicsPipe::m_funcGetInstance();
-		Helper::Helpers* helper = Helper::Helpers::GetInstance();
-		file << "GlobalIllumination: " << graphics->m_globalLightIntensity << std::endl;
-		file << "BackgroundColor: " << helper->m_colour.m_x << ' ' << helper->m_colour.m_y << ' ' << helper->m_colour.m_z << std::endl;
-		file.close();
-	}
 
-	void Serialization::Serialize::m_LoadGlobalSettings()
-	{
-		std::ifstream file("./Config/GlobalConfig.txt");
-		if (!file.is_open()) {
-			LOGGING_ERROR("Could not open GlobalConfig.txt for reading.");
-			return;
-		}
-
-		std::string line;
-		graphicpipe::GraphicsPipe* graphics = graphicpipe::GraphicsPipe::m_funcGetInstance();
-		Helper::Helpers* helper = Helper::Helpers::GetInstance();
-
-		while (std::getline(file, line))
-		{
-			std::istringstream iss(line);
-			std::string temp;
-			iss >> temp;
-			if (temp == "GlobalIllumination:") {
-				float light;
-				iss >> light;
-				graphics->m_globalLightIntensity = light;
-			}
-			if (temp == "BackgroundColor:") {
-				float r, g, b = 0;
-				iss >> r >> g >> b;
-				helper->m_colour = { r,g,b };
-			}
-		}
-		
-
-
-		file.close();
-		LOGGING_INFO("Global Settings loaded from GlobalConfig.txt");
-	}*/
 	std::string Serialize::m_EncodeBase64(const void* data, size_t size)
 	{
 		static const char encodingTable[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";

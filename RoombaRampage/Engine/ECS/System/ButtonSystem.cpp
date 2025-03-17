@@ -80,20 +80,21 @@ namespace ecs {
 		float minX, maxX, minY, maxY;
 		ECS* ecs = ECS::m_GetInstance();
 
-		if ((Input::InputSystem::m_isKeyTriggered(keys::LMB) || Input::InputSystem::m_isKeyPressed(keys::LMB)) && m_vecButtonComponentPtr.size()) {
-			for (int i = 0; i < m_vecButtonComponentPtr.size(); ++i) {
-				TransformComponent* transform = m_vecTransformComponentPtr[i];
-				ButtonComponent* button = m_vecButtonComponentPtr[i];
-				NameComponent* NameComp = m_vecNameComponentPtr[i];
+		for (int i = 0; i < m_vecButtonComponentPtr.size(); ++i) {
+			ButtonComponent* button = m_vecButtonComponentPtr[i];
+			TransformComponent* transform = m_vecTransformComponentPtr[i];
+			NameComponent* NameComp = m_vecNameComponentPtr[i];
 
+			//reset button
+			button->m_IsClick = false;
+			button->m_IsHover = false;
 
-				if ((transform->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer)) continue;
+			if ((transform->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer)) continue;
 
-				//reset button
-				if (button->m_IsClick)
-				{
-					button->m_IsClick = false;
-				}
+			bool clicked = (Input::InputSystem::m_isKeyTriggered(keys::LMB) || Input::InputSystem::m_isKeyPressed(keys::LMB));
+
+			if (clicked || button->m_EnableHover) {
+
 
 				float rotate = -graphicpipe::GraphicsCamera::m_currCameraRotate * (3.14151f / 180.f);
 
@@ -131,8 +132,15 @@ namespace ecs {
 		 		std::cout << button->m_Position.m_x << " " << button->m_Position.m_y << std::endl;
 				std::cout << minX << " " << minY << " " << maxX << " " << maxY << std::endl;*/
 				if ((minX <= mouseX && mouseX <= maxX) && (minY <= mouseY && mouseY <= maxY)) {
-					button->m_IsClick = true;
-					LOGGING_INFO("Button Clicked");
+					if (clicked) {
+						button->m_IsClick = true;
+						LOGGING_INFO("Button Clicked");
+					}
+					if (button->m_EnableHover) {
+						button->m_IsHover = true;
+					}
+
+					
 					//std::cout << " clicked " << std::endl;
 				}
 			}

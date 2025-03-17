@@ -275,6 +275,8 @@ namespace script {
 		/******************************************************************/
 		static bool m_InternalGetButtonComponent(ecs::EntityID entity, vector2::Vec2* position, vector2::Vec2* scale, bool* isClick);
 
+		static bool m_InternalIsButtonHovered(ecs::EntityID entity);
+
 		/******************************************************************/
 		/*! \fn        bool InternalCall::m_InternalSetButtonComponent(ecs::EntityID entity, const vector2::Vec2& position, const vector2::Vec2& scale, bool isClick)
 			\brief     Sets the button component of a specified entity.

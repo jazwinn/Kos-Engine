@@ -137,7 +137,7 @@ namespace Serialization {
 				 between physics layers, ensuring consistent physics behavior across sessions.
 		*/
 		/******************************************************************/
-		static void m_LoadPhysicsLayerMatrix(std::string);
+		static void m_LoadPhysicsLayerMatrix();
 
 		///******************************************************************/
 		///*!

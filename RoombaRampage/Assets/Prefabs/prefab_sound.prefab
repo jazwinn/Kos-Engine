@@ -1,17 +1,17 @@
 [
     {
         "GlobalSettings": {
-            "globalIllumination": 0.05999999865889549,
+            "globalIllumination": 0.46000000834465027,
             "backgroundColor": {
-                "r": 0.0,
-                "g": 0.0,
-                "b": 0.0
+                "r": 0.13300000131130219,
+                "g": 0.23000000417232513,
+                "b": 0.3199999928474426
             }
         }
     },
     {
         "CursorSettings": {
-            "cursorImage": "./Assets/Texture/UI/img_inGameCursor.png",
+            "cursorImage": "../Assets/Texture/UI/img_inGameCursor.png",
             "isCursorCentered": true
         }
     },
@@ -271,45 +271,6 @@
                         "y": 3.0
                     }
                 },
-                "collider": {
-                    "checkcollision": true,
-                    "checkresponse": false,
-                    "size": {
-                        "x": 1.4800000190734863,
-                        "y": 0.2800000011920929
-                    },
-                    "offset": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "drawDebug": true,
-                    "radius": 0.5,
-                    "shapetype": 0
-                },
-                "rigidbody": {
-                    "linearVelocity": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "linearAcceleration": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "rotation": 0.0,
-                    "angularVelocity": 0.0,
-                    "angularAcceleration": 0.0,
-                    "mass": 1.0,
-                    "inverseMass": 1.0,
-                    "linearDamping": 0.9900000095367432,
-                    "angularDamping": 0.9900000095367432,
-                    "force": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "torque": 0.0,
-                    "kinematic": false,
-                    "static": false
-                },
                 "sprite": {
                     "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
                     "layer": 507,
@@ -327,6 +288,17 @@
                     "frameTimer": 0.0,
                     "isAnimating": true,
                     "stripCount": 2
+                },
+                "button": {
+                    "force": {
+                        "x": 896.5,
+                        "y": 123.86907958984375
+                    },
+                    "scale": {
+                        "x": 2.9000000953674316,
+                        "y": 1.0
+                    },
+                    "enablehover": true
                 },
                 "script": {
                     "scripts": [
@@ -827,45 +799,6 @@
                                 "y": 5.0
                             }
                         },
-                        "collider": {
-                            "checkcollision": true,
-                            "checkresponse": false,
-                            "size": {
-                                "x": 0.12999999523162842,
-                                "y": 0.12999999523162842
-                            },
-                            "offset": {
-                                "x": 0.0,
-                                "y": 0.0
-                            },
-                            "drawDebug": true,
-                            "radius": 0.5,
-                            "shapetype": 0
-                        },
-                        "rigidbody": {
-                            "linearVelocity": {
-                                "x": 0.0,
-                                "y": 0.0
-                            },
-                            "linearAcceleration": {
-                                "x": 0.0,
-                                "y": 0.0
-                            },
-                            "rotation": 0.0,
-                            "angularVelocity": 0.0,
-                            "angularAcceleration": 0.0,
-                            "mass": 1.0,
-                            "inverseMass": 1.0,
-                            "linearDamping": 0.9900000095367432,
-                            "angularDamping": 0.9900000095367432,
-                            "force": {
-                                "x": 0.0,
-                                "y": 0.0
-                            },
-                            "torque": 0.0,
-                            "kinematic": false,
-                            "static": false
-                        },
                         "sprite": {
                             "imagefile": "ani_inventoryRightArrow_strip2.png",
                             "layer": 519,
@@ -883,6 +816,17 @@
                             "frameTimer": 0.0,
                             "isAnimating": true,
                             "stripCount": 2
+                        },
+                        "button": {
+                            "force": {
+                                "x": 1141.2679443359375,
+                                "y": 604.9170532226563
+                            },
+                            "scale": {
+                                "x": 0.7599999904632568,
+                                "y": 0.6800000071525574
+                            },
+                            "enablehover": true
                         },
                         "script": {
                             "scripts": [
@@ -937,45 +881,6 @@
                                 "y": 5.0
                             }
                         },
-                        "collider": {
-                            "checkcollision": true,
-                            "checkresponse": false,
-                            "size": {
-                                "x": 0.12999999523162842,
-                                "y": 0.12999999523162842
-                            },
-                            "offset": {
-                                "x": 0.0,
-                                "y": 0.0
-                            },
-                            "drawDebug": true,
-                            "radius": 0.5,
-                            "shapetype": 0
-                        },
-                        "rigidbody": {
-                            "linearVelocity": {
-                                "x": 0.0,
-                                "y": 0.0
-                            },
-                            "linearAcceleration": {
-                                "x": 0.0,
-                                "y": 0.0
-                            },
-                            "rotation": 0.0,
-                            "angularVelocity": 0.0,
-                            "angularAcceleration": 0.0,
-                            "mass": 1.0,
-                            "inverseMass": 1.0,
-                            "linearDamping": 0.9900000095367432,
-                            "angularDamping": 0.9900000095367432,
-                            "force": {
-                                "x": 0.0,
-                                "y": 0.0
-                            },
-                            "torque": 0.0,
-                            "kinematic": false,
-                            "static": false
-                        },
                         "sprite": {
                             "imagefile": "ani_inventoryLeftArrow_strip2.png",
                             "layer": 520,
@@ -993,6 +898,17 @@
                             "frameTimer": 0.0,
                             "isAnimating": true,
                             "stripCount": 2
+                        },
+                        "button": {
+                            "force": {
+                                "x": 668.4271240234375,
+                                "y": 604.8821411132813
+                            },
+                            "scale": {
+                                "x": 0.6399999856948853,
+                                "y": 0.7400000095367432
+                            },
+                            "enablehover": true
                         },
                         "script": {
                             "scripts": [
@@ -1460,45 +1376,6 @@
                                 "y": 5.0
                             }
                         },
-                        "collider": {
-                            "checkcollision": true,
-                            "checkresponse": false,
-                            "size": {
-                                "x": 0.12999999523162842,
-                                "y": 0.12999999523162842
-                            },
-                            "offset": {
-                                "x": 0.0,
-                                "y": 0.0
-                            },
-                            "drawDebug": true,
-                            "radius": 0.5,
-                            "shapetype": 0
-                        },
-                        "rigidbody": {
-                            "linearVelocity": {
-                                "x": 0.0,
-                                "y": 0.0
-                            },
-                            "linearAcceleration": {
-                                "x": 0.0,
-                                "y": 0.0
-                            },
-                            "rotation": 0.0,
-                            "angularVelocity": 0.0,
-                            "angularAcceleration": 0.0,
-                            "mass": 1.0,
-                            "inverseMass": 1.0,
-                            "linearDamping": 0.9900000095367432,
-                            "angularDamping": 0.9900000095367432,
-                            "force": {
-                                "x": 0.0,
-                                "y": 0.0
-                            },
-                            "torque": 0.0,
-                            "kinematic": false,
-                            "static": false
-                        },
                         "sprite": {
                             "imagefile": "ani_inventoryRightArrow_strip2.png",
                             "layer": 531,
@@ -1516,6 +1393,17 @@
                             "frameTimer": 0.0,
                             "isAnimating": true,
                             "stripCount": 2
+                        },
+                        "button": {
+                            "force": {
+                                "x": 1144.00390625,
+                                "y": 297.43963623046875
+                            },
+                            "scale": {
+                                "x": 0.6399999856948853,
+                                "y": 0.7599999904632568
+                            },
+                            "enablehover": true
                         },
                         "script": {
                             "scripts": [
@@ -1570,45 +1458,6 @@
                                 "y": 5.0
                             }
                         },
-                        "collider": {
-                            "checkcollision": true,
-                            "checkresponse": false,
-                            "size": {
-                                "x": 0.12999999523162842,
-                                "y": 0.12999999523162842
-                            },
-                            "offset": {
-                                "x": 0.0,
-                                "y": 0.0
-                            },
-                            "drawDebug": true,
-                            "radius": 0.5,
-                            "shapetype": 0
-                        },
-                        "rigidbody": {
-                            "linearVelocity": {
-                                "x": 0.0,
-                                "y": 0.0
-                            },
-                            "linearAcceleration": {
-                                "x": 0.0,
-                                "y": 0.0
-                            },
-                            "rotation": 0.0,
-                            "angularVelocity": 0.0,
-                            "angularAcceleration": 0.0,
-                            "mass": 1.0,
-                            "inverseMass": 1.0,
-                            "linearDamping": 0.9900000095367432,
-                            "angularDamping": 0.9900000095367432,
-                            "force": {
-                                "x": 0.0,
-                                "y": 0.0
-                            },
-                            "torque": 0.0,
-                            "kinematic": false,
-                            "static": false
-                        },
                         "sprite": {
                             "imagefile": "ani_inventoryLeftArrow_strip2.png",
                             "layer": 532,
@@ -1626,6 +1475,17 @@
                             "frameTimer": 0.0,
                             "isAnimating": true,
                             "stripCount": 2
+                        },
+                        "button": {
+                            "force": {
+                                "x": 668.8213500976563,
+                                "y": 297.3955993652344
+                            },
+                            "scale": {
+                                "x": 0.7400000095367432,
+                                "y": 0.7799999713897705
+                            },
+                            "enablehover": true
                         },
                         "script": {
                             "scripts": [

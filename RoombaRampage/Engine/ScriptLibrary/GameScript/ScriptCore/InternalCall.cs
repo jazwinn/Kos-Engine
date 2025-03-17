@@ -72,6 +72,9 @@ public static class InternalCall
     public extern static bool m_InternalSetButtonComponent(uint entity, in Vector2 position, in Vector2 scale, bool isClick);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static bool m_InternalIsButtonHovered(uint entity);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static string[] m_InternalGetScriptNames(uint entityID);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
