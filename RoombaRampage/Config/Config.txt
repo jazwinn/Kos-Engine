@@ -1,4 +1,0 @@
-WindowHeight: 1080
-WindowWidth: 1920
-FpsCap: 60
-StartScene: Assets/Scene/Level1.json

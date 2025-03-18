@@ -1,12 +1,18 @@
 [
     {
         "GlobalSettings": {
-            "globalIllumination": 0.30000001192092896,
+            "globalIllumination": 0.46000000834465027,
             "backgroundColor": {
-                "r": 0.13716816902160645,
-                "g": 0.13716816902160645,
-                "b": 0.13716816902160645
+                "r": 0.13300000131130219,
+                "g": 0.23000000417232513,
+                "b": 0.3199999928474426
             }
+        }
+    },
+    {
+        "CursorSettings": {
+            "cursorImage": "../Assets/Texture/UI/img_inGameCursor.png",
+            "isCursorCentered": true
         }
     },
     {
@@ -16,7 +22,7 @@
             "isprefab": true,
             "tagstr": "Default",
             "prefabname": "EndPoint.prefab",
-            "issync": true
+            "issync": false
         },
         "transform": {
             "position": {
@@ -87,7 +93,7 @@
                     "map": [
                         {
                             "variable": "NextLevelName",
-                            "base64": "Cutscene05"
+                            "base64": "CutsceneLevel6"
                         }
                     ]
                 }

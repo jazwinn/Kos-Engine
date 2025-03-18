@@ -39,8 +39,8 @@ public class UI_AmmoHUD : ScriptBase
     private string gunIconTexture = "img_hudGunIcon.png";
     private string katanaIconTexture = "img_hudKatanaIcon.png";
     private string boosterIconTexture = "img_hudBoosterIcon.png";
-    private string shotgunIconTexture = "img_hudGunIcon.png";
-    private string railgunIconTexture = "img_hudGunIcon.png";
+    private string shotgunIconTexture = "img_hudShotgunIcon.png";
+    private string railgunIconTexture = "img_hudRailgunIcon.png";
 
     private string fullBarTexture = "ani_hudFullBar_strip7.png";
     private string segmentedBarTexture = "ani_hudSegmentBar_strip7.png";
@@ -124,12 +124,9 @@ public class UI_AmmoHUD : ScriptBase
                 return katanaIconTexture;
 
             case 2:
-                return boosterIconTexture;
-
-            case 3:
                 return shotgunIconTexture;
 
-            case 4:
+            case 3:
                 return railgunIconTexture;
 
             default:
@@ -164,13 +161,10 @@ public class UI_AmmoHUD : ScriptBase
                 return fullBarTexture;
 
             case 2:
-                return fullBarTexture;
+                return segmentedBarTexture;
 
             case 3:
-                return segmentedBarTexture;
-
-            case 4:
-                return segmentedBarTexture;
+                return fullBarTexture;
 
             default:
                 return null;
@@ -188,7 +182,6 @@ public class UI_AmmoHUD : ScriptBase
             case 1:
                 return fullBarTexture;
 
-
             default:
                 return fullBarTexture;
         }
@@ -196,7 +189,12 @@ public class UI_AmmoHUD : ScriptBase
 
     private void UpdatePosition()
     {
-        transformComp.m_position = MoveTowards(transformComp.m_position, Component.Get<TransformComponent>(cameraID).m_position, 10f * InternalCall.m_InternalCallGetDeltaTime());
+        transformComp.m_position = MoveTowards(transformComp.m_position, Component.Get<TransformComponent>(cameraID).m_position, 30f * InternalCall.m_InternalCallGetDeltaTime());
+        if (float.IsNaN(transformComp.m_position.X) || float.IsNaN(transformComp.m_position.Y))
+        {
+            transformComp.m_position = new Vector2(0, 0);
+        }
+
         Component.Set<TransformComponent>(EntityID, transformComp);
     }
 

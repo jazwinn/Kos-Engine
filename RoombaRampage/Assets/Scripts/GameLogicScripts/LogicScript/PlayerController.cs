@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,7 +29,7 @@ public class PlayerController : ScriptBase
         isDead = false;
 
         //Set speed of player
-        speed = 5;
+        speed = 4;
 
         //Set tolerance to prevent jittering, higher values = more rigid rotation, but no more jittering due to micro changes
         angleTolerance = 4f;
@@ -121,7 +122,18 @@ public class PlayerController : ScriptBase
         //Normalize to prevent diagonal movement from adding speed
         movement = NormalizeAndScale(movement.X, movement.Y, speed);
 
-        InternalCall.m_InternalSetVelocity(EntityID, movement);
+        if (!PlayerGun.playerBoost)
+        {
+            InternalCall.m_InternalSetVelocity(EntityID, movement);
+        }
+
+        if (PlayerLoadoutManager.isSortieing)
+        {
+            movement.X = 0;
+            movement.Y = 0;
+            InternalCall.m_InternalSetVelocity(EntityID, movement);
+        }
+
 
         #endregion
 
@@ -132,29 +144,125 @@ public class PlayerController : ScriptBase
 
             foreach (int collidedEntitiesID in collidedEntities)
             {
-                if (InternalCall.m_InternalCallGetTag((uint) collidedEntitiesID) == "Enemy")
+                if (!PlayerGun.playerBoost)
                 {
-                    CameraFollowPlayerScript.Shake(10f, 1f);
+                    if (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID) == "Enemy")
+                    {
+                        CameraFollowPlayerScript.Shake(10f, 1f);
 
-                    InternalCall.m_InternalCallPlayAudio(EntityID, "aud_playerDeath01");
+                        InternalCall.m_InternalCallPlayAudio(EntityID, "aud_playerDeath01");
 
-                    var collisionComponent = GetComponent.GetColliderComponent(EntityID);
-                    collisionComponent.m_collisionCheck = !collisionComponent.m_collisionCheck;
-                    SetComponent.SetCollisionComponent(EntityID, collisionComponent);
+                        var collisionComponent = GetComponent.GetColliderComponent(EntityID);
+                        collisionComponent.m_collisionCheck = !collisionComponent.m_collisionCheck;
+                        SetComponent.SetCollisionComponent(EntityID, collisionComponent);
 
-                    InternalCall.m_InternalSetAnimationComponent(EntityID, 0, 0, 0, false, 1);
-                    InternalCall.m_InternalSetSpriteComponent(EntityID, playerDeathTexture, startingLayer, startingColor, startingAlpha);
+                        InternalCall.m_InternalSetAnimationComponent(EntityID, 0, 0, 0, false, 1);
+                        InternalCall.m_InternalSetSpriteComponent(EntityID, playerDeathTexture, startingLayer, startingColor, startingAlpha);
 
-                    movement.X = 0;
-                    movement.Y = 0;
+                        movement.X = 0;
+                        movement.Y = 0;
 
-                    InternalCall.m_InternalSetVelocity(EntityID, movement);
+                        InternalCall.m_InternalSetVelocity(EntityID, movement);
 
-                    isDead = true;
+                        isDead = true;
 
-                    InternalCall.m_InternalCallSetTimeScale(0);
+                        CoroutineManager.Instance.PauseAllCoroutines();
+
+                        InternalCall.m_InternalCallSetTimeScale(0);
+                    }
+                    if (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID) == "EnemyBullet")
+                    {
+                        CameraFollowPlayerScript.Shake(10f, 1f);
+
+                        InternalCall.m_InternalCallPlayAudio(EntityID, "aud_playerDeath01");
+
+                        var collisionComponent = GetComponent.GetColliderComponent(EntityID);
+                        collisionComponent.m_collisionCheck = !collisionComponent.m_collisionCheck;
+                        SetComponent.SetCollisionComponent(EntityID, collisionComponent);
+
+                        InternalCall.m_InternalSetAnimationComponent(EntityID, 0, 0, 0, false, 1);
+                        InternalCall.m_InternalSetSpriteComponent(EntityID, playerDeathTexture, startingLayer, startingColor, startingAlpha);
+
+                        movement.X = 0;
+                        movement.Y = 0;
+
+                        InternalCall.m_InternalSetVelocity(EntityID, movement);
+
+                        isDead = true;
+
+                        CoroutineManager.Instance.PauseAllCoroutines();
+
+                        InternalCall.m_InternalCallSetTimeScale(0);
+                    }
+
+                    if (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID) == "PlayerRailgunBullet")
+                    {
+                        CameraFollowPlayerScript.Shake(10f, 1f);
+
+                        InternalCall.m_InternalCallPlayAudio(EntityID, "aud_playerDeath01");
+
+                        var collisionComponent = GetComponent.GetColliderComponent(EntityID);
+                        collisionComponent.m_collisionCheck = !collisionComponent.m_collisionCheck;
+                        SetComponent.SetCollisionComponent(EntityID, collisionComponent);
+
+                        InternalCall.m_InternalSetAnimationComponent(EntityID, 0, 0, 0, false, 1);
+                        InternalCall.m_InternalSetSpriteComponent(EntityID, playerDeathTexture, startingLayer, startingColor, startingAlpha);
+
+                        movement.X = 0;
+                        movement.Y = 0;
+
+                        InternalCall.m_InternalSetVelocity(EntityID, movement);
+
+                        isDead = true;
+
+                        CoroutineManager.Instance.PauseAllCoroutines();
+
+                        InternalCall.m_InternalCallSetTimeScale(0);
+                    }
                 }
-                if (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID) == "EnemyBullet")
+           
+                else
+                {
+                    if (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID) == "Boss")
+                    {
+                        CameraFollowPlayerScript.Shake(10f, 1f);
+
+                        InternalCall.m_InternalCallPlayAudio(EntityID, "aud_playerDeath01");
+
+                        var collisionComponent = GetComponent.GetColliderComponent(EntityID);
+                        collisionComponent.m_collisionCheck = !collisionComponent.m_collisionCheck;
+                        SetComponent.SetCollisionComponent(EntityID, collisionComponent);
+
+                        InternalCall.m_InternalSetAnimationComponent(EntityID, 0, 0, 0, false, 1);
+                        InternalCall.m_InternalSetSpriteComponent(EntityID, playerDeathTexture, startingLayer, startingColor, startingAlpha);
+
+                        movement.X = 0;
+                        movement.Y = 0;
+
+                        InternalCall.m_InternalSetVelocity(EntityID, movement);
+
+                        isDead = true;
+
+                        InternalCall.m_InternalCallSetTimeScale(0);
+
+                        CoroutineManager.Instance.PauseAllCoroutines();
+                    }
+                }
+                
+                if (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID) == "Wall")
+                {
+
+                    if (PlayerGun.playerBoost)
+                    {
+                        CameraFollowPlayerScript.Shake(10f, 1f);
+                        PlayerGun.playerBoost = false;
+                    }
+
+
+
+                }
+
+                if (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID) == "LaserWall")
                 {
                     CameraFollowPlayerScript.Shake(10f, 1f);
 
@@ -175,11 +283,18 @@ public class PlayerController : ScriptBase
                     isDead = true;
 
                     InternalCall.m_InternalCallSetTimeScale(0);
+
+                    CoroutineManager.Instance.PauseAllCoroutines();
                 }
             }
         }
 
         #endregion
+
+        if (PlayerGun.playerBoost)
+        {
+            return;
+        }
 
         #region Mouse Rotation
 
@@ -225,20 +340,26 @@ public class PlayerController : ScriptBase
     {
         Vector2 temp;
         InternalCall.m_InternalGetVelocity(EntityID, out temp);
+        RigidBodyComponent rigidBodyComponent = Component.Get<RigidBodyComponent>(EntityID);
 
-        if (Magnitude(temp) != 0 && isAnimating == false)
+        if ((Magnitude(temp) != 0 && isAnimating == false)||(Magnitude(rigidBodyComponent.m_Acceleration) != 0 && isAnimating == false))
         {
-            InternalCall.m_InternalCallPlayAudio(EntityID, movementStartAudio);
-            InternalCall.m_InternalCallPlayAudio(EntityID, movementLoopAudio);
-            animComp = Component.Get<AnimationComponent>(EntityID);
-            animComp.m_isAnimating = true;
-            Component.Set<AnimationComponent>(EntityID, animComp);
-            isAnimating = true;
+            if (isAnimating == false)
+            {
+                InternalCall.m_InternalCallPlayAudio(EntityID, movementStartAudio);
+                InternalCall.m_InternalCallPlayAudio(EntityID, movementLoopAudio);
+                animComp = Component.Get<AnimationComponent>(EntityID);
+                animComp.m_isAnimating = true;
+                Component.Set<AnimationComponent>(EntityID, animComp);
+                isAnimating = true;
+
+
+            }
 
             
         }
 
-        else if (Magnitude(temp) == 0 && isAnimating == true)
+        else if ((Magnitude(temp) == 0 && Magnitude(rigidBodyComponent.m_Acceleration) == 0 && isAnimating == true))
         {
             InternalCall.m_InternalCallStopAudio(EntityID, movementLoopAudio);
             InternalCall.m_InternalCallPlayAudio(EntityID, movementStopAudio);
@@ -248,6 +369,7 @@ public class PlayerController : ScriptBase
             Component.Set<AnimationComponent>(EntityID, animComp);
             isAnimating = false;
         }
+
     }
 
     #region Vec2 Functions

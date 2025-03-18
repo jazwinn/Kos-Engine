@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using static EnemyScript;
 
 
 public class EnemyScript : ScriptBase //Enemy Script, not state machine
@@ -19,13 +21,15 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     {
         Helpless,
         Melee,
-        Ranged
+        Ranged,
+        AlertMelee,
+        AlertRanged
     };
 
     public enum EnemyRoamType //Enemy roaming type enum, add here for more roaming behaviours
     {
-        Patrolling,
-        Static
+        Static,
+        Patrolling
     };
 
     public EnemySelection enemyType; //Current Enemy Type
@@ -44,6 +48,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     private ColliderComponent collComp;
     private TransformComponent transformComp;
     private TransformComponent playerTransformComp;
+    private ParticleComponent particleComp;
     //private GridComponent gridComp;
     #endregion
 
@@ -70,6 +75,9 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     private string bodyStabAud1 = "aud_bodyStab01.wav";
     private string bodyStabAud2 = "aud_bodyStab02.wav";
 
+    private string rangedEnemyDeathAud1 = "aud_playerDeath01.wav";
+    private string enemyShootAud1 = "aud_railgunShot01.wav";
+
     private List<string> bodyDeathAudList = new List<string>();
     private List<string> bodyFallAudList = new List<string>();
     private List<string> bodyStabAudList = new List<string>();
@@ -84,10 +92,10 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     private Vector2 movement = new Vector2();
     private float enemyDeathKnockbackMultiplier;
     private float enemyBloodPoolSpawnDelay = 0.5f;
-    private float enemySpeed = 1.5f;
-    private float patrolSpeed = 1.5f;
-    private float enemyFOVangle = 80.0f;
-    private float enemyFOVdistance = 20.0f;
+    private float enemySpeed = 1.9f;
+    private float patrolSpeed = 1.9f;
+    private float enemyFOVangle = 300.0f;
+    private float enemyFOVdistance = 10.0f;
 
     private float scanTime = 0f;
     private bool scanning = false;
@@ -112,8 +120,15 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     #endregion
 
     #region Enemy Variables
-    private float fireRate = 1.5f;
+    private Vector2 originalPosition;
+
+    private float fireRate = 2.5f;
+    private float fireFirstDelay = 0.5f;
     private float fireTimer = 0f;
+    private float shuffleDistance = 0.20f;
+    private bool  rangedShuffleLeft = true;
+    private float rangedShuffleRate = 1.1f;
+    private float rangedShuffleTimer = 0f;
     private float targetCheckInterval = 0.3f;
     private float targetCheckTimer = 0f;
 
@@ -122,6 +137,24 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     private float scanInterval = 0.5f;
     private float scanTimer = 0f;
     private Vector2 lastKnownPlayerPosition;
+    #endregion
+
+    #region Particle Variables
+    private bool willSpawn = false;          // Whether the particle system should spawn particles
+    private int noOfParticles = 1;       // Number of particles in the system
+    private float lifeSpan = 3f;          // Lifespan of each particle
+    private Vector2 velocity;        // Initial velocity of the particles
+    private Vector2 acceleration;    // Acceleration affecting the particles
+    private Vector3 color;           // Color of the particles
+    private float coneRotation = 0;      // Rotation of the emission cone
+    private float coneAngle = 360f;         // Angle of the emission cone
+    private float randomFactor = 0;      // Randomness applied to particle properties
+    private string imageFile;        // Texture file for the particle
+    private int stripCount = 0;          // Number of strips in the particle animation
+    private int frameNumber = 0;         // Current frame in animation
+    private int layer = 500;               // Layer the particle system belongs to
+    private float friction = 0;          // Friction affecting particle movement
+    private int fps = 0;                 // Frames per second for particle animation
     #endregion
 
     public override void Awake(uint id) //Called everytime instance is created
@@ -138,9 +171,11 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         playerID = (uint)InternalCall.m_InternalCallGetTagID("Player"); //Get Player ID
         UpdateComponentValues();
         enemyScientistDeathTexture = "img_scientistDeath.png";
-        enemyRobotDeathTexture = "img_scientistDeath.png"; //Set to ranged enemy death texture
+        enemyRobotDeathTexture = "img_rangedEnemyDeath.png"; //Set to ranged enemy death texture
 
+        originalPosition = transformComp.m_position;
         enemyDeathKnockbackMultiplier = 0.4f;
+
 
         switch (enemyComp.m_enemyTypeInt) //Sets enemy type based on EnemyComponent enemy type int ID
         {
@@ -157,6 +192,14 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
             //Ranged
             case 2:
                 enemyType = EnemySelection.Ranged; //Set enemy type to ranged
+                break;
+
+            case 3:
+                enemyType = EnemySelection.AlertMelee; //Set enemy type to AlertMelee
+                break;
+
+            case 4:
+                enemyType = EnemySelection.AlertRanged; //Set enemy type to AlertRanged
                 break;
 
             default:
@@ -181,36 +224,52 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
         UpdateRayCastToPlayerPosition(); //Updates Raycast Position at the start to lock onto the Player
 
-        currentState = CheckEnemyType(); //Checks enemy type to start off new state
+        currentState = CheckEnemyType(); // Checks enemy type to start off new state
 
         if (enemyRoamBehaviour == EnemyRoamType.Patrolling)
         {
-            childrenIDList = InternalCall.m_InternalCallGetChildrenID(EntityID); //Gets waypoints for enemy, will be null/empty if there are no children waypoints
+            childrenIDList = InternalCall.m_InternalCallGetChildrenID(EntityID);
             StoreWaypoints();
-            if (waypoints.Count != 0)
+
+            if (waypoints == null || waypoints.Count == 0)
             {
-                Vector2 targetWaypoint = waypoints[currentPatrolWaypoint];
-
-                Vector2 gridTargetPos = World2GridCoordinates(targetWaypoint.X, targetWaypoint.Y, pathFindComp.m_gridkey);
-
-                pathFindComp.m_targetPosition = gridTargetPos;
+                //Console.WriteLine("[WARNING] No waypoints found. Enemy will remain static.");
+                enemyRoamBehaviour = EnemyRoamType.Static;
+                return;
             }
 
+            // Ensure `currentPatrolWaypoint` is within a valid range
+            if (currentPatrolWaypoint < 0 || currentPatrolWaypoint >= waypoints.Count)
+            {
+                //Console.WriteLine($"[ERROR] Invalid waypoint index {currentPatrolWaypoint}. Resetting to 0.");
+                currentPatrolWaypoint = 0;
+            }
+
+            Vector2 targetWaypoint = waypoints[currentPatrolWaypoint];
+            Vector2 gridTargetPos = World2GridCoordinates(targetWaypoint.X, targetWaypoint.Y, pathFindComp.m_gridkey);
+            pathFindComp.m_targetPosition = gridTargetPos;
+
+            // Ensure GetPath() is only called if there is a valid target
             Paths = GetPath(
                pathFindComp.m_gridkey,
-               (int)World2GridCoordinates(transformComp.m_position.X, transformComp.m_position.Y, pathFindComp.m_gridkey).X, (int)World2GridCoordinates(transformComp.m_position.X, transformComp.m_position.Y, pathFindComp.m_gridkey).Y,
-               (int)pathFindComp.m_targetPosition.X, (int)pathFindComp.m_targetPosition.Y
+               (int)World2GridCoordinates(transformComp.m_position.X, transformComp.m_position.Y, pathFindComp.m_gridkey).X,
+               (int)World2GridCoordinates(transformComp.m_position.X, transformComp.m_position.Y, pathFindComp.m_gridkey).Y,
+               (int)pathFindComp.m_targetPosition.X,
+               (int)pathFindComp.m_targetPosition.Y
             );
 
+            if (Paths == null || Paths.Count == 0)
+            {
+                //Console.WriteLine("[WARNING] No valid path found! Enemy may remain idle.");
+            }
         }
     }
 
     public override void Update() //Runs every frame
     {
-        if (isDead) return;
+        if (isDead || PlayerController.isDead || GameControllerLevel1.gameIsPaused) return;
         CheckForCollisions(); //Checks for collisions in the event an enemy touches the player
         CheckWalking();
-
         currentState.DoActionUpdate(InternalCall.m_InternalCallGetDeltaTime()); //Update the current state's DoActionUpdate function, such as patrolling, chasing etc, with delta time
     }
 
@@ -220,23 +279,31 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         currentState = nextState; //Set current state
     }
 
-    public EnemyState CheckEnemyType() //Check for which enemy type, and creates a new state to begin AI
+    public EnemyState CheckEnemyType()
     {
         switch (enemyType)
         {
-            case EnemySelection.Helpless: //Return helpless beginning state
+            case EnemySelection.Helpless:
                 return new EnemyStatePatrol(this);
 
-            case EnemySelection.Melee: //Return melee beginning state
-                return new EnemyStatePatrol(this);
+            case EnemySelection.Melee:
+                return new EnemyStateScan(this); // Start with scanning before chasing
 
-            case EnemySelection.Ranged: //Return ranged beginning state
-                return new EnemyStatePatrol(this); // New ranged patrol state
+            case EnemySelection.Ranged:
+                return new EnemyStateScan(this); // Scanning before attacking
+
+            case EnemySelection.AlertMelee:
+                return new EnemyStateChase(this);
+
+            case EnemySelection.AlertRanged:
+                return new EnemyStateRangedSearch(this);
 
             default:
+                //Console.WriteLine("[ERROR] Invalid enemy type!");
                 return null;
         }
     }
+
 
     #endregion
 
@@ -278,11 +345,13 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
             foreach (int collidedEntitiesID in collidedEntities)
             {
+                if (isDead) return;
                 switch (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID))
                 {
                     case "MeleeKillZoneSpawn":
                         CoroutineManager.Instance.StartCoroutine(EnemyDeath("Katana"), "EnemyDeath");
                         break;
+                    case "PlayerRailgunBullet":
                     case "PlayerBullet":
                         CoroutineManager.Instance.StartCoroutine(EnemyDeath("Gun"), "EnemyDeath"); //Runs coroutine to spawn blood pool
                         break;
@@ -291,7 +360,11 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
                         //playerIsDead = true;
                         //InternalCall.m_InternalSetAnimationComponent(EntityID, frameNumber, 10, frameTimer, !playerIsDead, stripCount);
-
+                        if (PlayerGun.playerBoost) //kill enemy if player is boosting
+                        {
+                            CoroutineManager.Instance.StartCoroutine(EnemyDeath("Booster"), "EnemyDeath"); //Runs coroutine to spawn blood pool
+                            break;
+                        }
                         movement.X = 0;
                         movement.Y = 0;
 
@@ -321,10 +394,12 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
                 break;
 
             case EnemySelection.Melee: //Set dead scientist image
+            case EnemySelection.AlertMelee:
                 spriteComp.m_imageFile = enemyScientistDeathTexture;
                 break;
 
             case EnemySelection.Ranged: //Set dead robot image
+            case EnemySelection.AlertRanged:
                 spriteComp.m_imageFile = enemyRobotDeathTexture;
                 break;
 
@@ -333,12 +408,17 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         }
 
         Component.Set<SpriteComponent>(EntityID, spriteComp); //Sets sprite component
+
+
     }
+
+
 
     private IEnumerator EnemyDeath(string causeOfDeath) //Coroutine for enemy death
     {
+        if (isDead) yield break;
         CoroutineManager.Instance.StartCoroutine(PlayEnemyDeathAudio(causeOfDeath), "EnemyDeathAudio");
-
+       
         isDead = true;
         currentState.EnemyDead();
 
@@ -352,6 +432,11 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         InternalCall.m_InternalSetAnimationComponent(EntityID, 0, 0, 0, false, 1); //Stops animation of enemy
         SetDeadEnemySprite(); //Sets dead sprite
 
+        willSpawn = true;
+        InternalCall.m_InternalCallSpawnParticle(EntityID);
+
+
+
         transformComp = Component.Get<TransformComponent>(EntityID);
 
         Vector2 direction;
@@ -361,6 +446,11 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         direction.Y = (transformComp.m_position.Y - playerTransformComp.m_position.Y); //Gets Vector.Y towards player
 
         float rotationFloat = (float)(Math.Atan2(direction.X, direction.Y) * (180 / Math.PI)); //Gets rotation towards player
+
+
+        InternalCall.m_InternalCallSpawnParticle(EntityID);
+        InternalCall.m_InternalCallSetParticleConeRotation(EntityID, rotationFloat);
+        InternalCall.m_InternalCallSetParticleLayer(EntityID, 8);// 1 Below the sprite layer;
 
         transformComp.m_rotation = rotationFloat; //Sets rotation values
 
@@ -396,40 +486,82 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         yield return null;
         //yield return new CoroutineManager.WaitForSeconds(enemyBloodPoolSpawnDelay); //Waits for time before moving to next line;
 
-        InternalCall.m_InternalCallAddPrefab("prefab_enemyBloodPool", transformComp.m_position.X, transformComp.m_position.Y, transformComp.m_rotation); //Spawns blood pool
+
+        int poolId = InternalCall.m_InternalCallAddPrefab("prefab_enemyBloodPool", transformComp.m_position.X, transformComp.m_position.Y, transformComp.m_rotation); //Spawns blood pool
+        if (enemyType == EnemySelection.Ranged || enemyType == EnemySelection.AlertRanged)
+        {
+            SpriteComponent sc = Component.Get<SpriteComponent>((uint)poolId);
+            sc.m_color.R = 0;
+            sc.m_color.G = 0;
+            sc.m_color.B = 0;
+            Component.Set<SpriteComponent>((uint)poolId, sc);
+            //sc.m_color = 
+        }
+
+        KillCounter.killCount++;
+        Console.WriteLine($"Kill Count: {KillCounter.killCount}");
     }
     #endregion
 
     #region Patrolling Behaviour
+    public void PatrolSetup()
+    {
+        if (enemyRoamBehaviour == EnemyScript.EnemyRoamType.Patrolling)
+        {
+            SetInitialPatrolPaths();
+
+            if (!AreWaypointsAvailable())
+            {
+                //Console.WriteLine("[WARNING] No valid waypoints for patrol!");
+                return;
+            }
+
+            StartPatrol();
+        }
+    }
+
+
+
     public void StartPatrol()
     {
-        //Console.WriteLine("patrolling");
+        if (!AreWaypointsAvailable())
+        {
+            //Console.WriteLine("[ERROR] No waypoints available! Calling StoreWaypoints...");
+            //StoreWaypoints();
+
+            if (waypoints == null || waypoints.Count == 0)
+            {
+                //Console.WriteLine("[ERROR] Waypoints still empty after StoreWaypoints(). Enemy will stop.");
+                return;
+            }
+        }
+
+        if (Paths == null || Paths.Count == 0)
+        {
+            //Console.WriteLine("[ERROR] Paths list is empty! Resetting to waypoints.");
+            SetInitialPatrolPaths();
+            return;
+        }
+
+        if (currentPatrolPath < 0 || currentPatrolPath >= Paths.Count)
+        {
+            //Console.WriteLine("[ERROR] Invalid patrol path index: " + currentPatrolPath);
+            currentPatrolPath = 0;
+        }
+
         if (!Vector2DistanceChecker(transformComp.m_position, Grid2WorldCoordinates((int)Paths[currentPatrolPath].X, (int)Paths[currentPatrolPath].Y, pathFindComp.m_gridkey), 0.8f))
         {
-            //Console.WriteLine("patrolling");
             MoveToTarget(Paths[currentPatrolPath], patrolSpeed);
-        }
-        else if (Vector2DistanceChecker(transformComp.m_position, Grid2WorldCoordinates((int)Paths[currentPatrolPath].X, (int)Paths[currentPatrolPath].Y, pathFindComp.m_gridkey), 0.8f))
-        {
-            RigidBodyComponent rb = Component.Get<RigidBodyComponent>(EntityID);
-
-            SetToNextPath();
-        }
-        if (childrenIDList.Length > 0)
-        {
-
-            if (!isPatrolling)
-            {
-
-                isPatrolling = true;
-
-                CoroutineManager.Instance.StartCoroutine(PatrolRoutine(), "Patrol");
-
-            }
         }
         else
         {
-            //Console.WriteLine("Enemy Has No Waypoints!");
+            SetToNextPath();
+        }
+
+        if (childrenIDList.Length > 0 && !isPatrolling)
+        {
+            isPatrolling = true;
+            CoroutineManager.Instance.StartCoroutine(PatrolRoutine(), "Patrol");
         }
     }
 
@@ -437,32 +569,62 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     {
         if (waypoints == null || waypoints.Count == 0)
         {
-            //Console.WriteLine("Waypoints list is empty!");
+            //Console.WriteLine("[ERROR] No waypoints found! Stopping patrol.");
+            isPatrolling = false;
             yield break;
         }
 
-        if (isPatrolling)
+        while (isPatrolling)
         {
+            if (Paths == null || Paths.Count == 0)
+            {
+                //Console.WriteLine("[ERROR] No waypoints available for fallback movement. Stopping patrol.");
+                isPatrolling = false;
+                yield break;
+            }
+
             Vector2 targetWaypoint = waypoints[currentPatrolWaypoint];
             Vector2 gridTargetPos = World2GridCoordinates(targetWaypoint.X, targetWaypoint.Y, pathFindComp.m_gridkey);
             pathFindComp.m_targetPosition = gridTargetPos;
 
-
-            if (Paths == null || Paths.Count == 0)
-            {
-                enemyRoamBehaviour = EnemyRoamType.Static;
-
-                //Console.WriteLine("No valid path found!");
-                yield return new CoroutineManager.WaitForSeconds(1.0f);
-            }
-
-
-
-            //Wait at the waypoint for 3 seconds before moving to the next waypoint
             yield return new CoroutineManager.WaitForSeconds(5.0f);
         }
-
     }
+
+    public void SetInitialPatrolPaths()
+    {
+        if (!AreWaypointsAvailable())
+        {
+            //Console.WriteLine("[ERROR] No waypoints set for patrolling!");
+            enemyRoamBehaviour = EnemyRoamType.Static;
+            return;
+        }
+
+        //Console.WriteLine("[DEBUG] Setting initial patrol paths...");
+
+        Vector2 targetWaypoint = waypoints[currentPatrolWaypoint];
+        Vector2 gridTargetPos = World2GridCoordinates(targetWaypoint.X, targetWaypoint.Y, pathFindComp.m_gridkey);
+        pathFindComp.m_targetPosition = gridTargetPos;
+
+        Paths = GetPath(
+            pathFindComp.m_gridkey,
+            (int)World2GridCoordinates(transformComp.m_position.X, transformComp.m_position.Y, pathFindComp.m_gridkey).X,
+            (int)World2GridCoordinates(transformComp.m_position.X, transformComp.m_position.Y, pathFindComp.m_gridkey).Y,
+            (int)pathFindComp.m_targetPosition.X, (int)pathFindComp.m_targetPosition.Y
+        );
+
+        if (Paths == null || Paths.Count == 0)
+        {
+            //Console.WriteLine("[WARNING] No valid path found! Enemy will remain idle.");
+            enemyRoamBehaviour = EnemyRoamType.Static;
+        }
+    }
+
+    public bool AreWaypointsAvailable()
+    {
+        return waypoints != null && waypoints.Count > 0;
+    }
+
 
     public void SetToNextWaypoint()
     {
@@ -495,7 +657,6 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         currentChasePath += 1;
         if (currentChasePath >= ChasePaths.Count) // Ensure it wraps correctly
         {
-
             ChasePaths.Clear();
             currentChasePath = 0;
             SetCurrentState(new EnemyStateScan(this));
@@ -521,31 +682,40 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     #region Pathfinding
     private void StoreWaypoints()
     {
-        if (childrenIDList == null || childrenIDList.Length <= 0)
+        //Console.WriteLine("[DEBUG] Storing Waypoints!");
+
+        if (childrenIDList == null || childrenIDList.Length == 0)
         {
-            Console.WriteLine("No child waypoints found!");
+            //Console.WriteLine("[WARNING] No child waypoints found!");
             return;
         }
 
-        waypoints = new List<Vector2>();
+        waypoints = new List<Vector2>(); // Ensure list is fresh
 
         foreach (var waypointID in childrenIDList)
         {
-            TransformComponent waypointTransform = GetComponent.GetTransformComponent((uint)waypointID);
-            if (waypointTransform == null)
+            Vector2 waypointPos;
+            bool success = InternalCall.m_InternalGetTranslate((uint)waypointID, out waypointPos);
+
+            if (!success)
             {
-                // Console.WriteLine($"Waypoint ID {waypointID} has no TransformComponent!");
+                //Console.WriteLine($"[ERROR] Failed to get translation for waypoint ID {waypointID}!");
                 continue;
             }
 
-            Vector2 waypointPos;
-
-            InternalCall.m_InternalGetTranslate((uint)waypointID, out waypointPos);
-
             waypoints.Add(waypointPos);
+        }
 
+        if (waypoints.Count == 0)
+        {
+            //Console.WriteLine("[WARNING] All waypoints failed to load!");
+        }
+        else
+        {
+            //Console.WriteLine($"[INFO] Successfully stored {waypoints.Count} waypoints.");
         }
     }
+
     public bool ReachedEndOfPathChecker()
     {
         return false;
@@ -578,8 +748,6 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     }
     public List<Vector2> GetPath(int gridKey, int startX, int startY, int endX, int endY)
     {
-        //Console.WriteLine(endX);
-        //Console.WriteLine(endY);
         bool success = InternalCall.m_InternalCallGetPath(gridKey, startX, startY, endX, endY, out int[] pathx, out int[] pathy);
 
         List<Vector2> path = new List<Vector2>();
@@ -598,6 +766,38 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     #endregion
 
     #region Enemy Behaviour
+    public void ReturnHomeStart()
+    {
+        currentChasePath = 0;
+
+        // Convert positions to grid coordinates
+        Vector2 gridLastPos = World2GridCoordinates(originalPosition.X, originalPosition.Y, pathFindComp.m_gridkey);
+        Vector2 gridCurrentPos = World2GridCoordinates(transformComp.m_position.X, transformComp.m_position.Y, pathFindComp.m_gridkey);
+
+        // Attempt pathfinding
+        ChasePaths = GetPath(pathFindComp.m_gridkey,
+                             (int)gridCurrentPos.X, (int)gridCurrentPos.Y,
+                             (int)gridLastPos.X, (int)gridLastPos.Y);
+
+        if (ChasePaths.Count == 0)
+        {
+            HandleFailedPathfinding();
+        }
+    }
+
+    public void ReturnHomeUpdate()
+    {
+        if (isDead) return;
+
+        UpdateRayCastToPlayerPosition();
+        if (CheckPlayerWithinSight() && IsPlayerInFOV())
+        {
+            SetCurrentState(new EnemyStateChase(this));
+            return;
+        }
+        MoveToLastKnownPosition(lastKnownPlayerPosition);
+
+    }
 
     public void RunFromPlayer()
     {
@@ -706,56 +906,53 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
     public void RunAtPlayer()
     {
-        //Call MoveToTarget method with player's position
         UpdateRayCastToPlayerPosition();
+
         if (!CheckPlayerWithinSight())
         {
             currentState.LostTarget();
-        }
-
-        //UpdateComponentValues();
-        transformComp = Component.Get<TransformComponent>(EntityID);
-        playerTransformComp = Component.Get<TransformComponent>(playerID);
-
-        Vector2 direction;
-
-        //Gets direction to look towards
-        direction.X = (playerTransformComp.m_position.X - transformComp.m_position.X); //Gets Vector.X towards player
-        direction.Y = (playerTransformComp.m_position.Y - transformComp.m_position.Y); //Gets Vector.Y towards player
-
-        float rotationFloat = (float)(Math.Atan2(direction.X, direction.Y) * (180 / Math.PI)); //Gets rotation towards player
-
-        transformComp.m_rotation = rotationFloat; //Sets rotation values
-
-        SetComponent.SetTransformComponent(EntityID, transformComp); //Sets transform component
-
-        direction.X = (playerTransformComp.m_position.X - transformComp.m_position.X); //Gets Vector.X towards player
-        direction.Y = (playerTransformComp.m_position.Y - transformComp.m_position.Y); //Gets Vector.Y away from player
-
-        rotationFloat = (float)(Math.Atan2(direction.X, direction.Y) * (180 / Math.PI)); //Gets rotation away player
-
-        //Convert into radians
-        float rotationInRadians = (float)((rotationFloat) * Math.PI / 180.0);
-
-        //Get forward vector X
-        float forwardX = (float)(Math.Sin(rotationInRadians));
-
-        //Get forward vector Y
-        float forwardY = (float)(Math.Cos(rotationInRadians));
-
-        if (!InternalCall.m_InternalGetVelocity(EntityID, out movement))
-        {
-            // return cause velocity -> rigidbody is not present in entity
             return;
         }
 
-        movement.X = 0 + forwardX * enemySpeed;
-        movement.Y = 0 + forwardY * enemySpeed;
+        // Fetch enemy and player transform components
+        transformComp = Component.Get<TransformComponent>(EntityID);
+        playerTransformComp = Component.Get<TransformComponent>(playerID);
 
+        // Compute direction vector to the player
+        Vector2 direction;
+        direction.X = playerTransformComp.m_position.X - transformComp.m_position.X;
+        direction.Y = playerTransformComp.m_position.Y - transformComp.m_position.Y;
 
+        // Normalize direction to maintain consistent movement speed
+        float magnitude = (float)Math.Sqrt(direction.X * direction.X + direction.Y * direction.Y);
+        if (magnitude > 0)
+        {
+            direction.X /= magnitude;
+            direction.Y /= magnitude;
+        }
 
-        InternalCall.m_InternalSetVelocity(EntityID, in movement); //BANE OF MY EXISTENCE
+        // Compute rotation angle towards the player
+        float rotationFloat = (float)(Math.Atan2(direction.X, direction.Y) * (180 / Math.PI));
+        transformComp.m_rotation = rotationFloat;
+
+        // Apply updated transform
+        SetComponent.SetTransformComponent(EntityID, transformComp);
+
+        // Get velocity reference
+        if (!InternalCall.m_InternalGetVelocity(EntityID, out movement))
+        {
+            //Console.WriteLine($"[ERROR] Entity {EntityID} has no Rigidbody!");
+            return;
+        }
+
+        // Compute movement based on direction
+        movement.X = direction.X * enemySpeed;
+        movement.Y = direction.Y * enemySpeed;
+
+        // Apply movement
+        InternalCall.m_InternalSetVelocity(EntityID, in movement);
     }
+
 
     //public void PatrolToWaypoint()
     //{
@@ -830,26 +1027,43 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
     private IEnumerator PlayEnemyDeathAudio(string causeOfDeath)
     {
-        switch (causeOfDeath)
+        switch (enemyType)
         {
-            case "Gun":
-                InternalCall.m_InternalCallPlayAudio(EntityID, ReturnRandomAudio("Death")); //Plays enemy death sound
-                yield return new CoroutineManager.WaitForSeconds(0.1f);
-                InternalCall.m_InternalCallPlayAudio(EntityID, ReturnRandomAudio("Fall")); //Plays enemy fall sound
+            case EnemySelection.Helpless:
+            case EnemySelection.Melee:
+            case EnemySelection.AlertMelee:
+                switch (causeOfDeath)
+                {
+                    case "Booster":
+                    case "Gun":
+                        InternalCall.m_InternalCallPlayAudio(EntityID, ReturnRandomAudio("Death")); //Plays enemy death sound
+                        yield return new CoroutineManager.WaitForSeconds(0.1f);
+                        InternalCall.m_InternalCallPlayAudio(EntityID, ReturnRandomAudio("Fall")); //Plays enemy fall sound
+                        break;
+
+                    case "Katana":
+                        InternalCall.m_InternalCallPlayAudio(EntityID, ReturnRandomAudio("Stab")); //Plays enemy death sound
+                        yield return new CoroutineManager.WaitForSeconds(0.1f);
+                        InternalCall.m_InternalCallPlayAudio(EntityID, ReturnRandomAudio("Death")); //Plays enemy fall sound
+                        yield return new CoroutineManager.WaitForSeconds(0.2f);
+                        InternalCall.m_InternalCallPlayAudio(EntityID, ReturnRandomAudio("Fall")); //Plays enemy fall sound
+                        break;
+
+                    default:
+                        break;
+
+                }
+                break;
+            case EnemySelection.Ranged:
+            case EnemySelection.AlertRanged:
+             InternalCall.m_InternalCallPlayAudio(EntityID, rangedEnemyDeathAud1); //Plays enemy death sound
                 break;
 
-            case "Katana":
-                InternalCall.m_InternalCallPlayAudio(EntityID, ReturnRandomAudio("Stab")); //Plays enemy death sound
-                yield return new CoroutineManager.WaitForSeconds(0.1f);
-                InternalCall.m_InternalCallPlayAudio(EntityID, ReturnRandomAudio("Death")); //Plays enemy fall sound
-                yield return new CoroutineManager.WaitForSeconds(0.2f);
-                InternalCall.m_InternalCallPlayAudio(EntityID, ReturnRandomAudio("Fall")); //Plays enemy fall sound
-                break;
-
-            default:
+            default :
                 break;
 
         }
+
     }
     #endregion
 
@@ -939,23 +1153,57 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     {
         UpdateComponentValues();
 
+        // Ensure ChasePaths is valid before clearing it
         if (ChasePaths == null || ChasePaths.Count == 0)
         {
-            // No valid path found, stop movement
+            //Console.WriteLine("[DEBUG] No path found. Switching to fallback behavior.");
+
+            // Stop movement
             movement.X = 0;
             movement.Y = 0;
             InternalCall.m_InternalSetVelocity(EntityID, in movement);
+
+            // Clear paths only if ChasePaths is not null
+            ChasePaths?.Clear();
+            currentChasePath = 0;
+
+            // Ensure melee enemies properly return to patrolling
+            HandleLostPath();
             return;
         }
 
-        if (!Vector2DistanceChecker(transformComp.m_position, Grid2WorldCoordinates((int)ChasePaths[currentChasePath].X, (int)ChasePaths[currentChasePath].Y, pathFindComp.m_gridkey), 0.5f))
-        {
+        // Convert the current path point to world coordinates
+        Vector2 targetPos = Grid2WorldCoordinates((int)ChasePaths[currentChasePath].X, (int)ChasePaths[currentChasePath].Y, pathFindComp.m_gridkey);
 
+        // Move to the next waypoint if not close enough
+        if (!Vector2DistanceChecker(transformComp.m_position, targetPos, 0.5f))
+        {
             MoveToTarget(ChasePaths[currentChasePath], enemySpeed);
         }
         else
         {
             SetToNextChasePath();
+        }
+    }
+
+    private void HandleLostPath()
+    {
+        //Console.WriteLine("[DEBUG] Enemy lost path. Checking behavior...");
+
+        if (enemyRoamBehaviour == EnemyRoamType.Patrolling)
+        {
+            //Console.WriteLine("[DEBUG] Returning to patrol.");
+            SetCurrentState(new EnemyStatePatrol(this));
+        }
+        else if (enemyRoamBehaviour == EnemyRoamType.Static)
+        {
+           // Console.WriteLine("[DEBUG] Returning to home position.");
+            SetCurrentState(new EnemyStateReturnToHome(this));
+        }
+        else
+        {
+            //Console.WriteLine("[DEBUG] Defaulting to scan state.");
+            SetCurrentState(new EnemyStateScan(this));
         }
     }
 
@@ -980,15 +1228,15 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         );
 
         // Play shooting sound
-        InternalCall.m_InternalCallPlayAudio(EntityID, "aud_enemyShoot.wav"); //AUDIOHERE
+        InternalCall.m_InternalCallPlayAudio(EntityID, enemyShootAud1); //AUDIOHERE
 
-        // Optional: Add muzzle flash effect
-        // InternalCall.m_InternalCallAddPrefab("prefab_muzzleFlash", bulletSpawnPosition.X, bulletSpawnPosition.Y, transformComp.m_rotation);
+
     }
 
-    public void RangedSearchStart()
+
+    public void MeleeSearchStart()
     {
-        Console.WriteLine("startsearch");
+        //Console.WriteLine("startsearch");
         searchTimer = searchDuration;
         lastKnownPlayerPosition = GetPlayerPosition();
         currentChasePath = 0;
@@ -1003,13 +1251,26 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
             (int)gridCurrentPos.X, (int)gridCurrentPos.Y,
             (int)gridLastPos.X, (int)gridLastPos.Y
         );
-
-
+        //Console.WriteLine(ChasePaths.Count);
+        if (ChasePaths.Count > 0)
+        {
+            return;
+        }
+        else
+        {
+            if (enemyRoamBehaviour == EnemyRoamType.Patrolling)
+            {
+                SetCurrentState(new EnemyStatePatrol(this));
+            }
+            else if(enemyRoamBehaviour == EnemyRoamType.Static)
+            {
+                SetCurrentState(new EnemyStateReturnToHome(this));
+            }
+        }
     }
 
-    public void RangedSearchUpdate()
+    public void MeleeSearchUpdate()
     {
-
         if (isDead) return;
 
         UpdateRayCastToPlayerPosition();
@@ -1017,15 +1278,87 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         // Check if player is back in sight
         if (CheckPlayerWithinSight() && IsPlayerInFOV())
         {
-
             // Player spotted again, switch back to attack
-            SetCurrentState(new EnemyStateRangedAttack(this));
+            SetCurrentState(new EnemyStateChase(this));
             return;
         }
 
         // Move toward last known player position
         MoveToLastKnownPosition(lastKnownPlayerPosition);
 
+        searchTimer -= InternalCall.m_InternalCallGetDeltaTime();
+        if (searchTimer <= 0)
+        {
+            SetCurrentState(new EnemyStatePatrol(this));
+        }
+    }
+
+    public void RangedSearchStart()
+    {
+        //searchTimer = searchDuration;
+        //lastKnownPlayerPosition = GetPlayerPosition();
+        //currentChasePath = 0;
+
+        //// Convert positions to grid coordinates
+        //Vector2 gridLastPos = World2GridCoordinates(lastKnownPlayerPosition.X, lastKnownPlayerPosition.Y, pathFindComp.m_gridkey);
+        //Vector2 gridCurrentPos = World2GridCoordinates(transformComp.m_position.X, transformComp.m_position.Y, pathFindComp.m_gridkey);
+
+        //// Attempt pathfinding
+        //ChasePaths = GetPath(pathFindComp.m_gridkey,
+        //                     (int)gridCurrentPos.X, (int)gridCurrentPos.Y,
+        //                     (int)gridLastPos.X, (int)gridLastPos.Y);
+
+        //if (ChasePaths.Count == 0)
+        //{
+        //    HandleFailedPathfinding();
+        //}
+        //Console.WriteLine("startsearch");
+        searchTimer = searchDuration;
+        lastKnownPlayerPosition = GetPlayerPosition();
+        currentChasePath = 0;
+
+        // Convert last known position to grid coordinates
+        Vector2 gridLastPos = World2GridCoordinates(lastKnownPlayerPosition.X, lastKnownPlayerPosition.Y, pathFindComp.m_gridkey);
+        Vector2 gridCurrentPos = World2GridCoordinates(transformComp.m_position.X, transformComp.m_position.Y, pathFindComp.m_gridkey);
+
+        // Generate path to last known position
+        ChasePaths = GetPath(
+            pathFindComp.m_gridkey,
+            (int)gridCurrentPos.X, (int)gridCurrentPos.Y,
+            (int)gridLastPos.X, (int)gridLastPos.Y
+        );
+        //Console.WriteLine(ChasePaths.Count);
+        if (ChasePaths.Count > 0)
+        {
+            return;
+        }
+        else
+        {
+            if (enemyRoamBehaviour == EnemyRoamType.Patrolling)
+            {
+                SetCurrentState(new EnemyStatePatrol(this));
+            }
+            else if (enemyRoamBehaviour == EnemyRoamType.Static)
+            {
+                SetCurrentState(new EnemyStateReturnToHome(this));
+            }
+        }
+    }
+
+    public void RangedSearchUpdate()
+    {
+        if (isDead) return;
+
+        // Update vision check and transition if player is found
+        UpdateRayCastToPlayerPosition();
+        if (CheckPlayerWithinSight() && IsPlayerInFOV())
+        {
+            SetCurrentState(new EnemyStateRangedAttack(this));
+            return;
+        }
+            MoveToLastKnownPosition(lastKnownPlayerPosition);
+
+        // Countdown search timer
         searchTimer -= InternalCall.m_InternalCallGetDeltaTime();
         if (searchTimer <= 0)
         {
@@ -1044,7 +1377,8 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         rb.m_Acceleration = movement;
         Component.Set<RigidBodyComponent>(EntityID, rb);
         // Initial delay before first shot
-        fireTimer = fireRate * 0.5f;
+        fireTimer = fireRate * fireFirstDelay;
+        rangedShuffleTimer = fireRate * 0.6f;
 
     }
 
@@ -1072,12 +1406,80 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
         // Fire at player when timer expires
         fireTimer -= InternalCall.m_InternalCallGetDeltaTime();
+        rangedShuffleTimer -= InternalCall.m_InternalCallGetDeltaTime();
         if (fireTimer <= 0)
         {
             fireTimer = fireRate;
             FireAtPlayer();
         }
+        if (rangedShuffleTimer <= 0)
+        {
+            rangedShuffleTimer = rangedShuffleRate;
+            if (rangedShuffleLeft)
+            {
+                ShuffleLeft();
+                rangedShuffleLeft = !rangedShuffleLeft;
+            }
+            else
+            {
+                ShuffleRight();
+                rangedShuffleLeft = !rangedShuffleLeft;
+
+            }
+        }
     }
+
+    private void ShuffleLeft()
+    {
+        UpdateComponentValues();
+
+        // Get direction to player
+        Vector2 directionToPlayer = new Vector2(
+            playerTransformComp.m_position.X - transformComp.m_position.X,
+            playerTransformComp.m_position.Y - transformComp.m_position.Y
+        );
+
+        // Get perpendicular direction for left shuffle
+        Vector2 leftShuffleDir = new Vector2(-directionToPlayer.Y, directionToPlayer.X);
+
+        // Apply movement (multiply components separately)
+        Vector2 newPosition = new Vector2(
+            transformComp.m_position.X + (leftShuffleDir.X * shuffleDistance),
+            transformComp.m_position.Y + (leftShuffleDir.Y * shuffleDistance)
+        );
+
+        movement.X = newPosition.X - transformComp.m_position.X;
+        movement.Y = newPosition.Y - transformComp.m_position.Y;
+
+        InternalCall.m_InternalSetVelocity(EntityID, in movement);
+    }
+
+    private void ShuffleRight()
+    {
+        UpdateComponentValues();
+
+        // Get direction to player
+        Vector2 directionToPlayer = new Vector2(
+            playerTransformComp.m_position.X - transformComp.m_position.X,
+            playerTransformComp.m_position.Y - transformComp.m_position.Y
+        );
+
+        // Get perpendicular direction for right shuffle
+        Vector2 rightShuffleDir = new Vector2(directionToPlayer.Y, -directionToPlayer.X);
+
+        // Apply movement (multiply components separately)
+        Vector2 newPosition = new Vector2(
+            transformComp.m_position.X + (rightShuffleDir.X * shuffleDistance),
+            transformComp.m_position.Y + (rightShuffleDir.Y * shuffleDistance)
+        );
+
+        movement.X = newPosition.X - transformComp.m_position.X;
+        movement.Y = newPosition.Y - transformComp.m_position.Y;
+
+        InternalCall.m_InternalSetVelocity(EntityID, in movement);
+
+    }
+
 
     public void EnemyScanStart()
     {
@@ -1090,7 +1492,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         Component.Set<RigidBodyComponent>(EntityID, rb);
         scanning = true;
         scanTime = 0f;
-        initialRotation = transformComp.m_rotation;
+        initialRotation = transformComp.m_rotation - 180f;
     }
 
     public void EnemyScanUpdate()
@@ -1101,23 +1503,19 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
         if (scanTime >= scanDuration)
         {
-            // Stop scanning and return to patrol
-            scanning = false;
-            if (waypoints.Count != 0)
-            {
-                Vector2 targetWaypoint = waypoints[currentPatrolWaypoint];
+            HandleLostPath();
+            return;
+        }
 
-                Vector2 gridTargetPos = World2GridCoordinates(targetWaypoint.X, targetWaypoint.Y, pathFindComp.m_gridkey);
-
-                pathFindComp.m_targetPosition = gridTargetPos;
-            }
-
-            Paths = GetPath(
-               pathFindComp.m_gridkey,
-               (int)World2GridCoordinates(transformComp.m_position.X, transformComp.m_position.Y, pathFindComp.m_gridkey).X, (int)World2GridCoordinates(transformComp.m_position.X, transformComp.m_position.Y, pathFindComp.m_gridkey).Y,
-               (int)pathFindComp.m_targetPosition.X, (int)pathFindComp.m_targetPosition.Y
-            );
-            SetCurrentState(new EnemyStatePatrol(this));
+        UpdateRayCastToPlayerPosition();
+        if (CheckPlayerWithinSight() && IsPlayerInFOV() && enemyType == EnemySelection.Ranged)
+        {
+            SetCurrentState(new EnemyStateRangedAttack(this));
+            return;
+        }
+        else if(CheckPlayerWithinSight() && IsPlayerInFOV() && enemyType == EnemySelection.Melee)
+        {
+            SetCurrentState(new EnemyStateChase(this));
             return;
         }
 
@@ -1133,5 +1531,19 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         SetComponent.SetTransformComponent(EntityID, transformComp);
     }
 
+    private void HandleFailedPathfinding()
+    {
+        // Example fallback strategy: enemy roams near the last known position before giving up
+        if (enemyRoamBehaviour == EnemyRoamType.Patrolling)
+        {
+            SetCurrentState(new EnemyStatePatrol(this));
+        }
+        else if (enemyRoamBehaviour == EnemyRoamType.Static)
+        {
+            SetCurrentState(new EnemyStateReturnToHome(this));
+        }
+    }
+
 }
+
 

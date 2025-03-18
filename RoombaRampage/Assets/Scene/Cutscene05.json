@@ -10,6 +10,12 @@
         }
     },
     {
+        "CursorSettings": {
+            "cursorImage": "../Assets/Texture/UI/img_startScreenCursor.png",
+            "isCursorCentered": false
+        }
+    },
+    {
         "name": {
             "namestr": "img_cutscene",
             "layer": 0,
@@ -145,45 +151,6 @@
                 "y": 0.6000000238418579
             }
         },
-        "collider": {
-            "checkcollision": true,
-            "checkresponse": false,
-            "size": {
-                "x": 0.4399999976158142,
-                "y": 0.4399999976158142
-            },
-            "offset": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "drawDebug": true,
-            "radius": 0.5,
-            "shapetype": 0
-        },
-        "rigidbody": {
-            "linearVelocity": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "linearAcceleration": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "rotation": 0.0,
-            "angularVelocity": 0.0,
-            "angularAcceleration": 0.0,
-            "mass": 1.0,
-            "inverseMass": 1.0,
-            "linearDamping": 0.9900000095367432,
-            "angularDamping": 0.9900000095367432,
-            "force": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "torque": 0.0,
-            "kinematic": false,
-            "static": false
-        },
         "sprite": {
             "imagefile": "ani_dialogueArrows_strip2.png",
             "layer": 6,
@@ -201,6 +168,17 @@
             "frameTimer": 0.0,
             "isAnimating": false,
             "stripCount": 2
+        },
+        "button": {
+            "force": {
+                "x": 1551.61376953125,
+                "y": 133.88751220703125
+            },
+            "scale": {
+                "x": 0.20000000298023224,
+                "y": 0.25999999046325684
+            },
+            "enablehover": true
         },
         "script": {
             "scripts": [
@@ -221,25 +199,33 @@
                 "name": "aud_buttonHover01",
                 "volume": 0.4440000057220459,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             },
             {
                 "name": "aud_buttonClick01",
                 "volume": 1.0,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             },
             {
                 "name": "",
                 "volume": 1.0,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             },
             {
                 "name": "aud_startMenuAmbienceQuitt01",
                 "volume": 1.0,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             }
         ]
     },
@@ -283,8 +269,8 @@
         },
         "transform": {
             "position": {
-                "x": -0.1765206754207611,
-                "y": -0.6225347518920898
+                "x": -0.13514649868011475,
+                "y": -0.6260688304901123
             },
             "rotation": -0.0,
             "scale": {
@@ -293,7 +279,7 @@
             }
         },
         "text": {
-            "text": "OBJECTIVE : FIND BOSS IN MILESTONE 5 AND KILL.",
+            "text": "OBJECTIVE : ESCAPE IN CUTSCENE.MP4 IN MILESTONE 6",
             "text": null,
             "filename": "fnt_silkscreenRegular.ttf",
             "fontsize": 1.0,
@@ -389,7 +375,7 @@
         },
         "transform": {
             "position": {
-                "x": -0.5060957670211792,
+                "x": -0.5313889384269714,
                 "y": -0.5382811427116394
             },
             "rotation": -0.0,
@@ -399,7 +385,7 @@
             }
         },
         "text": {
-            "text": "STATUS: LEVEL 1 COMPLETED",
+            "text": "STATUS: BOSS DESTROYED.",
             "text": null,
             "filename": "fnt_silkscreenRegular.ttf",
             "fontsize": 1.0,
@@ -443,13 +429,17 @@
                 "name": "aud_startMenuAmbienceLoop01",
                 "volume": 1.0,
                 "loop": true,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             },
             {
                 "name": "aud_startMenuAmbienceStart01",
                 "volume": 1.0,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             }
         ]
     },

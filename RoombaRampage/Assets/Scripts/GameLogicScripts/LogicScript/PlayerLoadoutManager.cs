@@ -12,8 +12,8 @@ public class PlayerLoadoutManager : ScriptBase
 
         isSortieing = false;
 
-        totalLeftRightLimbs = 5;
-        totalBackLimbs = 1;
+        totalLeftRightLimbs = 4;
+        totalBackLimbs = 2;
 
         uiLeftLimbSpriteID = (uint)InternalCall.m_InternalCallGetTagID("UILoadoutLeftLimb");
         uiRightLimbSpriteID = (uint)InternalCall.m_InternalCallGetTagID("UILoadoutRightLimb");
@@ -71,6 +71,10 @@ public class PlayerLoadoutManager : ScriptBase
     private void UpdatePosition()
     {
         transformComp.m_position = MoveTowards(transformComp.m_position, Component.Get<TransformComponent>(cameraID).m_position, 20f * InternalCall.m_InternalCallGetDeltaTime());
+        if (float.IsNaN(transformComp.m_position.X) || float.IsNaN(transformComp.m_position.Y))
+        {
+            transformComp.m_position = new Vector2(0, 0);
+        }
         Component.Set<TransformComponent>(EntityID, transformComp);
     }
 

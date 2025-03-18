@@ -32,26 +32,15 @@ public class CutsceneMenuButtons : ScriptBase
 
     private void CheckForCollisions()
     {
-        if (InternalCall.m_InternalCallIsCollided(EntityID) != 0.0f)
+        if (InternalCall.m_InternalIsButtonHovered(EntityID))
         {
-            int[] collidedEntities = InternalCall.m_InternalCallGetCollidedEntities(EntityID);
-
-            foreach (int collidedEntitiesID in collidedEntities)
+            if (isHovering)
             {
-                switch (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID))
-                {
-                    default:
-                        if (isHovering)
-                        {
-                            break;
-                        }
-                        isHovering = true;
-                        InternalCall.m_InternalCallPlayAudio(EntityID, "aud_buttonHover01");
-                        break;
-                }
+                return;
             }
+            isHovering = true;
+            InternalCall.m_InternalCallPlayAudio(EntityID, "aud_buttonHover01");
         }
-
         else
         {
             isHovering = false;
@@ -75,11 +64,28 @@ public class CutsceneMenuButtons : ScriptBase
 
     private void CheckForClicks()
     {
-        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.LMB) && isHovering == true)
+        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.ESC))
+        {
+            InternalCall.m_InternalCallLoadScene(LevelSelection.SceneName);
+        }
+
+        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.LMB) || InternalCall.m_InternalCallIsKeyTriggered(keyCode.RMB) || InternalCall.m_InternalCallIsKeyTriggered(keyCode.SPACE) || InternalCall.m_InternalCallIsKeyTriggered(keyCode.ENTER))
         {
             InternalCall.m_InternalCallPlayAudio(EntityID, "aud_buttonClick01");
             switch (buttonFunctionNo)
             {
+                case 1:
+                    InternalCall.m_UnloadAllScene();
+                    InternalCall.m_InternalCallLoadScene("TutorialCutscene02");
+                    break;
+                case 2:
+                    InternalCall.m_UnloadAllScene();
+                    InternalCall.m_InternalCallLoadScene("TutorialCutscene03");
+                    break;
+                case 3:
+                    InternalCall.m_UnloadAllScene();
+                    InternalCall.m_InternalCallLoadScene("Cutscene01");
+                    break;
                 case 10:
                     InternalCall.m_UnloadAllScene();
                     InternalCall.m_InternalCallLoadScene("Cutscene02");
@@ -103,6 +109,36 @@ public class CutsceneMenuButtons : ScriptBase
                     InternalCall.m_InternalCallStopAllAudio();
                     InternalCall.m_UnloadAllScene();
                     InternalCall.m_InternalCallLoadScene("LevelSelect");
+                    break;
+                case 21:
+                    InternalCall.m_InternalCallPlayAudio(EntityID, "aud_startMenuAmbienceStop01");
+                    InternalCall.m_InternalCallStopAllAudio();
+                    InternalCall.m_UnloadAllScene();
+                    InternalCall.m_InternalCallLoadScene("Level2");
+                    break;
+                case 22:
+                    InternalCall.m_InternalCallPlayAudio(EntityID, "aud_startMenuAmbienceStop01");
+                    InternalCall.m_InternalCallStopAllAudio();
+                    InternalCall.m_UnloadAllScene();
+                    InternalCall.m_InternalCallLoadScene("Level3");
+                    break;
+                case 23:
+                    InternalCall.m_InternalCallPlayAudio(EntityID, "aud_startMenuAmbienceStop01");
+                    InternalCall.m_InternalCallStopAllAudio();
+                    InternalCall.m_UnloadAllScene();
+                    InternalCall.m_InternalCallLoadScene("Level4");
+                    break;
+                case 24:
+                    InternalCall.m_InternalCallPlayAudio(EntityID, "aud_startMenuAmbienceStop01");
+                    InternalCall.m_InternalCallStopAllAudio();
+                    InternalCall.m_UnloadAllScene();
+                    InternalCall.m_InternalCallLoadScene("Level5");
+                    break;
+                case 25:
+                    InternalCall.m_InternalCallPlayAudio(EntityID, "aud_startMenuAmbienceStop01");
+                    InternalCall.m_InternalCallStopAllAudio();
+                    InternalCall.m_UnloadAllScene();
+                    InternalCall.m_InternalCallLoadScene("Level6");
                     break;
                 default:
                     break;

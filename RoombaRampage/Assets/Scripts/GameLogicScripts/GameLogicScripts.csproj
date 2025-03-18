@@ -24,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
     <IntermediateOutputPath>C:\Users\ngjaz\AppData\Local\Temp\vsED98.tmp\Debug\</IntermediateOutputPath>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PlatformTarget>ARM64</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -43,16 +44,6 @@
     <IntermediateOutputPath>..\..\..\x64\scriptobj</IntermediateOutputPath>
     <BaseIntermediateOutputPath>..\..\..\x64\scriptobj</BaseIntermediateOutputPath>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Game|AnyCPU'">
-    <OutputPath>bin\Game\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
   <Target Name="Build" />
   <Target Name="CoreCompile" />
   <ItemGroup>
@@ -68,6 +59,7 @@
   <ItemGroup>
     <Compile Include="LogicScript\BossController.cs" />
     <Compile Include="LogicScript\BossBullet.cs" />
+    <Compile Include="LogicScript\BossDoor.cs" />
     <Compile Include="LogicScript\CameraFollowPlayerScript.cs" />
     <Compile Include="LogicScript\CoroutineController.cs" />
     <Compile Include="LogicScript\CoroutineManager.cs" />
@@ -78,19 +70,26 @@
     <Compile Include="LogicScript\EnemyBulletScript.cs" />
     <Compile Include="LogicScript\EnemyController.cs" />
     <Compile Include="LogicScript\EnemyScript.cs" />
+    <Compile Include="LogicScript\EnemySpawner.cs" />
     <Compile Include="LogicScript\EnemyState.cs" />
     <Compile Include="LogicScript\ExitGameButton.cs" />
     <Compile Include="LogicScript\GameController.cs" />
     <Compile Include="LogicScript\GameControllerLevel1.cs" />
+    <Compile Include="LogicScript\GameControllerLevel6.cs" />
+    <Compile Include="LogicScript\KillCounter.cs" />
+    <Compile Include="LogicScript\Keycard.cs" />
+    <Compile Include="LogicScript\LazerForwardBackward.cs" />
     <Compile Include="LogicScript\LevelDoorLocker.cs" />
     <Compile Include="LogicScript\LevelEndPoint.cs" />
     <Compile Include="LogicScript\LevelEnemySpawner.cs" />
-    <Compile Include="LogicScript\LevelOneButton.cs" />
+    <Compile Include="LogicScript\LevelSelectButton.cs" />
     <Compile Include="LogicScript\LevelSelection.cs" />
     <Compile Include="LogicScript\LevelSelectionTextBlink.cs" />
     <Compile Include="LogicScript\LevelTransition.cs" />
     <Compile Include="LogicScript\MainMenuScript.cs" />
+    <Compile Include="LogicScript\ParticleEmitter.cs" />
     <Compile Include="LogicScript\PauseMenuButtons.cs" />
+    <Compile Include="LogicScript\SoundCursor.cs" />
     <Compile Include="LogicScript\PauseMenuCursor.cs" />
     <Compile Include="LogicScript\PauseMenuManager.cs" />
     <Compile Include="LogicScript\PlayerBulletType2.cs" />
@@ -106,13 +105,15 @@
     <Compile Include="LogicScript\StartGameButton.cs" />
     <Compile Include="LogicScript\StartMenuButtons.cs" />
     <Compile Include="LogicScript\StartMenuCursor.cs" />
+    <Compile Include="LogicScript\SoundManager.cs" />
     <Compile Include="LogicScript\testscript.cs" />
     <Compile Include="LogicScript\UI_AmmoHUD.cs" />
     <Compile Include="LogicScript\UI_FPSCounter.cs" />
     <Compile Include="LogicScript\UI_PlayerDeath.cs" />
+    <Compile Include="LogicScript\UI_TabPrompt.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\ScriptLibrary\GameScript\GameScript.csproj">
+    <ProjectReference Include="..\..\..\Engine\ScriptLibrary\GameScript\GameScript.csproj">
       <Project>{785fc541-4463-4316-8b60-776cebc341b2}</Project>
       <Name>GameScript</Name>
     </ProjectReference>

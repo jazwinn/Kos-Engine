@@ -10,6 +10,12 @@
         }
     },
     {
+        "CursorSettings": {
+            "cursorImage": "../Assets/Texture/UI/img_startScreenCursor.png",
+            "isCursorCentered": false
+        }
+    },
+    {
         "name": {
             "namestr": "img_cutscene",
             "layer": 0,
@@ -145,45 +151,6 @@
                 "y": 0.6000000238418579
             }
         },
-        "collider": {
-            "checkcollision": true,
-            "checkresponse": false,
-            "size": {
-                "x": 0.4399999976158142,
-                "y": 0.4399999976158142
-            },
-            "offset": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "drawDebug": true,
-            "radius": 0.5,
-            "shapetype": 0
-        },
-        "rigidbody": {
-            "linearVelocity": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "linearAcceleration": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "rotation": 0.0,
-            "angularVelocity": 0.0,
-            "angularAcceleration": 0.0,
-            "mass": 1.0,
-            "inverseMass": 1.0,
-            "linearDamping": 0.9900000095367432,
-            "angularDamping": 0.9900000095367432,
-            "force": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "torque": 0.0,
-            "kinematic": false,
-            "static": false
-        },
         "sprite": {
             "imagefile": "ani_dialogueArrows_strip2.png",
             "layer": 6,
@@ -201,6 +168,17 @@
             "frameTimer": 0.0,
             "isAnimating": false,
             "stripCount": 2
+        },
+        "button": {
+            "force": {
+                "x": 1551.61376953125,
+                "y": 133.88751220703125
+            },
+            "scale": {
+                "x": 0.2199999988079071,
+                "y": 0.2199999988079071
+            },
+            "enablehover": true
         },
         "script": {
             "scripts": [
@@ -221,13 +199,17 @@
                 "name": "aud_buttonHover01",
                 "volume": 0.4440000057220459,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             },
             {
                 "name": "aud_buttonClick01",
                 "volume": 1.0,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             }
         ]
     },
@@ -377,7 +359,7 @@
         },
         "transform": {
             "position": {
-                "x": -0.4852215349674225,
+                "x": -0.4939313232898712,
                 "y": -0.6587930917739868
             },
             "rotation": -0.0,
@@ -439,7 +421,7 @@
         },
         "transform": {
             "position": {
-                "x": -0.2774646282196045,
+                "x": -0.3006907105445862,
                 "y": -0.7718878984451294
             },
             "rotation": -0.0,
@@ -470,7 +452,7 @@
         },
         "transform": {
             "position": {
-                "x": -0.4852215349674225,
+                "x": -0.4939313232898712,
                 "y": -0.714989423751831
             },
             "rotation": -0.0,

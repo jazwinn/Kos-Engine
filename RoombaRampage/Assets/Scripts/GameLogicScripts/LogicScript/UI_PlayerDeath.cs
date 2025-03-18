@@ -35,7 +35,7 @@ public class UI_PlayerDeath : ScriptBase
 
     private void UpdatePosition()
     {
-        transformComp.m_position = MoveTowards(transformComp.m_position, Component.Get<TransformComponent>(playerID).m_position, 20f * InternalCall.m_InternalCallGetDeltaTime());
+        transformComp.m_position = MoveTowards(transformComp.m_position, Component.Get<TransformComponent>(playerID).m_position, 30f * InternalCall.m_InternalCallGetDeltaTime());
         Component.Set<TransformComponent>(EntityID, transformComp);
     }
 

@@ -1,0 +1,80 @@
+[
+    {
+        "GlobalSettings": {
+            "globalIllumination": 0.46000000834465027,
+            "backgroundColor": {
+                "r": 0.13300000131130219,
+                "g": 0.23000000417232513,
+                "b": 0.3199999928474426
+            }
+        }
+    },
+    {
+        "CursorSettings": {
+            "cursorImage": "../Assets/Texture/UI/img_inGameCursor.png",
+            "isCursorCentered": true
+        }
+    },
+    {
+        "name": {
+            "namestr": "GameControllerLevel1",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "collider": {
+            "checkcollision": false,
+            "checkresponse": false,
+            "size": {
+                "x": 0.10000000149011612,
+                "y": 0.10000000149011612
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true,
+            "radius": 0.5,
+            "shapetype": 0
+        },
+        "script": {
+            "scripts": [
+                {
+                    "name": "GameControllerLevel1",
+                    "enabled": true,
+                    "map": [
+                        {
+                            "variable": "gameIsPaused",
+                            "base64": ""
+                        },
+                        {
+                            "variable": "runOnce",
+                            "base64": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        "audio": [
+            {
+                "name": "aud_mainLevelLoop",
+                "volume": 0.17000000178813934,
+                "loop": true,
+                "playOnStart": false,
+                "isBGM": true,
+                "isSFX": false
+            }
+        ]
+    }
+]

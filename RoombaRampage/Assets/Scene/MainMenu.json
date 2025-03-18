@@ -3,10 +3,16 @@
         "GlobalSettings": {
             "globalIllumination": 1.0,
             "backgroundColor": {
-                "r": 0.8539819717407227,
-                "g": 0.8539819717407227,
-                "b": 0.8539819717407227
+                "r": 0.13300000131130219,
+                "g": 0.23000000417232513,
+                "b": 0.3199999928474426
             }
+        }
+    },
+    {
+        "CursorSettings": {
+            "cursorImage": "../Assets/Texture/UI/img_startScreenCursor.png",
+            "isCursorCentered": false
         }
     },
     {
@@ -86,7 +92,9 @@
                 "name": "aud_buttonClick01",
                 "volume": 0.5220000147819519,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             }
         ]
     },
@@ -108,45 +116,6 @@
                 "y": 0.75
             }
         },
-        "collider": {
-            "checkcollision": true,
-            "checkresponse": false,
-            "size": {
-                "x": 0.23000000417232513,
-                "y": 0.25
-            },
-            "offset": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "drawDebug": true,
-            "radius": 0.5,
-            "shapetype": 0
-        },
-        "rigidbody": {
-            "linearVelocity": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "linearAcceleration": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "rotation": 0.0,
-            "angularVelocity": 0.0,
-            "angularAcceleration": 0.0,
-            "mass": 1.0,
-            "inverseMass": 1.0,
-            "linearDamping": 0.9900000095367432,
-            "angularDamping": 0.9900000095367432,
-            "force": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "torque": 0.0,
-            "kinematic": false,
-            "static": false
-        },
         "sprite": {
             "imagefile": "ani_quitIcon_strip2.png",
             "layer": 2,
@@ -167,13 +136,14 @@
         },
         "button": {
             "force": {
-                "x": 97.65570068359375,
-                "y": 967.924560546875
+                "x": 95.82659912109375,
+                "y": 950.8963012695313
             },
             "scale": {
                 "x": 0.20999999344348907,
                 "y": 0.20999999344348907
-            }
+            },
+            "enablehover": true
         },
         "script": {
             "scripts": [
@@ -182,11 +152,11 @@
                     "enabled": true,
                     "map": [
                         {
-                            "variable": "yolo",
+                            "variable": "speed",
                             "base64": ""
                         },
                         {
-                            "variable": "speed",
+                            "variable": "yolo",
                             "base64": ""
                         }
                     ]
@@ -212,7 +182,9 @@
                 "name": "aud_buttonHover01",
                 "volume": 0.3440000116825104,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             }
         ]
     },
@@ -234,45 +206,6 @@
                 "y": 0.75
             }
         },
-        "collider": {
-            "checkcollision": true,
-            "checkresponse": false,
-            "size": {
-                "x": 0.2199999988079071,
-                "y": 0.25
-            },
-            "offset": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "drawDebug": true,
-            "radius": 0.5,
-            "shapetype": 0
-        },
-        "rigidbody": {
-            "linearVelocity": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "linearAcceleration": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "rotation": 0.0,
-            "angularVelocity": 0.0,
-            "angularAcceleration": 0.0,
-            "mass": 1.0,
-            "inverseMass": 1.0,
-            "linearDamping": 0.9900000095367432,
-            "angularDamping": 0.9900000095367432,
-            "force": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "torque": 0.0,
-            "kinematic": false,
-            "static": false
-        },
         "sprite": {
             "imagefile": "ani_startIcon_strip2.png",
             "layer": 1,
@@ -293,13 +226,14 @@
         },
         "button": {
             "force": {
-                "x": 97.65570068359375,
-                "y": 825.2830200195313
+                "x": 95.82659912109375,
+                "y": 810.7640991210938
             },
             "scale": {
-                "x": 0.18000000715255737,
-                "y": 0.20999999344348907
-            }
+                "x": 0.20000000298023224,
+                "y": 0.27000001072883606
+            },
+            "enablehover": true
         },
         "script": {
             "scripts": [
@@ -329,31 +263,41 @@
                 "name": "aud_buttonClick01",
                 "volume": 1.0,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             },
             {
                 "name": "aud_startMenuAmbienceStart01",
                 "volume": 1.0,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             },
             {
                 "name": "aud_startMenuAmbienceLoop01",
                 "volume": 1.0,
                 "loop": true,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             },
             {
                 "name": "aud_startMenuAmbienceQuitt01",
                 "volume": 1.0,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             },
             {
                 "name": "aud_buttonHover01",
                 "volume": 0.37400001287460327,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             }
         ]
     },
@@ -375,45 +319,6 @@
                 "y": 0.75
             }
         },
-        "collider": {
-            "checkcollision": true,
-            "checkresponse": false,
-            "size": {
-                "x": 0.20999999344348907,
-                "y": 0.20999999344348907
-            },
-            "offset": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "drawDebug": true,
-            "radius": 0.5,
-            "shapetype": 0
-        },
-        "rigidbody": {
-            "linearVelocity": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "linearAcceleration": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "rotation": 0.0,
-            "angularVelocity": 0.0,
-            "angularAcceleration": 0.0,
-            "mass": 1.0,
-            "inverseMass": 1.0,
-            "linearDamping": 0.9900000095367432,
-            "angularDamping": 0.9900000095367432,
-            "force": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "torque": 0.0,
-            "kinematic": false,
-            "static": false
-        },
         "sprite": {
             "imagefile": "ani_howToPlayIcon_strip2.png",
             "layer": 5,
@@ -431,6 +336,17 @@
             "frameTimer": 0.0,
             "isAnimating": false,
             "stripCount": 2
+        },
+        "button": {
+            "force": {
+                "x": 95.82659912109375,
+                "y": 670.632080078125
+            },
+            "scale": {
+                "x": 0.20000000298023224,
+                "y": 0.3199999928474426
+            },
+            "enablehover": true
         },
         "script": {
             "scripts": [
@@ -455,7 +371,9 @@
                 "name": "aud_buttonHover01",
                 "volume": 0.39899998903274536,
                 "loop": false,
-                "playOnStart": false
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
             }
         ]
     },
@@ -468,7 +386,7 @@
         },
         "transform": {
             "position": {
-                "x": -2.1131601333618164,
+                "x": -2.1308069229125977,
                 "y": 0.9291677474975586
             },
             "rotation": -0.0,
@@ -499,7 +417,7 @@
         },
         "transform": {
             "position": {
-                "x": -2.1084299087524414,
+                "x": -2.1241159439086914,
                 "y": 0.570757269859314
             },
             "rotation": -0.0,
@@ -530,8 +448,8 @@
         },
         "transform": {
             "position": {
-                "x": -2.109240770339966,
-                "y": 0.22467921674251556
+                "x": -2.1229660511016846,
+                "y": 0.21879692375659943
             },
             "rotation": -0.0,
             "scale": {
@@ -625,53 +543,14 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 0.655129611492157,
-                        "y": 0.635952353477478
+                        "x": 0.9958215951919556,
+                        "y": 0.6329637765884399
                     },
-                    "rotation": -0.0,
+                    "rotation": 0.0,
                     "scale": {
                         "x": 0.5,
                         "y": 0.5
                     }
-                },
-                "collider": {
-                    "checkcollision": true,
-                    "checkresponse": false,
-                    "size": {
-                        "x": 0.12999999523162842,
-                        "y": 0.12999999523162842
-                    },
-                    "offset": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "drawDebug": true,
-                    "radius": 0.5,
-                    "shapetype": 0
-                },
-                "rigidbody": {
-                    "linearVelocity": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "linearAcceleration": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "rotation": 0.0,
-                    "angularVelocity": 0.0,
-                    "angularAcceleration": 0.0,
-                    "mass": 1.0,
-                    "inverseMass": 1.0,
-                    "linearDamping": 0.9900000095367432,
-                    "angularDamping": 0.9900000095367432,
-                    "force": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "torque": 0.0,
-                    "kinematic": false,
-                    "static": false
                 },
                 "sprite": {
                     "imagefile": "ani_howToPlayTextCloseButton_strip2.png",
@@ -690,6 +569,17 @@
                     "frameTimer": 0.0,
                     "isAnimating": false,
                     "stripCount": 2
+                },
+                "button": {
+                    "force": {
+                        "x": 1340.9404296875,
+                        "y": 783.9243774414063
+                    },
+                    "scale": {
+                        "x": 0.07999999821186066,
+                        "y": 0.07999999821186066
+                    },
+                    "enablehover": true
                 },
                 "script": {
                     "scripts": [
@@ -714,7 +604,9 @@
                         "name": "aud_buttonHover01",
                         "volume": 0.3490000069141388,
                         "loop": false,
-                        "playOnStart": false
+                        "playOnStart": false,
+                        "isBGM": false,
+                        "isSFX": true
                     }
                 ]
             }

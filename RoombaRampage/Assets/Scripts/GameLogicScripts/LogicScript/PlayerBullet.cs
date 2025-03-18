@@ -108,7 +108,7 @@ public class PlayerBullet : ScriptBase
 
             foreach (int collidedEntitiesID in collidedEntities)
             {
-
+                if (bulletHasHit) { return; }
                 switch (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID))
                 {
                     case "PropGlassWall":
@@ -131,6 +131,7 @@ public class PlayerBullet : ScriptBase
                         break;
 
                     case "Enemy":
+                    case "Boss":
                         bulletHasHit = true;
                         InternalCall.m_InternalCallDeleteEntity(EntityID);
 

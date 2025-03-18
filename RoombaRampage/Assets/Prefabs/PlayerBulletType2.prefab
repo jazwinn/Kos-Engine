@@ -1,12 +1,18 @@
 [
     {
         "GlobalSettings": {
-            "globalIllumination": 0.30000001192092896,
+            "globalIllumination": 0.46000000834465027,
             "backgroundColor": {
-                "r": 0.13716816902160645,
-                "g": 0.13716816902160645,
-                "b": 0.13716816902160645
+                "r": 0.13300000131130219,
+                "g": 0.23000000417232513,
+                "b": 0.3199999928474426
             }
+        }
+    },
+    {
+        "CursorSettings": {
+            "cursorImage": "../Assets/Texture/UI/img_inGameCursor.png",
+            "isCursorCentered": true
         }
     },
     {
@@ -14,14 +20,14 @@
             "namestr": "PlayerBulletType2",
             "layer": 3,
             "isprefab": true,
-            "tagstr": "PlayerBullet",
+            "tagstr": "PlayerRailgunBullet",
             "prefabname": "prefab_playerBullet.prefab",
             "issync": false
         },
         "transform": {
             "position": {
                 "x": 0.0,
-                "y": 0.0
+                "y": 24.406795501708984
             },
             "rotation": 0.0,
             "scale": {
@@ -38,7 +44,7 @@
             },
             "offset": {
                 "x": 0.0,
-                "y": 0.03999999910593033
+                "y": 0.019999999552965164
             },
             "drawDebug": true,
             "radius": 0.5,
@@ -46,8 +52,8 @@
         },
         "rigidbody": {
             "linearVelocity": {
-                "x": 11.46951675415039,
-                "y": 3.5284833908081055
+                "x": 0.0,
+                "y": 19.799999237060547
             },
             "linearAcceleration": {
                 "x": 0.0,
@@ -102,14 +108,23 @@
         },
         "LightingComponent": {
             "m_innerOuterRadius": {
-                "x": 0.03999999910593033,
-                "y": 0.800000011920929
+                "x": 0.0,
+                "y": 0.7799999713897705
             },
-            "m_intensity": 4.400000095367432,
+            "m_intensity": 5.599999904632568,
+            "m_light_OffSet": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "m_light_scale": {
+                "x": 0.4399999976158142,
+                "y": 1.4199999570846558
+            },
+            "m_light_rotation": 0.0,
             "m_colour": {
-                "x": 0.20796459913253784,
+                "x": 1.0,
                 "y": 1.0,
-                "z": 0.8738349080085754
+                "z": 1.0
             }
         }
     }

@@ -10,6 +10,8 @@ public class CameraFollowPlayerScript : ScriptBase
     private uint EntityID;
     private uint playerID;
 
+    private Vector2 previousPos;
+
     //Tracks point in between player and mousePos
     private Vector2 trackingPos;
     //Mouse position
@@ -36,13 +38,14 @@ public class CameraFollowPlayerScript : ScriptBase
         camTransformComp = GetComponent.GetTransformComponent(EntityID);
 
         trackScale = 0.2f;
-        trackSpeed = 10f;
+        trackSpeed = 30f;
     }
 
     public override void Start()
     {
         UpdateMousePosition();
         trackingPos = Lerp(playerTransformComp.m_position, mousePos, trackScale);
+        previousPos = playerTransformComp.m_position;
     }
 
     public override void Update()
@@ -72,6 +75,7 @@ public class CameraFollowPlayerScript : ScriptBase
         {
             UpdatePlayerPosition();
             trackingPos = playerTransformComp.m_position;
+            
         }
 
         else
@@ -84,14 +88,24 @@ public class CameraFollowPlayerScript : ScriptBase
         // Final camera position = tracked position + shake offset
         trackingPos = new Vector2(trackingPos.X + shakeOffset.X, trackingPos.Y + shakeOffset.Y);
 
-        if (float.IsNaN(trackingPos.X) || float.IsNaN(trackingPos.Y))
+        if (float.IsNaN(trackingPos.X) || float.IsNaN(trackingPos.Y) || float.IsNaN(camTransformComp.m_position.X) || float.IsNaN(camTransformComp.m_position.Y) ||
+            float.IsInfinity(trackingPos.X) || float.IsInfinity(trackingPos.Y) || float.IsInfinity(camTransformComp.m_position.X) || float.IsInfinity(camTransformComp.m_position.Y))
         {
-            trackingPos = new Vector2(0, 0);
-            camTransformComp.m_position = new Vector2(0, 0);
+            trackingPos = previousPos;
+            camTransformComp.m_position = previousPos;
+        }
+        else
+        {
+            //set previous as current
+            previousPos = trackingPos;
+            //Console.WriteLine(trackingPos.X);
         }
 
         camTransformComp.m_position = MoveTowards(camTransformComp.m_position, trackingPos, trackSpeed * InternalCall.m_InternalCallGetDeltaTime());
         Component.Set<TransformComponent>(EntityID, camTransformComp);
+
+
+
     }
 
     public static void Shake(float intensity, float duration)

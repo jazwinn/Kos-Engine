@@ -1,12 +1,18 @@
 [
     {
         "GlobalSettings": {
-            "globalIllumination": 0.30000001192092896,
+            "globalIllumination": 0.46000000834465027,
             "backgroundColor": {
-                "r": 0.13716816902160645,
-                "g": 0.13716816902160645,
-                "b": 0.13716816902160645
+                "r": 0.13300000131130219,
+                "g": 0.23000000417232513,
+                "b": 0.3199999928474426
             }
+        }
+    },
+    {
+        "CursorSettings": {
+            "cursorImage": "../Assets/Texture/UI/img_inGameCursor.png",
+            "isCursorCentered": true
         }
     },
     {
@@ -20,13 +26,13 @@
         },
         "transform": {
             "position": {
-                "x": 0.0,
-                "y": 0.0
+                "x": 15.627988815307617,
+                "y": -15.873442649841309
             },
-            "rotation": 0.0,
+            "rotation": -0.0,
             "scale": {
-                "x": 1.0,
-                "y": 1.0
+                "x": 5.0,
+                "y": 5.0
             }
         },
         "collider": {
@@ -69,8 +75,8 @@
             "static": false
         },
         "sprite": {
-            "imagefile": "img_BulletPrefab1.png",
-            "layer": 5,
+            "imagefile": "ani_bossBulletEffect_strip10.png",
+            "layer": 12,
             "color": {
                 "r": 1.0,
                 "g": 1.0,
@@ -78,6 +84,13 @@
             },
             "alpha": 1.0,
             "isLit": true
+        },
+        "animation": {
+            "frameNumber": 0,
+            "framesPerSecond": 8,
+            "frameTimer": 0.0,
+            "isAnimating": false,
+            "stripCount": 10
         },
         "script": {
             "scripts": [
@@ -92,6 +105,27 @@
                     ]
                 }
             ]
+        },
+        "LightingComponent": {
+            "m_innerOuterRadius": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "m_intensity": 1.7999999523162842,
+            "m_light_OffSet": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "m_light_scale": {
+                "x": 1.0,
+                "y": 1.0
+            },
+            "m_light_rotation": 0.0,
+            "m_colour": {
+                "x": 0.991150438785553,
+                "y": 0.06578432023525238,
+                "z": 0.06578432023525238
+            }
         }
     }
 ]
