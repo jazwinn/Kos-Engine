@@ -400,9 +400,3 @@ FodyWeavers.xsd
 !Json/
 !Application/
 !Dependencies/
-
-#logfiles
-LogFile.txt
-
-#dlls
-*.dll
