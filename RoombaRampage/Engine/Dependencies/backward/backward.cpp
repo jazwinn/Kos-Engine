@@ -34,7 +34,6 @@
 // #define BACKWARD_HAS_LIBUNWIND 1
 
 #include "backward.hpp"
-#include "../Config/pch.h"
 
 namespace backward {
 
