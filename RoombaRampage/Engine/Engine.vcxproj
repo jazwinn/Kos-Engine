@@ -268,6 +268,7 @@ xcopy /y /d "$(ProjectDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClCompile Include="ECS\System\RenderSystem.cpp" />
     <ClCompile Include="ECS\System\RenderTextSystem.cpp" />
     <ClCompile Include="ECS\System\RayCastSystem.cpp" />
+    <ClCompile Include="ECS\System\UIRenderSystem.cpp" />
     <ClCompile Include="ECS\System\VideoSystem.cpp" />
     <ClInclude Include="Actions\Action.h" />
     <ClInclude Include="Actions\ActionManager.h" />
@@ -278,6 +279,7 @@ xcopy /y /d "$(ProjectDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="ECS\Component\EnemyComponent.h" />
     <ClInclude Include="ECS\Component\LightingComponent.h" />
     <ClInclude Include="ECS\Component\ParticleComponent.h" />
+    <ClInclude Include="ECS\Component\SpriteComponent.h" />
     <ClInclude Include="ECS\Component\VideoComponent.h" />
     <ClInclude Include="ECS\System\LightingSystem.h" />
     <ClInclude Include="ECS\Component\GridComponent.h" />
@@ -314,6 +316,7 @@ xcopy /y /d "$(ProjectDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClCompile Include="Physics\PhysicsLayer.cpp" />
     <ClInclude Include="ECS\Component\RaycastComponent.h" />
     <ClInclude Include="ECS\System\RayCastSystem.h" />
+    <ClInclude Include="ECS\System\UIRenderSystem.h" />
     <ClInclude Include="ECS\System\VideoSystem.h" />
   </ItemGroup>
   <ItemGroup>
@@ -362,7 +365,7 @@ xcopy /y /d "$(ProjectDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="ECS\Component\NameComponent.h" />
     <ClInclude Include="ECS\Component\PlayerComponent.h" />
     <ClInclude Include="ECS\Component\RigidBodyComponent.h" />
-    <ClInclude Include="ECS\Component\SpriteComponent.h" />
+    <ClInclude Include="ECS\Component\UISpriteComponent.h" />
     <ClInclude Include="ECS\Component\TextComponent.h" />
     <ClInclude Include="ECS\Component\TransformComponent.h" />
     <ClInclude Include="ECS\ECS.h" />

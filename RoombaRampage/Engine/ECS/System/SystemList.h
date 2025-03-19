@@ -6,6 +6,7 @@
 #include "../ECS/System/CollisionResponseSystem.h"
 #include "../ECS/System/PhysicsSystem.h"
 #include "../ECS/System/RenderSystem.h"
+#include "../ECS/System/UIRenderSystem.h"
 #include "../ECS/System/RenderDebugSystem.h"
 #include "../ECS/System/RenderTextSystem.h"
 #include "../ECS/System/AnimationSystem.h"

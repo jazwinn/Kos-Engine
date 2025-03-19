@@ -95,7 +95,7 @@ namespace ecs {
 			NameComponent* NameComp = m_vecNameComponentPtr[n];
 
 			//skip component not of the scene
-			if ((AniComp->m_scene != scene) && !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer) ) continue;
+			if ((AniComp->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer) || NameComp->m_hide ) continue;
 
 			if (m_vecAnimationComponentPtr[n]->m_isAnimating && m_vecAnimationComponentPtr[n]->m_framesPerSecond)
 			{

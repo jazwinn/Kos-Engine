@@ -84,7 +84,7 @@ namespace ecs {
 			TransformComponent* transform = m_vecTransformComponentPtr[n];
 			NameComponent* NameComp = m_vecNameComponentPtr[n];
 			//skip component not of the scene
-			if ((transform->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer)) continue;
+			if ((transform->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer) || NameComp->m_hide) continue;
 
 			//CameraComponent* cam = m_vecCameraComponentPtr[n];
 

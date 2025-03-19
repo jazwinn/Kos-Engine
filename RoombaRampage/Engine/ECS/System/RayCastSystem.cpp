@@ -79,7 +79,7 @@ namespace ecs {
 			RaycastComponent* raycast = m_vecRaycastComponentPtr[n];
 			NameComponent* NameComp = m_vecNameComponentPtr[n];
 			//skip component not of the scene
-			if ((raycast->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer)) continue;
+			if ((raycast->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer) || NameComp->m_hide) continue;
 
 
 

@@ -228,6 +228,8 @@ namespace ecs {
 		GAMESTATE m_nextState{ STOP };
 		GAMESTATE m_getState() { return m_state; };
 
+		std::unordered_map<GAMESTATE, std::bitset<TOTALTYPESYSTEM>> m_gameStateSystems;
+
 	private:
 		static std::unique_ptr<ECS> m_InstancePtr;
 

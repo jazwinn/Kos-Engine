@@ -65,7 +65,7 @@ namespace ecs {
             GridComponent* grid = NULL;
 
             // Skip components not of the scene
-            if ((pathfinding->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer)) continue;
+            if ((pathfinding->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer) || NameComp->m_hide) continue;
 
             const auto& ids = ecs->m_ECS_SceneMap.find(pathfinding->m_scene);
             if (ids != ecs->m_ECS_SceneMap.end()) {

@@ -85,7 +85,7 @@ namespace ecs {
 			SpriteComponent* sprite = m_vecSpriteComponentPtr[n];
 			NameComponent* NameComp = m_vecNameComponentPtr[n];
 			//skip component not of the scene
-			if ((sprite->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer)) continue;
+			if ((sprite->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer) || NameComp->m_hide) continue;
 
 			//ECS* ecs = ECS::m_GetInstance();
 

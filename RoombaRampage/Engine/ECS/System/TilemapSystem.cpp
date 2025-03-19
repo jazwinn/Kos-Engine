@@ -88,7 +88,7 @@ namespace ecs {
 
 
 			//skip component not of the scene
-			if ((tile->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer)) continue;
+			if ((tile->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer) || NameComp->m_hide) continue;
 
 			//ECS* ecs = ECS::m_GetInstance();
 

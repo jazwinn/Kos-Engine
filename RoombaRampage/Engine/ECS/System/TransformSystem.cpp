@@ -75,7 +75,7 @@ namespace ecs {
 			NameComponent* NameComp = m_vecNameComponentPtr[n];
 
 			//skip component not of the scene
-			if ((transformComp->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer)) continue;
+			if ((transformComp->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer) || NameComp->m_hide) continue;
 
 			transformComp->m_transformation = mat3x3::Mat3Transform(transformComp->m_position, transformComp->m_scale, transformComp->m_rotation);
 			vector2::Vec2 pos{}, scale_s{};

@@ -89,7 +89,7 @@ namespace ecs {
 			button->m_IsClick = false;
 			button->m_IsHover = false;
 
-			if ((transform->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer)) continue;
+			if ((transform->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer) || NameComp->m_hide) continue;
 
 			bool clicked = (Input::InputSystem::m_isKeyTriggered(keys::LMB) || Input::InputSystem::m_isKeyPressed(keys::LMB));
 

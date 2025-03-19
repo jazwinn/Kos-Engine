@@ -292,12 +292,12 @@ namespace gui {
 			
 			if (Input::InputSystem::m_isKeyPressed(keys::LeftControl) && Input::InputSystem::m_isKeyTriggered(keys::Z)) {
 				events::UndoLatest temp;
-				DISPATCH_ACTION_EVENT(temp);
+				//DISPATCH_ACTION_EVENT(temp);
 			}
 
 			if (Input::InputSystem::m_isKeyPressed(keys::LeftControl) && Input::InputSystem::m_isKeyTriggered(keys::Y)) {
 				events::RedoPrevious temp;
-				DISPATCH_ACTION_EVENT(temp);
+				//DISPATCH_ACTION_EVENT(temp);
 			}
 
 			

@@ -86,7 +86,7 @@ namespace ecs {
 
 
 			//skip component not of the scene
-			if ((transform->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer)) continue;
+			if ((transform->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer) || NameComp->m_hide) continue;
 
 			grid->m_Anchor.m_x = floor(transform->m_transformation.m_e20);
 			grid->m_Anchor.m_y = floor(transform->m_transformation.m_e21) + 1.0f;
