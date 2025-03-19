@@ -101,7 +101,7 @@ namespace gui {
                 // add string to name component
                 static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(newEntityID))->m_entityName = std::string(m_charBuffer);
                 //events::AddEntity addEvent(newEntityID);
-                //DISPATCH_ACTION_EVENT(addEvent);
+                ////DISPATCH_ACTION_EVENT(addEvent);
 
                 m_charBuffer[0] = '\0';
                 m_objectNameBox = false;
@@ -242,7 +242,7 @@ namespace gui {
                     const auto& parent = ecs::Hierachy::m_GetParent(Id);
                     if (parent.has_value()) {
                         events::MoveEntityChildToParent moveEvent(Id, parent.value());
-                        DISPATCH_ACTION_EVENT(moveEvent);
+                        //DISPATCH_ACTION_EVENT(moveEvent);
                         ecs::Hierachy::m_RemoveParent(Id);
                     }
 
@@ -437,7 +437,7 @@ namespace gui {
                 if (ImGui::MenuItem("Delete Entity")) {
 
                     events::RemoveEntity removeEvent(id);
-                    DISPATCH_ACTION_EVENT(removeEvent);
+                    //DISPATCH_ACTION_EVENT(removeEvent);
                     
                     ecs->m_DeleteEntity(id);
                     m_clickedEntityId = -1;
@@ -455,7 +455,7 @@ namespace gui {
                    ecs::Hierachy::m_SetParent(id, newid);
                 }
                 //events::AddEntity addEvent(newid);
-                //DISPATCH_ACTION_EVENT(addEvent);
+                ////DISPATCH_ACTION_EVENT(addEvent);
 
 
 
@@ -502,11 +502,11 @@ namespace gui {
                     const auto& parent2 = ecs::Hierachy::m_GetParent(childId);
                     if (parent2.has_value()) {
                         events::MoveEntityChildToChild moveEvent(childId, parent2.value(), id);
-                        DISPATCH_ACTION_EVENT(moveEvent);
+                        //DISPATCH_ACTION_EVENT(moveEvent);
                     }
                     else {
                         events::MoveEntityParentToChild moveEvent(childId, id);
-                        DISPATCH_ACTION_EVENT(moveEvent);
+                        //DISPATCH_ACTION_EVENT(moveEvent);
                     }
                     ecs::Hierachy::m_SetParent(id, childId);
                     LOGGING_INFO("Set Parent: %d, Child: %d", id, childId);

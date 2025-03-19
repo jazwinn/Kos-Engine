@@ -35,13 +35,14 @@ namespace ecs {
 
 		layer::LAYERS m_Layer{ layer::DEFAULT };
 
+		std::string m_entityTag = "Default";
+
+		bool m_hide{ false };
+
 		bool m_isPrefab{ false };
 		
 		bool m_syncPrefab{false};
 		std::string m_prefabName{};
-
-		std::string m_entityTag = "Default";
-
 		REFLECTABLE(NameComponent, m_entityName, m_Layer, m_entityTag, m_isPrefab, m_prefabName, m_entityTag);
 	};
 
