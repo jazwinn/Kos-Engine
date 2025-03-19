@@ -26,9 +26,17 @@ public class PlayerLoadoutButtons : ScriptBase
     {
         if (PlayerLoadoutManager.isSortieing)
         {
-            CheckForCollisions();
-            CheckForHover();
-            CheckForClicks();
+            if (!GameControllerLevel1.gameIsPaused)
+            {
+                CheckForCollisions();
+                CheckForHover();
+                CheckForClicks();
+            }
+            else
+            {
+                isHovering = false;
+                CheckForHover();
+            }
         }
         
     }

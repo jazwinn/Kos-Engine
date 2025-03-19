@@ -21,7 +21,6 @@
  * SOFTWARE.
  */
 #include "../Debugging/Logging.h"
-#include "../Config/pch.h"
 
 #ifndef H_6B9572DA_A64B_49E6_B234_051480991C89
 #define H_6B9572DA_A64B_49E6_B234_051480991C89
@@ -1211,7 +1210,6 @@ public:
         break;
       }
     }
-
 #undef max
 #undef min
     _stacktrace.resize(std::min(_stacktrace.size(), skip_n_firsts() + depth));
