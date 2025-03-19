@@ -861,6 +861,8 @@ namespace script {
 
 		static MonoString* m_GetScenefromID(ecs::EntityID id);
 
+		static void m_HideEntityandchildren(ecs::EntityID id);
+		static void m_UnHideEntityandchildren(ecs::EntityID id);
 
 	public:
 		/******************************************************************/

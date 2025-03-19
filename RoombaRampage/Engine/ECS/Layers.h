@@ -107,6 +107,10 @@ namespace layer{
 		/******************************************************************/
 		std::vector<ecs::EntityID> m_RetrieveEntityID(LAYERS layer);
 
+		void m_hideEntitywithChild(ecs::EntityID id);
+		void m_unhideEntitywithChild(ecs::EntityID id);
+
+
 		//bool m_CreateLayer(layer);
 
 		//bool m_DeleteLayer(layer);

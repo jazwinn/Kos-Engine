@@ -602,6 +602,19 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 ////DISPATCH_ACTION_EVENT(action);
                 oldValN = *nc;
             }
+            //ImGui::SameLine();
+
+            bool hidden = nc->m_hide;
+            if (ImGui::Checkbox("Hide", &hidden)) {
+                if (!nc->m_hide) {
+                    ecs->m_layersStack.m_hideEntitywithChild(entityID);
+                }
+                else {
+                    ecs->m_layersStack.m_unhideEntitywithChild(entityID);
+                }
+
+            }
+
             //layer selector
             const char* layers[] = { ecs->m_layersStack.m_layerMap[layer::DEFAULT].first.c_str(), ecs->m_layersStack.m_layerMap[layer::LAYER1].first.c_str(),ecs->m_layersStack.m_layerMap[layer::LAYER2].first.c_str(),
                                   ecs->m_layersStack.m_layerMap[layer::LAYER3].first.c_str(), ecs->m_layersStack.m_layerMap[layer::LAYER4].first.c_str(), ecs->m_layersStack.m_layerMap[layer::LAYER5].first.c_str(),

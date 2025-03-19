@@ -710,6 +710,18 @@ namespace script {
 		return mono_string_new(assetmanager->m_scriptManager.m_GetDomain(), results.c_str());
 	}
 
+	void InternalCall::m_HideEntityandchildren(ecs::EntityID id)
+	{
+		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+		ecs->m_layersStack.m_hideEntitywithChild(id);
+	}
+
+	void InternalCall::m_UnHideEntityandchildren(ecs::EntityID id)
+	{
+		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+		ecs->m_layersStack.m_unhideEntitywithChild(id);
+	}
+
 	MonoArray* InternalCall::m_InternalCallGetTagIDs(MonoString* monostring)
 	{
 		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
@@ -1689,6 +1701,9 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_GetRandomInt);
 
 		MONO_ADD_INTERNAL_CALL(m_GetScenefromID);
+
+		MONO_ADD_INTERNAL_CALL(m_HideEntityandchildren);
+		MONO_ADD_INTERNAL_CALL(m_UnHideEntityandchildren);
 		///SO HELP ME THEN OVER HERE
 	}
 }

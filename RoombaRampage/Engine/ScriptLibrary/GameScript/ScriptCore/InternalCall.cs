@@ -348,6 +348,13 @@ public static class InternalCall
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     static public extern string m_GetScenefromID(uint id);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    static public extern void m_HideEntityandchildren(uint id);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    static public extern void m_UnHideEntityandchildren(uint id);
+
 }
 
 
