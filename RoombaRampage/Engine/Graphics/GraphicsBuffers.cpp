@@ -388,38 +388,88 @@ namespace graphicpipe
 
 	}
 
-	void GraphicsPipe::m_funcSetupLightingFrameBuffer()
+	void GraphicsPipe::m_funcSetupMultiLightingFrameBuffer()
 	{
 		Helper::Helpers* help = Helper::Helpers::GetInstance();
 
-		if (m_lightingTexture)
+		if (m_multiLightingTexture)
 		{
-			glDeleteTextures(1, &m_lightingTexture);
+			glDeleteTextures(1, &m_multiLightingTexture);
 		}
-		if (m_lightingDepthBufferObject)
+		if (m_multiLightingDepthBufferObject)
 		{
-			glDeleteRenderbuffers(1, &m_lightingDepthBufferObject);
+			glDeleteRenderbuffers(1, &m_multiLightingDepthBufferObject);
 		}
-		if (m_lightingFrameBufferObject)
+		if (m_multiLightingFrameBufferObject)
 		{
-			glDeleteFramebuffers(1, &m_lightingFrameBufferObject);
+			glDeleteFramebuffers(1, &m_multiLightingFrameBufferObject);
 		}
-		glGenFramebuffers(1, &m_lightingFrameBufferObject);
-		glBindFramebuffer(GL_FRAMEBUFFER, m_lightingFrameBufferObject);
+		glGenFramebuffers(1, &m_multiLightingFrameBufferObject);
+		glBindFramebuffer(GL_FRAMEBUFFER, m_multiLightingFrameBufferObject);
 
-		glGenTextures(1, &m_lightingTexture);
-		glBindTexture(GL_TEXTURE_2D, m_lightingTexture);
+		glGenTextures(1, &m_multiLightingTexture);
+		glBindTexture(GL_TEXTURE_2D, m_multiLightingTexture);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, static_cast<GLsizei>(help->m_windowWidth), static_cast<GLsizei>(help->m_windowHeight), 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glBindTexture(GL_TEXTURE_2D, 0);
-		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_lightingTexture, 0);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_multiLightingTexture, 0);
 
 
-		glGenRenderbuffers(1, &m_lightingDepthBufferObject);
-		glBindRenderbuffer(GL_RENDERBUFFER, m_lightingDepthBufferObject);
+		glGenRenderbuffers(1, &m_multiLightingDepthBufferObject);
+		glBindRenderbuffer(GL_RENDERBUFFER, m_multiLightingDepthBufferObject);
 		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, static_cast<GLsizei>(help->m_windowWidth), static_cast<GLsizei>(help->m_windowHeight));
-		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_lightingDepthBufferObject);
+		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_multiLightingDepthBufferObject);
+
+#if DEBUG
+		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE)
+		{
+			LOGGING_INFO("Framebuffer successfully created");
+		}
+		else
+		{
+			LOGGING_INFO("Framebuffer has not been created");
+		}
+#endif
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		//glScissor(0, 0, static_cast<GLsizei>(help->m_windowWidth), static_cast<GLsizei>(help->m_windowHeight));
+
+	}
+
+	void GraphicsPipe::m_funcSetupAdditiveLightingFrameBuffer()
+	{
+		Helper::Helpers* help = Helper::Helpers::GetInstance();
+
+		if (m_additiveLightingTexture)
+		{
+			glDeleteTextures(1, &m_additiveLightingTexture);
+		}
+		if (m_additiveLightingDepthBufferObject)
+		{
+			glDeleteRenderbuffers(1, &m_additiveLightingDepthBufferObject);
+		}
+		if (m_additiveLightingFrameBufferObject)
+		{
+			glDeleteFramebuffers(1, &m_additiveLightingFrameBufferObject);
+		}
+		glGenFramebuffers(1, &m_additiveLightingFrameBufferObject);
+		glBindFramebuffer(GL_FRAMEBUFFER, m_additiveLightingFrameBufferObject);
+
+		glGenTextures(1, &m_additiveLightingTexture);
+		glBindTexture(GL_TEXTURE_2D, m_additiveLightingTexture);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, static_cast<GLsizei>(help->m_windowWidth), static_cast<GLsizei>(help->m_windowHeight), 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glBindTexture(GL_TEXTURE_2D, 0);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_additiveLightingTexture, 0);
+
+
+		glGenRenderbuffers(1, &m_additiveLightingDepthBufferObject);
+		glBindRenderbuffer(GL_RENDERBUFFER, m_additiveLightingDepthBufferObject);
+		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, static_cast<GLsizei>(help->m_windowWidth), static_cast<GLsizei>(help->m_windowHeight));
+		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_additiveLightingDepthBufferObject);
 
 #if DEBUG
 		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE)

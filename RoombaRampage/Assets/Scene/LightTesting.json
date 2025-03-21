@@ -3,10 +3,16 @@
         "GlobalSettings": {
             "globalIllumination": 0.0,
             "backgroundColor": {
-                "r": 0.8362832069396973,
-                "g": 0.8362832069396973,
-                "b": 0.8362832069396973
+                "r": 0.13300000131130219,
+                "g": 0.23000000417232513,
+                "b": 0.3199999928474426
             }
+        }
+    },
+    {
+        "CursorSettings": {
+            "cursorImage": "default",
+            "isCursorCentered": false
         }
     },
     {
@@ -243,8 +249,8 @@
         },
         "transform": {
             "position": {
-                "x": 0.027610454708337784,
-                "y": -0.013052931986749172
+                "x": -6.646763801574707,
+                "y": 2.858624219894409
             },
             "rotation": -0.0,
             "scale": {
@@ -258,11 +264,62 @@
                 "y": 1.0
             },
             "m_intensity": 1.0,
+            "m_light_OffSet": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "m_light_scale": {
+                "x": 0.25999999046325684,
+                "y": 1.0
+            },
+            "m_light_rotation": 0.0,
             "m_colour": {
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0
+            },
+            "m_lightType": 1
+        }
+    },
+    {
+        "name": {
+            "namestr": "light",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": 0.4508409798145294,
+                "y": 0.8636391758918762
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 28.173559188842773,
+                "y": 28.173559188842773
             }
+        },
+        "LightingComponent": {
+            "m_innerOuterRadius": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "m_intensity": 1.0,
+            "m_light_OffSet": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "m_light_scale": {
+                "x": 1.0,
+                "y": 1.0
+            },
+            "m_light_rotation": 0.0,
+            "m_colour": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "m_lightType": 0
         }
     }
 ]

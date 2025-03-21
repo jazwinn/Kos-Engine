@@ -88,7 +88,6 @@ namespace graphicpipe {
         glm::vec4 m_color{};               ///< Color of the light (RGBA).
         glm::vec2 m_innerOuterRadius{};    ///< Inner and outer radius of the light effect.
         float m_intensity{};               ///< Intensity of the light source.
-        int m_lightType{};                 ///< Type of light (e.g., point, directional, spot).
     };
 
     struct ColliderGridData
@@ -269,8 +268,10 @@ namespace graphicpipe {
         unsigned int m_iVec3Buffer{};               ///< Buffer for integer vec3 attributes, used for texture ordering.
         unsigned int m_debugCollisionCheckBuffer{}; ///< Buffer for collision detection in debug drawing.
         unsigned int m_frameBufferObject{};         ///< Framebuffer object for offscreen rendering.
-        unsigned int m_lightingFrameBufferObject{}; ///< Framebuffer object for lighting pass rendering.
-        unsigned int m_lightingDepthBufferObject{}; ///< Depth buffer for the lighting framebuffer.
+        unsigned int m_multiLightingFrameBufferObject{}; ///< Framebuffer object for lighting pass rendering.
+        unsigned int m_multiLightingDepthBufferObject{}; ///< Depth buffer for the lighting framebuffer.
+        unsigned int m_additiveLightingFrameBufferObject{}; ///< Framebuffer object for additive lighting pass rendering.
+        unsigned int m_additiveLightingDepthBufferObject{}; ///< Depth buffer for the additive lighting framebuffer.
         unsigned int m_finalPassFrameBufferObject{}; ///< Framebuffer object for final post-processing pass.
         unsigned int m_finalPassDepthBufferObject{}; ///< Depth buffer for the final pass framebuffer.
         unsigned int m_depthBufferObject{};         ///< Depth buffer object for storing depth information.
@@ -455,7 +456,9 @@ namespace graphicpipe {
          * This function renders the lighting texture generated from the lighting
          * framebuffer onto the screen or another target.
          */
-        void m_drawLightingTexture();
+        void m_drawMultiLightingTexture();
+
+        void m_drawAdditiveLightingTexture();
 
         /**
           * @brief Draws unlit object textures.
@@ -493,7 +496,9 @@ namespace graphicpipe {
          * This function processes and applies lighting effects using the lighting
          * framebuffer, shaders, and associated buffers.
          */
-        void m_funcRenderLighting();
+        void m_funcRenderMultiLighting();
+
+        void m_funcRenderAdditiveLighting();
 
         /**
           * @brief Draws a full-screen quad with a texture.
@@ -561,7 +566,9 @@ namespace graphicpipe {
          *
          * @note This function assumes that the OpenGL context has been properly initialized.
          */
-        void m_funcSetupLightingFrameBuffer();
+        void m_funcSetupMultiLightingFrameBuffer();
+
+        void m_funcSetupAdditiveLightingFrameBuffer();
 
         /**
          * @brief Calculates the model-to-world transformation matrix.
@@ -623,7 +630,8 @@ namespace graphicpipe {
         // Data for rendering
         std::vector<ParticleData> m_particleData{};
         std::vector<EmitterData> m_emitterData{}; ///< Emitter Data for the Scene.
-        std::vector<LightingData> m_lightingData{}; ///< Lighting data for the scene.
+        std::vector<LightingData> m_multiLightingData{}; ///< Lighting data for the scene.
+        std::vector<LightingData> m_additiveLightingData{}; ///< Lighting data for the scene.
         std::vector<ColliderGridData> m_colliderGridData{}; ///< Collider grid data for collision checks.
         std::vector<TilemapData> m_tilemapData{}; ///< Data for tilemaps in the scene.
         std::vector<GraphicsData> m_modelData{}; ///< Graphics data for rendering 3D models.
@@ -635,8 +643,10 @@ namespace graphicpipe {
         std::vector<float> m_debugCircleCollisionChecks{}; ///< Collision check data for debug circle rendering.
 
         std::vector<glm::vec4> m_colors{}; ///< Colors used in various elements for rendering.
-        std::vector<glm::vec4> m_lightingColors{}; ///< Lighting colors for illumination effects.
-        std::vector<glm::vec3> m_lightingParams{}; ///< Parameters related to lighting calculations.
+        std::vector<glm::vec4> m_multiLightingColors{}; ///< Lighting colors for illumination effects.
+        std::vector<glm::vec3> m_multiLightingParams{}; ///< Parameters related to lighting calculations.
+        std::vector<glm::vec4> m_additiveLightingColors{}; ///< Lighting colors for illumination effects.
+        std::vector<glm::vec3> m_additiveLightingParams{}; ///< Parameters related to lighting calculations.
         std::vector<std::vector<int>> m_tileIndexes{}; ///< Tile indexes for rendering in the tilemap.
         std::vector<std::vector<int>> m_gridColliderChecks{}; ///< Collider check indexes for the grid.
 
@@ -647,7 +657,8 @@ namespace graphicpipe {
         std::vector<int> m_frameNumbers{}; ///< Frame numbers for sprite animations.
         std::vector<image::Image> m_imageData{}; ///< Image data used for rendering textures and sprites.
         std::vector<TilemapData> m_transformedTilemaps{}; ///< Transformed tilemap data after processing.
-        std::vector<glm::mat3> m_lightingTransforms{}; ///< Lighting transformation matrices for effects.
+        std::vector<glm::mat3> m_multiLightingTransforms{}; ///< Multiplicative Lighting transformation matrices for effects.
+        std::vector<glm::mat3> m_additiveLightingTransforms{}; ///< Additive Lighting transformation matrices for effects.
         std::vector<std::vector<std::vector<int>>> m_tilemapIndexArrays{}; ///< Tilemap index arrays for 2D grid-based tiles.
         std::vector<std::vector<std::vector<int>>> m_gridColliderArrays{}; ///< Grid collider arrays for collision handling.
 
@@ -659,7 +670,8 @@ namespace graphicpipe {
         unsigned int m_screenTextureVAO{}; ///< Vertex Array Object for screen texture rendering.
         unsigned int m_screenTexture{}; ///< Texture for rendering the screen.
         unsigned int m_gamePreviewTexture{}; ///< Texture for displaying game preview.
-        unsigned int m_lightingTexture{}; ///< Texture for storing lighting data.
+        unsigned int m_multiLightingTexture{}; ///< Texture for storing lighting data.
+        unsigned int m_additiveLightingTexture{};
         unsigned int m_finalPassTexture{}; ///< Texture for the final rendering pass.
         unsigned int m_unlitScreenTexture{};
 
