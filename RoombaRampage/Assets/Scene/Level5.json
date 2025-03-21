@@ -64282,11 +64282,11 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "ammoCount",
+                                    "variable": "backLimbGunAmmo",
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "backLimbGunAmmo",
+                                    "variable": "ammoCount",
                                     "base64": ""
                                 },
                                 {
@@ -64298,11 +64298,7 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "railGunLightMaxIntensity",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "rightLimbRailGunHold",
+                                    "variable": "leftLimbGunAmmo",
                                     "base64": ""
                                 },
                                 {
@@ -64310,7 +64306,11 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "leftLimbGunAmmo",
+                                    "variable": "rightLimbRailGunHold",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "railGunLightMaxIntensity",
                                     "base64": ""
                                 },
                                 {
@@ -64497,11 +64497,11 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "ammoCount",
+                                    "variable": "backLimbGunAmmo",
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "backLimbGunAmmo",
+                                    "variable": "ammoCount",
                                     "base64": ""
                                 },
                                 {
@@ -64513,11 +64513,7 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "leftLimbShotGunAmmo",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "leftLimbGunAmmo",
+                                    "variable": "rightLimbRailGunHold",
                                     "base64": ""
                                 },
                                 {
@@ -64525,7 +64521,11 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "rightLimbRailGunHold",
+                                    "variable": "leftLimbGunAmmo",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "leftLimbShotGunAmmo",
                                     "base64": ""
                                 },
                                 {
@@ -64913,10 +64913,11 @@
                     },
                     "m_light_rotation": 0.0,
                     "m_colour": {
-                        "x": 1.0,
-                        "y": 1.0,
-                        "z": 1.0
-                    }
+                        "x": 0.8628318309783936,
+                        "y": 0.38178399205207825,
+                        "z": 0.38178399205207825
+                    },
+                    "m_lightType": 0
                 }
             },
             {
@@ -64956,9 +64957,10 @@
                     "m_light_rotation": 0.0,
                     "m_colour": {
                         "x": 1.0,
-                        "y": 1.0,
-                        "z": 1.0
-                    }
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "m_lightType": 1
                 }
             },
             {
@@ -64997,10 +64999,11 @@
                     },
                     "m_light_rotation": 0.0,
                     "m_colour": {
-                        "x": 1.0,
-                        "y": 1.0,
+                        "x": 0.41150444746017456,
+                        "y": 0.9531287550926208,
                         "z": 1.0
-                    }
+                    },
+                    "m_lightType": 1
                 }
             },
             {
@@ -65039,10 +65042,11 @@
                     },
                     "m_light_rotation": 0.0,
                     "m_colour": {
-                        "x": 1.0,
+                        "x": 0.4601770043373108,
                         "y": 1.0,
-                        "z": 1.0
-                    }
+                        "z": 0.9856683015823364
+                    },
+                    "m_lightType": 1
                 }
             },
             {
@@ -65126,7 +65130,8 @@
                 "x": 0.9734513163566589,
                 "y": 0.10768268257379532,
                 "z": 0.10768268257379532
-            }
+            },
+            "m_lightType": 0
         }
     },
     {
@@ -65166,7 +65171,8 @@
                 "x": 0.9734513163566589,
                 "y": 0.10768268257379532,
                 "z": 0.10768268257379532
-            }
+            },
+            "m_lightType": 0
         }
     },
     {
@@ -65206,7 +65212,8 @@
                 "x": 0.9734513163566589,
                 "y": 0.10768268257379532,
                 "z": 0.10768268257379532
-            }
+            },
+            "m_lightType": 0
         }
     },
     {
@@ -65246,7 +65253,8 @@
                 "x": 0.9734513163566589,
                 "y": 0.10768268257379532,
                 "z": 0.10768268257379532
-            }
+            },
+            "m_lightType": 0
         }
     },
     {
@@ -65286,7 +65294,8 @@
                 "x": 0.9734513163566589,
                 "y": 0.10768268257379532,
                 "z": 0.10768268257379532
-            }
+            },
+            "m_lightType": 0
         }
     },
     {
@@ -65326,7 +65335,8 @@
                 "x": 0.9734513163566589,
                 "y": 0.10768268257379532,
                 "z": 0.10768268257379532
-            }
+            },
+            "m_lightType": 0
         }
     },
     {

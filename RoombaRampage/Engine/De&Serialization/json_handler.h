@@ -29,6 +29,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Dependencies/rapidjson/writer.h"
 #include "../Dependencies/rapidjson/stringbuffer.h"
 #include "../Physics/PhysicsLayer.h"
+#include "../Graphics/GraphicsLighting.h"
 
 namespace Serialization {
 	class Serialize {
@@ -197,6 +198,14 @@ namespace Serialization {
 			count++;
 		}
 
+		void operator()(graphicpipe::LightType& _args, rapidjson::Value& value, rapidjson::Document::AllocatorType& allocator) {
+			rapidjson::Value key;
+			key.SetString(m_Array[count].c_str(), allocator);
+
+			value.AddMember(key, _args, allocator);
+			count++;
+		}
+
 		void operator()(vector2::Vec2& _args, rapidjson::Value& value, rapidjson::Document::AllocatorType& allocator) {
 			rapidjson::Value key;
 			key.SetString(m_Array[count].c_str(), allocator);
@@ -327,6 +336,15 @@ namespace Serialization {
 
 			if (value.HasMember(m_Array[count].c_str()) && value[m_Array[count].c_str()].IsInt()) {
 				_args = value[m_Array[count].c_str()].GetInt();
+			}
+
+			count++;
+		}
+
+		void operator()(graphicpipe::LightType& _args, const rapidjson::Value& value) {
+
+			if (value.HasMember(m_Array[count].c_str()) && value[m_Array[count].c_str()].IsInt()) {
+				_args = static_cast<graphicpipe::LightType>(value[m_Array[count].c_str()].GetInt());
 			}
 
 			count++;

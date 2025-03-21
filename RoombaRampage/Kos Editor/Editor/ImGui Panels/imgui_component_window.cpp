@@ -94,22 +94,26 @@ struct DrawComponents {
         count++;
         return changed;
     }
-    void operator()(graphicpipe::LightType& _args)
+    bool operator()(graphicpipe::LightType& _args)
     {
         const char* shapeName = (_args == graphicpipe::LightType::GLOW) ? "GLOW" : "MULTIPLY";
+        bool changed = false;
         if (ImGui::BeginCombo("Shape Types", shapeName))
         {
-            if (ImGui::Selectable("GLOW"))
-            {
-                _args = graphicpipe::LightType::GLOW;
-            }
             if (ImGui::Selectable("MULTIPLY"))
             {
                 _args = graphicpipe::LightType::MULTIPLY;
+                changed = true;
+            }
+            if (ImGui::Selectable("GLOW"))
+            {
+                _args = graphicpipe::LightType::GLOW;
+                changed = true;
             }
             ImGui::EndCombo();
         }
         count++;
+        return changed;
     }
 
     bool operator()(int& _args) {
@@ -514,70 +518,70 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
             }
         };
 
-        static std::map<int, std::pair<ecs::EntityID, bool>> layerMap; // Bool represents whether it's a sprite or a text
-        static bool layerChange{ true };
-        static size_t entitySize = ecs->m_ECS_EntityMap.size();
-        static std::string sceneChange = m_activeScene;
+        //static std::map<int, std::pair<ecs::EntityID, bool>> layerMap; // Bool represents whether it's a sprite or a text
+        //static bool layerChange{ true };
+        //static size_t entitySize = ecs->m_ECS_EntityMap.size();
+        //static std::string sceneChange = m_activeScene;
 
-        if (layerChange || entitySize != ecs->m_ECS_EntityMap.size() || sceneChange != m_activeScene)
-        {
-            layerChange = false;
-            entitySize = ecs->m_ECS_EntityMap.size();
-            sceneChange = m_activeScene;
-            layerMap.clear();
+        //if (layerChange || entitySize != ecs->m_ECS_EntityMap.size() || sceneChange != m_activeScene)
+        //{
+        //    layerChange = false;
+        //    entitySize = ecs->m_ECS_EntityMap.size();
+        //    sceneChange = m_activeScene;
+        //    layerMap.clear();
 
-            for (const auto& scene : ecs->m_ECS_SceneMap)
-            {
-                if (scene.second.m_isActive)
-                {
-                    for (const auto& id : scene.second.m_sceneIDs)
-                    {
-                        if (ecs->m_ECS_EntityMap[id].test(ecs::TYPESPRITECOMPONENT))
-                        {
-                            ecs::SpriteComponent* sprite = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(id));
-                            const int maxLayer = 999;
-                            int layer = sprite->m_layer;
-                            if (layer >= maxLayer)
-                            {
-                                layer = maxLayer;
-                                while (layerMap.find(--layer) != layerMap.end());
-                            }
-                            else if (layerMap.find(sprite->m_layer) != layerMap.end())
-                            {
-                                while (layerMap.find(++layer) != layerMap.end())
-                                {
+        //    for (const auto& scene : ecs->m_ECS_SceneMap)
+        //    {
+        //        if (scene.second.m_isActive)
+        //        {
+        //            for (const auto& id : scene.second.m_sceneIDs)
+        //            {
+        //                if (ecs->m_ECS_EntityMap[id].test(ecs::TYPESPRITECOMPONENT))
+        //                {
+        //                    ecs::SpriteComponent* sprite = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(id));
+        //                    const int maxLayer = 999;
+        //                    int layer = sprite->m_layer;
+        //                    if (layer >= maxLayer)
+        //                    {
+        //                        layer = maxLayer;
+        //                        while (layerMap.find(--layer) != layerMap.end());
+        //                    }
+        //                    else if (layerMap.find(sprite->m_layer) != layerMap.end())
+        //                    {
+        //                        while (layerMap.find(++layer) != layerMap.end())
+        //                        {
 
-                                }
-                            }
-                            sprite->m_layer = layer;
-                            layerMap[layer] = { id , true };
-                        }
-                        if (ecs->m_ECS_EntityMap[id].test(ecs::TYPETEXTCOMPONENT))
-                        {
-                            ecs::TextComponent* text = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(id));
-                            const int maxLayer = 999;
-                            int layer = text->m_fontLayer;
-                            if (layer >= maxLayer)
-                            {
-                                layer = maxLayer;
-                                while (layerMap.find(--layer) != layerMap.end());
-                            }
-                            else if (layerMap.find(text->m_fontLayer) != layerMap.end())
-                            {
-                                while (layerMap.find(++layer) != layerMap.end())
-                                {
+        //                        }
+        //                    }
+        //                    sprite->m_layer = layer;
+        //                    layerMap[layer] = { id , true };
+        //                }
+        //                if (ecs->m_ECS_EntityMap[id].test(ecs::TYPETEXTCOMPONENT))
+        //                {
+        //                    ecs::TextComponent* text = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(id));
+        //                    const int maxLayer = 999;
+        //                    int layer = text->m_fontLayer;
+        //                    if (layer >= maxLayer)
+        //                    {
+        //                        layer = maxLayer;
+        //                        while (layerMap.find(--layer) != layerMap.end());
+        //                    }
+        //                    else if (layerMap.find(text->m_fontLayer) != layerMap.end())
+        //                    {
+        //                        while (layerMap.find(++layer) != layerMap.end())
+        //                        {
 
-                                }
-                            }
-                            text->m_fontLayer = layer;
-                            layerMap[layer] = { id , false };
-                        }
-                    }
-                }
+        //                        }
+        //                    }
+        //                    text->m_fontLayer = layer;
+        //                    layerMap[layer] = { id , false };
+        //                }
+        //            }
+        //        }
 
 
-            }
-        }
+        //    }
+        //}
         
 
 
@@ -885,86 +889,86 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                
                     
 
-                    if (ImGui::TreeNode("Image Layers"))
-                    {
-                        //int count = 0;
-                        for (auto it2 = layerMap.begin(); it2 != layerMap.end(); ++it2) 
-                        {
-                            ecs::NameComponent* namec = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(it2->second.first));
-                            if (namec == nullptr) continue;
-                            std::string entityIDS = std::to_string(it2->second.first);
-                            if (it2->second.second)
-                            {
-                                entityIDS += " (Sprite)";
-                            }
-                            else
-                            {
-                                entityIDS += " (Font)";
-                            }
+                //    if (ImGui::TreeNode("Image Layers"))
+                //    {
+                //        //int count = 0;
+                //        for (auto it2 = layerMap.begin(); it2 != layerMap.end(); ++it2) 
+                //        {
+                //            ecs::NameComponent* namec = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(it2->second.first));
+                //            if (namec == nullptr) continue;
+                //            std::string entityIDS = std::to_string(it2->second.first);
+                //            if (it2->second.second)
+                //            {
+                //                entityIDS += " (Sprite)";
+                //            }
+                //            else
+                //            {
+                //                entityIDS += " (Font)";
+                //            }
 
-                            std::string selectable = namec->m_entityName + "_ID" + entityIDS;
-                            if (it2->second.first == static_cast<unsigned>(m_clickedEntityId))
-                            {
-                                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.3f, 0.8f, 0.f, 1.0f));
-                                selectable += "(Active)";
-                                ImGui::Selectable(selectable.c_str());
-                                ImGui::PopStyleColor();
-                            }
-                            else
-                            {
-                                ImGui::Selectable(selectable.c_str());
-                            }
-                            
-                          /*  std::ostringstream display;
-                            display << selectable << std::setw(30 - selectable.length()) << std::right << "Layer" + std::to_string(spriteLayer);*/
-                            
+                //            std::string selectable = namec->m_entityName + "_ID" + entityIDS;
+                //            if (it2->second.first == static_cast<unsigned>(m_clickedEntityId))
+                //            {
+                //                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.3f, 0.8f, 0.f, 1.0f));
+                //                selectable += "(Active)";
+                //                ImGui::Selectable(selectable.c_str());
+                //                ImGui::PopStyleColor();
+                //            }
+                //            else
+                //            {
+                //                ImGui::Selectable(selectable.c_str());
+                //            }
+                //            
+                //          /*  std::ostringstream display;
+                //            display << selectable << std::setw(30 - selectable.length()) << std::right << "Layer" + std::to_string(spriteLayer);*/
+                //            
 
-                            if (ImGui::IsItemActive() && !ImGui::IsItemHovered())
-                            {
-                                decltype(it2) n_next = (ImGui::GetMouseDragDelta(0).y < 0.f ? std::prev(it2) : std::next(it2));
-                                if (n_next != layerMap.end())
-                                {
-                                    if (n_next->second.second && it2->second.second)
-                                    {
-                                        ecs::SpriteComponent* sprite1 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(it2->second.first));
-                                        ecs::SpriteComponent* sprite2 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(n_next->second.first));
-                                        int layer = sprite1->m_layer;
-                                        sprite1->m_layer = sprite2->m_layer;
-                                        sprite2->m_layer = layer;
-                                    }
-                                    else if (!n_next->second.second && !it2->second.second)
-                                    {
-                                        ecs::TextComponent* text1 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(it2->second.first));
-                                        ecs::TextComponent* text2 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(n_next->second.first));
-                                        int layer = text1->m_fontLayer;
-                                        text1->m_fontLayer = text2->m_fontLayer;
-                                        text2->m_fontLayer = layer;
-                                    }
-                                    else if (n_next->second.second && !it2->second.second)
-                                    {
-                                        ecs::SpriteComponent* sprite1 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(n_next->second.first));
-                                        ecs::TextComponent* text1 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(it2->second.first));
-                                        int layer = text1->m_fontLayer;
-                                        text1->m_fontLayer = sprite1->m_layer;
-                                        sprite1->m_layer = layer;
-                                    }
-                                    else
-                                    {
-                                        ecs::SpriteComponent* sprite1 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(it2->second.first));
-                                        ecs::TextComponent* text1 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(n_next->second.first));
-                                        int layer = text1->m_fontLayer;
-                                        text1->m_fontLayer = sprite1->m_layer;
-                                        sprite1->m_layer = layer;
-                                    }
-                                    layerChange = true;
-                                    ImGui::ResetMouseDragDelta();
-                                }
-                            }
-                           
-                        }
-                        ImGui::TreePop();
-                    }
-                  
+                //            if (ImGui::IsItemActive() && !ImGui::IsItemHovered())
+                //            {
+                //                decltype(it2) n_next = (ImGui::GetMouseDragDelta(0).y < 0.f ? std::prev(it2) : std::next(it2));
+                //                if (n_next != layerMap.end())
+                //                {
+                //                    if (n_next->second.second && it2->second.second)
+                //                    {
+                //                        ecs::SpriteComponent* sprite1 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(it2->second.first));
+                //                        ecs::SpriteComponent* sprite2 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(n_next->second.first));
+                //                        int layer = sprite1->m_layer;
+                //                        sprite1->m_layer = sprite2->m_layer;
+                //                        sprite2->m_layer = layer;
+                //                    }
+                //                    else if (!n_next->second.second && !it2->second.second)
+                //                    {
+                //                        ecs::TextComponent* text1 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(it2->second.first));
+                //                        ecs::TextComponent* text2 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(n_next->second.first));
+                //                        int layer = text1->m_fontLayer;
+                //                        text1->m_fontLayer = text2->m_fontLayer;
+                //                        text2->m_fontLayer = layer;
+                //                    }
+                //                    else if (n_next->second.second && !it2->second.second)
+                //                    {
+                //                        ecs::SpriteComponent* sprite1 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(n_next->second.first));
+                //                        ecs::TextComponent* text1 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(it2->second.first));
+                //                        int layer = text1->m_fontLayer;
+                //                        text1->m_fontLayer = sprite1->m_layer;
+                //                        sprite1->m_layer = layer;
+                //                    }
+                //                    else
+                //                    {
+                //                        ecs::SpriteComponent* sprite1 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(it2->second.first));
+                //                        ecs::TextComponent* text1 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(n_next->second.first));
+                //                        int layer = text1->m_fontLayer;
+                //                        text1->m_fontLayer = sprite1->m_layer;
+                //                        sprite1->m_layer = layer;
+                //                    }
+                //                    layerChange = true;
+                //                    ImGui::ResetMouseDragDelta();
+                //                }
+                //            }
+                //           
+                //        }
+                //        ImGui::TreePop();
+                //    }
+                //  
                 }
 
 
@@ -1338,84 +1342,84 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         ImGui::EndDragDropTarget();
                     }
 
-                    if (ImGui::TreeNode("Font Layers"))
-                    {
-                        //int count = 0;
-                        for (auto it2 = layerMap.begin(); it2 != layerMap.end(); ++it2)
-                        {
-                            ecs::NameComponent* namec = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(it2->second.first));
-                            std::string entityIDS = std::to_string(it2->second.first);
-                            if (it2->second.second)
-                            {
-                                entityIDS += " (Sprite)";
-                            }
-                            else
-                            {
-                                entityIDS += " (Font)";
-                            }
+                    //if (ImGui::TreeNode("Font Layers"))
+                    //{
+                    //    //int count = 0;
+                    //    for (auto it2 = layerMap.begin(); it2 != layerMap.end(); ++it2)
+                    //    {
+                    //        ecs::NameComponent* namec = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(it2->second.first));
+                    //        std::string entityIDS = std::to_string(it2->second.first);
+                    //        if (it2->second.second)
+                    //        {
+                    //            entityIDS += " (Sprite)";
+                    //        }
+                    //        else
+                    //        {
+                    //            entityIDS += " (Font)";
+                    //        }
 
-                            std::string selectable = namec->m_entityName + "_ID" + entityIDS;
-                            if (it2->second.first == static_cast<unsigned>(m_clickedEntityId))
-                            {
-                                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.f, 0.3f, 0.8f, 1.0f));
-                                selectable += "(Active)";
-                                ImGui::Selectable(selectable.c_str());
-                                ImGui::PopStyleColor();
-                            }
-                            else
-                            {
-                                ImGui::Selectable(selectable.c_str());
-                            }
+                    //        std::string selectable = namec->m_entityName + "_ID" + entityIDS;
+                    //        if (it2->second.first == static_cast<unsigned>(m_clickedEntityId))
+                    //        {
+                    //            ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.f, 0.3f, 0.8f, 1.0f));
+                    //            selectable += "(Active)";
+                    //            ImGui::Selectable(selectable.c_str());
+                    //            ImGui::PopStyleColor();
+                    //        }
+                    //        else
+                    //        {
+                    //            ImGui::Selectable(selectable.c_str());
+                    //        }
 
-                            /*  std::ostringstream display;
-                              display << selectable << std::setw(30 - selectable.length()) << std::right << "Layer" + std::to_string(spriteLayer);*/
+                    //        /*  std::ostringstream display;
+                    //          display << selectable << std::setw(30 - selectable.length()) << std::right << "Layer" + std::to_string(spriteLayer);*/
 
 
-                            if (ImGui::IsItemActive() && !ImGui::IsItemHovered())
-                            {
-                                decltype(it2) n_next = (ImGui::GetMouseDragDelta(0).y < 0.f ? std::prev(it2) : std::next(it2));
-                                if (n_next != layerMap.end())
-                                {
-                                    if (n_next->second.second && it2->second.second)
-                                    {
-                                        ecs::SpriteComponent* sprite1 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(it2->second.first));
-                                        ecs::SpriteComponent* sprite2 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(n_next->second.first));
-                                        int layer = sprite1->m_layer;
-                                        sprite1->m_layer = sprite2->m_layer;
-                                        sprite2->m_layer = layer;
-                                    }
-                                    else if (!n_next->second.second && !it2->second.second)
-                                    {
-                                        ecs::TextComponent* text1 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(it2->second.first));
-                                        ecs::TextComponent* text2 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(n_next->second.first));
-                                        int layer = text1->m_fontLayer;
-                                        text1->m_fontLayer = text2->m_fontLayer;
-                                        text2->m_fontLayer = layer;
-                                    }
-                                    else if (n_next->second.second && !it2->second.second)
-                                    {
-                                        ecs::SpriteComponent* sprite1 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(n_next->second.first));
-                                        ecs::TextComponent* text1 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(it2->second.first));
-                                        int layer = text1->m_fontLayer;
-                                        text1->m_fontLayer = sprite1->m_layer;
-                                        sprite1->m_layer = layer;
-                                    }
-                                    else
-                                    {
-                                        ecs::SpriteComponent* sprite1 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(it2->second.first));
-                                        ecs::TextComponent* text1 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(n_next->second.first));
-                                        int layer = text1->m_fontLayer;
-                                        text1->m_fontLayer = sprite1->m_layer;
-                                        sprite1->m_layer = layer;
-                                    }
-                                    layerChange = true;
-                                    ImGui::ResetMouseDragDelta();
-                                }
-                            }
+                    //        if (ImGui::IsItemActive() && !ImGui::IsItemHovered())
+                    //        {
+                    //            decltype(it2) n_next = (ImGui::GetMouseDragDelta(0).y < 0.f ? std::prev(it2) : std::next(it2));
+                    //            if (n_next != layerMap.end())
+                    //            {
+                    //                if (n_next->second.second && it2->second.second)
+                    //                {
+                    //                    ecs::SpriteComponent* sprite1 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(it2->second.first));
+                    //                    ecs::SpriteComponent* sprite2 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(n_next->second.first));
+                    //                    int layer = sprite1->m_layer;
+                    //                    sprite1->m_layer = sprite2->m_layer;
+                    //                    sprite2->m_layer = layer;
+                    //                }
+                    //                else if (!n_next->second.second && !it2->second.second)
+                    //                {
+                    //                    ecs::TextComponent* text1 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(it2->second.first));
+                    //                    ecs::TextComponent* text2 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(n_next->second.first));
+                    //                    int layer = text1->m_fontLayer;
+                    //                    text1->m_fontLayer = text2->m_fontLayer;
+                    //                    text2->m_fontLayer = layer;
+                    //                }
+                    //                else if (n_next->second.second && !it2->second.second)
+                    //                {
+                    //                    ecs::SpriteComponent* sprite1 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(n_next->second.first));
+                    //                    ecs::TextComponent* text1 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(it2->second.first));
+                    //                    int layer = text1->m_fontLayer;
+                    //                    text1->m_fontLayer = sprite1->m_layer;
+                    //                    sprite1->m_layer = layer;
+                    //                }
+                    //                else
+                    //                {
+                    //                    ecs::SpriteComponent* sprite1 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(it2->second.first));
+                    //                    ecs::TextComponent* text1 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(n_next->second.first));
+                    //                    int layer = text1->m_fontLayer;
+                    //                    text1->m_fontLayer = sprite1->m_layer;
+                    //                    sprite1->m_layer = layer;
+                    //                }
+                    //                layerChange = true;
+                    //                ImGui::ResetMouseDragDelta();
+                    //            }
+                    //        }
 
-                        }
-                        ImGui::TreePop();
-                    }
+                    //    }
+                    //    ImGui::TreePop();
+                    //}
                     //DrawComponents toDraw(tc->Names());
                     if (toDraw(tc->m_fontLayer)) {
                         if ((dragfloat::DragFloatCheck::m_GetInstance()->m_GetPrevMem() != dragfloat::Member::TEXTLAYER)) {
@@ -2234,6 +2238,17 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             oldValL = *lc;
                         }
                     }
+                    if (toDraw(lc->m_lightType)) {
+                        if ((dragfloat::DragFloatCheck::m_GetInstance()->m_GetPrevMem() != dragfloat::Member::LIGHTTYPE)) {
+                            oldValL = *lc;
+                        }
+                        if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::LIGHT, dragfloat::Member::LIGHTTYPE)) {
+                            events::ModifyLight action(ecs::TYPELIGHTINGCOMPONENT, entityID, lc, oldValL);
+                            ////DISPATCH_ACTION_EVENT(action);
+                            oldValL = *lc;
+                        }
+                    }
+                    
 
                     ImVec4 color = ImVec4(lc->m_colour.m_x, lc->m_colour.m_y, lc->m_colour.m_z, 1.f);
 
@@ -2251,7 +2266,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             oldValL = *lc;
                         }
                         if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::LIGHT, dragfloat::Member::LIGHTCLR)) {
-                            events::ModifyLight action(ecs::TYPESPRITECOMPONENT, entityID, lc, oldValL);
+                            events::ModifyLight action(ecs::TYPELIGHTINGCOMPONENT, entityID, lc, oldValL);
                             ////DISPATCH_ACTION_EVENT(action);
                             oldValL = *lc;
                         }
@@ -2261,7 +2276,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             oldValL = *lc;
                         }
                         if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::LIGHT, dragfloat::Member::LIGHTCLR)) {
-                            events::ModifyLight action(ecs::TYPESPRITECOMPONENT, entityID, lc, oldValL);
+                            events::ModifyLight action(ecs::TYPELIGHTINGCOMPONENT, entityID, lc, oldValL);
                             ////DISPATCH_ACTION_EVENT(action);
                             oldValL = *lc;
                         }

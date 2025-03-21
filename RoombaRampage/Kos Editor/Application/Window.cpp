@@ -283,7 +283,8 @@ namespace Application {
             old_h = static_cast<int>(help->m_windowHeight);
             pipe->m_funcSetupFrameBuffer();
             pipe->m_funcSetupGamePreviewFrameBuffer();
-            pipe->m_funcSetupLightingFrameBuffer();
+            pipe->m_funcSetupMultiLightingFrameBuffer();
+            pipe->m_funcSetupAdditiveLightingFrameBuffer();
             pipe->m_funcSetupFinalPassBuffer();
             pipe->m_funcSetUpUnlitScreenFrameBuffer();
            
