@@ -206,6 +206,8 @@ namespace ecs {
 						else {
 							toMove = -valit->second.first * valit->second.second;
 						}
+						std::cout << "x move:" << toMove.m_x << std::endl;
+						std::cout << "y move:" << toMove.m_y << std::endl;
 
 						transform->m_position += toMove;
 					}
