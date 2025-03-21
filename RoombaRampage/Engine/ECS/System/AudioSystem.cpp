@@ -64,10 +64,10 @@ namespace ecs {
         int n{ 0 };
         for (auto& audioCompPtr : m_vecAudioComponentPtr) {
             TransformComponent* transform = m_vecTransformComponentPtr[n];
-            NameComponent* nameComp = m_vecNameComponentPtr[n];
+            NameComponent* NameComp = m_vecNameComponentPtr[n];
             n++;
 
-            if ((transform->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(nameComp->m_Layer)) continue;
+            if ((transform->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer) || NameComp->m_hide) continue;
 
             std::string entityIDStr = std::to_string(audioCompPtr->m_Entity);
             for (auto& audioFile : audioCompPtr->m_AudioFiles) {

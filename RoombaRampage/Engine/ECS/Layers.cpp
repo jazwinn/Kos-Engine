@@ -153,5 +153,37 @@ namespace layer {
 		return m_layerMap[layer].second;
 	}
 
+	void LayerStack::m_hideEntitywithChild(ecs::EntityID id)
+	{
+		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+		ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id));
+		ecs::TransformComponent* tc = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id));
+		nc->m_hide = true;
+
+		if (tc->m_childID.size() > 0) {
+			for (auto child_id : tc->m_childID) {
+				m_hideEntitywithChild(child_id);
+			}
+
+		}
+		
+	}
+
+	void LayerStack::m_unhideEntitywithChild(ecs::EntityID id)
+	{
+		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+		ecs::NameComponent* nc = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(id));
+		ecs::TransformComponent* tc = static_cast<ecs::TransformComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETRANSFORMCOMPONENT]->m_GetEntityComponent(id));
+		
+		nc->m_hide = false;
+
+		if (tc->m_childID.size() > 0) {
+			for (auto child_id : tc->m_childID) {
+				m_unhideEntitywithChild(child_id);
+			}
+
+		}
+	}
+
 
 }

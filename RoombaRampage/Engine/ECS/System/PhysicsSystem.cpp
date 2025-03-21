@@ -76,7 +76,7 @@ namespace ecs {
 			NameComponent* NameComp = m_vecNameComponentPtr[n];
 
 			//skip component not of the scene
-			if ((rigidBody->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer)) continue;
+			if ((rigidBody->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer) || NameComp->m_hide) continue;
 
 
 			if (rigidBody->m_IsKinematic || rigidBody->m_IsStatic) {

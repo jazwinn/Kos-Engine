@@ -85,7 +85,7 @@ namespace ecs {
 			VideoComponent* VideoComp = m_vecVideoComponentPtr[n];
 
 			//skip component not of the scene
-			if ((transform->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer)) continue;
+			if ((transform->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer) || NameComp->m_hide) continue;
 
 			if (VideoComp->play == false) {
 

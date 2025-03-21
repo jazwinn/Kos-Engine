@@ -110,7 +110,7 @@ namespace ecs {
 			ColComp->m_collidedWith.clear();
 			ColComp->m_blockedFlag = -1;
 			//skip component not of the scene
-			if ((rigidComp->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer)) continue;
+			if ((rigidComp->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer) || NameComp->m_hide) continue;
 
 
 			EntityID obj1_EntityID = rigidComp->m_Entity;

@@ -106,7 +106,7 @@ namespace ecs {
 			EntityID id = ColComp->m_Entity;
 
 			//skip component not of the scene
-			if ((ColComp->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer)) continue;
+			if ((ColComp->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer) || NameComp->m_hide) continue;
 			
 
 
