@@ -1,17 +1,17 @@
 [
     {
         "GlobalSettings": {
-            "globalIllumination": 0.05999999865889549,
+            "globalIllumination": 0.46000000834465027,
             "backgroundColor": {
-                "r": 0.0,
-                "g": 0.0,
-                "b": 0.0
+                "r": 0.13300000131130219,
+                "g": 0.23000000417232513,
+                "b": 0.3199999928474426
             }
         }
     },
     {
         "CursorSettings": {
-            "cursorImage": "./Assets/Texture/UI/img_inGameCursor.png",
+            "cursorImage": "../Assets/Texture/UI/img_inGameCursor.png",
             "isCursorCentered": true
         }
     },
@@ -194,11 +194,11 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "backLimbGunAmmo",
+                                    "variable": "ammoCount",
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "ammoCount",
+                                    "variable": "backLimbGunAmmo",
                                     "base64": ""
                                 },
                                 {
@@ -206,11 +206,7 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "railGunLightMaxIntensity",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "rightLimbRailGunHold",
+                                    "variable": "leftLimbGunAmmo",
                                     "base64": ""
                                 },
                                 {
@@ -218,7 +214,11 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "leftLimbGunAmmo",
+                                    "variable": "rightLimbRailGunHold",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "railGunLightMaxIntensity",
                                     "base64": ""
                                 },
                                 {
@@ -409,11 +409,11 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "backLimbGunAmmo",
+                                    "variable": "ammoCount",
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "ammoCount",
+                                    "variable": "backLimbGunAmmo",
                                     "base64": ""
                                 },
                                 {
@@ -421,11 +421,7 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "leftLimbShotGunAmmo",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "leftLimbGunAmmo",
+                                    "variable": "rightLimbRailGunHold",
                                     "base64": ""
                                 },
                                 {
@@ -433,7 +429,11 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "rightLimbRailGunHold",
+                                    "variable": "leftLimbGunAmmo",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "leftLimbShotGunAmmo",
                                     "base64": ""
                                 },
                                 {

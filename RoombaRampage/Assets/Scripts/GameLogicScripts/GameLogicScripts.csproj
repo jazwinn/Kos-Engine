@@ -24,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
     <IntermediateOutputPath>C:\Users\ngjaz\AppData\Local\Temp\vsED98.tmp\Debug\</IntermediateOutputPath>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PlatformTarget>ARM64</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -42,16 +43,6 @@
     <PostBuildEvent>rmdir /s /q obj</PostBuildEvent>
     <IntermediateOutputPath>..\..\..\x64\scriptobj</IntermediateOutputPath>
     <BaseIntermediateOutputPath>..\..\..\x64\scriptobj</BaseIntermediateOutputPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Game|AnyCPU'">
-    <OutputPath>bin\Game\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <Target Name="Build" />
   <Target Name="CoreCompile" />
@@ -87,6 +78,7 @@
     <Compile Include="LogicScript\GameControllerLevel6.cs" />
     <Compile Include="LogicScript\KillCounter.cs" />
     <Compile Include="LogicScript\Keycard.cs" />
+    <Compile Include="LogicScript\LazerForwardBackward.cs" />
     <Compile Include="LogicScript\LevelDoorLocker.cs" />
     <Compile Include="LogicScript\LevelEndPoint.cs" />
     <Compile Include="LogicScript\LevelEnemySpawner.cs" />
@@ -121,7 +113,7 @@
     <Compile Include="LogicScript\UI_TabPrompt.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\ScriptLibrary\GameScript\GameScript.csproj">
+    <ProjectReference Include="..\..\..\Engine\ScriptLibrary\GameScript\GameScript.csproj">
       <Project>{785fc541-4463-4316-8b60-776cebc341b2}</Project>
       <Name>GameScript</Name>
     </ProjectReference>

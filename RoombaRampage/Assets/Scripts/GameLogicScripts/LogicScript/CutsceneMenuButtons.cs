@@ -32,26 +32,15 @@ public class CutsceneMenuButtons : ScriptBase
 
     private void CheckForCollisions()
     {
-        if (InternalCall.m_InternalCallIsCollided(EntityID) != 0.0f)
+        if (InternalCall.m_InternalIsButtonHovered(EntityID))
         {
-            int[] collidedEntities = InternalCall.m_InternalCallGetCollidedEntities(EntityID);
-
-            foreach (int collidedEntitiesID in collidedEntities)
+            if (isHovering)
             {
-                switch (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID))
-                {
-                    default:
-                        if (isHovering)
-                        {
-                            break;
-                        }
-                        isHovering = true;
-                        InternalCall.m_InternalCallPlayAudio(EntityID, "aud_buttonHover01");
-                        break;
-                }
+                return;
             }
+            isHovering = true;
+            InternalCall.m_InternalCallPlayAudio(EntityID, "aud_buttonHover01");
         }
-
         else
         {
             isHovering = false;
