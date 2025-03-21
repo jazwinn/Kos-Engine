@@ -186,24 +186,25 @@
         ],
         "LightingComponent": {
             "m_innerOuterRadius": {
-                "x": 1.0,
+                "x": 0.0,
                 "y": 1.0
             },
-            "m_intensity": 1.0,
+            "m_intensity": 0.699999988079071,
             "m_light_OffSet": {
                 "x": 0.0,
                 "y": 0.0
             },
             "m_light_scale": {
-                "x": 1.4500000476837158,
-                "y": 1.4500000476837158
+                "x": 10.0,
+                "y": 10.0
             },
             "m_light_rotation": 0.0,
             "m_colour": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            }
+                "x": 0.509123682975769,
+                "y": 0.8524306416511536,
+                "z": 0.8716814517974854
+            },
+            "m_lightType": 1
         },
         "children": [
             {
