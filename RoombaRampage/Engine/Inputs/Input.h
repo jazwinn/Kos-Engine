@@ -54,20 +54,34 @@ namespace Input {
 		static bool m_isKeyReleased(const keyCode givenKey);
 		static vector2::Vec2 m_getMousePosition();
 
+		static void joystick_callback(int jid, int event);
+
+		static bool m_isControllerButtonPressed(const keyCode givenKey);
+		static bool m_isControllerButtonTriggered(const keyCode givenKey);
+		static bool m_isControllerButtonReleased(const keyCode givenKey);
+		static float m_getControllerAxis(const keyCode);
+
 		void m_inputUpdate();
 		
 		static vector2::Vec2 MousePosition;
 
 		static std::string m_mouseString;
 		static std::string m_keyString;
+		static bool m_controllerConnected;
+		static int m_controllerID;
 
 		static std::vector<std::string> m_droppedFiles;
+		static std::vector<float> m_controllerAxes;
 
 
 		static GLFWwindow* m_windowInput;
 	private:
 		inline static std::unordered_map<int, bool> m_wasTriggered;
 		inline static std::unordered_map<int, bool> m_wasPressed;
+		inline static std::unordered_map<int, bool> m_wasReleased;
+		inline static std::unordered_map<int, bool> m_controllerButtonsPress;
+		inline static std::unordered_map<int, bool> m_controllerButtonsTriggered;
+		inline static std::unordered_map<int, bool> m_wasControllerReleased;
 
 	};
 
