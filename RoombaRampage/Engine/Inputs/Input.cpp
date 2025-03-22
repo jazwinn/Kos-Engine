@@ -30,6 +30,10 @@ namespace Input {
 	std::string InputSystem::m_keyString;
 	GLFWwindow* Input::InputSystem::m_windowInput;
 	std::vector<std::string> InputSystem::m_droppedFiles;
+	bool InputSystem::m_controllerConnected = false;
+	int InputSystem::m_controllerID = NULL;
+	std::vector<float> InputSystem::m_controllerAxes(6, 0);
+
 
 
 	void InputSystem::KeyCallBack([[maybe_unused]] GLFWwindow* window, [[maybe_unused]] int key, [[maybe_unused]] int scancode, int action, [[maybe_unused]] int mods) {
@@ -73,6 +77,23 @@ namespace Input {
 		//std::cout << xpos << " : " << ypos << std::endl;
 
 	}
+
+	void InputSystem::joystick_callback(int jid, int event)
+	{
+		if (event == GLFW_CONNECTED)
+		{
+			//std::cout << "Joystick " << jid << " connected" << std::endl;
+			m_controllerConnected = true;
+			m_controllerID = jid;
+
+		}
+		else if (event == GLFW_DISCONNECTED)
+		{
+			//std::cout << "Joystick " << jid << " disconnected" << std::endl;
+			m_controllerConnected = false;
+			m_controllerID = NULL;
+		}
+	}
 	
 
 	void InputSystem::dropCallback([[maybe_unused]] GLFWwindow* window, int count, const char** paths) {
@@ -87,31 +108,92 @@ namespace Input {
 		glfwSetDropCallback(Window, dropCallback);
 		glfwSetMouseButtonCallback(Window, MouseButtonCallBack);
 		glfwSetCursorPosCallback(Window, mousepos_cb);
+		glfwSetJoystickCallback(joystick_callback);
 	}
 
 	void InputSystem::m_inputUpdate() {
-		for (auto& currKey : m_wasTriggered) {
-			int state;
-			if (currKey.first == keys::LMB || currKey.first == keys::RMB || currKey.first == keys::MMB) {
-				state = glfwGetMouseButton(m_windowInput, currKey.first);
-			}
-			else {
-				state = glfwGetKey(m_windowInput, currKey.first);
-			}
+		if (glfwJoystickPresent(GLFW_JOYSTICK_1)) {
+			m_controllerID = GLFW_JOYSTICK_1;
+			m_controllerConnected = true;
+		}
+		if (!m_controllerConnected) {
+			for (auto& currKey : m_wasTriggered) {
+				int state;
+				if (currKey.first == keys::LMB || currKey.first == keys::RMB || currKey.first == keys::MMB) {
+					state = glfwGetMouseButton(m_windowInput, currKey.first);
+				}
+				else {
+					state = glfwGetKey(m_windowInput, currKey.first);
+				}
 
-			if (!m_wasPressed[currKey.first] && state == GLFW_PRESS) {
-				m_wasPressed[currKey.first] = true;
-				m_wasTriggered[currKey.first] = true;
+				if (!m_wasPressed[currKey.first] && state == GLFW_PRESS) {
+					m_wasPressed[currKey.first] = true;
+					m_wasTriggered[currKey.first] = true;
+				}
+				else if (m_wasPressed[currKey.first]) {
+					m_wasTriggered[currKey.first] = false;
+				}
+				if (state == GLFW_RELEASE) {
+					if (m_wasPressed[currKey.first] || m_wasTriggered[currKey.first]) {
+						m_wasReleased[currKey.first] = true;
+					}
+					else {
+						m_wasReleased[currKey.first] = false;
+					}
+					m_wasPressed[currKey.first] = false;
+					m_wasTriggered[currKey.first] = false;
+				}
 			}
-			else if (m_wasPressed[currKey.first]) {
-				m_wasTriggered[currKey.first] = false;
-			}
-			if (state == GLFW_RELEASE) {
-				m_wasPressed[currKey.first] = false;
-				m_wasTriggered[currKey.first] = false;
+		}
+		else {
+			GLFWgamepadstate state;
+			if (glfwGetGamepadState(m_controllerID, &state))
+			{
+				// Update button states
+				for (int i = 0; i < 15; ++i)  // GLFW_GAMEPAD_BUTTON_LAST is 14
+				{
+					if (state.buttons[i] == GLFW_PRESS)
+					{
+						if (!m_controllerButtonsPress[i]) {
+							m_controllerButtonsTriggered[i] = true;
+							m_controllerButtonsPress[i] = true;
+						}
+						else if (m_controllerButtonsPress[i]) {
+							m_controllerButtonsTriggered[i] = false;
+						}
+						//m_controllerButtonsPress[i] = true;
+					}
+					else
+					{
+						if (m_controllerButtonsPress[i] || m_controllerButtonsTriggered[i]) {
+							m_wasControllerReleased[i] = true;
+						}
+						else {
+							m_wasControllerReleased[i] = false;
+						}
+						m_controllerButtonsPress[i] = false;
+						m_controllerButtonsTriggered[i] = false;
+					}
+				}
+
+				int store = 0;
+				const float* axes = glfwGetJoystickAxes(m_controllerID, &store);
+				for (int i = 0; i < store; ++i)  // GLFW_GAMEPAD_AXIS_LAST is 5
+				{
+					if (i == 1 || i == 3) {
+						m_controllerAxes[i] = -axes[i];
+					}
+					else {
+						m_controllerAxes[i] = axes[i];
+					}
+					if (m_controllerAxes[i] < 0.001f && m_controllerAxes[i] > -0.001f) {
+						m_controllerAxes[i] = 0.f;
+					}
+				}
 			}
 		}
 	}
+
 
 	bool InputSystem::m_isKeyTriggered(const keyCode givenKey) {
 		return m_wasTriggered[givenKey];
@@ -128,20 +210,32 @@ namespace Input {
 		return state == GLFW_PRESS ? true : false;
 	}
 	bool InputSystem::m_isKeyReleased(const keyCode givenKey) {
-		int state;
-			if (givenKey == keys::LMB || givenKey == keys::RMB || givenKey == keys::MMB) {
-			state = glfwGetMouseButton(m_windowInput, givenKey);
-		}
-		else {
-			state = glfwGetKey(m_windowInput, givenKey);
-		}
-			return (state == GLFW_RELEASE);
+		return m_wasReleased[givenKey];
 	}
 
 	vector2::Vec2 InputSystem::m_getMousePosition() {
 		return InputSystem::MousePosition;
 	}
 
+	bool InputSystem::m_isControllerButtonTriggered(const keyCode givenKey) {
+		return m_controllerButtonsTriggered[givenKey];
+	}
+
+	bool InputSystem::m_isControllerButtonPressed(const keyCode givenKey)
+	{
+		return m_controllerButtonsPress[givenKey];
+	}
+
+	bool InputSystem::m_isControllerButtonReleased(const keyCode givenKey)
+	{
+		return m_wasControllerReleased[givenKey];
+
+	}
+
+	float InputSystem::m_getControllerAxis(const keyCode givenAxis)
+	{
+		return m_controllerAxes[givenAxis];
+	}
 
 
 }
