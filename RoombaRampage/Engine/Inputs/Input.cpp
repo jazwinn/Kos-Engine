@@ -112,43 +112,102 @@ namespace Input {
 	}
 
 	void InputSystem::m_inputUpdate() {
-		if (glfwJoystickPresent(GLFW_JOYSTICK_1)) {
-			m_controllerID = GLFW_JOYSTICK_1;
-			m_controllerConnected = true;
-		}
-		if (!m_controllerConnected) {
-			for (auto& currKey : m_wasTriggered) {
-				int state;
-				if (currKey.first == keys::LMB || currKey.first == keys::RMB || currKey.first == keys::MMB) {
-					state = glfwGetMouseButton(m_windowInput, currKey.first);
-				}
-				else {
-					state = glfwGetKey(m_windowInput, currKey.first);
-				}
-
-				if (!m_wasPressed[currKey.first] && state == GLFW_PRESS) {
-					m_wasPressed[currKey.first] = true;
-					m_wasTriggered[currKey.first] = true;
-				}
-				else if (m_wasPressed[currKey.first]) {
-					m_wasTriggered[currKey.first] = false;
-				}
-				if (state == GLFW_RELEASE) {
-					if (m_wasPressed[currKey.first] || m_wasTriggered[currKey.first]) {
-						m_wasReleased[currKey.first] = true;
-					}
-					else {
-						m_wasReleased[currKey.first] = false;
-					}
-					m_wasPressed[currKey.first] = false;
-					m_wasTriggered[currKey.first] = false;
-				}
+		for (int controlID = GLFW_JOYSTICK_1; controlID <= GLFW_JOYSTICK_LAST; controlID++) {
+			if (glfwJoystickPresent(controlID)) {
+				m_controllerConnected = true;
+				m_controllerID = controlID;
 			}
 		}
-		else {
+		for (auto& currKey : m_wasTriggered) {
+			int state;
+			if (currKey.first == keys::LMB || currKey.first == keys::RMB || currKey.first == keys::MMB) {
+				state = glfwGetMouseButton(m_windowInput, currKey.first);
+			}
+			else {
+				state = glfwGetKey(m_windowInput, currKey.first);
+			}
+
+			if (!m_wasPressed[currKey.first] && state == GLFW_PRESS) {
+				m_wasPressed[currKey.first] = true;
+				m_wasTriggered[currKey.first] = true;
+			}
+			else if (m_wasPressed[currKey.first]) {
+				m_wasTriggered[currKey.first] = false;
+			}
+			if (state == GLFW_RELEASE) {
+				if (m_wasPressed[currKey.first] || m_wasTriggered[currKey.first]) {
+					m_wasReleased[currKey.first] = true;
+				}
+				else {
+					m_wasReleased[currKey.first] = false;
+				}
+				m_wasPressed[currKey.first] = false;
+				m_wasTriggered[currKey.first] = false;
+			}
+		}
+		
+		if(m_controllerConnected){
 			GLFWgamepadstate state;
 			if (glfwGetGamepadState(m_controllerID, &state))
 			{
+				int store = 0;
+				const float* axes = glfwGetJoystickAxes(m_controllerID, &store);
+				for (int i = 0; i < store; ++i)  // GLFW_GAMEPAD_AXIS_LAST is 5
+				{
+					if (i == 4) {
+						if (axes[i] > 0.f) {
+							if (!m_controllerButtonsPress[keys::CONTROLLER_LEFT_TRIGGER]) {
+								m_controllerButtonsTriggered[keys::CONTROLLER_LEFT_TRIGGER] = true;
+								m_controllerButtonsPress[keys::CONTROLLER_LEFT_TRIGGER] = true;
+							}
+							else {
+								m_controllerButtonsTriggered[keys::CONTROLLER_LEFT_TRIGGER] = false;
+							}
+						}
+						else {
+							if (m_controllerButtonsPress[keys::CONTROLLER_LEFT_TRIGGER] || m_controllerButtonsTriggered[keys::CONTROLLER_LEFT_TRIGGER]) {
+								m_wasControllerReleased[keys::CONTROLLER_LEFT_TRIGGER] = true;
+							}
+							else {
+								m_wasControllerReleased[keys::CONTROLLER_LEFT_TRIGGER] = false;
+							}
+							m_controllerButtonsPress[keys::CONTROLLER_LEFT_TRIGGER] = false;
+							m_controllerButtonsTriggered[keys::CONTROLLER_LEFT_TRIGGER] = false;
+						}
+						
+					}else if (i == 5) {
+						if (axes[i] > 0.f) {
+							if (!m_controllerButtonsPress[keys::CONTROLLER_RIGHT_TRIGGER]) {
+								m_controllerButtonsTriggered[keys::CONTROLLER_RIGHT_TRIGGER] = true;
+								m_controllerButtonsPress[keys::CONTROLLER_RIGHT_TRIGGER] = true;
+							}
+							else {
+								m_controllerButtonsTriggered[keys::CONTROLLER_RIGHT_TRIGGER] = false;
+							}
+						}
+						else {
+							if (m_controllerButtonsPress[keys::CONTROLLER_RIGHT_TRIGGER] || m_controllerButtonsTriggered[keys::CONTROLLER_LEFT_TRIGGER]) {
+								m_wasControllerReleased[keys::CONTROLLER_RIGHT_TRIGGER] = true;
+							}
+							else {
+								m_wasControllerReleased[keys::CONTROLLER_RIGHT_TRIGGER] = false;
+							}
+							m_controllerButtonsPress[keys::CONTROLLER_RIGHT_TRIGGER] = false;
+							m_controllerButtonsTriggered[keys::CONTROLLER_RIGHT_TRIGGER] = false;
+						}
+
+					}
+					else if (i == 1 || i == 3) {
+						m_controllerAxes[i] = -axes[i];
+					}
+					else {
+						m_controllerAxes[i] = axes[i];
+					}
+					if (m_controllerAxes[i] < 0.001f && m_controllerAxes[i] > -0.001f) {
+						m_controllerAxes[i] = 0.f;
+					}
+				}
+				
 				// Update button states
 				for (int i = 0; i < 15; ++i)  // GLFW_GAMEPAD_BUTTON_LAST is 14
 				{
@@ -176,20 +235,7 @@ namespace Input {
 					}
 				}
 
-				int store = 0;
-				const float* axes = glfwGetJoystickAxes(m_controllerID, &store);
-				for (int i = 0; i < store; ++i)  // GLFW_GAMEPAD_AXIS_LAST is 5
-				{
-					if (i == 1 || i == 3) {
-						m_controllerAxes[i] = -axes[i];
-					}
-					else {
-						m_controllerAxes[i] = axes[i];
-					}
-					if (m_controllerAxes[i] < 0.001f && m_controllerAxes[i] > -0.001f) {
-						m_controllerAxes[i] = 0.f;
-					}
-				}
+
 			}
 		}
 	}
