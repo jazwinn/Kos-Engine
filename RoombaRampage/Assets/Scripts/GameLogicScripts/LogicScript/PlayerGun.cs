@@ -1214,7 +1214,7 @@ public class PlayerGun : ScriptBase
     {
         #region Checks
 
-        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.LMB) && limbTag == "LeftLimbSprite" && PlayerLoadoutManager.isSortieing == false)
+        if ((InternalCall.m_InternalCallIsKeyTriggered(keyCode.LMB) || InternalCall.m_InternalCallIsControllerTriggered(keyCode.CONTROLLER_LEFT_TRIGGER))&& limbTag == "LeftLimbSprite" && PlayerLoadoutManager.isSortieing == false)
         {
             switch (weaponEquipped)
             {
@@ -1234,7 +1234,7 @@ public class PlayerGun : ScriptBase
             }
         }
 
-        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.RMB) && limbTag == "RightLimbSprite" && PlayerLoadoutManager.isSortieing == false)
+        if ((InternalCall.m_InternalCallIsKeyTriggered(keyCode.RMB) || InternalCall.m_InternalCallIsControllerTriggered(keyCode.CONTROLLER_RIGHT_TRIGGER)) && limbTag == "RightLimbSprite" && PlayerLoadoutManager.isSortieing == false)
         {
             switch (weaponEquipped)
             {
@@ -1255,7 +1255,7 @@ public class PlayerGun : ScriptBase
         }
 
         //Railgun
-        if (InternalCall.m_InternalCallIsKeyPressed(keyCode.LMB) && limbTag == "LeftLimbSprite" && PlayerLoadoutManager.isSortieing == false)
+        if ((InternalCall.m_InternalCallIsKeyPressed(keyCode.LMB) || InternalCall.m_InternalCallIsControllerPress(keyCode.CONTROLLER_LEFT_TRIGGER)) && limbTag == "LeftLimbSprite" && PlayerLoadoutManager.isSortieing == false)
         {
             switch (weaponEquipped)
             {
@@ -1268,7 +1268,7 @@ public class PlayerGun : ScriptBase
             }
         }
 
-        if (InternalCall.m_InternalCallIsKeyPressed(keyCode.RMB) && limbTag == "RightLimbSprite" && PlayerLoadoutManager.isSortieing == false)
+        if ((InternalCall.m_InternalCallIsKeyPressed(keyCode.RMB) || InternalCall.m_InternalCallIsControllerPress(keyCode.CONTROLLER_RIGHT_TRIGGER)) && limbTag == "RightLimbSprite" && PlayerLoadoutManager.isSortieing == false)
         {
             switch (weaponEquipped)
             {
@@ -1281,7 +1281,7 @@ public class PlayerGun : ScriptBase
             }
         }
 
-        if (InternalCall.m_InternalCallIsKeyReleased(keyCode.LMB) && limbTag == "LeftLimbSprite" && PlayerLoadoutManager.isSortieing == false)
+        if ((InternalCall.m_InternalCallIsKeyReleased(keyCode.LMB) || InternalCall.m_InternalCallIsControllerReleased(keyCode.CONTROLLER_LEFT_TRIGGER)) && limbTag == "LeftLimbSprite" && PlayerLoadoutManager.isSortieing == false)
         {
             switch (weaponEquipped)
             {
@@ -1294,7 +1294,7 @@ public class PlayerGun : ScriptBase
             }
         }
 
-        if (InternalCall.m_InternalCallIsKeyReleased(keyCode.RMB) && limbTag == "RightLimbSprite" && PlayerLoadoutManager.isSortieing == false)
+        if ((InternalCall.m_InternalCallIsKeyReleased(keyCode.RMB) || InternalCall.m_InternalCallIsControllerReleased(keyCode.CONTROLLER_RIGHT_TRIGGER)) && limbTag == "RightLimbSprite" && PlayerLoadoutManager.isSortieing == false)
         {
             switch (weaponEquipped)
             {
@@ -1308,7 +1308,7 @@ public class PlayerGun : ScriptBase
         }
 
         //Back limb
-        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.SPACE) || InternalCall.m_InternalCallIsKeyTriggered(keyCode.MMB) || InternalCall.m_InternalCallIsKeyTriggered(keyCode.LeftShift))
+        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.SPACE) || InternalCall.m_InternalCallIsKeyTriggered(keyCode.MMB) || InternalCall.m_InternalCallIsKeyTriggered(keyCode.LeftShift) || InternalCall.m_InternalCallIsControllerTriggered(keyCode.CONTROLLER_LBUMP))
         {
             if (limbTag == "BackLimbSprite" && PlayerLoadoutManager.isSortieing == false)
             {
