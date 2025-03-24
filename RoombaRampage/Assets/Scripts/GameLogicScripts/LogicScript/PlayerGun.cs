@@ -1308,7 +1308,7 @@ public class PlayerGun : ScriptBase
         }
 
         //Back limb
-        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.SPACE) || InternalCall.m_InternalCallIsKeyTriggered(keyCode.MMB) || InternalCall.m_InternalCallIsKeyTriggered(keyCode.LeftShift) || InternalCall.m_InternalCallIsControllerTriggered(keyCode.CONTROLLER_LBUMP))
+        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.SPACE) || InternalCall.m_InternalCallIsKeyTriggered(keyCode.MMB) || InternalCall.m_InternalCallIsKeyTriggered(keyCode.LeftShift) || InternalCall.m_InternalCallIsControllerTriggered(keyCode.CONTROLLER_RBUMP))
         {
             if (limbTag == "BackLimbSprite" && PlayerLoadoutManager.isSortieing == false)
             {

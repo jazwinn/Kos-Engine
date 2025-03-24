@@ -62,6 +62,8 @@ namespace Input {
 		static float m_getControllerAxis(const keyCode);
 
 		void m_inputUpdate();
+
+		static void giveControllerMousePos();
 		
 		static vector2::Vec2 MousePosition;
 
@@ -75,6 +77,11 @@ namespace Input {
 
 
 		static GLFWwindow* m_windowInput;
+
+		static float cursorSpeed;
+		static float deadzone;
+
+
 	private:
 		inline static std::unordered_map<int, bool> m_wasTriggered;
 		inline static std::unordered_map<int, bool> m_wasPressed;

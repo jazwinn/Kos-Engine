@@ -33,7 +33,8 @@ namespace Input {
 	bool InputSystem::m_controllerConnected = false;
 	int InputSystem::m_controllerID = NULL;
 	std::vector<float> InputSystem::m_controllerAxes(6, 0);
-
+	float InputSystem::cursorSpeed = 10.0f;
+	float InputSystem::deadzone = 0.2f;
 
 
 	void InputSystem::KeyCallBack([[maybe_unused]] GLFWwindow* window, [[maybe_unused]] int key, [[maybe_unused]] int scancode, int action, [[maybe_unused]] int mods) {
@@ -109,9 +110,11 @@ namespace Input {
 		glfwSetMouseButtonCallback(Window, MouseButtonCallBack);
 		glfwSetCursorPosCallback(Window, mousepos_cb);
 		glfwSetJoystickCallback(joystick_callback);
+		
 	}
 
 	void InputSystem::m_inputUpdate() {
+		giveControllerMousePos();
 		for (int controlID = GLFW_JOYSTICK_1; controlID <= GLFW_JOYSTICK_LAST; controlID++) {
 			if (glfwJoystickPresent(controlID)) {
 				m_controllerConnected = true;
@@ -236,6 +239,30 @@ namespace Input {
 				}
 
 
+			}
+		}
+	}
+
+	void InputSystem::giveControllerMousePos()
+	{
+
+		if (glfwJoystickPresent(GLFW_JOYSTICK_1)) {
+			int axesCount;
+			const float* axes = glfwGetJoystickAxes(GLFW_JOYSTICK_1, &axesCount);
+
+			if (axesCount >= 2) {
+				float stickX = axes[2];
+				float stickY = axes[3];
+				GLFWwindow* window = glfwGetCurrentContext();
+				double mouseX, mouseY;
+				glfwGetCursorPos(window, &mouseX, &mouseY);
+
+
+				if (fabs(stickX) > deadzone || fabs(stickY) > deadzone) {
+					mouseX += stickX * cursorSpeed;
+					mouseY += stickY * cursorSpeed; // Invert Y if needed
+					glfwSetCursorPos(window, mouseX, mouseY);
+				}
 			}
 		}
 	}
