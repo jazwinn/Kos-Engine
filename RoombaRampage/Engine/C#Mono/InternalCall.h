@@ -474,6 +474,12 @@ namespace script {
 		/******************************************************************/
 		static bool m_InternalCallIsKeyTriggered(keyCode key);
 
+		static bool m_InternalCallIsControllerTriggered(keyCode key);
+
+		static bool m_InternalCallIsControllerPress(keyCode key);
+
+		static bool m_InternalCallIsControllerReleased(keyCode key);
+
 		/******************************************************************/
 		/*!
 			\fn        void InternalCall::m_InternalCallSetTimeScale(const float x)
