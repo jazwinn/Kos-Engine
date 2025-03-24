@@ -62,6 +62,8 @@ namespace Input {
 		static float m_getControllerAxis(const keyCode);
 
 		void m_inputUpdate();
+
+		static void giveControllerMousePos();
 		
 		static vector2::Vec2 MousePosition;
 
