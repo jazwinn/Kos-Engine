@@ -77,6 +77,11 @@ namespace Input {
 
 
 		static GLFWwindow* m_windowInput;
+
+		static float cursorSpeed;
+		static float deadzone;
+
+
 	private:
 		inline static std::unordered_map<int, bool> m_wasTriggered;
 		inline static std::unordered_map<int, bool> m_wasPressed;

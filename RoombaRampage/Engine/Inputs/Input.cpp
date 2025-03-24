@@ -33,7 +33,8 @@ namespace Input {
 	bool InputSystem::m_controllerConnected = false;
 	int InputSystem::m_controllerID = NULL;
 	std::vector<float> InputSystem::m_controllerAxes(6, 0);
-
+	float InputSystem::cursorSpeed = 10.0f;
+	float InputSystem::deadzone = 0.2f;
 
 
 	void InputSystem::KeyCallBack([[maybe_unused]] GLFWwindow* window, [[maybe_unused]] int key, [[maybe_unused]] int scancode, int action, [[maybe_unused]] int mods) {
@@ -244,8 +245,7 @@ namespace Input {
 
 	void InputSystem::giveControllerMousePos()
 	{
-		float cursorSpeed = 10.0f;
-		float deadzone = 0.2f;
+
 		if (glfwJoystickPresent(GLFW_JOYSTICK_1)) {
 			int axesCount;
 			const float* axes = glfwGetJoystickAxes(GLFW_JOYSTICK_1, &axesCount);
