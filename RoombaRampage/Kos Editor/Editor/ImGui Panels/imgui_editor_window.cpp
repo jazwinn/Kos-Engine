@@ -281,7 +281,7 @@ void gui::ImGuiHandler::m_DrawRenderScreenWindow(unsigned int windowWidth, unsig
         if (m_clickedEntityId >= 0) {
 
             events::RemoveEntity removeEvent(m_clickedEntityId);
-            DISPATCH_ACTION_EVENT(removeEvent);
+            //DISPATCH_ACTION_EVENT(removeEvent);
             
             ecs::ECS::m_GetInstance()->m_DeleteEntity(m_clickedEntityId);
             m_clickedEntityId = -1;

@@ -30,8 +30,8 @@ namespace graphicpipe
 {
     enum LightType
     {
-        GLOW,
-        MULTIPLY
+        MULTIPLY,
+        GLOW
     };
 }
 

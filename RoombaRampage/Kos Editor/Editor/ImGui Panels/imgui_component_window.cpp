@@ -94,22 +94,26 @@ struct DrawComponents {
         count++;
         return changed;
     }
-    void operator()(graphicpipe::LightType& _args)
+    bool operator()(graphicpipe::LightType& _args)
     {
         const char* shapeName = (_args == graphicpipe::LightType::GLOW) ? "GLOW" : "MULTIPLY";
+        bool changed = false;
         if (ImGui::BeginCombo("Shape Types", shapeName))
         {
-            if (ImGui::Selectable("GLOW"))
-            {
-                _args = graphicpipe::LightType::GLOW;
-            }
             if (ImGui::Selectable("MULTIPLY"))
             {
                 _args = graphicpipe::LightType::MULTIPLY;
+                changed = true;
+            }
+            if (ImGui::Selectable("GLOW"))
+            {
+                _args = graphicpipe::LightType::GLOW;
+                changed = true;
             }
             ImGui::EndCombo();
         }
         count++;
+        return changed;
     }
 
     bool operator()(int& _args) {
@@ -294,6 +298,13 @@ struct DrawComponents {
 
 };
 
+const char* ComponentNames[] =
+{
+    "Add Components", "Collider Component", "Sprite Component", "Enemy Component", "Rigid Body Component", "Text Component",
+    "Animation Component", "Camera Component" , "Button Component" , "Script Component", "Tilemap Component", "Audio Component",
+    "Grid Component", "RayCast Component", "PathfindingComponent", "Lighting Component", "Particle Component","Video Component",
+    "UI Sprite Component"
+};
 
 void gui::ImGuiHandler::m_DrawComponentWindow()
 {
@@ -305,15 +316,8 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
     ImGui::Begin(windowTitle.c_str(), &windowOpen);
 
-    
-
     //Add Component Window
-    const char* ComponentNames[] =
-    {
-        "Add Components", "Collider Component", "Sprite Component", "Enemy Component", "Rigid Body Component", "Text Component", 
-        "Animation Component", "Camera Component" , "Button Component" , "Script Component", "Tilemap Component", "Audio Component",
-        "Grid Component", "RayCast Component", "PathfindingComponent", "Lighting Component", "Particle Component","Video Component"
-    };
+
     static int ComponentType = 0;
 
 
@@ -344,7 +348,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 ComponentType = 0;
                 if (!EntitySignature.test(ecs::TYPECOLLIDERCOMPONENT)) {
                     events::AddComponent action(entityID, ecs::TYPECOLLIDERCOMPONENT);
-                    //DISPATCH_ACTION_EVENT(action);
+                    ////DISPATCH_ACTION_EVENT(action);
                 }
             }
             if (ComponentType == 2) {
@@ -352,7 +356,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 ComponentType = 0;
                 if (!EntitySignature.test(ecs::TYPESPRITECOMPONENT)) {
                     events::AddComponent action(entityID, ecs::TYPESPRITECOMPONENT);
-                    //DISPATCH_ACTION_EVENT(action);
+                    ////DISPATCH_ACTION_EVENT(action);
                 }
             }
             if (ComponentType == 3) {
@@ -360,7 +364,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 ComponentType = 0;
                 if (!EntitySignature.test(ecs::TYPEENEMYCOMPONENT)) {
                     events::AddComponent action(entityID, ecs::TYPEENEMYCOMPONENT);
-                    //DISPATCH_ACTION_EVENT(action);
+                    ////DISPATCH_ACTION_EVENT(action);
                 }
             }
             if (ComponentType == 4) {
@@ -368,7 +372,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 ComponentType = 0;
                 if (!EntitySignature.test(ecs::TYPERIGIDBODYCOMPONENT)) {
                     events::AddComponent action(entityID, ecs::TYPERIGIDBODYCOMPONENT);
-                    //DISPATCH_ACTION_EVENT(action);
+                    ////DISPATCH_ACTION_EVENT(action);
                 }
             }
             if (ComponentType == 5) {
@@ -376,7 +380,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 ComponentType = 0;
                 if (!EntitySignature.test(ecs::TYPETEXTCOMPONENT)) {
                     events::AddComponent action(entityID, ecs::TYPETEXTCOMPONENT);
-                    //DISPATCH_ACTION_EVENT(action);
+                    ////DISPATCH_ACTION_EVENT(action);
                 }
             }
             if (ComponentType == 6) {
@@ -384,7 +388,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 ComponentType = 0;
                 if (!EntitySignature.test(ecs::TYPEANIMATIONCOMPONENT)) {
                     events::AddComponent action(entityID, ecs::TYPEANIMATIONCOMPONENT);
-                    //DISPATCH_ACTION_EVENT(action);
+                    ////DISPATCH_ACTION_EVENT(action);
                 }
             }
             if (ComponentType == 7) {
@@ -392,7 +396,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 ComponentType = 0;
                 if (!EntitySignature.test(ecs::TYPECAMERACOMPONENT)) {
                     events::AddComponent action(entityID, ecs::TYPECAMERACOMPONENT);
-                    //DISPATCH_ACTION_EVENT(action);
+                    ////DISPATCH_ACTION_EVENT(action);
                 }
             }
             if (ComponentType == 8) {
@@ -400,7 +404,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 ComponentType = 0;
                 if (!EntitySignature.test(ecs::TYPEBUTTONCOMPONENT)) {
                     events::AddComponent action(entityID, ecs::TYPEBUTTONCOMPONENT);
-                    //DISPATCH_ACTION_EVENT(action);
+                    ////DISPATCH_ACTION_EVENT(action);
                 }
             }
             if (ComponentType == 9) {
@@ -408,7 +412,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 ComponentType = 0;
                 if (!EntitySignature.test(ecs::TYPESCRIPTCOMPONENT)) {
                     events::AddComponent action(entityID, ecs::TYPESCRIPTCOMPONENT);
-                    //DISPATCH_ACTION_EVENT(action);
+                    ////DISPATCH_ACTION_EVENT(action);
                 }
             }
             if (ComponentType == 10) {
@@ -416,7 +420,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 ComponentType = 0;
                 if (!EntitySignature.test(ecs::TYPETILEMAPCOMPONENT)) {
                     events::AddComponent action(entityID, ecs::TYPETILEMAPCOMPONENT);
-                    //DISPATCH_ACTION_EVENT(action);
+                    ////DISPATCH_ACTION_EVENT(action);
                 }
             }
             if (ComponentType == 11) {
@@ -424,7 +428,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 ComponentType = 0;
                 if (!EntitySignature.test(ecs::TYPEAUDIOCOMPONENT)) {
                     events::AddComponent action(entityID, ecs::TYPEAUDIOCOMPONENT);
-                    //DISPATCH_ACTION_EVENT(action);
+                    ////DISPATCH_ACTION_EVENT(action);
                 }
             }
             if (ComponentType == 12) {
@@ -433,7 +437,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 ComponentType = 0;
                 if (!EntitySignature.test(ecs::TYPEGRIDCOMPONENT)) {
                     events::AddComponent action(entityID, ecs::TYPEGRIDCOMPONENT);
-                    //DISPATCH_ACTION_EVENT(action);
+                    ////DISPATCH_ACTION_EVENT(action);
                 }
             }
             if (ComponentType == 13) {
@@ -441,7 +445,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 ComponentType = 0;
                 if (!EntitySignature.test(ecs::TYPERAYCASTINGCOMPONENT)) {
                     events::AddComponent action(entityID, ecs::TYPERAYCASTINGCOMPONENT);
-                    //DISPATCH_ACTION_EVENT(action);
+                    ////DISPATCH_ACTION_EVENT(action);
                 }
             }
             if (ComponentType == 14) {
@@ -449,7 +453,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 ComponentType = 0;
                 if (!EntitySignature.test(ecs::TYPEPATHFINDINGCOMPONENT)) {
                     events::AddComponent action(entityID, ecs::TYPEPATHFINDINGCOMPONENT);
-                    //DISPATCH_ACTION_EVENT(action);
+                    ////DISPATCH_ACTION_EVENT(action);
                 }
             }
             if (ComponentType == 15) {
@@ -457,7 +461,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 ComponentType = 0;
                 if (!EntitySignature.test(ecs::TYPELIGHTINGCOMPONENT)) {
                     events::AddComponent action(entityID, ecs::TYPELIGHTINGCOMPONENT);
-                    //DISPATCH_ACTION_EVENT(action);
+                    ////DISPATCH_ACTION_EVENT(action);
                 }
             }
             if (ComponentType == 16) {
@@ -465,7 +469,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 ComponentType = 0;
                 if (!EntitySignature.test(ecs::TYPEPARTICLECOMPONENT)) {
                     events::AddComponent action(entityID, ecs::TYPEPARTICLECOMPONENT);
-                    //DISPATCH_ACTION_EVENT(action);
+                    ////DISPATCH_ACTION_EVENT(action);
                 }
             }
             if (ComponentType == 17) {
@@ -473,10 +477,17 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 ComponentType = 0;
                 if (!EntitySignature.test(ecs::TYPEVIDEOCOMPONENT)) {
                     events::AddComponent action(entityID, ecs::TYPEVIDEOCOMPONENT);
-                    //DISPATCH_ACTION_EVENT(action);
+                    ////DISPATCH_ACTION_EVENT(action);
                 }
             }
-
+            if (ComponentType == 18) {
+                ecs->m_AddComponent(ecs::TYPEUISPRITECOMPONENT, entityID);
+                ComponentType = 0;
+                if (!EntitySignature.test(ecs::TYPEUISPRITECOMPONENT)) {
+                    events::AddComponent action(entityID, ecs::TYPEUISPRITECOMPONENT);
+                    ////DISPATCH_ACTION_EVENT(action);
+                }
+            }
 
            
         }
@@ -486,7 +497,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 if (Type != ecs::TYPETRANSFORMCOMPONENT && ImGui::MenuItem("Delete Component")) {
                     ecs::ECS::m_GetInstance()->m_RemoveComponent(Type, ID);
                     events::RemoveComponent removeTemp(ID,Type);
-                    DISPATCH_ACTION_EVENT(removeTemp);
+                    //DISPATCH_ACTION_EVENT(removeTemp);
                 }
                 if (ImGui::MenuItem("Reset Component")) {
                     if (Type == ecs::TYPETRANSFORMCOMPONENT) {
@@ -507,70 +518,70 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
             }
         };
 
-        static std::map<int, std::pair<ecs::EntityID, bool>> layerMap; // Bool represents whether it's a sprite or a text
-        static bool layerChange{ true };
-        static size_t entitySize = ecs->m_ECS_EntityMap.size();
-        static std::string sceneChange = m_activeScene;
+        //static std::map<int, std::pair<ecs::EntityID, bool>> layerMap; // Bool represents whether it's a sprite or a text
+        //static bool layerChange{ true };
+        //static size_t entitySize = ecs->m_ECS_EntityMap.size();
+        //static std::string sceneChange = m_activeScene;
 
-        if (layerChange || entitySize != ecs->m_ECS_EntityMap.size() || sceneChange != m_activeScene)
-        {
-            layerChange = false;
-            entitySize = ecs->m_ECS_EntityMap.size();
-            sceneChange = m_activeScene;
-            layerMap.clear();
+        //if (layerChange || entitySize != ecs->m_ECS_EntityMap.size() || sceneChange != m_activeScene)
+        //{
+        //    layerChange = false;
+        //    entitySize = ecs->m_ECS_EntityMap.size();
+        //    sceneChange = m_activeScene;
+        //    layerMap.clear();
 
-            for (const auto& scene : ecs->m_ECS_SceneMap)
-            {
-                if (scene.second.m_isActive)
-                {
-                    for (const auto& id : scene.second.m_sceneIDs)
-                    {
-                        if (ecs->m_ECS_EntityMap[id].test(ecs::TYPESPRITECOMPONENT))
-                        {
-                            ecs::SpriteComponent* sprite = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(id));
-                            const int maxLayer = 999;
-                            int layer = sprite->m_layer;
-                            if (layer >= maxLayer)
-                            {
-                                layer = maxLayer;
-                                while (layerMap.find(--layer) != layerMap.end());
-                            }
-                            else if (layerMap.find(sprite->m_layer) != layerMap.end())
-                            {
-                                while (layerMap.find(++layer) != layerMap.end())
-                                {
+        //    for (const auto& scene : ecs->m_ECS_SceneMap)
+        //    {
+        //        if (scene.second.m_isActive)
+        //        {
+        //            for (const auto& id : scene.second.m_sceneIDs)
+        //            {
+        //                if (ecs->m_ECS_EntityMap[id].test(ecs::TYPESPRITECOMPONENT))
+        //                {
+        //                    ecs::SpriteComponent* sprite = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(id));
+        //                    const int maxLayer = 999;
+        //                    int layer = sprite->m_layer;
+        //                    if (layer >= maxLayer)
+        //                    {
+        //                        layer = maxLayer;
+        //                        while (layerMap.find(--layer) != layerMap.end());
+        //                    }
+        //                    else if (layerMap.find(sprite->m_layer) != layerMap.end())
+        //                    {
+        //                        while (layerMap.find(++layer) != layerMap.end())
+        //                        {
 
-                                }
-                            }
-                            sprite->m_layer = layer;
-                            layerMap[layer] = { id , true };
-                        }
-                        if (ecs->m_ECS_EntityMap[id].test(ecs::TYPETEXTCOMPONENT))
-                        {
-                            ecs::TextComponent* text = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(id));
-                            const int maxLayer = 999;
-                            int layer = text->m_fontLayer;
-                            if (layer >= maxLayer)
-                            {
-                                layer = maxLayer;
-                                while (layerMap.find(--layer) != layerMap.end());
-                            }
-                            else if (layerMap.find(text->m_fontLayer) != layerMap.end())
-                            {
-                                while (layerMap.find(++layer) != layerMap.end())
-                                {
+        //                        }
+        //                    }
+        //                    sprite->m_layer = layer;
+        //                    layerMap[layer] = { id , true };
+        //                }
+        //                if (ecs->m_ECS_EntityMap[id].test(ecs::TYPETEXTCOMPONENT))
+        //                {
+        //                    ecs::TextComponent* text = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(id));
+        //                    const int maxLayer = 999;
+        //                    int layer = text->m_fontLayer;
+        //                    if (layer >= maxLayer)
+        //                    {
+        //                        layer = maxLayer;
+        //                        while (layerMap.find(--layer) != layerMap.end());
+        //                    }
+        //                    else if (layerMap.find(text->m_fontLayer) != layerMap.end())
+        //                    {
+        //                        while (layerMap.find(++layer) != layerMap.end())
+        //                        {
 
-                                }
-                            }
-                            text->m_fontLayer = layer;
-                            layerMap[layer] = { id , false };
-                        }
-                    }
-                }
+        //                        }
+        //                    }
+        //                    text->m_fontLayer = layer;
+        //                    layerMap[layer] = { id , false };
+        //                }
+        //            }
+        //        }
 
 
-            }
-        }
+        //    }
+        //}
         
 
 
@@ -592,9 +603,22 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
             ImGui::InputText("##NAMETEXT##", &nc->m_entityName);
             if (ImGui::IsItemDeactivatedAfterEdit()) {
                 events::ModifyName action(ecs::TYPENAMECOMPONENT, entityID, nc, oldValN);
-                //DISPATCH_ACTION_EVENT(action);
+                ////DISPATCH_ACTION_EVENT(action);
                 oldValN = *nc;
             }
+            //ImGui::SameLine();
+
+            bool hidden = nc->m_hide;
+            if (ImGui::Checkbox("Hide", &hidden)) {
+                if (!nc->m_hide) {
+                    ecs->m_layersStack.m_hideEntitywithChild(entityID);
+                }
+                else {
+                    ecs->m_layersStack.m_unhideEntitywithChild(entityID);
+                }
+
+            }
+
             //layer selector
             const char* layers[] = { ecs->m_layersStack.m_layerMap[layer::DEFAULT].first.c_str(), ecs->m_layersStack.m_layerMap[layer::LAYER1].first.c_str(),ecs->m_layersStack.m_layerMap[layer::LAYER2].first.c_str(),
                                   ecs->m_layersStack.m_layerMap[layer::LAYER3].first.c_str(), ecs->m_layersStack.m_layerMap[layer::LAYER4].first.c_str(), ecs->m_layersStack.m_layerMap[layer::LAYER5].first.c_str(),
@@ -610,7 +634,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
             if (ImGui::Combo("Layers", &layer_current, layers_vec.data(), static_cast<int>(layers_vec.size()))) {
                 ecs->m_layersStack.m_SwapEntityLayer((layer::LAYERS)layer_current, nc->m_Layer, entityID);
                 events::ModifyName action(ecs::TYPENAMECOMPONENT, entityID, nc, oldValN);
-                //DISPATCH_ACTION_EVENT(action);
+                ////DISPATCH_ACTION_EVENT(action);
                 oldValN = *nc;
             }
 
@@ -634,7 +658,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
             if (ImGui::Combo("Tag", &item, tag_Names.data(), static_cast<int>(tag_Names.size()))) {
                 nc->m_entityTag = m_tags[item];
                 events::ModifyName action(ecs::TYPENAMECOMPONENT, entityID, nc, oldValN);
-                //DISPATCH_ACTION_EVENT(action);
+                ////DISPATCH_ACTION_EVENT(action);
                 oldValN = *nc;
             }
 
@@ -681,7 +705,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         }
                         if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::TRANSFORM, dragfloat::Member::POS)) {
                             events::TransformComponentChanged action(ecs::TYPETRANSFORMCOMPONENT, entityID, rbc, oldVal);
-                            //DISPATCH_ACTION_EVENT(action);
+                            ////DISPATCH_ACTION_EVENT(action);
                             oldVal = *rbc;
                         }
                         
@@ -692,7 +716,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         }
                         if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::TRANSFORM, dragfloat::Member::ROT)) {
                             events::TransformComponentChanged action(ecs::TYPETRANSFORMCOMPONENT, entityID, rbc, oldVal);
-                            //DISPATCH_ACTION_EVENT(action);
+                            ////DISPATCH_ACTION_EVENT(action);
                             oldVal = *rbc;
                         }
                     }
@@ -702,7 +726,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         }
                         if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::TRANSFORM, dragfloat::Member::SCALE)) {
                             events::TransformComponentChanged action(ecs::TYPETRANSFORMCOMPONENT, entityID, rbc, oldVal);
-                            //DISPATCH_ACTION_EVENT(action);
+                            ////DISPATCH_ACTION_EVENT(action);
                             oldVal = *rbc;
                         }
                     }
@@ -741,9 +765,9 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                                         ecs::AnimationComponent* com = static_cast<ecs::AnimationComponent*>(ecs->m_AddComponent(ecs::TYPEANIMATIONCOMPONENT, entityID));
                                         com->m_stripCount = assets->m_imageManager.m_imageMap[sc->m_imageFile].m_stripCount;
                                         events::ModifySprite action2(ecs::TYPESPRITECOMPONENT, entityID, sc, oldValS);
-                                        DISPATCH_ACTION_EVENT(action2);
+                                        //DISPATCH_ACTION_EVENT(action2);
                                         events::AddComponent action1(entityID, ecs::TYPEANIMATIONCOMPONENT);
-                                        DISPATCH_ACTION_EVENT(action1);
+                                        //DISPATCH_ACTION_EVENT(action1);
                                         oldValS = *sc;
                                        
                                     }
@@ -755,9 +779,9 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                                     com->m_stripCount = assets->m_imageManager.m_imageMap[sc->m_imageFile].m_stripCount;
                                     //static ecs::AnimationComponent oldValA2 = *com;
                                     //events::ModifyAnim action(ecs::TYPESPRITECOMPONENT, entityID, com, oldValA2);
-                                    ////DISPATCH_ACTION_EVENT(action);
+                                    //////DISPATCH_ACTION_EVENT(action);
                                     events::ModifySprite action(ecs::TYPESPRITECOMPONENT, entityID, sc, oldValS);
-                                    //DISPATCH_ACTION_EVENT(action);
+                                    ////DISPATCH_ACTION_EVENT(action);
                                     oldValS = *sc;
                                 }
                             }
@@ -801,7 +825,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         sc->m_color.m_y = color.y;
                         sc->m_color.m_z = color.z;
                         //events::ModifySprite action(ecs::TYPESPRITECOMPONENT, entityID, sc, oldValS);
-                        ////DISPATCH_ACTION_EVENT(action);
+                        //////DISPATCH_ACTION_EVENT(action);
                     }
                     if (ImGui::IsItemActivated()) {
                         if ((dragfloat::DragFloatCheck::m_GetInstance()->m_GetPrevMem() != dragfloat::Member::SPRITECLR)) {
@@ -809,7 +833,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         }
                         if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::SPRITE, dragfloat::Member::SPRITECLR)) {
                             events::ModifySprite action(ecs::TYPESPRITECOMPONENT, entityID, sc, oldValS);
-                            //DISPATCH_ACTION_EVENT(action);
+                            ////DISPATCH_ACTION_EVENT(action);
                             oldValS = *sc;
                         }
                     }
@@ -819,7 +843,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         }
                         if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::SPRITE, dragfloat::Member::SPRITECLR)) {
                             events::ModifySprite action(ecs::TYPESPRITECOMPONENT, entityID, sc, oldValS);
-                            //DISPATCH_ACTION_EVENT(action);
+                            ////DISPATCH_ACTION_EVENT(action);
                             oldValS = *sc;
                         }
                     }
@@ -831,12 +855,12 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         if (toDraw(rbc->m_imageFile)) {
 
                             events::ModifySprite action(ecs::TYPESPRITECOMPONENT, entityID, sc, oldValS);
-                            //DISPATCH_ACTION_EVENT(action);
+                            ////DISPATCH_ACTION_EVENT(action);
                             oldValS = *rbc;
                         }
                         if (toDraw(rbc->m_isIlluminated)) {
                             events::ModifySprite action(ecs::TYPESPRITECOMPONENT, entityID, sc, oldValS);
-                            //DISPATCH_ACTION_EVENT(action);
+                            ////DISPATCH_ACTION_EVENT(action);
                             oldValS = *rbc;
                         }
                         if (toDraw(rbc->m_alpha)) {
@@ -845,7 +869,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             }
                             if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::SPRITE, dragfloat::Member::SPRITEALPHA)) {
                                 events::ModifySprite action(ecs::TYPESPRITECOMPONENT, entityID, rbc, oldValS);
-                                //DISPATCH_ACTION_EVENT(action);
+                                ////DISPATCH_ACTION_EVENT(action);
                                 oldValS = *rbc;
                             }
                         }
@@ -855,7 +879,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             }
                             if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::SPRITE, dragfloat::Member::SPRITELAYER)) {
                                 events::ModifySprite action(ecs::TYPESPRITECOMPONENT, entityID, rbc, oldValS);
-                                //DISPATCH_ACTION_EVENT(action);
+                                ////DISPATCH_ACTION_EVENT(action);
                                 oldValS = *rbc;
                             }
                         }
@@ -865,86 +889,86 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                
                     
 
-                    if (ImGui::TreeNode("Image Layers"))
-                    {
-                        //int count = 0;
-                        for (auto it2 = layerMap.begin(); it2 != layerMap.end(); ++it2) 
-                        {
-                            ecs::NameComponent* namec = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(it2->second.first));
-                            if (namec == nullptr) continue;
-                            std::string entityIDS = std::to_string(it2->second.first);
-                            if (it2->second.second)
-                            {
-                                entityIDS += " (Sprite)";
-                            }
-                            else
-                            {
-                                entityIDS += " (Font)";
-                            }
+                //    if (ImGui::TreeNode("Image Layers"))
+                //    {
+                //        //int count = 0;
+                //        for (auto it2 = layerMap.begin(); it2 != layerMap.end(); ++it2) 
+                //        {
+                //            ecs::NameComponent* namec = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(it2->second.first));
+                //            if (namec == nullptr) continue;
+                //            std::string entityIDS = std::to_string(it2->second.first);
+                //            if (it2->second.second)
+                //            {
+                //                entityIDS += " (Sprite)";
+                //            }
+                //            else
+                //            {
+                //                entityIDS += " (Font)";
+                //            }
 
-                            std::string selectable = namec->m_entityName + "_ID" + entityIDS;
-                            if (it2->second.first == static_cast<unsigned>(m_clickedEntityId))
-                            {
-                                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.3f, 0.8f, 0.f, 1.0f));
-                                selectable += "(Active)";
-                                ImGui::Selectable(selectable.c_str());
-                                ImGui::PopStyleColor();
-                            }
-                            else
-                            {
-                                ImGui::Selectable(selectable.c_str());
-                            }
-                            
-                          /*  std::ostringstream display;
-                            display << selectable << std::setw(30 - selectable.length()) << std::right << "Layer" + std::to_string(spriteLayer);*/
-                            
+                //            std::string selectable = namec->m_entityName + "_ID" + entityIDS;
+                //            if (it2->second.first == static_cast<unsigned>(m_clickedEntityId))
+                //            {
+                //                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.3f, 0.8f, 0.f, 1.0f));
+                //                selectable += "(Active)";
+                //                ImGui::Selectable(selectable.c_str());
+                //                ImGui::PopStyleColor();
+                //            }
+                //            else
+                //            {
+                //                ImGui::Selectable(selectable.c_str());
+                //            }
+                //            
+                //          /*  std::ostringstream display;
+                //            display << selectable << std::setw(30 - selectable.length()) << std::right << "Layer" + std::to_string(spriteLayer);*/
+                //            
 
-                            if (ImGui::IsItemActive() && !ImGui::IsItemHovered())
-                            {
-                                decltype(it2) n_next = (ImGui::GetMouseDragDelta(0).y < 0.f ? std::prev(it2) : std::next(it2));
-                                if (n_next != layerMap.end())
-                                {
-                                    if (n_next->second.second && it2->second.second)
-                                    {
-                                        ecs::SpriteComponent* sprite1 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(it2->second.first));
-                                        ecs::SpriteComponent* sprite2 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(n_next->second.first));
-                                        int layer = sprite1->m_layer;
-                                        sprite1->m_layer = sprite2->m_layer;
-                                        sprite2->m_layer = layer;
-                                    }
-                                    else if (!n_next->second.second && !it2->second.second)
-                                    {
-                                        ecs::TextComponent* text1 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(it2->second.first));
-                                        ecs::TextComponent* text2 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(n_next->second.first));
-                                        int layer = text1->m_fontLayer;
-                                        text1->m_fontLayer = text2->m_fontLayer;
-                                        text2->m_fontLayer = layer;
-                                    }
-                                    else if (n_next->second.second && !it2->second.second)
-                                    {
-                                        ecs::SpriteComponent* sprite1 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(n_next->second.first));
-                                        ecs::TextComponent* text1 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(it2->second.first));
-                                        int layer = text1->m_fontLayer;
-                                        text1->m_fontLayer = sprite1->m_layer;
-                                        sprite1->m_layer = layer;
-                                    }
-                                    else
-                                    {
-                                        ecs::SpriteComponent* sprite1 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(it2->second.first));
-                                        ecs::TextComponent* text1 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(n_next->second.first));
-                                        int layer = text1->m_fontLayer;
-                                        text1->m_fontLayer = sprite1->m_layer;
-                                        sprite1->m_layer = layer;
-                                    }
-                                    layerChange = true;
-                                    ImGui::ResetMouseDragDelta();
-                                }
-                            }
-                           
-                        }
-                        ImGui::TreePop();
-                    }
-                  
+                //            if (ImGui::IsItemActive() && !ImGui::IsItemHovered())
+                //            {
+                //                decltype(it2) n_next = (ImGui::GetMouseDragDelta(0).y < 0.f ? std::prev(it2) : std::next(it2));
+                //                if (n_next != layerMap.end())
+                //                {
+                //                    if (n_next->second.second && it2->second.second)
+                //                    {
+                //                        ecs::SpriteComponent* sprite1 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(it2->second.first));
+                //                        ecs::SpriteComponent* sprite2 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(n_next->second.first));
+                //                        int layer = sprite1->m_layer;
+                //                        sprite1->m_layer = sprite2->m_layer;
+                //                        sprite2->m_layer = layer;
+                //                    }
+                //                    else if (!n_next->second.second && !it2->second.second)
+                //                    {
+                //                        ecs::TextComponent* text1 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(it2->second.first));
+                //                        ecs::TextComponent* text2 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(n_next->second.first));
+                //                        int layer = text1->m_fontLayer;
+                //                        text1->m_fontLayer = text2->m_fontLayer;
+                //                        text2->m_fontLayer = layer;
+                //                    }
+                //                    else if (n_next->second.second && !it2->second.second)
+                //                    {
+                //                        ecs::SpriteComponent* sprite1 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(n_next->second.first));
+                //                        ecs::TextComponent* text1 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(it2->second.first));
+                //                        int layer = text1->m_fontLayer;
+                //                        text1->m_fontLayer = sprite1->m_layer;
+                //                        sprite1->m_layer = layer;
+                //                    }
+                //                    else
+                //                    {
+                //                        ecs::SpriteComponent* sprite1 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(it2->second.first));
+                //                        ecs::TextComponent* text1 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(n_next->second.first));
+                //                        int layer = text1->m_fontLayer;
+                //                        text1->m_fontLayer = sprite1->m_layer;
+                //                        sprite1->m_layer = layer;
+                //                    }
+                //                    layerChange = true;
+                //                    ImGui::ResetMouseDragDelta();
+                //                }
+                //            }
+                //           
+                //        }
+                //        ImGui::TreePop();
+                //    }
+                //  
                 }
 
 
@@ -962,22 +986,22 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                     DrawComponents toDraw(rbc->Names());
                     if (toDraw(rbc->m_collisionResponse)) {
                         events::ModifyCollider action(ecs::TYPECOLLIDERCOMPONENT, entityID, rbc, oldValC);
-                        //DISPATCH_ACTION_EVENT(action);
+                        ////DISPATCH_ACTION_EVENT(action);
                         oldValC = *rbc;
                     }
                     if (toDraw(rbc->m_collisionCheck)) {
                         events::ModifyCollider action(ecs::TYPECOLLIDERCOMPONENT, entityID, rbc, oldValC);
-                        //DISPATCH_ACTION_EVENT(action);
+                        ////DISPATCH_ACTION_EVENT(action);
                         oldValC = *rbc;
                     }
                     if (toDraw(rbc->m_drawDebug)) {
                         events::ModifyCollider action(ecs::TYPECOLLIDERCOMPONENT, entityID, rbc, oldValC);
-                        //DISPATCH_ACTION_EVENT(action);
+                        ////DISPATCH_ACTION_EVENT(action);
                         oldValC = *rbc;
                     }
                     if (toDraw(rbc->m_type)) {
                         events::ModifyCollider action(ecs::TYPECOLLIDERCOMPONENT, entityID, rbc, oldValC);
-                        //DISPATCH_ACTION_EVENT(action);
+                        ////DISPATCH_ACTION_EVENT(action);
                         oldValC = *rbc;
                     }
 
@@ -987,7 +1011,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         }
                         if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::COLL, dragfloat::Member::COLLOFFSET)) {
                             events::ModifyCollider action(ecs::TYPECOLLIDERCOMPONENT, entityID, rbc, oldValC);
-                            //DISPATCH_ACTION_EVENT(action);
+                            ////DISPATCH_ACTION_EVENT(action);
                             oldValC = *rbc;
                         }
                     }
@@ -997,7 +1021,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         }
                         if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::COLL, dragfloat::Member::COLLRAD)) {
                             events::ModifyCollider action(ecs::TYPECOLLIDERCOMPONENT, entityID, rbc, oldValC);
-                            //DISPATCH_ACTION_EVENT(action);
+                            ////DISPATCH_ACTION_EVENT(action);
                             oldValC = *rbc;
                         }
                     }
@@ -1007,7 +1031,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         }
                         if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::COLL, dragfloat::Member::COLLSIZE)) {
                             events::ModifyCollider action(ecs::TYPECOLLIDERCOMPONENT, entityID, rbc, oldValC);
-                            //DISPATCH_ACTION_EVENT(action);
+                            ////DISPATCH_ACTION_EVENT(action);
                             oldValC = *rbc;
                         }
                     }
@@ -1033,7 +1057,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         }
                         if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::RIGID, dragfloat::Member::RIGIDVELO)) {
                             events::ModifyRigid action(ecs::TYPERIGIDBODYCOMPONENT, entityID, rbc, oldValR);
-                            //DISPATCH_ACTION_EVENT(action);
+                            ////DISPATCH_ACTION_EVENT(action);
                             oldValR = *rbc;
                         }
                     }
@@ -1043,7 +1067,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         }
                         if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::RIGID, dragfloat::Member::RIGIDACCEL)) {
                             events::ModifyRigid action(ecs::TYPERIGIDBODYCOMPONENT, entityID, rbc, oldValR);
-                            //DISPATCH_ACTION_EVENT(action);
+                            ////DISPATCH_ACTION_EVENT(action);
                             oldValR = *rbc;
                         }
                     }
@@ -1054,7 +1078,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         }
                         if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::RIGID, dragfloat::Member::RIGIDROT)) {
                             events::ModifyRigid action(ecs::TYPERIGIDBODYCOMPONENT, entityID, rbc, oldValR);
-                            //DISPATCH_ACTION_EVENT(action);
+                            ////DISPATCH_ACTION_EVENT(action);
                             oldValR = *rbc;
                         }
                     }
@@ -1064,7 +1088,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         }
                         if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::RIGID, dragfloat::Member::RIGIDANGVELO)) {
                             events::ModifyRigid action(ecs::TYPERIGIDBODYCOMPONENT, entityID, rbc, oldValR);
-                            //DISPATCH_ACTION_EVENT(action);
+                            ////DISPATCH_ACTION_EVENT(action);
                             oldValR = *rbc;
                         }
                     }
@@ -1074,7 +1098,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         }
                         if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::RIGID, dragfloat::Member::RIGIDANGACCEL)) {
                             events::ModifyRigid action(ecs::TYPERIGIDBODYCOMPONENT, entityID, rbc, oldValR);
-                            //DISPATCH_ACTION_EVENT(action);
+                            ////DISPATCH_ACTION_EVENT(action);
                             oldValR = *rbc;
                         }
                     }
@@ -1084,7 +1108,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         }
                         if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::RIGID, dragfloat::Member::RIGIDMASS)) {
                             events::ModifyRigid action(ecs::TYPERIGIDBODYCOMPONENT, entityID, rbc, oldValR);
-                            //DISPATCH_ACTION_EVENT(action);
+                            ////DISPATCH_ACTION_EVENT(action);
                             oldValR = *rbc;
                         }
                     }
@@ -1094,7 +1118,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         }
                         if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::RIGID, dragfloat::Member::RIGIDINVMASS)) {
                             events::ModifyRigid action(ecs::TYPERIGIDBODYCOMPONENT, entityID, rbc, oldValR);
-                            //DISPATCH_ACTION_EVENT(action);
+                            ////DISPATCH_ACTION_EVENT(action);
                             oldValR = *rbc;
                         }
                     }
@@ -1104,7 +1128,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         }
                         if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::RIGID, dragfloat::Member::RIGIDLINDAMP)) {
                             events::ModifyRigid action(ecs::TYPERIGIDBODYCOMPONENT, entityID, rbc, oldValR);
-                            //DISPATCH_ACTION_EVENT(action);
+                            ////DISPATCH_ACTION_EVENT(action);
                             oldValR = *rbc;
                         }
                     }
@@ -1114,7 +1138,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         }
                         if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::RIGID, dragfloat::Member::RIGIDANGDAMP)) {
                             events::ModifyRigid action(ecs::TYPERIGIDBODYCOMPONENT, entityID, rbc, oldValR);
-                            //DISPATCH_ACTION_EVENT(action);
+                            ////DISPATCH_ACTION_EVENT(action);
                             oldValR = *rbc;
                         }
                     }
@@ -1124,7 +1148,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         }
                         if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::RIGID, dragfloat::Member::RIGIDFORCE)) {
                             events::ModifyRigid action(ecs::TYPERIGIDBODYCOMPONENT, entityID, rbc, oldValR);
-                            //DISPATCH_ACTION_EVENT(action);
+                            ////DISPATCH_ACTION_EVENT(action);
                             oldValR = *rbc;
                         }
                     }
@@ -1134,18 +1158,18 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         }
                         if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::RIGID, dragfloat::Member::RIGIDTORQUE)) {
                             events::ModifyRigid action(ecs::TYPERIGIDBODYCOMPONENT, entityID, rbc, oldValR);
-                            //DISPATCH_ACTION_EVENT(action);
+                            ////DISPATCH_ACTION_EVENT(action);
                             oldValR = *rbc;
                         }
                     }
                     if (toDraw(rbc->m_IsKinematic)) {
                         events::ModifyRigid action(ecs::TYPERIGIDBODYCOMPONENT, entityID, rbc, oldValR);
-                        //DISPATCH_ACTION_EVENT(action);
+                        ////DISPATCH_ACTION_EVENT(action);
                         oldValR = *rbc;
                     }
                     if (toDraw(rbc->m_IsStatic)) {
                         events::ModifyRigid action(ecs::TYPERIGIDBODYCOMPONENT, entityID, rbc, oldValR);
-                        //DISPATCH_ACTION_EVENT(action);
+                        ////DISPATCH_ACTION_EVENT(action);
                         oldValR = *rbc;
                     }
                 }
@@ -1169,7 +1193,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         }
                         if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::ENEMY, dragfloat::Member::ENEMYTAG)) {
                             events::ModifyEnemy action(ecs::TYPEENEMYCOMPONENT, entityID, rbc, oldValE);
-                            //DISPATCH_ACTION_EVENT(action);
+                            ////DISPATCH_ACTION_EVENT(action);
                             oldValE = *rbc;
                         }
                     }
@@ -1179,7 +1203,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         }
                         if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::ENEMY, dragfloat::Member::ENEMYTYPE)) {
                             events::ModifyEnemy action(ecs::TYPEENEMYCOMPONENT, entityID, rbc, oldValE);
-                            //DISPATCH_ACTION_EVENT(action);
+                            ////DISPATCH_ACTION_EVENT(action);
                             oldValE = *rbc;
                         }
                     }
@@ -1189,7 +1213,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         }
                         if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::ENEMY, dragfloat::Member::ENEMYBEHAVE)) {
                             events::ModifyEnemy action(ecs::TYPEENEMYCOMPONENT, entityID, rbc, oldValE);
-                            //DISPATCH_ACTION_EVENT(action);
+                            ////DISPATCH_ACTION_EVENT(action);
                             oldValE = *rbc;
                         }
                     }
@@ -1220,12 +1244,12 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                     ImGui::InputText("##TEXT##", &tc->m_text);
                     if (ImGui::IsItemActivated()) {
                         events::ModifyText action(ecs::TYPETEXTCOMPONENT, entityID, tc, oldValT);
-                        //DISPATCH_ACTION_EVENT(action);
+                        ////DISPATCH_ACTION_EVENT(action);
                         oldValT = *tc;
                     }
                     if (ImGui::IsItemDeactivatedAfterEdit()) {
                         events::ModifyText action(ecs::TYPETEXTCOMPONENT, entityID, tc, oldValT);
-                        //DISPATCH_ACTION_EVENT(action);
+                        ////DISPATCH_ACTION_EVENT(action);
                         oldValT = *tc;
                     }
                     ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
@@ -1239,7 +1263,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         }
                         if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::TEXT, dragfloat::Member::TEXTSIZE)) {
                             events::ModifyText action(ecs::TYPETEXTCOMPONENT, entityID, tc, oldValT);
-                            //DISPATCH_ACTION_EVENT(action);
+                            ////DISPATCH_ACTION_EVENT(action);
                             oldValT = *tc;
                         }
                     }
@@ -1249,7 +1273,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         }
                         if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::TEXT, dragfloat::Member::TEXTSIZE)) {
                             events::ModifyText action(ecs::TYPETEXTCOMPONENT, entityID, tc, oldValT);
-                            //DISPATCH_ACTION_EVENT(action);
+                            ////DISPATCH_ACTION_EVENT(action);
                             oldValT = *tc;
                         }
                     }
@@ -1266,7 +1290,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         }
                         if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::TEXT, dragfloat::Member::TEXTCLR)) {
                             events::ModifyText action(ecs::TYPETEXTCOMPONENT, entityID, tc, oldValT);
-                            //DISPATCH_ACTION_EVENT(action);
+                            ////DISPATCH_ACTION_EVENT(action);
                             oldValT = *tc;
                         }
                     }
@@ -1276,7 +1300,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         }
                         if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::TEXT, dragfloat::Member::TEXTCLR)) {
                             events::ModifyText action(ecs::TYPETEXTCOMPONENT, entityID, tc, oldValT);
-                            //DISPATCH_ACTION_EVENT(action);
+                            ////DISPATCH_ACTION_EVENT(action);
                             oldValT = *tc;
                         }
                     }
@@ -1287,7 +1311,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             if (ImGui::Selectable(font.first.c_str())) {
                                 tc->m_fileName = font.first.c_str();
                                 events::ModifyText action(ecs::TYPETEXTCOMPONENT, entityID, tc, oldValT);
-                                //DISPATCH_ACTION_EVENT(action);
+                                ////DISPATCH_ACTION_EVENT(action);
                                 oldValT = *tc;
                             }
                         }
@@ -1318,84 +1342,84 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         ImGui::EndDragDropTarget();
                     }
 
-                    if (ImGui::TreeNode("Font Layers"))
-                    {
-                        //int count = 0;
-                        for (auto it2 = layerMap.begin(); it2 != layerMap.end(); ++it2)
-                        {
-                            ecs::NameComponent* namec = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(it2->second.first));
-                            std::string entityIDS = std::to_string(it2->second.first);
-                            if (it2->second.second)
-                            {
-                                entityIDS += " (Sprite)";
-                            }
-                            else
-                            {
-                                entityIDS += " (Font)";
-                            }
+                    //if (ImGui::TreeNode("Font Layers"))
+                    //{
+                    //    //int count = 0;
+                    //    for (auto it2 = layerMap.begin(); it2 != layerMap.end(); ++it2)
+                    //    {
+                    //        ecs::NameComponent* namec = static_cast<ecs::NameComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPENAMECOMPONENT]->m_GetEntityComponent(it2->second.first));
+                    //        std::string entityIDS = std::to_string(it2->second.first);
+                    //        if (it2->second.second)
+                    //        {
+                    //            entityIDS += " (Sprite)";
+                    //        }
+                    //        else
+                    //        {
+                    //            entityIDS += " (Font)";
+                    //        }
 
-                            std::string selectable = namec->m_entityName + "_ID" + entityIDS;
-                            if (it2->second.first == static_cast<unsigned>(m_clickedEntityId))
-                            {
-                                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.f, 0.3f, 0.8f, 1.0f));
-                                selectable += "(Active)";
-                                ImGui::Selectable(selectable.c_str());
-                                ImGui::PopStyleColor();
-                            }
-                            else
-                            {
-                                ImGui::Selectable(selectable.c_str());
-                            }
+                    //        std::string selectable = namec->m_entityName + "_ID" + entityIDS;
+                    //        if (it2->second.first == static_cast<unsigned>(m_clickedEntityId))
+                    //        {
+                    //            ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.f, 0.3f, 0.8f, 1.0f));
+                    //            selectable += "(Active)";
+                    //            ImGui::Selectable(selectable.c_str());
+                    //            ImGui::PopStyleColor();
+                    //        }
+                    //        else
+                    //        {
+                    //            ImGui::Selectable(selectable.c_str());
+                    //        }
 
-                            /*  std::ostringstream display;
-                              display << selectable << std::setw(30 - selectable.length()) << std::right << "Layer" + std::to_string(spriteLayer);*/
+                    //        /*  std::ostringstream display;
+                    //          display << selectable << std::setw(30 - selectable.length()) << std::right << "Layer" + std::to_string(spriteLayer);*/
 
 
-                            if (ImGui::IsItemActive() && !ImGui::IsItemHovered())
-                            {
-                                decltype(it2) n_next = (ImGui::GetMouseDragDelta(0).y < 0.f ? std::prev(it2) : std::next(it2));
-                                if (n_next != layerMap.end())
-                                {
-                                    if (n_next->second.second && it2->second.second)
-                                    {
-                                        ecs::SpriteComponent* sprite1 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(it2->second.first));
-                                        ecs::SpriteComponent* sprite2 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(n_next->second.first));
-                                        int layer = sprite1->m_layer;
-                                        sprite1->m_layer = sprite2->m_layer;
-                                        sprite2->m_layer = layer;
-                                    }
-                                    else if (!n_next->second.second && !it2->second.second)
-                                    {
-                                        ecs::TextComponent* text1 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(it2->second.first));
-                                        ecs::TextComponent* text2 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(n_next->second.first));
-                                        int layer = text1->m_fontLayer;
-                                        text1->m_fontLayer = text2->m_fontLayer;
-                                        text2->m_fontLayer = layer;
-                                    }
-                                    else if (n_next->second.second && !it2->second.second)
-                                    {
-                                        ecs::SpriteComponent* sprite1 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(n_next->second.first));
-                                        ecs::TextComponent* text1 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(it2->second.first));
-                                        int layer = text1->m_fontLayer;
-                                        text1->m_fontLayer = sprite1->m_layer;
-                                        sprite1->m_layer = layer;
-                                    }
-                                    else
-                                    {
-                                        ecs::SpriteComponent* sprite1 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(it2->second.first));
-                                        ecs::TextComponent* text1 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(n_next->second.first));
-                                        int layer = text1->m_fontLayer;
-                                        text1->m_fontLayer = sprite1->m_layer;
-                                        sprite1->m_layer = layer;
-                                    }
-                                    layerChange = true;
-                                    ImGui::ResetMouseDragDelta();
-                                }
-                            }
+                    //        if (ImGui::IsItemActive() && !ImGui::IsItemHovered())
+                    //        {
+                    //            decltype(it2) n_next = (ImGui::GetMouseDragDelta(0).y < 0.f ? std::prev(it2) : std::next(it2));
+                    //            if (n_next != layerMap.end())
+                    //            {
+                    //                if (n_next->second.second && it2->second.second)
+                    //                {
+                    //                    ecs::SpriteComponent* sprite1 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(it2->second.first));
+                    //                    ecs::SpriteComponent* sprite2 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(n_next->second.first));
+                    //                    int layer = sprite1->m_layer;
+                    //                    sprite1->m_layer = sprite2->m_layer;
+                    //                    sprite2->m_layer = layer;
+                    //                }
+                    //                else if (!n_next->second.second && !it2->second.second)
+                    //                {
+                    //                    ecs::TextComponent* text1 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(it2->second.first));
+                    //                    ecs::TextComponent* text2 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(n_next->second.first));
+                    //                    int layer = text1->m_fontLayer;
+                    //                    text1->m_fontLayer = text2->m_fontLayer;
+                    //                    text2->m_fontLayer = layer;
+                    //                }
+                    //                else if (n_next->second.second && !it2->second.second)
+                    //                {
+                    //                    ecs::SpriteComponent* sprite1 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(n_next->second.first));
+                    //                    ecs::TextComponent* text1 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(it2->second.first));
+                    //                    int layer = text1->m_fontLayer;
+                    //                    text1->m_fontLayer = sprite1->m_layer;
+                    //                    sprite1->m_layer = layer;
+                    //                }
+                    //                else
+                    //                {
+                    //                    ecs::SpriteComponent* sprite1 = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPESPRITECOMPONENT]->m_GetEntityComponent(it2->second.first));
+                    //                    ecs::TextComponent* text1 = static_cast<ecs::TextComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPETEXTCOMPONENT]->m_GetEntityComponent(n_next->second.first));
+                    //                    int layer = text1->m_fontLayer;
+                    //                    text1->m_fontLayer = sprite1->m_layer;
+                    //                    sprite1->m_layer = layer;
+                    //                }
+                    //                layerChange = true;
+                    //                ImGui::ResetMouseDragDelta();
+                    //            }
+                    //        }
 
-                        }
-                        ImGui::TreePop();
-                    }
+                    //    }
+                    //    ImGui::TreePop();
+                    //}
                     //DrawComponents toDraw(tc->Names());
                     if (toDraw(tc->m_fontLayer)) {
                         if ((dragfloat::DragFloatCheck::m_GetInstance()->m_GetPrevMem() != dragfloat::Member::TEXTLAYER)) {
@@ -1403,7 +1427,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         }
                         if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::TEXT, dragfloat::Member::TEXTLAYER)) {
                             events::ModifyText action(ecs::TYPETEXTCOMPONENT, entityID, tc, oldValT);
-                            //DISPATCH_ACTION_EVENT(action);
+                            ////DISPATCH_ACTION_EVENT(action);
                             oldValT = *tc;
                         }
                     }
@@ -1435,7 +1459,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         }
                         if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::ANIM, dragfloat::Member::ANIMFRAMENUM)) {
                             events::ModifyAnim action(ecs::TYPEANIMATIONCOMPONENT, entityID, rbc, oldValA);
-                            //DISPATCH_ACTION_EVENT(action);
+                            ////DISPATCH_ACTION_EVENT(action);
                             oldValA = *rbc;
                         }
                     }
@@ -1445,7 +1469,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         }
                         if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::ANIM, dragfloat::Member::ANIMFPS)) {
                             events::ModifyAnim action(ecs::TYPEANIMATIONCOMPONENT, entityID, rbc, oldValA);
-                            //DISPATCH_ACTION_EVENT(action);
+                            ////DISPATCH_ACTION_EVENT(action);
                             oldValA = *rbc;
                         }
                     }
@@ -1455,13 +1479,13 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         }
                         if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::ANIM, dragfloat::Member::ANIMFT)) {
                             events::ModifyAnim action(ecs::TYPEANIMATIONCOMPONENT, entityID, rbc, oldValA);
-                            //DISPATCH_ACTION_EVENT(action);
+                            ////DISPATCH_ACTION_EVENT(action);
                             oldValA = *rbc;
                         }
                     }
                     if (toDraw(rbc->m_isAnimating)) {
                         events::ModifyAnim action(ecs::TYPEANIMATIONCOMPONENT, entityID, rbc, oldValA);
-                        //DISPATCH_ACTION_EVENT(action);
+                        ////DISPATCH_ACTION_EVENT(action);
                         oldValA = *rbc;
                     }
                     if (toDraw(rbc->m_stripCount)) {
@@ -1470,7 +1494,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         }
                         if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::ANIM, dragfloat::Member::ANIMSC)) {
                             events::ModifyAnim action(ecs::TYPEANIMATIONCOMPONENT, entityID, rbc, oldValA);
-                            //DISPATCH_ACTION_EVENT(action);
+                            ////DISPATCH_ACTION_EVENT(action);
                             oldValA = *rbc;
                         }
                     }
@@ -1495,7 +1519,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         }
                         if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::CAMERA, dragfloat::Member::CAMLEFT)) {
                             events::ModifyCamera action(ecs::TYPECAMERACOMPONENT, entityID, rbc, oldValC);
-                            //DISPATCH_ACTION_EVENT(action);
+                            ////DISPATCH_ACTION_EVENT(action);
                             oldValC = *rbc;
                         }
                     }
@@ -1505,7 +1529,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         }
                         if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::CAMERA, dragfloat::Member::CAMRIGHT)) {
                             events::ModifyCamera action(ecs::TYPECAMERACOMPONENT, entityID, rbc, oldValC);
-                            //DISPATCH_ACTION_EVENT(action);
+                            ////DISPATCH_ACTION_EVENT(action);
                             oldValC = *rbc;
                         }
                     }
@@ -1515,7 +1539,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         }
                         if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::CAMERA, dragfloat::Member::CAMDOWN)) {
                             events::ModifyCamera action(ecs::TYPECAMERACOMPONENT, entityID, rbc, oldValC);
-                            //DISPATCH_ACTION_EVENT(action);
+                            ////DISPATCH_ACTION_EVENT(action);
                             oldValC = *rbc;
                         }
                     }
@@ -1525,7 +1549,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         }
                         if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::CAMERA, dragfloat::Member::CAMUP)) {
                             events::ModifyCamera action(ecs::TYPECAMERACOMPONENT, entityID, rbc, oldValC);
-                            //DISPATCH_ACTION_EVENT(action);
+                            ////DISPATCH_ACTION_EVENT(action);
                             oldValC = *rbc;
                         }
                     }
@@ -1535,7 +1559,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         }
                         if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::CAMERA, dragfloat::Member::CAMAR)) {
                             events::ModifyCamera action(ecs::TYPECAMERACOMPONENT, entityID, rbc, oldValC);
-                            //DISPATCH_ACTION_EVENT(action);
+                            ////DISPATCH_ACTION_EVENT(action);
                             oldValC = *rbc;
                         }
                     }
@@ -1678,7 +1702,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                     //    //}
                     //    //if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::BUTTON, dragfloat::Member::BUTTONPOS)) {
                     //    //    events::ModifyButton action(ecs::TYPEBUTTONCOMPONENT, entityID, rbc, oldValB);
-                    //    //    //DISPATCH_ACTION_EVENT(action);
+                    //    //    ////DISPATCH_ACTION_EVENT(action);
                     //    //    oldValB = *rbc;
                     //    //}
                     //}
@@ -1688,13 +1712,13 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         }
                         if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::BUTTON, dragfloat::Member::BUTTONSCALE)) {
                             events::ModifyButton action(ecs::TYPEBUTTONCOMPONENT, entityID, rbc, oldValB);
-                            //DISPATCH_ACTION_EVENT(action);
+                            ////DISPATCH_ACTION_EVENT(action);
                             oldValB = *rbc;
                         }
                     }
                     if (toDraw(rbc->m_IsClick)) {
                         events::ModifyButton action(ecs::TYPEBUTTONCOMPONENT, entityID, rbc, oldValB);
-                        //DISPATCH_ACTION_EVENT(action);
+                        ////DISPATCH_ACTION_EVENT(action);
                         oldValB = *rbc;
                     }
                     if (toDraw(rbc->m_EnableHover)) {
@@ -1733,7 +1757,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             if (ImGui::Selectable(image.first.c_str())) {
                                 tmc->m_tilemapFile = image.first.c_str();
                                 events::ModifyTilemap action(ecs::TYPETILEMAPCOMPONENT, entityID, tmc, oldValTM);
-                                //DISPATCH_ACTION_EVENT(action);
+                                ////DISPATCH_ACTION_EVENT(action);
                                 oldValTM = *tmc;
                             }
                         }
@@ -1775,12 +1799,12 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                     }
                     if (ImGui::IsItemActivated()) {
                         events::ModifyTilemap action(ecs::TYPETILEMAPCOMPONENT, entityID, tmc, oldValTM);
-                        //DISPATCH_ACTION_EVENT(action);
+                        ////DISPATCH_ACTION_EVENT(action);
                         oldValTM = *tmc;
                     }
                     if (ImGui::IsItemDeactivatedAfterEdit()) {
                         events::ModifyTilemap action(ecs::TYPETILEMAPCOMPONENT, entityID, tmc, oldValTM);
-                        //DISPATCH_ACTION_EVENT(action);
+                        ////DISPATCH_ACTION_EVENT(action);
                         oldValTM = *tmc;
                     }
 
@@ -1794,7 +1818,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             }
                             if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::TILEMAP, dragfloat::Member::TILEMAPIDX)) {
                                 events::ModifyTilemap action(ecs::TYPETILEMAPCOMPONENT, entityID, rbc, oldValTM);
-                                //DISPATCH_ACTION_EVENT(action);
+                                ////DISPATCH_ACTION_EVENT(action);
                                 oldValTM = *rbc;
                             }
                         }
@@ -1804,7 +1828,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             }
                             if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::TILEMAP, dragfloat::Member::TILEMAPLAYER)) {
                                 events::ModifyTilemap action(ecs::TYPETILEMAPCOMPONENT, entityID, rbc, oldValTM);
-                                //DISPATCH_ACTION_EVENT(action);
+                                ////DISPATCH_ACTION_EVENT(action);
                                 oldValTM = *rbc;
                             }
                         }
@@ -1814,7 +1838,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             }
                             if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::TILEMAP, dragfloat::Member::TILEMAPROW)) {
                                 events::ModifyTilemap action(ecs::TYPETILEMAPCOMPONENT, entityID, rbc, oldValTM);
-                                //DISPATCH_ACTION_EVENT(action);
+                                ////DISPATCH_ACTION_EVENT(action);
                                 oldValTM = *rbc;
                             }
                         }
@@ -1824,7 +1848,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             }
                             if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::TILEMAP, dragfloat::Member::TILEMAPCOL)) {
                                 events::ModifyTilemap action(ecs::TYPETILEMAPCOMPONENT, entityID, rbc, oldValTM);
-                                //DISPATCH_ACTION_EVENT(action);
+                                ////DISPATCH_ACTION_EVENT(action);
                                 oldValTM = *rbc;
                             }
                         }
@@ -1834,7 +1858,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             }
                             if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::TILEMAP, dragfloat::Member::TILEMAPPICROW)) {
                                 events::ModifyTilemap action(ecs::TYPETILEMAPCOMPONENT, entityID, rbc, oldValTM);
-                                //DISPATCH_ACTION_EVENT(action);
+                                ////DISPATCH_ACTION_EVENT(action);
                                 oldValTM = *rbc;
                             }
                         }
@@ -1844,7 +1868,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             }
                             if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::TILEMAP, dragfloat::Member::TILEMAPPICCOL)) {
                                 events::ModifyTilemap action(ecs::TYPETILEMAPCOMPONENT, entityID, rbc, oldValTM);
-                                //DISPATCH_ACTION_EVENT(action);
+                                ////DISPATCH_ACTION_EVENT(action);
                                 oldValTM = *rbc;
                             }
                         }
@@ -1893,7 +1917,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             }
                             if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::GRID, dragfloat::Member::GRIDANCHOR)) {
                                 events::ModifyGrid action(ecs::TYPEGRIDCOMPONENT, entityID, rbc, oldValG);
-                                //DISPATCH_ACTION_EVENT(action);
+                                ////DISPATCH_ACTION_EVENT(action);
                                 oldValG = *rbc;
                             }
                         }
@@ -1903,7 +1927,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             }
                             if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::GRID, dragfloat::Member::GRIDROW)) {
                                 events::ModifyGrid action(ecs::TYPEGRIDCOMPONENT, entityID, rbc, oldValG);
-                                //DISPATCH_ACTION_EVENT(action);
+                                ////DISPATCH_ACTION_EVENT(action);
                                 oldValG = *rbc;
                             }
                         }
@@ -1913,13 +1937,13 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             }
                             if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::GRID, dragfloat::Member::GRIDCOL)) {
                                 events::ModifyGrid action(ecs::TYPEGRIDCOMPONENT, entityID, rbc, oldValG);
-                                //DISPATCH_ACTION_EVENT(action);
+                                ////DISPATCH_ACTION_EVENT(action);
                                 oldValG = *rbc;
                             }
                         }
                         if (toDraw(rbc->m_SetCollidable)) {
                             events::ModifyGrid action(ecs::TYPEGRIDCOMPONENT, entityID, rbc, oldValG);
-                            //DISPATCH_ACTION_EVENT(action);
+                            ////DISPATCH_ACTION_EVENT(action);
                             oldValG = *rbc;
                          
                         }
@@ -1929,7 +1953,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             }
                             if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::GRID, dragfloat::Member::GRIDKEY)) {
                                 events::ModifyGrid action(ecs::TYPEGRIDCOMPONENT, entityID, rbc, oldValG);
-                                //DISPATCH_ACTION_EVENT(action);
+                                ////DISPATCH_ACTION_EVENT(action);
                                 oldValG = *rbc;
                             }
                         }
@@ -2126,7 +2150,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                                 audioManager.m_StopAudioForEntity(entityID, key);
                                 it2 = ac->m_AudioFiles.erase(it2);
                                 events::RemoveAudio action(ecs::TYPEAUDIOCOMPONENT, entityID, ac, oldValAU);
-                                //DISPATCH_ACTION_EVENT(action);
+                                ////DISPATCH_ACTION_EVENT(action);
                                 oldValAU = *ac;
                             }
                             else {
@@ -2141,7 +2165,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         if (ImGui::Button("Add Audio File")) {
                             ac->m_AudioFiles.emplace_back();
                             events::AddAudio action(ecs::TYPEAUDIOCOMPONENT, entityID, ac, oldValAU);
-                            //DISPATCH_ACTION_EVENT(action);
+                            ////DISPATCH_ACTION_EVENT(action);
                             oldValAU = *ac;
                         }
 
@@ -2170,7 +2194,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         }
                         if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::LIGHT, dragfloat::Member::LIGHTRAD)) {
                             events::ModifyLight action(ecs::TYPELIGHTINGCOMPONENT, entityID, lc, oldValL);
-                            //DISPATCH_ACTION_EVENT(action);
+                            ////DISPATCH_ACTION_EVENT(action);
                             oldValL = *lc;
                         }
                     }
@@ -2180,7 +2204,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         }
                         if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::LIGHT, dragfloat::Member::LIGHTINTENSE)) {
                             events::ModifyLight action(ecs::TYPELIGHTINGCOMPONENT, entityID, lc, oldValL);
-                            //DISPATCH_ACTION_EVENT(action);
+                            ////DISPATCH_ACTION_EVENT(action);
                             oldValL = *lc;
                         }
                     }
@@ -2190,7 +2214,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         }
                         if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::LIGHT, dragfloat::Member::LIGHTOFFSET)) {
                             events::ModifyLight action(ecs::TYPELIGHTINGCOMPONENT, entityID, lc, oldValL);
-                            //DISPATCH_ACTION_EVENT(action);
+                            ////DISPATCH_ACTION_EVENT(action);
                             oldValL = *lc;
                         }
                     }
@@ -2200,7 +2224,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         }
                         if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::LIGHT, dragfloat::Member::LIGHTSCALE)) {
                             events::ModifyLight action(ecs::TYPELIGHTINGCOMPONENT, entityID, lc, oldValL);
-                            //DISPATCH_ACTION_EVENT(action);
+                            ////DISPATCH_ACTION_EVENT(action);
                             oldValL = *lc;
                         }
                     }
@@ -2210,10 +2234,21 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         }
                         if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::LIGHT, dragfloat::Member::LIGHTROT)) {
                             events::ModifyLight action(ecs::TYPELIGHTINGCOMPONENT, entityID, lc, oldValL);
-                            //DISPATCH_ACTION_EVENT(action);
+                            ////DISPATCH_ACTION_EVENT(action);
                             oldValL = *lc;
                         }
                     }
+                    if (toDraw(lc->m_lightType)) {
+                        if ((dragfloat::DragFloatCheck::m_GetInstance()->m_GetPrevMem() != dragfloat::Member::LIGHTTYPE)) {
+                            oldValL = *lc;
+                        }
+                        if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::LIGHT, dragfloat::Member::LIGHTTYPE)) {
+                            events::ModifyLight action(ecs::TYPELIGHTINGCOMPONENT, entityID, lc, oldValL);
+                            ////DISPATCH_ACTION_EVENT(action);
+                            oldValL = *lc;
+                        }
+                    }
+                    
 
                     ImVec4 color = ImVec4(lc->m_colour.m_x, lc->m_colour.m_y, lc->m_colour.m_z, 1.f);
 
@@ -2231,8 +2266,8 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             oldValL = *lc;
                         }
                         if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::LIGHT, dragfloat::Member::LIGHTCLR)) {
-                            events::ModifyLight action(ecs::TYPESPRITECOMPONENT, entityID, lc, oldValL);
-                            //DISPATCH_ACTION_EVENT(action);
+                            events::ModifyLight action(ecs::TYPELIGHTINGCOMPONENT, entityID, lc, oldValL);
+                            ////DISPATCH_ACTION_EVENT(action);
                             oldValL = *lc;
                         }
                     }
@@ -2241,8 +2276,8 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             oldValL = *lc;
                         }
                         if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::LIGHT, dragfloat::Member::LIGHTCLR)) {
-                            events::ModifyLight action(ecs::TYPESPRITECOMPONENT, entityID, lc, oldValL);
-                            //DISPATCH_ACTION_EVENT(action);
+                            events::ModifyLight action(ecs::TYPELIGHTINGCOMPONENT, entityID, lc, oldValL);
+                            ////DISPATCH_ACTION_EVENT(action);
                             oldValL = *lc;
                         }
                     }
@@ -2266,7 +2301,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                      DrawComponents toDraw(rbc->Names());
                      if (toDraw(rbc->m_willSpawn)) {
                         events::ModifyParticle action(ecs::TYPEPARTICLECOMPONENT, entityID, rbc, oldValP);
-                        //DISPATCH_ACTION_EVENT(action);
+                        ////DISPATCH_ACTION_EVENT(action);
                         oldValP = *rbc;
                      }
                      if (toDraw(rbc->m_noOfParticles)) {
@@ -2275,7 +2310,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                          }
                          if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::PARTICLE, dragfloat::Member::PARTICLENUM)) {
                              events::ModifyParticle action(ecs::TYPEPARTICLECOMPONENT, entityID, rbc, oldValP);
-                             //DISPATCH_ACTION_EVENT(action);
+                             ////DISPATCH_ACTION_EVENT(action);
                              oldValP = *rbc;
                          }
                      }
@@ -2285,7 +2320,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                          }
                          if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::PARTICLE, dragfloat::Member::PARTICLENUM)) {
                              events::ModifyParticle action(ecs::TYPEPARTICLECOMPONENT, entityID, rbc, oldValP);
-                             //DISPATCH_ACTION_EVENT(action);
+                             ////DISPATCH_ACTION_EVENT(action);
                              oldValP = *rbc;
                          }
                      }
@@ -2295,7 +2330,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                          }
                          if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::PARTICLE, dragfloat::Member::PARTICLENUM)) {
                              events::ModifyParticle action(ecs::TYPEPARTICLECOMPONENT, entityID, rbc, oldValP);
-                             //DISPATCH_ACTION_EVENT(action);
+                             ////DISPATCH_ACTION_EVENT(action);
                              oldValP = *rbc;
                          }
                      }
@@ -2305,7 +2340,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                          }
                          if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::PARTICLE, dragfloat::Member::PARTICLENUM)) {
                              events::ModifyParticle action(ecs::TYPEPARTICLECOMPONENT, entityID, rbc, oldValP);
-                             //DISPATCH_ACTION_EVENT(action);
+                             ////DISPATCH_ACTION_EVENT(action);
                              oldValP = *rbc;
                          }
                      }
@@ -2315,7 +2350,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                          }
                          if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::PARTICLE, dragfloat::Member::PARTICLEACCEL)) {
                              events::ModifyParticle action(ecs::TYPEPARTICLECOMPONENT, entityID, rbc, oldValP);
-                             //DISPATCH_ACTION_EVENT(action);
+                             ////DISPATCH_ACTION_EVENT(action);
                              oldValP = *rbc;
                          }
                      }
@@ -2325,7 +2360,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                          }
                          if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::PARTICLE, dragfloat::Member::PARTICLECONEROT)) {
                              events::ModifyParticle action(ecs::TYPEPARTICLECOMPONENT, entityID, rbc, oldValP);
-                             //DISPATCH_ACTION_EVENT(action);
+                             ////DISPATCH_ACTION_EVENT(action);
                              oldValP = *rbc;
                          }
                      }
@@ -2335,7 +2370,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                          }
                          if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::PARTICLE, dragfloat::Member::PARTICLENUM)) {
                              events::ModifyParticle action(ecs::TYPEPARTICLECOMPONENT, entityID, rbc, oldValP);
-                             //DISPATCH_ACTION_EVENT(action);
+                             ////DISPATCH_ACTION_EVENT(action);
                              oldValP = *rbc;
                          }
                      }
@@ -2345,7 +2380,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                          }
                          if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::PARTICLE, dragfloat::Member::PARTICLERAND)) {
                              events::ModifyParticle action(ecs::TYPEPARTICLECOMPONENT, entityID, rbc, oldValP);
-                             //DISPATCH_ACTION_EVENT(action);
+                             ////DISPATCH_ACTION_EVENT(action);
                              oldValP = *rbc;
                          }
                      }
@@ -2355,7 +2390,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                          }
                          if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::PARTICLE, dragfloat::Member::PARTICLESTRIP)) {
                              events::ModifyParticle action(ecs::TYPEPARTICLECOMPONENT, entityID, rbc, oldValP);
-                             //DISPATCH_ACTION_EVENT(action);
+                             ////DISPATCH_ACTION_EVENT(action);
                              oldValP = *rbc;
                          }
                      }
@@ -2365,7 +2400,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                          }
                          if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::PARTICLE, dragfloat::Member::PARTICLEFRAMENUM)) {
                              events::ModifyParticle action(ecs::TYPEPARTICLECOMPONENT, entityID, rbc, oldValP);
-                             //DISPATCH_ACTION_EVENT(action);
+                             ////DISPATCH_ACTION_EVENT(action);
                              oldValP = *rbc;
                          }
                      }
@@ -2375,7 +2410,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                          }
                          if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::PARTICLE, dragfloat::Member::PARTICLELAYER)) {
                              events::ModifyParticle action(ecs::TYPEPARTICLECOMPONENT, entityID, rbc, oldValP);
-                             //DISPATCH_ACTION_EVENT(action);
+                             ////DISPATCH_ACTION_EVENT(action);
                              oldValP = *rbc;
                          }
                      }
@@ -2385,7 +2420,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                          }
                          if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::PARTICLE, dragfloat::Member::PARTICLEFRICTION)) {
                              events::ModifyParticle action(ecs::TYPEPARTICLECOMPONENT, entityID, rbc, oldValP);
-                             //DISPATCH_ACTION_EVENT(action);
+                             ////DISPATCH_ACTION_EVENT(action);
                              oldValP = *rbc;
                          }
                      }
@@ -2395,14 +2430,14 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                          }
                          if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::PARTICLE, dragfloat::Member::PARTICLEFPS)) {
                              events::ModifyParticle action(ecs::TYPEPARTICLECOMPONENT, entityID, rbc, oldValP);
-                             //DISPATCH_ACTION_EVENT(action);
+                             ////DISPATCH_ACTION_EVENT(action);
                              oldValP = *rbc;
                          }
                      }
 
                      if (toDraw(rbc->m_loopAnimation)) {
                          events::ModifyParticle action(ecs::TYPEPARTICLECOMPONENT, entityID, rbc, oldValP);
-                         //DISPATCH_ACTION_EVENT(action);
+                         ////DISPATCH_ACTION_EVENT(action);
                          oldValP = *rbc;
                      }
 
@@ -2423,7 +2458,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                          }
                          if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::PARTICLE, dragfloat::Member::PARTICLECLR)) {
                              events::ModifyParticle action(ecs::TYPEPARTICLECOMPONENT, entityID, rbc, oldValP);
-                             //DISPATCH_ACTION_EVENT(action);
+                             ////DISPATCH_ACTION_EVENT(action);
                              oldValP = *rbc;
                          }
                      }
@@ -2433,7 +2468,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                          }
                          if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::PARTICLE, dragfloat::Member::PARTICLECLR)) {
                              events::ModifyParticle action(ecs::TYPEPARTICLECOMPONENT, entityID, rbc, oldValP);
-                             //DISPATCH_ACTION_EVENT(action);
+                             ////DISPATCH_ACTION_EVENT(action);
                              oldValP = *rbc;
                          }
                      }
@@ -2449,7 +2484,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                              {
                                  rbc->m_imageFile = image.first.c_str();
                                  events::ModifyParticle action(ecs::TYPEPARTICLECOMPONENT, entityID, rbc, oldValP);
-                                 //DISPATCH_ACTION_EVENT(action);
+                                 ////DISPATCH_ACTION_EVENT(action);
                                  oldValP = *rbc;
                              }
                          }
@@ -2463,7 +2498,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                          {
                              rbc->m_imageFile.clear();
                              events::ModifyParticle action(ecs::TYPEPARTICLECOMPONENT, entityID, rbc, oldValP);
-                             //DISPATCH_ACTION_EVENT(action);
+                             ////DISPATCH_ACTION_EVENT(action);
                              oldValP = *rbc;
                              resetImage = false;
                          }
@@ -2485,7 +2520,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                     if (ImGui::Button("+ Add Ray")) {
                         rcc->m_raycast.push_back(ecs::RaycastComponent::Raycast{});
                         events::AddRay action(ecs::TYPERAYCASTINGCOMPONENT, entityID, rcc, oldValRC);
-                        //DISPATCH_ACTION_EVENT(action);
+                        ////DISPATCH_ACTION_EVENT(action);
                         oldValRC = *rcc;
                     }
                     ImGui::Separator();
@@ -2511,7 +2546,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         if (ImGui::Button(" Delete Ray")) {
                             rcc->m_raycast.erase(it2);
                             events::RemoveRay action(ecs::TYPERAYCASTINGCOMPONENT, entityID, rcc, oldValRC);
-                            //DISPATCH_ACTION_EVENT(action);
+                            ////DISPATCH_ACTION_EVENT(action);
                             oldValRC = *rcc;
                             ImGui::PopID();
                             break;
@@ -2548,7 +2583,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             }
                             if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::PATHFINDING, dragfloat::Member::PATHFINDINGSTART)) {
                                 events::ModifyPathfinding action(ecs::TYPEPATHFINDINGCOMPONENT, entityID, pfc, oldValPF);
-                                //DISPATCH_ACTION_EVENT(action);
+                                ////DISPATCH_ACTION_EVENT(action);
                                 oldValPF = *pfc;
                             }
                         }
@@ -2558,7 +2593,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             }
                             if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::PATHFINDING, dragfloat::Member::PATHFINDINGEND)) {
                                 events::ModifyPathfinding action(ecs::TYPEPATHFINDINGCOMPONENT, entityID, pfc, oldValPF);
-                                //DISPATCH_ACTION_EVENT(action);
+                                ////DISPATCH_ACTION_EVENT(action);
                                 oldValPF = *pfc;
                             }
                         }
@@ -2568,7 +2603,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             }
                             if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::PATHFINDING, dragfloat::Member::PATHFINDINGKEY)) {
                                 events::ModifyPathfinding action(ecs::TYPEPATHFINDINGCOMPONENT, entityID, pfc, oldValPF);
-                                //DISPATCH_ACTION_EVENT(action);
+                                ////DISPATCH_ACTION_EVENT(action);
                                 oldValPF = *pfc;
                             }
                         }
@@ -2596,7 +2631,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             if (ImGui::Button("Play")) {
                                 vc->play = true;
                                 events::ModifyVideo action(ecs::TYPEVIDEOCOMPONENT, entityID, vc, oldValV);
-                                //DISPATCH_ACTION_EVENT(action);
+                                ////DISPATCH_ACTION_EVENT(action);
                                 oldValV = *vc;
                             }
                         }
@@ -2604,7 +2639,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             if (ImGui::Button("Stop")) {
                                 vc->play = false;
                                 events::ModifyVideo action(ecs::TYPEVIDEOCOMPONENT, entityID, vc, oldValV);
-                                //DISPATCH_ACTION_EVENT(action);
+                                ////DISPATCH_ACTION_EVENT(action);
                                 oldValV = *vc;
                             }
                         }
@@ -2626,7 +2661,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                                     //TODO for now push back
                                     vc->filename = videoname.first;
                                     events::ModifyVideo action(ecs::TYPEVIDEOCOMPONENT, entityID, vc, oldValV);
-                                    //DISPATCH_ACTION_EVENT(action);
+                                    ////DISPATCH_ACTION_EVENT(action);
                                     oldValV = *vc;
 
 
@@ -2643,17 +2678,17 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                         //if (toDraw(vc->filename)) {
                         //    events::ModifyVideo action(ecs::TYPEVIDEOCOMPONENT, entityID, vc, oldValV);
-                        //    //DISPATCH_ACTION_EVENT(action);
+                        //    ////DISPATCH_ACTION_EVENT(action);
                         //    oldValV = *vc;
                         //}
                         if (toDraw(vc->pause)) {
                             events::ModifyVideo action(ecs::TYPEVIDEOCOMPONENT, entityID, vc, oldValV);
-                            //DISPATCH_ACTION_EVENT(action);
+                            ////DISPATCH_ACTION_EVENT(action);
                             oldValV = *vc;
                         }
                         if (toDraw(vc->loop)) {
                             events::ModifyVideo action(ecs::TYPEVIDEOCOMPONENT, entityID, vc, oldValV);
-                            //DISPATCH_ACTION_EVENT(action);
+                            ////DISPATCH_ACTION_EVENT(action);
                             oldValV = *vc;
                         }
                         if (toDraw(vc->layer)) {
@@ -2662,7 +2697,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                             }
                             if (dragfloat::DragFloatCheck::m_GetInstance()->m_Click(dragfloat::Comp::VIDEO, dragfloat::Member::VIDEOLAYER)) {
                                 events::ModifyVideo action(ecs::TYPEVIDEOCOMPONENT, entityID, vc, oldValV);
-                                //DISPATCH_ACTION_EVENT(action);
+                                ////DISPATCH_ACTION_EVENT(action);
                                 oldValV = *vc;
                             }
                         }
@@ -2671,6 +2706,106 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                 }
             }
             
+            if (EntitySignature.test(ecs::TYPEUISPRITECOMPONENT)) {
+                open = ImGui::CollapsingHeader("UI Sprite Component");
+
+                CreateContext(ecs::TYPEUISPRITECOMPONENT, entityID);
+
+                if (open && ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEUISPRITECOMPONENT)) {
+
+                    assetmanager::AssetManager* Asset = assetmanager::AssetManager::m_funcGetInstance();
+                    auto* sc = static_cast<ecs::SpriteComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEUISPRITECOMPONENT]->m_GetEntityComponent(entityID));
+                    static ecs::SpriteComponent oldValS = *sc;
+
+
+                    if (ImGui::BeginCombo("Images##UI1234", sc->m_imageFile.c_str()))
+                    {
+                        for (const auto& image : Asset->m_imageManager.m_imageMap) {
+
+                            if (ImGui::Selectable(image.first.c_str())) {
+                                //static ecs::SpriteComponent oldValA = *sc;
+                                sc->m_imageFile = image.first.c_str();
+                                if (!ecs->m_ECS_EntityMap[entityID].test(ecs::TYPEANIMATIONCOMPONENT))
+                                {
+                                    assetmanager::AssetManager* assets = assetmanager::AssetManager::m_funcGetInstance();
+                                    //graphicpipe::GraphicsPipe* pipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
+                                    if (assets->m_imageManager.m_imageMap[sc->m_imageFile].m_stripCount > 1)
+                                    {
+
+                                        ecs::AnimationComponent* com = static_cast<ecs::AnimationComponent*>(ecs->m_AddComponent(ecs::TYPEANIMATIONCOMPONENT, entityID));
+                                        com->m_stripCount = assets->m_imageManager.m_imageMap[sc->m_imageFile].m_stripCount;
+                                        events::ModifySprite action2(ecs::TYPEUISPRITECOMPONENT, entityID, sc, oldValS);
+                                        //DISPATCH_ACTION_EVENT(action2);
+                                        events::AddComponent action1(entityID, ecs::TYPEANIMATIONCOMPONENT);
+                                        //DISPATCH_ACTION_EVENT(action1);
+                                        oldValS = *sc;
+
+                                    }
+                                }
+                                else
+                                {
+                                    assetmanager::AssetManager* assets = assetmanager::AssetManager::m_funcGetInstance();
+                                    ecs::AnimationComponent* com = static_cast<ecs::AnimationComponent*>(ecs->m_ECS_CombinedComponentPool[ecs::TYPEANIMATIONCOMPONENT]->m_GetEntityComponent(entityID));
+                                    com->m_stripCount = assets->m_imageManager.m_imageMap[sc->m_imageFile].m_stripCount;
+                                    //static ecs::AnimationComponent oldValA2 = *com;
+                                    //events::ModifyAnim action(ecs::TYPESPRITECOMPONENT, entityID, com, oldValA2);
+                                    //////DISPATCH_ACTION_EVENT(action);
+                                    events::ModifySprite action(ecs::TYPESPRITECOMPONENT, entityID, sc, oldValS);
+                                    ////DISPATCH_ACTION_EVENT(action);
+                                    oldValS = *sc;
+                                }
+                            }
+                        }
+                        ImGui::EndCombo();
+                    }
+
+                    if (ImGui::BeginDragDropTarget())
+                    {
+
+                        if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("file"))
+                        {
+                            IM_ASSERT(payload->DataSize == sizeof(std::filesystem::path));
+                            std::filesystem::path* filename = static_cast<std::filesystem::path*>(payload->Data);
+                            if (filename->filename().extension().string() == ".png" || filename->filename().extension().string() == ".jpg") {
+                                if (Asset->m_imageManager.m_imageMap.find(filename->filename().string()) == Asset->m_imageManager.m_imageMap.end()) {
+                                    LOGGING_WARN("File not loaded, please reload content browser");
+                                }
+                                else {
+                                    sc->m_imageFile = filename->filename().string();
+                                }
+                            }
+                            else {
+                                LOGGING_WARN("Wrong File Type");
+                            }
+
+
+
+                        }
+                        ImGui::EndDragDropTarget();
+                    }
+
+                    ImVec4 color = ImVec4(sc->m_color.m_x, sc->m_color.m_y, sc->m_color.m_z, sc->m_alpha);
+
+                    ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
+                    ImGui::Text("Color");
+                    ImGui::SameLine();
+                    if (ImGui::ColorEdit3("##1234MyColor2", (float*)&color, ImGuiColorEditFlags_DisplayRGB))
+                    {
+                        sc->m_color.m_x = color.x;
+                        sc->m_color.m_y = color.y;
+                        sc->m_color.m_z = color.z;
+                        //events::ModifySprite action(ecs::TYPESPRITECOMPONENT, entityID, sc, oldValS);
+                        //////DISPATCH_ACTION_EVENT(action);
+                    }
+                  
+                    ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
+                    ImGui::Text("Layer");
+                    ImGui::SameLine();
+                    if (ImGui::InputInt("Layer##9127391823", &sc->m_layer))
+                    {
+                    }
+                }
+            }
 
             //draw invinsible box
             if (ImGui::GetContentRegionAvail().x > 0 && ImGui::GetContentRegionAvail().y > 0){

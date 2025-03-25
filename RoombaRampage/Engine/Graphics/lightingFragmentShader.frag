@@ -28,7 +28,7 @@ R"( #version 460 core
 
 layout(location=0) in vec4 color;
 layout(location=1) in vec2 lightPos;
-layout(location=2) in vec3 lightParams; //Intensity, Inner Radius, Outer Radius
+layout(location=2) in vec3 lightParams; //Intensity, Inner Radius, Outer Radius //Change outer Radius To Type // Change Inner Radius to Feather Amount
 
 layout(location=5) in vec2 lightDirection;
 layout (location=0) out vec4 fragColor;

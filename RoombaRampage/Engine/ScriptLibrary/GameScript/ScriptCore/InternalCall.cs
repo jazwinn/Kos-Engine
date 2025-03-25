@@ -132,6 +132,15 @@ public static class InternalCall
     public extern static bool m_InternalCallIsKeyTriggered(keyCode key);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static bool m_InternalCallIsControllerTriggered(keyCode key);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static bool m_InternalCallIsControllerPress(keyCode key);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static bool m_InternalCallIsControllerReleased(keyCode key);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static void m_InternalGetWorldMousePosition(out Vector2 mousepos);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
@@ -348,6 +357,13 @@ public static class InternalCall
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     static public extern string m_GetScenefromID(uint id);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    static public extern void m_HideEntityandchildren(uint id);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    static public extern void m_UnHideEntityandchildren(uint id);
+
 }
 
 

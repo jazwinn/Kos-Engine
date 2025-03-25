@@ -1,6 +1,6 @@
 /********************************************************************/
 /*!
-\file      InternalCall.h
+\file      InternalCall.cpp
 \author    Chiu Jun Jie, junjie.c , 2301524
 \par       junjie.c@digipen.edu
 \date      Nov 27 , 2024
@@ -708,6 +708,18 @@ namespace script {
 
 
 		return mono_string_new(assetmanager->m_scriptManager.m_GetDomain(), results.c_str());
+	}
+
+	void InternalCall::m_HideEntityandchildren(ecs::EntityID id)
+	{
+		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+		ecs->m_layersStack.m_hideEntitywithChild(id);
+	}
+
+	void InternalCall::m_UnHideEntityandchildren(ecs::EntityID id)
+	{
+		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+		ecs->m_layersStack.m_unhideEntitywithChild(id);
 	}
 
 	MonoArray* InternalCall::m_InternalCallGetTagIDs(MonoString* monostring)
@@ -1551,6 +1563,21 @@ namespace script {
 		return Input::InputSystem::m_isKeyTriggered(key);
 	}
 
+	bool InternalCall::m_InternalCallIsControllerTriggered(keyCode key)
+	{
+		return Input::InputSystem::m_isControllerButtonTriggered(key);
+	}
+
+	bool InternalCall::m_InternalCallIsControllerPress(keyCode key)
+	{
+		return Input::InputSystem::m_isControllerButtonPressed(key);
+	}
+
+	bool InternalCall::m_InternalCallIsControllerReleased(keyCode key)
+	{
+		return Input::InputSystem::m_isControllerButtonReleased(key);
+	}
+
 
 	void InternalCall::m_RegisterInternalCalls()
 	{
@@ -1689,6 +1716,13 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_GetRandomInt);
 
 		MONO_ADD_INTERNAL_CALL(m_GetScenefromID);
+
+		MONO_ADD_INTERNAL_CALL(m_HideEntityandchildren);
+		MONO_ADD_INTERNAL_CALL(m_UnHideEntityandchildren);
+
+		MONO_ADD_INTERNAL_CALL(m_InternalCallIsControllerTriggered);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallIsControllerPress);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallIsControllerReleased);
 		///SO HELP ME THEN OVER HERE
 	}
 }

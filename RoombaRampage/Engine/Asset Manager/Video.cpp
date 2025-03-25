@@ -1,6 +1,6 @@
 /******************************************************************/
 /*!
-\file      Video.h
+\file      Video.cpp
 \author    Ng Jaz winn, jazwinn.ng , 2301502
 \par       jazwinn.ng@digipen.edu
 \date      March 01, 2025

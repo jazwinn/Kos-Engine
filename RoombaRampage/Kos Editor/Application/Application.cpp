@@ -45,7 +45,7 @@ namespace Application {
         /*--------------------------------------------------------------
         INITIALIZE LOGGING SYSTEM
         --------------------------------------------------------------*/
-        LOGGING_INIT_LOGS("../Logs/LogFile.txt");
+        LOGGING_INIT_LOGS("../LogFile.txt");
         LOGGING_INFO("Application Start");
         LOGGING_INFO("Load Log Successful");
         logs.m_Setup_Abort_Handler();

@@ -87,7 +87,7 @@ namespace ecs {
 			ColliderComponent* collider = m_vecColliderComponentPtr[n];
 			NameComponent* NameComp = m_vecNameComponentPtr[n];
 			//skip component not of the scene
-			if ((collider->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer)) continue;
+			if ((collider->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer) || NameComp->m_hide) continue;
 
 
 			mat3x3::Mat3x3 translateMatrix;

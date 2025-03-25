@@ -104,7 +104,8 @@ namespace graphicpipe {
 		m_funcSetupArrayBuffer();
 		m_funcSetupFrameBuffer();
 		m_funcSetupGamePreviewFrameBuffer();
-		m_funcSetupLightingFrameBuffer();
+		m_funcSetupMultiLightingFrameBuffer();
+		m_funcSetupAdditiveLightingFrameBuffer();
 		m_funcSetupFinalPassBuffer();
 		m_funcSetupSSBO();
 
@@ -164,7 +165,7 @@ namespace graphicpipe {
 		{
 			
 			m_funcDrawWindow();
-			//m_drawLightingTexture();
+			//m_drawMultiLightingTexture();
 		}
 		
 	}
@@ -190,10 +191,14 @@ namespace graphicpipe {
 		m_debugBoxData.clear();
 		m_textData.clear();
 		m_colors.clear();
-		m_lightingData.clear();
-		m_lightingColors.clear();
-		m_lightingTransforms.clear();
-		m_lightingParams.clear();
+		m_multiLightingData.clear();
+		m_additiveLightingData.clear();
+		m_multiLightingColors.clear();
+		m_multiLightingTransforms.clear();
+		m_multiLightingParams.clear();
+		m_additiveLightingTransforms.clear();
+		m_additiveLightingParams.clear();
+		m_additiveLightingColors.clear();
 		m_tilemapData.clear();
 		m_transformedTilemaps.clear();
 		m_tileIndexes.clear();

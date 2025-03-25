@@ -49,6 +49,7 @@ namespace ecs{
 		m_AddComponentToECS<NameComponent>(TYPENAMECOMPONENT);
 		m_AddComponentToECS<TransformComponent>(TYPETRANSFORMCOMPONENT);
 		m_AddComponentToECS<SpriteComponent>(TYPESPRITECOMPONENT);
+		m_AddComponentToECS<UISpriteComponent>(TYPEUISPRITECOMPONENT);
 		m_AddComponentToECS<ColliderComponent>(TYPECOLLIDERCOMPONENT);
 		m_AddComponentToECS<RigidBodyComponent>(TYPERIGIDBODYCOMPONENT);
 		m_AddComponentToECS<EnemyComponent>(TYPEENEMYCOMPONENT);
@@ -77,6 +78,7 @@ namespace ecs{
 		ecs->m_ECS_SystemMap[TYPEBUTTONSYSTEM] = std::make_shared<ButtonSystem>();
 
 		ecs->m_ECS_SystemMap[TYPERENDERSYSTEM] = std::make_shared<RenderSystem>();
+		ecs->m_ECS_SystemMap[TYPEUIRENDERSYSTEM] = std::make_shared<UIRenderSystem>();
 		ecs->m_ECS_SystemMap[TYPERENDERTEXTSYSTEM] = std::make_shared<RenderTextSystem>();
 		ecs->m_ECS_SystemMap[TYPEDEBUGDRAWINGSYSTEM] = std::make_shared<DebugDrawingSystem>();
 		ecs->m_ECS_SystemMap[TYPEAUDIOSYSTEM] = std::make_shared<AudioSystem>();
@@ -92,6 +94,7 @@ namespace ecs{
 		ecs->m_ECS_SystemMap[TYPEPARTICLESYSTEM] = std::make_shared<ParticleSystem>();
 
 		ecs->m_ECS_SystemMap[TYPEVIDEOSYSTEM] = std::make_shared<VideoSystem>();
+
 
 		
 
@@ -142,19 +145,37 @@ namespace ecs{
 
 		//loops through all the system
 		for (auto& System : ecs->m_ECS_SystemMap) {
-			std::chrono::duration<float> duration{};
+			
 			
 
 
 
 			if (ecs->m_state != RUNNING) {
-				if (System.first == TYPECOLLISIONRESPONSESYSTEM ||// System.first == TYPECOLLISIONSYSTEM ||
+				if (System.first == TYPECOLLISIONRESPONSESYSTEM || System.first == TYPERAYCASTSYSTEM ||
 					System.first == TYPELOGICSYSTEM || System.first == TYPEPHYSICSSYSTEM || 
 					System.first == TYPEANIMATIONSYSTEM || System.first == TYPEPATHFINDINGSYSTEM) {
 					//skip physics and logic if not running
 					continue;
 				}
 			}
+
+			//switch (ecs->m_state) {
+
+			//case STOP:
+			//	break;
+			//case START:
+			//	break;
+			//case RUNNING:
+			//	break;
+			//case WAIT:
+			//	break;
+			//case TERMINATE:
+			//	break;
+
+			//}
+
+			std::chrono::duration<float> duration{};
+
 
 			//iterate through all the scenes, check if true or false
 			std::vector<decltype(ecs->m_ECS_SceneMap)::key_type> keys;

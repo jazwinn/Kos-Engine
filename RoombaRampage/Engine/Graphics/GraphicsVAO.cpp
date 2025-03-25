@@ -1,6 +1,6 @@
 /******************************************************************/
 /*!
-\file      GraphicsPipeVaoSetup.cpp
+\file      GraphicsVAO.cpp
 \author    Sean Tiu
 \par       s.tiu@digipen.edu
 \date      8th Nov, 2024

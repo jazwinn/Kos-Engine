@@ -230,7 +230,7 @@ namespace gui {
         if (!ImGuizmo::IsUsingAny() && wasClicked) {
             wasClicked = false;
             events::TransformComponentChanged action(ecs::TYPETRANSFORMCOMPONENT, m_clickedEntityId, transcom, tempComp);
-            //DISPATCH_ACTION_EVENT(action);
+            ////DISPATCH_ACTION_EVENT(action);
         }
 	}
 

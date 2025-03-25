@@ -484,9 +484,9 @@ namespace graphicpipe
 
 	
 
-	void GraphicsPipe::m_funcRenderLighting()
+	void GraphicsPipe::m_funcRenderMultiLighting()
 	{
-		if (!m_lightingTransforms.empty())
+		if (!m_multiLightingTransforms.empty())
 		{
 			//glBlendFunc(GL_SRC_ALPHA, GL_ONE); //USE THIS BLENDING FOR LIGHTS
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -496,14 +496,14 @@ namespace graphicpipe
 			glUseProgram(m_lightingShaderProgram);
 
 			glBindBuffer(GL_ARRAY_BUFFER, m_modelMatrixArrayBuffer);
-			glNamedBufferData(m_modelMatrixArrayBuffer, m_lightingTransforms.size() * sizeof(glm::mat3), &m_lightingTransforms[0], GL_DYNAMIC_DRAW);
+			glNamedBufferData(m_modelMatrixArrayBuffer, m_multiLightingTransforms.size() * sizeof(glm::mat3), &m_multiLightingTransforms[0], GL_DYNAMIC_DRAW);
 
 
 			glBindBuffer(GL_ARRAY_BUFFER, m_vec3Buffer);
-			glNamedBufferData(m_vec3Buffer, m_lightingParams.size() * sizeof(glm::vec3), &m_lightingParams[0], GL_DYNAMIC_DRAW); // Light Intensity, Inner/Outer Radius
+			glNamedBufferData(m_vec3Buffer, m_multiLightingParams.size() * sizeof(glm::vec3), &m_multiLightingParams[0], GL_DYNAMIC_DRAW); // Light Intensity, Inner/Outer Radius
 
 			glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer);
-			glNamedBufferData(m_colorBuffer, m_lightingColors.size() * sizeof(glm::vec4), &m_lightingColors[0], GL_DYNAMIC_DRAW);
+			glNamedBufferData(m_colorBuffer, m_multiLightingColors.size() * sizeof(glm::vec4), &m_multiLightingColors[0], GL_DYNAMIC_DRAW);
 	
 
 			glUniformMatrix3fv(glGetUniformLocation(m_lightingShaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currViewMatrix));
@@ -523,7 +523,59 @@ namespace graphicpipe
 			
 
 			glBindVertexArray(m_squareMesh.m_vaoId);
-			glDrawElementsInstanced(m_squareMesh.m_primitiveType, m_squareMesh.m_indexElementCount, GL_UNSIGNED_SHORT, NULL, static_cast<GLsizei>(m_lightingTransforms.size()));
+			glDrawElementsInstanced(m_squareMesh.m_primitiveType, m_squareMesh.m_indexElementCount, GL_UNSIGNED_SHORT, NULL, static_cast<GLsizei>(m_multiLightingTransforms.size()));
+			glBindVertexArray(0);
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+			GLenum err2 = glGetError();
+			if (err2 != GL_NO_ERROR) {
+				//LOGGING_ERROR("First OpenGL Error: 0x%X", err);
+				std::cout << "#05 OpenGL Error : " << err2 << std::endl;
+			}
+
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		}
+	}
+	void GraphicsPipe::m_funcRenderAdditiveLighting()
+	{
+		if (!m_additiveLightingTransforms.empty())
+		{
+			//glBlendFunc(GL_SRC_ALPHA, GL_ONE); //USE THIS BLENDING FOR LIGHTS
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			//glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+
+
+			glUseProgram(m_lightingShaderProgram);
+
+			glBindBuffer(GL_ARRAY_BUFFER, m_modelMatrixArrayBuffer);
+			glNamedBufferData(m_modelMatrixArrayBuffer, m_additiveLightingTransforms.size() * sizeof(glm::mat3), &m_additiveLightingTransforms[0], GL_DYNAMIC_DRAW);
+
+
+			glBindBuffer(GL_ARRAY_BUFFER, m_vec3Buffer);
+			glNamedBufferData(m_vec3Buffer, m_additiveLightingParams.size() * sizeof(glm::vec3), &m_additiveLightingParams[0], GL_DYNAMIC_DRAW); // Light Intensity, Inner/Outer Radius
+
+			glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer);
+			glNamedBufferData(m_colorBuffer, m_additiveLightingColors.size() * sizeof(glm::vec4), &m_additiveLightingColors[0], GL_DYNAMIC_DRAW);
+
+
+			glUniformMatrix3fv(glGetUniformLocation(m_lightingShaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currViewMatrix));
+
+			glUniformMatrix3fv(glGetUniformLocation(m_lightingShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currOrthoMatrix));
+
+			glUniform1f(glGetUniformLocation(m_lightingShaderProgram, "globalBrightness"), m_globalLightIntensity);
+
+			GLenum err = glGetError();
+			if (err != GL_NO_ERROR) {
+				//LOGGING_ERROR("First OpenGL Error: 0x%X", err);
+				std::cout << "#04 OpenGL Error: " << err << std::endl;
+			}
+
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+
+
+			glBindVertexArray(m_squareMesh.m_vaoId);
+			glDrawElementsInstanced(m_squareMesh.m_primitiveType, m_squareMesh.m_indexElementCount, GL_UNSIGNED_SHORT, NULL, static_cast<GLsizei>(m_additiveLightingTransforms.size()));
 			glBindVertexArray(0);
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
 
