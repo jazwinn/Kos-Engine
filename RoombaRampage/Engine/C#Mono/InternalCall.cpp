@@ -1578,6 +1578,11 @@ namespace script {
 		return Input::InputSystem::m_isControllerButtonReleased(key);
 	}
 
+	float InternalCall::m_InternalCallGetRightJoyStickRotation()
+	{
+
+		return Input::InputSystem::controllerRightJoyStickRotation;
+	}
 	bool InternalCall::m_InternalCallIsControllerPresent()
 	{
 		return glfwJoystickPresent(GLFW_JOYSTICK_1);
@@ -1744,6 +1749,7 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_InternalCallIsControllerReleased);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallIsControllerPresent);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallGetJoyStickAxis);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallGetRightJoyStickRotation);
 		///SO HELP ME THEN OVER HERE
 	}
 }
