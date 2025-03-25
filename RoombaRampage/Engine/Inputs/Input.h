@@ -74,7 +74,7 @@ namespace Input {
 
 		static std::vector<std::string> m_droppedFiles;
 		static std::vector<float> m_controllerAxes;
-
+		static float controllerRightJoyStickRotation;
 
 		static GLFWwindow* m_windowInput;
 

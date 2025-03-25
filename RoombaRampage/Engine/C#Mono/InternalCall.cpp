@@ -1578,6 +1578,11 @@ namespace script {
 		return Input::InputSystem::m_isControllerButtonReleased(key);
 	}
 
+	bool InternalCall::m_IntenralCallIsGetRightJoyStickRotation()
+	{
+		return false;
+	}
+
 
 	void InternalCall::m_RegisterInternalCalls()
 	{

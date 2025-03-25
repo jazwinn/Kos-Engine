@@ -94,6 +94,7 @@ namespace Input {
 			m_controllerConnected = false;
 			m_controllerID = NULL;
 		}
+
 	}
 	
 
@@ -246,25 +247,53 @@ namespace Input {
 	void InputSystem::giveControllerMousePos()
 	{
 
+		//if (glfwJoystickPresent(GLFW_JOYSTICK_1)) {
+		//	int axesCount;
+		//	const float* axes = glfwGetJoystickAxes(GLFW_JOYSTICK_1, &axesCount);
+
+		//	if (axesCount >= 2) {
+		//		float stickX = axes[2];
+		//		float stickY = axes[3];
+		//		GLFWwindow* window = glfwGetCurrentContext();
+		//		double mouseX, mouseY;
+		//		glfwGetCursorPos(window, &mouseX, &mouseY);
+
+
+		//		if (fabs(stickX) > deadzone || fabs(stickY) > deadzone) {
+		//			mouseX += stickX * cursorSpeed;
+		//			mouseY += stickY * cursorSpeed; // Invert Y if needed
+		//			glfwSetCursorPos(window, mouseX, mouseY);
+		//		}
+		//	}
+		//}
+
+
 		if (glfwJoystickPresent(GLFW_JOYSTICK_1)) {
-			int axesCount;
-			const float* axes = glfwGetJoystickAxes(GLFW_JOYSTICK_1, &axesCount);
+			int count;
+			const float* axes = glfwGetJoystickAxes(GLFW_JOYSTICK_1, &count);
 
-			if (axesCount >= 2) {
-				float stickX = axes[2];
-				float stickY = axes[3];
-				GLFWwindow* window = glfwGetCurrentContext();
-				double mouseX, mouseY;
-				glfwGetCursorPos(window, &mouseX, &mouseY);
+			if (count >= 2) { // Ensure the joystick has at least two axes
+				float x = axes[0]; // X-axis
+				float y = axes[1]; // Y-axis (negate to correct inversion)
 
-
-				if (fabs(stickX) > deadzone || fabs(stickY) > deadzone) {
-					mouseX += stickX * cursorSpeed;
-					mouseY += stickY * cursorSpeed; // Invert Y if needed
-					glfwSetCursorPos(window, mouseX, mouseY);
+				if (x == 0.0f && y == 0.0f) {
+					controllerRightJoyStickRotation = -1;
+					return;
 				}
+				if (fabs(x) < deadzone || fabs(y) < deadzone) {
+					controllerRightJoyStickRotation = -1;
+					return;
+				}
+
+
+				float angle = atan2(x, -y) * 57.2958f; // Swap x and y
+				if (angle < 0) angle += 360.0f; // Normalize to [0, 360)
+
+				controllerRightJoyStickRotation = angle;
 			}
 		}
+		controllerRightJoyStickRotation = -1;
+		return; // Joystick not present or invalid axes
 	}
 
 
