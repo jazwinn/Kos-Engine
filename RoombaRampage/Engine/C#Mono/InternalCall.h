@@ -481,6 +481,9 @@ namespace script {
 		static bool m_InternalCallIsControllerReleased(keyCode key);
 
 		static bool m_IntenralCallIsGetRightJoyStickRotation();
+		static bool m_InternalCallIsControllerPresent();
+
+		static MonoArray* m_InternalCallGetJoyStickAxis();
 
 		/******************************************************************/
 		/*!

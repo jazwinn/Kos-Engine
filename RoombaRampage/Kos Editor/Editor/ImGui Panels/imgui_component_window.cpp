@@ -1252,6 +1252,13 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                         ////DISPATCH_ACTION_EVENT(action);
                         oldValT = *tc;
                     }
+
+                    // Checkbox for cursor centering
+                    ImGui::Text("Center Text");
+                    ImGui::SameLine();
+                    ImGui::Checkbox("##Text Centered", &tc->m_isCentered);
+
+         
                     ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
                     ImGui::Text("Size");
                     ImGui::SameLine(slider_start_pos_x);

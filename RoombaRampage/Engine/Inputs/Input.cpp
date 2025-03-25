@@ -33,7 +33,7 @@ namespace Input {
 	bool InputSystem::m_controllerConnected = false;
 	int InputSystem::m_controllerID = NULL;
 	std::vector<float> InputSystem::m_controllerAxes(6, 0);
-	float InputSystem::cursorSpeed = 10.0f;
+	float InputSystem::ControllerSensitivity = 30.0f;
 	float InputSystem::deadzone = 0.2f;
 
 
@@ -339,5 +339,8 @@ namespace Input {
 		return m_controllerAxes[givenAxis];
 	}
 
+	std::vector<float> InputSystem::m_getControllerAxiss(){
+		return m_controllerAxes;
+	}
 
 }

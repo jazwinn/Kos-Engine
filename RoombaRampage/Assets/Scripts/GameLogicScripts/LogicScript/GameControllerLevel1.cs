@@ -207,14 +207,14 @@ public class GameControllerLevel1 : ScriptBase
 
     private void InputChecker()
     {
-        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.R) && PlayerController.isDead)
+        if ((InternalCall.m_InternalCallIsKeyTriggered(keyCode.R) || InternalCall.m_InternalCallIsControllerTriggered(keyCode.CONTROLLER_Y)) && PlayerController.isDead)
         {
             RestartGame();
         }
 
         if (PlayerController.isDead) { return; }
 
-        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.ESC))
+        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.ESC) || InternalCall.m_InternalCallIsControllerTriggered(keyCode.CONTROLLER_START))
         {
             PauseGame();
         }

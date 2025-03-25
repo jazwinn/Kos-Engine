@@ -141,6 +141,12 @@ public static class InternalCall
     public extern static bool m_InternalCallIsControllerReleased(keyCode key);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static bool m_InternalCallIsControllerPresent();
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static float[] m_InternalCallGetJoyStickAxis();
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static void m_InternalGetWorldMousePosition(out Vector2 mousepos);
 
     [MethodImpl(MethodImplOptions.InternalCall)]

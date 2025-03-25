@@ -60,6 +60,7 @@ namespace Input {
 		static bool m_isControllerButtonTriggered(const keyCode givenKey);
 		static bool m_isControllerButtonReleased(const keyCode givenKey);
 		static float m_getControllerAxis(const keyCode);
+		static std::vector<float> m_getControllerAxiss();
 
 		void m_inputUpdate();
 
@@ -78,7 +79,7 @@ namespace Input {
 
 		static GLFWwindow* m_windowInput;
 
-		static float cursorSpeed;
+		static float ControllerSensitivity;
 		static float deadzone;
 
 

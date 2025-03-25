@@ -1581,6 +1581,23 @@ namespace script {
 	bool InternalCall::m_IntenralCallIsGetRightJoyStickRotation()
 	{
 		return false;
+	bool InternalCall::m_InternalCallIsControllerPresent()
+	{
+		return glfwJoystickPresent(GLFW_JOYSTICK_1);
+	}
+
+	MonoArray* InternalCall::m_InternalCallGetJoyStickAxis()
+	{
+
+		std::vector<float> controlleraxis = Input::InputSystem::m_getControllerAxiss();
+
+		MonoArray* Array = mono_array_new(assetmanager::AssetManager::m_funcGetInstance()->m_scriptManager.m_GetDomain(), mono_get_single_class(), 4);
+		for (size_t i = 0; i < 4; ++i) {
+			mono_array_set(Array, float, i, controlleraxis[i]);
+
+		}
+
+		return Array;
 	}
 
 
@@ -1728,6 +1745,8 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_InternalCallIsControllerTriggered);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallIsControllerPress);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallIsControllerReleased);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallIsControllerPresent);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallGetJoyStickAxis);
 		///SO HELP ME THEN OVER HERE
 	}
 }
