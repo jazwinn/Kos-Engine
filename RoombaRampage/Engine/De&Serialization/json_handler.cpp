@@ -488,6 +488,7 @@ namespace Serialization {
 					.AddMember("b", tc->m_color.m_z, allocator), allocator);
 
 				text.AddMember("layer", tc->m_fontLayer, allocator);
+				text.AddMember("isCentered", tc->m_isCentered,allocator);
 
 				entityData.AddMember("text", text, allocator);
 				hasComponents = true;  // Mark as having a component
@@ -1086,6 +1087,10 @@ namespace Serialization {
 					if (color.HasMember("g")) tc->m_color.m_y = color["g"].GetFloat();
 					if (color.HasMember("b")) tc->m_color.m_z = color["b"].GetFloat();
 				}
+				if (text.HasMember("isCentered")) {
+					tc->m_isCentered = text["isCentered"].GetBool();
+				}
+
 			}
 		}
 
