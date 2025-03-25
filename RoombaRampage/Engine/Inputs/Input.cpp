@@ -34,8 +34,8 @@ namespace Input {
 	int InputSystem::m_controllerID = NULL;
 	std::vector<float> InputSystem::m_controllerAxes(6, 0);
 	float InputSystem::ControllerSensitivity = 30.0f;
-	float InputSystem::deadzone = 0.2f;
-
+	float InputSystem::deadzone = 0.05f;
+	float InputSystem::controllerRightJoyStickRotation = -1.f;
 
 	void InputSystem::KeyCallBack([[maybe_unused]] GLFWwindow* window, [[maybe_unused]] int key, [[maybe_unused]] int scancode, int action, [[maybe_unused]] int mods) {
 		if (action == GLFW_PRESS) {
@@ -273,8 +273,8 @@ namespace Input {
 			const float* axes = glfwGetJoystickAxes(GLFW_JOYSTICK_1, &count);
 
 			if (count >= 2) { // Ensure the joystick has at least two axes
-				float x = axes[0]; // X-axis
-				float y = axes[1]; // Y-axis (negate to correct inversion)
+				float x = axes[2]; // X-axis
+				float y = axes[3]; // Y-axis (negate to correct inversion)
 
 				if (x == 0.0f && y == 0.0f) {
 					controllerRightJoyStickRotation = -1;
@@ -290,9 +290,14 @@ namespace Input {
 				if (angle < 0) angle += 360.0f; // Normalize to [0, 360)
 
 				controllerRightJoyStickRotation = angle;
+				
 			}
 		}
-		controllerRightJoyStickRotation = -1;
+		else {
+			controllerRightJoyStickRotation = -1;
+		}
+		
+		//std::cout << controllerRightJoyStickRotation << std::endl;
 		return; // Joystick not present or invalid axes
 	}
 
