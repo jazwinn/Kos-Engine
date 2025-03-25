@@ -91688,8 +91688,8 @@
                 },
                 "button": {
                     "force": {
-                        "x": 3348.709228515625,
-                        "y": 1159.85400390625
+                        "x": 1572.0147705078125,
+                        "y": 775.399169921875
                     },
                     "scale": {
                         "x": 0.8600000143051147,
@@ -91770,8 +91770,8 @@
                 },
                 "button": {
                     "force": {
-                        "x": 2743.438232421875,
-                        "y": 445.8141174316406
+                        "x": 694.7000122070313,
+                        "y": -259.572021484375
                     },
                     "scale": {
                         "x": 4.519999980926514,
@@ -92123,8 +92123,8 @@
                 },
                 "button": {
                     "force": {
-                        "x": 2743.880859375,
-                        "y": 481.892822265625
+                        "x": 896.5,
+                        "y": 123.86907958984375
                     },
                     "scale": {
                         "x": 2.9000000953674316,
@@ -92651,8 +92651,8 @@
                         },
                         "button": {
                             "force": {
-                                "x": 2921.392578125,
-                                "y": 830.7604370117188
+                                "x": 1141.2679443359375,
+                                "y": 604.9170532226563
                             },
                             "scale": {
                                 "x": 0.7599999904632568,
@@ -92733,8 +92733,8 @@
                         },
                         "button": {
                             "force": {
-                                "x": 2578.476806640625,
-                                "y": 830.7351684570313
+                                "x": 668.4271240234375,
+                                "y": 604.8821411132813
                             },
                             "scale": {
                                 "x": 0.6399999856948853,
@@ -93228,8 +93228,8 @@
                         },
                         "button": {
                             "force": {
-                                "x": 2923.37646484375,
-                                "y": 607.7703247070313
+                                "x": 1144.00390625,
+                                "y": 297.43963623046875
                             },
                             "scale": {
                                 "x": 0.6399999856948853,
@@ -93310,8 +93310,8 @@
                         },
                         "button": {
                             "force": {
-                                "x": 2578.762451171875,
-                                "y": 607.7384643554688
+                                "x": 668.8213500976563,
+                                "y": 297.3955993652344
                             },
                             "scale": {
                                 "x": 0.7400000095367432,
@@ -93408,7 +93408,7 @@
             "isprefab": true,
             "tagstr": "Enemy",
             "prefabname": "prefab_Vertical_Lazer.prefab",
-            "issync": false
+            "issync": true
         },
         "transform": {
             "position": {
@@ -93462,7 +93462,7 @@
         },
         "sprite": {
             "imagefile": "ani_inventoryCloseButton_strip2.png",
-            "layer": 2,
+            "layer": 6,
             "color": {
                 "r": 1.0,
                 "g": 1.0,
@@ -93492,14 +93492,14 @@
                 "x": 0.0,
                 "y": 1.0
             },
-            "m_intensity": 2.0,
+            "m_intensity": 1.5,
             "m_light_OffSet": {
                 "x": 0.0,
                 "y": 0.0
             },
             "m_light_scale": {
                 "x": 1.0,
-                "y": 3.0
+                "y": 1.0
             },
             "m_light_rotation": 0.0,
             "m_colour": {
@@ -93522,7 +93522,7 @@
                 "transform": {
                     "position": {
                         "x": -0.0010843176860362291,
-                        "y": -9.378756523132324
+                        "y": -5.397906303405762
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -93543,7 +93543,7 @@
                 "transform": {
                     "position": {
                         "x": 0.0021955023985356092,
-                        "y": 6.4436445236206055
+                        "y": 10.415268898010254
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -93561,7 +93561,7 @@
             "isprefab": true,
             "tagstr": "Enemy",
             "prefabname": "prefab_Vertical_Lazer.prefab",
-            "issync": false
+            "issync": true
         },
         "transform": {
             "position": {
@@ -93615,7 +93615,7 @@
         },
         "sprite": {
             "imagefile": "ani_inventoryCloseButton_strip2.png",
-            "layer": 3,
+            "layer": 6,
             "color": {
                 "r": 1.0,
                 "g": 1.0,
@@ -93645,14 +93645,14 @@
                 "x": 0.0,
                 "y": 1.0
             },
-            "m_intensity": 2.0,
+            "m_intensity": 1.5,
             "m_light_OffSet": {
                 "x": 0.0,
                 "y": 0.0
             },
             "m_light_scale": {
                 "x": 1.0,
-                "y": 3.0
+                "y": 1.0
             },
             "m_light_rotation": 0.0,
             "m_colour": {
@@ -93675,7 +93675,7 @@
                 "transform": {
                     "position": {
                         "x": -0.0010843176860362291,
-                        "y": -6.776252746582031
+                        "y": -5.397906303405762
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -93696,7 +93696,7 @@
                 "transform": {
                     "position": {
                         "x": 0.0021955023985356092,
-                        "y": 8.932985305786133
+                        "y": 10.415268898010254
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -93714,7 +93714,7 @@
             "isprefab": true,
             "tagstr": "Enemy",
             "prefabname": "prefab_Vertical_Lazer.prefab",
-            "issync": false
+            "issync": true
         },
         "transform": {
             "position": {
@@ -93768,7 +93768,7 @@
         },
         "sprite": {
             "imagefile": "ani_inventoryCloseButton_strip2.png",
-            "layer": 4,
+            "layer": 6,
             "color": {
                 "r": 1.0,
                 "g": 1.0,
@@ -93798,20 +93798,20 @@
                 "x": 0.0,
                 "y": 1.0
             },
-            "m_intensity": 2.0,
+            "m_intensity": 1.5,
             "m_light_OffSet": {
                 "x": 0.0,
                 "y": 0.0
             },
             "m_light_scale": {
                 "x": 1.0,
-                "y": 3.0
+                "y": 1.0
             },
             "m_light_rotation": 0.0,
             "m_colour": {
-                "x": 0.8141592741012573,
-                "y": 0.0036024518776685,
-                "z": 0.0036024518776685
+                "x": 1.0,
+                "y": 0.0,
+                "z": 0.0
             },
             "m_lightType": 1
         },
@@ -93828,7 +93828,7 @@
                 "transform": {
                     "position": {
                         "x": -0.0010843176860362291,
-                        "y": -8.660029411315918
+                        "y": -5.397906303405762
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -93849,7 +93849,7 @@
                 "transform": {
                     "position": {
                         "x": 0.0021955023985356092,
-                        "y": 7.2323126792907715
+                        "y": 10.415268898010254
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -93867,12 +93867,12 @@
             "isprefab": true,
             "tagstr": "Enemy",
             "prefabname": "prefab_Vertical_Lazer.prefab",
-            "issync": false
+            "issync": true
         },
         "transform": {
             "position": {
-                "x": 47.1938362121582,
-                "y": 108.08074188232422
+                "x": 47.01144790649414,
+                "y": 92.07588195800781
             },
             "rotation": -0.0,
             "scale": {
@@ -93921,7 +93921,7 @@
         },
         "sprite": {
             "imagefile": "ani_inventoryCloseButton_strip2.png",
-            "layer": 5,
+            "layer": 6,
             "color": {
                 "r": 1.0,
                 "g": 1.0,
@@ -93951,13 +93951,13 @@
                 "x": 0.0,
                 "y": 1.0
             },
-            "m_intensity": 2.0,
+            "m_intensity": 1.5,
             "m_light_OffSet": {
                 "x": 0.0,
                 "y": 0.0
             },
             "m_light_scale": {
-                "x": 3.0,
+                "x": 1.0,
                 "y": 1.0
             },
             "m_light_rotation": 0.0,
@@ -93981,7 +93981,7 @@
                 "transform": {
                     "position": {
                         "x": -0.0010843176860362291,
-                        "y": -14.880784034729004
+                        "y": -5.397906303405762
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -94002,7 +94002,7 @@
                 "transform": {
                     "position": {
                         "x": 0.0021955023985356092,
-                        "y": 0.8435996770858765
+                        "y": 10.415268898010254
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -94104,13 +94104,13 @@
                 "x": 0.0,
                 "y": 1.0
             },
-            "m_intensity": 2.0,
+            "m_intensity": 1.5,
             "m_light_OffSet": {
                 "x": 0.0,
                 "y": 0.0
             },
             "m_light_scale": {
-                "x": 3.0,
+                "x": 1.0,
                 "y": 1.0
             },
             "m_light_rotation": 0.0,
@@ -94173,7 +94173,7 @@
             "isprefab": true,
             "tagstr": "Enemy",
             "prefabname": "prefab_Vertical_Lazer.prefab",
-            "issync": false
+            "issync": true
         },
         "transform": {
             "position": {
@@ -94227,7 +94227,7 @@
         },
         "sprite": {
             "imagefile": "ani_inventoryCloseButton_strip2.png",
-            "layer": 7,
+            "layer": 6,
             "color": {
                 "r": 1.0,
                 "g": 1.0,
@@ -94257,13 +94257,13 @@
                 "x": 0.0,
                 "y": 1.0
             },
-            "m_intensity": 2.0,
+            "m_intensity": 1.5,
             "m_light_OffSet": {
                 "x": 0.0,
                 "y": 0.0
             },
             "m_light_scale": {
-                "x": 3.0,
+                "x": 1.0,
                 "y": 1.0
             },
             "m_light_rotation": 0.0,
@@ -94287,7 +94287,7 @@
                 "transform": {
                     "position": {
                         "x": -0.0010843176860362291,
-                        "y": -5.084541320800781
+                        "y": -5.397906303405762
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -94308,7 +94308,7 @@
                 "transform": {
                     "position": {
                         "x": 0.0021955023985356092,
-                        "y": 10.657788276672363
+                        "y": 10.415268898010254
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -94326,7 +94326,7 @@
             "isprefab": true,
             "tagstr": "Enemy",
             "prefabname": "prefab_Vertical_Lazer.prefab",
-            "issync": false
+            "issync": true
         },
         "transform": {
             "position": {
@@ -94380,7 +94380,7 @@
         },
         "sprite": {
             "imagefile": "ani_inventoryCloseButton_strip2.png",
-            "layer": 8,
+            "layer": 6,
             "color": {
                 "r": 1.0,
                 "g": 1.0,
@@ -94410,13 +94410,13 @@
                 "x": 0.0,
                 "y": 1.0
             },
-            "m_intensity": 2.0,
+            "m_intensity": 1.5,
             "m_light_OffSet": {
                 "x": 0.0,
                 "y": 0.0
             },
             "m_light_scale": {
-                "x": 3.0,
+                "x": 1.0,
                 "y": 1.0
             },
             "m_light_rotation": 0.0,
@@ -94440,7 +94440,7 @@
                 "transform": {
                     "position": {
                         "x": -0.0010843176860362291,
-                        "y": 13.214547157287598
+                        "y": -5.397906303405762
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -94461,7 +94461,7 @@
                 "transform": {
                     "position": {
                         "x": 0.0021955023985356092,
-                        "y": -2.7181925773620605
+                        "y": 10.415268898010254
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -94479,7 +94479,7 @@
             "isprefab": true,
             "tagstr": "Enemy",
             "prefabname": "prefab_Vertical_Lazer.prefab",
-            "issync": false
+            "issync": true
         },
         "transform": {
             "position": {
@@ -94533,7 +94533,7 @@
         },
         "sprite": {
             "imagefile": "ani_inventoryCloseButton_strip2.png",
-            "layer": 9,
+            "layer": 6,
             "color": {
                 "r": 1.0,
                 "g": 1.0,
@@ -94563,13 +94563,13 @@
                 "x": 0.0,
                 "y": 1.0
             },
-            "m_intensity": 2.0,
+            "m_intensity": 1.5,
             "m_light_OffSet": {
                 "x": 0.0,
                 "y": 0.0
             },
             "m_light_scale": {
-                "x": 3.0,
+                "x": 1.0,
                 "y": 1.0
             },
             "m_light_rotation": 0.0,
@@ -94593,7 +94593,7 @@
                 "transform": {
                     "position": {
                         "x": -0.0010843176860362291,
-                        "y": 13.214547157287598
+                        "y": -5.397906303405762
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -94614,7 +94614,7 @@
                 "transform": {
                     "position": {
                         "x": 0.0021955023985356092,
-                        "y": -2.7181925773620605
+                        "y": 10.415268898010254
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -94632,7 +94632,7 @@
             "isprefab": true,
             "tagstr": "Enemy",
             "prefabname": "prefab_Horizontal_Lazer.prefab",
-            "issync": false
+            "issync": true
         },
         "transform": {
             "position": {
@@ -94686,7 +94686,7 @@
         },
         "sprite": {
             "imagefile": "ani_inventoryCloseButton_strip2.png",
-            "layer": 10,
+            "layer": 16,
             "color": {
                 "r": 1.0,
                 "g": 1.0,
@@ -94707,7 +94707,12 @@
                 {
                     "name": "LazerForwardBackward",
                     "enabled": true,
-                    "map": []
+                    "map": [
+                        {
+                            "variable": "startOpposite",
+                            "base64": ""
+                        }
+                    ]
                 }
             ]
         },
@@ -94716,9 +94721,9 @@
                 "x": 0.0,
                 "y": 1.0
             },
-            "m_intensity": 0.5,
+            "m_intensity": 1.0,
             "m_light_OffSet": {
-                "x": 2.0,
+                "x": 0.0,
                 "y": 0.0
             },
             "m_light_scale": {
@@ -94746,7 +94751,7 @@
                 "transform": {
                     "position": {
                         "x": 0.018060749396681786,
-                        "y": -0.0408473014831543
+                        "y": 19.28890609741211
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -94767,7 +94772,7 @@
                 "transform": {
                     "position": {
                         "x": -0.00016162704559974372,
-                        "y": 38.085838317871094
+                        "y": -18.6070499420166
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -94785,7 +94790,7 @@
             "isprefab": true,
             "tagstr": "Enemy",
             "prefabname": "prefab_Horizontal_Lazer.prefab",
-            "issync": false
+            "issync": true
         },
         "transform": {
             "position": {
@@ -94839,7 +94844,7 @@
         },
         "sprite": {
             "imagefile": "ani_inventoryCloseButton_strip2.png",
-            "layer": 15,
+            "layer": 16,
             "color": {
                 "r": 1.0,
                 "g": 1.0,
@@ -94874,7 +94879,7 @@
                 "x": 0.0,
                 "y": 1.0
             },
-            "m_intensity": 2.0,
+            "m_intensity": 1.0,
             "m_light_OffSet": {
                 "x": 0.0,
                 "y": 0.0
@@ -94904,7 +94909,7 @@
                 "transform": {
                     "position": {
                         "x": 0.018060749396681786,
-                        "y": 28.294544219970703
+                        "y": 19.28890609741211
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -94925,7 +94930,7 @@
                 "transform": {
                     "position": {
                         "x": -0.00016162704559974372,
-                        "y": -10.045345306396484
+                        "y": -18.6070499420166
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -94943,7 +94948,7 @@
             "isprefab": true,
             "tagstr": "Enemy",
             "prefabname": "prefab_Horizontal_Lazer.prefab",
-            "issync": false
+            "issync": true
         },
         "transform": {
             "position": {
@@ -95032,14 +95037,14 @@
                 "x": 0.0,
                 "y": 1.0
             },
-            "m_intensity": 2.0,
+            "m_intensity": 1.0,
             "m_light_OffSet": {
                 "x": 0.0,
                 "y": 0.0
             },
             "m_light_scale": {
-                "x": 1.0399999618530273,
-                "y": 3.0799999237060547
+                "x": 1.0,
+                "y": 3.0
             },
             "m_light_rotation": 0.0,
             "m_colour": {
@@ -96784,11 +96789,11 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "ammoCount",
+                                    "variable": "backLimbGunAmmo",
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "backLimbGunAmmo",
+                                    "variable": "ammoCount",
                                     "base64": ""
                                 },
                                 {
@@ -96800,11 +96805,7 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "railGunLightMaxIntensity",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "rightLimbRailGunHold",
+                                    "variable": "leftLimbGunAmmo",
                                     "base64": ""
                                 },
                                 {
@@ -96812,7 +96813,11 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "leftLimbGunAmmo",
+                                    "variable": "rightLimbRailGunHold",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "railGunLightMaxIntensity",
                                     "base64": ""
                                 },
                                 {
@@ -96999,11 +97004,11 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "ammoCount",
+                                    "variable": "backLimbGunAmmo",
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "backLimbGunAmmo",
+                                    "variable": "ammoCount",
                                     "base64": ""
                                 },
                                 {
@@ -97015,11 +97020,7 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "leftLimbShotGunAmmo",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "leftLimbGunAmmo",
+                                    "variable": "rightLimbRailGunHold",
                                     "base64": ""
                                 },
                                 {
@@ -97027,7 +97028,11 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "rightLimbRailGunHold",
+                                    "variable": "leftLimbGunAmmo",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "leftLimbShotGunAmmo",
                                     "base64": ""
                                 },
                                 {
@@ -97415,11 +97420,11 @@
                     },
                     "m_light_rotation": 0.0,
                     "m_colour": {
-                        "x": 1.0,
-                        "y": 1.0,
-                        "z": 1.0
+                        "x": 0.8628318309783936,
+                        "y": 0.38178399205207825,
+                        "z": 0.38178399205207825
                     },
-                    "m_lightType": 1
+                    "m_lightType": 0
                 }
             },
             {
@@ -97459,8 +97464,8 @@
                     "m_light_rotation": 0.0,
                     "m_colour": {
                         "x": 1.0,
-                        "y": 1.0,
-                        "z": 1.0
+                        "y": 0.0,
+                        "z": 0.0
                     },
                     "m_lightType": 1
                 }
@@ -97501,8 +97506,8 @@
                     },
                     "m_light_rotation": 0.0,
                     "m_colour": {
-                        "x": 1.0,
-                        "y": 1.0,
+                        "x": 0.41150444746017456,
+                        "y": 0.9531287550926208,
                         "z": 1.0
                     },
                     "m_lightType": 1
@@ -97544,9 +97549,9 @@
                     },
                     "m_light_rotation": 0.0,
                     "m_colour": {
-                        "x": 1.0,
+                        "x": 0.4601770043373108,
                         "y": 1.0,
-                        "z": 1.0
+                        "z": 0.9856683015823364
                     },
                     "m_lightType": 1
                 }
@@ -97717,8 +97722,8 @@
                 },
                 "button": {
                     "force": {
-                        "x": 2761.2802734375,
-                        "y": 995.9531860351563
+                        "x": 896.5,
+                        "y": 788.2498168945313
                     },
                     "scale": {
                         "x": 5.920000076293945,
@@ -97799,8 +97804,8 @@
                 },
                 "button": {
                     "force": {
-                        "x": 2761.2802734375,
-                        "y": 862.9583740234375
+                        "x": 896.5,
+                        "y": 625.7006225585938
                     },
                     "scale": {
                         "x": 5.800000190734863,
@@ -97881,8 +97886,8 @@
                 },
                 "button": {
                     "force": {
-                        "x": 2761.2802734375,
-                        "y": 591.0762329101563
+                        "x": 896.5,
+                        "y": 293.40032958984375
                     },
                     "scale": {
                         "x": 5.840000152587891,
@@ -97963,8 +97968,8 @@
                 },
                 "button": {
                     "force": {
-                        "x": 2761.2802734375,
-                        "y": 454.7007751464844
+                        "x": 896.5,
+                        "y": 126.71932983398438
                     },
                     "scale": {
                         "x": 4.539999961853027,
@@ -98177,8 +98182,8 @@
                 },
                 "button": {
                     "force": {
-                        "x": 2761.2802734375,
-                        "y": 730.652099609375
+                        "x": 896.5,
+                        "y": 463.99310302734375
                     },
                     "scale": {
                         "x": 5.900000095367432,
