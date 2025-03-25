@@ -92,7 +92,7 @@
             }
         },
         "sprite": {
-            "imagefile": "img_portraitFrame.png",
+            "imagefile": "img_strangerPortrait.png",
             "layer": 4,
             "color": {
                 "r": 1.0,
@@ -142,8 +142,8 @@
         },
         "transform": {
             "position": {
-                "x": 1.2985405921936035,
-                "y": -0.7346134781837463
+                "x": 1.4700000286102295,
+                "y": -0.7699999809265137
             },
             "rotation": -0.0,
             "scale": {
@@ -171,12 +171,12 @@
         },
         "button": {
             "force": {
-                "x": 1551.61376953125,
-                "y": 133.88751220703125
+                "x": 577.6602172851563,
+                "y": 559.80810546875
             },
             "scale": {
-                "x": 0.20000000298023224,
-                "y": 0.25999999046325684
+                "x": 0.2199999988079071,
+                "y": 0.23999999463558197
             },
             "enablehover": true
         },
@@ -238,7 +238,7 @@
         },
         "transform": {
             "position": {
-                "x": -0.6567482948303223,
+                "x": -0.8500000238418579,
                 "y": -0.4461106061935425
             },
             "rotation": -0.0,
@@ -248,7 +248,7 @@
             }
         },
         "text": {
-            "text": "ROOM13A",
+            "text": "???",
             "text": null,
             "filename": "fnt_silkscreenRegular.ttf",
             "fontsize": 2.0,
@@ -257,38 +257,8 @@
                 "g": 0.8823529481887817,
                 "b": 0.06666667014360428
             },
-            "layer": 3
-        }
-    },
-    {
-        "name": {
-            "namestr": "DialogueText",
-            "layer": 0,
-            "isprefab": false,
-            "tagstr": "Default"
-        },
-        "transform": {
-            "position": {
-                "x": -0.13514649868011475,
-                "y": -0.6260688304901123
-            },
-            "rotation": -0.0,
-            "scale": {
-                "x": 1.0,
-                "y": 1.0
-            }
-        },
-        "text": {
-            "text": "OBJECTIVE : ESCAPE IN CUTSCENE.MP4 IN MILESTONE 6",
-            "text": null,
-            "filename": "fnt_silkscreenRegular.ttf",
-            "fontsize": 1.0,
-            "color": {
-                "r": 0.10588235408067703,
-                "g": 0.8823529481887817,
-                "b": 0.06666667014360428
-            },
-            "layer": 7
+            "layer": 3,
+            "isCentered": false
         }
     },
     {
@@ -338,32 +308,34 @@
     },
     {
         "name": {
-            "namestr": "img_scientistPortrait",
+            "namestr": "DialogueText",
             "layer": 0,
             "isprefab": false,
             "tagstr": "Default"
         },
         "transform": {
             "position": {
-                "x": -1.3862369060516357,
-                "y": -0.17917901277542114
+                "x": -0.8500000238418579,
+                "y": -0.550000011920929
             },
             "rotation": -0.0,
             "scale": {
-                "x": 1.1159999370574951,
-                "y": 1.1159999370574951
+                "x": 1.0,
+                "y": 1.0
             }
         },
-        "sprite": {
-            "imagefile": "img_roombert.png",
-            "layer": 5,
+        "text": {
+            "text": "Well done...",
+            "text": null,
+            "filename": "fnt_silkscreenRegular.ttf",
+            "fontsize": 1.0,
             "color": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
+                "r": 0.10588235408067703,
+                "g": 0.8823529481887817,
+                "b": 0.06666667014360428
             },
-            "alpha": 1.0,
-            "isLit": false
+            "layer": 8,
+            "isCentered": false
         }
     },
     {
@@ -375,8 +347,8 @@
         },
         "transform": {
             "position": {
-                "x": -0.5313889384269714,
-                "y": -0.5382811427116394
+                "x": -0.8500000238418579,
+                "y": -0.6000000238418579
             },
             "rotation": -0.0,
             "scale": {
@@ -385,7 +357,7 @@
             }
         },
         "text": {
-            "text": "STATUS: BOSS DESTROYED.",
+            "text": "Seems like room13A was successful after all.",
             "text": null,
             "filename": "fnt_silkscreenRegular.ttf",
             "fontsize": 1.0,
@@ -394,7 +366,8 @@
                 "g": 0.8823529481887817,
                 "b": 0.06666667014360428
             },
-            "layer": 8
+            "layer": 7,
+            "isCentered": false
         }
     },
     {
@@ -538,9 +511,42 @@
                         "g": 0.8823529481887817,
                         "b": 0.06666667014360428
                     },
-                    "layer": 900
+                    "layer": 900,
+                    "isCentered": true
                 }
             }
         ]
+    },
+    {
+        "name": {
+            "namestr": "DialogueText",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": -0.8500000238418579,
+                "y": -0.6499999761581421
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "text": {
+            "text": "Room13a, start \"Return home\" routine. override code 070325.",
+            "text": null,
+            "filename": "fnt_silkscreenRegular.ttf",
+            "fontsize": 1.0,
+            "color": {
+                "r": 0.10588235408067703,
+                "g": 0.8823529481887817,
+                "b": 0.06666667014360428
+            },
+            "layer": 7,
+            "isCentered": false
+        }
     }
 ]

@@ -142,8 +142,8 @@
         },
         "transform": {
             "position": {
-                "x": 1.2985405921936035,
-                "y": -0.7346134781837463
+                "x": 1.4700000286102295,
+                "y": -0.7699999809265137
             },
             "rotation": -0.0,
             "scale": {
@@ -171,8 +171,8 @@
         },
         "button": {
             "force": {
-                "x": 1551.61376953125,
-                "y": 133.88751220703125
+                "x": 1972.2396240234375,
+                "y": 514.0345458984375
             },
             "scale": {
                 "x": 0.20000000298023224,
@@ -222,7 +222,7 @@
         },
         "transform": {
             "position": {
-                "x": -0.8112843036651611,
+                "x": -0.8500000238418579,
                 "y": -0.4461106061935425
             },
             "rotation": -0.0,
@@ -241,7 +241,8 @@
                 "g": 0.8823529481887817,
                 "b": 0.06666667014360428
             },
-            "layer": 3
+            "layer": 3,
+            "isCentered": false
         }
     },
     {
@@ -253,8 +254,8 @@
         },
         "transform": {
             "position": {
-                "x": 0.07872739434242249,
-                "y": -0.544570803642273
+                "x": -0.8500000238418579,
+                "y": -0.550000011920929
             },
             "rotation": -0.0,
             "scale": {
@@ -263,7 +264,7 @@
             }
         },
         "text": {
-            "text": "this is a rather long hallway. your objective is still the same.",
+            "text": "They've found you! i'll try to delay them as much as i can...",
             "text": null,
             "filename": "fnt_silkscreenRegular.ttf",
             "fontsize": 1.0,
@@ -272,7 +273,8 @@
                 "g": 0.8823529481887817,
                 "b": 0.06666667014360428
             },
-            "layer": 7
+            "layer": 7,
+            "isCentered": false
         }
     },
     {
@@ -284,8 +286,8 @@
         },
         "transform": {
             "position": {
-                "x": -0.27230966091156006,
-                "y": -0.6348737478256226
+                "x": -0.8500000238418579,
+                "y": -0.6000000238418579
             },
             "rotation": -0.0,
             "scale": {
@@ -294,7 +296,7 @@
             }
         },
         "text": {
-            "text": "elimination of all personnel is optional.",
+            "text": "There's an escape hatch at the end, RUN!",
             "text": null,
             "filename": "fnt_silkscreenRegular.ttf",
             "fontsize": 1.0,
@@ -303,7 +305,8 @@
                 "g": 0.8823529481887817,
                 "b": 0.06666667014360428
             },
-            "layer": 8
+            "layer": 8,
+            "isCentered": false
         }
     },
     {
@@ -492,7 +495,8 @@
                         "g": 0.8823529481887817,
                         "b": 0.06666667014360428
                     },
-                    "layer": 900
+                    "layer": 900,
+                    "isCentered": true
                 }
             }
         ]

@@ -169,85 +169,54 @@ public class PlayerController : ScriptBase
             {
                 if (!PlayerGun.playerBoost)
                 {
-                    if (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID) == "Enemy")
+                    switch (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID))
                     {
-                        CameraFollowPlayerScript.Shake(10f, 1f);
+                        case "Enemy":
+                        case "EnemyBullet":
+                        case "PlayerRailgunBullet":
+                        case "Boss":
+                            CameraFollowPlayerScript.Shake(10f, 1f);
 
-                        InternalCall.m_InternalCallPlayAudio(EntityID, "aud_playerDeath01");
+                            InternalCall.m_InternalCallPlayAudio(EntityID, "aud_playerDeath01");
 
-                        var collisionComponent = GetComponent.GetColliderComponent(EntityID);
-                        collisionComponent.m_collisionCheck = !collisionComponent.m_collisionCheck;
-                        SetComponent.SetCollisionComponent(EntityID, collisionComponent);
+                            var collisionComponent = GetComponent.GetColliderComponent(EntityID);
+                            collisionComponent.m_collisionCheck = !collisionComponent.m_collisionCheck;
+                            SetComponent.SetCollisionComponent(EntityID, collisionComponent);
 
-                        InternalCall.m_InternalSetAnimationComponent(EntityID, 0, 0, 0, false, 1);
-                        InternalCall.m_InternalSetSpriteComponent(EntityID, playerDeathTexture, startingLayer, startingColor, startingAlpha);
+                            InternalCall.m_InternalSetAnimationComponent(EntityID, 0, 0, 0, false, 1);
+                            InternalCall.m_InternalSetSpriteComponent(EntityID, playerDeathTexture, startingLayer, startingColor, startingAlpha);
 
-                        movement.X = 0;
-                        movement.Y = 0;
+                            movement.X = 0;
+                            movement.Y = 0;
 
-                        InternalCall.m_InternalSetVelocity(EntityID, movement);
+                            InternalCall.m_InternalSetVelocity(EntityID, movement);
 
-                        isDead = true;
+                            isDead = true;
 
-                        CoroutineManager.Instance.PauseAllCoroutines();
+                            CoroutineManager.Instance.PauseAllCoroutines();
 
-                        InternalCall.m_InternalCallSetTimeScale(0);
-                    }
-                    if (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID) == "EnemyBullet")
-                    {
-                        CameraFollowPlayerScript.Shake(10f, 1f);
+                            InternalCall.m_InternalCallSetTimeScale(0);
+                            break;
 
-                        InternalCall.m_InternalCallPlayAudio(EntityID, "aud_playerDeath01");
+                        default:
+                            break;
 
-                        var collisionComponent = GetComponent.GetColliderComponent(EntityID);
-                        collisionComponent.m_collisionCheck = !collisionComponent.m_collisionCheck;
-                        SetComponent.SetCollisionComponent(EntityID, collisionComponent);
-
-                        InternalCall.m_InternalSetAnimationComponent(EntityID, 0, 0, 0, false, 1);
-                        InternalCall.m_InternalSetSpriteComponent(EntityID, playerDeathTexture, startingLayer, startingColor, startingAlpha);
-
-                        movement.X = 0;
-                        movement.Y = 0;
-
-                        InternalCall.m_InternalSetVelocity(EntityID, movement);
-
-                        isDead = true;
-
-                        CoroutineManager.Instance.PauseAllCoroutines();
-
-                        InternalCall.m_InternalCallSetTimeScale(0);
-                    }
-
-                    if (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID) == "PlayerRailgunBullet")
-                    {
-                        CameraFollowPlayerScript.Shake(10f, 1f);
-
-                        InternalCall.m_InternalCallPlayAudio(EntityID, "aud_playerDeath01");
-
-                        var collisionComponent = GetComponent.GetColliderComponent(EntityID);
-                        collisionComponent.m_collisionCheck = !collisionComponent.m_collisionCheck;
-                        SetComponent.SetCollisionComponent(EntityID, collisionComponent);
-
-                        InternalCall.m_InternalSetAnimationComponent(EntityID, 0, 0, 0, false, 1);
-                        InternalCall.m_InternalSetSpriteComponent(EntityID, playerDeathTexture, startingLayer, startingColor, startingAlpha);
-
-                        movement.X = 0;
-                        movement.Y = 0;
-
-                        InternalCall.m_InternalSetVelocity(EntityID, movement);
-
-                        isDead = true;
-
-                        CoroutineManager.Instance.PauseAllCoroutines();
-
-                        InternalCall.m_InternalCallSetTimeScale(0);
                     }
                 }
-           
-                else
+
+                switch (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID))
                 {
-                    if (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID) == "Boss")
-                    {
+                    case "Wall":
+                        if (PlayerGun.playerBoost)
+                        {
+                            CameraFollowPlayerScript.Shake(10f, 1f);
+                            PlayerGun.playerBoost = false;
+                        }
+                        break;
+
+                    case "Boss":
+                    case "LaserWall":
+
                         CameraFollowPlayerScript.Shake(10f, 1f);
 
                         InternalCall.m_InternalCallPlayAudio(EntityID, "aud_playerDeath01");
@@ -269,45 +238,11 @@ public class PlayerController : ScriptBase
                         InternalCall.m_InternalCallSetTimeScale(0);
 
                         CoroutineManager.Instance.PauseAllCoroutines();
-                    }
-                }
-                
-                if (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID) == "Wall")
-                {
 
-                    if (PlayerGun.playerBoost)
-                    {
-                        CameraFollowPlayerScript.Shake(10f, 1f);
-                        PlayerGun.playerBoost = false;
-                    }
+                        break;
 
-
-
-                }
-
-                if (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID) == "LaserWall")
-                {
-                    CameraFollowPlayerScript.Shake(10f, 1f);
-
-                    InternalCall.m_InternalCallPlayAudio(EntityID, "aud_playerDeath01");
-
-                    var collisionComponent = GetComponent.GetColliderComponent(EntityID);
-                    collisionComponent.m_collisionCheck = !collisionComponent.m_collisionCheck;
-                    SetComponent.SetCollisionComponent(EntityID, collisionComponent);
-
-                    InternalCall.m_InternalSetAnimationComponent(EntityID, 0, 0, 0, false, 1);
-                    InternalCall.m_InternalSetSpriteComponent(EntityID, playerDeathTexture, startingLayer, startingColor, startingAlpha);
-
-                    movement.X = 0;
-                    movement.Y = 0;
-
-                    InternalCall.m_InternalSetVelocity(EntityID, movement);
-
-                    isDead = true;
-
-                    InternalCall.m_InternalCallSetTimeScale(0);
-
-                    CoroutineManager.Instance.PauseAllCoroutines();
+                    default:
+                        break;
                 }
             }
         }
