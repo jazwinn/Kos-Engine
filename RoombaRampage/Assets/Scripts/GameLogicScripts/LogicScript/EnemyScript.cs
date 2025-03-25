@@ -142,20 +142,20 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
     #region Particle Variables
     private bool willSpawn = false;          // Whether the particle system should spawn particles
-    private int noOfParticles = 1;       // Number of particles in the system
-    private float lifeSpan = 3f;          // Lifespan of each particle
-    private Vector2 velocity;        // Initial velocity of the particles
-    private Vector2 acceleration;    // Acceleration affecting the particles
-    private Vector3 color;           // Color of the particles
-    private float coneRotation = 0;      // Rotation of the emission cone
-    private float coneAngle = 360f;         // Angle of the emission cone
-    private float randomFactor = 0;      // Randomness applied to particle properties
-    private string imageFile;        // Texture file for the particle
-    private int stripCount = 0;          // Number of strips in the particle animation
-    private int frameNumber = 0;         // Current frame in animation
-    private int layer = 500;               // Layer the particle system belongs to
-    private float friction = 0;          // Friction affecting particle movement
-    private int fps = 0;                 // Frames per second for particle animation
+    //private int noOfParticles = 1;       // Number of particles in the system
+    //private float lifeSpan = 3f;          // Lifespan of each particle
+    //private Vector2 velocity;        // Initial velocity of the particles
+    //private Vector2 acceleration;    // Acceleration affecting the particles
+    //private Vector3 color;           // Color of the particles
+    //private float coneRotation = 0;      // Rotation of the emission cone
+    //private float coneAngle = 360f;         // Angle of the emission cone
+    //private float randomFactor = 0;      // Randomness applied to particle properties
+    //private string imageFile;        // Texture file for the particle
+    //private int stripCount = 0;          // Number of strips in the particle animation
+    //private int frameNumber = 0;         // Current frame in animation
+    //private int layer = 500;               // Layer the particle system belongs to
+    //private float friction = 0;          // Friction affecting particle movement
+    //private int fps = 0;                 // Frames per second for particle animation
     #endregion
 
     public override void Awake(uint id) //Called everytime instance is created

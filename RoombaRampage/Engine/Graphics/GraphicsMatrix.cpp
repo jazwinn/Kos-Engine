@@ -149,15 +149,26 @@ namespace graphicpipe
 		}
 
 		//Lighting Data
-		if (m_lightingData.size() > 0)
+		if (m_multiLightingData.size() > 0)
 		{
-			for (int n{}; n < m_lightingData.size(); n++)
+			for (int n{}; n < m_multiLightingData.size(); n++)
 			{
-				m_lightingTransforms.push_back(m_lightingData[n].m_transformation);
-				m_lightingColors.push_back(m_lightingData[n].m_color);
-				m_lightingParams.push_back({ m_lightingData[n].m_intensity,m_lightingData[n].m_innerOuterRadius.x,m_lightingData[n].m_innerOuterRadius.y });
+				m_multiLightingTransforms.push_back(m_multiLightingData[n].m_transformation);
+				m_multiLightingColors.push_back(m_multiLightingData[n].m_color);
+				m_multiLightingParams.push_back({ m_multiLightingData[n].m_intensity,m_multiLightingData[n].m_innerOuterRadius.x,m_multiLightingData[n].m_innerOuterRadius.y });
 			}
-			m_lightingData.clear();
+			m_multiLightingData.clear();
+		}
+
+		if (m_additiveLightingData.size() > 0)
+		{
+			for (int n{}; n < m_additiveLightingData.size(); n++)
+			{
+				m_additiveLightingTransforms.push_back(m_additiveLightingData[n].m_transformation);
+				m_additiveLightingColors.push_back(m_additiveLightingData[n].m_color);
+				m_additiveLightingParams.push_back({ m_additiveLightingData[n].m_intensity,m_additiveLightingData[n].m_innerOuterRadius.x,m_additiveLightingData[n].m_innerOuterRadius.y });
+			}
+			m_additiveLightingData.clear();
 		}
 		
 

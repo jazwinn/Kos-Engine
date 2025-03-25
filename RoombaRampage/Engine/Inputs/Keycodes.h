@@ -16,11 +16,33 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 using keyCode = uint16_t;
 
 namespace keys {
-    enum : keyCode {
-        // From glfw3.h
+	enum : keyCode {
+		// From glfw3.h
 		LMB = 0,
 		RMB = 1,
 		MMB = 2,
+		CONTROLLER_A = LMB,
+		CONTROLLER_B = RMB,
+		CONTROLLER_X = MMB,
+		CONTROLLER_Y = 3,
+		CONTROLLER_LBUMP = 4,
+		CONTROLLER_RBUMP = 5,
+		CONTROLLER_BACK = 6,
+		CONTROLLER_START = 7,
+		CONTROLLER_GUIDE = 8,
+		CONTROLLER_LTHUMB = 9,
+		CONTROLLER_RTHUMB = 10,
+		CONTROLLER_UP = 11,
+		CONTROLLER_RIGHT = 12,
+		CONTROLLER_DOWN = 13,
+		CONTROLLER_LEFT = 14,
+		CONTROLLER_LEFT_TRIGGER = 15,
+		CONTROLLER_RIGHT_TRIGGER = 16,
+		CONTROLLER_LEFT_AXIS_X = LMB,
+		CONTROLLER_LEFT_AXIS_Y = RMB,
+		CONTROLLER_RIGHT_AXIS_X = MMB,
+		CONTROLLER_RIGHT_AXIS_Y = CONTROLLER_Y,
+
 
         SPACE = 32,
 		APOSTROPHE = 39, /* ' */

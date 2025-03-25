@@ -1,16 +1,14 @@
 /******************************************************************/
 /*!
-\file      debugFragmentShader.frag
-\author    Sean Tiu
-\par       s.tiu@digipen.edu
-\date      8th Nov, 2024
-\brief     A fragment shader used for debug visualization. 
+\file      videoFragmentShader.frag
+\author    Jaz Winn Ng
+\par       jazwinn.ng@digipen.edu
+\date      1st March, 2025
+\brief     A fragment shader used for video rendering. 
 
-           This shader outputs green or red colors depending on the 
-           collision status, with green indicating no collision and 
-           red indicating a collision. Camera indicates an orange box.
+          
 
-Copyright (C) 2024 DigiPen Institute of Technology.
+Copyright (C) 2025 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the
 prior written consent of DigiPen Institute of Technology is prohibited.
 */

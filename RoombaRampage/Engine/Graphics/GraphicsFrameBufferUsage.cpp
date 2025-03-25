@@ -57,14 +57,28 @@ namespace graphicpipe
 
 	}
 
-	void GraphicsPipe::m_drawLightingTexture()
+	void GraphicsPipe::m_drawMultiLightingTexture()
 	{
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-		glBindFramebuffer(GL_FRAMEBUFFER, m_lightingFrameBufferObject);
+		glBindFramebuffer(GL_FRAMEBUFFER, m_multiLightingFrameBufferObject);
 		glEnable(GL_DEPTH_TEST);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		m_funcRenderLighting();
+		m_funcRenderMultiLighting();
+
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		glDisable(GL_DEPTH_TEST);
+		glClear(GL_COLOR_BUFFER_BIT);
+	}
+
+	void GraphicsPipe::m_drawAdditiveLightingTexture()
+	{
+		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+		glBindFramebuffer(GL_FRAMEBUFFER, m_additiveLightingFrameBufferObject);
+		glEnable(GL_DEPTH_TEST);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		m_funcRenderAdditiveLighting();
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		glDisable(GL_DEPTH_TEST);
@@ -122,7 +136,8 @@ namespace graphicpipe
 		Helper::Helpers* help = Helper::Helpers::GetInstance();
 		glViewport(0, 0, (int)help->m_windowWidth, (int)help->m_windowHeight);
 		m_funcDrawGameFrameBuffer();
-		m_drawLightingTexture();
+		m_drawMultiLightingTexture();
+		m_drawAdditiveLightingTexture();
 		m_funcDrawUnlitObjectTexture();
 		glClearColor(0, 0, 0, 1.f);
 
@@ -137,13 +152,17 @@ namespace graphicpipe
 		glBindTexture(GL_TEXTURE_2D, m_screenTexture);
 
 		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, m_lightingTexture);
+		glBindTexture(GL_TEXTURE_2D, m_multiLightingTexture);
 
 		glActiveTexture(GL_TEXTURE2);
 		glBindTexture(GL_TEXTURE_2D, m_unlitScreenTexture);
 
+		glActiveTexture(GL_TEXTURE3);
+		glBindTexture(GL_TEXTURE_2D, m_additiveLightingTexture);
+
+		glUniform1i(glGetUniformLocation(m_finalPassShaderProgram, "additiveLightTexture"), 3);
 		glUniform1i(glGetUniformLocation(m_finalPassShaderProgram, "unlitScreenTexture"), 2);
-		glUniform1i(glGetUniformLocation(m_finalPassShaderProgram, "lightTexture"), 1);
+		glUniform1i(glGetUniformLocation(m_finalPassShaderProgram, "multiLightTexture"), 1);
 		glUniform1i(glGetUniformLocation(m_finalPassShaderProgram, "screenTexture"), 0);
 		glUniform1f(glGetUniformLocation(m_finalPassShaderProgram, "globalBrightness"), m_globalLightIntensity);
 
@@ -179,7 +198,8 @@ namespace graphicpipe
 		Helper::Helpers* help = Helper::Helpers::GetInstance();
 		glViewport(0, 0, (int)help->m_windowWidth, (int)help->m_windowHeight);
 		m_funcDrawWindow();
-		m_drawLightingTexture();
+		m_drawMultiLightingTexture();
+		m_drawAdditiveLightingTexture();
 		m_funcDrawDebugTexture();
 		glBindFramebuffer(GL_FRAMEBUFFER, m_gamePreviewFrameBufferObject);
 		glEnable(GL_DEPTH_TEST);
@@ -197,11 +217,15 @@ namespace graphicpipe
 		glBindTexture(GL_TEXTURE_2D, m_screenTexture);
 
 		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, m_lightingTexture);
+		glBindTexture(GL_TEXTURE_2D, m_multiLightingTexture);
 
 		glActiveTexture(GL_TEXTURE2);
 		glBindTexture(GL_TEXTURE_2D, m_unlitScreenTexture);
 
+		glActiveTexture(GL_TEXTURE3);
+		glBindTexture(GL_TEXTURE_2D, m_additiveLightingTexture);
+
+		glUniform1i(glGetUniformLocation(m_finalPassShaderProgram, "additiveLightTexture"), 3);
 		glUniform1i(glGetUniformLocation(m_finalPassShaderProgram, "unlitScreenTexture"), 2);
 		glUniform1i(glGetUniformLocation(m_finalPassShaderProgram, "lightTexture"), 1);
 		glUniform1i(glGetUniformLocation(m_finalPassShaderProgram, "screenTexture"), 0);
@@ -234,7 +258,7 @@ namespace graphicpipe
 		m_funcDrawTilemap();
 		m_funcDraw();
 		m_funcDrawText();
-		m_funcRenderLighting();
+		m_funcRenderMultiLighting();
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		glDisable(GL_DEPTH_TEST);

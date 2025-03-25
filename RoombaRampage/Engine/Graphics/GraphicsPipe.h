@@ -41,47 +41,45 @@ namespace graphicpipe {
 
     struct EmitterData
     {
-        int m_noOfParticles{};
-        float m_lifeSpan{};
-        glm::vec2 m_position{};
-        glm::vec2 m_velocity{};
-        glm::vec2 m_acceleration{};
-        glm::vec2 m_scale{};
-        glm::vec4 m_color{};
-        float m_rotation{};
-        float m_coneRotation{}; //Cone Rotation
-        float m_coneAngle{}; //
-        float m_randomFactor{};
-        unsigned int m_textureID{};
-        int m_stripCount{};
-        int m_frameNumber{};
-        int m_framesPerSecond{};
-        bool m_loopAnimation{};
-        int m_layer{};
-        float m_friction{};
+        int m_noOfParticles{};      ///< Number of particles emitted.
+        float m_lifeSpan{};        ///< Lifespan of each particle in seconds.
+        glm::vec2 m_position{};    ///< Emitter's position in world space.
+        glm::vec2 m_velocity{};    ///< Initial velocity of emitted particles.
+        glm::vec2 m_acceleration{}; ///< Acceleration applied to particles over time.
+        glm::vec2 m_scale{};       ///< Scale of emitted particles.
+        glm::vec4 m_color{};       ///< Initial color of emitted particles.
+        float m_rotation{};        ///< Initial rotation of emitted particles in degrees.
+        float m_coneRotation{};    ///< Rotation of the emission cone in degrees.
+        float m_coneAngle{};       ///< Spread angle of emitted particles in degrees.
+        float m_randomFactor{};    ///< Randomness applied to particle attributes.
+        unsigned int m_textureID{}; ///< Texture ID for particle rendering.
+        int m_stripCount{};        ///< Number of sprite strip frames.
+        int m_frameNumber{};       ///< Current animation frame.
+        int m_framesPerSecond{};   ///< Animation speed in frames per second.
+        bool m_loopAnimation{};    ///< Whether the animation should loop.
+        int m_layer{};             ///< Rendering layer order.
+        float m_friction{};        ///< Friction applied to slow down particles.
     };
 
     struct ParticleData
     {
-        float m_lifeSpan;
-        float m_rotation;
-        float m_isActive;
-        int m_textureID;
-        int m_stripCount;
-        int m_frameNumber;
-        int m_layer;
-        float m_initialEmissionAngle;
-        glm::vec2 m_position;
-        glm::vec2 m_velocity;
-        glm::vec2 m_acceleration;
-        glm::vec2 m_scale;
-  
-        glm::vec4 m_color;
-
-        float m_friction;
-        int m_framesPerSecond{};
-        float m_animationTimer{};
-        float padding3{};
+        float m_lifeSpan;            ///< Remaining lifespan of the particle.
+        float m_rotation;            ///< Current rotation of the particle in degrees.
+        float m_isActive;            ///< Flag indicating whether the particle is active.
+        int m_textureID;             ///< Texture ID used for rendering the particle.
+        int m_stripCount;            ///< Number of frames in the sprite strip.
+        int m_frameNumber;           ///< Current frame of animation.
+        int m_layer;                 ///< Rendering layer of the particle.
+        float m_initialEmissionAngle; ///< Initial angle at which the particle was emitted.
+        glm::vec2 m_position;        ///< Current position of the particle.
+        glm::vec2 m_velocity;        ///< Current velocity of the particle.
+        glm::vec2 m_acceleration;    ///< Acceleration applied to the particle.
+        glm::vec2 m_scale;           ///< Scale of the particle.
+        glm::vec4 m_color;           ///< Color of the particle.
+        float m_friction;            ///< Friction applied to slow the particle down.
+        int m_framesPerSecond{};     ///< Animation speed in frames per second.
+        float m_animationTimer{};    ///< Timer for animation updates.
+        float padding3{};            ///< Padding to align memory layout.
     };
 
     struct LightingData
@@ -90,7 +88,6 @@ namespace graphicpipe {
         glm::vec4 m_color{};               ///< Color of the light (RGBA).
         glm::vec2 m_innerOuterRadius{};    ///< Inner and outer radius of the light effect.
         float m_intensity{};               ///< Intensity of the light source.
-        int m_lightType{};                 ///< Type of light (e.g., point, directional, spot).
     };
 
     struct ColliderGridData
@@ -135,18 +132,17 @@ namespace graphicpipe {
         std::string m_fileName;            ///< Font file used for rendering.
     };
 
-    struct VideoData {
-
-        glm::mat3 transformation;
-        GLuint yTexture;
-        GLuint uTexture;
-        GLuint vTexture;
-        GLint locTransformation;
-        GLint locView;
-        GLint locProjection;
-
-        GLuint unilayer;
-        int layer;
+    struct VideoData
+    {
+        glm::mat3 transformation; ///< Transformation matrix for video rendering.
+        GLuint yTexture;          ///< Texture ID for the Y (luminance) channel.
+        GLuint uTexture;          ///< Texture ID for the U (chrominance blue) channel.
+        GLuint vTexture;          ///< Texture ID for the V (chrominance red) channel.
+        GLint locTransformation;  ///< Shader location for the transformation matrix.
+        GLint locView;            ///< Shader location for the view matrix.
+        GLint locProjection;      ///< Shader location for the projection matrix.
+        GLuint unilayer;          ///< Uniform layer used for multi-layer rendering.
+        int layer;                ///< Layer index for rendering order.
     };
 
     /**
@@ -272,8 +268,10 @@ namespace graphicpipe {
         unsigned int m_iVec3Buffer{};               ///< Buffer for integer vec3 attributes, used for texture ordering.
         unsigned int m_debugCollisionCheckBuffer{}; ///< Buffer for collision detection in debug drawing.
         unsigned int m_frameBufferObject{};         ///< Framebuffer object for offscreen rendering.
-        unsigned int m_lightingFrameBufferObject{}; ///< Framebuffer object for lighting pass rendering.
-        unsigned int m_lightingDepthBufferObject{}; ///< Depth buffer for the lighting framebuffer.
+        unsigned int m_multiLightingFrameBufferObject{}; ///< Framebuffer object for lighting pass rendering.
+        unsigned int m_multiLightingDepthBufferObject{}; ///< Depth buffer for the lighting framebuffer.
+        unsigned int m_additiveLightingFrameBufferObject{}; ///< Framebuffer object for additive lighting pass rendering.
+        unsigned int m_additiveLightingDepthBufferObject{}; ///< Depth buffer for the additive lighting framebuffer.
         unsigned int m_finalPassFrameBufferObject{}; ///< Framebuffer object for final post-processing pass.
         unsigned int m_finalPassDepthBufferObject{}; ///< Depth buffer for the final pass framebuffer.
         unsigned int m_depthBufferObject{};         ///< Depth buffer object for storing depth information.
@@ -389,9 +387,20 @@ namespace graphicpipe {
          */
         void m_funcDraw();
 
+        /**
+          * @brief Draws all unlit graphical elements.
+          *
+          * Renders objects that do not require lighting calculations, such as UI elements.
+          */
         void m_funcDrawUnlit();
 
+        /**
+         * @brief Draws video textures.
+         *
+         * Renders video frames stored in textures, applying appropriate transformations.
+         */
         void m_funcDrawVideos();
+
 
         /**
          * @brief Draws debug elements.
@@ -447,14 +456,36 @@ namespace graphicpipe {
          * This function renders the lighting texture generated from the lighting
          * framebuffer onto the screen or another target.
          */
-        void m_drawLightingTexture();
+        void m_drawMultiLightingTexture();
 
+        void m_drawAdditiveLightingTexture();
+
+        /**
+          * @brief Draws unlit object textures.
+          *
+          * Renders textures for objects that do not use lighting calculations.
+          */
         void m_funcDrawUnlitObjectTexture();
 
+        /**
+         * @brief Draws debug textures.
+         *
+         * Renders debug-related textures, such as wireframes or overlays.
+         */
         void m_funcDrawDebugTexture();
 
+        /**
+         * @brief Executes the final rendering pass.
+         *
+         * Combines all rendering layers and outputs the final image to the screen.
+         */
         void m_renderFinalPass();
 
+        /**
+         * @brief Executes the final rendering pass with debug overlays.
+         *
+         * Similar to m_renderFinalPass but includes additional debug information.
+         */
         void m_renderFinalPassWithDebug();
 
 
@@ -465,12 +496,25 @@ namespace graphicpipe {
          * This function processes and applies lighting effects using the lighting
          * framebuffer, shaders, and associated buffers.
          */
-        void m_funcRenderLighting();
+        void m_funcRenderMultiLighting();
 
+        void m_funcRenderAdditiveLighting();
+
+        /**
+          * @brief Draws a full-screen quad with a texture.
+          *
+          * Renders a full-screen quad using the specified texture, often used for post-processing effects.
+          *
+          * @param texture The texture to be applied to the full-screen quad.
+          */
         void m_funcDrawFullScreenQuad(unsigned int texture);
 
+        /**
+         * @brief Draws all active particles.
+         *
+         * Renders the particle system, displaying particles with their respective properties such as position, color, and animation.
+         */
         void m_funcDrawParticles();
-
         /**
          * @brief Sets the drawing mode for rendering.
          *
@@ -499,10 +543,19 @@ namespace graphicpipe {
         void m_funcSetupGamePreviewFrameBuffer();
 
 
+        /**
+          * @brief Sets up the final pass buffer.
+          *
+          * Configures the framebuffer and necessary resources for the final rendering pass.
+          */
         void m_funcSetupFinalPassBuffer();
 
+        /**
+         * @brief Sets up the framebuffer for unlit screen rendering.
+         *
+         * Initializes the framebuffer used for rendering unlit objects on the screen.
+         */
         void m_funcSetUpUnlitScreenFrameBuffer();
-
         /**
          * @brief Sets up the framebuffer for lighting rendering.
          *
@@ -513,7 +566,9 @@ namespace graphicpipe {
          *
          * @note This function assumes that the OpenGL context has been properly initialized.
          */
-        void m_funcSetupLightingFrameBuffer();
+        void m_funcSetupMultiLightingFrameBuffer();
+
+        void m_funcSetupAdditiveLightingFrameBuffer();
 
         /**
          * @brief Calculates the model-to-world transformation matrix.
@@ -540,8 +595,18 @@ namespace graphicpipe {
         */
         void m_funcClearContainers();
 
+        /**
+          * @brief Spawns new particles.
+          *
+          * Generates and initializes new particles based on the emitter's properties.
+          */
         void m_spawnParticles();
 
+        /**
+         * @brief Updates particle properties.
+         *
+         * Updates the position, velocity, lifespan, and animation of active particles over time.
+         */
         void m_updateParticles();
 
         //Boolean Values
@@ -565,7 +630,8 @@ namespace graphicpipe {
         // Data for rendering
         std::vector<ParticleData> m_particleData{};
         std::vector<EmitterData> m_emitterData{}; ///< Emitter Data for the Scene.
-        std::vector<LightingData> m_lightingData{}; ///< Lighting data for the scene.
+        std::vector<LightingData> m_multiLightingData{}; ///< Lighting data for the scene.
+        std::vector<LightingData> m_additiveLightingData{}; ///< Lighting data for the scene.
         std::vector<ColliderGridData> m_colliderGridData{}; ///< Collider grid data for collision checks.
         std::vector<TilemapData> m_tilemapData{}; ///< Data for tilemaps in the scene.
         std::vector<GraphicsData> m_modelData{}; ///< Graphics data for rendering 3D models.
@@ -577,8 +643,10 @@ namespace graphicpipe {
         std::vector<float> m_debugCircleCollisionChecks{}; ///< Collision check data for debug circle rendering.
 
         std::vector<glm::vec4> m_colors{}; ///< Colors used in various elements for rendering.
-        std::vector<glm::vec4> m_lightingColors{}; ///< Lighting colors for illumination effects.
-        std::vector<glm::vec3> m_lightingParams{}; ///< Parameters related to lighting calculations.
+        std::vector<glm::vec4> m_multiLightingColors{}; ///< Lighting colors for illumination effects.
+        std::vector<glm::vec3> m_multiLightingParams{}; ///< Parameters related to lighting calculations.
+        std::vector<glm::vec4> m_additiveLightingColors{}; ///< Lighting colors for illumination effects.
+        std::vector<glm::vec3> m_additiveLightingParams{}; ///< Parameters related to lighting calculations.
         std::vector<std::vector<int>> m_tileIndexes{}; ///< Tile indexes for rendering in the tilemap.
         std::vector<std::vector<int>> m_gridColliderChecks{}; ///< Collider check indexes for the grid.
 
@@ -589,7 +657,8 @@ namespace graphicpipe {
         std::vector<int> m_frameNumbers{}; ///< Frame numbers for sprite animations.
         std::vector<image::Image> m_imageData{}; ///< Image data used for rendering textures and sprites.
         std::vector<TilemapData> m_transformedTilemaps{}; ///< Transformed tilemap data after processing.
-        std::vector<glm::mat3> m_lightingTransforms{}; ///< Lighting transformation matrices for effects.
+        std::vector<glm::mat3> m_multiLightingTransforms{}; ///< Multiplicative Lighting transformation matrices for effects.
+        std::vector<glm::mat3> m_additiveLightingTransforms{}; ///< Additive Lighting transformation matrices for effects.
         std::vector<std::vector<std::vector<int>>> m_tilemapIndexArrays{}; ///< Tilemap index arrays for 2D grid-based tiles.
         std::vector<std::vector<std::vector<int>>> m_gridColliderArrays{}; ///< Grid collider arrays for collision handling.
 
@@ -601,7 +670,8 @@ namespace graphicpipe {
         unsigned int m_screenTextureVAO{}; ///< Vertex Array Object for screen texture rendering.
         unsigned int m_screenTexture{}; ///< Texture for rendering the screen.
         unsigned int m_gamePreviewTexture{}; ///< Texture for displaying game preview.
-        unsigned int m_lightingTexture{}; ///< Texture for storing lighting data.
+        unsigned int m_multiLightingTexture{}; ///< Texture for storing lighting data.
+        unsigned int m_additiveLightingTexture{};
         unsigned int m_finalPassTexture{}; ///< Texture for the final rendering pass.
         unsigned int m_unlitScreenTexture{};
 

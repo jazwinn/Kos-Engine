@@ -66,7 +66,6 @@ namespace ecs {
 	{
 		ECS* ecs = ECS::m_GetInstance();
 		graphicpipe::GraphicsPipe* graphicsPipe = graphicpipe::GraphicsPipe::m_funcGetInstance();
-		//assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
 
 		if (m_vecLightingComponentPtr.size() != m_vecTransformComponentPtr.size()) {
 			LOGGING_ERROR("Error: Vectors container size does not Match");
@@ -147,13 +146,27 @@ namespace ecs {
 
 				lightTransformation = lightTransformation * mat3x3::Mat3Transform(light->m_light_OffSet, light->m_light_scale, 0);
 
+
+
 				//transform->m_transformation = lightTransformation;
 
-				graphicsPipe->m_lightingData.push_back({ { lightTransformation.m_e00,lightTransformation.m_e01,lightTransformation.m_e02,
+				if (light->m_lightType == graphicpipe::GLOW)
+				{
+					graphicsPipe->m_additiveLightingData.push_back({ { lightTransformation.m_e00,lightTransformation.m_e01,lightTransformation.m_e02,
 										   lightTransformation.m_e10,lightTransformation.m_e11, lightTransformation.m_e12,
 										   lightTransformation.m_e20, lightTransformation.m_e21, lightTransformation.m_e22 },
 										{  light->m_colour.m_x,light->m_colour.m_y,light->m_colour.m_z ,1.f }, { light->m_innerOuterRadius.m_x ,light->m_innerOuterRadius.m_y },
-										   light->m_intensity, light->m_lightType });
+										   light->m_intensity });
+				}
+				else
+				{
+					graphicsPipe->m_multiLightingData.push_back({ { lightTransformation.m_e00,lightTransformation.m_e01,lightTransformation.m_e02,
+															   lightTransformation.m_e10,lightTransformation.m_e11, lightTransformation.m_e12,
+															   lightTransformation.m_e20, lightTransformation.m_e21, lightTransformation.m_e22 },
+															   { light->m_colour.m_x,light->m_colour.m_y,light->m_colour.m_z ,1.f }, { light->m_innerOuterRadius.m_x ,light->m_innerOuterRadius.m_y },
+															   light->m_intensity });
+				}
+				
 
 			}
 			else {
@@ -175,16 +188,28 @@ namespace ecs {
 
 				lightTransformation = lightTransformation * mat3x3::Mat3Transform(light->m_light_OffSet, light->m_light_scale, 0);
 
-				//transform->m_transformation = lightTransformation;
-				graphicsPipe->m_lightingData.push_back({ { lightTransformation.m_e00,lightTransformation.m_e01,lightTransformation.m_e02,
-														   lightTransformation.m_e10,lightTransformation.m_e11, lightTransformation.m_e12,
-														   lightTransformation.m_e20, lightTransformation.m_e21, lightTransformation.m_e22 },
-														{  light->m_colour.m_x,light->m_colour.m_y,light->m_colour.m_z ,1.f }, { light->m_innerOuterRadius.m_x ,light->m_innerOuterRadius.m_y },
-														   light->m_intensity, light->m_lightType });
+				if (light->m_lightType == graphicpipe::GLOW)
+				{
+					graphicsPipe->m_additiveLightingData.push_back({ { lightTransformation.m_e00,lightTransformation.m_e01,lightTransformation.m_e02,
+															   lightTransformation.m_e10,lightTransformation.m_e11, lightTransformation.m_e12,
+															   lightTransformation.m_e20, lightTransformation.m_e21, lightTransformation.m_e22 },
+															   { light->m_colour.m_x,light->m_colour.m_y,light->m_colour.m_z ,1.f }, { light->m_innerOuterRadius.m_x ,light->m_innerOuterRadius.m_y },
+															   light->m_intensity });
+				}
+				else
+				{
+					graphicsPipe->m_multiLightingData.push_back({ { lightTransformation.m_e00,lightTransformation.m_e01,lightTransformation.m_e02,
+															   lightTransformation.m_e10,lightTransformation.m_e11, lightTransformation.m_e12,
+															   lightTransformation.m_e20, lightTransformation.m_e21, lightTransformation.m_e22 },
+															   { light->m_colour.m_x,light->m_colour.m_y,light->m_colour.m_z ,1.f }, { light->m_innerOuterRadius.m_x ,light->m_innerOuterRadius.m_y },
+															   light->m_intensity });
+				}
+
+				
 			}
 
 			//ORIGINAL
-			//graphicsPipe->m_lightingData.push_back({ { transform->m_transformation.m_e00,transform->m_transformation.m_e01,transform->m_transformation.m_e02,
+			//graphicsPipe->m_multiLightingData.push_back({ { transform->m_transformation.m_e00,transform->m_transformation.m_e01,transform->m_transformation.m_e02,
 			//										   transform->m_transformation.m_e10,transform->m_transformation.m_e11, transform->m_transformation.m_e12,
 			//										   transform->m_transformation.m_e20, transform->m_transformation.m_e21, transform->m_transformation.m_e22 },
 			//										{  light->m_colour.m_x,light->m_colour.m_y,light->m_colour.m_z ,1.f }, { light->m_innerOuterRadius.m_x ,light->m_innerOuterRadius.m_y },

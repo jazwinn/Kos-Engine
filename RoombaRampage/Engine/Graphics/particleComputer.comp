@@ -4,7 +4,7 @@
 \author    Sean Tiu
 \par       s.tiu@digipen.edu
 \date      8th March, 2025
-\brief     This com shader is used to calculate the particles
+\brief     This computer shader is used to calculate the particles
            physics and lifetime
 */
 /******************************************************************/

@@ -1,6 +1,6 @@
 /********************************************************************/
 /*!
-\file      InternalCall.h
+\file      InternalCall.cpp
 \author    Chiu Jun Jie, junjie.c , 2301524
 \par       junjie.c@digipen.edu
 \date      Nov 27 , 2024
@@ -1563,6 +1563,21 @@ namespace script {
 		return Input::InputSystem::m_isKeyTriggered(key);
 	}
 
+	bool InternalCall::m_InternalCallIsControllerTriggered(keyCode key)
+	{
+		return Input::InputSystem::m_isControllerButtonTriggered(key);
+	}
+
+	bool InternalCall::m_InternalCallIsControllerPress(keyCode key)
+	{
+		return Input::InputSystem::m_isControllerButtonPressed(key);
+	}
+
+	bool InternalCall::m_InternalCallIsControllerReleased(keyCode key)
+	{
+		return Input::InputSystem::m_isControllerButtonReleased(key);
+	}
+
 
 	void InternalCall::m_RegisterInternalCalls()
 	{
@@ -1704,6 +1719,10 @@ namespace script {
 
 		MONO_ADD_INTERNAL_CALL(m_HideEntityandchildren);
 		MONO_ADD_INTERNAL_CALL(m_UnHideEntityandchildren);
+
+		MONO_ADD_INTERNAL_CALL(m_InternalCallIsControllerTriggered);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallIsControllerPress);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallIsControllerReleased);
 		///SO HELP ME THEN OVER HERE
 	}
 }
