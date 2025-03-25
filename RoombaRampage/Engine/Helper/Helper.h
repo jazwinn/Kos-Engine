@@ -52,6 +52,8 @@ namespace Helper {
 
 		float m_windowHeight;
 
+		float m_windowScalar;
+
 		bool m_windowMinimise{ false };
 
 		bool m_closeWindow{ false };
