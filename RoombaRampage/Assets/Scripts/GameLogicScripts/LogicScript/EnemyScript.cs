@@ -96,6 +96,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     private float patrolSpeed = 1.9f;
     private float enemyFOVangle = 300.0f;
     private float enemyFOVdistance = 10.0f;
+    private float maxEnemySpeed = 1.2f;
 
     private float scanTime = 0f;
     private bool scanning = false;
@@ -847,8 +848,8 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         movement.Y = 0 + forwardY * enemySpeed;
 
         RigidBodyComponent rb = Component.Get<RigidBodyComponent>(EntityID);
-        //rb.m_Acceleration = movement;
-        rb.m_Velocity = movement;
+        rb.m_Acceleration = movement;
+        //rb.m_Velocity = movement;
         Component.Set<RigidBodyComponent>(EntityID, rb);
 
         //InternalCall.m_InternalSetVelocity(EntityID, in movement); //BANE OF MY EXISTENCE
@@ -949,9 +950,12 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         // Compute movement based on direction
         movement.X = direction.X * enemySpeed;
         movement.Y = direction.Y * enemySpeed;
-
+        RigidBodyComponent rb = Component.Get<RigidBodyComponent>(EntityID);
+        rb.m_Acceleration = movement;
+        //rb.m_Velocity = movement;
+        Component.Set<RigidBodyComponent>(EntityID, rb);
         // Apply movement
-        InternalCall.m_InternalSetVelocity(EntityID, in movement);
+        //InternalCall.m_InternalSetVelocity(EntityID, in movement);
     }
 
 
