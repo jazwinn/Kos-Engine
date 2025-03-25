@@ -480,6 +480,10 @@ namespace script {
 
 		static bool m_InternalCallIsControllerReleased(keyCode key);
 
+		static bool m_InternalCallIsControllerPresent();
+
+		static MonoArray* m_InternalCallGetJoyStickAxis();
+
 		/******************************************************************/
 		/*!
 			\fn        void InternalCall::m_InternalCallSetTimeScale(const float x)
