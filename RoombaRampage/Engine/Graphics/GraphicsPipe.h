@@ -130,6 +130,7 @@ namespace graphicpipe {
         int m_layer{};                     ///< Layer for rendering order.
         glm::vec3 m_color{};               ///< Text color (RGB).
         std::string m_fileName;            ///< Font file used for rendering.
+        bool m_isCentered;
     };
 
     struct VideoData

@@ -263,33 +263,37 @@ namespace graphicpipe
 				//float scale = help->m_windowHeight / static_cast<float>(help->m_currWindowHeight);
 				//scale /= (help->m_windowWidth / 1920.f); ///Recalibrate if needed
 
-				// Step 1: Calculate total width and height of the text
-				float totalWidth = 0.0f;
-				float maxAscent = 0.0f;
-				float maxDescent = 0.0f;
-				for (int i = 0; i < textData.m_text.size(); ++i) // To calculate the total width of the text
+				if (textData.m_isCentered)
 				{
-					char c = textData.m_text[i];
-					text::CharacterData ch = assetmanager->m_fontManager.m_fonts[textData.m_fileName][c];
-					if (i == textData.m_text.size() - 1) // If it's the last letter, add only the letter size
+					// Step 1: Calculate total width and height of the text
+					float totalWidth = 0.0f;
+					float maxAscent = 0.0f;
+					float maxDescent = 0.0f;
+					for (int i = 0; i < textData.m_text.size(); ++i) // To calculate the total width of the text
 					{
-						totalWidth += ((ch.m_size.x * textData.m_scale * textData.m_xyScale.x) / ((static_cast<float>(help->m_currWindowHeight))));
+						char c = textData.m_text[i];
+						text::CharacterData ch = assetmanager->m_fontManager.m_fonts[textData.m_fileName][c];
+						if (i == textData.m_text.size() - 1) // If it's the last letter, add only the letter size
+						{
+							totalWidth += ((ch.m_size.x * textData.m_scale * textData.m_xyScale.x) / ((static_cast<float>(help->m_currWindowHeight))));
+						}
+						else // Add the letter size and the space
+						{
+							totalWidth += ((ch.m_advance >> 6) * textData.m_scale * textData.m_xyScale.x) / ((static_cast<float>(help->m_currWindowHeight)));
+						}
+						maxAscent = std::max(maxAscent, (ch.m_bearing.y * textData.m_scale * textData.m_xyScale.y) / ((static_cast<float>(help->m_currWindowHeight))));
+						maxDescent = std::max(maxDescent, ((ch.m_size.y - ch.m_bearing.y) * textData.m_scale * textData.m_xyScale.y) / ((static_cast<float>(help->m_currWindowHeight))));
 					}
-					else // Add the letter size and the space
-					{
-						totalWidth += ((ch.m_advance >> 6) * textData.m_scale * textData.m_xyScale.x) / ((static_cast<float>(help->m_currWindowHeight)));
-					}
-					maxAscent = std::max(maxAscent, (ch.m_bearing.y * textData.m_scale * textData.m_xyScale.y) / ((static_cast<float>(help->m_currWindowHeight))));
-					maxDescent = std::max(maxDescent, ((ch.m_size.y - ch.m_bearing.y) * textData.m_scale * textData.m_xyScale.y) / ((static_cast<float>(help->m_currWindowHeight))));
+
+					float totalHeight = maxAscent + maxDescent;
+
+
+
+					// Adjust starting position to center the text
+					textData.m_x = originX - totalWidth / 2.0f;  // Horizontal centering
+					textData.m_y = originY + maxAscent / 2.0f - totalHeight / 2.0f;  // Vertical centering
 				}
 				
-				float totalHeight = maxAscent + maxDescent;
-
-
-
-				// Adjust starting position to center the text
-				textData.m_x = originX - totalWidth / 2.0f;  // Horizontal centering
-				textData.m_y = originY + maxAscent / 2.0f - totalHeight / 2.0f;  // Vertical centering
 
 				// Step 2: Render the text
 				for (const char& c : textData.m_text)
