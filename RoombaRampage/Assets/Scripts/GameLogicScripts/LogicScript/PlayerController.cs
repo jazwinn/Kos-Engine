@@ -34,6 +34,8 @@ public class PlayerController : ScriptBase
 
         //Set tolerance to prevent jittering, higher values = more rigid rotation, but no more jittering due to micro changes
         angleTolerance = 4f;
+
+        InternalCall.m_InternalGetWorldMousePosition(out previousMousePos);
     }
     #endregion
 
@@ -52,6 +54,9 @@ public class PlayerController : ScriptBase
 
     //Movement Vector
     private Vector2 movement;
+
+    //prev mouse pos
+    private Vector2 previousMousePos;
 
     //Collision
     private int[] collidedEntities;
@@ -258,20 +263,32 @@ public class PlayerController : ScriptBase
 
         Vector2 mousePos;
         Vector2 roombaPos;
-
-        //Get pos of mouse
-        InternalCall.m_InternalGetWorldMousePosition(out mousePos);
-
         //Get pos of player
         InternalCall.m_InternalGetTransformComponent(EntityID, out roombaPos, out startingRoombaScale, out startingRoombaRotate);
+        //Get pos of mouse
+        InternalCall.m_InternalGetWorldMousePosition(out mousePos);
+        if(previousMousePos.X != mousePos.X && previousMousePos.Y != mousePos.Y)
+        {
 
-        Vector2 direction;
+            Vector2 direction;
 
-        //Gets direction to look towards
-        direction.X = (mousePos.X - roombaPos.X);
-        direction.Y = (mousePos.Y - roombaPos.Y);
+            //Gets direction to look towards
+            direction.X = (mousePos.X - roombaPos.X);
+            direction.Y = (mousePos.Y - roombaPos.Y);
 
-        rotationFloat = (float)(Math.Atan2(direction.X, direction.Y) * (180 / Math.PI));
+            rotationFloat = (float)(Math.Atan2(direction.X, direction.Y) * (180 / Math.PI));
+
+            previousMousePos = mousePos;
+        }
+       
+
+        float controllerRotation = InternalCall.m_InternalCallGetRightJoyStickRotation();
+
+        if(controllerRotation > 0)
+        {
+            rotationFloat = controllerRotation;
+        }
+
 
         if ((rotationFloat > previousRotationFloat + angleTolerance) || (rotationFloat < previousRotationFloat - angleTolerance))
         {

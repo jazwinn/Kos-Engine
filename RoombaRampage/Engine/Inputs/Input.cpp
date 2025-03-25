@@ -34,8 +34,8 @@ namespace Input {
 	int InputSystem::m_controllerID = NULL;
 	std::vector<float> InputSystem::m_controllerAxes(6, 0);
 	float InputSystem::ControllerSensitivity = 30.0f;
-	float InputSystem::deadzone = 0.2f;
-
+	float InputSystem::deadzone = 0.05f;
+	float InputSystem::controllerRightJoyStickRotation = -1.f;
 
 	void InputSystem::KeyCallBack([[maybe_unused]] GLFWwindow* window, [[maybe_unused]] int key, [[maybe_unused]] int scancode, int action, [[maybe_unused]] int mods) {
 		if (action == GLFW_PRESS) {
@@ -94,6 +94,7 @@ namespace Input {
 			m_controllerConnected = false;
 			m_controllerID = NULL;
 		}
+
 	}
 	
 
@@ -246,25 +247,58 @@ namespace Input {
 	void InputSystem::giveControllerMousePos()
 	{
 
+		//if (glfwJoystickPresent(GLFW_JOYSTICK_1)) {
+		//	int axesCount;
+		//	const float* axes = glfwGetJoystickAxes(GLFW_JOYSTICK_1, &axesCount);
+
+		//	if (axesCount >= 2) {
+		//		float stickX = axes[2];
+		//		float stickY = axes[3];
+		//		GLFWwindow* window = glfwGetCurrentContext();
+		//		double mouseX, mouseY;
+		//		glfwGetCursorPos(window, &mouseX, &mouseY);
+
+
+		//		if (fabs(stickX) > deadzone || fabs(stickY) > deadzone) {
+		//			mouseX += stickX * cursorSpeed;
+		//			mouseY += stickY * cursorSpeed; // Invert Y if needed
+		//			glfwSetCursorPos(window, mouseX, mouseY);
+		//		}
+		//	}
+		//}
+
+
 		if (glfwJoystickPresent(GLFW_JOYSTICK_1)) {
-			int axesCount;
-			const float* axes = glfwGetJoystickAxes(GLFW_JOYSTICK_1, &axesCount);
+			int count;
+			const float* axes = glfwGetJoystickAxes(GLFW_JOYSTICK_1, &count);
 
-			if (axesCount >= 2) {
-				float stickX = axes[2];
-				float stickY = axes[3];
-				GLFWwindow* window = glfwGetCurrentContext();
-				double mouseX, mouseY;
-				glfwGetCursorPos(window, &mouseX, &mouseY);
+			if (count >= 2) { // Ensure the joystick has at least two axes
+				float x = axes[2]; // X-axis
+				float y = axes[3]; // Y-axis (negate to correct inversion)
 
-
-				if (fabs(stickX) > deadzone || fabs(stickY) > deadzone) {
-					mouseX += stickX * ControllerSensitivity;
-					mouseY += stickY * ControllerSensitivity; // Invert Y if needed
-					glfwSetCursorPos(window, mouseX, mouseY);
+				if (x == 0.0f && y == 0.0f) {
+					controllerRightJoyStickRotation = -1;
+					return;
 				}
+				if (fabs(x) < deadzone || fabs(y) < deadzone) {
+					controllerRightJoyStickRotation = -1;
+					return;
+				}
+
+
+				float angle = atan2(x, -y) * 57.2958f; // Swap x and y
+				if (angle < 0) angle += 360.0f; // Normalize to [0, 360)
+
+				controllerRightJoyStickRotation = angle;
+				
 			}
 		}
+		else {
+			controllerRightJoyStickRotation = -1;
+		}
+		
+		//std::cout << controllerRightJoyStickRotation << std::endl;
+		return; // Joystick not present or invalid axes
 	}
 
 
