@@ -75,7 +75,7 @@ public class PauseMenuButtons : ScriptBase
 
     private void CheckForClicks()
     {
-        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.LMB) && isHovering == true)
+        if ((InternalCall.m_InternalCallIsKeyTriggered(keyCode.LMB) || InternalCall.m_InternalCallIsControllerTriggered(keyCode.CONTROLLER_A)) && isHovering == true)
         {
             switch (buttonFunctionNo)
             {

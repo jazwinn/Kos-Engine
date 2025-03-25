@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -118,6 +119,28 @@ public class PlayerController : ScriptBase
         {
             movement.X = speed; // Move right if not blocked
         }
+
+        if (InternalCall.m_InternalCallIsControllerPresent())
+        {
+            float[] axis = InternalCall.m_InternalCallGetJoyStickAxis();
+
+            if(axis != null)
+            {
+                float deadzone = 0.2f;
+                if (Math.Abs(axis[0]) > deadzone)
+                {
+                   // Console.WriteLine(axis[0]);
+                    movement.X = speed * axis[0];
+                }
+                if (Math.Abs(axis[1]) > deadzone)
+                {
+                    movement.Y = speed * axis[1];
+                }
+            }
+
+        }
+
+        
 
         //Normalize to prevent diagonal movement from adding speed
         movement = NormalizeAndScale(movement.X, movement.Y, speed);
