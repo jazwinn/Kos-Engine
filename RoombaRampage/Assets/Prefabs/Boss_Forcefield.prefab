@@ -1,11 +1,11 @@
 [
     {
         "GlobalSettings": {
-            "globalIllumination": 0.46000000834465027,
+            "globalIllumination": 0.18000000715255737,
             "backgroundColor": {
-                "r": 0.13300000131130219,
-                "g": 0.23000000417232513,
-                "b": 0.3199999928474426
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0
             }
         }
     },
@@ -55,17 +55,17 @@
         },
         "LightingComponent": {
             "m_innerOuterRadius": {
-                "x": 0.0,
+                "x": 0.11999999731779099,
                 "y": 1.0
             },
-            "m_intensity": 0.800000011920929,
+            "m_intensity": 0.4000000059604645,
             "m_light_OffSet": {
                 "x": 0.0,
                 "y": 0.0
             },
             "m_light_scale": {
-                "x": 3.0,
-                "y": 3.0
+                "x": 4.0,
+                "y": 4.0
             },
             "m_light_rotation": 0.0,
             "m_colour": {
