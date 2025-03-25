@@ -754,7 +754,7 @@ namespace physicspipe {
 			float axisDepth = std::min(maxB - minA, maxA - minB);
 			if (axisDepth < depth) {
 				depth = axisDepth;
-				depth = std::max(0.0f, std::min(depth, maxAllowedDepth));
+				//depth = std::max(0.0f, std::min(depth, maxAllowedDepth));
 				normal = axis;
 			}
 		}
@@ -775,7 +775,7 @@ namespace physicspipe {
 			float axisDepth = std::min(maxB - minA, maxA - minB);
 			if (axisDepth < depth) {
 				depth = axisDepth;
-				depth = std::max(0.0f, std::min(depth, maxAllowedDepth));
+				//depth = std::max(0.0f, std::min(depth, maxAllowedDepth));
 				normal = axis;
 			}
 		}
