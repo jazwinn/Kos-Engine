@@ -277,6 +277,8 @@ namespace Application {
         help->m_windowHeight = static_cast<float>(display_h);
         help->m_windowWidth = static_cast<float>(display_w);
 
+        help->m_windowScalar = help->m_windowHeight / 1080.f;
+
         if ((old_w != help->m_windowWidth || old_h != help->m_windowHeight || curr_w != oldOverall_W || curr_h != oldOverall_H) && (help->m_windowHeight > 0 || help->m_windowWidth > 0))
         {
             oldOverall_W = curr_w;
