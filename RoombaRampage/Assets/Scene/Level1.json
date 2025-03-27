@@ -76265,7 +76265,8 @@
                         "g": 0.8823529481887817,
                         "b": 0.06666667014360428
                     },
-                    "layer": 901
+                    "layer": 901,
+                    "isCentered": true
                 }
             },
             {
@@ -76324,7 +76325,8 @@
                                 "g": 0.8823529481887817,
                                 "b": 0.06666667014360428
                             },
-                            "layer": 900
+                            "layer": 900,
+                            "isCentered": true
                         }
                     }
                 ]
@@ -78010,7 +78012,8 @@
                         "g": 0.8823529481887817,
                         "b": 0.06666667014360428
                     },
-                    "layer": 502
+                    "layer": 502,
+                    "isCentered": true
                 }
             },
             {
@@ -78043,7 +78046,8 @@
                         "g": 0.8823529481887817,
                         "b": 0.06666667014360428
                     },
-                    "layer": 503
+                    "layer": 503,
+                    "isCentered": true
                 }
             },
             {
@@ -78076,7 +78080,8 @@
                         "g": 0.8823529481887817,
                         "b": 0.06666667014360428
                     },
-                    "layer": 504
+                    "layer": 504,
+                    "isCentered": true
                 }
             },
             {
@@ -78109,7 +78114,8 @@
                         "g": 0.8823529481887817,
                         "b": 0.06666667014360428
                     },
-                    "layer": 505
+                    "layer": 505,
+                    "isCentered": true
                 }
             },
             {
@@ -78142,7 +78148,8 @@
                         "g": 0.8823529481887817,
                         "b": 0.06666667014360428
                     },
-                    "layer": 506
+                    "layer": 506,
+                    "isCentered": true
                 }
             },
             {
@@ -78185,8 +78192,8 @@
                 },
                 "button": {
                     "force": {
-                        "x": 943.0,
-                        "y": 254.45718383789063
+                        "x": 896.5,
+                        "y": 123.86907958984375
                     },
                     "scale": {
                         "x": 2.9000000953674316,
@@ -78257,7 +78264,8 @@
                                 "g": 0.0,
                                 "b": 0.0
                             },
-                            "layer": 508
+                            "layer": 508,
+                            "isCentered": true
                         }
                     }
                 ]
@@ -78713,8 +78721,8 @@
                         },
                         "button": {
                             "force": {
-                                "x": 1120.51171875,
-                                "y": 603.3248901367188
+                                "x": 1141.2679443359375,
+                                "y": 604.9170532226563
                             },
                             "scale": {
                                 "x": 0.7599999904632568,
@@ -78795,8 +78803,8 @@
                         },
                         "button": {
                             "force": {
-                                "x": 777.5960083007813,
-                                "y": 603.299560546875
+                                "x": 668.4271240234375,
+                                "y": 604.8821411132813
                             },
                             "scale": {
                                 "x": 0.6399999856948853,
@@ -79290,8 +79298,8 @@
                         },
                         "button": {
                             "force": {
-                                "x": 1122.495849609375,
-                                "y": 380.33477783203125
+                                "x": 1144.00390625,
+                                "y": 297.43963623046875
                             },
                             "scale": {
                                 "x": 0.6399999856948853,
@@ -79372,8 +79380,8 @@
                         },
                         "button": {
                             "force": {
-                                "x": 777.8818969726563,
-                                "y": 380.3028259277344
+                                "x": 668.8213500976563,
+                                "y": 297.3955993652344
                             },
                             "scale": {
                                 "x": 0.7400000095367432,
@@ -81207,8 +81215,8 @@
                 },
                 "button": {
                     "force": {
-                        "x": 1554.5341796875,
-                        "y": 930.826416015625
+                        "x": 1572.0147705078125,
+                        "y": 775.399169921875
                     },
                     "scale": {
                         "x": 0.8600000143051147,
@@ -81289,8 +81297,8 @@
                 },
                 "button": {
                     "force": {
-                        "x": 949.2633666992188,
-                        "y": 216.78646850585938
+                        "x": 694.7000122070313,
+                        "y": -259.572021484375
                     },
                     "scale": {
                         "x": 4.519999980926514,
@@ -81361,7 +81369,8 @@
                         "g": 0.0,
                         "b": 0.0
                     },
-                    "layer": 503
+                    "layer": 503,
+                    "isCentered": true
                 }
             }
         ]
@@ -81488,8 +81497,8 @@
                 },
                 "button": {
                     "force": {
-                        "x": 949.2636108398438,
-                        "y": 773.5407104492188
+                        "x": -3528.021484375,
+                        "y": -3852.66259765625
                     },
                     "scale": {
                         "x": 5.920000076293945,
@@ -81570,8 +81579,8 @@
                 },
                 "button": {
                     "force": {
-                        "x": 949.2636108398438,
-                        "y": 640.5458374023438
+                        "x": -3528.021484375,
+                        "y": -4024.2646484375
                     },
                     "scale": {
                         "x": 5.800000190734863,
@@ -81652,8 +81661,8 @@
                 },
                 "button": {
                     "force": {
-                        "x": 949.2636108398438,
-                        "y": 368.66375732421875
+                        "x": -3528.021484375,
+                        "y": -4375.072265625
                     },
                     "scale": {
                         "x": 5.840000152587891,
@@ -81734,8 +81743,8 @@
                 },
                 "button": {
                     "force": {
-                        "x": 949.2636108398438,
-                        "y": 232.28826904296875
+                        "x": -3528.021484375,
+                        "y": -4551.0361328125
                     },
                     "scale": {
                         "x": 4.539999961853027,
@@ -81806,7 +81815,8 @@
                         "g": 0.0,
                         "b": 0.0
                     },
-                    "layer": 421
+                    "layer": 421,
+                    "isCentered": true
                 }
             },
             {
@@ -81839,7 +81849,8 @@
                         "g": 0.0,
                         "b": 0.0
                     },
-                    "layer": 422
+                    "layer": 422,
+                    "isCentered": true
                 }
             },
             {
@@ -81872,7 +81883,8 @@
                         "g": 0.0,
                         "b": 0.0
                     },
-                    "layer": 423
+                    "layer": 423,
+                    "isCentered": true
                 }
             },
             {
@@ -81905,7 +81917,8 @@
                         "g": 0.0,
                         "b": 0.0
                     },
-                    "layer": 424
+                    "layer": 424,
+                    "isCentered": true
                 }
             },
             {
@@ -81948,8 +81961,8 @@
                 },
                 "button": {
                     "force": {
-                        "x": 949.2636108398438,
-                        "y": 508.2396545410156
+                        "x": -3528.021484375,
+                        "y": -4194.978515625
                     },
                     "scale": {
                         "x": 5.900000095367432,
@@ -82020,7 +82033,8 @@
                         "g": 0.0,
                         "b": 0.0
                     },
-                    "layer": 425
+                    "layer": 425,
+                    "isCentered": true
                 }
             }
         ]
@@ -82927,7 +82941,8 @@
                         "g": 0.8823529481887817,
                         "b": 0.06666667014360428
                     },
-                    "layer": 320
+                    "layer": 320,
+                    "isCentered": true
                 },
                 "script": {
                     "scripts": [
@@ -82974,7 +82989,8 @@
                         "g": 0.8823529481887817,
                         "b": 0.06666667014360428
                     },
-                    "layer": 321
+                    "layer": 321,
+                    "isCentered": true
                 },
                 "script": {
                     "scripts": [
@@ -83021,7 +83037,8 @@
                         "g": 0.8823529481887817,
                         "b": 0.06666667014360428
                     },
-                    "layer": 323
+                    "layer": 323,
+                    "isCentered": true
                 },
                 "script": {
                     "scripts": [
@@ -84501,6 +84518,293 @@
                 "playOnStart": false,
                 "isBGM": true,
                 "isSFX": false
+            }
+        ]
+    },
+    {
+        "name": {
+            "namestr": "prefab_enemyRanged",
+            "layer": 2,
+            "isprefab": true,
+            "tagstr": "Enemy",
+            "prefabname": "prefab_enemyRanged.prefab",
+            "issync": false
+        },
+        "transform": {
+            "position": {
+                "x": 23.70725440979004,
+                "y": -12.67396354675293
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 2.999998092651367,
+                "y": 2.999998092651367
+            }
+        },
+        "collider": {
+            "checkcollision": true,
+            "checkresponse": true,
+            "size": {
+                "x": 0.5199999809265137,
+                "y": 0.5199999809265137
+            },
+            "offset": {
+                "x": 0.0,
+                "y": -0.10000000149011612
+            },
+            "drawDebug": true,
+            "radius": 0.5,
+            "shapetype": 0
+        },
+        "enemy": {
+            "enemytag": -1,
+            "enemytype": 2,
+            "enemybehaviour": 1
+        },
+        "rigidbody": {
+            "linearVelocity": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "linearAcceleration": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "rotation": 0.0,
+            "angularVelocity": 0.0,
+            "angularAcceleration": 0.0,
+            "mass": 1.0,
+            "inverseMass": 1.0,
+            "linearDamping": 0.9900000095367432,
+            "angularDamping": 0.9900000095367432,
+            "force": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "torque": 0.0,
+            "kinematic": false,
+            "static": false
+        },
+        "sprite": {
+            "imagefile": "ani_rangedEnemyMoving_strip6.png",
+            "layer": 65,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0,
+            "isLit": true
+        },
+        "animation": {
+            "frameNumber": 2,
+            "framesPerSecond": 10,
+            "frameTimer": 0.0,
+            "isAnimating": false,
+            "stripCount": 6
+        },
+        "script": {
+            "scripts": [
+                {
+                    "name": "EnemyScript",
+                    "enabled": true,
+                    "map": [
+                        {
+                            "variable": "isDead",
+                            "base64": ""
+                        },
+                        {
+                            "variable": "isPatrolling",
+                            "base64": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        "audio": [
+            {
+                "name": "aud_bodyDeath01",
+                "volume": 0.3160000145435333,
+                "loop": false,
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
+            },
+            {
+                "name": "aud_bodyStab01",
+                "volume": 0.4880000054836273,
+                "loop": false,
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
+            },
+            {
+                "name": "aud_bodyStab02",
+                "volume": 0.6650000214576721,
+                "loop": false,
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
+            },
+            {
+                "name": "aud_bodyFall01",
+                "volume": 0.24899999797344208,
+                "loop": false,
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
+            },
+            {
+                "name": "aud_bodyFall02",
+                "volume": 0.2849999964237213,
+                "loop": false,
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
+            },
+            {
+                "name": "aud_bodyFall03",
+                "volume": 0.3070000112056732,
+                "loop": false,
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
+            },
+            {
+                "name": "aud_bodyFall04",
+                "volume": 0.24300000071525574,
+                "loop": false,
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
+            },
+            {
+                "name": "aud_bodyFall05",
+                "volume": 0.2290000021457672,
+                "loop": false,
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
+            },
+            {
+                "name": "aud_bodyFall06",
+                "volume": 0.21199999749660492,
+                "loop": false,
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
+            },
+            {
+                "name": "aud_bodyFall07",
+                "volume": 0.20399999618530273,
+                "loop": false,
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
+            },
+            {
+                "name": "aud_bodyFall08",
+                "volume": 0.25099998712539673,
+                "loop": false,
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
+            },
+            {
+                "name": "aud_bodyFall09",
+                "volume": 0.2290000021457672,
+                "loop": false,
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
+            },
+            {
+                "name": "aud_railgunShot01",
+                "volume": 0.14499999582767487,
+                "loop": false,
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
+            },
+            {
+                "name": "aud_playerDeath01",
+                "volume": 0.2750000059604645,
+                "loop": false,
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
+            }
+        ],
+        "raycast": {
+            "raycasts": [
+                {
+                    "raycastID": "RaycastToPlayer",
+                    "israycasting": true,
+                    "targetposition": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "Layer Vector": [
+                        {
+                            "layer": 5
+                        }
+                    ]
+                }
+            ]
+        },
+        "pathfinding": {
+            "startPosition": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "targetPosition": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "gridKey": 0
+        },
+        "children": [
+            {
+                "name": {
+                    "namestr": "waypoint 1",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "prefab_enemyRanged.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": -0.640697181224823,
+                        "y": 0.3209020495414734
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                }
+            },
+            {
+                "name": {
+                    "namestr": "waypoint 2",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "prefab_enemyRanged.prefab",
+                    "issync": true
+                },
+                "transform": {
+                    "position": {
+                        "x": 1.5952647924423218,
+                        "y": 0.4790774881839752
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                }
             }
         ]
     }

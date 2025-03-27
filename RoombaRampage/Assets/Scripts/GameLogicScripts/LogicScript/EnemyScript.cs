@@ -2,9 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 using static EnemyScript;
 
 
@@ -95,7 +97,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     private float enemySpeed = 1.9f;
     private float patrolSpeed = 1.9f;
     private float enemyFOVangle = 300.0f;
-    private float enemyFOVdistance = 10.0f;
+    private float enemyFOVdistance = 15.0f;
 
     private float scanTime = 0f;
     private bool scanning = false;
@@ -422,6 +424,8 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         isDead = true;
         currentState.EnemyDead();
 
+       
+
         collComp.m_collisionCheck = !collComp.m_collisionCheck; //Disables collision check
         collComp.m_collisionResponse = false;
         InternalCall.m_ChangeLayer(EntityID, 12);
@@ -450,7 +454,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
         InternalCall.m_InternalCallSpawnParticle(EntityID);
         InternalCall.m_InternalCallSetParticleConeRotation(EntityID, rotationFloat);
-        InternalCall.m_InternalCallSetParticleLayer(EntityID, 8);// 1 Below the sprite layer;
+        InternalCall.m_InternalCallSetParticleLayer(EntityID, 4);// 1 Below the sprite layer;
 
         transformComp.m_rotation = rotationFloat; //Sets rotation values
 
@@ -495,12 +499,44 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
             sc.m_color.G = 0;
             sc.m_color.B = 0;
             Component.Set<SpriteComponent>((uint)poolId, sc);
-            //sc.m_color = 
+            //sc.m_color =
+
+            //Turn off light
+            if (enemyType == EnemySelection.Ranged || enemyType == EnemySelection.AlertRanged)
+            {
+                CoroutineManager.Instance.StartCoroutine(TurnLightOff(), "EnemyLights");
+            }
         }
 
         KillCounter.killCount++;
         Console.WriteLine($"Kill Count: {KillCounter.killCount}");
     }
+
+    private IEnumerator TurnLightOff()
+    {
+        LightComponent lc = Component.Get<LightComponent>(EntityID);
+
+        float start = lc.m_intensity;   // Start value
+        float end = 0;    // Target value
+        float duration = 10.0f; // Time in seconds
+        double t = 0;
+
+        while (t < 1.0f)
+        {
+            t += InternalCall.m_InternalCallGetDeltaTime() / duration; // Adjusting t based on deltaTime
+            t = Math.Min(t, 1.0f);
+
+            lc = Component.Get<LightComponent>(EntityID);
+
+            lc.m_intensity = Lerp(lc.m_intensity, end, t);
+
+            Component.Set<LightComponent>(EntityID, lc);
+
+        }
+        
+        yield return null;
+    }
+
     #endregion
 
     #region Patrolling Behaviour
@@ -1542,6 +1578,11 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         {
             SetCurrentState(new EnemyStateReturnToHome(this));
         }
+    }
+
+    private float Lerp(float a, float b, double t)
+    {
+        return (float)(a + (b - a) * t);
     }
 
 }

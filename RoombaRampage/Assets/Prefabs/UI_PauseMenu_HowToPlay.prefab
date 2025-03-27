@@ -286,7 +286,8 @@
                         "g": 0.0,
                         "b": 0.0
                     },
-                    "layer": 503
+                    "layer": 503,
+                    "isCentered": true
                 }
             }
         ]
