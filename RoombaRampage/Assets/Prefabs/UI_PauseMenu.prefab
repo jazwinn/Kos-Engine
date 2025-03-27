@@ -1,11 +1,11 @@
 [
     {
         "GlobalSettings": {
-            "globalIllumination": 0.46000000834465027,
+            "globalIllumination": 0.36000001430511475,
             "backgroundColor": {
-                "r": 0.13300000131130219,
-                "g": 0.23000000417232513,
-                "b": 0.3199999928474426
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0
             }
         }
     },
@@ -455,7 +455,8 @@
                         "g": 0.0,
                         "b": 0.0
                     },
-                    "layer": 421
+                    "layer": 421,
+                    "isCentered": true
                 }
             },
             {
@@ -488,7 +489,8 @@
                         "g": 0.0,
                         "b": 0.0
                     },
-                    "layer": 422
+                    "layer": 422,
+                    "isCentered": true
                 }
             },
             {
@@ -521,7 +523,8 @@
                         "g": 0.0,
                         "b": 0.0
                     },
-                    "layer": 423
+                    "layer": 423,
+                    "isCentered": true
                 }
             },
             {
@@ -554,7 +557,8 @@
                         "g": 0.0,
                         "b": 0.0
                     },
-                    "layer": 424
+                    "layer": 424,
+                    "isCentered": true
                 }
             },
             {
@@ -669,7 +673,8 @@
                         "g": 0.0,
                         "b": 0.0
                     },
-                    "layer": 425
+                    "layer": 425,
+                    "isCentered": true
                 }
             }
         ]

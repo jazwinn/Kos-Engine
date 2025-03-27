@@ -293,6 +293,12 @@ namespace graphicpipe
 					textData.m_x = originX - totalWidth / 2.0f;  // Horizontal centering
 					textData.m_y = originY + maxAscent / 2.0f - totalHeight / 2.0f;  // Vertical centering
 				}
+
+				else
+				{
+					float xpos = (assetmanager->m_fontManager.m_fonts[textData.m_fileName][textData.m_text[0]].m_bearing.x / ((static_cast<float>(help->m_currWindowHeight))) * (textData.m_scale * textData.m_xyScale.x));
+					textData.m_x -= xpos;
+				}
 				
 
 				// Step 2: Render the text

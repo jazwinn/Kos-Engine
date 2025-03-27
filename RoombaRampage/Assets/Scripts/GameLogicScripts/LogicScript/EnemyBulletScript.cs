@@ -82,6 +82,7 @@ public class EnemyBulletScript : ScriptBase
                     case "Obstacle":
                     case "MeleeKillZoneSpawn":
                     case "PlayerBullet":
+                    case "PlayerRailgunBullet":
                         if (!isAnimating)
                         {
                             isAnimating = true;
