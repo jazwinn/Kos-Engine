@@ -741,6 +741,7 @@ namespace physicspipe {
 		for (size_t i = 0; i < verticesA.size(); ++i) {
 			float minA{}, maxA{}, minB{}, maxB{};
 			vector2::Vec2 axis = { -edgesA[i].m_y, edgesA[i].m_x };
+			vector2::Vec2::m_funcVec2Normalize(axis, axis);
 			m_ProjectOntoAxis(verticesA, axis, minA, maxA);
 			m_ProjectOntoAxis(verticesB, axis, minB, maxB);
 			if (minA >= maxB || minB >= maxA) {
@@ -762,6 +763,7 @@ namespace physicspipe {
 		for (size_t i = 0; i < verticesB.size(); ++i) {
 			float minA{}, maxA{}, minB{}, maxB{};
 			vector2::Vec2 axis = { -edgesB[i].m_y, edgesB[i].m_x };
+			vector2::Vec2::m_funcVec2Normalize(axis, axis);
 			m_ProjectOntoAxis(verticesA, axis, minA, maxA);
 			m_ProjectOntoAxis(verticesB, axis, minB, maxB);
 			if (minA >= maxB || minB >= maxA) {
