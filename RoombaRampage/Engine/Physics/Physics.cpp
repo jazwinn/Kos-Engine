@@ -906,7 +906,7 @@ namespace physicspipe {
 	}
 
 	bool Physics::LineIntersect(const vector2::Vec2& p1, const vector2::Vec2& p2, const vector2::Vec2& q1, const vector2::Vec2& q2, vector2::Vec2& intersection) {
-		const float epsilon = 1e-6f;
+		const float epsilon = 1e-4f;
 
 		// Line equations: Ax + By = C
 		float a1 = p2.m_y - p1.m_y;
