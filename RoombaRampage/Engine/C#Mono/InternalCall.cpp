@@ -1540,6 +1540,11 @@ namespace script {
 	void InternalCall::m_InternalCallDeleteEntity(ecs::EntityID id)
 	{
 		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+
+		if (ecs->m_ECS_EntityMap.find(id) == ecs->m_ECS_EntityMap.end()) {
+			return;
+		}
+
 		ecs->m_DeleteEntity(id);
 
 	}

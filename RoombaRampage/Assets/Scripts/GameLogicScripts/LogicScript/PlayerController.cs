@@ -178,7 +178,8 @@ public class PlayerController : ScriptBase
 
             foreach (int collidedEntitiesID in collidedEntities)
             {
-                if (!PlayerGun.playerBoost)
+                if (isDead) return;
+                if ( !PlayerGun.playerBoost)
                 {
                     switch (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID))
                     {
