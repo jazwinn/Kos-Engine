@@ -123,7 +123,10 @@ public static class InternalCall
     public extern static float m_InternalCallIsCollided(uint entity);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern static Vector2 m_InternalGetMousePosition();
+    public extern static void m_InternalCallOverideMouseWithCursor(bool _boolean);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static void m_InternalGetMousePosition(out Vector2 mousepos);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static bool m_InternalCallIsKeyReleased(keyCode key);

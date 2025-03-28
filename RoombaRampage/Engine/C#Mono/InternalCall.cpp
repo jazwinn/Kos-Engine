@@ -1543,9 +1543,9 @@ namespace script {
 
 	}
 
-	vector2::Vec2 InternalCall::m_InternalGetMousePosition()
+	void InternalCall::m_InternalGetMousePosition(vector2::Vec2* returnValue)
 	{
-		return Input::InputSystem::m_getMousePosition();
+		*returnValue = Input::InputSystem::m_getMousePosition();
 	}
 
 	bool InternalCall::m_InternalCallIsKeyPressed(keyCode key)
@@ -1600,6 +1600,11 @@ namespace script {
 		}
 
 		return Array;
+	}
+
+	void InternalCall::m_InternalCallOverideMouseWithCursor(bool _boolean)
+	{
+		Input::InputSystem::overwriteMousePosWithController = _boolean;
 	}
 
 
@@ -1750,6 +1755,7 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_InternalCallIsControllerPresent);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallGetJoyStickAxis);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallGetRightJoyStickRotation);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallOverideMouseWithCursor);
 		///SO HELP ME THEN OVER HERE
 	}
 }
