@@ -213,6 +213,9 @@ public static class InternalCall
     public extern static bool m_InternalCallCheckIsSFX(uint id, string monoString);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
+    public extern static void m_InternalCallSetPanAudio(uint id, string monoString, float pan);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
     public extern static bool m_InternalCallIsWindowMinimise();
 
     [MethodImpl(MethodImplOptions.InternalCall)]

@@ -25,6 +25,8 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Physics/PhysicsCollisionResponse.h"
 #include "../Graphics/GraphicsPipe.h"
 
+#include "../Helper/Helper.h"
+
 namespace ecs {
 
 	void CollisionResponseSystem::m_RegisterSystem(EntityID ID) {
@@ -78,6 +80,7 @@ namespace ecs {
 	void CollisionResponseSystem::m_Update(const std::string& scene) {
 
 		ECS* ecs = ECS::m_GetInstance();
+		Helper::Helpers* help = Helper::Helpers::GetInstance();
 
 		if (m_vecRigidBodyComponentPtr.size() != m_vecTransformComponentPtr.size()) {
 			LOGGING_ERROR("Error: Vecotrs container size does not Match");
@@ -206,6 +209,8 @@ namespace ecs {
 						else {
 							toMove = -valit->second.first * valit->second.second;
 						}
+						//std::cout << "x move:" << toMove.m_x << std::endl;
+						//std::cout << "y move:" << toMove.m_y << std::endl;
 
 						transform->m_position += toMove;
 					}

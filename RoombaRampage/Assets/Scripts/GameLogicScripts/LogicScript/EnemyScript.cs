@@ -78,7 +78,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     private string bodyStabAud2 = "aud_bodyStab02.wav";
 
     private string rangedEnemyDeathAud1 = "aud_playerDeath01.wav";
-    private string enemyShootAud1 = "aud_railgunShot01.wav";
+    private string enemyShootAud1       = "aud_railgunShot01.wav";
 
     private List<string> bodyDeathAudList = new List<string>();
     private List<string> bodyFallAudList = new List<string>();
@@ -475,8 +475,16 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         float forwardY = (float)(Math.Cos(rotationInRadians));
 
         //+ forwardX * 0.4f
-        movement.X = 0.0f; //Pushes enemy back for "knockback effect"
-        movement.Y = 0.0f; //Pushes enemy back for "knockback effect"
+        //movement.X = 0.0f; //Pushes enemy back for "knockback effect"
+        //movement.Y = 0.0f; //Pushes enemy back for "knockback effect"
+
+        //Pushes enemy back "Knockback effect" with varying force
+        Random random = new Random();
+        float randomForce = 0.05f + (float)random.NextDouble() * 0.3f; // 0.05 to 0.3
+
+        movement.X = forwardX * randomForce;
+        movement.Y = forwardY * randomForce;
+
 
         InternalCall.m_InternalSetVelocity(EntityID, in movement); //Sets velocity for rigidbody to move
 
@@ -884,6 +892,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
         RigidBodyComponent rb = Component.Get<RigidBodyComponent>(EntityID);
         rb.m_Acceleration = movement;
+        //rb.m_Velocity = movement;
         Component.Set<RigidBodyComponent>(EntityID, rb);
 
         //InternalCall.m_InternalSetVelocity(EntityID, in movement); //BANE OF MY EXISTENCE
@@ -984,9 +993,12 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         // Compute movement based on direction
         movement.X = direction.X * enemySpeed;
         movement.Y = direction.Y * enemySpeed;
-
+        RigidBodyComponent rb = Component.Get<RigidBodyComponent>(EntityID);
+        rb.m_Acceleration = movement;
+        //rb.m_Velocity = movement;
+        Component.Set<RigidBodyComponent>(EntityID, rb);
         // Apply movement
-        InternalCall.m_InternalSetVelocity(EntityID, in movement);
+        //InternalCall.m_InternalSetVelocity(EntityID, in movement);
     }
 
 
@@ -1243,6 +1255,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         }
     }
 
+    
     public void FireAtPlayer()
     {
         UpdateComponentValues();
