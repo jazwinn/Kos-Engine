@@ -2057,6 +2057,8 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
                                 ImGui::SliderFloat("Volume", &it2->m_Volume, 0.0f, 1.0f);
                                 assetManager->m_audioManager.m_SetVolumeForEntity(entityID, it2->m_Name, it2->m_Volume);
 
+                                ImGui::SliderFloat("Pan", &it2->m_Pan, -1.0f, 1.0f);
+                                assetManager->m_audioManager.m_SetPanForEntity(entityID, it2->m_Name, it2->m_Pan);
 
                                 bool wasLooping = it2->m_Loop;
 
