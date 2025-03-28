@@ -35,10 +35,10 @@ public class LevelSelectButton : ScriptBase
 
     public override void Update()
     {
-        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.LMB))
+        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.LMB) || InternalCall.m_InternalCallIsControllerTriggered(keyCode.CONTROLLER_A))
         {
             InternalCall.m_InternalGetButtonComponent(EntityID, out Vector2 position, out Vector2 scale, out bool isClick);
-            if (isClick == true && isSelected == false)
+            if ((isClick == true || InternalCall.m_InternalIsButtonHovered(EntityID))&& isSelected == false)
             {
                 InternalCall.m_InternalCallPlayAudio(EntityID, "aud_buttonClick01");
                 UnclickOtherButtons();

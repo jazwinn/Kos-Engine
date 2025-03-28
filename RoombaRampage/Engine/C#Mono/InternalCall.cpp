@@ -1090,6 +1090,11 @@ namespace script {
 
 	}
 
+	void InternalCall::m_InternalCallHideCursor(bool _boolean)
+	{
+		Input::InputSystem::m_HideCursor(_boolean);
+	}
+
 	bool InternalCall::m_InternalCallIsWindowMinimise()
 	{
 		return Helper::Helpers::GetInstance()->m_windowMinimise;
@@ -1770,6 +1775,7 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_InternalCallGetJoyStickAxis);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallGetRightJoyStickRotation);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallOverideMouseWithCursor);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallHideCursor);
 		///SO HELP ME THEN OVER HERE
 	}
 }
