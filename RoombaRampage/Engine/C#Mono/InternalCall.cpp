@@ -1078,6 +1078,18 @@ namespace script {
 
 	}
 
+	void InternalCall::m_InternalCallSetPanAudio(ecs::EntityID id, MonoString* monoString, float pan)
+	{
+		char* nativeString = mono_string_to_utf8(monoString);
+		std::filesystem::path filepath = nativeString;
+
+		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+		assetmanager->m_audioManager.m_SetPanForEntity(id, filepath.filename().stem().string(), pan);
+
+		mono_free(nativeString);
+
+	}
+
 	bool InternalCall::m_InternalCallIsWindowMinimise()
 	{
 		return Helper::Helpers::GetInstance()->m_windowMinimise;
@@ -1693,6 +1705,8 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_InternalCallGetGlobalSFXVolume);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallCheckIsBGM);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallCheckIsSFX);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallSetPanAudio);
+
 
 
 		MONO_ADD_INTERNAL_CALL(m_InternalCallIsWindowMinimise);

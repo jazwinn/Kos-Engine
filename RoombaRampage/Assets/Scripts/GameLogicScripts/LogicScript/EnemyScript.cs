@@ -78,7 +78,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     private string bodyStabAud2 = "aud_bodyStab02.wav";
 
     private string rangedEnemyDeathAud1 = "aud_playerDeath01.wav";
-    private string enemyShootAud1 = "aud_railgunShot01.wav";
+    private string enemyShootAud1       = "aud_railgunShot01.wav";
 
     private List<string> bodyDeathAudList = new List<string>();
     private List<string> bodyFallAudList = new List<string>();
@@ -892,6 +892,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
         RigidBodyComponent rb = Component.Get<RigidBodyComponent>(EntityID);
         rb.m_Acceleration = movement;
+        //rb.m_Velocity = movement;
         Component.Set<RigidBodyComponent>(EntityID, rb);
 
         //InternalCall.m_InternalSetVelocity(EntityID, in movement); //BANE OF MY EXISTENCE
@@ -992,9 +993,12 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         // Compute movement based on direction
         movement.X = direction.X * enemySpeed;
         movement.Y = direction.Y * enemySpeed;
-
+        RigidBodyComponent rb = Component.Get<RigidBodyComponent>(EntityID);
+        rb.m_Acceleration = movement;
+        //rb.m_Velocity = movement;
+        Component.Set<RigidBodyComponent>(EntityID, rb);
         // Apply movement
-        InternalCall.m_InternalSetVelocity(EntityID, in movement);
+        //InternalCall.m_InternalSetVelocity(EntityID, in movement);
     }
 
 
