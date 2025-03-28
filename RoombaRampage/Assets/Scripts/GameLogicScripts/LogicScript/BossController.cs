@@ -53,6 +53,7 @@ public class BossController : ScriptBase
     public int forceFieldHealth = 3;
     public int bossHealth = 21;
     public bool isForceFieldActive = true;
+    private bool forceFieldStart = false;
     private string forceFieldPrefab = "Boss_Forcefield";
 
     private string bossBulletPrefab;
@@ -92,7 +93,7 @@ public class BossController : ScriptBase
         bossBulletPrefab = "prefab_bossBullet";
         bossClusterBulletPrefab = "prefab_bossClusterBullet";
 
-        SpawnForceField();
+        //SpawnForceField();
 
         int[] childIDs = InternalCall.m_InternalCallGetChildrenID(EntityID);
         enemySpawnPoints = Array.ConvertAll(childIDs, item => (uint)item);
@@ -115,6 +116,12 @@ public class BossController : ScriptBase
     public override void Update()
     {
         if (GameControllerLevel1.isBossDead || !GameControllerLevel1.isActivated || PlayerController.isDead) return;
+
+        if (GameControllerLevel1.isActivated && !forceFieldStart)
+        {
+            forceFieldStart = true;
+            SpawnForceField();
+        }
 
         if (isDying)
         {
@@ -423,7 +430,7 @@ public class BossController : ScriptBase
         for (int i = 0; i < 6; i++)
         {
             float angle = i * (360f / 6); // Spread evenly
-            uint mediumBullet = (uint)InternalCall.m_InternalCallAddPrefab(bossBulletPrefab, explosionPosition.X, explosionPosition.Y, angle);
+            uint mediumBullet = (uint)InternalCall.m_InternalCallAddPrefab(bossClusterBulletPrefab, explosionPosition.X, explosionPosition.Y, angle);
             mediumBullets.Add(mediumBullet);
         }
 
