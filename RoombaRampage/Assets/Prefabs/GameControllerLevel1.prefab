@@ -1,26 +1,28 @@
 [
     {
         "GlobalSettings": {
-            "globalIllumination": 0.36000001430511475,
+            "globalIllumination": 1.0,
             "backgroundColor": {
-                "r": 0.0,
-                "g": 0.0,
-                "b": 0.0
+                "r": 0.8274509906768799,
+                "g": 0.7137255072593689,
+                "b": 0.7137255072593689
             }
         }
     },
     {
         "CursorSettings": {
-            "cursorImage": "../Assets/Texture/UI/img_inGameCursor.png",
-            "isCursorCentered": true
+            "cursorImage": "../Assets/Texture/UI/img_startScreenCursor.png",
+            "isCursorCentered": false
         }
     },
     {
         "name": {
             "namestr": "GameControllerLevel1",
             "layer": 0,
-            "isprefab": false,
-            "tagstr": "Default"
+            "isprefab": true,
+            "tagstr": "Default",
+            "prefabname": "GameControllerLevel1.prefab",
+            "issync": true
         },
         "transform": {
             "position": {
@@ -69,7 +71,7 @@
         "audio": [
             {
                 "name": "aud_mainLevelLoop",
-                "volume": 0.17000000178813934,
+                "volume": 0.40400001406669617,
                 "loop": true,
                 "playOnStart": false,
                 "isBGM": true,

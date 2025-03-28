@@ -20,6 +20,7 @@ public class StartMenuButtons : ScriptBase
 
     public override void Start()
     {
+        isReading = false;
         animComp = Component.Get<AnimationComponent>(EntityID);
     }
 

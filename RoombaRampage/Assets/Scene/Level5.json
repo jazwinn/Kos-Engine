@@ -125,7 +125,8 @@
                         "g": 0.8823529481887817,
                         "b": 0.06666667014360428
                     },
-                    "layer": 901
+                    "layer": 901,
+                    "isCentered": true
                 }
             },
             {
@@ -184,7 +185,8 @@
                                 "g": 0.8823529481887817,
                                 "b": 0.06666667014360428
                             },
-                            "layer": 900
+                            "layer": 900,
+                            "isCentered": true
                         }
                     }
                 ]
@@ -60496,7 +60498,8 @@
                         "g": 0.0,
                         "b": 0.0
                     },
-                    "layer": 503
+                    "layer": 503,
+                    "isCentered": true
                 }
             }
         ]
@@ -61403,7 +61406,8 @@
                         "g": 0.8823529481887817,
                         "b": 0.06666667014360428
                     },
-                    "layer": 320
+                    "layer": 320,
+                    "isCentered": true
                 },
                 "script": {
                     "scripts": [
@@ -61450,7 +61454,8 @@
                         "g": 0.8823529481887817,
                         "b": 0.06666667014360428
                     },
-                    "layer": 321
+                    "layer": 321,
+                    "isCentered": true
                 },
                 "script": {
                     "scripts": [
@@ -61497,7 +61502,8 @@
                         "g": 0.8823529481887817,
                         "b": 0.06666667014360428
                     },
-                    "layer": 323
+                    "layer": 323,
+                    "isCentered": true
                 },
                 "script": {
                     "scripts": [
@@ -61766,7 +61772,8 @@
                         "g": 0.8823529481887817,
                         "b": 0.06666667014360428
                     },
-                    "layer": 502
+                    "layer": 502,
+                    "isCentered": true
                 }
             },
             {
@@ -61799,7 +61806,8 @@
                         "g": 0.8823529481887817,
                         "b": 0.06666667014360428
                     },
-                    "layer": 503
+                    "layer": 503,
+                    "isCentered": true
                 }
             },
             {
@@ -61832,7 +61840,8 @@
                         "g": 0.8823529481887817,
                         "b": 0.06666667014360428
                     },
-                    "layer": 504
+                    "layer": 504,
+                    "isCentered": true
                 }
             },
             {
@@ -61865,7 +61874,8 @@
                         "g": 0.8823529481887817,
                         "b": 0.06666667014360428
                     },
-                    "layer": 505
+                    "layer": 505,
+                    "isCentered": true
                 }
             },
             {
@@ -61898,7 +61908,8 @@
                         "g": 0.8823529481887817,
                         "b": 0.06666667014360428
                     },
-                    "layer": 506
+                    "layer": 506,
+                    "isCentered": true
                 }
             },
             {
@@ -62013,7 +62024,8 @@
                                 "g": 0.0,
                                 "b": 0.0
                             },
-                            "layer": 508
+                            "layer": 508,
+                            "isCentered": true
                         }
                     }
                 ]
@@ -63399,7 +63411,7 @@
         "audio": [
             {
                 "name": "aud_mainLevelLoop",
-                "volume": 0.17000000178813934,
+                "volume": 0.39899998903274536,
                 "loop": true,
                 "playOnStart": false,
                 "isBGM": true,
@@ -64217,7 +64229,7 @@
             },
             {
                 "name": "aud_vacuumLoop01",
-                "volume": 0.3140000104904175,
+                "volume": 0.4790000021457672,
                 "loop": true,
                 "playOnStart": false,
                 "isBGM": false,
@@ -64282,11 +64294,11 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "backLimbGunAmmo",
+                                    "variable": "ammoCount",
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "ammoCount",
+                                    "variable": "backLimbGunAmmo",
                                     "base64": ""
                                 },
                                 {
@@ -64298,11 +64310,7 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "leftLimbGunAmmo",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "rightWeaponCount",
+                                    "variable": "railGunLightMaxIntensity",
                                     "base64": ""
                                 },
                                 {
@@ -64310,7 +64318,11 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "railGunLightMaxIntensity",
+                                    "variable": "rightWeaponCount",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "leftLimbGunAmmo",
                                     "base64": ""
                                 },
                                 {
@@ -64368,7 +64380,7 @@
                     },
                     {
                         "name": "aud_gunshot01",
-                        "volume": 0.6539999842643738,
+                        "volume": 0.7910000085830688,
                         "loop": false,
                         "playOnStart": false,
                         "isBGM": false,
@@ -64376,7 +64388,7 @@
                     },
                     {
                         "name": "aud_weaponSwitch01",
-                        "volume": 0.20900000631809235,
+                        "volume": 0.296999990940094,
                         "loop": false,
                         "playOnStart": false,
                         "isBGM": false,
@@ -64384,7 +64396,7 @@
                     },
                     {
                         "name": "aud_katana01",
-                        "volume": 0.5199999809265137,
+                        "volume": 0.722000002861023,
                         "loop": false,
                         "playOnStart": false,
                         "isBGM": false,
@@ -64392,7 +64404,7 @@
                     },
                     {
                         "name": "aud_emptyGun01",
-                        "volume": 0.22100000083446503,
+                        "volume": 0.5,
                         "loop": false,
                         "playOnStart": false,
                         "isBGM": false,
@@ -64408,7 +64420,7 @@
                     },
                     {
                         "name": "aud_railgunChargeUp01",
-                        "volume": 0.6209999918937683,
+                        "volume": 1.0,
                         "loop": false,
                         "playOnStart": false,
                         "isBGM": false,
@@ -64432,7 +64444,7 @@
                     },
                     {
                         "name": "aud_shotgunShot01",
-                        "volume": 0.6869999766349792,
+                        "volume": 1.0,
                         "loop": false,
                         "playOnStart": false,
                         "isBGM": false,
@@ -64497,11 +64509,11 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "backLimbGunAmmo",
+                                    "variable": "ammoCount",
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "ammoCount",
+                                    "variable": "backLimbGunAmmo",
                                     "base64": ""
                                 },
                                 {
@@ -64513,11 +64525,7 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "rightLimbRailGunHold",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "rightWeaponCount",
+                                    "variable": "leftLimbShotGunAmmo",
                                     "base64": ""
                                 },
                                 {
@@ -64525,7 +64533,11 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "leftLimbShotGunAmmo",
+                                    "variable": "rightWeaponCount",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "rightLimbRailGunHold",
                                     "base64": ""
                                 },
                                 {
@@ -64583,7 +64595,7 @@
                     },
                     {
                         "name": "aud_gunshot01",
-                        "volume": 0.6589999794960022,
+                        "volume": 0.7540000081062317,
                         "loop": false,
                         "playOnStart": false,
                         "isBGM": false,
@@ -64599,7 +64611,7 @@
                     },
                     {
                         "name": "aud_katana01",
-                        "volume": 0.48899999260902405,
+                        "volume": 0.640999972820282,
                         "loop": false,
                         "playOnStart": false,
                         "isBGM": false,
@@ -64607,7 +64619,7 @@
                     },
                     {
                         "name": "aud_emptyGun01",
-                        "volume": 0.23199999332427979,
+                        "volume": 0.4490000009536743,
                         "loop": false,
                         "playOnStart": false,
                         "isBGM": false,
@@ -64615,7 +64627,7 @@
                     },
                     {
                         "name": "aud_tempcock",
-                        "volume": 0.22699999809265137,
+                        "volume": 0.3919999897480011,
                         "loop": false,
                         "playOnStart": false,
                         "isBGM": false,
@@ -64623,7 +64635,7 @@
                     },
                     {
                         "name": "aud_railgunChargeUp01",
-                        "volume": 0.6159999966621399,
+                        "volume": 1.0,
                         "loop": false,
                         "playOnStart": false,
                         "isBGM": false,
@@ -64647,7 +64659,7 @@
                     },
                     {
                         "name": "aud_shotgunShot01",
-                        "volume": 0.6869999766349792,
+                        "volume": 1.0,
                         "loop": false,
                         "playOnStart": false,
                         "isBGM": false,
@@ -64730,7 +64742,7 @@
                 "audio": [
                     {
                         "name": "aud_gunshot01",
-                        "volume": 0.6759999990463257,
+                        "volume": 0.7850000262260437,
                         "loop": false,
                         "playOnStart": false,
                         "isBGM": false,
@@ -64754,7 +64766,7 @@
                     },
                     {
                         "name": "aud_emptyGun01",
-                        "volume": 0.25699999928474426,
+                        "volume": 0.46799999475479126,
                         "loop": false,
                         "playOnStart": false,
                         "isBGM": false,
@@ -65854,7 +65866,8 @@
                         "g": 0.0,
                         "b": 0.0
                     },
-                    "layer": 421
+                    "layer": 421,
+                    "isCentered": true
                 }
             },
             {
@@ -65887,7 +65900,8 @@
                         "g": 0.0,
                         "b": 0.0
                     },
-                    "layer": 422
+                    "layer": 422,
+                    "isCentered": true
                 }
             },
             {
@@ -65920,7 +65934,8 @@
                         "g": 0.0,
                         "b": 0.0
                     },
-                    "layer": 423
+                    "layer": 423,
+                    "isCentered": true
                 }
             },
             {
@@ -65953,7 +65968,8 @@
                         "g": 0.0,
                         "b": 0.0
                     },
-                    "layer": 424
+                    "layer": 424,
+                    "isCentered": true
                 }
             },
             {
@@ -66068,7 +66084,8 @@
                         "g": 0.0,
                         "b": 0.0
                     },
-                    "layer": 425
+                    "layer": 425,
+                    "isCentered": true
                 }
             }
         ]
