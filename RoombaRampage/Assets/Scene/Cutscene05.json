@@ -171,8 +171,8 @@
         },
         "button": {
             "force": {
-                "x": 577.6602172851563,
-                "y": 559.80810546875
+                "x": 2222.71484375,
+                "y": 157.43499755859375
             },
             "scale": {
                 "x": 0.2199999988079071,
@@ -536,7 +536,7 @@
             }
         },
         "text": {
-            "text": "Room13a, start \"Return home\" routine. override code 070325.",
+            "text": "Room13a, start \"Return home\" routine. override code 070425.",
             "text": null,
             "filename": "fnt_silkscreenRegular.ttf",
             "fontsize": 1.0,

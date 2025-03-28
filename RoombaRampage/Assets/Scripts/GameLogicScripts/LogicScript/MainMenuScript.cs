@@ -23,7 +23,7 @@ public class MainMenuScript : ScriptBase
 
     public override void Start()
     {
-        
+        InternalCall.m_DisableLayer(9);
         CoroutineManager.Instance.StartCoroutine(Wait(), "Wait");
         InternalCall.m_InternalCallOverideMouseWithCursor(true);
     }

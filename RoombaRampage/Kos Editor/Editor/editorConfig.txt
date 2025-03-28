@@ -20,6 +20,7 @@ PauseMenuCursor
 SoundMenuCursor
 SoundBarSFX
 SoundBarBGM
+StartMenuButton
 PlayerLoadoutCursor
 PlayerGunLightLeft
 PlayerGunLightRight
@@ -37,4 +38,4 @@ UIPauseTextSFX
 UIConfirmQuit
 PropGlassWall
 LaserWall
-
+GameController

@@ -40,14 +40,16 @@ public class GameControllerLevel1 : ScriptBase
 
         InternalCall.m_InternalGetTranslate(EntityID, out Vector2 doorPosition);
 
-        if (LevelSelection.SceneName != "Level6")
+        switch (LevelSelection.SceneName)
         {
-            InternalCall.m_InternalCallPlayAudio(EntityID, "aud_mainLevelLoop");
-        }
+            case "Level6":
+            case "LevelChallenge":
+                InternalCall.m_InternalCallPlayAudio(EntityID, bossBGM);
+                break;
 
-        else
-        {
-            InternalCall.m_InternalCallPlayAudio(EntityID, bossBGM);
+            default:
+                InternalCall.m_InternalCallPlayAudio(EntityID, "aud_mainLevelLoop");
+                break;
         }
 
         runOnce = false; 
@@ -77,6 +79,7 @@ public class GameControllerLevel1 : ScriptBase
     {
         InputChecker();
 
+        if (isActivated) { return; }
         #region Collision Handling
         if (InternalCall.m_InternalCallIsCollided(EntityID) != 0.0f)
         {
@@ -90,6 +93,10 @@ public class GameControllerLevel1 : ScriptBase
                         if (isActivated == false)
                         {
                             isActivated = true;
+                            ColliderComponent temp = Component.Get<ColliderComponent>(EntityID);
+                            temp.m_collisionCheck = false;
+                            temp.m_collisionResponse = false;
+                            Component.Set<ColliderComponent>(EntityID, temp);
                             SpawnDoor();
                             
 

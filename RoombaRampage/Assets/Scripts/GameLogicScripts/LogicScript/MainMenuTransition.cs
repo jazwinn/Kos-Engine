@@ -37,7 +37,16 @@ public class MainMenuTransition : ScriptBase
         if (frameNumber == 4)
         {
             InternalCall.m_UnloadAllScene();
-            InternalCall.m_InternalCallLoadScene("LevelSelect");
+
+            if (StartMenuEasterEgg.easterEggEnabled)
+            {
+                InternalCall.m_InternalCallLoadScene("LevelChallenge");
+            }
+            else
+            {
+                InternalCall.m_InternalCallLoadScene("LevelSelect");
+            }
+            
         }
     }
 }

@@ -87,6 +87,7 @@
     <Compile Include="LogicScript\LevelSelectionTextBlink.cs" />
     <Compile Include="LogicScript\LevelTransition.cs" />
     <Compile Include="LogicScript\MainMenuScript.cs" />
+    <Compile Include="LogicScript\MainMenuTransition.cs" />
     <Compile Include="LogicScript\ParticleEmitter.cs" />
     <Compile Include="LogicScript\PauseMenuButtons.cs" />
     <Compile Include="LogicScript\SoundCursor.cs" />
@@ -106,6 +107,7 @@
     <Compile Include="LogicScript\StartMenuButtons.cs" />
     <Compile Include="LogicScript\StartMenuCursor.cs" />
     <Compile Include="LogicScript\SoundManager.cs" />
+    <Compile Include="LogicScript\StartMenuEasterEgg.cs" />
     <Compile Include="LogicScript\testscript.cs" />
     <Compile Include="LogicScript\UI_AmmoHUD.cs" />
     <Compile Include="LogicScript\UI_FPSCounter.cs" />
