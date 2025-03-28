@@ -475,8 +475,16 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         float forwardY = (float)(Math.Cos(rotationInRadians));
 
         //+ forwardX * 0.4f
-        movement.X = 0.0f; //Pushes enemy back for "knockback effect"
-        movement.Y = 0.0f; //Pushes enemy back for "knockback effect"
+        //movement.X = 0.0f; //Pushes enemy back for "knockback effect"
+        //movement.Y = 0.0f; //Pushes enemy back for "knockback effect"
+
+        //Pushes enemy back "Knockback effect" with varying force
+        Random random = new Random();
+        float randomForce = 0.05f + (float)random.NextDouble() * 0.3f; // 0.05 to 0.3
+
+        movement.X = forwardX * randomForce;
+        movement.Y = forwardY * randomForce;
+
 
         InternalCall.m_InternalSetVelocity(EntityID, in movement); //Sets velocity for rigidbody to move
 
@@ -1243,6 +1251,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         }
     }
 
+    
     public void FireAtPlayer()
     {
         UpdateComponentValues();
