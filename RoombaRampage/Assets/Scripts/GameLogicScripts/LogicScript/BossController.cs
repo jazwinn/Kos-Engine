@@ -48,8 +48,10 @@ public class BossController : ScriptBase
 
     private Vector2 bossPosition;
     //private bool canAttack = true;
-    private float attackCooldown = 4.0f;
+    private float attackCooldown = 3.0f;
+    private BossAttackPattern lastPattern;
 
+    private int repeatCount = 0;
     public int forceFieldHealth = 3;
     public int bossHealth = 21;
     public bool isForceFieldActive = true;
@@ -289,7 +291,17 @@ public class BossController : ScriptBase
             newPattern = (BossAttackPattern)randomIndex;
 
         }
-        while (newPattern == currentPattern);
+        while (repeatCount >= 1 && newPattern == lastPattern);
+
+        if (newPattern == lastPattern)
+        {
+            repeatCount++;
+        }
+        else
+        {
+            repeatCount = 0;
+            lastPattern = newPattern;
+        }
 
         currentPattern = newPattern;
         ExecutePattern(currentPattern);
@@ -330,6 +342,7 @@ public class BossController : ScriptBase
         while (bossHealth > 0)
         {
             AttackRandomizer();
+            attackCooldown = GenerateRandom(200, 350) / 100f; 
             yield return new CoroutineManager.WaitForSeconds(attackCooldown);
         }
     }
@@ -409,7 +422,7 @@ public class BossController : ScriptBase
 
     private void SpawnBulletDisperse(Vector2 position)
     {
-        float bigBulletAngle = 270f;
+        float bigBulletAngle = GenerateRandom(240, 300); // 270 ± 30
 
         InternalCall.m_InternalCallPlayAudio(EntityID, bossShootingSound);
 
