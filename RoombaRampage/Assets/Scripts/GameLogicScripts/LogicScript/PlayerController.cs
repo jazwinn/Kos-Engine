@@ -39,6 +39,8 @@ public class PlayerController : ScriptBase
     }
     #endregion
 
+    //
+
     //Player Speed
     public float speed;
 
@@ -267,7 +269,9 @@ public class PlayerController : ScriptBase
         InternalCall.m_InternalGetTransformComponent(EntityID, out roombaPos, out startingRoombaScale, out startingRoombaRotate);
         //Get pos of mouse
         InternalCall.m_InternalGetWorldMousePosition(out mousePos);
-        if(previousMousePos.X != mousePos.X && previousMousePos.Y != mousePos.Y)
+        Vector2 screenMousePos;
+        InternalCall.m_InternalGetMousePosition(out screenMousePos);
+        if (previousMousePos.X != screenMousePos.X && previousMousePos.Y != screenMousePos.Y)
         {
 
             Vector2 direction;
@@ -278,7 +282,8 @@ public class PlayerController : ScriptBase
 
             rotationFloat = (float)(Math.Atan2(direction.X, direction.Y) * (180 / Math.PI));
 
-            previousMousePos = mousePos;
+            previousMousePos = screenMousePos;
+           // Console.WriteLine("Mouse");
         }
        
 
@@ -287,13 +292,17 @@ public class PlayerController : ScriptBase
         if(controllerRotation > 0)
         {
             rotationFloat = controllerRotation;
+
+           // Console.WriteLine("Controller");
         }
 
 
         if ((rotationFloat > previousRotationFloat + angleTolerance) || (rotationFloat < previousRotationFloat - angleTolerance))
         {
             InternalCall.m_InternalSetTransformComponent(EntityID, roombaPos, startingRoombaScale, rotationFloat);
+
             previousRotationFloat = rotationFloat;
+
         }
 
         #endregion

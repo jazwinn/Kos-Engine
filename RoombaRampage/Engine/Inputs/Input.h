@@ -82,6 +82,7 @@ namespace Input {
 		static float ControllerSensitivity;
 		static float deadzone;
 
+		static bool overwriteMousePosWithController;
 
 	private:
 		inline static std::unordered_map<int, bool> m_wasTriggered;
