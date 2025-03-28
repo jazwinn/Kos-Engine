@@ -25,7 +25,7 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "../Config/pch.h"
 #include "../backward/backward.hpp"
 
-
+#define NO_GAME
 
 /*
 * @brief Variadic Macro for logging Information. This macro takes in a string message, followed by the
@@ -389,6 +389,7 @@ namespace logging {
     template <typename... Args>
     void Logger::m_Info(const std::string_view message, Args&&... args)
     {
+#ifdef NO_GAME
         assert(m_bInitialized && "The logger must be initialized before it is used!");
 
         if (!m_bInitialized)
@@ -411,11 +412,13 @@ namespace logging {
             m_logFile << logEntry.str() << "\n";
             m_logFile.flush(); // Ensure immediate write to file
         }
+#endif
     }
 
     template <typename... Args>
     void Logger::m_Warn(const std::string_view message, Args&&... args)
     {
+#ifdef NO_GAME
         assert(m_bInitialized && "The logger must be initialized before it is used!");
 
         if (!m_bInitialized)
@@ -440,10 +443,12 @@ namespace logging {
         else {
             std::cout << "Not storing" << std::endl;
         }
+#endif
     }
     template <typename... Args>
     void Logger::m_Error(std::source_location location, const std::string_view message, Args&&... args)
     {
+#ifdef NO_GAME
         assert(m_bInitialized && "The logger must be initialized before it is used!");
 
         if (!m_bInitialized)
@@ -490,11 +495,13 @@ namespace logging {
         }
         m_st.load_here(32);
         m_printer.print(m_st, m_logFile);
+#endif
     }
 
     template <typename... Args>
     void Logger::m_Error(const std::string_view message, Args&&... args)
     {
+#ifdef NO_GO
         assert(m_bInitialized && "The logger must be initialized before it is used!");
 
         if (!m_bInitialized)
@@ -538,11 +545,13 @@ namespace logging {
         default:
             break;
         }
+#endif
     }
 
     template <typename... Args>
     void Logger::m_Crash(const std::string_view message, Args&&... args)
     {
+#ifdef NO_GAME
         assert(m_bInitialized && "The logger must be initialized before it is used!");
 
         if (!m_bInitialized)
@@ -565,11 +574,13 @@ namespace logging {
             m_logFile << logEntry.str() << "\n";
             m_logFile.flush(); // Ensure immediate write to file
         }
+#endif
     }
 
     template <typename... Args>
     void Logger::m_Assert(std::source_location location, const std::string_view message, Args&&... args)
     {
+#ifdef NO_GAME
         assert(m_bInitialized && "The logger must be initialized before it is used!");
 
         if (!m_bInitialized)
@@ -615,13 +626,14 @@ namespace logging {
             break;
         }
 
-
+#endif
     }
 
 
     template <typename... Args>
     void Logger::m_Debug( const std::string_view message, Args&&... args)
     {
+#ifdef NO_GAME
         assert(m_bInitialized && "The logger must be initialized before it is used!");
 
         if (!m_bInitialized)
@@ -644,12 +656,13 @@ namespace logging {
             m_logFile << logEntry.str() << "\n";
             m_logFile.flush(); // Ensure immediate write to file
         }
-
+#endif
     }
 
     template <typename... Args>
     void Logger::m_Popup(const std::string_view message, Args&&... args)
     {
+#ifdef NO_GAME
         assert(m_bInitialized && "The logger must be initialized before it is used!");
 
         if (!m_bInitialized)
@@ -693,7 +706,7 @@ namespace logging {
         default:
             break;
         }
-
+#endif
     }
 
 }

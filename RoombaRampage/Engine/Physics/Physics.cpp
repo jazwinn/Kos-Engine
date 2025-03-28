@@ -741,6 +741,7 @@ namespace physicspipe {
 		for (size_t i = 0; i < verticesA.size(); ++i) {
 			float minA{}, maxA{}, minB{}, maxB{};
 			vector2::Vec2 axis = { -edgesA[i].m_y, edgesA[i].m_x };
+			vector2::Vec2::m_funcVec2Normalize(axis, axis);
 			m_ProjectOntoAxis(verticesA, axis, minA, maxA);
 			m_ProjectOntoAxis(verticesB, axis, minB, maxB);
 			if (minA >= maxB || minB >= maxA) {
@@ -754,7 +755,7 @@ namespace physicspipe {
 			float axisDepth = std::min(maxB - minA, maxA - minB);
 			if (axisDepth < depth) {
 				depth = axisDepth;
-				depth = std::max(0.0f, std::min(depth, maxAllowedDepth));
+				//depth = std::max(0.0f, std::min(depth, maxAllowedDepth));
 				normal = axis;
 			}
 		}
@@ -762,6 +763,7 @@ namespace physicspipe {
 		for (size_t i = 0; i < verticesB.size(); ++i) {
 			float minA{}, maxA{}, minB{}, maxB{};
 			vector2::Vec2 axis = { -edgesB[i].m_y, edgesB[i].m_x };
+			vector2::Vec2::m_funcVec2Normalize(axis, axis);
 			m_ProjectOntoAxis(verticesA, axis, minA, maxA);
 			m_ProjectOntoAxis(verticesB, axis, minB, maxB);
 			if (minA >= maxB || minB >= maxA) {
@@ -775,7 +777,7 @@ namespace physicspipe {
 			float axisDepth = std::min(maxB - minA, maxA - minB);
 			if (axisDepth < depth) {
 				depth = axisDepth;
-				depth = std::max(0.0f, std::min(depth, maxAllowedDepth));
+				//depth = std::max(0.0f, std::min(depth, maxAllowedDepth));
 				normal = axis;
 			}
 		}
@@ -904,7 +906,7 @@ namespace physicspipe {
 	}
 
 	bool Physics::LineIntersect(const vector2::Vec2& p1, const vector2::Vec2& p2, const vector2::Vec2& q1, const vector2::Vec2& q2, vector2::Vec2& intersection) {
-		const float epsilon = 1e-6f;
+		const float epsilon = 1e-4f;
 
 		// Line equations: Ax + By = C
 		float a1 = p2.m_y - p1.m_y;

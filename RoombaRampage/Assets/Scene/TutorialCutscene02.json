@@ -112,8 +112,8 @@
         },
         "transform": {
             "position": {
-                "x": 0.0,
-                "y": -0.5883199572563171
+                "x": 0.5160863399505615,
+                "y": 0.32613563537597656
             },
             "rotation": -0.0,
             "scale": {
@@ -122,7 +122,7 @@
             }
         },
         "sprite": {
-            "imagefile": "img_dialogueFrame.png",
+            "imagefile": "img_inventory.png",
             "layer": 2,
             "color": {
                 "r": 1.0,
@@ -142,8 +142,8 @@
         },
         "transform": {
             "position": {
-                "x": 1.2985405921936035,
-                "y": -0.7346134781837463
+                "x": 1.4700000286102295,
+                "y": -0.7699999809265137
             },
             "rotation": -0.0,
             "scale": {
@@ -250,7 +250,7 @@
         },
         "transform": {
             "position": {
-                "x": -0.8112843036651611,
+                "x": -0.8500000238418579,
                 "y": -0.4461106061935425
             },
             "rotation": -0.0,
@@ -269,7 +269,8 @@
                 "g": 0.8823529481887817,
                 "b": 0.06666667014360428
             },
-            "layer": 3
+            "layer": 3,
+            "isCentered": false
         }
     },
     {
@@ -281,8 +282,8 @@
         },
         "transform": {
             "position": {
-                "x": 0.08616024255752563,
-                "y": -0.544570803642273
+                "x": -0.8500000238418579,
+                "y": -0.550000011920929
             },
             "rotation": -0.0,
             "scale": {
@@ -291,7 +292,7 @@
             }
         },
         "text": {
-            "text": "press tab to access the roomba's inventory. this will allow you",
+            "text": "press tab to access the roomba's inventory.",
             "text": null,
             "filename": "fnt_silkscreenRegular.ttf",
             "fontsize": 1.0,
@@ -300,7 +301,8 @@
                 "g": 0.8823529481887817,
                 "b": 0.06666667014360428
             },
-            "layer": 7
+            "layer": 7,
+            "isCentered": false
         }
     },
     {
@@ -312,8 +314,8 @@
         },
         "transform": {
             "position": {
-                "x": 0.08041352033615112,
-                "y": -0.6348737478256226
+                "x": -0.8500000238418579,
+                "y": -0.6000000238418579
             },
             "rotation": -0.0,
             "scale": {
@@ -322,7 +324,7 @@
             }
         },
         "text": {
-            "text": "to access the roomba's limbs. left click activates the left limb,",
+            "text": "left click activates the left limb.",
             "text": null,
             "filename": "fnt_silkscreenRegular.ttf",
             "fontsize": 1.0,
@@ -331,7 +333,8 @@
                 "g": 0.8823529481887817,
                 "b": 0.06666667014360428
             },
-            "layer": 8
+            "layer": 8,
+            "isCentered": false
         }
     },
     {
@@ -503,7 +506,8 @@
                         "g": 0.8823529481887817,
                         "b": 0.06666667014360428
                     },
-                    "layer": 900
+                    "layer": 900,
+                    "isCentered": true
                 }
             }
         ]
@@ -517,8 +521,8 @@
         },
         "transform": {
             "position": {
-                "x": 0.10773923993110657,
-                "y": -0.7327660918235779
+                "x": -0.8500000238418579,
+                "y": -0.6499999761581421
             },
             "rotation": -0.0,
             "scale": {
@@ -527,7 +531,7 @@
             }
         },
         "text": {
-            "text": "right click activates the right limb. to activate the tail limb, you",
+            "text": "right click activates the right limb.",
             "text": null,
             "filename": "fnt_silkscreenRegular.ttf",
             "fontsize": 1.0,
@@ -536,7 +540,8 @@
                 "g": 0.8823529481887817,
                 "b": 0.06666667014360428
             },
-            "layer": 9
+            "layer": 9,
+            "isCentered": false
         }
     },
     {
@@ -548,8 +553,8 @@
         },
         "transform": {
             "position": {
-                "x": -0.20669740438461304,
-                "y": -0.8283302783966064
+                "x": -0.8500000238418579,
+                "y": -0.7009667158126831
             },
             "rotation": -0.0,
             "scale": {
@@ -558,7 +563,7 @@
             }
         },
         "text": {
-            "text": "can use middle click, spacebar, or left shift.",
+            "text": "Middle Click, SpaceBar and lShift activates the back limb.",
             "text": null,
             "filename": "fnt_silkscreenRegular.ttf",
             "fontsize": 1.0,
@@ -567,7 +572,68 @@
                 "g": 0.8823529481887817,
                 "b": 0.06666667014360428
             },
-            "layer": 10
+            "layer": 10,
+            "isCentered": false
+        }
+    },
+    {
+        "name": {
+            "namestr": "img_dialogueFrame",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": 0.0,
+                "y": -0.5883199572563171
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 0.6000000238418579,
+                "y": 0.6000000238418579
+            }
+        },
+        "sprite": {
+            "imagefile": "img_dialogueFrame.png",
+            "layer": 2,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0,
+            "isLit": false
+        }
+    },
+    {
+        "name": {
+            "namestr": "img_dialogueFrame",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": 0.5160863399505615,
+                "y": 0.32613563537597656
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 0.6000000238418579,
+                "y": 0.6000000238418579
+            }
+        },
+        "sprite": {
+            "imagefile": "img_roombert.png",
+            "layer": 3,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0,
+            "isLit": false
         }
     }
 ]

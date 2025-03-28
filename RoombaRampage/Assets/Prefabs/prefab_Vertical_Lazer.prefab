@@ -1,11 +1,11 @@
 [
     {
         "GlobalSettings": {
-            "globalIllumination": 0.46000000834465027,
+            "globalIllumination": 0.36000001430511475,
             "backgroundColor": {
-                "r": 0.13300000131130219,
-                "g": 0.23000000417232513,
-                "b": 0.3199999928474426
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0
             }
         }
     },
@@ -26,8 +26,8 @@
         },
         "transform": {
             "position": {
-                "x": -1.0142779350280762,
-                "y": 32.591575622558594
+                "x": 35.7636604309082,
+                "y": 92.97721099853516
             },
             "rotation": -0.0,
             "scale": {
@@ -76,7 +76,7 @@
         },
         "sprite": {
             "imagefile": "ani_inventoryCloseButton_strip2.png",
-            "layer": 2,
+            "layer": 6,
             "color": {
                 "r": 1.0,
                 "g": 1.0,
@@ -101,6 +101,28 @@
                 }
             ]
         },
+        "LightingComponent": {
+            "m_innerOuterRadius": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "m_intensity": 1.5,
+            "m_light_OffSet": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "m_light_scale": {
+                "x": 1.0,
+                "y": 1.0
+            },
+            "m_light_rotation": 0.0,
+            "m_colour": {
+                "x": 1.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "m_lightType": 1
+        },
         "children": [
             {
                 "name": {
@@ -114,7 +136,7 @@
                 "transform": {
                     "position": {
                         "x": -0.0010843176860362291,
-                        "y": -6.48015022277832
+                        "y": -5.397906303405762
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -135,7 +157,7 @@
                 "transform": {
                     "position": {
                         "x": 0.0021955023985356092,
-                        "y": 7.028032302856445
+                        "y": 10.415268898010254
                     },
                     "rotation": 0.0,
                     "scale": {

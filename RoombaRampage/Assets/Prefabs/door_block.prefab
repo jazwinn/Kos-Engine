@@ -1,11 +1,11 @@
 [
     {
         "GlobalSettings": {
-            "globalIllumination": 0.46000000834465027,
+            "globalIllumination": 0.36000001430511475,
             "backgroundColor": {
-                "r": 0.13300000131130219,
-                "g": 0.23000000417232513,
-                "b": 0.3199999928474426
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0
             }
         }
     },
@@ -52,13 +52,17 @@
             },
             "alpha": 1.0,
             "rowlength": 2,
-            "columnlength": 18,
+            "columnlength": 19,
             "pictureRowLength": 13,
             "pictureColumnLength": 6,
             "tilePictureIndex": [
                 [
-                    9,
-                    9
+                    35,
+                    35
+                ],
+                [
+                    19,
+                    19
                 ],
                 [
                     22,
@@ -143,7 +147,7 @@
                 "transform": {
                     "position": {
                         "x": 3.318809986114502,
-                        "y": 4.414003849029541
+                        "y": 3.2366461753845215
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -179,7 +183,7 @@
                 "transform": {
                     "position": {
                         "x": 3.318809986114502,
-                        "y": -33.92096710205078
+                        "y": -36.0099983215332
                     },
                     "rotation": 0.0,
                     "scale": {

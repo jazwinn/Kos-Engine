@@ -121,15 +121,19 @@ namespace ecs {
 					continue;
 				}
 
+				vector2::Vec2 parentScale, parentTranslate;
+				float parentRotate;
+				mat3x3::Mat3Decompose(parentComp->m_transformation, parentTranslate, parentScale, parentRotate);
+
 				mat3x3::Mat3x3 lightTransformation = mat3x3::Mat3Transform(transform->m_position, transform->m_scale, 0);
 				
-				lightTransformation.m_e20 += parentComp->m_position.m_x;
-				lightTransformation.m_e21 += parentComp->m_position.m_y;
+				lightTransformation.m_e20 += parentTranslate.m_x;
+				lightTransformation.m_e21 += parentTranslate.m_y;
 
 				mat3x3::Mat3Scale(scaleMatrix, parentComp->m_scale.m_x, parentComp->m_scale.m_y);
 				mat3x3::Mat3RotDeg(rotateMatrix, parentComp->m_rotation);
-				mat3x3::Mat3Translate(translateToOriginMatrix, -parentComp->m_position.m_x, -parentComp->m_position.m_y);
-				mat3x3::Mat3Translate(translateBackMatrix, parentComp->m_position.m_x, (parentComp->m_position.m_y));
+				mat3x3::Mat3Translate(translateToOriginMatrix, -parentTranslate.m_x, -parentTranslate.m_y);
+				mat3x3::Mat3Translate(translateBackMatrix, parentTranslate.m_x, parentTranslate.m_y);
 				lightTransformation = translateBackMatrix * rotateMatrix * scaleMatrix * translateToOriginMatrix * lightTransformation;
 
 				mat3x3::Mat3RotDeg(rotateMatrix, transform->m_rotation);

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -33,6 +34,8 @@ public class PlayerController : ScriptBase
 
         //Set tolerance to prevent jittering, higher values = more rigid rotation, but no more jittering due to micro changes
         angleTolerance = 4f;
+
+        InternalCall.m_InternalGetWorldMousePosition(out previousMousePos);
     }
     #endregion
 
@@ -51,6 +54,9 @@ public class PlayerController : ScriptBase
 
     //Movement Vector
     private Vector2 movement;
+
+    //prev mouse pos
+    private Vector2 previousMousePos;
 
     //Collision
     private int[] collidedEntities;
@@ -119,6 +125,28 @@ public class PlayerController : ScriptBase
             movement.X = speed; // Move right if not blocked
         }
 
+        if (InternalCall.m_InternalCallIsControllerPresent())
+        {
+            float[] axis = InternalCall.m_InternalCallGetJoyStickAxis();
+
+            if(axis != null)
+            {
+                float deadzone = 0.2f;
+                if (Math.Abs(axis[0]) > deadzone)
+                {
+                   // Console.WriteLine(axis[0]);
+                    movement.X = speed * axis[0];
+                }
+                if (Math.Abs(axis[1]) > deadzone)
+                {
+                    movement.Y = speed * axis[1];
+                }
+            }
+
+        }
+
+        
+
         //Normalize to prevent diagonal movement from adding speed
         movement = NormalizeAndScale(movement.X, movement.Y, speed);
 
@@ -146,85 +174,54 @@ public class PlayerController : ScriptBase
             {
                 if (!PlayerGun.playerBoost)
                 {
-                    if (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID) == "Enemy")
+                    switch (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID))
                     {
-                        CameraFollowPlayerScript.Shake(10f, 1f);
+                        case "Enemy":
+                        case "EnemyBullet":
+                        case "PlayerRailgunBullet":
+                        case "Boss":
+                            CameraFollowPlayerScript.Shake(10f, 1f);
 
-                        InternalCall.m_InternalCallPlayAudio(EntityID, "aud_playerDeath01");
+                            InternalCall.m_InternalCallPlayAudio(EntityID, "aud_playerDeath01");
 
-                        var collisionComponent = GetComponent.GetColliderComponent(EntityID);
-                        collisionComponent.m_collisionCheck = !collisionComponent.m_collisionCheck;
-                        SetComponent.SetCollisionComponent(EntityID, collisionComponent);
+                            var collisionComponent = GetComponent.GetColliderComponent(EntityID);
+                            collisionComponent.m_collisionCheck = !collisionComponent.m_collisionCheck;
+                            SetComponent.SetCollisionComponent(EntityID, collisionComponent);
 
-                        InternalCall.m_InternalSetAnimationComponent(EntityID, 0, 0, 0, false, 1);
-                        InternalCall.m_InternalSetSpriteComponent(EntityID, playerDeathTexture, startingLayer, startingColor, startingAlpha);
+                            InternalCall.m_InternalSetAnimationComponent(EntityID, 0, 0, 0, false, 1);
+                            InternalCall.m_InternalSetSpriteComponent(EntityID, playerDeathTexture, startingLayer, startingColor, startingAlpha);
 
-                        movement.X = 0;
-                        movement.Y = 0;
+                            movement.X = 0;
+                            movement.Y = 0;
 
-                        InternalCall.m_InternalSetVelocity(EntityID, movement);
+                            InternalCall.m_InternalSetVelocity(EntityID, movement);
 
-                        isDead = true;
+                            isDead = true;
 
-                        CoroutineManager.Instance.PauseAllCoroutines();
+                            CoroutineManager.Instance.PauseAllCoroutines();
 
-                        InternalCall.m_InternalCallSetTimeScale(0);
-                    }
-                    if (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID) == "EnemyBullet")
-                    {
-                        CameraFollowPlayerScript.Shake(10f, 1f);
+                            InternalCall.m_InternalCallSetTimeScale(0);
+                            break;
 
-                        InternalCall.m_InternalCallPlayAudio(EntityID, "aud_playerDeath01");
+                        default:
+                            break;
 
-                        var collisionComponent = GetComponent.GetColliderComponent(EntityID);
-                        collisionComponent.m_collisionCheck = !collisionComponent.m_collisionCheck;
-                        SetComponent.SetCollisionComponent(EntityID, collisionComponent);
-
-                        InternalCall.m_InternalSetAnimationComponent(EntityID, 0, 0, 0, false, 1);
-                        InternalCall.m_InternalSetSpriteComponent(EntityID, playerDeathTexture, startingLayer, startingColor, startingAlpha);
-
-                        movement.X = 0;
-                        movement.Y = 0;
-
-                        InternalCall.m_InternalSetVelocity(EntityID, movement);
-
-                        isDead = true;
-
-                        CoroutineManager.Instance.PauseAllCoroutines();
-
-                        InternalCall.m_InternalCallSetTimeScale(0);
-                    }
-
-                    if (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID) == "PlayerRailgunBullet")
-                    {
-                        CameraFollowPlayerScript.Shake(10f, 1f);
-
-                        InternalCall.m_InternalCallPlayAudio(EntityID, "aud_playerDeath01");
-
-                        var collisionComponent = GetComponent.GetColliderComponent(EntityID);
-                        collisionComponent.m_collisionCheck = !collisionComponent.m_collisionCheck;
-                        SetComponent.SetCollisionComponent(EntityID, collisionComponent);
-
-                        InternalCall.m_InternalSetAnimationComponent(EntityID, 0, 0, 0, false, 1);
-                        InternalCall.m_InternalSetSpriteComponent(EntityID, playerDeathTexture, startingLayer, startingColor, startingAlpha);
-
-                        movement.X = 0;
-                        movement.Y = 0;
-
-                        InternalCall.m_InternalSetVelocity(EntityID, movement);
-
-                        isDead = true;
-
-                        CoroutineManager.Instance.PauseAllCoroutines();
-
-                        InternalCall.m_InternalCallSetTimeScale(0);
                     }
                 }
-           
-                else
+
+                switch (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID))
                 {
-                    if (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID) == "Boss")
-                    {
+                    case "Wall":
+                        if (PlayerGun.playerBoost)
+                        {
+                            CameraFollowPlayerScript.Shake(10f, 1f);
+                            PlayerGun.playerBoost = false;
+                        }
+                        break;
+
+                    case "Boss":
+                    case "LaserWall":
+
                         CameraFollowPlayerScript.Shake(10f, 1f);
 
                         InternalCall.m_InternalCallPlayAudio(EntityID, "aud_playerDeath01");
@@ -246,45 +243,11 @@ public class PlayerController : ScriptBase
                         InternalCall.m_InternalCallSetTimeScale(0);
 
                         CoroutineManager.Instance.PauseAllCoroutines();
-                    }
-                }
-                
-                if (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID) == "Wall")
-                {
 
-                    if (PlayerGun.playerBoost)
-                    {
-                        CameraFollowPlayerScript.Shake(10f, 1f);
-                        PlayerGun.playerBoost = false;
-                    }
+                        break;
 
-
-
-                }
-
-                if (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID) == "LaserWall")
-                {
-                    CameraFollowPlayerScript.Shake(10f, 1f);
-
-                    InternalCall.m_InternalCallPlayAudio(EntityID, "aud_playerDeath01");
-
-                    var collisionComponent = GetComponent.GetColliderComponent(EntityID);
-                    collisionComponent.m_collisionCheck = !collisionComponent.m_collisionCheck;
-                    SetComponent.SetCollisionComponent(EntityID, collisionComponent);
-
-                    InternalCall.m_InternalSetAnimationComponent(EntityID, 0, 0, 0, false, 1);
-                    InternalCall.m_InternalSetSpriteComponent(EntityID, playerDeathTexture, startingLayer, startingColor, startingAlpha);
-
-                    movement.X = 0;
-                    movement.Y = 0;
-
-                    InternalCall.m_InternalSetVelocity(EntityID, movement);
-
-                    isDead = true;
-
-                    InternalCall.m_InternalCallSetTimeScale(0);
-
-                    CoroutineManager.Instance.PauseAllCoroutines();
+                    default:
+                        break;
                 }
             }
         }
@@ -300,20 +263,32 @@ public class PlayerController : ScriptBase
 
         Vector2 mousePos;
         Vector2 roombaPos;
-
-        //Get pos of mouse
-        InternalCall.m_InternalGetWorldMousePosition(out mousePos);
-
         //Get pos of player
         InternalCall.m_InternalGetTransformComponent(EntityID, out roombaPos, out startingRoombaScale, out startingRoombaRotate);
+        //Get pos of mouse
+        InternalCall.m_InternalGetWorldMousePosition(out mousePos);
+        if(previousMousePos.X != mousePos.X && previousMousePos.Y != mousePos.Y)
+        {
 
-        Vector2 direction;
+            Vector2 direction;
 
-        //Gets direction to look towards
-        direction.X = (mousePos.X - roombaPos.X);
-        direction.Y = (mousePos.Y - roombaPos.Y);
+            //Gets direction to look towards
+            direction.X = (mousePos.X - roombaPos.X);
+            direction.Y = (mousePos.Y - roombaPos.Y);
 
-        rotationFloat = (float)(Math.Atan2(direction.X, direction.Y) * (180 / Math.PI));
+            rotationFloat = (float)(Math.Atan2(direction.X, direction.Y) * (180 / Math.PI));
+
+            previousMousePos = mousePos;
+        }
+       
+
+        float controllerRotation = InternalCall.m_InternalCallGetRightJoyStickRotation();
+
+        if(controllerRotation > 0)
+        {
+            rotationFloat = controllerRotation;
+        }
+
 
         if ((rotationFloat > previousRotationFloat + angleTolerance) || (rotationFloat < previousRotationFloat - angleTolerance))
         {

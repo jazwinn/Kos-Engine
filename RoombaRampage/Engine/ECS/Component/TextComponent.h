@@ -34,10 +34,11 @@ namespace ecs {
 		std::string m_fileName{};
 		int m_fontLayer{};
 		float m_fontSize{ 100.f };
+		bool m_isCentered{ true };
 
 		vector3::Vec3 m_color;
 
-		REFLECTABLE(TextComponent, m_fontLayer);
+		REFLECTABLE(TextComponent, m_fontLayer, m_isCentered);
 	};
 
 }

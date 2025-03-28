@@ -142,8 +142,8 @@
         },
         "transform": {
             "position": {
-                "x": 1.2985405921936035,
-                "y": -0.7346134781837463
+                "x": 1.4700000286102295,
+                "y": -0.7699999809265137
             },
             "rotation": -0.0,
             "scale": {
@@ -171,8 +171,8 @@
         },
         "button": {
             "force": {
-                "x": 1551.61376953125,
-                "y": 133.88751220703125
+                "x": 1435.789306640625,
+                "y": 347.0489196777344
             },
             "scale": {
                 "x": 0.2199999988079071,
@@ -222,7 +222,7 @@
         },
         "transform": {
             "position": {
-                "x": -0.8112843036651611,
+                "x": -0.8500000238418579,
                 "y": -0.4461106061935425
             },
             "rotation": -0.0,
@@ -241,7 +241,8 @@
                 "g": 0.8823529481887817,
                 "b": 0.06666667014360428
             },
-            "layer": 3
+            "layer": 3,
+            "isCentered": false
         }
     },
     {
@@ -253,8 +254,8 @@
         },
         "transform": {
             "position": {
-                "x": -0.16563186049461365,
-                "y": -0.544570803642273
+                "x": -0.8500000238418579,
+                "y": -0.550000011920929
             },
             "rotation": -0.0,
             "scale": {
@@ -263,7 +264,7 @@
             }
         },
         "text": {
-            "text": "room13a seems to be a failure. 12a had better",
+            "text": "room13a seems to be a failure. 12a had better results.",
             "text": null,
             "filename": "fnt_silkscreenRegular.ttf",
             "fontsize": 1.0,
@@ -272,7 +273,8 @@
                 "g": 0.8823529481887817,
                 "b": 0.06666667014360428
             },
-            "layer": 7
+            "layer": 7,
+            "isCentered": false
         }
     },
     {
@@ -284,8 +286,8 @@
         },
         "transform": {
             "position": {
-                "x": -0.37060123682022095,
-                "y": -0.6348737478256226
+                "x": -0.8500000238418579,
+                "y": -0.6000000238418579
             },
             "rotation": -0.0,
             "scale": {
@@ -294,7 +296,7 @@
             }
         },
         "text": {
-            "text": "results. scrap him and move on.",
+            "text": "scrap him and move on.",
             "text": null,
             "filename": "fnt_silkscreenRegular.ttf",
             "fontsize": 1.0,
@@ -303,7 +305,8 @@
                 "g": 0.8823529481887817,
                 "b": 0.06666667014360428
             },
-            "layer": 8
+            "layer": 8,
+            "isCentered": false
         }
     },
     {
@@ -475,7 +478,8 @@
                         "g": 0.8823529481887817,
                         "b": 0.06666667014360428
                     },
-                    "layer": 900
+                    "layer": 900,
+                    "isCentered": true
                 }
             }
         ]

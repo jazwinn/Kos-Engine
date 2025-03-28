@@ -39,6 +39,7 @@ namespace logging {
     /******************************************************************/
     Logger::Logger(const std::string& filename) {
         // Attempt to open the log file in append mode to ensure it exists
+#ifdef NO_GAME
         std::ofstream tempFile(filename, std::ios::app);
         if (!tempFile) {
 #ifdef IMGUIENABLED
@@ -55,6 +56,7 @@ namespace logging {
             std::cerr << "Error: Failed to open log file for writing: " << filename << std::endl;
 #endif
         }
+#endif
     }
     /******************************************************************/
     /*!
@@ -64,6 +66,7 @@ namespace logging {
     */
     /******************************************************************/
     void Logger::m_Setup_Abort_Handler() {
+#ifdef NO_GAME
         // Handle abort signals
         std::signal(SIGABRT, m_Abort_Handler);
 
@@ -78,6 +81,7 @@ namespace logging {
 
         // Handle termination requests (can be caught for cleanup)
         std::signal(SIGTERM, m_Abort_Handler);
+#endif
     }
     /******************************************************************/
     /*!
@@ -147,10 +151,12 @@ namespace logging {
     */
     /******************************************************************/
     void Logger::m_TestingLog() {
+#ifdef NO_GAME
         LOGGING_INFO("Testing of Logging Information {}" , 50);
         LOGGING_DEBUG("Testing of Logging Debug");
         LOGGING_ERROR("Testing of Logging Error with Source Location");
         LOGGING_ERROR_NO_SOURCE_LOCATION("Testing of Logging without source location");        
+#endif
     }
     /******************************************************************/
     /*!
@@ -158,9 +164,14 @@ namespace logging {
     \brief     Destructor that closes the log file.
     */
     /******************************************************************/
-    Logger::~Logger() { m_logFile.close(); }
+    Logger::~Logger() { 
+#ifdef NO_GAME
+        m_logFile.close(); 
+#endif
+    }
 
     void Logger::m_Init(const std::string& filename) {
+#ifdef NO_GAME
         assert(!m_bInitialized && "The logger must be initialized before it is used!");
         if (m_bInitialized)
         {
@@ -189,6 +200,7 @@ namespace logging {
         catch (const std::exception& e) {
             LOGGING_ERROR("Error Init Logging File {}" , e.what());
         }
+#endif
     }
 
     /******************************************************************/
@@ -235,6 +247,7 @@ namespace logging {
     /******************************************************************/
     void Logger::m_Log(LogLevel level, const std::string& message)
     {
+#ifdef NO_GAME
         std::string current_Time = m_GetCurrentTimestamp();
         // Create log entry
         std::ostringstream logEntry;
@@ -250,6 +263,8 @@ namespace logging {
             m_logFile << logEntry.str();
             m_logFile.flush(); // Ensure immediate write to file
         }
+
+#endif
     }
 
     /******************************************************************/
