@@ -283,7 +283,7 @@ public class PlayerController : ScriptBase
             rotationFloat = (float)(Math.Atan2(direction.X, direction.Y) * (180 / Math.PI));
 
             previousMousePos = screenMousePos;
-            Console.WriteLine("Mouse");
+           // Console.WriteLine("Mouse");
         }
        
 
@@ -293,7 +293,7 @@ public class PlayerController : ScriptBase
         {
             rotationFloat = controllerRotation;
 
-            Console.WriteLine("Controller");
+           // Console.WriteLine("Controller");
         }
 
 

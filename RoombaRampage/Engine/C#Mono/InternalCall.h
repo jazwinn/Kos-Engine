@@ -486,6 +486,8 @@ namespace script {
 
 		static void m_InternalCallOverideMouseWithCursor(bool _boolean);
 
+		static void m_InternalCallSetPanAudio(ecs::EntityID id, MonoString* monoString, float pan);
+
 		static MonoArray* m_InternalCallGetJoyStickAxis();
 
 		/******************************************************************/
