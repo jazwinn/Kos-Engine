@@ -83,8 +83,10 @@ public class PlayerController : ScriptBase
     private string movementLoopAudio = "aud_vacuumLoop01.wav";
     private string movementStopAudio = "aud_vacuumEnd01.wav";
 
-    static public bool isControllerLastUsed = false;
 
+    //controller/cursor
+    static public bool isControllerLastUsed = false;
+    private bool cursoroff = false;
     public override void Start()
     {
 
@@ -287,6 +289,12 @@ public class PlayerController : ScriptBase
             previousMousePos = screenMousePos;
 
             isControllerLastUsed = false;
+
+            if (cursoroff)
+            {
+                cursoroff = false;
+                InternalCall.m_InternalCallHideCursor(false);
+            }
            // Console.WriteLine("Mouse");
         }
        
@@ -298,7 +306,13 @@ public class PlayerController : ScriptBase
             rotationFloat = controllerRotation;
             isControllerLastUsed = true;
 
-           // Console.WriteLine("Controller");
+            if (!cursoroff)
+            {
+                cursoroff = true;
+                InternalCall.m_InternalCallHideCursor(true);
+            }
+
+            // Console.WriteLine("Controller");
         }
 
 

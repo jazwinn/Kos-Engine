@@ -28,10 +28,10 @@ public class ExitGameButton : ScriptBase
 
     public override void Update()
     {
-        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.LMB))
+        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.LMB) || InternalCall.m_InternalCallIsControllerTriggered(keyCode.CONTROLLER_A))
         {
             InternalCall.m_InternalGetButtonComponent(EntityID, out Vector2 position, out Vector2 scale, out bool isClick);
-            if (isClick == true)
+            if (isClick == true || InternalCall.m_InternalIsButtonHovered(EntityID))
             {
                 InternalCall.m_InternalCallCloseWindow();
             }

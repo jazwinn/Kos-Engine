@@ -132,6 +132,9 @@ public class GameControllerLevel1 : ScriptBase
 
 
             InternalCall.m_InternalCallPauseAllAudio();
+
+            // enable back cursor
+            InternalCall.m_InternalCallHideCursor(false);
         }
 
         else if (gameIsPaused)

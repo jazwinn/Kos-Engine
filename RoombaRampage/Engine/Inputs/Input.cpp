@@ -33,7 +33,7 @@ namespace Input {
 	bool InputSystem::m_controllerConnected = false;
 	int InputSystem::m_controllerID = NULL;
 	std::vector<float> InputSystem::m_controllerAxes(6, 0);
-	float InputSystem::ControllerSensitivity = 30.0f;
+	float InputSystem::ControllerSensitivity = 20.0f;
 	float InputSystem::deadzone = 0.4f;
 	float InputSystem::controllerRightJoyStickRotation = -1.f;
 	bool InputSystem::overwriteMousePosWithController = false;
@@ -114,6 +114,17 @@ namespace Input {
 		glfwSetCursorPosCallback(Window, mousepos_cb);
 		glfwSetJoystickCallback(joystick_callback);
 		
+	}
+
+	void InputSystem::m_HideCursor(bool _boolean)
+	{
+		if (_boolean) {
+			glfwSetInputMode(m_windowInput, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+		}
+		else {
+			glfwSetInputMode(m_windowInput, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+		}
+
 	}
 
 	void InputSystem::m_inputUpdate() {

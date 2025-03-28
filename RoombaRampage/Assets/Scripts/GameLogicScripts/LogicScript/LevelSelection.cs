@@ -25,7 +25,7 @@ public class LevelSelection : ScriptBase
 
     public override void Update()
     {
-        if(InternalCall.m_InternalCallIsKeyPressed(keyCode.Y) && LevelSelected == true)
+        if((InternalCall.m_InternalCallIsKeyPressed(keyCode.Y) || InternalCall.m_InternalCallIsControllerTriggered(keyCode.CONTROLLER_Y) )&& LevelSelected == true)
         {
             ShowGameLayers();
 
@@ -37,7 +37,7 @@ public class LevelSelection : ScriptBase
 
 
         }
-        else if (InternalCall.m_InternalCallIsKeyPressed(keyCode.N) || InternalCall.m_InternalCallIsKeyPressed(keyCode.ESC))
+        else if (InternalCall.m_InternalCallIsKeyPressed(keyCode.N) || InternalCall.m_InternalCallIsKeyPressed(keyCode.ESC) || InternalCall.m_InternalCallIsControllerTriggered(keyCode.CONTROLLER_B))
         {
             HideGameLayers();
 

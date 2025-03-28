@@ -69,7 +69,7 @@ public class CutsceneMenuButtons : ScriptBase
             InternalCall.m_InternalCallLoadScene(LevelSelection.SceneName);
         }
 
-        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.LMB) || InternalCall.m_InternalCallIsKeyTriggered(keyCode.RMB) || InternalCall.m_InternalCallIsKeyTriggered(keyCode.SPACE) || InternalCall.m_InternalCallIsKeyTriggered(keyCode.ENTER))
+        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.LMB) || InternalCall.m_InternalCallIsKeyTriggered(keyCode.RMB) || InternalCall.m_InternalCallIsKeyTriggered(keyCode.SPACE) || InternalCall.m_InternalCallIsKeyTriggered(keyCode.ENTER) || InternalCall.m_InternalCallIsControllerTriggered(keyCode.CONTROLLER_A))
         {
             InternalCall.m_InternalCallPlayAudio(EntityID, "aud_buttonClick01");
             switch (buttonFunctionNo)
