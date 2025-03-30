@@ -31,7 +31,8 @@ namespace fmodaudio {
     }
 
     FModAudio::~FModAudio() {
-        m_StopAllSounds();
+        float fadeOutTime = 0.3f;
+        m_StopAllSounds(fadeOutTime);
         m_Shutdown();
     }
 
@@ -49,11 +50,47 @@ namespace fmodaudio {
     }
 
     void FModAudio::m_Shutdown() {
-        m_StopAllSounds();
+        float fadeOutTime = 0.3f;
+        m_StopAllSounds(fadeOutTime);
         if (m_system) {
             m_system->release();
             m_system = nullptr;
         }
+    }
+
+    void FModAudio::Update(float deltaTime) {
+        auto currentTime = std::chrono::steady_clock::now();
+
+        for (auto& info : m_channelPool) {
+            if (info.channel && info.isFading) {
+                float elapsedTime = std::chrono::duration<float>(
+                    currentTime - info.fadeStartTime).count();
+
+                if (elapsedTime >= info.fadeDuration) {
+                    info.channel->setVolume(info.fadeTargetVolume);
+                    info.isFading = false;
+
+                    if (info.isFadingOut && info.fadeTargetVolume == 0.0f) {
+                        info.channel->stop();
+                        auto it = m_entityChannels.find(info.entityId);
+                        if (it != m_entityChannels.end()) {
+                            m_entityChannels.erase(it);
+                        }
+                        info.isActive = false;
+                        info.isFadingOut = false;
+                        info.channel = nullptr;
+                    }
+                }
+                else {
+                    float t = elapsedTime / info.fadeDuration;
+                    float newVolume = info.fadeStartVolume +
+                        (info.fadeTargetVolume - info.fadeStartVolume) * t;
+                    info.channel->setVolume(newVolume);
+                }
+            }
+        }
+
+        m_ReleaseUnusedChannels();
     }
 
     bool FModAudio::m_CreateSound(const char* soundFile) {
@@ -165,28 +202,36 @@ namespace fmodaudio {
 
 
 
-    void FModAudio::m_StopSound(const std::string& entityId) {
+    void FModAudio::m_StopSound(const std::string& entityId, float fadeOutTime) {
         auto it = m_entityChannels.find(entityId);
         if (it != m_entityChannels.end()) {
-            it->second->stop();
+            m_FadeSound(entityId, 0.0f, fadeOutTime);
 
             for (auto& info : m_channelPool) {
                 if (info.entityId == entityId) {
-                    info.isActive = false;
-                    info.channel = nullptr;
-                    break;
+                    info.isFadingOut = true;
+                    info.fadeCompleteTime = std::chrono::steady_clock::now() +
+                        std::chrono::milliseconds(static_cast<int>(fadeOutTime * 1000));
+                    return;
                 }
             }
-
-            m_entityChannels.erase(it);
         }
     }
 
-    void FModAudio::m_StopAllSounds() {
+
+    void FModAudio::m_StopAllSounds(float fadeOutTime) {
         for (auto& pair : m_entityChannels) {
-            pair.second->stop();
+            m_FadeSound(pair.first, 0.0f, fadeOutTime);
+
+            for (auto& info : m_channelPool) {
+                if (info.channel == pair.second) {
+                    info.isFadingOut = true;
+                    info.fadeCompleteTime = std::chrono::steady_clock::now() +
+                        std::chrono::milliseconds(static_cast<int>(fadeOutTime * 1000));
+                    break;
+                }
+            }
         }
-        m_entityChannels.clear();
     }
 
     void FModAudio::m_PauseAllSounds() {
@@ -307,29 +352,31 @@ namespace fmodaudio {
             return false;
         }
 
-        FMOD_RESULT result = it->second->setVolumeRamp(true);
+        FMOD::Channel* channel = it->second;
+
+        FMOD_RESULT result = channel->setVolumeRamp(true);
         if (result != FMOD_OK) {
             return false;
         }
 
         float currentVolume;
-        result = it->second->getVolume(&currentVolume);
+        result = channel->getVolume(&currentVolume);
         if (result != FMOD_OK) {
             return false;
         }
 
-        int steps = 100;
-        float volumeStep = (targetVolume - currentVolume) / steps;
-        int delay = static_cast<int>(fadeDuration * 1000 / steps);  // Delay between steps (in milliseconds)
-
-        for (int i = 0; i < steps; ++i) {
-            currentVolume += volumeStep;
-            it->second->setVolume(currentVolume);
-            std::this_thread::sleep_for(std::chrono::milliseconds(delay));
+        for (auto& info : m_channelPool) {
+            if (info.channel == channel) {
+                info.isFading = true;
+                info.fadeStartTime = std::chrono::steady_clock::now();
+                info.fadeDuration = fadeDuration;
+                info.fadeStartVolume = currentVolume;
+                info.fadeTargetVolume = targetVolume;
+                return true;
+            }
         }
 
-        it->second->setVolume(targetVolume);
-        return true;
+        return false;
     }
 
     FMOD::Channel* FModAudio::m_GetChannelForEntity(ecs::EntityID entityId) {
@@ -375,16 +422,27 @@ namespace fmodaudio {
     }
 
     void FModAudio::m_ReleaseUnusedChannels() {
+        auto currentTime = std::chrono::steady_clock::now();
+
         for (auto& info : m_channelPool) {
             if (info.channel) {
                 bool isPlaying = false;
-                FMOD_RESULT result = info.channel->isPlaying(&isPlaying);
-                if (result == FMOD_OK && !isPlaying) {
+                info.channel->isPlaying(&isPlaying);
+
+                bool shouldRelease = !isPlaying;
+
+                if (info.isFadingOut && currentTime >= info.fadeCompleteTime) {
+                    shouldRelease = true;
+                }
+
+                if (shouldRelease) {
+                    info.channel->stop();
                     auto it = m_entityChannels.find(info.entityId);
                     if (it != m_entityChannels.end()) {
                         m_entityChannels.erase(it);
                     }
                     info.isActive = false;
+                    info.isFadingOut = false;
                     info.channel = nullptr;
                 }
             }
@@ -490,7 +548,7 @@ namespace fmodaudio {
         auto it = m_soundMap.find(name);
         if (it != m_soundMap.end()) {
             FModAudio* sound = it->second.get();
-            sound->m_StopSound(std::to_string(entityId));
+            sound->m_StopSound(std::to_string(entityId), 0.2f);
         }
         else {
             // TODO Handle error (e.g., logging or notification)
@@ -712,7 +770,8 @@ namespace fmodaudio {
         for (auto& soundPair : m_soundMap) {
             FModAudio* audio = soundPair.second.get();
             if (audio) {
-                audio->m_StopAllSounds();
+                float fadeOutTime = 0.2f;
+                audio->m_StopAllSounds(fadeOutTime);
             }
         }
     }
