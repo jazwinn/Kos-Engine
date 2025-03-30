@@ -100,6 +100,7 @@ namespace ecs {
 
                 sound->m_SetVolume(entityIDStr, adjustedVolume);
                 sound->m_SetLooping(entityIDStr, audioFile.m_Loop);
+
                 if (audioFile.m_PlayOnStart && !sound->m_IsPlaying(entityIDStr)) {
                     sound->m_PlaySound(entityIDStr);
                     audioFile.m_PlayOnStart = false;
