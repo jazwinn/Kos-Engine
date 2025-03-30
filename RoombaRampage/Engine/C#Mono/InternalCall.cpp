@@ -1090,6 +1090,11 @@ namespace script {
 
 	}
 
+	void InternalCall::m_InternalCallHideCursor(bool _boolean)
+	{
+		Input::InputSystem::m_HideCursor(_boolean);
+	}
+
 	bool InternalCall::m_InternalCallIsWindowMinimise()
 	{
 		return Helper::Helpers::GetInstance()->m_windowMinimise;
@@ -1535,6 +1540,11 @@ namespace script {
 	void InternalCall::m_InternalCallDeleteEntity(ecs::EntityID id)
 	{
 		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
+
+		if (ecs->m_ECS_EntityMap.find(id) == ecs->m_ECS_EntityMap.end()) {
+			return;
+		}
+
 		ecs->m_DeleteEntity(id);
 
 	}
@@ -1770,6 +1780,7 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_InternalCallGetJoyStickAxis);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallGetRightJoyStickRotation);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallOverideMouseWithCursor);
+		MONO_ADD_INTERNAL_CALL(m_InternalCallHideCursor);
 		///SO HELP ME THEN OVER HERE
 	}
 }

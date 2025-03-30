@@ -68,7 +68,7 @@ namespace ecs {
 			LOGGING_ERROR("Error: Vectors container size does not Match");
 			return;
 		}
-		std::cout << help->currentNumberOfSteps << std::endl;
+		//std::cout << help->currentNumberOfSteps << std::endl;
 		for (int i = 0; i < help->currentNumberOfSteps; ++i) {
 		// Loop through all vectors pointing to components
 		for (int n = 0; n < m_vecRigidBodyComponentPtr.size(); n++) {
@@ -88,19 +88,19 @@ namespace ecs {
 			
 				// Integrate linear motion
 				vector2::Vec2 acceleration = rigidBody->m_Acceleration + rigidBody->m_Force * rigidBody->m_InverseMass;
-				rigidBody->m_Velocity += acceleration * help->m_deltaTime;
+				rigidBody->m_Velocity += acceleration * help->m_fixedDeltaTime;
 				rigidBody->m_Velocity *= rigidBody->m_LinearDamping; // Apply linear damping
 
 				// Integrate angular motion
 				float angularAcceleration = rigidBody->m_Torque * rigidBody->m_InverseMass;
-				rigidBody->m_AngularVelocity += angularAcceleration * help->m_deltaTime;
+				rigidBody->m_AngularVelocity += angularAcceleration * help->m_fixedDeltaTime;
 				rigidBody->m_AngularVelocity *= rigidBody->m_AngularDamping;
 
 				//store previous position
 				rigidBody->m_PrevPos = transform->m_position;
 
-				transform->m_position += rigidBody->m_Velocity * help->m_deltaTime;
-				transform->m_rotation += rigidBody->m_AngularVelocity * help->m_deltaTime;
+				transform->m_position += rigidBody->m_Velocity * help->m_fixedDeltaTime;
+				transform->m_rotation += rigidBody->m_AngularVelocity * help->m_fixedDeltaTime;
 
 				rigidBody->m_Force = vector2::Vec2{ 0.0f, 0.0f };
 				rigidBody->m_Torque = 0.0f;
@@ -108,8 +108,8 @@ namespace ecs {
 				
 
 				if (!rigidBody->m_IsStatic && !rigidBody->m_IsKinematic) {
-					transform->m_position += rigidBody->m_Velocity * help->m_deltaTime;
-					transform->m_rotation += rigidBody->m_AngularVelocity * help->m_deltaTime;
+					transform->m_position += rigidBody->m_Velocity * help->m_fixedDeltaTime;
+					transform->m_rotation += rigidBody->m_AngularVelocity * help->m_fixedDeltaTime;
 				}
 
 				

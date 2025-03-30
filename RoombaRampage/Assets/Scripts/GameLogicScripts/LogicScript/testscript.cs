@@ -43,7 +43,6 @@ public class testscript : ScriptBase
 
     public override void Update()
     {
-        Console.WriteLine(test);
        
     }
 

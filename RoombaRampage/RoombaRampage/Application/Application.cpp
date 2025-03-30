@@ -139,7 +139,7 @@ namespace Application {
                 Helper::Helpers::GetInstance()->currentNumberOfSteps = 0;
                 while (help->m_accumulatedTime >= (fixedDeltaTime  )) {
                     help->m_accumulatedTime -= static_cast<float>(fixedDeltaTime);
-                    help->currentNumberOfSteps = 1;
+                    ++help->currentNumberOfSteps;
                 }
                 
                 /*--------------------------------------------------------------

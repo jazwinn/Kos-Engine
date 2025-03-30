@@ -103,17 +103,20 @@ public class BossBullet : ScriptBase
 
             foreach (int collidedEntitiesID in collidedEntities)
             {
+                if(bulletHasHit) return;
                 switch (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID))
                 {
                     case "PropGlassWall":
                     case "Wall":
-                    case "Player": // If it hits the player, delete it
-
                         bulletHasHit = true;
                         animComp.m_isAnimating = true;
                         animComp.m_framesPerSecond = 20;
                         Component.Set<AnimationComponent>(EntityID, animComp);
                         InternalCall.m_InternalSetVelocity(EntityID, new Vector2(0, 0));
+                        break;
+                    case "Player": // If it hits the player, delete it
+                        
+                        InternalCall.m_InternalCallDeleteEntity(EntityID);
 
                         break;
 

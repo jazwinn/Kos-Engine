@@ -20,6 +20,7 @@ public class StartMenuButtons : ScriptBase
 
     public override void Start()
     {
+        isReading = false;
         animComp = Component.Get<AnimationComponent>(EntityID);
     }
 
@@ -65,7 +66,7 @@ public class StartMenuButtons : ScriptBase
 
     private void CheckForClicks()
     {
-        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.LMB) && isHovering == true)
+        if ((InternalCall.m_InternalCallIsKeyTriggered(keyCode.LMB) || InternalCall.m_InternalCallIsControllerTriggered(keyCode.CONTROLLER_A) ) && isHovering == true)
         {
             
             switch (buttonFunctionNo)
@@ -83,6 +84,22 @@ public class StartMenuButtons : ScriptBase
                     }
                     
                     break;
+                case 11:
+                    isReading = false;
+                    InternalCall.m_DisableLayer(9);
+                    break;
+                case -1:
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        if(InternalCall.m_InternalCallIsControllerTriggered(keyCode.CONTROLLER_B))
+        {
+            switch (buttonFunctionNo)
+            {
+                case 10:
                 case 11:
                     isReading = false;
                     InternalCall.m_DisableLayer(9);

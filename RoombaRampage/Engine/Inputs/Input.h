@@ -49,6 +49,8 @@ namespace Input {
 		*/
 		void SetCallBack(GLFWwindow* window);
 
+		static void m_HideCursor(bool);
+
 		static bool m_isKeyTriggered(const keyCode givenKey);
 		static bool m_isKeyPressed(const keyCode givenKey);
 		static bool m_isKeyReleased(const keyCode givenKey);

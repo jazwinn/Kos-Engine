@@ -23,9 +23,9 @@ public class MainMenuScript : ScriptBase
 
     public override void Start()
     {
-        
+        InternalCall.m_DisableLayer(9);
         CoroutineManager.Instance.StartCoroutine(Wait(), "Wait");
-        
+        InternalCall.m_InternalCallOverideMouseWithCursor(true);
     }
 
     private IEnumerator Wait()
@@ -37,12 +37,13 @@ public class MainMenuScript : ScriptBase
 
     public override void Update()
     {
-        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.LMB))
+        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.LMB) || InternalCall.m_InternalCallIsControllerTriggered(keyCode.CONTROLLER_A))
         {
             InternalCall.m_InternalCallPlayAudio(EntityID, "aud_buttonClick01");
 
             InternalCall.m_InternalGetButtonComponent(EntityID, out Vector2 position, out Vector2 scale, out bool isClick);
-            if (isClick == true)
+            
+            if (isClick == true || InternalCall.m_InternalIsButtonHovered(EntityID))
             {
                 CoroutineManager.Instance.StopAllCoroutines();
                 InternalCall.m_InternalCallStopAllAudio();

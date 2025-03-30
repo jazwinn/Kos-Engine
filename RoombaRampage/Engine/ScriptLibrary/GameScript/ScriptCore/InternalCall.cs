@@ -379,6 +379,9 @@ public static class InternalCall
     [MethodImpl(MethodImplOptions.InternalCall)]
     static public extern void m_UnHideEntityandchildren(uint id);
 
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    static public extern void m_InternalCallHideCursor(bool _boolean);
+
 }
 
 

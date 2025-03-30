@@ -53,7 +53,7 @@ public class BossController : ScriptBase
 
     private int repeatCount = 0;
     public int forceFieldHealth = 3;
-    public int bossHealth = 21;
+    public int bossHealth = 18;
     public bool isForceFieldActive = true;
     private bool forceFieldStart = false;
     private string forceFieldPrefab = "Boss_Forcefield";
@@ -62,9 +62,11 @@ public class BossController : ScriptBase
     private string bossClusterBulletPrefab;
 
     private bool isInvincible = false;
-    private float invicibilityTimer = 0.5f;
+    private float invicibilityTimer = 0.1f;
 
     private int bossVulnerableHealth = 3;
+
+    private static int challengeCounter;
     #endregion
 
     #region Enemy Spawning
@@ -109,10 +111,11 @@ public class BossController : ScriptBase
         bossDamageTexture = "ani_bossHit_strip4.png";
         bossDestroyedTexture = "ani_bossDeath_strip15.png";
 
+        challengeCounter = 0;
     }
     public override void Start()
     {
-
+        
     }
 
     public override void Update()
@@ -138,7 +141,22 @@ public class BossController : ScriptBase
                 Component.Set<AnimationComponent>(EntityID, animComp);
 
                 isDying = false;
-                GameControllerLevel1.isBossDead = true;
+                
+                if (LevelSelection.SceneName == "LevelChallenge")
+                {
+                    challengeCounter++;
+                    if (challengeCounter == 3)
+                    {
+                        InternalCall.m_InternalCallStopAudio((uint)InternalCall.m_InternalCallGetTagID("GameController"), "aud_bossLevelLoop.wav");
+                        GameControllerLevel1.isBossDead = true;
+                    }
+                }
+
+                else
+                {
+                    GameControllerLevel1.isBossDead = true;
+                    InternalCall.m_InternalCallStopAudio((uint)InternalCall.m_InternalCallGetTagID("GameController"), "aud_bossLevelLoop.wav");
+                }
 
                 return;
             }
@@ -249,6 +267,11 @@ public class BossController : ScriptBase
 
     private void StartBossDestroyedAnimation()
     {
+
+        LightComponent lightComp = Component.Get<LightComponent>(EntityID);
+        lightComp.m_intensity = 0;
+        Component.Set<LightComponent>(EntityID, lightComp);
+
         ColliderComponent tempColComp = Component.Get<ColliderComponent>(EntityID);
 
         tempColComp.m_collisionCheck = false;

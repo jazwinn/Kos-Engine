@@ -71,7 +71,7 @@ public class CameraFollowPlayerScript : ScriptBase
             shakeOffset = new Vector2(0, 0);
         }
 
-        if (PlayerLoadoutManager.isSortieing || GameControllerLevel1.gameIsPaused || PlayerController.isDead == true)
+        if (PlayerLoadoutManager.isSortieing || GameControllerLevel1.gameIsPaused || PlayerController.isDead == true || PlayerController.isControllerLastUsed)
         {
             UpdatePlayerPosition();
             trackingPos = playerTransformComp.m_position;
