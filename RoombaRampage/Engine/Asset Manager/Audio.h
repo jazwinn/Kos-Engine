@@ -107,7 +107,7 @@ namespace fmodaudio {
         \param   entityId - The ID of the entity for which to stop the sound.
         */
         /******************************************************************/
-        void m_StopSound(const std::string& entityId, float fadeOutTime);
+        void m_StopSound(const std::string& entityId);
 
         /******************************************************************/
         /*!

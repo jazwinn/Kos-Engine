@@ -1085,7 +1085,7 @@ namespace script {
 
 		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
 		assetmanager->m_audioManager.m_SetPanForEntity(id, filepath.filename().stem().string(), pan);
-
+		//std::cout << pan << std::endl;
 		mono_free(nativeString);
 
 	}

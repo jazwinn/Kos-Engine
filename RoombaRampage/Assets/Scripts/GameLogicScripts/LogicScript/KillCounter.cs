@@ -42,7 +42,7 @@ public class KillCounter : ScriptBase
     public void IncrementKillCount()
     {
         killCount++;
-        Console.WriteLine($"Kill Count: {killCount}"); 
+        //Console.WriteLine($"Kill Count: {killCount}"); 
     }
 
     public int GetKillCount()
@@ -53,7 +53,7 @@ public class KillCounter : ScriptBase
     public void ResetKillCount()
     {
         killCount = 0;
-        Console.WriteLine("Kill Counter Reset"); // Help for debbugging if Ted need
+        //Console.WriteLine("Kill Counter Reset"); // Help for debbugging if Ted need
     }
 
 }

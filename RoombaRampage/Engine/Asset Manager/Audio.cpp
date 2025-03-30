@@ -194,32 +194,33 @@ namespace fmodaudio {
             if (info.isActive && info.channel) {
                 bool isPlaying = false;
                 info.channel->isPlaying(&isPlaying);
-                std::cout << "Channel " << i << ": " << (isPlaying ? "Playing" : "Stopped")
-                    << " EntityID: " << info.entityId << "\n";
+                //std::cout << "Channel " << i << ": " << (isPlaying ? "Playing" : "Stopped")
+                   // << " EntityID: " << info.entityId << "\n";
             }
         }
     }
 
 
 
-    void FModAudio::m_StopSound(const std::string& entityId, float fadeOutTime) {
+    void FModAudio::m_StopSound(const std::string& entityId) {
         auto it = m_entityChannels.find(entityId);
         if (it != m_entityChannels.end()) {
-            m_FadeSound(entityId, 0.0f, fadeOutTime);
+            it->second->stop();
 
             for (auto& info : m_channelPool) {
                 if (info.entityId == entityId) {
-                    info.isFadingOut = true;
-                    info.fadeCompleteTime = std::chrono::steady_clock::now() +
-                        std::chrono::milliseconds(static_cast<int>(fadeOutTime * 1000));
-                    return;
+                    info.isActive = false;
+                    info.channel = nullptr;
+                    break;
                 }
             }
+
+            m_entityChannels.erase(it);
         }
     }
 
-
     void FModAudio::m_StopAllSounds(float fadeOutTime) {
+
         for (auto& pair : m_entityChannels) {
             m_FadeSound(pair.first, 0.0f, fadeOutTime);
 
@@ -276,6 +277,7 @@ namespace fmodaudio {
     bool FModAudio::m_SetPan(const std::string& entityId, float pan) {
         auto it = m_entityChannels.find(entityId);
         if (it != m_entityChannels.end()) {
+            std::cout << pan << std::endl;
             FMOD_RESULT result = it->second->setPan(pan);
             if (result != FMOD_OK) {
                 return false;
@@ -514,23 +516,19 @@ namespace fmodaudio {
                     if (audioFile.m_Name == name) {
                         float adjustedVolume = volume;
                         if (audioFile.m_IsBGM) {
-                            if (m_GlobalBGMVolume == 0)
-                            {
-                                return;
-                            }
+                            if (m_GlobalBGMVolume == 0) return;
                             adjustedVolume *= m_GlobalBGMVolume;
                         }
                         else if (audioFile.m_IsSFX) {
-                            if (m_GlobalSFXVolume == 0)
-                            {
-                                return;
-                            }
+                            if (m_GlobalSFXVolume == 0) return;
                             adjustedVolume *= m_GlobalSFXVolume;
                         }
 
+                        float pan = audioFile.m_Pan;
 
                         if (sound->m_PlaySound(entityIdStr)) {
                             sound->m_SetVolume(entityIdStr, adjustedVolume);
+                            sound->m_SetPan(entityIdStr, pan);
                         }
                         return;
                     }
@@ -539,7 +537,7 @@ namespace fmodaudio {
         }
         else {
             // TODO Handle error (e.g., logging or notification)
-            LOGGING_WARN("Sound not found: " + name);
+           // LOGGING_WARN("Sound not found: " + name);
         }
     }
 
@@ -548,7 +546,7 @@ namespace fmodaudio {
         auto it = m_soundMap.find(name);
         if (it != m_soundMap.end()) {
             FModAudio* sound = it->second.get();
-            sound->m_StopSound(std::to_string(entityId), 0.2f);
+            sound->m_StopSound(std::to_string(entityId));
         }
         else {
             // TODO Handle error (e.g., logging or notification)
@@ -730,20 +728,36 @@ namespace fmodaudio {
         }
     }
 
-    void AudioManager::m_SetPanForEntity(unsigned int entityId, const std::string& name, float pan) {
-        auto it = m_soundMap.find(name);
+    void AudioManager::m_SetPanForEntity(ecs::EntityID entityId, const std::string& audioName, float pan) {
+        auto* ecs = ecs::ECS::m_GetInstance();
+        auto* entityComponent = ecs->m_ECS_CombinedComponentPool[ecs::TYPEAUDIOCOMPONENT]->m_GetEntityComponent(entityId);
+
+        if (entityComponent) {
+            ecs::AudioComponent* ac = static_cast<ecs::AudioComponent*>(entityComponent);
+
+            for (auto& audioFile : ac->m_AudioFiles) {
+                if (audioFile.m_Name == audioName) {
+                    audioFile.m_Pan = pan;
+                    //std::cout << audioFile.m_Pan << std::endl;
+                    audioFile.m_hasChanged = true;
+                    break;
+                }
+            }
+        }
+
+        auto it = m_soundMap.find(audioName);
         if (it != m_soundMap.end()) {
             FModAudio* sound = it->second.get();
+
             if (!sound->m_SetPan(std::to_string(entityId), pan)) {
-                // TODO: Handle error (e.g., logging or notification)
-                // std::cerr << "Failed to set pan for entity " << entityId << " on sound " << name << std::endl;
+                //std::cerr << "Failed to set pan for entity " << entityId << " on sound " << audioName << std::endl;
             }
         }
         else {
-            // TODO: Handle error (e.g., logging or notification)
-            // std::cerr << "Sound not found: " << name << std::endl;
+            //std::cerr << "Sound not found: " << audioName << std::endl;
         }
     }
+
 
 
 
@@ -770,7 +784,7 @@ namespace fmodaudio {
         for (auto& soundPair : m_soundMap) {
             FModAudio* audio = soundPair.second.get();
             if (audio) {
-                float fadeOutTime = 0.2f;
+                float fadeOutTime = 0.3f;
                 audio->m_StopAllSounds(fadeOutTime);
             }
         }

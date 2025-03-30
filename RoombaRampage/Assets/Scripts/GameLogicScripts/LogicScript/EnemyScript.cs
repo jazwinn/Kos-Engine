@@ -60,6 +60,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     #endregion
 
     #region Audio Variables
+    private float panRange = 5.0f;
 
     private string bodyDeathAud1 = "aud_bodyDeath01.wav";
 
@@ -517,7 +518,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         }
 
         KillCounter.killCount++;
-        Console.WriteLine($"Kill Count: {KillCounter.killCount}");
+        //Console.WriteLine($"Kill Count: {KillCounter.killCount}");
     }
 
     private IEnumerator TurnLightOff()
@@ -1052,6 +1053,25 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
         //Console.WriteLine("Sizes are " + bodyDeathAudList.Count + " " + bodyFallAudList.Count + " "+ bodyStabAudList.Count);
     }
+    private float CalculateAudioPan(float bulletX)
+    {
+        uint cameraEntityID = (uint)InternalCall.m_InternalCallGetTagID("Camera");
+        TransformComponent camTransformComp = GetComponent.GetTransformComponent(cameraEntityID);
+
+        float camX = camTransformComp.m_position.X;
+
+        float pan = (bulletX - camX) / panRange;
+        pan = Clamp(pan, -1.0f, 1.0f);
+        return pan;
+    }
+
+
+    private float Clamp(float value, float min, float max)
+    {
+        if (value < min) return min;
+        if (value > max) return max;
+        return value;
+    }
 
     private string ReturnRandomAudio(string name)
     {
@@ -1255,7 +1275,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         }
     }
 
-    
+
     public void FireAtPlayer()
     {
         UpdateComponentValues();
@@ -1276,10 +1296,11 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
             transformComp.m_rotation
         );
 
-        // Play shooting sound
-        InternalCall.m_InternalCallPlayAudio(EntityID, enemyShootAud1); //AUDIOHERE
+        float pan = CalculateAudioPan(bulletSpawnPosition.X);
 
+        InternalCall.m_InternalCallSetPanAudio(EntityID, enemyShootAud1, pan);
 
+        InternalCall.m_InternalCallPlayAudio(EntityID, enemyShootAud1);
     }
 
 

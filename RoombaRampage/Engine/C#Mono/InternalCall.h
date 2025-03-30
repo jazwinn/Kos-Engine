@@ -618,7 +618,6 @@ namespace script {
 
 		static bool m_InternalCallCheckIsSFX(ecs::EntityID id, MonoString* monoString);
 
-		static void m_InternalCallSetPanAudio(ecs::EntityID id, MonoString* monoString, float pan);
 
 
 		/******************************************************************/
