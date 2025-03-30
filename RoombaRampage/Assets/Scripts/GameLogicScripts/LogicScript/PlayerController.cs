@@ -85,7 +85,7 @@ public class PlayerController : ScriptBase
 
 
     //controller/cursor
-    static public bool isControllerLastUsed = false;
+    public static bool isControllerLastUsed = false;
     private bool cursoroff = false;
     public override void Start()
     {

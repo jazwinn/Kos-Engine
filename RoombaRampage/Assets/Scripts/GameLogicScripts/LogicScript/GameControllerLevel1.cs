@@ -238,9 +238,12 @@ public class GameControllerLevel1 : ScriptBase
 
         if (gameIsPaused) { return; } //Ensures nothing but pause menu can be activated when game is paused
 
-        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.TAB) && PlayerGun.playerBoost == false)
+        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.TAB) || InternalCall.m_InternalCallIsKeyTriggered(keyCode.I))
         {
-            Sortie();
+            if (PlayerGun.playerBoost == false)
+            {
+                Sortie();
+            }
         }
 
     }
