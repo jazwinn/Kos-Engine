@@ -58,22 +58,33 @@ namespace ecs {
     void AudioSystem::m_Update(const std::string& scene) {
         assetmanager::AssetManager* assetManager = assetmanager::AssetManager::m_funcGetInstance();
         ECS* ecs = ECS::m_GetInstance();
-
         if (m_vecAudioComponentPtr.empty()) return;
+
+        // Calculate delta time for smooth fading
+        static auto lastUpdateTime = std::chrono::steady_clock::now();
+        auto currentTime = std::chrono::steady_clock::now();
+        float deltaTime = std::chrono::duration<float>(currentTime - lastUpdateTime).count();
+        lastUpdateTime = currentTime;
+
+        // Update all FModAudio instances to process fading
+        for (auto& soundPair : assetManager->m_audioManager.getSoundMap()) {
+            fmodaudio::FModAudio* audio = soundPair.second.get();
+            if (audio) {
+                audio->Update(deltaTime);
+            }
+        }
 
         int n{ 0 };
         for (auto& audioCompPtr : m_vecAudioComponentPtr) {
             TransformComponent* transform = m_vecTransformComponentPtr[n];
             NameComponent* NameComp = m_vecNameComponentPtr[n];
             n++;
-
             if ((transform->m_scene != scene) || !ecs->m_layersStack.m_layerBitSet.test(NameComp->m_Layer) || NameComp->m_hide) continue;
 
             std::string entityIDStr = std::to_string(audioCompPtr->m_Entity);
             for (auto& audioFile : audioCompPtr->m_AudioFiles) {
                 auto it = assetManager->m_audioManager.getSoundMap().find(audioFile.m_Name);
                 if (it == assetManager->m_audioManager.getSoundMap().end()) continue;
-
                 auto& sound = it->second;
 
                 float adjustedVolume = audioFile.m_Volume;
@@ -83,16 +94,15 @@ namespace ecs {
                 else if (audioFile.m_IsSFX) {
                     adjustedVolume *= assetManager->m_audioManager.m_GlobalSFXVolume;
                 }
-                if (adjustedVolume < 0)
-                {
+                if (adjustedVolume < 0) {
                     adjustedVolume = 0;
                 }
+
                 sound->m_SetVolume(entityIDStr, adjustedVolume);
                 sound->m_SetLooping(entityIDStr, audioFile.m_Loop);
-
                 if (audioFile.m_PlayOnStart && !sound->m_IsPlaying(entityIDStr)) {
                     sound->m_PlaySound(entityIDStr);
-                    audioFile.m_PlayOnStart = false;  // Ensure the original struct is modified
+                    audioFile.m_PlayOnStart = false;
                 }
             }
         }

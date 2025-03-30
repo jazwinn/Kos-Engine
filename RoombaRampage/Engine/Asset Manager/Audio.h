@@ -78,6 +78,8 @@ namespace fmodaudio {
         /******************************************************************/
         void m_Shutdown();
 
+        void Update(float deltaTime);
+
         /******************************************************************/
         /*!
         \fn      bool m_CreateSound(const char* soundFile)
@@ -105,7 +107,7 @@ namespace fmodaudio {
         \param   entityId - The ID of the entity for which to stop the sound.
         */
         /******************************************************************/
-        void m_StopSound(const std::string& entityId);
+        void m_StopSound(const std::string& entityId, float fadeOutTime);
 
         /******************************************************************/
         /*!
@@ -113,7 +115,7 @@ namespace fmodaudio {
         \brief   Stops all currently playing sounds.
         */
         /******************************************************************/
-        void m_StopAllSounds();
+        void m_StopAllSounds(float fadeOutTime);
 
         /******************************************************************/
         /*!
@@ -248,6 +250,14 @@ namespace fmodaudio {
             bool isActive;
             float priority;
             std::chrono::steady_clock::time_point lastUsed;
+
+            bool isFading = false;
+            bool isFadingOut = false; // Specifically for stopping sounds
+            std::chrono::steady_clock::time_point fadeStartTime;
+            std::chrono::steady_clock::time_point fadeCompleteTime;
+            float fadeDuration = 0.0f;
+            float fadeStartVolume = 1.0f;
+            float fadeTargetVolume = 1.0f;
 
             ChannelInfo() : channel(nullptr), isActive(false), priority(0.0f) {}
         };
