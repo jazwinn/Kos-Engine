@@ -68,6 +68,9 @@ public class GameControllerLevel1 : ScriptBase
         InternalCall.m_EnableLayer(3);
         InternalCall.m_EnableLayer(4);
         InternalCall.m_EnableLayer(5);
+
+        //disable controller cursor
+        InternalCall.m_InternalCallOverideMouseWithCursor(false);
     }
 
     public override void Update()
@@ -114,6 +117,7 @@ public class GameControllerLevel1 : ScriptBase
             gameIsPaused = true;
             gameAudioUp = false;
             runOnce = true;
+            InternalCall.m_InternalCallOverideMouseWithCursor(true);
 
             previousTimeScale = InternalCall.m_InternalCallGetTimeScale();
 
@@ -147,6 +151,9 @@ public class GameControllerLevel1 : ScriptBase
             InternalCall.m_DisableLayer(16);
 
             InternalCall.m_InternalCallUnPauseAllAudio();
+
+            //disable controller cursor
+            InternalCall.m_InternalCallOverideMouseWithCursor(false);
 
             gameIsPaused = false;
             runOnce = false;

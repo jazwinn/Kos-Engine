@@ -161,6 +161,8 @@ public class PauseMenuButtons : ScriptBase
         //continue sound
         InternalCall.m_InternalCallUnPauseAllAudio();
 
+        //disable controller cursor
+        InternalCall.m_InternalCallOverideMouseWithCursor(false);
 
     }
 

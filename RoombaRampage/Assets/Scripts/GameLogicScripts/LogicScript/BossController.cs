@@ -48,11 +48,14 @@ public class BossController : ScriptBase
 
     private Vector2 bossPosition;
     //private bool canAttack = true;
-    private float attackCooldown = 4.0f;
+    private float attackCooldown = 3.0f;
+    private BossAttackPattern lastPattern;
 
+    private int repeatCount = 0;
     public int forceFieldHealth = 3;
     public int bossHealth = 21;
     public bool isForceFieldActive = true;
+    private bool forceFieldStart = false;
     private string forceFieldPrefab = "Boss_Forcefield";
 
     private string bossBulletPrefab;
@@ -92,7 +95,7 @@ public class BossController : ScriptBase
         bossBulletPrefab = "prefab_bossBullet";
         bossClusterBulletPrefab = "prefab_bossClusterBullet";
 
-        SpawnForceField();
+        //SpawnForceField();
 
         int[] childIDs = InternalCall.m_InternalCallGetChildrenID(EntityID);
         enemySpawnPoints = Array.ConvertAll(childIDs, item => (uint)item);
@@ -115,6 +118,12 @@ public class BossController : ScriptBase
     public override void Update()
     {
         if (GameControllerLevel1.isBossDead || !GameControllerLevel1.isActivated || PlayerController.isDead) return;
+
+        if (GameControllerLevel1.isActivated && !forceFieldStart)
+        {
+            forceFieldStart = true;
+            SpawnForceField();
+        }
 
         if (isDying)
         {
@@ -282,7 +291,17 @@ public class BossController : ScriptBase
             newPattern = (BossAttackPattern)randomIndex;
 
         }
-        while (newPattern == currentPattern);
+        while (repeatCount >= 1 && newPattern == lastPattern);
+
+        if (newPattern == lastPattern)
+        {
+            repeatCount++;
+        }
+        else
+        {
+            repeatCount = 0;
+            lastPattern = newPattern;
+        }
 
         currentPattern = newPattern;
         ExecutePattern(currentPattern);
@@ -323,6 +342,7 @@ public class BossController : ScriptBase
         while (bossHealth > 0)
         {
             AttackRandomizer();
+            attackCooldown = GenerateRandom(200, 350) / 100f; 
             yield return new CoroutineManager.WaitForSeconds(attackCooldown);
         }
     }
@@ -402,7 +422,7 @@ public class BossController : ScriptBase
 
     private void SpawnBulletDisperse(Vector2 position)
     {
-        float bigBulletAngle = 270f;
+        float bigBulletAngle = GenerateRandom(240, 300); // 270 ± 30
 
         InternalCall.m_InternalCallPlayAudio(EntityID, bossShootingSound);
 
@@ -423,7 +443,7 @@ public class BossController : ScriptBase
         for (int i = 0; i < 6; i++)
         {
             float angle = i * (360f / 6); // Spread evenly
-            uint mediumBullet = (uint)InternalCall.m_InternalCallAddPrefab(bossBulletPrefab, explosionPosition.X, explosionPosition.Y, angle);
+            uint mediumBullet = (uint)InternalCall.m_InternalCallAddPrefab(bossClusterBulletPrefab, explosionPosition.X, explosionPosition.Y, angle);
             mediumBullets.Add(mediumBullet);
         }
 

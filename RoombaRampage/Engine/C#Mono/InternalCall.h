@@ -441,7 +441,7 @@ namespace script {
 			\return    A vector2::Vec2 object containing the mouse's position.
 		*/
 		/******************************************************************/
-		static vector2::Vec2 m_InternalGetMousePosition();
+		static void m_InternalGetMousePosition(vector2::Vec2*);
 
 
 		/******************************************************************/
@@ -481,7 +481,12 @@ namespace script {
 		static bool m_InternalCallIsControllerReleased(keyCode key);
 
 		static float m_InternalCallGetRightJoyStickRotation();
+
 		static bool m_InternalCallIsControllerPresent();
+
+		static void m_InternalCallOverideMouseWithCursor(bool _boolean);
+
+		static void m_InternalCallSetPanAudio(ecs::EntityID id, MonoString* monoString, float pan);
 
 		static MonoArray* m_InternalCallGetJoyStickAxis();
 

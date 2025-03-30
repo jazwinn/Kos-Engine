@@ -34,8 +34,10 @@ namespace Input {
 	int InputSystem::m_controllerID = NULL;
 	std::vector<float> InputSystem::m_controllerAxes(6, 0);
 	float InputSystem::ControllerSensitivity = 30.0f;
-	float InputSystem::deadzone = 0.05f;
+	float InputSystem::deadzone = 0.4f;
 	float InputSystem::controllerRightJoyStickRotation = -1.f;
+	bool InputSystem::overwriteMousePosWithController = false;
+
 
 	void InputSystem::KeyCallBack([[maybe_unused]] GLFWwindow* window, [[maybe_unused]] int key, [[maybe_unused]] int scancode, int action, [[maybe_unused]] int mods) {
 		if (action == GLFW_PRESS) {
@@ -247,28 +249,37 @@ namespace Input {
 	void InputSystem::giveControllerMousePos()
 	{
 
+
+
 		//if (glfwJoystickPresent(GLFW_JOYSTICK_1)) {
-		//	int axesCount;
-		//	const float* axes = glfwGetJoystickAxes(GLFW_JOYSTICK_1, &axesCount);
 
-		//	if (axesCount >= 2) {
-		//		float stickX = axes[2];
-		//		float stickY = axes[3];
-		//		GLFWwindow* window = glfwGetCurrentContext();
-		//		double mouseX, mouseY;
-		//		glfwGetCursorPos(window, &mouseX, &mouseY);
-
-
-		//		if (fabs(stickX) > deadzone || fabs(stickY) > deadzone) {
-		//			mouseX += stickX * cursorSpeed;
-		//			mouseY += stickY * cursorSpeed; // Invert Y if needed
-		//			glfwSetCursorPos(window, mouseX, mouseY);
-		//		}
-		//	}
 		//}
 
 
 		if (glfwJoystickPresent(GLFW_JOYSTICK_1)) {
+
+			if (overwriteMousePosWithController) {
+				int axesCount;
+				const float* axes = glfwGetJoystickAxes(GLFW_JOYSTICK_1, &axesCount);
+
+				if (axesCount >= 2) {
+					float stickX = axes[2];
+					float stickY = axes[3];
+					GLFWwindow* window = glfwGetCurrentContext();
+					double mouseX, mouseY;
+					glfwGetCursorPos(window, &mouseX, &mouseY);
+
+
+					if (fabs(stickX) > deadzone || fabs(stickY) > deadzone) {
+						mouseX += stickX * ControllerSensitivity;
+						mouseY += stickY * ControllerSensitivity; // Invert Y if needed
+						glfwSetCursorPos(window, mouseX, mouseY);
+					}
+				}
+
+
+			}
+
 			int count;
 			const float* axes = glfwGetJoystickAxes(GLFW_JOYSTICK_1, &count);
 
@@ -280,13 +291,14 @@ namespace Input {
 					controllerRightJoyStickRotation = -1;
 					return;
 				}
-				if (fabs(x) < deadzone || fabs(y) < deadzone) {
+				if (fabs(x) < deadzone && fabs(y) < deadzone) {
 					controllerRightJoyStickRotation = -1;
 					return;
 				}
 
 
 				float angle = atan2(x, -y) * 57.2958f; // Swap x and y
+				//std::cout << angle << std::endl;
 				if (angle < 0) angle += 360.0f; // Normalize to [0, 360)
 
 				controllerRightJoyStickRotation = angle;
