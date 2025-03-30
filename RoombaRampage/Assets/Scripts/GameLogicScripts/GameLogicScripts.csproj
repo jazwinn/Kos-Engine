@@ -112,6 +112,7 @@
     <Compile Include="LogicScript\StartMenuEasterEgg.cs" />
     <Compile Include="LogicScript\testscript.cs" />
     <Compile Include="LogicScript\UI_AmmoHUD.cs" />
+    <Compile Include="LogicScript\UI_ControllerSwap.cs" />
     <Compile Include="LogicScript\UI_FPSCounter.cs" />
     <Compile Include="LogicScript\UI_PlayerDeath.cs" />
     <Compile Include="LogicScript\UI_TabPrompt.cs" />

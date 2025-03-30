@@ -11,7 +11,7 @@
     },
     {
         "CursorSettings": {
-            "cursorImage": "default",
+            "cursorImage": "../Assets/Texture/UI/img_startScreenCursor.png",
             "isCursorCentered": false
         }
     },
