@@ -2263,7 +2263,7 @@ void gui::ImGuiHandler::m_DrawComponentWindow()
 
                     ImGui::AlignTextToFramePadding();  // Aligns text to the same baseline as the slider
 
-                    ImGui::SameLine();
+                    //ImGui::SameLine();
                     if (ImGui::ColorEdit4("MyColor##3", (float*)&color, ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel))
                     {
                         lc->m_colour.m_x = color.x;
