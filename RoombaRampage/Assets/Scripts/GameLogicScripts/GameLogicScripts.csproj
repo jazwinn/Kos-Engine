@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LogicScript\CreditsScroll.cs" />
+    <Compile Include="LogicScript\EnemyCorpseHalf.cs" />
     <Compile Include="LogicScript\LightFlashing.cs" />
     <Compile Include="LogicScript\BossController.cs" />
     <Compile Include="LogicScript\BossBullet.cs" />
