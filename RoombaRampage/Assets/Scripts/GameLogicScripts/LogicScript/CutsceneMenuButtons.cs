@@ -140,6 +140,12 @@ public class CutsceneMenuButtons : ScriptBase
                     InternalCall.m_UnloadAllScene();
                     InternalCall.m_InternalCallLoadScene("Level6");
                     break;
+                case 100:
+                    InternalCall.m_InternalCallPlayAudio(EntityID, "aud_startMenuAmbienceStop01");
+                    InternalCall.m_InternalCallStopAllAudio();
+                    InternalCall.m_UnloadAllScene();
+                    InternalCall.m_InternalCallLoadScene("Credits");
+                    break;
                 default:
                     break;
             }

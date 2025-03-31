@@ -9,15 +9,21 @@ using System.Xml;
 public class LevelSelectButton : ScriptBase
 {
     private uint EntityID;
+
+    public int buttonFunctionNo;
     //private string SceneName;
     private bool LevelSelected = false;
-    public bool isSelected;
+    private bool isSelected;
     private bool isClick;
     public static bool otherIsClick;
 
+    private ButtomComponent buttonComp;
+
     public static List<LevelSelectButton> allButtonScripts = new List<LevelSelectButton>();
 
-    public int buttonFunctionNo;
+    private AnimationComponent animComp;
+
+    
 
     public override void Awake(uint id)
     {
@@ -49,6 +55,23 @@ public class LevelSelectButton : ScriptBase
             {
                 InternalCall.m_InternalCallPlayAudio(EntityID, "aud_buttonClick01");
                 UnclickButton();
+            }
+        }
+
+        if (buttonFunctionNo == -1)
+        {
+            if (InternalCall.m_InternalIsButtonHovered(EntityID))
+            {
+                animComp = Component.Get<AnimationComponent>(EntityID);
+                animComp.m_frameNumber = 1;
+                Component.Set<AnimationComponent>(EntityID, animComp);
+            }
+
+            else
+            {
+                animComp = Component.Get<AnimationComponent>(EntityID);
+                animComp.m_frameNumber = 0;
+                Component.Set<AnimationComponent>(EntityID, animComp);
             }
         }
 
@@ -88,6 +111,18 @@ public class LevelSelectButton : ScriptBase
             case 60:
                 LevelSelection.SceneName = "CutsceneLevel6";
                 InternalCall.m_EnableLayer(6);
+                break;
+            case -1:
+                InternalCall.m_InternalCallStopAllAudio();
+                CoroutineManager.Instance.StopAllCoroutines();
+                InternalCall.m_UnloadAllScene();
+                InternalCall.m_InternalCallLoadScene("MainMenu");
+                InternalCall.m_DisableLayer(1);
+                InternalCall.m_DisableLayer(2);
+                InternalCall.m_DisableLayer(3);
+                InternalCall.m_DisableLayer(4);
+                InternalCall.m_DisableLayer(5);
+                InternalCall.m_DisableLayer(6);
                 break;
             default:
                 break;
