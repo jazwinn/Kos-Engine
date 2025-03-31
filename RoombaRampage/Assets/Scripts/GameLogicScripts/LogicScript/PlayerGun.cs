@@ -49,6 +49,7 @@ public class PlayerGun : ScriptBase
         rightRailGunTexture = "ani_railgunRightAnim_strip10.png";
 
         bulletPrefab = "prefab_playerBullet";
+        shotgunBulletPrefab = "prefab_playerShotgunBullet";
         bulletPrefabType2 = "PlayerBulletType2";
 
         leftLimbGunAmmo = 6;
@@ -122,6 +123,7 @@ public class PlayerGun : ScriptBase
     private string backGunTexture;
     private string bulletPrefab;
     private string bulletPrefabType2;
+    private string shotgunBulletPrefab;
     private string leftShotGunTexture;
     private string rightShotGunTexture;
     private string leftRailGunTexture;
@@ -853,7 +855,7 @@ public class PlayerGun : ScriptBase
 
             for (int n = 0; n < numberofpallets; n++)
             {
-                InternalCall.m_InternalCallAddPrefab(bulletPrefab, shotgunLimbPos.X, shotgunLimbPos.Y, startangle);
+                InternalCall.m_InternalCallAddPrefab(shotgunBulletPrefab, shotgunLimbPos.X, shotgunLimbPos.Y, startangle);
                 startangle += (float)interval; 
             }
 

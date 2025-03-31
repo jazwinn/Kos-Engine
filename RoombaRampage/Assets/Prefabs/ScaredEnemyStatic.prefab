@@ -1,7 +1,7 @@
 [
     {
         "GlobalSettings": {
-            "globalIllumination": 0.2199999988079071,
+            "globalIllumination": 0.05999999865889549,
             "backgroundColor": {
                 "r": 0.0,
                 "g": 0.0,
@@ -11,8 +11,8 @@
     },
     {
         "CursorSettings": {
-            "cursorImage": "../Assets/Texture/UI/img_startScreenCursor.png",
-            "isCursorCentered": false
+            "cursorImage": "../Assets/Texture/UI/img_inGameCursor.png",
+            "isCursorCentered": true
         }
     },
     {
@@ -114,6 +114,30 @@
                     ]
                 }
             ]
+        },
+        "particle": {
+            "willSpawn": false,
+            "noOfParticles": 20,
+            "lifeSpan": 20.0,
+            "velocityX": 0.0,
+            "velocityY": 40.0,
+            "sizeX": 1.0,
+            "sizeY": 0.699999988079071,
+            "accelerationX": 0.0,
+            "accelerationY": 0.0,
+            "colorR": 1.0,
+            "colorG": 1.0,
+            "colorB": 1.0,
+            "coneRotation": 0.0,
+            "coneAngle": 45.0,
+            "randomFactor": 3.0,
+            "imageFile": "ani_bloodPool_strip9.png",
+            "stripCount": 9,
+            "frameNumber": 0,
+            "layer": 500,
+            "friction": 20.0,
+            "fps": 1,
+            "loopAnimation": false
         },
         "audio": [
             {

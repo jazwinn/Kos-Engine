@@ -173,7 +173,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
         playerID = (uint)InternalCall.m_InternalCallGetTagID("Player"); //Get Player ID
         UpdateComponentValues();
-        enemyScientistDeathTexture = "img_scientistDeath.png";
+        enemyScientistDeathTexture = "ani_scientistDeathPose_strip5.png";
         enemyRobotDeathTexture = "img_rangedEnemyDeath.png"; //Set to ranged enemy death texture
 
         originalPosition = transformComp.m_position;
@@ -355,6 +355,11 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
                         CoroutineManager.Instance.StartCoroutine(EnemyDeath("Katana"), "EnemyDeath");
                         break;
                     case "PlayerRailgunBullet":
+                        CoroutineManager.Instance.StartCoroutine(EnemyDeath("Railgun"), "EnemyDeath"); //Runs coroutine to spawn blood pool
+                        break;
+                    case "PlayerShotgunBullet":
+                        CoroutineManager.Instance.StartCoroutine(EnemyDeath("Shotgun"), "EnemyDeath"); //Runs coroutine to spawn blood pool
+                        break;
                     case "PlayerBullet":
                         CoroutineManager.Instance.StartCoroutine(EnemyDeath("Gun"), "EnemyDeath"); //Runs coroutine to spawn blood pool
                         break;
@@ -384,7 +389,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     #endregion
 
     #region Death Handlers
-    private void SetDeadEnemySprite() //Function to set dead enemy Sprite
+    private void SetDeadEnemySprite(string causeOfDeath) //Function to set dead enemy Sprite
     {
         UpdateComponentValues(); //Get latest sprite component
 
@@ -392,18 +397,18 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
         switch (enemyType)
         {
-            case EnemySelection.Helpless: //Set dead scientist image
-                spriteComp.m_imageFile = enemyScientistDeathTexture;
-                break;
-
-            case EnemySelection.Melee: //Set dead scientist image
+            case EnemySelection.Helpless: 
+            case EnemySelection.Melee:
             case EnemySelection.AlertMelee:
                 spriteComp.m_imageFile = enemyScientistDeathTexture;
+                InternalCall.m_InternalSetAnimationComponent(EntityID, GetDeathFrameNumber(causeOfDeath), 0, 0, false, 5); //Stops animation of enemy
+
                 break;
 
             case EnemySelection.Ranged: //Set dead robot image
             case EnemySelection.AlertRanged:
                 spriteComp.m_imageFile = enemyRobotDeathTexture;
+                InternalCall.m_InternalSetAnimationComponent(EntityID, 0, 0, 0, false, 1); //Stops animation of enemy
                 break;
 
             default:
@@ -415,6 +420,30 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
     }
 
+    private int GetDeathFrameNumber(string causeOfDeath)
+    {
+        switch (causeOfDeath)
+        {
+            case "Gun":
+                return 0;
+
+            case "Shotgun":
+                return 1;
+
+            case "Railgun":
+                return 2;
+
+            case "Katana":
+                
+                //Spawn prefab
+                
+
+                return 3;
+
+            default:
+                return 0;
+        }
+    }
 
 
     private IEnumerator EnemyDeath(string causeOfDeath) //Coroutine for enemy death
@@ -427,15 +456,13 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
        
 
-        collComp.m_collisionCheck = !collComp.m_collisionCheck; //Disables collision check
-        collComp.m_collisionResponse = false;
+        //collComp.m_collisionCheck = !collComp.m_collisionCheck; //Disables collision check
+        //collComp.m_collisionResponse = false;
         InternalCall.m_ChangeLayer(EntityID, 12);
 
 
         // SetComponent.SetCollisionComponent(EntityID, collComp); //Sets collider of enemy
-
-        InternalCall.m_InternalSetAnimationComponent(EntityID, 0, 0, 0, false, 1); //Stops animation of enemy
-        SetDeadEnemySprite(); //Sets dead sprite
+        SetDeadEnemySprite(causeOfDeath); //Sets dead sprite
 
         willSpawn = true;
         InternalCall.m_InternalCallSpawnParticle(EntityID);
@@ -466,6 +493,12 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
         rotationFloat = (float)(Math.Atan2(direction.X, direction.Y) * (180 / Math.PI)); //Gets rotation away player
 
+        if (causeOfDeath == "Katana")
+        {
+            Random random = new Random();
+            rotationFloat += (float)(random.NextDouble() * 150 - 75);
+        }
+
         //Convert into radians
         float rotationInRadians = (float)((rotationFloat) * Math.PI / 180.0);
 
@@ -480,14 +513,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         //movement.Y = 0.0f; //Pushes enemy back for "knockback effect"
 
         //Pushes enemy back "Knockback effect" with varying force
-        Random random = new Random();
-        float randomForce = 0.05f + (float)random.NextDouble() * 0.3f; // 0.05 to 0.3
-
-        movement.X = forwardX * randomForce;
-        movement.Y = forwardY * randomForce;
-
-
-        InternalCall.m_InternalSetVelocity(EntityID, in movement); //Sets velocity for rigidbody to move
+        PushbackCorpse(forwardX, forwardY, rotationInRadians, causeOfDeath);
 
         RigidBodyComponent rb = Component.Get<RigidBodyComponent>(EntityID);
         rb.m_Acceleration.X = 0;
@@ -495,6 +521,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         Component.Set<RigidBodyComponent>(EntityID, rb);
 
         transformComp = Component.Get<TransformComponent>(EntityID);
+
 
         yield return null;
         //yield return new CoroutineManager.WaitForSeconds(enemyBloodPoolSpawnDelay); //Waits for time before moving to next line;
@@ -544,6 +571,49 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         }
         
         yield return null;
+    }
+
+    private void PushbackCorpse(float forwardX, float forwardY, float rotationInRadians, string causeOfDeath)
+    {
+        switch (enemyType)
+        {
+            case EnemySelection.Helpless:
+            case EnemySelection.Melee:
+            case EnemySelection.AlertMelee:
+                float temp = 0;
+                switch (causeOfDeath)
+                {
+                    case "Pistol":
+                        temp = 0.7f;
+                        break;
+                    case "Shotgun":
+                    case "Railgun":
+                    case "Booster":
+                        temp = 0.9f;
+                        break;
+                    case "Katana":
+                        temp = 0;
+                        InternalCall.m_InternalCallAddPrefab("EnemyTopHalf", transformComp.m_position.X  * 1.01f, transformComp.m_position.Y * 1.01f, rotationInRadians);
+                        break;
+                }
+                Random random = new Random();
+                float randomForce = 0.05f + (float)random.NextDouble() * temp; // 0.05 to 0.3
+
+                movement.X = forwardX * randomForce;
+                movement.Y = forwardY * randomForce;
+
+                InternalCall.m_InternalSetVelocity(EntityID, in movement); //Sets velocity for rigidbody to move
+
+                break;
+            default:
+                movement.X = 0;
+                movement.Y = 0;
+
+                InternalCall.m_InternalSetVelocity(EntityID, in movement); //Sets velocity for rigidbody to move
+
+                break;
+        }
+
     }
 
     #endregion
@@ -1104,6 +1174,8 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
                 {
                     case "Booster":
                     case "Gun":
+                    case "Railgun":
+                    case "Shotgun":
                         InternalCall.m_InternalCallPlayAudio(EntityID, ReturnRandomAudio("Death")); //Plays enemy death sound
                         yield return new CoroutineManager.WaitForSeconds(0.1f);
                         InternalCall.m_InternalCallPlayAudio(EntityID, ReturnRandomAudio("Fall")); //Plays enemy fall sound

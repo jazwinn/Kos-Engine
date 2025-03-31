@@ -7,6 +7,8 @@ Enemy
 EnemyBullet
 Camera
 PlayerBullet
+PlayerShotgunBullet
+PlayerRailgunBullet
 MeleeKillZoneSpawn
 LeftLimbPos
 RightLimbPos
