@@ -58,7 +58,7 @@ namespace fmodaudio {
         }
     }
 
-    void FModAudio::Update(float deltaTime) {
+    void FModAudio::Update(float deltaTime [[maybe_unused]] ) {
         auto currentTime = std::chrono::steady_clock::now();
 
         for (auto& info : m_channelPool) {
@@ -188,7 +188,7 @@ namespace fmodaudio {
     }
 
     void FModAudio::m_PrintChannelStatus() const {
-        std::cout << "Active Channels: " << m_GetActiveChannelCount() << "/" << MAX_CHANNELS << "\n";
+        //std::cout << "Active Channels: " << m_GetActiveChannelCount() << "/" << MAX_CHANNELS << "\n";
         for (size_t i = 0; i < m_channelPool.size(); ++i) {
             const auto& info = m_channelPool[i];
             if (info.isActive && info.channel) {
@@ -277,7 +277,7 @@ namespace fmodaudio {
     bool FModAudio::m_SetPan(const std::string& entityId, float pan) {
         auto it = m_entityChannels.find(entityId);
         if (it != m_entityChannels.end()) {
-            std::cout << pan << std::endl;
+            //std::cout << pan << std::endl;
             FMOD_RESULT result = it->second->setPan(pan);
             if (result != FMOD_OK) {
                 return false;

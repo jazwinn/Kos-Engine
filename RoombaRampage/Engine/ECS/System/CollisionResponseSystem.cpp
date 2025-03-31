@@ -80,7 +80,7 @@ namespace ecs {
 	void CollisionResponseSystem::m_Update(const std::string& scene) {
 
 		ECS* ecs = ECS::m_GetInstance();
-		Helper::Helpers* help = Helper::Helpers::GetInstance();
+		//Helper::Helpers* help = Helper::Helpers::GetInstance();
 
 		if (m_vecRigidBodyComponentPtr.size() != m_vecTransformComponentPtr.size()) {
 			LOGGING_ERROR("Error: Vecotrs container size does not Match");

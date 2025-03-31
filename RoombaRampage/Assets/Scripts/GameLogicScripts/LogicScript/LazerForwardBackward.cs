@@ -129,7 +129,7 @@ public class LazerForwardBackward : ScriptBase
     {
         if(Waypoint1 < 0 || Waypoint2 < 0)
         {
-            Console.WriteLine("No Waypoints, add 2 waypoint in child");
+            //Console.WriteLine("No Waypoints, add 2 waypoint in child");
             return;
         }
 

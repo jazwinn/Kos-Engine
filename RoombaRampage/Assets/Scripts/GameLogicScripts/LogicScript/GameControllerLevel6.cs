@@ -152,7 +152,7 @@ public class GameControllerLevel6 : ScriptBase
 
         else
         {
-            Console.WriteLine("Level Selection Script Has No SceneName!");
+            //Console.WriteLine("Level Selection Script Has No SceneName!");
 
             InternalCall.m_InternalCallStopAllAudio();
 

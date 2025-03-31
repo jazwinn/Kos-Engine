@@ -41,7 +41,7 @@ public class EnemyStatePatrol : EnemyState
             }
             else
             {
-                Console.WriteLine("[WARNING] No valid waypoints for patrol!");
+                //Console.WriteLine("[WARNING] No valid waypoints for patrol!");
             }
         }
     }

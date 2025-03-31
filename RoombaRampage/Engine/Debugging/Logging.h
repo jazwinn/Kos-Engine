@@ -499,7 +499,7 @@ namespace logging {
     }
 
     template <typename... Args>
-    void Logger::m_Error(const std::string_view message, Args&&... args)
+    void Logger::m_Error(const std::string_view message [[maybe_unused]], Args&&... args)
     {
 #ifdef NO_GO
         assert(m_bInitialized && "The logger must be initialized before it is used!");

@@ -728,7 +728,7 @@ namespace physicspipe {
 	}
 	std::pair<bool, std::pair<vector2::Vec2, float>> Physics::m_CollisionIntersection_RectRect_SAT_TEST(const Rectangle& obj1, const Rectangle& obj2) {
 		vector2::Vec2 normal{};
-		float maxAllowedDepth = 1.f;
+		//float maxAllowedDepth = 1.f;
 		float depth = std::numeric_limits<float>::max();
 		bool flag = true;
 		std::pair<bool, std::pair<vector2::Vec2, float>> ret_Val;

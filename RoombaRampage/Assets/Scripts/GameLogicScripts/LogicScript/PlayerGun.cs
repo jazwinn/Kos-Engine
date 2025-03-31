@@ -889,7 +889,7 @@ public class PlayerGun : ScriptBase
             return !GameControllerLevel1.gameIsPaused;
         });
 
-        Console.WriteLine("Condition Met " + !GameControllerLevel1.gameIsPaused);
+        //Console.WriteLine("Condition Met " + !GameControllerLevel1.gameIsPaused);
 
         isAnimating = true;
         limbAnimComp.m_isAnimating = true;
