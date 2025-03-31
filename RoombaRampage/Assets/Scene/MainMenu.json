@@ -1,11 +1,11 @@
 [
     {
         "GlobalSettings": {
-            "globalIllumination": 1.0,
+            "globalIllumination": 0.2199999988079071,
             "backgroundColor": {
-                "r": 0.13300000131130219,
-                "g": 0.23000000417232513,
-                "b": 0.3199999928474426
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0
             }
         }
     },
@@ -136,8 +136,8 @@
         },
         "button": {
             "force": {
-                "x": 158.638916015625,
-                "y": 996.8521118164063
+                "x": -8063.431640625,
+                "y": -2459.661865234375
             },
             "scale": {
                 "x": 0.20999999344348907,
@@ -226,12 +226,12 @@
         },
         "button": {
             "force": {
-                "x": 158.638916015625,
-                "y": 816.040771484375
+                "x": -8063.431640625,
+                "y": -2640.473388671875
             },
             "scale": {
                 "x": 0.20000000298023224,
-                "y": 0.27000001072883606
+                "y": 0.20999999344348907
             },
             "enablehover": true
         },
@@ -339,12 +339,12 @@
         },
         "button": {
             "force": {
-                "x": 158.638916015625,
-                "y": 635.2294311523438
+                "x": -8063.431640625,
+                "y": -2821.28466796875
             },
             "scale": {
                 "x": 0.20000000298023224,
-                "y": 0.3199999928474426
+                "y": 0.23999999463558197
             },
             "enablehover": true
         },
@@ -546,8 +546,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 0.9958215951919556,
-                        "y": 0.6329637765884399
+                        "x": 0.6560066938400269,
+                        "y": 0.6351301670074463
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -575,8 +575,8 @@
                 },
                 "button": {
                     "force": {
-                        "x": 1424.4324951171875,
-                        "y": 999.4241333007813
+                        "x": 2153.77978515625,
+                        "y": 847.9440307617188
                     },
                     "scale": {
                         "x": 0.07999999821186066,
@@ -646,8 +646,8 @@
         },
         "button": {
             "force": {
-                "x": 2237.21435546875,
-                "y": 62.59228515625
+                "x": -5984.8564453125,
+                "y": -3393.921875
             },
             "scale": {
                 "x": 0.30000001192092896,
@@ -842,5 +842,113 @@
                 }
             }
         ]
+    },
+    {
+        "name": {
+            "namestr": "Credits Button",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": -2.119999885559082,
+                "y": 0.0
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 0.75,
+                "y": 0.75
+            }
+        },
+        "sprite": {
+            "imagefile": "ani_howToPlayIcon_strip2.png",
+            "layer": 5,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0,
+            "isLit": false
+        },
+        "animation": {
+            "frameNumber": 0,
+            "framesPerSecond": 0,
+            "frameTimer": 0.0,
+            "isAnimating": false,
+            "stripCount": 2
+        },
+        "button": {
+            "force": {
+                "x": -8063.431640625,
+                "y": -3002.095947265625
+            },
+            "scale": {
+                "x": 0.20000000298023224,
+                "y": 0.23999999463558197
+            },
+            "enablehover": true
+        },
+        "script": {
+            "scripts": [
+                {
+                    "name": "StartMenuButtons",
+                    "enabled": true,
+                    "map": [
+                        {
+                            "variable": "buttonFunctionNo",
+                            "base64": "DAAAAMzMzMwA"
+                        },
+                        {
+                            "variable": "isReading",
+                            "base64": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        "audio": [
+            {
+                "name": "aud_buttonHover01",
+                "volume": 0.39899998903274536,
+                "loop": false,
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
+            }
+        ]
+    },
+    {
+        "name": {
+            "namestr": "Credits Text",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": -2.1229660511016846,
+                "y": -0.12999999523162842
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "text": {
+            "text": "CREDITS",
+            "text": null,
+            "filename": "fnt_silkscreenRegular.ttf",
+            "fontsize": 1.2000000476837158,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "layer": 12,
+            "isCentered": true
+        }
     }
 ]

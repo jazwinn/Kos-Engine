@@ -22,6 +22,7 @@ public class StartMenuButtons : ScriptBase
     {
         isReading = false;
         animComp = Component.Get<AnimationComponent>(EntityID);
+        InternalCall.m_DisableLayer(9);
     }
 
     public override void Update()
@@ -87,6 +88,16 @@ public class StartMenuButtons : ScriptBase
                 case 11:
                     isReading = false;
                     InternalCall.m_DisableLayer(9);
+                    break;
+                case 12:
+                    CoroutineManager.Instance.StopAllCoroutines();
+                    InternalCall.m_InternalCallStopAllAudio();
+                    InternalCall.m_InternalCallPlayAudio(EntityID, "aud_buttonClick01");
+                    InternalCall.m_InternalCallPlayAudio(EntityID, "aud_startMenuAmbienceQuit01");
+                    StartMenuButtons.isReading = false;
+                    InternalCall.m_DisableLayer(9);
+                    InternalCall.m_UnloadAllScene();
+                    InternalCall.m_InternalCallLoadScene("Credits");
                     break;
                 case -1:
                     break;
