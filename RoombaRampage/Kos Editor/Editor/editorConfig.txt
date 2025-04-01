@@ -41,3 +41,4 @@ UIConfirmQuit
 PropGlassWall
 LaserWall
 GameController
+UIPauseConfirmation
