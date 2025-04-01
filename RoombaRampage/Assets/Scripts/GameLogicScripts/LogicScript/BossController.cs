@@ -309,7 +309,7 @@ public class BossController : ScriptBase
 
         do
         {
-            Console.WriteLine("Randomizing");
+            //Console.WriteLine("Randomizing");
             int randomIndex = GenerateRandom(0, Enum.GetValues(typeof(BossAttackPattern)).Length);
             newPattern = (BossAttackPattern)randomIndex;
 
@@ -329,7 +329,7 @@ public class BossController : ScriptBase
         currentPattern = newPattern;
         ExecutePattern(currentPattern);
 
-        Console.WriteLine($"Selected Pattern: {currentPattern}");
+        //Console.WriteLine($"Selected Pattern: {currentPattern}");
     }
 
     private void ExecutePattern(BossAttackPattern pattern)
@@ -338,22 +338,22 @@ public class BossController : ScriptBase
         switch (pattern)
         {
             case BossAttackPattern.AlternatingBullet:
-                Console.WriteLine("Firing Alternating Bullets!");
+                //Console.WriteLine("Firing Alternating Bullets!");
                 CoroutineManager.Instance.StartCoroutine(FireAlternatingWaves());
 
                 break;
             case BossAttackPattern.BulletSpread:
-                Console.WriteLine("Firing Bullet Spread!");
+                //Console.WriteLine("Firing Bullet Spread!");
                 SpawnBullets(bossPosition, 8, 0.2f, 180f, 360f);
 
                 break;
             case BossAttackPattern.BulletDisperse:
-                Console.WriteLine("Firing Bullet Disperse!");
+                //Console.WriteLine("Firing Bullet Disperse!");
                 SpawnBulletDisperse(bossPosition);
 
                 break;
             case BossAttackPattern.BulletSpiral:
-                Console.WriteLine("Firing Bullet Spiral!");
+                //Console.WriteLine("Firing Bullet Spiral!");
                 CoroutineManager.Instance.StartCoroutine(FireSweepingCurvingBulletVolley(bossPosition, 10, 0.2f, 0.1f));
 
                 break;
