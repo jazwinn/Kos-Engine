@@ -108,6 +108,32 @@ namespace Serialization {
 
 	}
 
+	std::vector<std::string> Serialize::m_LoadFilePath(std::string filepath) {
+
+
+		std::ifstream file;
+		configFilePath = filepath + "/filepath.txt";
+		file.open(configFilePath);
+		std::vector < std::string> ret;
+		if (!file.is_open()) {
+			LOGGING_ERROR("Error opening config file");
+			return ret;
+		}
+		//graphicpipe::GraphicsPipe* graphics = graphicpipe::GraphicsPipe::m_funcGetInstance();
+
+		std::string line;
+
+		//char* str[256];
+
+		while (std::getline(file, line)) { // Read line by line
+			std::stringstream str2{ line };
+			std::string temp;
+			str2 >> temp;
+			ret.push_back(temp);
+		}
+		return ret;
+	}
+
 	bool Serialize::m_UpdateConfigStartScene( const std::string& newStartScene)
 	{
 		// Open the file for reading

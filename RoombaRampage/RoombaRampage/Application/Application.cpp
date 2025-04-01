@@ -38,14 +38,16 @@ namespace Application {
     --------------------------------------------------------------*/
     graphicpipe::GraphicsPipe* pipe;
     assetmanager::AssetManager* AstManager;
+    std::vector<std::string> filePath;
 
     int Application::Init() {
         
+        filePath = Serialization::Serialize::m_LoadFilePath("../configs");
 
         /*--------------------------------------------------------------
         INITIALIZE LOGGING SYSTEM
         --------------------------------------------------------------*/
-        LOGGING_INIT_LOGS("../LogFile.txt");
+        LOGGING_INIT_LOGS(filePath[0]);
         LOGGING_INFO("Application Start");
         LOGGING_INFO("Load Log Successful");
         logs.m_Setup_Abort_Handler();
@@ -75,7 +77,7 @@ namespace Application {
            INITIALIZE Asset Manager
         --------------------------------------------------------------*/
         AstManager = assetmanager::AssetManager::m_funcGetInstance();
-        AstManager->m_funcLoadAssets("../Assets");
+        AstManager->m_funcLoadAssets(filePath[1]);
         scenes::SceneManager* scenemanager = scenes::SceneManager::m_GetInstance();
         scenemanager->m_LoadScene(Helper::Helpers::GetInstance()->m_startScene);
         LOGGING_INFO("Load Asset Successful");
