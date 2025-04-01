@@ -23,8 +23,8 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include <imgui_internal.h>
 
 namespace gui {
-
-	static std::filesystem::path assetDirectory = "../Assets";
+	std::vector<std::string> filePath = Serialization::Serialize::m_LoadFilePath("../configs");
+	static std::filesystem::path assetDirectory = filePath[1];
 	static std::filesystem::path currentDirectory  = assetDirectory;
 	static const char* fileIcon = "img_folderIcon.png";
 	static std::string searchString;
@@ -148,7 +148,7 @@ namespace gui {
 				}
 				if (ImGui::MenuItem("Reload Browser")) {
 					assetmanager::AssetManager* AstManager = assetmanager::AssetManager::m_funcGetInstance();
-					AstManager->m_funcLoadAssets("Assets");
+					AstManager->m_funcLoadAssets(assetDirectory.string());
 				}
 				ImGui::EndPopup();
 			}

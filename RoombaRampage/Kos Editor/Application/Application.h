@@ -22,7 +22,6 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 #include "Helper/Helper.h"
 #include "Window.h"
 
-
 #include "C#Mono/mono_handler.h"
 #include "Events/EventsEventHandler.h"
 
