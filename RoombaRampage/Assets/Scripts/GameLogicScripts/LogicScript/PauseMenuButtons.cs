@@ -39,10 +39,12 @@ public class PauseMenuButtons : ScriptBase
 
             if (confirmQuit == true && InternalCall.m_InternalCallIsKeyTriggered(keyCode.Y))
             {
+                InternalCall.m_InternalCallPlayAudio(EntityID, "aud_buttonClick01");
                 QuitToMainMenu();
             }
             if (confirmQuit == true && InternalCall.m_InternalCallIsKeyTriggered(keyCode.N))
             {
+                InternalCall.m_InternalCallPlayAudio(EntityID, "aud_buttonClick01");
                 confirmQuit = false;
             }
         }

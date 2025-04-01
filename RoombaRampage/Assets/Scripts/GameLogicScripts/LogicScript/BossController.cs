@@ -122,12 +122,6 @@ public class BossController : ScriptBase
     {
         if (GameControllerLevel1.isBossDead || !GameControllerLevel1.isActivated || PlayerController.isDead) return;
 
-        if (GameControllerLevel1.isActivated && !forceFieldStart)
-        {
-            forceFieldStart = true;
-            SpawnForceField();
-        }
-
         if (isDying)
         {
             animComp = Component.Get<AnimationComponent>(EntityID);
@@ -582,6 +576,14 @@ public class BossController : ScriptBase
                 // Ignore damage if forcefield is deactivating or boss is dying
                 if (isForceFieldDeactivating || isDying || isInvincible)
                     continue;
+
+                if (!forceFieldStart)
+                {
+                    // First time boss is hit, trigger force field
+                    forceFieldStart = true;
+                    SpawnForceField();
+                    return; // Skip damage for this hit
+                }
 
                 // Apply damage to forcefield or boss
                 if (isForceFieldActive)
