@@ -167,6 +167,7 @@ public class GameControllerLevel1 : ScriptBase
 
             gameIsPaused = false;
             runOnce = false;
+            PauseMenuButtons.confirmQuit = false;
         }
 
     }
