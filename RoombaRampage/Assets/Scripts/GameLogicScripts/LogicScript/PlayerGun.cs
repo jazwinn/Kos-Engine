@@ -691,6 +691,7 @@ public class PlayerGun : ScriptBase
         if (isAnimating)
         {
             StopAnimation();
+
             yield return new CoroutineManager.WaitForSeconds(0.001f);
             StartAnimation();
         }
@@ -698,6 +699,11 @@ public class PlayerGun : ScriptBase
         else
         {
             StartAnimation();
+
+            //create boost light
+            LightComponent lc = Component.Get<LightComponent>(EntityID);
+            lc.m_intensity = 1f;
+            Component.Set(EntityID, lc);
         }
 
 
@@ -719,6 +725,7 @@ public class PlayerGun : ScriptBase
             playerBoost = true;
             CheckAndSetBoost();
 
+            Console.WriteLine("loop");
 
             yield return new CoroutineManager.WaitForSeconds(boostDuration);
 
@@ -732,6 +739,11 @@ public class PlayerGun : ScriptBase
             Component.Set<RigidBodyComponent>(playerID, rigidBodyComponent);
 
             playerBoost = false;
+
+            LightComponent lc = Component.Get<LightComponent>(EntityID);
+            lc.m_intensity = 0f;
+            Component.Set(EntityID, lc);
+
         }
 
         //RigidBodyComponent rigidBodyComponent = Component.Get<RigidBodyComponent>(EntityID);
