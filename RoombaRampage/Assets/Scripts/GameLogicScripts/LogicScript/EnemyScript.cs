@@ -105,6 +105,8 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
     private float scanDuration = 3.0f;
     private float initialRotation;
     private bool scanningRight = true;
+    private bool animateRobotDeath = false;
+    private bool spewGuts = false;
 
     #region Waypoint Variables
     private int initialPatrolWaypoint = 0;
@@ -174,7 +176,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         playerID = (uint)InternalCall.m_InternalCallGetTagID("Player"); //Get Player ID
         UpdateComponentValues();
         enemyScientistDeathTexture = "ani_scientistDeathPose_strip5.png";
-        enemyRobotDeathTexture = "img_rangedEnemyDeath.png"; //Set to ranged enemy death texture
+        enemyRobotDeathTexture = "ani_rangedEnemyDeath_strip11.png"; //Set to ranged enemy death texture
 
         originalPosition = transformComp.m_position;
         enemyDeathKnockbackMultiplier = 0.4f;
@@ -270,6 +272,31 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
     public override void Update() //Runs every frame
     {
+        if (animateRobotDeath)
+        {
+            int frameNumber;
+            int fps;
+            float timer;
+            bool isAnimating;
+            int stripCount;
+            InternalCall.m_InternalGetAnimationComponent(EntityID, out frameNumber, out fps, out timer, out isAnimating, out stripCount);
+            if (frameNumber == 9 && spewGuts)
+            {
+                int[] childs = InternalCall.m_InternalCallGetChildrenID(EntityID);
+                for (int i = 0; i < 11; i++)
+                {
+                    uint childID = (uint)childs[i];
+                   InternalCall.m_InternalCallSpawnParticle(childID);
+                }
+                spewGuts = false;
+            }
+            if (frameNumber == stripCount - 1)
+            {
+                InternalCall.m_InternalSetAnimationComponent(EntityID, 10, 8, 0, false, 11); //Stops animation of enemy
+               
+                animateRobotDeath = false;
+            }
+        }
         if (isDead || PlayerController.isDead || GameControllerLevel1.gameIsPaused) return;
         CheckForCollisions(); //Checks for collisions in the event an enemy touches the player
         CheckWalking();
@@ -402,13 +429,17 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
             case EnemySelection.AlertMelee:
                 spriteComp.m_imageFile = enemyScientistDeathTexture;
                 InternalCall.m_InternalSetAnimationComponent(EntityID, GetDeathFrameNumber(causeOfDeath), 0, 0, false, 5); //Stops animation of enemy
+               
 
                 break;
 
             case EnemySelection.Ranged: //Set dead robot image
             case EnemySelection.AlertRanged:
                 spriteComp.m_imageFile = enemyRobotDeathTexture;
-                InternalCall.m_InternalSetAnimationComponent(EntityID, 0, 0, 0, false, 1); //Stops animation of enemy
+                InternalCall.m_InternalSetAnimationComponent(EntityID, 0, 16, 0, true, 11); //Stops animation of enemy
+               // InternalCall.m_InternalCallSpawnParticle(EntityID);
+                animateRobotDeath = true;
+                spewGuts = true;
                 break;
 
             default:
@@ -464,8 +495,8 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         // SetComponent.SetCollisionComponent(EntityID, collComp); //Sets collider of enemy
         SetDeadEnemySprite(causeOfDeath); //Sets dead sprite
 
-        willSpawn = true;
-        InternalCall.m_InternalCallSpawnParticle(EntityID);
+       // willSpawn = true;
+        //InternalCall.m_InternalCallSpawnParticle(EntityID);
 
 
 
