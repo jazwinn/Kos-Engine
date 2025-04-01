@@ -704,6 +704,15 @@ public class PlayerGun : ScriptBase
             LightComponent lc = Component.Get<LightComponent>(EntityID);
             lc.m_intensity = 1f;
             Component.Set(EntityID, lc);
+
+            int frontlightID = InternalCall.m_InternalCallGetTagID("PlayerGunLightBack");
+
+            LightComponent lc2 = Component.Get<LightComponent>((uint)frontlightID);
+            lc2.m_intensity = 0.8f;
+            Component.Set((uint)frontlightID, lc2);
+
+
+
         }
 
 
@@ -743,6 +752,12 @@ public class PlayerGun : ScriptBase
             LightComponent lc = Component.Get<LightComponent>(EntityID);
             lc.m_intensity = 0f;
             Component.Set(EntityID, lc);
+
+            int frontlightID = InternalCall.m_InternalCallGetTagID("PlayerGunLightBack");
+
+            LightComponent lc2 = Component.Get<LightComponent>((uint)frontlightID);
+            lc2.m_intensity = 0f;
+            Component.Set((uint)frontlightID, lc2);
 
         }
 
