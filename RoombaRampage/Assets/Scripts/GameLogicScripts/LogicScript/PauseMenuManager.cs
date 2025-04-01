@@ -11,6 +11,7 @@ public class PauseMenuManager : ScriptBase
 
         cameraID = (uint)InternalCall.m_InternalCallGetTagID("Camera");
         playerTransformComp = GetComponent.GetTransformComponent(cameraID);
+        confirmationButtonID = (uint)InternalCall.m_InternalCallGetTagID("UIPauseConfirmation");
     }
     #endregion
 
@@ -18,15 +19,28 @@ public class PauseMenuManager : ScriptBase
     private TransformComponent playerTransformComp;
 
     private uint cameraID;
+    private uint confirmationButtonID;
 
     public override void Start()
     {
         transformComp = Component.Get<TransformComponent>(EntityID);
+        InternalCall.m_HideEntityandchildren(confirmationButtonID);
+
     }
 
     public override void Update()
     {
         UpdatePosition();
+
+        if(PauseMenuButtons.confirmQuit == true)
+        {
+            InternalCall.m_UnHideEntityandchildren(confirmationButtonID);
+        }
+        else if(PauseMenuButtons.confirmQuit == false)
+        {
+            InternalCall.m_HideEntityandchildren(confirmationButtonID);
+
+        }
     }
 
     private void UpdatePosition()

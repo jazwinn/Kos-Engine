@@ -11,7 +11,7 @@
     },
     {
         "CursorSettings": {
-            "cursorImage": "../Assets/Texture/UI/img_inGameCursor.png",
+            "cursorImage": "default",
             "isCursorCentered": false
         }
     },
@@ -137,8 +137,8 @@
                 },
                 "button": {
                     "force": {
-                        "x": 1616.095458984375,
-                        "y": 1203.67822265625
+                        "x": 943.0,
+                        "y": 762.6589965820313
                     },
                     "scale": {
                         "x": 5.920000076293945,
@@ -219,8 +219,8 @@
                 },
                 "button": {
                     "force": {
-                        "x": 1616.095458984375,
-                        "y": 1023.1763305664063
+                        "x": 943.0,
+                        "y": 629.6641845703125
                     },
                     "scale": {
                         "x": 5.800000190734863,
@@ -301,8 +301,8 @@
                 },
                 "button": {
                     "force": {
-                        "x": 1616.095458984375,
-                        "y": 654.175048828125
+                        "x": 943.0,
+                        "y": 357.7820129394531
                     },
                     "scale": {
                         "x": 5.840000152587891,
@@ -383,8 +383,8 @@
                 },
                 "button": {
                     "force": {
-                        "x": 1616.095458984375,
-                        "y": 469.0849609375
+                        "x": 943.0,
+                        "y": 221.4066162109375
                     },
                     "scale": {
                         "x": 4.539999961853027,
@@ -601,8 +601,8 @@
                 },
                 "button": {
                     "force": {
-                        "x": 1616.095458984375,
-                        "y": 843.60888671875
+                        "x": 943.0,
+                        "y": 497.35791015625
                     },
                     "scale": {
                         "x": 5.900000095367432,
@@ -679,70 +679,85 @@
             },
             {
                 "name": {
-                    "namestr": "UI_PauseMenu_QuitConfirmationContainer",
+                    "namestr": "UI_PauseMenu_ExitConfirmation",
                     "layer": 7,
                     "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "UI_PauseMenu.prefab",
+                    "tagstr": "UIPauseConfirmation",
+                    "prefabname": "UI_PauseMenu_ExitConfirmation.prefab",
                     "issync": false
                 },
                 "transform": {
                     "position": {
-                        "x": 0.0,
-                        "y": -0.5
+                        "x": -12.740821838378906,
+                        "y": -0.3988189697265625
                     },
                     "rotation": 0.0,
                     "scale": {
-                        "x": 6.0,
-                        "y": 6.0
+                        "x": 1.0,
+                        "y": 1.0
                     }
                 },
-                "sprite": {
-                    "imagefile": "img_quitConfirmationWindow.png",
-                    "layer": 500,
-                    "color": {
-                        "r": 1.0,
-                        "g": 1.0,
-                        "b": 1.0
-                    },
-                    "alpha": 1.0,
-                    "isLit": false
-                },
                 "script": {
-                    "scripts": [
-                        {
-                            "name": "ExitConfirmationButton",
-                            "enabled": true,
-                            "map": []
-                        }
-                    ]
+                    "scripts": []
                 },
                 "children": [
                     {
                         "name": {
-                            "namestr": "UI_PauseMenu_QuitConfirmation",
+                            "namestr": "Confirmation UI",
                             "layer": 7,
                             "isprefab": true,
                             "tagstr": "Default",
-                            "prefabname": "UI_PauseMenu_QuitConfirmation.prefab",
+                            "prefabname": "UI_PauseMenu_ExitConfirmation.prefab",
                             "issync": false
                         },
                         "transform": {
                             "position": {
-                                "x": 0.0,
-                                "y": -0.4000000059604645
+                                "x": 12.949272155761719,
+                                "y": 0.08977890014648438
                             },
                             "rotation": 0.0,
                             "scale": {
-                                "x": 1.1799999475479126,
-                                "y": 1.1799999475479126
+                                "x": 6.0,
+                                "y": 6.0
+                            }
+                        },
+                        "sprite": {
+                            "imagefile": "img_quitConfirmationWindow.png",
+                            "layer": 500,
+                            "color": {
+                                "r": 1.0,
+                                "g": 1.0,
+                                "b": 1.0
+                            },
+                            "alpha": 1.0,
+                            "isLit": false
+                        }
+                    },
+                    {
+                        "name": {
+                            "namestr": "Confirmation_Text",
+                            "layer": 7,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "UI_PauseMenu_ExitConfirmation.prefab",
+                            "issync": false
+                        },
+                        "transform": {
+                            "position": {
+                                "x": 12.754656791687012,
+                                "y": -2.3273239135742188
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0
                             }
                         },
                         "text": {
                             "text": "Y/N",
                             "text": null,
                             "filename": "fnt_silkscreenRegular.ttf",
-                            "fontsize": 5.849999904632568,
+                            "fontsize": 35.099998474121094,
                             "color": {
                                 "r": 0.0,
                                 "g": 0.0,

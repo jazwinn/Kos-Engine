@@ -6,12 +6,15 @@ public class ExitConfirmationButton : ScriptBase
 {
     #region Entity ID
     private uint EntityID;
+    private uint ConfirmID;
+    private int[] childrenIDList;
+
 
     public override void Awake(uint id)
     {
 
         EntityID = id;
-        InternalCall.m_InternalCallGetChildrenID(EntityID);
+        childrenIDList = InternalCall.m_InternalCallGetChildrenID(EntityID);
     }
     #endregion
 
@@ -23,12 +26,8 @@ public class ExitConfirmationButton : ScriptBase
     {
         if(PauseMenuButtons.confirmQuit == true)
         {
-            InternalCall.m_UnHideEntityandchildren(EntityID);
-            //InternalCall.m_InternalCallGetChildrenID
-        }
-        else
-        {
-            InternalCall.m_HideEntityandchildren(EntityID);
+            InternalCall.m_UnHideEntityandchildren((uint)childrenIDList[1]);
+            InternalCall.m_UnHideEntityandchildren((uint)childrenIDList[2]);
 
         }
     }

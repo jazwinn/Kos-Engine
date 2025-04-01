@@ -36,8 +36,16 @@ public class PauseMenuButtons : ScriptBase
             CheckForCollisions();
             CheckForHover();
             CheckForClicks();
+
+            if (confirmQuit == true && InternalCall.m_InternalCallIsKeyTriggered(keyCode.Y))
+            {
+                QuitToMainMenu();
+            }
+            if (confirmQuit == true && InternalCall.m_InternalCallIsKeyTriggered(keyCode.N))
+            {
+                confirmQuit = false;
+            }
         }
-        
     }
 
     private void CheckForCollisions()
@@ -223,9 +231,14 @@ public class PauseMenuButtons : ScriptBase
 
         }
 
-        else if (confirmQuit == true)
+        if (confirmQuit == true && InternalCall.m_InternalCallIsKeyTriggered(keyCode.Y))
         {
             QuitToMainMenu();
+        }
+
+        if (confirmQuit == true && InternalCall.m_InternalCallIsKeyTriggered(keyCode.N))
+        {
+            confirmQuit = false;
         }
     }
 
