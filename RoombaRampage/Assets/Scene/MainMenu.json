@@ -1,11 +1,11 @@
 [
     {
         "GlobalSettings": {
-            "globalIllumination": 1.0,
+            "globalIllumination": 0.2199999988079071,
             "backgroundColor": {
-                "r": 0.13300000131130219,
-                "g": 0.23000000417232513,
-                "b": 0.3199999928474426
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0
             }
         }
     },
@@ -136,8 +136,8 @@
         },
         "button": {
             "force": {
-                "x": 95.82659912109375,
-                "y": 950.8963012695313
+                "x": 123.3988037109375,
+                "y": 1226.93408203125
             },
             "scale": {
                 "x": 0.20999999344348907,
@@ -226,12 +226,12 @@
         },
         "button": {
             "force": {
-                "x": 95.82659912109375,
-                "y": 810.7640991210938
+                "x": 123.3988037109375,
+                "y": 1046.12255859375
             },
             "scale": {
                 "x": 0.20000000298023224,
-                "y": 0.27000001072883606
+                "y": 0.20999999344348907
             },
             "enablehover": true
         },
@@ -339,12 +339,12 @@
         },
         "button": {
             "force": {
-                "x": 95.82659912109375,
-                "y": 670.632080078125
+                "x": 123.3988037109375,
+                "y": 865.3113403320313
             },
             "scale": {
                 "x": 0.20000000298023224,
-                "y": 0.3199999928474426
+                "y": 0.23999999463558197
             },
             "enablehover": true
         },
@@ -546,8 +546,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 0.9958215951919556,
-                        "y": 0.6329637765884399
+                        "x": 0.6560066938400269,
+                        "y": 0.6351301670074463
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -575,8 +575,8 @@
                 },
                 "button": {
                     "force": {
-                        "x": 1424.4324951171875,
-                        "y": 999.4241333007813
+                        "x": 2153.77978515625,
+                        "y": 847.9440307617188
                     },
                     "scale": {
                         "x": 0.07999999821186066,
@@ -646,8 +646,8 @@
         },
         "button": {
             "force": {
-                "x": 1706.7603759765625,
-                "y": 226.82781982421875
+                "x": 2201.97412109375,
+                "y": 292.6741943359375
             },
             "scale": {
                 "x": 0.30000001192092896,
@@ -845,36 +845,110 @@
     },
     {
         "name": {
-            "namestr": "30FPS",
+            "namestr": "Credits Button",
             "layer": 0,
             "isprefab": false,
             "tagstr": "Default"
         },
         "transform": {
             "position": {
-                "x": -0.12092301994562149,
-                "y": 0.015115376561880112
+                "x": -2.119999885559082,
+                "y": 0.0
             },
-            "rotation": 0.0,
+            "rotation": -0.0,
+            "scale": {
+                "x": 0.75,
+                "y": 0.75
+            }
+        },
+        "sprite": {
+            "imagefile": "ani_creditsIcon_strip2.png",
+            "layer": 5,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0,
+            "isLit": false
+        },
+        "animation": {
+            "frameNumber": 0,
+            "framesPerSecond": 0,
+            "frameTimer": 0.0,
+            "isAnimating": false,
+            "stripCount": 2
+        },
+        "button": {
+            "force": {
+                "x": 123.3988037109375,
+                "y": 684.5
+            },
+            "scale": {
+                "x": 0.20000000298023224,
+                "y": 0.23999999463558197
+            },
+            "enablehover": true
+        },
+        "script": {
+            "scripts": [
+                {
+                    "name": "StartMenuButtons",
+                    "enabled": true,
+                    "map": [
+                        {
+                            "variable": "buttonFunctionNo",
+                            "base64": "DAAAAMzMzMwA"
+                        },
+                        {
+                            "variable": "isReading",
+                            "base64": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        "audio": [
+            {
+                "name": "aud_buttonHover01",
+                "volume": 0.39899998903274536,
+                "loop": false,
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
+            }
+        ]
+    },
+    {
+        "name": {
+            "namestr": "Credits Text",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": -2.1229660511016846,
+                "y": -0.12999999523162842
+            },
+            "rotation": -0.0,
             "scale": {
                 "x": 1.0,
                 "y": 1.0
             }
         },
-        "script": {
-            "scripts": [
-                {
-                    "name": "VideoScript",
-                    "enabled": true,
-                    "map": []
-                }
-            ]
-        },
-        "VideoComponent": {
-            "filename": "30FPS.mpeg",
-            "pause": false,
-            "loop": false,
-            "layer": 13
+        "text": {
+            "text": "CREDITS",
+            "text": null,
+            "filename": "fnt_silkscreenRegular.ttf",
+            "fontsize": 1.2000000476837158,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "layer": 12,
+            "isCentered": true
         }
     }
 ]

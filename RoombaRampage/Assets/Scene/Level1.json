@@ -77348,8 +77348,8 @@
                 },
                 "button": {
                     "force": {
-                        "x": 896.5,
-                        "y": 123.86907958984375
+                        "x": 839.0591430664063,
+                        "y": 239.65301513671875
                     },
                     "scale": {
                         "x": 2.9000000953674316,
@@ -77463,12 +77463,12 @@
                             },
                             "rotation": 0.0,
                             "scale": {
-                                "x": 0.30000001192092896,
-                                "y": 2.5
+                                "x": 4.0,
+                                "y": 4.0
                             }
                         },
                         "sprite": {
-                            "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
+                            "imagefile": "ani_soundBar_strip2.png",
                             "layer": 509,
                             "color": {
                                 "r": 1.0,
@@ -77498,16 +77498,16 @@
                         "transform": {
                             "position": {
                                 "x": -2.700000047683716,
-                                "y": 2.1959502696990967
+                                "y": 2.200000047683716
                             },
                             "rotation": 0.0,
                             "scale": {
-                                "x": 0.30000001192092896,
-                                "y": 2.5
+                                "x": 4.0,
+                                "y": 4.0
                             }
                         },
                         "sprite": {
-                            "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
+                            "imagefile": "ani_soundBar_strip2.png",
                             "layer": 510,
                             "color": {
                                 "r": 1.0,
@@ -77541,12 +77541,12 @@
                             },
                             "rotation": 0.0,
                             "scale": {
-                                "x": 0.30000001192092896,
-                                "y": 2.5
+                                "x": 4.0,
+                                "y": 4.0
                             }
                         },
                         "sprite": {
-                            "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
+                            "imagefile": "ani_soundBar_strip2.png",
                             "layer": 511,
                             "color": {
                                 "r": 1.0,
@@ -77580,12 +77580,12 @@
                             },
                             "rotation": 0.0,
                             "scale": {
-                                "x": 0.30000001192092896,
-                                "y": 2.5
+                                "x": 4.0,
+                                "y": 4.0
                             }
                         },
                         "sprite": {
-                            "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
+                            "imagefile": "ani_soundBar_strip2.png",
                             "layer": 512,
                             "color": {
                                 "r": 1.0,
@@ -77619,12 +77619,12 @@
                             },
                             "rotation": 0.0,
                             "scale": {
-                                "x": 0.30000001192092896,
-                                "y": 2.5
+                                "x": 4.0,
+                                "y": 4.0
                             }
                         },
                         "sprite": {
-                            "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
+                            "imagefile": "ani_soundBar_strip2.png",
                             "layer": 513,
                             "color": {
                                 "r": 1.0,
@@ -77658,12 +77658,12 @@
                             },
                             "rotation": 0.0,
                             "scale": {
-                                "x": 0.30000001192092896,
-                                "y": 2.5
+                                "x": 4.0,
+                                "y": 4.0
                             }
                         },
                         "sprite": {
-                            "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
+                            "imagefile": "ani_soundBar_strip2.png",
                             "layer": 514,
                             "color": {
                                 "r": 1.0,
@@ -77697,12 +77697,12 @@
                             },
                             "rotation": 0.0,
                             "scale": {
-                                "x": 0.30000001192092896,
-                                "y": 2.5
+                                "x": 4.0,
+                                "y": 4.0
                             }
                         },
                         "sprite": {
-                            "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
+                            "imagefile": "ani_soundBar_strip2.png",
                             "layer": 515,
                             "color": {
                                 "r": 1.0,
@@ -77736,12 +77736,12 @@
                             },
                             "rotation": 0.0,
                             "scale": {
-                                "x": 0.30000001192092896,
-                                "y": 2.5
+                                "x": 4.0,
+                                "y": 4.0
                             }
                         },
                         "sprite": {
-                            "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
+                            "imagefile": "ani_soundBar_strip2.png",
                             "layer": 516,
                             "color": {
                                 "r": 1.0,
@@ -77775,12 +77775,12 @@
                             },
                             "rotation": 0.0,
                             "scale": {
-                                "x": 0.30000001192092896,
-                                "y": 2.5
+                                "x": 4.0,
+                                "y": 4.0
                             }
                         },
                         "sprite": {
-                            "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
+                            "imagefile": "ani_soundBar_strip2.png",
                             "layer": 517,
                             "color": {
                                 "r": 1.0,
@@ -77814,12 +77814,12 @@
                             },
                             "rotation": 0.0,
                             "scale": {
-                                "x": 0.30000001192092896,
-                                "y": 2.5
+                                "x": 4.0,
+                                "y": 4.0
                             }
                         },
                         "sprite": {
-                            "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
+                            "imagefile": "ani_soundBar_strip2.png",
                             "layer": 518,
                             "color": {
                                 "r": 1.0,
@@ -77877,8 +77877,8 @@
                         },
                         "button": {
                             "force": {
-                                "x": 1141.2679443359375,
-                                "y": 604.9170532226563
+                                "x": 1065.2789306640625,
+                                "y": 684.2476196289063
                             },
                             "scale": {
                                 "x": 0.7599999904632568,
@@ -77959,8 +77959,8 @@
                         },
                         "button": {
                             "force": {
-                                "x": 668.4271240234375,
-                                "y": 604.8821411132813
+                                "x": 628.2693481445313,
+                                "y": 684.2153930664063
                             },
                             "scale": {
                                 "x": 0.6399999856948853,
@@ -78040,12 +78040,12 @@
                             },
                             "rotation": 0.0,
                             "scale": {
-                                "x": 0.30000001192092896,
-                                "y": 2.5
+                                "x": 4.0,
+                                "y": 4.0
                             }
                         },
                         "sprite": {
-                            "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
+                            "imagefile": "ani_soundBar_strip2.png",
                             "layer": 521,
                             "color": {
                                 "r": 1.0,
@@ -78079,12 +78079,12 @@
                             },
                             "rotation": 0.0,
                             "scale": {
-                                "x": 0.30000001192092896,
-                                "y": 2.5
+                                "x": 4.0,
+                                "y": 4.0
                             }
                         },
                         "sprite": {
-                            "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
+                            "imagefile": "ani_soundBar_strip2.png",
                             "layer": 522,
                             "color": {
                                 "r": 1.0,
@@ -78118,12 +78118,12 @@
                             },
                             "rotation": 0.0,
                             "scale": {
-                                "x": 0.30000001192092896,
-                                "y": 2.5
+                                "x": 4.0,
+                                "y": 4.0
                             }
                         },
                         "sprite": {
-                            "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
+                            "imagefile": "ani_soundBar_strip2.png",
                             "layer": 523,
                             "color": {
                                 "r": 1.0,
@@ -78157,12 +78157,12 @@
                             },
                             "rotation": 0.0,
                             "scale": {
-                                "x": 0.30000001192092896,
-                                "y": 2.5
+                                "x": 4.0,
+                                "y": 4.0
                             }
                         },
                         "sprite": {
-                            "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
+                            "imagefile": "ani_soundBar_strip2.png",
                             "layer": 524,
                             "color": {
                                 "r": 1.0,
@@ -78196,12 +78196,12 @@
                             },
                             "rotation": 0.0,
                             "scale": {
-                                "x": 0.30000001192092896,
-                                "y": 2.5
+                                "x": 4.0,
+                                "y": 4.0
                             }
                         },
                         "sprite": {
-                            "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
+                            "imagefile": "ani_soundBar_strip2.png",
                             "layer": 525,
                             "color": {
                                 "r": 1.0,
@@ -78235,12 +78235,12 @@
                             },
                             "rotation": 0.0,
                             "scale": {
-                                "x": 0.30000001192092896,
-                                "y": 2.5
+                                "x": 4.0,
+                                "y": 4.0
                             }
                         },
                         "sprite": {
-                            "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
+                            "imagefile": "ani_soundBar_strip2.png",
                             "layer": 526,
                             "color": {
                                 "r": 1.0,
@@ -78274,12 +78274,12 @@
                             },
                             "rotation": 0.0,
                             "scale": {
-                                "x": 0.30000001192092896,
-                                "y": 2.5
+                                "x": 4.0,
+                                "y": 4.0
                             }
                         },
                         "sprite": {
-                            "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
+                            "imagefile": "ani_soundBar_strip2.png",
                             "layer": 527,
                             "color": {
                                 "r": 1.0,
@@ -78313,12 +78313,12 @@
                             },
                             "rotation": 0.0,
                             "scale": {
-                                "x": 0.30000001192092896,
-                                "y": 2.5
+                                "x": 4.0,
+                                "y": 4.0
                             }
                         },
                         "sprite": {
-                            "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
+                            "imagefile": "ani_soundBar_strip2.png",
                             "layer": 528,
                             "color": {
                                 "r": 1.0,
@@ -78352,12 +78352,12 @@
                             },
                             "rotation": 0.0,
                             "scale": {
-                                "x": 0.30000001192092896,
-                                "y": 2.5
+                                "x": 4.0,
+                                "y": 4.0
                             }
                         },
                         "sprite": {
-                            "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
+                            "imagefile": "ani_soundBar_strip2.png",
                             "layer": 529,
                             "color": {
                                 "r": 1.0,
@@ -78391,12 +78391,12 @@
                             },
                             "rotation": 0.0,
                             "scale": {
-                                "x": 0.30000001192092896,
-                                "y": 2.5
+                                "x": 4.0,
+                                "y": 4.0
                             }
                         },
                         "sprite": {
-                            "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
+                            "imagefile": "ani_soundBar_strip2.png",
                             "layer": 530,
                             "color": {
                                 "r": 1.0,
@@ -78454,8 +78454,8 @@
                         },
                         "button": {
                             "force": {
-                                "x": 1144.00390625,
-                                "y": 297.43963623046875
+                                "x": 1067.8074951171875,
+                                "y": 400.070556640625
                             },
                             "scale": {
                                 "x": 0.6399999856948853,
@@ -78536,8 +78536,8 @@
                         },
                         "button": {
                             "force": {
-                                "x": 668.8213500976563,
-                                "y": 297.3955993652344
+                                "x": 628.6336669921875,
+                                "y": 400.02984619140625
                             },
                             "scale": {
                                 "x": 0.7400000095367432,
@@ -80653,8 +80653,8 @@
                 },
                 "button": {
                     "force": {
-                        "x": 896.5,
-                        "y": 788.2498168945313
+                        "x": -17.0108642578125,
+                        "y": 2280.168701171875
                     },
                     "scale": {
                         "x": 5.920000076293945,
@@ -80735,8 +80735,8 @@
                 },
                 "button": {
                     "force": {
-                        "x": 896.5,
-                        "y": 625.7006225585938
+                        "x": -17.0108642578125,
+                        "y": 2108.566650390625
                     },
                     "scale": {
                         "x": 5.800000190734863,
@@ -80798,7 +80798,7 @@
                     }
                 },
                 "sprite": {
-                    "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
+                    "imagefile": "ani_pauseMenuManualButton_strip2.png",
                     "layer": 408,
                     "color": {
                         "r": 1.0,
@@ -80817,8 +80817,8 @@
                 },
                 "button": {
                     "force": {
-                        "x": 896.5,
-                        "y": 293.40032958984375
+                        "x": -17.0108642578125,
+                        "y": 1757.75927734375
                     },
                     "scale": {
                         "x": 5.840000152587891,
@@ -80899,8 +80899,8 @@
                 },
                 "button": {
                     "force": {
-                        "x": 896.5,
-                        "y": 126.71932983398438
+                        "x": -17.0108642578125,
+                        "y": 1581.7950439453125
                     },
                     "scale": {
                         "x": 4.539999961853027,
@@ -80986,7 +80986,7 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 0.2382989525794983,
+                        "x": 0.23999999463558197,
                         "y": 1.2865631580352783
                     },
                     "rotation": 0.0,
@@ -81054,8 +81054,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": -0.08570563793182373,
-                        "y": -0.71555495262146
+                        "x": 0.23999999463558197,
+                        "y": -0.6888558864593506
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -81098,7 +81098,7 @@
                     }
                 },
                 "sprite": {
-                    "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
+                    "imagefile": "ani_pauseMenuSoundButton_strip2.png",
                     "layer": 410,
                     "color": {
                         "r": 1.0,
@@ -81117,8 +81117,8 @@
                 },
                 "button": {
                     "force": {
-                        "x": 896.5,
-                        "y": 463.99310302734375
+                        "x": -17.0108642578125,
+                        "y": 1937.85302734375
                     },
                     "scale": {
                         "x": 5.900000095367432,
@@ -81170,7 +81170,7 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 0.1125917136669159,
+                        "x": 0.23999999463558197,
                         "y": -2.7719311714172363
                     },
                     "rotation": 0.0,
@@ -81180,7 +81180,7 @@
                     }
                 },
                 "text": {
-                    "text": "USER MANUAL",
+                    "text": "MANUAL",
                     "text": null,
                     "filename": "fnt_silkscreenRegular.ttf",
                     "fontsize": 12.0,

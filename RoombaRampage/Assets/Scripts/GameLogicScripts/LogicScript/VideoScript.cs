@@ -21,7 +21,8 @@ public class VideoScript : ScriptBase
 
         if (InternalCall.m_HasVideoFinish(EntityID))
         {
-            Console.WriteLine("Video Done");
+            InternalCall.m_UnloadAllScene();
+            InternalCall.m_InternalCallLoadScene("MainMenu");
         }
 
     }
