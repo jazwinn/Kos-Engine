@@ -29,19 +29,19 @@ public class CoroutineTester : ScriptBase
 
     private IEnumerator SimpleCoroutine()
     {
-        Console.WriteLine("SimpleCoroutine Start");
+        //Console.WriteLine("SimpleCoroutine Start");
         yield return new CoroutineManager.WaitForSeconds(4);
-        Console.WriteLine("SimpleCoroutine After 4 seconds");
+        //Console.WriteLine("SimpleCoroutine After 4 seconds");
     }
 
     private IEnumerator ConditionCoroutine()
     {
-        Console.WriteLine("ConditionCoroutine Waiting for condition...");
+        //Console.WriteLine("ConditionCoroutine Waiting for condition...");
         yield return new CoroutineManager.WaitForCondition(() =>
         {
             return tempBool;
         });
-        Console.WriteLine("ConditionCoroutine Condition met!");
+        //Console.WriteLine("ConditionCoroutine Condition met!");
     }
 
     private bool CheckCondition()

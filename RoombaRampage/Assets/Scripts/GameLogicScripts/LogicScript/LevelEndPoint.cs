@@ -39,7 +39,7 @@ public class LevelEndPoint : ScriptBase
                 {
                     if (InternalCall.m_InternalCallGetTag((uint)collidedEntitiesID) == "Player")
                     {
-                        Console.WriteLine("Closing Game");
+                        //Console.WriteLine("Closing Game");
                         InternalCall.m_InternalCallCloseWindow();
                     }
                 }

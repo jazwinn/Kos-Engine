@@ -179,14 +179,14 @@ public class GameController : ScriptBase
             {
                 if (!easyMode)
                 {
-                    Console.WriteLine("CHEAT - Easy Mode Activated");
+                    //Console.WriteLine("CHEAT - Easy Mode Activated");
                     easyMode = true;
                     EnemyController.enemySpeed = 1f;
                 }
 
                 else
                 {
-                    Console.WriteLine("CHEAT - Easy Mode Deactivated");
+                    //Console.WriteLine("CHEAT - Easy Mode Deactivated");
                     easyMode = false;
                     EnemyController.enemySpeed = 4f;
                 }
@@ -195,7 +195,7 @@ public class GameController : ScriptBase
             //Kills all enemies
             if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.L))
             {
-                Console.WriteLine("CHEAT - All Enemies Killed");
+                //Console.WriteLine("CHEAT - All Enemies Killed");
                 EnemyController.forceDeath = true;
             }
         }

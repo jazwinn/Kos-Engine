@@ -68,7 +68,7 @@ public class StartMenuEasterEgg : ScriptBase
         float elapsedTime = 0f;
         while (elapsedTime < jumpDuration)
         {
-            Console.WriteLine(elapsedTime + " " + InternalCall.m_InternalCallGetDeltaTime());
+            //Console.WriteLine(elapsedTime + " " + InternalCall.m_InternalCallGetDeltaTime());
             elapsedTime += InternalCall.m_InternalCallGetDeltaTime();
             float progress = elapsedTime / jumpDuration;
             float smoothStep = (float)(Math.Sin(progress * Math.PI * 0.5f)); // Easing function
