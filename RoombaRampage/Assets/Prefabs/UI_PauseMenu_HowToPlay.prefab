@@ -1,11 +1,11 @@
 [
     {
         "GlobalSettings": {
-            "globalIllumination": 0.2199999988079071,
+            "globalIllumination": 1.0,
             "backgroundColor": {
-                "r": 0.0,
-                "g": 0.0,
-                "b": 0.0
+                "r": 0.13300000131130219,
+                "g": 0.23000000417232513,
+                "b": 0.3199999928474426
             }
         }
     },
@@ -94,88 +94,6 @@
             },
             {
                 "name": {
-                    "namestr": "UI_PauseMenu_HowToPlay_XButton",
-                    "layer": 6,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "UI_PauseMenu_HowToPlay.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": 9.127551078796387,
-                        "y": 5.757751941680908
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 4.0,
-                        "y": 4.0
-                    }
-                },
-                "sprite": {
-                    "imagefile": "ani_inventoryCloseButton_strip2.png",
-                    "layer": 501,
-                    "color": {
-                        "r": 1.0,
-                        "g": 1.0,
-                        "b": 1.0
-                    },
-                    "alpha": 1.0,
-                    "isLit": false
-                },
-                "animation": {
-                    "frameNumber": 0,
-                    "framesPerSecond": 0,
-                    "frameTimer": 0.0,
-                    "isAnimating": false,
-                    "stripCount": 2
-                },
-                "button": {
-                    "force": {
-                        "x": 1572.0147705078125,
-                        "y": 775.399169921875
-                    },
-                    "scale": {
-                        "x": 0.8600000143051147,
-                        "y": 0.8600000143051147
-                    },
-                    "enablehover": true
-                },
-                "script": {
-                    "scripts": [
-                        {
-                            "name": "PauseMenuButtons",
-                            "enabled": true,
-                            "map": [
-                                {
-                                    "variable": "buttonFunctionNo",
-                                    "base64": "HwAAAMzMzMwA"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                "audio": [
-                    {
-                        "name": "aud_buttonHover01",
-                        "volume": 0.4909999966621399,
-                        "loop": false,
-                        "playOnStart": false,
-                        "isBGM": false,
-                        "isSFX": true
-                    },
-                    {
-                        "name": "aud_buttonClick01",
-                        "volume": 1.0,
-                        "loop": false,
-                        "playOnStart": false,
-                        "isBGM": false,
-                        "isSFX": true
-                    }
-                ]
-            },
-            {
-                "name": {
                     "namestr": "UI_PauseMenu_HowToPlay_BackButton",
                     "layer": 6,
                     "isprefab": true,
@@ -195,7 +113,7 @@
                     }
                 },
                 "sprite": {
-                    "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
+                    "imagefile": "ani_pauseMenuQuitButton_strip2.png",
                     "layer": 502,
                     "color": {
                         "r": 1.0,
@@ -214,11 +132,11 @@
                 },
                 "button": {
                     "force": {
-                        "x": 694.7000122070313,
-                        "y": -259.572021484375
+                        "x": 1140.218017578125,
+                        "y": 362.7215881347656
                     },
                     "scale": {
-                        "x": 4.519999980926514,
+                        "x": 3.380000114440918,
                         "y": 1.0
                     },
                     "enablehover": true
