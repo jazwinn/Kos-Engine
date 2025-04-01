@@ -11,7 +11,7 @@
     },
     {
         "CursorSettings": {
-            "cursorImage": "../Assets/Texture/UI/img_startScreenCursor.png",
+            "cursorImage": "../Assets/Texture/UI/img_inGameCursor.png",
             "isCursorCentered": false
         }
     },
@@ -26,8 +26,8 @@
         },
         "transform": {
             "position": {
-                "x": 13.401872634887695,
-                "y": -15.005485534667969
+                "x": 13.0,
+                "y": -39.0
             },
             "rotation": -0.0,
             "scale": {
@@ -137,8 +137,8 @@
                 },
                 "button": {
                     "force": {
-                        "x": 1137.8353271484375,
-                        "y": 844.9650268554688
+                        "x": 1616.095458984375,
+                        "y": 1203.67822265625
                     },
                     "scale": {
                         "x": 5.920000076293945,
@@ -219,8 +219,8 @@
                 },
                 "button": {
                     "force": {
-                        "x": 1137.8353271484375,
-                        "y": 736.525390625
+                        "x": 1616.095458984375,
+                        "y": 1023.1763305664063
                     },
                     "scale": {
                         "x": 5.800000190734863,
@@ -301,8 +301,8 @@
                 },
                 "button": {
                     "force": {
-                        "x": 1137.8353271484375,
-                        "y": 514.8416748046875
+                        "x": 1616.095458984375,
+                        "y": 654.175048828125
                     },
                     "scale": {
                         "x": 5.840000152587891,
@@ -383,8 +383,8 @@
                 },
                 "button": {
                     "force": {
-                        "x": 1137.8353271484375,
-                        "y": 403.64569091796875
+                        "x": 1616.095458984375,
+                        "y": 469.0849609375
                     },
                     "scale": {
                         "x": 4.539999961853027,
@@ -601,8 +601,8 @@
                 },
                 "button": {
                     "force": {
-                        "x": 1137.8353271484375,
-                        "y": 628.6473388671875
+                        "x": 1616.095458984375,
+                        "y": 843.60888671875
                     },
                     "scale": {
                         "x": 5.900000095367432,
@@ -676,6 +676,83 @@
                     "layer": 425,
                     "isCentered": true
                 }
+            },
+            {
+                "name": {
+                    "namestr": "UI_PauseMenu_QuitConfirmationContainer",
+                    "layer": 7,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "UI_PauseMenu.prefab",
+                    "issync": false
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.0,
+                        "y": -0.5
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 6.0,
+                        "y": 6.0
+                    }
+                },
+                "sprite": {
+                    "imagefile": "img_quitConfirmationWindow.png",
+                    "layer": 500,
+                    "color": {
+                        "r": 1.0,
+                        "g": 1.0,
+                        "b": 1.0
+                    },
+                    "alpha": 1.0,
+                    "isLit": false
+                },
+                "script": {
+                    "scripts": [
+                        {
+                            "name": "ExitConfirmationButton",
+                            "enabled": true,
+                            "map": []
+                        }
+                    ]
+                },
+                "children": [
+                    {
+                        "name": {
+                            "namestr": "UI_PauseMenu_QuitConfirmation",
+                            "layer": 7,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "UI_PauseMenu_QuitConfirmation.prefab",
+                            "issync": false
+                        },
+                        "transform": {
+                            "position": {
+                                "x": 0.0,
+                                "y": -0.4000000059604645
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 1.1799999475479126,
+                                "y": 1.1799999475479126
+                            }
+                        },
+                        "text": {
+                            "text": "Y/N",
+                            "text": null,
+                            "filename": "fnt_silkscreenRegular.ttf",
+                            "fontsize": 5.849999904632568,
+                            "color": {
+                                "r": 0.0,
+                                "g": 0.0,
+                                "b": 0.0
+                            },
+                            "layer": 600,
+                            "isCentered": true
+                        }
+                    }
+                ]
             }
         ]
     }

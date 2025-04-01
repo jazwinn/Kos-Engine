@@ -16,8 +16,8 @@ public class PauseMenuButtons : ScriptBase
     private bool isHovering;
 
     private AnimationComponent animComp;
-    
-    public static bool confirmQuit;
+
+    private bool confirmQuit;
 
     private TextComponent quitConfirmTextComp;
     public override void Start()
@@ -219,8 +219,6 @@ public class PauseMenuButtons : ScriptBase
             quitConfirmTextComp.m_text = "Confirm";
 
             Component.Set<TextComponent>((uint)InternalCall.m_InternalCallGetTagID("UIConfirmQuit"), quitConfirmTextComp);
-            Console.WriteLine($"Bool {confirmQuit}");
-
         }
 
         else if (confirmQuit == true)
@@ -246,9 +244,6 @@ public class PauseMenuButtons : ScriptBase
         InternalCall.m_DisableLayer(9); //Disable Death Screen UI
         InternalCall.m_DisableLayer(15); //Disable FPS counter UI
 
-        //InternalCall.m_UnHideEntityandchildren(EntityID);
-
-       // InternalCall.m_HideEntityandchildren(EntityID);
         InternalCall.m_InternalCallStopAllAudio();
         CoroutineManager.Instance.StopAllCoroutines();
         InternalCall.m_InternalCallSetTimeScale(1);

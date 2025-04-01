@@ -465,10 +465,15 @@ public class BossController : ScriptBase
         // First explosion (i = number of bullet)
         for (int i = 0; i < 6; i++)
         {
+            InternalCall.m_InternalCallPlayAudio(EntityID, bossShootingSound);
+
+
             float angle = i * (360f / 6); // Spread evenly
             uint mediumBullet = (uint)InternalCall.m_InternalCallAddPrefab(bossClusterBulletPrefab, explosionPosition.X, explosionPosition.Y, angle);
             mediumBullets.Add(mediumBullet);
         }
+
+
 
         InternalCall.m_InternalCallDeleteEntity(largeBullet);
 
@@ -478,6 +483,8 @@ public class BossController : ScriptBase
         // Second explosion
         foreach (uint mediumBullet in mediumBullets)
         {
+            InternalCall.m_InternalCallPlayAudio(EntityID, bossShootingSound);
+
             InternalCall.m_InternalGetTranslate(mediumBullet, out Vector2 mediumBulletPosition);
 
             for (int j = 0; j < 8; j++)
