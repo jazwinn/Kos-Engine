@@ -883,6 +883,11 @@ namespace script {
 		static void m_HideEntityandchildren(ecs::EntityID id);
 		static void m_UnHideEntityandchildren(ecs::EntityID id);
 
+		static void m_StopVideo(ecs::EntityID);
+		static void m_PauseVideo(ecs::EntityID, bool _boolean);
+		static void m_StartVideo(ecs::EntityID);
+		static bool m_HasVideoFinish(ecs::EntityID);
+
 	public:
 		/******************************************************************/
 		/*!

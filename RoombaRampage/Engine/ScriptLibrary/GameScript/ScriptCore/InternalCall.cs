@@ -382,6 +382,18 @@ public static class InternalCall
     [MethodImpl(MethodImplOptions.InternalCall)]
     static public extern void m_InternalCallHideCursor(bool _boolean);
 
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    static public extern void m_StopVideo(uint id);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    static public extern void m_PauseVideo(uint id, bool _boolean);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    static public extern void m_StartVideo(uint id);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    static public extern bool m_HasVideoFinish(uint id);
+
 }
 
 

@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LogicScript\VideoScript.cs" />
     <Compile Include="LogicScript\CreditsScroll.cs" />
     <Compile Include="LogicScript\EnemyCorpseHalf.cs" />
     <Compile Include="LogicScript\LightFlashing.cs" />
