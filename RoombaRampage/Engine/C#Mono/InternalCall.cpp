@@ -722,6 +722,60 @@ namespace script {
 		ecs->m_layersStack.m_unhideEntitywithChild(id);
 	}
 
+	void InternalCall::m_StopVideo(ecs::EntityID id )
+	{
+
+		auto* VC = static_cast<ecs::VideoComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPEVIDEOCOMPONENT]->m_GetEntityComponent(id));
+
+		if (VC) {
+			VC->play = false;
+		}
+		else {
+			ASSERTNOCOMPONENT(VideoComponent, id);
+		}
+
+	}
+
+	void InternalCall::m_PauseVideo(ecs::EntityID id , bool _boolean)
+	{
+		auto* VC = static_cast<ecs::VideoComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPEVIDEOCOMPONENT]->m_GetEntityComponent(id));
+
+		if (VC) {
+			VC->pause = _boolean;
+		}
+		else {
+			ASSERTNOCOMPONENT(VideoComponent, id);
+		}
+
+
+	}
+
+	void InternalCall::m_StartVideo(ecs::EntityID id )
+	{
+		auto* VC = static_cast<ecs::VideoComponent*>(ecs::ECS::m_GetInstance()->m_ECS_CombinedComponentPool[ecs::TYPEVIDEOCOMPONENT]->m_GetEntityComponent(id));
+
+		if (VC) {
+			VC->play = true;
+		}
+		else {
+			ASSERTNOCOMPONENT(VideoComponent, id);
+		}
+	}
+
+	bool InternalCall::m_HasVideoFinish(ecs::EntityID id)
+	{
+		assetmanager::AssetManager* assetmanager = assetmanager::AssetManager::m_funcGetInstance();
+
+		auto& videomap = assetmanager->m_videoManager.m_videoMap;
+		auto it = videomap.find(id);
+		if (it != videomap.end()) {
+			return it->second->HasStopped();
+		}
+
+		return false;
+
+	}
+
 	MonoArray* InternalCall::m_InternalCallGetTagIDs(MonoString* monostring)
 	{
 		ecs::ECS* ecs = ecs::ECS::m_GetInstance();
@@ -1781,6 +1835,11 @@ namespace script {
 		MONO_ADD_INTERNAL_CALL(m_InternalCallGetRightJoyStickRotation);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallOverideMouseWithCursor);
 		MONO_ADD_INTERNAL_CALL(m_InternalCallHideCursor);
+
+		MONO_ADD_INTERNAL_CALL(m_StopVideo);
+		MONO_ADD_INTERNAL_CALL(m_PauseVideo);
+		MONO_ADD_INTERNAL_CALL(m_StartVideo);
+		MONO_ADD_INTERNAL_CALL(m_HasVideoFinish);
 		///SO HELP ME THEN OVER HERE
 	}
 }
