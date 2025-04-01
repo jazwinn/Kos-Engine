@@ -151,21 +151,6 @@
                 "y": 0.6000000238418579
             }
         },
-        "collider": {
-            "checkcollision": true,
-            "checkresponse": false,
-            "size": {
-                "x": 0.4399999976158142,
-                "y": 0.4399999976158142
-            },
-            "offset": {
-                "x": 0.0,
-                "y": 0.0
-            },
-            "drawDebug": true,
-            "radius": 0.5,
-            "shapetype": 0
-        },
         "rigidbody": {
             "linearVelocity": {
                 "x": 0.0,
@@ -207,6 +192,17 @@
             "frameTimer": 0.0,
             "isAnimating": false,
             "stripCount": 2
+        },
+        "button": {
+            "force": {
+                "x": 1722.8350830078125,
+                "y": 122.0150146484375
+            },
+            "scale": {
+                "x": 0.20000000298023224,
+                "y": 0.23999999463558197
+            },
+            "enablehover": true
         },
         "script": {
             "scripts": [
