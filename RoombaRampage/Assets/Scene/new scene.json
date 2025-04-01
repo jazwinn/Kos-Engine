@@ -14,30 +14,5 @@
             "cursorImage": "default",
             "isCursorCentered": false
         }
-    },
-    {
-        "name": {
-            "namestr": "bjork-all-is-full-of-love",
-            "layer": 0,
-            "isprefab": false,
-            "tagstr": "Default"
-        },
-        "transform": {
-            "position": {
-                "x": -2.357998847961426,
-                "y": 0.6499612331390381
-            },
-            "rotation": 0.0,
-            "scale": {
-                "x": 1.0,
-                "y": 1.0
-            }
-        },
-        "VideoComponent": {
-            "filename": "bjork-all-is-full-of-love.mpg",
-            "pause": false,
-            "loop": true,
-            "layer": 0
-        }
     }
 ]

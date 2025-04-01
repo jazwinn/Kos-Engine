@@ -148,7 +148,7 @@ namespace gui {
 				}
 				if (ImGui::MenuItem("Reload Browser")) {
 					assetmanager::AssetManager* AstManager = assetmanager::AssetManager::m_funcGetInstance();
-					AstManager->m_funcLoadAssets(assetDirectory.string());
+					AstManager->m_funcLoadAssets("Assets");
 				}
 				ImGui::EndPopup();
 			}
