@@ -280,7 +280,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
             bool isAnimating;
             int stripCount;
             InternalCall.m_InternalGetAnimationComponent(EntityID, out frameNumber, out fps, out timer, out isAnimating, out stripCount);
-            if (frameNumber == 9 && spewGuts)
+            if (frameNumber == 8 && spewGuts)
             {
                 int[] childs = InternalCall.m_InternalCallGetChildrenID(EntityID);
                 for (int i = 0; i < 11; i++)
