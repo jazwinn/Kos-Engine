@@ -219,7 +219,6 @@ public class GameControllerLevel1 : ScriptBase
         {
             PlayerLoadoutManager.isSortieing = false;
             InternalCall.m_InternalCallOverideMouseWithCursor(false);
-            InternalCall.m_InternalCallHideCursor(true);
             InternalCall.m_InternalCallSetTimeScale(1f);
             InternalCall.m_DisableLayer(8);
         }
