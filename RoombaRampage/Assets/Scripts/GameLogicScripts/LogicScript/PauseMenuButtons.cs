@@ -228,8 +228,8 @@ public class PauseMenuButtons : ScriptBase
 
             quitConfirmTextComp.m_text = "Confirm";
 
-            Component.Set<TextComponent>((uint)InternalCall.m_InternalCallGetTagID("UIConfirmQuit"), quitConfirmTextComp);
-            Console.WriteLine($"Bool {confirmQuit}");
+            //Component.Set<TextComponent>((uint)InternalCall.m_InternalCallGetTagID("UIConfirmQuit"), quitConfirmTextComp);
+            //Console.WriteLine($"Bool {confirmQuit}");
 
         }
 
@@ -261,14 +261,21 @@ public class PauseMenuButtons : ScriptBase
         InternalCall.m_DisableLayer(9); //Disable Death Screen UI
         InternalCall.m_DisableLayer(15); //Disable FPS counter UI
 
+        InternalCall.m_DisableLayer(1);
+        InternalCall.m_DisableLayer(2);
+        InternalCall.m_DisableLayer(3);
+        InternalCall.m_DisableLayer(4);
+        InternalCall.m_DisableLayer(5);
+        InternalCall.m_DisableLayer(6);
+
         //InternalCall.m_UnHideEntityandchildren(EntityID);
 
-       // InternalCall.m_HideEntityandchildren(EntityID);
+        // InternalCall.m_HideEntityandchildren(EntityID);
         InternalCall.m_InternalCallStopAllAudio();
         CoroutineManager.Instance.StopAllCoroutines();
         InternalCall.m_InternalCallSetTimeScale(1);
         InternalCall.m_UnloadAllScene();
-        InternalCall.m_InternalCallLoadScene("MainMenu");
+        InternalCall.m_InternalCallLoadScene("LevelSelect");
     }
 
     private void PauseToSoundMenu()

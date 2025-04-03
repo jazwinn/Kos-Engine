@@ -23,11 +23,14 @@ public class LevelSelectButton : ScriptBase
 
     private AnimationComponent animComp;
 
+    private bool isHovering;
+
     
 
     public override void Awake(uint id)
     {
         EntityID = id;
+        HideAllBlueprints();
     }
 
 
@@ -37,6 +40,7 @@ public class LevelSelectButton : ScriptBase
         HideAllBlueprints();
         isClick = false;
         otherIsClick = false;
+        isHovering = false;
     }
 
     public override void Update()
@@ -58,21 +62,22 @@ public class LevelSelectButton : ScriptBase
             }
         }
 
-        if (buttonFunctionNo == -1)
+        if(InternalCall.m_InternalIsButtonHovered(EntityID))
         {
-            if (InternalCall.m_InternalIsButtonHovered(EntityID))
-            {
-                animComp = Component.Get<AnimationComponent>(EntityID);
-                animComp.m_frameNumber = 1;
-                Component.Set<AnimationComponent>(EntityID, animComp);
-            }
+            if (isHovering) { return; }
+            animComp = Component.Get<AnimationComponent>(EntityID);
+            animComp.m_frameNumber = 1;
+            Component.Set<AnimationComponent>(EntityID, animComp);
+            isHovering = true;
+            InternalCall.m_InternalCallPlayAudio(EntityID, "aud_buttonHover01");
+        }
 
-            else
-            {
-                animComp = Component.Get<AnimationComponent>(EntityID);
-                animComp.m_frameNumber = 0;
-                Component.Set<AnimationComponent>(EntityID, animComp);
-            }
+        else if (!isSelected)
+        {
+            isHovering = false;
+            animComp = Component.Get<AnimationComponent>(EntityID);
+            animComp.m_frameNumber = 0;
+            Component.Set<AnimationComponent>(EntityID, animComp);
         }
 
 
@@ -81,7 +86,7 @@ public class LevelSelectButton : ScriptBase
     private void ClickButton()
     {
         AnimationComponent temp = Component.Get<AnimationComponent>(EntityID);
-        temp.m_frameNumber = 0;
+        temp.m_frameNumber = 1;
         Component.Set<AnimationComponent>(EntityID, temp);
         isSelected = true;
         isClick = false;
@@ -135,7 +140,7 @@ public class LevelSelectButton : ScriptBase
     {
         HideAllBlueprints();
         AnimationComponent temp = Component.Get<AnimationComponent>(EntityID);
-        temp.m_frameNumber = 1;
+        temp.m_frameNumber = 0;
         Component.Set<AnimationComponent>(EntityID, temp);
         isSelected = false;
         isClick = false;

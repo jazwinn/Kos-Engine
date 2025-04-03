@@ -152,8 +152,8 @@
         },
         "transform": {
             "position": {
-                "x": -1.4616254568099976,
-                "y": 0.7613599300384521
+                "x": -1.4642666578292847,
+                "y": 0.753293514251709
             },
             "rotation": -0.0,
             "scale": {
@@ -177,7 +177,7 @@
             "shapetype": 0
         },
         "sprite": {
-            "imagefile": "ani_levelFrameButtons_strip2.png",
+            "imagefile": "ani_pauseMenuQuitButton_strip2.png",
             "layer": 1,
             "color": {
                 "r": 1.0,
@@ -196,8 +196,8 @@
         },
         "button": {
             "force": {
-                "x": 216.017333984375,
-                "y": 1205.65087890625
+                "x": 1204.47607421875,
+                "y": 977.82470703125
             },
             "scale": {
                 "x": 0.47999998927116394,
@@ -223,6 +223,16 @@
                 }
             ]
         },
+        "audio": [
+            {
+                "name": "aud_buttonHover01",
+                "volume": 1.0,
+                "loop": false,
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
+            }
+        ],
         "children": [
             {
                 "name": {
@@ -457,7 +467,7 @@
             "rotation": -0.0,
             "scale": {
                 "x": 0.4985886812210083,
-                "y": 0.5
+                "y": 0.38371625542640686
             }
         },
         "sprite": {
@@ -1282,7 +1292,7 @@
             }
         },
         "sprite": {
-            "imagefile": "ani_levelFrameButtons_strip2.png",
+            "imagefile": "ani_pauseMenuQuitButton_strip2.png",
             "layer": 10,
             "color": {
                 "r": 1.0,
@@ -1293,7 +1303,7 @@
             "isLit": false
         },
         "animation": {
-            "frameNumber": 1,
+            "frameNumber": 0,
             "framesPerSecond": 0,
             "frameTimer": 0.0,
             "isAnimating": false,
@@ -1301,8 +1311,8 @@
         },
         "button": {
             "force": {
-                "x": 220.97314453125,
-                "y": 119.1785888671875
+                "x": 1211.23974609375,
+                "y": -103.12615966796875
             },
             "scale": {
                 "x": 0.550000011920929,
@@ -1335,6 +1345,14 @@
         "audio": [
             {
                 "name": "aud_buttonClick01",
+                "volume": 1.0,
+                "loop": false,
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
+            },
+            {
+                "name": "aud_buttonHover01",
                 "volume": 1.0,
                 "loop": false,
                 "playOnStart": false,
@@ -1396,7 +1414,7 @@
             }
         },
         "sprite": {
-            "imagefile": "ani_levelFrameButtons_strip2.png",
+            "imagefile": "ani_pauseMenuQuitButton_strip2.png",
             "layer": 11,
             "color": {
                 "r": 1.0,
@@ -1407,7 +1425,7 @@
             "isLit": false
         },
         "animation": {
-            "frameNumber": 1,
+            "frameNumber": 0,
             "framesPerSecond": 0,
             "frameTimer": 0.0,
             "isAnimating": false,
@@ -1415,8 +1433,8 @@
         },
         "button": {
             "force": {
-                "x": 619.877685546875,
-                "y": 119.1785888671875
+                "x": 1610.144287109375,
+                "y": -103.12615966796875
             },
             "scale": {
                 "x": 0.550000011920929,
@@ -1449,6 +1467,14 @@
         "audio": [
             {
                 "name": "aud_buttonClick01",
+                "volume": 1.0,
+                "loop": false,
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
+            },
+            {
+                "name": "aud_buttonHover01",
                 "volume": 1.0,
                 "loop": false,
                 "playOnStart": false,
@@ -1510,7 +1536,7 @@
             }
         },
         "sprite": {
-            "imagefile": "ani_levelFrameButtons_strip2.png",
+            "imagefile": "ani_pauseMenuQuitButton_strip2.png",
             "layer": 13,
             "color": {
                 "r": 1.0,
@@ -1521,7 +1547,7 @@
             "isLit": false
         },
         "animation": {
-            "frameNumber": 1,
+            "frameNumber": 0,
             "framesPerSecond": 0,
             "frameTimer": 0.0,
             "isAnimating": false,
@@ -1529,8 +1555,8 @@
         },
         "button": {
             "force": {
-                "x": 1016.3342895507813,
-                "y": 119.1785888671875
+                "x": 2006.6009521484375,
+                "y": -103.12615966796875
             },
             "scale": {
                 "x": 0.550000011920929,
@@ -1563,6 +1589,14 @@
         "audio": [
             {
                 "name": "aud_buttonClick01",
+                "volume": 1.0,
+                "loop": false,
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
+            },
+            {
+                "name": "aud_buttonHover01",
                 "volume": 1.0,
                 "loop": false,
                 "playOnStart": false,
@@ -1624,7 +1658,7 @@
             }
         },
         "sprite": {
-            "imagefile": "ani_levelFrameButtons_strip2.png",
+            "imagefile": "ani_pauseMenuQuitButton_strip2.png",
             "layer": 14,
             "color": {
                 "r": 1.0,
@@ -1635,7 +1669,7 @@
             "isLit": false
         },
         "animation": {
-            "frameNumber": 1,
+            "frameNumber": 0,
             "framesPerSecond": 0,
             "frameTimer": 0.0,
             "isAnimating": false,
@@ -1643,8 +1677,8 @@
         },
         "button": {
             "force": {
-                "x": 1410.200927734375,
-                "y": 119.1785888671875
+                "x": 2400.4677734375,
+                "y": -103.12615966796875
             },
             "scale": {
                 "x": 0.550000011920929,
@@ -1677,6 +1711,14 @@
         "audio": [
             {
                 "name": "aud_buttonClick01",
+                "volume": 1.0,
+                "loop": false,
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
+            },
+            {
+                "name": "aud_buttonHover01",
                 "volume": 1.0,
                 "loop": false,
                 "playOnStart": false,
@@ -1738,7 +1780,7 @@
             }
         },
         "sprite": {
-            "imagefile": "ani_levelFrameButtons_strip2.png",
+            "imagefile": "ani_pauseMenuQuitButton_strip2.png",
             "layer": 15,
             "color": {
                 "r": 1.0,
@@ -1749,7 +1791,7 @@
             "isLit": false
         },
         "animation": {
-            "frameNumber": 1,
+            "frameNumber": 0,
             "framesPerSecond": 0,
             "frameTimer": 0.0,
             "isAnimating": false,
@@ -1757,8 +1799,8 @@
         },
         "button": {
             "force": {
-                "x": 1808.0291748046875,
-                "y": 119.1785888671875
+                "x": 2798.295654296875,
+                "y": -103.12615966796875
             },
             "scale": {
                 "x": 0.550000011920929,
@@ -1791,6 +1833,14 @@
         "audio": [
             {
                 "name": "aud_buttonClick01",
+                "volume": 1.0,
+                "loop": false,
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
+            },
+            {
+                "name": "aud_buttonHover01",
                 "volume": 1.0,
                 "loop": false,
                 "playOnStart": false,
@@ -1852,7 +1902,7 @@
             }
         },
         "sprite": {
-            "imagefile": "ani_levelFrameButtons_strip2.png",
+            "imagefile": "ani_pauseMenuQuitButton_strip2.png",
             "layer": 16,
             "color": {
                 "r": 1.0,
@@ -1863,7 +1913,7 @@
             "isLit": false
         },
         "animation": {
-            "frameNumber": 1,
+            "frameNumber": 0,
             "framesPerSecond": 0,
             "frameTimer": 0.0,
             "isAnimating": false,
@@ -1871,8 +1921,8 @@
         },
         "button": {
             "force": {
-                "x": 2206.894775390625,
-                "y": 119.1785888671875
+                "x": 3197.16162109375,
+                "y": -103.12615966796875
             },
             "scale": {
                 "x": 0.550000011920929,
@@ -1905,6 +1955,14 @@
         "audio": [
             {
                 "name": "aud_buttonClick01",
+                "volume": 1.0,
+                "loop": false,
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
+            },
+            {
+                "name": "aud_buttonHover01",
                 "volume": 1.0,
                 "loop": false,
                 "playOnStart": false,
