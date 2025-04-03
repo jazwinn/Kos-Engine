@@ -530,6 +530,7 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
             rotationFloat += (float)(random.NextDouble() * 150 - 75);
         }
 
+
         //Convert into radians
         float rotationInRadians = (float)((rotationFloat) * Math.PI / 180.0);
 
@@ -617,8 +618,10 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
                     case "Pistol":
                         temp = 0.7f;
                         break;
-                    case "Shotgun":
                     case "Railgun":
+                        temp = 0f;
+                        break;
+                    case "Shotgun":
                     case "Booster":
                         temp = 0.9f;
                         break;

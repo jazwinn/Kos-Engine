@@ -26,6 +26,7 @@ StartMenuButton
 PlayerLoadoutCursor
 PlayerGunLightLeft
 PlayerGunLightRight
+PlayerGunLightBack
 UILoadoutLeftLimb
 UILoadoutRightLimb
 UILoadoutBackLimb
@@ -41,3 +42,4 @@ UIConfirmQuit
 PropGlassWall
 LaserWall
 GameController
+UIPauseConfirmation

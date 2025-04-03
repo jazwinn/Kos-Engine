@@ -122,12 +122,6 @@ public class BossController : ScriptBase
     {
         if (GameControllerLevel1.isBossDead || !GameControllerLevel1.isActivated || PlayerController.isDead) return;
 
-        if (GameControllerLevel1.isActivated && !forceFieldStart)
-        {
-            forceFieldStart = true;
-            SpawnForceField();
-        }
-
         if (isDying)
         {
             animComp = Component.Get<AnimationComponent>(EntityID);
@@ -465,10 +459,15 @@ public class BossController : ScriptBase
         // First explosion (i = number of bullet)
         for (int i = 0; i < 6; i++)
         {
+            InternalCall.m_InternalCallPlayAudio(EntityID, bossShootingSound);
+
+
             float angle = i * (360f / 6); // Spread evenly
             uint mediumBullet = (uint)InternalCall.m_InternalCallAddPrefab(bossClusterBulletPrefab, explosionPosition.X, explosionPosition.Y, angle);
             mediumBullets.Add(mediumBullet);
         }
+
+
 
         InternalCall.m_InternalCallDeleteEntity(largeBullet);
 
@@ -478,6 +477,8 @@ public class BossController : ScriptBase
         // Second explosion
         foreach (uint mediumBullet in mediumBullets)
         {
+            InternalCall.m_InternalCallPlayAudio(EntityID, bossShootingSound);
+
             InternalCall.m_InternalGetTranslate(mediumBullet, out Vector2 mediumBulletPosition);
 
             for (int j = 0; j < 8; j++)
@@ -575,6 +576,14 @@ public class BossController : ScriptBase
                 // Ignore damage if forcefield is deactivating or boss is dying
                 if (isForceFieldDeactivating || isDying || isInvincible)
                     continue;
+
+                if (!forceFieldStart)
+                {
+                    // First time boss is hit, trigger force field
+                    forceFieldStart = true;
+                    SpawnForceField();
+                    return; // Skip damage for this hit
+                }
 
                 // Apply damage to forcefield or boss
                 if (isForceFieldActive)

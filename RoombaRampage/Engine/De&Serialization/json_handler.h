@@ -106,6 +106,7 @@ namespace Serialization {
 		*/
 		/******************************************************************/
 		static void m_LoadConfig(std::string);
+		static std::vector<std::string> m_LoadFilePath(std::string);
 
 		static bool m_UpdateConfigStartScene(const std::string& newStartScene);
 
