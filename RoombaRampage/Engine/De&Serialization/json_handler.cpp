@@ -77,6 +77,7 @@ namespace Serialization {
 
 		if (!file.is_open()) {
 			LOGGING_ERROR("Error opening config file");
+			file.close();
 			return;
 		}
 		Helper::Helpers* help = Helper::Helpers::GetInstance();
@@ -103,7 +104,7 @@ namespace Serialization {
 		if (help->m_windowHeight <= 0 || help->m_windowWidth <= 0 || !help->m_fpsCap) {
 			LOGGING_ERROR("Error Reading Config file (Width or Height <= 0)");
 		}
-
+		file.close();
 		m_LoadPhysicsLayerMatrix();
 
 	}
@@ -112,18 +113,15 @@ namespace Serialization {
 
 
 		std::ifstream file;
-		configFilePath = filepath + "/filepath.txt";
-		file.open(configFilePath);
+		std::string filePathText = filepath + "/filepath.txt";
+		file.open(filePathText);
 		std::vector < std::string> ret;
 		if (!file.is_open()) {
 			LOGGING_ERROR("Error opening config file");
+			file.close();
 			return ret;
 		}
-		//graphicpipe::GraphicsPipe* graphics = graphicpipe::GraphicsPipe::m_funcGetInstance();
-
 		std::string line;
-
-		//char* str[256];
 
 		while (std::getline(file, line)) { // Read line by line
 			std::stringstream str2{ line };
@@ -131,6 +129,7 @@ namespace Serialization {
 			str2 >> temp;
 			ret.push_back(temp);
 		}
+		file.close();
 		return ret;
 	}
 
