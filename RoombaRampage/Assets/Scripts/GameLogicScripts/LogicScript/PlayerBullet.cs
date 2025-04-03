@@ -56,6 +56,7 @@ public class PlayerBullet : ScriptBase
     public override void Start()
     {
         bulletHasHit = false;
+        Console.WriteLine(EntityID);
     }
 
     public override void Update()
@@ -81,7 +82,7 @@ public class PlayerBullet : ScriptBase
 
         }
 
-        else
+        else if (isAnimating)
         {
             
 
@@ -93,6 +94,8 @@ public class PlayerBullet : ScriptBase
                 InternalCall.m_InternalCallDeleteEntity(EntityID);
                 return;
             }
+
+            return;
         }
 
         
@@ -102,8 +105,6 @@ public class PlayerBullet : ScriptBase
 
         if (InternalCall.m_InternalCallIsCollided(EntityID) != 0.0f)
         {
-
-
             int[] collidedEntities = InternalCall.m_InternalCallGetCollidedEntities(EntityID);
 
             foreach (int collidedEntitiesID in collidedEntities)
@@ -132,8 +133,19 @@ public class PlayerBullet : ScriptBase
 
                     case "Enemy":
                     case "Boss":
-                        bulletHasHit = true;
-                        InternalCall.m_InternalCallDeleteEntity(EntityID);
+                        if (!isAnimating)
+                        {
+                            isAnimating = true;
+                            InternalCall.m_InternalSetAnimationComponent(EntityID, in frameNumber, in framesPerSecond, in frameTimer, in isAnimating, in stripCount);
+
+                            Vector2 movement;
+
+                            movement.X = 0;
+                            movement.Y = 0;
+
+                            InternalCall.m_InternalSetVelocity(EntityID, movement);
+
+                        }
 
                         return;
 
