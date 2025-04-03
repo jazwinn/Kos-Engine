@@ -20,9 +20,7 @@ public class StartMenuButtons : ScriptBase
 
     public override void Start()
     {
-        isReading = false;
         animComp = Component.Get<AnimationComponent>(EntityID);
-        InternalCall.m_DisableLayer(9);
     }
 
     public override void Update()
