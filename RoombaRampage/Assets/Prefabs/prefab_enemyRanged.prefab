@@ -1,7 +1,7 @@
 [
     {
         "GlobalSettings": {
-            "globalIllumination": 1.0,
+            "globalIllumination": 0.46000000834465027,
             "backgroundColor": {
                 "r": 0.13300000131130219,
                 "g": 0.23000000417232513,
@@ -11,8 +11,8 @@
     },
     {
         "CursorSettings": {
-            "cursorImage": "../Assets/Texture/UI/img_startScreenCursor.png",
-            "isCursorCentered": false
+            "cursorImage": "../Assets/Texture/UI/img_inGameCursor.png",
+            "isCursorCentered": true
         }
     },
     {
@@ -114,6 +114,30 @@
                     ]
                 }
             ]
+        },
+        "particle": {
+            "willSpawn": false,
+            "noOfParticles": 20,
+            "lifeSpan": 200.0,
+            "velocityX": 0.0,
+            "velocityY": 40.0,
+            "sizeX": 1.0,
+            "sizeY": 1.0,
+            "accelerationX": 0.0,
+            "accelerationY": 0.0,
+            "colorR": 0.2743362784385681,
+            "colorG": 0.24520322680473328,
+            "colorB": 0.24520322680473328,
+            "coneRotation": 0.0,
+            "coneAngle": 30.0,
+            "randomFactor": 3.0,
+            "imageFile": "ani_bloodPool_strip9.png",
+            "stripCount": 9,
+            "frameNumber": 1,
+            "layer": 5,
+            "friction": 20.0,
+            "fps": 2,
+            "loopAnimation": false
         },
         "audio": [
             {
@@ -320,6 +344,393 @@
                         "x": 1.0,
                         "y": 1.0
                     }
+                }
+            },
+            {
+                "name": {
+                    "namestr": "guts",
+                    "layer": 0,
+                    "isprefab": false,
+                    "tagstr": "Default"
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "particle": {
+                    "willSpawn": false,
+                    "noOfParticles": 1,
+                    "lifeSpan": 200.0,
+                    "velocityX": 0.0,
+                    "velocityY": 70.0,
+                    "sizeX": 0.5,
+                    "sizeY": 0.5,
+                    "accelerationX": 0.0,
+                    "accelerationY": 0.0,
+                    "colorR": 1.0,
+                    "colorG": 1.0,
+                    "colorB": 1.0,
+                    "coneRotation": 0.0,
+                    "coneAngle": 360.0,
+                    "randomFactor": 1.0,
+                    "imageFile": "ani_rangedEnemyGuts_strip9.png",
+                    "stripCount": 9,
+                    "frameNumber": 0,
+                    "layer": 5,
+                    "friction": 20.0,
+                    "fps": 0,
+                    "loopAnimation": false
+                }
+            },
+            {
+                "name": {
+                    "namestr": "guts 2",
+                    "layer": 0,
+                    "isprefab": false,
+                    "tagstr": "Default"
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "particle": {
+                    "willSpawn": false,
+                    "noOfParticles": 1,
+                    "lifeSpan": 200.0,
+                    "velocityX": 0.0,
+                    "velocityY": 60.0,
+                    "sizeX": 0.5,
+                    "sizeY": 0.5,
+                    "accelerationX": 0.0,
+                    "accelerationY": 0.0,
+                    "colorR": 1.0,
+                    "colorG": 1.0,
+                    "colorB": 1.0,
+                    "coneRotation": 0.0,
+                    "coneAngle": 360.0,
+                    "randomFactor": 1.0,
+                    "imageFile": "ani_rangedEnemyGuts_strip9.png",
+                    "stripCount": 9,
+                    "frameNumber": 1,
+                    "layer": 5,
+                    "friction": 20.0,
+                    "fps": 0,
+                    "loopAnimation": false
+                }
+            },
+            {
+                "name": {
+                    "namestr": "guts 3",
+                    "layer": 0,
+                    "isprefab": false,
+                    "tagstr": "Default"
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "particle": {
+                    "willSpawn": false,
+                    "noOfParticles": 1,
+                    "lifeSpan": 200.0,
+                    "velocityX": 0.0,
+                    "velocityY": 40.0,
+                    "sizeX": 0.5,
+                    "sizeY": 0.5,
+                    "accelerationX": 0.0,
+                    "accelerationY": 0.0,
+                    "colorR": 1.0,
+                    "colorG": 1.0,
+                    "colorB": 1.0,
+                    "coneRotation": 0.0,
+                    "coneAngle": 360.0,
+                    "randomFactor": 1.0,
+                    "imageFile": "ani_rangedEnemyGuts_strip9.png",
+                    "stripCount": 9,
+                    "frameNumber": 2,
+                    "layer": 5,
+                    "friction": 20.0,
+                    "fps": 0,
+                    "loopAnimation": false
+                }
+            },
+            {
+                "name": {
+                    "namestr": "guts 4",
+                    "layer": 0,
+                    "isprefab": false,
+                    "tagstr": "Default"
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "particle": {
+                    "willSpawn": false,
+                    "noOfParticles": 1,
+                    "lifeSpan": 200.0,
+                    "velocityX": 0.0,
+                    "velocityY": 30.0,
+                    "sizeX": 0.5,
+                    "sizeY": 0.5,
+                    "accelerationX": 0.0,
+                    "accelerationY": 0.0,
+                    "colorR": 1.0,
+                    "colorG": 1.0,
+                    "colorB": 1.0,
+                    "coneRotation": 0.0,
+                    "coneAngle": 360.0,
+                    "randomFactor": 1.0,
+                    "imageFile": "ani_rangedEnemyGuts_strip9.png",
+                    "stripCount": 9,
+                    "frameNumber": 3,
+                    "layer": 5,
+                    "friction": 20.0,
+                    "fps": 0,
+                    "loopAnimation": false
+                }
+            },
+            {
+                "name": {
+                    "namestr": "guts 5",
+                    "layer": 0,
+                    "isprefab": false,
+                    "tagstr": "Default"
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "particle": {
+                    "willSpawn": false,
+                    "noOfParticles": 1,
+                    "lifeSpan": 200.0,
+                    "velocityX": 0.0,
+                    "velocityY": 80.0,
+                    "sizeX": 0.5,
+                    "sizeY": 0.5,
+                    "accelerationX": 0.0,
+                    "accelerationY": 0.0,
+                    "colorR": 1.0,
+                    "colorG": 1.0,
+                    "colorB": 1.0,
+                    "coneRotation": 0.0,
+                    "coneAngle": 360.0,
+                    "randomFactor": 1.0,
+                    "imageFile": "ani_rangedEnemyGuts_strip9.png",
+                    "stripCount": 9,
+                    "frameNumber": 4,
+                    "layer": 5,
+                    "friction": 20.0,
+                    "fps": 0,
+                    "loopAnimation": false
+                }
+            },
+            {
+                "name": {
+                    "namestr": "guts 6",
+                    "layer": 0,
+                    "isprefab": false,
+                    "tagstr": "Default"
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "particle": {
+                    "willSpawn": false,
+                    "noOfParticles": 1,
+                    "lifeSpan": 200.0,
+                    "velocityX": 0.0,
+                    "velocityY": 50.0,
+                    "sizeX": 0.5,
+                    "sizeY": 0.5,
+                    "accelerationX": 0.0,
+                    "accelerationY": 0.0,
+                    "colorR": 1.0,
+                    "colorG": 1.0,
+                    "colorB": 1.0,
+                    "coneRotation": 0.0,
+                    "coneAngle": 360.0,
+                    "randomFactor": 1.0,
+                    "imageFile": "ani_rangedEnemyGuts_strip9.png",
+                    "stripCount": 9,
+                    "frameNumber": 5,
+                    "layer": 5,
+                    "friction": 20.0,
+                    "fps": 0,
+                    "loopAnimation": false
+                }
+            },
+            {
+                "name": {
+                    "namestr": "guts 7",
+                    "layer": 0,
+                    "isprefab": false,
+                    "tagstr": "Default"
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "particle": {
+                    "willSpawn": false,
+                    "noOfParticles": 1,
+                    "lifeSpan": 200.0,
+                    "velocityX": 0.0,
+                    "velocityY": 40.0,
+                    "sizeX": 0.5,
+                    "sizeY": 0.5,
+                    "accelerationX": 0.0,
+                    "accelerationY": 0.0,
+                    "colorR": 1.0,
+                    "colorG": 1.0,
+                    "colorB": 1.0,
+                    "coneRotation": 0.0,
+                    "coneAngle": 360.0,
+                    "randomFactor": 1.0,
+                    "imageFile": "ani_rangedEnemyGuts_strip9.png",
+                    "stripCount": 9,
+                    "frameNumber": 6,
+                    "layer": 5,
+                    "friction": 20.0,
+                    "fps": 0,
+                    "loopAnimation": false
+                }
+            },
+            {
+                "name": {
+                    "namestr": "guts 8",
+                    "layer": 0,
+                    "isprefab": false,
+                    "tagstr": "Default"
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "particle": {
+                    "willSpawn": false,
+                    "noOfParticles": 1,
+                    "lifeSpan": 200.0,
+                    "velocityX": 0.0,
+                    "velocityY": 20.0,
+                    "sizeX": 0.5,
+                    "sizeY": 0.5,
+                    "accelerationX": 0.0,
+                    "accelerationY": 0.0,
+                    "colorR": 1.0,
+                    "colorG": 1.0,
+                    "colorB": 1.0,
+                    "coneRotation": 0.0,
+                    "coneAngle": 360.0,
+                    "randomFactor": 1.0,
+                    "imageFile": "ani_rangedEnemyGuts_strip9.png",
+                    "stripCount": 9,
+                    "frameNumber": 7,
+                    "layer": 5,
+                    "friction": 20.0,
+                    "fps": 0,
+                    "loopAnimation": false
+                }
+            },
+            {
+                "name": {
+                    "namestr": "guts 9",
+                    "layer": 0,
+                    "isprefab": false,
+                    "tagstr": "Default"
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "particle": {
+                    "willSpawn": false,
+                    "noOfParticles": 1,
+                    "lifeSpan": 200.0,
+                    "velocityX": 0.0,
+                    "velocityY": 40.0,
+                    "sizeX": 0.5,
+                    "sizeY": 0.5,
+                    "accelerationX": 0.0,
+                    "accelerationY": 0.0,
+                    "colorR": 1.0,
+                    "colorG": 1.0,
+                    "colorB": 1.0,
+                    "coneRotation": 0.0,
+                    "coneAngle": 360.0,
+                    "randomFactor": 1.0,
+                    "imageFile": "ani_rangedEnemyGuts_strip9.png",
+                    "stripCount": 9,
+                    "frameNumber": 7,
+                    "layer": 5,
+                    "friction": 20.0,
+                    "fps": 0,
+                    "loopAnimation": false
                 }
             }
         ]
