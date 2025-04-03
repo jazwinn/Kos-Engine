@@ -70,6 +70,16 @@
                 }
             ]
         },
+        "audio": [
+            {
+                "name": "aud_cutsceneStartup01",
+                "volume": 1.0,
+                "loop": false,
+                "playOnStart": false,
+                "isBGM": false,
+                "isSFX": true
+            }
+        ],
         "VideoComponent": {
             "filename": "30FPS.mpeg",
             "pause": false,

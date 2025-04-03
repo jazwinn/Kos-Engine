@@ -14,6 +14,7 @@ public class VideoScript : ScriptBase
     public override void Start()
     {
         InternalCall.m_StartVideo(EntityID);
+        InternalCall.m_InternalCallPlayAudio(EntityID, "aud_cutsceneStartup01.wav");
     }
 
     public override void Update()
