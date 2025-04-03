@@ -1,7 +1,7 @@
 [
     {
         "GlobalSettings": {
-            "globalIllumination": 0.2199999988079071,
+            "globalIllumination": 0.05999999865889549,
             "backgroundColor": {
                 "r": 0.0,
                 "g": 0.0,
@@ -11,8 +11,8 @@
     },
     {
         "CursorSettings": {
-            "cursorImage": "../Assets/Texture/UI/img_startScreenCursor.png",
-            "isCursorCentered": false
+            "cursorImage": "../Assets/Texture/UI/img_inGameCursor.png",
+            "isCursorCentered": true
         }
     },
     {
@@ -26,10 +26,10 @@
         },
         "transform": {
             "position": {
-                "x": 0.0,
-                "y": 0.0
+                "x": 0.094451904296875,
+                "y": 0.27921533584594727
             },
-            "rotation": 0.0,
+            "rotation": -0.0,
             "scale": {
                 "x": 1.0,
                 "y": 1.0
@@ -103,7 +103,7 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 9.127551078796387,
+                        "x": 5.983552932739258,
                         "y": 5.757751941680908
                     },
                     "rotation": 0.0,
@@ -132,8 +132,8 @@
                 },
                 "button": {
                     "force": {
-                        "x": 1572.0147705078125,
-                        "y": 775.399169921875
+                        "x": 1428.302001953125,
+                        "y": 677.41357421875
                     },
                     "scale": {
                         "x": 0.8600000143051147,
@@ -214,8 +214,8 @@
                 },
                 "button": {
                     "force": {
-                        "x": 694.7000122070313,
-                        "y": -259.572021484375
+                        "x": 1031.517578125,
+                        "y": -36.62640380859375
                     },
                     "scale": {
                         "x": 4.519999980926514,
