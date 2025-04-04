@@ -123,7 +123,7 @@ xcopy /y /d "$(SolutionDir)FMOD_API\studio\lib\x64\*.dll" "$(OutDir)"</Command>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);GLEW_STATIC;CRT_SECURE_NO_WARNINGS;CRT_SECURE_NO_WARNINGS;CRT_SECURE_NO_WARNINGSCRT_SECURE_NO_WARNINGSCRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)Dependencies\Freetype_Font\include\freetype\config;$(ProjectDir)Dependencies\mono\include;$(ProjectDir)Dependencies\mono\include\mono-2.0;$(ProjectDir)Dependencies\pl_mpeg;$(ProjectDir)Dependencies\rapidjson;$(ProjectDir)Dependencies\FMOD_API\core\inc;$(ProjectDir)Dependencies\FMOD_API\studio\inc;$(ProjectDir)include;$(ProjectDir)Dependencies\GLFW\include;$(ProjectDir)Dependencies\glm\include;$(ProjectDir)Dependencies\stb_image\include;$(ProjectDir)Dependencies\GLEW\include\GL;$(ProjectDir)Json Texts;$(ProjectDir)Dependencies\Freetype_Font\include</AdditionalIncludeDirectories>
-      <DisableSpecificWarnings>26945;4005;4245;4083;26495;6255;6263;6001;4244;4706;4267;4305;4098;4099;4217</DisableSpecificWarnings>
+      <DisableSpecificWarnings>26945; 4005; 4245;4083;26495;6255;6263;6001; 4244; 4706;4267;4305;</DisableSpecificWarnings>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <UseStandardPreprocessor>true</UseStandardPreprocessor>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -150,7 +150,7 @@ xcopy /y /d "$(ProjectDir)Dependencies\Freetype_Font\lib\*.dll" "$(OutDir)"
 xcopy /y /d "$(ProjectDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     </PostBuildEvent>
     <Lib>
-      <AdditionalDependencies>fmod_vc.lib</AdditionalDependencies>
+      <AdditionalDependencies>glew32s.lib;glfw3.lib;User32.lib;Gdi32.lib;Shell32.lib;opengl32.lib;freetype.lib;mono-2.0-sgen.lib;Comdlg32.lib;fmod_vc.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(ProjectDir)Dependencies\GLFW\lib-vc2022;$(ProjectDir)Dependencies\GLEW\\lib\Release\x64;$(ProjectDir)Dependencies\FMOD_API\core\lib\x64;$(ProjectDir)Dependencies\FMOD_API\studio\lib\x64;$(ProjectDir)Dependencies\Freetype_Font\lib;$(ProjectDir)Dependencies\mono\lib</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
@@ -168,7 +168,7 @@ xcopy /y /d "$(ProjectDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>../Config/pch.h</PrecompiledHeaderFile>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <DisableSpecificWarnings>26945;4005;4245;4083;26495;6255;6263;6001;4244;4706;4267;4305;4098;4099;4217</DisableSpecificWarnings>
+      <DisableSpecificWarnings>26945; 4005; 4245;4083;26495;6255;6263;6001; 4244; 4706;4267;4305;</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -190,7 +190,7 @@ xcopy /y /d "$(ProjectDir)Dependencies\Freetype_Font\lib\*.dll" "$(OutDir)"
 xcopy /y /d "$(ProjectDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     </PostBuildEvent>
     <Lib>
-      <AdditionalDependencies>fmod_vc.lib</AdditionalDependencies>
+      <AdditionalDependencies>glew32s.lib;glfw3.lib;User32.lib;Gdi32.lib;Shell32.lib;opengl32.lib;freetype.lib;mono-2.0-sgen.lib;Comdlg32.lib;fmod_vc.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(ProjectDir)Dependencies\GLFW\lib-vc2022;$(ProjectDir)Dependencies\GLEW\\lib\Release\x64;$(ProjectDir)Dependencies\FMOD_API\core\lib\x64;$(ProjectDir)Dependencies\FMOD_API\studio\lib\x64;$(ProjectDir)Dependencies\Freetype_Font\lib;$(ProjectDir)Dependencies\mono\lib</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
