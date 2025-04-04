@@ -37,7 +37,9 @@ namespace Input {
 	float InputSystem::deadzone = 0.4f;
 	float InputSystem::controllerRightJoyStickRotation = -1.f;
 	bool InputSystem::overwriteMousePosWithController = false;
-
+	std::string InputSystem::m_controllerName = "";
+	const std::string InputSystem::ps5Mapping = "030000004c050000e60c000000000000, PS5 Controller, a:b1, b : b2, back : b8, dpdown : h0.4, dpleft : h0.8, dpright : h0.2, dpup : h0.1, guide : b12, leftshoulder : b4, leftstick : b10, lefttrigger : a3, leftx : a0, lefty : a1, misc1 : b13, rightshoulder : b5, rightstick : b11, righttrigger : a4, rightx : a2, righty : a5, start : b9, x : b0, y : b3, platform : Windows,";
+	const std::string InputSystem::xboxMapping = "78696e70757401000000000000000000,XInput Gamepad (GLFW),platform:Windows,a:b0,b:b1,x:b2,y:b3,leftshoulder:b4,rightshoulder:b5,back:b6,start:b7,leftstick:b8,rightstick:b9,leftx:a0,lefty:a1,rightx:a2,righty:a3,lefttrigger:a4,righttrigger:a5,dpup:h0.1,dpright:h0.2,dpdown:h0.4,dpleft:h0.8,";
 
 	void InputSystem::KeyCallBack([[maybe_unused]] GLFWwindow* window, [[maybe_unused]] int key, [[maybe_unused]] int scancode, int action, [[maybe_unused]] int mods) {
 		if (action == GLFW_PRESS) {
@@ -88,6 +90,15 @@ namespace Input {
 			//std::cout << "Joystick " << jid << " connected" << std::endl;
 			m_controllerConnected = true;
 			m_controllerID = jid;
+			m_controllerName = glfwGetGamepadName(jid);
+			std::cout << m_controllerName << std::endl;
+			if (m_controllerName == "XInput Gamepad (GLFW)") {
+				glfwUpdateGamepadMappings(xboxMapping.c_str());
+			}
+			else if (m_controllerName == "PS5 Controller") {
+				std::cout << "updated mappings" << std::endl;
+				glfwUpdateGamepadMappings(ps5Mapping.c_str());
+			}
 
 		}
 		else if (event == GLFW_DISCONNECTED)
@@ -133,7 +144,18 @@ namespace Input {
 			if (glfwJoystickPresent(controlID)) {
 				m_controllerConnected = true;
 				m_controllerID = controlID;
+				m_controllerName = glfwGetGamepadName(controlID);
+				//if (glfwJoystickIsGamepad(controlID)) {
+				//	std::cout << "yepcock" << std::endl;
+				//}
+				//if (m_controllerName == "XInput Gamepad (GLFW)") {
+				//	glfwUpdateGamepadMappings(xboxMapping.c_str());
+				//}
+				//else if (m_controllerName == "PS5 Controller") {
+				//	glfwUpdateGamepadMappings(ps5Mapping.c_str());
+				//}
 			}
+			
 		}
 		for (auto& currKey : m_wasTriggered) {
 			int state;
@@ -169,62 +191,134 @@ namespace Input {
 			{
 				int store = 0;
 				const float* axes = glfwGetJoystickAxes(m_controllerID, &store);
-				for (int i = 0; i < store; ++i)  // GLFW_GAMEPAD_AXIS_LAST is 5
-				{
-					if (i == 4) {
-						if (axes[i] > 0.f) {
-							if (!m_controllerButtonsPress[keys::CONTROLLER_LEFT_TRIGGER]) {
-								m_controllerButtonsTriggered[keys::CONTROLLER_LEFT_TRIGGER] = true;
-								m_controllerButtonsPress[keys::CONTROLLER_LEFT_TRIGGER] = true;
+				if (m_controllerName == "XInput Gamepad (GLFW)") {
+					for (int i = 0; i < store; ++i)  // GLFW_GAMEPAD_AXIS_LAST is 5
+					{
+
+						if (i == 4) {
+							if (axes[i] > 0.f) {
+								if (!m_controllerButtonsPress[keys::CONTROLLER_LEFT_TRIGGER]) {
+									m_controllerButtonsTriggered[keys::CONTROLLER_LEFT_TRIGGER] = true;
+									m_controllerButtonsPress[keys::CONTROLLER_LEFT_TRIGGER] = true;
+								}
+								else {
+									m_controllerButtonsTriggered[keys::CONTROLLER_LEFT_TRIGGER] = false;
+								}
 							}
 							else {
+								if (m_controllerButtonsPress[keys::CONTROLLER_LEFT_TRIGGER] || m_controllerButtonsTriggered[keys::CONTROLLER_LEFT_TRIGGER]) {
+									m_wasControllerReleased[keys::CONTROLLER_LEFT_TRIGGER] = true;
+								}
+								else {
+									m_wasControllerReleased[keys::CONTROLLER_LEFT_TRIGGER] = false;
+								}
+								m_controllerButtonsPress[keys::CONTROLLER_LEFT_TRIGGER] = false;
+								m_controllerButtonsTriggered[keys::CONTROLLER_LEFT_TRIGGER] = false;
+							}
+
+						}
+						else if (i == 5) {
+							if (axes[i] > 0.f) {
+								if (!m_controllerButtonsPress[keys::CONTROLLER_RIGHT_TRIGGER]) {
+									m_controllerButtonsTriggered[keys::CONTROLLER_RIGHT_TRIGGER] = true;
+									m_controllerButtonsPress[keys::CONTROLLER_RIGHT_TRIGGER] = true;
+								}
+								else {
+									m_controllerButtonsTriggered[keys::CONTROLLER_RIGHT_TRIGGER] = false;
+								}
+							}
+							else {
+								if (m_controllerButtonsPress[keys::CONTROLLER_RIGHT_TRIGGER] || m_controllerButtonsTriggered[keys::CONTROLLER_RIGHT_TRIGGER]) {
+									m_wasControllerReleased[keys::CONTROLLER_RIGHT_TRIGGER] = true;
+								}
+								else {
+									m_wasControllerReleased[keys::CONTROLLER_RIGHT_TRIGGER] = false;
+								}
+								m_controllerButtonsPress[keys::CONTROLLER_RIGHT_TRIGGER] = false;
+								m_controllerButtonsTriggered[keys::CONTROLLER_RIGHT_TRIGGER] = false;
+							}
+
+						}
+						else if (i == 1 || i == 3) {
+							m_controllerAxes[i] = -axes[i];
+						}
+						else {
+							m_controllerAxes[i] = axes[i];
+						}
+						if (m_controllerAxes[i] < 0.001f && m_controllerAxes[i] > -0.001f) {
+							m_controllerAxes[i] = 0.f;
+						}
+					}
+				}
+				else {
+					//i = 4 is right trigger
+					//i = 5 is right y axis
+					//i = 2 is right x axis
+					//i = 1 is left y axis
+					//i = 0 is left x axis
+					int store = 0;
+					const float* axes = glfwGetJoystickAxes(m_controllerID, &store);
+					for (int i = 0; i < store; ++i)  // GLFW_GAMEPAD_AXIS_LAST is 5
+					{
+						if (i == 3) {
+							if (axes[i] > 0.f) {
+								if (!m_controllerButtonsPress[keys::CONTROLLER_LEFT_TRIGGER]) {
+									m_controllerButtonsTriggered[keys::CONTROLLER_LEFT_TRIGGER] = true;
+									m_controllerButtonsPress[keys::CONTROLLER_LEFT_TRIGGER] = true;
+								}
+								else {
+									m_controllerButtonsTriggered[keys::CONTROLLER_LEFT_TRIGGER] = false;
+								}
+							}
+							else {
+								if (m_controllerButtonsPress[keys::CONTROLLER_LEFT_TRIGGER] || m_controllerButtonsTriggered[keys::CONTROLLER_LEFT_TRIGGER]) {
+									m_wasControllerReleased[keys::CONTROLLER_LEFT_TRIGGER] = true;
+								}
+								else {
+									m_wasControllerReleased[keys::CONTROLLER_LEFT_TRIGGER] = false;
+								}
+								m_controllerButtonsPress[keys::CONTROLLER_LEFT_TRIGGER] = false;
 								m_controllerButtonsTriggered[keys::CONTROLLER_LEFT_TRIGGER] = false;
 							}
 						}
-						else {
-							if (m_controllerButtonsPress[keys::CONTROLLER_LEFT_TRIGGER] || m_controllerButtonsTriggered[keys::CONTROLLER_LEFT_TRIGGER]) {
-								m_wasControllerReleased[keys::CONTROLLER_LEFT_TRIGGER] = true;
+						else if (i == 4) {
+							if (axes[i] > 0.f) {
+								if (!m_controllerButtonsPress[keys::CONTROLLER_RIGHT_TRIGGER]) {
+									m_controllerButtonsTriggered[keys::CONTROLLER_RIGHT_TRIGGER] = true;
+									m_controllerButtonsPress[keys::CONTROLLER_RIGHT_TRIGGER] = true;
+								}
+								else {
+									m_controllerButtonsTriggered[keys::CONTROLLER_RIGHT_TRIGGER] = false;
+								}
 							}
 							else {
-								m_wasControllerReleased[keys::CONTROLLER_LEFT_TRIGGER] = false;
-							}
-							m_controllerButtonsPress[keys::CONTROLLER_LEFT_TRIGGER] = false;
-							m_controllerButtonsTriggered[keys::CONTROLLER_LEFT_TRIGGER] = false;
-						}
-						
-					}else if (i == 5) {
-						if (axes[i] > 0.f) {
-							if (!m_controllerButtonsPress[keys::CONTROLLER_RIGHT_TRIGGER]) {
-								m_controllerButtonsTriggered[keys::CONTROLLER_RIGHT_TRIGGER] = true;
-								m_controllerButtonsPress[keys::CONTROLLER_RIGHT_TRIGGER] = true;
-							}
-							else {
+								if (m_controllerButtonsPress[keys::CONTROLLER_RIGHT_TRIGGER] || m_controllerButtonsTriggered[keys::CONTROLLER_RIGHT_TRIGGER]) {
+									m_wasControllerReleased[keys::CONTROLLER_RIGHT_TRIGGER] = true;
+								}
+								else {
+									m_wasControllerReleased[keys::CONTROLLER_RIGHT_TRIGGER] = false;
+								}
+								m_controllerButtonsPress[keys::CONTROLLER_RIGHT_TRIGGER] = false;
 								m_controllerButtonsTriggered[keys::CONTROLLER_RIGHT_TRIGGER] = false;
 							}
+
+						}
+						else if (i == 5) {
+							m_controllerAxes[3] = -axes[i];
+						}
+						else if (i == 1) {
+							m_controllerAxes[i] = -axes[i];
 						}
 						else {
-							if (m_controllerButtonsPress[keys::CONTROLLER_RIGHT_TRIGGER] || m_controllerButtonsTriggered[keys::CONTROLLER_LEFT_TRIGGER]) {
-								m_wasControllerReleased[keys::CONTROLLER_RIGHT_TRIGGER] = true;
-							}
-							else {
-								m_wasControllerReleased[keys::CONTROLLER_RIGHT_TRIGGER] = false;
-							}
-							m_controllerButtonsPress[keys::CONTROLLER_RIGHT_TRIGGER] = false;
-							m_controllerButtonsTriggered[keys::CONTROLLER_RIGHT_TRIGGER] = false;
+							m_controllerAxes[i] = axes[i];
 						}
-
-					}
-					else if (i == 1 || i == 3) {
-						m_controllerAxes[i] = -axes[i];
-					}
-					else {
-						m_controllerAxes[i] = axes[i];
-					}
-					if (m_controllerAxes[i] < 0.001f && m_controllerAxes[i] > -0.001f) {
-						m_controllerAxes[i] = 0.f;
+						
+						
+						if (m_controllerAxes[i] < 0.001f && m_controllerAxes[i] > -0.001f) {
+							m_controllerAxes[i] = 0.f;
+						}
 					}
 				}
-				
 				// Update button states
 				for (int i = 0; i < 15; ++i)  // GLFW_GAMEPAD_BUTTON_LAST is 14
 				{
@@ -268,52 +362,97 @@ namespace Input {
 
 
 		if (glfwJoystickPresent(GLFW_JOYSTICK_1)) {
+			if (m_controllerName == "XInput Gamepad (GLFW)") {
+				if (overwriteMousePosWithController) {
+					int axesCount;
+					const float* axes = glfwGetJoystickAxes(GLFW_JOYSTICK_1, &axesCount);
 
-			if (overwriteMousePosWithController) {
-				int axesCount;
-				const float* axes = glfwGetJoystickAxes(GLFW_JOYSTICK_1, &axesCount);
-
-				if (axesCount >= 2) {
-					float stickX = axes[2];
-					float stickY = axes[3];
-					GLFWwindow* window = glfwGetCurrentContext();
-					double mouseX, mouseY;
-					glfwGetCursorPos(window, &mouseX, &mouseY);
+					if (axesCount >= 2) {
+						float stickX = axes[2];
+						float stickY = axes[3];
+						GLFWwindow* window = glfwGetCurrentContext();
+						double mouseX, mouseY;
+						glfwGetCursorPos(window, &mouseX, &mouseY);
 
 
-					if (fabs(stickX) > deadzone || fabs(stickY) > deadzone) {
-						mouseX += stickX * ControllerSensitivity;
-						mouseY += stickY * ControllerSensitivity; // Invert Y if needed
-						glfwSetCursorPos(window, mouseX, mouseY);
+						if (fabs(stickX) > deadzone || fabs(stickY) > deadzone) {
+							mouseX += stickX * ControllerSensitivity;
+							mouseY += stickY * ControllerSensitivity; // Invert Y if needed
+							glfwSetCursorPos(window, mouseX, mouseY);
+						}
+					}
+
+
+				}
+
+				int count;
+				const float* axes = glfwGetJoystickAxes(GLFW_JOYSTICK_1, &count);
+
+				if (count >= 2) { // Ensure the joystick has at least two axes
+					float x = axes[2]; // X-axis
+					float y = axes[3]; // Y-axis (negate to correct inversion)
+
+					if (x == 0.0f && y == 0.0f) {
+						controllerRightJoyStickRotation = -1;
+						return;
+					}
+					if (fabs(x) < deadzone && fabs(y) < deadzone) {
+						controllerRightJoyStickRotation = -1;
+						return;
+					}
+
+
+					float angle = atan2(x, -y) * 57.2958f; // Swap x and y
+					//std::cout << angle << std::endl;
+					if (angle < 0) angle += 360.0f; // Normalize to [0, 360)
+
+					controllerRightJoyStickRotation = angle;
+
+				}
+			}
+			else{
+				if (overwriteMousePosWithController) {
+					int axesCount;
+					const float* axes = glfwGetJoystickAxes(GLFW_JOYSTICK_1, &axesCount);
+
+					if (axesCount >= 2) {
+						float stickX = m_controllerAxes[2];
+						float stickY = -m_controllerAxes[3];
+						GLFWwindow* window = glfwGetCurrentContext();
+						double mouseX, mouseY;
+						glfwGetCursorPos(window, &mouseX, &mouseY);
+						if (fabs(stickX) > deadzone || fabs(stickY) > deadzone) {
+							mouseX += stickX * ControllerSensitivity;
+							mouseY += stickY * ControllerSensitivity; // Invert Y if needed
+							glfwSetCursorPos(window, mouseX, mouseY);
+						}
 					}
 				}
 
+				int count;
+				const float* axes = glfwGetJoystickAxes(GLFW_JOYSTICK_1, &count);
 
-			}
+				if (count >= 2) { // Ensure the joystick has at least two axes
+					float x = m_controllerAxes[2]; // X-axis
+					float y = -m_controllerAxes[3]; // Y-axis (negate to correct inversion)
 
-			int count;
-			const float* axes = glfwGetJoystickAxes(GLFW_JOYSTICK_1, &count);
+					if (x == 0.0f && y == 0.0f) {
+						controllerRightJoyStickRotation = -1;
+						return;
+					}
+					if (fabs(x) < deadzone && fabs(y) < deadzone) {
+						controllerRightJoyStickRotation = -1;
+						return;
+					}
 
-			if (count >= 2) { // Ensure the joystick has at least two axes
-				float x = axes[2]; // X-axis
-				float y = axes[3]; // Y-axis (negate to correct inversion)
 
-				if (x == 0.0f && y == 0.0f) {
-					controllerRightJoyStickRotation = -1;
-					return;
+					float angle = atan2(x, -y) * 57.2958f; // Swap x and y
+					//std::cout << angle << std::endl;
+					if (angle < 0) angle += 360.0f; // Normalize to [0, 360)
+
+					controllerRightJoyStickRotation = angle;
+
 				}
-				if (fabs(x) < deadzone && fabs(y) < deadzone) {
-					controllerRightJoyStickRotation = -1;
-					return;
-				}
-
-
-				float angle = atan2(x, -y) * 57.2958f; // Swap x and y
-				//std::cout << angle << std::endl;
-				if (angle < 0) angle += 360.0f; // Normalize to [0, 360)
-
-				controllerRightJoyStickRotation = angle;
-				
 			}
 		}
 		else {

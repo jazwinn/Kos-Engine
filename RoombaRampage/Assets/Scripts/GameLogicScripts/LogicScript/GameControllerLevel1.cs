@@ -209,6 +209,8 @@ public class GameControllerLevel1 : ScriptBase
         if (!PlayerLoadoutManager.isSortieing)
         {
             PlayerLoadoutManager.isSortieing = true;
+            InternalCall.m_InternalCallOverideMouseWithCursor(true);
+            InternalCall.m_InternalCallHideCursor(false);
             InternalCall.m_InternalCallSetTimeScale(0.2f);
             InternalCall.m_EnableLayer(8);
         }
@@ -216,6 +218,7 @@ public class GameControllerLevel1 : ScriptBase
         else
         {
             PlayerLoadoutManager.isSortieing = false;
+            InternalCall.m_InternalCallOverideMouseWithCursor(false);
             InternalCall.m_InternalCallSetTimeScale(1f);
             InternalCall.m_DisableLayer(8);
         }
@@ -239,7 +242,7 @@ public class GameControllerLevel1 : ScriptBase
 
         if (gameIsPaused) { return; } //Ensures nothing but pause menu can be activated when game is paused
 
-        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.TAB) || InternalCall.m_InternalCallIsKeyTriggered(keyCode.I))
+        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.TAB) || InternalCall.m_InternalCallIsKeyTriggered(keyCode.I) || InternalCall.m_InternalCallIsControllerTriggered(keyCode.CONTROLLER_UP))
         {
             if (PlayerGun.playerBoost == false)
             {

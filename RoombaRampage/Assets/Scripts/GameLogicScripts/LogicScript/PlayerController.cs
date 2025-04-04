@@ -95,7 +95,7 @@ public class PlayerController : ScriptBase
     public override void Update()
     {
         //Checks if game is paused and prevents player from doing anything
-        if (GameControllerLevel1.gameIsPaused) { return; }
+        if (GameControllerLevel1.gameIsPaused || PlayerLoadoutManager.isSortieing) { return; }
 
         //Dead player, return to prevent actions
         if (isDead) { return; }
@@ -265,6 +265,7 @@ public class PlayerController : ScriptBase
         {
             return;
         }
+
 
         #region Mouse Rotation
 

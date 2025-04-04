@@ -37,12 +37,12 @@ public class PauseMenuButtons : ScriptBase
             CheckForHover();
             CheckForClicks();
 
-            if (confirmQuit == true && InternalCall.m_InternalCallIsKeyTriggered(keyCode.Y))
+            if (confirmQuit == true && (InternalCall.m_InternalCallIsKeyTriggered(keyCode.Y) || InternalCall.m_InternalCallIsControllerTriggered(keyCode.CONTROLLER_Y)))
             {
                 InternalCall.m_InternalCallPlayAudio(EntityID, "aud_buttonClick01");
                 QuitToMainMenu();
             }
-            if (confirmQuit == true && InternalCall.m_InternalCallIsKeyTriggered(keyCode.N))
+            if (confirmQuit == true && (InternalCall.m_InternalCallIsKeyTriggered(keyCode.N) || InternalCall.m_InternalCallIsControllerTriggered(keyCode.CONTROLLER_B)))
             {
                 InternalCall.m_InternalCallPlayAudio(EntityID, "aud_buttonClick01");
                 confirmQuit = false;
@@ -150,6 +150,12 @@ public class PauseMenuButtons : ScriptBase
                     break;
             }
         }
+
+        if (InternalCall.m_InternalCallIsControllerTriggered(keyCode.CONTROLLER_B)){
+            InternalCall.m_InternalCallPlayAudio(EntityID, "aud_buttonClick01");
+            ResumeGame();
+
+        }
     }
 
     private void ResumeGame()
@@ -158,6 +164,10 @@ public class PauseMenuButtons : ScriptBase
 
         //Hide Pause Menu Layer
         InternalCall.m_DisableLayer(7);
+        //Hide sound layer
+        InternalCall.m_DisableLayer(16);
+        //Hide how to play
+        InternalCall.m_DisableLayer(6);
 
         //Resumes all coroutines
         CoroutineManager.Instance.ResumeAllCoroutines();
@@ -233,12 +243,12 @@ public class PauseMenuButtons : ScriptBase
 
         }
 
-        if (confirmQuit == true && InternalCall.m_InternalCallIsKeyTriggered(keyCode.Y))
+        if (confirmQuit == true && (InternalCall.m_InternalCallIsKeyTriggered(keyCode.Y) || InternalCall.m_InternalCallIsControllerTriggered(keyCode.CONTROLLER_Y)))
         {
             QuitToMainMenu();
         }
 
-        if (confirmQuit == true && InternalCall.m_InternalCallIsKeyTriggered(keyCode.N))
+        if (confirmQuit == true && (InternalCall.m_InternalCallIsKeyTriggered(keyCode.N) || InternalCall.m_InternalCallIsControllerTriggered(keyCode.CONTROLLER_B)))
         {
             confirmQuit = false;
         }
