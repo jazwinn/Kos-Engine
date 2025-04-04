@@ -80,8 +80,22 @@ namespace ecs {
         /******************************************************************/
         std::vector<TransformComponent*> m_vecTransformComponentPtr;
 
+        /******************************************************************/
+        /*!
+        \var     std::vector<VideoComponent*> m_vecVideoComponentPtr
+        \brief   Stores pointers to VideoComponent instances for registered entities.
+        \details Used to manage and control video playback functionality for entities within the system.
+        */
+        /******************************************************************/
         std::vector<VideoComponent*> m_vecVideoComponentPtr;
 
+        /******************************************************************/
+        /*!
+        \var     std::vector<NameComponent*> m_vecNameComponentPtr
+        \brief   Stores pointers to NameComponent instances for registered entities.
+        \details Used to identify and reference entities by name within the system.
+        */
+        /******************************************************************/
         std::vector<NameComponent*> m_vecNameComponentPtr;
     };
 

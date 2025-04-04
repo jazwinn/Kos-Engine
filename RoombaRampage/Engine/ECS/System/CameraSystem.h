@@ -87,6 +87,13 @@ namespace ecs {
 		/******************************************************************/
 		std::vector<CameraComponent*> m_vecCameraComponentPtr;
 
+		/******************************************************************/
+		/*!
+		\var     std::vector<NameComponent*> m_vecNameComponentPtr
+		\brief   Stores pointers to NameComponent instances for registered entities.
+		\details Used to identify and manage entities by name within the camera system.
+		*/
+		/******************************************************************/
 		std::vector<NameComponent*> m_vecNameComponentPtr;
 	};
 

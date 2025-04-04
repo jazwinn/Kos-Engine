@@ -90,9 +90,32 @@ namespace layer{
 		/******************************************************************/
 		bool m_SwapEntityLayer(LAYERS newlayer, LAYERS oldlayer, ecs::EntityID);
 
+		/******************************************************************/
+		/*!
+		\fn      void m_DisableLayer(LAYERS layer)
+		\brief   Disables rendering for the specified layer.
+		\param   layer - The layer to be disabled.
+		*/
+		/******************************************************************/
 		void m_DisableLayer(LAYERS layer);
+
+		/******************************************************************/
+		/*!
+		\fn      void m_EnableLayer(LAYERS layer)
+		\brief   Enables rendering for the specified layer.
+		\param   layer - The layer to be enabled.
+		*/
+		/******************************************************************/
 		void m_EnableLayer(LAYERS layer);
 
+		/******************************************************************/
+		/*!
+		\fn      bool m_IsLayerVisable(int layer)
+		\brief   Checks whether the specified layer is currently visible.
+		\param   layer - The layer index to check.
+		\return  True if the layer is visible, false otherwise.
+		*/
+		/******************************************************************/
 		bool m_IsLayerVisable(int layer);
 
 		/******************************************************************/
@@ -107,7 +130,22 @@ namespace layer{
 		/******************************************************************/
 		std::vector<ecs::EntityID> m_RetrieveEntityID(LAYERS layer);
 
+		/******************************************************************/
+		/*!
+		\fn      void m_hideEntitywithChild(ecs::EntityID id)
+		\brief   Hides the specified entity along with all of its child entities.
+		\param   id - The ID of the parent entity to be hidden.
+		*/
+		/******************************************************************/
 		void m_hideEntitywithChild(ecs::EntityID id);
+
+		/******************************************************************/
+		/*!
+		\fn      void m_unhideEntitywithChild(ecs::EntityID id)
+		\brief   Unhides the specified entity along with all of its child entities.
+		\param   id - The ID of the parent entity to be unhidden.
+		*/
+		/******************************************************************/
 		void m_unhideEntitywithChild(ecs::EntityID id);
 
 

@@ -275,6 +275,14 @@ namespace script {
 		/******************************************************************/
 		static bool m_InternalGetButtonComponent(ecs::EntityID entity, vector2::Vec2* position, vector2::Vec2* scale, bool* isClick);
 
+		/******************************************************************/
+		/*!
+		\fn      static bool m_InternalIsButtonHovered(ecs::EntityID entity)
+		\brief   Checks whether the button associated with the specified entity is currently hovered.
+		\param   entity - The ID of the entity to check for hover status.
+		\return  True if the button is hovered by the mouse cursor, false otherwise.
+		*/
+		/******************************************************************/
 		static bool m_InternalIsButtonHovered(ecs::EntityID entity);
 
 		/******************************************************************/
@@ -474,20 +482,79 @@ namespace script {
 		/******************************************************************/
 		static bool m_InternalCallIsKeyTriggered(keyCode key);
 
+		/******************************************************************/
+		/*!
+		\fn      static bool m_InternalCallIsControllerTriggered(keyCode key)
+		\brief   Checks if the specified controller key was triggered (pressed this frame).
+		\param   key - The controller key to check.
+		\return  True if the key was triggered, false otherwise.
+		*/
+		/******************************************************************/
 		static bool m_InternalCallIsControllerTriggered(keyCode key);
 
+		/******************************************************************/
+		/*!
+		\fn      static bool m_InternalCallIsControllerPress(keyCode key)
+		\brief   Checks if the specified controller key is currently being held down.
+		\param   key - The controller key to check.
+		\return  True if the key is being held down, false otherwise.
+		*/
+		/******************************************************************/
 		static bool m_InternalCallIsControllerPress(keyCode key);
 
+		/******************************************************************/
+		/*!
+		\fn      static bool m_InternalCallIsControllerReleased(keyCode key)
+		\brief   Checks if the specified controller key was released this frame.
+		\param   key - The controller key to check.
+		\return  True if the key was released, false otherwise.
+		*/
+		/******************************************************************/
 		static bool m_InternalCallIsControllerReleased(keyCode key);
 
+		/******************************************************************/
+		/*!
+		\fn      static float m_InternalCallGetRightJoyStickRotation()
+		\brief   Retrieves the rotation angle of the right joystick.
+		\return  The angle of the right joystick in degrees.
+		*/
+		/******************************************************************/
 		static float m_InternalCallGetRightJoyStickRotation();
 
+		/******************************************************************/
+		/*!
+		\fn      static bool m_InternalCallIsControllerPresent()
+		\brief   Checks if a controller is currently connected and active.
+		\return  True if a controller is detected, false otherwise.
+		*/
+		/******************************************************************/
 		static bool m_InternalCallIsControllerPresent();
 
+		/******************************************************************/
+		/*!
+		\fn      static void m_InternalCallOverideMouseWithCursor(bool _boolean)
+		\brief   Enables or disables the override of mouse input with the controller cursor.
+		\param   _boolean - True to enable override, false to disable.
+		*/
+		/******************************************************************/
 		static void m_InternalCallOverideMouseWithCursor(bool _boolean);
 
+		/******************************************************************/
+		/*!
+		\fn      static void m_InternalCallHideCursor(bool _boolean)
+		\brief   Shows or hides the mouse cursor.
+		\param   _boolean - True to hide the cursor, false to show it.
+		*/
+		/******************************************************************/
 		static void m_InternalCallHideCursor(bool _boolean);
 
+		/******************************************************************/
+		/*!
+		\fn      static MonoArray* m_InternalCallGetJoyStickAxis()
+		\brief   Retrieves the joystick axis data as a MonoArray for scripting integration.
+		\return  A MonoArray containing the axis values of the connected controller.
+		*/
+		/******************************************************************/
 		static MonoArray* m_InternalCallGetJoyStickAxis();
 
 		/******************************************************************/
@@ -499,6 +566,13 @@ namespace script {
 		/******************************************************************/
 		static void m_InternalCallSetTimeScale(const float x);
 
+		/******************************************************************/
+		/*!
+		\fn      static float m_InternalCallGetTimeScale()
+		\brief   Retrieves the current time scale of the game.
+		\return  The time scale value (1.0f is normal speed, 0.0f is paused, etc.).
+		*/
+		/******************************************************************/
 		static float m_InternalCallGetTimeScale();
 
 		/******************************************************************/
@@ -604,20 +678,87 @@ namespace script {
 		/******************************************************************/
 		static void m_InternalCallUnPauseAllAudio();
 
+		/******************************************************************/
+		/*!
+		\fn      static bool m_InternalCallAudioIsPlayingForEntity(ecs::EntityID id, MonoString* monoString)
+		\brief   Checks if the specified audio is currently playing for the given entity.
+		\param   id - The ID of the entity.
+		\param   monoString - The name of the audio clip to check.
+		\return  True if the audio is playing, false otherwise.
+		*/
+		/******************************************************************/
 		static bool m_InternalCallAudioIsPlayingForEntity(ecs::EntityID id, MonoString* monoString);
 
+		/******************************************************************/
+		/*!
+		\fn      static void m_InternalCallSetGlobalBGMVolume(float volume)
+		\brief   Sets the global volume for all background music (BGM).
+		\param   volume - The desired volume level (0.0 to 1.0).
+		*/
+		/******************************************************************/
 		static void m_InternalCallSetGlobalBGMVolume(float volume);
 
+
+		/******************************************************************/
+		/*!
+		\fn      static void m_InternalCallSetGlobalSFXVolume(float volume)
+		\brief   Sets the global volume for all sound effects (SFX).
+		\param   volume - The desired volume level (0.0 to 1.0).
+		*/
+		/******************************************************************/
 		static void m_InternalCallSetGlobalSFXVolume(float volume);
 
+		/******************************************************************/
+		/*!
+		\fn      static float m_InternalCallGetGlobalBGMVolume()
+		\brief   Retrieves the current global volume level for background music (BGM).
+		\return  The current BGM volume (0.0 to 1.0).
+		*/
+		/******************************************************************/
 		static float m_InternalCallGetGlobalBGMVolume();
 
+
+		/******************************************************************/
+		/*!
+		\fn      static float m_InternalCallGetGlobalSFXVolume()
+		\brief   Retrieves the current global volume level for sound effects (SFX).
+		\return  The current SFX volume (0.0 to 1.0).
+		*/
+		/******************************************************************/
 		static float m_InternalCallGetGlobalSFXVolume();
 
+		/******************************************************************/
+		/*!
+		\fn      static bool m_InternalCallCheckIsBGM(ecs::EntityID id, MonoString* monoString)
+		\brief   Checks if the specified audio for an entity is marked as background music (BGM).
+		\param   id - The ID of the entity.
+		\param   monoString - The name of the audio clip.
+		\return  True if the audio is categorized as BGM, false otherwise.
+		*/
+		/******************************************************************/
 		static bool m_InternalCallCheckIsBGM(ecs::EntityID id, MonoString* monoString);
 
+		/******************************************************************/
+		/*!
+		\fn      static bool m_InternalCallCheckIsSFX(ecs::EntityID id, MonoString* monoString)
+		\brief   Checks if the specified audio for an entity is marked as a sound effect (SFX).
+		\param   id - The ID of the entity.
+		\param   monoString - The name of the audio clip.
+		\return  True if the audio is categorized as SFX, false otherwise.
+		*/
+		/******************************************************************/
 		static bool m_InternalCallCheckIsSFX(ecs::EntityID id, MonoString* monoString);
 
+
+		/******************************************************************/
+		/*!
+		\fn      static void m_InternalCallSetPanAudio(ecs::EntityID id, MonoString* monoString, float pan)
+		\brief   Sets the stereo pan for the specified audio on an entity.
+		\param   id - The ID of the entity.
+		\param   monoString - The name of the audio clip.
+		\param   pan - Stereo balance (-1.0 for full left, 1.0 for full right).
+		*/
+		/******************************************************************/
 		static void m_InternalCallSetPanAudio(ecs::EntityID id, MonoString* monoString, float pan);
 
 
@@ -719,16 +860,100 @@ namespace script {
 		/******************************************************************/
 		static bool m_InternalCallSetRayCast(ecs::EntityID id, MonoString* monoString, bool* isRaycasting, vector2::Vec2* targetposition, float* m_distance, bool* targetReached, vector2::Vec2* hitposition);;
 
+		/******************************************************************/
+		/*!
+		\fn      static bool m_InternalGetParticleComponent(ecs::EntityID entity, bool* willSpawn, int* noOfParticles, float* lifeSpan, vector2::Vec2* size, vector2::Vec2* velocity, vector2::Vec2* acceleration, vector3::Vec3* color, float* coneRotation, float* coneAngle, float* randomFactor, MonoString** imageFile, int* stripCount, int* frameNumber, int* layer, float* friction, int* fps, bool* loopAnimation)
+		\brief   Retrieves particle component data for the specified entity.
+		\param   entity - The ID of the entity.
+		\param   willSpawn - Whether the particle system is currently set to spawn particles.
+		\param   noOfParticles - Number of particles to spawn.
+		\param   lifeSpan - Lifetime of each particle.
+		\param   size - Size of each particle.
+		\param   velocity - Initial velocity of the particles.
+		\param   acceleration - Acceleration applied to particles over time.
+		\param   color - Color of the particles.
+		\param   coneRotation - Rotation angle of the spawn cone.
+		\param   coneAngle - Spread angle of the cone.
+		\param   randomFactor - Degree of randomness applied to particle properties.
+		\param   imageFile - Texture image file for the particles.
+		\param   stripCount - Number of strips in the animation sheet.
+		\param   frameNumber - Current frame number in animation.
+		\param   layer - Rendering layer.
+		\param   friction - Friction applied to particle movement.
+		\param   fps - Frames per second for animation playback.
+		\param   loopAnimation - Whether the animation should loop.
+		\return  True if the component was successfully retrieved, false otherwise.
+		*/
+		/******************************************************************/
 		static bool m_InternalGetParticleComponent(ecs::EntityID entity, bool* willSpawn, int* noOfParticles, float* lifeSpan, vector2::Vec2* size ,vector2::Vec2* velocity, vector2::Vec2* acceleration, vector3::Vec3* color, float* coneRotation, float* coneAngle, float* randomFactor, MonoString** imageFile, int* stripCount, int* frameNumber, int* layer, float* friction, int* fps, bool* loopAnimation);
 
+		/******************************************************************/
+		/*!
+		\fn      static bool m_InternalSetParticleComponent(ecs::EntityID entity, bool* willSpawn, int* noOfParticles, float* lifeSpan, vector2::Vec2* size, vector2::Vec2* velocity, vector2::Vec2* acceleration, vector3::Vec3* color, float* coneRotation, float* coneAngle, float* randomFactor, MonoString* imageFile, int* stripCount, int* frameNumber, int* layer, float* friction, int* fps, bool* loopAnimation)
+		\brief   Sets the particle component data for the specified entity.
+		\param   entity - The ID of the entity.
+		\param   willSpawn - Whether the particle system should spawn particles.
+		\param   noOfParticles - Number of particles to spawn.
+		\param   lifeSpan - Lifetime of each particle.
+		\param   size - Size of each particle.
+		\param   velocity - Initial velocity of the particles.
+		\param   acceleration - Acceleration applied to particles.
+		\param   color - Color of the particles.
+		\param   coneRotation - Rotation angle of the spawn cone.
+		\param   coneAngle - Spread angle of the cone.
+		\param   randomFactor - Randomness factor for particle properties.
+		\param   imageFile - Texture image file for the particles.
+		\param   stripCount - Number of strips in the animation sheet.
+		\param   frameNumber - Current frame of the animation.
+		\param   layer - Rendering layer.
+		\param   friction - Friction applied to particles.
+		\param   fps - Animation playback speed.
+		\param   loopAnimation - Whether the animation should loop.
+		\return  True if the component was successfully set, false otherwise.
+		*/
+		/******************************************************************/
 		static bool m_InternalSetParticleComponent(ecs::EntityID entity, bool* willSpawn, int* noOfParticles, float* lifeSpan, vector2::Vec2* size, vector2::Vec2* velocity, vector2::Vec2* acceleration, vector3::Vec3* color, float* coneRotation, float* coneAngle, float* randomFactor, MonoString* imageFile, int* stripCount, int* frameNumber, int* layer, float* friction, int* fps, bool* loopAnimation);
 
+		/******************************************************************/
+		/*!
+		\fn      static bool m_InternalCallSpawnParticle(ecs::EntityID entity)
+		\brief   Triggers the particle system to start spawning particles for the specified entity.
+		\param   entity - The ID of the entity.
+		\return  True if the particle system was successfully started, false otherwise.
+		*/
+		/******************************************************************/
 		static bool m_InternalCallSpawnParticle(ecs::EntityID entity);
 
+		/******************************************************************/
+		/*!
+		\fn      static bool m_InternalCallSetParticleLayer(ecs::EntityID entity, int* layer)
+		\brief   Sets the rendering layer of the particle system for the specified entity.
+		\param   entity - The ID of the entity.
+		\param   layer - Pointer to the desired rendering layer.
+		\return  True if the layer was set successfully, false otherwise.
+		*/
+		/******************************************************************/
 		static bool m_InternalCallSetParticleLayer(ecs::EntityID entity, int* layer);
 
+		/******************************************************************/
+		/*!
+		\fn      static bool m_InternalCallSetParticleConeRotation(ecs::EntityID entity, float* angle)
+		\brief   Sets the cone rotation angle for the particle system of the specified entity.
+		\param   entity - The ID of the entity.
+		\param   angle - Pointer to the desired rotation angle.
+		\return  True if the angle was set successfully, false otherwise.
+		*/
+		/******************************************************************/
 		static bool m_InternalCallSetParticleConeRotation(ecs::EntityID entity, float* angle);
 
+		/******************************************************************/
+		/*!
+		\fn      static bool m_InternalCallDespawnParticle(ecs::EntityID entity)
+		\brief   Stops the particle system from spawning further particles for the specified entity.
+		\param   entity - The ID of the entity.
+		\return  True if the particle system was successfully stopped, false otherwise.
+		*/
+		/******************************************************************/
 		static bool m_InternalCallDespawnParticle(ecs::EntityID entity);
 
 
@@ -866,26 +1091,138 @@ namespace script {
 		/******************************************************************/
 		static float m_getFPS();
 
+		/******************************************************************/
+		/*!
+		\fn      static void m_InternalCallGetLightingComponent(ecs::EntityID id, vector2::Vec2* innerouterradius, vector3::Vec3* color, float* intensity)
+		\brief   Retrieves the lighting component data for a given entity.
+		\param   id - The ID of the entity.
+		\param   innerouterradius - Pointer to store the inner and outer radius values.
+		\param   color - Pointer to store the light color.
+		\param   intensity - Pointer to store the light intensity.
+		*/
+		/******************************************************************/
 		static void m_InternalCallGetLightingComponent(ecs::EntityID id, vector2::Vec2* innerouterradius, vector3::Vec3* color, float* intensity);
 
+		/******************************************************************/
+		/*!
+		\fn      static void m_InternalCallSetLightingComponent(ecs::EntityID id, vector2::Vec2* innerouterradius, vector3::Vec3* color, float* intensity)
+		\brief   Sets the lighting component values for a given entity.
+		\param   id - The ID of the entity.
+		\param   innerouterradius - Pointer to the inner and outer radius values.
+		\param   color - Pointer to the light color.
+		\param   intensity - Pointer to the light intensity.
+		*/
+		/******************************************************************/
 		static void m_InternalCallSetLightingComponent(ecs::EntityID id, vector2::Vec2* innerouterradius, vector3::Vec3* color, float* intensity);
 
+		/******************************************************************/
+		/*!
+		\fn      static bool m_IsLayerVisable(int layer)
+		\brief   Checks if the specified rendering layer is currently visible.
+		\param   layer - The layer index to check.
+		\return  True if the layer is visible, false otherwise.
+		*/
+		/******************************************************************/
 		static bool m_IsLayerVisable(int layer);
 
+		/******************************************************************/
+		/*!
+		\fn      static void m_GetColliderDecomposedTRS(ecs::EntityID id, vector2::Vec2* translate, vector2::Vec2* rotate, float* scale)
+		\brief   Retrieves the decomposed translation, rotation, and scale of a collider.
+		\param   id - The ID of the entity.
+		\param   translate - Pointer to store the translation values.
+		\param   rotate - Pointer to store the rotation values.
+		\param   scale - Pointer to store the scale value.
+		*/
+		/******************************************************************/
 		static void m_GetColliderDecomposedTRS(ecs::EntityID id, vector2::Vec2* translate, vector2::Vec2* rotate, float* scale);
 
+		/******************************************************************/
+		/*!
+		\fn      static float m_GetRandomFloat(float min, float max)
+		\brief   Generates a random floating-point number between min and max.
+		\param   min - Minimum value.
+		\param   max - Maximum value.
+		\return  Random float between min and max.
+		*/
+		/******************************************************************/
 		static float m_GetRandomFloat(float min, float max);
 
+		/******************************************************************/
+		/*!
+		\fn      static int m_GetRandomInt(int min, int max)
+		\brief   Generates a random integer between min and max.
+		\param   min - Minimum integer value.
+		\param   max - Maximum integer value.
+		\return  Random integer between min and max.
+		*/
+		/******************************************************************/
 		static int m_GetRandomInt(int min, int max);
 
+		/******************************************************************/
+		/*!
+		\fn      static MonoString* m_GetScenefromID(ecs::EntityID id)
+		\brief   Retrieves the scene name associated with the given entity ID.
+		\param   id - The ID of the entity.
+		\return  A MonoString containing the scene name.
+		*/
+		/******************************************************************/
 		static MonoString* m_GetScenefromID(ecs::EntityID id);
 
+		/******************************************************************/
+		/*!
+		\fn      static void m_HideEntityandchildren(ecs::EntityID id)
+		\brief   Hides the specified entity and all its child entities.
+		\param   id - The ID of the parent entity.
+		*/
+		/******************************************************************/
 		static void m_HideEntityandchildren(ecs::EntityID id);
+
+		/******************************************************************/
+		/*!
+		\fn      static void m_UnHideEntityandchildren(ecs::EntityID id)
+		\brief   Unhides the specified entity and all its child entities.
+		\param   id - The ID of the parent entity.
+		*/
+		/******************************************************************/
 		static void m_UnHideEntityandchildren(ecs::EntityID id);
 
+		/******************************************************************/
+		/*!
+		\fn      static void m_StopVideo(ecs::EntityID id)
+		\brief   Stops the video playback for the given entity.
+		\param   id - The ID of the entity playing the video.
+		*/
+		/******************************************************************/
 		static void m_StopVideo(ecs::EntityID);
+
+		/******************************************************************/
+		/*!
+		\fn      static void m_PauseVideo(ecs::EntityID id, bool _boolean)
+		\brief   Pauses or resumes the video playback for the given entity.
+		\param   id - The ID of the entity.
+		\param   _boolean - True to pause, false to resume.
+		*/
+		/******************************************************************/
 		static void m_PauseVideo(ecs::EntityID, bool _boolean);
+
+		/******************************************************************/
+		/*!
+		\fn      static void m_StartVideo(ecs::EntityID id)
+		\brief   Starts video playback for the specified entity.
+		\param   id - The ID of the entity.
+		*/
+		/******************************************************************/
 		static void m_StartVideo(ecs::EntityID);
+
+		/******************************************************************/
+		/*!
+		\fn      static bool m_HasVideoFinish(ecs::EntityID id)
+		\brief   Checks if the video has finished playing for the specified entity.
+		\param   id - The ID of the entity.
+		\return  True if the video has completed playback, false otherwise.
+		*/
+		/******************************************************************/
 		static bool m_HasVideoFinish(ecs::EntityID);
 
 	public:
