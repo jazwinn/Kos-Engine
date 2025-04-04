@@ -487,4 +487,55 @@ namespace graphicpipe
 		//glScissor(0, 0, static_cast<GLsizei>(help->m_windowWidth), static_cast<GLsizei>(help->m_windowHeight));
 
 	}
+
+
+	void GraphicsPipe::m_funcSetupCRTFrameBuffer()
+	{
+		Helper::Helpers* help = Helper::Helpers::GetInstance();
+
+		if (m_crtTexture)
+		{
+			glDeleteTextures(1, &m_crtTexture);
+		}
+		if (m_crtDepthBufferObject)
+		{
+			glDeleteRenderbuffers(1, &m_crtDepthBufferObject);
+		}
+		if (m_crtFrameBufferObject)
+		{
+			glDeleteFramebuffers(1, &m_crtFrameBufferObject);
+		}
+		glGenFramebuffers(1, &m_crtFrameBufferObject);
+		glBindFramebuffer(GL_FRAMEBUFFER, m_crtFrameBufferObject);
+
+		glGenTextures(1, &m_crtTexture);
+		glBindTexture(GL_TEXTURE_2D, m_crtTexture);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, static_cast<GLsizei>(help->m_windowWidth), static_cast<GLsizei>(help->m_windowHeight), 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glBindTexture(GL_TEXTURE_2D, 0);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_crtTexture, 0);
+
+
+		glGenRenderbuffers(1, &m_crtDepthBufferObject);
+		glBindRenderbuffer(GL_RENDERBUFFER, m_crtDepthBufferObject);
+		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, static_cast<GLsizei>(help->m_windowWidth), static_cast<GLsizei>(help->m_windowHeight));
+		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_crtDepthBufferObject);
+
+#if DEBUG
+		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE)
+		{
+			LOGGING_INFO("Framebuffer successfully created");
+		}
+		else
+		{
+			LOGGING_INFO("Framebuffer has not been created");
+		}
+#endif
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		//glScissor(0, 0, static_cast<GLsizei>(help->m_windowWidth), static_cast<GLsizei>(help->m_windowHeight));
+
+	}
 }
