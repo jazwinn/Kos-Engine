@@ -286,6 +286,7 @@ namespace Application {
             pipe->m_funcSetupFrameBuffer();
             pipe->m_funcSetupGamePreviewFrameBuffer();
             pipe->m_funcSetupMultiLightingFrameBuffer();
+            pipe->m_funcSetupCRTFrameBuffer();
             pipe->m_funcSetupAdditiveLightingFrameBuffer();
             pipe->m_funcSetupFinalPassBuffer();
             pipe->m_funcSetUpUnlitScreenFrameBuffer();

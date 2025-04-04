@@ -83558,12 +83558,12 @@
             "isprefab": true,
             "tagstr": "Default",
             "prefabname": "UI_LimbCounters_1.prefab",
-            "issync": false
+            "issync": true
         },
         "transform": {
             "position": {
-                "x": 13.0,
-                "y": -39.0
+                "x": 0.021785736083984375,
+                "y": -0.17336797714233398
             },
             "rotation": -0.0,
             "scale": {

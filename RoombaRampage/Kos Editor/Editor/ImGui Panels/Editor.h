@@ -92,6 +92,13 @@ namespace gui {
         /******************************************************************/
         void m_update();
 
+        /******************************************************************/
+        /*!
+        \fn      void m_InputUpdate(GLFWwindow* window)
+        \brief   Updates input states based on the current GLFW window context.
+        \param   window - Pointer to the GLFW window used to poll input events.
+        */
+        /******************************************************************/
         void m_InputUpdate(GLFWwindow* window);
 
         /******************************************************************/

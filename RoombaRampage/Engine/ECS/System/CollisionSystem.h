@@ -103,6 +103,14 @@ namespace ecs {
         std::vector<TransformComponent*> m_vecTransformComponentPtr;
         //! Vector storing pointers to the ColliderComponent of registered entities
         std::vector<ColliderComponent*> m_vecColliderComponentPtr;
+
+        /******************************************************************/
+        /*!
+        \var     std::vector<NameComponent*> m_vecNameComponentPtr
+        \brief   Stores pointers to NameComponent instances for registered entities.
+        \details Used to identify and manage entities by name during collision processing, aiding in debugging and filtering.
+        */
+        /******************************************************************/
         std::vector<NameComponent*>m_vecNameComponentPtr;
 
 

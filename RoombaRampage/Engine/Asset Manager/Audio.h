@@ -369,16 +369,66 @@ namespace fmodaudio {
         /******************************************************************/
         void m_SetLoopingForEntity(ecs::EntityID entityId, const std::string& name, bool loop);
 
+        /******************************************************************/
+        /*!
+        \fn      void m_SetIsBGMForEntity(ecs::EntityID entityId, const std::string& name, bool isBGM)
+        \brief   Sets whether the audio is categorized as background music (BGM) for a specific entity.
+        \param   entityId - ID of the entity.
+        \param   name - Name of the audio asset.
+        \param   isBGM - True if the audio is BGM, false otherwise.
+        */
+        /******************************************************************/
         void m_SetIsBGMForEntity(ecs::EntityID entityId, const std::string& name, bool isBGM);
 
+        /******************************************************************/
+        /*!
+        \fn      void m_SetIsSFXForEntity(ecs::EntityID entityId, const std::string& name, bool isSFX)
+        \brief   Sets whether the audio is categorized as sound effects (SFX) for a specific entity.
+        \param   entityId - ID of the entity.
+        \param   name - Name of the audio asset.
+        \param   isSFX - True if the audio is SFX, false otherwise.
+        */
+        /******************************************************************/
         void m_SetIsSFXForEntity(ecs::EntityID entityId, const std::string& name, bool isSFX);
 
+        /******************************************************************/
+        /*!
+        \fn      void m_SetGlobalBGMVolume(float volume)
+        \brief   Sets the global volume level for all background music (BGM).
+        \param   volume - Desired global BGM volume (0.0 to 1.0).
+        */
+        /******************************************************************/
         void m_SetGlobalBGMVolume(float volume);
 
+        /******************************************************************/
+        /*!
+        \fn      void m_SetGlobalSFXVolume(float volume)
+        \brief   Sets the global volume level for all sound effects (SFX).
+        \param   volume - Desired global SFX volume (0.0 to 1.0).
+        */
+        /******************************************************************/
         void m_SetGlobalSFXVolume(float volume);
 
+        /******************************************************************/
+        /*!
+        \fn      bool m_CheckIsBGMForEntity(ecs::EntityID entityId, const std::string& name)
+        \brief   Checks if the specified audio for the entity is marked as background music (BGM).
+        \param   entityId - ID of the entity.
+        \param   name - Name of the audio asset.
+        \return  True if the audio is BGM, false otherwise.
+        */
+        /******************************************************************/
         bool m_CheckIsBGMForEntity(ecs::EntityID entityId, const std::string& name);
 
+        /******************************************************************/
+        /*!
+        \fn      bool m_CheckIsSFXForEntity(ecs::EntityID entityId, const std::string& name)
+        \brief   Checks if the specified audio for the entity is marked as sound effects (SFX).
+        \param   entityId - ID of the entity.
+        \param   name - Name of the audio asset.
+        \return  True if the audio is SFX, false otherwise.
+        */
+        /******************************************************************/
         bool m_CheckIsSFXForEntity(ecs::EntityID entityId, const std::string& name);
 
         /******************************************************************/

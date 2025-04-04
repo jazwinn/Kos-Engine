@@ -152,11 +152,11 @@
                     "enabled": true,
                     "map": [
                         {
-                            "variable": "speed",
+                            "variable": "yolo",
                             "base64": ""
                         },
                         {
-                            "variable": "yolo",
+                            "variable": "speed",
                             "base64": ""
                         }
                     ]
