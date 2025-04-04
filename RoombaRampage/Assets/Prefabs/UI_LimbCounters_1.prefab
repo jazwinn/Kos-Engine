@@ -1,26 +1,28 @@
 [
     {
         "GlobalSettings": {
-            "globalIllumination": 1.0,
+            "globalIllumination": 0.05999999865889549,
             "backgroundColor": {
-                "r": 0.13300000131130219,
-                "g": 0.23000000417232513,
-                "b": 0.3199999928474426
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0
             }
         }
     },
     {
         "CursorSettings": {
-            "cursorImage": "../Assets/Texture/UI/img_startScreenCursor.png",
-            "isCursorCentered": false
+            "cursorImage": "../Assets/Texture/UI/img_inGameCursor.png",
+            "isCursorCentered": true
         }
     },
     {
         "name": {
             "namestr": "UI_LimbCounters",
             "layer": 0,
-            "isprefab": false,
-            "tagstr": "Default"
+            "isprefab": true,
+            "tagstr": "Default",
+            "prefabname": "UI_LimbCounters_1.prefab",
+            "issync": true
         },
         "transform": {
             "position": {
@@ -47,8 +49,10 @@
                 "name": {
                     "namestr": "UI_LimbCounters_ButtonPrompts",
                     "layer": 4,
-                    "isprefab": false,
-                    "tagstr": "Default"
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "UI_LimbCounters_1.prefab",
+                    "issync": false
                 },
                 "transform": {
                     "position": {
@@ -102,8 +106,10 @@
                 "name": {
                     "namestr": "UI_LimbCounters_LeftCounter",
                     "layer": 4,
-                    "isprefab": false,
-                    "tagstr": "UIGameLeftLimbCounter"
+                    "isprefab": true,
+                    "tagstr": "UIGameLeftLimbCounter",
+                    "prefabname": "UI_LimbCounters_1.prefab",
+                    "issync": false
                 },
                 "transform": {
                     "position": {
@@ -139,8 +145,10 @@
                 "name": {
                     "namestr": "UI_LimbCounters_RightCounter",
                     "layer": 4,
-                    "isprefab": false,
-                    "tagstr": "UIGameRightLimbCounter"
+                    "isprefab": true,
+                    "tagstr": "UIGameRightLimbCounter",
+                    "prefabname": "UI_LimbCounters_1.prefab",
+                    "issync": false
                 },
                 "transform": {
                     "position": {
@@ -176,8 +184,10 @@
                 "name": {
                     "namestr": "UI_LimbCounters_BackCounter",
                     "layer": 4,
-                    "isprefab": false,
-                    "tagstr": "UIGameBackLimbCounter"
+                    "isprefab": true,
+                    "tagstr": "UIGameBackLimbCounter",
+                    "prefabname": "UI_LimbCounters_1.prefab",
+                    "issync": false
                 },
                 "transform": {
                     "position": {
@@ -213,8 +223,10 @@
                 "name": {
                     "namestr": "UI_LimbCounters_LeftCounterIcon",
                     "layer": 4,
-                    "isprefab": false,
-                    "tagstr": "UIGameLeftLimbCounterIcon"
+                    "isprefab": true,
+                    "tagstr": "UIGameLeftLimbCounterIcon",
+                    "prefabname": "UI_LimbCounters_1.prefab",
+                    "issync": false
                 },
                 "transform": {
                     "position": {
@@ -243,8 +255,10 @@
                 "name": {
                     "namestr": "UI_LimbCounters_RightCounterIcon",
                     "layer": 4,
-                    "isprefab": false,
-                    "tagstr": "UIGameRightLimbCounterIcon"
+                    "isprefab": true,
+                    "tagstr": "UIGameRightLimbCounterIcon",
+                    "prefabname": "UI_LimbCounters_1.prefab",
+                    "issync": false
                 },
                 "transform": {
                     "position": {
@@ -273,8 +287,10 @@
                 "name": {
                     "namestr": "UI_LimbCounters_BackCounterIcon",
                     "layer": 4,
-                    "isprefab": false,
-                    "tagstr": "UIGameBackLimbCounterIcon"
+                    "isprefab": true,
+                    "tagstr": "UIGameBackLimbCounterIcon",
+                    "prefabname": "UI_LimbCounters_1.prefab",
+                    "issync": false
                 },
                 "transform": {
                     "position": {
