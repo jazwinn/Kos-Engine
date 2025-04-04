@@ -150,7 +150,7 @@ xcopy /y /d "$(ProjectDir)Dependencies\Freetype_Font\lib\*.dll" "$(OutDir)"
 xcopy /y /d "$(ProjectDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     </PostBuildEvent>
     <Lib>
-      <AdditionalDependencies>fmod_vc.lib</AdditionalDependencies>
+      <AdditionalDependencies>glew32s.lib;glfw3.lib;User32.lib;Gdi32.lib;Shell32.lib;opengl32.lib;freetype.lib;mono-2.0-sgen.lib;Comdlg32.lib;fmod_vc.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(ProjectDir)Dependencies\GLFW\lib-vc2022;$(ProjectDir)Dependencies\GLEW\\lib\Release\x64;$(ProjectDir)Dependencies\FMOD_API\core\lib\x64;$(ProjectDir)Dependencies\FMOD_API\studio\lib\x64;$(ProjectDir)Dependencies\Freetype_Font\lib;$(ProjectDir)Dependencies\mono\lib</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
@@ -190,7 +190,7 @@ xcopy /y /d "$(ProjectDir)Dependencies\Freetype_Font\lib\*.dll" "$(OutDir)"
 xcopy /y /d "$(ProjectDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     </PostBuildEvent>
     <Lib>
-      <AdditionalDependencies>fmod_vc.lib</AdditionalDependencies>
+      <AdditionalDependencies>glew32s.lib;glfw3.lib;User32.lib;Gdi32.lib;Shell32.lib;opengl32.lib;freetype.lib;mono-2.0-sgen.lib;Comdlg32.lib;fmod_vc.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(ProjectDir)Dependencies\GLFW\lib-vc2022;$(ProjectDir)Dependencies\GLEW\\lib\Release\x64;$(ProjectDir)Dependencies\FMOD_API\core\lib\x64;$(ProjectDir)Dependencies\FMOD_API\studio\lib\x64;$(ProjectDir)Dependencies\Freetype_Font\lib;$(ProjectDir)Dependencies\mono\lib</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
