@@ -24,6 +24,11 @@ prior written consent of DigiPen Institute of Technology is prohibited.
 
 namespace Input {
 
+	enum CONTROLLER_TYPE {
+		XBOX,
+		PS5
+	};
+
 	class InputSystem {
 
 	public:
@@ -85,7 +90,9 @@ namespace Input {
 		static float deadzone;
 
 		static bool overwriteMousePosWithController;
-
+		static std::string m_controllerName;
+		static const std::string ps5Mapping;
+		static const std::string xboxMapping;
 	private:
 		inline static std::unordered_map<int, bool> m_wasTriggered;
 		inline static std::unordered_map<int, bool> m_wasPressed;
@@ -93,6 +100,7 @@ namespace Input {
 		inline static std::unordered_map<int, bool> m_controllerButtonsPress;
 		inline static std::unordered_map<int, bool> m_controllerButtonsTriggered;
 		inline static std::unordered_map<int, bool> m_wasControllerReleased;
+
 
 	};
 
