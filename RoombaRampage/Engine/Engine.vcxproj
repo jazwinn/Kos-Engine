@@ -408,6 +408,8 @@ xcopy /y /d "$(ProjectDir)Dependencies\mono\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="Physics\PhysicsLayer.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Graphics\crtFragmentShader.frag" />
+    <None Include="Graphics\crtVertexShader.vert" />
     <None Include="Graphics\debugFragmentShader.frag" />
     <None Include="Graphics\debugVertexShader.vert" />
     <None Include="Graphics\finalPassFragmentShader.frag" />
