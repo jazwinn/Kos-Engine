@@ -258,6 +258,7 @@ namespace graphicpipe {
         unsigned int m_finalPassShaderProgram{};    ///< Shader program for the final post-processing pass.
         unsigned int m_particleComputerShaderProgram{};
         unsigned int m_particleShaderProgram{};
+        unsigned int m_crtShaderProgram{};
 
     public:
         unsigned int m_videoShaderProgram{};        ///< Shader program for video
@@ -273,6 +274,8 @@ namespace graphicpipe {
         unsigned int m_multiLightingDepthBufferObject{}; ///< Depth buffer for the lighting framebuffer.
         unsigned int m_additiveLightingFrameBufferObject{}; ///< Framebuffer object for additive lighting pass rendering.
         unsigned int m_additiveLightingDepthBufferObject{}; ///< Depth buffer for the additive lighting framebuffer.
+        unsigned int m_crtFrameBufferObject{};
+        unsigned int m_crtDepthBufferObject{};
         unsigned int m_finalPassFrameBufferObject{}; ///< Framebuffer object for final post-processing pass.
         unsigned int m_finalPassDepthBufferObject{}; ///< Depth buffer for the final pass framebuffer.
         unsigned int m_depthBufferObject{};         ///< Depth buffer object for storing depth information.
@@ -482,6 +485,14 @@ namespace graphicpipe {
          */
         void m_renderFinalPass();
 
+
+        /**
+         * @brief Executes the final rendering pass.
+         *
+         * Combines the final texture with the CRT shader.
+         */
+        void m_renderCRTPass();
+
         /**
          * @brief Executes the final rendering pass with debug overlays.
          *
@@ -568,6 +579,8 @@ namespace graphicpipe {
          * @note This function assumes that the OpenGL context has been properly initialized.
          */
         void m_funcSetupMultiLightingFrameBuffer();
+
+        void m_funcSetupCRTFrameBuffer();
 
         void m_funcSetupAdditiveLightingFrameBuffer();
 
@@ -673,6 +686,7 @@ namespace graphicpipe {
         unsigned int m_gamePreviewTexture{}; ///< Texture for displaying game preview.
         unsigned int m_multiLightingTexture{}; ///< Texture for storing lighting data.
         unsigned int m_additiveLightingTexture{};
+        unsigned int m_crtTexture{};
         unsigned int m_finalPassTexture{}; ///< Texture for the final rendering pass.
         unsigned int m_unlitScreenTexture{};
 
@@ -792,6 +806,16 @@ namespace graphicpipe {
         const std::string particleFragmentShader =
         {
             #include "../Graphics/particleFragmentShader.frag"
+        };
+
+        const std::string crtVertexShader =
+        {
+            #include "../Graphics/crtVertexShader.vert"
+        };
+
+        const std::string crtFragmentShader =
+        {
+            #include "../Graphics/crtFragmentShader.frag"
         };
         
         

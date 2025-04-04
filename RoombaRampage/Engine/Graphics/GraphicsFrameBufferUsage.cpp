@@ -177,11 +177,22 @@ namespace graphicpipe
 
 
 		glViewport(help->m_viewportOffsetX, help->m_viewportOffsetY, (int)help->m_windowWidth, (int)help->m_windowHeight);
-		glUseProgram(m_frameBufferShaderProgram);
-		glBindVertexArray(m_screenTextureVAO);
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, m_finalPassTexture);
-		glDrawArrays(GL_TRIANGLES, 0, 6);
+		
+
+		if (true)
+		{
+			m_renderCRTPass();
+		}
+		else
+		{
+			glUseProgram(m_frameBufferShaderProgram);
+			glBindVertexArray(m_screenTextureVAO);
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, m_finalPassTexture);
+			glDrawArrays(GL_TRIANGLES, 0, 6);
+		}
+
+		
 
 
 		
@@ -189,6 +200,51 @@ namespace graphicpipe
 		if (err != GL_NO_ERROR) {
 			//LOGGING_ERROR("First OpenGL Error: 0x%X", err);
 			std::cout << "Second Final Pass OpenGL Error: " << err << std::endl;
+		}
+	}
+
+	void GraphicsPipe::m_renderCRTPass()
+	{
+		Helper::Helpers* help = Helper::Helpers::GetInstance();
+		glViewport(0, 0, (int)help->m_windowWidth, (int)help->m_windowHeight);
+
+		glBindFramebuffer(GL_FRAMEBUFFER, m_crtFrameBufferObject);
+		glEnable(GL_DEPTH_TEST);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		/*-----------------------------------------------------------------------------*/
+		glUseProgram(m_crtShaderProgram);
+
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, m_finalPassTexture);
+		static float timePassed{};
+		timePassed += help->m_fixedDeltaTime;
+		glUniform1i(glGetUniformLocation(m_crtShaderProgram, "finalTexture"), 0);
+		glUniform2f(glGetUniformLocation(m_crtShaderProgram, "iResolution"), help->m_windowWidth, help->m_windowHeight );
+		glUniform1f(glGetUniformLocation(m_crtShaderProgram, "deltaTime"), timePassed);
+		
+		glBindVertexArray(m_screenTextureVAO);
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		glDisable(GL_DEPTH_TEST);
+		glClear(GL_COLOR_BUFFER_BIT);
+
+		/*------------------------------------------------------------------------------*/
+
+
+		glViewport(help->m_viewportOffsetX, help->m_viewportOffsetY, (int)help->m_windowWidth, (int)help->m_windowHeight);
+
+		glUseProgram(m_frameBufferShaderProgram);
+		glBindVertexArray(m_screenTextureVAO);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, m_crtTexture);
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+
+		GLenum err = glGetError();
+		if (err != GL_NO_ERROR) {
+			//LOGGING_ERROR("First OpenGL Error: 0x%X", err);
+			std::cout << "CRT OpenGL Error: " << err << std::endl;
 		}
 	}
 

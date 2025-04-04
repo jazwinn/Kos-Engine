@@ -86,6 +86,7 @@ namespace graphicpipe {
 		m_videoShaderProgram = m_funcSetupShader(videoVertexShader,videoFragmentShader);
 		m_particleComputerShaderProgram = m_funcSetupComputerShader(particleComputerShader);
 		m_particleShaderProgram = m_funcSetupShader(particleVertexShader, particleFragmentShader);
+		m_crtShaderProgram = m_funcSetupShader(crtVertexShader, crtFragmentShader);
 
 		// Initialize model-to-NDC transformation matrix and other drawing data.
 		m_modelToNDCMatrix.push_back(m_testMatrix);
@@ -105,6 +106,7 @@ namespace graphicpipe {
 		m_funcSetupFrameBuffer();
 		m_funcSetupGamePreviewFrameBuffer();
 		m_funcSetupMultiLightingFrameBuffer();
+		m_funcSetupCRTFrameBuffer();
 		m_funcSetupAdditiveLightingFrameBuffer();
 		m_funcSetupFinalPassBuffer();
 		m_funcSetupSSBO();
