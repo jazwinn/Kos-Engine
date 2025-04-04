@@ -656,7 +656,7 @@
                             "noOfParticles": 1,
                             "lifeSpan": 200.0,
                             "velocityX": 0.0,
-                            "velocityY": 80.0,
+                            "velocityY": 70.0,
                             "sizeX": 0.5,
                             "sizeY": 0.5,
                             "accelerationX": 0.0,
@@ -701,7 +701,7 @@
                             "noOfParticles": 1,
                             "lifeSpan": 200.0,
                             "velocityX": 0.0,
-                            "velocityY": 100.0,
+                            "velocityY": 60.0,
                             "sizeX": 0.5,
                             "sizeY": 0.5,
                             "accelerationX": 0.0,
@@ -1940,7 +1940,7 @@
                             "noOfParticles": 1,
                             "lifeSpan": 200.0,
                             "velocityX": 0.0,
-                            "velocityY": 80.0,
+                            "velocityY": 70.0,
                             "sizeX": 0.5,
                             "sizeY": 0.5,
                             "accelerationX": 0.0,
@@ -1985,7 +1985,7 @@
                             "noOfParticles": 1,
                             "lifeSpan": 200.0,
                             "velocityX": 0.0,
-                            "velocityY": 100.0,
+                            "velocityY": 60.0,
                             "sizeX": 0.5,
                             "sizeY": 0.5,
                             "accelerationX": 0.0,
@@ -3977,7 +3977,7 @@
                             "noOfParticles": 1,
                             "lifeSpan": 200.0,
                             "velocityX": 0.0,
-                            "velocityY": 80.0,
+                            "velocityY": 70.0,
                             "sizeX": 0.5,
                             "sizeY": 0.5,
                             "accelerationX": 0.0,
@@ -4022,7 +4022,7 @@
                             "noOfParticles": 1,
                             "lifeSpan": 200.0,
                             "velocityX": 0.0,
-                            "velocityY": 100.0,
+                            "velocityY": 60.0,
                             "sizeX": 0.5,
                             "sizeY": 0.5,
                             "accelerationX": 0.0,
@@ -9160,267 +9160,6 @@
                     "drawDebug": true,
                     "radius": 0.5,
                     "shapetype": 0
-                }
-            }
-        ]
-    },
-    {
-        "name": {
-            "namestr": "UI_LimbCounters",
-            "layer": 0,
-            "isprefab": false,
-            "tagstr": "Default"
-        },
-        "transform": {
-            "position": {
-                "x": 41.0,
-                "y": 40.0
-            },
-            "rotation": -0.0,
-            "scale": {
-                "x": 1.0,
-                "y": 1.0
-            }
-        },
-        "script": {
-            "scripts": [
-                {
-                    "name": "UI_AmmoHUD",
-                    "enabled": true,
-                    "map": []
-                }
-            ]
-        },
-        "children": [
-            {
-                "name": {
-                    "namestr": "UI_LimbCounters_ButtonPrompts",
-                    "layer": 4,
-                    "isprefab": false,
-                    "tagstr": "Default"
-                },
-                "transform": {
-                    "position": {
-                        "x": 10.536602973937988,
-                        "y": -4.441705703735352
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 4.0,
-                        "y": 4.0
-                    }
-                },
-                "sprite": {
-                    "imagefile": "img_hudButtonPrompts.png",
-                    "layer": 99,
-                    "color": {
-                        "r": 1.0,
-                        "g": 1.0,
-                        "b": 1.0
-                    },
-                    "alpha": 1.0,
-                    "isLit": false
-                }
-            },
-            {
-                "name": {
-                    "namestr": "UI_LimbCounters_LeftCounter",
-                    "layer": 4,
-                    "isprefab": false,
-                    "tagstr": "UIGameLeftLimbCounter"
-                },
-                "transform": {
-                    "position": {
-                        "x": 7.8037872314453125,
-                        "y": -6.050000190734863
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 4.0,
-                        "y": 4.0
-                    }
-                },
-                "sprite": {
-                    "imagefile": "ani_hudFullBar_strip7.png",
-                    "layer": 354,
-                    "color": {
-                        "r": 1.0,
-                        "g": 1.0,
-                        "b": 1.0
-                    },
-                    "alpha": 1.0,
-                    "isLit": false
-                },
-                "animation": {
-                    "frameNumber": 6,
-                    "framesPerSecond": 6,
-                    "frameTimer": 0.0,
-                    "isAnimating": false,
-                    "stripCount": 7
-                }
-            },
-            {
-                "name": {
-                    "namestr": "UI_LimbCounters_RightCounter",
-                    "layer": 4,
-                    "isprefab": false,
-                    "tagstr": "UIGameRightLimbCounter"
-                },
-                "transform": {
-                    "position": {
-                        "x": 9.987579345703125,
-                        "y": -6.050000190734863
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 4.0,
-                        "y": 4.0
-                    }
-                },
-                "sprite": {
-                    "imagefile": "ani_hudFullBar_strip7.png",
-                    "layer": 353,
-                    "color": {
-                        "r": 1.0,
-                        "g": 1.0,
-                        "b": 1.0
-                    },
-                    "alpha": 1.0,
-                    "isLit": false
-                },
-                "animation": {
-                    "frameNumber": 6,
-                    "framesPerSecond": 6,
-                    "frameTimer": 0.0,
-                    "isAnimating": false,
-                    "stripCount": 7
-                }
-            },
-            {
-                "name": {
-                    "namestr": "UI_LimbCounters_BackCounter",
-                    "layer": 4,
-                    "isprefab": false,
-                    "tagstr": "UIGameBackLimbCounter"
-                },
-                "transform": {
-                    "position": {
-                        "x": 12.205166816711426,
-                        "y": -6.050000190734863
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 4.0,
-                        "y": 4.0
-                    }
-                },
-                "sprite": {
-                    "imagefile": "ani_hudFullBar_strip7.png",
-                    "layer": 355,
-                    "color": {
-                        "r": 1.0,
-                        "g": 1.0,
-                        "b": 1.0
-                    },
-                    "alpha": 1.0,
-                    "isLit": false
-                },
-                "animation": {
-                    "frameNumber": 6,
-                    "framesPerSecond": 6,
-                    "frameTimer": 0.0,
-                    "isAnimating": false,
-                    "stripCount": 7
-                }
-            },
-            {
-                "name": {
-                    "namestr": "UI_LimbCounters_LeftCounterIcon",
-                    "layer": 4,
-                    "isprefab": false,
-                    "tagstr": "UIGameLeftLimbCounterIcon"
-                },
-                "transform": {
-                    "position": {
-                        "x": 7.800000190734863,
-                        "y": -6.050000190734863
-                    },
-                    "rotation": -0.0,
-                    "scale": {
-                        "x": 4.0,
-                        "y": 4.0
-                    }
-                },
-                "sprite": {
-                    "imagefile": "img_hudKatanaIcon.png",
-                    "layer": 356,
-                    "color": {
-                        "r": 1.0,
-                        "g": 1.0,
-                        "b": 1.0
-                    },
-                    "alpha": 1.0,
-                    "isLit": false
-                }
-            },
-            {
-                "name": {
-                    "namestr": "UI_LimbCounters_RightCounterIcon",
-                    "layer": 4,
-                    "isprefab": false,
-                    "tagstr": "UIGameRightLimbCounterIcon"
-                },
-                "transform": {
-                    "position": {
-                        "x": 9.989999771118164,
-                        "y": -6.050000190734863
-                    },
-                    "rotation": -0.0,
-                    "scale": {
-                        "x": 4.0,
-                        "y": 4.0
-                    }
-                },
-                "sprite": {
-                    "imagefile": "img_hudKatanaIcon.png",
-                    "layer": 358,
-                    "color": {
-                        "r": 1.0,
-                        "g": 1.0,
-                        "b": 1.0
-                    },
-                    "alpha": 1.0,
-                    "isLit": false
-                }
-            },
-            {
-                "name": {
-                    "namestr": "UI_LimbCounters_BackCounterIcon",
-                    "layer": 4,
-                    "isprefab": false,
-                    "tagstr": "UIGameBackLimbCounterIcon"
-                },
-                "transform": {
-                    "position": {
-                        "x": 12.210000038146973,
-                        "y": -6.050000190734863
-                    },
-                    "rotation": -0.0,
-                    "scale": {
-                        "x": 4.0,
-                        "y": 4.0
-                    }
-                },
-                "sprite": {
-                    "imagefile": "img_hudKatanaIcon.png",
-                    "layer": 357,
-                    "color": {
-                        "r": 1.0,
-                        "g": 1.0,
-                        "b": 1.0
-                    },
-                    "alpha": 1.0,
-                    "isLit": false
                 }
             }
         ]
@@ -21310,7 +21049,7 @@
                     "isprefab": true,
                     "tagstr": "Default",
                     "prefabname": "UI_PauseMenu_HowToPlay.prefab",
-                    "issync": true
+                    "issync": false
                 },
                 "transform": {
                     "position": {
@@ -21337,94 +21076,12 @@
             },
             {
                 "name": {
-                    "namestr": "UI_PauseMenu_HowToPlay_XButton",
-                    "layer": 6,
-                    "isprefab": true,
-                    "tagstr": "Default",
-                    "prefabname": "UI_PauseMenu_HowToPlay.prefab",
-                    "issync": true
-                },
-                "transform": {
-                    "position": {
-                        "x": 9.127551078796387,
-                        "y": 5.757751941680908
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 4.0,
-                        "y": 4.0
-                    }
-                },
-                "sprite": {
-                    "imagefile": "ani_inventoryCloseButton_strip2.png",
-                    "layer": 501,
-                    "color": {
-                        "r": 1.0,
-                        "g": 1.0,
-                        "b": 1.0
-                    },
-                    "alpha": 1.0,
-                    "isLit": false
-                },
-                "animation": {
-                    "frameNumber": 0,
-                    "framesPerSecond": 0,
-                    "frameTimer": 0.0,
-                    "isAnimating": false,
-                    "stripCount": 2
-                },
-                "button": {
-                    "force": {
-                        "x": 1572.0147705078125,
-                        "y": 775.399169921875
-                    },
-                    "scale": {
-                        "x": 0.8600000143051147,
-                        "y": 0.8600000143051147
-                    },
-                    "enablehover": true
-                },
-                "script": {
-                    "scripts": [
-                        {
-                            "name": "PauseMenuButtons",
-                            "enabled": true,
-                            "map": [
-                                {
-                                    "variable": "buttonFunctionNo",
-                                    "base64": "HwAAAMzMzMwA"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                "audio": [
-                    {
-                        "name": "aud_buttonHover01",
-                        "volume": 0.4909999966621399,
-                        "loop": false,
-                        "playOnStart": false,
-                        "isBGM": false,
-                        "isSFX": true
-                    },
-                    {
-                        "name": "aud_buttonClick01",
-                        "volume": 1.0,
-                        "loop": false,
-                        "playOnStart": false,
-                        "isBGM": false,
-                        "isSFX": true
-                    }
-                ]
-            },
-            {
-                "name": {
                     "namestr": "UI_PauseMenu_HowToPlay_BackButton",
                     "layer": 6,
                     "isprefab": true,
                     "tagstr": "Default",
                     "prefabname": "UI_PauseMenu_HowToPlay.prefab",
-                    "issync": true
+                    "issync": false
                 },
                 "transform": {
                     "position": {
@@ -21438,7 +21095,7 @@
                     }
                 },
                 "sprite": {
-                    "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
+                    "imagefile": "ani_pauseMenuQuitButton_strip2.png",
                     "layer": 502,
                     "color": {
                         "r": 1.0,
@@ -21457,11 +21114,11 @@
                 },
                 "button": {
                     "force": {
-                        "x": 694.7000122070313,
-                        "y": -259.572021484375
+                        "x": 1140.218017578125,
+                        "y": 362.7215881347656
                     },
                     "scale": {
-                        "x": 4.519999980926514,
+                        "x": 3.380000114440918,
                         "y": 1.0
                     },
                     "enablehover": true
@@ -21506,7 +21163,7 @@
                     "isprefab": true,
                     "tagstr": "Default",
                     "prefabname": "UI_PauseMenu_HowToPlay.prefab",
-                    "issync": true
+                    "issync": false
                 },
                 "transform": {
                     "position": {
@@ -21586,7 +21243,7 @@
                 "transform": {
                     "position": {
                         "x": 0.0,
-                        "y": 0.6998029947280884
+                        "y": 0.0
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -21618,7 +21275,7 @@
                 "transform": {
                     "position": {
                         "x": 0.0,
-                        "y": 4.368076801300049
+                        "y": 3.78761625289917
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -21651,8 +21308,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": -2.355748176574707,
-                        "y": 2.75
+                        "x": -2.9121999740600586,
+                        "y": 2.5
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -21671,7 +21328,7 @@
                         "b": 0.06666667014360428
                     },
                     "layer": 503,
-                    "isCentered": true
+                    "isCentered": false
                 }
             },
             {
@@ -21685,8 +21342,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 2.4642953872680664,
-                        "y": 2.753795623779297
+                        "x": 2.5877890586853027,
+                        "y": 2.5
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -21719,8 +21376,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": -2.3873393535614014,
-                        "y": -0.6299999952316284
+                        "x": -2.9100000858306885,
+                        "y": -0.8999999761581421
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -21739,7 +21396,7 @@
                         "b": 0.06666667014360428
                     },
                     "layer": 505,
-                    "isCentered": true
+                    "isCentered": false
                 }
             },
             {
@@ -21753,8 +21410,8 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 2.4600000381469727,
-                        "y": -0.6276767253875732
+                        "x": 2.5899999141693115,
+                        "y": -0.8999999761581421
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -21788,16 +21445,16 @@
                 "transform": {
                     "position": {
                         "x": 0.0,
-                        "y": -4.16275691986084
+                        "y": -4.69300651550293
                     },
                     "rotation": 0.0,
                     "scale": {
-                        "x": 2.0,
+                        "x": 3.0,
                         "y": 3.0
                     }
                 },
                 "sprite": {
-                    "imagefile": "ani_pauseMenuUserManualButton_strip2.png",
+                    "imagefile": "ani_pauseMenuQuitButton_strip2.png",
                     "layer": 507,
                     "color": {
                         "r": 1.0,
@@ -21816,8 +21473,8 @@
                 },
                 "button": {
                     "force": {
-                        "x": 839.0591430664063,
-                        "y": 239.65301513671875
+                        "x": 1211.232177734375,
+                        "y": 340.58026123046875
                     },
                     "scale": {
                         "x": 2.9000000953674316,
@@ -21875,14 +21532,14 @@
                             "rotation": 0.0,
                             "scale": {
                                 "x": 1.0,
-                                "y": 0.7439739108085632
+                                "y": 1.0
                             }
                         },
                         "text": {
                             "text": "Back",
                             "text": null,
                             "filename": "fnt_silkscreenRegular.ttf",
-                            "fontsize": 5.0,
+                            "fontsize": 3.0,
                             "color": {
                                 "r": 0.0,
                                 "g": 0.0,
@@ -21906,7 +21563,7 @@
                 "transform": {
                     "position": {
                         "x": 0.6676761507987976,
-                        "y": -0.06217384338378906
+                        "y": -0.36000001430511475
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -22345,8 +22002,8 @@
                         },
                         "button": {
                             "force": {
-                                "x": 1065.2789306640625,
-                                "y": 684.2476196289063
+                                "x": 1442.4674072265625,
+                                "y": 815.1090087890625
                             },
                             "scale": {
                                 "x": 0.7599999904632568,
@@ -22427,8 +22084,8 @@
                         },
                         "button": {
                             "force": {
-                                "x": 628.2693481445313,
-                                "y": 684.2153930664063
+                                "x": 995.7691040039063,
+                                "y": 815.0760498046875
                             },
                             "scale": {
                                 "x": 0.6399999856948853,
@@ -22483,7 +22140,7 @@
                 "transform": {
                     "position": {
                         "x": 0.6700000166893005,
-                        "y": -3.4449901580810547
+                        "y": -3.740000009536743
                     },
                     "rotation": 0.0,
                     "scale": {
@@ -22922,8 +22579,8 @@
                         },
                         "button": {
                             "force": {
-                                "x": 1067.8074951171875,
-                                "y": 400.070556640625
+                                "x": 1445.0521240234375,
+                                "y": 524.8748168945313
                             },
                             "scale": {
                                 "x": 0.6399999856948853,
@@ -23004,8 +22661,8 @@
                         },
                         "button": {
                             "force": {
-                                "x": 628.6336669921875,
-                                "y": 400.02984619140625
+                                "x": 996.1415405273438,
+                                "y": 524.8331909179688
                             },
                             "scale": {
                                 "x": 0.7400000095367432,
@@ -24249,8 +23906,8 @@
                 },
                 "button": {
                     "force": {
-                        "x": 146.7706298828125,
-                        "y": -154.28057861328125
+                        "x": 1141.8170166015625,
+                        "y": 991.2127685546875
                     },
                     "scale": {
                         "x": 5.920000076293945,
@@ -24331,8 +23988,8 @@
                 },
                 "button": {
                     "force": {
-                        "x": 146.7706298828125,
-                        "y": -287.275390625
+                        "x": 1141.8170166015625,
+                        "y": 879.3662109375
                     },
                     "scale": {
                         "x": 5.800000190734863,
@@ -24413,8 +24070,8 @@
                 },
                 "button": {
                     "force": {
-                        "x": 146.7706298828125,
-                        "y": -559.1575927734375
+                        "x": 1141.8170166015625,
+                        "y": 650.717529296875
                     },
                     "scale": {
                         "x": 5.840000152587891,
@@ -24495,8 +24152,8 @@
                 },
                 "button": {
                     "force": {
-                        "x": 146.7706298828125,
-                        "y": -695.532958984375
+                        "x": 1141.8170166015625,
+                        "y": 536.0278930664063
                     },
                     "scale": {
                         "x": 4.539999961853027,
@@ -24713,8 +24370,8 @@
                 },
                 "button": {
                     "force": {
-                        "x": 146.7706298828125,
-                        "y": -419.5816650390625
+                        "x": 1141.8170166015625,
+                        "y": 768.0987548828125
                     },
                     "scale": {
                         "x": 5.900000095367432,
@@ -81413,7 +81070,7 @@
                     "noOfParticles": 1,
                     "lifeSpan": 200.0,
                     "velocityX": 0.0,
-                    "velocityY": 80.0,
+                    "velocityY": 70.0,
                     "sizeX": 0.5,
                     "sizeY": 0.5,
                     "accelerationX": 0.0,
@@ -81458,7 +81115,7 @@
                     "noOfParticles": 1,
                     "lifeSpan": 200.0,
                     "velocityX": 0.0,
-                    "velocityY": 100.0,
+                    "velocityY": 60.0,
                     "sizeX": 0.5,
                     "sizeY": 0.5,
                     "accelerationX": 0.0,
@@ -82883,5 +82540,307 @@
             "radius": 0.5,
             "shapetype": 0
         }
+    },
+    {
+        "name": {
+            "namestr": "UI_LimbCounters",
+            "layer": 0,
+            "isprefab": true,
+            "tagstr": "Default",
+            "prefabname": "UI_LimbCounters_1.prefab",
+            "issync": false
+        },
+        "transform": {
+            "position": {
+                "x": 13.0,
+                "y": -39.0
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 1.0,
+                "y": 1.0
+            }
+        },
+        "script": {
+            "scripts": [
+                {
+                    "name": "UI_AmmoHUD",
+                    "enabled": true,
+                    "map": []
+                }
+            ]
+        },
+        "children": [
+            {
+                "name": {
+                    "namestr": "UI_LimbCounters_ButtonPrompts",
+                    "layer": 4,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "UI_LimbCounters_1.prefab",
+                    "issync": false
+                },
+                "transform": {
+                    "position": {
+                        "x": 10.390585899353027,
+                        "y": -4.441705703735352
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 4.0,
+                        "y": 4.0
+                    }
+                },
+                "sprite": {
+                    "imagefile": "ani_hudButtonPrompts_strip2.png",
+                    "layer": 99,
+                    "color": {
+                        "r": 1.0,
+                        "g": 1.0,
+                        "b": 1.0
+                    },
+                    "alpha": 1.0,
+                    "isLit": false
+                },
+                "animation": {
+                    "frameNumber": 0,
+                    "framesPerSecond": 0,
+                    "frameTimer": 0.0,
+                    "isAnimating": false,
+                    "stripCount": 2
+                },
+                "script": {
+                    "scripts": [
+                        {
+                            "name": "ButtonPrompt",
+                            "enabled": true,
+                            "map": [
+                                {
+                                    "variable": "test",
+                                    "base64": "1"
+                                },
+                                {
+                                    "variable": "promptNo",
+                                    "base64": "AQAAAMzMzMwA"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "name": {
+                    "namestr": "UI_LimbCounters_LeftCounter",
+                    "layer": 4,
+                    "isprefab": true,
+                    "tagstr": "UIGameLeftLimbCounter",
+                    "prefabname": "UI_LimbCounters_1.prefab",
+                    "issync": false
+                },
+                "transform": {
+                    "position": {
+                        "x": 7.8037872314453125,
+                        "y": -6.050000190734863
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 4.0,
+                        "y": 4.0
+                    }
+                },
+                "sprite": {
+                    "imagefile": "ani_hudSegmentBar_strip7.png",
+                    "layer": 354,
+                    "color": {
+                        "r": 1.0,
+                        "g": 1.0,
+                        "b": 1.0
+                    },
+                    "alpha": 1.0,
+                    "isLit": false
+                },
+                "animation": {
+                    "frameNumber": 6,
+                    "framesPerSecond": 6,
+                    "frameTimer": 0.0,
+                    "isAnimating": false,
+                    "stripCount": 7
+                }
+            },
+            {
+                "name": {
+                    "namestr": "UI_LimbCounters_RightCounter",
+                    "layer": 4,
+                    "isprefab": true,
+                    "tagstr": "UIGameRightLimbCounter",
+                    "prefabname": "UI_LimbCounters_1.prefab",
+                    "issync": false
+                },
+                "transform": {
+                    "position": {
+                        "x": 9.987579345703125,
+                        "y": -6.050000190734863
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 4.0,
+                        "y": 4.0
+                    }
+                },
+                "sprite": {
+                    "imagefile": "ani_hudSegmentBar_strip7.png",
+                    "layer": 353,
+                    "color": {
+                        "r": 1.0,
+                        "g": 1.0,
+                        "b": 1.0
+                    },
+                    "alpha": 1.0,
+                    "isLit": false
+                },
+                "animation": {
+                    "frameNumber": 6,
+                    "framesPerSecond": 6,
+                    "frameTimer": 0.0,
+                    "isAnimating": false,
+                    "stripCount": 7
+                }
+            },
+            {
+                "name": {
+                    "namestr": "UI_LimbCounters_BackCounter",
+                    "layer": 4,
+                    "isprefab": true,
+                    "tagstr": "UIGameBackLimbCounter",
+                    "prefabname": "UI_LimbCounters_1.prefab",
+                    "issync": false
+                },
+                "transform": {
+                    "position": {
+                        "x": 12.205166816711426,
+                        "y": -6.050000190734863
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 4.0,
+                        "y": 4.0
+                    }
+                },
+                "sprite": {
+                    "imagefile": "ani_hudSegmentBar_strip7.png",
+                    "layer": 355,
+                    "color": {
+                        "r": 1.0,
+                        "g": 1.0,
+                        "b": 1.0
+                    },
+                    "alpha": 1.0,
+                    "isLit": false
+                },
+                "animation": {
+                    "frameNumber": 6,
+                    "framesPerSecond": 6,
+                    "frameTimer": 0.0,
+                    "isAnimating": false,
+                    "stripCount": 7
+                }
+            },
+            {
+                "name": {
+                    "namestr": "UI_LimbCounters_LeftCounterIcon",
+                    "layer": 4,
+                    "isprefab": true,
+                    "tagstr": "UIGameLeftLimbCounterIcon",
+                    "prefabname": "UI_LimbCounters_1.prefab",
+                    "issync": false
+                },
+                "transform": {
+                    "position": {
+                        "x": 7.800000190734863,
+                        "y": -6.050000190734863
+                    },
+                    "rotation": -0.0,
+                    "scale": {
+                        "x": 4.0,
+                        "y": 4.0
+                    }
+                },
+                "sprite": {
+                    "imagefile": "img_hudGunIcon.png",
+                    "layer": 356,
+                    "color": {
+                        "r": 1.0,
+                        "g": 1.0,
+                        "b": 1.0
+                    },
+                    "alpha": 1.0,
+                    "isLit": false
+                }
+            },
+            {
+                "name": {
+                    "namestr": "UI_LimbCounters_RightCounterIcon",
+                    "layer": 4,
+                    "isprefab": true,
+                    "tagstr": "UIGameRightLimbCounterIcon",
+                    "prefabname": "UI_LimbCounters_1.prefab",
+                    "issync": false
+                },
+                "transform": {
+                    "position": {
+                        "x": 9.989999771118164,
+                        "y": -6.050000190734863
+                    },
+                    "rotation": -0.0,
+                    "scale": {
+                        "x": 4.0,
+                        "y": 4.0
+                    }
+                },
+                "sprite": {
+                    "imagefile": "img_hudGunIcon.png",
+                    "layer": 358,
+                    "color": {
+                        "r": 1.0,
+                        "g": 1.0,
+                        "b": 1.0
+                    },
+                    "alpha": 1.0,
+                    "isLit": false
+                }
+            },
+            {
+                "name": {
+                    "namestr": "UI_LimbCounters_BackCounterIcon",
+                    "layer": 4,
+                    "isprefab": true,
+                    "tagstr": "UIGameBackLimbCounterIcon",
+                    "prefabname": "UI_LimbCounters_1.prefab",
+                    "issync": false
+                },
+                "transform": {
+                    "position": {
+                        "x": 12.210000038146973,
+                        "y": -6.050000190734863
+                    },
+                    "rotation": -0.0,
+                    "scale": {
+                        "x": 4.0,
+                        "y": 4.0
+                    }
+                },
+                "sprite": {
+                    "imagefile": "img_hudGunIcon.png",
+                    "layer": 357,
+                    "color": {
+                        "r": 1.0,
+                        "g": 1.0,
+                        "b": 1.0
+                    },
+                    "alpha": 1.0,
+                    "isLit": false
+                }
+            }
+        ]
     }
 ]

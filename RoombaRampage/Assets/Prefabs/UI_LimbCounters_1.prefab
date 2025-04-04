@@ -24,10 +24,10 @@
         },
         "transform": {
             "position": {
-                "x": 0.0,
-                "y": 0.0
+                "x": 13.0,
+                "y": -39.0
             },
-            "rotation": 0.0,
+            "rotation": -0.0,
             "scale": {
                 "x": 1.0,
                 "y": 1.0
@@ -52,18 +52,18 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 11.290364265441895,
+                        "x": 10.390585899353027,
                         "y": -4.441705703735352
                     },
-                    "rotation": -0.0,
+                    "rotation": 0.0,
                     "scale": {
                         "x": 4.0,
                         "y": 4.0
                     }
                 },
                 "sprite": {
-                    "imagefile": "img_hudButtonPrompts.png",
-                    "layer": 201,
+                    "imagefile": "ani_hudButtonPrompts_strip2.png",
+                    "layer": 99,
                     "color": {
                         "r": 1.0,
                         "g": 1.0,
@@ -71,6 +71,31 @@
                     },
                     "alpha": 1.0,
                     "isLit": false
+                },
+                "animation": {
+                    "frameNumber": 0,
+                    "framesPerSecond": 0,
+                    "frameTimer": 0.0,
+                    "isAnimating": false,
+                    "stripCount": 2
+                },
+                "script": {
+                    "scripts": [
+                        {
+                            "name": "ButtonPrompt",
+                            "enabled": true,
+                            "map": [
+                                {
+                                    "variable": "test",
+                                    "base64": "1"
+                                },
+                                {
+                                    "variable": "promptNo",
+                                    "base64": "AQAAAMzMzMwA"
+                                }
+                            ]
+                        }
+                    ]
                 }
             },
             {
@@ -82,17 +107,17 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 8.75,
+                        "x": 7.8037872314453125,
                         "y": -6.050000190734863
                     },
-                    "rotation": -0.0,
+                    "rotation": 0.0,
                     "scale": {
                         "x": 4.0,
                         "y": 4.0
                     }
                 },
                 "sprite": {
-                    "imagefile": "ani_hudFullBar_strip7.png",
+                    "imagefile": "ani_hudSegmentBar_strip7.png",
                     "layer": 354,
                     "color": {
                         "r": 1.0,
@@ -119,17 +144,17 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 10.899999618530273,
+                        "x": 9.987579345703125,
                         "y": -6.050000190734863
                     },
-                    "rotation": -0.0,
+                    "rotation": 0.0,
                     "scale": {
                         "x": 4.0,
                         "y": 4.0
                     }
                 },
                 "sprite": {
-                    "imagefile": "ani_hudFullBar_strip7.png",
+                    "imagefile": "ani_hudSegmentBar_strip7.png",
                     "layer": 353,
                     "color": {
                         "r": 1.0,
@@ -156,17 +181,17 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 13.050000190734863,
+                        "x": 12.205166816711426,
                         "y": -6.050000190734863
                     },
-                    "rotation": -0.0,
+                    "rotation": 0.0,
                     "scale": {
                         "x": 4.0,
                         "y": 4.0
                     }
                 },
                 "sprite": {
-                    "imagefile": "ani_hudFullBar_strip7.png",
+                    "imagefile": "ani_hudSegmentBar_strip7.png",
                     "layer": 355,
                     "color": {
                         "r": 1.0,
@@ -193,7 +218,7 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 8.75,
+                        "x": 7.800000190734863,
                         "y": -6.050000190734863
                     },
                     "rotation": -0.0,
@@ -203,7 +228,7 @@
                     }
                 },
                 "sprite": {
-                    "imagefile": "img_hudKatanaIcon.png",
+                    "imagefile": "img_hudGunIcon.png",
                     "layer": 356,
                     "color": {
                         "r": 1.0,
@@ -223,7 +248,7 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 10.899999618530273,
+                        "x": 9.989999771118164,
                         "y": -6.050000190734863
                     },
                     "rotation": -0.0,
@@ -233,7 +258,7 @@
                     }
                 },
                 "sprite": {
-                    "imagefile": "img_hudKatanaIcon.png",
+                    "imagefile": "img_hudGunIcon.png",
                     "layer": 358,
                     "color": {
                         "r": 1.0,
@@ -253,7 +278,7 @@
                 },
                 "transform": {
                     "position": {
-                        "x": 13.050000190734863,
+                        "x": 12.210000038146973,
                         "y": -6.050000190734863
                     },
                     "rotation": -0.0,
@@ -263,7 +288,7 @@
                     }
                 },
                 "sprite": {
-                    "imagefile": "img_hudKatanaIcon.png",
+                    "imagefile": "img_hudGunIcon.png",
                     "layer": 357,
                     "color": {
                         "r": 1.0,

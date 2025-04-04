@@ -1,11 +1,11 @@
 [
     {
         "GlobalSettings": {
-            "globalIllumination": 0.2199999988079071,
+            "globalIllumination": 1.0,
             "backgroundColor": {
-                "r": 0.0,
-                "g": 0.0,
-                "b": 0.0
+                "r": 0.13300000131130219,
+                "g": 0.23000000417232513,
+                "b": 0.3199999928474426
             }
         }
     },
@@ -26,10 +26,10 @@
         },
         "transform": {
             "position": {
-                "x": 0.0,
-                "y": 0.0
+                "x": 0.094451904296875,
+                "y": 0.27921533584594727
             },
-            "rotation": 0.0,
+            "rotation": -0.0,
             "scale": {
                 "x": 1.0,
                 "y": 1.0
@@ -67,7 +67,7 @@
                     "isprefab": true,
                     "tagstr": "Default",
                     "prefabname": "UI_PauseMenu_HowToPlay.prefab",
-                    "issync": true
+                    "issync": false
                 },
                 "transform": {
                     "position": {
@@ -90,6 +90,20 @@
                     },
                     "alpha": 1.0,
                     "isLit": false
+                },
+                "script": {
+                    "scripts": [
+                        {
+                            "name": "ButtonPrompt",
+                            "enabled": true,
+                            "map": [
+                                {
+                                    "variable": "promptNo",
+                                    "base64": "AgAAAMzMzMwA"
+                                }
+                            ]
+                        }
+                    ]
                 }
             },
             {
@@ -99,7 +113,7 @@
                     "isprefab": true,
                     "tagstr": "Default",
                     "prefabname": "UI_PauseMenu_HowToPlay.prefab",
-                    "issync": true
+                    "issync": false
                 },
                 "transform": {
                     "position": {
@@ -181,7 +195,7 @@
                     "isprefab": true,
                     "tagstr": "Default",
                     "prefabname": "UI_PauseMenu_HowToPlay.prefab",
-                    "issync": true
+                    "issync": false
                 },
                 "transform": {
                     "position": {
