@@ -102,7 +102,7 @@
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Engine\ECS;$(SolutionDir)Engine\Dependencies\pl_mpeg;$(SolutionDir)Engine\Dependencies\Freetype_Font\include\freetype\config;$(SolutionDir)Engine\Dependencies\Freetype_Font\include;$(SolutionDir)Engine\Dependencies\FMOD_API\studio\inc;$(SolutionDir)Engine\Dependencies\FMOD_API\core\inc;$(SolutionDir)Engine\Dependencies\mono\include\mono-2.0;$(SolutionDir)Engine\Dependencies\mono\include;$(SolutionDir)Engine;$(SolutionDir)Engine\Dependencies\stb_image\include;$(SolutionDir)Engine\Dependencies\glm\include;$(SolutionDir)Engine\Dependencies\GLEW\include\GL;$(SolutionDir)Engine\Dependencies\GLFW\include;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
@@ -116,6 +116,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>Engine lib.lib;glew32s.lib;glfw3.lib;User32.lib;Gdi32.lib;Shell32.lib;opengl32.lib;freetype.lib;mono-2.0-sgen.lib;Comdlg32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Engine\Dependencies\GLFW\lib-vc2022;$(SolutionDir)Engine\Dependencies\GLEW\lib\Release\x64;$(SolutionDir)Engine\Dependencies\FMOD_API\core\lib\x64;$(SolutionDir)Engine\Dependencies\FMOD_API\studio\lib\x64;$(SolutionDir)Engine\Dependencies\Freetype_Font\lib;$(SolutionDir)Engine\Dependencies\mono\lib;$(SolutionDir)Engine\Dependencies\Freetype_Font\include\freetype\config;$(SolutionDir)x64\Debug</AdditionalLibraryDirectories>
+      <AdditionalOptions>/NODEFAULTLIB:LIBCMT /NODEFAULTLIB:MSVCRT /IGNORE:4099 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /y /d "$(SolutionDir)Engine\Dependencies\FMOD_API\core\lib\x64\*.dll" "$(OutDir)"
@@ -130,7 +131,7 @@ xcopy /y /d "$(SolutionDir)Engine\Dependencies\mono\*.dll" "$(OutDir)"</Command>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Engine\ECS;$(SolutionDir)Engine\Dependencies\pl_mpeg;$(SolutionDir)Engine\Dependencies\Freetype_Font\include\freetype\config;$(SolutionDir)Engine\Dependencies\Freetype_Font\include;$(SolutionDir)Engine\Dependencies\FMOD_API\studio\inc;$(SolutionDir)Engine\Dependencies\FMOD_API\core\inc;$(SolutionDir)Engine\Dependencies\mono\include\mono-2.0;$(SolutionDir)Engine\Dependencies\mono\include;$(SolutionDir)Engine;$(SolutionDir)Engine\Dependencies\stb_image\include;$(SolutionDir)Engine\Dependencies\glm\include;$(SolutionDir)Engine\Dependencies\GLEW\include\GL;$(SolutionDir)Engine\Dependencies\GLFW\include;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
@@ -145,6 +146,7 @@ xcopy /y /d "$(SolutionDir)Engine\Dependencies\mono\*.dll" "$(OutDir)"</Command>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>Engine lib.lib;glew32s.lib;glfw3.lib;User32.lib;Gdi32.lib;Shell32.lib;opengl32.lib;freetype.lib;mono-2.0-sgen.lib;Comdlg32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Engine\Dependencies\GLFW\lib-vc2022;$(SolutionDir)Engine\Dependencies\GLEW\lib\Release\x64;$(SolutionDir)Engine\Dependencies\FMOD_API\core\lib\x64;$(SolutionDir)Engine\Dependencies\FMOD_API\studio\lib\x64;$(SolutionDir)Engine\Dependencies\Freetype_Font\lib;$(SolutionDir)Engine\Dependencies\mono\lib;$(SolutionDir)Engine\Dependencies\Freetype_Font\include\freetype\config;$(SolutionDir)x64\Release</AdditionalLibraryDirectories>
+      <AdditionalOptions>/NODEFAULTLIB:LIBCMT /NODEFAULTLIB:MSVCRT /IGNORE:4099 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /y /d "$(SolutionDir)Engine\Dependencies\FMOD_API\core\lib\x64\*.dll" "$(OutDir)"
