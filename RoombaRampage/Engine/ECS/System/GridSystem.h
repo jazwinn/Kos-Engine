@@ -93,6 +93,13 @@ namespace ecs {
 		/******************************************************************/
 		std::vector<GridComponent*> m_vecGridComponentPtr;
 
+		/******************************************************************/
+		/*!
+		\var     std::vector<NameComponent*> m_vecNameComponentPtr
+		\brief   Stores pointers to NameComponent instances for registered entities.
+		\details Used for identifying and referencing entities within the grid system.
+		*/
+		/******************************************************************/
 		std::vector<NameComponent*> m_vecNameComponentPtr;
 	};
 

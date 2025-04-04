@@ -85,6 +85,14 @@ namespace ecs {
 		/******************************************************************/
 		virtual bool m_HasComponent(EntityID) = 0;
 
+		/******************************************************************/
+		/*!
+		\fn        m_DeleteEntityComponent(EntityID)
+		\brief     Deletes the component assigned to the given entity.
+		\param     EntityID - The ID of the entity whose component should be deleted.
+		\return    True if the component was successfully deleted, false otherwise.
+		*/
+		/******************************************************************/
 		virtual bool m_DeleteEntityComponent(EntityID) = 0;
 
 		virtual void m_ResetComponent(EntityID) = 0;

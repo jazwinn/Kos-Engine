@@ -84,6 +84,13 @@ namespace ecs {
         /******************************************************************/
         std::vector<TransformComponent*> m_vecTransformComponentPtr;
 
+        /******************************************************************/
+        /*!
+        \var     std::vector<NameComponent*> m_vecNameComponentPtr
+        \brief   Stores pointers to NameComponent instances for registered entities.
+        \details Used to reference and manage the names of entities for identification in the audio system.
+        */
+        /******************************************************************/
         std::vector<NameComponent*> m_vecNameComponentPtr;
     };
 }

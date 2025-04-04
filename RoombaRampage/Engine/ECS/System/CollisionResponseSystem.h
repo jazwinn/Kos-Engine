@@ -98,6 +98,13 @@ namespace ecs {
 		/******************************************************************/
 		std::vector<RigidBodyComponent*> m_vecRigidBodyComponentPtr;
 
+		/******************************************************************/
+		/*!
+		\var     std::vector<NameComponent*> m_vecNameComponentPtr
+		\brief   Stores pointers to NameComponent instances for registered entities.
+		\details Used to identify entities by name within the collision response system, aiding in debugging and tracking.
+		*/
+		/******************************************************************/
 		std::vector<NameComponent*> m_vecNameComponentPtr;
 
 	};

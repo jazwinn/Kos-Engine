@@ -87,6 +87,13 @@ namespace ecs {
 		/******************************************************************/
 		std::vector<ButtonComponent*> m_vecButtonComponentPtr;
 
+		/******************************************************************/
+		/*!
+		\var     std::vector<NameComponent*> m_vecNameComponentPtr
+		\brief   Stores pointers to NameComponent instances for registered entities.
+		\details Used to reference and identify entities by name within the button system.
+		*/
+		/******************************************************************/
 		std::vector<NameComponent*> m_vecNameComponentPtr;
 	};
 }

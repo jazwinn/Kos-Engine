@@ -75,6 +75,13 @@ namespace ecs {
         /******************************************************************/
         std::vector<TransformComponent*> m_vecTransformComponentPtr;
 
+        /******************************************************************/
+        /*!
+        \var     std::vector<NameComponent*> m_vecNameComponentPtr
+        \brief   Stores pointers to NameComponent instances for registered entities.
+        \details Used to identify and reference entities by name within the system.
+        */
+        /******************************************************************/
         std::vector<NameComponent*> m_vecNameComponentPtr;
     };
 
