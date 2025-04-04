@@ -1,11 +1,11 @@
 [
     {
         "GlobalSettings": {
-            "globalIllumination": 0.2199999988079071,
+            "globalIllumination": 1.0,
             "backgroundColor": {
-                "r": 0.0,
-                "g": 0.0,
-                "b": 0.0
+                "r": 0.13300000131130219,
+                "g": 0.23000000417232513,
+                "b": 0.3199999928474426
             }
         }
     },
@@ -26,8 +26,8 @@
         },
         "transform": {
             "position": {
-                "x": 13.0,
-                "y": -39.0
+                "x": 0.09445571899414063,
+                "y": 0.16409683227539063
             },
             "rotation": -0.0,
             "scale": {
@@ -137,8 +137,8 @@
                 },
                 "button": {
                     "force": {
-                        "x": 1141.8170166015625,
-                        "y": 991.2127685546875
+                        "x": 966.375732421875,
+                        "y": 787.3929443359375
                     },
                     "scale": {
                         "x": 5.920000076293945,
@@ -219,8 +219,8 @@
                 },
                 "button": {
                     "force": {
-                        "x": 1141.8170166015625,
-                        "y": 879.3662109375
+                        "x": 966.375732421875,
+                        "y": 652.0165405273438
                     },
                     "scale": {
                         "x": 5.800000190734863,
@@ -301,8 +301,8 @@
                 },
                 "button": {
                     "force": {
-                        "x": 1141.8170166015625,
-                        "y": 650.717529296875
+                        "x": 966.375732421875,
+                        "y": 375.2656555175781
                     },
                     "scale": {
                         "x": 5.840000152587891,
@@ -383,8 +383,8 @@
                 },
                 "button": {
                     "force": {
-                        "x": 1141.8170166015625,
-                        "y": 536.0278930664063
+                        "x": 966.375732421875,
+                        "y": 236.447998046875
                     },
                     "scale": {
                         "x": 4.539999961853027,
@@ -601,8 +601,8 @@
                 },
                 "button": {
                     "force": {
-                        "x": 1141.8170166015625,
-                        "y": 768.0987548828125
+                        "x": 966.375732421875,
+                        "y": 517.3410034179688
                     },
                     "scale": {
                         "x": 5.900000095367432,
@@ -683,7 +683,7 @@
                     "layer": 7,
                     "isprefab": true,
                     "tagstr": "UIPauseConfirmation",
-                    "prefabname": "UI_PauseMenu_ExitConfirmation.prefab",
+                    "prefabname": "UI_PauseMenu.prefab",
                     "issync": false
                 },
                 "transform": {
@@ -707,7 +707,7 @@
                             "layer": 7,
                             "isprefab": true,
                             "tagstr": "Default",
-                            "prefabname": "UI_PauseMenu_ExitConfirmation.prefab",
+                            "prefabname": "UI_PauseMenu.prefab",
                             "issync": false
                         },
                         "transform": {
@@ -739,7 +739,7 @@
                             "layer": 7,
                             "isprefab": true,
                             "tagstr": "Default",
-                            "prefabname": "UI_PauseMenu_ExitConfirmation.prefab",
+                            "prefabname": "UI_PauseMenu.prefab",
                             "issync": false
                         },
                         "transform": {
