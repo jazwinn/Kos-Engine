@@ -82611,11 +82611,11 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "ammoCount",
+                                    "variable": "backLimbGunAmmo",
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "backLimbGunAmmo",
+                                    "variable": "ammoCount",
                                     "base64": ""
                                 },
                                 {
@@ -82627,11 +82627,7 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "railGunLightMaxIntensity",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "rightLimbRailGunHold",
+                                    "variable": "leftLimbGunAmmo",
                                     "base64": ""
                                 },
                                 {
@@ -82639,7 +82635,11 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "leftLimbGunAmmo",
+                                    "variable": "rightLimbRailGunHold",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "railGunLightMaxIntensity",
                                     "base64": ""
                                 },
                                 {
@@ -82826,11 +82826,11 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "ammoCount",
+                                    "variable": "backLimbGunAmmo",
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "backLimbGunAmmo",
+                                    "variable": "ammoCount",
                                     "base64": ""
                                 },
                                 {
@@ -82842,11 +82842,7 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "leftLimbShotGunAmmo",
-                                    "base64": ""
-                                },
-                                {
-                                    "variable": "leftLimbGunAmmo",
+                                    "variable": "rightLimbRailGunHold",
                                     "base64": ""
                                 },
                                 {
@@ -82854,7 +82850,11 @@
                                     "base64": ""
                                 },
                                 {
-                                    "variable": "rightLimbRailGunHold",
+                                    "variable": "leftLimbGunAmmo",
+                                    "base64": ""
+                                },
+                                {
+                                    "variable": "leftLimbShotGunAmmo",
                                     "base64": ""
                                 },
                                 {
@@ -83558,7 +83558,7 @@
             "isprefab": true,
             "tagstr": "Default",
             "prefabname": "UI_LimbCounters_1.prefab",
-            "issync": false
+            "issync": true
         },
         "transform": {
             "position": {
