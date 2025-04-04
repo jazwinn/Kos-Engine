@@ -20,7 +20,7 @@ public class CreditsScroll : ScriptBase
 
     public override void Start()
     {
-        endPointY = -127.0f;
+        endPointY = -222.5f;
         rbComp = Component.Get<RigidBodyComponent>(EntityID);
         rbComp.m_Velocity.Y = speed;
         Component.Set<RigidBodyComponent>(EntityID, rbComp);

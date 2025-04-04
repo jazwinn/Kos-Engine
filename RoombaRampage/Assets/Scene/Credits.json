@@ -102,7 +102,7 @@
             "isprefab": true,
             "tagstr": "Default",
             "prefabname": "CreditsParent.prefab",
-            "issync": true
+            "issync": false
         },
         "transform": {
             "position": {
@@ -1301,7 +1301,7 @@
                         "x": 0.0,
                         "y": -115.0
                     },
-                    "rotation": -0.0,
+                    "rotation": 0.0,
                     "scale": {
                         "x": 1.0,
                         "y": 1.0
@@ -1392,7 +1392,7 @@
                         "x": 0.0,
                         "y": -125.0
                     },
-                    "rotation": -0.0,
+                    "rotation": 0.0,
                     "scale": {
                         "x": 1.0,
                         "y": 1.0
@@ -1420,7 +1420,7 @@
                             }
                         },
                         "text": {
-                            "text": "SPECIAL THANKS TO",
+                            "text": "CREATED AT",
                             "text": null,
                             "filename": "fnt_silkscreenRegular.ttf",
                             "fontsize": 40.0,
@@ -1454,7 +1454,7 @@
                             }
                         },
                         "text": {
-                            "text": "PROFESSORS, CLASSMATES AT DIGIPEN",
+                            "text": "DIGIPEN INSTITUTE OF TECHNOLOGY SINGAPORE",
                             "text": null,
                             "filename": "fnt_silkscreenRegular.ttf",
                             "fontsize": 20.0,
@@ -1481,9 +1481,9 @@
                 "transform": {
                     "position": {
                         "x": 0.0,
-                        "y": -150.0
+                        "y": -235.0
                     },
-                    "rotation": -0.0,
+                    "rotation": 0.0,
                     "scale": {
                         "x": 1.0,
                         "y": 1.0
@@ -1559,6 +1559,1210 @@
                         }
                     }
                 ]
+            },
+            {
+                "name": {
+                    "namestr": "Credits",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "CreditsParent.prefab",
+                    "issync": false
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.0,
+                        "y": -135.0
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "children": [
+                    {
+                        "name": {
+                            "namestr": "CreditsText",
+                            "layer": 0,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "CreditsParent.prefab",
+                            "issync": false
+                        },
+                        "transform": {
+                            "position": {
+                                "x": 13.0,
+                                "y": 23.5
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0
+                            }
+                        },
+                        "text": {
+                            "text": "TECH INSTRUCTORS",
+                            "text": null,
+                            "filename": "fnt_silkscreenRegular.ttf",
+                            "fontsize": 40.0,
+                            "color": {
+                                "r": 0.10588235408067703,
+                                "g": 0.8823529481887817,
+                                "b": 0.06666667014360428
+                            },
+                            "layer": 900,
+                            "isCentered": true
+                        }
+                    },
+                    {
+                        "name": {
+                            "namestr": "CreditsText",
+                            "layer": 0,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "CreditsParent.prefab",
+                            "issync": false
+                        },
+                        "transform": {
+                            "position": {
+                                "x": 13.0,
+                                "y": 22.0
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0
+                            }
+                        },
+                        "text": {
+                            "text": "ELIE HOSRY",
+                            "text": null,
+                            "filename": "fnt_silkscreenRegular.ttf",
+                            "fontsize": 20.0,
+                            "color": {
+                                "r": 0.10588235408067703,
+                                "g": 0.8823529481887817,
+                                "b": 0.06666667014360428
+                            },
+                            "layer": 900,
+                            "isCentered": true
+                        }
+                    },
+                    {
+                        "name": {
+                            "namestr": "CreditsText",
+                            "layer": 0,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "CreditsParent.prefab",
+                            "issync": false
+                        },
+                        "transform": {
+                            "position": {
+                                "x": 13.0,
+                                "y": 21.0
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0
+                            }
+                        },
+                        "text": {
+                            "text": "PARMINDER SINGH",
+                            "text": null,
+                            "filename": "fnt_silkscreenRegular.ttf",
+                            "fontsize": 20.0,
+                            "color": {
+                                "r": 0.10588235408067703,
+                                "g": 0.8823529481887817,
+                                "b": 0.06666667014360428
+                            },
+                            "layer": 900,
+                            "isCentered": true
+                        }
+                    },
+                    {
+                        "name": {
+                            "namestr": "CreditsText",
+                            "layer": 0,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "CreditsParent.prefab",
+                            "issync": false
+                        },
+                        "transform": {
+                            "position": {
+                                "x": 13.0,
+                                "y": 20.0
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0
+                            }
+                        },
+                        "text": {
+                            "text": "GOH DIAN YANG",
+                            "text": null,
+                            "filename": "fnt_silkscreenRegular.ttf",
+                            "fontsize": 20.0,
+                            "color": {
+                                "r": 0.10588235408067703,
+                                "g": 0.8823529481887817,
+                                "b": 0.06666667014360428
+                            },
+                            "layer": 900,
+                            "isCentered": true
+                        }
+                    }
+                ]
+            },
+            {
+                "name": {
+                    "namestr": "Credits",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "CreditsParent.prefab",
+                    "issync": false
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.0,
+                        "y": -155.0
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "children": [
+                    {
+                        "name": {
+                            "namestr": "CreditsText",
+                            "layer": 0,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "CreditsParent.prefab",
+                            "issync": false
+                        },
+                        "transform": {
+                            "position": {
+                                "x": 13.0,
+                                "y": 23.5
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0
+                            }
+                        },
+                        "text": {
+                            "text": "AUDIO INSTRUCTORS",
+                            "text": null,
+                            "filename": "fnt_silkscreenRegular.ttf",
+                            "fontsize": 40.0,
+                            "color": {
+                                "r": 0.10588235408067703,
+                                "g": 0.8823529481887817,
+                                "b": 0.06666667014360428
+                            },
+                            "layer": 900,
+                            "isCentered": true
+                        }
+                    },
+                    {
+                        "name": {
+                            "namestr": "CreditsText",
+                            "layer": 0,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "CreditsParent.prefab",
+                            "issync": false
+                        },
+                        "transform": {
+                            "position": {
+                                "x": 13.0,
+                                "y": 22.0
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0
+                            }
+                        },
+                        "text": {
+                            "text": "VUK KRAKOVIC",
+                            "text": null,
+                            "filename": "fnt_silkscreenRegular.ttf",
+                            "fontsize": 20.0,
+                            "color": {
+                                "r": 0.10588235408067703,
+                                "g": 0.8823529481887817,
+                                "b": 0.06666667014360428
+                            },
+                            "layer": 900,
+                            "isCentered": true
+                        }
+                    },
+                    {
+                        "name": {
+                            "namestr": "CreditsText",
+                            "layer": 0,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "CreditsParent.prefab",
+                            "issync": false
+                        },
+                        "transform": {
+                            "position": {
+                                "x": 13.0,
+                                "y": 21.0
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0
+                            }
+                        },
+                        "text": {
+                            "text": "GAVIN PARKER",
+                            "text": null,
+                            "filename": "fnt_silkscreenRegular.ttf",
+                            "fontsize": 20.0,
+                            "color": {
+                                "r": 0.10588235408067703,
+                                "g": 0.8823529481887817,
+                                "b": 0.06666667014360428
+                            },
+                            "layer": 900,
+                            "isCentered": true
+                        }
+                    }
+                ]
+            },
+            {
+                "name": {
+                    "namestr": "Credits",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "CreditsParent.prefab",
+                    "issync": false
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.0,
+                        "y": -145.0
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "children": [
+                    {
+                        "name": {
+                            "namestr": "CreditsText",
+                            "layer": 0,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "CreditsParent.prefab",
+                            "issync": false
+                        },
+                        "transform": {
+                            "position": {
+                                "x": 13.0,
+                                "y": 23.5
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0
+                            }
+                        },
+                        "text": {
+                            "text": "DESIGN INSTRUCTORS",
+                            "text": null,
+                            "filename": "fnt_silkscreenRegular.ttf",
+                            "fontsize": 40.0,
+                            "color": {
+                                "r": 0.10588235408067703,
+                                "g": 0.8823529481887817,
+                                "b": 0.06666667014360428
+                            },
+                            "layer": 900,
+                            "isCentered": true
+                        }
+                    },
+                    {
+                        "name": {
+                            "namestr": "CreditsText",
+                            "layer": 0,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "CreditsParent.prefab",
+                            "issync": false
+                        },
+                        "transform": {
+                            "position": {
+                                "x": 13.0,
+                                "y": 22.0
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0
+                            }
+                        },
+                        "text": {
+                            "text": "HOLGER LIEBNITZ",
+                            "text": null,
+                            "filename": "fnt_silkscreenRegular.ttf",
+                            "fontsize": 20.0,
+                            "color": {
+                                "r": 0.10588235408067703,
+                                "g": 0.8823529481887817,
+                                "b": 0.06666667014360428
+                            },
+                            "layer": 900,
+                            "isCentered": true
+                        }
+                    },
+                    {
+                        "name": {
+                            "namestr": "CreditsText",
+                            "layer": 0,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "CreditsParent.prefab",
+                            "issync": false
+                        },
+                        "transform": {
+                            "position": {
+                                "x": 13.0,
+                                "y": 21.0
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0
+                            }
+                        },
+                        "text": {
+                            "text": "GOH JING YING",
+                            "text": null,
+                            "filename": "fnt_silkscreenRegular.ttf",
+                            "fontsize": 20.0,
+                            "color": {
+                                "r": 0.10588235408067703,
+                                "g": 0.8823529481887817,
+                                "b": 0.06666667014360428
+                            },
+                            "layer": 900,
+                            "isCentered": true
+                        }
+                    },
+                    {
+                        "name": {
+                            "namestr": "CreditsText",
+                            "layer": 0,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "CreditsParent.prefab",
+                            "issync": false
+                        },
+                        "transform": {
+                            "position": {
+                                "x": 13.0,
+                                "y": 20.0
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0
+                            }
+                        },
+                        "text": {
+                            "text": "DANIELLE FONG SUM YEE",
+                            "text": null,
+                            "filename": "fnt_silkscreenRegular.ttf",
+                            "fontsize": 20.0,
+                            "color": {
+                                "r": 0.10588235408067703,
+                                "g": 0.8823529481887817,
+                                "b": 0.06666667014360428
+                            },
+                            "layer": 900,
+                            "isCentered": true
+                        }
+                    }
+                ]
+            },
+            {
+                "name": {
+                    "namestr": "Credits",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "CreditsParent.prefab",
+                    "issync": false
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.0,
+                        "y": -165.0
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "children": [
+                    {
+                        "name": {
+                            "namestr": "CreditsText",
+                            "layer": 0,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "CreditsParent.prefab",
+                            "issync": false
+                        },
+                        "transform": {
+                            "position": {
+                                "x": 13.0,
+                                "y": 23.5
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0
+                            }
+                        },
+                        "text": {
+                            "text": "ART INSTRUCTORS",
+                            "text": null,
+                            "filename": "fnt_silkscreenRegular.ttf",
+                            "fontsize": 40.0,
+                            "color": {
+                                "r": 0.10588235408067703,
+                                "g": 0.8823529481887817,
+                                "b": 0.06666667014360428
+                            },
+                            "layer": 900,
+                            "isCentered": true
+                        }
+                    },
+                    {
+                        "name": {
+                            "namestr": "CreditsText",
+                            "layer": 0,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "CreditsParent.prefab",
+                            "issync": false
+                        },
+                        "transform": {
+                            "position": {
+                                "x": 13.0,
+                                "y": 22.0
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0
+                            }
+                        },
+                        "text": {
+                            "text": "Keh Choon Wee",
+                            "text": null,
+                            "filename": "fnt_silkscreenRegular.ttf",
+                            "fontsize": 20.0,
+                            "color": {
+                                "r": 0.10588235408067703,
+                                "g": 0.8823529481887817,
+                                "b": 0.06666667014360428
+                            },
+                            "layer": 900,
+                            "isCentered": true
+                        }
+                    }
+                ]
+            },
+            {
+                "name": {
+                    "namestr": "Credits",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "CreditsParent.prefab",
+                    "issync": false
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.0,
+                        "y": -175.0
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "children": [
+                    {
+                        "name": {
+                            "namestr": "CreditsText",
+                            "layer": 0,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "CreditsParent.prefab",
+                            "issync": false
+                        },
+                        "transform": {
+                            "position": {
+                                "x": 13.0,
+                                "y": 23.5
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0
+                            }
+                        },
+                        "text": {
+                            "text": "PRESIDENT",
+                            "text": null,
+                            "filename": "fnt_silkscreenRegular.ttf",
+                            "fontsize": 40.0,
+                            "color": {
+                                "r": 0.10588235408067703,
+                                "g": 0.8823529481887817,
+                                "b": 0.06666667014360428
+                            },
+                            "layer": 900,
+                            "isCentered": true
+                        }
+                    },
+                    {
+                        "name": {
+                            "namestr": "CreditsText",
+                            "layer": 0,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "CreditsParent.prefab",
+                            "issync": false
+                        },
+                        "transform": {
+                            "position": {
+                                "x": 13.0,
+                                "y": 22.0
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0
+                            }
+                        },
+                        "text": {
+                            "text": "CLAUDE COMAIR",
+                            "text": null,
+                            "filename": "fnt_silkscreenRegular.ttf",
+                            "fontsize": 20.0,
+                            "color": {
+                                "r": 0.10588235408067703,
+                                "g": 0.8823529481887817,
+                                "b": 0.06666667014360428
+                            },
+                            "layer": 900,
+                            "isCentered": true
+                        }
+                    }
+                ]
+            },
+            {
+                "name": {
+                    "namestr": "Credits",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "CreditsParent.prefab",
+                    "issync": false
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.0,
+                        "y": -185.0
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "children": [
+                    {
+                        "name": {
+                            "namestr": "CreditsText",
+                            "layer": 0,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "CreditsParent.prefab",
+                            "issync": false
+                        },
+                        "transform": {
+                            "position": {
+                                "x": 13.0,
+                                "y": 23.5
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0
+                            }
+                        },
+                        "text": {
+                            "text": "BOARD OF DIRECTORS",
+                            "text": null,
+                            "filename": "fnt_silkscreenRegular.ttf",
+                            "fontsize": 40.0,
+                            "color": {
+                                "r": 0.10588235408067703,
+                                "g": 0.8823529481887817,
+                                "b": 0.06666667014360428
+                            },
+                            "layer": 900,
+                            "isCentered": true
+                        }
+                    },
+                    {
+                        "name": {
+                            "namestr": "CreditsText",
+                            "layer": 0,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "CreditsParent.prefab",
+                            "issync": false
+                        },
+                        "transform": {
+                            "position": {
+                                "x": 13.0,
+                                "y": 22.0
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0
+                            }
+                        },
+                        "text": {
+                            "text": "CHU JASON YEU TAT",
+                            "text": null,
+                            "filename": "fnt_silkscreenRegular.ttf",
+                            "fontsize": 20.0,
+                            "color": {
+                                "r": 0.10588235408067703,
+                                "g": 0.8823529481887817,
+                                "b": 0.06666667014360428
+                            },
+                            "layer": 900,
+                            "isCentered": true
+                        }
+                    },
+                    {
+                        "name": {
+                            "namestr": "CreditsText",
+                            "layer": 0,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "CreditsParent.prefab",
+                            "issync": false
+                        },
+                        "transform": {
+                            "position": {
+                                "x": 13.0,
+                                "y": 21.0
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0
+                            }
+                        },
+                        "text": {
+                            "text": "MICHELE COMAIR",
+                            "text": null,
+                            "filename": "fnt_silkscreenRegular.ttf",
+                            "fontsize": 20.0,
+                            "color": {
+                                "r": 0.10588235408067703,
+                                "g": 0.8823529481887817,
+                                "b": 0.06666667014360428
+                            },
+                            "layer": 900,
+                            "isCentered": true
+                        }
+                    },
+                    {
+                        "name": {
+                            "namestr": "CreditsText",
+                            "layer": 0,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "CreditsParent.prefab",
+                            "issync": false
+                        },
+                        "transform": {
+                            "position": {
+                                "x": 13.0,
+                                "y": 20.0
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0
+                            }
+                        },
+                        "text": {
+                            "text": "CHRISTOPHER COMAIR",
+                            "text": null,
+                            "filename": "fnt_silkscreenRegular.ttf",
+                            "fontsize": 20.0,
+                            "color": {
+                                "r": 0.10588235408067703,
+                                "g": 0.8823529481887817,
+                                "b": 0.06666667014360428
+                            },
+                            "layer": 900,
+                            "isCentered": true
+                        }
+                    },
+                    {
+                        "name": {
+                            "namestr": "CreditsText",
+                            "layer": 0,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "CreditsParent.prefab",
+                            "issync": false
+                        },
+                        "transform": {
+                            "position": {
+                                "x": 13.0,
+                                "y": 19.0
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0
+                            }
+                        },
+                        "text": {
+                            "text": "ALEXANDER COMAIR",
+                            "text": null,
+                            "filename": "fnt_silkscreenRegular.ttf",
+                            "fontsize": 20.0,
+                            "color": {
+                                "r": 0.10588235408067703,
+                                "g": 0.8823529481887817,
+                                "b": 0.06666667014360428
+                            },
+                            "layer": 900,
+                            "isCentered": true
+                        }
+                    }
+                ]
+            },
+            {
+                "name": {
+                    "namestr": "Credits",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "CreditsParent.prefab",
+                    "issync": false
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.0,
+                        "y": -195.0
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "children": [
+                    {
+                        "name": {
+                            "namestr": "CreditsText",
+                            "layer": 0,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "CreditsParent.prefab",
+                            "issync": false
+                        },
+                        "transform": {
+                            "position": {
+                                "x": 13.0,
+                                "y": 23.5
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0
+                            }
+                        },
+                        "text": {
+                            "text": "EXECUTIVES",
+                            "text": null,
+                            "filename": "fnt_silkscreenRegular.ttf",
+                            "fontsize": 40.0,
+                            "color": {
+                                "r": 0.10588235408067703,
+                                "g": 0.8823529481887817,
+                                "b": 0.06666667014360428
+                            },
+                            "layer": 900,
+                            "isCentered": true
+                        }
+                    },
+                    {
+                        "name": {
+                            "namestr": "CreditsText",
+                            "layer": 0,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "CreditsParent.prefab",
+                            "issync": false
+                        },
+                        "transform": {
+                            "position": {
+                                "x": 13.0,
+                                "y": 22.0
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0
+                            }
+                        },
+                        "text": {
+                            "text": "MICHAEL GATS",
+                            "text": null,
+                            "filename": "fnt_silkscreenRegular.ttf",
+                            "fontsize": 20.0,
+                            "color": {
+                                "r": 0.10588235408067703,
+                                "g": 0.8823529481887817,
+                                "b": 0.06666667014360428
+                            },
+                            "layer": 900,
+                            "isCentered": true
+                        }
+                    },
+                    {
+                        "name": {
+                            "namestr": "CreditsText",
+                            "layer": 0,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "CreditsParent.prefab",
+                            "issync": false
+                        },
+                        "transform": {
+                            "position": {
+                                "x": 13.0,
+                                "y": 21.0
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0
+                            }
+                        },
+                        "text": {
+                            "text": "TAN CHEK MING",
+                            "text": null,
+                            "filename": "fnt_silkscreenRegular.ttf",
+                            "fontsize": 20.0,
+                            "color": {
+                                "r": 0.10588235408067703,
+                                "g": 0.8823529481887817,
+                                "b": 0.06666667014360428
+                            },
+                            "layer": 900,
+                            "isCentered": true
+                        }
+                    },
+                    {
+                        "name": {
+                            "namestr": "CreditsText",
+                            "layer": 0,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "CreditsParent.prefab",
+                            "issync": false
+                        },
+                        "transform": {
+                            "position": {
+                                "x": 13.0,
+                                "y": 20.0
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0
+                            }
+                        },
+                        "text": {
+                            "text": "PRASANNA KUMAR GHALI",
+                            "text": null,
+                            "filename": "fnt_silkscreenRegular.ttf",
+                            "fontsize": 20.0,
+                            "color": {
+                                "r": 0.10588235408067703,
+                                "g": 0.8823529481887817,
+                                "b": 0.06666667014360428
+                            },
+                            "layer": 900,
+                            "isCentered": true
+                        }
+                    },
+                    {
+                        "name": {
+                            "namestr": "CreditsText",
+                            "layer": 0,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "CreditsParent.prefab",
+                            "issync": false
+                        },
+                        "transform": {
+                            "position": {
+                                "x": 13.0,
+                                "y": 19.0
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0
+                            }
+                        },
+                        "text": {
+                            "text": "MANDY WONG",
+                            "text": null,
+                            "filename": "fnt_silkscreenRegular.ttf",
+                            "fontsize": 20.0,
+                            "color": {
+                                "r": 0.10588235408067703,
+                                "g": 0.8823529481887817,
+                                "b": 0.06666667014360428
+                            },
+                            "layer": 900,
+                            "isCentered": true
+                        }
+                    },
+                    {
+                        "name": {
+                            "namestr": "CreditsText",
+                            "layer": 0,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "CreditsParent.prefab",
+                            "issync": false
+                        },
+                        "transform": {
+                            "position": {
+                                "x": 13.0,
+                                "y": 18.0
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0
+                            }
+                        },
+                        "text": {
+                            "text": "JOHNNY DEEK",
+                            "text": null,
+                            "filename": "fnt_silkscreenRegular.ttf",
+                            "fontsize": 20.0,
+                            "color": {
+                                "r": 0.10588235408067703,
+                                "g": 0.8823529481887817,
+                                "b": 0.06666667014360428
+                            },
+                            "layer": 900,
+                            "isCentered": true
+                        }
+                    }
+                ]
+            },
+            {
+                "name": {
+                    "namestr": "Credits",
+                    "layer": 0,
+                    "isprefab": true,
+                    "tagstr": "Default",
+                    "prefabname": "CreditsParent.prefab",
+                    "issync": false
+                },
+                "transform": {
+                    "position": {
+                        "x": 0.0,
+                        "y": -205.0
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                "children": [
+                    {
+                        "name": {
+                            "namestr": "CreditsText",
+                            "layer": 0,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "CreditsParent.prefab",
+                            "issync": false
+                        },
+                        "transform": {
+                            "position": {
+                                "x": 13.0,
+                                "y": 23.5
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0
+                            }
+                        },
+                        "text": {
+                            "text": "SPECIAL THANKS TO",
+                            "text": null,
+                            "filename": "fnt_silkscreenRegular.ttf",
+                            "fontsize": 40.0,
+                            "color": {
+                                "r": 0.10588235408067703,
+                                "g": 0.8823529481887817,
+                                "b": 0.06666667014360428
+                            },
+                            "layer": 900,
+                            "isCentered": true
+                        }
+                    },
+                    {
+                        "name": {
+                            "namestr": "CreditsText",
+                            "layer": 0,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "CreditsParent.prefab",
+                            "issync": false
+                        },
+                        "transform": {
+                            "position": {
+                                "x": 13.0,
+                                "y": 22.0
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0
+                            }
+                        },
+                        "text": {
+                            "text": "GABE NG JIA WEN",
+                            "text": null,
+                            "filename": "fnt_silkscreenRegular.ttf",
+                            "fontsize": 20.0,
+                            "color": {
+                                "r": 0.10588235408067703,
+                                "g": 0.8823529481887817,
+                                "b": 0.06666667014360428
+                            },
+                            "layer": 900,
+                            "isCentered": true
+                        }
+                    },
+                    {
+                        "name": {
+                            "namestr": "CreditsText",
+                            "layer": 0,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "CreditsParent.prefab",
+                            "issync": false
+                        },
+                        "transform": {
+                            "position": {
+                                "x": 13.0,
+                                "y": 21.0
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0
+                            }
+                        },
+                        "text": {
+                            "text": "LOH JIA QUAN",
+                            "text": null,
+                            "filename": "fnt_silkscreenRegular.ttf",
+                            "fontsize": 20.0,
+                            "color": {
+                                "r": 0.10588235408067703,
+                                "g": 0.8823529481887817,
+                                "b": 0.06666667014360428
+                            },
+                            "layer": 900,
+                            "isCentered": true
+                        }
+                    },
+                    {
+                        "name": {
+                            "namestr": "CreditsText",
+                            "layer": 0,
+                            "isprefab": true,
+                            "tagstr": "Default",
+                            "prefabname": "CreditsParent.prefab",
+                            "issync": false
+                        },
+                        "transform": {
+                            "position": {
+                                "x": 13.0,
+                                "y": 19.896255493164063
+                            },
+                            "rotation": 0.0,
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0
+                            }
+                        },
+                        "text": {
+                            "text": "KITSON LOW",
+                            "text": null,
+                            "filename": "fnt_silkscreenRegular.ttf",
+                            "fontsize": 20.0,
+                            "color": {
+                                "r": 0.10588235408067703,
+                                "g": 0.8823529481887817,
+                                "b": 0.06666667014360428
+                            },
+                            "layer": 900,
+                            "isCentered": true
+                        }
+                    }
+                ]
             }
         ]
     },
@@ -1610,7 +2814,7 @@
         "transform": {
             "position": {
                 "x": 32.45012283325195,
-                "y": -22.705276489257813
+                "y": -63.33885192871094
             },
             "rotation": 36.29874038696289,
             "scale": {
@@ -1662,7 +2866,7 @@
         "transform": {
             "position": {
                 "x": -5.2923479080200195,
-                "y": 7.37681770324707
+                "y": -13.252533912658691
             },
             "rotation": -22.50843048095703,
             "scale": {
@@ -1714,7 +2918,7 @@
         "transform": {
             "position": {
                 "x": -4.796106338500977,
-                "y": -57.40321350097656
+                "y": -108.6640396118164
             },
             "rotation": 125.73143005371094,
             "scale": {
@@ -1766,7 +2970,7 @@
         "transform": {
             "position": {
                 "x": 31.5894832611084,
-                "y": -88.2476806640625
+                "y": -163.57606506347656
             },
             "rotation": -127.81178283691406,
             "scale": {
@@ -1926,6 +3130,81 @@
                     "map": []
                 }
             ]
+        }
+    },
+    {
+        "name": {
+            "namestr": "img_creditsPicture",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": 13.0,
+                "y": -225.04739379882813
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 0.9224708676338196,
+                "y": 0.9224708676338196
+            }
+        },
+        "sprite": {
+            "imagefile": "img_creditsPicture.png",
+            "layer": 0,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0,
+            "isLit": false
+        }
+    },
+    {
+        "name": {
+            "namestr": "img_creditsCinema",
+            "layer": 0,
+            "isprefab": false,
+            "tagstr": "Default"
+        },
+        "transform": {
+            "position": {
+                "x": 13.0,
+                "y": -198.66650390625
+            },
+            "rotation": -0.0,
+            "scale": {
+                "x": 0.7075168490409851,
+                "y": 0.7075168490409851
+            }
+        },
+        "collider": {
+            "checkcollision": true,
+            "checkresponse": true,
+            "size": {
+                "x": 25.600000381469727,
+                "y": 25.600000381469727
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "drawDebug": true,
+            "radius": 0.5,
+            "shapetype": 0
+        },
+        "sprite": {
+            "imagefile": "img_creditsCinema.png",
+            "layer": 0,
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "alpha": 1.0,
+            "isLit": false
         }
     }
 ]
