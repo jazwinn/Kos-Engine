@@ -9,6 +9,7 @@ Camera
 PlayerBullet
 PlayerShotgunBullet
 PlayerRailgunBullet
+PlayerEyeGlow
 MeleeKillZoneSpawn
 LeftLimbPos
 RightLimbPos

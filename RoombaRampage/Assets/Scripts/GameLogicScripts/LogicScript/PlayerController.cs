@@ -39,7 +39,7 @@ public class PlayerController : ScriptBase
     }
     #endregion
 
-    //
+    public static bool godMode = false;
 
     //Player Speed
     public float speed;
@@ -96,6 +96,14 @@ public class PlayerController : ScriptBase
     {
         //Checks if game is paused and prevents player from doing anything
         if (GameControllerLevel1.gameIsPaused || PlayerLoadoutManager.isSortieing) { return; }
+
+        if (InternalCall.m_InternalCallIsKeyPressed(keyCode.LeftControl))
+        {
+            if (InternalCall.m_InternalCallIsKeyPressed(keyCode.L))
+            {
+                godMode = true;
+            }
+        }
 
         //Dead player, return to prevent actions
         if (isDead) { return; }
@@ -172,7 +180,7 @@ public class PlayerController : ScriptBase
         #endregion
 
         #region Collision
-        if (InternalCall.m_InternalCallIsCollided(EntityID) != 0.0f)
+        if (InternalCall.m_InternalCallIsCollided(EntityID) != 0.0f && !godMode)
         {
             collidedEntities = InternalCall.m_InternalCallGetCollidedEntities(EntityID);
 
