@@ -220,7 +220,7 @@ namespace Application {
 
 
 
-        if (Input::InputSystem::m_isKeyPressed(keys::LeftAlt) && Input::InputSystem::m_isKeyTriggered(keys::ENTER)) {
+        if ((Input::InputSystem::m_isKeyPressed(keys::LeftAlt) || Input::InputSystem::m_isKeyPressed(keys::RightAlt)) && Input::InputSystem::m_isKeyTriggered(keys::ENTER)) {
             if (m_enabledFullScreen) {
                 glfwSetWindowFocusCallback(m_window, windowedFocusCallback);
                 glfwSetWindowMonitor(m_window, nullptr, 100, 100, static_cast<int>(AppWindow::m_windowWidth), static_cast<int>(AppWindow::m_windowHeight), 0);
