@@ -3046,7 +3046,7 @@
                     },
                     {
                         "name": "aud_railgunShot01",
-                        "volume": 0.14499999582767487,
+                        "volume": 0.38600000739097595,
                         "loop": false,
                         "playOnStart": false,
                         "isBGM": false,
@@ -3054,7 +3054,7 @@
                     },
                     {
                         "name": "aud_playerDeath01",
-                        "volume": 0.2750000059604645,
+                        "volume": 1.0,
                         "loop": false,
                         "playOnStart": false,
                         "isBGM": false,
@@ -3784,7 +3784,7 @@
                     },
                     {
                         "name": "aud_railgunShot01",
-                        "volume": 0.14499999582767487,
+                        "volume": 0.38600000739097595,
                         "loop": false,
                         "playOnStart": false,
                         "isBGM": false,
@@ -3792,7 +3792,7 @@
                     },
                     {
                         "name": "aud_playerDeath01",
-                        "volume": 0.2750000059604645,
+                        "volume": 1.0,
                         "loop": false,
                         "playOnStart": false,
                         "isBGM": false,
@@ -4522,7 +4522,7 @@
                     },
                     {
                         "name": "aud_railgunShot01",
-                        "volume": 0.14499999582767487,
+                        "volume": 0.38600000739097595,
                         "loop": false,
                         "playOnStart": false,
                         "isBGM": false,
@@ -4530,7 +4530,7 @@
                     },
                     {
                         "name": "aud_playerDeath01",
-                        "volume": 0.2750000059604645,
+                        "volume": 1.0,
                         "loop": false,
                         "playOnStart": false,
                         "isBGM": false,
@@ -5260,7 +5260,7 @@
                     },
                     {
                         "name": "aud_railgunShot01",
-                        "volume": 0.14499999582767487,
+                        "volume": 0.38600000739097595,
                         "loop": false,
                         "playOnStart": false,
                         "isBGM": false,
@@ -5268,7 +5268,7 @@
                     },
                     {
                         "name": "aud_playerDeath01",
-                        "volume": 0.2750000059604645,
+                        "volume": 1.0,
                         "loop": false,
                         "playOnStart": false,
                         "isBGM": false,
@@ -6747,7 +6747,7 @@
                     },
                     {
                         "name": "aud_railgunShot01",
-                        "volume": 0.14499999582767487,
+                        "volume": 0.38600000739097595,
                         "loop": false,
                         "playOnStart": false,
                         "isBGM": false,
@@ -6755,7 +6755,7 @@
                     },
                     {
                         "name": "aud_playerDeath01",
-                        "volume": 0.2750000059604645,
+                        "volume": 1.0,
                         "loop": false,
                         "playOnStart": false,
                         "isBGM": false,
@@ -45042,7 +45042,7 @@
                     "namestr": "PlayerEyeGlow",
                     "layer": 0,
                     "isprefab": true,
-                    "tagstr": "Default",
+                    "tagstr": "PlayerEyeGlow",
                     "prefabname": "prefab_player.prefab",
                     "issync": true
                 },
