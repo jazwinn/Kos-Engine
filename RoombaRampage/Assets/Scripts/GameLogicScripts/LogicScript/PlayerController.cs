@@ -106,22 +106,24 @@ public class PlayerController : ScriptBase
         //Checks if game is paused and prevents player from doing anything
         if (GameControllerLevel1.gameIsPaused) { return; }
 
-        if (InternalCall.m_InternalCallIsKeyPressed(keyCode.LeftControl) && (InternalCall.m_InternalCallIsKeyPressed(keyCode.L))
+        if (InternalCall.m_InternalCallIsKeyPressed(keyCode.LeftControl) && (InternalCall.m_InternalCallIsKeyTriggered(keyCode.L))
 )
         {
             
                 if (godMode == true)
                 {
 
-                    color.R = 255f;
+                    color.R = 1f;
+                    color.G = 0f;
+                    color.B = 0f;
 
-                    godMode = false;
+                godMode = false;
                 }
                 else if (godMode == false)
                 {
                     color.R = 0f;
-                    color.G = 255f;
-                    color.B = 99f;
+                    color.G = 1f;
+                    color.B = 0.4f;
 
                     godMode = true;
                 }          
