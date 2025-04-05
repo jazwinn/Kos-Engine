@@ -144,11 +144,11 @@ namespace ecs {
 
 				/*mat3x3::Mat3RotDeg(rotateMatrix, light->m_light_rotation);
 				mat3x3::Mat3Translate(translateToOriginMatrix, -lightTransformation.m_e20, -lightTransformation.m_e21);
-				mat3x3::Mat3Translate(translateBackMatrix, lightTransformation.m_e20, lightTransformation.m_e21);
+				mat3x3::Mat3Translate(translateBackMatrix, lightTransformation.m_e20, lightTransformation.m_e21);*/
 
-				lightTransformation = translateBackMatrix * rotateMatrix * translateToOriginMatrix * lightTransformation;*/
+				//lightTransformation = translateBackMatrix * rotateMatrix * translateToOriginMatrix * lightTransformation;
 
-				lightTransformation = lightTransformation * mat3x3::Mat3Transform(light->m_light_OffSet, light->m_light_scale, 0);
+				lightTransformation = lightTransformation * mat3x3::Mat3Transform(light->m_light_OffSet, light->m_light_scale, light->m_light_rotation);
 
 
 
