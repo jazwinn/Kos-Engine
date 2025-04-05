@@ -3,9 +3,9 @@
         "GlobalSettings": {
             "globalIllumination": 0.2199999988079071,
             "backgroundColor": {
-                "r": 0.0,
-                "g": 0.0,
-                "b": 0.0
+                "r": 0.13300000131130219,
+                "g": 0.23000000417232513,
+                "b": 0.3199999928474426
             }
         }
     },
@@ -238,7 +238,7 @@
             },
             {
                 "name": "aud_railgunShot01",
-                "volume": 0.14499999582767487,
+                "volume": 0.3919999897480011,
                 "loop": false,
                 "playOnStart": false,
                 "isBGM": false,
@@ -246,7 +246,7 @@
             },
             {
                 "name": "aud_playerDeath01",
-                "volume": 0.2750000059604645,
+                "volume": 1.0,
                 "loop": false,
                 "playOnStart": false,
                 "isBGM": false,
