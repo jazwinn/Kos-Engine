@@ -184,7 +184,7 @@ namespace Application {
 
         m_monitor = glfwGetPrimaryMonitor();
         m_mode = glfwGetVideoMode(m_monitor);
-        m_window = glfwCreateWindow(static_cast<int>(m_windowWidth), static_cast<int>(m_windowHeight), "Kos", m_enabledFullScreen ?m_monitor : NULL , NULL);
+        m_window = glfwCreateWindow(static_cast<int>(m_windowWidth), static_cast<int>(m_windowHeight), "R00M13A-OS", m_enabledFullScreen ?m_monitor : NULL , NULL);
 
         Input::InputSystem::m_windowInput = m_window;
         if (!m_window)
@@ -220,7 +220,7 @@ namespace Application {
 
 
 
-        if (Input::InputSystem::m_isKeyPressed(keys::LeftAlt) && Input::InputSystem::m_isKeyTriggered(keys::ENTER)) {
+        if ((Input::InputSystem::m_isKeyPressed(keys::LeftAlt) || Input::InputSystem::m_isKeyPressed(keys::RightAlt)) && Input::InputSystem::m_isKeyTriggered(keys::ENTER)) {
             if (m_enabledFullScreen) {
                 glfwSetWindowFocusCallback(m_window, windowedFocusCallback);
                 glfwSetWindowMonitor(m_window, nullptr, 100, 100, static_cast<int>(AppWindow::m_windowWidth), static_cast<int>(AppWindow::m_windowHeight), 0);
