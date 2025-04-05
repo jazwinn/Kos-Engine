@@ -384,8 +384,42 @@ namespace physicspipe {
 		*/
 		/******************************************************************/
 		bool m_CollisionIntersection_CircleRect_AABB(const Circle&, const Rectangle&);
+
+		/******************************************************************/
+		/*!
+		\fn      bool m_CollisionIntersection_CircleRect_SAT(const Circle& circle, const Rectangle& rect)
+		\brief   Checks for collision between a circle and a rectangle using the Separating Axis Theorem (SAT).
+		\param   circle - The circle to test for intersection.
+		\param   rect - The rectangle to test for intersection.
+		\return  True if the circle and rectangle intersect, false otherwise.
+		*/
+		/******************************************************************/
 		bool m_CollisionIntersection_CircleRect_SAT(const Circle&, const Rectangle&);
+
+		/******************************************************************/
+		/*!
+		\fn      std::pair<bool, std::pair<vector2::Vec2, float>> m_CollisionIntersection_CircleRect_SAT_TEST(const Circle& circle, const Rectangle& rect)
+		\brief   Performs SAT collision detection between a circle and a rectangle and provides collision response data.
+		\param   circle - The circle to test for intersection.
+		\param   rect - The rectangle to test for intersection.
+		\return  A pair containing:
+				 - A bool indicating if a collision occurred.
+				 - A pair of resolution vector and penetration depth for collision response.
+		*/
+		/******************************************************************/
 		std::pair<bool, std::pair<vector2::Vec2, float>> m_CollisionIntersection_CircleRect_SAT_TEST(const Circle&, const Rectangle&);
+
+		/******************************************************************/
+		/*!
+		\fn      std::pair<bool, std::pair<vector2::Vec2, float>> m_CollisionIntersection_CircleCircle_SAT_TEST(const Circle& circleA, const Circle& circleB)
+		\brief   Performs SAT collision detection between two circles and provides collision response data.
+		\param   circleA - The first circle.
+		\param   circleB - The second circle.
+		\return  A pair containing:
+				 - A bool indicating if a collision occurred.
+				 - A pair of resolution vector and penetration depth for collision response.
+		*/
+		/******************************************************************/
 		std::pair<bool, std::pair<vector2::Vec2, float>> m_CollisionIntersection_CircleCircle_SAT_TEST(const Circle&, const Circle&);
 		/******************************************************************/
 		/*!
@@ -505,9 +539,46 @@ namespace physicspipe {
 		/******************************************************************/
 		int m_FindClosestPointOnPolygon(vector2::Vec2 circle_pos, std::vector<vector2::Vec2> vertices);
 
+		/******************************************************************/
+		/*!
+		\fn      bool LineIntersect(const vector2::Vec2& p1, const vector2::Vec2& p2, const vector2::Vec2& q1, const vector2::Vec2& q2, vector2::Vec2& intersection)
+		\brief   Determines whether two line segments intersect and calculates the intersection point if they do.
+		\param   p1 - Starting point of the first line segment.
+		\param   p2 - Ending point of the first line segment.
+		\param   q1 - Starting point of the second line segment.
+		\param   q2 - Ending point of the second line segment.
+		\param   intersection - Output parameter to store the point of intersection.
+		\return  True if the lines intersect, false otherwise.
+		*/
+		/******************************************************************/
 		bool LineIntersect(const vector2::Vec2& p1, const vector2::Vec2& p2, const vector2::Vec2& q1, const vector2::Vec2& q2, vector2::Vec2& intersection);
+		
+		/******************************************************************/
+		/*!
+		\fn      bool LineIntersect(const vector2::Vec2& p1, const vector2::Vec2& p2, const vector2::Vec2& q1, const vector2::Vec2& q2, vector2::Vec2& intersection)
+		\brief   Determines whether two line segments intersect and calculates the intersection point if they do.
+		\param   p1 - Starting point of the first line segment.
+		\param   p2 - Ending point of the first line segment.
+		\param   q1 - Starting point of the second line segment.
+		\param   q2 - Ending point of the second line segment.
+		\param   intersection - Output parameter to store the point of intersection.
+		\return  True if the lines intersect, false otherwise.
+		*/
+		/******************************************************************/
 		bool LineRectangleIntersect(const vector2::Vec2& p1, const vector2::Vec2& p2, const vector2::Vec2& rectBottomLeft, const vector2::Vec2& rectTopRight, vector2::Vec2& intersectionpoint);
 
+		/******************************************************************/
+		/*!
+		\fn      bool LineIntersect(const vector2::Vec2& p1, const vector2::Vec2& p2, const vector2::Vec2& q1, const vector2::Vec2& q2, vector2::Vec2& intersection)
+		\brief   Determines whether two line segments intersect and calculates the intersection point if they do.
+		\param   p1 - Starting point of the first line segment.
+		\param   p2 - Ending point of the first line segment.
+		\param   q1 - Starting point of the second line segment.
+		\param   q2 - Ending point of the second line segment.
+		\param   intersection - Output parameter to store the point of intersection.
+		\return  True if the lines intersect, false otherwise.
+		*/
+		/******************************************************************/
 		void IsLineIntersecting(const ecs::EntityID id, const vector2::Vec2& p1, const vector2::Vec2& p2, const std::vector<layer::LAYERS>& layer, bool& isHit, vector2::Vec2& hitPosition);
 };
 }

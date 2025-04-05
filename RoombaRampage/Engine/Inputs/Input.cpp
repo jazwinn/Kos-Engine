@@ -256,8 +256,8 @@ namespace Input {
 					//i = 2 is right x axis
 					//i = 1 is left y axis
 					//i = 0 is left x axis
-					int store = 0;
-					const float* axes = glfwGetJoystickAxes(m_controllerID, &store);
+				//	int store = 0;
+					//const float* axes = glfwGetJoystickAxes(m_controllerID, &store);
 					for (int i = 0; i < store; ++i)  // GLFW_GAMEPAD_AXIS_LAST is 5
 					{
 						if (i == 3) {
@@ -412,8 +412,8 @@ namespace Input {
 			}
 			else{
 				if (overwriteMousePosWithController) {
-					int axesCount;
-					const float* axes = glfwGetJoystickAxes(GLFW_JOYSTICK_1, &axesCount);
+					int axesCount{};
+					glfwGetJoystickAxes(GLFW_JOYSTICK_1, &axesCount);
 
 					if (axesCount >= 2) {
 						float stickX = m_controllerAxes[2];
@@ -429,8 +429,8 @@ namespace Input {
 					}
 				}
 
-				int count;
-				const float* axes = glfwGetJoystickAxes(GLFW_JOYSTICK_1, &count);
+				int count{};
+				glfwGetJoystickAxes(GLFW_JOYSTICK_1, &count);
 
 				if (count >= 2) { // Ensure the joystick has at least two axes
 					float x = m_controllerAxes[2]; // X-axis

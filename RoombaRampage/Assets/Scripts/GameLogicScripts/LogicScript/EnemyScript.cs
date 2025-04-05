@@ -1581,8 +1581,9 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
 
 
         // Fire at player when timer expires
-        fireTimer -= InternalCall.m_InternalCallGetDeltaTime();
-        rangedShuffleTimer -= InternalCall.m_InternalCallGetDeltaTime();
+        float timescale = InternalCall.m_InternalCallGetTimeScale();
+        fireTimer -= InternalCall.m_InternalCallGetDeltaTime() * timescale;
+        rangedShuffleTimer -= InternalCall.m_InternalCallGetDeltaTime() * timescale;
         if (fireTimer <= 0)
         {
             fireTimer = fireRate;

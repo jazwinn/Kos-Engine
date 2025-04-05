@@ -228,7 +228,7 @@ public class GameControllerLevel1 : ScriptBase
 
     private void InputChecker()
     {
-        if ((InternalCall.m_InternalCallIsKeyTriggered(keyCode.R) || InternalCall.m_InternalCallIsControllerTriggered(keyCode.CONTROLLER_Y)) && PlayerController.isDead)
+        if ((InternalCall.m_InternalCallIsKeyTriggered(keyCode.R) || InternalCall.m_InternalCallIsControllerTriggered(keyCode.CONTROLLER_A)) && PlayerController.isDead)
         {
             RestartGame();
         }
@@ -242,7 +242,7 @@ public class GameControllerLevel1 : ScriptBase
 
         if (gameIsPaused) { return; } //Ensures nothing but pause menu can be activated when game is paused
 
-        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.TAB) || InternalCall.m_InternalCallIsKeyTriggered(keyCode.I) || InternalCall.m_InternalCallIsControllerTriggered(keyCode.CONTROLLER_UP))
+        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.TAB) || InternalCall.m_InternalCallIsKeyTriggered(keyCode.I) || InternalCall.m_InternalCallIsControllerTriggered(keyCode.CONTROLLER_Y))
         {
             if (PlayerGun.playerBoost == false)
             {

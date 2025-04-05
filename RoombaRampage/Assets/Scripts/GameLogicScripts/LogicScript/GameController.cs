@@ -118,7 +118,7 @@ public class GameController : ScriptBase
         }
 
         //Pausing
-        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.ESC) || InternalCall.m_InternalCallIsControllerTriggered(keyCode.CONTROLLER_B)) ;
+        if (InternalCall.m_InternalCallIsKeyTriggered(keyCode.ESC) || InternalCall.m_InternalCallIsControllerTriggered(keyCode.CONTROLLER_B))
         {
             if (confirmQuit)
             {

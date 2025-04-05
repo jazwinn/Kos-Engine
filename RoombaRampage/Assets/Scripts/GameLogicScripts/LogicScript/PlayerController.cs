@@ -39,7 +39,7 @@ public class PlayerController : ScriptBase
     }
     #endregion
 
-    //
+    public static bool godMode = false;
 
     //Player Speed
     public float speed;
@@ -95,7 +95,15 @@ public class PlayerController : ScriptBase
     public override void Update()
     {
         //Checks if game is paused and prevents player from doing anything
-        if (GameControllerLevel1.gameIsPaused || PlayerLoadoutManager.isSortieing) { return; }
+        if (GameControllerLevel1.gameIsPaused) { return; }
+
+        if (InternalCall.m_InternalCallIsKeyPressed(keyCode.LeftControl))
+        {
+            if (InternalCall.m_InternalCallIsKeyPressed(keyCode.L))
+            {
+                godMode = true;
+            }
+        }
 
         //Dead player, return to prevent actions
         if (isDead) { return; }
@@ -154,6 +162,7 @@ public class PlayerController : ScriptBase
         
 
         //Normalize to prevent diagonal movement from adding speed
+
         movement = NormalizeAndScale(movement.X, movement.Y, speed);
 
         if (!PlayerGun.playerBoost)
@@ -166,13 +175,14 @@ public class PlayerController : ScriptBase
             movement.X = 0;
             movement.Y = 0;
             InternalCall.m_InternalSetVelocity(EntityID, movement);
+
         }
 
 
         #endregion
 
         #region Collision
-        if (InternalCall.m_InternalCallIsCollided(EntityID) != 0.0f)
+        if (InternalCall.m_InternalCallIsCollided(EntityID) != 0.0f && !godMode)
         {
             collidedEntities = InternalCall.m_InternalCallGetCollidedEntities(EntityID);
 
@@ -261,7 +271,7 @@ public class PlayerController : ScriptBase
 
         #endregion
 
-        if (PlayerGun.playerBoost)
+        if (PlayerGun.playerBoost || PlayerLoadoutManager.isSortieing)
         {
             return;
         }

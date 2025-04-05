@@ -66,7 +66,7 @@ public class Prop_GlassWall : ScriptBase
 
                         isAnimating = true;
 
-                        InternalCall.m_InternalCallDeleteEntity(rCWallID);
+                        //InternalCall.m_InternalCallDeleteEntity(rCWallID);
 
                         animComp = Component.Get<AnimationComponent>(EntityID);
                         animComp.m_frameNumber = 0;
