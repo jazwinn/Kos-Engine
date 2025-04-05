@@ -11,7 +11,7 @@
     },
     {
         "CursorSettings": {
-            "cursorImage": "../Assets/Texture/UI/img_startScreenCursor.png",
+            "cursorImage": "../Assets/Texture/UI/img_inGameCursor.png",
             "isCursorCentered": false
         }
     },
@@ -859,7 +859,7 @@
                     "namestr": "PlayerEyeGlow",
                     "layer": 0,
                     "isprefab": true,
-                    "tagstr": "Default",
+                    "tagstr": "PlayerEyeGlow",
                     "prefabname": "prefab_player.prefab",
                     "issync": true
                 },
@@ -1029,8 +1029,10 @@
                 "name": {
                     "namestr": "front light",
                     "layer": 0,
-                    "isprefab": false,
-                    "tagstr": "PlayerGunLightBack"
+                    "isprefab": true,
+                    "tagstr": "PlayerGunLightBack",
+                    "prefabname": "prefab_player.prefab",
+                    "issync": false
                 },
                 "transform": {
                     "position": {

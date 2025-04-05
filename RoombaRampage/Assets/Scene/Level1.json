@@ -78648,42 +78648,6 @@
             },
             {
                 "name": {
-                    "namestr": "GlassWallCollider",
-                    "layer": 5,
-                    "isprefab": true,
-                    "tagstr": "PropGlassWall",
-                    "prefabname": "Wall.prefab",
-                    "issync": false
-                },
-                "transform": {
-                    "position": {
-                        "x": -4.296412392523763e-10,
-                        "y": -2.1963512897491455
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    }
-                },
-                "collider": {
-                    "checkcollision": true,
-                    "checkresponse": false,
-                    "size": {
-                        "x": 5.5,
-                        "y": 0.3400000035762787
-                    },
-                    "offset": {
-                        "x": 0.0,
-                        "y": 0.0
-                    },
-                    "drawDebug": true,
-                    "radius": 0.5,
-                    "shapetype": 0
-                }
-            },
-            {
-                "name": {
                     "namestr": "GlassWallSprite",
                     "layer": 10,
                     "isprefab": true,
@@ -83276,7 +83240,7 @@
                     "namestr": "PlayerEyeGlow",
                     "layer": 0,
                     "isprefab": true,
-                    "tagstr": "Default",
+                    "tagstr": "PlayerEyeGlow",
                     "prefabname": "prefab_player.prefab",
                     "issync": true
                 },
