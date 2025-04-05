@@ -26,12 +26,12 @@
         },
         "transform": {
             "position": {
-                "x": 13.060652732849121,
-                "y": -38.12770080566406
+                "x": 13.0,
+                "y": -39.0
             },
             "rotation": -0.0,
             "scale": {
-                "x": 8.0,
+                "x": 8.460000038146973,
                 "y": 8.0
             }
         },
@@ -142,7 +142,7 @@
                             }
                         },
                         "text": {
-                            "text": "FPS : 000",
+                            "text": "FPS : 59",
                             "text": null,
                             "filename": "fnt_silkscreenRegular.ttf",
                             "fontsize": 1.5,
@@ -200,8 +200,8 @@
         },
         "transform": {
             "position": {
-                "x": 0.0,
-                "y": 0.0
+                "x": -29.926803588867188,
+                "y": -33.7298583984375
             },
             "rotation": -0.0,
             "scale": {
@@ -4505,7 +4505,7 @@
     {
         "name": {
             "namestr": "Boss Level Controller",
-            "layer": 5,
+            "layer": 0,
             "isprefab": false,
             "tagstr": "GameController"
         },
@@ -6464,7 +6464,7 @@
         "transform": {
             "position": {
                 "x": 13.0,
-                "y": -38.76601791381836
+                "y": -39.0
             },
             "rotation": -0.0,
             "scale": {
@@ -6527,6 +6527,20 @@
                     },
                     "alpha": 1.0,
                     "isLit": false
+                },
+                "script": {
+                    "scripts": [
+                        {
+                            "name": "ButtonPrompt",
+                            "enabled": true,
+                            "map": [
+                                {
+                                    "variable": "promptNo",
+                                    "base64": "AgAAAMzMzMwA"
+                                }
+                            ]
+                        }
+                    ]
                 }
             },
             {
@@ -6659,7 +6673,7 @@
         "transform": {
             "position": {
                 "x": 13.0,
-                "y": -38.708194732666016
+                "y": -39.0
             },
             "rotation": -0.0,
             "scale": {
@@ -7872,7 +7886,7 @@
         "transform": {
             "position": {
                 "x": 13.0,
-                "y": -38.18777084350586
+                "y": -39.0
             },
             "rotation": -0.0,
             "scale": {
@@ -9387,7 +9401,7 @@
         "transform": {
             "position": {
                 "x": 13.0,
-                "y": -38.12995147705078
+                "y": -39.0
             },
             "rotation": -0.0,
             "scale": {
@@ -9464,7 +9478,7 @@
                 "x": 13.0,
                 "y": -39.0
             },
-            "rotation": 0.0,
+            "rotation": 84.60977172851563,
             "scale": {
                 "x": 3.0,
                 "y": 3.0
@@ -10516,8 +10530,8 @@
         },
         "transform": {
             "position": {
-                "x": 13.401872634887695,
-                "y": -36.805458068847656
+                "x": 13.0,
+                "y": -39.0
             },
             "rotation": -0.0,
             "scale": {
@@ -10627,8 +10641,8 @@
                 },
                 "button": {
                     "force": {
-                        "x": 1141.8170166015625,
-                        "y": 991.2127685546875
+                        "x": 966.375732421875,
+                        "y": 787.3929443359375
                     },
                     "scale": {
                         "x": 5.920000076293945,
@@ -10709,8 +10723,8 @@
                 },
                 "button": {
                     "force": {
-                        "x": 1141.8170166015625,
-                        "y": 879.3662109375
+                        "x": 966.375732421875,
+                        "y": 652.0165405273438
                     },
                     "scale": {
                         "x": 5.800000190734863,
@@ -10791,8 +10805,8 @@
                 },
                 "button": {
                     "force": {
-                        "x": 1141.8170166015625,
-                        "y": 650.717529296875
+                        "x": 966.375732421875,
+                        "y": 375.2656555175781
                     },
                     "scale": {
                         "x": 5.840000152587891,
@@ -10873,8 +10887,8 @@
                 },
                 "button": {
                     "force": {
-                        "x": 1141.8170166015625,
-                        "y": 536.0278930664063
+                        "x": 966.375732421875,
+                        "y": 236.447998046875
                     },
                     "scale": {
                         "x": 4.539999961853027,
@@ -11091,8 +11105,8 @@
                 },
                 "button": {
                     "force": {
-                        "x": 1141.8170166015625,
-                        "y": 768.0987548828125
+                        "x": 966.375732421875,
+                        "y": 517.3410034179688
                     },
                     "scale": {
                         "x": 5.900000095367432,
@@ -11665,7 +11679,7 @@
                 "x": 6.960000038146973,
                 "y": -10.023512840270996
             },
-            "rotation": -0.0,
+            "rotation": 0.0,
             "scale": {
                 "x": 3.0999999046325684,
                 "y": 3.0
@@ -11943,7 +11957,7 @@
                 "x": 18.959999084472656,
                 "y": -10.023512840270996
             },
-            "rotation": -0.0,
+            "rotation": 0.0,
             "scale": {
                 "x": 3.0999999046325684,
                 "y": 3.0
@@ -12218,10 +12232,10 @@
         },
         "transform": {
             "position": {
-                "x": 0.0,
-                "y": 0.0
+                "x": 12.489020347595215,
+                "y": -39.0
             },
-            "rotation": 0.0,
+            "rotation": -0.0,
             "scale": {
                 "x": 1.0,
                 "y": 1.0
@@ -12290,7 +12304,7 @@
                     }
                 },
                 "sprite": {
-                    "imagefile": "ani_hudFullBar_strip7.png",
+                    "imagefile": "ani_hudSegmentBar_strip7.png",
                     "layer": 354,
                     "color": {
                         "r": 1.0,
@@ -12329,7 +12343,7 @@
                     }
                 },
                 "sprite": {
-                    "imagefile": "ani_hudFullBar_strip7.png",
+                    "imagefile": "ani_hudSegmentBar_strip7.png",
                     "layer": 353,
                     "color": {
                         "r": 1.0,
@@ -12368,7 +12382,7 @@
                     }
                 },
                 "sprite": {
-                    "imagefile": "ani_hudFullBar_strip7.png",
+                    "imagefile": "ani_hudSegmentBar_strip7.png",
                     "layer": 355,
                     "color": {
                         "r": 1.0,
@@ -12407,7 +12421,7 @@
                     }
                 },
                 "sprite": {
-                    "imagefile": "img_hudKatanaIcon.png",
+                    "imagefile": "img_hudGunIcon.png",
                     "layer": 356,
                     "color": {
                         "r": 1.0,
@@ -12439,7 +12453,7 @@
                     }
                 },
                 "sprite": {
-                    "imagefile": "img_hudKatanaIcon.png",
+                    "imagefile": "img_hudGunIcon.png",
                     "layer": 358,
                     "color": {
                         "r": 1.0,
@@ -12471,7 +12485,7 @@
                     }
                 },
                 "sprite": {
-                    "imagefile": "img_hudKatanaIcon.png",
+                    "imagefile": "img_hudGunIcon.png",
                     "layer": 357,
                     "color": {
                         "r": 1.0,
