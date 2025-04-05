@@ -184,7 +184,7 @@ namespace Application {
 
         m_monitor = glfwGetPrimaryMonitor();
         m_mode = glfwGetVideoMode(m_monitor);
-        m_window = glfwCreateWindow(static_cast<int>(m_windowWidth), static_cast<int>(m_windowHeight), "Kos", m_enabledFullScreen ?m_monitor : NULL , NULL);
+        m_window = glfwCreateWindow(static_cast<int>(m_windowWidth), static_cast<int>(m_windowHeight), "R00M13A-OS", m_enabledFullScreen ?m_monitor : NULL , NULL);
 
         Input::InputSystem::m_windowInput = m_window;
         if (!m_window)
