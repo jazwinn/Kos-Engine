@@ -12,7 +12,7 @@ public class PlayerController : ScriptBase
 {
     #region Entity ID
     private uint EntityID;
-
+    private uint eyeID;
     public override void Awake(uint id)
     {
         EntityID = id;
@@ -36,10 +36,13 @@ public class PlayerController : ScriptBase
         angleTolerance = 4f;
 
         InternalCall.m_InternalGetWorldMousePosition(out previousMousePos);
+
+        eyeID = (uint)InternalCall.m_InternalCallGetTagID("PlayerEyeGlow");
+
     }
     #endregion
 
-    public static bool godMode = false;
+    private bool godMode = false;
 
     //Player Speed
     public float speed;
@@ -87,8 +90,14 @@ public class PlayerController : ScriptBase
     //controller/cursor
     public static bool isControllerLastUsed = false;
     private bool cursoroff = false;
+
+    //godmode color
+    private Vector2 innterOuterRadius;
+    private Vector3 color;
+    private static float intensity;
     public override void Start()
     {
+        InternalCall.m_InternalCallGetLightingComponent(eyeID, out innterOuterRadius, out color, out intensity);
 
     }
 
@@ -97,12 +106,29 @@ public class PlayerController : ScriptBase
         //Checks if game is paused and prevents player from doing anything
         if (GameControllerLevel1.gameIsPaused) { return; }
 
-        if (InternalCall.m_InternalCallIsKeyPressed(keyCode.LeftControl))
+        if (InternalCall.m_InternalCallIsKeyPressed(keyCode.LeftControl) && (InternalCall.m_InternalCallIsKeyPressed(keyCode.L))
+)
         {
-            if (InternalCall.m_InternalCallIsKeyPressed(keyCode.L))
-            {
-                godMode = true;
-            }
+            
+                if (godMode == true)
+                {
+
+                    color.R = 255f;
+
+                    godMode = false;
+                }
+                else if (godMode == false)
+                {
+                    color.R = 0f;
+                    color.G = 255f;
+                    color.B = 99f;
+
+                    godMode = true;
+                }          
+            
+
+            InternalCall.m_InternalCallSetLightingComponent(eyeID, innterOuterRadius, color, intensity);
+
         }
 
         //Dead player, return to prevent actions
