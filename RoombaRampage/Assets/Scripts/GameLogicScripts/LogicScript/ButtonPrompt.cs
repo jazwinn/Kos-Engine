@@ -10,6 +10,9 @@ public class ButtonPrompt : ScriptBase
         EntityID = id;
         howToPlayTextureController = "img_userManualController.png";
         howToPlayTextureMouse = "img_userManual.png";
+        howToPlayMainMenuTextureController = "img_howToPlayTextController.png";
+        howToPlayMainMenuTextureMouse = "img_howToPlayText.png";
+
     }
     #endregion
 
@@ -17,6 +20,9 @@ public class ButtonPrompt : ScriptBase
     private AnimationComponent animComp;
     private string howToPlayTextureController;
     private string howToPlayTextureMouse;
+
+    private string howToPlayMainMenuTextureController;
+    private string howToPlayMainMenuTextureMouse;
 
     //image
     private string startingSprite;
@@ -40,7 +46,7 @@ public class ButtonPrompt : ScriptBase
     {
         animComp = Component.Get<AnimationComponent>(EntityID);
         InternalCall.m_InternalGetSpriteComponent(EntityID, out startingSprite, out startingLayer, out startingColor, out startingAlpha);
-        InternalCall.m_InternalGetTextComponent(EntityID, out confirmationText, out confirmationFontFileName, out confirmationFontLayer, out confirmationFontSize,out confirmationFontColor);
+        InternalCall.m_InternalGetTextComponent(EntityID, out confirmationText, out confirmationFontFileName, out confirmationFontLayer, out confirmationFontSize, out confirmationFontColor);
     }
 
     public override void Update()
@@ -62,7 +68,12 @@ public class ButtonPrompt : ScriptBase
                     break;
 
                 case 3:
-                    InternalCall.m_InternalSetTextComponent(EntityID, controllerText, confirmationFontFileName,  confirmationFontLayer,  confirmationFontSize,  confirmationFontColor);
+                    InternalCall.m_InternalSetTextComponent(EntityID, controllerText, confirmationFontFileName, confirmationFontLayer, confirmationFontSize, confirmationFontColor);
+                    break;
+
+                case 4:
+
+                    InternalCall.m_InternalSetSpriteComponent(EntityID, howToPlayMainMenuTextureController, startingLayer, startingColor, startingAlpha);
                     break;
 
                 default:
@@ -85,6 +96,11 @@ public class ButtonPrompt : ScriptBase
 
                 case 3:
                     InternalCall.m_InternalSetTextComponent(EntityID, mouseText, confirmationFontFileName, confirmationFontLayer, confirmationFontSize, confirmationFontColor);
+                    break;
+
+
+                case 4:
+                    InternalCall.m_InternalSetSpriteComponent(EntityID, howToPlayMainMenuTextureMouse, startingLayer, startingColor, startingAlpha);
                     break;
 
                 default:
