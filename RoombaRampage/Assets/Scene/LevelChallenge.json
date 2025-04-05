@@ -4505,7 +4505,7 @@
     {
         "name": {
             "namestr": "Boss Level Controller",
-            "layer": 0,
+            "layer": 5,
             "isprefab": false,
             "tagstr": "GameController"
         },
