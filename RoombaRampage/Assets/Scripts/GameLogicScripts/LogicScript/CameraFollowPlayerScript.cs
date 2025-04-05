@@ -110,7 +110,7 @@ public class CameraFollowPlayerScript : ScriptBase
 
     public static void Shake(float intensity, float duration)
     {
-        shakeIntensity = intensity;
+        shakeIntensity = intensity * 0.6f;
         shakeDuration = duration;
     }
 

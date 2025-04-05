@@ -53,7 +53,7 @@ public class BossController : ScriptBase
 
     private int repeatCount = 0;
     public int forceFieldHealth = 3;
-    public int bossHealth = 18;
+    public int bossHealth = 24;
     public bool isForceFieldActive = true;
     private bool forceFieldStart = false;
     private string forceFieldPrefab = "Boss_Forcefield";
@@ -62,7 +62,7 @@ public class BossController : ScriptBase
     private string bossClusterBulletPrefab;
 
     private bool isInvincible = false;
-    private float invicibilityTimer = 0.1f;
+    private float invicibilityTimer = 0.2f;
 
     private int bossVulnerableHealth = 3;
 
