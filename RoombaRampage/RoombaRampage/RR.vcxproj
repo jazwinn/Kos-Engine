@@ -136,7 +136,7 @@ xcopy /y /d "$(SolutionDir)Engine\Dependencies\mono\*.dll" "$(OutDir)"</Command>
       <AdditionalIncludeDirectories>$(SolutionDir)Engine\ECS;$(SolutionDir)Engine\Dependencies\pl_mpeg;$(SolutionDir)Engine\Dependencies\Freetype_Font\include\freetype\config;$(SolutionDir)Engine\Dependencies\Freetype_Font\include;$(SolutionDir)Engine\Dependencies\FMOD_API\studio\inc;$(SolutionDir)Engine\Dependencies\FMOD_API\core\inc;$(SolutionDir)Engine\Dependencies\mono\include\mono-2.0;$(SolutionDir)Engine\Dependencies\mono\include;$(SolutionDir)Engine;$(SolutionDir)Engine\Dependencies\stb_image\include;$(SolutionDir)Engine\Dependencies\glm\include;$(SolutionDir)Engine\Dependencies\GLEW\include\GL;$(SolutionDir)Engine\Dependencies\GLFW\include;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <UseStandardPreprocessor>true</UseStandardPreprocessor>
-      <DisableSpecificWarnings>26945;4005;4245;4083;26495;6255;6263;6001;4244;4706;4267;4305;4098;4099</DisableSpecificWarnings>
+      <DisableSpecificWarnings>26945; 4005; 4245;4083;26495;6255;6263;6001; 4244; 4706;4267;4305;</DisableSpecificWarnings>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
