@@ -114,7 +114,7 @@ namespace Application {
 
         void setCursorImage(const std::string& image, bool centered);
 
-        bool m_enabledFullScreen{ false };//use this to set launch application fullscreen or not
+        bool m_enabledFullScreen{ true };//use this to set launch application fullscreen or not
 
     };
 }

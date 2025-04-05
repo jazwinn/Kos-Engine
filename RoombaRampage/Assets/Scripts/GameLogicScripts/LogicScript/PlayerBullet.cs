@@ -56,7 +56,7 @@ public class PlayerBullet : ScriptBase
     public override void Start()
     {
         bulletHasHit = false;
-        Console.WriteLine(EntityID);
+        //Console.WriteLine(EntityID);
     }
 
     public override void Update()
