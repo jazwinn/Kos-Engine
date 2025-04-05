@@ -154,6 +154,8 @@ public class BossController : ScriptBase
 
                 return;
             }
+
+            return;
         }
 
         if (isTakingDamage)
