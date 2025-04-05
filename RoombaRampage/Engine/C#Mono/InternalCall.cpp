@@ -772,7 +772,7 @@ namespace script {
 			return it->second->HasStopped();
 		}
 
-		return false;
+		return true;
 
 	}
 
