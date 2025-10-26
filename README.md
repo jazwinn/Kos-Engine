@@ -1,6 +1,10 @@
+**Kos Engine 2.0** is on the way! You may view it here: [KosEngine2.0](https://github.com/jazwinn/Kos-Engine-2.0)
+
 # Kos Engine
 
 A 2D Game Engine Editor Developed in C++ and with C# Scripting support.
+
+
 
 # Demo
 
