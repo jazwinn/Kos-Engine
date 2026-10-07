@@ -1,0 +1,92 @@
+name: Build and Package Installer
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write  # This allows the token to create tags and releases
+
+env:
+  # Pushing a tag such as v1.2.0 releases under that tag; manual runs get v1.0.<run number>.
+  RELEASE_TAG: ${{ startsWith(github.ref, 'refs/tags/v') && github.ref_name || format('v1.0.{0}', github.run_number) }}
+
+jobs:
+  build-and-package-windows:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 1. Compile the game with the same CMake presets used locally (Ninja + MSVC)
+      - name: Set up MSVC environment
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
+
+      - name: Install Ninja
+        run: pip install ninja
+        shell: powershell
+
+      - name: Configure with CMake
+        working-directory: RoombaRampage
+        run: cmake --preset msvc-x64
+        shell: powershell
+
+      - name: Build (Release)
+        working-directory: RoombaRampage
+        run: cmake --build --preset release --target RR
+        shell: powershell
+
+      # 2. Populate the GAMEDIRECTORY (mirrors the repo layout RR.exe expects)
+      - name: Prepare Game Directory
+        shell: powershell
+        run: |
+          $src  = "RoombaRampage"
+          $dest = "Installer\GAMEDIRECTORY"
+
+          # 1. Create all the destination directories first
+          New-Item -ItemType Directory -Force -Path "$dest\RoombaRampage" | Out-Null
+          New-Item -ItemType Directory -Force -Path "$dest\Engine\Dependencies\mono" | Out-Null
+          New-Item -ItemType Directory -Force -Path "$dest\Engine\ScriptLibrary\GameScript\ScriptCoreDLL" | Out-Null
+
+          # 2. Game executable and its runtime DLLs
+          Copy-Item -Path "$src\build\bin\Release\RR.exe" -Destination "$dest\RoombaRampage\" -Force
+          Copy-Item -Path "$src\build\bin\Release\*.dll" -Destination "$dest\RoombaRampage\" -Force
+
+          # 3. Game data (loaded via ../Assets and ../Configs)
+          Copy-Item -Path "$src\Assets" -Destination "$dest\" -Recurse -Force
+          Copy-Item -Path "$src\Configs" -Destination "$dest\" -Recurse -Force
+
+          # 4. Mono runtime libraries and the compiled C# script core
+          Copy-Item -Path "$src\Engine\Dependencies\mono\lib" -Destination "$dest\Engine\Dependencies\mono\" -Recurse -Force
+          Copy-Item -Path "$src\Engine\ScriptLibrary\GameScript\ScriptCoreDLL\GameScript.dll" -Destination "$dest\Engine\ScriptLibrary\GameScript\ScriptCoreDLL\" -Force
+
+          # 5. Shortcut icon
+          Copy-Item -Path "Installer\INSTALLERFILES\SetupIcon.ico" -Destination "$dest\Icon.ico" -Force
+
+      - name: Download VC++ Redistributable
+        shell: powershell
+        run: |
+          New-Item -ItemType Directory -Force -Path "Installer\REDIST" | Out-Null
+          Invoke-WebRequest -Uri "https://aka.ms/vs/17/release/vc_redist.x64.exe" -OutFile "Installer\REDIST\VC_redist.x64.exe"
+
+      # 3. Run Inno Setup to generate the installer
+      - name: Compile Inno Setup Script
+        uses: Minionguyjpro/Inno-Setup-Action@v1.2.2
+        with:
+          path: Installer\InstallScript.iss
+          options: /DAppVersion=${{ env.RELEASE_TAG }}
+
+      # 4. Upload the final installer
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.RELEASE_TAG }}
+          files: Installer/INSTALLER/RoombaRampage_Setup.exe
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
