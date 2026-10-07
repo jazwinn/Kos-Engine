@@ -1,0 +1,22 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Kos Editor",
+      "type": "cppvsdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/build/bin/${command:cmake.buildType}/Kos Engine.exe",
+      "cwd": "${workspaceFolder}/Kos Editor",
+      "console": "integratedTerminal",
+      "preLaunchTask": "Build"
+    },
+    {
+      "name": "RR (Game)",
+      "type": "cppvsdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/build/bin/${command:cmake.buildType}/RR.exe",
+      "cwd": "${workspaceFolder}/RoombaRampage",
+      "preLaunchTask": "Build"
+    }
+  ]
+}
