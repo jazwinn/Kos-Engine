@@ -248,6 +248,13 @@ namespace script {
         try {
             mono_runtime_invoke(method, objInstance, args, &exception);
 
+            // A script loaded a new scene. Mono has already unwound the C# frames,
+            // so it is now safe to throw and stop the logic system's loop.
+            if (m_sceneChangeRequested) {
+                m_sceneChangeRequested = false;
+                throw 1;
+            }
+
             if (exception) {
 
                 LOGGING_WARN("Script Exception Occured");

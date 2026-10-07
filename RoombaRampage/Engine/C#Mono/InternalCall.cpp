@@ -896,7 +896,11 @@ namespace script {
 
 		mono_free(nativeString);
 
-		throw 1;//stop the loop in the logic system
+		// Stop the calling script and the logic system's loop. A C++ throw here would
+		// unwind through Mono's managed frames and corrupt the heap, so raise a managed
+		// exception instead; m_InvokeMethod throws once mono_runtime_invoke returns.
+		ScriptHandler::m_sceneChangeRequested = true;
+		mono_runtime_set_pending_exception(mono_get_exception_invalid_operation("Scene changed"), true);
 	}
 
 	int InternalCall::m_InternalCallAddPrefab(MonoString* prefab, const float* x, const float* y, const float* rotation)

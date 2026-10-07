@@ -180,6 +180,16 @@ namespace script {
 
 		/******************************************************************/
 		/*!
+			\var       m_sceneChangeRequested
+			\brief     Set by the LoadScene internal call. m_InvokeMethod then
+					   throws once mono_runtime_invoke has returned, so the logic
+					   system stops iterating scripts of the unloaded scene.
+		*/
+		/******************************************************************/
+		static inline bool m_sceneChangeRequested{ false };
+
+		/******************************************************************/
+		/*!
 			\fn        void m_HotReloadCompileAllCsharpFile()
 			\brief     Recompiles all C# files for hot reloading, allowing scripts to be updated dynamically.
 			\details   This function recompiles all C# script files, producing updated DLLs for each file,
