@@ -3601,10 +3601,10 @@ public:
     ret.image_name = temp;
     GetModuleBaseNameA(process, module, temp, sizeof(temp));
     ret.module_name = temp;
-    std::vector<char> img(ret.image_name.begin(), ret.image_name.end());
-    std::vector<char> mod(ret.module_name.begin(), ret.module_name.end());
-    SymLoadModule64(process, 0, &img[0], &mod[0], (DWORD64)ret.base_address,
-                    ret.load_size);
+    // Pass null-terminated strings: copying into std::vector<char> dropped the
+    // terminator, so SymLoadModule64 read past the end of the buffers.
+    SymLoadModule64(process, 0, ret.image_name.c_str(), ret.module_name.c_str(),
+                    (DWORD64)ret.base_address, ret.load_size);
     return ret;
   }
 };
