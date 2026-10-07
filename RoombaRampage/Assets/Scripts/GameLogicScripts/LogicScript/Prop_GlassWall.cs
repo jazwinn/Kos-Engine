@@ -17,8 +17,6 @@ public class Prop_GlassWall : ScriptBase
 
     private AnimationComponent animComp;
     private ColliderComponent colComp;
-    private ColliderComponent rCWallColComp;
-    private uint rCWallID;
     private bool isAnimating;
     private bool isBroken;
 
@@ -27,8 +25,6 @@ public class Prop_GlassWall : ScriptBase
         isBroken = false;
         isAnimating = false;
 
-        rCWallID = (uint)InternalCall.m_InternalCallGetTagID("PropGlassWall");
-        rCWallColComp = Component.Get<ColliderComponent>(rCWallID);
         animComp = Component.Get<AnimationComponent>(EntityID);
         colComp = Component.Get<ColliderComponent>(EntityID);
     }
@@ -66,7 +62,6 @@ public class Prop_GlassWall : ScriptBase
 
                         isAnimating = true;
 
-                        //InternalCall.m_InternalCallDeleteEntity(rCWallID);
 
                         animComp = Component.Get<AnimationComponent>(EntityID);
                         animComp.m_frameNumber = 0;
