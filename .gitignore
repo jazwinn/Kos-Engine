@@ -404,3 +404,4 @@ FodyWeavers.xsd
 #logfiles
 LogFile.txt
 
+.vscode/settings.json
