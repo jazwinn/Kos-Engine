@@ -347,7 +347,7 @@ namespace script {
         LOGGING_INFO("Generated command: {}", command.c_str());
 
         //// Execute the command
-        int result = system("run_command.bat");
+        int result = system(".\\run_command.bat");
             
         //remove bat file
         std::remove("run_command.bat");
@@ -394,7 +394,7 @@ namespace script {
         LOGGING_INFO("Generated command: {}", command.c_str());
 
         //// Execute the command
-        int result = system("run_command.bat");
+        int result = system(".\\run_command.bat");
 
         //remove bat file
         std::remove("run_command.bat");
