@@ -39,6 +39,9 @@ namespace assetmanager {
             std::replace(filepath.begin(), filepath.end(), '\\', '/');
 
             if (directoryPath.is_directory()) {
+                // skip IDE/dotnet build output (e.g. GameLogicScripts/obj), it is not game assets
+                const std::string dirname = directoryPath.path().filename().string();
+                if (dirname == "bin" || dirname == "obj") continue;
                 m_funcLoadAssets(filepath);
             }
             else {
