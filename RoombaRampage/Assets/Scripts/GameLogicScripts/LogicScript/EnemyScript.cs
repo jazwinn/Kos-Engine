@@ -1717,7 +1717,10 @@ public class EnemyScript : ScriptBase //Enemy Script, not state machine
         }
         else if (enemyRoamBehaviour == EnemyRoamType.Static)
         {
-            SetCurrentState(new EnemyStateReturnToHome(this));
+            // Stand and scan in place. Re-entering EnemyStateReturnToHome here recursed forever
+            // (its constructor calls ReturnHomeStart, which fails again and lands back here),
+            // overflowing the stack inside native code and corrupting the heap.
+            SetCurrentState(new EnemyStateScan(this));
         }
     }
 
