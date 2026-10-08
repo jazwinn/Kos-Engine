@@ -41,7 +41,7 @@ jobs:
         run: cmake --build --preset release --target RR
         shell: powershell
 
-      # 2. Populate the GAMEDIRECTORY (mirrors the repo layout RR.exe expects)
+      # 2. Populate the GAMEDIRECTORY (mirrors the repo layout R00M13A-OS.exe expects)
       - name: Prepare Game Directory
         shell: powershell
         run: |
@@ -54,7 +54,7 @@ jobs:
           New-Item -ItemType Directory -Force -Path "$dest\Engine\ScriptLibrary\GameScript\ScriptCoreDLL" | Out-Null
 
           # 2. Game executable and its runtime DLLs
-          Copy-Item -Path "$src\build\bin\Release\RR.exe" -Destination "$dest\RoombaRampage\" -Force
+          Copy-Item -Path "$src\build\bin\Release\R00M13A-OS.exe" -Destination "$dest\RoombaRampage\" -Force
           Copy-Item -Path "$src\build\bin\Release\*.dll" -Destination "$dest\RoombaRampage\" -Force
 
           # 3. Game data (loaded via ../Assets and ../Configs)
@@ -86,7 +86,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ env.RELEASE_TAG }}
-          files: Installer/INSTALLER/RoombaRampage_Setup.exe
+          files: Installer/INSTALLER/R00M13A-OS_Setup.exe
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -100,4 +100,4 @@ jobs:
         shell: powershell
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
-        run: butler push Installer/INSTALLER/RoombaRampage_Setup.exe cjjalchemication/r00m13a-os:windows --userversion ${{ env.RELEASE_TAG }}
+        run: butler push Installer/INSTALLER/R00M13A-OS_Setup.exe cjjalchemication/r00m13a-os:windows --userversion ${{ env.RELEASE_TAG }}

@@ -11,10 +11,10 @@
       "preLaunchTask": "Build"
     },
     {
-      "name": "RR (Game)",
+      "name": "R00M13A-OS (Game)",
       "type": "cppvsdbg",
       "request": "launch",
-      "program": "${workspaceFolder}/build/bin/${command:cmake.buildType}/RR.exe",
+      "program": "${workspaceFolder}/build/bin/${command:cmake.buildType}/R00M13A-OS.exe",
       "cwd": "${workspaceFolder}/RoombaRampage",
       "preLaunchTask": "Build"
     }

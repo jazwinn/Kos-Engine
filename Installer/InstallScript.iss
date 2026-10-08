@@ -1,17 +1,17 @@
-; Inno Setup script for Roomba Rampage.
+; Inno Setup script for R00M13A-OS.
 ; The GitHub "Build and Package Installer" workflow fills GAMEDIRECTORY and REDIST
 ; before compiling this script. GAMEDIRECTORY mirrors the repo layout the game
 ; expects at runtime (it loads "../Assets", "../Configs" and "../Engine/..."
 ; relative to the RoombaRampage folder it runs from):
 ;
-;   GAMEDIRECTORY\RoombaRampage\RR.exe (+ DLLs)
+;   GAMEDIRECTORY\RoombaRampage\R00M13A-OS.exe (+ DLLs)
 ;   GAMEDIRECTORY\Assets\
 ;   GAMEDIRECTORY\Configs\
 ;   GAMEDIRECTORY\Engine\Dependencies\mono\lib\
 ;   GAMEDIRECTORY\Engine\ScriptLibrary\GameScript\ScriptCoreDLL\GameScript.dll
 
-#define AppName "Roomba Rampage"
-#define ExeName "RR.exe"
+#define AppName "R00M13A-OS"
+#define ExeName "R00M13A-OS.exe"
 #ifndef AppVersion
   #define AppVersion "1.0.0"
 #endif
@@ -36,7 +36,7 @@ ArchitecturesAllowed=x64compatible
 ArchitecturesInstallIn64BitMode=x64compatible
 
 OutputDir=.\INSTALLER
-OutputBaseFilename=RoombaRampage_Setup
+OutputBaseFilename=R00M13A-OS_Setup
 
 LicenseFile=INSTALLERFILES\DigiPen_EULA.txt
 SetupIconFile=.\INSTALLERFILES\SetupIcon.ico
