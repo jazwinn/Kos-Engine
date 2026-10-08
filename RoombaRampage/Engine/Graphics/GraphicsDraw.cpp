@@ -36,9 +36,6 @@ namespace graphicpipe
 			glBindBuffer(GL_ARRAY_BUFFER, m_modelMatrixArrayBuffer);
 			glNamedBufferData(m_modelMatrixArrayBuffer, m_modelMatrix.size() * sizeof(glm::mat3), &m_modelMatrix[0], GL_DYNAMIC_DRAW);
 
-			glBindBuffer(GL_ARRAY_BUFFER, m_iVec3Buffer);
-			glNamedBufferData(m_iVec3Buffer, m_iVec3Array.size() * sizeof(glm::ivec3), &m_iVec3Array[0], GL_DYNAMIC_DRAW); //Strip Count, FrameNumber, Texture Order
-
 			glBindBuffer(GL_ARRAY_BUFFER, m_layerBuffer);
 			glNamedBufferData(m_layerBuffer, m_layers.size() * sizeof(int), &m_layers[0], GL_DYNAMIC_DRAW);
 
@@ -54,7 +51,10 @@ namespace graphicpipe
 
 			if (lvUniformVarLoc1 >= 0)
 			{
-				glUniform1iv(lvUniformVarLoc1, static_cast<GLsizei>(m_textureIDs.size()), (GLint*)&m_textureIDs[0]);
+				// textures[i] samples texture unit i; m_funcDrawTextureBatches binds them.
+				std::array<GLint, MAX_TEXTURE_SLOTS> slots{};
+				std::iota(slots.begin(), slots.end(), 0);
+				glUniform1iv(lvUniformVarLoc1, MAX_TEXTURE_SLOTS, slots.data());
 			}
 			else
 			{
@@ -63,20 +63,13 @@ namespace graphicpipe
 				std::exit(EXIT_FAILURE);
 			}
 
-			for (int i = 0; i < m_textureIDs.size(); ++i)
-			{
-				glActiveTexture(GL_TEXTURE0 + m_textureIDs[i]);
-				glBindTexture(GL_TEXTURE_2D, m_textureIDs[i]);
-			
-			}
-
 			glUniformMatrix3fv(glGetUniformLocation(m_genericShaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currViewMatrix));
 			glUniformMatrix3fv(glGetUniformLocation(m_genericShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currOrthoMatrix));
-			
+
 			glUniform1f(glGetUniformLocation(m_genericShaderProgram, "globalBrightness"), m_globalLightIntensity);
 
 			glBindVertexArray(m_squareMesh.m_vaoId);
-			glDrawElementsInstanced(m_squareMesh.m_primitiveType, m_squareMesh.m_indexElementCount, GL_UNSIGNED_SHORT, NULL, static_cast<GLsizei>(m_modelMatrix.size()));
+			m_funcDrawTextureBatches(m_iVec3Array); //Strip Count, FrameNumber, Texture Order
 			glBindVertexArray(0);
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
 
@@ -94,9 +87,6 @@ namespace graphicpipe
 			glBindBuffer(GL_ARRAY_BUFFER, m_modelMatrixArrayBuffer);
 			glNamedBufferData(m_modelMatrixArrayBuffer, m_unlitModelMatrix.size() * sizeof(glm::mat3), &m_unlitModelMatrix[0], GL_DYNAMIC_DRAW);
 
-			glBindBuffer(GL_ARRAY_BUFFER, m_iVec3Buffer);
-			glNamedBufferData(m_iVec3Buffer, m_unlitModelParams.size() * sizeof(glm::ivec3), &m_unlitModelParams[0], GL_DYNAMIC_DRAW); //Strip Count, FrameNumber, Texture Order
-
 			glBindBuffer(GL_ARRAY_BUFFER, m_layerBuffer);
 			glNamedBufferData(m_layerBuffer, m_unlitLayers.size() * sizeof(int), &m_unlitLayers[0], GL_DYNAMIC_DRAW);
 
@@ -112,7 +102,10 @@ namespace graphicpipe
 
 			if (lvUniformVarLoc1 >= 0)
 			{
-				glUniform1iv(lvUniformVarLoc1, static_cast<GLsizei>(m_textureIDs.size()), (GLint*)&m_textureIDs[0]);
+				// textures[i] samples texture unit i; m_funcDrawTextureBatches binds them.
+				std::array<GLint, MAX_TEXTURE_SLOTS> slots{};
+				std::iota(slots.begin(), slots.end(), 0);
+				glUniform1iv(lvUniformVarLoc1, MAX_TEXTURE_SLOTS, slots.data());
 			}
 			else
 			{
@@ -121,26 +114,75 @@ namespace graphicpipe
 				std::exit(EXIT_FAILURE);
 			}
 
-			for (int i = 0; i < m_textureIDs.size(); ++i)
-			{
-				glActiveTexture(GL_TEXTURE0 + m_textureIDs[i]);
-				glBindTexture(GL_TEXTURE_2D, m_textureIDs[i]);
-
-			}
-
 			glUniformMatrix3fv(glGetUniformLocation(m_genericShaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currViewMatrix));
 			glUniformMatrix3fv(glGetUniformLocation(m_genericShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currOrthoMatrix));
 
 			glUniform1f(glGetUniformLocation(m_genericShaderProgram, "globalBrightness"), m_globalLightIntensity);
 
 			glBindVertexArray(m_squareMesh.m_vaoId);
-			glDrawElementsInstanced(m_squareMesh.m_primitiveType, m_squareMesh.m_indexElementCount, GL_UNSIGNED_SHORT, NULL, static_cast<GLsizei>(m_unlitModelMatrix.size()));
+			m_funcDrawTextureBatches(m_unlitModelParams); //Strip Count, FrameNumber, Texture Order
 			glBindVertexArray(0);
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 
 
 		}
+	}
+
+	void GraphicsPipe::m_funcDrawTextureBatches(const std::vector<glm::ivec3>& params)
+	{
+		struct TextureBatch
+		{
+			GLuint m_firstInstance{};
+			GLsizei m_instanceCount{};
+			std::vector<unsigned int> m_textures{}; // texture bound to unit (slot) i
+		};
+
+		// Each run of consecutive instances samples at most MAX_TEXTURE_SLOTS textures,
+		// so draw order is kept. The texture order in .z becomes the slot in that run.
+		std::vector<glm::ivec3> slotted(params);
+		std::vector<TextureBatch> batches(1);
+		std::unordered_map<int, int> slotOfOrder;
+
+		for (size_t i = 0; i < slotted.size(); ++i)
+		{
+			int order = slotted[i].z;
+			if (order < 0 || order >= static_cast<int>(m_textureIDs.size()))
+			{
+				order = 0;
+			}
+
+			auto slot = slotOfOrder.find(order);
+			if (slot == slotOfOrder.end())
+			{
+				if (batches.back().m_textures.size() == MAX_TEXTURE_SLOTS)
+				{
+					batches.push_back({ static_cast<GLuint>(i), 0, {} });
+					slotOfOrder.clear();
+				}
+				slot = slotOfOrder.emplace(order, static_cast<int>(batches.back().m_textures.size())).first;
+				batches.back().m_textures.push_back(m_textureIDs.empty() ? 0 : m_textureIDs[order]);
+			}
+
+			slotted[i].z = slot->second;
+			++batches.back().m_instanceCount;
+		}
+
+		glNamedBufferData(m_iVec3Buffer, slotted.size() * sizeof(glm::ivec3), slotted.data(), GL_DYNAMIC_DRAW);
+
+		for (const TextureBatch& batch : batches)
+		{
+			for (size_t slot = 0; slot < batch.m_textures.size(); ++slot)
+			{
+				glActiveTexture(GL_TEXTURE0 + static_cast<GLenum>(slot));
+				glBindTexture(GL_TEXTURE_2D, batch.m_textures[slot]);
+			}
+
+			glDrawElementsInstancedBaseInstance(m_squareMesh.m_primitiveType, m_squareMesh.m_indexElementCount, GL_UNSIGNED_SHORT, NULL,
+				batch.m_instanceCount, batch.m_firstInstance);
+		}
+
+		glActiveTexture(GL_TEXTURE0);
 	}
 
 	void GraphicsPipe::m_funcDrawVideos()
@@ -455,10 +497,10 @@ namespace graphicpipe
 			//glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 
-			glActiveTexture(GL_TEXTURE0 + m_textureIDs[m_transformedTilemaps[i].m_textureID]); // Activate each texture unit
-			glBindTexture(GL_TEXTURE_2D, m_textureIDs[m_transformedTilemaps[i].m_textureID]);  // Unbind the 2D texture from that unit
-			
-			glUniform1i(glGetUniformLocation(m_tilemapShaderProgram, "textureID"), m_textureIDs[m_transformedTilemaps[i].m_textureID]);
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, m_textureIDs[m_transformedTilemaps[i].m_textureID]);
+
+			glUniform1i(glGetUniformLocation(m_tilemapShaderProgram, "textureID"), 0); // sampler reads texture unit 0
 
 			glUniform1i(glGetUniformLocation(m_tilemapShaderProgram, "layer"), m_transformedTilemaps[i].m_layer);
 
@@ -620,11 +662,14 @@ namespace graphicpipe
 
 		glUniformMatrix3fv(glGetUniformLocation(m_particleShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(GraphicsCamera::m_currOrthoMatrix));
 
-		GLint lvUniformVarLoc1 = glGetUniformLocation(m_genericShaderProgram, "textures");
+		GLint lvUniformVarLoc1 = glGetUniformLocation(m_particleShaderProgram, "textures");
 
 		if (lvUniformVarLoc1 >= 0)
 		{
-			glUniform1iv(lvUniformVarLoc1, static_cast<GLsizei>(m_textureIDs.size()), (GLint*)&m_textureIDs[0]);
+			// Particles store a slot (see m_funcParticleTextureSlot); textures[i] samples unit i.
+			std::array<GLint, MAX_TEXTURE_SLOTS> slots{};
+			std::iota(slots.begin(), slots.end(), 0);
+			glUniform1iv(lvUniformVarLoc1, MAX_TEXTURE_SLOTS, slots.data());
 		}
 		else
 		{
@@ -633,12 +678,13 @@ namespace graphicpipe
 			std::exit(EXIT_FAILURE);
 		}
 
-		for (int i = 0; i < m_textureIDs.size(); ++i)
+		for (int slot = 0; slot < MAX_TEXTURE_SLOTS; ++slot)
 		{
-			glActiveTexture(GL_TEXTURE0 + m_textureIDs[i]);
-			glBindTexture(GL_TEXTURE_2D, m_textureIDs[i]);
-
+			const unsigned int order = m_particleSlotTextures[slot];
+			glActiveTexture(GL_TEXTURE0 + slot);
+			glBindTexture(GL_TEXTURE_2D, (order == 0 || order > m_textureIDs.size()) ? 0 : m_textureIDs[order - 1]);
 		}
+		glActiveTexture(GL_TEXTURE0);
 
 		glBindVertexArray(m_squareMesh.m_vaoId);
 		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, m_particleSSBO);

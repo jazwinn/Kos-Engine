@@ -22,7 +22,7 @@ R"( #version 460 core
 
 	layout (location=0) out vec4 fragColor;
 
-	uniform sampler2D textures[192]; // Subscript indicates max texture amount
+	uniform sampler2D textures[16]; // One per texture unit; matches GraphicsPipe::MAX_TEXTURE_SLOTS
 	uniform float globalBrightness;
 
 

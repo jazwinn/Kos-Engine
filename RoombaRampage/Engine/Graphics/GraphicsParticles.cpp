@@ -59,7 +59,25 @@ namespace graphicpipe
             << "-----------------------------------\n";
     }
 
-    void GraphicsPipe::m_spawnParticles() 
+    int GraphicsPipe::m_funcParticleTextureSlot(unsigned int textureOrder)
+    {
+        for (int slot = 0; slot < MAX_TEXTURE_SLOTS; ++slot)
+        {
+            if (m_particleSlotTextures[slot] == textureOrder + 1)
+            {
+                return slot;
+            }
+        }
+
+        // Not bound yet: reuse slots round-robin. Live particles still on an evicted
+        // slot draw with the new texture until they expire.
+        const int slot = m_nextParticleSlot;
+        m_nextParticleSlot = (m_nextParticleSlot + 1) % MAX_TEXTURE_SLOTS;
+        m_particleSlotTextures[slot] = textureOrder + 1;
+        return slot;
+    }
+
+    void GraphicsPipe::m_spawnParticles()
     {
         glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_particleSSBO);
 
@@ -71,6 +89,8 @@ namespace graphicpipe
             {
                 scenes::SceneManager::m_GetInstance()->isSceneChanged = false;
                 memset(particles, 0, MAX_PARTICLES * sizeof(ParticleData));
+                m_particleSlotTextures.fill(0);
+                m_nextParticleSlot = 0;
             }
             else
             {
@@ -78,6 +98,7 @@ namespace graphicpipe
                 {
                     if (m_emitterData[i].m_noOfParticles >= 0)
                     {
+                        const int textureSlot = m_funcParticleTextureSlot(m_emitterData[i].m_textureID);
                         int particlesProcessed = 0;
                         float speedRandomValue{};
                         float sizeRandomValue{};
@@ -117,7 +138,7 @@ namespace graphicpipe
                                 particles[j].m_velocity = newVelocity * speedRandomValue;
                                 particles[j].m_acceleration = m_emitterData[i].m_acceleration * speedRandomValue; 
 
-                                particles[j].m_textureID = m_emitterData[i].m_textureID;
+                                particles[j].m_textureID = textureSlot;
                                 particles[j].m_stripCount = m_emitterData[i].m_stripCount;
                                 particles[j].m_frameNumber = m_emitterData[i].m_frameNumber;
                                 particles[j].m_layer = m_emitterData[i].m_layer;

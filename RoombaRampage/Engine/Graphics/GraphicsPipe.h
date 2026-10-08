@@ -399,6 +399,23 @@ namespace graphicpipe {
         void m_funcDrawUnlit();
 
         /**
+         * @brief Uploads per-instance sprite data and draws it in texture batches.
+         *
+         * Splits the instances into consecutive runs that sample at most
+         * MAX_TEXTURE_SLOTS distinct textures, rewrites each instance's texture
+         * order to the slot its texture is bound to, and issues one draw per run.
+         *
+         * @param params Strip count, frame number and texture order per instance.
+         */
+        void m_funcDrawTextureBatches(const std::vector<glm::ivec3>& params);
+
+        /**
+         * @brief Returns the particle texture slot holding the given texture order,
+         *        assigning a slot (round-robin) if the texture is not bound yet.
+         */
+        int m_funcParticleTextureSlot(unsigned int textureOrder);
+
+        /**
          * @brief Draws video textures.
          *
          * Renders video frames stored in textures, applying appropriate transformations.
@@ -665,6 +682,13 @@ namespace graphicpipe {
         std::vector<std::vector<int>> m_gridColliderChecks{}; ///< Collider check indexes for the grid.
 
         std::vector<unsigned int> m_textureIDs{}; ///< Array of texture IDs for rendering.
+
+        // Texture units one sprite/particle draw samples from. OpenGL 4.6 guarantees
+        // at least 16 per fragment shader (Intel iGPUs reject larger sampler arrays);
+        // the "textures" arrays in the generic and particle shaders match this size.
+        static constexpr int MAX_TEXTURE_SLOTS = 16;
+        std::array<unsigned int, MAX_TEXTURE_SLOTS> m_particleSlotTextures{}; ///< Texture order + 1 bound to each particle slot (0 = empty).
+        int m_nextParticleSlot{}; ///< Next particle slot to reuse when all are taken.
         std::vector<int> m_layers{}; ///< Layer information for rendering elements.
         std::vector<glm::vec3> m_vec3Array{}; ///< Array of 3D vector data for rendering.
         std::vector<glm::ivec3> m_iVec3Array{}; ///< Array of integer 3D vector data for sprite strip counts and other uses.

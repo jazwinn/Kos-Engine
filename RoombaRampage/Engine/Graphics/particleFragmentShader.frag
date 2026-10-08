@@ -19,7 +19,7 @@ R"( #version 430 core
 
 	layout (location=0) out vec4 fragColor;
 
-	uniform sampler2D textures[192]; // Subscript indicates max texture amount
+	uniform sampler2D textures[16]; // One per texture unit; matches GraphicsPipe::MAX_TEXTURE_SLOTS
 
 	void main()
 	{
@@ -29,7 +29,7 @@ R"( #version 430 core
 			return;
 		}
 	 
-		if (textureID < 200)
+		if (textureID >= 0 && textureID < 16)
 		{
 			vec4 texColor = texture(textures[textureID], texCoords) * vec4(color);
 
